@@ -1,0 +1,65 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## a pane 3 wrapper with no tab set to show only the data 
+## located in the velocity template $resource
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+
+#set($pane2_id=$viewMethods.getSessionData().getRowId())
+<html>
+  <head>
+    #parse('gui/display_error.vm')
+  
+    <title>Edit $viewMethods.getSessionData().getTable() data</title>
+    <style type="text/css">
+      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+			
+			html, body { padding:0; 
+			             margin:0;
+								 	 height:100%;
+									 width:100%; 
+									 overflow:auto }
+									 
+			body { padding-bottom:0;
+					 	 position:absolute;
+					 	 font-family:sans-serif,Arial;
+    	       font-size:10pt;
+						 }
+						 
+			div.wrapper { height:100%;
+										/*width:100%;*/
+										position:relative; }
+										
+			td.trailing input[type=button] { font-size:8pt }
+			
+			table#reportData tbody tr.rowa:hover td,
+			table#reportData tbody tr.rowb:hover td { background-color:transparent!important }
+			
+    </style>  
+  	<script src="resources/jquery.js" language="Javascript"> </script>
+    <SCRIPT language="Javascript" src="resources/wait/request.js"></SCRIPT> 
+  	<SCRIPT language="Javascript" src="resources/wait/editData.js"></SCRIPT>  
+  	<SCRIPT language="Javascript">
+    	#if($pane2_id)parent.pane_2.fSetRowSelection('$pane2_id')#end   
+  	</SCRIPT>
+
+	  </head>
+  <body onload="fInit()">
+	    #parse($resource)
+  </body>
+</html>

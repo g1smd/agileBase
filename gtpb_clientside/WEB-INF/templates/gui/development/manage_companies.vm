@@ -1,0 +1,37 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<html>
+<head>
+<title>Manage Companies</title>
+    #parse('gui/display_error.vm')
+</head>
+<body>
+<h1>Manage companies</h1>
+<form method="post" action="AppController.servlet?return=gui/development/manage_companies">
+<input type="hidden" name="add_company" value="1" />
+<input type="text" name="companyname" />
+<input type="submit" value="Add company" />
+</form><p />
+<table>
+#foreach($company in $viewMethods.getCompanies())
+  <tr><td>$company</td><td><a href="AppController.servlet?return=gui/development/manage_companies&remove_company=1&internalcompanyname=$company.getInternalCompanyName()">remove</a></td></tr>
+#end
+</table>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<html>
+<head>
+<style>
+	@import url("styles/report.css");
+
+	html, body { font-family: "Arial", sans-serif; 
+    			 color: black; 
+    			 font-size: 11pt; 
+    			 margin:0; 
+    			 padding:0;
+    			 height:100% }
+</style>
+<title>portalBase data import</title>
+</head>
+<body>
+#set($sessionData = $viewMethods.getSessionData())
+#if($viewMethods.getWhetherExceptionOccurred())
+  #parse("gui/error.vm")
+#else
+<h1>Import Successful</h1>
+<script language="JavaScript">
+  top.window.location=top.window.location;
+</script>
+#end
+</body>
+</html>

@@ -1,0 +1,73 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<request>
+  #parse('gui/customisations/wizard_result.vm')
+  <okTemplate>gui/printouts/pane2_printout_wizard_ok</okTemplate>  
+  <htmlContent><![CDATA[        
+        <form style="padding:10px;">
+          <style>
+            table#_md_lockBeforePrint {
+              align:center;
+              margin-top:20px;
+            }
+            
+            table#_md_lockBeforePrint td {
+              vertical-align:top;
+              padding:10px;
+            }
+          </style>
+          <h1>finalise the records?</h1>
+          <small style="font-size:8pt">You are about to print some records that can still be edited.  Do you want to
+          finalise these records before printing?  <br />
+          Finalised records are locked and can only be edited by a manager.</small>
+          <table border="0" cellpadding="0" cellspacing="0" id="_md_lockBeforePrint" align="center">
+            <tr>
+              <td>&nbsp;</td>
+              <td style="padding-right:60px">
+                <label for="recordlock_no">
+                  <img src="resources/recordLocking/print_draft.png">
+                </label>     
+              </td> 
+               <td>&nbsp;</td>
+              <td style="padding-right:60px">
+                <label for="recordlock_yes">
+                  <img src="resources/recordLocking/print_locked.png">
+                </label>     
+              </td>                  
+            <tr>
+	              <td>
+	                <input type="radio" name="recordlock" id="recordlock_no" value="no" gtpb_set_custom_string="true" gtpb_stringkey="record_lock_attempted" gtpb_customstringvalue="no" checked>
+              </td>
+              <td style="padding-right:60px">  
+                <label for="recordlock_no">No -<br />
+                  <small>print the report as a draft</label>          
+              </td>            
+              <td>
+	                <input type="radio" name="recordlock" id="recordlock_yes" value="yes" gtpb_lock_records="true" gtpb_set_custom_string="true" gtpb_stringkey="record_lock_attempted" gtpb_customstringvalue="yes">
+              </td>
+              <td style="padding-right:60px">  
+                <label for="recordlock_yes">
+                  Yes -<br />
+                  <small>lock the records and print<br />a final copy</small></label>
+	              </td>
+            </tr>
+          </table>
+        </form>
+    ]]>
+  </htmlContent>  
+</request>

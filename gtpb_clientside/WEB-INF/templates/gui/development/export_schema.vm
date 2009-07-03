@@ -1,0 +1,105 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<portalbaseschema>
+<tables>
+#foreach($table in $viewMethods.adminGetCompanyTables())
+	#if(! $table.isAuditTable())
+	<table name="$table.getTableName()" description="$table.getTableDescription()" internalTableName="$table.getInternalTableName()">
+		<fields>
+		#foreach($field in $table.getFields())
+			<field name="$field.getFieldName()" description="$field.getFieldDescription()" internalFieldName="$field.getInternalFieldName()" class="$field.getClass().getSimpleName()" dbType="$field.getDbType().toString()">
+				<fieldproperties>
+					<property name="unique" #if($field.isUnique()) value="true" #else value="false" #end />
+					<property name="notNull" #if($field.isNotNull()) value="true" #else value="false" #end />
+					#if($field.hasDefault())	<property name="default" value="TODO: parse default value" />#end
+					#if($field.equals($table.getPrimaryKey)) <property name="primarykey" value="true" /> #end
+					#if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+					<property name="relatedField" value="$field.getRelatedField().getInternalFieldName()" />
+					#end
+					#if($field.getClass().getSimpleName().equals("GeneratedDropdownFieldDefn"))
+					<property name="sourcereport" value="$field.getReport().getInternalReportName()" />
+					<property name="keyfield" value="$field.getKeyField().getInternalFieldName()" />
+					<property name="valuefield" value="$field.getValueField().getInternalFieldName()" />
+					#end
+				</fieldproperties>
+			</field>
+		#end
+		</fields>
+		<reports>
+			#foreach($report in $table.getReports())
+				<report name="$report.getReportName()" description="$report.getReportDescription()" internalReportName="$report.getInternalReportName()" class="$report.getClass().getSimpleName()" #if($report.equals($table.getDefaultReport())) default="true" #else default="false" #end>
+					<reportfields>
+						#foreach($reportField in $report.getReportFields())
+							<reportfield baseFieldInternalName="$reportField.getBaseField().getInternalFieldName()" baseFieldName="$reportField.getBaseField().getFieldName()">
+							#if($reportField.getBaseField().getClass().getSimpleName().equals("CalculationFieldDefn"))
+								<calculation definition="$reportField.getBaseField().getCalculationDefinition()"/>
+							#end
+							</reportfield>
+						#end
+					</reportfields>
+					<joins>
+						#foreach($join in $report.getJoins())
+							<join>
+							#if($join.isLeftPartTable())
+								#set($joinedField = $join.getLeftTableField())
+								<leftside type="table" source="$joinedField.getTableContainingField().getInternalTableName()" field="$joinedField.getInternalFieldName()" />
+							#else
+								#set($joinedField = $join.getLeftReportField())
+								<leftside type="report" source="$joinedField.getParentReport().getInternalReportName()" field="$joinedField.getBaseField().getInternalFieldName()" />
+							#end
+							#if($join.isRightPartTable())
+								#set($joinedField = $join.getRightTableField())
+								<rightside type="table" source="$joinedField.getTableContainingField().getInternalTableName()" field="$joinedField.getInternalFieldName()" />
+							#else
+								#set($joinedField = $join.getRightReportField())
+								<rightside type="report" source="$joinedField.getParentReport().getInternalReportName()" field="$joinedField.getBaseField().getInternalFieldName()" />
+							#end
+								<jointype value="$join.getJoinType().toString()" />
+							</join>							
+						#end
+					</joins>
+					<filters>
+						#foreach($filter in $report.getFilters())
+							<filter field="$filter.getFilterField.getInternalFieldName()" type="$filter.getFilterType()" values="$filter.getFilterValues()" />
+						#end
+					</filters>
+					<reportsummary>
+						#set($reportSummary = $report.getReportSummary())
+						<groupings>
+							#foreach($groupingField in $reportSummary.getGroupingFields())
+							<grouping internalFieldName="$groupingField.getInternalFieldName()" fieldName="$groupingField.getFieldName()" />
+							#end
+						</groupings>
+						<functions>
+							#foreach($function in $reportSummary.getAggregateFunctions())
+								<function field="$function.getField().getInternalFieldName()" definition="$function.toString()" />
+							#end
+						</functions>
+					</reportsummary>
+				</report>
+			#end
+		</reports>
+	</table>
+	#end ## end if table isn't an audit table
+#end ## end tables
+</tables>
+<users>
+</users>
+<roles>
+</roles>
+</portalbaseschema>

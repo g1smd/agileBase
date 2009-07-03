@@ -1,0 +1,168 @@
+table#reportData { 
+  width:100%; 
+  height:100%;
+  border-collapse:collapse;
+  border:0; 
+}												
+
+table#reportData th { 
+  background-color:#f1f2ed; 
+  font-size:10pt; 
+  color:black;
+  font-weight:bold;
+  border:1px solid #cecece;
+  padding:7px;
+  text-align:left;
+  height:30px; 
+  text-transform: capitalize;
+  cursor:default; 
+/*  padding-right:20px; -- moved into sortedColumn styles */
+  background-repeat:no-repeat;
+  background-position:right center;
+}
+
+table#reportData th[onclick]:hover {
+  border-bottom-color:#FFD588!important;
+  background-color:#F8F8F6!important;
+}
+
+table#reportData th#sortedColumn{
+  background-color: #E4EAF2;
+  padding-right:25px;
+}
+
+table#reportData th#sortedColumn[sortDirn=true] {
+  background-image:url('../resources/reports/asc.png');
+  border-bottom-color:green;
+}
+
+table#reportData th#sortedColumn[sortDirn=false] {
+  background-image:url('../resources/reports/desc.png');
+  border-bottom-color:red;
+}
+
+table#reportData th div {
+  width:100%;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+table#reportData th.waiting {
+  background-image:url('../resources/reports/spinner.gif')!important;
+}
+	
+/*	on=true/false replaced by jQuery show/hide			  
+table#reportData thead tr#fieldFilters[on=false],
+table#reportData thead tr#fieldFilters[on=null] { 
+  display:none 
+}
+*/
+
+table#reportData thead tr#fieldFilters,
+table#reportData thead tr.wikiTitle { 
+  background-color:#e2e1d9 
+}
+table#reportData thead tr#fieldFilters input { 
+  width:100% 
+}
+					  
+table#reportData thead td { 
+  border-bottom:1px solid#cecece 
+}					  
+
+table#reportData tbody td { 
+  vertical-align:top 
+}
+					  
+table#reportData .selectable tr.rowa:hover td,
+table#reportData .selectable tr.rowb:hover td { 
+  background-color:#dae2ff;
+}
+
+table#reportData tbody tr.rowa:hover td.colored,
+table#reportData tbody tr.rowb:hover td.colored { 
+  background-image: url('highlighted_row_fine_angled.png'); 
+}   
+					  
+table#reportData td { 
+  border-right: 1px solid #cecece;
+  padding:3px 7px 3px 7px;
+  font-size:10pt;
+  cursor:default;
+  height:20px;
+  color:black!important
+}
+					  
+table#reportData tr#currentRow td { 
+  background-color:#ffd588;
+  /*background-image: url(selected_row_fine_angled.png);*/
+  /*font-family:"Arial Bold";*/
+}				
+
+table#reportData tr#currentRow td.leading,
+table#reportData tr#currentRow td.trailing {
+  background-color:#FFBA3B;
+}	  
+
+table#reportData tr#currentRow td.colored {
+  background-image: url('selected_row_fine_angled.png');
+}
+					 
+table#reportData tr.rowb td, 
+table#reportData tr.rowa td { 
+  height:25px 
+}					 
+					 
+table#reportData tr.rowb  { 
+  /* background-color:#f1f2ed; */
+  background-image: url('rowb.png');
+}
+
+table#reportData .trailing { 
+  border-right:0 
+}
+table#reportData tr.trailing td { 
+  height:auto 
+}
+
+table#reportData tr.excludedRecord td.leading {
+  background-color:#eaba72;
+}
+
+table#reportData tr.excludedRecord td.trailing {
+  background-color:#eaba72;
+}
+
+.error { color: red }
+
+.greytext {
+	color: gray;
+	text-transform: none;
+}
+
+.small { font-size: 8pt!important }
+
+.load-spinner {
+	background: #fff url('ajax-loader.gif') no-repeat 50% 50%;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	opacity: 0.8;
+	filter: alpha(opacity = 80);
+	top: 0;
+	left: 0;
+}
+
+.colour-block {
+	width: 36px;
+	height: 36px;
+	float: left;
+}
+
+.capitalised { text-transform: capitalize }
+
+.seemorerows {
+	background: #f4f4f4;
+	width: 100%;
+	padding-left: 14px;
+}

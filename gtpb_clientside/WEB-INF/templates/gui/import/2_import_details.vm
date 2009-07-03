@@ -1,0 +1,130 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($company = $viewMethods.getLoggedInUser().getCompany())
+#set($companyName = $viewTools.cleanString($company.getCompanyName()))
+#set($sessionData = $viewMethods.getSessionData())
+#set($import_type = $sessionData.getCustomString("import_type"))
+#if($sessionData.hasTable())
+  #set($sessionTable = $sessionData.getTable())
+  #set($primaryKey = $sessionTable.getPrimaryKey())
+  #set($primaryKeyInternalName = $primaryKey.getInternalFieldName())
+#end
+#if(!$top_level_xml_element_set)<request>#end
+  #set($app_action_caption="Import Details")
+  <backTemplate>gui/import/1_update_or_insert</backTemplate>
+  #parse('gui/customisations/wizard_result.vm') 
+  <htmlContent><![CDATA[
+<form method="post" enctype="multipart/form-data" action="AppController.servlet" target="import_results">
+<input type="hidden" name="csv_import" value="true" />
+<input type="hidden" name="return" value="gui/import/after_import" />
+<input type="hidden" name="import_type" value="$import_type" />
+#if($import_type == "insert")
+  <input type="hidden" name="generate_row_ids" value="true" />
+#end
+<table id="reportData">
+#set($rowClass="rowa")
+<tr class="$rowClass">
+  <td>File to import</td>
+  <td><input type="file" name="importfile"></td>
+</tr>
+#if(!$sessionData.hasTable())
+#if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
+<tr class="$rowClass">
+  <td>Table to import into</td>
+  <td>
+    <select name="internaltablename">
+    #foreach($table in $viewMethods.getTablesAllowedTo("VIEW_TABLE_DATA")) <option value="$table.getInternalTableName">$table</option> #end
+    </select>
+  </td>
+</tr>
+#end
+#if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
+<tr class="$rowClass">
+  <td>Header lines</td>
+  <td>Skip the first <input size="3" name="num_header_lines" value="1"> lines of the import file</td>
+</tr>
+#if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
+<tr class="$rowClass">
+  <td>Field separator</td>
+  </td>
+  <td>
+    <select name="separator">
+      <option value=",">comma</option>
+      <option value="\t">tab</option>
+      <option value="\$">dollar sign</option>
+    </select>
+  </td>
+</tr>
+#if($import_type == "update")
+#if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
+<tr class="$rowClass">
+  <td>Select a unique key to identify each record</td>
+  <td>
+    <input type="radio" name="record_identifier" id="$primaryKeyInternalName" value="$primaryKeyInternalName" checked /><label for="$primaryKeyInternalName">Use internal portalBase Row IDs.</label> Recommended if you are re-importing updated data from a previous export. The first column in your import spreadsheet must be the portalBase Row ID<br>
+	#foreach($field in $sessionTable.getFields())
+	  #if($field.getUnique() && (!$field.equals($primaryKey)))
+	    #set($internalFieldName = $field.getInternalFieldName())
+        <input type="radio" name="record_identifier" id="$internalFieldName" value="$internalFieldName" /><label for="$field.getInternalFieldName">$field</label><br>
+      #end
+    #end
+  </td>
+</tr>
+#end
+#if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
+<tr class="$rowClass">
+  <td>Import file contains relation display values</td>
+  <td><input type="checkbox" name="use_relation_display_values" value="true" checked> Check if the import file contains display values for relation fields, uncheck if it contains internal values</td>
+</tr>
+#foreach($field in $sessionTable.getFields())
+  #set($sequenceFieldNames = "")
+  #if(($field.getClass().getSimpleName() == "SequenceFieldDefn") && (! $field.equals($sessionTable.getPrimaryKey())))
+	#set($sequenceFieldNames = "$sequenceFieldNames $field")
+	#set($importSequenceFields = true)
+  #end 
+#end
+#if($importSequenceFields)
+#if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
+<tr class="$rowClass">
+  <td>Import values for sequence fields</td>
+  <td><input type="checkbox" name="import_sequence_values" value="true">Check if the import file contains values for sequence field(s) $sequenceFieldNames, uncheck if you want these values to be automatically generated</td>
+</tr>
+#end
+#foreach($field in $sessionTable.getFields())
+  #if($field.getFieldCategory() == "RELATION")
+    #set($relationsFound = true)
+  #end
+#end
+#if($relationsFound)
+  #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
+  <tr class="$rowClass">
+    <td>Best guess relations</td>
+    <td><input type="checkbox" name="best_guess_relations" value="true">It's normally required that import values for relation fields match those the database exactly. This option causes portalBase to look for a close match</td>
+  </tr>
+#end
+
+</table>
+<p>
+<input type="submit" name="submit" value="Import" />
+</form>
+<p>
+<iframe width="100%" height="250px" name="import_results" frameborder="0" scrolling="auto" marginwidth="10px">
+</iframe>
+	]]>
+  </htmlContent>
+  <caption>$app_action_caption</caption>  
+#if(!$top_level_xml_element_set)</request>#end

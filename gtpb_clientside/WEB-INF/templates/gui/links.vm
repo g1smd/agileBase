@@ -1,0 +1,29 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($session_report = $viewMethods.getSessionData().getReport())##
+#set($session_table = $viewMethods.getSessionData().getTable())##
+#set($session_table_id = $session_table.getInternalTableName())##
+#set($session_report_id = $session_report.getInternalReportName())##
+#set($session_row_id = $viewMethods.getSessionData().getRowId())##
+#set($company = $viewMethods.getLoggedInUser().getCompany())##
+#set($report_url = "${viewTools.getAppUrl()}?return=gui/display_application&set_report=$session_report_id&set_row_id=$session_row_id")##
+#set($report_url_escaped = $viewTools.escapeForURL($report_url))##
+#set($report_name = $session_report.getReportName())##
+#set($body=$viewTools.escapeForURL("This is a link to a record in the $company portalBase report $session_report.getModule() - $report_name:\n\n"))##
+#set($body="$body$report_url_escaped")##
+mailto:?subject=Link%20to%3A%20$viewTools.escapeForURL("$session_report.getModule() - $report_name")&body=$body

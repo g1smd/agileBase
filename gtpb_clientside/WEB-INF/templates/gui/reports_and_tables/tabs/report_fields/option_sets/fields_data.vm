@@ -1,0 +1,231 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## edit the fields in a report
+#set($sessionContext = $sessionData.getContext().toString())
+
+<style>
+	  @import url("styles/report.css");
+	
+	  div#fieldOptionsSet { 
+	    display:none 
+	  }
+	  div#fieldOptionsSet[selected] { 
+	    display:block 
+	  }
+	  form { 
+	    height:100% 
+	  }
+	
+	  tr#addNewField td { 
+	    vertical-align:top;
+		font-size:8pt;
+		border-top:1px solid orange 
+	  }
+						
+	  optgroup { 
+	    font-style:normal;
+		margin-top:5px; 
+		color:#333333 
+	  }
+</style>
+
+<script language=javascript>
+	  function fArrayContains(aArray, vTest){
+	    	for (var i=0;i<aArray.length;i++)
+			    if (aArray[i]==vTest) return true;
+		    return false;
+	  }
+</script>
+
+<form action="AppController.servlet" target="pane_2" method=post id=newfield>
+
+  ##defined in ../../report_fields.vm
+  ##set($report = $viewMethods.getSessionData().getReport())
+  #set($sorts = $report.getSorts())
+  <table id=reportData cellspacing="0" class="draggable">
+	    <thead>
+		      <tr>
+			        <th class="leading">&nbsp;</th>
+			        <th>Source</th>
+			        <th>Field</th>
+			        <th>Sort</th>
+			        <th class="trailing">&nbsp;</th>
+		      </tr>
+	    </thead>
+	    <tbody>
+	      #set($reportFields = $report.getReportFields())
+	      #set($numReportFields = $reportFields.size())
+		      #foreach ($field in $reportFields)
+		        #set($baseField = $field.getBaseField())
+			        <tr #if($velocityCount%2!=0) class="rowa" #else class="rowb" #end id="$field.getBaseField().getInternalFieldName()" currentFieldIndex="$field.getFieldIndex()">
+        			  <td class="leading">&nbsp;</td>
+    			      <td>
+					            ##Source = the table or report that the field was taken from
+					            #if($field.getClass().getSimpleName().equals("ReportCalcFieldDefn"))
+					              #if($field.getReportFieldIsFrom().equals($report))
+					                #set($calcDbType = $field.getDbType())
+                     calculation ($calcDbType.getDescription())<br>
+					                <small>$field.getCalculationDefinition()</small>
+					              #else
+					                calculation in report: $field.getReportFieldIsFrom().getReportName()
+					              #end
+					            #elseif($field.isFieldFromReport())
+						              report: $field.getReportFieldIsFrom().getReportName()
+					            #else
+						              $baseField.getTableContainingField().getTableName()
+					            #end
+			          </td>
+			          ##Field name with move up and down links
+			          #set($currentFieldIndex = $field.getFieldIndex())
+			          #set($lowerFieldIndex = $currentFieldIndex - 1)
+			          #set($higherFieldIndex = $currentFieldIndex + 1)
+          <td class="capitalised">
+##            #if($currentFieldIndex == 1) &nbsp; #end
+##            #if($currentFieldIndex > 1)
+##              <a #if(!$mobile_device) target="pane_2" #end href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_field_index&internalfieldname=$field.getBaseField().getInternalFieldName()&newfieldindex=$lowerFieldIndex">&uarr;</a>
+##            #else &nbsp;
+##            #end
+##            #if($currentFieldIndex == ($numReportFields - 1)) &nbsp; #end
+##            #if(($currentFieldIndex < ($numReportFields - 1)) && ($currentFieldIndex > 0))
+##            #else &nbsp;
+##              <a #if(!$mobile_device) target="pane_2" #end href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_field_index&internalfieldname=$field.getBaseField().getInternalFieldName()&newfieldindex=$higherFieldIndex">&darr;</a>
+##            #end
+            #if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
+				<span class="greytext">$field</span>
+			#else $field
+			#end
+          </td>
+    			      <td>
+					    #set($fieldSorting = "unsorted")
+					    #foreach ($sort in $sorts)
+						   #if($sort.getSortReportField().equals($field))
+						     ##If sorted in ascending order
+						     #if($sort.getSortDirection())
+						       #set($fieldSorting = "ascending")
+							 #else
+							   #set($fieldSorting = "descending")
+							 #end	
+						   #end
+					    #end
+    			        ## only show sorts for non-ID fields
+    			        #if((!$baseField.equals($baseField.getTableContainingField().getPrimaryKey())) || ($fieldSorting!="unsorted"))
+					            ##Provide a SELECT box to show/change the sorting
+					            #set($selectId = "sortdirection${field.getInternalFieldName()}")
+					            <select id="$selectId" name="$selectId" onChange="new fChange(this); parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';"
+					                    class="small" gtpb_set_report_field_sorting=true gtpb_internalfieldname="$field.getInternalFieldName()">
+					              <option #if ($fieldSorting=="unsorted") selected="selected" #end>unsorted</option>
+					              <option #if ($fieldSorting=="ascending") selected="selected" #end>ascending</option>
+					              <option #if ($fieldSorting=="descending") selected="selected" #end>descending</option>
+					            </select>
+					          #end ## end if not primary key
+          </td>
+        		  <td class="trailing">
+        		  #if(!($field.getBaseField().equals($report.getParentTable().getPrimaryKey())))
+				          <input type="button" value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_field_from_report=true gtpb_internalfieldname="$field.getBaseField().getInternalFieldName()">
+			         #end
+			         </td>
+			        </tr>
+			      #end ##end loop through report fields
+		      <tr class="trailing nodrag nodrop"> <!-- a padding row -->
+			        <td class="leading">&nbsp;</td>
+			        <td>&nbsp;</td>
+			        <td>&nbsp;</td>
+			        <td>&nbsp;</td>
+			        <td class="trailing">&nbsp;</td>
+		      </tr>
+      ## Defined outside in ../../report_fields.vm
+      ##set($joinReferencedTables = $report.getJoinReferencedTables())
+      ##set($joinedTables = $report.getJoinedTables())
+      ##set($joinedReports = $report.getJoinedReports())
+		      <input type="hidden" name="return" value="gui/reports_and_tables/report_data" />
+		      <input type="hidden" name="add_field_to_report" value="true">
+		      <tr id="addNewField" class="nodrag nodrop">
+			        <td class="leading" height="20">&nbsp;</td>
+			        <td height="20">
+			          <select name="internalreportname">
+  				          #foreach($table in $joinReferencedTables)
+  				            #set($tableReports = $table.getReports())
+    	          <optgroup label="$table.getTableName()">
+    	            #if($joinedTables.contains($table))
+      	            ## send default report in place of actual table (server will use table if default report)
+	                  <option value="$table.getDefaultReport().getInternalReportName()" #if($table.equals($report.getParentTable()))selected#end>
+	                    $table.getTableName()
+	                  </option>
+	                #end
+			  	              #foreach($tableReport in $tableReports)
+			  	                #if (($joinedReports.contains($tableReport)) && (! $table.getDefaultReport().equals($tableReport)) && (! $report.equals($tableReport)))
+  			  		                <option value="$tableReport.getInternalReportName()">
+  			  		                  $tableReport.getReportName()
+  			  		                </option>
+  			  		              #end
+			  	              #end
+			  	            </optgroup>
+				            #end
+			          </select>
+			        </td>
+			        <td height="20">
+			          ##The actual field
+			          <select name="internalfieldname" parent="internalreportname" return="xmlreturn_reportfields" parentType="report">
+             </select>
+			        </td>
+				      ##Sort direction
+				        <td>
+					          <select name="sortdirection">
+						            <option selected value="unsorted">unsorted</option>
+						            <option value="ascending">ascending</option>
+						            <option value="descending">descending</option>
+					          </select>
+				        </td>
+				        <td height="20" class="trailing">
+					          <input type="submit" value="add field">
+				        </td>
+			      </tr>
+		    </tbody>
+	  </table>
+</form>
+<script language="JavaScript">
+$('.draggable').tableDnD({
+  scrollAmount: 5,
+  onDragClass: "draggingRow",
+  onDrop: function(table, row) {
+    var jqTable = $(table);
+	var jqRow = $(row);
+    jqTable.find('tr:even').removeClass('rowa').addClass('rowb');
+    jqTable.find('tr:odd').removeClass('rowb').addClass('rowa');
+	// find the new position of the dropped row
+	var internalFieldName = jqRow.attr('id');
+	var originalFieldIndex = jqRow.attr('currentFieldIndex');
+	var rows = table.tBodies[0].rows;
+	var newPosition = 0;
+	for (var i=0; i<rows.length; i++) {
+	  if(rows[i].id == internalFieldName) {
+	    if (i != originalFieldIndex) {
+		  var url="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_field_index&internalfieldname=";
+		  url += internalFieldName;
+		  url += "&newfieldindex=";
+		  url += i;
+		  parent.pane_2.document.location=url;
+		}
+		break;
+	  }
+	}
+  }
+});
+</script>
+
+<script language=javascript src="resources/wait/interdependent_fields.js"></script>

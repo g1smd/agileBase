@@ -1,0 +1,78 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+$viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
+## edit the data in the session table
+    <!-- script to generate tooltip text describing global edit -->
+    <SCRIPT language=Javascript>
+      function fGetTooltipText() {
+        var tooltipText= 'Click \'Update Globally\' to apply a value to all records displayed in pane 2.<br/>';
+        tooltipText = tooltipText + 'You can filter records in Pane 2 to reduce the number of records affected or show \'more\' to increase the number of records affected.';
+        return tooltipText;
+      }
+    </SCRIPT>
+#set($tabCaption='global edit')
+#set($rowCount = 0)
+#set($sessionTable=$viewMethods.getSessionData().getTable())
+#set($sessionRowId=$viewMethods.getSessionData().getRowId())
+#if($sessionRowId == -1)
+	  Select a record to edit data
+#else
+  ## show the interface to edit the record
+	  <table cellspacing="0" cellpadding="0" border="0" id="reportData">
+		    <thead>
+			      <tr>
+			##        <th class="leading">&nbsp;</th>			
+			        <th class="leading"><img src="resources/icons/help.png" onmouseover="return escape(fGetTooltipText())"></th>
+			        <th>field</th>
+			        <th>value</th>
+			        <th class="trailing">&nbsp;</th>
+			      </tr>
+		    </thead>
+		    #set($tableDataRow=$viewMethods.getTableDataRow())
+		    #if ($tableDataRow.size() == 0)
+		      Please select a record to edit, or press the 'New' button in the toolbar to create one
+		    #else
+		      #set($viewOnly=false) ## $viewOnly used by resources/input/input.vm
+		      #set($globalEdit=true) ## $globalEdit used by resources/input/* to determine whether to show values
+		      #set($fields = $sessionTable.getFields())
+			      #foreach($field in $fields)
+				        #if($field.getHidden() == false)
+          #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+				        #end
+			      #end ## end loop through fields
+			      #if($viewMethods.isWikiIntegrated())
+			        #parse("gui/reports_and_tables/tabs/wiki.vm")  
+			      					  <tr class="trailing">
+			          <td>&nbsp;</td>
+			          <td colspan="2">&nbsp;</td>
+			          <td>&nbsp;</td>
+		        </tr> 
+		      #else
+		    			    <tr class="trailing">
+			          <td>&nbsp;</td>
+			          <td>&nbsp;</td>
+			          <td>&nbsp;</td>
+			          <td>&nbsp;</td>
+		        </tr> 
+					      #end
+		    #end 
+	  </table>
+#end ## end of if session row_id is set
+<!-- javascript for multi-line filter tooltips -->
+ <script language="JavaScript" type="text/javascript" src="resources/wz_tooltip.js"></script>
+$viewTools.stopTimer("gui/reports_and_tables/tabs/global_edit")

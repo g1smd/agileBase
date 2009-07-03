@@ -1,0 +1,249 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## Link record to a wiki page
+<style>
+  thead[wikiExists=false] div.wikiControl,
+  thead[wikiExists=false] tr.wikiTitle,
+  td[wikiExists=false] div#editWikiEntry,
+  td[wikiExists=true] div#createWikiEntry {
+    display:none;
+  }
+  /* think about this carefully, it's confusing...! */
+  td[wikiExists=true] div#editWikiEntry,
+  td[wikiExists=false] div#createWikiEntry {
+    display:auto;
+  }
+  
+
+	  div.wikiControl {
+	    float:right;
+	    width:225px!important;
+	    font-size:8pt;
+	    white-space:nowrap;
+	    font-weight:normal;
+	  }
+	  
+	  tr.wikiTitle div {
+	    float: left; 
+	    margin-right: 20px; 
+	    padding-top: 5px; 
+	    font-weight: bold;
+	  }
+	  
+	  tr.wikiTitle button {
+	    padding:2px;
+	  }
+</style>
+
+<tr class="rowa">
+			  <td class="leading">&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class="trailing">&nbsp;</td>
+			</tr>
+			
+			#set($wikiTitle=$tableDataRow.get($sessionTable.getFieldByName('Wiki page [Auto]')))
+			#set($wikiSnippet = $viewMethods.getWikiPageSnippet($wikiTitle.toString(), 300))
+						<thead id="wikiHead" #if($wikiTitle.isNull())wikiExists="false"#else wikiExists="true"#end>
+			  <tr>
+			    <th class="leading">&nbsp;</th>			
+			    <th colspan="2">
+			      #if($tabCaption=="edit")
+			      <div class="wikiControl">
+			        <a href="javascript:alert('functionality coming soon!')">start a new record</a>
+			        |
+			        <a href="javascript:alert('functionality coming soon!')">link to another record</a>
+			      </div>
+			      #end
+			      wiki notes
+			    </th>
+			    <th class="trailing">&nbsp;</th>
+			  </tr>
+			  
+			  <tr class="wikiTitle">
+			    <td class="leading">&nbsp;</td>
+			    <td colspan="2">
+			      <div id="_wikiCaption">
+	        #if($wikiTitle.isNull())$wikiTitle
+	        #else [untitled]
+	        #end
+	      </div>
+			      #if($tabCaption=="edit")	      
+			      <button name="_edit_wiki_page">
+			        edit
+			        <img src="resources/reports/edit.png" align="absmiddle">
+			      </button>
+			      #end
+			    </td>
+			    <td class="trailing">&nbsp;</td>
+			  </tr>
+		</thead>		        
+			<tr class="rowa">
+						  <td class="leading">&nbsp;</td>
+						  <td colspan="2" #if($wikiTitle.isNull())wikiExists="false"#else wikiExists="true"#end>
+			      #if($tabCaption=="edit")	      
+					    <script language="Javascript">
+					      oWikiWindow=null;
+					      
+					      function fCheckWikiWindow() {
+					        if(!oWikiWindow) return;
+					        if(!oWikiWindow.closed) window.setTimeout('fCheckWikiWindow()',500);
+					        else fUpdateWikiSnippet();
+					      }
+					    </script>
+					    <div id="createWikiEntry">
+						      <p style="margin-top:20px">
+						        There is no page linked to this record...<br />
+						        <i><span class="greytext">
+						          With a wiki page you can create a long block of text for this record, 
+						          including links to other pages
+						        </span></i>						              
+						      </p>
+						      <p>
+						        <input />
+						        <!-- <big style="padding:0 40px 0 40px">or</big> -->
+						        <button name="_link_wiki_page" isWiki="true">
+						          link to an existing page
+						        </button>
+						        <script language="JavaScript" src="resources/picker.js"></script>
+						        <script language="Javascript">
+						          function fInitialise() {
+						            function fDoInitialise(oBox){
+						              function fButton() {
+						                var oButton=document.createElement('BUTTON');
+						                oButton.innerHTML='Create a new page';
+						                ##oButton.addEventListener('click',oBox.createPage,false);
+						                ##oButton.addEventListener('click',oBox.setWikiTitleInDb,false);
+										$(obutton).click(function() {
+										  oBox.createPage();
+										  oBox.setWikiTitleInDb();
+										});
+						                oButton.wikiNameBox=oBox;
+						                return oButton;
+						              }
+						              
+						              function fSetUpdateWatch() {
+						                function fSetWatch(oElement, oWikiCaption) {
+						                  function fUpdateWikiName() {
+						                    // would be good to check that the return trip from the server completed successfully
+						                    if(oBox.getAttribute('manualChange')=='true') return;
+						                    oBox.value='$viewTools.rinseString($sessionTable.getTableName())' + ' ' + this.value;
+						                    oWikiCaption.innerHTML=this.value;
+						                  }
+						                  var oWikiCaption=oWikiCaption;
+						                  oBox.value='$viewTools.rinseString($sessionTable.getTableName())' + ' ' + oElement.value;
+						                  ##oElement.addEventListener('keyup',fUpdateWikiName,false);
+						                  $(oElement).keyup(fUpdateWikiName);
+						                }
+						                
+						                var oWikiCaption=document.getElementById('_wikiCaption')
+						                var aInputs=document.getElementsByTagName('INPUT');
+						                for(var i=0;i<aInputs.length;i++) {
+						                  if(aInputs[i].getAttribute('gtpbBasicTextField')=='true') {
+						                    fSetWatch(aInputs[i], oWikiCaption);
+						                    return aInputs[i];
+						                  }
+						                }
+						                return null;
+						              }
+						              
+						              function fSetWikiTitleInDb() {
+						                new fChange(oBox);
+						                oBox.setAttribute('manualChange','true');
+						              }
+						              
+						              function fEditCreatePage() {
+						                // this string will need to be cleaned...!
+						                oBox.setAttribute('disabled','true');
+						                oBox.oCreateButton.setAttribute('disabled','true');
+						                ##oWikiWindow=window.open('../jamwiki/$viewTools.cleanString($viewMethods.getLoggedInUser().getCompany().getCompanyName().toLowerCase())/Special:Edit?topic='+oBox.value,'gtpb_record_wiki');
+						                oWikiWindow=window.open('?return=/gui/resources/wiki/edit_wiki_page&set_custom_string=1&stringkey=wikipagename&customstringvalue='+oBox.value,'gtpb_record_wiki');
+						                oWikiWindow.focus();
+						                setTimeout('fCheckWikiWindow()',500);
+						              }
+						              
+						              function fMarkAsChanged() {
+						                this.setAttribute('manualChange','true');
+						              }
+						              
+						              ##oBox.addEventListener('keyup',fMarkAsChanged,false);
+						              $(oBox).keyup(fMarkAsChanged);
+						              oBox.setAttribute('type','text');
+						              oBox.setAttribute('value','$wikiTitle');
+						              oBox.setAttribute('name','$sessionTable.getFieldByName('Wiki page [Auto]').getInternalFieldName()');
+						              oBox.setAttribute('style','width:300px');
+						              oBox.setAttribute('gtpb_update_record','true');
+						              // we don't want the XML handler to change the disabled state of the box
+						              oBox.setAttribute('busyAttribute','busy');
+						              oBox.createPage=fEditCreatePage;
+						              oBox.setWikiTitleInDb=fSetWikiTitleInDb;
+						              oBox.editPage=fEditCreatePage;
+						              oBox.oCreateButton=fButton();
+						              oBox.oEditButton=document.getElementsByName('_edit_wiki_page')[document.getElementsByName('_edit_wiki_page').length-1];
+						              oBox.oEditButton.oBox=oBox;
+						              ##oBox.oEditButton.addEventListener('click',oBox.editPage,false);
+						              $(oBox.oEditButton).click(oBox.editPage);
+						              #if($wikiTitle.isNull())
+						                oBox.watchedElement=fSetUpdateWatch();
+						              #end
+						              oBox.oLinkButton = document.getElementsByName('_link_wiki_page')[document.getElementsByName('_link_wiki_page').length-1];
+																				oBox.oLinkButton.addEventListener('click',fPicker,false);
+						              oBox.oLinkButton.formEl = oBox;
+						              oBox.parentNode.appendChild(oBox.oCreateButton);
+						            }
+						            
+						            fDoInitialise(this)
+						          }
+						        
+						          // find the input just created
+						          var oWikiNameBox=document.getElementsByTagName('INPUT')[document.getElementsByTagName('INPUT').length-1]
+						          
+						          // should test that this has been found OK
+						          oWikiNameBox.initialise=fInitialise;
+						          oWikiNameBox.initialise();
+						          
+						        
+						        </script>
+
+						      </p>
+						    </div>
+						    #end ## end if in edit tab      
+						    <div id="editWikiEntry">
+						      <script language="Javascript">
+						        function fUpdateWikiSnippet() {
+						          function fUpdateSnippetContent(sText,sXML){
+						            if (!sText || sText=='') return;
+						            var oSnippetDiv=document.getElementById('editWikiEntry');
+						            oSnippetDiv.innerHTML=sText;
+						            document.getElementById('wikiHead').setAttribute('wikiExists','true');
+						            oSnippetDiv.parentNode.setAttribute('wikiExists','true');
+						          }
+						          
+						          var aPostVars=new Array();
+          aPostVars['return']='gui/reports_and_tables/tabs/wikiSnippet';
+          var oReq=new fRequest('AppController.servlet',aPostVars,fUpdateSnippetContent,0);
+						        }
+						      </script>
+												      $wikiSnippet 
+												      #if($tabCaption=="view")
+												        ##<a href="../jamwiki/$viewTools.cleanString($viewMethods.getLoggedInUser().getCompany().getCompanyName().toLowerCase())/$wikiTitle" target="_blank"> more...</a> 
+												        <a href="?return=/gui/resources/wiki/view_wiki_page&set_custom_string=1&stringkey=wikipagename&customstringvalue=$wikiTitle" target="_blank"> more...</a> 
+												      #else     
+												         ...
+												      #end
+						    </div>
+						  </td>
+						  <td class="trailing">&nbsp;</td>
+					</tr>

@@ -1,0 +1,68 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## Used by view.vm and edit.vm
+## $tableDataRow and $field must be defined by them
+#if (! $field.getTableContainingField().getPrimaryKey().equals($field)) ## remove to show primary key field
+  #if($address.size() > 0)
+	#if($address.firstKey().equals($field)) #set($partOfAddress = true) #end
+    #if($partOfAddress && $address.firstKey().equals($field))
+	  #set($firstLineOfAddress = true)
+	#else
+	  #set($firstLineOfAddress = false)
+	#end
+  #end
+  #if($partOfAddress)
+	#if($firstLineOfAddress)
+		#set($rowCount = $rowCount + 1)
+		<tr #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
+			<td class=leading>&nbsp;</td>
+            <td class="capitalised">Address</td>
+			<td><table border="0"><tr><td width="100px" style="border-right:0"><div id="map" style="width:100px;height:100px"></div>
+			</td><td style="border-right:0">
+    #end
+	#parse('gui/resources/input/input.vm')<br>
+	#if($address.lastKey().equals($field))
+		<script langauge="JavaScript">
+		  loadMap("$tableDataRow.get($field).toString()");
+		</script>
+		    #set($partOfAddress = false)
+			</td></tr></table>
+			</td>
+			<td class=trailing>&nbsp;</td>
+		</tr>
+	#end
+  #else
+	#set($fieldCategory = $field.getFieldCategory())
+					#set($rowCount = $rowCount + 1)
+					<tr #if($fieldCategory =='SEPARATOR') #set($rowCount=0) class="separator" #elseif($rowCount%2!=0) class="rowb" #else class="rowa" #end>
+						<td class=leading>&nbsp;</td>
+<!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
+<td class="capitalised printoutfieldnamecolumn">
+#if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+<span class="fieldname">$field.getSimplifiedFieldName()</span>
+#else
+<span class="fieldname">$field</span>
+#end
+#if($fieldCategory !='SEPARATOR')<br>#end
+<i><span class="greytext">$field.getFieldDescription()</span></i>
+</td>
+<td>#if($fieldCategory !='SEPARATOR') #parse('gui/resources/input/input.vm') #end</td>
+<td class=trailing>&nbsp;</td>
+</tr>
+#end ## if partOfAddress
+#end ## remove to show primary key field

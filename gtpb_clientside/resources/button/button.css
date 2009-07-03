@@ -1,0 +1,23 @@
+button.gtpb {
+  border:0;
+  width:68px; /* formerly 70px */
+  height:55px;
+  text-decoration:none;
+  text-align:center;
+  color:black;
+  font-size:8pt;
+  background-color:#f1f2ed;
+}
+	 
+button.gtpb img { border:0; }
+
+button.gtpb:hover { background:transparent url(button_bg_over.png) no-repeat center center }		 
+button.gtpb:active { background-image:url(button_bg_down.png) }
+button.gtpb.selected { background:transparent url(button_bg_down.png) no-repeat center center }
+
+button.gtpb[disabled],
+button.gtpb[disabled]:hover,
+button.gtpb[disabled]:active,
+button.gtpb[disabled].selected { background:#f1f2ed; color:#aaaaaa }
+
+button.gtpb[disabled] img { -moz-opacity:0.2 }

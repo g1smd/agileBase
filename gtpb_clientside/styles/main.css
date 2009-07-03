@@ -1,0 +1,36 @@
+html, body { height:100% }
+
+body { font-family:"MS Sans Serif",arial, sans_serif; font-size:10pt; margin:0px; padding:0px; behavior:url(scripts/body_behaviors.htc) }
+h1, h2, h3, big { font-family: "Trebuchet MS",arial, sans_serif; font-weight:normal }
+h2 { font-size:16pt }
+form { margin:0; padding:0px }
+td { font-size:9pt; padding-right:10px; vertical-align:top }
+th { text-align:left; font-size:10pt; padding-bottom:5px }
+
+div#wrapper { width:100%; height:100% }
+div#wrapper div#header { top:0; overflow:hidden; position:absolute; width:100%  }
+div#display_data { width:100%; height:100%; overflow-y:scroll }
+
+/* used by learner summary & wizards */
+div#header big { font-size:16pt; color:#ffffff }
+div#header small { color:#dddddd; font-weight:bold }
+
+table.data { width:100% }
+table.data tr.rowa td, table.data tr.rowb td { padding:5px }
+table.data tr.rowa td small { color:#ffffff }
+table.data tr.rowb td { background-color:#f1f2ed }
+table.data tr.rowb td small { color:#f1f2ed }
+
+table.data small { font-size:8pt; color:#cccccc }
+
+input.datePicker { width:60px!important }
+
+#errormessage {
+		-webkit-border-radius: 1em;
+		-moz-border-radius: 1em;
+		border: 2px solid #ff0000;
+		text-align: center;
+		background: rgb(233,204,201);
+		margin: 10px;
+}
+

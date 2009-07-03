@@ -1,0 +1,100 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<html>
+<head>
+<style>
+@import url("styles/report.css");
+	
+		html, body { font-family: "Arial", sans-serif; 
+    			 color: black; 
+    			 font-size: 11pt; 
+    			 margin:0; 
+    			 padding:0;
+    			 height:100% }
+</style>
+<title>portalBase data import</title>
+#parse("gui/display_error.vm")
+</head>
+<body>
+#set($sessionData = $viewMethods.getSessionData())
+#if($sessionData.hasTable())
+#set($sessionTable = $sessionData.getTable())
+<h2>Import to '$sessionTable'</h2>
+#end
+<form method="post" enctype="multipart/form-data" action="AppController.servlet">
+<input type="hidden" name="csv_import" value="true" />
+<input type="hidden" name="return" value="gui/after_import_csv" />
+<table id="reportData">
+<tr class="rowa">
+  <td>File to import</td>
+  <td><input type="file" name="importfile"></td>
+</tr>
+#if(!$sessionData.hasTable())
+<tr class="rowa">
+  <td>Table to import into</td>
+  <td>
+    <select name="internaltablename">
+    #foreach($table in $viewMethods.getTablesAllowedTo("VIEW_TABLE_DATA")) <option value="$table.getInternalTableName">$table</option> #end
+    </select>
+  </td>
+</tr>
+#end
+<tr class="rowb">
+  <td>Header lines</td>
+  <td>Skip the first <input size="3" name="num_header_lines" value="1"> lines of the import file</td>
+</tr>
+<tr class="rowb">
+  <td>Field separator</td>
+  </td>
+  <td>
+    <select name="separator">
+      <option value=",">comma</option>
+      <option value="\t">tab</option>
+      <option value="\$">dollar sign</option>
+    </select>
+  </td>
+</tr>
+<tr class="rowb">
+  <td>Generate row IDs</td>
+  <td><input type="checkbox" name="generate_row_ids" value="true" checked> If checked, generate IDs for each record, otherwise use the first column in the import file as an ID</td>
+</tr>
+<tr class="rowb">
+  <td>Import file contains relation display values</td>
+  <td><input type="checkbox" name="use_relation_display_values" value="true" checked> Check if the import file contains display values for relation fields, uncheck if it contains internal values</td>
+</tr>
+#foreach($field in $sessionTable.getFields())
+  #if(($field.getClass().getSimpleName() == "SequenceFieldDefn") && (! $field.equals($sessionTable.getPrimaryKey())))
+	#set($importSequenceFields = true)
+  #end 
+#end
+#if($importSequenceFields)
+<tr class="rowa">
+  <td>Import values for sequence fields</td>
+  <td><input type="checkbox" name="import_sequence_values" value="true">Check if the import file contains values for sequence fields, uncheck if you want these values to be automatically generated</td>
+</tr>
+<tr class="rowb">
+#else
+<tr class="rowa">
+#end
+  <td>&nbsp;</td>
+  <td><input type="submit" value="Import" /></td>
+</tr>
+</table>
+</form>
+</body>
+</html>

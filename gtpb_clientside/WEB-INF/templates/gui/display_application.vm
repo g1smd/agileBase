@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+#set($sessionData = $viewMethods.getSessionData())
+<html>
+  <head>
+  <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+    <title>
+      #set($company_name=$viewMethods.getLoggedInUser().getCompany().getCompanyName())
+      $viewMethods.getApplicationName() $viewMethods.getApplicationVersion() - $company_name
+    </title>
+   	  <script src="resources/jquery.js" language="Javascript"></script>
+	  <script type="text/javascript" src="resources/fauxconsole.js"></script>	
+      <script language=JavaScript src="resources/logger.js"></script>
+      <script language=JavaScript src="resources/wait/request.js"></script>
+      <script language=JavaScript src="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.js"></script>      
+      <script language=JavaScript src="resources/modalFramework/modalFramework.js"></script>
+      <script language=JavaScript src="resources/wait/editData.js"></script>
+      <SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
+      <script language=JavaScript src="resources/wait/setFilter.js"></script>
+      <script language=JavaScript src="resources/wait/editBuffer.js"></script>
+      <script language="JavaScript" type="text/javascript">
+	        function fSummaryPaneReady() {				 
+	          // return the status of the summary pane by examining its readystate
+						          with (oViewPane){  
+						            		if (document.readyState != 'complete') return false;
+  					          			if (detail_pane.document.readyState != 'complete') return false;
+  						        }
+  						        return true;
+        	}
+        	
+        	function fNew() {  
+        	  document.getElementById('oViewPane').contentWindow.pane_2.fNew();
+        	} 
+        	
+        	function fClone() 	{  
+        	  document.getElementById('oViewPane').contentWindow.pane_2.fClone();
+        	} 
+
+        	function fDelete() 	{  
+        	  document.getElementById('oViewPane').contentWindow.pane_2.fDelete();
+        	}
+        	
+        	function fImport() {  
+        	  document.getElementById('oViewPane').contentWindow.pane_2.fImport();
+        	}
+
+        	function fExport() {  
+        	  document.getElementById('oViewPane').contentWindow.pane_2.fExport();
+        	}
+        	
+        	function fLinks() {  
+        	  document.getElementById('oViewPane').contentWindow.pane_2.fLinks();
+        	}
+        	
+        	function fPrint() {
+              var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/printouts/pane2_printout_wrapper','print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')	
+        	}
+        
+            function fSpawnWindow(sURL,sName,sParams) {
+        	  function fDestroyWin() {
+        	    oNewWin.close();
+        	  }
+        	  
+	          function fDisableApp() {
+	            var oDiv=document.createElement('div');
+	            oDiv.setAttribute('id','_md_blank');
+	            $(oDiv).addClass('window_disable');
+	            
+	            oH1=document.createElement('h1');
+				oH1.appendChild(document.createTextNode('another window is open...'));
+				oDiv.appendChild(oH1);
+	          
+	            document.body.appendChild(oDiv);
+	            return oDiv;	
+	          }
+	        	   
+	          function fEnableApp() {
+	        	// the unload event seems to trigger immediately.  Check that the window's closed so that this is called correctly
+	        	if(!oNewWin.closed) return;
+	        	clearInterval(sInterval);
+	            oBlank.parentNode.removeChild(oBlank);	
+        	  }
+        	  
+        	  var oNewWin=window.open(sURL,sName,sParams);
+        	  oNewWin.focus();
+        	  var oBlank=fDisableApp();
+        	  /*
+        	  if(window.addEventListener) {
+        	    window.addEventListener('unload',fDestroyWin,true);
+        	    oNewWin.addEventListener('unload',fEnableApp,true);
+        	  else {
+        	    window.attachEvent('onunload',fDestroyWin);
+        	    oNewWin.attachEvent('onunload',fEnableApp);
+        	  }
+        	  */
+        	  
+        	  $(window).unload(fDestroyWin);
+        	  $(oNewWin).unload(fEnableApp);
+
+        	  var sInterval=setInterval(fEnableApp,2000); // if the print window is refreshed, it won't re-enable the app.  Use the timeout to check that the window is still open
+        	  return oNewWin;
+        	}
+        	  	
+        window.spawnWindow=fSpawnWindow;
+        		
+      </script> 
+      <style>
+		@import url('resources/fauxconsole.css');
+        @import url('resources/modalFramework/modalFramework.css');
+        @import url('customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css');
+		@import url('resources/display_application.css');
+      </style>
+      
+ 	<!--[if IE 7]>
+    <style>
+		@import url('resources/display_application-ie.css');
+		html {
+		  overflow:auto;
+		}
+    </style>		
+	<![endif]-->
+ 
+    </head>
+	#if ($viewTools.isRunningLocally())
+		<body class="localhost">
+	#else
+		<body>
+	#end	
+    	      <div id=toolbarDiv>
+			        <div class=buttonGroup> ## record actions
+			          #parse('gui/toolbar/buttons/new.vm')
+			          #parse('gui/toolbar/buttons/clone.vm')
+			          #parse('gui/toolbar/buttons/delete.vm')
+			        </div>
+			        <div class=buttonGroup> ## display preferences
+			          #parse('gui/toolbar/buttons/pane1.vm')
+		          #parse('gui/toolbar/buttons/pane2.vm')
+			          #parse('gui/toolbar/buttons/pane3.vm')
+			        </div>
+			        <div class=buttonGroup> ## pane 2 filter
+			          #parse('gui/toolbar/buttons/filter.vm')
+			        </div>
+			        <div class=buttonGroup> ## mass operations
+			          #parse('gui/toolbar/buttons/print.vm')
+			          #parse('gui/toolbar/buttons/links.vm')
+			          #parse('gui/toolbar/buttons/import.vm')
+			          #parse('gui/toolbar/buttons/export.vm')
+			        </div>
+			        <div class=buttonGroup> ## external applications, built in and customised
+			          ## #parse('gui/toolbar/buttons/calendar.vm')
+			          ## #parse('gui/toolbar/buttons/wiki.vm')
+			          #set($sessionContext = $sessionData.getContext().toString())
+			          #if($sessionContext == "SYSADMIN")
+			            #parse('gui/toolbar/buttons/dev_tools.vm')
+			          #end
+			          #if($viewMethods.usesToolbarPlugin())
+			            #set($toolbarPluginName = $viewMethods.getToolbarPluginName())
+			            #parse("gui/plugins/$toolbarPluginName/toolbar.vm")
+			          #end
+			        </div>
+					<div id="logout">
+						<img style="float:left" src="resources/toolbar/logout_left.png">
+						<span>
+						<a href="AppController.servlet?return=gui/display_application&logout=true" target="_top">logout</a>
+						</span>
+					</div>
+		      </div>
+
+		      <iframe id="oViewPane" name="oViewPane" src="AppController.servlet?return=gui/display_panes" frameborder=no scrolling=yes></iframe>
+    </body>		
+</html>

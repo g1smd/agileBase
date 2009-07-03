@@ -1,0 +1,55 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+
+<html>
+  <head>
+    <style>
+      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+    </style>
+	
+	<!--[if IE 7]>
+    	<style>
+      		#colsWrapper {
+      			margin-top: 69px;
+      		}
+    	</style>		
+	<![endif]-->	
+	
+  </head>
+
+  #if ($viewTools.getBrowser() == "Internet Explorer")
+  <frameset id=colsWrapper cols="250,*" frameborder="yes" framespacing="5" bordercolor="#cccccc">
+	<frame name="pane_1" id="pane_1" scrolling="auto" frameborder="no" src="AppController.servlet?return=gui/pane1">
+	<frameset id=rowsWrapper rows="*,*" frameborder="yes" framespacing="5" bordercolor="#cccccc">
+	  <!-- pane 2 and 3 loads will cascade from pane 1 -->
+	  <frame name="pane_2" id="pane_2" scrolling="auto" frameborder="no" src="AppController.servlet?return=gui/resources/nothing">
+	  <frame name="pane_3" id="pane_3" scrolling="no" frameborder="no" src="AppController.servlet?return=gui/resources/nothing">
+	</frameset>
+  </frameset>
+  #else
+  <frameset id=colsWrapper cols="250,*" border="5" frameborder="yes" framespacing="5">
+	<frame name="pane_1" id="pane_1" frameborder="no" scrolling="auto" src="AppController.servlet?return=gui/pane1">
+	<frameset id=rowsWrapper rows="*,*" border="5" frameborder="yes" framespacing="5">
+	  <!-- pane 2 and 3 loads will cascade from pane 1 -->
+	  <frame name="pane_2" id="pane_2" scrolling="auto" src=""> ##AppController.servlet?return=gui/resources/nothing
+	  <frame name="pane_3" id="pane_3" scrolling="no" src="">
+	</frameset>
+  </frameset>
+  #end
+</html>

@@ -1,0 +1,50 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($sessionData = $viewMethods.getSessionData())
+#set($table = $sessionData.getTable())
+<html>
+<head>
+<title>Anonymise $table data</title>
+</head>
+<body>
+<form method="POST" action="AppController.servlet">
+<input type="hidden" name="return" value="gui/development/dev_tools">
+<input type="hidden" name="anonymise" value="true">
+Please select appropriate content types for each field, or leave data for that field the same<p>
+<table border="0">
+#set($fields = $table.getFields())
+#foreach($field in $fields)
+<tr>
+<td>$field ($field.getFieldCategory())</td>
+<td>
+<select name="$field.getInternalFieldName()">
+<option value="" selected></option>
+<option value="FULL_NAME">Full name</option>
+<option value="PHONE_NUMBER">Phone number</option>
+<option value="EMAIL_ADDRESS">Email address</option>
+<option value="NI_NUMBER">NI number</option>
+<option value="OTHER">Other</option>
+</select>
+</td>
+</tr>
+#end
+</table>
+<input type="Submit" value="Submit">
+</form>
+</body>
+</html>

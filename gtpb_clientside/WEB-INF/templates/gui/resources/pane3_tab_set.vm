@@ -1,0 +1,263 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+#set($sessionData=$viewMethods.getSessionData())
+<html>
+  <head>
+	<script type="text/javascript" src="resources/jquery.js"></script>
+	<script type="text/javascript" src="resources/jquery.bgiframe.js"></script>
+	<script type="text/javascript" src="resources/jquery.autocomplete.js"></script>
+    #parse('gui/display_error.vm')
+ 	#if($mobile_device)
+	<meta name = "viewport" content = "width = device-width">
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
+	<script language=JavaScript src="resources/wait/editData.js"></script>
+	<script language=JavaScript src="resources/wait/editBuffer.js"></script>
+	#end
+ 
+<title>$sessionData.getTable() data</title>
+    <style type="text/css">
+    @import url("styles/report.css");
+    @import url('resources/tabs/tabs.css');	
+    @import url('resources/jquery.autocomplete.css');	
+	
+	## Import required stylesheets
+	#foreach($style in $styles)
+		@import url('$style');
+	#end	
+    	
+    #if($mobile_device)
+	  *[changed] { text-decoration:underline }
+	  *[error] { color:red }
+	  a[error] { font-size:8pt }
+	#end
+    * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+										
+	td.trailing input[type=button] { 
+	  font-size:8pt; 
+	}
+			
+    </style>  
+    <!--[if IE]>
+		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/tabs-ie.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/edit-ie.css" />
+	<![endif]-->
+
+    <script language=Javascript src="resources/wait/request.js"></script> 
+    <SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
+    <script language=Javascript src="resources/wait/setFilter.js"></script>
+  	<script language=Javascript src="resources/wait/editData.js"></script>  
+  	<script language=Javascript> 
+
+  	  // When submitting the newfield form to create a table field
+  	  // disable all input elements not in the addNewField row of the reportData table
+  	  // as they'll be irrelevant to the field creation
+  	  function disableUneccessaryElements() {
+  		  $("tr:not(#addNewField)").find(":input").each(function(i) {
+  			    this.disabled = true;
+  		  });
+  	  }
+
+	</script>
+	  #if(($pane2_id) && (!$mobile_device))
+  	  <script language=Javascript>
+    	  parent.pane_2.fSetRowSelection('$pane2_id');    
+  	  </script>
+	  #end
+
+    <script language="JavaScript" type="text/javascript">
+	## Used by individual tabs
+    	  function fDeleteTabularItem(oObj) {
+    	    	function fParent(oObj,sTag) {
+    	    	  	oObj=oObj.parentNode;
+    			      while(oObj && (oObj.tagName!=sTag))
+    				      oObj=oObj.parentNode;
+    			      return oObj;
+    	    	}
+    		
+        		function fReqComplete(sResponseText,sResponseXML){
+        		  	function fDeleteColumn(iCellIndex,oTable){
+        		  	  	function fDeleteColFromObj(oObj,iCellIndex,iMinRowLength){
+        		  	  	  	var aRows=oObj.rows;
+    					          for (var iRow=0;iRow<aRows.length;iRow++){ 
+    					            aRows[iRow].deleteCell(iCellIndex);
+    					            if(aRows[iRow].cells.length<iMinRowLength)
+    					  	            document.location=document.location.href;
+    					          }
+    				        }
+    				        // many tables have a footer which contains colspans
+    				        // if any of the rows fall below this length, or a cell is
+    			        	// deleted from the footer (i.e. the one containing the span
+    				        // is removed), reload the template and Velocity will display
+    				        // it correctly
+    				        var iMinRowLength=oTable.tFoot.rows[0].cells.length;
+    			        	fDeleteColFromObj(oTable.tHead,iCellIndex,iMinRowLength);
+    		        		fDeleteColFromObj(oTable.tBody,iCellIndex,iMinRowLength);
+    				
+    				        // reduce the length of the longest colspan on each row 
+    				        // in the footer to remove the cell 				        
+    				        var aRows=oTable.tFoot.rows;
+    				        for (var iRow=0;iRow<aRows.length;iRow++){
+    				          	var iMaxColspan=aRows[iRow].cells[0].colspan;
+    					          var oMaxColspan=aRows[iRow].cells[0];
+    					          for (var iCell=1;iCell<aRows[iRow].cells.length;iCell++){
+    					            	if (aRows[iRow].cells[iCell].colspan>iMaxColspan)
+    							              oMaxColspan=aRows[iRow].cells[iCell];
+    					          }
+    					          oMaxColspan.colspan=iMaxColspan-1;
+    				        }
+    				
+    				        var aRows=oTable.rows;
+    				        var iMinRowLength=oTable.tFoot.rows[0].cells.length;
+    				        for (var iRow=0;iRow<aRows.length;iRow++){	    					
+    					          if(aRows[iRow].cells.length<iMinRowLength)
+    					            document.location=document.location.href;
+    		        				}
+    			      }
+    			    		
+    			      function fReformatTable(oContainer){
+    			        var oRows=oContainer.rows;
+    	 			
+  			            var jqContainer = $(oContainer);
+    			        if(oContainer.tagName=='TBODY') {
+      			          jqContainer.find('tr:even').removeClass('rowb').addClass('rowa');
+    			          jqContainer.find('tr:odd').removeClass('rowa').addClass('rowb');
+    			        } else {
+        			      jqContainer.find('tr:even').removeClass('rowa').addClass('rowb');
+        			      jqContainer.find('tr:odd').removeClass('rowb').addClass('rowa');
+    			        }
+    			        	
+    	        //		for (var i=0;i<oRows.length;i++)
+    			//		          if((oRows[i].getAttribute('class')=='rowa')||(oRows[i].getAttribute('class')=='rowb')){
+    			//		          	  if (oContainer.tagName=='TBODY') oRows[i].setAttribute('class',(i%2==0?'rowa':'rowb'));
+    			//			            else oRows[i].setAttribute('class',(i%2!=0?'rowa':'rowb'));
+    			//	        	  }
+    	 		     }
+    		
+    			      sResponse=sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
+         	 if(sResponse!='ok'){ // the action was not successfully processed by the server
+         	   	alert(sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue);
+         		   oObj.removeAttribute('disabled');
+         		   return;
+         	 }         	
+         	
+         	 // we're deleting a column
+         	 //alert(oObj.getAttribute('deleteColumn'));
+         	 if(oObj.getAttribute('deleteColumn')=='true') {    
+         		 /* don't delete col with JS, just refresh tab contents with AJAX
+    	 			       var oCell=fParent(oObj,'TD')
+    	 			       if(!oCell) oCell=fParent(oObj,'TH');
+    	 		       	var oTable=fParent(oCell,'TABLE');
+    	 			       var iCellIndex=oCell.cellIndex;
+    	 			       fDeleteColumn(iCellIndex,oTable); 
+    	 			       // we only need to call fReformatTable if deleting rows
+    	 		*/
+    	 			      parent.pane_2
+    						.loadIntoPane3(
+    								'AppController.servlet?return=gui/reports_and_tables/pane3',
+    								-1, null);
+         	 }
+         	 // we're deleting a row
+         	 else {
+         		   var oRow=fParent(oObj,'TR');  // find the row so that we can delete the row by row index
+         		   var oContainer=oRow.parentNode;  // this is TBODY etc if one exists, otherwise TABLE
+         		   var iRowIndex=oContainer.tagName=='TABLE'?oRow.rowIndex:oRow.sectionRowIndex;         			
+         		   oContainer.deleteRow(iRowIndex);
+         		   fReformatTable(oContainer); 
+         	 }        	
+    		    }
+    		
+    		    function fDoDelete(oObj) {
+    		      	function fSetPostVars(oObj){  
+    		      	  // create a key value array of the variables to post with the request to the server
+				            var aPostVars=new Array();
+				            // always pass these in the post request
+				            aPostVars['return']='gui/administration/xmlreturn_fieldchange';
+				            aPostVars['returntype']='xml'; 
+				    
+				            /* look at all the attributes that the DOM object has and pass all the 
+				               ones prefixed gtpb_ to the server in the post request   */
+				            for (var i=0;i<oObj.attributes.length;i++)
+				              with(oObj.attributes.item(i))
+				                if (nodeName.search(/^gtpb_/)>=0)
+				                  aPostVars[nodeName.replace(/^gtpb_/,'')]=nodeValue;
+				            return aPostVars;
+				          }
+				            
+				          oObj.setAttribute('disabled','true');
+					          var oReq=new fRequest('AppController.servlet', fSetPostVars(oObj), fReqComplete, -1);
+    		    }
+    		
+    		    var oObj=oObj;
+				fDoDelete(oObj);
+    	  }    
+    </script>
+    #parse('gui/resources/google_maps_api_key.vm')
+    <script src="http://maps.google.com/maps?file=api&v=2&key=$google_maps_api_key&sensor=false" type="text/javascript"></script>
+    #if(!$mobile_device)
+      #if($viewMethods.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
+    	<script type="text/javascript" src="resources/jquery.tablednd.js"></script>
+      #end
+      <script type="text/javascript" src="resources/tabs/tabs.js"></script>
+  	#end
+	<script type="text/javascript" src="resources/tabs/edit.js"></script>
+	<script type="text/javascript" src="resources/tabs/view.js"></script>
+  </head>
+  <body #if($mobile_device) onload="window.scrollTo(0,1)" #end>
+  
+  ## Put fInit() into tab content logic (probably only edit tab)
+  ##<body #if($mobile_device) onload="window.scrollTo(0,1)" #else onload=fInitiateTabs();fInit(); #end>
+	
+	    <div class="wrapper tab-interface" id="gtpb_wrapper">
+	    	
+	    	
+	#if($mobile_device)
+		#parse('gui/mobile/pane3_selector.vm')
+	#else
+		## Create tab interface
+
+		#set($currentTab = $sessionData.getCustomString('report_tabindex'))
+		#if(!$currentTab)
+			#set($currentTab = "1")
+		#end		
+		
+		<ul class="tab-list">
+		#foreach($tab in $tabs)
+    		#if($velocityCount == $currentTab)
+    			<li class="current">
+    		#else
+    			<li>
+    		#end
+			<a href="AppController.servlet?return=$tab.get('tabSource')">$tab.get('tabName')</a></li>
+		#end
+		</ul>
+		
+		<div class="tab-content">
+		</div>	
+	#end
+	
+	
+    	</div>
+    
+    ## Hack for filters section in report fields tab
+    ## Activate first filter option input box - moved from filters_data.vm
+    ##<script language="JavaScript">
+    ##  if(window.fSelectFilterOption) fSelectFilterOption(0);
+    ##</script>
+  </body>
+</html>

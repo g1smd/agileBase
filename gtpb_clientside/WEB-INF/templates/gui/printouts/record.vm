@@ -1,0 +1,40 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html>
+  <head>
+    <title>Record Summary Printout</title>
+    <style type="text/css">
+      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+			      			html, body { padding:0;
+      			             margin:0;
+								 	                  height:100%;
+                  									 width:100%; }
+
+      			body { padding-bottom:25px;
+           					 	 position:absolute;
+					            	 font-family:sans-serif,Arial;
+      	       font-size:10pt; }
+ 
+      			td.trailing input[type=button] { font-size:8pt }			
+    </style>
+  </head>
+  <body>
+    #parse('gui/reports_and_tables/tabs/view.vm')
+  </body>
+</html>

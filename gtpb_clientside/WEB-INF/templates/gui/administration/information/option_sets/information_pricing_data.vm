@@ -1,0 +1,46 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+$viewTools.startTimer("gui/administration/information/option_sets/information_pricing_data.vm")
+#if(!$usageStats)
+	#set($usageStats = $viewMethods.getUsageStats(true))
+#end
+
+#set($appUser = $viewMethods.getLoggedInUser())
+## Hard code the list of usernames not allowed to view pricing data
+#set($disallowedUsernames = [])
+General information about the $appUser.getCompany() portalBase service<p>
+
+#if(!$disallowedUsernames.contains($appUser.getUserName()))
+<h2>Cost Calculation</h2>
+Monthly cost per table is &pound;10 for the first ten tables and &pound;5 for any subsequent.<p>
+
+$viewMethods.getLoggedInUser().getCompany() has $usageStats.getNumberOfTables() tables<p>
+
+Total monthly cost = <b>&pound;$usageStats.getMonthlyTableCost()</b><p>
+
+&pound;50/month will be added if the wiki is used
+
+<h2>Low Activity Tables</h2>
+#end
+These tables have low activity and are <i>possibly</i> unused:<p>
+
+#set($unusedTables = $usageStats.getUnusedTables())
+#foreach($table in $unusedTables)
+  $table<br>
+#end
+$viewTools.stopTimer("gui/administration/information/option_sets/information_pricing_data.vm")

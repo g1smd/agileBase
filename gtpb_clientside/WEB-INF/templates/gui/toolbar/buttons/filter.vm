@@ -1,0 +1,101 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<script language=javascript>
+function fFilters(){
+
+	function fShowFilters(oButton){  
+		function fWhatever(sResponseText,sResponseXML){
+			// addition by Oliver - scroll to top
+			var wrapperDiv = document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('wrapper');
+			wrapperDiv.scrollTop = 0;
+			// original - don't do anything
+			return;
+		}
+
+		function fUnfilterComplete(sResponseText,sResponseXML){  
+			function fClearFilterBoxes(){  
+				var oFilterRow=oReportDoc.getElementById('fieldFilters');
+				cFilterBoxes=oFilterRow.getElementsByTagName('INPUT');
+				for(var i=0;i<cFilterBoxes.length;i++){  
+					var oFilterBox=cFilterBoxes[i];
+					if(oFilterBox.getAttribute('is_filter')!='true') continue;
+					oFilterBox.value="";
+				}
+			}
+			if(!sResponseText) return;
+			if(sResponseText==null) return;
+			if(sResponseText=='') return;		
+
+			var oReportBody=oReportDoc.getElementById('reportBody');
+			if (!oReportBody) return;     
+
+			fClearFilterBoxes();
+
+			/* see setFilter.js */
+			fLoadReport(sResponseText, oReportBody, null)
+		}
+
+		var oReportDoc=document.getElementById('oViewPane').contentWindow.pane_2.document;
+		if ($(oButton).hasClass('selected')) {
+		  //oReportDoc.getElementById('fieldFilters').setAttribute('on','true'); // set the expando property to turn the row on - now replaced by jQuery show/hide
+			$(oReportDoc).find("#fieldFilters").show();
+			var aPostVars=new Array();  // send a post to the server to set the session variable for the filters on
+			aPostVars['return']='gui/development/blank';
+			aPostVars['set_custom_string']='true';
+			aPostVars['stringkey']='filtering_on';
+			aPostVars['customstringvalue']='true';
+			var oReq=new fRequest('AppController.servlet', aPostVars, fWhatever, -1);
+		}
+		else {
+			//oReportDoc.getElementById('fieldFilters').setAttribute('on','false');
+			$(oReportDoc).find("#fieldFilters").hide();
+			var aPostVars=new Array();
+			aPostVars['return']='gui/reports_and_tables/report_data_only';
+			aPostVars['clear_all_report_filter_values']='true';
+			aPostVars['clear_custom_variable']='filtering_on';
+			var oReq=new fRequest('AppController.servlet', aPostVars, fUnfilterComplete, -1);
+		}
+	}
+
+	function fUnFilter() {  
+		var oFilter=document.getElementById('filter');
+		if (oFilter.getAttribute('selected')=='true') oFilter.click();
+	}
+
+	function fFilter(){  
+		var oFilter=document.getElementById('filter');
+		if (oFilter.getAttribute('selected')!='true') oFilter.click();
+	}
+
+	this.fShowFilters=fShowFilters;
+	this.fUnFilter=fUnFilter;
+	this.fFilter=fFilter;
+}
+
+fFilters=new fFilters();
+
+</script>
+
+#set($button_img='resources/toolbar/filter.png')
+#set($click="fFilters.fShowFilters(this)")
+#set($caption='Filter')
+#set($id='filter')
+#set($params='toggleButton=true disabled=true')
+#set($classes='toggleButton')
+#set($tooltip='Narrow down the list of records in pane 2 by searching')
+#parse('gui/resources/button.vm')

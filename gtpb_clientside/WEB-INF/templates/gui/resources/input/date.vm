@@ -1,0 +1,316 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($calendar = $viewTools.getCalendar())##
+#set($CONST_DAY_OF_MONTH = $viewTools.getCalendarConstant("DAY_OF_MONTH"))##
+#set($CONST_MONTH = $viewTools.getCalendarConstant("MONTH"))##
+#set($CONST_YEAR = $viewTools.getCalendarConstant("YEAR"))##
+#set($CONST_HOUR_OF_DAY = $viewTools.getCalendarConstant("HOUR_OF_DAY"))##
+#set($CONST_MINUTE = $viewTools.getCalendarConstant("MINUTE"))##
+#set($CONST_SECOND = $viewTools.getCalendarConstant("SECOND"))##
+##Calendar values are ordered as DAY_OF_MONTH < HOUR_OF_DAY < MINUTE etc.
+##i.e. values denoting shorter time periods are larger numbers
+#if ($tableDataRow.get($field).isNull() || $globalEdit)##
+  ## otherwise the function is printed to screen
+  #set($days="0")##
+  #set($months="0")##
+  #set($years="")##
+  #set($hours="00")##
+  #set($minutes="00")##
+  #set($seconds="00")##
+#else##
+  #set($fieldValue=$tableDataRow.get($field).getValueDate())##
+  #set($days=$fieldValue.get($CONST_DAY_OF_MONTH))##
+  #set($months=$fieldValue.get($CONST_MONTH)+1)##
+  #set($years=$fieldValue.get($CONST_YEAR))##
+  #set($hours=$fieldValue.get($CONST_HOUR_OF_DAY))##
+  #set($minutes=$fieldValue.get($CONST_MINUTE))##
+  #set($seconds=$fieldValue.get($CONST_SECOND))##
+#end##
+#set($dateResolution = $field.getDateResolution())##
+
+#if($globalEdit) #set($non_xml_update=true) #end
+
+#if($userCanEdit)##
+  <style>
+    div.date {
+      display:inline;
+    }
+  
+    div.date[changed=true] {
+      text-decoration:none;
+    }
+    div.date[changed=true] select {
+      background-color:ltgrey;
+    }
+    div.date[changed=true] input {
+      text-decoration:underline;
+    }
+    
+    input[focused][type='text'],
+    textarea[focused] {
+      border:2px solid #A2B6FF;
+      background-color:#ECF0FF;
+    }    
+  </style>
+  
+  	<input type="hidden" name="$field.getInternalFieldName()" value="$field.formatCalendar($fieldValue)" #if(! $globalEdit) gtpb_update_record #end gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_$field.getInternalFieldName()_days="$days" gtpb_$field.getInternalFieldName()_months="$months" gtpb_$field.getInternalFieldName()_years="$years" gtpb_$field.getInternalFieldName()_hours="$hours" gtpb_$field.getInternalFieldName()_minutes="$minutes" gtpb_$field.getInternalFieldName()_seconds="$seconds">
+  <script language="Javascript">
+	    
+	    function fCreateDateObject() {	 
+	      function fFloodValuesIntoFields() {
+	        function fSetDropdownByValue(oDropdown,sValue) {
+	          for (var i=0;i<oDropdown.options.length;i++)
+	            if(oDropdown.options[i].value==sValue) oDropdown.selectedIndex=i;
+	        }
+	        	with(oWrapperDiv) {
+	          	#if($dateResolution >= $CONST_DAY_OF_MONTH)
+	            if (getAttribute('gtpb_$field.getInternalFieldName()_days')!=0) fSetDropdownByValue(day,getAttribute('gtpb_$field.getInternalFieldName()_days'));
+	          #end
+	          #if($dateResolution >= $CONST_MONTH)
+	            if (getAttribute('gtpb_$field.getInternalFieldName()_months')!=0) fSetDropdownByValue(month,getAttribute('gtpb_$field.getInternalFieldName()_months'));
+	          #end
+	          if(!isNaN(getAttribute('gtpb_$field.getInternalFieldName()_years'))) year.value=getAttribute('gtpb_$field.getInternalFieldName()_years');
+	          #if($dateResolution >= $CONST_HOUR_OF_DAY)
+	            if(!isNaN(getAttribute('gtpb_$field.getInternalFieldName()_hours'))) hour.value=getAttribute('gtpb_$field.getInternalFieldName()_hours');
+	          #end
+	          #if($dateResolution >= $CONST_MINUTE)
+	            if(!isNaN(getAttribute('gtpb_$field.getInternalFieldName()_minutes'))) minute.value=getAttribute('gtpb_$field.getInternalFieldName()_minutes');
+	        		  #end
+	        		  #if($dateResolution >= $CONST_SECOND)
+	        		    if(!isNaN(getAttribute('gtpb_$field.getInternalFieldName()_seconds'))) second.value=getAttribute('gtpb_$field.getInternalFieldName()_seconds');
+	      		    #end
+	      		  }
+	      }
+	      
+	      function fSetValueAtt() {
+	        function fLPad(sString, iLength) {
+	          if(sString.length>=iLength) return sString;
+	          while(sString.length<iLength) sString='0'+sString;
+	          return sString;
+	        }
+	        with (oWrapperDiv) {
+	          var sValue='';
+	          #if($dateResolution >= $CONST_DAY_OF_MONTH)
+	            if (getAttribute('gtpb_$field.getInternalFieldName()_days')==0) return;
+	            sValue+=fLPad(getAttribute('gtpb_$field.getInternalFieldName()_days'),2)+' ';
+	          #end
+	          #if($dateResolution >= $CONST_MONTH)
+	            if (getAttribute('gtpb_$field.getInternalFieldName()_months')==0) return;
+	            sValue+=aMonths[getAttribute('gtpb_$field.getInternalFieldName()_months')-1].substr(0,3)+' ';
+	          #end
+	          if(isNaN(getAttribute('gtpb_$field.getInternalFieldName()_years'))) return;
+	          sValue+=fLPad(getAttribute('gtpb_$field.getInternalFieldName()_years'),4);
+	          #if($dateResolution >= $CONST_HOUR_OF_DAY)
+	            if(isNaN(getAttribute('gtpb_$field.getInternalFieldName()_hours'))) return;
+	      	      sValue+=' '+fLPad(getAttribute('gtpb_$field.getInternalFieldName()_hours'),2);
+	          #end
+	          #if($dateResolution >= $CONST_MINUTE)
+	            if(isNaN(getAttribute('gtpb_$field.getInternalFieldName()_minutes'))) return;		
+	          		  sValue+=':'+fLPad(getAttribute('gtpb_$field.getInternalFieldName()_minutes'),2);
+	          		#end
+	          		#if($dateResolution >= $CONST_SECOND)
+	          		  if(isNaN(getAttribute('gtpb_$field.getInternalFieldName()_seconds'))) return;
+	      		      sValue+=':'+fLPad(getAttribute('gtpb_$field.getInternalFieldName()_seconds'),2);
+	      		    #end
+	      		    setAttribute('e_value',sValue);
+	      		  }
+	      }
+	         
+	      function fCreateTextElement(iMaxLength,sWrapperAttribute) {
+	        function fKeyupEvent() {
+	          // update the relevent value in the wrapper
+	          var oWrapper=this.wrapper;
+	          var sAttribute=this.getAttribute('wrapperAttribute');
+	          oWrapper.setAttribute(sAttribute,this.value);
+	          fSetValueAtt();
+	          
+	          	#if(!$globalEdit)
+	          ## if we're global editing, we want to trigger the update by clicking a button
+	            // queue the wrapper for an update
+	            top.oBuffer.writeBuffer(oWrapper);
+	          #end
+	        }
+	        
+	        function fTextFocus() {
+	          this.setAttribute('focused','true');
+	        }
+	        
+	        function fTextBlur() {
+	          this.removeAttribute('focused');
+	        }
+	        
+	        var oObj=document.createElement('INPUT');
+	        oObj.setAttribute('type','text');
+	        oObj.setAttribute('maxLength',iMaxLength);
+	        oObj.setAttribute('size',iMaxLength);
+	        oObj.setAttribute('maxKeyCount',iMaxLength);
+	        oObj.setAttribute('value',oWrapperDiv.getAttribute(sWrapperAttribute));
+	        oObj.setAttribute('wrapperAttribute',sWrapperAttribute);
+	        oObj.wrapper=oWrapperDiv;
+			var jqObj = $(oObj);
+	        jqObj.keyup(fKeyupEvent);
+	        jqObj.focus(fTextFocus);
+	        jqObj.blur(fTextBlur);
+	        oWrapperDiv.appendChild(oObj);
+	        return oObj;
+	      }
+	      
+	      function fChangeEvent() {
+	        var oWrapper=this.wrapper;
+	        var sAttribute=this.getAttribute('wrapperAttribute');
+	        oWrapper.setAttribute(sAttribute,this.value);
+	        fSetValueAtt();
+	          
+	        #if(!$globalEdit)
+	        ## if we're global editing, we want to trigger the update by clicking a button
+	          // send the update
+	          new fChange(oWrapper);
+	        #end
+	      }
+	      
+	      // finds the last one 
+      var oHidden=document.getElementsByName('$field.getInternalFieldName()')[document.getElementsByName('$field.getInternalFieldName()').length-1];
+	      var oWrapperDiv=document.createElement('DIV');
+	      oHidden.parentNode.replaceChild(oWrapperDiv,oHidden);
+	      oWrapperDiv.setAttribute('value','none set');
+	      $(oWrapperDiv).addClass('date');
+	      oWrapperDiv.setAttribute('name',oHidden.getAttribute('name'));	 
+	      oWrapperDiv.floodValues=fFloodValuesIntoFields;
+	      //oWrapperDiv.hidden=oHidden;     
+      for (var i=0;i<oHidden.attributes.length;i++)
+	        with(oHidden.attributes.item(i))
+          if (nodeName.search(/^gtpb_/)>=0)
+            oWrapperDiv.setAttribute(nodeName,nodeValue);
+            
+      	#if($globalEdit)
+      	  function fUpdateGlobalDate() {
+          function fResponse(sResponseText, sResponseXML) {
+            if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
+  	            var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
+  	            #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+                var sFieldName='$field.getSimplifiedFieldName()';
+              #else
+                var sFieldName='$field';
+              #end
+              var sFieldValue=oField.getAttribute('e_value');
+  	            if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+sFieldValue+'?\nThis will update '+sRowsToChange+' records'))
+				new fChange(oField);
+            }
+          }
+          
+          var oField=this.field;
+          var aPostVars=new Array();
+          aPostVars['returntype']='xml'; 
+          aPostVars['return']='gui/resources/sessionReportInfo';
+          var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);
+        }
+        oWrapperDiv.setAttribute('gtpb_global_edit','true');
+        var oButton=document.createElement('BUTTON');
+        $(oButton).addClass('globalEdit');
+        oButton.innerHTML='update globally';
+        oButton.field=oWrapperDiv;
+        $(oButton).click(fUpdateGlobalDate);
+                
+        oWrapperDiv.parentNode.appendChild(oButton);
+      #end
+            
+      #if($dateResolution >= $CONST_DAY_OF_MONTH)
+	        // ********  THE DAY DROPPER  *************
+	        var oDay=document.createElement('SELECT');
+	        if($days==0) oDay.options[0]=new Option('day');
+	        for (var i=1; i<=31; i++) {
+	          // can't use options.length in this loop because it doesn't work on the iPhone :(
+	          /* the loop is counting from 1 to 31.  If this a new day then we've already added an element
+	             to this selection so we need to add options 1 to 31 just using i.  If the day is already 
+	             set (either by default or because we're editing, we need to add options 0 to 30 so we need 
+	             to offset i by -1 */
+	          if($days==0) oDay.options[i]=new Option(i,i);
+	          else oDay.options[i-1]=new Option(i,i);
+	          
+	          // i will never be 0 here so don't need to worry about this if this is new day
+	          if(i==$days) oDay.selectedIndex=i-1;
+	        }
+	        oDay.setAttribute('wrapperAttribute','gtpb_$field.getInternalFieldName()_days');
+			oDay.setAttribute('tabindex','$tabIndex');
+			#set($tabIndex = $tabIndex + 1)
+	        oWrapperDiv.appendChild(oDay);
+	        oWrapperDiv.day=oDay;
+	        oDay.wrapper=oWrapperDiv;
+	        $(oDay).change(fChangeEvent);
+	      #end
+	      
+	      #if($dateResolution >= $CONST_MONTH)
+	        // ********* THE MONTH DROPPER  ****************
+	        var aMonths=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+	        var oMonth=document.createElement('SELECT');
+	        if($months==0) oMonth.options[0]=new Option('month');
+	        for (var i=0; i<aMonths.length; i++) {
+          // can't use options.length in this loop because it doesn't work on the iPhone :(
+	          /* the loop is counting from 0 to 11 effectively.  If this a new month then we've already added an 
+	             element to this selection so we need to add options 1 to 12 using i+1.  If the month is already 
+	             set (either by default or because we're editing, we need to add options 0 to 11 so we don't need 
+	             offset i */	        
+	          if($months==0) oMonth.options[i+1]=new Option(aMonths[i],i+1);
+	          else oMonth.options[i]=new Option(aMonths[i],i+1);	 
+	          
+	          // if months=0 this condition will never be reached
+	          if(i+1==$months) oMonth.selectedIndex=i;
+	        }
+	        oMonth.setAttribute('wrapperAttribute','gtpb_$field.getInternalFieldName()_months');
+			        oMonth.setAttribute('tabindex','$tabIndex');
+			        #set($tabIndex = $tabIndex + 1)
+	        oWrapperDiv.appendChild(oMonth);
+	        oWrapperDiv.month=oMonth;
+	        oMonth.wrapper=oWrapperDiv;
+	        $(oMonth).change(fChangeEvent);
+	      #end
+	      
+	      // ********* TEXT FIELDS ************
+	      var oYear=fCreateTextElement(4,'gtpb_$field.getInternalFieldName()_years');
+		  oYear.setAttribute('tabindex','$tabIndex');
+		  #set($tabIndex = $tabIndex + 1)
+	      oWrapperDiv.year=oYear;
+	      #if($dateResolution >= $CONST_HOUR_OF_DAY)
+	        oWrapperDiv.appendChild(document.createTextNode(' time '));
+	        var oHour=fCreateTextElement(2,'gtpb_$field.getInternalFieldName()_hours');
+			oHour.setAttribute('tabindex','$tabIndex');
+			#set($tabIndex = $tabIndex + 1)
+	        oWrapperDiv.hour=oHour;
+	      #end
+	      #if($dateResolution >= $CONST_MINUTE)
+	        oWrapperDiv.appendChild(document.createTextNode(':'));
+	      		  var oMinute=fCreateTextElement(2,'gtpb_$field.getInternalFieldName()_minutes');
+			oMinute.setAttribute('tabindex','$tabIndex');
+			#set($tabIndex = $tabIndex + 1)
+	      		  oWrapperDiv.minute=oMinute;
+	      		#end
+	      		#if($dateResolution >= $CONST_SECOND)
+	      		  var oSecond=fCreateTextElement(2,'gtpb_$field.getInternalFieldName()_seconds');
+			oSecond.setAttribute('tabindex','$tabIndex');
+			#set($tabIndex = $tabIndex + 1)
+	      		  oWrapperDiv.second=oSecond;
+	      		#end
+	    }
+	  
+	    fCreateDateObject();
+	  
+	  </script>
+#else ##user can't edit
+$field.formatCalendar($fieldValue)##
+#end##
+##found date for $field.getFieldName(): $days/$months/$years

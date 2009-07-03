@@ -1,0 +1,53 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html>
+  <head>
+    <title>
+      $viewMethods.getApplicationName() version $viewMethods.getApplicationVersion() translator
+    </title>
+    <style>
+      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+
+      			html, body { height:100% }
+
+      			body { font-family:"MS Sans Serif",arial, sans_serif; 
+             font-size:10pt; 
+            						 margin:0px;
+            						 padding:0px; 
+            						 overflow:hidden;
+           					}
+			    </style>
+			  </head>
+			  <body>
+			  <table width="100%" height="100%">
+			  <tr>
+			  <td align="center">
+    			  <form action="AppController.servlet?return=gui/development/translation" method="post">
+    			    <input type="hidden" name="set_custom_string" value="true" />
+    			    <input type="hidden" name="key" value="sourcetext" />
+			      		  <textarea cols=100 rows=30 name="value"></textarea>
+			      		  <br />
+			        <br />
+  			    		  <input type="submit" value="translate" />
+			      </form>
+			  </td>
+			  </tr>
+			  </table>
+  </body>
+</html>

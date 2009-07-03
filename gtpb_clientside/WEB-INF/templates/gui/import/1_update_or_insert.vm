@@ -1,0 +1,66 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($sessionData = $viewMethods.getSessionData())
+#set($table = $sessionData.getTable())
+<request>
+  <nextTemplate>gui/import/2_import_details</nextTemplate>
+  <caption>Import into $table</caption>
+  #parse('gui/customisations/wizard_result.vm') 
+  <htmlContent><![CDATA[
+      <style>
+         table#_choice_table {
+           width:85%;
+           margin-top:50px;
+         }
+         
+        table#_choice_table td {
+           text-align:center;
+         }
+         
+         table#_choice_table tr.labels td {
+           padding-top:30px;
+         }
+         
+      </style>
+  
+      <form style="padding:5px">
+        <h1>How would you like to import?</h1>
+        <table id="_choice_table" border="0" cellpadding="0" cellspacing="0" align="center">
+          <tr>
+            <td>
+              <label for="insert"><img src="resources/icons/import/new.png" /></label>
+            </td>
+            <td>
+              <label for="update"><img src="resources/icons/import/update.png" /></label>
+            </td>
+          </tr>
+          <tr class="labels">
+            <td>
+              <input type="radio" name="import_type" id="insert" value="insert" gtpb_set_custom_string="true" gtpb_stringkey="import_type" gtpb_customstringvalue="insert" checked>
+              <label for="insert">Insert all new records</label>
+            </td>
+            <td>
+              <input type="radio" name="import_type" id="update" value="update" gtpb_set_custom_string="true" gtpb_stringkey="import_type" gtpb_customstringvalue="update" >
+              <label for="update">Update existing records</label>
+            </td>
+          </tr>          
+        </table>
+      </form>
+    ]]>
+  </htmlContent>
+</request>

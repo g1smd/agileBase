@@ -1,0 +1,393 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+  	<script src="resources/jquery.js" language="Javascript"> </script>
+ 	<script src="resources/jquery.dimensions.js" type="text/javascript"></script> <!-- for cluetip -->
+	<script src="resources/jquery.hoverIntent.js" type="text/javascript"></script> <!-- for cluetip, optional -->
+	<script src="resources/jquery.cluetip.js" type="text/javascript"></script> 
+	#if($mobile_device)
+	  <meta name = "viewport" content = "initial-scale = 0.8">
+      <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
+	#end
+    #set($sessionData = $viewMethods.getSessionData())
+	#set($sessionReport = $sessionData.getReport())
+	#set($sessionTable = $sessionData.getTable())
+    <title>$sessionReport.getModule() - $sessionReport</title>
+    <style>
+	      @import url("styles/report.css");
+	      @import url("resources/module-colours.css");	
+		  @import url("styles/jquery.cluetip.css");
+	      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+	
+	      html, body { 
+	        font-family: "Arial", sans-serif; 
+    			    color: black; 
+    			    font-size: 11pt; 
+    			    margin:0; 
+    			    padding:0;
+    			    height:100%;
+    			  }
+				 
+	      div#wrapper { 
+				height:100%;
+		        /*width:100%;*/
+				#if($mobile_device)
+				overflow:visible;
+				#else
+				/*overflow:auto;*/
+				#end
+			}
+				  
+	      input[type=text][changed=true] { 
+	        text-decoration:underline 
+	      }
+	    </style>
+	    
+		#if($isNotTable)
+	      <SCRIPT language=Javascript>
+   	        top.document.getElementById('filter').setAttribute('disabled','true');
+	      </SCRIPT>
+	    #end
+      	<SCRIPT language=Javascript src="resources/$resource_folder/new_delete.js"></SCRIPT>
+	    #if($isNotTable||$viewMethods.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
+		#if(!$mobile_device)
+  	    <SCRIPT language=Javascript>
+   	     top.document.getElementById('button_new').removeAttribute('disabled');
+   	     top.document.getElementById('button_clone').removeAttribute('disabled');
+   	     top.document.getElementById('button_delete').removeAttribute('disabled');
+   	     top.document.getElementById('button_import').removeAttribute('disabled');
+   	     top.document.getElementById('button_export').removeAttribute('disabled');
+   	     top.document.getElementById('button_print').removeAttribute('disabled');
+   	     top.document.getElementById('button_links').removeAttribute('disabled');
+        </SCRIPT>
+	    #end
+    #else
+		#if(!$mobile_device)
+      <SCRIPT language=Javascript>
+        		function fNew(){
+        		  // do nothing
+        		}
+   		
+   		     function fClone(){
+   		       // do nothing
+   		     }
+
+   		        top.document.getElementById('button_new').setAttribute('disabled');
+   	            top.document.getElementById('button_clone').setAttribute('disabled');
+   		        top.document.getElementById('button_delete').setAttribute('disabled');
+        		top.document.getElementById('button_import').setAttribute('disabled');
+        	#if($viewMethods.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
+	    	    top.document.getElementById('button_export').removeAttribute('disabled');
+   	     		top.document.getElementById('button_print').removeAttribute('disabled');
+   	     		top.document.getElementById('button_links').removeAttribute('disabled');
+        	#else
+        		top.document.getElementById('button_export').setAttribute('disabled');
+        		top.document.getElementById('button_print').setAttribute('disabled');
+   	            top.document.getElementById('button_links').setAttribute('disabled');
+   	        #end
+      </SCRIPT>
+	  #end
+    #end
+    <SCRIPT language=Javascript src="resources/wait/request.js"></SCRIPT>
+    <SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
+    <SCRIPT language=Javascript src="resources/wait/setFilter.js"></SCRIPT>
+    <SCRIPT language=Javascript>
+      #set($numRows = $data.size())
+      #set($reportRowLimit = $sessionData.getReportRowLimit())
+	  #if(!$mobile_device)
+        #if($numRows < $reportRowLimit)
+          parent.pane_1.fSetCurrentOption('$pane1_id','$numRows');##
+        #else## if current set on screen isn't the full dataset, show a link to load more
+  		  #set($rowCount = $sessionReport.getRowCount())
+  		  #if($sessionReport.isRowCountEstimate())
+            parent.pane_1.fSetCurrentOption('$pane1_id','<i title="$rowCount is the approximate number of records in total">$rowCount</i>');
+          #else
+            parent.pane_1.fSetCurrentOption('$pane1_id','$rowCount');##
+          #end
+        #end
+		#if(!$isNotTable)
+          top.document.getElementById('filter').removeAttribute('disabled');
+		#end
+	  #end
+    
+      // clear all the selected rows
+      // there should only be one but will clear all if more than this.
+      function fClearRowSelection(){  
+        while (oSelected=document.getElementById('currentRow'))
+    		    oSelected.id=null;
+      }
+    
+      // set the row with the name sName to show it as selected
+      function fSetRowSelection(sName){  
+        fClearRowSelection();
+        var oBodyRows=document.getElementById('reportBody').rows;
+        for(var i=0;i<oBodyRows.length;i++){  
+          if(oBodyRows[i].getAttribute('name')==sName) {
+             var currentRow = oBodyRows[i];
+             currentRow.id='currentRow';
+			 // Work out whether we need to scroll the row into view (if it's off screen)
+             var excluded = $(currentRow).hasClass("excludedRecord")
+			 if (!excluded) {
+			   var currentRowOffsetTop = currentRow.offsetTop;
+               //var visiblePortionTop = document.getElementById('wrapper').scrollTop;
+               var visiblePortionTop = document.scrollTop;
+               //var visiblePortionBottom = visiblePortionTop + document.body.clientHeight;
+               var visiblePortionBottom = visiblePortionTop + document.body.offsetHeight;
+               if ((currentRowOffsetTop < visiblePortionTop) || ((currentRowOffsetTop + 15) > visiblePortionBottom)) {
+				 currentRow.scrollIntoView(true);
+               }
+			 }
+       	     break;
+          	}  
+        }     
+      }  
+	
+	      function fDeleteObj(sAction, sRowIdentifier) { 
+	        function fControlCheckboxes(bDisable) 	{
+	          	var aCheckedRows=new Array();
+    	
+          		// set the header checkbox
+          		var oCheckbox=document.getElementById('reportData').rows[0].cells[iDeleteCellIndex].getElementsByTagName('INPUT')[0]
+    	      if (oCheckbox) {
+    	        	if(bDisable) oCheckbox.setAttribute('disabled','true');
+    	        	else {  
+    	        	  oCheckbox.removeAttribute('disabled');
+				              oCheckbox.checked=false;
+			            }
+    	      }
+    		
+          		// set the row checkboxes
+    	      var oRows=document.getElementById('reportBody').rows;
+    	      for (var i=0;i<oRows.length;i++) {
+			  		if(! oRows[i].cells[iDeleteCellIndex]) continue;
+    	        	var oCheckbox=oRows[i].cells[iDeleteCellIndex].getElementsByTagName('INPUT')[0];
+    	        	if (!oCheckbox) continue;
+    	  	      if(bDisable) oCheckbox.setAttribute('disabled','true');
+    	  	      else oCheckbox.removeAttribute('disabled');
+    	  	      if (oCheckbox.checked) aCheckedRows.push(oRows[i]);
+    	      }
+    	  
+    	      return aCheckedRows;
+    	    }	
+    	 
+    	    function fReqComplete(sResponseText,sResponseXML) {
+    	      	function fReformatTable() {
+				  $('#reportBody tr:even').not('.trailing').not('.seemorerows').removeClass().addClass('rowa');
+				  $('#reportBody tr:odd').not('.trailing').not('.seemorerows').removeClass().addClass('rowb'); 
+// non-jQuery way			
+//    	      	  	var oRows=document.getElementById('reportBody').rows;
+//    	  		      for (var i=0;i<oRows.length;i++)
+//    					          if((oRows[i].getAttribute('class')=='rowa')||(oRows[i].getAttribute('class')=='rowb'))
+//            oRows[i].setAttribute('class',(i%2==0?'rowa':'rowb'));
+    	      }
+    	      
+    	      function fRetryDeletions() {
+    	        var sExceptionMessage=sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue;
+    	        if(!confirm('Some rows were not deleted because they are linked to data in other tables.\n\n' + sExceptionMessage + '\n\nWould you like to delete these rows and the related data or CANCEL this operation?')) return false;
+    	        bDeleteRelatedData=true;
+    	        bFailedDeletions=false;
+    	    		    bRetryDeletions=false;
+    	        aCheckedRows=fControlCheckboxes(true);
+    	        fDeleteFirstItem();
+    	        return true;
+    	      }
+
+    	 		     sResponse=sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
+         	 if(sResponse=='ok') { // the action was successfully processed by the server
+         	   if (oCurrentRow==oSessionItem) bRemovedSessionItem=true;
+            		var oRowParent=oCurrentRow.parentNode;
+         		   var iRowIndex=oRowParent.tagName=='TABLE'?oCurrentRow.rowIndex:oCurrentRow.sectionRowIndex;
+         		   oRowParent.deleteRow(iRowIndex);
+          	} else {
+          	  bFailedDeletions=true;
+          	  sException=sResponseXML.getElementsByTagName('exception')[0].getAttribute('type');
+			  var sExceptionMessage=sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue;
+          	  if(sException=='DataDependencyException') bRetryDeletions=true;
+          	}
+          	if (fDeleteFirstItem()) return true; // the next item will be deleted
+          
+          if(bFailedDeletions) {
+            // some records may not have been deleted if they included relations
+          	  if(bRetryDeletions) { 
+          	    if(fRetryDeletions()) return true;  // deletions can be retried if the user has permissions on the table containing the data
+          	  } else alert('Some rows were not deleted because they are linked to data in other tables that you do not have permission to change.\n\n' + sExceptionMessage);    	      
+    	      }
+          	
+         	 // clean everything up
+         	 // if we've removed the session set a new one as the first row
+          	if (bRemovedSessionItem) {  
+          	  if (document.getElementById('reportBody').rows.length>1) // there will always be the filler row
+            		eval(document.getElementById('reportBody').rows[0].getAttribute('onclick'));  
+			            else parent.pane_3.document.location='AppController.servlet?return=$return';
+			          }
+          	fControlCheckboxes(false); // re-enable the checkboxes
+          	fReformatTable();
+    	    } 
+    	 
+    	    function fDeleteFirstItem() {
+    	      	if (aCheckedRows.length<1) return false;
+    	      oCurrentRow=aCheckedRows.shift();
+    	      		var aPostVars=new Array();
+       
+          // always pass these in the post request
+          aPostVars['return']='gui/administration/xmlreturn_fieldchange';
+          aPostVars['returntype']='xml';
+          
+          if(bDeleteRelatedData) aPostVars['cascadedelete']='1';
+          
+    			      aPostVars[sAction]='true';
+    			      aPostVars[sRowIdentifier]=oCurrentRow.getAttribute('name');
+          
+          oReq=new fRequest('AppController.servlet', aPostVars, fReqComplete, 1);
+    	 		     return true;
+    	    }
+    	 
+    	    // nothing has been selected for deletion
+    	    try {
+    	      	if (!iDeleteCellIndex) return; 
+    	    }
+    	    catch(e) {
+    	      	return;
+    	    }
+    	 
+    	    var sAction=sAction;
+    	    var sRowIdentifier=sRowIdentifier;
+    	    var bRemovedSessionItem=false;
+    	    var bFailedDeletions=false;
+    	    var bRetryDeletions=false;
+    	    var bDeleteRelatedData=false;
+    	    var oSessionItem=document.getElementById('currentRow');
+    	    var oCurrentRow;
+    	    var oReq;
+    	    var aCheckedRows=fControlCheckboxes(true);
+    	    fDeleteFirstItem();
+      }
+	  
+	  function loadPane3() {
+		  var url = 'AppController.servlet?return=$return';
+		  #set($rowId = $sessionData.getRowId())
+		  #if($rowId)
+		    var rowId = $rowId;
+		  #else
+		    var rowId = -1;
+		  #end
+			  #if($sessionTable.getDefaultReport().equals($sessionReport))
+				#set($numberOfTabs = '-1')
+			  #else
+			    #set($numberOfTabs = '2')
+			    #if($viewMethods.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))
+				  #set($numberOfTabs = '6')
+			    #elseif($viewMethods.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))
+				  #set($numberOfTabs = '3')
+				#end
+			  #end
+
+		  loadIntoPane3(url,rowId,$numberOfTabs);
+	  }
+    </SCRIPT>
+	<script type="text/javascript">
+	$(document).ready(function() {
+	  $("#filterhelp").cluetip({
+	    showTitle: false,
+		ajaxCache: true,
+		waitImage: false
+	  });
+	});
+	</script>
+	<script src="resources/pane2.js" language="Javascript"> </script>
+  </head>
+
+  #if($viewMethods.getWhetherExceptionOccurred())
+	<body onload="loadPane3();">
+		#parse("gui/error.vm")
+	</body>
+	#stop
+  #end
+  
+  #set($filters = $viewMethods.getSessionData().getReportFilterValues())
+  #if(($viewMethods.getSessionData().getCustomString('filtering_on')=='true') || $mobile_device)
+    #set($filtersShouldBeShown='true')
+  #else
+    #set($filtersShouldBeShown='false')
+  #end
+  #if ($resource_folder=='user' || $resource_folder=='roles')
+    #set($filtersShouldBeShown='false')
+  #end
+##  <body #if($mobile_device) onload="window.scrollTo(0,1)" #else onload="#if($selection||($data.size()==0))parent.pane_3.document.location='AppController.servlet?return=$return'#else eval(document.getElementById('reportBody').rows[0].getAttribute('onclick'))#end;" #end>
+  <body #if($mobile_device) onload="window.scrollTo(0,1)" #else onload="#if($selection||($data.size()==0))loadPane3(); #else eval(document.getElementById('reportBody').rows[0].getAttribute('onclick')); #end" #end>
+    <div id=wrapper>
+	  #if($mobile_device)
+		#parse("gui/mobile/pane2_header.vm")
+	  #end
+	  <table id=reportData cellspacing="0">
+        <thead>
+          <tr>
+            <th class=leading>&nbsp;</th>
+            #foreach($field in $fields)
+              #set($internalFieldName = $field.get(0))
+              #set($fieldObject = $field.get(1))
+              ## row0 contains the internal field name
+    		          ## row1 contains the display field
+              		<th #if(($fieldObject.getClass().getSimpleName() == "TextFieldDefn") || ($fieldObject.getClass().getSimpleName() == "BigTextFieldDefn")) maxTextLength="$fieldObject.getContentSize()" #end #if($field.get(0) && $internalFieldName!="")internalName="$internalFieldName" onclick="fSetSort(this)"#end>
+                				#if($fieldObject)
+    				              #if($internalFieldName && $internalFieldName!="")
+									#if($fieldObject.getFieldDescription() != "")
+										#set($fieldTitle = "$fieldObject - $fieldObject.getFieldDescription()")
+									#else
+										#set($fieldTitle = "$fieldObject")
+									#end
+    				                <div title="$fieldTitle">
+    				              #end
+    				              $fieldObject
+    				              #if($internalFieldName && $internalFieldName!="")
+    				                </div>
+    				              #end
+              				  #else
+    				              &nbsp;
+                				#end
+              		</th>
+            #end
+            <th class=trailing>&nbsp;</th>
+          </tr>
+          ## filtersShouldBeShown should either print the string 'true' or 'false'
+          <tr name="fieldFilters" id="fieldFilters" #if($filtersShouldBeShown == 'false') style="display:none" #end>
+            <td class="leading"><img src="resources/icons/help.png" id="filterhelp" rel="resources/reports/filtering_help.htm"></td>
+		            #foreach($field in $fields)
+              #set($internalFieldName = $field.get(0))
+              #set($fieldObject = $field.get(1))
+              <td>
+                #if($internalFieldName!='')
+                  <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" onkeyup="new fSetFilter(this)" gtpb_return="gui/reports_and_tables/report_data_only" #if($filtersShouldBeShown) value="$!filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(this)"#end>
+                #end
+              </td>
+		            #end
+		            <td class=trailing>&nbsp;</td>      
+          </tr>
+        </thead>
+        <tbody name=reportBody id=reportBody class="selectable">
+          #parse("gui/pane2/pane2_body.vm")
+			     </tbody>
+      </table>
+	#if($mobile_device)<p>
+		#parse("gui/mobile/pane2_footer.vm")
+	#end
+    </div>
+  </body>
+</html>

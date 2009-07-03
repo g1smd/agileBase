@@ -1,0 +1,39 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+$viewTools.startTimer("gui/administration/information/option_sets/information_export_data.vm")
+#if(!$usageStats)
+	#set($usageStats = $viewMethods.getUsageStats(true))
+#end
+
+Please click on a link to export data to spreadsheet format:<p>
+	
+<a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">Logins</a><br>
+Date, time and IP address of each user's login<p>
+
+<a href="?return=gui/administration/information/export/report_view&returntype=download&returnfilename=report_views.csv">Report views</a><br>
+Which users viewed which reports<p>
+
+<a href="?return=gui/administration/information/export/data_change&returntype=download&returnfilename=data_changes.csv">Data changes</a><br>
+Date, time, user and record identifier for each insertion, edit or record delete<p>
+
+<a href="?return=gui/administration/information/export/report_schema_change&returntype=download&returnfilename=report_schema_changes.csv">Report schema changes</a><br>
+Details of changes to a report structure, such as the addition or removal of a field<p>
+
+<a href="?return=gui/administration/information/export/table_schema_change&returntype=download&returnfilename=table_schema_changes.csv">Table schema changes</a><br>
+Details of changes to a table structure<p>
+$viewTools.stopTimer("gui/administration/information/option_sets/information_export_data.vm")

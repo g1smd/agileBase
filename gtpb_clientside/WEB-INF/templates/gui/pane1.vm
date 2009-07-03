@@ -1,0 +1,89 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($sessionData = $viewMethods.getSessionData())
+#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html>
+<head>
+    #parse('gui/display_error.vm')
+	#if($mobile_device)
+	<meta name = "viewport" content = "width = device-width">
+	<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
+	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
+	#end
+	<title>$viewMethods.getApplicationName() version $viewMethods.getApplicationVersion() - $viewMethods.getLoggedInUser().getCompany()</title>
+
+	<style type="text/css">
+		 @import url("resources/tree/tree.css");
+		 @import url("resources/module-colours.css");	
+		 @import url("styles/jquery.cluetip.css");
+	</style>
+	<script type="text/javascript" src="resources/jquery.js"></script>
+	<script type="text/javascript" src="resources/tree/tree.js"></script>
+ 	<script src="resources/jquery.dimensions.js" type="text/javascript"></script> <!-- for cluetip -->
+	<script src="resources/jquery.hoverIntent.js" type="text/javascript"></script> <!-- for cluetip, optional -->
+	<script src="resources/jquery.cluetip.js" type="text/javascript"></script> 
+	<script>
+	$(document).ready(function() {
+	  $(".report_tooltip").cluetip({
+	    showTitle: false,
+		ajaxCache: true,
+		waitImage: false,
+		width: 229,
+		hoverIntent: {  
+		  interval: 150
+		}
+	  });
+	});
+    </script>
+</head>
+  <body #if($mobile_device) onload="window.scrollTo(0,1)" #else onload="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data'"#end>
+	<ol id="tree"> <!-- ordered list for sections -->      
+	  #parse('gui/reports_and_tables/report_list.vm')  
+      ##TODO: add logout button if mobile device
+	  #if($mobile_device)
+		<li><h1><span>Tools</span></h1>
+			<ul>
+					<div id="logout">
+						<span>
+						<a href="AppController.servlet?return=gui/display_application&logout=true">logout</a>
+						</span>
+					</div>
+			</ul>
+		</li>
+	  #else
+        #set($manageableTables = $viewMethods.getTablesAllowedTo("MANAGE_TABLE"))
+	    #if(($manageableTables.size() > 0) || $viewMethods.loggedInUserAllowedTo('ADMINISTRATE'))
+	    <li><h1><span>Setup</span></h1>
+  		  <ul>
+		  #parse('gui/reports_and_tables/table_list.vm')
+          #if($viewMethods.loggedInUserAllowedTo('ADMINISTRATE'))
+			#parse('gui/administration/administration.vm')
+	 	  #end
+		  </ul>
+	    </li>
+	    #end
+	  #end
+	</ol> ## end list of sections	  
+	  #if($viewMethods.getException().getMessage())
+		   <script language="javascript">
+		      alert('$viewTools.escape($viewMethods.getException().getMessage())');
+		   </script>
+	  #end
+  </body>
+</html>

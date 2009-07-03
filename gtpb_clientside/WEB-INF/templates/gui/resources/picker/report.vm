@@ -1,0 +1,69 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#parse('gui/browser_incapabilities.vm')
+#set($pickerReport=$sessionData.getCustomReport('picker_report'))
+#set($fields=[])
+	#set($reportBaseFields = $pickerReport.getReportBaseFields())
+	#foreach ($field in $reportBaseFields)
+		#if ( (!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))
+			#set($success=$fields.add([$field.getInternalFieldName(),$field]))
+		#end ## uncomment to remove to show primary key field
+	#end
+
+#set($filters = $sessionData.getCustomReportFilterValues("picker"))
+<table id="reportData" cellspacing="0">
+  <thead>
+    <tr>
+      <th class="leading">&nbsp;</th>
+        #foreach($field in $fields)
+          ## row0 contains the internal field name
+    		      ## row1 contains the display field
+          		<th #if($field.get(0) && $field.get(0)!="")internalName=$field.get(0)#end>
+            				#if($field.get(1))
+    				          #if($field.get(0) && $field.get(0)!="")
+    				            <div title="$field.get(1)">
+    				          #end
+    				          $field.get(1)
+    				          #if($field.get(0) && $field.get(0)!="")
+    				            </div>
+    				          #end
+            #else
+    				          &nbsp;
+            				#end
+          		</th>
+        #end
+      <th class="trailing">&nbsp;</th>
+    </tr>
+    <tr name="fieldFilters" id="fieldFilters" on="true">
+      <td class="leading">&nbsp;</td>
+		      #foreach($field in $fields)
+        #set ($uiType = $field.getUiType())
+        #set ($dbType = $field.getDbType())
+        <td>
+          #if($field.get(0)!='')
+            <input type="text" name="$field.get(0)" is_filter="true" gtpb_internalfieldname="$field.get(0)" gtpb_customfilterset="picker" onkeyup="new fSetFilter(this)" #if($browser_cannot_detect_keyup) keyup_bug="true"#end gtpb_return="gui/resources/picker/report_body" value="$!filters.get($field.get(1))">
+          #end
+        </td>
+		      #end
+		      <td class="trailing">&nbsp;</td>      
+    </tr>
+  </thead>
+  <tbody name="reportBody" id="reportBody">
+    #parse('gui/resources/picker/report_body.vm')
+			  </tbody>
+</table>

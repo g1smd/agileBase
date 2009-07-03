@@ -1,0 +1,65 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<style>  
+  input[focused][type='text'],
+  textarea[focused] {
+    border:2px solid #A2B6FF;
+    background-color:#ECF0FF;
+  }
+</style>
+#set($table = $viewMethods.getSessionData().getTable())
+<table cellspacing=0 border=0 cellpadding=0>
+  <tr valign="top">
+    <td class="table_details">
+	<b>Name:</b><br>
+      <input type="text" name="tablename" gtpb_update_table value="$table.getTableName()" onkeyup="top.oBuffer.writeBuffer(this); parent.pane_1.fUpdateTitle('$table.getInternalTableName()$table.getDefaultReport().getInternalReportName()', this.value);" maxKeyCount="6" identifier="$table.getInternalTableName()" gtpb_internaltablename="$table.getInternalTableName()" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/><p>
+    <b>Purpose:</b><br><span class="greytext" style="font-size:8pt">Purpose of table and key stakeholders who value it</span><br>
+	  <textarea name="tabledesc" cols="50" rows="4" gtpb_update_table onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" gtpb_internaltablename="$table.getInternalTableName()" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">$table.getTableDescription()</textarea><p>
+      <input type="checkbox" name="lockable" gtpb_update_table #if($table.getRecordsLockable()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$table.getInternalTableName()" gtpb_internaltablename="$table.getInternalTableName()">
+	  Records lockable<br>
+	  <span class="greytext" style="font-size:8pt">Allow custom actions (such as 'print invoice') to lock records against future editing</span><p>
+      <!-- table deletion button -->
+	<input type=button value="Delete Table" #if($viewMethods.loggedInUserAllowedTo('ADMINISTRATE')) onclick="top.location='AppController.servlet?return=gui/display_application&remove_table=true&internaltablename=$table.getInternalTableName()'" #else disabled=true #end>
+    </td>
+	<td class="table_details" style="background-color:#f4f4f4">
+<form method="POST" action="/portalBase/AppController.servlet" target="pane_1">
+	<input type="hidden" name="return" value="gui/pane1">
+	<input type="hidden" name="add_report" value="true">
+	<input type="hidden" name="set_custom_string" value="true">
+	<input type="hidden" name="key" value="report_tabindex">
+	<input type="hidden" name="value" value="6">		
+	<input type="submit" value="Create new report"><br>
+	<input type="checkbox" checked name="populatereport" value="true"> Populate the report with fields from this table (recommended)
+</form>
+<p>
+#if($table.getReports().size() > 1)
+  A list of existing reports based on this table:<p>
+  <ul>
+  #foreach($tableReport in $table.getReports())
+	#if(!$tableReport.equals($table.getDefaultReport()))
+		<li>#if($tableReport.getModule())$tableReport.getModule() - #end $tableReport</li>
+	#end
+  #end
+#else
+  Create a report to allow data entry into this table as well as data analysis and filtering
+#end
+  </ul>
+
+	</td>
+  </tr>
+</table>

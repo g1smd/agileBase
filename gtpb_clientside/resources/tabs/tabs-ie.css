@@ -1,0 +1,61 @@
+/* button.css doesn't import properly in IE when the tab content is loaded
+   over AJAX
+*/
+
+@import url("../button/button.css");
+
+html .tab-interface .tab-list a, html .tab-interface .tab-list strong { 
+	min-width: 60px;
+}
+
+html .tab-interface .tab-list li {
+
+}
+
+.options_wrapper {
+	width:auto!important;
+}
+
+/*
+
+body{
+}
+
+thead{
+	height: 30px;
+}
+
+#tree{
+	position: absolute;
+	top: 10px;
+}
+
+	#tree li{
+		margin-bottom: -5px;
+	}
+	
+		#tree li img{
+			margin: 0 5px 0 -20px;
+			vertical-align: middle;
+		}
+		
+		#tree li ul{
+			//display: block;
+			padding-bottom: 5px solid #FFF;
+		}
+		
+		#tree li ul.expanded{
+			display: block;
+		}
+		
+		#tree li ul.collapsed{
+			display: none;
+		}
+		
+			#tree li ul li{
+				margin: -5px 0 5px 0;
+			}
+			
+
+
+*/

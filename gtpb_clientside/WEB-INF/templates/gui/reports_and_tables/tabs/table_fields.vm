@@ -1,0 +1,278 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+$viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
+## edit the fields in a table
+
+#set($tabCaption='fields')
+<STYLE>
+  @import url("styles/report.css");
+	
+  div#fieldOptionsSet { 
+    display:none
+	  }
+	
+  div#fieldOptionsSet[selected] {
+    display:block 
+	  }
+	
+  form {
+    height:100% 
+	  }
+	
+  tr#addNewField td { 
+    vertical-align:top; 
+	    font-size:8pt;
+	    border-top:1px solid orange 
+	  }
+	
+</STYLE>
+
+<script language=javascript>
+  function fArrayContains(aArray, vTest) {
+    for (var i=0;i<aArray.length;i++)
+	      if (aArray[i]==vTest) return true;
+	        return false;
+  }
+
+</script>
+## Moved from table_field_creator.vm - can't have a form inside a tr
+<form action="AppController.servlet" target="pane_2" method="post" id="newfield" onSubmit="disableUneccessaryElements();">
+<input type="hidden" name="return" value="gui/reports_and_tables/report_data">
+<input type="hidden" name="add_field" value="true">
+	
+<table id=reportData cellspacing="0" class="draggable">
+	  <thead>
+	    <tr>
+	      <th class=leading>&nbsp;</th>
+		      <th>Field Name</th>
+		      <th>Description</th>
+		      <th>Type</th>
+		      <th>Options</th>
+		      <th class=trailing>&nbsp;</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		#set($sessionTable = $viewMethods.getSessionData().getTable())
+	    #set($tableFields = $sessionTable.getFields())
+	    #set($numTableFields = $tableFields.size())
+	    #foreach ($field in $tableFields)
+		  #set($internalFieldName = $field.getInternalFieldName())
+	      #if($field.getHidden() == false)
+			#set($class="rowa")
+			#if($velocityCount%2==0)
+				#set($class="rowb")
+			#end
+			#if($field.equals($sessionTable.getPrimaryKey())) 
+				## can't move the position of the primary key
+				#set($class="$class nodrag nodrop")
+			#end
+	        <tr class="$class" id="$field.getInternalFieldName()" currentFieldIndex="$field.getFieldIndex()">
+    	      <td class=leading>&nbsp;</td>
+    	      <td class="capitalised">
+				#if($field.equals($sessionTable.getPrimaryKey())) $field #else
+    	        <div class="fieldinfo" id="fieldname_$field.getInternalFieldName()" onClick="makeFieldEditable(this)">$field</div>
+				<input class="input_fieldinfo" id="input_fieldname_$field.getInternalFieldName()" type="text" gtpb_internalfieldname="$field.getInternalFieldName()" gtpb_update_field="true" name="fieldname" value="$field.getFieldName()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)">
+    	        #end
+			  </td>
+    	      <td>
+				<div class="fieldinfo" id="fielddescription_$field.getInternalFieldName()" onClick="makeFieldEditable(this)">$field.getFieldDescription()</div>
+				<input class="input_fieldinfo" id="input_fielddescription_$field.getInternalFieldName()" type="text" gtpb_internalfieldname="$field.getInternalFieldName()" gtpb_update_field="true" name="fielddesc" value="$field.getFieldDescription()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)">
+			  </td>
+    	      <td>#set($category = $field.getFieldCategory().getDescription())
+				#if(($category == "Number") && ($field.getDbType() == "INTEGER"))
+				  #set($category = "Whole Number")
+				#end
+				$category
+			  </td>
+			  #set($options = $field.getFieldDescriptor().getOptions())
+    	      <td class="small">
+				<div id="viewoptions_$internalFieldName">
+		         #foreach($option in $options)
+			                #if ($option.getClass().getSimpleName().equals("BooleanFieldDescriptorOption"))
+			                ## Just show boolean options that are set (true)
+			  	                #if ($option.getOptionState())
+			  	                  '$option.getOptionDescription()' is set<br>
+			  	                #end
+			                #end
+			                #if ($option.getClass().getSimpleName().equals("ListFieldDescriptorOption"))
+						      #if(($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision"))
+			                  #else
+								$option.getOptionDescription() : $option.getSelectedItemDisplayValue()<br>
+			                  #end
+							#end
+			                #if ($option.getClass().getSimpleName().equals("TextFieldDescriptorOption"))
+		                  ## Just show text options that are set (not null)
+			                  #if ($option.isValueNull() == false)
+			                    $option.getOptionDescription() : "$option.getValue()"<br>
+			  	                #end
+			                #end	
+				 #end
+				 #if($options.size() > 0)
+				  <a href="#" onclick="$('#editoptions_$internalFieldName').slideDown('normal'); $('#viewoptions_$internalFieldName').hide('fast');" >more/change</a>	
+				 #end
+				</div>
+				<div id="editoptions_$internalFieldName" style="display:none">
+		         #foreach($option in $options)
+			        #set($formInputName = $option.getFormInputName())
+			        #set($formName = "updateoption${field.getInternalFieldName()}${formInputName}")
+			        #if ($option.getClass().getSimpleName().equals("BooleanFieldDescriptorOption"))			        
+                  <input class="small" type="checkbox" name="$formName" value="1" id="${formName}" #if($option.getOptionState()) checked #end onclick="new fChange(this); parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';" 
+                    gtpb_internalfieldname="$internalFieldName"
+                    gtpb_update_field_option=true />
+                  <label for="${formName}">
+                    $option.getOptionDescription()
+                  </label>
+			        #end
+			        #if($option.getClass().getSimpleName()=="ListFieldDescriptorOption")
+						#if(($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision"))
+						#else
+			                  <select class="small" name="$formName" onchange="new fChange(this); parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';"
+			                    gtpb_internalfieldname="$internalFieldName"
+                    gtpb_update_field_option="true">
+                    #foreach($optionKey in $option.getOptionsList().keySet())
+                      <option value="$optionKey" #if($optionKey.equals($option.getSelectedItemKey())) selected #end >
+        			                $option.getOptionsList().get($optionKey)
+					                      </option>
+      		        #end 
+                  </select>
+                  $option.getOptionDescription()
+				   #end ## end if a whole number and the option is NUMBERPRECISION
+	      		   #end ## end ListFieldDescriptorOption
+	          	   #if($option.getClass().getSimpleName()=="TextFieldDescriptorOption")
+                  <input type="text" name="$formName" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_internalfieldname="$internalFieldName" gtpb_update_field_option="true" #if($option.isValueNull() == false) value="$option.getValue()" #end />
+                  <label for="$formName">
+                    $option.getOptionDescription()
+                  </label>
+                  #end<br>
+			    #end ## end loop through options
+				</div>
+		          </td>
+    	      <td class="trailing">
+		            #if(!($field.equals($field.getTableContainingField().getPrimaryKey())))
+		              <input type=button value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_field=true gtpb_internalfieldname="$internalFieldName">
+		            #end
+		          </td>
+		        </tr>
+		      #end ## end if field hidden
+	    #end ## end loop through fields
+	    <tr class="trailing nodrag nodrop"> <!-- a padding row -->
+	      <td class=leading>&nbsp;</td>
+		      <td>&nbsp;</td>
+		      <td>&nbsp;</td>
+		      <td>&nbsp;</td>
+		      <td>&nbsp;</td>
+		      <td class=trailing>&nbsp;</td>
+	    </tr>
+	    #parse('gui/reports_and_tables/tabs/table_fields/table_field_creator.vm')
+  </tbody>
+</TABLE>
+</form>
+
+## This script is ripe for replacing with jQuery but does work. Also though, it relies on 
+## multiple elements with the same ID, perhaps classes could be used instead
+<SCRIPT language=javascript>
+  function fSelectFieldOption(iIndex){	
+    function fEnableDisable(oFieldOptionSet){
+	      function fDoIt(oSet,bEnable) {
+	        for (var i=0;i<oSet.childNodes.length;i++){
+	          if(oSet.childNodes[i].form) {
+		            //it's a form element
+		            if (bEnable) oSet.childNodes[i].removeAttribute('disabled');
+		            else oSet.childNodes[i].setAttribute('disabled','true');
+		          }
+		          else {
+		            // if the element has child nodes itself (could be another wrapper div), then enable or disable its elements
+		            if(oSet.childNodes[i].hasChildNodes) fDoIt(oSet.childNodes[i],bEnable);
+		          }
+	        }
+	      }
+	      fDoIt(oFieldOptionSet,oFieldOptionSet.getAttribute('selected')?true:false);
+	    }
+		
+	    for(var i=0;i<aFieldOptionsSets.length;i++) {
+	      aFieldOptionsSets[i].removeAttribute('selected');
+		  $(aFieldOptionsSets[i]).hide();
+	      fEnableDisable(aFieldOptionsSets[i]);
+	    }
+	
+	    aFieldOptionsSets[iIndex].setAttribute('selected','true');
+		$(aFieldOptionsSets[iIndex]).show();
+		
+	    fEnableDisable(aFieldOptionsSets[iIndex]);
+  }
+	
+  var aFieldOptionsSets=new Array();
+	
+  //push all the options sets into a global array 
+  var optionSetsDivs = document.getElementById('fieldOptionsSets').getElementsByTagName('DIV');
+  for(var i=0;i<optionSetsDivs.length;i++)
+    if(optionSetsDivs[i].id=='fieldOptionsSet')
+	  aFieldOptionsSets.push(optionSetsDivs[i]);		
+	
+  fSelectFieldOption(0);
+</SCRIPT>
+<script language="JavaScript">
+$('.draggable').tableDnD({
+  scrollAmount: 5,
+  onDragClass: "draggingRow",
+  onDrop: function(table, row) {
+    var jqTable = $(table);
+	var jqRow = $(row);
+    jqTable.find('tr:even').removeClass('rowa').addClass('rowb');
+    jqTable.find('tr:odd').removeClass('rowb').addClass('rowa');
+	// find the new position of the dropped row
+	var internalFieldName = jqRow.attr('id');
+	var originalFieldIndex = jqRow.attr('currentFieldIndex');
+	var rows = table.tBodies[0].rows;
+	var newPosition = 0;
+	for (var i=0; i<rows.length; i++) {
+	  if(rows[i].id == internalFieldName) {
+	    if (i != originalFieldIndex) {
+		  var url="AppController.servlet?return=gui/reports_and_tables/report_data&set_field_index&internalfieldname=";
+		  url += internalFieldName;
+		  url += "&newfieldindex=";
+		  url += i;
+		  parent.pane_2.document.location=url;
+		}
+		break;
+	  }
+	}
+  }
+});
+
+function makeFieldEditable(fieldnameDiv) {
+  var jqFieldnameDiv = $(fieldnameDiv);
+  var fieldnameInputId = "input_" + jqFieldnameDiv.attr("id");
+  var jqFieldnameInput = $("#" + fieldnameInputId);
+  $(".fieldinfo").show();
+  jqFieldnameDiv.hide();
+  $(".input_fieldinfo").hide();
+  jqFieldnameInput.show();
+}
+
+function updateFieldnameDiv(fieldnameInput) {
+  var jqFieldnameInput = $(fieldnameInput);
+  var fieldnameDivId = jqFieldnameInput.attr("id");
+  fieldnameDivId = fieldnameDivId.replace("input_","");
+  var jqFieldnameDiv = $("#" + fieldnameDivId);
+  jqFieldnameDiv.text(jqFieldnameInput.val());
+}
+
+</script>
+##<script language=javascript src="resources/wait/interdependent_fields.js"></script>
+$viewTools.stopTimer("gui/reports_and_tables/tabs/table_fields")

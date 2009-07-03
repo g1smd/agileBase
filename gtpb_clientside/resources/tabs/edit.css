@@ -1,0 +1,71 @@
+div#recordBlank {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	padding: 20px;
+	background-color: #FF0000;
+	-moz-opacity: 0.3;
+	opacity: 0.3;
+	filter: alpha(opacity = 30);
+}
+
+div#recordUnlock {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding-top: 20px;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+div#recordUnlock button, div#recordUnlock div#staticMessage {
+	position: relative;
+	width: 320px;
+	height: 220px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div#recordUnlock div#staticMessage {
+	background: transparent url('../recordLocking/unlock_static.png')
+		no-repeat top left;
+	padding-left: 140px;
+	padding-right: 20px;
+	padding-top: 1px;
+}
+
+div#recordUnlock button div {
+	position: absolute;
+	top: -110px;
+	padding-right: 20px;
+	padding-left: 130px;
+	padding-top: 20px;
+	height: 220px;
+	background: transparent url('../recordLocking/padlock_closed.png')
+		no-repeat 20px center;
+}
+
+div#recordUnlock button:hover div {
+	background-image: url('../recordLocking/padlock_open.png');
+}
+
+div#recordUnlock button[disabled] div {
+	background-image: url('../wait/hourglass.gif');
+}
+
+div#recordUnlock button div h1, div#recordUnlock div#staticMessage h1 {
+	font-size: 16pt;
+	font-weight: normal;
+	margin-top: 40px;
+	margin-bottom: 30px;
+}
+
+div#recordUnlock button div small, div#recordUnlock div#staticMessage small
+	{
+	font-size: 8pt;
+}

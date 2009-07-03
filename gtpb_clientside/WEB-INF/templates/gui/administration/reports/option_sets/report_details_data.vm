@@ -1,0 +1,72 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<script language=JavaScript>
+  function updateGrouping(groupingValue) {
+    var groupingInputElement = document.getElementById('reportgrouping');
+    groupingInputElement.value = groupingValue;
+    new fChange(groupingInputElement);
+  }
+</script>
+<style>  
+  input[focused][type='text'],
+  textarea[focused] {
+    border:2px solid #A2B6FF;
+    background-color:#ECF0FF;
+  }
+</style>
+#set($report = $viewMethods.getSessionData().getReport())
+<table cellspacing=0 border=0 cellpadding=0>
+  <tr>
+    <td>Name:</td>
+    <td>
+		#set($pane1_report_name="$report.getParentTable().getInternalTableName()$report.getInternalReportName()")
+      <input type="text" name="reportname" gtpb_update_report value="$report" pane1_report_name="$pane1_report_name" onkeyup="top.oBuffer.writeBuffer(this); parent.pane_1.fUpdateTitle('$pane1_report_name', this.value);" maxKeyCount="6" identifier="$report.getInternalReportName()" gtpb_internalreportname="$report.getInternalReportName()" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/>
+    </td>
+  </tr>
+  <tr>
+    <td>Purpose:<br><span class="greytext">Purpose and any key users</span></td>
+    <td>
+	  <textarea name="reportdesc" cols="60" rows="4" gtpb_update_report onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="15" gtpb_internalreportname="$report.getInternalReportName()" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">$report.getReportDescription()</textarea>
+    </td>
+  </tr>
+  <tr>
+    #set($modules = $viewMethods.getLoggedInUser().getCompany().getModules())
+    <td>
+      Module:<br><span class='greytext'><i>Please choose a module to place this report in</i></span>
+    </td>
+    <td>
+	      #set($reportModule = $report.getModule())
+	      <select name="internalmodulename" id="internalmodulename" gtpb_update_report onchange="new fChange(this); parent.pane_1.document.location = 'AppController.servlet?return=gui/pane1';" identifier="report.getInternalReportName()">
+		        <option value="">--Please choose a module--</option>
+		        #foreach($module in $modules)
+			          #if($module.equals($reportModule))
+			            <option value="$module.getInternalModuleName()" selected>$module</option>
+			          #else
+			            <option value="$module.getInternalModuleName()">$module</option>
+			          #end
+		        #end
+	      </select>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+		      <input type=button value="Delete Report" onclick="parent.pane_1.document.location='AppController.servlet?return=gui/pane1&remove_report=true&internalreportname=$report.getInternalReportName()'">
+    </td>
+  </tr>
+</table>

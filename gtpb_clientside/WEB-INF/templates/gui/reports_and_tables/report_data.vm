@@ -1,0 +1,91 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($sessionData = $viewMethods.getSessionData())##
+#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))##
+## data from a report for pane2
+#set($resource_folder='tables')##
+#set($sessionContext = $sessionData.getContext().toString())##
+##Check there's stuff in the session to stop an exception when there's not
+#if($sessionData.hasTable())##
+	  #set($sessionReport=$sessionData.getReport())##
+	  #set($sessionTable=$sessionData.getTable())##
+	  #set($return='gui/reports_and_tables/pane3')##
+	  #set($pane1_id="$sessionTable.getInternalTableName()$sessionReport.getInternalReportName()")##
+	  ##test to see whether a record has previously been selected and is stored in the session
+	  #if ($sessionData.getRowId())##
+		    #set($selection=$sessionData.getRowId())##
+	  #end##
+	  #set($fields=[])##
+	  #set($reportBaseFields = $sessionReport.getReportBaseFields())##
+	  #foreach ($field in $reportBaseFields)##
+		    #if ( (!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
+				#set($success=$fields.add([$field.getInternalFieldName(),$field]))##
+			#end ## added to show display field name for relation fields
+	  #end##
+	  #set($data=[])##
+	  #foreach($datarow in $viewMethods.getReportDataRows())##
+		    #set($row=[])##
+		    #set($colours=[])##
+		    #set($dataRowFields = $datarow.getDataRowFields())##
+		    #foreach($field in $reportBaseFields)##
+		      #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
+			       #set($dataRowField = $dataRowFields.get($field))##
+			       #if(($printout) && ($field.getClass().getSimpleName().equals("BigTextFieldDefn")))##
+			         #set($success=$row.add($dataRowField.getKeyValue()))##
+			       #else##
+			         #set($success=$row.add($dataRowField.getDisplayValue()))##
+			       #end##
+			       #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
+			      #end##
+		    #end##
+		    #set($success=$colours.add("")) ## needs an extra one for some reason
+		    #if($printout)##
+		      #set($click='')##
+		      #set($locked=$viewMethods.isRecordLocked($sessionTable,$datarow.getRowId()))##
+		    #else##
+		      #set($locked='')##
+			  #if($sessionTable.getDefaultReport().equals($sessionReport))
+				#set($numberOfTabs = '-1')
+			  #else
+			    #set($numberOfTabs = '2')
+			    #if($viewMethods.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))
+				  #set($numberOfTabs = '6')
+			    #elseif($viewMethods.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))
+				  #set($numberOfTabs = '3')
+				#end
+			  #end
+			  #if($mobile_device)
+				#set($click="document.location='AppController.servlet?return=$return&set_row_id=$datarow.getRowId()';")
+			  #else
+		        #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()', $datarow.getRowId(), $numberOfTabs)")##
+			  #end##
+			#end##
+		    #set($uniqueid=$datarow.getRowId())##
+		    #set($success=$data.add([$row,$click,$uniqueid,$colours,$locked]))##
+		    #if ($uniqueid==$selection)##
+		      #set($selectionFound = true)##
+		    #end##
+	  #end##
+	  #if($printout)##
+	    #parse('gui/printouts/pane2_printout.vm')##
+	  #else##
+	    #parse('gui/pane2/include_delete_checkboxes.vm')##
+	  #end##
+#else ##if there's no report in the session
+	  #parse('gui/resources/nothing.vm')##
+#end##

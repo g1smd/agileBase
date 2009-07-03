@@ -1,0 +1,68 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+$viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/table_field_creator")
+## Form for user to create a new table field with
+## Called from ../table_fields.vm
+#set($viewableTables = $viewMethods.getTablesAllowedTo("VIEW_TABLE_DATA"))
+<style>  
+  input[focused][type='text'],
+  textarea[focused] {
+    border:2px solid #A2B6FF;
+    background-color:#ECF0FF;
+  }
+</style>
+	  ##nodrag and nodrop classes used by jquery.tableDnD plugin
+	  <tr id="addNewField" class="nodrag nodrop">
+	    <td class="leading" height="20">&nbsp;</td>
+		    <td height="20"><input type="text" name="fieldname" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"></td>
+		    <td height="20"><input type="text" name="fielddesc" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"></td>
+		    <td height="20">
+		      <select name="fieldtype" onchange="fSelectFieldOption(this.selectedIndex)">
+		        #foreach($fieldType in $viewTools.getFieldTypeDescriptors())
+			          <option value="$fieldType.getFieldCategory().getFieldTypeParameter()">
+			            $fieldType.getFieldCategory().getDescription()
+			          </option>
+			        #end
+		      </select>
+		    </td>
+		    <td height="20" id="fieldOptionsSets">
+		      #foreach($fieldType in $viewTools.getFieldTypeDescriptors())
+		        <div id="fieldOptionsSet">
+		          ## First loop - basic options
+  			        #foreach($fieldOption in $fieldType.getOptions())
+  			          #if(!$fieldOption.isAdvancedOption())
+              #parse('gui/reports_and_tables/tabs/table_fields/field_option.vm')
+            #end
+          #end
+  		        ## Second loop - advanced options
+  			        <a href="#" onClick="document.getElementById('advancedFieldOptionSet${fieldType}').style.display='block'">advanced options</a><br>
+  			        <div id="advancedFieldOptionSet$fieldType" style="display:none">
+  			          #foreach($fieldOption in $fieldType.getOptions())
+  			            #if($fieldOption.isAdvancedOption())
+                #parse('gui/reports_and_tables/tabs/table_fields/field_option.vm')
+              #end
+  			          #end
+  			        </div>
+        </div>
+		      #end  ##foreach field type
+	    </td>
+	    <td height="20" class="trailing">
+	      <input type="submit" value="create field">
+	    </td>
+	  </tr>
+$viewTools.stopTimer("gui/reports_and_tables/tabs/table_fields/table_field_creator")

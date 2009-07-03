@@ -1,0 +1,44 @@
+portalBase programming information and practices:
+
+*) Interfaces should be defined for all classes prior to implementing them apart from those in:
+com.gtwm.pb.util most of which contain only static methods
+com.gtwm.pb.servlets which extend HttpServlet or VelocityServlet, or contain static methods
+
+*) Each class that needs to log debug or error information should use it's own logger
+defined with a private variable in this manner:
+private static Logger logger = Logger.getLogger(MyClass.class.getName())
+Output will then be written in {Servlet container root}/logs/ into file portalbase.xxx.log
+
+*) Exceptions: For exceptions caused by user input, particularly SQLExceptions, catch them as soon as possible
+and generate a user friendly message to pass to the user interface for display in the appropriate way. 
+For any other exception, either let ManageController catch it and throw a ServletException with the original exception
+as the root cause or do whatever looks best for the situation
+
+*) For release, all severe exceptions should log to file
+
+*) Comment liberally! Javadoc interfaces
+
+*) import statements are almost always explicit - no wildcard imports;
+
+*) Don't use setters unless absolutely necessary - rather use constructors to populate objects with data
+
+*) For questions, http://www.javapractices.com/ or oliver@gtportalbase.com
+
+*) Unit testing: THERE ARE CURRENTLY ONLY A FEW UNIT TESTS, this is a drawback. Additions welcome
+
+*) Database persistence: Hibernate is used for schema objects
+
+*) MVC:
+controller = com.gtwm.pb.servlets.AppController
+view = Velocity templates in WEB-INF/templates
+model = DatabaseInfo is the base model interface
+
+*) Guide to main classes
+Tier 1: AppController, as above is the servlet that handles posted data to perform actions
+Tier 2: It parcels out work to other classes in the com.gtwm.pb.servlets package as appropriate
+- ServletAuthMethods: authentication related, e.g. adding/removing users and roles, assigning privileges
+- ServletDataMethods: to do with database data (creating/deleting records etc.) and session data
+- ServletSchemaMethods: e.g. editing table, field and report structures.
+Tier 2 wraps actions in transactions (Hibernate and/or SQL) and handles commit/rollback
+Tier 3 and below: other classes called by tier 2 as appropriate.
+Largely manageSchema.DatabaseDefn and manageData.DataManagement

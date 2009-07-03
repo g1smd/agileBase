@@ -1,0 +1,174 @@
+.gfg-root {
+  width : 100%;
+  height : auto;
+  position : relative;
+  overflow : hidden;
+  text-align : center;
+  font-size: 12px;
+  background:transparent url('../images/bg-announce.png') no-repeat center top;
+  margin-top:15px;
+}
+
+/*.gfg-title {
+  font-size: 14pt;
+  font-weight : bold;
+  line-height : 1.4em;
+  overflow : hidden;
+  white-space : nowrap;
+}*/
+
+.gfg-title {
+	display:none;
+}
+
+.gfg-title a {
+  color:black;
+  text-decoration:none;
+}
+
+.gfg-subtitle {
+  font-size: 12px;
+  font-weight : bold;
+  color : #3366cc;
+  line-height : 1.4em;
+  overflow : hidden;
+  white-space : nowrap;
+  margin-bottom : 5px;
+}
+
+.gfg-subtitle a {
+}
+
+.gfg-entry {
+  width : 100%;
+  height : 7.5em; /* 6.9em; changed to to addition of font size in .gf-snippet */
+  position : relative;
+  overflow : hidden;
+  text-align : left;
+  margin-top : 7px;
+  padding-bottom: 7px;
+}
+
+/* To allow correct behavior for overlay */
+.gfg-root .gfg-entry .gf-result {
+  position : relative;
+  width : auto;
+  height : 100%;
+  padding-left : 20px;
+  padding-right : 5px;
+  padding-bottom:5px;
+}
+
+.gfg-list {
+  position : relative;
+  overflow : hidden;
+  text-align : left;
+  margin-bottom : 5px;
+  padding-top:43px;  
+}
+
+.gfg-listentry {
+  line-height : 1.5em;
+  overflow : hidden;
+  white-space : nowrap;
+  text-overflow : ellipsis;
+  -o-text-overflow : ellipsis;
+  padding:3px;
+  padding-left : 15px;
+  padding-right : 5px;
+  margin-left : 5px;
+  margin-right : 5px;
+  color:#dddddd;
+}
+
+.gfg-listentry a {
+  color: #eeeeee;
+  text-decoration: none;
+}
+
+.gfg-listentry-odd {
+}
+
+.gfg-listentry-even {
+}
+
+.gfg-listentry-highlight { 
+  background-image : url('garrow.gif');
+  background-repeat: no-repeat;
+  background-position : left center;
+}
+
+.gfg-listentry-highlight a {
+	color:orange;
+	}
+
+/*
+ * FeedControl customizations.
+ */
+
+.gfg-root .gfg-entry .gf-result .gf-title {
+  font-size: 14px;
+  overflow : hidden;
+  white-space : nowrap;
+  text-overflow : ellipsis;
+  -o-text-overflow : ellipsis;
+  margin-bottom : 15px;
+  color:#333333;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.gfg-root .gfg-entry .gf-result .gf-snippet {
+  height : 3.8em;
+  color: #000000;
+  margin-top : 3px;
+  font-size: 10pt; /* see also .gfg-entry */
+}
+
+.gf-spacer,
+.gf-author {
+  position:absolute;
+  bottom:-50px;	
+}
+
+.gf-relativePublishedDate {
+  position:absolute;
+  bottom:0;
+  right:10px;
+  font-size:8pt;	
+}
+
+.gfg-branding {
+  white-space : nowrap;
+  overflow : hidden;
+  text-align : left;
+  position : absolute;
+  right : 0px;
+  top : 0px;
+  width : 80px;
+}
+
+.gfg-collapse-open, .gfg-collapse-closed {
+  background-repeat : no-repeat;
+  background-position : center;
+  cursor : pointer;
+  float : right;
+  width : 17px;
+  height : 20px;
+}
+
+.gfg-collapse-open {
+  background-image : url('arrow_open.gif');
+}
+
+.gfg-collapse-closed {
+  background-image : url('arrow_close.gif');
+}
+
+.gfg-collapse-href {
+  float : left;
+}
+
+.clearFloat {
+  clear : both;
+}

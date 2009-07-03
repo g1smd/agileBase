@@ -1,0 +1,81 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<STYLE>@import url("resources/tab/tab.css");</STYLE>
+
+<script language="JavaScript" type="text/javascript">
+  function fNothing(x,y){  
+    return;
+  }
+  
+  function fTabClick(oEvent){  
+    function fTabObj(oEventObj){  
+      while ((oEventObj.parentNode)&&((oEventObj.tagName!='DIV')||(!oEventObj.className)||(oEventObj.className!='tab_content')))
+				      oEventObj=oEventObj.parentNode;				    
+      		return oEventObj.parentNode?oEventObj:null;
+    }
+     
+    function fSetTabSessionVars(oTabObj){ 
+      function fSetSessionTabset(aPostVars){
+        	aPostVars['key']='$tabset_id';
+	     		   aPostVars['value']='true'; ##note that this is a smarty variable
+	     		   var oReq=new fRequest('AppController.servlet',aPostVars,fNothing,-1);
+	      }
+	      
+	      function fSetSessionTab(oTabObj,aPostVars){
+	        	aPostVars['key']="$tabset_id"+'_tabindex';
+	     		   aPostVars['value']=oTabObj.getAttribute('tabindex');
+	     		   var oReq=new fRequest('AppController.servlet',aPostVars,fNothing,-1);
+	      }
+	    
+	      aPostVars=new Array();
+	      aPostVars['return']='gui/administration/xmlreturn_fieldchange';
+	      aPostVars['set_custom_string']='true';
+     	 
+     	 fSetSessionTabset(aPostVars);
+     	 fSetSessionTab(oTabObj,aPostVars);     
+    }
+				 
+		    fClearSelectedTabs();
+		    var oTabObj=fTabObj(oEvent.target);
+		    if (oTabObj) {
+		      	oTabObj.blur();
+		 		     oTabObj.id='selected_tab';				 
+		 		     fSetTabSessionVars(oTabObj);
+		    }
+	  }
+</script>
+
+<div class="tab_content"
+  #if ($viewMethods.getSessionData().getCustomVariable($tabset_id)=='true')
+    	#set($sTI='_tabindex')
+  	  #if ($viewMethods.getSessionData().getCustomVariable("$tabset_id$sTI")=="$velocityCount")
+  		    id="selected_tab"
+  	  #end
+  #elseif ($velocityCount==1)
+    id="selected_tab"
+  #end 
+  tabindex="$velocityCount">
+  <div id="html_content" class="content">
+    ##tab html content
+    #parse($tabSource)
+  </div>
+  <div id="tab">
+		    ##tabCaption is set in the tab HTML content
+		    $tab.get('tabName')
+	  </div>
+</div>

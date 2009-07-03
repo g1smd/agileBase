@@ -1,0 +1,97 @@
+.tagCloud {
+	border:2px solid #cccccc;
+	width:500px;
+    height:350px;	
+    float:left;
+    margin-right:30px;
+    text-align:center;
+}
+
+.tagCloud,
+#filter {
+    background-color:#ffffff;
+    overflow:hidden;
+    padding:10px;
+}
+
+.tagCloud a {	
+}
+
+.tagCloud a,
+#filter a {
+	text-decoration:none;
+}
+
+.tagCloud a:hover {
+	color:#000000!important;
+}
+
+.tagCloud a.clicked {
+	color:orange!important;
+}
+
+
+.tagCloud.loading,
+#results.loading {
+    background: transparent url('ajax-loader.gif') no-repeat center center;
+}
+
+#searchWrapper {
+	width:300px;
+	float:right;
+}
+
+#filter {
+	border:2px solid #cccccc;
+	width:300px;
+    height:280px;
+    background-color:#ffffff;
+    overflow:hidden;
+    position:relative;
+    color:#aaaaaa!important;
+    font-size:16pt!important;
+}
+
+#filter h1 {
+	font-size:18pt;
+	font-weight:normal;
+	margin-top:0;
+	margin-bottom:15px;	
+}
+
+#filter a {
+  display:block!important;
+  color:#8D8D8D!important;
+  font-size:16pt!important;
+  background:transparent url('cross.png') no-repeat right 5px;
+  overflow:hidden;
+  padding-right:20px; /* why doesn't this work? */
+}
+
+#filter a:hover {
+	color:black!important; 
+	background-position:right -80px;
+}
+
+#filter a.clicked {
+	color:orange!important;
+	text-decoration:line-through;
+}
+
+#search {
+  width:300px;
+  margin-top:40px;
+}
+
+#search input {
+	font-size:14pt;	
+	width:200px;
+	float:left;
+}
+
+#search button {
+	font-size:14pt;
+	float:right;
+	position:relative;
+	top:-1px;	
+}

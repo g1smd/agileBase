@@ -1,0 +1,167 @@
+    	
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+
+body { 
+    background-color:#f1f2ed; 
+  font-family:sans-serif,Arial;
+     font-size:10pt;
+     margin: 0;
+overflow: hidden;
+}
+  	  								
+td.trailing input[type=button] { 
+  font-size:8pt; 
+}
+
+.tab-interface {
+
+}
+
+.tab-interface .tab-list {
+	list-style-type: none;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 2em;
+	margin: 0;
+	padding: 0 0 0 10px;
+	background: #F1F2ED;
+  border-top:1px solid #cecece;	
+}
+
+.tab-interface .tab-list li {
+	float: left;
+	margin-right: -1px;
+	height: 100%;
+}
+
+.tab-interface .tab-content { 
+  background-color:white;
+  position: absolute;
+	top: 0; 
+	bottom: 2em;  
+	right: 0;
+	left: 0;
+	/*
+	overflow: scroll;
+	*/
+	
+	overflow: auto;
+	
+ }
+														  
+.tab-interface .tab-list a, .tab-interface .tab-list strong { 
+  padding: 3px 20px;
+  margin: 0;
+  min-width: 100px;
+  text-align:center;
+  border:1px solid #cecece;
+  border-top:0;
+  font-size:8pt;
+  color:#666666;
+  display: block;
+  text-decoration: none;
+}
+															
+.tab-interface .tab-list a:hover { 
+  border-bottom-color:orange;
+  color:black;
+  padding-bottom: 6px;
+
+}													
+																
+.tab-interface .tab-list strong { 
+  font-weight:bold;
+  background-color:white;
+  padding-bottom: 6px;
+  margin-top: -1px;
+  font-size:9pt; 
+  color:black;
+}	
+
+.tab-interface .tab-content .tab-item {
+	/*
+	overflow:auto;
+	
+	height:100%;
+	*/
+ }
+
+.tab-interface .tab-content div.content { 
+  width:100%;
+  height:100%;
+  overflow:auto; 
+}
+															
+div.tab_content th { 
+  text-transform:uppercase;
+  border-bottom:1px solid #333333;
+  color:#333333;
+  padding-bottom:3px;
+  vertical-align:bottom;
+  font-size:8pt;
+}
+                                          
+div.tab_content tr.caption:hover { 
+  background:transparent;
+}  
+                                          
+div.tab_content td { 
+  padding:10px;
+  font-size:8pt;
+  color:#666666;
+  padding-left:10px; 
+}		
+                     
+label:hover { 
+  color:black; 
+}                                       
+                                          
+div.tab_content td:first-child:first-line { 
+  font-size:10pt;
+  font-weight:bold;
+  color:black;
+  vertical-align:top;
+  padding-top:13px; 
+} 
+                                            
+div.tab_content table#reportData tbody tr.rowa:hover td,
+div.tab_content table#reportData tbody tr.rowb:hover td { 
+  background-color:transparent!important;
+} 
+
+div.tab_content table#reportData tbody tr.rowa[forcehighlight=true]:hover td,
+div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td { 
+  background-color:#dae2ff!important;
+}
+
+.separator {
+  background:transparent url(line.gif) repeat-x scroll 0pt 28px;
+  color:#888888;
+  font-style:italic;
+  font-weight:bold;
+  margin-bottom:-3px;
+  position:relative;
+}
+
+.separator td {
+  padding-top:20px!important;
+  border-right:0px!important;
+}
+
+.separator span {
+  background:#FFFFFF none repeat scroll 0% 0%;
+  padding: 0px 5px;
+}
+
+.separator .fieldname {
+  margin-left:-25px;
+  font-size: 12pt;
+}
+
+.draggingRow {
+  border-width: 1px;
+  border-color: black;
+  background-color: #cccccc;
+  cursor: move;
+}

@@ -1,0 +1,71 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## What content to display in pane 2? Report, summary etc.
+#set($sessionData = $viewMethods.getSessionData())
+#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
+#set($report = $sessionData.getReport())
+#set($sessionReport = $report)
+#set($mobile_pane2_selection = $sessionData.getCustomString("mobile_pane2_selection"))
+#parse('gui/browser_incapabilities.vm')
+#if($mobile_pane2_selection == "report")
+  #parse("gui/reports_and_tables/report_data.vm")
+#elseif($mobile_pane2_selection == "summary")
+  <html>
+	<head><title>$report summary</title>
+	  <meta name = "viewport" content = "width = device-width">
+	  <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
+  	  <script src="resources/jquery.js" language="Javascript"> </script>
+	      <style type="text/css">
+			@import url("styles/report.css");
+			@import url('resources/tabs/tabs.css');	
+			@import url('resources/tabs/summary.css');	
+		  </style>
+    </head>
+	<body>
+	  #parse("gui/mobile/pane2_header.vm")
+      #parse("gui/reports_and_tables/tabs/summary.vm")
+	</body></head>
+  </html>
+## Mobile users can't edit or manage reports 
+##  
+###elseif($mobile_pane2_selection == "edit_report")
+##  <html>
+##	<head><title>edit report $report</title>
+##	  <meta name = "viewport" content = "width = 700">
+##	  <meta name="apple-mobile-web-app-capable" content="yes" />
+##  	  <script src="resources/jquery.js" language="Javascript"> </script>
+##    </head>
+##	<body>
+##      #parse("gui/reports_and_tables/tabs/report_fields.vm")
+##	</body></head>
+##  </html>
+###elseif($mobile_pane2_selection == "manage_report")
+##  <html>
+##	<head><title>manage report $report</title>
+##	  <meta name = "viewport" content = "width = device-width">
+##      <meta name="apple-mobile-web-app-capable" content="yes" />
+##  	  <script src="resources/jquery.js" language="Javascript"> </script>
+##    </head>
+##	<body>
+##      #parse("gui/reports_and_tables/tabs/report_administration.vm")
+##	</body></head>
+##  </html>
+#else
+  #set($mobile_pane2_selection = "report")
+  #parse("gui/reports_and_tables/report_data.vm")
+#end

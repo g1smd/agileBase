@@ -1,0 +1,98 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## a list of all the reports and tables for pane1
+#set($sessionData=$viewMethods.getSessionData())
+#set($sessionContext=$sessionData.getContext().toString())
+
+## Only show the table list if the user has manage privileges on at least one table
+## or user is an administrator
+#if(($manageableTables.size() > 0) || $viewMethods.loggedInUserAllowedTo('ADMINISTRATE'))
+
+
+	
+<li branch="true"
+#if($sessionReport.equals($sessionTable.getDefaultReport()))
+	class="moduleexpanded silver"
+#else
+	class="modulecollapsed silver"
+#end
+><h2><span>Tables</span></h2>
+	<ul>
+	  
+    #foreach($table in $manageableTables)
+        #set($tableReports = $viewMethods.getViewableReports($table))
+        ##find out whether only the default report exists
+        #set($reportsExist=false)
+        ## Find which modules contain reports from this table
+        #set($modulesReferencing=[])
+        #foreach($report in $tableReports)
+          #if(!$report.equals($table.getDefaultReport()))
+            #set($reportsExist=true)
+        	#set($module = $report.getModule())
+        	#if($module)
+        	  #if(!$modulesReferencing.contains($module))
+        	    #set($tmp = $modulesReferencing.add($module))
+        	  #end
+        	#end
+          #end
+        #end
+        ###set($expanded=false)
+        ###if($table.equals($viewMethods.getSessionData().getTable()))
+        ##  #set($expanded=true)
+        ###end    
+    
+        <li branch="true" id="$table.getInternalTableName()$table.getDefaultReport().getInternalReportName()"
+        ##use this to switch branching on or off e.g. if user had permission to add a report
+        ###if($expanded)
+        ##	class="expandable"
+        ###else
+        ##	class="expandable collapsed"
+        ###end	
+        >
+    		<div class="tree-item-wrap">
+                <a target="pane_2" name="caption" type="tablename" identifier="$table.getInternalTableName()" href="AppController.servlet?return=gui/reports_and_tables/report_data&set_table=$table.getInternalTableName()&set_report=$table.getDefaultReport().getInternalReportName()&set_report_row_limit=100&clear_all_report_sorts=true"
+                		#if($modulesReferencing.size() > 0)
+                		  title="Used by $modulesReferencing"
+                        #else
+                		  title="There are no reports directly based on this table"
+                		#end
+                >$viewTools.escape($table.getTableName())</a>
+        ##  oLink.updateTitle=fUpdateTitle;
+        ##  oLink.dtitle=oLinkTitle;	
+                <span class="recordcount">()</span>
+            	
+            	###if($viewMethods.loggedInUserAllowedTo('MANAGE_TABLE',$table))	
+            	##<ul>
+            	##	<li option="true">
+            	##		<a href="AppController.servlet?return=gui/pane1&add_report&set_table=${table.getInternalTableName()}&set_custom_string=true&key=report_tabindex&value=6">create new report</a>
+            	##	</li>
+            	##</ul>
+				###end
+			</div>
+    	</li>
+	#end
+	
+		#if($viewMethods.loggedInUserAllowedTo('ADMINISTRATE'))
+		<li option="true">
+			<a href="AppController.servlet?return=gui/pane1&add_table&set_custom_string=true&key=table_tabindex&value=5">create a new table</a>
+		</li>
+		#end	
+	</ul>
+</li>  
+	  
+#end

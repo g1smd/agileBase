@@ -1,0 +1,336 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($VELOCITY_RETURN = "return=gui/development/blank")
+
+#macro (loadFieldAttribs $field)
+  #set($internalfieldname = "$field.getInternalFieldName()")
+  #set($fieldname = "$field.getFieldName()")
+  #set($fieldtype = "$field.getFieldCategory().toString().toLowerCase()")
+  #set($fieldDesc = "$field.getFieldDescription()")
+
+  #if ($field.getUnique() == true)
+    #set($fieldpropertyunique = "1")
+  #else
+    #set($fieldpropertyunique = "0")
+  #end
+
+  #if ($field.getNotNull() == false)
+    #set($fieldpropertynotnull = "0")
+  #else
+    #set($fieldpropertynotnull = "1")
+  #end
+
+  #if($field.getClass().getSimpleName() == "BigTextFieldDefn")
+    #set($fieldpropertybigtext = "1")
+  #else
+    #set($fieldpropertybigtext = "")
+  #end
+
+  #if($field.getClass().getSimpleName() == "DateFieldDefn")
+    #set($fieldpropertydefaulttonow = "1")
+    #set($fieldpropertydateresolution = "$field.getDateResolution()")
+  #else
+    #set($fieldpropertydefaulttonow = "")
+    #set($fieldpropertydateresolution = "")
+  #end
+
+  #if($field.getFieldCategory().toString() == "TEXT" || $field.getFieldCategory().toString() == "NUMBER")
+    #if ($field.allowNotApplicable())
+      #set($fieldpropertyallownotapplicable = "1")
+      #set($fieldpropertynotapplicabledescription = "$field.getNotApplicableDescription()")
+      #set($fieldpropertynotapplicablevalue = "$field.getNotApplicableValue()")
+    #else
+      #set($fieldpropertyallownotapplicable = "")
+      #set($fieldpropertynotapplicabledescription = "")
+      #set($fieldpropertynotapplicablevalue = "")
+    #end
+  #else
+    #set($fieldpropertyallownotapplicable = "")
+    #set($fieldpropertynotapplicabledescription = "")
+    #set($fieldpropertynotapplicablevalue = "")
+  #end
+  
+  #if($field.getClass().getSimpleName() == "DecimalFieldDefn")
+    #set($fieldpropertynumberprecision = "$field.getPrecision()")
+  #elseif($field.getClass().getName() == "IntegerFieldDefn")
+    #set($fieldpropertynumberprecision = "0")
+  #else
+    #set($fieldpropertynumberprecision = "")
+  #end
+  
+  #if($field.getClass().getSimpleName() == "DurationFieldDefn")
+    #set($fieldpropertydurationresolution = "$field.getResolution()")
+    #set($fieldpropertydurationscale = "$field.getScale()")
+  #else
+    #set($fieldpropertydurationresolution = "")
+    #set($fieldpropertydurationscale = "")
+  #end
+
+  #if($field.getFieldCategory().toString() == "GENERATED_LIST")
+    #set($fieldpropertylisttable = "")
+    #set($fieldpropertylistreport = "$field.getReport().getInternalReportName()")
+    #set($fieldpropertylistkeyfield = "$field.getKeyField().getInternalFieldName()")
+    #set($fieldpropertylistvaluefield = "$field.getValueField().getInternalFieldName()")
+  #else
+    #set($fieldpropertylisttable = "")
+    #set($fieldpropertylistreport = "")
+    #set($fieldpropertylistkeyfield = "")
+    #set($fieldpropertylistvaluefield = "")
+  #end
+  
+  #if($field.getFieldCategory().toString() == "RELATION")
+    #set($fieldpropertylisttable = "$field.getRelatedTable().getInternalTableName()")
+    #set($fieldpropertylistreport = "")
+    #set($fieldpropertylistkeyfield = "")
+    #set($fieldpropertylistvaluefield = "$field.getDisplayField().getInternalFieldName()")
+  #end
+
+  #if($field.getFieldCategory().toString() == "CHECKBOX")
+    #set($fieldpropertycheckboxdefault = "$field.getDefault()")
+  #else
+    #set($fieldpropertycheckboxdefault = "")
+  #end
+
+  #if($field.hasDefault())
+    #set($fieldpropertydefaultvalue = "$field.getDefault()")
+  #else
+    #set($fieldpropertydefaultvalue = "")
+  #end
+
+  #if($field.getFieldCategory().toString() == "TEXT")  
+    #set($fieldpropertymaxchars = "$field.getMaxChars()")
+  #else
+    #set($fieldpropertymaxchars = "")
+  #end
+#end
+
+#macro (outputAttrib $output $attrib $value)
+  #if ($value != "")
+    #set($output = "$output$attrib=$value&")
+  #elseif ($attrib == "fieldpropertydefaultvalue")
+    ## causes null pointer exception in dbDefn if text field doesn't get default value
+    #set($output = "$output$attrib=&")
+  #end
+#end
+
+$viewTools.log("about to analyse tables")
+$viewTools.log("$viewMethods.adminGetCompanyTables()")
+#foreach ($table in $viewMethods.adminGetCompanyTables())
+  $viewTools.log("analysing $table")
+  #if (! $table.isAuditTable())
+    #set($internalTableName = $table.getInternalTableName())
+    #set($internalDefaultReportName = $table.getDefaultReport().getInternalReportName())
+    #set($internalPrimaryKeyName = $table.getPrimaryKey().getInternalFieldName())
+    #set($tableName = $table.getTableName())
+    #set($tableDesc = $table.getTableDescription())
+    <br /><h2>$tableName</h2><br />
+    $VELOCITY_RETURN&add_table=true&internaltablename=$internalTableName&internaldefaultreportname=$internalDefaultReportName&tablename=$tableName&internalprimarykeyname=$internalPrimaryKeyName&tabledesc=$tableDesc<br /><br />
+    
+    #foreach ($field in $table.getFields())
+      #if (! $table.getPrimaryKey().equals($field))
+        #loadFieldAttribs ($field)
+        #set($output = "$VELOCITY_RETURN&add_field=true&")
+        #outputAttrib($output "internalfieldname" $internalfieldname)
+        #outputAttrib($output "fieldname" $fieldname)
+        #outputAttrib($output "fieldtype" $fieldtype)
+        #outputAttrib($output "fielddesc" $fieldDesc)
+        #outputAttrib($output "fieldpropertyunique" $fieldpropertyunique)
+        #outputAttrib($output "fieldpropertynotnull" $fieldpropertynotnull)
+        #outputAttrib($output "fieldpropertybigtext" $fieldpropertybigtext)
+        #outputAttrib($output "fieldpropertydefaulttonow" $fieldpropertydefaulttonow)
+        #outputAttrib($output "fieldpropertyallownotapplicable" $fieldpropertyallownotapplicable)
+        #outputAttrib($output "fieldpropertydateresolution" $fieldpropertydateresolution)
+        #outputAttrib($output "fieldpropertynumberprecision" $fieldpropertynumberprecision)
+        #outputAttrib($output "fieldpropertydurationresolution" $fieldpropertydurationresolution)
+        #outputAttrib($output "fieldpropertydurationscale" $fieldpropertydurationscale)
+        #outputAttrib($output "fieldpropertylisttable" $fieldpropertylisttable)
+        #outputAttrib($output "fieldpropertylistreport" $fieldpropertylistreport)
+        #outputAttrib($output "fieldpropertylistkeyfield" $fieldpropertylistkeyfield)
+        #outputAttrib($output "fieldpropertylistvaluefield" $fieldpropertylistvaluefield)
+        #outputAttrib($output "fieldpropertycheckboxdefault" $fieldpropertycheckboxdefault)
+        #outputAttrib($output "fieldpropertydefaultvalue" $fieldpropertydefaultvalue)
+        #outputAttrib($output "fieldpropertynotapplicabledescription" $fieldpropertynotapplicabledescription)
+        #outputAttrib($output "fieldpropertynotapplicablevalue" $fieldpropertynotapplicablevalue)
+        #outputAttrib($output "fieldpropertymaxchars" $fieldpropertymaxchars)
+        
+        $output<br />
+      #end
+    #end ## fields
+    
+    #foreach ($report in $table.getReports()) ## a line could be added here to filter out union reports
+      #if (! $report.getParentTable().getDefaultReport().equals($report))
+        #set($internalReportName = "")
+        #set($reportName = "")
+        #set($reportDesc = "")
+        #set($internalReportName = $report.getInternalReportName())
+        #set($reportName = $report.getReportName())
+        #set($reportDesc = $report.getReportDescription())
+
+        <br />$VELOCITY_RETURN&set_table=$table.getInternalTableName()<br />
+        $VELOCITY_RETURN&add_report=true&internalreportname=$internalReportName&reportname=$reportName&reportdesc=$reportDesc&reportType=simple<br /><br />
+      
+        #foreach($join in $report.getJoins())
+          #set($leftInternalTableName = "")
+          #set($leftInternalFieldName = "")
+          #set($leftInternalReportName = "")
+          #set($joinType = "")
+          #set($rightInternalTableName = "")
+          #set($rightInternalFieldName = "")
+          #set($rightInternalReportName = "")
+          #if ($join.isLeftPartTable())
+            #set($leftInternalTableName = $join.getLeftTableField().getTableContainingField().getInternalTableName())
+            #set($leftInternalFieldName = $join.getLeftTableField().getInternalFieldName())
+          #else
+            #set($leftInternalFieldName = $join.getLeftReportField().getBaseField().getInternalFieldName())
+            ## had to use .getParentReport() shouldn't this be getReportFieldIsFrom() ??
+            #set($leftInternalReportName = $join.getLeftReportField().getParentReport().getInternalReportName())
+          #end
+          #if ($join.isRightPartTable())
+            #set($rightInternalTableName = $join.getRightTableField().getTableContainingField().getInternalTableName())
+            #set($rightInternalFieldName = $join.getRightTableField().getInternalFieldName())
+          #else
+            #set($rightInternalFieldName = $join.getRightReportField().getBaseField().getInternalFieldName())
+            #set($rightInternalReportName = $join.getRightReportField().getParentReport().getInternalReportName())
+          #end
+          #set($joinType = $join.getJoinType().toString().replaceAll(" ", "_"))
+         
+          $VELOCITY_RETURN&add_join_to_report=true&jointype=$joinType&leftinternaltablename=$leftInternalTableName&leftinternalreportname=$leftInternalReportName&leftinternalfieldname=$leftInternalFieldName&rightinternaltablename=$rightInternalTableName&rightinternalreportname=$rightInternalReportName&rightinternalfieldname=$rightInternalFieldName<br />
+        
+        #end ## report joins
+        <br />
+##      #foreach($filter in $report.getFilters())
+        ## cannot add code to get filters as the filter object doesn't support
+        ## properties to indicate that filters  are on report fields
+##      #end ## filters
+
+        #foreach ($reportField in $report.getReportFields())
+          #if(! $reportField.getBaseField().equals($report.getParentTable().getPrimaryKey()))
+            #set($sorts = $report.getSorts())            
+            #set($sort = "") ## reset sort in case of null return
+            ##set($sort = $sorts.get($reportField.getBaseField()))
+            #if($sort.toString() == "true")
+              #set($sort = "ascending")
+            #elseif ($sort.toString() == "false")
+              #set($sort = "descending")
+            #end
+            #set($internalTableName = "")
+            #set($internalReportName = "")
+            #set($internalFieldName = "")
+            #if($reportField.isFieldFromReport())
+              #set($internalTableName = "")
+              #set($internalReportName = $reportField.getReportFieldIsFrom().getInternalReportName())
+              #set($internalFieldName = $reportField.getBaseField().getInternalFieldName())
+              $VELOCITY_RETURN&add_field_to_report=true&internaltablename=$internalTableName&internalreportname=$internalReportName&internalfieldname=$internalFieldName&sortdirection=$sort&<br />
+            #else
+              #if ($reportField.getBaseField().getClass().getSimpleName() == "CalculationFieldDefn")
+                ## deal with calculation fields
+                #set($calculationField = "")
+                #set($internalCalculationName = "")
+                #set($calculationName = "")
+                #set($calculationDefn = "")
+                #set($databaseType = "")
+
+                #set($calculationField = $reportField.getBaseField())
+                #set($internalCalculationName = $calculationField.getInternalFieldName())
+                #set($calculationName = $calculationField.getFieldName())
+                #set($calculationDefn = $calculationField.getCalculationDefinition())
+                #set($databaseType = $calculationField.getDbType())
+                $VELOCITY_RETURN&add_calculation_to_report=true&internalcalculationname=$internalCalculationName&calculationname=$calculationName&calculationdefn=$calculationDefn&databasetype=$databaseType<br />
+              #else
+                ## deal with non-calculation fields
+                #set($internalTableName = $reportField.getBaseField().getTableContainingField().getInternalTableName())
+                #set($internalReportName = "")
+                #set($internalFieldName = $reportField.getBaseField().getInternalFieldName())
+
+                $VELOCITY_RETURN&add_field_to_report=true&internaltablename=$internalTableName&internalreportname=$internalReportName&internalfieldname=$internalFieldName&sortdirection=$sort&<br />
+              #end
+              ## add check to avoid adding primary key of parent table to report, (should already be added automatically)
+            #end
+          #end ## if not primary key of report's parent table (& therefore automatically in report)
+        #end ## report fields
+      #end ## if not default report
+      
+      #foreach($filter in $report.getFilters())
+        #set($internalreportname = "")
+        #set($internaltablename = "")
+        #set($internalfieldname = "")
+        #set($filtertype = "")
+        #set($fieldpropertydefaultvalue = "")
+
+        #if ($filter.isFilterFieldFromReport())
+          #set($internalreportname = $filter.getFilterReportField().getParentReport().getInternalReportName())
+          #set($internalfieldname = $filter.getFilterReportField().getBaseField().getInternalFieldName())          
+        #else
+          #set($internaltablename = $filter.getFilterBaseField().getTableContainingField().getInternalTableName())
+          #set($internalfieldname = $filter.getFilterBaseField().getInternalFieldName())
+        #end
+        #set($filtertype = $filter.getFilterType())
+        
+        #foreach($filterValue in $filter.getFilterValues())
+          #if($fieldpropertydefaultvalue == "")
+            #set($fieldpropertydefaultvalue = $filterValue)
+          #else
+            #set($fieldpropertydefaultvalue = "$fieldpropertydefaultvalue;$filterValue")
+          #end
+        #end
+        
+        $VELOCITY_RETURN&add_filter_to_report=true&internalreportname=$internalreportname&internaltablename=$internaltablename&internalfieldname=$internalfieldname&filtertype=$filtertype&fieldpropertydefaultvalue=$fieldpropertydefaultvalue<br />
+      #end
+    #end ## reports
+  #end ## if not audit table
+#end ## tables
+<br /><b>Users</b><br /><br />
+#foreach($user in $viewMethods.adminGetUsers())
+  #set($internalUserName = "")
+  #set($userName = "")
+  #set($forename = "")
+  #set($surname = "")
+  #set($passwd = "")
+  #set($internalUserName = $user.getInternalUserName())
+  #set($userName = $user.getUserName())
+  #set($forename = $user.getForename())
+  #set($surname = $user.getSurname())
+  #set($passwd = $user.getPassword())
+  $VELOCITY_RETURN&add_user=true&internalusername=$internalUserName&username=$userName&forename=$forename&surname=$surname&password=$passwd<br />
+#end
+<br /><b>Roles</b><br /><br />
+#foreach($role in $viewMethods.adminGetRoles())
+  #set($internalRoleName = "")
+  #set($roleName = "")
+  #set($internalRoleName = $role.getInternalRoleName())
+  #set($roleName = $role.getRoleName())
+  $VELOCITY_RETURN&add_role=true&internalrolename=$internalRoleName&rolename=$roleName<br />
+#end
+<br />
+<br /><b>Privileges</b><br /><br />
+#foreach ($table in $viewMethods.adminGetAllTables())
+  #if (! $table.isAuditTable())
+    #set($internalTableName = $table.getInternalTableName())
+    #foreach($role in $viewMethods.adminGetRoles())
+      #set($internalRoleName = "")
+      #set($internalRoleName = $role.getInternalRoleName())
+      $VELOCITY_RETURN&privilegetype=MANAGE_TABLE&internaltablename=$internalTableName&assignto=role&internalrolename=$internalRoleName&set_max_table_privilege=&internalusername=<br />
+    #end ## roles
+    
+    #foreach($user in $viewMethods.adminGetUsers())
+      #set($internalUserName = "")
+      #set($internalUserName = $user.getInternalUserName())
+      $VELOCITY_RETURN&privilegetype=MANAGE_TABLE&internaltablename=$internalTableName&assignto=user&internalusername=$internalUserName&set_max_table_privilege=&internalrolename<br />
+    #end ## users
+  #end ## if not audit table
+#end ## tables

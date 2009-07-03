@@ -1,0 +1,6 @@
+html, body {font-family: Arial, Helvetica, sans-serif; font-size: 10pt}
+h1 {font-size: 14pt;}
+th {font-size: 10pt; font-weight: bold; text-align: left;}
+.pagebreakafter {page-break-after: always}
+.boxed {border-style: solid; border-width: 1px}
+.signhere {border-style: solid; border-width: 1px; border-top-width: 0px; border-left-width: 0px; border-right-width: 0px}

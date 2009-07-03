@@ -1,0 +1,174 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<style>
+  div#moduleColorPicker table.colorPickerTable {
+    border-collapse:collapsed;
+    margin-top:30px;
+  }
+  
+  div#moduleColorPicker table.colorPickerTable td {  
+    border:1px solid #999999;
+    width:35px;
+    height:35px;
+    text-align:center;
+    cursor:default:important;
+  }
+  
+  div#moduleColorPicker table.colorPickerTable td span {
+    cursor:default;
+    display:block;
+  }
+  
+  div#moduleColorPicker table.colorPickerTable td:hover {
+    background-color:#dae2ff;
+  }
+  
+  div#moduleColorPicker table.colorPickerTable td#color_pending {
+    border-color:#FFBA3B;
+  }
+  
+  div#moduleColorPicker table.colorPickerTable td#color_selected {
+    border-color:#FFBA3B;
+    background-color:#ffd588;
+  }
+  
+  /* override the style set in option_set_wrapper.vm for the picker table*/
+  .options_wrapper div.options_set div#moduleColorPicker table.colorPickerTable {
+    font-size:8pt;
+    font-weight:normal;
+    vertical-align:auto;
+  }
+
+  .colour-block {
+	width: 36px;
+  	height: 36px;
+  }
+  
+</style>
+
+<div id="moduleColorPicker"></div>
+
+<script language="Javascript">
+  function fColorPicker(oContainer) {
+    function fDivClick(oEvent) {        
+      function fReqOK(sResponseText,sResponseXML) {
+        function fUpdateP1() {
+          var oCaptions=parent.pane_1.document.getElementsByName('caption');
+          for (var i=0; i<oCaptions.length; i++) {
+            if(oCaptions[i].getAttribute('type')!='modulename') continue;
+            if(oCaptions[i].getAttribute('identifier')!=sModuleId) continue;
+            oCaptions[i].updateBackground(oImg.getAttribute('src'));
+            break;
+          }
+        }      
+      
+        function fUpdateP2() {
+          var oCells=top.document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('reportData').tHead.rows[0].cells;
+          // the index of the current row
+          if(top.document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('currentRow')) {
+            oCurrentRow=top.document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('currentRow');
+          }
+          else return; // there is no selected row to update            
+            
+          for (var i=0;i<oCells.length;i++) { 
+            if(oCells[i].getAttribute('internalName')=='colour') {
+              oOldP2TD=oCurrentRow.cells[i];
+              var oNewP2TD=oTD.cloneNode(true);
+              oOldP2TD.parentNode.replaceChild(oNewP2TD,oOldP2TD);
+              break;
+            }
+          }
+        }
+        
+        while(document.getElementById('color_pending')) document.getElementById('color_pending').removeAttribute('id');
+        while(document.getElementById('color_selected')) document.getElementById('color_selected').removeAttribute('id');
+        oTD.setAttribute('id','color_selected');
+        
+        fUpdateP1();
+        fUpdateP2();
+      }
+        
+      if(oEvent.target==oColorDiv) return;
+      var oTD=oEvent.target;
+      while (oTD.tagName!='TD') {
+        oTD=oTD.parentNode;
+        if(oTD==document) return;
+      }
+        
+      var oImg=oTD.getElementsByTagName('IMG')[0];
+        
+      	var aPostVars=new Array();
+      aPostVars['return']='gui/administration/xmlreturn_fieldchange';
+	      aPostVars['update_module']='true';
+	      aPostVars['colour']=oTD.getAttribute('colorName');
+	        
+	      var oReq=new fRequest('AppController.servlet',aPostVars,fReqOK,-1);
+        
+      while(document.getElementById('color_pending')) document.getElementById('color_pending').removeAttribute('id');
+      oTD.setAttribute('id','color_pending');
+    }
+     
+    var oColorDiv=document.createElement('div');
+		    $(oColorDiv).addClass('colorPickerTable');
+		    ##oColorDiv.addEventListener('click',fDivClick,false);
+		    $(oColorDiv).click(fDivClick);
+		    #set($module = $viewMethods.getSessionData().getModule())
+		    #set($currentColor=$module.getColour())
+		    #set($innerHTML='<table class="colorPickerTable" border="0" cellpadding="0" cellspacing="5"><tr>')
+		    #set($cellCount=0)
+		    
+		    // Get the list of colour files to choose from
+			##	#foreach($file in $viewTools.listFiles("resources/tree/heading_colors"))
+			##		#set($fileName = $file.getName())
+			##  	#if($fileName.endsWith("gif"))
+			##			#set($innerHTML=$innerHTML+'<td')
+			##		    #if($fileName == $currentColor)
+			##		    	#set($innerHTML = $innerHTML + ' id=color_selected')
+			##		    #end
+			##		    #set($innerHTML=$innerHTML+' colorName="'+$fileName+'"><div class="'+$fileName+'">&nbsp;</div><span style="font-size:8pt; color:#666666; padding:0 7px">'+$fileName.replaceAll('\.gif$','')+'</span></td>')        
+			##			#set($cellCount=$cellCount+1)
+			##		#end
+			##		#if($cellCount%10==0)
+			##			#set($innerHTML="$innerHTML </tr><tr>")
+			##		#end
+			##	#end
+			
+			// Get colours array
+			#parse('gui/resources/module_color_colors.vm')
+			
+			#foreach($colour in $colours)
+				#set($innerHTML=$innerHTML+'<td')
+				#if($colour.get('colourName') == $currentColor)
+					#set($innerHTML = $innerHTML + ' id=color_selected')
+				#end
+				#set($innerHTML=$innerHTML+' colorName="'+$colour.get('colourName')+'"><div class="colour-block '+$colour.get('styleName')+'">&nbsp;</div><span style="font-size:8pt; color:#666666; padding:0 7px">'+$colour.get('colourName')+'</span></td>')        
+				#set($cellCount=$cellCount+1)
+				#if($cellCount%10==0)
+					#set($innerHTML="$innerHTML </tr><tr>")
+				#end
+			#end			
+			
+		    #set($innerHTML="$innerHTML </tr></table>")
+		    
+		    var sModuleId='$module.getInternalModuleName()';
+		    oContainer.appendChild(oColorDiv);
+		    oColorDiv.innerHTML='$innerHTML';
+  }
+
+  fColorPicker(document.getElementById('moduleColorPicker'));
+</script>

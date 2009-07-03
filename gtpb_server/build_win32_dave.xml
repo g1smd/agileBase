@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="deploy" name="portalBase">
+	<!-- java components -->
+	<property name="compiler" value="C:\Program Files\Java\jdk1.6.0_01\bin\javac" />
+	<property name="jvm" value="java" />
+	<property name="documentor" value="javadoc" />
+	<!-- project directories -->
+	<property name="src.dir" location="src" />
+	<property name="build.dir" location="build" />
+	<property name="doc.dir" location="doc" />
+	<!-- server directories -->
+	<property name="tomcat.dir" location="C:\Program Files\Apache Software Foundation\Tomcat 5.5" />
+	<property name="webapp" value="portalBase" />
+
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${doc.dir}" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${doc.dir}" />
+	</target>
+
+	<target name="build" depends="clean, init">
+		<javac destdir="${build.dir}" executable="${compiler}" fork="true" listfiles="true">
+			<compilerarg value="-Xlint:unchecked" />
+			<src>
+				<pathelement path="${src.dir}" />
+			</src>
+			<classpath>
+				<pathelement path="${build.dir}" />
+				<!--Apache Velocity templating engine - used by servlet when serving web pages -->
+				<pathelement location="WEB-INF/lib/velocity-1.5.jar" />
+				<pathelement location="WEB-INF/lib/velocity-tools-view-1.3.jar" />
+				<!--This apache jar provided in Velocity distribution, used by Velocity -->
+				<pathelement location="${tomcat.dir}/common/lib/servlet-api.jar" />
+				<!--Unit testing framework -->
+				<pathelement location="WEB-INF/lib/junit-3.8.1.jar" />
+				<!--File uploads -->
+				<pathelement location="WEB-INF/lib/commons-fileupload-1.1.jar" />
+				<pathelement location="WEB-INF/lib/commons-io-1.2.jar" />
+				<!--Postgresql JDBC driver -->
+				<pathelement location="${tomcat.dir}/common/lib/postgresql-8.2-505.jdbc4.jar" />
+				<!-- Hibernate -->
+		        <pathelement location="WEB-INF/lib/hibernate3.jar"/>
+		        <pathelement location="WEB-INF/lib/xml-apis.jar"/>
+		        <pathelement location="WEB-INF/lib/versioncheck.jar"/>
+		        <pathelement location="WEB-INF/lib/syndiag2.jar"/>
+		        <pathelement location="WEB-INF/lib/junit-3.8.1.jar"/>
+		        <pathelement location="WEB-INF/lib/ehcache-1.2.3jar"/>
+		        <pathelement location="WEB-INF/lib/dom4j-1.6.1.jar"/>
+		        <pathelement location="WEB-INF/lib/commons-logging-1.1.jar" />
+		        <pathelement location="WEB-INF/lib/commons-collections-3.2.jar" />
+		        <pathelement location="WEB-INF/lib/commons-lang-2.3.jar" />
+		        <pathelement location="WEB-INF/lib/cleanimports.jar"/>
+		        <pathelement location="WEB-INF/lib/asm-attrs.jar"/>
+		        <pathelement location="WEB-INF/lib/asm.jar"/>
+		        <pathelement location="WEB-INF/lib/ant-swing-1.6.5.jar"/>
+		        <pathelement location="WEB-INF/lib/antlr-2.7.6.jar"/>
+		        <pathelement location="WEB-INF/lib/ant-launcher-1.6.5.jar"/>
+		        <pathelement location="WEB-INF/lib/ant-junit-1.6.5.jar"/>
+		        <pathelement location="WEB-INF/lib/ant-antlr-1.6.5.jar"/>
+		        <pathelement location="WEB-INF/lib/ant-1.6.5.jar"/>
+		        <pathelement location="WEB-INF/lib/hibernate-annotations.jar"/>
+		        <pathelement location="WEB-INF/lib/hibernate-commons-annotations.jar"/>
+		        <pathelement location="WEB-INF/lib/ejb3-persistence.jar"/>
+		        <pathelement location="WEB-INF/lib/cglib-2.1.3.jar"/>
+		        <pathelement location="WEB-INF/lib/jta.jar"/>
+				<!-- CSV import/export -->
+		        <pathelement location="WEB-INF/lib/opencsv-1.5.jar"/>
+				<!-- Google client API -->
+				<pathelement location="WEB-INF/lib/gdata-client-1.0.jar"/>
+				<!-- Aspectwerkz aspect oriented programming -->
+				<pathelement location="WEB-INF/lib/jarjar-0.3.jar"/>
+				<pathelement location="WEB-INF/lib/jrexx-1.1.1.jar"/>
+				<pathelement location="WEB-INF/lib/junitperf.jar"/>
+				<pathelement location="WEB-INF/lib/aspectwerkz-2.0.jar"/>
+				<pathelement location="WEB-INF/lib/managementapi-jrockit81.jar"/>
+				<pathelement location="WEB-INF/lib/aspectwerkz-core-2.0.jar"/>
+				<pathelement location="WEB-INF/lib/aspectwerkz-extensions-2.0.jar"/>
+				<pathelement location="WEB-INF/lib/aspectwerkz-jdk5-2.0.jar"/>
+				<pathelement location="WEB-INF/lib/qdox-1.4.jar"/>
+				<pathelement location="WEB-INF/lib/concurrent-1.3.2.jar"/>
+				<pathelement location="WEB-INF/lib/trove-1.0.2.jar"/>
+				<!-- Jamon profiler, currently unused -->
+				<!-- <pathelement location="${tomcat.dir}/common/lib/jamon-2.2.jar"/> -->
+				<!-- Treemaps -->
+				<pathelement location="WEB-INF/lib/treemap.jar"/>
+				<!-- number utilities -->
+				<pathelement location="WEB-INF/lib/icu4j-3_6.jar"/>
+				<pathelement location="WEB-INF/lib/commons-math-1.1.jar"/>
+				<!-- Logging -->
+				<pathelement location="WEB-INF/lib/simple-log.jar"/>
+				<pathelement location="WEB-INF/lib/simple-log-rollover.jar"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="deploy" depends="build">
+		<copy todir="${tomcat.dir}/webapps/${webapp}/WEB-INF">
+			<fileset dir="WEB-INF"/>
+		</copy>
+		<copy file="velocity.properties" todir="${tomcat.dir}/webapps/${webapp}"/>
+		<copy file="hibernate.properties" todir="${tomcat.dir}/webapps/${webapp}/WEB-INF/classes" />
+		<copy todir="${tomcat.dir}/webapps/${webapp}/WEB-INF/classes">
+			<fileset dir="build"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/styles">
+			<fileset dir="styles"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/javadoc_resources">
+			<fileset dir="javadoc_resources"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/resources">
+			<fileset dir="resources"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/customisations">
+			<fileset dir="customisations" />
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/doc">
+			<fileset dir="doc"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/chart_engine">
+			<fileset dir="chart_engine"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/chart_xml">
+			<fileset dir="chart_xml"/>
+		</copy>
+	</target>
+
+	<target name="run">
+		<echo>This is a web application and can't be run from the command line</echo>
+	</target>
+
+	<target name="doc">
+		<javadoc destdir="${doc.dir}" link="http://java.sun.com/j2se/1.5.0/docs/api/">
+			<fileset dir="${src.dir}">
+				<include name="**/*.java" />
+				<!--<include name="**/package.html" />-->
+			</fileset>
+		</javadoc>
+	</target>
+
+	<target name="all" depends="clean, doc, run" />
+
+</project>

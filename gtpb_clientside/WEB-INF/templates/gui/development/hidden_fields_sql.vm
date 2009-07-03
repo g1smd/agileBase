@@ -1,0 +1,92 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## define global variables
+#set($portalbaseSchemaSQL = '')
+#set($portalbaseDataSQL = '')
+
+## define macros:
+
+  ## checks names of fields within a table for a match
+  #macro(tableContainsField $return $table $fieldName)
+    #set($return = false)
+    #foreach($field in $table.getFields())
+      #if($field.getFieldName().equals($fieldName))
+        #set($return = true)
+      #end
+    #end ## foreach field
+  #end
+  
+  #macro(generateSqlForWikiPageField $table)
+    #set($internalFieldName = $viewMethods.getRandomString())
+    #set($portalbaseSchemaSQL = "$portalbaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName varchar(10000); -- wiki page for $table.getTableName()")
+    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','Related wiki page',false,true,1,'Wiki page',false,false,'$table.getInternalTableName()');")
+    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO textfielddefn (internalfieldname,maxchars,defaultdirect,notapplicable,notapplicabledescriptiondirect,notapplicablevaluedirect,useslookup) VALUES ('$internalFieldName',10000,null,false,'Not applicable','NOT APPLICABLE',false);")
+  #end
+
+  #macro(generateSqlForDateCreatedField $table)
+    #set($internalFieldName = $viewMethods.getRandomString())
+    #set($portalbaseSchemaSQL = "$portalbaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName timestamp; -- date created for $table.getTableName()")
+    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','Date & time of record creation',false,true,2,'GTPB Date created',false,true,'$table.getInternalTableName()');")
+    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO datefielddefn (internalfieldname,databaseformatstring,dateresolutiondirect,defaulttonowdirect,javaformatstring) VALUES ('$internalFieldName','DD Mon YYYY HH24:MI:SS',13,true,'%1$td %1$tb %1$tY %1$tH:%1$tM:%1$tS');")
+  #end
+  
+  #macro(generateSqlForCreatedByField $table)
+    #set($internalFieldName = $viewMethods.getRandomString())
+    #set($portalbaseSchemaSQL = "$portalbaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName varchar(10000); -- created by for $table.getTableName()")
+    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','User who created the record',false,true,3,'GTPB Created by',false,false,'$table.getInternalTableName()');")
+    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO textfielddefn (internalfieldname,maxchars,defaultdirect,notapplicable,notapplicabledescriptiondirect,notapplicablevaluedirect,useslookup) VALUES ('$internalFieldName',10000,null,false,'Not applicable','NOT APPLICABLE',false);")
+  #end
+  
+  #macro(generateSqlForLastModifiedField $table)
+    #set($internalFieldName = $viewMethods.getRandomString())
+    #set($portalbaseSchemaSQL = "$portalbaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName timestamp; -- last modified for $table.getTableName()")
+    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','Date & time of last change to record',false,true,4,'GTPB Last modified',false,true,'$table.getInternalTableName()');")
+    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO datefielddefn (internalfieldname,databaseformatstring,dateresolutiondirect,defaulttonowdirect,javaformatstring) VALUES ('$internalFieldName','DD Mon YYYY HH24:MI:SS',13,true,'%1$td %1$tb %1$tY %1$tH:%1$tM:%1$tS');")
+  #end
+  
+  #macro(generateSqlForModififedByField $table)
+    #set($internalFieldName = $viewMethods.getRandomString())
+    #set($portalbaseSchemaSQL = "$portalbaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName varchar(10000); -- modified by for $table.getTableName()")
+    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','User who made the last change',false,true,5,'GTPB Modified by',false,false,'$table.getInternalTableName()');")
+    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO textfielddefn (internalfieldname,maxchars,defaultdirect,notapplicable,notapplicabledescriptiondirect,notapplicablevaluedirect,useslookup) VALUES ('$internalFieldName',10000,null,false,'Not applicable','NOT APPLICABLE',false);")
+  #end
+
+## main:
+#set($companyTables = $viewMethods.adminGetCompanyTables())
+#foreach($companyTable in $companyTables)
+
+  #tableContainsField($containsWikiPageField     $companyTable 'Wiki page')
+  #tableContainsField($containsDateCreatedField  $companyTable 'GTPB Date created')
+  #tableContainsField($containsCreatedByField    $companyTable 'GTPB Created by')
+  #tableContainsField($containsLastModifiedField $companyTable 'GTPB Last modified')
+  #tableContainsField($containsModifiedByField   $companyTable 'GTPB Modified by')
+
+  #if(! $containsWikiPageField)     #generateSqlForWikiPageField($companyTable)     #end
+  #if(! $containsDateCreatedField)  #generateSqlForDateCreatedField($companyTable)  #end
+  #if(! $containsCreatedByField)    #generateSqlForCreatedByField($companyTable)    #end
+  #if(! $containsLastModifiedField) #generateSqlForLastModifiedField($companyTable) #end
+  #if(! $containsModififedByField)  #generateSqlForModififedByField($companyTable)  #end
+
+#end ## foreach companyTable
+
+## output the generated SQL:
+-- portalbasedata SQL for missing hidden fields<br/><br/>
+$portalbaseDataSQL
+
+-- portalbaseschema SQL for missing hidden fields<br/><br/>
+$portalbaseSchemaSQL

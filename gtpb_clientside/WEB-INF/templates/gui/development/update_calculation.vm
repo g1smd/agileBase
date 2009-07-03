@@ -1,0 +1,82 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html>
+  <head>
+    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+    <title>
+      Calculation Update
+    </title>
+    <link rel="stylesheet" type="text/css" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css"/>
+    #parse("gui/display_error.vm")
+  </head>
+
+  <body class="mediawiki ns-0 ltr page-Main_Page">
+  	<div id="globalWrapper">
+		  <div id="column-content">
+	  <div id="content">
+				    <h1 class="firstHeading">Calculation Update</h1>
+    <div id="bodyContent">
+    #set($sessionData = $viewMethods.getSessionData())
+    #set($report = $sessionData.getReport())
+    #foreach($reportField in $report.getReportFields())
+      #set($reportFieldClass = $reportField.getClass().getSimpleName())
+      #if($reportFieldClass.equals("ReportCalcFieldDefn"))
+        #if(!$reportField.referencesCalcFromOtherReport())
+        <h2>Update $reportField.getFieldName()</h2><br />
+        <FORM action="AppController.servlet" method=post id=newcalculation>
+          		<input type=hidden name=return value="gui/development/update_calculation" />
+          		<input type=hidden name=update_calculation_in_report value=true>
+          		<input type=hidden name=internalcalculationname value="$reportField.getInternalFieldName()">
+          <table>
+            <tr>
+              <td>Calculation name</td>
+              <td><input name="calculationname" value="$reportField.getFieldName()" /></td>
+            </tr>
+            <tr>
+              <td>Return type</td>
+              <td>
+                #set($databaseType = $reportField.getDbType().toString())
+            	    	<select name="databasetype">
+            		      <option value="VARCHAR" #if ($databaseType.equals("VARCHAR")) selected="selected" #end>Text</option>
+            		      <option value="INTEGER" #if ($databaseType.equals("INTEGER")) selected="selected" #end>Whole number</option>
+            		      <option value="FLOAT" #if ($databaseType.equals("FLOAT")) selected="selected" #end>Decimal number</option>
+            		      <option value="TIMESTAMP" #if ($databaseType.equals("TIMESTAMP")) selected="selected" #end>Date/time</option>
+            		      <option value="INTERVAL" #if ($databaseType.equals("INTERVAL")) selected="selected" #end>Time interval</option>
+            		    </select>
+        	      </td>
+            </tr>
+	            <tr>
+		              <td>Calculation definition (SQL)</td>
+        		      <td><textarea name="calculationdefn" cols="60" rows="4">$reportField.getCalculationDefinition()</textarea></td>
+      	      </tr>
+            	<tr>
+        		      <td>&nbsp;</td>
+        		      <td><input type="submit" value="Update Calculation" /></td>
+      	      </tr>
+          </table>
+        </FORM>
+        #end
+      #end
+    #end
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>		
+</html>

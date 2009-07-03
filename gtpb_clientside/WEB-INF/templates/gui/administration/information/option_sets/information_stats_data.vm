@@ -1,0 +1,106 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+$viewTools.startTimer("gui/administration/information/option_sets/information_stats_data.vm")
+<style>
+	@import url("styles/report.css");
+	
+	div#fieldOptionsSet { display:none }
+	div#fieldOptionsSet[selected] { display:block }
+	form { height:100% }
+	
+	tr#addNewField td { vertical-align:top;
+                    	font-size:8pt;
+						border-top:1px solid orange }
+						
+	optgroup { font-style:normal;
+		       margin-top:5px; 
+			   color:#333333 }
+    .chartBar { 
+	  position:relative;
+	  height:100%;
+	  background-color:#9091f4;
+	  border:0px;
+	  padding:4px;
+	  color:black;
+	}
+	
+	/* Override report.css */
+	table#reportData {
+	  height:auto!important;
+	}
+	
+	table#reportData td.leading, table#reportData td.trailing {
+	  width: 15px;
+	}
+	
+</style>
+#set($mathTool = $viewTools.getMathTool())
+#if(!$usageStats)
+	#set($usageStats = $viewMethods.getUsageStats(true))
+#end
+
+## Calculate the max. no. report views for any report, for setting the scale when charting
+#set($maxViews = 0)
+#foreach($moduleUsageStats in $usageStats.getModuleStats())
+  #set($reportViews = $moduleUsageStats.getUserReportViewStats())
+  #foreach($userStatsSet in $reportViews.values())
+	#set($reportViews = 0)
+	#foreach($userStats in $userStatsSet)
+	  #set($reportViews = $reportViews + $userStats.getReportViews())
+	#end
+	#if($reportViews > $maxViews)
+	  #set($maxViews = $reportViews)
+	#end
+  #end
+#end
+Report usage in each module, along with with the users of each report (main users coloured darker)<p>
+#set($companyReportViews = 0)
+#foreach($moduleUsageStats in $usageStats.getModuleStats())
+  #set($companyReportViews = $companyReportViews + $moduleUsageStats.getTotalReportViews())
+  #set($module = $moduleUsageStats.getModule())
+  <img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/><b style="text-transform:capitalize; padding-left: 20px; font-size:13px">$module</b><br>
+  <table cellspacing=0 cellpadding=0 border=0 id=reportData><tbody>
+  #set($reportViewStats = $moduleUsageStats.getUserReportViewStats())
+  #foreach($report in $reportViewStats.keySet())
+	<tr #if($velocityCount%2!=0) class=rowa #else class=rowb #end>
+	  <td class=leading>&nbsp;</td>
+	    <td width="200px">$report</td>
+		<td>
+		  ## Add up the views from each user to get a total 
+		  #set($reportViews = 0)
+		  #set($usersText = "") ## A list of users
+		  #set($usersTextRaw = "") ## A list of users
+		  #foreach($userStats in $reportViewStats.get($report))
+			#set($user = $userStats.getUser())
+		    #set($reportViews = $reportViews + $userStats.getReportViews())
+			#set($userColour = 100 - $moduleUsageStats.getUserReportViewsPercentage($report, $user))
+			#set($usersTextRaw = $usersTextRaw + "#if($usersTextRaw.length()<70)$user#else.#end")
+			#set($usersText = $usersText + "<span style='color:rgb(${userColour}%,${userColour}%,${userColour}%)'><b title='$user.getForename() $user.getSurname()'>#if($usersTextRaw.length()<70)$user#else.#end</b></span>&nbsp;")
+		  #end
+		  #set($reportViewsPercentage = $mathTool.mul($mathTool.div($reportViews,$maxViews),100))
+		  #set($reportViewsPercentage = $mathTool.toInteger($reportViewsPercentage))
+		  <div class="chartBar" style="width: ${reportViewsPercentage}%">$usersText</div>
+		</td>
+	  <td class=trailing>&nbsp;</td>
+	</tr>
+  #end
+  </tbody></table>
+#end<p>
+Total report views = $companyReportViews
+$viewTools.stopTimer("gui/administration/information/option_sets/information_stats_data.vm")
+

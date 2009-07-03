@@ -1,0 +1,78 @@
+   
+   * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+    *[changed] { text-decoration:underline }
+    .changed { text-decoration:underline }
+	*[error] { color:red }
+	a[error] { font-size:8pt }
+    	           
+    #navigation { position:absolute; 
+                  height:100%;
+                  width:120px;
+                  background-color:#f1f2ed;
+                  border-top:2px solid #cccccc;
+                  border-right:1px solid #cecece;
+                  top:0;
+                  left:0;
+                  text-align:center;
+				  overflow:auto;
+                }
+				
+	#navigation button { margin:5px }
+                
+    .options_wrapper { padding-left:120px; 
+    		           height:100%;
+                       width:100%;
+                       position:absolute;
+                       top:0;
+                       left:0; }
+                       
+    .options_wrapper div.options_set { display:none;
+    	                               position:relative;
+                                       padding-top:40px;
+									   padding-left:30px;
+    	                               height:100%; 
+    		                           width:100% }
+    		                                   
+    .options_wrapper div.options_set[selected] { display:block }    		                                   
+    		                                                          
+    .options_wrapper div.options_set h1 { position:absolute;
+    	                                  top:0;
+    	                                  left:30px;
+    	                                  width:100%;
+    	                                  height:27px; 
+    	                                  font-size:14pt;
+                                          font-weight:normal;
+                                          border-bottom:1px solid black}                       
+                       
+    .options_wrapper div.options_set div.data  { height:100%;
+                                                 width:100%;;
+                                                 padding-top:10px;
+                                                 overflow:auto }					
+                       
+   
+    .options_wrapper div.options_set tr:first-child:hover, 
+	.options_wrapper div.options_set tr.trailing { background-color:transparent }
+    
+    .options_wrapper div.options_set th { text-transform:uppercase;
+                                          border-bottom:1px solid #333333;
+                                          color:#333333;
+                                          padding-bottom:3px;
+                                          vertical-align:bottom;
+                                          font-size:8pt }
+                                          
+    .options_wrapper div.options_set tr.caption:hover { background:transparent }  
+                                          
+    .options_wrapper div.options_set td { padding:10px;
+                                          font-size:8pt;
+                                          color:#666666;
+                                          padding-left:10px }
+                                          
+    label:hover { color:black }                                       
+                                          
+    .options_wrapper div.options_set td:first-child:first-line { 
+      font-size:10pt;
+      font-weight:bold;
+      color:black;
+      /* vertical-align:top;*/ /* this mucked up the module editing screens - doesn't seem to affect anything else */
+      padding-top:13px;
+    }                                      

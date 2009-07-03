@@ -1,0 +1,41 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($company = $viewMethods.getLoggedInUser().getCompany())
+#set($companyName = $viewTools.cleanString($company.getCompanyName()))
+
+#if(!$top_level_xml_element_set)<request>#end
+  #set($app_action_caption="Organisation added ok")
+  <okTemplate>gui/customisations/$companyName/actions/add_address_data/add_organisation/4_closer</okTemplate>
+  #parse('gui/customisations/wizard_result.vm') 
+  <htmlContent onload="oToolbar.cancelButton.switchOff()"><![CDATA[
+    <form style="padding:10px">
+      #if($viewMethods.getWhetherExceptionOccurred())
+        ## this is only a failsafe.  As this template doesn't submit any user data, it shouldn't fail ;)
+        <h1>Ooops!</h1>
+        an unexpected error has occurred
+      #else
+        <h1>Success</h1>
+        The organisation was added successfully
+      #end
+      ## postset table = organisations (possibly redundant as has already been set, though may be needed if the last template produced an exception)
+      <input type="hidden" name="postset_table" value="a2e9a7e9e257153de" />
+    </form>       
+    ]]>
+  </htmlContent>
+  <caption>$app_action_caption</caption>  
+#if(!$top_level_xml_element_set)</request>#end

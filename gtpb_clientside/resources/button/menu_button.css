@@ -1,0 +1,23 @@
+.button { border:0;
+		      height:100%;
+		      display:inline;
+		      position:relative;
+		      text-decoration:none;
+		      text-align:center;
+		      color:black;
+		      font-size:8px;
+		      padding:6px;
+		   }
+		 
+.button img { border:0; }
+
+.button div { display:none }
+
+.button[selected] div { position:absolute;
+												display:block;
+							          top:20px;
+							          background-color:orange }
+
+.button:hover { background-color:#cccccc }		 
+.button:active { background-color:#cccccc }
+.button[selected] { background-color:#cccccc }

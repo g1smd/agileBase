@@ -1,0 +1,198 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## edit the filters in a report
+
+<STYLE>
+	@import url("styles/report.css");
+	
+	div#filterOptionsSet { display:none }
+	div#filterOptionsSet[selected=true] { display:block }
+	form { height:100% }
+	
+	tr#addNewFilter td { vertical-align:top;
+                    	 font-size:8pt!important;
+						 border-top:1px solid orange }
+</STYLE>
+
+<script language=javascript>
+  	function fArrayContains(aArray, vTest)
+	  {	
+	    for (var i=0; i<aArray.length; i++)
+      			if (aArray[i]==vTest)
+      			  return true;
+    return false;
+  	}	
+</script>
+
+<FORM action="AppController.servlet" target="pane_2" method=post id=newfilter>
+
+##defined in ../../report_fields.vm
+##set($report = $viewMethods.getSessionData().getReport())
+
+<table id=reportData cellspacing="0">
+	<THEAD >
+		<TR >
+			<th class=leading>&nbsp;</th>
+			<TH >Source</TH>
+			<TH >Field</TH>
+			<TH >Filter Type</TH>
+			<TH >Filter Value(s)</TH>
+			<th class=trailing>&nbsp;</th>
+		</TR>
+	</THEAD>
+	<tbody>
+		#foreach ($filter in $report.getFilters())
+			#set($filterType = $filter.getFilterType())
+			<tr #if($velocityCount%2!=0) class=rowa #else class=rowb #end>
+    			<td class=leading>&nbsp;</td>
+    			<td>#if($filter.isFilterFieldFromReport())
+    			      report: $filter.getFilterReportField().getParentReport()
+    			    #else
+    			      $filter.getFilterBaseField().getTableContainingField()
+    			    #end
+    			</td>
+    			<td>#if($filter.isFilterFieldFromReport())
+    			      $filter.getFilterReportField()
+    			    #else
+    			      $filter.getFilterBaseField()
+    			    #end</td>
+    			<td>$filterType</td>
+    			<td>
+					#if(($filterType != "IS_NULL") && ($filterType != "IS_NOT_NULL"))
+					  $filter.getFilterValues()
+					#end
+				</td>
+    			<td class=trailing>
+					<input type=button value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_filter_from_report=true gtpb_internalfiltername="$filter.getInternalName()">
+				</td>
+			</tr>
+		#end
+		<tr class=trailing> <!-- a padding row -->
+			<td class=leading>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td class=trailing>&nbsp;</td>
+		</tr>
+## Defined outside in ../../report_fields.vm
+##set($joinReferencedTables = $report.getJoinReferencedTables())
+##set($joinedTables = $report.getJoinedTables())
+##set($joinedReports = $report.getJoinedReports())
+    	<input type=hidden name=return value="gui/reports_and_tables/report_data">
+    		<input type=hidden name=add_filter_to_report value=true>
+		<TR id=addNewFilter>
+			<td class=leading height=20>&nbsp;</td>
+			<TD height=20>
+			  <select name="internalreportname">
+  				#foreach($table in $joinReferencedTables)
+  				  #set($tableReports = $table.getReports())
+    	<optgroup label="$table.getTableName()">
+    	#if($joinedTables.contains($table))
+      	## send default report in place of actual table (server will use table if default report)
+	      <option value=$table.getDefaultReport().getInternalReportName() #if($table.equals($report.getParentTable()))selected#end>$table.getTableName()</option>
+	    #end
+			  	    #foreach($tableReport in $tableReports)
+			  	      #if (($joinedReports.contains($tableReport)) && (! $table.getDefaultReport().equals($tableReport)))
+  			  		      <option value=$tableReport.getInternalReportName()>$tableReport.getReportName()</option>
+  			  		    #end
+			  	    #end
+			  	  </optgroup>
+				  #end
+			  </select>
+</TD>
+			<TD height=20>
+			  ##The actual field, content filled by separate AJAX request
+			  <select name="internalfieldname" parent="internalreportname">
+			  </select>
+			</TD>
+			
+			<TD>
+				<SELECT name="filtertype" onchange="fSelectFilterOption(this.selectedIndex)">
+				    #set($filterTypeDescriptors = $viewTools.getFilterTypeDescriptors())
+   					#foreach($filterType in $filterTypeDescriptors)
+   						<OPTION value="$filterType.getFilterType().getFilterTypeParameter()">
+   							$filterType.getFilterType().getDescription()
+   						</OPTION>
+   					#end
+   				</SELECT>
+			</TD>
+			
+			<TD height=20 id=filterOptionsSets>
+				#foreach($filterType in $filterTypeDescriptors)
+					<DIV id=filterOptionsSet desc="$filterType.getFilterType().getDescription()"> ##  #if($velocityCount==1)selected="true"#end
+						#foreach($filterOption in $filterType.getOptions())
+							#if($filterOption.getClass().getSimpleName()=="BooleanFieldDescriptorOption")
+								<INPUT type=checkbox name="$filterOption.getFormInputName()" value="1" id="$filterOption.getFormInputName()1">
+    						#elseif($filterOption.getClass().getSimpleName()=="ListFieldDescriptorOption")
+								<SELECT name="$filterOption.getFormInputName()">
+									#foreach($filterOptionOption in $filterOption.getOptionsList().keySet())
+										<OPTION value="$filterOptionOption">
+											$filterOption.getOptionsList().get($filterOptionOption)
+										</OPTION>
+									#end ##foreach option in list type
+								</SELECT>
+							#elseif($filterOption.getClass().getSimpleName()=="TextFieldDescriptorOption")
+      							<INPUT name="$filterOption.getFormInputName()">
+							#end  ##if is boolean or list or text
+    						<BR>
+  						#end  ##foreach field option
+					</DIV>
+				#end  ##foreach field type
+			</TD>
+				<TD height=20 class=trailing>
+				  <INPUT type="submit" value="create filter">
+				</TD>
+			</TR>
+		</tbody>
+	</TABLE>
+</FORM>
+<SCRIPT language=javascript>
+  	function fSelectFilterOption(iIndex)
+  	{
+  	   function fEnableDisable(oFilterOptionSet)
+    		{	// disable all the form elements in the hidden options
+				for (var i=0;i<oFilterOptionSet.childNodes.length;i++)
+      			{		if(oFilterOptionSet.childNodes[i].form) //it's a form element
+        				{	if (oFilterOptionSet.getAttribute('selected'))
+        				  	  oFilterOptionSet.childNodes[i].removeAttribute('disabled');
+							else
+							  oFilterOptionSet.childNodes[i].setAttribute('disabled','true');
+        				}
+			      }
+		    }
+		
+    		for(var i=0; i<aFilterOptionsSets.length; i++)
+    		{
+    		  	aFilterOptionsSets[i].removeAttribute('selected');
+      			fEnableDisable(aFilterOptionsSets[i]);
+    		}
+    		aFilterOptionsSets[iIndex].setAttribute('selected','true');
+			fEnableDisable(aFilterOptionsSets[iIndex]);
+  	}
+	
+  	var aFilterOptionsSets = new Array();
+	
+  	//push all the options sets into a global array 
+  	for(var i=0;i<document.getElementById('filterOptionsSets').getElementsByTagName('DIV').length;i++)
+		    if(document.getElementById('filterOptionsSets').getElementsByTagName('DIV')[i].id=='filterOptionsSet')
+			      aFilterOptionsSets.push(document.getElementById('filterOptionsSets').getElementsByTagName('DIV')[i]);		
+	
+	  //fSelectFilterOption(0); // moved to pane_3_tab_set.vm
+</SCRIPT>
+<script language=javascript src="resources/wait/interdependent_fields.js"></script>

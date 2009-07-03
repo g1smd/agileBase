@@ -1,0 +1,61 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html>
+#set($sessionData = $viewMethods.getSessionData())
+#set($table = $sessionData.getTable())
+  <head>
+    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+    <title>
+      PortalBase Development Tools
+    </title>
+    <link rel="stylesheet" type="text/css" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css"/>
+  </head>
+
+  <body class="mediawiki ns-0 ltr page-Main_Page">
+  	<div id="globalWrapper">
+		  <div id="column-content">
+	  <div id="content">
+				  
+    <h1 class="firstHeading">portalBase development tools</h1>
+    <div id="bodyContent">
+    
+    <h2>Schema development</h2>
+    #if($viewMethods.loggedInUserAllowedTo('MASTER'))
+      <!-- Company Management Console should only be available to MASTER gtpb user -->
+      <a href="AppController.servlet?return=gui/development/manage_companies">Manage companies</a><p>
+    #end
+    <a href="AppController.servlet?return=gui/development/update_calculation">Update a Calculation</a><p>
+    <a href="AppController.servlet?return=gui/development/anonymise_table">Anonymise $table table data</a><p>
+    <!-- <a href="AppController.servlet?return=gui/development/clone_report">Clone a report</a><p> -->
+    <!-- <a href="AppController.servlet?return=gui/development/delete">Delete a table, field or report</a><p> -->
+    <!-- <a href="AppController.servlet?return=gui/development/table_fields_editor">Amend table field</a><p> -->
+    <!-- <a href="AppController.servlet?return=gui/development/fieldReorder">Move a report field</a><p> -->
+    <a href="AppController.servlet?return=gui/development/export_schema&returntype=xml">View schema as XML</a><p>
+    <a href="AppController.servlet?return=gui/development/script_gen">View script for DB creation</a><p>
+    <a href="AppController.servlet?return=gui/development/php_script_gen">View PHP script for DB cloning</a><p>
+    <a href="AppController.servlet?return=gui/development/translator">Translate to internal names</a><p>
+    <!-- <a href="AppController.servlet?return=gui/development/import_tables">Import Tables</a><p> -->
+    <a href="AppController.servlet?return=gui/development/send_requests">Send a sequence of preformatted post requests</a><p>
+    <a href="AppController.servlet?return=gui/development/manage_tab_addresses">Manage tab addresses for $viewMethods.getLoggedInUser().getCompany()</a><p>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

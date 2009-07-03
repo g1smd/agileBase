@@ -1,0 +1,96 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+$viewTools.startTimer("gui/resources/option_set_wrapper")
+#if($options_wrapper_no)
+	#set($options_wrapper_no=$options_wrapper_no+1)
+#else
+	#set($options_wrapper_no=0)
+#end
+
+
+
+  <SCRIPT language=Javascript>
+  function fNothing(x,y)
+  {  return;
+  }
+  
+    function fShowOption(sWrapperID, sOptionID)
+    { function fSetOptionSessionVars(sOption)
+       { function fSetSessionOptionset(aPostVars)
+	     {	aPostVars['key']='$optionset_id';  ##note that this is a smarty variable
+	        aPostVars['value']='true'; 
+	     	var oReq=new fRequest('AppController.servlet',aPostVars,fNothing,-1);
+	     }
+	     
+	     function fSetSessionOption(sOption,aPostVars)
+	     {	aPostVars['key']="$optionset_id"+'_option';
+	     		aPostVars['value']=sOption;
+	     		var oReq=new fRequest('AppController.servlet',aPostVars,fNothing,-1);
+	     }
+	    
+	     aPostVars=new Array();
+	     aPostVars['return']='gui/administration/xmlreturn_fieldchange';
+	     aPostVars['set_custom_string']='true';
+     	 
+		 fSetSessionOptionset(aPostVars);
+     	 fSetSessionOption(sOption,aPostVars);     
+       }
+	
+	   $("#"+sWrapperID+" > div").hide();
+	   $("#"+sOptionID).show();
+
+	   //var oOptions=document.getElementById(sWrapperID).getElementsByTagName('DIV');
+       //// for(var i=0;i<oOptions.length;i++) oOptions[i].removeAttribute('selected');
+       //for(var i=0;i<oOptions.length;i++) $(oOptions[i]).hide();
+       //// document.getElementById(sOptionID).setAttribute('selected','true');
+	   //$(document.getElementById(sOptionID)).show(); // there's probably a better way to do this in jQuery
+	   fSetOptionSessionVars(sOptionID);
+    }
+  </SCRIPT>
+  #if($path && $path!='')
+	##do nothing
+  #else
+	## assume that we're doing something administrative and use the appropriate
+	## admin folder
+	#set($path="gui/administration/$admin_folder")
+  #end
+  <DIV id=options_wrapper_$options_wrapper_no class=options_wrapper>
+    ##options set here
+    #parse("$path/options_set.vm")
+  </DIV>
+  <DIV id=navigation class=buttonRadioGroup>
+	    ##navigation here
+		#parse("$path/navigation.vm")
+  </DIV>
+  
+  <SCRIPT language=Javascript>  
+    // show the first option
+    #if ($viewMethods.getSessionData().getCustomVariable($optionset_id)=='true')
+	  #set($sOid='_option')
+	  #set($option=$viewMethods.getSessionData().getCustomVariable("$optionset_id$sOid"))
+	  var oButton=document.getElementById('button_$option');
+	  if (oButton) oButton.click();
+	  else document.getElementById('navigation').getElementsByTagName('BUTTON')[0].click();
+	#else
+	  document.getElementById('navigation').getElementsByTagName('BUTTON')[0].click();
+	#end
+  </SCRIPT>
+  #set($path='')
+  #set($admin_folder='')
+  $viewTools.stopTimer("gui/resources/option_set_wrapper")
+  

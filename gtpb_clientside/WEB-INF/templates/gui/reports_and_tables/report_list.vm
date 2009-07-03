@@ -1,0 +1,144 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($SQ = "'")
+
+#if($mobile_device)
+  #parse('gui/browser_incapabilities.vm')
+  #set($pane2_template = "gui/mobile/pane2_selector")
+#else
+  #set($pane2_template = "gui/reports_and_tables/report_data")
+#end
+
+## a list of reports by module for pane1
+#set($sessionData=$viewMethods.getSessionData())
+#set($sessionReport = $sessionData.getReport())
+#set($sessionReportModule = $sessionReport.getModule())
+#set($sessionTable = $sessionData.getTable())
+#set($sessionContext=$sessionData.getContext().toString())
+
+## include custom per-company actions
+#set($company = $viewMethods.getLoggedInUser().getCompany())
+#set($companyName = $viewTools.cleanString($company.getCompanyName()))
+#set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
+#if($viewTools.templateExists($customisationsTemplateLocation))
+  #parse($customisationsTemplateLocation)
+#end
+
+## obtain a mapping of group to reports (Map<String, BaseReport[]>)
+## don't add groups/reports where the report is the default report
+## or a calculation/criteria report
+#set($reportModules=$viewTools.getNewSortedModuleObjectMap())
+#set($reports=$viewMethods.getAllViewableReports())
+#foreach($report in $reports)
+  #set($displayReport = true)
+  #if($report.getParentTable().getDefaultReport().equals($report))
+    ## don't group/display default reports
+    #set($displayReport = false)
+  #end
+  #set($reportName = $report.getReportName())
+  #if( (($reportName.contains("dbvcalc")) || ($reportName.contains("dbvcrit"))) && ($sessionContext != "SYSADMIN"))
+    ## don't display calculation/criteria reports
+    #set($displayReport = false)  
+  #end
+  ## add report to mapping if it should be displayed
+  #if($displayReport)
+    #if(!$report.getModule())
+	  #if($company.getModules().size() > 0)
+        #set($module=$company.getModules().last())
+	  #end
+	#else
+	  #set($module=$report.getModule())
+	#end
+	#if($module)
+      #if($reportModules.containsKey($module))
+        #set($reportsArray=$reportModules.get($module))
+      #else
+        #set($reportsArray=[])
+      #end
+      #set($success=$reportsArray.add($report))
+      #set($success=$reportModules.put($module, $reportsArray))
+	#end
+  #end
+#end
+
+## only show the grouped reports section if it isn't empty!
+#if($reportModules.size() > 0)
+## search box
+#if($reports.size() > 5000)
+  <div id="reportsearch">
+    <img src="resources/icons/applications/tango/actions/system-search.png" style="float:left"/>&nbsp;
+	<input type="text" size="15" name="reportsearch" id="reportsearchbox"/>
+  </div>
+#end ## search box
+	
+  #set($previousSection = "")
+  
+  ## Get colours array
+  #parse('gui/resources/module_color_colors.vm')
+  
+  #foreach($module in $reportModules.keySet())
+	#set($section = $module.getSection())
+	#if($section == "")
+		#set($section = $previousSection)
+	#end
+	## If first module doesn't have a section name, set it to the company name
+	#if(($velocityCount == 1) && ($section == ""))
+		#set($section = "$company")
+	#end
+	#if($section != $previousSection)
+      #if($velocityCount > 1) </li></ul> #end
+	  <li><h1><span>$section</span></h1>
+	  <ul>
+    #end
+	#set($previousSection = $section)
+	#set($internalModuleName = $module.getInternalModuleName())
+	
+	#set($colourStyleName = '')
+	#foreach($colour in $colours)
+    	#if($colour.get('colourName') == $module.getColour())
+    		#set($colourStyleName = $colour.get('styleName'))
+		#end
+	#end	
+	
+	<li id="$internalModuleName" #if($sessionReportModule.equals($module)) class="moduleexpanded $colourStyleName" #else class="modulecollapsed $colourStyleName" #end>
+	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> $module</span></h2>
+	  #set($moduleActions = $viewMethods.getModuleActions($internalModuleName))
+	  #if(($moduleActions.size()>0) && (!$mobile_device))
+	    <ul parent="$internalModuleName" class="moduleaction">
+		  #foreach($moduleAction in $moduleActions)
+			<li title="$moduleAction.getDescription()"><div class="module-tree-item-wrap"><a href="#" onclick="top.fShowModalDialog(${SQ}$moduleAction.getActionTemplate()${SQ},${SQ}$moduleAction.getActionName()${SQ},$moduleAction.getCallbackFunction(),${SQ}$moduleAction.getButtons()${SQ},${SQ}$moduleAction.getAttributes()${SQ}); return false">$moduleAction</a></div></li>
+		  #end
+		</ul>
+	  #end ## end if there are module actions
+	  <ul parent="$internalModuleName">
+	  #foreach($report in $reportModules.get($module)) 
+		#set($table=$report.getParentTable())
+		<li id="$table.getInternalTableName()$report.getInternalReportName()">
+		  <div class="module-tree-item-wrap">
+			<a href="AppController.servlet?return=$pane2_template&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()&set_report_row_limit=100&clear_all_report_sorts=true&set_module=$module.getInternalModuleName()" #if(!$mobile_device)target="pane_2" class="report_tooltip" rel="AppController.servlet?return=gui/reports_and_tables/report_tooltip&set_custom_report=true&reportkey=tooltip_report&custominternalreportname=$report.getInternalReportName()"#end >
+				$report
+			</a>
+			<span class="recordcount">()</span>
+		  </div>
+		</li>
+	  #end ## end of loop through reports in a module
+	  </ul>
+	</li>
+  #end ## end loop through modules
+  </li></ul>
+#end

@@ -1,0 +1,44 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+$viewTools.startTimer("gui/reports_and_tables/default_pane3")
+## pane3 for the default report
+
+#set($tabs=[])
+#set($styles=[])
+#set($success=$tabs.add({'tabName':'view', 'tabSource':'gui/reports_and_tables/tabs/view'}))
+#if($viewMethods.loggedInUserAllowedTo('EDIT_TABLE_DATA',$viewMethods.getSessionData().getTable()))
+	#set($success=$tabs.add({'tabName':'edit', 'tabSource':'gui/reports_and_tables/tabs/edit'}))
+	#set($success=$styles.add('resources/tabs/edit.css'))	
+#end
+
+#if($viewMethods.loggedInUserAllowedTo('MANAGE_TABLE',$viewMethods.getSessionData().getTable()))
+	  ## the current user can manage the table so show them admin options as well
+	  ## as the data and summary in tabs
+	  #set($success=$tabs.add({'tabName':'global edit', 'tabSource':'gui/reports_and_tables/tabs/global_edit'}))
+	  #set($success=$styles.add('resources/tabs/global_edit.css'))
+	  #set($success=$tabs.add({'tabName':'fields', 'tabSource':'gui/reports_and_tables/tabs/table_fields'}))
+	  #set($success=$styles.add('resources/tabs/table_fields.css'))
+	  #set($success=$tabs.add({'tabName':'manage', 'tabSource':'gui/reports_and_tables/tabs/table_administration'}))
+	  #set($success=$styles.add('resources/tabs/table_administration.css'))
+#end
+
+#set($pane2_id=$viewMethods.getSessionData().getRowId())
+#set($tabset_id='table')
+
+#parse('gui/resources/pane3_tab_set.vm')
+$viewTools.stopTimer("gui/reports_and_tables/default_pane3")

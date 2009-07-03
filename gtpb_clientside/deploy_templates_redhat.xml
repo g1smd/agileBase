@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="deploy" name="portalBase">
+	<!-- server directories -->
+	<property name="tomcat.dir" location="/usr/local/tomcat/apache-tomcat-6.0.13" />
+	<property name="webapp" value="portalBase" />
+
+	<target name="deploy">
+		<copy todir="${tomcat.dir}/webapps/${webapp}/WEB-INF">
+			<fileset dir="WEB-INF"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/styles">
+			<fileset dir="styles"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/resources">
+			<fileset dir="resources"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/website">
+			<fileset dir="website"/>
+		</copy>
+	</target>
+
+	<target name="run">
+		<echo>This is a web application and can't be run from the command line</echo>
+	</target>
+
+	<target name="all" depends="deploy" />
+</project>

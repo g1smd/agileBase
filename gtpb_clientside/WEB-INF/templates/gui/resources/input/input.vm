@@ -1,0 +1,33 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($fieldCategory=$field.getFieldCategory())
+
+#if($viewOnly)
+  #set($userCanEdit=false)
+#elseif($viewMethods.loggedInUserAllowedTo('EDIT_TABLE_DATA',$viewMethods.getSessionData().getTable()))
+	  ## the user is allowed to edit data in the table
+	  #set($userCanEdit=true)
+#else
+	  #set($userCanEdit=false)
+#end
+
+#set($fieldValue="") ##reset fieldValue since last usage
+#if(!$tabIndex) #set($tabIndex = 0) #end
+#set($tabIndex = $tabIndex + 1)
+#parse("gui/resources/input/${fieldCategory.toString().toLowerCase()}.vm")
+&nbsp;

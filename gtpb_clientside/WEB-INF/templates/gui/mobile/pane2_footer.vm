@@ -1,0 +1,59 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## Buttons to select different pane 2 functions
+<style>
+#mobile_footer {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  background-image: url('resources/mobile/header_middle.png');
+  border-top: 1px solid rgb(45, 54, 66);
+  font-size: 16pt;
+  font-weight: bold;
+  color: white;
+  text-shadow: rgba(0, 0, 0, .6) 0px -1px 0px;
+  /* enfore trimming if the label is too long */
+  white-space : nowrap;
+  overflow : hidden;
+  text-overflow: ellipsis;
+}
+</style>
+
+<div id="mobile_footer">
+#set($report = $viewMethods.getSessionData().getReport())
+<form method="post" action="AppController.servlet" name="footerform">
+<input type="hidden" name="return" value="gui/mobile/pane2_selector">
+<input type="hidden" name="set_custom_string" value="1">
+<input type="hidden" name="stringkey" value="mobile_pane2_selection">
+<input type="hidden" name="customstringvalue" value="$mobile_pane2_selection">
+
+## Report
+<button #if($mobile_pane2_selection == "report") disabled #end onclick="document.footerform.customstringvalue.value='report'; submit();">report</button> 
+## Summary
+#set($summary = $report.getReportSummary())
+#set($summary_enabled = false)
+## With tag clouds there's always a summary
+###if(($summary.getGroupingReportFields().size() > 0) || ($summary.getAggregateFunctions().size() > 0))
+  #set($summary_enabled = true)
+###end
+#if($mobile_pane2_selection == "summary")
+  #set($summary_enabled = false)
+#end
+<button #if(!$summary_enabled) disabled #end onclick="document.footerform.customstringvalue.value='summary'; submit();">summary</button> 
+</form>
+</div>

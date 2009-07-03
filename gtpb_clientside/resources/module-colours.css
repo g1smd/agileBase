@@ -1,0 +1,44 @@
+/* Pane 1 Tree view */
+.blue {background-color: #EEF3F9;}
+.blue h2 {background-color: #DDE6EF;}
+
+.cyan {background-color: #EEF9F8;}
+.cyan h2 {background-color: #DDEFEE;}
+
+.green {background-color: #EEF9F0;}
+.green h2 {background-color: #DDEFE0;}
+
+.orange {background-color: #F9F6EE;}
+.orange h2 {background-color: #EFEADD;}
+
+.pink {background-color: #F9EEF4;}
+.pink h2 {background-color: #EFDDE7;}
+
+.purple {background-color: #F5EEF9;}
+.purple h2 {background-color: #E8DDEF;}
+
+.silver {background-color: #FAFAF8;}
+.silver h2 {background-color: #F1F2ED;}
+
+.yellow {background-color: #F6F9EE;}
+.yellow h2 {background-color: #EBEFDD;}
+
+/* Pane 2 report list */
+#reportData .blue {background-color: #DDE6EF;}
+#reportData .cyan {background-color: #DDEFEE;}
+#reportData .green {background-color: #DDEFE0;}
+#reportData .orange {background-color: #EFEADD;}
+#reportData .pink {background-color: #EFDDE7;}
+#reportData .purple {background-color: #E8DDEF;}
+#reportData .silver {background-color: #F1F2ED;}
+#reportData .yellow {background-color: #EBEFDD;}
+
+/* Pane 3 colour picker */
+#module_color .blue {background-color: #DDE6EF;}
+#module_color .cyan {background-color: #DDEFEE;}
+#module_color .green {background-color: #DDEFE0;}
+#module_color .orange {background-color: #EFEADD;}
+#module_color .pink {background-color: #EFDDE7;}
+#module_color .purple {background-color: #E8DDEF;}
+#module_color .silver {background-color: #F1F2ED;}
+#module_color .yellow {background-color: #EBEFDD;}

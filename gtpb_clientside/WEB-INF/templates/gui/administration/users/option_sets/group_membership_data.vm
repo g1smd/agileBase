@@ -1,0 +1,35 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<table cellspacing=0 border=0 cellpadding=0>
+  #set($userRoles = $viewMethods.adminGetRolesForUser($sessionUser))
+  #foreach($role in $viewMethods.adminGetRoles())
+  <tr>
+    <td>$role.getRoleName()</td>
+    <td>
+      <input type=checkbox 
+       name="$role.getRoleName()" 
+       fn_checked="assign_user_to_role" 
+       fn_unchecked="remove_user_from_role" 
+       #if($userRoles.contains($role))checked#end
+       gtpb_internalrolename="$role.getInternalRoleName()"
+       gtpb_internalusername="$sessionUser.getInternalUserName()"
+       onclick="fSetPBfn(this);new fChange(this)">
+    </td>
+  </tr>
+  #end ##end of foreach
+</table>

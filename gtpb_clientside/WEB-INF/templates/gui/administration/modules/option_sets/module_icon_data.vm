@@ -1,0 +1,177 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($module = $viewMethods.getSessionData().getModule())
+#set($currentIconPath = $module.getIconPath())
+<style>
+  div#moduleIconPicker table.iconPickerTable {
+    border-collapse:collapsed;
+    margin-top:30px;
+  }
+  
+  div#moduleIconPicker table.iconPickerTable td {  
+    border:1px solid #999999;
+  }
+  
+  div#moduleIconPicker table.iconPickerTable td:hover {
+    background-color:#dae2ff;
+  }
+  
+  div#moduleIconPicker table.iconPickerTable td#icon_pending {
+    border-color:#FFBA3B;
+  }
+  
+  div#moduleIconPicker table.iconPickerTable td#icon_selected {
+    border-color:#FFBA3B;
+    background-color:#ffd588;
+  }
+
+  
+</style>
+
+<div id="moduleIconPicker"></div>
+
+<script language="Javascript">
+
+  function fIconPicker(oContainer) {
+    
+    function fIconTables() {
+      function fDivClick(oEvent) {
+        
+        function fReqOK(sResponseText,sResponseXML) {
+          function fUpdateP1() {
+            var oCaptions=parent.pane_1.document.getElementsByName('caption');
+            for (var i=0; i<oCaptions.length; i++) {
+              if(oCaptions[i].getAttribute('type')!='modulename') continue;
+              if(oCaptions[i].getAttribute('identifier')!=sModuleId) continue;
+              oCaptions[i].updateIcon(oImg);
+              break;
+            }
+          }
+        
+          function fUpdateP2() {
+            var oCells=top.document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('reportData').tHead.rows[0].cells;
+            // the index of the current row
+            if(top.document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('currentRow')) {
+              oCurrentRow=top.document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('currentRow');
+            }
+            else return; // there is no selected row to update            
+            
+            for (var i=0;i<oCells.length;i++) { 
+              if(oCells[i].getAttribute('internalName')=='iconpath') {
+                while(oCurrentRow.cells[i].hasChildNodes()) oCurrentRow.cells[i].removeChild(oCurrentRow.cells[i].childNodes[0]);
+                var oNewImg=oImg.cloneNode(true);
+                oCurrentRow.cells[i].appendChild(oNewImg);
+              }
+            }
+          }
+        
+          while(document.getElementById('icon_pending')) document.getElementById('icon_pending').removeAttribute('id');
+          while(document.getElementById('icon_selected')) document.getElementById('icon_selected').removeAttribute('id');
+          oTD.setAttribute('id','icon_selected');
+          fUpdateP1();
+          fUpdateP2();
+        }
+        
+        if(oEvent.target==oCurrentIconTable) return;
+        var oTD=oEvent.target;
+        while (oTD.tagName!='TD') {
+          oTD=oTD.parentNode;
+          if(oTD==document) return;
+        }
+        
+        var oImg=oTD.getElementsByTagName('IMG')[0];
+        
+        	var aPostVars=new Array();
+        aPostVars['return']='gui/administration/xmlreturn_fieldchange';
+	        aPostVars['update_module']='true';
+	        aPostVars['iconpath']=oTD.getAttribute('iconName');
+	        
+	        var oReq=new fRequest('AppController.servlet',aPostVars,fReqOK,-1);
+        
+        while(document.getElementById('icon_pending')) document.getElementById('icon_pending').removeAttribute('id');
+        oTD.setAttribute('id','icon_pending');
+      }
+      
+      #foreach($folder in $viewTools.listFiles("resources/icons/applications/tango"))
+	        #if($folder.isDirectory())
+		          #set($folderName = $folder.getName())
+		          var oDiv=document.createElement('div');
+		          $(oDiv).addClass('iconPickerDiv');
+		          oDiv.style.display='none';
+		          ##oDiv.addEventListener('click',fDivClick,false);
+		          $(oDiv).click(fDivClick);
+		          #set($innerHTML='<table class="iconPickerTable" border="0" cellpadding="0" cellspacing="5"><tr>')
+		          #set($cellCount=0)
+		          		#foreach($file in $viewTools.listFiles("resources/icons/applications/tango/$folderName"))
+			            #set($fileName = $file.getName())
+			            #if($fileName.endsWith("png"))
+						              #set($iconPath = "${folderName}/${fileName}")
+				              #set($innerHTML=$innerHTML+'<td')
+						              #if($iconPath == $currentIconPath)
+						                #set($innerHTML = $innerHTML + ' id=icon_selected')
+						              #end
+						              #set($innerHTML=$innerHTML+' iconName="'+$iconPath+'"><img src="resources/icons/applications/tango/'+$iconPath+'"/></td>')
+			              #set($cellCount=$cellCount+1)
+			            #end
+			            #if($cellCount%10==0)
+			              #set($innerHTML="$innerHTML </tr><tr>")
+			            #end
+		          #end
+		          #set($innerHTML="$innerHTML </tr></table>")
+		          oDiv.innerHTML='$innerHTML';      
+		          oContainer.appendChild(oDiv);
+		          aIconTables.push(oDiv);
+	        #end
+      #end
+      aIconTables[0].style.display='block';
+      oCurrentIconTable=aIconTables[0];
+    }   
+    
+    function fDropDown() {
+      function fChangeIconset() {
+        for(var i=0; i<aIconTables.length; i++) {
+          aIconTables[i].style.display='none';
+        }
+        aIconTables[this.selectedIndex].style.display='block';
+        oCurrentIconTable=aIconTables[this.selectedIndex];
+      }
+      
+      var oDropDown=document.createElement('SELECT');
+      ##oDropDown.addEventListener('change',fChangeIconset,true);
+      $(oDropDown).change(fChangeIconset);
+      #foreach($folder in $viewTools.listFiles("resources/icons/applications/tango"))
+	        #if($folder.isDirectory())
+		          #set($folderName = $folder.getName())
+		          var oOption=new Option('$folderName');
+          oDropDown.appendChild(oOption);
+        #end
+      #end
+      return oDropDown; 
+    }
+    
+    var sModuleId='$module.getInternalModuleName()';
+    var aIconTables=new Array();
+    var oCurrentIconTable;
+    oContainer.appendChild(document.createTextNode('Pick icon set: '));
+    oContainer.appendChild(fDropDown());
+    fIconTables();
+  }
+  
+  fIconPicker(document.getElementById('moduleIconPicker'));
+
+</script>

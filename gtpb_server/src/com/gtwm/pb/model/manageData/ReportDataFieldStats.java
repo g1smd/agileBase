@@ -1,0 +1,50 @@
+/*
+ *  Copyright 2009 GT webMarque Ltd
+ * 
+ *  This file is part of GT portalBase.
+ *
+ *  GT portalBase is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  GT portalBase is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.gtwm.pb.model.manageData;
+
+import com.gtwm.pb.model.interfaces.ReportDataFieldStatsInfo;
+
+public class ReportDataFieldStats implements ReportDataFieldStatsInfo {
+	/**
+	 * Private constructor only used by the object database db4o Provided for
+	 * performance reasons, see the 'Tuning' section 21.2 of the db4o tutorial
+	 */
+	private ReportDataFieldStats() {
+	}
+
+	public ReportDataFieldStats(double mean, double stdDev) {
+		this.mean = mean;
+		this.stdDev = stdDev;
+	}
+
+	public double getStdDev() {
+		return this.stdDev;
+	}
+
+	public double getMean() {
+		return this.mean;
+	}
+
+	public String toString() {
+		return "Mean = " + this.mean + ", standard deviation = " + this.stdDev;
+	}
+
+	private double stdDev = 0f;
+
+	private double mean = 0f;
+}

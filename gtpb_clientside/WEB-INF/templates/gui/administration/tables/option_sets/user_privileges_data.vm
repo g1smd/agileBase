@@ -1,0 +1,59 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#macro(radio_table_user $caption $privilege $pbfn)
+  <label FOR="$table.getInternalTableName()$privilege$velocityCount">
+    <input type=radio 
+     id="$table.getInternalTableName()$privilege$velocityCount"
+     name="setuser$velocityCount" 
+     value="$privilege"
+     gtpb_internalusername="$user.getInternalUserName()"
+     gtpb_internaltablename="$table.getInternalTableName()"
+     gtpb_privilegetype="$privilege"
+     gtpb_assignto="user"
+	 $pbfn
+     onclick="new fChange(this)"
+     #if($highestTablePrivilege.equals($privilege)) checked #end
+    >
+    <br>$caption
+  </label>
+#end
+
+
+#set($table=$viewMethods.getSessionData().getTable())
+<table cellspacing=0 border=0 cellpadding=0>
+  <tr>
+    <td>&nbsp;</td>
+    <th colspan=4>privileges</th></tr>
+      #foreach($user in $viewMethods.adminGetUsers())
+		#set($highestTablePrivilege = "")
+		#if($viewMethods.userHasPrivilege($user, "MANAGE_TABLE", $table))
+          #set($highestTablePrivilege = "MANAGE_TABLE")
+		#elseif($viewMethods.userHasPrivilege($user, "EDIT_TABLE_DATA", $table))
+          #set($highestTablePrivilege = "EDIT_TABLE_DATA")
+		#elseif($viewMethods.userHasPrivilege($user, "VIEW_TABLE_DATA", $table))
+          #set($highestTablePrivilege = "VIEW_TABLE_DATA")  
+		#end
+        <tr>
+          <td>$user.getUserName()</td>
+          <td>#radio_table_user('none' '' 'gtpb_clear_all_table_privileges')</td>
+          <td>#radio_table_user('read' 'VIEW_TABLE_DATA' 'gtpb_set_max_table_privilege')</td>
+          <td>#radio_table_user('edit' 'EDIT_TABLE_DATA' 'gtpb_set_max_table_privilege')</td>
+          <td>#radio_table_user('manage' 'MANAGE_TABLE' 'gtpb_set_max_table_privilege')</td>
+        </tr>
+      #end
+</table>

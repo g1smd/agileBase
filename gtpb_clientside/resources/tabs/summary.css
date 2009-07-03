@@ -1,0 +1,52 @@
+
+	  div#fieldOptionsSet { 
+	    display:none;
+	  }
+	  
+	  div#fieldOptionsSet[selected] { 
+	    display:block;
+	  }
+	  
+	  form { 
+	    height:100%;
+	  }
+	
+	  tr#addNewField td { 
+	    vertical-align:top;
+    font-size:8pt;
+						    border-top:1px solid orange;
+						  }
+						
+	  optgroup { 
+	    font-style:normal;
+		    margin-top:5px; 
+			    color:#333333;
+			  }
+  
+  .chartBar { 
+	    position:relative;
+	    height:100%;
+	    background-color:#9091f4;
+	    border:0px;
+	    padding:4px;
+	    color:black;
+	  }
+	  
+  .chartBarNegative { 
+	    position:relative;
+	    height:100%;
+	    background-color:#f49092;
+	    opacity:0.7;
+	    text-align: right;
+	    border:0px;
+	    padding:4px;
+	    color:black;
+	  }
+	  
+  .tagCloud {
+    color:#8D8D8D;
+    position:absolute;
+    width:100%;
+    background-color:#ffffff;
+  }
+  

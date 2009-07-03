@@ -1,0 +1,10 @@
+
+   table#reportData tbody tr button.globalEdit {
+     visibility:hidden;
+   }
+   
+    table#reportData tbody tr:hover button.globalEdit {
+     visibility:visible;
+     background-color:orange;
+     color:white;
+   }

@@ -1,0 +1,37 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($resource_folder='roles')
+#set($return='gui/administration/roles/options')
+#set($pane1_id='administrationroles')
+#set($isNotTable=true)
+##test to see whether a record has previously been selected and is stored in the session
+#set($selection=$viewMethods.getSessionData().getRole())
+
+#set($fields=[['rolename','Role name']])
+#set($data=[])
+#foreach($role in $viewMethods.adminGetRoles())
+  ## item to display on screen for this role - the row array is only one item long because we're only displaying one thing - role name
+  #set($row=[$role.getRoleName()])
+  #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_role=$role.getInternalRoleName()'")
+  ## #set($click="return=$return&set_role=$role.getInternalRoleName()")
+  #set($uniqueid=$role.getInternalRoleName())
+  #set($success=$data.add([$row,$click,$uniqueid,'',false]))
+#end
+
+#parse('gui/pane2/include_delete_checkboxes.vm')
+

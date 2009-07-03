@@ -1,0 +1,135 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+$viewTools.startTimer("gui/reports_and_tables/tabs/view")
+#set($rowCount = 0)
+
+## view the data in the session table, plus related data
+#set($sessionData = $viewMethods.getSessionData())
+#set($tabCaption='view')
+#set($sessionTable=$sessionData.getTable())
+#set($sessionReport=$sessionData.getReport())
+#if(!$sessionRowId)
+  #set($sessionRowId=$sessionData.getRowId())
+#end
+#if($sessionRowId == -1)
+	Select a record to view data
+#else
+	<table cellspacing=0 cellpadding=0 border=0 id=reportData>
+		<thead>
+			<tr><th class=leading>&nbsp;</th>			
+			<th>$sessionTable</th>
+			<th>value</th>			
+			<th class=trailing>&nbsp;</th></tr>			
+		</thead>
+		#set($sessionTableDataRow=$viewMethods.getTableDataRow($sessionTable, $sessionRowId))
+		#set($tableDataRow = $sessionTableDataRow)
+		#if ($tableDataRow.size() == 0)
+		 No data found for row id $sessionRowId
+		#else
+		 #set($viewOnly=true) ## $viewOnly used by resources/input/input.vm
+		 #set($address = $viewTools.getAddress($tableDataRow))
+		 #foreach($field in $sessionTable.getFields())
+		   #set($tableDataValue = $tableDataRow.get($field))
+		   ## don't display hidden or blank fields
+		   #if($field.getFieldCategory()=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
+			 ## don't display checkbox values that are false
+		     #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
+               #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+             #end
+   	       #end
+	     #end ## end loop through fields
+			    #if($viewMethods.isWikiIntegrated())
+				  #set($wikiTitle=$tableDataRow.get($sessionTable.getFieldByName('Wiki page [Auto]')))
+                  #if(!$wikiTitle.isNull())
+			        #parse("gui/reports_and_tables/tabs/wiki.vm")
+				  #end
+			      					<tr class="trailing">
+			        <td>&nbsp;</td>
+			        <td colspan="2">&nbsp;</td>
+			        <td>&nbsp;</td>
+		      </tr> 
+		    #else
+		    			  <tr class="trailing">
+			        <td>&nbsp;</td>
+			        <td>&nbsp;</td>
+			        <td>&nbsp;</td>
+			        <td>&nbsp;</td>
+		      </tr> 
+					    #end
+		#end 
+		## Show related data
+		#foreach($reportField in $sessionReport.getReportFields())
+		  ## don't show fields we've already shown
+		  #set($field = $reportField.getBaseField())
+		  #set($fieldTable = $field.getTableContainingField())
+		  #if(! ($fieldTable.equals($sessionTable)))
+		    ## if we have a relation to another table, show that table's data
+		    ## (if it has any related data)
+		    #if($field.equals($fieldTable.getPrimaryKey()))
+		     #set($relatedRowIds = $viewMethods.getRelatedRowIds($sessionRowId, $fieldTable))
+		     #set($numRelatedRows = $relatedRowIds.size())
+       #if ($numRelatedRows > 0)
+	     	   <thead>
+		        	<tr><th class=leading>&nbsp;</th>			
+		        	<th>$fieldTable</th>
+		        	<th>&nbsp;</th>			
+		        	<th class=trailing>&nbsp;</th></tr>			
+		        </thead>
+	 	      ## attempt to only display related data if it's a managable amount
+		       #if(($numRelatedRows == 1) || (($numRelatedRows * ($fieldTable.getFields().size() - 1)) < 30))
+		        #foreach($relatedRowId in $relatedRowIds)
+		         #set($tableDataRow=$viewMethods.getTableDataRow($fieldTable, $relatedRowId))
+		         #if ($tableDataRow.size() != 0)
+					#set($rowCount = 0)
+					#set($address = $viewTools.getAddress($tableDataRow))
+		            #foreach($field in $fieldTable.getFields())
+		          	#set($tableDataValue = $tableDataRow.get($field))
+				         #if(($field.getHidden() == false) && (! ($tableDataValue.toString() == '')))
+				          ## don't display checkbox values that are false
+				          #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
+               ## Don't re-show data from the session table
+               #if(!($field.getClass().getSimpleName().equals("RelationFieldDefn") && $sessionTable.equals($field.getRelatedTable())))
+                #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+               #end
+              #end
+   	         #end
+		          #end ## end foreach field in table
+		         #end ## end if ($tableDataRow.size() != 0)
+		        #end ## end foreach related row id
+		       #else
+		   #set($rowCount = $rowCount+1)
+           <tr #if($rowCount%2!=0) class=rowa #else class=rowb #end>
+           <td class=leading>&nbsp;</td>
+           <td>$numRelatedRows related records</td>
+           <td>#if($numRelatedRows > 0)not shown #else &nbsp; #end</td>
+           <td class=trailing>&nbsp;</td>
+				  	   </tr>
+		       #end ## end if number of related rows is a manageable amount
+		      #end
+		    #end
+		  #end
+		#end
+		<tr class=trailing>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+#end
+$viewTools.stopTimer("gui/reports_and_tables/tabs/view")

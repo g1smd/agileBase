@@ -1,0 +1,94 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<style>  
+  input[focused][type='text'] {
+    border:2px solid #A2B6FF;
+    background-color:#ECF0FF;
+  }
+</style>
+
+#if ($field.getClass().getSimpleName() == "IntegerFieldDefn")##
+  #if($globalEdit)##
+    #set($fieldValue = "")##
+  #else##
+  			  #set($fieldValue=$tableDataRow.get($field).toString())##
+  #end##
+  	#if($userCanEdit)##
+  	  #if($globalEdit || (!$updateAsType))##
+  	    		<input tabindex="$tabIndex" type="text" name="$field.getInternalFieldName()" value="$fieldValue" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
+  	  #else##
+  	    		<input tabindex="$tabIndex" type="text" gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+  	  #end##
+    		#if($field.allowNotApplicable())##
+		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
+		    #end##
+  	#else##
+$fieldValue##
+  	#end##
+#else##
+  #if(!$globalEdit)##
+  	  #set($fieldValue=$field.formatDecimalValue($tableDataRow.get($field)))##
+  	#end##
+  	#if($userCanEdit)##
+  	  #if($globalEdit || (!$updateAsType))##
+  	    		<input tabindex="$tabIndex" type="text" name="$field.getInternalFieldName()" value="" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
+  	  #else##
+  	    		<input tabindex="$tabIndex" type="text" gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+  	  #end##
+    		#if($field.allowNotApplicable())##
+		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
+		    #end##
+  	#else##
+$fieldValue##
+  	#end##
+#end##
+#if($globalEdit)
+  <script language="Javascript">
+    function fUpdateGlobalNumber() {
+      function fResponse(sResponseText, sResponseXML) {
+        if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
+  	        var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
+  	        #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+            var sFieldName='$field.getSimplifiedFieldName()';
+          #else
+            var sFieldName='$field';
+          #end
+          var sFieldValue=oField.value;
+  	        if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+sFieldValue+'?\nThis will update '+sRowsToChange+' records'))         
+			new fChange(oField);
+        }
+      }
+          
+      var oField=this.field;
+      var aPostVars=new Array();
+      aPostVars['returntype']='xml'; 
+      aPostVars['return']='gui/resources/sessionReportInfo';
+      var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);
+    }
+    var oElement=document.getElementsByName('$field.getInternalFieldName()')[document.getElementsByName('$field.getInternalFieldName()').length-1];
+    oElement.setAttribute('gtpb_global_edit','true');
+    var oButton=document.createElement('BUTTON');
+    $(oButton).addClass('globalEdit');
+    oButton.innerHTML='update globally';
+    oButton.field=oElement;
+    ##oButton.addEventListener('click',fUpdateGlobalNumber,false);
+    $(oButton).click(fUpdateGlobalNumber);
+    oElement.parentNode.appendChild(oButton);
+  </script>
+#end
+		

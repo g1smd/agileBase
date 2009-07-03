@@ -1,0 +1,298 @@
+<!--  
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN>
+<html>
+	<head>
+		<title>GT portalBase</title>
+		<link rel="icon" href="/portalBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
+	    <!--  <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
+	    <meta name="viewport" content="width = 915, initial-scale = 1.2, user-scalable=yes" />
+	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
+		<script type="text/javascript" src="/portalBase/website/scripts/jquery.js"></script>
+		<script type="text/javascript" src="/portalBase/website/scripts/thickbox.js"></script>
+		<!-- <script type="text/javascript" src="/portalBase/website/facebox/facebox.js"></script>-->
+		
+<!--#if expr="$SERVER_PORT = '443'" --> 
+	<!-- https://appserver.gtportalbase.com -->
+		<script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg"></script>
+<!--#elif expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
+	<!-- http://gtwmbackup.dh.bytemark.co.uk -->
+		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBQf1koDrgwv2nVopgtXyNJJGf3wPhSGxzvELTvIoGYjhEXJzrBbXQIbKw"></script>
+<!--#else -->
+	<!-- http://appserver.gtportalbase.com -->
+		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBTkxqGBZcNO6KTJ8OH7el13ZyLEzxT0-wdY7BkQmrNPx8dhLS-syRRsRQ"></script>
+<!--#endif -->
+
+	<script type="text/javascript">
+		google.load("feeds", "1");
+	</script>
+	
+<!--#if expr="$SERVER_PORT = '443'" --> 
+		<script src="https://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
+		<script src="https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
+<!--#else --> 
+		<script src="http://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
+		<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
+<!--#endif -->
+	<script type="text/javascript"> 
+
+		function  loadFeedControl() {
+			var feed  = "http://gtwebmarque.co.uk/clients/non_gtwp/gtpb/?feed=rss2";
+				var options = {
+				numResults : 6,
+						displayTime : 15000,
+						title : "<a href='http://www.gtportalbase.com/blog'>announcements</a>",
+						linkTarget : google.feeds.LINK_TARGET_SELF
+				};
+			var fg = new GFdynamicFeedControl(feed, "announce", options);
+		}
+
+		function LoadSlideShow() {
+			// test known to work: http://feed.photobucket.com/images/sunsets/feed.rss
+			// flickr: http://api.flickr.com/services/feeds/photoset.gne?set=72157615624584156&nsid=36549361@N06&lang=en-us
+				var screenshotfeed  = "http://picasaweb.google.com/data/feed/base/user/oliver.kohll/albumid/5315354509188522353?alt=rss&kind=photo&hl=en_US";
+				var options = {
+						displayTime: 17000,
+						transistionTime: 500,
+						scaleImages: false,
+						maintainAspectRatio: true,
+						linkTarget: google.feeds.LINK_TARGET_BLANK,
+						thumbnailSize : GFslideShow.THUMBNAILS_LARGE,
+						pauseOnHover : false
+				};
+				var ss = new GFslideShow(screenshotfeed, "screenshots", options);
+		}
+
+		$(document).ready(function(){
+			// frame buster needed as we may be in one of the portalBase application panes after a login timeout
+			if ((top.frames.length!=0) || (document.location.href.indexOf("logout") > -1)) {
+				top.location="http://gtportalbase.com/start";
+			}
+			// focus the 'username' box for logging in
+			$("#j_username").focus();
+			try {
+				// start the RSS headlines from blog
+				google.setOnLoadCallback(loadFeedControl);
+				// start the RSS screenshots from flickr
+				google.setOnLoadCallback(LoadSlideShow);
+			} catch(err) {
+			}
+			// test for iPhone
+			if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+				if(document.location.href.indexOf("mobile") == -1) {
+					$('#login').html('<big>iPhone users log in at<br><a href="http://www.gtportalbase.com/mobile">www.gtportalbase.com/mobile</a></big>');
+				}
+			}
+			
+			// is enter is pressed in username field with no password, don't submit details
+			$("#loginform").submit(function() {
+				if($('#j_password').val() == '') {
+					return false;
+				} else {
+					return true;
+				} 
+			});
+		}); 
+
+		function showSection(sectionName) {
+			$("#navigation").find("a").removeClass("current");
+			$("#nav_" + sectionName).addClass("current");
+			$(".detail").fadeOut("fast");
+			$("#" + sectionName).fadeIn("fast");
+		}
+
+	</script>
+	<style>
+		/* Google RSS stylesheet */
+		@import url("/portalBase/website/styles/gfdynamicfeedcontrol.css");
+		@import url("/portalBase/website/styles/thickbox.css");
+		@import url("/portalBase/website/styles/thickbox_override.css");
+		@import url("/portalBase/website/styles/styles.css");
+	</style>
+		<!-- <link href="/portalBase/website/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css"/> -->    
+	</head>
+	
+	<body>
+	<div id="scroller">
+		<div id="tl_wrapper">
+			<div id="header" class="wrapper">
+					<div class="content">
+						<a id="home" href="#" alt="GT portalBase"><img src="/portalBase/website/images/logo-gtpb.png"></a>
+						<table cellspacing="0" cellpadding="0" border="0">
+							<tr class="row1">
+								<td class="col1"><a href="#TB_inline&inlineId=popupPricingContent" class="thickbox">pricing</a></td>
+								<td><a href="#TB_inline&inlineId=popupDemoContent" class="thickbox">demo</a></td>
+							</tr>
+							<tr class="row2">
+								<td class="col1"><a href="#TB_inline&inlineId=popupHelpContent" class="thickbox">help</a></td>
+								<td><a href="#TB_inline&inlineId=popupContactContent" class="thickbox">contact</a></td>
+							</tr>
+						</table>
+					</div>
+					<div id="popupPricingContent" style="display:none">
+						Hosted pricing is simply &pound;10/month/table.<br>
+						Add unlimited users for free! No additional per user cost.<br>
+						Do contact us for volume/partner discounts
+					</div>
+					<div id="popupDemoContent" class="popup">
+						Log in with username and password <b>demo</b> for a basic demo.<br>
+						Please contact us for custom demos
+					</div>
+					<div id="popupHelpContent" class="popup">
+								See <a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#End_user_documentation">User</a> 
+								and <a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#Administrator_documentation">administrator</a> 
+								documentation.<br>
+								portalBase is a <a href="http://www.gtwm.co.uk">GT webMarque</a> product, <a href="http://www.gtwm.co.uk">contact us</a> for more help and advice
+					</div>
+					<div id="popupContactContent" class="popup">
+						Email <a href="mailto:oliver@gtportalbase.com">oliver@gtportalbase.com</a><br>
+						Phone +44(0)845 4561810<br>
+						Skype okohll<br>
+						<a href="http://www.gtwm.co.uk">More contacts</a> at GT webMarque
+					</div>
+		  </div> <!-- end of header -->
+			<div id="intro" class="wrapper">      
+					<div class="content">
+						<div id="bubble">
+							<h1>industrial strength platform for business applications</h1>
+							use to rapidly prototype and develop data entry and 
+							reporting applications that work over the 
+							internet or a local network 
+						</div>
+				<div id="login">
+			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
+					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/portalBase/j_security_check" name="loginform" id="loginform">
+			<!--#else --> 
+					<form method="POST" action="https://appserver.gtportalbase.com/portalBase/j_security_check" name="loginform" id="loginform">
+			<!--#endif -->
+								<div class="input">username<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/>
+								</div>  
+								<div class="input">password<input type="password" name="j_password" id="j_password" />
+								</div>
+								<!-- submit element allows us to press enter to log in -->
+								<input type="submit" value="login" style="display:none"/>
+								<a id="button_login" href="javascript:document.loginform.submit();">login</a>
+						</form>
+				</div>     
+				<ul id="navigation">
+					<li><a href="javascript:showSection('main');" id="nav_main" class="current"><span>main</span></a>
+					<li><a href="javascript:showSection('technical');" id="nav_technical"><span>technical</span></a>
+					<li id="li_analyst"><a href="javascript:showSection('analyst');" id="nav_analyst"><span>analyst</span></a>
+				</ul>
+				<div id="announce"><!-- populated by JavaScript RSS feed --></div>
+				</div>   <!-- end content -->
+			</div> <!-- end wrapper -->
+				<div class="wrapper">
+					<div class="content"> 
+					  <div id="detail_right">
+							<div id="screenshots"><!-- populated by JavaScript slideshow --></div>
+						</div>
+						<div id="main" class="detail">
+							<div class="divider">
+								<h1>How do I use it?</h1>
+								<p>Use portalBase to create database web applications. It's most
+								suited to those who understand in depth both technology and the business needs.
+								People who are best placed to make use of an enterprise database flexibility and power,
+								while appreciating the clear and pleasant user interface of a well designed web application.</p>
+							</div>
+							<div>
+								<h1>Documentation</h1>
+								<p><img border="0" src="/portalBase/website/images/download.png" style="float:left">See 
+								<a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#End_user_documentation">User</a> 
+								and <a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#Administrator_documentation">administrator</a> 
+							  documentation</p>
+								<p><a href="/portalBase/website/images/gtpb_overview.pdf">Download the brochure</a>
+							  portalBase is a <a href="http://www.gtwm.co.uk">GT webMarque</a> product, <a href="http://www.gtwm.co.uk">contact us</a> for more help and advice</p>
+							</div>
+						</div>   <!-- end of main --> 
+						<div id="technical" class="detail">
+							<div class="divider">
+								<h1>On the foundations</h1>
+								<p>Building blocks provide the capacity for massive scalability of end applications if necessary 
+								but the portalBase aplication itself also has some nice technical features that anyone who's worked 
+								on large scale databases will appreciate, for example...</p>
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td style="width:50%">
+											<h2>View cascading</h2>
+											If a view/report A has dependent reports B, C and D, they are automatically dropped and 
+											recreated when changes to A are made. There's no laborious manual process of dropping and 
+											re-creating multiple reports for a simple field addition.               
+										</td>
+										<td style="width:50%">
+											<h2>Auto joins</h2>
+											Joins are automatically created (LEFT OUTER by default) where there are relations but 
+											you can still create completely custom joins on any field or calculation if you need to.
+										</td>
+									</tr>
+									<tr>
+										<td style="width:50%">
+											<h2>Deleting</h2>
+											Similarly, if you try to delete a table or view field that something else depends on, 
+											portalBase will tell you exactly where the dependencies are so you can solve them first.
+										</td>
+										<td style="width:50%">
+											<h2>More</h2>
+										Auto indexes (case insensitive where relevant), quick aggregates, advanced filters 
+										(e.g. newer than x months), built-in stats/audit trail and more mean that common app 
+										building tasks are taken care of leaving you to concentrate on design or quick prototyping.
+										</td>
+									</tr>
+								</table>        
+							</div>
+							<div>
+								<h1>Technology</h1>
+								portalBase is a web-based, usually hosted application. 
+								The <a href="http://en.wikipedia.org/wiki/AJAX">AJAX</a> user interface works on Firefox (recommended), Internet Explorer 7+, Google Chrome and Safari browsers.<p>
+								The server side software and data is usually run as a hosted service by us. 
+								However, if you wish to run your own version, it is platform agnostic, running on Linux or Windows.<p>
+								A number of robust and scalable third party products are used by the server as a foundation for our innovations<p>
+								<p>The relational database behind the scenes on our server is the enterprise class database <a href="http://www.postgresql.org/">PostgreSQL</a>.<p>
+								<a href="http://www.hibernate.org/">Hibernate</a> and <a href="http://velocity.apache.org/">Velocity</a> provide stable frameworks for object storage and display.<p>
+								We host at <a href="http://www.ntt.com/">NTT Communications</a>' London datacentre. Backups are made hourly and transferred offsite (to Manchester) daily.</p>
+								<table border="0" width="100%" style="margin-top:20px">
+									<tr>
+										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://www.postgresql.org/"><img border="0" src="/portalBase/website/content/postgresql.gif"></a></td>
+										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://www.hibernate.org/"><img border="0" src="/portalBase/website/content/hibernate_logo.gif"></a></td>
+										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://velocity.apache.org/"><img border="0" src="/portalBase/website/content/velocity_logo.gif"></a></td>
+									 </tr>
+								</table>
+							</div>
+						</div>  <!-- end of technical -->
+						<div id="analyst" class="detail">
+							<h1>A business analyst's view</h1>
+							Over the last 10 years the role of the Business Analyst has emerged as organisations grapple with the problem of how to ensure software development projects deliver applications that match the needs of their client.<p>
+							Traditionally this role has involved defining requirements and recording these in a formal specification document. However there is a growing recognition of the problems inherent in this approach and a more agile approach involving prototyping is often seen as an viable alternative.<p>
+							<b>GT portalbase requires no programming skills and thus allows analysts to convert schemas into fully working web based prototypes in hours. The prototype is immediately available via the web for client review and feedback from various stakeholders can be incorporated into the product often in real time.</b>
+							<h1>GTpB as a long term solution</h1>
+							For many organisations these "prototypes" may even suffice, as the PostgreSQL database underlying GTpB is highly scalable & robust.<p>
+							For small organisations or applications GTpB therefore provides a cost effective, rapid, easy to use and robust web app. development tool.  
+						</div> <!-- end of anyalyst -->
+						<br clear="both" /> <!-- because of the right floated content -->
+					</div>  <!-- end of content -->
+				</div>   <!-- end of wrapper -->
+				<div class="wrapper">
+					<div class="content" id="footer">
+						&copy; 2009 GT webMarque Ltd, Furze Bank, 34 Hanover Street, SWANSEA. +44(0)845 456 1810
+					</div>
+				</div>	<!-- end of wrapper -->				
+			</div>  <!-- end of tl_wrapper -->
+		</div>  <!-- end of scroller -->     
+	</body>
+</html>

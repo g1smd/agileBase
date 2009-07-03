@@ -1,0 +1,215 @@
+/* Resetting browser styles */
+body{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup,sub{line-height:-1px;vertical-align:text-top;}sub{vertical-align:text-bottom;}input, textarea, select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+
+/* Menu styles */
+body{
+	font: 13px/1.5 Arial, Sans-serif;
+}
+
+	h1{
+		position: relative; /* Fixes some obscure bug in IE */
+		padding: 5px 0 8px 10px;
+		background: #fff;
+		font-weight: bold;
+		font-style: italic;
+		margin-bottom: -3px;
+		background: transparent url(line.gif) repeat-x 0 50%;
+		color: #888;
+		text-align: right;
+	}
+	
+	h1 span {
+		background: #fff;
+		padding: 0 10px;
+	}
+	
+	h2{
+		display: block;
+		margin-bottom: -3px;
+		padding: 8px 10px 5px 5px;
+		background: url(drop-shadow.gif) bottom repeat-x;
+		cursor: hand;
+		cursor: pointer;
+		font-size: 13px;
+		font-weight: bold;
+		height: 23px;
+		border-top: #CECECE 1px solid;
+	}
+	
+		h2 span{
+			padding-left: 20px;
+			background-position: left;
+			background-repeat: no-repeat;
+			text-transform: capitalize;
+		}
+	
+		.moduleexpanded h2 span{
+			background-image: url(collapse.png);
+		}
+	
+		.modulecollapsed h2 span{
+			background-image: url(expand.png);
+		}
+	
+		h2 img{
+			vertical-align: middle;
+		}
+		
+		.expandable {
+			background: transparent url(collapse.gif) no-repeat 0 0.6em;
+			margin-left: -5px;
+			padding-left: 20px;
+			height: 100%;
+		}
+		
+		.expandable.collapsed {
+			background-image: url(expand.gif)
+		}
+		
+	ol{
+		
+	}
+	
+		ol li{
+			
+		}
+		
+			ol li ul{
+				
+			}
+				
+				ol li ul li ul{
+					margin: 2px 10px 0 10px;
+					padding-bottom: 2px;
+					border-left: 1px dotted #CCC;
+				}
+			
+				/* reports */
+				ol li ul li ul li.expanded div ul {
+					display: block;
+				}
+				
+				ol li ul li ul li.collapsed div ul {
+					display: none;
+				}
+			
+				ol li ul li.moduleexpanded ul{
+					display: block;
+				}
+				
+				ol li ul li.modulecollapsed ul{
+					display: none;
+				}
+
+				/* tables */
+				ol li ul li.expanded ul{
+					display: block;
+				}
+				
+				ol li ul li.collapsed ul{
+					display: none;
+				}
+
+					ol li ul li ul li{
+						padding: 0 0 0 8px;
+						background: transparent url(line_hor.gif) no-repeat 0 0.55em;
+					}
+					
+						.module-tree-item-wrap {
+							padding: 2px 15px 2px 7px;
+							text-transform: lowercase;
+						}
+						
+						.currentOption .module-tree-item-wrap {
+							background-color: #CCCCCC;
+						}
+					
+						.tree-item-wrap {
+							padding: 2px 15px 2px 7px;
+							text-transform: lowercase;
+						}
+						
+						.currentOption .tree-item-wrap {
+							background-color: #CCCCCC;
+						}
+					
+							/* links to tables, reports and admin functions */
+							ol li ul li ul li div a {
+								color: #000;
+								text-decoration: none;
+							}
+
+								ol li ul li ul li ul {
+									background: none;
+								}
+
+								ol li ul li ul li li {
+									background: none;
+								}
+							
+								ol li ul li ul li li a {
+									color: #00e;
+									text-decoration: underline;
+								}				
+								
+								ol li ul li ul li li a:hover {
+									text-decoration: none;
+								}																		
+							
+							.recordcount {
+								display: none;
+							}
+							
+							.currentOption .recordcount {
+								display: inline;
+							}
+							
+							.recordcount a {
+								color: #00F;
+								text-decoration: underline;
+							}
+							
+							.recordcount a:hover {
+								text-decoration: none;
+							}
+		
+	.moduleaction {
+		border-style: dotted;
+		border-width: 0 1px 1px 1px;
+		border-color: #999999;
+		background-color: #FAF5F2;
+		
+	}	
+		
+	.moduleaction li {
+		background: transparent url(../icons/arrowRight.gif) no-repeat 3px 0.6em;
+	}
+	
+	#reportsearch {
+		position:absolute;
+		top:0px; left:0px;
+		padding:3px;
+		background-color:white;
+		z-index: 1;
+		height: 22px;
+	}
+	
+	#reportsearchbox {
+		position: absolute;
+		top: 3px; left: 28px;
+		height: 16px;
+		display: none;
+		vertical-align: top;
+		padding-top: 2px;
+	}
+	
+	.greytext a {
+		color: grey !important;
+	}
+
+	.found {
+	}
+	
+	.module {
+	}
+						

@@ -1,0 +1,233 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($internalFieldName = $field.getInternalFieldName())
+#set($relatedField=$field.getRelatedField())##
+##
+#set($fieldValue=$tableDataRow.get($relatedField).toString())##
+#set($fieldDisplayValue = $field.getDisplayValue($fieldValue))##
+##
+## sessionTableName is set in edit.vm
+#if($globalEdit)##
+	#set($inputId="${internalFieldName}-globalEdit")##
+#elseif($userCanEdit)
+	#set($inputId="${internalFieldName}-edit")##	
+#else
+	#set($inputId="$internalFieldName")##	
+#end
+<div class="relation_field">##
+  <input name="$internalFieldName" ##
+  			       type="hidden" ##
+  			       gtpb_update_record="true" ##
+  			       value="$fieldValue" ##
+  			       displayValue="$fieldDisplayValue" ##
+  			       internalFieldName="$internalFieldName" ##
+  			       internalTableName="$sessionTable.getInternalTableName()"##
+				   #if(!$globalEdit)
+				     ## set the row ID for the related table
+				     ## so that if we choose a relation value for a particular record
+				     ## then click 'New' to add additional records, the same relation value is used
+  			         gtpb_rowidinternaltablename="$relatedField.getTableContainingField().getInternalTableName()"##
+  			         gtpb_set_row_id="$fieldValue"##
+				   #end
+				   id="$inputId">##
+</div>##
+#if($userCanEdit)##
+  <script language="JavaScript" src="resources/picker.js"></script>
+  <script language="Javascript">
+    ## Hack added by Oliver for iPod/iPhone compatibility
+	function fSetOverflowHack() {
+	  document.getElementById('gtpb_wrapper').style.overflow='auto';
+	}
+	
+    // finds the last one 
+    // var oHidden = document.getElementsByName('$internalFieldName')[document.getElementsByName('$internalFieldName').length-1];
+    var oHidden = document.getElementById('$inputId');
+    oHidden.doUpdate=function(sValue, bIsAutoUpdate) {
+    	#if($globalEdit)
+    		var bIsGlobalEdit=true;
+    	#else
+    		var bIsGlobalEdit=false;
+    	#end
+
+    	this.value=sValue;
+		if(!bIsGlobalEdit) {
+		  this.setAttribute('gtpb_set_row_id',sValue);
+		}
+		
+    	// if it's not a global edit, then always do the update
+    	// if it is a global edit, only update when the button is clicked i.e. not a global update
+    	if(!bIsGlobalEdit || (bIsGlobalEdit && !bIsAutoUpdate)) new fChange(this);
+    };
+    
+	if(jQuery.browser.msie) { // autocomplete doesn't work in IE so just show plain text for the time being
+		var oLabel=document.createElement('span');
+		oLabel.update=function(sValue) {
+			$(this).html(sValue);
+		};
+		
+    } else {
+        var oLabel=document.createElement('input');
+        oLabel.setAttribute('type','text');
+        oLabel.setAttribute('internalTableName','$sessionTable.getInternalTableName()');
+        oLabel.setAttribute('internalFieldName','$internalFieldName');
+		
+		oLabel.update=function(sValue) {
+			this.value=sValue;
+		};
+    	
+    	$(oLabel).addClass('autocomplete');
+	}
+	
+	oLabel.update('$viewTools.escape($fieldDisplayValue)');
+	oLabel.formEl=oHidden;
+    oHidden.label=oHidden.parentNode.insertBefore(oLabel,oHidden.nextSibling);
+
+    var oClicker=document.createElement('A');
+    oClicker.setAttribute('href','#');
+	oClicker.setAttribute('tabindex','$tabIndex');
+    $(oClicker).click(fPicker);
+	#if($mobile_device)
+	  $(oClicker).click(fSetOverflowHack,false);
+	#end
+    oClicker.innerHTML='change...';
+    oClicker.formEl=oHidden;
+    oHidden.clicker=oHidden.parentNode.insertBefore(oClicker,oHidden.label.nextSibling);
+    
+    #if($globalEdit)
+		function fUpdateGlobalRelation() {
+          function fResponse(sResponseText, sResponseXML) {
+            if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
+  	            var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
+  	            #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+                  var sFieldName='$field.getSimplifiedFieldName()';
+                #else
+                  var sFieldName='$field';
+                #end
+  	            if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+oField.label.value+'?\nThis will update '+sRowsToChange+' records'))
+                new fChange(oField);
+            }
+          }
+          
+          var oField=this.field;
+          var aPostVars=new Array();
+          aPostVars['returntype']='xml'; 
+          aPostVars['return']='gui/resources/sessionReportInfo';
+          var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);           
+        }    
+    
+    
+        oHidden.setAttribute('gtpb_global_edit','true');
+        var oButton=document.createElement('BUTTON');
+        $(oButton).addClass('globalEdit');
+        oButton.appendChild(document.createTextNode('update globally'));
+        oButton.field=oHidden;
+        // attaching this way means that the click function points to the one just declared.
+        // this means that we can code some velocity variables straight into the JS rather than finding
+        // them from expandos on the element which will save some client processing time and memory
+        ##oButton.addEventListener('click',fUpdateGlobalText,false);
+        $(oButton).click(fUpdateGlobalRelation);
+                
+        oHidden.parentNode.appendChild(oButton);    
+    
+    #end
+    
+  </script>
+  
+  <!--[if IE]>
+
+    <style>
+      /* this block is overwriting styles below it.  Appears that in IE (v7 anyway) that
+         higher style blocks take precidence over blocks below.  Of course, in the sheet
+         itself, styles still cascade top to bottom */
+         
+      div.relation_picker div#toolbar {
+        height:24px;
+        width:auto;
+      }
+
+    </style>
+    
+  <![endif]-->
+
+  <style>   
+    div.relation_field input {
+      margin-right:10px;
+    }
+	
+	div.relation_field span {
+	  padding-right:10px;
+	}
+    
+    div.relation_field a {
+      font-size:8pt;
+      margin-right:15px;
+    }
+     
+    div.relation_picker {
+      display:inline;
+      background-color:white;
+      /*width:100%;*/
+      height:100%;
+      position:absolute;
+      top:0;
+      left:0;
+      padding-top:30px;
+    }
+    
+    div.relation_picker div#toolbar {
+      border-bottom:1px solid black;
+      background-color:#F1F2ED;
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:30px;
+      font-size:8pt;
+      padding:3px 10px;
+      z-index:999;
+    }
+    
+    div.relation_picker div#toolbar select {
+      margin:0;
+    }
+    
+    div.relation_picker div#toolbar a {
+      float:right;
+      color:black;
+      text-decoration:none;
+      margin-top:5px;
+    }
+    
+    div.relation_picker div#toolbar a:hover {
+      text-decoration:underline;
+    }
+    
+    div.relation_picker div#content {
+      position:relative;
+      height:100%;
+      /*width:100%;*/
+      overflow:scroll;
+    }
+    
+  </style>
+  
+##elseif($globalEdit)##
+##  <br><i><span class="greytext">global editing of relation field not yet supported</span></i>##
+#else ##read-only
+$fieldDisplayValue##
+#end

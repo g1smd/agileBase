@@ -1,0 +1,67 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<html>
+<head>
+<style>
+	html, body { font-family: "Arial", sans-serif; 
+    			 color: black; 
+    			 font-size: 11pt; 
+    			 margin:0; 
+    			 padding:0;
+    			 height:100% }	
+</style>
+<title>portalBase error report</title>
+  	<script src="resources/jquery.js" language="Javascript"> </script>
+	<script src="resources/pane2.js" language="Javascript"> </script>
+</head>
+<body>
+#parse("gui/error.vm")
+#set($sessionData = $viewMethods.getSessionData())
+#set($sessionTable = $sessionData.getTable())
+#set($sessionReport = $sessionData.getReport())
+#if($sessionReport && $return)
+<script language="JavaScript">
+	  function loadPane3() {
+		  var url = 'AppController.servlet?return=$return';
+		  #set($rowId = $sessionData.getRowId())
+		  #if($rowId)
+		    var rowId = $rowId;
+		  #else
+		    var rowId = -1;
+		  #end
+			  #if($sessionTable.getDefaultReport().equals($sessionReport))
+				#set($numberOfTabs = '-1')
+			  #else
+			    #set($numberOfTabs = '2')
+			    #if($viewMethods.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))
+				  #set($numberOfTabs = '6')
+			    #elseif($viewMethods.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))
+				  #set($numberOfTabs = '3')
+				#end
+			  #end
+
+		  loadIntoPane3(url,rowId,$numberOfTabs);
+	  }
+
+  if(self.id="pane_2") {
+    loadPane3();
+  }
+</script>
+#end
+</body>
+</html>

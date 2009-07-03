@@ -1,0 +1,99 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($Q = '"') 
+
+## copied from report_data, modified for including in wiki
+
+## data from a report for pane2
+#set($resource_folder='tables')
+#set($sessionData = $viewMethods.getSessionData())
+#set($sessionContext = $sessionData.getContext().toString())
+##Added by Oliver to stop exception on empty report
+#if($sessionData.hasTable())
+	  #set($sessionReport=$sessionData.getReport())
+	  #set($sessionTable=$sessionData.getTable())
+	  ###if ($sessionData.getTable().getDefaultReport().equals($sessionReport))
+	    ##	#set($return='gui/reports_and_tables/default_pane3')
+	  ###else
+	    ##	#set($return='gui/reports_and_tables/report_pane3')
+	  ###end
+	  #set($return='gui/reports_and_tables/pane3')
+	  #set($pane1_id="$sessionTable.getInternalTableName()$sessionReport.getInternalReportName()")
+	  ##test to see whether a record has previously been selected and is stored in the session
+	  #if ($sessionData.getRowId())
+		    #set($selection=$sessionData.getRowId())
+	  #end
+	  #set($fields=[])
+	  #set($reportBaseFields = $sessionReport.getReportBaseFields())
+	  #foreach ($field in $reportBaseFields)
+		    #if ( (!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))
+##		      #if ($field.getFieldCategory().getDescription().equals("Relation")) ## added to show display field name for relation fields
+##        #set($relationFieldDisplay = "$field.getRelatedTable().getTableName(): $field.getDisplayField().getFieldName()")
+##        #set($success=$fields.add([$field.getInternalFieldName(),$relationFieldDisplay]))		 ## added to show display field name for relation fields
+		##      #else ## added to show display field name for relation fields
+					    #set($success=$fields.add([$field.getInternalFieldName(),$field]))
+      #end ## added to show display field name for relation fields
+			##    #end ## uncomment to remove to show primary key field
+	  #end
+	  #set($data=[])
+	  #foreach($datarow in $viewMethods.getReportDataRows())
+		    #set($row=[])
+		    #set($colours=[])
+		    #set($dataRowFields = $datarow.getDataRowFields())
+		    #foreach($field in $reportBaseFields)
+		      #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))
+			       #set($dataRowField = $dataRowFields.get($field))
+			       #set($textValue = $viewTools.getTextValueTool($dataRowField.getKeyValue()))
+			       #if(($printout) && ($field.getClass().getSimpleName().equals("BigTextFieldDefn")))
+			         #set($success=$row.add($dataRowField.getKeyValue()))
+			       #elseif($field.getFieldName().equals("Wiki page [Auto]")) ## these parts only for wiki inclusion
+			         #set($wikiPageUrl = $viewMethods.getWikiPageUrl($dataRowField.getKeyValue(), false))
+			         #set($success=$row.add("<a href='$wikiPageUrl'>$dataRowField.getDisplayValue()</a>"))
+			       #elseif(($field.getClass().getSimpleName().equals("TextFieldDefn")) && ($textValue.isURL()))
+			         #set($success=$row.add("<a href='$textValue.getFormattedURL()'>$dataRowField.getDisplayValue()</a>"))		         
+			       #elseif(($field.getClass().getSimpleName().equals("TextFieldDefn")) && ($textValue.isPostcode()))
+			         #set($success=$row.add("<a href='http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue'>$dataRowField.getDisplayValue()</a>"))		         
+			       #elseif(($field.getClass().getSimpleName().equals("TextFieldDefn")) && ($textValue.isEmailAddress()))
+			         #set($success=$row.add("<a href='mailto:$dataRowField.getKeyValue()'>$dataRowField.getDisplayValue()</a>"))
+				   #elseif(($field.getClass().getSimpleName().equals("FileFieldDefn")) && ($dataRowField.getKeyValue() != ""))
+					 #set($fileValue = $viewTools.getFileValueTool($dataRowField.getKeyValue()))
+					 #set($downloadUrl = "http://appserver.gtportalbase.com/portalBase/uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$datarow.getRowId()/$fileValue")
+					 #if(!$fieldValueObject.isImage())
+					   #set($fileCellContents = "<img border='0' style='float:left' src=${Q}http://gtwebmarque.com/static_features/filetypes/${fileValue.getIconName()}.png${Q}><a href=${Q}${downloadUrl}${Q}>$fileValue</a>")
+                     #end
+				     #set($success=$row.add($fileCellContents))
+			       #else
+			         #set($success=$row.add($dataRowField.getDisplayValue()))
+			       #end
+			       #set($success=$colours.add($dataRowField.getStandardDevHexColour()))
+			      #end ## uncomment to remove to show primary key field
+		    #end
+		    #set($success=$colours.add("")) ## needs an extra one for some reason
+		    #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_row_id=$datarow.getRowId()'")
+		    #set($uniqueid=$datarow.getRowId())
+		    #set($success=$data.add([$row,$click,$uniqueid,$colours]))
+		    #if ($uniqueid==$selection)
+		      #set($selectionFound = true)
+		    #end
+	  #end
+   #set($table_part_only=true)
+   #parse('gui/pane2/include_delete_checkboxes.vm')
+   #set($table_part_only=false)
+#else ##if there's no report in the session
+	  #parse('gui/resources/nothing.vm')
+#end

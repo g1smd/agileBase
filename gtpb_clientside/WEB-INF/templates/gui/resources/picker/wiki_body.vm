@@ -1,0 +1,34 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+	#set($sessionData = $viewMethods.getSessionData())
+	#set($pageNameFilter = $sessionData.getCustomString("gtwm_wiki_page_name_filter"))
+	#set($pageContentFilter = $sessionData.getCustomString("gtwm_wiki_page_content_filter"))
+	
+	#set($data=[])
+	#foreach($datarow in $viewMethods.getWikiRecordDataRows($pageNameFilter, $pageContentFilter))
+		  #set($row=[])
+		  #set($colours=[])
+			 #set($success=$row.add($datarow.getPageName()))
+			 #set($success=$row.add($datarow.getPageContentSnippet()))
+		  #set($click="fPickItem(this)")
+		  #set($uniqueid=$datarow.getPageName())
+				#set($expando=[['keyValue',$datarow.getPageName()],['displayValue',$datarow.getPageName()]])
+		  #set($success=$data.add([$row,$click,$uniqueid,'','',$expando]))
+	#end
+	
+	#parse("gui/pane2/pane2_body.vm")

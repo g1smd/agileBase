@@ -1,0 +1,39 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+## Deal with any plugin
+#set($app_params = 'return=gui/display_application')
+#if($viewMethods.usesToolbarPlugin())
+  #set($app_params = "return=gui/display_application&include_toolbar_plugin=$viewMethods.getToolbarPluginName()")
+#end
+<html>
+  <head>
+  <title>Loading intranet tabs...</title>
+  </head>
+  <body>
+	#set($company = $viewMethods.getLoggedInUser().getCompany())
+	#set($tabAddresses = $company.getTabAddresses())
+      <script language="JavaScript" type="text/javascript">
+	       #foreach($tabAddress in $tabAddresses)
+             var tab$velocityCount = window.open('$tabAddress','tab$velocityCount','');
+	       #end
+           document.location='AppController.servlet?$app_params';
+		   window.focus();
+      </script>
+  </body>
+</html>

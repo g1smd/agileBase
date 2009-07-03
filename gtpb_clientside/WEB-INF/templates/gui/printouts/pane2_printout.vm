@@ -1,0 +1,178 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($unlockedRecords=false)
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    #parse('gui/display_error.vm')
+    #set($sessionData = $viewMethods.getSessionData())
+    #set($report = $sessionData.getReport())
+    #if($report.getModule())
+      #set($module=$report.getModule())
+    #else
+      #set($module=$sessionData.getTable().getTableName())
+    #end
+    <title>$module - $report</title>      
+ 	<script src="resources/jquery.js" language="Javascript"></script>
+    <script language="JavaScript" src="resources/wait/request.js"></script>
+    <script language="JavaScript" src="resources/modalFramework/modalFramework.js"></script>   
+    <script language="JavaScript">
+	function loadDetail() {
+		$('#detail').text('loading...');
+		$('#detail').load('AppController.servlet?return=gui/printouts/detail');
+		$('#detail').removeAttr('id');
+	}
+    </script>
+    <style>
+	  @import url("styles/report.css");
+	  @import url('resources/modalFramework/modalFramework.css'); 
+      @import url("resources/button/button.css");	             
+	
+	      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+	
+	      html, body { 
+	        font-family: "Arial", sans-serif; 
+    			    color: black; 
+    			    font-size: 11pt; 
+    			    margin:0; 
+    			    padding:0;
+    			    height:100% 
+    			  }
+				      
+				      h2 {
+				        padding:15px;
+				      }
+				      
+				      table#reportData {
+				        height:auto!important;
+				      }
+	      
+	      body .draftMarker {
+	        display:none;
+	      }
+	      
+	      body[isDraft='true'] .draftMarker {
+	        display:block;
+	      }
+	      
+	      h1.draftMarker {
+	        border:1px solid red;
+	        color:red;
+	        text-align:center;
+	        width:80%;
+	        margin-left:auto;
+	        margin-right:auto;
+	      }
+	      
+	      div.draftMarker {
+	        border:1px solid red;
+	        width:80%;
+	        padding:20px;
+	        margin-left:auto;
+	        margin-right:auto;
+	        margin-top:40px;
+	      }
+	      
+	      div.draftMarker big {
+	        color:red;
+	      }
+	      
+	    </style>
+  </head>
+  <body oncontextmenu="return false" isDraft="true"> ## err on the side of caution and mark as a draft by default.  This will be changed when the doc loads if it's not a draft
+    <h1 class="draftMarker">DRAFT ONLY</h1>
+    <h2>$module - $report</h2>
+    <table id=reportData cellspacing="0">
+      <thead>
+        <tr>
+          <th class=leading>&nbsp;</th>
+          #foreach($field in $fields)
+            ## row0 contains the internal field name
+            ## row1 contains the display field
+       		     <th #if($field.get(0) && $field.get(0)!="")internalName=$field.get(0)#end>
+        			      #if($field.get(1))
+  	              #if($field.get(0) && $field.get(0)!="")
+                  <div title="$field.get(1)">
+ 			               #end
+  	              $field.get(1)
+  		              #if($field.get(0) && $field.get(0)!="")
+  		                </div>
+  		              #end
+      			        #else
+  		              &nbsp;
+        			      #end
+      		      </th>
+            #end
+            <th class=trailing>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody name=reportBody id=reportBody>
+          #parse("gui/pane2/pane2_body.vm")
+		</tbody>
+      </table>
+      #set($reportSummary = $report.getReportSummary())
+      ## if a summary has been created
+      #if(($reportSummary.getGroupingReportFields().size() > 0) || ($reportSummary.getAggregateFunctions().size() > 0))
+        <h2>Summary</h2>
+        #parse('gui/reports_and_tables/tabs/summary.vm')
+	  #end
+	  <div id="detail">
+		<a name="detail" href="#detail" onClick="loadDetail();">Show full detail of every record...</a>
+	  </div>
+      <div class="draftMarker">
+        <big>Draft Only</big>
+        <p>The data in this report can be locked however it was still able to be edited when this printout
+        was created.</p>
+        <p>As the data can still be edited, it should be considered draft until the values are locked</p>
+      </div>
+    </div>
+    <script languange="Javascript">
+      function fMarkAsDraft(bMark) {
+        if(bMark) document.body.setAttribute('isDraft','true');
+        else document.body.removeAttribute('isDraft');
+        
+        window.isDraft=bMark;
+      }    
+      
+      window.markAsDraft=fMarkAsDraft;
+      
+      ## note that this is initialised at the top of the page
+      #if($sessionTable.getRecordsLockable()&&$unlockedRecords)
+        markAsDraft(true);
+      #else
+        markAsDraft(false);
+      #end
+      
+      #*
+      
+         records lockable  |  unlocked records ||  draft status
+        ========================================================
+               0           |          X        ||      0
+        --------------------------------------------------------
+               1           |          0        ||      0
+        --------------------------------------------------------
+               1           |          1        ||      1
+               
+        => draft status=records locable.unlocked records
+      
+      *#
+
+      while(document.getElementById('currentRow')) document.getElementById('currentRow').removeAttribute('id');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## $viewTools.startTimer("gui/resources/button")
+<STYLE>@import url("resources/button/button.css");</STYLE>
+<SCRIPT language=Javascript src="resources/button/button.js"></SCRIPT>
+#if(!$button_img)#set($button_img='resources/toolbar/blank.png')#end
+<button #if($tooltip) title="$tooltip" #end class="gtpb #if($classes)$classes#end"
+  #if($id)id="$id"#end
+  #if($params)$params#end
+  onclick="fButtonClick(this) #if($click); $click #end" 
+  onmouseout="this.blur()">
+    <img src="$button_img"><br>
+    $caption
+</button>
+
+## clear all the variables in case subsequent calls don't use them
+#set($id=false)
+#set($params=false)
+#set($classes=false)
+#set($click=false)
+#set($button_img=false)
+#set($caption=false)
+#set($tooltip=false)
+## $viewTools.stopTimer("gui/resources/button")

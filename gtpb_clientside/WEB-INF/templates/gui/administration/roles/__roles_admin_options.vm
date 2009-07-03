@@ -1,0 +1,153 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+
+<HTML>
+<HEAD>
+<SCRIPT language="Javascript" src="resources/wait/request.js"></SCRIPT>
+  
+  <SCRIPT language=javascript>
+    parent.pane_2.fSetRowSelection('$viewMethods.getSessionData().getRole()');
+    
+	// Deletion candidate
+    function fCallback(sResponseText,sResponseXML)
+	{
+    }
+    
+    function fInit()
+    {  // show the first tab
+    	   document.getElementById('navigation').getElementsByTagName('BUTTON')[0].click();
+    }
+    
+    function fShowOption(sOptionID)
+    {  var oOptions=document.getElementById('options_wrapper').getElementsByTagName('DIV');
+       for(var i=0;i<oOptions.length;i++) oOptions[i].removeAttribute('selected');
+       document.getElementById(sOptionID).setAttribute('selected','true');
+    }
+    
+  </SCRIPT>
+  
+  <STYLE>
+    * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+    
+    html, body { padding:0;
+    	             margin:0;
+    	             height:100%;
+    	             font-family:sans-serif,Arial;
+    	             font-size:10pt;
+    	           }
+    	           
+    #navigation { position:absolute; 
+                  height:100%;
+                  width:120px;
+                  background-color:#f1f2ed;
+                  border-top:2px solid #cccccc;
+                  border-right:1px solid #cecece;
+                  top:0;
+                  left:0;
+                  text-align:center;
+                }
+                
+    #options_wrapper { position:absolute;
+    		                   margin-left:150px; 
+                       padding-top:10px;
+                       height:100%;
+                       overflow-y:scroll }
+                       
+   
+    #options_wrapper div.options_set { display:none }
+    #options_wrapper div.options_set[selected] { display:block }
+    #options_wrapper div.options_set h1 { font-size:14pt;
+                                          font-weight:normal;
+                                          border-bottom:1px solid black }
+    #options_wrapper div.options_set tr:hover { background-color:#f1f2ed }  
+    #options_wrapper div.options_set th { text-transform:uppercase;
+                                          border-bottom:1px solid #333333;
+                                          color:#333333;
+                                          padding-bottom:3px;
+                                          vertical-align:bottom;
+                                          font-size:8pt }
+    #options_wrapper div.options_set tr.caption:hover { background:transparent }                                        
+    #options_wrapper div.options_set td { padding:10px;
+                                          font-size:8pt;
+                                          color:#666666;
+                                          padding-left:10px }
+    #options_wrapper div.options_set td:first-child:first-line { font-size:10pt;
+                                                      font-weight:bold;
+                                                      color:black;
+                                                      vertical-align:top;
+                                                      padding-top:13px }                                         
+                                       
+
+  
+  </STYLE>
+</HEAD>
+<BODY onload="fInit()">
+  ## session role will be used often
+  #set($sessionRole = $viewMethods.getSessionData().getRole())
+  <DIV id=navigation class=buttonRadioGroup>
+    #parse('gui/administration/users/button_group.vm')<br>
+    #parse('gui/administration/users/button_privileges.vm')
+  </DIV>
+  <DIV id=options_wrapper>
+    <DIV id=group_membership class=options_set>
+      <H1>role membership</H1>
+      The $sessionRole role has the following members<p />
+      <table cellspacing=0 border=0 cellpadding=0>
+      #set($roleMembers = $sessionRole.getUsers())
+      #foreach($user in $viewMethods.adminGetUsers())
+        <tr>
+          <td>$user.getForename() $user.getSurname() ($user.getUserName())</td>
+          #if($roleMembers.contains($user))
+            <td><input type=checkbox name="$user.getInternalUserName()" checked></td>
+          #else
+            <td><input type=checkbox name="$user.getInternalUserName()"></td>            
+          #end
+        </tr>
+      #end
+      </table>
+    </DIV>
+
+    <DIV id=table_privileges class=options_set>
+      <H1>table privileges</H1>
+      $sessionRole members have the following privileges<p />
+      <table cellspacing=0 border=0 cellpadding=0>
+      <tr><td>&nbsp;</td><th colspan=4>privileges</th></tr>
+      #foreach($table in $viewMethods.adminGetCompanyTables())
+        #set($highestTablePrivilege = "")
+        #if($viewMethods.roleHasPrivilege("MANAGE_TABLE", $table))
+          #set($highestTablePrivilege = "MANAGE_TABLE")
+        #elseif($viewMethods.roleHasPrivilege("EDIT_TABLE_DATA", $table))
+          #set($highestTablePrivilege = "EDIT_TABLE_DATA")
+        #elseif($viewMethods.roleHasPrivilege("VIEW_TABLE_DATA", $table))
+          #set($highestTablePrivilege = "VIEW_TABLE_DATA")          
+        #end
+        <tr>
+          <td>$table.getTableName()<br>$table.getTableDescription()</td>
+          <td><input type=radio name="$table.getInternalTableName()" value="none" #if($highestTablePrivilege.equals("")) checked #end><br>none</td>
+          <td><input type=radio name="$table.getInternalTableName()" value="read" #if($highestTablePrivilege.equals("VIEW_TABLE_DATA")) checked #end><br>read</td>
+          <td><input type=radio name="$table.getInternalTableName()" value="edit" #if($highestTablePrivilege.equals("EDIT_TABLE_DATA")) checked #end><br>edit</td>
+          <td><input type=radio name="$table.getInternalTableName()" value="manage" #if($highestTablePrivilege.equals("MANAGE_TABLE")) checked #end><br>manage</td>
+        </tr>
+      #end
+      </table>
+    </DIV>
+  </DIV>
+  
+</BODY>
+</HTML>
