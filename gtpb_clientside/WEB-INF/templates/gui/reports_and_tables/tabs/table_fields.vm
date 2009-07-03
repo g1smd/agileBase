@@ -39,7 +39,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 	    font-size:8pt;
 	    border-top:1px solid orange 
 	  }
-	
+
 </STYLE>
 
 <script language=javascript>
@@ -72,6 +72,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 	    #set($numTableFields = $tableFields.size())
 	    #foreach ($field in $tableFields)
 		  #set($internalFieldName = $field.getInternalFieldName())
+		  #set($category = $field.getFieldCategory().getDescription())
 	      #if($field.getHidden() == false)
 			#set($class="rowa")
 			#if($velocityCount%2==0)
@@ -85,15 +86,15 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
     	      <td class=leading>&nbsp;</td>
     	      <td class="capitalised">
 				#if($field.equals($sessionTable.getPrimaryKey())) $field #else
-    	        <div class="fieldinfo" id="fieldname_$field.getInternalFieldName()" onClick="makeFieldEditable(this)">$field</div>
+    	        <div class="fieldinfo #if($category == 'Separator') separator #end" id="fieldname_$field.getInternalFieldName()" onClick="makeFieldEditable(this)">$field</div>
 				<input class="input_fieldinfo" id="input_fieldname_$field.getInternalFieldName()" type="text" gtpb_internalfieldname="$field.getInternalFieldName()" gtpb_update_field="true" name="fieldname" value="$field.getFieldName()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)">
     	        #end
 			  </td>
     	      <td>
-				<div class="fieldinfo" id="fielddescription_$field.getInternalFieldName()" onClick="makeFieldEditable(this)">$field.getFieldDescription()</div>
+				<div class="fieldinfo #if($category == 'Separator') separator #end" id="fielddescription_$field.getInternalFieldName()" onClick="makeFieldEditable(this)">$field.getFieldDescription()</div>
 				<input class="input_fieldinfo" id="input_fielddescription_$field.getInternalFieldName()" type="text" gtpb_internalfieldname="$field.getInternalFieldName()" gtpb_update_field="true" name="fielddesc" value="$field.getFieldDescription()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)">
 			  </td>
-    	      <td>#set($category = $field.getFieldCategory().getDescription())
+    	      <td>
 				#if(($category == "Number") && ($field.getDbType() == "INTEGER"))
 				  #set($category = "Whole Number")
 				#end

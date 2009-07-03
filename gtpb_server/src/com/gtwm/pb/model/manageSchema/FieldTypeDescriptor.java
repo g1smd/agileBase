@@ -164,6 +164,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 		return this.fieldCategory.hashCode();
 	}
 
+	//TODO: Should be in util.Enumerations with the other enumerations
 	public enum FieldCategory {
 		TEXT("Text", true), NUMBER("Number", true), DATE("Date", true), DURATION("Time duration",
 				true), SEQUENCE("Auto-generated number sequence", true), RELATION("Relation", true), CHECKBOX(
