@@ -687,8 +687,7 @@ public class DataManagement implements DataManagementInfo {
 					fields.remove(field);
 				} else if (updateExistingRecords) {
 					if (field.getFieldName().equals(HiddenFields.DATE_CREATED.getFieldName())
-							|| field.getFieldName()
-									.equals(HiddenFields.CREATED_BY.getFieldName())) {
+							|| field.getFieldName().equals(HiddenFields.CREATED_BY.getFieldName())) {
 						fields.remove(field);
 					}
 				}
@@ -1070,6 +1069,11 @@ public class DataManagement implements DataManagementInfo {
 		statement.close();
 	}
 
+	/**
+	 * Upload a file for a particular field in a particular record. If a file
+	 * with the same name already exists, rename the old one to avoid
+	 * overwriting and keep a version history
+	 */
 	private void uploadFile(HttpServletRequest request, FileField field, FileValue fileValue,
 			int rowId, List<FileItem> multipartItems) throws CantDoThatException,
 			FileUploadException {
@@ -1080,8 +1084,7 @@ public class DataManagement implements DataManagementInfo {
 			throw new CantDoThatException(
 					"To upload a file, the form must be posted as multi-part form data");
 		}
-		// Since we can't guarantee user defined filenames will be unique, put
-		// the file in a unique folder.
+		// Put the file in a unique folder per row ID.
 		// This is in the format table ID / field ID / row ID
 		String uploadFolderName = this.webAppRoot + "uploads/"
 				+ field.getTableContainingField().getInternalTableName() + "/"
@@ -1098,7 +1101,27 @@ public class DataManagement implements DataManagementInfo {
 				if (item.getSize() == 0) {
 					throw new CantDoThatException("An empty file was submitted, no upload done");
 				}
-				File uploadedFile = new File(uploadFolderName + "/" + fileValue.toString());
+				String filePath = uploadFolderName + "/" + fileValue.toString();
+				File uploadedFile = new File(filePath);
+				if (uploadedFile.exists()) {
+					// rename the existing file to something else so we don't
+					// overwrite it
+					String basePath = filePath;
+					int fileNum = 1;
+					String renamedFileName = filePath + "-" + fileNum;
+					File renamedFile = new File(renamedFileName);
+					while (renamedFile.exists()) {
+						fileNum++;
+						renamedFile = new File(renamedFileName);
+					}
+					if (!uploadedFile.renameTo(renamedFile)) {
+						throw new FileUploadException("Rename of existing file from '" + basePath
+								+ "' to '" + renamedFileName + "' failed");
+					}
+					// I think a File object's name is inviolable but just in
+					// case
+					uploadedFile = new File(filePath);
+				}
 				try {
 					item.write(uploadedFile);
 				} catch (Exception ex) {

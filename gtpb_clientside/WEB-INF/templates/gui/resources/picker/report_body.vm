@@ -26,7 +26,10 @@
 	
 	#set($data=[])
 	#set($pickerFilters = $viewMethods.getSessionData().getCustomReportFilterValues("picker"))
-	#foreach($datarow in $viewMethods.getReportDataRows($pickerReport,50,$pickerFilters,false))
+	#if(!$pickerReportRowLimit)
+		#set($pickerReportRowLimit = 50)
+	#end
+	#foreach($datarow in $viewMethods.getReportDataRows($pickerReport,$pickerReportRowLimit,$pickerFilters,false))
 		  #set($row=[])
 		  #set($colours=[])
 		  #set($dataRowFields = $datarow.getDataRowFields())
