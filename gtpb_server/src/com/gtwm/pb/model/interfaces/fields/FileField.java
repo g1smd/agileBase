@@ -17,10 +17,26 @@
  */
 package com.gtwm.pb.model.interfaces.fields;
 
+import java.util.SortedSet;
+
 /**
  * For storing uploaded files
  */
 public interface FileField extends BaseField {
 
-	
+	/**
+	 * Return a set of all the files that have ever been uploaded into this
+	 * field in a particular record except the current version
+	 * 
+	 * @param rowId
+	 *            Identify the record
+	 * 
+	 * @param webAppRoot
+	 *            The serverside root of the application, which the method needs
+	 *            to know to examine the files. Can be found with
+	 *            ViewTools.getWebAppRoot()
+	 *            
+	 *            @see com.gtwm.pb.model.interfaces.ViewTools#getWebAppRoot()
+	 */
+	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId);
 }

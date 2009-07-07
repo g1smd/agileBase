@@ -48,11 +48,16 @@ public class ViewTools implements ViewToolsInfo {
 	private ViewTools() {
 	}
 
-	public ViewTools(HttpServletRequest request, HttpServletResponse response) {
+	public ViewTools(HttpServletRequest request, HttpServletResponse response, String webAppRoot) {
 		this.request = request;
 		this.response = response;
+		this.webAppRoot = webAppRoot;
 	}
 
+	public String getWebAppRoot() {
+		return this.webAppRoot;
+	}
+	
 	public String spelloutDecimal(double number) {
 		RuleBasedNumberFormat rbnf = new RuleBasedNumberFormat(RuleBasedNumberFormat.SPELLOUT);
 		return rbnf.format(number);
@@ -1116,6 +1121,8 @@ public class ViewTools implements ViewToolsInfo {
 	private HttpServletRequest request = null;
 
 	private HttpServletResponse response = null;
+	
+	private String webAppRoot = null;
 
 	private MathTool mathTool = new MathTool();
 

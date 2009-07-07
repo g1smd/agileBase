@@ -99,7 +99,7 @@ public class AppController extends VelocityViewServlet {
 
 		logger.info("Initialising " + AppProperties.applicationName);
 		ServletContext servletContext = getServletContext();
-		String webAppRoot = servletContext.getRealPath("/");
+		this.webAppRoot = servletContext.getRealPath("/");
 
 		// Create and cache a DatabaseDefn object which is an entry point to all
 		// application logic
@@ -120,7 +120,7 @@ public class AppController extends VelocityViewServlet {
 			this.relationalDataSource = relationalDataSource;
 			// Store 'global objects' data sources and webAppRoot in
 			// databaseDefn
-			this.databaseDefn = new DatabaseDefn(relationalDataSource, webAppRoot);
+			this.databaseDefn = new DatabaseDefn(relationalDataSource, this.webAppRoot);
 			// Store top level stuff in the context so that other servlets can
 			// access it
 			servletContext.setAttribute("com.gtwm.pb.servlets.databaseDefn", this.databaseDefn);
@@ -799,7 +799,7 @@ public class AppController extends VelocityViewServlet {
 			}
 			context.put("viewMethods", viewMethods);
 			// Also some helper tools
-			context.put("viewTools", new ViewTools(request, response));
+			context.put("viewTools", new ViewTools(request, response, this.webAppRoot));
 		} catch (ObjectNotFoundException onfex) {
 			logException(onfex, request, "Error creating view methods object");
 			throw new ServletException("Error creating view methods object", onfex);
@@ -971,4 +971,6 @@ public class AppController extends VelocityViewServlet {
 	private DataSource relationalDataSource = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(AppController.class);
+
+	private String webAppRoot;
 }

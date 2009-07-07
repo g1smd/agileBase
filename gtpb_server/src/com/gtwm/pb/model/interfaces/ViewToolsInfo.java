@@ -263,7 +263,7 @@ public interface ViewToolsInfo {
 	 * Return an empty set of strings
 	 */
 	public Set<String> getNewStringSet();
-	
+
 	/**
 	 * Return the list having been reordered into reverse order
 	 */
@@ -284,6 +284,14 @@ public interface ViewToolsInfo {
 	 *      .html#getParameterMap() HttpServletRequest.getParameterMap()
 	 */
 	public Map getRequestParameters();
+
+	/**
+	 * Return the serverside path of the root of the application
+	 * 
+	 * NB for security you should be aware this is the serverside path, e.g.
+	 * /usr/local/tomcat/webapps/portalBase/
+	 */
+	public String getWebAppRoot();
 
 	/**
 	 * Return the content type of the page being served, e.g. text/html, xml
@@ -316,7 +324,7 @@ public interface ViewToolsInfo {
 	 * Removes all non-word characters apart from spaces. Doesn't change case
 	 */
 	public String rinseString(String stringToRinse);
-	
+
 	/**
 	 * Replace any linebreak characters in text with html paragraphs allowing
 	 * proper display in a web page
@@ -339,7 +347,7 @@ public interface ViewToolsInfo {
 	 *            "resources/icons/applications/tango"
 	 */
 	public List<File> listFiles(String folder);
-	
+
 	/**
 	 * Causes an exception to be thrown for test purposes - intended for testing
 	 * of error handling

@@ -17,11 +17,17 @@
  */
 package com.gtwm.pb.model.manageSchema.fields;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import javax.servlet.ServletContext;
+
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.FileField;
+import com.gtwm.pb.model.interfaces.fields.FileVersion;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
@@ -53,6 +59,15 @@ public class FileFieldDefn extends AbstractField implements FileField {
 		}
 	}
 
+	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId) {
+		SortedSet<FileVersion> fileVersions = new TreeSet<FileVersion>();
+		String uploadFolderName = webAppRoot + "uploads/"
+				+ this.getTableContainingField().getInternalTableName() + "/"
+				+ this.getInternalFieldName() + "/" + rowId;
+		
+		return fileVersions;
+	}
+
 	@Transient
 	public FieldCategory getFieldCategory() {
 		return FieldCategory.FILE;
@@ -71,13 +86,6 @@ public class FileFieldDefn extends AbstractField implements FileField {
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
 		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.FILE);
-//		try {
-//			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCONTENTSIZE, String
-//					.valueOf(TextContentSizes.FEW_WORDS.getNumChars()));
-//		} catch (ObjectNotFoundException onfex) {
-//			throw new CantDoThatException("Internal error setting up " + this.getClass()
-//					+ " field descriptor", onfex);
-//		}
 		return fieldDescriptor;
 	}
 

@@ -352,16 +352,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
 		
   	  function fToolbar() {  	  
   	    // function to create generic button
-  		function fCreateButton(sCaption,fAction) {  		
-  		  // functions to allow the buttons to be switched on and off
-  		  function fSwitchOn() {
-  		    oButton.removeAttribute('disabled');
-  		  }
-  				
-  		  function fSwitchOff() {
-  		    oButton.setAttribute('disabled','true');
-  		  }
-  				
+  		function fCreateButton(sCaption,fAction) {  		  				
   		  var oButton=document.createElement('BUTTON');
   		  oButton.setAttribute('caption',sCaption.toLowerCase()); // an expando property to allow the stylesheet to detect specific buttons
   		  /* put the caption in a span because button icons are applied as a bg image.  If a bg
@@ -372,24 +363,26 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   		  oButton.appendChild(oCaptionSpan);
   		  
   		  oButton.toolbar=oToolbar;
-  		  //oButton.addEventListener('click',fAction,true);
   		  $(oButton).click(fAction);
   		  
-  		  if(!aButtons.containsValue(sCaption.toLowerCase())) oButton.style.display='none';
-  		  
   		  // add switchon, switchoff functionality to the buttons so that they can be controlled by fDisplayContent
-  		  oButton.switchOn=fSwitchOn;
-  		  oButton.switchOff=fSwitchOff;
+  		  oButton.switchOn=function() {
+    	    this.removeAttribute('disabled');
+  		  };
+  		  oButton.switchOff=function() {
+  			this.setAttribute('disabled','true');
+  		  };
+  		  
+  		  if(!aButtons.containsValue(sCaption.toLowerCase())) oButton.style.display='none';  		  
+  		  
   		  oToolbar.appendChild(oButton);
-  		  fSwitchOff();
+  		  
+  		  // if there are more than 1 buttons specified, switch them all off 
+  		  // the cancel button will be turned on later
+  		  if(aButtons.length>1) oButton.switchOff();
+  		  else oButton.switchOn();
+  		  
   		  return oButton;  // note that oButton is the actual HTML object
-  		}
-  		
-  		function fArrayContainsValue(sValue) {
-  		  for(iItem in this) {
-  		    if(this[iItem]==sValue) return true;
-  		  }
-  		  return false;
   		}
 			
   		var oToolbar=document.createElement('DIV');
@@ -399,7 +392,12 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   		oSpacer.setAttribute('id','_md_spacer');
   		
   		var aButtons=sButtons.split(' ');
-  		Array.prototype.containsValue=fArrayContainsValue;
+  		Array.prototype.containsValue=function(sValue) {
+    		  for(iItem in this) {
+    	  		    if(this[iItem]==sValue) return true;
+    	      }
+    	  	  return false;
+  		};
   		
   		// create all the buttons	
   		oToolbar.backButton=fCreateButton('Back',fBack);
@@ -475,6 +473,8 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	  oDialog.centraliseVertically=fCentraliseVertically;
   	  // set attributes passed in the contructor
   	  if(sAttributes) fCreateAttributes();	
+  	  
+  	  oDialog.destroy=fDestroy;
   	  
   	  // load any customisations - from external librarly loaded in display_application
   	  try {
