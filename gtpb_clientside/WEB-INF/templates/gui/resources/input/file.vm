@@ -18,23 +18,41 @@
 #set($fieldValueObject = $tableDataRow.get($field))
 #set($fieldValue=$fieldValueObject.toString())
 #if($globalEdit)
-  <br><i><span class="greytext">global editing of files not yet supported</span></i>
+  <br><i><span class="greytext">files can't be altered in bulk</span></i>
 #else
   #if(!$fieldValueObject.isNull())
     ## Download URL
     #if($relatedRowId)
-      #set($downloadUrl = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$relatedRowId/$fieldValue")
+	  #set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$relatedRowId/")
       ## if we're parsing non-parent table data in the view tab
     #else
-      #set($downloadUrl = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/$fieldValue")
+      #set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/")
     #end
-	#set($downloadUrl = $viewTools.escapeForURL($downloadUrl))
+	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValue"))
     ## File icon
     #if(!$fieldValueObject.isImage())
       <img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/> $fieldValue
-      <a href="$downloadUrl">download</a>    
+      <a href="$downloadUrl">download</a>
+	  #if(!$userCanEdit)
+	    #set($previousFileVersions = $field.getPreviousFileVersions($viewTools.getWebAppRoot(), $sessionRowId, $fieldValue))
+	    #if($previousFileVersions.size() > 0)
+		  <br clear="left">
+		  <div class="greytext"><i>Previous versions</i>
+		  #foreach($previousFileVersion in $previousFileVersions)
+			<br>
+		    #set($lastModified = $previousFileVersion.getLastModified())
+		    #set($yearConst = $viewTools.getCalendarConstant("YEAR"))
+		    #set($monthConst = $viewTools.getCalendarConstant("MONTH"))
+		    #set($dayConst = $viewTools.getCalendarConstant("DAY_OF_MONTH"))
+			#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$previousFileVersion"))
+		    $lastModified.get($dayConst)/$lastModified.get($monthConst)/$lastModified.get($yearConst)
+			- <a href="$downloadUrl" style="color:gray">$previousFileVersion</a>
+		  #end
+		  </div>
+	    #end
+	  #end ## !$userCanEdit
     #end
-  #end
+  #end ## if !$fieldValueObject.isNull()
   #if($userCanEdit && (!$mobile_device))
     ##For file uploads, do a normal post not an XMLHttpRequest for now. Look at getting the AJAX stuff working later
     <form method="post" enctype="multipart/form-data" action="AppController.servlet">
@@ -50,4 +68,4 @@
       </a>
     #end
   #end
-#end
+#end ## if !$globalEdit

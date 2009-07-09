@@ -84,22 +84,22 @@ public class ViewTools implements ViewToolsInfo {
 	}
 
 	public int getCalendarConstant(String constantName) throws CantDoThatException {
-		if (constantName.equals("YEAR")) {
+		if (constantName.equalsIgnoreCase("YEAR")) {
 			return Calendar.YEAR;
 		}
-		if (constantName.equals("DAY_OF_MONTH")) {
+		if (constantName.equalsIgnoreCase("DAY_OF_MONTH")) {
 			return Calendar.DAY_OF_MONTH;
 		}
-		if (constantName.equals("MONTH")) {
+		if (constantName.equalsIgnoreCase("MONTH")) {
 			return Calendar.MONTH;
 		}
-		if (constantName.equals("HOUR_OF_DAY")) {
+		if (constantName.equalsIgnoreCase("HOUR_OF_DAY")) {
 			return Calendar.HOUR_OF_DAY;
 		}
-		if (constantName.equals("MINUTE")) {
+		if (constantName.equalsIgnoreCase("MINUTE")) {
 			return Calendar.MINUTE;
 		}
-		if (constantName.equals("SECOND")) {
+		if (constantName.equalsIgnoreCase("SECOND")) {
 			return Calendar.SECOND;
 		}
 		throw new CantDoThatException("Unimplemented calendar constant: " + constantName);

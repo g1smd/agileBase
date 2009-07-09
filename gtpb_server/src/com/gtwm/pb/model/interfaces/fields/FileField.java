@@ -35,8 +35,13 @@ public interface FileField extends BaseField {
 	 *            The serverside root of the application, which the method needs
 	 *            to know to examine the files. Can be found with
 	 *            ViewTools.getWebAppRoot()
-	 *            
-	 *            @see com.gtwm.pb.model.interfaces.ViewTools#getWebAppRoot()
+	 * 
+	 * @param currentFileName
+	 *            The name of the current file in this field in this row ID. So
+	 *            it can be excluded from the set of previous files
+	 * 
+	 * @see com.gtwm.pb.model.interfaces.ViewTools#getWebAppRoot()
 	 */
-	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId);
+	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId,
+			String currentFileName);
 }

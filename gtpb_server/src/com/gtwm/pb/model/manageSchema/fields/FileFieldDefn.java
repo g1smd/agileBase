@@ -17,17 +17,21 @@
  */
 package com.gtwm.pb.model.manageSchema.fields;
 
+import java.io.File;
+import java.util.Calendar;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-import javax.servlet.ServletContext;
+
+import org.grlea.log.SimpleLogger;
 
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.FileField;
 import com.gtwm.pb.model.interfaces.fields.FileVersion;
+import com.gtwm.pb.model.manageData.DataManagement;
+import com.gtwm.pb.model.manageData.fields.FileVersionDefn;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
@@ -55,16 +59,35 @@ public class FileFieldDefn extends AbstractField implements FileField {
 			super.setUnique(false);
 			super.setNotNull(false);
 		} catch (CantDoThatException cdtex) {
-			throw new CodingErrorException("Error setting file field to unique or not null", cdtex);
+			throw new CodingErrorException("Error setting file field not unique or nullable", cdtex);
 		}
 	}
 
-	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId) {
+	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId, String currentFileName) {
 		SortedSet<FileVersion> fileVersions = new TreeSet<FileVersion>();
 		String uploadFolderName = webAppRoot + "uploads/"
 				+ this.getTableContainingField().getInternalTableName() + "/"
 				+ this.getInternalFieldName() + "/" + rowId;
-		
+		logger.debug("Getting files in dir " + uploadFolderName);
+		File uploadFolder = new File(uploadFolderName);
+		if (!uploadFolder.exists()) {
+			// If folder isn't there, there have probably never been any files uploaded for this record
+			return fileVersions;
+		}
+		logger.debug("uploadFolder is " + uploadFolder);
+		File[] fileArray = uploadFolder.listFiles();
+		logger.debug("fileArray is " + fileArray);
+		for (File file : fileArray) {
+			String fileName = file.getName();
+			logger.debug("Checking file " + fileName);
+			if (!fileName.equals(currentFileName)) {
+				long lastModified = file.lastModified();
+				Calendar lastModifiedCal = Calendar.getInstance();
+				lastModifiedCal.setTimeInMillis(lastModified);
+				FileVersion fileVersion = new FileVersionDefn(fileName, lastModifiedCal);
+				fileVersions.add(fileVersion);
+			}
+		}
 		return fileVersions;
 	}
 
@@ -88,5 +111,7 @@ public class FileFieldDefn extends AbstractField implements FileField {
 		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.FILE);
 		return fieldDescriptor;
 	}
+
+	private static final SimpleLogger logger = new SimpleLogger(FileFieldDefn.class);
 
 }

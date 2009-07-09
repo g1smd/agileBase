@@ -1072,7 +1072,9 @@ public class DataManagement implements DataManagementInfo {
 	/**
 	 * Upload a file for a particular field in a particular record. If a file
 	 * with the same name already exists, rename the old one to avoid
-	 * overwriting and keep a version history
+	 * overwriting. Reset the last modified time of the old one so the rename
+	 * doesn't muck this up. Maintaining the file timestamp is useful for
+	 * version history
 	 */
 	private void uploadFile(HttpServletRequest request, FileField field, FileValue fileValue,
 			int rowId, List<FileItem> multipartItems) throws CantDoThatException,
@@ -1102,28 +1104,43 @@ public class DataManagement implements DataManagementInfo {
 					throw new CantDoThatException("An empty file was submitted, no upload done");
 				}
 				String filePath = uploadFolderName + "/" + fileValue.toString();
-				File uploadedFile = new File(filePath);
-				if (uploadedFile.exists()) {
+				File selectedFile = new File(filePath);
+				if (selectedFile.exists()) {
 					// rename the existing file to something else so we don't
 					// overwrite it
 					String basePath = filePath;
 					int fileNum = 1;
-					String renamedFileName = filePath + "-" + fileNum;
+					String extension = "";
+					if (basePath.contains(".")) {
+						extension = basePath.replaceAll("^.*\\.", "");
+						basePath = basePath.substring(0, basePath.length() - extension.length() - 1);
+					}
+					String renamedFileName = basePath + "-" + fileNum;
+					if (!extension.equals("")) {
+						renamedFileName += "." + extension;
+					}
 					File renamedFile = new File(renamedFileName);
 					while (renamedFile.exists()) {
 						fileNum++;
+						renamedFileName = basePath + "-" + fileNum;
+						if (!extension.equals("")) {
+							renamedFileName += "." + extension;
+						}
 						renamedFile = new File(renamedFileName);
 					}
-					if (!uploadedFile.renameTo(renamedFile)) {
-						throw new FileUploadException("Rename of existing file from '" + basePath
-								+ "' to '" + renamedFileName + "' failed");
+					// Keep the original timestamp
+					long lastModified = selectedFile.lastModified();
+					if (!selectedFile.renameTo(renamedFile)) {
+						throw new FileUploadException("Rename of existing file from '" + selectedFile
+								+ "' to '" + renamedFile + "' failed");
 					}
+					renamedFile.setLastModified(lastModified);
 					// I think a File object's name is inviolable but just in
 					// case
-					uploadedFile = new File(filePath);
+					selectedFile = new File(filePath);
 				}
 				try {
-					item.write(uploadedFile);
+					item.write(selectedFile);
 				} catch (Exception ex) {
 					throw new FileUploadException("Error writing file: " + ex.getMessage());
 				}
