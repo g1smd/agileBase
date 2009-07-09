@@ -68,18 +68,14 @@ public class FileFieldDefn extends AbstractField implements FileField {
 		String uploadFolderName = webAppRoot + "uploads/"
 				+ this.getTableContainingField().getInternalTableName() + "/"
 				+ this.getInternalFieldName() + "/" + rowId;
-		logger.debug("Getting files in dir " + uploadFolderName);
 		File uploadFolder = new File(uploadFolderName);
 		if (!uploadFolder.exists()) {
 			// If folder isn't there, there have probably never been any files uploaded for this record
 			return fileVersions;
 		}
-		logger.debug("uploadFolder is " + uploadFolder);
 		File[] fileArray = uploadFolder.listFiles();
-		logger.debug("fileArray is " + fileArray);
 		for (File file : fileArray) {
 			String fileName = file.getName();
-			logger.debug("Checking file " + fileName);
 			if (!fileName.equals(currentFileName)) {
 				long lastModified = file.lastModified();
 				Calendar lastModifiedCal = Calendar.getInstance();
