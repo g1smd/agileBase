@@ -16,6 +16,10 @@ body {
 	font-size:10pt;
 }
 
+body.mobile {
+	margin: 20px;
+}
+
 #scroller {
 	position:relative;
 	width:100%;
@@ -92,9 +96,17 @@ body {
 	right:20px;
 	border-collapse:collapse;
 }
+
+#header table.mobileLogin {
+	right:auto;
+}
    
 #header table td {
 	padding:10px 30px;
+}
+
+#header table.mobileLogin td {
+	padding-left:0px;
 }
 
 #header table .row1 td {
@@ -109,6 +121,10 @@ body {
 	font-size:16pt;
 	color:#666666;
 	text-decoration:none;
+}
+
+#header table.mobileLogin * {
+	font-size: 10pt;
 }
    
 #header table a:hover {

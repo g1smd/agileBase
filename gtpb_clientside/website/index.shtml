@@ -16,18 +16,60 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 -->
+<!--#if expr="$QUERY_STRING = 'return=boot_mobile&set_custom_boolean=1&booleankey=mobile_device&custombooleanvalue=true'" --> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN>
+<html>
+	<head>
+		<title>GT portalBase</title>
+		<link rel="icon" href="/portalBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
+	    <meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable=yes" />
+	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
+	    <style>
+	    	@import url("/portalBase/website/styles/styles.css");
+		</style>
+    </head>
+    <body class="mobile">
+		<div id="header" class="wrapper">
+			<div class="content">
+				<a id="home" href="#" alt="GT portalBase"><img src="/portalBase/website/images/logo-gtpb.png"></a>
+				<div style="position:relative; top:110px">
+			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
+					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/portalBase/j_security_check" name="loginform" id="loginform">
+			<!--#else --> 
+					<form method="POST" action="https://appserver.gtportalbase.com/portalBase/j_security_check" name="loginform" id="loginform">
+			<!--#endif -->
+			<table border="0" class="mobileLogin">
+			<tr>
+			  <td>username</td>
+			  <td><input style="right:0px" type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></td>
+			</tr>
+			<tr>
+			  <td>password</td>
+			  <td><input style="right:0px" type="password" name="j_password" id="j_password" /></td>
+			</tr>
+			<tr>
+			<td>&nbsp;</td>
+			<td><input type="submit" value="login" style="top:200px"></td>
+			</tr>
+			
+			</table>
+					</form>
+				</div>
+			</div>
+		</div>  
+    </body>
+</html> <!-- end of mobile version -->
+<!--#else -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN>
 <html>
 	<head>
 		<title>GT portalBase</title>
 		<link rel="icon" href="/portalBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
 	    <!--  <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
-	    <meta name="viewport" content="width = 915, initial-scale = 1.2, user-scalable=yes" />
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 		<script type="text/javascript" src="/portalBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="/portalBase/website/scripts/thickbox.js"></script>
-		<!-- <script type="text/javascript" src="/portalBase/website/facebox/facebox.js"></script>-->
-		
+
 <!--#if expr="$SERVER_PORT = '443'" --> 
 	<!-- https://appserver.gtportalbase.com -->
 		<script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg"></script>
@@ -125,10 +167,10 @@
 		@import url("/portalBase/website/styles/thickbox_override.css");
 		@import url("/portalBase/website/styles/styles.css");
 	</style>
-		<!-- <link href="/portalBase/website/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css"/> -->    
 	</head>
 	
 	<body>
+	<!--#printenv -->
 	<div id="scroller">
 		<div id="tl_wrapper">
 			<div id="header" class="wrapper">
@@ -296,3 +338,4 @@
 		</div>  <!-- end of scroller -->     
 	</body>
 </html>
+<!--#endif --> <!-- end of standard version -->
