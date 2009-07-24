@@ -170,7 +170,6 @@
 	</head>
 	
 	<body>
-	<!--#printenv -->
 	<div id="scroller">
 		<div id="tl_wrapper">
 			<div id="header" class="wrapper">
