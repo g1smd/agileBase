@@ -125,12 +125,22 @@ table#reportData tr.trailing td {
   height:auto 
 }
 
-table#reportData tr.excludedRecord td.leading {
+/* table#reportData tr.excludedRecord td.leading {
   background-color:#eaba72;
 }
 
 table#reportData tr.excludedRecord td.trailing {
   background-color:#eaba72;
+}
+*/
+
+table#reportData tr#currentRow.excludedRecord td {
+  background-color: #cccccc;
+  color: white!important;
+}
+
+table#reportData tr.excludedRecord td {
+	color: #cccccc!important;
 }
 
 .error { color: red }

@@ -22,6 +22,33 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 #set($sessionData = $viewMethods.getSessionData())
 #set($sessionRowId= $sessionData.getRowId())
 
+## Make an extra blank row for the record being edited if it's not already in the dataset on screen
+## #if((!$selectionFound) && ($numRows > 0) && ($filtersShouldBeShown != 'true') && (!$isNotTable))
+#if((!$selectionFound) && ($numRows > 0) && (!$mobile_device) && ($sessionRowId > -1))
+  #set($tableDataRow = $viewMethods.getTableDataRow())
+  #if($tableDataRow.size() > 0)
+    ## For value of $return, see reports_and_tables/report_data.vm
+	#set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_row_id=$selection'")
+    <tr title="The record currently being edited is not in the report data on this page"
+      name="$selection" 
+      #if($uniqueIdCount%2!=0) class="rowa excludedRecord" #else class="rowb excludedRecord" #end
+      onclick="$click" 
+      forcehighlight="true">
+      <td class="leading">&nbsp;</td>
+      #foreach($field in $reportBaseFields)
+	    #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
+		  #if($tableDataRow.get($field))
+            <td nowrap="true">$tableDataRow.get($field)</td>
+		  #else
+            <td nowrap="true">&nbsp;</td>
+		  #end
+	    #end
+      #end
+	  <td class="trailing">&nbsp;</td>
+    </tr>
+  #end
+#end  ## end additional row if selected record not in dataset on screen
+
 #foreach($row in $data)
   ## row[0] contains the data to display in each field
   ## row[1] contains the click event parameters for the row
@@ -80,23 +107,6 @@ $viewTools.startTimer("gui/pane2/pane2_body")
   </tr>
 
 #end ## end loop through report data rows
-## Make an extra blank row for the record being edited if it's not already in the dataset on screen
-#if((!$selectionFound) && ($numRows > 0) && ($filtersShouldBeShown != 'true') && (!$isNotTable))
-  #set($uniqueIdCount = $uniqueIdCount + 1)
-  ## For value of $return, see reports_and_tables/report_data.vm
-		#set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_row_id=$selection'")
-  <tr title="The record currently being edited is not visible in the dataset on screen"
-      name="$selection" 
-      #if($uniqueIdCount%2!=0) class="rowa excludedRecord" #else class="rowb excludedRecord" #end
-      onclick="$click" 
-      forcehighlight="true">
-    <td class="leading">&nbsp;</td>
-    #foreach($cell in $thisValues)
-    <td nowrap="true">&nbsp;</td>
-    #end
-    <td class="trailing">&nbsp;</td>
-  </tr>
-#end  ## end additional row if selected record not in dataset on screen
 ## a closing row
 ## also include count of records returned for the UI to pick up and display
 <tr class=trailing>
