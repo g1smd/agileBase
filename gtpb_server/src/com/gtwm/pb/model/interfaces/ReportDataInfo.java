@@ -51,6 +51,11 @@ public interface ReportDataInfo {
 			CodingErrorException, CantDoThatException;
 
 	/**
+	 * Return true if the record identified by the given number is present in the report
+	 */
+	public boolean isRowIdInReport(Connection conn, int rowId) throws SQLException;
+	
+	/**
 	 * Generate an SQL PreparedStatement object for getting the report VIEW
 	 * definition. Usually code would call getReportDataRows instead, this
 	 * method is only useful in a few particular circumstances where more

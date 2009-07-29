@@ -186,6 +186,15 @@ public class ViewMethods implements ViewMethodsInfo {
 			ObjectNotFoundException {
 		return this.databaseDefn.getDataManagement().isRecordLocked(this.sessionData, table, rowId);
 	}
+	
+	public boolean isRowIdInReport() throws SQLException {
+		BaseReportInfo report = this.sessionData.getReport();
+		int rowId = this.sessionData.getRowId();
+		if (rowId < 0 || report == null) {
+			return false;
+		}
+		return this.databaseDefn.getDataManagement().isRowIdInReport(report, rowId);
+	}
 
 	public synchronized void addModuleAction(String module, String actionName, String description,
 			String attributes, String actionTemplate, String buttons, String callbackFunction) {

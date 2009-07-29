@@ -1340,6 +1340,19 @@ public class DataManagement implements DataManagementInfo {
 		return reportDataRows;
 	}
 
+	public boolean isRowIdInReport(BaseReportInfo report, int rowId) throws SQLException {
+		Connection conn = null;
+		try {
+			conn = this.dataSource.getConnection();
+			ReportDataInfo reportData = new ReportData(conn, report, false, false);
+			return reportData.isRowIdInReport(conn, rowId);
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+	
 	public Map<RelationField, List<DataRow>> getChildDataTableRows(DatabaseInfo databaseDefn,
 			TableInfo tableDefn, int rowid) throws SQLException, ObjectNotFoundException,
 			CodingErrorException {
@@ -1363,9 +1376,6 @@ public class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	/**
-	 * Copy of the method in ReportData. TODO: refactor to remove duplication
-	 */
 	private Map<String, String> getKeyToDisplayMapping(Connection conn, String internalSourceName,
 			String internalKeyFieldName, String internalDisplayFieldName) throws SQLException {
 		// Buffer the set of display values for this field:

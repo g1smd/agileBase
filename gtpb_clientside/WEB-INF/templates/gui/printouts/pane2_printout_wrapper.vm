@@ -25,7 +25,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
   <head>
-    <title>Print Preview - $module - $report</title>      
+    <title>$module - $report</title>      
  	<script src="resources/jquery.js" language="Javascript"></script>
     <script language="JavaScript" src="resources/wait/request.js"></script>
     <script language="JavaScript" src="resources/modalFramework/modalFramework.js"></script>   

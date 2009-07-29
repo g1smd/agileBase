@@ -69,6 +69,8 @@ public interface DataManagementInfo {
 			Map<BaseField, Boolean> sessionSorts, int rowLimit) throws SQLException,
 			CodingErrorException, CantDoThatException;
 
+	public boolean isRowIdInReport(BaseReportInfo reportDefn, int rowId) throws SQLException;
+	
 	/**
 	 * Return the full path of the root of the web application
 	 */

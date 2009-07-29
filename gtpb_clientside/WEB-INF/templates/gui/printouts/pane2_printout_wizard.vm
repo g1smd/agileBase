@@ -48,7 +48,8 @@
                 <label for="recordlock_yes">
                   <img src="resources/recordLocking/print_locked.png">
                 </label>     
-              </td>                  
+              </td>
+		    </tr>
             <tr>
 	              <td>
 	                <input type="radio" name="recordlock" id="recordlock_no" value="no" gtpb_set_custom_string="true" gtpb_stringkey="record_lock_attempted" gtpb_customstringvalue="no" checked>

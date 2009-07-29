@@ -135,12 +135,15 @@ table#reportData tr.excludedRecord td.trailing {
 */
 
 table#reportData tr#currentRow.excludedRecord td {
-  background-color: #cccccc;
-  color: white!important;
+  background-color: rgb(254,242,149);
 }
 
-table#reportData tr.excludedRecord td {
-	color: #cccccc!important;
+table#reportData tr.excludedRecord td.leading {
+  background-color: rgb(254,233,84)!important
+}
+
+table#reportData tr.excludedRecord td.trailing {
+  background-color: rgb(254,233,84)!important
 }
 
 .error { color: red }
@@ -175,4 +178,13 @@ table#reportData tr.excludedRecord td {
 	background: #f4f4f4;
 	width: 100%;
 	padding-left: 14px;
+}
+
+.warningmessage {
+		-webkit-border-radius: 1em;
+		-moz-border-radius: 1em;
+		border: 2px solid rgb(254,233,84);
+		text-align: center;
+		background: rgb(254,242,149);
+		margin: 10px;
 }

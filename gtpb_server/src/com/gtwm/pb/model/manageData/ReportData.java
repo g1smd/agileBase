@@ -700,7 +700,11 @@ public class ReportData implements ReportDataInfo {
 					+ ", statement = " + statement);
 		}
 		// 2) parse the SQL resultset to generate a return value:
-		reportData = new ArrayList<DataRowInfo>();
+		int initialCapacity = rowLimit;
+		if (initialCapacity > 10000 || initialCapacity < 0) {
+			initialCapacity = 10000;
+		}
+		reportData = new ArrayList<DataRowInfo>(initialCapacity);
 		DataRow reportDataRow;
 		DataRowField reportDataRowField;
 		TableInfo parentTable = this.report.getParentTable();
@@ -913,6 +917,31 @@ public class ReportData implements ReportDataInfo {
 		results.close();
 		statement.close();
 		return reportData;
+	}
+
+	public boolean isRowIdInReport(Connection conn, int rowId) throws SQLException {
+		boolean rowIdIsInReport = false;
+		BaseField primaryKey = this.report.getParentTable().getPrimaryKey();
+		String SQLCode = "SELECT " + primaryKey.getInternalFieldName() + " FROM "
+				+ this.report.getInternalReportName();
+		SQLCode += " WHERE " + primaryKey.getInternalFieldName() + " = " + rowId;
+		Statement statement = conn.createStatement();
+		long executionStartTime = System.currentTimeMillis();
+		ResultSet results = statement.executeQuery(SQLCode);
+		if (results.next()) {
+			logger.debug("Result gotten is " + results.getInt(1));
+			rowIdIsInReport = true;
+		}
+		logger.debug("SQLCode " + SQLCode + " returned " + rowIdIsInReport);
+		results.close();
+		float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
+		//if (durationSecs > AppProperties.longSqlTime) {
+			logger.warn("Long SELECT SQL execution time of " + durationSecs
+					+ " seconds for isRowIdInReport for report " + this.report + ", statement = "
+					+ statement);
+		//}
+		statement.close();
+		return rowIdIsInReport;
 	}
 
 	public String toString() {

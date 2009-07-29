@@ -24,7 +24,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 
 ## Make an extra blank row for the record being edited if it's not already in the dataset on screen
 ## #if((!$selectionFound) && ($numRows > 0) && ($filtersShouldBeShown != 'true') && (!$isNotTable))
-#if((!$selectionFound) && ($numRows > 0) && (!$mobile_device) && ($sessionRowId > -1))
+#if((!$selectionFound) && ($numRows > 0) && (!$mobile_device) && ($sessionRowId > -1) && (!$printout))
   #set($tableDataRow = $viewMethods.getTableDataRow())
   #if($tableDataRow.size() > 0)
     ## For value of $return, see reports_and_tables/report_data.vm

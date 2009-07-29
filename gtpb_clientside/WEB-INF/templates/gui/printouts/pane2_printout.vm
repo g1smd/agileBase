@@ -122,6 +122,7 @@
           </tr>
         </thead>
         <tbody name=reportBody id=reportBody>
+		  #set($printout = true)
           #parse("gui/pane2/pane2_body.vm")
 		</tbody>
       </table>

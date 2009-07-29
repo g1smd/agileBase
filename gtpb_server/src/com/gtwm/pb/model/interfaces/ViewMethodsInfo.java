@@ -406,6 +406,12 @@ public interface ViewMethodsInfo {
 			SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
 	/**
+	 * Returns true if the record identified by the session row ID is visible in
+	 * the session report
+	 */
+	public boolean isRowIdInReport() throws SQLException;
+
+	/**
 	 * @see WikiManagementInfo#getWikiRecordDataRows(CompanyInfo, String,
 	 *      String)
 	 */
@@ -450,9 +456,10 @@ public interface ViewMethodsInfo {
 	 * 
 	 * Also allow specific stop words to be set to blacklist unwanted terms
 	 */
-	public SortedSet<TagInfo> getReportTagCloud(BaseReportInfo report, ReportFieldInfo reportField, Set<String> stopWords,
-			int minWeight, int maxWeight, int maxTags) throws ObjectNotFoundException,
-			DisallowedException, CodingErrorException, CantDoThatException, SQLException;
+	public SortedSet<TagInfo> getReportTagCloud(BaseReportInfo report, ReportFieldInfo reportField,
+			Set<String> stopWords, int minWeight, int maxWeight, int maxTags)
+			throws ObjectNotFoundException, DisallowedException, CodingErrorException,
+			CantDoThatException, SQLException;
 
 	/**
 	 * Exposes session data to the user interface
