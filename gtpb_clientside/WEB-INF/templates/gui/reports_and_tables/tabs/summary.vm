@@ -241,8 +241,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 					            	<select name="internalfieldname">
 							              #foreach($reportField in $report.getReportFields())
 							              	#set($baseField = $reportField.getBaseField())
-							              	#if(!($baseField.equals($baseField.getTableContainingField().getPrimaryKey())))
-							                	<option value="$reportField.getInternalFieldName()">$reportField.getFieldName()</option>
+							              	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
+							                  <option value="$reportField.getInternalFieldName()">each '$baseField.getTableContainingField()' record</option>
+											#else
+							                  <option value="$reportField.getInternalFieldName()">$reportField.getFieldName()</option>
 							                #end
 							              #end
 						            </select><br>
@@ -250,8 +252,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 					            		  <option value="">--choose a second argument--</option>
 							              #foreach($reportField in $report.getReportFields())
 							              	#set($baseField = $reportField.getBaseField())
-							              	#if(!($baseField.equals($baseField.getTableContainingField().getPrimaryKey())))
-							                	<option value="$reportField.getInternalFieldName()">$reportField.getFieldName()</option>
+							              	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
+							                  <option value="$reportField.getInternalFieldName()">each '$baseField.getTableContainingField()' record</option>
+											#else
+							                  <option value="$reportField.getInternalFieldName()">$reportField.getFieldName()</option>
 							                #end
 							              #end
 						            </select><br>
