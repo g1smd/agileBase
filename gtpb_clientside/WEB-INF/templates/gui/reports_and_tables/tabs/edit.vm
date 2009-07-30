@@ -69,23 +69,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 		        </tr> 
 					      #end
 		    #end 
-		#if(!$viewMethods.isRowIdInReport())
-		<tr>
-		  <td class="leading">&nbsp;</td>
-		  <td colspan="2">
-		    <div class="warningmessage">
-				<b>Note:</b><p>
-				This record isn't visible in the report '$sessionReport'
-				#set($filters = $sessionReport.getFilters())
-				#if($filters.size() > 0)
-					, which requires that
-					#parse('gui/reports_and_tables/plain_english_filters.vm')
-				#end
-			</div>
-		  </td>
-		  <td class="trailing">&nbsp;</td>
-		</tr>
-		#end
 	  </table>
 	  #if($viewMethods.isRecordLocked())
 	  		  <div id="recordBlank"></div>

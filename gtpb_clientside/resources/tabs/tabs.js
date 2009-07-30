@@ -76,7 +76,7 @@ var TabInterfaceObjectPub = new Object();
 
         var tabLoaded = false;
 
-        
+
         TabObjectPub.queueTab = function() {
         	tabLoaded = false;
 
@@ -86,7 +86,10 @@ var TabInterfaceObjectPub = new Object();
             	
             	loadSpinner.hide();
             	if (parent.pane_2 && currentRowId != -1) {
-            		parent.pane_2.fSetRowSelection(currentRowId);
+            		var rowFound = parent.pane_2.fSetRowSelection(currentRowId);
+            		if (!rowFound) {
+            			$.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
+            		}
             	}
             	pane3Scripts.update();
             });
@@ -108,7 +111,11 @@ var TabInterfaceObjectPub = new Object();
                 jqTabContainer.load(tabSource, null, function(){
                 	loadSpinner.hide();
                 	if (parent.pane_2 && currentRowId != -1) {
-                		parent.pane_2.fSetRowSelection(currentRowId);
+                		var rowFound = parent.pane_2.fSetRowSelection(currentRowId);
+                		alert('row found is ' + rowFound);
+                		if (!rowFound) {
+                			$.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
+                		}
                 	}
                 	pane3Scripts.update();
                 });

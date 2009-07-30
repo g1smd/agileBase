@@ -51,9 +51,6 @@ function fUnlockButton() {
 }
 
 
-
-
-
 function fComboComponents() {
 	// ComboComponent object
 	function fComboComponent(elem) {
@@ -145,6 +142,14 @@ function fRelationPickers() {
 				    
 }
 
+/* Called if the current record isn't visible in pane 2, to add a warning to that effect in the edit tab */
+function appendWarning(warningRowHtml) {
+  var jqTableBody = $("#reportData > tbody");
+  // if message not already there
+  if (jqTableBody.find(".warningmessage").length == 0) {
+    jqTableBody.append(warningRowHtml);
+  }
+}
 
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
@@ -152,5 +157,3 @@ function fRelationPickers() {
 pane3Scripts.functionList.push(fUnlockButton);
 pane3Scripts.functionList.push(fComboComponents);
 pane3Scripts.functionList.push(fRelationPickers);
-
-

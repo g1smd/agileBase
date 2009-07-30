@@ -79,8 +79,8 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	}
 
 	public synchronized void addGrouping(ReportFieldInfo groupByReportField) {
-		ReportSummaryGroupingInfo grouping = new ReportSummaryGrouping(groupByReportField);
-		// Need a save here because no link from grouping back to report so
+		ReportSummaryGroupingInfo grouping = new ReportSummaryGrouping(groupByReportField, null);
+		// Need a save here because no link from grouping back to report summary so
 		// Hibernate can't save automatically
 		HibernateUtil.currentSession().save(grouping);
 		this.getGroupingsDirect().add(grouping);

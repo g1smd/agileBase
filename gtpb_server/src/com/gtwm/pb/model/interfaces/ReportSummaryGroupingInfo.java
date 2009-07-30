@@ -18,15 +18,28 @@
 package com.gtwm.pb.model.interfaces;
 
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
+import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
+
 import java.util.Date;
 
+/**
+ * Represents a field to group by in a report summary
+ */
 public interface ReportSummaryGroupingInfo extends Comparable<ReportSummaryGroupingInfo> {
-    
-    public ReportFieldInfo getGroupingReportField();
 
-    /**
-     * Used to sort grouping fields, ensuring earliest are at the start of the report summary
-     */
-    public Date getCreationTime();
+	public ReportFieldInfo getGroupingReportField();
+
+	/**
+	 * Return the modifier (if any) that should be used with this field. For
+	 * example, if the field is a date, the modifier could be 'year' which would
+	 * cause the grouping to be on the year only
+	 */
+	public SummaryGroupingModifier getGroupingModifier();
+
+	/**
+	 * Used to sort grouping fields, ensuring earliest are at the start of the
+	 * report summary
+	 */
+	public Date getCreationTime();
 
 }

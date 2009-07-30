@@ -140,23 +140,25 @@
         var oBodyRows=document.getElementById('reportBody').rows;
         for(var i=0;i<oBodyRows.length;i++){  
           if(oBodyRows[i].getAttribute('name')==sName) {
-             var currentRow = oBodyRows[i];
-             currentRow.id='currentRow';
-			 // Work out whether we need to scroll the row into view (if it's off screen)
-             var excluded = $(currentRow).hasClass("excludedRecord")
-			 if (!excluded) {
-			   var currentRowOffsetTop = currentRow.offsetTop;
-               //var visiblePortionTop = document.getElementById('wrapper').scrollTop;
-               var visiblePortionTop = document.scrollTop;
-               //var visiblePortionBottom = visiblePortionTop + document.body.clientHeight;
-               var visiblePortionBottom = visiblePortionTop + document.body.offsetHeight;
-               if ((currentRowOffsetTop < visiblePortionTop) || ((currentRowOffsetTop + 15) > visiblePortionBottom)) {
-				 currentRow.scrollIntoView(true);
-               }
-			 }
-       	     break;
-          	}  
-        }     
+            var currentRow = oBodyRows[i];
+            currentRow.id='currentRow';
+			// Work out whether we need to scroll the row into view (if it's off screen)
+            var excluded = $(currentRow).hasClass("excludedRecord")
+			if (!excluded) {
+			  var currentRowOffsetTop = currentRow.offsetTop;
+              //var visiblePortionTop = document.getElementById('wrapper').scrollTop;
+              var visiblePortionTop = document.scrollTop;
+              //var visiblePortionBottom = visiblePortionTop + document.body.clientHeight;
+              var visiblePortionBottom = visiblePortionTop + document.body.offsetHeight;
+              if ((currentRowOffsetTop < visiblePortionTop) || ((currentRowOffsetTop + 15) > visiblePortionBottom)) {
+				currentRow.scrollIntoView(true);
+              }
+			  // row was found
+       	      return true;
+			}
+          }
+        }
+		return false;
       }  
 	
 	      function fDeleteObj(sAction, sRowIdentifier) { 

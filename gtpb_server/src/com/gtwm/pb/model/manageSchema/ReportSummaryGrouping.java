@@ -19,6 +19,8 @@ package com.gtwm.pb.model.manageSchema;
 
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -28,6 +30,7 @@ import javax.persistence.Transient;
 import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.manageSchema.AbstractReportField;
+import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 
 @Entity
 public class ReportSummaryGrouping implements ReportSummaryGroupingInfo {
@@ -35,9 +38,10 @@ public class ReportSummaryGrouping implements ReportSummaryGroupingInfo {
     protected ReportSummaryGrouping() {
     }
     
-    public ReportSummaryGrouping(ReportFieldInfo groupingReportField) {
+    public ReportSummaryGrouping(ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifier) {
         this.setGroupingReportField(groupingReportField);
         this.setCreationTimeDirect(new Date());
+        this.setGroupingModifier(groupingModifier);
     }
     
     @Id
@@ -62,6 +66,15 @@ public class ReportSummaryGrouping implements ReportSummaryGroupingInfo {
         this.groupingField = groupingField;
     }
 
+    private void setGroupingModifier(SummaryGroupingModifier groupingModifier) {
+    	this.groupingModifier = groupingModifier;
+    }
+    
+    @Enumerated(EnumType.STRING)
+    public SummaryGroupingModifier getGroupingModifier() {
+    	return this.groupingModifier;
+    }
+    
 	@Transient
     public Date getCreationTime() {
     	return new Date(this.getCreationTimeDirect().getTime());
@@ -103,6 +116,8 @@ public class ReportSummaryGrouping implements ReportSummaryGroupingInfo {
     }
     
     private ReportFieldInfo groupingField = null;
+    
+    private SummaryGroupingModifier groupingModifier = null;
     
     private Date creationTime = null;
     
