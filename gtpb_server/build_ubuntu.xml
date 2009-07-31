@@ -77,7 +77,7 @@
 				<!-- Jamon profiler, currently unused -->
 				<!-- <pathelement location="${tomcat.dir}/common/lib/jamon-2.2.jar"/> -->
 				<!-- Treemaps -->
-				<pathelement location="WEB-INF/lib/treemap.jar"/>
+				<!-- <pathelement location="WEB-INF/lib/treemap.jar"/> -->
 				<!-- number utilities -->
 				<pathelement location="WEB-INF/lib/icu4j-3_6.jar"/>
 				<pathelement location="WEB-INF/lib/commons-math-1.2.jar"/>
