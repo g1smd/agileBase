@@ -62,6 +62,14 @@
     <SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
     <script language=Javascript src="resources/wait/setFilter.js"></script>
   	<script language=Javascript src="resources/wait/editData.js"></script>  
+    #if(!$mobile_device)
+        #if($viewMethods.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
+      	<script type="text/javascript" src="resources/jquery.tablednd.js"></script>
+        #end
+        <script type="text/javascript" src="resources/tabs/tabs.js"></script>
+    #end
+  	<script type="text/javascript" src="resources/tabs/edit.js"></script>
+  	<script type="text/javascript" src="resources/tabs/view.js"></script>
   	<script language=Javascript> 
 
   	  // When submitting the newfield form to create a table field
@@ -76,7 +84,10 @@
 	</script>
 	  #if(($pane2_id) && (!$mobile_device))
   	  <script language=Javascript>
-    	  parent.pane_2.fSetRowSelection('$pane2_id');    
+	  	  var rowFound = parent.pane_2.fSetRowSelection('$pane2_id');
+	  	  if (!rowFound) {
+	  		  jQuery.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
+	  	  }
   	  </script>
 	  #end
 
@@ -209,14 +220,6 @@
     </script>
     #parse('gui/resources/google_maps_api_key.vm')
     <script src="http://maps.google.com/maps?file=api&v=2&key=$google_maps_api_key&sensor=false" type="text/javascript"></script>
-    #if(!$mobile_device)
-      #if($viewMethods.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
-    	<script type="text/javascript" src="resources/jquery.tablednd.js"></script>
-      #end
-      <script type="text/javascript" src="resources/tabs/tabs.js"></script>
-  	#end
-	<script type="text/javascript" src="resources/tabs/edit.js"></script>
-	<script type="text/javascript" src="resources/tabs/view.js"></script>
   </head>
   <body #if($mobile_device) onload="window.scrollTo(0,1)" #end>
   

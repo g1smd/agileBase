@@ -32,6 +32,8 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
+import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
@@ -406,7 +408,7 @@ public interface DatabaseInfo {
 	 *             the report's parent table
 	 */
 	public void addGroupingToSummaryReport(HttpServletRequest request,
-			ReportFieldInfo groupingReportField) throws DisallowedException, CantDoThatException,
+			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException, SQLException;
 
 	/**

@@ -112,7 +112,7 @@ var TabInterfaceObjectPub = new Object();
                 	loadSpinner.hide();
                 	if (parent.pane_2 && currentRowId != -1) {
                 		var rowFound = parent.pane_2.fSetRowSelection(currentRowId);
-                		alert('row found is ' + rowFound);
+
                 		if (!rowFound) {
                 			$.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
                 		}

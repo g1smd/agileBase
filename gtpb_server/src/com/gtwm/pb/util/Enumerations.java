@@ -314,7 +314,17 @@ public class Enumerations {
 	 * In a report summary you can group by any field in the report, but the addition of field modifiers allows you to do things like group by year, quarter or month of a date field
 	 */
 	public enum SummaryGroupingModifier {
-		DATE_YEAR, DATE_QUARTER, DATE_MONTH;
+		DATE_YEAR("year"), DATE_QUARTER("quarter"), DATE_MONTH("month"), DATE_DAY("day");
+		
+		public String getDescription() {
+			return this.description;
+		}
+		
+		private String description = "";
+		
+		SummaryGroupingModifier(String description) {
+			this.description = description;
+		}
 	}
 
 }

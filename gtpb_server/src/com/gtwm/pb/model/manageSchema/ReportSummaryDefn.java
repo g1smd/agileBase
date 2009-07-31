@@ -50,6 +50,7 @@ import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
+import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.HibernateUtil;
@@ -78,9 +79,12 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 		this.id = id;
 	}
 
-	public synchronized void addGrouping(ReportFieldInfo groupByReportField) {
-		ReportSummaryGroupingInfo grouping = new ReportSummaryGrouping(groupByReportField, null);
-		// Need a save here because no link from grouping back to report summary so
+	public synchronized void addGrouping(ReportFieldInfo groupByReportField,
+			SummaryGroupingModifier groupingModifier) {
+		ReportSummaryGroupingInfo grouping = new ReportSummaryGrouping(groupByReportField,
+				groupingModifier);
+		// Need a save here because no link from grouping back to report summary
+		// so
 		// Hibernate can't save automatically
 		HibernateUtil.currentSession().save(grouping);
 		this.getGroupingsDirect().add(grouping);
@@ -146,15 +150,38 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 			CantDoThatException {
 		String groupByFieldsCsv = "";
 		String aggregateFunctionsCsv = "";
-		List<ReportFieldInfo> groupingReportFields = this.getGroupingReportFields();
-		for (ReportFieldInfo groupingReportField : groupingReportFields) {
-			groupByFieldsCsv += groupingReportField.getInternalFieldName() + ", ";
+		Set<ReportSummaryGroupingInfo> groupings = this.getGroupings();
+		for (ReportSummaryGroupingInfo grouping : groupings) {
+			String internalFieldName = grouping.getGroupingReportField().getInternalFieldName();
+			SummaryGroupingModifier groupingModifier = grouping.getGroupingModifier();
+			if (groupingModifier == null) {
+				groupByFieldsCsv += internalFieldName;
+			} else {
+				switch (groupingModifier) {
+				case DATE_YEAR:
+					groupByFieldsCsv += "date_part('year'," + internalFieldName + ")";
+					break;
+				case DATE_QUARTER:
+					groupByFieldsCsv += "date_part('quarter'," + internalFieldName + ")";
+					break;
+				case DATE_MONTH:
+					groupByFieldsCsv += "date_part('month'," + internalFieldName + ")";
+					break;
+				case DATE_DAY:
+					groupByFieldsCsv += "date_part('day'," + internalFieldName + ")";
+					break;
+				default:
+					throw new CantDoThatException("Grouping by " + groupingModifier
+							+ " not implemented");
+				}
+			}
+			groupByFieldsCsv += ", ";
 		}
 		for (ReportSummaryAggregateInfo aggregateFunction : this.getAggregateFunctionsDirect()) {
 			aggregateFunctionsCsv += aggregateFunction.getSQLPartForAggregate() + ", ";
 		}
 		// Remove trailing commas
-		if (groupingReportFields.size() > 0) {
+		if (groupings.size() > 0) {
 			groupByFieldsCsv = groupByFieldsCsv.substring(0, groupByFieldsCsv.length() - 2);
 		}
 		if (this.getAggregateFunctionsDirect().size() > 0) {
@@ -173,7 +200,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 		}
 		String sqlForSummary = null;
 		boolean validSummary = true;
-		if ((groupingReportFields.size() > 0) && (this.getAggregateFunctionsDirect().size() > 0)) {
+		if ((groupings.size() > 0) && (this.getAggregateFunctionsDirect().size() > 0)) {
 			sqlForSummary = "SELECT " + groupByFieldsCsv + ", " + aggregateFunctionsCsv;
 			sqlForSummary += " FROM " + this.getReport().getInternalReportName();
 			if (filterArgs.length() > 0) {
@@ -187,7 +214,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 			if (filterArgs.length() > 0) {
 				sqlForSummary += " WHERE " + filterArgs;
 			}
-		} else if (groupingReportFields.size() > 0) {
+		} else if (groupings.size() > 0) {
 			sqlForSummary = "SELECT " + groupByFieldsCsv + " FROM "
 					+ this.getReport().getInternalReportName();
 			if (filterArgs.length() > 0) {
@@ -218,7 +245,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	}
 
 	@Transient
-	private SortedSet<ReportSummaryGroupingInfo> getGroupings() {
+	public SortedSet<ReportSummaryGroupingInfo> getGroupings() {
 		SortedSet<ReportSummaryGroupingInfo> groupings = new TreeSet<ReportSummaryGroupingInfo>(
 				this.getGroupingsDirect());
 		return Collections.unmodifiableSortedSet(groupings);

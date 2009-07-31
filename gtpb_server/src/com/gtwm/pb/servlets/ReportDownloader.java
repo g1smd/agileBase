@@ -43,6 +43,7 @@ import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryDataRowInfo;
+import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
@@ -186,16 +187,16 @@ public class ReportDownloader extends HttpServlet {
 		// the summary pane
 		ReportSummaryInfo reportSummary = report.getReportSummary();
 		Set<ReportSummaryAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
-		List<ReportFieldInfo> groupingReportFields = reportSummary.getGroupingReportFields();
-		boolean needSummary = (groupingReportFields.size() > 0) || (aggregateFunctions.size() > 0);
+		Set<ReportSummaryGroupingInfo> groupings = reportSummary.getGroupings();
+		boolean needSummary = (groupings.size() > 0) || (aggregateFunctions.size() > 0);
 		if (needSummary) {
 			HSSFSheet summarySheet = workbook.createSheet("Summary");
 			// header
 			rowNum = 0;
 			row = summarySheet.createRow(rowNum);
 			columnNum = 0;
-			for (ReportFieldInfo groupingReportField : groupingReportFields) {
-				BaseField groupingBaseField = groupingReportField.getBaseField();
+			for (ReportSummaryGroupingInfo grouping : groupings) {
+				BaseField groupingBaseField = grouping.getGroupingReportField().getBaseField();
 				if (groupingBaseField instanceof RelationField) {
 					fieldValue = groupingBaseField.getTableContainingField() + ": "
 							+ ((RelationField) groupingBaseField).getDisplayField();
@@ -223,8 +224,8 @@ public class ReportDownloader extends HttpServlet {
 			for (ReportSummaryDataRowInfo summaryDataRow : reportSummaryDataRows) {
 				row = summarySheet.createRow(rowNum);
 				columnNum = 0;
-				for (ReportFieldInfo groupingReportField : groupingReportFields) {
-					fieldValue = summaryDataRow.getGroupingValue(groupingReportField);
+				for (ReportSummaryGroupingInfo grouping : groupings) {
+					fieldValue = summaryDataRow.getGroupingValue(grouping);
 					row.createCell((short) columnNum).setCellValue(
 							new HSSFRichTextString(fieldValue));
 					columnNum++;

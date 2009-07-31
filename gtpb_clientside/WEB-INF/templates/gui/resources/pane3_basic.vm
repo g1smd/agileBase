@@ -55,7 +55,9 @@
     <SCRIPT language="Javascript" src="resources/wait/request.js"></SCRIPT> 
   	<SCRIPT language="Javascript" src="resources/wait/editData.js"></SCRIPT>  
   	<SCRIPT language="Javascript">
-    	#if($pane2_id)parent.pane_2.fSetRowSelection('$pane2_id')#end   
+    	#if($pane2_id)
+		  parent.pane_2.fSetRowSelection('$pane2_id')
+		#end   
   	</SCRIPT>
 
 	  </head>

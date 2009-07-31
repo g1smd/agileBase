@@ -79,6 +79,7 @@ import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.servlets.ServletSchemaMethods;
 import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.HiddenFields;
+import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
@@ -2051,7 +2052,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public synchronized void addGroupingToSummaryReport(HttpServletRequest request,
-			ReportFieldInfo groupingReportField) throws DisallowedException, CantDoThatException,
+			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException, SQLException {
 		HibernateUtil.activateObject(groupingReportField);
 		BaseReportInfo report = groupingReportField.getParentReport();
@@ -2061,7 +2062,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		ReportSummaryInfo reportSummary = report.getReportSummary();
 		HibernateUtil.activateObject(reportSummary);
-		reportSummary.addGrouping(groupingReportField);
+		reportSummary.addGrouping(groupingReportField, groupingModifer);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();

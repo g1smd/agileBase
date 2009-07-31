@@ -142,14 +142,26 @@ function fRelationPickers() {
 				    
 }
 
-/* Called if the current record isn't visible in pane 2, to add a warning to that effect in the edit tab */
-function appendWarning(warningRowHtml) {
+function appendWarningAction() {
   var jqTableBody = $("#reportData > tbody");
-  // if message not already there
-  if (jqTableBody.find(".warningmessage").length == 0) {
-    jqTableBody.append(warningRowHtml);
+  if (jqTableBody.length > 0) {
+    // if message not already there
+    if (jqTableBody.find(".warningmessage").length == 0) {
+	  jqTableBody.append(warningRowHtmlSaved);
+    }
+  } else {
+	// TODO: possibility of infinite heap building up if reportData > tbody is never there, deal with this
+    setTimeout('appendWarningAction', 1000);
   }
 }
+
+/* Called if the current record isn't visible in pane 2, to add a warning to that effect in the edit tab */
+function appendWarning(warningRowHtml) {
+  warningRowHtmlSaved = warningRowHtml;
+  setTimeout('appendWarningAction()', 1000);
+}
+
+var warningRowHtmlSaved = '';
 
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */

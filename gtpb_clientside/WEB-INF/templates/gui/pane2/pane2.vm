@@ -135,7 +135,7 @@
       }
     
       // set the row with the name sName to show it as selected
-      function fSetRowSelection(sName){  
+      function fSetRowSelection(sName){
         fClearRowSelection();
         var oBodyRows=document.getElementById('reportBody').rows;
         for(var i=0;i<oBodyRows.length;i++){  

@@ -19,7 +19,8 @@ package com.gtwm.pb.model.manageData;
 
 import com.gtwm.pb.model.interfaces.ReportSummaryDataRowInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
-import com.gtwm.pb.model.interfaces.ReportFieldInfo;
+import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
+
 import java.util.Map;
 import java.util.LinkedHashMap;
 
@@ -28,16 +29,16 @@ public class ReportSummaryDataRow implements ReportSummaryDataRowInfo {
     public ReportSummaryDataRow() {
     }
 
-    public synchronized void addGroupingValue(ReportFieldInfo groupingReportField, String value) {
-        this.groupingFieldValues.put(groupingReportField, value);
+    public synchronized void addGroupingValue(ReportSummaryGroupingInfo grouping, String value) {
+        this.groupingFieldValues.put(grouping, value);
     }
 
     public synchronized void addAggregateValue(ReportSummaryAggregateInfo aggregateFunction, Number value) {
         this.aggregateValues.put(aggregateFunction, value);
     }
 
-    public synchronized String getGroupingValue(ReportFieldInfo groupingReportField) {
-        String groupingFieldValue = this.groupingFieldValues.get(groupingReportField);
+    public synchronized String getGroupingValue(ReportSummaryGroupingInfo grouping) {
+        String groupingFieldValue = this.groupingFieldValues.get(grouping);
         if (groupingFieldValue == null) {
         	return "";
         } else {
@@ -61,7 +62,7 @@ public class ReportSummaryDataRow implements ReportSummaryDataRowInfo {
         return returnValue;
     }
 
-    private Map<ReportFieldInfo, String> groupingFieldValues = new LinkedHashMap<ReportFieldInfo, String>();
+    private Map<ReportSummaryGroupingInfo, String> groupingFieldValues = new LinkedHashMap<ReportSummaryGroupingInfo, String>();
 
     private Map<ReportSummaryAggregateInfo, Number> aggregateValues = new LinkedHashMap<ReportSummaryAggregateInfo, Number>();
 }

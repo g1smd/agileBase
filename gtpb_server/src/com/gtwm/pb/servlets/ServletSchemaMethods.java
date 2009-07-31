@@ -74,6 +74,7 @@ import com.gtwm.pb.util.TableDependencyException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.FilterType;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
+import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
 
 /**
@@ -2066,11 +2067,23 @@ public class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' parameter is required to add a grouping field to a report summary");
 		}
+		SummaryGroupingModifier groupingModifer = null;
+		if (internalFieldName.contains("_")) {
+			String groupingModifierString = internalFieldName.replaceAll("^.*\\_", "");
+			try {
+				groupingModifer = SummaryGroupingModifier.valueOf("DATE_"
+						+ groupingModifierString.toUpperCase());
+			} catch (IllegalArgumentException iaex) {
+				throw new ObjectNotFoundException("No grouping modifier found for "
+						+ groupingModifierString, iaex);
+			}
+			internalFieldName = internalFieldName.replaceAll("\\_.*$", "");
+		}
 		ReportFieldInfo groupingReportField = report
 				.getReportFieldByInternalName(internalFieldName);
 		try {
 			HibernateUtil.startHibernateTransaction();
-			databaseDefn.addGroupingToSummaryReport(request, groupingReportField);
+			databaseDefn.addGroupingToSummaryReport(request, groupingReportField, groupingModifer);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
@@ -2110,18 +2123,21 @@ public class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
+			// TODO: making the second arg. null will remove any previous
+			// grouping modifier, but we can perhaps sort this out at a later
+			// date
 			groupingReportField.getParentReport().getReportSummary().addGrouping(
-					groupingReportField);
+					groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", hex);
 		} catch (PortalBaseException pex) {
 			rollbackConnections(null);
 			groupingReportField.getParentReport().getReportSummary().addGrouping(
-					groupingReportField);
+					groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
 			groupingReportField.getParentReport().getReportSummary().addGrouping(
-					groupingReportField);
+					groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();

@@ -23,11 +23,11 @@ package com.gtwm.pb.model.interfaces;
  */
 public interface ReportSummaryDataRowInfo {
     
-    public void addGroupingValue(ReportFieldInfo groupingReportField, String value);
+    public void addGroupingValue(ReportSummaryGroupingInfo grouping, String value);
     
     public void addAggregateValue(ReportSummaryAggregateInfo aggregateFunction, Number value);
 
-    public String getGroupingValue(ReportFieldInfo groupingReportField);
+    public String getGroupingValue(ReportSummaryGroupingInfo grouping);
 
     public Number getAggregateValue(ReportSummaryAggregateInfo aggregateFunction);
 }

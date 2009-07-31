@@ -50,6 +50,7 @@ import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
+import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.DataManagementInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
@@ -95,6 +96,8 @@ import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.FieldContentType;
 import com.gtwm.pb.util.Enumerations.HiddenFields;
 import com.gtwm.pb.util.Enumerations.AppAction;
+import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import org.apache.commons.fileupload.FileItem;
@@ -1113,7 +1116,8 @@ public class DataManagement implements DataManagementInfo {
 					String extension = "";
 					if (basePath.contains(".")) {
 						extension = basePath.replaceAll("^.*\\.", "");
-						basePath = basePath.substring(0, basePath.length() - extension.length() - 1);
+						basePath = basePath
+								.substring(0, basePath.length() - extension.length() - 1);
 					}
 					String renamedFileName = basePath + "-" + fileNum;
 					if (!extension.equals("")) {
@@ -1131,8 +1135,8 @@ public class DataManagement implements DataManagementInfo {
 					// Keep the original timestamp
 					long lastModified = selectedFile.lastModified();
 					if (!selectedFile.renameTo(renamedFile)) {
-						throw new FileUploadException("Rename of existing file from '" + selectedFile
-								+ "' to '" + renamedFile + "' failed");
+						throw new FileUploadException("Rename of existing file from '"
+								+ selectedFile + "' to '" + renamedFile + "' failed");
 					}
 					renamedFile.setLastModified(lastModified);
 					// I think a File object's name is inviolable but just in
@@ -1352,7 +1356,7 @@ public class DataManagement implements DataManagementInfo {
 			}
 		}
 	}
-	
+
 	public Map<RelationField, List<DataRow>> getChildDataTableRows(DatabaseInfo databaseDefn,
 			TableInfo tableDefn, int rowid) throws SQLException, ObjectNotFoundException,
 			CodingErrorException {
@@ -1396,19 +1400,20 @@ public class DataManagement implements DataManagementInfo {
 			CantDoThatException {
 		ReportSummaryInfo reportSummary = report.getReportSummary();
 		Set<ReportSummaryAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
-		List<ReportFieldInfo> groupingReportFields = reportSummary.getGroupingReportFields();
+		Set<ReportSummaryGroupingInfo> groupings = reportSummary.getGroupings();
 		List<ReportSummaryDataRowInfo> reportSummaryRows;
 		reportSummaryRows = new LinkedList<ReportSummaryDataRowInfo>();
 		ReportSummaryDataInfo reportSummaryData = null;
 		Connection conn = null;
-		boolean needSummary = (groupingReportFields.size() > 0) || (aggregateFunctions.size() > 0);
+		boolean needSummary = (groupings.size() > 0) || (aggregateFunctions.size() > 0);
 		if (needSummary) {
 			try {
 				conn = this.dataSource.getConnection();
 				conn.setAutoCommit(false);
 				// First, cache the set of display values for relation fields
 				Map<ReportFieldInfo, Map<String, String>> displayLookups = new HashMap<ReportFieldInfo, Map<String, String>>();
-				for (ReportFieldInfo groupingReportField : groupingReportFields) {
+				for (ReportSummaryGroupingInfo grouping : groupings) {
+					ReportFieldInfo groupingReportField = grouping.getGroupingReportField();
 					BaseField baseField = groupingReportField.getBaseField();
 					if (baseField instanceof RelationField) {
 						String relatedKey = ((RelationField) baseField).getRelatedField()
@@ -1440,7 +1445,9 @@ public class DataManagement implements DataManagementInfo {
 				while (summaryResults.next()) {
 					ReportSummaryDataRowInfo resultRow = new ReportSummaryDataRow();
 					int resultColumn = 0;
-					for (ReportFieldInfo groupingReportField : groupingReportFields) {
+					for (ReportSummaryGroupingInfo grouping : groupings) {
+						ReportFieldInfo groupingReportField = grouping.getGroupingReportField();
+						SummaryGroupingModifier groupingModifier = grouping.getGroupingModifier();
 						BaseField baseField = groupingReportField.getBaseField();
 						resultColumn++;
 						String value = "";
@@ -1451,33 +1458,38 @@ public class DataManagement implements DataManagementInfo {
 									.get(groupingReportField);
 							value = displayLookup.get(value);
 						} else if (dbType.equals(DatabaseFieldType.TIMESTAMP)) {
-							Date dbValue = summaryResults.getTimestamp(resultColumn);
-							if (dbValue != null) {
-								if (groupingReportField instanceof ReportCalcFieldInfo) {
-									// See DateFieldDefn constructor for format
-									// explanation
-									value = ((ReportCalcFieldInfo) groupingReportField)
-											.formatDate(dbValue);
-								} else {
-									DateField dateField = (DateField) baseField;
-									value = (dateField.formatDate(dbValue));
-									if (Integer.valueOf(dateField.getDateResolution()).equals(
-											Calendar.DAY_OF_MONTH)) {
-										Date previousDbValue = previousDateValues
-												.get(groupingReportField);
-										if (previousDbValue != null) {
-											calendar.setTime(previousDbValue);
-											int previousDayOfYear = calendar
-													.get(Calendar.DAY_OF_YEAR);
-											calendar.setTime(dbValue);
-											int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
-											int difference = Math
-													.abs(dayOfYear - previousDayOfYear);
-											if (difference > 1) {
-												value += " (" + (difference - 1) + " day gap)";
+							if (groupingModifier != null) {
+								value = summaryResults.getString(resultColumn);
+							} else {
+								Date dbValue = summaryResults.getTimestamp(resultColumn);
+								if (dbValue != null) {
+									if (groupingReportField instanceof ReportCalcFieldInfo) {
+										// See DateFieldDefn constructor for
+										// format
+										// explanation
+										value = ((ReportCalcFieldInfo) groupingReportField)
+												.formatDate(dbValue);
+									} else {
+										DateField dateField = (DateField) baseField;
+										value = (dateField.formatDate(dbValue));
+										if (Integer.valueOf(dateField.getDateResolution()).equals(
+												Calendar.DAY_OF_MONTH)) {
+											Date previousDbValue = previousDateValues
+													.get(groupingReportField);
+											if (previousDbValue != null) {
+												calendar.setTime(previousDbValue);
+												int previousDayOfYear = calendar
+														.get(Calendar.DAY_OF_YEAR);
+												calendar.setTime(dbValue);
+												int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+												int difference = Math.abs(dayOfYear
+														- previousDayOfYear);
+												if (difference > 1) {
+													value += " (" + (difference - 1) + " day gap)";
+												}
 											}
+											previousDateValues.put(groupingReportField, dbValue);
 										}
-										previousDateValues.put(groupingReportField, dbValue);
 									}
 								}
 							}
@@ -1500,7 +1512,7 @@ public class DataManagement implements DataManagementInfo {
 						} else {
 							value = summaryResults.getString(resultColumn);
 						}
-						resultRow.addGroupingValue(groupingReportField, value);
+						resultRow.addGroupingValue(grouping, value);
 					}
 					for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
 						resultColumn++;

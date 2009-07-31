@@ -21,18 +21,21 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
+import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 import java.util.List;
+import java.util.SortedSet;
 
 /**
  * Stores information on how to summarise a report - allows you to generate a
  * report table and report graphs. In SQL terms, a report summary is a report
  * using GROUP BY and aggregate functions such as count(*), sum(). You can only
- * group by certain types of field, as you can see from the methods. Similary,
+ * group by certain types of field, as you can see from the methods. Similarly,
  * you can only add functions on certain types of field.
  */
 public interface ReportSummaryInfo {
@@ -40,7 +43,7 @@ public interface ReportSummaryInfo {
 	/**
 	 * Group by a field filled from a report
 	 */
-	public void addGrouping(ReportFieldInfo groupByReportField);
+	public void addGrouping(ReportFieldInfo groupByReportField, SummaryGroupingModifier groupingModifier);
 
 	/**
 	 * Remove field from grouping. If field isn't in grouping, do nothing, don't
@@ -85,9 +88,12 @@ public interface ReportSummaryInfo {
 
 	/**
 	 * @return A read-only copy of the report summary's grouping field list
+	 * @deprecated Replaced by getGroupings()
 	 */
 	public List<ReportFieldInfo> getGroupingReportFields();
 
+	public SortedSet<ReportSummaryGroupingInfo> getGroupings();
+	
 	/**
 	 * Return a single grouping field
 	 */

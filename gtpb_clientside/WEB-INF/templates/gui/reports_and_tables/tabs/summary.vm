@@ -22,9 +22,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($tabCaption='summary')
 #set($report = $viewMethods.getSessionData().getReport())
 #set($reportSummary = $report.getReportSummary())
-#set($groupingReportFields = $reportSummary.getGroupingReportFields())
+#set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
-#set($numCols = 1 + $groupingReportFields.size() + $aggregateFunctions.size())
+#set($numCols = 1 + $groupings.size() + $aggregateFunctions.size())
 #set($reportSummaryData = $viewMethods.getReportSummaryData())
 #set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
 #set($loggedInUserAllowedToManage = $viewMethods.loggedInUserAllowedTo("MANAGE_TABLE", $report.getParentTable()))
@@ -46,7 +46,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 		<th #if($numCols == 1) colspan="3" #end><div style="position:relative; padding-top:15px" title="Summarises the most frequent words in the report">
 			Tag Cloud
 		</div></th>
-      #foreach($groupingReportField in $groupingReportFields)
+      #foreach($grouping in $groupings)
+		#set($groupingReportField = $grouping.getGroupingReportField())
         <th>##
           <div style="position:relative; padding-top:15px">
             #set($groupingBaseField = $groupingReportField.getBaseField())##
@@ -55,6 +56,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
               $groupingBaseField.getRelatedTable(): $groupingBaseField.getDisplayField()
             #else
               $groupingReportField.getFieldName()
+			  #set($groupingModifier = $grouping.getGroupingModifier())
+			  #if($groupingModifier)
+				- $groupingModifier.getDescription()
+			  #end
             #end
           </i>##
             #if($showManageUi)##
@@ -63,7 +68,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
           </div>
         </th>##
 	  #end
-	  #if(($groupingReportFields.size() == 0) && ($aggregateFunctions.size() > 0))
+	  #if(($groupings.size() == 0) && ($aggregateFunctions.size() > 0))
 		<th>&nbsp;</th>
 	  #end
 
@@ -82,7 +87,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 			      #if($numCols < 3)
 				        #set($numCols = 3)
 				  #end
-			      #if(($groupingReportFields.size() > 0) && ($aggregateFunctions.size() == 0))
+			      #if(($groupings.size() > 0) && ($aggregateFunctions.size() == 0))
 				        <th>&nbsp;</th>
 			      #end
 			      <th class=trailing>&nbsp;</th>
@@ -112,10 +117,11 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 						</div></div>
 						#end
 						</td>
-    			    #foreach($groupingReportField in $groupingReportFields)
-    				      <td>$summaryRow.getGroupingValue($groupingReportField)</td>
+    			    #foreach($grouping in $groupings)
+						#set($groupingReportField = $grouping.getGroupingReportField())
+    				      <td>$summaryRow.getGroupingValue($grouping)</td>
 					#end
-					#if(($groupingReportFields.size() == 0) && ($aggregateFunctions.size() > 0))
+					#if(($groupings.size() == 0) && ($aggregateFunctions.size() > 0))
 						<td>&nbsp;</td>
 					#end
     			    #foreach($aggregateFunction in $aggregateFunctions)
@@ -126,7 +132,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 						            <div #if($value >= 0)class="chartBar" #else class="chartBarNegative" #end style="width:${width}%; #if($value < 0) left:-${width}%; #end">$value</div>
 				          	</td>
 					#end
-					#if(($groupingReportFields.size() > 0) && ($aggregateFunctions.size() == 0))
+					#if(($groupings.size() > 0) && ($aggregateFunctions.size() == 0))
 						<td>&nbsp;</td>
 					#end
 				    <td class=trailing>&nbsp;</td>
@@ -153,14 +159,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 				<tr>
 					<td class=leading>&nbsp;</td>
 					<td>&nbsp;</td> ## tag cloud in the column above this cell
-    			    #foreach($groupingReportField in $groupingReportFields)
+    			    #foreach($grouping in $groupings)
 						#if($velocityCount == 1)
     				      <td>#if($aggregateFunctions.size() > 0)<b>Grand totals</b>#else &nbsp; #end</td>
 						#else
 						  <td>&nbsp;</td>
 						#end
     			    #end
-					#if(($groupingReportFields.size() == 0) && ($aggregateFunctions.size() > 0))
+					#if(($groupings.size() == 0) && ($aggregateFunctions.size() > 0))
 						<td>&nbsp;</td>
 					#end
     			    #foreach($aggregateFunction in $aggregateFunctions)
@@ -171,7 +177,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 						#end
 						</td>
     			    #end
-					#if(($groupingReportFields.size() > 0) && ($aggregateFunctions.size() == 0))
+					#if(($groupings.size() > 0) && ($aggregateFunctions.size() == 0))
 						<td>&nbsp;</td>
 					#end
 				    <td class=trailing>&nbsp;</td>
@@ -182,15 +188,15 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   		  <tr class=trailing> <!-- a padding row -->
 			      <td class=leading>&nbsp;</td>
 				  <td>&nbsp;</td>
-			  #foreach($groupingReportField in $groupingReportFields)
+			  #foreach($grouping in $groupings)
 				        <td>&nbsp;</td>
     		  #end
     		  #foreach($aggregateFunction in $aggregateFunctions)
     			    <td>&nbsp;</td>
 			      #end
-			      #if(($groupingReportFields.size() + $aggregateFunctions.size()) == 0)
+			      #if(($groupings.size() + $aggregateFunctions.size()) == 0)
 				        <td>&nbsp;</td><td>&nbsp;</td>
-				  #elseif(($groupingReportFields.size() + $aggregateFunctions.size()) == 1)
+				  #elseif(($groupings.size() + $aggregateFunctions.size()) == 1)
     				    <td>&nbsp;</td>
 			      #end
 			      <td class=trailing>&nbsp;</td>
@@ -203,12 +209,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 			      <tr id=addNewField>
 				        <td class=leading height=20>&nbsp;</td>
 						  <td>
-							#if(($groupingReportFields.size() == 0) && ($aggregateFunctions.size() == 0))
+							#if(($groupings.size() == 0) && ($aggregateFunctions.size() == 0))
 							You can add calculations and groupings to further analyze data
 							#else &nbsp;
 							#end
 						  </td>
-				        <td height=20 #if($groupingReportFields.size() > 1) colspan="$groupingReportFields.size()" #end>
+				        <td height=20 #if($groupings.size() > 1) colspan="$groupings.size()" #end>
 					          ## Form to add a grouping
 					          <form name=addgrouping method=post action="/portalBase/AppController.servlet">
 						            <input type="hidden" name="return" value="$return_template" />
@@ -220,7 +226,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 								                #else
 							              			#set($baseField = $reportField.getBaseField())
 							              			#if(!($baseField.equals($baseField.getTableContainingField().getPrimaryKey())))
-								 	                 <option value="$reportField.getInternalFieldName()">$reportField</option>
+														#if($baseField.getFieldCategory() == "DATE")
+															<option value="$reportField.getInternalFieldName()_year">$reportField - year</option>
+															<option value="$reportField.getInternalFieldName()_quarter">$reportField - quarter</option>
+															<option value="$reportField.getInternalFieldName()_month">$reportField - month</option>
+															<option value="$reportField.getInternalFieldName()_day">$reportField - day</option>
+														#else
+															<option value="$reportField.getInternalFieldName()">$reportField</option>
+														#end
 													#end
 								                #end
 							              #end
