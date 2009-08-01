@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.model.manageData;
 
+import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryDataRowInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
@@ -30,7 +31,7 @@ public class ReportSummaryDataRow implements ReportSummaryDataRowInfo {
     }
 
     public synchronized void addGroupingValue(ReportSummaryGroupingInfo grouping, String value) {
-        this.groupingFieldValues.put(grouping, value);
+        this.groupingValues.put(grouping, value);
     }
 
     public synchronized void addAggregateValue(ReportSummaryAggregateInfo aggregateFunction, Number value) {
@@ -38,21 +39,30 @@ public class ReportSummaryDataRow implements ReportSummaryDataRowInfo {
     }
 
     public synchronized String getGroupingValue(ReportSummaryGroupingInfo grouping) {
-        String groupingFieldValue = this.groupingFieldValues.get(grouping);
-        if (groupingFieldValue == null) {
+        String groupingValue = this.groupingValues.get(grouping);
+        if (groupingValue == null) {
         	return "";
         } else {
-        	return groupingFieldValue;
+        	return groupingValue;
         }
     }
 
+    public String getGroupingValue(ReportFieldInfo groupingField) {
+    	for (ReportSummaryGroupingInfo grouping : this.groupingValues.keySet()) {
+    		if (groupingField.equals(grouping.getGroupingReportField())) {
+    			return this.getGroupingValue(grouping);
+    		}
+    	}
+    	return "";
+    }
+    
     public synchronized Number getAggregateValue(ReportSummaryAggregateInfo aggregateFunction) {
         return this.aggregateValues.get(aggregateFunction);
     }
     
     public String toString() {
         String returnValue = "<tr>";
-        for (String groupingValue : this.groupingFieldValues.values()) {
+        for (String groupingValue : this.groupingValues.values()) {
             returnValue += "<td>" + groupingValue + "</td>";
         }
         for (Number aggregateValue : this.aggregateValues.values()) {
@@ -62,7 +72,7 @@ public class ReportSummaryDataRow implements ReportSummaryDataRowInfo {
         return returnValue;
     }
 
-    private Map<ReportSummaryGroupingInfo, String> groupingFieldValues = new LinkedHashMap<ReportSummaryGroupingInfo, String>();
+    private Map<ReportSummaryGroupingInfo, String> groupingValues = new LinkedHashMap<ReportSummaryGroupingInfo, String>();
 
     private Map<ReportSummaryAggregateInfo, Number> aggregateValues = new LinkedHashMap<ReportSummaryAggregateInfo, Number>();
 }

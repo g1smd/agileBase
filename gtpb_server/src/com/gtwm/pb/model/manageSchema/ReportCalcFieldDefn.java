@@ -240,6 +240,10 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		String identifierToReplace = null;
 		String identifierToMatch = null;
 		String replacement = null;
+		// Replace division signs with our own custom division operator, //
+		// This is specially created not to throw divide by zero errors
+		// but rather return null;
+		calculationSQL = calculationSQL.replaceAll("\\/", "//");
 		// Replace
 		// {table.field} => internaltablename.internalfieldname
 		for (TableInfo table : availableDataStores.keySet()) {
@@ -263,7 +267,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 				if (this.getDbType().equals(DatabaseFieldType.FLOAT)
 						&& (fieldDbType.equals(DatabaseFieldType.FLOAT) || fieldDbType
 								.equals(DatabaseFieldType.INTEGER))) {
-					replacement += "::numeric";
+					replacement += "::double precision";
 				}
 				if (calculationSQL.contains(identifierToMatch)) {
 					calculationSQL = calculationSQL.replaceAll(identifierToReplace, replacement);
@@ -299,7 +303,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 							if (this.getDbType().equals(DatabaseFieldType.FLOAT)
 									&& (fieldDbType.equals(DatabaseFieldType.FLOAT) || fieldDbType
 											.equals(DatabaseFieldType.INTEGER))) {
-								replacement += "::numeric";
+								replacement += "::double precision";
 							}
 						}
 						if (calculationSQL.contains(identifierToMatch)) {
@@ -335,7 +339,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 							if (this.getDbType().equals(DatabaseFieldType.FLOAT)
 									&& (fieldDbType.equals(DatabaseFieldType.FLOAT) || fieldDbType
 											.equals(DatabaseFieldType.INTEGER))) {
-								replacement += "::numeric";
+								replacement += "::double precision";
 							}
 						}
 						if (calculationSQL.contains(identifierToMatch)) {
@@ -366,7 +370,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 					if (this.getDbType().equals(DatabaseFieldType.FLOAT)
 							&& (fieldDbType.equals(DatabaseFieldType.FLOAT) || fieldDbType
 									.equals(DatabaseFieldType.INTEGER))) {
-						replacement += "::numeric";
+						replacement += "::double precision";
 					}
 				}
 				if (calculationSQL.contains(identifierToMatch)) {
@@ -393,7 +397,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 					if (this.getDbType().equals(DatabaseFieldType.FLOAT)
 							&& (fieldDbType.equals(DatabaseFieldType.FLOAT) || fieldDbType
 									.equals(DatabaseFieldType.INTEGER))) {
-						replacement += "::numeric";
+						replacement += "::double precision";
 					}
 					if (calculationSQL.contains(identifierToMatch)) {
 						calculationSQL = calculationSQL

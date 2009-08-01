@@ -582,7 +582,11 @@ public class ReportData implements ReportDataInfo {
 			if (!reportBaseFields.contains(filterField)) {
 				continue;
 			}
-			String filterValue = filterValueEntry.getValue().toLowerCase();
+			String filterValue = filterValueEntry.getValue();
+			if (filterValue == null) {
+				throw new CantDoThatException("Filter value for " + filterField + " is null");
+			}
+			filterValue = filterValue.toLowerCase();
 			DatabaseFieldType filterFieldDbType = filterField.getDbType();
 			// Don't bother filtering if the user's started typing a
 			// filter type but hasn't typed any of the actual filter value
@@ -925,22 +929,20 @@ public class ReportData implements ReportDataInfo {
 		String SQLCode = "SELECT " + primaryKey.getInternalFieldName() + " FROM "
 				+ this.report.getInternalReportName();
 		SQLCode += " WHERE " + primaryKey.getInternalFieldName() + " = " + rowId;
-		Statement statement = conn.createStatement();
 		long executionStartTime = System.currentTimeMillis();
+		Statement statement = conn.createStatement();
 		ResultSet results = statement.executeQuery(SQLCode);
 		if (results.next()) {
-			logger.debug("Result gotten is " + results.getInt(1));
 			rowIdIsInReport = true;
 		}
-		logger.debug("SQLCode " + SQLCode + " returned " + rowIdIsInReport);
 		results.close();
-		float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
-		//if (durationSecs > AppProperties.longSqlTime) {
-			logger.warn("Long SELECT SQL execution time of " + durationSecs
-					+ " seconds for isRowIdInReport for report " + this.report + ", statement = "
-					+ statement);
-		//}
 		statement.close();
+		float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
+		if (durationSecs > AppProperties.longSqlTime) {
+			logger.warn("Long SELECT SQL execution time of " + durationSecs
+					+ " seconds for isRowIdInReport on report " + this.report + ", SQLCode = "
+					+ SQLCode);
+		}
 		return rowIdIsInReport;
 	}
 

@@ -29,5 +29,10 @@ public interface ReportSummaryDataRowInfo {
 
     public String getGroupingValue(ReportSummaryGroupingInfo grouping);
 
+    /**
+     * @deprecated Replaced by #getGroupingValue(ReportSummaryGroupingInfo)
+     */
+    public String getGroupingValue(ReportFieldInfo groupingField);
+
     public Number getAggregateValue(ReportSummaryAggregateInfo aggregateFunction);
 }
