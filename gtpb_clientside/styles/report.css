@@ -125,7 +125,8 @@ table#reportData tr.trailing td {
   height:auto 
 }
 
-/* table#reportData tr.excludedRecord td.leading {
+/*
+table#reportData tr.excludedRecord td.leading {
   background-color:#eaba72;
 }
 
@@ -135,15 +136,13 @@ table#reportData tr.excludedRecord td.trailing {
 */
 
 table#reportData tr#currentRow.excludedRecord td {
-  background-color: rgb(254,242,149);
+  background-color: #cccccc;
+  color: white!important;
 }
 
-table#reportData tr.excludedRecord td.leading {
-  background-color: rgb(254,233,84)!important
-}
-
-table#reportData tr.excludedRecord td.trailing {
-  background-color: rgb(254,233,84)!important
+table#reportData tr.excludedRecord td {
+  background-color: #cccccc;
+  color: white!important;
 }
 
 .error { color: red }

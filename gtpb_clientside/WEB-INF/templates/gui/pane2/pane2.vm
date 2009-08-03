@@ -138,7 +138,12 @@
       function fSetRowSelection(sName){
         fClearRowSelection();
         var oBodyRows=document.getElementById('reportBody').rows;
-        for(var i=0;i<oBodyRows.length;i++){  
+		// remove excluded row when any other row clicked
+		var jqExcludedRow = $('tr.excludedRecord');
+		if(jqExcludedRow.attr('name') != sName) {
+		  jqExcludedRow.remove();
+		}
+        for(var i=0;i<oBodyRows.length;i++) {
           if(oBodyRows[i].getAttribute('name')==sName) {
             var currentRow = oBodyRows[i];
             currentRow.id='currentRow';
