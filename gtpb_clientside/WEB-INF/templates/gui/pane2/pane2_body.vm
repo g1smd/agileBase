@@ -21,27 +21,49 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 #set($thisUniqueId = -1)
 #set($sessionData = $viewMethods.getSessionData())
 #set($sessionRowId= $sessionData.getRowId())
+#set($sessionTable = $sessionTable.getTable())
 
 ## Make an extra blank row for the record being edited if it's not already in the dataset on screen
 ## #if((!$selectionFound) && ($numRows > 0) && ($filtersShouldBeShown != 'true') && (!$isNotTable))
 #if((!$selectionFound) && ($numRows > 0) && (!$mobile_device) && ($sessionRowId > -1) && (!$printout))
   #set($tableDataRow = $viewMethods.getTableDataRow())
+  #set($mathTool = $viewTools.getMathTool())
   #if($tableDataRow.size() > 0)
-    ## For value of $return, see reports_and_tables/report_data.vm
+	## Get data for all related tables
+	## Not perfect because we can't get calc. values
+	## or values for any data related more than one table away.
+	## These could only come from the reprt but since the record may not be in the report
+	## this is the best we can do
+	#set($relatedDataMap = {})
+	#foreach($field in $tableDataRow.keySet())
+	  #set($tableContainingField = $field.getTableContainingField())
+      #if($field.equals($tableContainingField.getPrimaryKey()) && (!$tableContainingField.equals($sessionTable)))
+	    #set($relatedTable = $field.getTableContainingField())
+		#set($relatedRowId = $mathTool.toInteger($tableDataRow.get($field)))
+	    #set($relatedTableDataRows = $viewMethods.getTableDataRow($relatedTable, $relatedRowId))
+		#set($temp = $relatedDataMap.put($relatedTable, $relatedTableDataRows))
+	  #end
+	#end
+	
+	## For value of $return, see reports_and_tables/report_data.vm
 	#set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_row_id=$selection'")
     <tr title="The record currently being edited is not in the report data on this page"
-      name="$selection" 
-      #if($uniqueIdCount%2!=0) class="rowa excludedRecord" #else class="rowb excludedRecord" #end
-      onclick="$click" 
-      forcehighlight="true">
+      name="$selection" class="rowa excludedRecord" onclick="$click" forcehighlight="true">
       <td class="leading">&nbsp;</td>
       #foreach($field in $reportBaseFields)
 	    #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
-		  #if($tableDataRow.get($field))
-            <td nowrap="true">$tableDataRow.get($field)</td>
-		  #else
-            <td nowrap="true">&nbsp;</td>
-		  #end
+		  <td nowrap="true">
+		    #if($tableDataRow.get($field))
+              $tableDataRow.get($field)
+		    #else
+			  #set($relatedValue = false)
+			  #foreach($relatedTable in $relatedDataMap.keySet())
+				#set($relatedDataRow = $relatedDataMap.get($relatedTable))
+				#set($relatedValue = $relatedDataRow.get($field))
+				#if($relatedValue) $relatedValue #break #end
+			  #end
+		    #end
+		  </td>
 	    #end
 	  #end
 	  <td>
