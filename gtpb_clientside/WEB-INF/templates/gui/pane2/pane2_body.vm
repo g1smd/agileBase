@@ -38,13 +38,15 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	#foreach($field in $tableDataRow.keySet())
 	    #set($tableContainingField = $field.getTableContainingField())
         #if($field.equals($tableContainingField.getPrimaryKey()) && (!$tableContainingField.equals($sessionTable)))
-		  #set($relatedRowId = $mathTool.toInteger($tableDataRow.get($field)))
-		  $viewTools.log("Getting row for table $tableContainingField, row ID $relatedRowId")
-	      #set($relatedTableDataRows = $viewMethods.getTableDataRow($tableContainingField, $relatedRowId))
-		  #set($temp = $relatedDataMap.put($tableContainingField, $relatedTableDataRows))
+		  #set($value = $tableDataRow.get($field))
+		  #if($value != "")
+		    #set($relatedRowId = $mathTool.toInteger($value))
+	        #set($relatedTableDataRows = $viewMethods.getTableDataRow($tableContainingField, $relatedRowId))
+		    #set($temp = $relatedDataMap.put($tableContainingField, $relatedTableDataRows))
+	      #end
 		#end
 	#end
-	
+
 	## For value of $return, see reports_and_tables/report_data.vm
 	#set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_row_id=$selection'")
     <tr title="The record currently being edited is not in the report data on this page"
