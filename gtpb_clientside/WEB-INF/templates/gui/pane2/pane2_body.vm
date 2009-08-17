@@ -36,13 +36,13 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	## this is the best we can do
 	#set($relatedDataMap = {})
 	#foreach($field in $tableDataRow.keySet())
-	  #set($tableContainingField = $field.getTableContainingField())
-      #if($field.equals($tableContainingField.getPrimaryKey()) && (!$tableContainingField.equals($sessionTable)))
-	    #set($relatedTable = $field.getTableContainingField())
-		#set($relatedRowId = $mathTool.toInteger($tableDataRow.get($field)))
-	    #set($relatedTableDataRows = $viewMethods.getTableDataRow($relatedTable, $relatedRowId))
-		#set($temp = $relatedDataMap.put($relatedTable, $relatedTableDataRows))
-	  #end
+	    #set($tableContainingField = $field.getTableContainingField())
+        #if($field.equals($tableContainingField.getPrimaryKey()) && (!$tableContainingField.equals($sessionTable)))
+		  #set($relatedRowId = $mathTool.toInteger($tableDataRow.get($field)))
+		  $viewTools.log("Getting row for table $tableContainingField, row ID $relatedRowId")
+	      #set($relatedTableDataRows = $viewMethods.getTableDataRow($tableContainingField, $relatedRowId))
+		  #set($temp = $relatedDataMap.put($tableContainingField, $relatedTableDataRows))
+		#end
 	#end
 	
 	## For value of $return, see reports_and_tables/report_data.vm

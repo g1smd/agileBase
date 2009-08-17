@@ -33,7 +33,21 @@ function loadMap(postcode) {
       }
 }
 
+function fYouTube() {
+	$('a.gtpb_url').each(function(){
+		var sHref=this.getAttribute('href');
+		var oContainer=document.createElement('div');
+		oContainer=$(oContainer);
+		oContainer.addClass('gtpb_youtube');
+		$(this).replaceWith(oContainer);
+		oContainer.oembed(sHref);
+		//oContainer.find('embed').attr('rel',0);
+	});
+}
+
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
 
 pane3Scripts.functionList.push(loadMap);
+//pane3Scripts.functionList.push($.youtubin);
+pane3Scripts.functionList.push(fYouTube);

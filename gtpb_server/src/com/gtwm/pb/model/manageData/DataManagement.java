@@ -1017,20 +1017,24 @@ public class DataManagement implements DataManagementInfo {
 			}
 			conn.commit();
 		} catch (SQLException sqlex) {
-			// todo: find field from internalfielname mentioned in error
-			// message
 			String databaseErrorMessage = Helpers.replaceInternalNames(sqlex.getMessage(), table
 					.getDefaultReport());
-			logger.debug("Import failed statement is " + statement);
-			logger.debug("Fields that should be imported are " + fields);
-			throw new InputRecordException("Error importing CSV line " + importLine + ", field '"
-					+ fieldImported + "': " + databaseErrorMessage, fieldImported);
+			logger.warn("Import failed, statement is " + statement);
+			String errorMessage = "Error importing CSV line " + importLine;
+			if (!fieldImported.getHidden()) {
+				errorMessage += ", field '" + fieldImported + "'";
+			}
+			errorMessage += "': " + databaseErrorMessage;
+			throw new InputRecordException(errorMessage, fieldImported);
 		} catch (NumberFormatException nfex) {
 			String causeMessage = nfex.getMessage();
 			causeMessage = causeMessage.replaceAll("For input string", "value");
-			throw new InputRecordException("Error parsing number when importing CSV line "
-					+ importLine + ", field '" + fieldImported + "': " + causeMessage,
-					fieldImported);
+			String errorMessage = "Error parsing number when importing CSV line " + importLine;
+			if (!fieldImported.getHidden()) {
+				errorMessage += ", field '" + fieldImported + "'";
+			}
+			errorMessage += "': " + causeMessage;
+			throw new InputRecordException(errorMessage, fieldImported);
 		} finally {
 			if (conn != null) {
 				conn.close();
