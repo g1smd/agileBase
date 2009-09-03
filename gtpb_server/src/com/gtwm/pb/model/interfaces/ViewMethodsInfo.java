@@ -53,10 +53,8 @@ public interface ViewMethodsInfo {
 	/**
 	 * Return company usage statistics
 	 * 
-	 * @analyzeStats Whether to get an object to report full analysed stats or
-	 *               just raw stats
 	 */
-	public UsageStatsInfo getUsageStats(boolean analyzeStats) throws DisallowedException,
+	public UsageStatsInfo getUsageStats() throws DisallowedException,
 			ObjectNotFoundException, SQLException;
 
 	/**

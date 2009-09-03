@@ -171,9 +171,9 @@ public class ViewMethods implements ViewMethodsInfo {
 	/**
 	 * Return usage stats for the current company
 	 */
-	public UsageStatsInfo getUsageStats(boolean analyzeStats) throws DisallowedException,
+	public UsageStatsInfo getUsageStats() throws DisallowedException,
 			ObjectNotFoundException, SQLException {
-		return UsageStats.getInstance(this.request, this.databaseDefn, analyzeStats);
+		return new UsageStats(this.request, this.databaseDefn);
 	}
 
 	public boolean isRecordLocked() throws SQLException, ObjectNotFoundException {

@@ -20,6 +20,9 @@ package com.gtwm.pb.model.interfaces;
 import java.util.SortedSet;
 import java.util.List;
 import java.sql.SQLException;
+
+import org.json.JSONException;
+
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.manageUsage.UsageLogger.LogType;
 import com.gtwm.pb.util.CodingErrorException;
@@ -44,15 +47,17 @@ public interface UsageStatsInfo {
 	public int getNumberOfTables();
 
 	/**
-	 * Used to populate this object with summary stats
+	 * Return data that can be used to build a treemap of report view
+	 * statistics. Reports are grouped by module
 	 */
-	public void addModuleStats(ModuleUsageStatsInfo moduleStats);
+	public String getTreeMapJSON() throws ObjectNotFoundException, DisallowedException, SQLException, JSONException;
 
 	/**
 	 * Return module viewing stats, sorted by the total number of report views
 	 * per module
 	 */
-	public SortedSet<ModuleUsageStatsInfo> getModuleStats();
+	public SortedSet<ModuleUsageStatsInfo> getModuleStats() throws DisallowedException,
+			ObjectNotFoundException, SQLException;
 
 	/**
 	 * Return raw data from the log tables, suitable for exporting to a
@@ -70,7 +75,8 @@ public interface UsageStatsInfo {
 			ObjectNotFoundException, CantDoThatException;
 
 	/**
-	 * Get raw stats about usage of a particular table - data changes or table schema changes
+	 * Get raw stats about usage of a particular table - data changes or table
+	 * schema changes
 	 * 
 	 * @param logType
 	 *            Can be DATA_CHANGE or TABLE_SCHEMA_CHANGE
@@ -79,21 +85,27 @@ public interface UsageStatsInfo {
 	 */
 	public List<List<String>> getRawTableStats(LogType logType, TableInfo table, int rowLimit)
 			throws DisallowedException, SQLException, CantDoThatException;
-	
-	/**
-	 * Get a list of reports that data from this table is included in along with some overview stats about each report
-	 * 
-	 * Columns for each row returned are: report, username, last access date, total access count
-	 */
-	public List<List<String>> getTableViewStats(TableInfo table) throws DisallowedException, SQLException, CodingErrorException, CantDoThatException;
 
 	/**
-	 * Get a list of users that have been viewing this report along with some overview stats about each
+	 * Get a list of reports that data from this table is included in along with
+	 * some overview stats about each report
 	 * 
-	 * Columns for each row returned are: username, last access date, total access count
+	 * Columns for each row returned are: report, username, last access date,
+	 * total access count
 	 */
-	public List<List<String>> getReportViewStats(BaseReportInfo report) throws DisallowedException, SQLException, CodingErrorException, CantDoThatException;
-	
+	public List<List<String>> getTableViewStats(TableInfo table) throws DisallowedException,
+			SQLException, CodingErrorException, CantDoThatException;
+
+	/**
+	 * Get a list of users that have been viewing this report along with some
+	 * overview stats about each
+	 * 
+	 * Columns for each row returned are: username, last access date, total
+	 * access count
+	 */
+	public List<List<String>> getReportViewStats(BaseReportInfo report) throws DisallowedException,
+			SQLException, CodingErrorException, CantDoThatException;
+
 	/**
 	 * Return any tables that have had no report views (from any child reports)
 	 */

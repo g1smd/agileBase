@@ -258,7 +258,7 @@
 								<a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#End_user_documentation">User</a> 
 								and <a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#Administrator_documentation">administrator</a> 
 							  documentation</p>
-								<p><a href="/portalBase/website/images/gtpb_overview.pdf">Download the brochure</a>
+								<p><a href="/portalBase/website/content/gtpb_overview.pdf">Download the brochure</a>
 							  portalBase is a <a href="http://www.gtwm.co.uk">GT webMarque</a> product, <a href="http://www.gtwm.co.uk">contact us</a> for more help and advice</p>
 							</div>
 						</div>   <!-- end of main --> 
@@ -314,6 +314,7 @@
 										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://velocity.apache.org/"><img border="0" src="/portalBase/website/content/velocity_logo.gif"></a></td>
 									 </tr>
 								</table>
+								<a href="http://github.com/okohll/GT-portalBase/tree/"><img border="0" src="/portalBase/website/content/github.png" style="float:left;"></a>The source code for GT portalBase is <a href="http://github.com/okohll/GT-portalBase/tree/">available</a> on GitHub as open source.
 							</div>
 						</div>  <!-- end of technical -->
 						<div id="analyst" class="detail">

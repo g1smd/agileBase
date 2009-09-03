@@ -26,6 +26,7 @@ import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
+import com.gtwm.pb.model.interfaces.UsageStatsTreeMapNodeInfo;
 import com.gtwm.pb.model.interfaces.UserReportViewStatsInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.util.AppProperties;
@@ -48,11 +49,11 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.HashSet;
-import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
-
+import org.json.JSONException;
+import org.json.JSONStringer;
 import org.grlea.log.SimpleLogger;
 
 public class UsageStats implements UsageStatsInfo {
@@ -60,129 +61,25 @@ public class UsageStats implements UsageStatsInfo {
 	private UsageStats() {
 	}
 
-	/**
-	 * Creates a blank object with only pricing information calculated, use the
-	 * factory method to get one populated with stats
-	 * 
-	 * @param companyTables
-	 *            All the tables in the company, if you want company cost to be
-	 *            calculated, otherwise an empty map can be passed in
-	 */
-	public UsageStats(Collection<TableInfo> companyTables, HttpServletRequest request,
-			DatabaseInfo databaseDefn) {
+	public UsageStats(HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws DisallowedException, ObjectNotFoundException {
 		this.request = request;
 		this.databaseDefn = databaseDefn;
-		int numTables = companyTables.size();
-		this.numTables = numTables;
-		if (numTables > AppProperties.numFullPriceTables) {
-			int numDiscountTables = this.numTables - AppProperties.numFullPriceTables;
-			this.monthlyTableCost = (AppProperties.numFullPriceTables * AppProperties.tableCost)
-					+ (numDiscountTables * AppProperties.discountTableCost);
-		} else {
-			this.monthlyTableCost = numTables * AppProperties.tableCost;
-		}
-	}
-
-	/**
-	 * Creates a blank UsageStats object with nothing calculated
-	 */
-	public UsageStats(HttpServletRequest request, DatabaseInfo databaseDefn) {
-		this.request = request;
-		this.databaseDefn = databaseDefn;
-	}
-
-	/**
-	 * Returns an instance of this object populated with summary data for the
-	 * company of the logged in administrator
-	 * 
-	 * @param analyzeStats
-	 *            Whether to populate the instance with comparative usage data,
-	 *            i.e. comparing report usage with each other etc. If not, the
-	 *            object can be used to get raw stats only
-	 */
-	public static UsageStatsInfo getInstance(HttpServletRequest request, DatabaseInfo databaseDefn,
-			boolean analyzeStats) throws DisallowedException, ObjectNotFoundException, SQLException {
-		UsageStatsInfo usageStats = null;
-		if (analyzeStats) {
-			AuthManagerInfo authManager = databaseDefn.getAuthManager();
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
+		if (authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.ADMINISTRATE)) {
 			Set<TableInfo> companyTables = authManager.getCompanyTables(request);
-			CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
-			Map<ModuleInfo, ModuleUsageStatsInfo> moduleStatsMap = new HashMap<ModuleInfo, ModuleUsageStatsInfo>();
-			String SQLCode = "SELECT app_user, report, count(*) FROM dbint_log_";
-			SQLCode += LogType.REPORT_VIEW.name().toLowerCase();
-			SQLCode += " WHERE company=?";
-			SQLCode += " AND app_timestamp > (now() - '3 months'::interval)";
-			SQLCode += " GROUP BY app_user, report";
-			Connection conn = null;
-			try {
-				conn = databaseDefn.getDataSource().getConnection();
-				conn.setAutoCommit(false);
-				PreparedStatement statement = conn.prepareStatement(SQLCode);
-				statement.setString(1, company.getCompanyName());
-				ResultSet results = statement.executeQuery();
-				Map<String, BaseReportInfo> reportMap = new HashMap<String, BaseReportInfo>();
-				RESULTLOOP: while (results.next()) {
-					String userName = results.getString(1);
-					String internalReportName = results.getString(2);
-					int reportViews = results.getInt(3);
-					AppUserInfo appUser = null;
-					try {
-						appUser = authManager.getUserByUserName(request, userName);
-					} catch (ObjectNotFoundException onex) {
-						continue RESULTLOOP;
-					}
-					BaseReportInfo report = reportMap.get(internalReportName);
-					if (report == null) {
-						REPORTSEARCH: for (TableInfo table : companyTables) {
-							for (BaseReportInfo testReport : table.getReports()) {
-								if (!testReport.equals(table.getDefaultReport())) {
-									if (internalReportName.equals(testReport
-											.getInternalReportName())) {
-										report = testReport;
-										reportMap.put(testReport.getInternalReportName(), report);
-										break REPORTSEARCH;
-									}
-								}
-							}
-						}
-					}
-					if (report == null) {
-						continue RESULTLOOP;
-					}
-					if (report.getReportName().startsWith("dbvcalc") || report.getReportName().startsWith("dbvcrit")) {
-						continue RESULTLOOP;
-					}
-					ModuleInfo module = report.getModule();
-					if (module == null) {
-						continue RESULTLOOP;
-					}
-					ModuleUsageStatsInfo moduleUsageStats = moduleStatsMap.get(module);
-					if (moduleUsageStats == null) {
-						moduleUsageStats = new ModuleUsageStats(module);
-					}
-					UserReportViewStatsInfo userReportViewStats = new UserReportViewStats(appUser,
-							reportViews);
-					moduleUsageStats.addReportViewStats(report, userReportViewStats);
-					moduleStatsMap.put(module, moduleUsageStats);
-				}
-				results.close();
-				statement.close();
-			} catch (SQLException sqlex) {
-				logger.error(sqlex.toString());
-				throw sqlex;
-			} finally {
-				if (conn != null) {
-					conn.close();
-				}
+			int numTables = companyTables.size();
+			this.numTables = numTables;
+			if (numTables > AppProperties.numFullPriceTables) {
+				int numDiscountTables = this.numTables - AppProperties.numFullPriceTables;
+				this.monthlyTableCost = (AppProperties.numFullPriceTables * AppProperties.tableCost)
+						+ (numDiscountTables * AppProperties.discountTableCost);
+			} else {
+				this.monthlyTableCost = numTables * AppProperties.tableCost;
 			}
-			usageStats = new UsageStats(companyTables, request, databaseDefn);
-			for (ModuleUsageStatsInfo moduleUsageStats : moduleStatsMap.values()) {
-				usageStats.addModuleStats(moduleUsageStats);
-			}
-		} else {
-			usageStats = new UsageStats(request, databaseDefn);
+
 		}
-		return usageStats;
 	}
 
 	public int getMonthlyTableCost() {
@@ -193,12 +90,161 @@ public class UsageStats implements UsageStatsInfo {
 		return this.numTables;
 	}
 
-	public void addModuleStats(ModuleUsageStatsInfo moduleStats) {
-		this.moduleStats.add(moduleStats);
+	public String getTreeMapJSON()
+			throws ObjectNotFoundException, DisallowedException, SQLException, JSONException {
+		Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> treeMap = new HashMap<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>();
+		Map<ModuleInfo, Integer> moduleAreas = new HashMap<ModuleInfo, Integer>();
+		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
+		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
+		Set<TableInfo> companyTables = authManager.getCompanyTables(this.request);
+		String SQLCode = "SELECT report, average_count, percentage_increase FROM dbint_report_view_stats";
+		SQLCode += " WHERE company=?";
+		Connection conn = null;
+		try {
+			conn = databaseDefn.getDataSource().getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			statement.setString(1, company.getCompanyName());
+			ResultSet results = statement.executeQuery();
+			Map<String, BaseReportInfo> reportMap = new HashMap<String, BaseReportInfo>();
+			RESULTLOOP: while (results.next()) {
+				String internalReportName = results.getString(1);
+				BaseReportInfo report = reportMap.get(internalReportName);
+				if (report == null) {
+					REPORTSEARCH: for (TableInfo table : companyTables) {
+						for (BaseReportInfo testReport : table.getReports()) {
+							if (!testReport.equals(table.getDefaultReport())) {
+								if (internalReportName.equals(testReport.getInternalReportName())) {
+									report = testReport;
+									reportMap.put(testReport.getInternalReportName(), report);
+									break REPORTSEARCH;
+								}
+							}
+						}
+					}
+				}
+				if (report == null) {
+					continue RESULTLOOP;
+				}
+				if (report.getReportName().startsWith("dbvcalc")
+						|| report.getReportName().startsWith("dbvcrit")) {
+					continue RESULTLOOP;
+				}
+				ModuleInfo module = report.getModule();
+				if (module == null) {
+					continue RESULTLOOP;
+				}
+				int averageCount = results.getInt(2);
+				int percentageIncrease = results.getInt(3);
+				Set<UsageStatsTreeMapNodeInfo> treeMapNodes = treeMap.get(module);
+				if (treeMapNodes == null) {
+					treeMapNodes = new HashSet<UsageStatsTreeMapNodeInfo>();
+				}
+				UsageStatsTreeMapNodeInfo treeMapNode = new UsageStatsTreeMapNode(report,
+						averageCount, percentageIncrease);
+				treeMapNodes.add(treeMapNode);
+				treeMap.put(module, treeMapNodes);
+			}
+			results.close();
+			statement.close();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		// transfer the data into JSON
+		JSONStringer js = new JSONStringer();
+		js.array();
+		for (Map.Entry<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> treeMapEntry : treeMap.entrySet()) {
+			ModuleInfo module = treeMapEntry.getKey();
+			Set<UsageStatsTreeMapNodeInfo> leaves = treeMapEntry.getValue();
+			js.object().key("id").value(module.getInternalModuleName());
+			js.key("name").value(module.getModuleName());
+			js.key("data").array().key("$area").value(moduleAreas.get(module)).endArray();
+			js.endObject();
+		}
+		js.endArray();
+		return js.toString();
 	}
 
-	public SortedSet<ModuleUsageStatsInfo> getModuleStats() {
-		return this.moduleStats;
+	public SortedSet<ModuleUsageStatsInfo> getModuleStats() throws DisallowedException,
+			ObjectNotFoundException, SQLException {
+		SortedSet<ModuleUsageStatsInfo> moduleStats = new TreeSet<ModuleUsageStatsInfo>();
+		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
+		Set<TableInfo> companyTables = authManager.getCompanyTables(request);
+		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
+		Map<ModuleInfo, ModuleUsageStatsInfo> moduleStatsMap = new HashMap<ModuleInfo, ModuleUsageStatsInfo>();
+		String SQLCode = "SELECT app_user, report, count(*) FROM dbint_log_";
+		SQLCode += LogType.REPORT_VIEW.name().toLowerCase();
+		SQLCode += " WHERE company=?";
+		SQLCode += " AND app_timestamp > (now() - '3 months'::interval)";
+		SQLCode += " GROUP BY app_user, report";
+		Connection conn = null;
+		try {
+			conn = databaseDefn.getDataSource().getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			statement.setString(1, company.getCompanyName());
+			ResultSet results = statement.executeQuery();
+			Map<String, BaseReportInfo> reportMap = new HashMap<String, BaseReportInfo>();
+			RESULTLOOP: while (results.next()) {
+				String userName = results.getString(1);
+				String internalReportName = results.getString(2);
+				int reportViews = results.getInt(3);
+				AppUserInfo appUser = null;
+				try {
+					appUser = authManager.getUserByUserName(request, userName);
+				} catch (ObjectNotFoundException onex) {
+					continue RESULTLOOP;
+				}
+				BaseReportInfo report = reportMap.get(internalReportName);
+				if (report == null) {
+					REPORTSEARCH: for (TableInfo table : companyTables) {
+						for (BaseReportInfo testReport : table.getReports()) {
+							if (!testReport.equals(table.getDefaultReport())) {
+								if (internalReportName.equals(testReport.getInternalReportName())) {
+									report = testReport;
+									reportMap.put(testReport.getInternalReportName(), report);
+									break REPORTSEARCH;
+								}
+							}
+						}
+					}
+				}
+				if (report == null) {
+					continue RESULTLOOP;
+				}
+				if (report.getReportName().startsWith("dbvcalc")
+						|| report.getReportName().startsWith("dbvcrit")) {
+					continue RESULTLOOP;
+				}
+				ModuleInfo module = report.getModule();
+				if (module == null) {
+					continue RESULTLOOP;
+				}
+				ModuleUsageStatsInfo moduleUsageStats = moduleStatsMap.get(module);
+				if (moduleUsageStats == null) {
+					moduleUsageStats = new ModuleUsageStats(module);
+				}
+				UserReportViewStatsInfo userReportViewStats = new UserReportViewStats(appUser,
+						reportViews);
+				moduleUsageStats.addReportViewStats(report, userReportViewStats);
+				moduleStatsMap.put(module, moduleUsageStats);
+			}
+			results.close();
+			statement.close();
+		} catch (SQLException sqlex) {
+			logger.error(sqlex.toString());
+			throw sqlex;
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		for (ModuleUsageStatsInfo moduleUsageStats : moduleStatsMap.values()) {
+			moduleStats.add(moduleUsageStats);
+		}
+		return moduleStats;
 	}
 
 	public List<List<String>> getRawStats(String logType) throws DisallowedException, SQLException,
@@ -256,9 +302,11 @@ public class UsageStats implements UsageStatsInfo {
 		return unusedTables;
 	}
 
-	public List<List<String>> getReportViewStats(BaseReportInfo report) throws DisallowedException, SQLException, CodingErrorException, CantDoThatException {
+	public List<List<String>> getReportViewStats(BaseReportInfo report) throws DisallowedException,
+			SQLException, CodingErrorException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, report.getParentTable())) {
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, report.getParentTable())) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		List<List<String>> userInfos = new LinkedList<List<String>>();
@@ -290,7 +338,7 @@ public class UsageStats implements UsageStatsInfo {
 			}
 			results.close();
 			statement.close();
-		} catch(SQLException sqlex) {
+		} catch (SQLException sqlex) {
 			// Could be because there's no log table - fail gracefully
 			logger.warn("Error reading from log with SQL " + SQLCode);
 			logger.warn("SQL error: " + sqlex);
@@ -302,16 +350,20 @@ public class UsageStats implements UsageStatsInfo {
 		return userInfos;
 	}
 
-	public List<List<String>> getTableViewStats(TableInfo table) throws DisallowedException, SQLException, CodingErrorException, CantDoThatException {
+	public List<List<String>> getTableViewStats(TableInfo table) throws DisallowedException,
+			SQLException, CodingErrorException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table)) {
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, table)) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
 		List<List<String>> reportInfos = new LinkedList<List<String>>();
-		Map<TableInfo, Set<BaseReportInfo>> viewableDataStores = this.databaseDefn.getViewableDataStores(this.request);
+		Map<TableInfo, Set<BaseReportInfo>> viewableDataStores = this.databaseDefn
+				.getViewableDataStores(this.request);
 		Set<BaseReportInfo> reportsReferencingTable = new TreeSet<BaseReportInfo>();
 		// Find which reports fields from the table are included in
-		// Not 100% exhaustive because it doesn't check for field use in calculations, filters etc.
+		// Not 100% exhaustive because it doesn't check for field use in
+		// calculations, filters etc.
 		for (Map.Entry<TableInfo, Set<BaseReportInfo>> dataStore : viewableDataStores.entrySet()) {
 			TableInfo viewableTable = dataStore.getKey();
 			Set<BaseReportInfo> viewableReports = dataStore.getValue();
@@ -328,7 +380,8 @@ public class UsageStats implements UsageStatsInfo {
 				}
 			}
 		}
-		// Find the last access time and access count for each user who looked at each report
+		// Find the last access time and access count for each user who looked
+		// at each report
 		String SQLCode = "SELECT max(app_timestamp), app_user, count(*) ";
 		SQLCode += "FROM dbint_log_" + LogType.REPORT_VIEW.name().toLowerCase() + " ";
 		SQLCode += "WHERE report=? ";
@@ -344,7 +397,8 @@ public class UsageStats implements UsageStatsInfo {
 				ResultSet results = statement.executeQuery();
 				Calendar calendar = Calendar.getInstance();
 				String appTimestampFormat = Helpers.generateJavaDateFormat(Calendar.DAY_OF_MONTH);
-				String reportName = "" + reportReferencingTable.getModule() + " - " + reportReferencingTable;
+				String reportName = "" + reportReferencingTable.getModule() + " - "
+						+ reportReferencingTable;
 				TableInfo parentTable = reportReferencingTable.getParentTable();
 				if (reportReferencingTable.equals(parentTable.getDefaultReport())) {
 					reportName = "Direct table access";
@@ -375,15 +429,17 @@ public class UsageStats implements UsageStatsInfo {
 		}
 		return reportInfos;
 	}
-	
+
 	public List<List<String>> getRawTableStats(LogType logType, TableInfo table, int rowLimit)
-	throws DisallowedException, SQLException, CantDoThatException {
+			throws DisallowedException, SQLException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table)) {
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, table)) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
 		if (!(logType.equals(LogType.DATA_CHANGE) || logType.equals(LogType.TABLE_SCHEMA_CHANGE))) {
-			throw new CantDoThatException("logType must by DATA_CHANGE or TABLE_SCHEMA_CHANGE when getting table stats");
+			throw new CantDoThatException(
+					"logType must by DATA_CHANGE or TABLE_SCHEMA_CHANGE when getting table stats");
 		}
 		List<List<String>> rawStats = new LinkedList<List<String>>();
 		// First row is the column headings
@@ -447,7 +503,7 @@ public class UsageStats implements UsageStatsInfo {
 		}
 		return rawStats;
 	}
-	
+
 	private List<List<String>> getRawStats(LogType logType) throws DisallowedException,
 			SQLException, ObjectNotFoundException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
@@ -614,15 +670,12 @@ public class UsageStats implements UsageStatsInfo {
 	}
 
 	public String toString() {
-		return "Monthly table cost = " + this.monthlyTableCost + ", module stats = "
-				+ this.moduleStats;
+		return "Monthly table cost = " + this.monthlyTableCost;
 	}
 
 	private int monthlyTableCost = 0;
 
 	private int numTables = 0;
-
-	private SortedSet<ModuleUsageStatsInfo> moduleStats = new TreeSet<ModuleUsageStatsInfo>();
 
 	private DatabaseInfo databaseDefn = null;
 

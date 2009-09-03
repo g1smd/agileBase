@@ -51,12 +51,13 @@ $viewTools.startTimer("gui/administration/information/option_sets/information_st
 </style>
 #set($mathTool = $viewTools.getMathTool())
 #if(!$usageStats)
-	#set($usageStats = $viewMethods.getUsageStats(true))
+	#set($usageStats = $viewMethods.getUsageStats())
 #end
 
 ## Calculate the max. no. report views for any report, for setting the scale when charting
 #set($maxViews = 0)
-#foreach($moduleUsageStats in $usageStats.getModuleStats())
+#set($moduleStats = $usageStats.getModuleStats())
+#foreach($moduleUsageStats in $moduleStats)
   #set($reportViews = $moduleUsageStats.getUserReportViewStats())
   #foreach($userStatsSet in $reportViews.values())
 	#set($reportViews = 0)
@@ -70,7 +71,7 @@ $viewTools.startTimer("gui/administration/information/option_sets/information_st
 #end
 Report usage in each module, along with with the users of each report (main users coloured darker)<p>
 #set($companyReportViews = 0)
-#foreach($moduleUsageStats in $usageStats.getModuleStats())
+#foreach($moduleUsageStats in $moduleStats)
   #set($companyReportViews = $companyReportViews + $moduleUsageStats.getTotalReportViews())
   #set($module = $moduleUsageStats.getModule())
   <img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/><b style="text-transform:capitalize; padding-left: 20px; font-size:13px">$module</b><br>
