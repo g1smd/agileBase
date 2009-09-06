@@ -36,11 +36,13 @@ function loadMap(postcode) {
 function fYouTube() {
 	$('a.gtpb_url').each(function(){
 		var sHref=this.getAttribute('href');
-		var oContainer=document.createElement('div');
-		oContainer=$(oContainer);
-		oContainer.addClass('gtpb_youtube');
-		$(this).replaceWith(oContainer);
-		oContainer.oembed(sHref);
+		if(sHref.indexOf('youtube') > -1) {
+			var oContainer=document.createElement('div');
+			oContainer=$(oContainer);
+			oContainer.addClass('gtpb_youtube');
+			$(this).replaceWith(oContainer);
+			oContainer.oembed(sHref);
+		}
 		//oContainer.find('embed').attr('rel',0);
 	});
 }
@@ -48,6 +50,7 @@ function fYouTube() {
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
 
-pane3Scripts.functionList.push(loadMap);
-//pane3Scripts.functionList.push($.youtubin);
+// Don't need to call loadMap when a tab loads, just need to have the fn available
+// for when a map does need to be loaded
+//pane3Scripts.functionList.push(loadMap);
 pane3Scripts.functionList.push(fYouTube);

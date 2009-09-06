@@ -144,6 +144,13 @@ public class UsageStats implements UsageStatsInfo {
 						averageCount, percentageIncrease);
 				treeMapNodes.add(treeMapNode);
 				treeMap.put(module, treeMapNodes);
+				Integer area = moduleAreas.get(module);
+				if (area == null) {
+					area = averageCount;
+				} else {
+					area += averageCount;
+				}
+				moduleAreas.put(module, area);
 			}
 			results.close();
 			statement.close();
@@ -154,17 +161,44 @@ public class UsageStats implements UsageStatsInfo {
 		}
 		// transfer the data into JSON
 		JSONStringer js = new JSONStringer();
-		js.array();
+		BaseReportInfo report = null;
+		js.object();
+		js.key("id").value("root");
+		js.key("data").object().key("$area").value(10000).endObject();
+		js.key("children").array();
 		for (Map.Entry<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> treeMapEntry : treeMap.entrySet()) {
 			ModuleInfo module = treeMapEntry.getKey();
 			Set<UsageStatsTreeMapNodeInfo> leaves = treeMapEntry.getValue();
-			js.object().key("id").value(module.getInternalModuleName());
+			logger.debug("Starting JSON for module " + module);
+			js.object();
+			logger.debug("key id");
+			js.key("id").value(module.getInternalModuleName());
+			logger.debug("key name");
 			js.key("name").value(module.getModuleName());
-			js.key("data").array().key("$area").value(moduleAreas.get(module)).endArray();
+			logger.debug("data object");
+			js.key("data").object().key("$area").value(moduleAreas.get(module)).endObject();
+			js.key("children").array();
+			for(UsageStatsTreeMapNodeInfo leaf : leaves) {
+				js.object();
+				report = leaf.getReport();
+				js.key("id").value(report.getInternalReportName());
+				js.key("name").value(report.getReportName());
+				js.key("data");
+				js.object();
+				js.key("$area").value(leaf.getArea());
+				js.key("$color").value(leaf.getColour());
+				js.endObject();
+				js.endObject();
+			}
+			js.endArray();
+			logger.debug("end of object");
 			js.endObject();
 		}
-		js.endArray();
-		return js.toString();
+		js.endArray(); // end children of root
+		js.endObject();
+		logger.debug("About to generate JSON String");
+		String JSONString = js.toString();
+		return JSONString;
 	}
 
 	public SortedSet<ModuleUsageStatsInfo> getModuleStats() throws DisallowedException,
