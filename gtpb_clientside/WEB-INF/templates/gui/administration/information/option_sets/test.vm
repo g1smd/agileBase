@@ -1,0 +1,106 @@
+<html>
+<head>
+<style>
+#infovis {  
+    position:relative;  
+    width:900px;  
+    height:500px;  
+    margin:auto;  
+    background-color:#1D1D20;  
+}  
+  
+#infovis div {  
+    position:absolute;  
+    overflow:hidden;  
+}  
+  
+#infovis .content {  
+    background-color:#333;  
+    border:0px solid #111;  
+}  
+  
+#infovis .head {  
+    height:12px;  
+    color:white;  
+    background-color:#444;  
+}  
+  
+#infovis .head.in-path {  
+    background-color:#655;  
+}  
+  
+#infovis .body {  
+    background-color:black;  
+}  
+  
+#infovis .leaf {  
+    color:white;  
+    background-color:#111;  
+    display:table-cell;  
+    vertical-align:middle;  
+}  
+  
+#infovis .over-leaf {  
+    border:1px solid #9FD4FF;  
+}  
+  
+#infovis .over-content {  
+    background-color: #9FD4FF;  
+}  
+  
+#infovis .over-head { /* ...boy i'm funny */  
+    background-color:#A4D9FF;  
+    color:black;  
+}  
+  
+/* tooltips style */  
+.tip {  
+    color: #fff;  
+    z-index: 13000;  
+    background-color: black;  
+    padding:5px;  
+    position:absolute;  
+}  
+</style>
+<script language="JavaScript" src="resources/jquery.js"></script>
+<script language=Javascript src="resources/jit.js"></script>
+#set($treeMap = $viewMethods.getUsageStats().getTreeMap())
+<script language="JavaScript">
+$(document).ready(function(){
+   var json = {
+   "id" : "root", "data" : {
+      "$area" : 2492}
+   , "children" : [ {
+      "id" : "ae4abbc2f9c8bf2f6", "name" : "Accounts", "data" :  {
+         "$area" : 2492}
+      , "children" : [ {
+         "id" : "acee68750591cfe07", "name" : "bacs - this years receipts", "data" : {
+            "$area" : 2273, "$color" : 56}
+         }
+      , {
+         "id" : "a420f1f5bf86cb4d3", "name" : "Bacs reconciliation", "data" : {
+            "$area" : 35, "$color" : -100}
+         }
+      , {
+         "id" : "aea489290524c6aa", "name" : "Bacs last two months receipts", "data" : {
+            "$area" : 183, "$color" : -100}
+         }
+      , {
+         "id" : "a658241ed034e3010", "name" : "Bacs paid off after month end", "data" : {
+            "$area" : 1, "$color" : 32}
+         }
+      ]}
+	]};
+		
+    var tm = new TM.Squarified({  
+                //Where to inject the Treemap  
+                rootId: 'infovis'  
+             });  
+    tm.loadJSON(json);
+});
+</script>
+</head>
+<body>
+<div id="infovis" /> 
+</body>
+</html>

@@ -1,0 +1,20 @@
+#set($sessionReport = $viewMethods.getSessionData().getReport())
+		#if(!$viewMethods.isRowIdInReport())
+		<tr>
+		  <td class="leading">&nbsp;</td>
+		  <td colspan="2">
+		    <div class="warningmessage">
+				<b>Note:</b><p>
+				This record isn't normally visible in the report '$sessionReport'
+				#set($filters = $sessionReport.getFilters())
+				#if($filters.size() > 0)
+					, which requires that
+					#parse('gui/reports_and_tables/plain_english_filters.vm')
+				#else <p>
+				#end
+				It is only being displayed for data entry purposes.
+			</div>
+		  </td>
+		  <td class="trailing">&nbsp;</td>
+		</tr>
+		#end

@@ -1,0 +1,21 @@
+#set($user = $viewMethods.getLoggedInUser())
+#set($company = $user.getCompany())
+#set($sessionData = $viewMethods.getSessionData())
+#set($table=$sessionData.getTable())
+#set($report = $table.getDefaultReport())
+#set($reportDataRows = $viewMethods.getReportDataRows($report))
+
+#set($fields = $table.getFields())
+#foreach($field in $fields)
+  #set($fieldCategory = $field.getFieldCategory())
+  #if($fieldCategory == "TEXT")
+	#set($fieldWeWant = $field)
+	#break
+  #end
+#end
+
+#foreach($reportDataRow in $reportDataRows)
+	#set($dataRowFields = $reportDataRow.getDataRowFields())
+	#set($value = $dataRowFields.get($fieldWeWant).getKeyValue())
+	$value<br>
+#end
