@@ -56,7 +56,7 @@ public class TextValueDefn implements TextValue {
             return false;
         }
         // regex from http://www.regexlib.com/
-        if (this.textValue.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+        if (this.textValue.trim().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
             return true;
         }
         return false;
@@ -67,7 +67,7 @@ public class TextValueDefn implements TextValue {
             return false;
         }
         // regex from http://www.regexlib.com/
-        if (this.textValue.matches("^(((ht|f)tp(s?))\\://)?(www.|[a-zA-Z].)[a-zA-Z0-9\\-\\.]+\\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk)(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\;\\?\\'\\\\\\+&%\\$#\\=~_\\-]+))*$")) {
+        if (this.textValue.trim().matches("^(((ht|f)tp(s?))\\://)?(www.|[a-zA-Z].)[a-zA-Z0-9\\-\\.]+\\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk)(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\;\\?\\'\\\\\\+&%\\$#\\=~_\\-]+))*$")) {
             return true;
         }
         return false;
@@ -78,7 +78,7 @@ public class TextValueDefn implements TextValue {
     		return false;
     	}
         // regex from http://www.regexlib.com/
-    	if (this.textValue.matches("^((\\(?0\\d{4}\\)?\\s?\\d{3}\\s?\\d{3})|(\\(?0\\d{3}\\)?\\s?\\d{3}\\s?\\d{4})|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#(\\d{4}|\\d{3}))?$")) {
+    	if (this.textValue.trim().matches("^((\\(?0\\d{4}\\)?\\s?\\d{3}\\s?\\d{3})|(\\(?0\\d{3}\\)?\\s?\\d{3}\\s?\\d{4})|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#(\\d{4}|\\d{3}))?$")) {
     		return true;
     	}
     	return false;
@@ -89,9 +89,9 @@ public class TextValueDefn implements TextValue {
             return null;
         }
         if (this.textValue.contains("://")) {
-            return this.textValue;
+            return this.textValue.trim();
         } else {
-            return "http://" + this.textValue;
+            return "http://" + this.textValue.trim();
         }
     }
     

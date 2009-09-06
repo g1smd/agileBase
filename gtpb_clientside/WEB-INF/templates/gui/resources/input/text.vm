@@ -53,7 +53,10 @@
 	      <textarea tabindex="$tabIndex" gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" cols="$numCols" rows="$numRows" name="$field.getInternalFieldName()" onkeyup="fResizeTextArea(this);" onclick="fResizeTextArea(this);" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">$fieldValue</textarea>##
 	    #else##
 	      <textarea tabindex="$tabIndex" cols="$numCols" rows="$numRows" name="$field.getInternalFieldName()" #if($updateAsType) gtpb_update_record gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" onkeyup="fResizeTextArea(this); top.oBuffer.writeBuffer(this);" maxKeyCount="15" #else onkeyup="fResizeTextArea(this);" #end onclick="fResizeTextArea(this);" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device && $updateAsType) top.oBuffer.writeBuffer(this); #end">$fieldValue</textarea>##
-	    #end##
+		  #if ($fieldValueObject.isURL())##      
+		    <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">website</a>##
+	      #end##
+		#end##
 	  #else ## start of normal (not big text) field
 	    #if($field.usesLookup())##
 			#parse("gui/resources/input/combo_component.vm")##
@@ -69,12 +72,7 @@
     #if((!$globalEdit) && $updateAsType)##
   		    #if ($fieldValueObject.isEmailAddress())##
 		        <a href="mailto:$fieldValue">email</a>##
-		      #elseif ($fieldValueObject.isURL())##
-				  #*
-				  #if($fieldValue.contains('youtube.com'))##
-				    <script language="JavaScript" src="resources/jquery.youtubin.js"></script>##
-				  #end##	
-				  *#	      
+		      #elseif ($fieldValueObject.isURL())##      
 		        <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">website</a>##
 		      #elseif ($fieldValueObject.isPostcode())##
 		        <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue" target="_blank">map</a>##
@@ -129,24 +127,27 @@
 ##
 #else ## user can't edit
   #if(($field.getContentSize() <= 50) && ($fieldValue.length() <= 100))##
+	$viewTools.log("Criteria met ($field.getContentSize() <= 50) && ($fieldValue.length() <= 100)")
 	#set($isPhoneNumber = $fieldValueObject.isPhoneNumber())
 	#if ($fieldValueObject.isEmailAddress())##
       <a href="mailto:$fieldValue">$fieldValue</a>##
 	#elseif ($fieldValueObject.isURL())##
-				  #*
-				  #if($fieldValue.contains('youtube.com'))##
-				    <script language="JavaScript" src="resources/jquery.youtubin.js"></script>##
-				  #end##	
-				  *#	
   	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>##
 	#elseif ($fieldValueObject.isPostcode())##
   	  <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue" target="_blank">$fieldValue</a>##
     #elseif ($mobile_device && $isPhoneNumber)##
 	  <a href="tel:$fieldValue">$fieldValue</a> <i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>##
     #else##
+	$viewTools.log("Nothing matched for '$fieldValue'")
       $fieldValue #if($isPhoneNumber)<i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>#end##
     #end##
   #else##
-    $viewTools.lineBreaksToParas($fieldValue)##
+    ## can have long URLs
+	$viewTools.log("long value '$fieldValue'")
+    #if ($fieldValueObject.isURL())
+	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>##
+	#else
+      $viewTools.lineBreaksToParas($fieldValue)##
+	#end
   #end##
 #end

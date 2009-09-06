@@ -36,6 +36,7 @@ function loadMap(postcode) {
 function fYouTube() {
 	$('a.gtpb_url').each(function(){
 		var sHref=this.getAttribute('href');
+		alert(sHref);
 		if(sHref.indexOf('youtube') > -1) {
 			var oContainer=document.createElement('div');
 			oContainer=$(oContainer);
