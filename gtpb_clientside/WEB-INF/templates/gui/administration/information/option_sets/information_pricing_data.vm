@@ -17,7 +17,7 @@
 ##
 $viewTools.startTimer("gui/administration/information/option_sets/information_pricing_data.vm")
 #if(!$usageStats)
-	#set($usageStats = $viewMethods.getUsageStats(true))
+	#set($usageStats = $viewMethods.getUsageStats())
 #end
 
 #set($appUser = $viewMethods.getLoggedInUser())

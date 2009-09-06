@@ -127,7 +127,6 @@
 ##
 #else ## user can't edit
   #if(($field.getContentSize() <= 50) && ($fieldValue.length() <= 100))##
-	$viewTools.log("Criteria met ($field.getContentSize() <= 50) && ($fieldValue.length() <= 100)")
 	#set($isPhoneNumber = $fieldValueObject.isPhoneNumber())
 	#if ($fieldValueObject.isEmailAddress())##
       <a href="mailto:$fieldValue">$fieldValue</a>##
@@ -138,12 +137,10 @@
     #elseif ($mobile_device && $isPhoneNumber)##
 	  <a href="tel:$fieldValue">$fieldValue</a> <i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>##
     #else##
-	$viewTools.log("Nothing matched for '$fieldValue'")
       $fieldValue #if($isPhoneNumber)<i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>#end##
     #end##
   #else##
     ## can have long URLs
-	$viewTools.log("long value '$fieldValue'")
     #if ($fieldValueObject.isURL())
 	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>##
 	#else

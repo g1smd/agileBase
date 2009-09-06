@@ -169,13 +169,9 @@ public class UsageStats implements UsageStatsInfo {
 		for (Map.Entry<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> treeMapEntry : treeMap.entrySet()) {
 			ModuleInfo module = treeMapEntry.getKey();
 			Set<UsageStatsTreeMapNodeInfo> leaves = treeMapEntry.getValue();
-			logger.debug("Starting JSON for module " + module);
 			js.object();
-			logger.debug("key id");
 			js.key("id").value(module.getInternalModuleName());
-			logger.debug("key name");
 			js.key("name").value(module.getModuleName());
-			logger.debug("data object");
 			js.key("data").object().key("$area").value(moduleAreas.get(module)).endObject();
 			js.key("children").array();
 			for(UsageStatsTreeMapNodeInfo leaf : leaves) {
@@ -191,12 +187,10 @@ public class UsageStats implements UsageStatsInfo {
 				js.endObject();
 			}
 			js.endArray();
-			logger.debug("end of object");
 			js.endObject();
 		}
 		js.endArray(); // end children of root
 		js.endObject();
-		logger.debug("About to generate JSON String");
 		String JSONString = js.toString();
 		return JSONString;
 	}

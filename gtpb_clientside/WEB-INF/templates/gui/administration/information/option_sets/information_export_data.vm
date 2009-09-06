@@ -17,7 +17,7 @@
 ##
 $viewTools.startTimer("gui/administration/information/option_sets/information_export_data.vm")
 #if(!$usageStats)
-	#set($usageStats = $viewMethods.getUsageStats(true))
+	#set($usageStats = $viewMethods.getUsageStats())
 #end
 
 Please click on a link to export data to spreadsheet format:<p>
