@@ -27,7 +27,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
   #set($sessionRowId=$sessionData.getRowId())
 #end
 #if($sessionRowId == -1)
-	Select a record to view data
+	<div class="warningmessage">
+		<b>No record selected:</b><p>
+		Pick a record from above to view data or press the 'New' button to create a record
+	</div>
 #else
 	<table cellspacing=0 cellpadding=0 border=0 id=reportData>
 		<thead>
