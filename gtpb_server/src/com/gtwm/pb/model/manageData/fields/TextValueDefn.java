@@ -67,7 +67,9 @@ public class TextValueDefn implements TextValue {
             return false;
         }
         // regex from http://www.regexlib.com/
-        if (this.textValue.trim().matches("^(((ht|f)tp(s?))\\://)?(www.|[a-zA-Z].)[a-zA-Z0-9\\-\\.]+\\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk)(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\;\\?\\'\\\\\\+&%\\$#\\=~_\\-]+))*$")) {
+        // with an addition to allow @ signs in URLs, e.g. for
+        // http://www.flickr.com/photos/14516334@N00/345009210/
+        if (this.textValue.trim().matches("^(((ht|f)tp(s?))\\://)?(www.|[a-zA-Z].)[a-zA-Z0-9\\-\\.]+\\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk)(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\;\\?\\'\\@\\\\\\+&%\\$#\\=~_\\-]+))*$")) {
             return true;
         }
         return false;
