@@ -1106,6 +1106,7 @@ public class ViewTools implements ViewToolsInfo {
 		List<File> files = new LinkedList<File>();
 		if (filesArray != null) {
 			files = Arrays.asList(filesArray);
+			Collections.sort(files);
 		}
 		return files;
 	}
