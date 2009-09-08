@@ -90,14 +90,21 @@ public class UsageStats implements UsageStatsInfo {
 		return this.numTables;
 	}
 
-	public String getTreeMapJSON()
-			throws ObjectNotFoundException, DisallowedException, SQLException, JSONException {
-		Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> treeMap = new HashMap<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>();
+	public String getTreeMapJSON() throws ObjectNotFoundException, DisallowedException,
+			SQLException, JSONException {
+		// data structure for the treemap for a particular section (a set of
+		// modules)
+		// Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> sectionTreeMap = new
+		// HashMap<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>();
+		// collection of section treemaps
+		Map<String, Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>> sectionTreeMaps = new HashMap<String, Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>>();
 		Map<ModuleInfo, Integer> moduleAreas = new HashMap<ModuleInfo, Integer>();
+		Map<String, Integer> sectionAreas = new HashMap<String, Integer>();
+		int totalArea = 0;
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
 		Set<TableInfo> companyTables = authManager.getCompanyTables(this.request);
-		String SQLCode = "SELECT report, average_count, percentage_increase FROM dbint_report_view_stats";
+		String SQLCode = "SELECT report, average_count, percentage_increase FROM dbint_report_view_stats_materialized";
 		SQLCode += " WHERE company=?";
 		Connection conn = null;
 		try {
@@ -135,22 +142,41 @@ public class UsageStats implements UsageStatsInfo {
 					continue RESULTLOOP;
 				}
 				int averageCount = results.getInt(2);
+				totalArea += averageCount;
 				int percentageIncrease = results.getInt(3);
-				Set<UsageStatsTreeMapNodeInfo> treeMapNodes = treeMap.get(module);
+				String section = module.getSection();
+				if (section == null) {
+					section = "";
+				}
+				Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> sectionTreeMap = sectionTreeMaps
+						.get(section);
+				if (sectionTreeMap == null) {
+					sectionTreeMap = new HashMap<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>();
+				}
+				Set<UsageStatsTreeMapNodeInfo> treeMapNodes = sectionTreeMap.get(module);
 				if (treeMapNodes == null) {
 					treeMapNodes = new HashSet<UsageStatsTreeMapNodeInfo>();
 				}
 				UsageStatsTreeMapNodeInfo treeMapNode = new UsageStatsTreeMapNode(report,
 						averageCount, percentageIncrease);
 				treeMapNodes.add(treeMapNode);
-				treeMap.put(module, treeMapNodes);
-				Integer area = moduleAreas.get(module);
-				if (area == null) {
-					area = averageCount;
+				sectionTreeMap.put(module, treeMapNodes);
+				sectionTreeMaps.put(section, sectionTreeMap);
+				// keep total areas up to date
+				Integer moduleArea = moduleAreas.get(module);
+				if (moduleArea == null) {
+					moduleArea = averageCount;
 				} else {
-					area += averageCount;
+					moduleArea += averageCount;
 				}
-				moduleAreas.put(module, area);
+				moduleAreas.put(module, moduleArea);
+				Integer sectionArea = sectionAreas.get(section);
+				if (sectionArea == null) {
+					sectionArea = averageCount;
+				} else {
+					sectionArea += averageCount;
+				}
+				sectionAreas.put(section, sectionArea);
 			}
 			results.close();
 			statement.close();
@@ -164,33 +190,51 @@ public class UsageStats implements UsageStatsInfo {
 		BaseReportInfo report = null;
 		js.object();
 		js.key("id").value("root");
-		js.key("data").object().key("$area").value(10000).endObject();
+		js.key("name").value("overview of usage");
+		js.key("data").object().key("$area").value(totalArea).endObject();
 		js.key("children").array();
-		for (Map.Entry<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> treeMapEntry : treeMap.entrySet()) {
-			ModuleInfo module = treeMapEntry.getKey();
-			Set<UsageStatsTreeMapNodeInfo> leaves = treeMapEntry.getValue();
-			js.object();
-			js.key("id").value(module.getInternalModuleName());
-			js.key("name").value(module.getModuleName());
-			js.key("data").object().key("$area").value(moduleAreas.get(module)).endObject();
+		// loop through sections
+		for (Map.Entry<String, Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>> sectionTreeMapsEntry : sectionTreeMaps
+				.entrySet()) {
+			String section = sectionTreeMapsEntry.getKey();
+			js.object(); // start section object
+			js.key("id").value("s_" + section);
+			js.key("name").value("<b>" + section.toUpperCase() + "</b>");
+			js.key("data").object().key("$area").value(sectionAreas.get(section)).endObject();
 			js.key("children").array();
-			for(UsageStatsTreeMapNodeInfo leaf : leaves) {
-				js.object();
-				report = leaf.getReport();
-				js.key("id").value(report.getInternalReportName());
-				js.key("name").value(report.getReportName());
-				js.key("data");
-				js.object();
-				js.key("$area").value(leaf.getArea());
-				js.key("$color").value(leaf.getColour());
-				js.endObject();
-				js.endObject();
+			// loop through modules
+			Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> sectionTreeMap = sectionTreeMapsEntry.getValue();
+			for (Map.Entry<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> treeMapEntry : sectionTreeMap.entrySet()) {
+				ModuleInfo module = treeMapEntry.getKey();
+				Set<UsageStatsTreeMapNodeInfo> leaves = treeMapEntry.getValue();
+				js.object(); // start module object
+				js.key("id").value("m_" + module.getInternalModuleName());
+				js.key("name").value(module.getModuleName().toLowerCase());
+				js.key("data").object().key("$area").value(moduleAreas.get(module)).endObject();
+				js.key("children").array();
+				for (UsageStatsTreeMapNodeInfo leaf : leaves) {
+					js.object(); // start report object
+					report = leaf.getReport();
+					js.key("id").value("r_" + report.getInternalReportName());
+					js.key("name").value(report.getReportName().toLowerCase());
+					js.key("data");
+					js.object();
+					js.key("$area").value(leaf.getArea());
+					js.key("$color").value(leaf.getColour());
+					js.endObject(); // end data object
+					js.key("children").array().endArray(); // no children, empty
+															// array still
+															// necessary
+					js.endObject(); // end report
+				}
+				js.endArray(); // end children
+				js.endObject(); // end module object
 			}
-			js.endArray();
-			js.endObject();
+			js.endArray(); // end children of section
+			js.endObject(); // end section object
 		}
 		js.endArray(); // end children of root
-		js.endObject();
+		js.endObject(); // end root
 		String JSONString = js.toString();
 		return JSONString;
 	}

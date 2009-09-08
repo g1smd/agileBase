@@ -62,15 +62,12 @@
     position:absolute;  
 }  
 </style>
-<script language="JavaScript" src="resources/jquery.js"></script>
-<script language=Javascript src="resources/jit.js"></script>
-#set($treeMap = $viewMethods.getUsageStats().getTreeMap())
+<script language="JavaScript" src="jquery.js"></script>
+<script language=Javascript src="jit.js"></script>
 <script language="JavaScript">
 $(document).ready(function(){
    var json = {
-   "id" : "root", "data" : {
-      "$area" : 2492}
-   , "children" : [ {
+  
       "id" : "ae4abbc2f9c8bf2f6", "name" : "Accounts", "data" :  {
          "$area" : 2492}
       , "children" : [ {

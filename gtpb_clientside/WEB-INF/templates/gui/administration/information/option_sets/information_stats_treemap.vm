@@ -4,10 +4,12 @@
 <style>
 #infovis {  
     position:relative;  
-    width:900px;  
-    height:500px;  
+    width:1000px;  
+    height:600px;  
     margin:auto;  
-    background-color:#1D1D20;  
+    background-color:#1D1D20;
+	font-size:9pt;
+	font-face: Arial, Helvetica, sans-serif;
 }  
   
 #infovis div {  
@@ -31,7 +33,8 @@
 }  
   
 #infovis .body {  
-    background-color:black;  
+    background-color:black;
+	background-color: white;
 }  
   
 #infovis .leaf {  
@@ -56,9 +59,9 @@
   
 /* tooltips style */  
 .tip {  
-    color: #fff;  
+    color: black;  
     z-index: 13000;  
-    background-color: black;  
+    background-color: white;  
     padding:5px;  
     position:absolute;  
 }  
@@ -75,7 +78,37 @@ $(document).ready(function(){
 		
     var tm = new TM.Squarified({  
                 //Where to inject the Treemap  
-                rootId: 'infovis'  
+                rootId: 'infovis',
+				addLeftClickHandler: true,
+				Color: {  
+        			//Allow coloring  
+        			allow: true,  
+        			//Select a value range for the $color  
+    			    //property. Default's to -100 and 100.  
+     			    minValue: -1000,  
+     			    maxValue: 1000,  
+        			//Set color range. Default's to reddish and  
+        			//greenish. It takes an array of three  
+        			//integers as R, G and B values.  
+        			maxColorValue: [0, 255, 50],  
+        			minColorValue: [255, 0, 50]  
+     			},
+				Tips: {  
+       				allow: true,  
+       				//add positioning offsets  
+       				offsetX: 20,  
+       				offsetY: 20,  
+       				//implement the onShow method to  
+       				//add content to the tooltip when a node  
+       				//is hovered  
+       				onShow: function(tip, node, isLeaf, domElement) {
+						if (isLeaf) {
+           					tip.innerHTML = "<b>name:</b> " + node.name;
+						} else {
+							tip.innerHTML = node.name;
+						}
+       				}  
+				}
              });  
     tm.loadJSON(json);
 });
@@ -84,4 +117,4 @@ $(document).ready(function(){
 <body>
 <div id="infovis" /> 
 </body>
-	</html>
+</html>
