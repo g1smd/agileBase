@@ -1,0 +1,88 @@
+#set($treeMap = $viewMethods.getUsageStats().getTreeMap())
+<script language="JavaScript">
+jQuery(document).ready(function(){
+	
+	// fit treemap to window
+	jqInfovis = jQuery("#infovis");
+	ivWidth = jQuery("#dashboard").css("width");
+	jqInfovis.css("width",ivWidth);
+
+    var json = $viewMethods.getUsageStats().getTreeMapJSON();
+		
+    var tm = new TM.Squarified({  
+                //Where to inject the Treemap  
+                rootId: 'infovis',
+				offset: 2,
+				selectPathOnHover: true,
+				Color: {  
+        			//Allow coloring  
+        			allow: true,  
+        			//Select a value range for the $color  
+    			    //property. Defaults to -100 and 100.  
+     			    minValue: -1000,  
+     			    maxValue: 1000,  
+        			//Set color range. Default's to reddish and  
+        			//greenish. It takes an array of three  
+        			//integers as R, G and B values.  
+        			//maxColorValue: [0, 255, 50],
+        			maxColorValue: [254, 50, 50],
+					minColorValue: [50, 150, 254]
+     			},
+				Tips: {  
+       				allow: true,  
+       				//add positioning offsets  
+       				offsetX: 20,  
+       				offsetY: 20,  
+       				//implement the onShow method to  
+       				//add content to the tooltip when a node  
+       				//is hovered  
+       				onShow: function(tip, node, isLeaf, domElement) {
+						if (isLeaf) {
+           					tip.innerHTML = node.name;
+						} else {
+							tip.innerHTML = node.name + " module";
+						}
+       				}  
+				}
+             });  
+    tm.loadJSON(json);
+	
+	// 'grow' leaves to remove the gaps between them and make groups of leaves look more contiguous
+	jQuery(".leaf").each(function(i) {
+	  var jqLeaf = jQuery(this);
+	  var width = jqLeaf.css("width");
+	  width = width.substring(0,width.length - 2)
+	  widthInt = parseInt(width) + 2;
+	  width = widthInt + "px";
+	  var height = jqLeaf.css("height");
+	  height = height.substring(0,height.length - 2)
+	  heightInt = parseInt(height) + 2;
+	  height = heightInt + "px";
+	  var top = jqLeaf.css("top");
+	  top = top.substring(0,top.length - 2)
+	  top = parseInt(top) -1;
+	  top = top + "px";
+	  var left = jqLeaf.css("left");
+	  left = left.substring(0,left.length - 2)
+	  left = parseInt(left) -1;
+	  left = left + "px";
+	  jqLeaf.css("width",width);
+	  jqLeaf.css("height",height);
+	  jqLeaf.css("top",top);
+	  jqLeaf.css("left",left);
+	  if((widthInt * heightInt) > 2500) {
+	  	jqLeaf.css("font-size","8pt");
+	  }
+	});
+	
+});
+</script>
+
+<div id="key">
+	<img src="resources/dashboard/large.png"> large = widely used report <img src="resources/dashboard/small.png"> small = less use<p>
+	<img src="resources/dashboard/increasing.png"> red = increasing use <img src="resources/dashboard/decreasing.png"> blue = cooling (decreasing)<p>
+</div>
+
+<div id="infovis" /> 
+
+

@@ -8,7 +8,7 @@
       $viewMethods.getApplicationName() $viewMethods.getApplicationVersion() - $company_name
     </title>
    	  <script src="resources/jquery.js" language="Javascript"></script>
-	  <script type="text/javascript" src="resources/fauxconsole.js"></script>	
+	  ## <script type="text/javascript" src="resources/fauxconsole.js"></script>	
       <script language=JavaScript src="resources/logger.js"></script>
       <script language=JavaScript src="resources/wait/request.js"></script>
       <script language=JavaScript src="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.js"></script>      
@@ -17,6 +17,7 @@
       <SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
       <script language=JavaScript src="resources/wait/setFilter.js"></script>
       <script language=JavaScript src="resources/wait/editBuffer.js"></script>
+	  <script language=Javascript src="resources/jit.js"></script>
       <script language="JavaScript" type="text/javascript">
 	        function fSummaryPaneReady() {				 
 	          // return the status of the summary pane by examining its readystate
@@ -104,7 +105,7 @@
         		
       </script> 
       <style>
-		@import url('resources/fauxconsole.css');
+		## @import url('resources/fauxconsole.css');
         @import url('resources/modalFramework/modalFramework.css');
         @import url('customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css');
 		@import url('resources/display_application.css');
@@ -164,7 +165,11 @@
 						</span>
 					</div>
 		      </div>
-
 		      <iframe id="oViewPane" name="oViewPane" src="AppController.servlet?return=gui/display_panes" frameborder=no scrolling=yes></iframe>
+			  #if($viewMethods.loggedInUserAllowedTo("ADMINISTRATE"))
+			    <div id="dashboard">
+			  	  #parse("gui/dashboard.vm")
+			    </div>
+			  #end
     </body>		
 </html>

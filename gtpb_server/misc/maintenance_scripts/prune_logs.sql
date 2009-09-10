@@ -6,7 +6,7 @@
 DELETE FROM dbint_log_data_change WHERE age(app_timestamp) > '1 year'::interval;
 DELETE FROM dbint_log_login WHERE age(app_timestamp) > '1 year'::interval;
 DELETE FROM dbint_log_report_schema_change WHERE age(app_timestamp) > '1 year'::interval;
-DELETE FROM dbint_log_report_view WHERE age(app_timestamp) > '1 year'::interval;
+DELETE FROM dbint_log_report_view WHERE age(app_timestamp) > '6 months'::interval;
 DELETE FROM dbint_log_table_schema_change WHERE age(app_timestamp) > '1 year'::interval;
 
 -- remove close-duplicate entries from report view log to save space
@@ -37,3 +37,9 @@ FROM dbint_log_report_view rv_outer INNER JOIN dbint_log_report_view rv_inner
   AND position(regexp_replace(rv_inner.details,'\}.*$','') in regexp_replace(rv_outer.details,'\}.*$','')) = 1
 ORDER BY rv_outer.log_entry_id
 );
+
+-- materialize statistics report
+DELETE FROM dbint_report_view_stats_materialized;
+INSERT INTO dbint_report_view_stats_materialized(company, report, average_count, percentage_increase)
+  SELECT company, report, average_count, percentage_increase FROM dbint_report_view_stats;
+

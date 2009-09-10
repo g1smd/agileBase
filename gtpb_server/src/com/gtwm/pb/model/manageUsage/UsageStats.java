@@ -144,6 +144,13 @@ public class UsageStats implements UsageStatsInfo {
 				int averageCount = results.getInt(2);
 				totalArea += averageCount;
 				int percentageIncrease = results.getInt(3);
+				// Hard code the max and min for now.
+				//TODO: These could become parameters
+				if (percentageIncrease > 1000) {
+					percentageIncrease = 1000;
+				} else if (percentageIncrease < -1000) {
+					percentageIncrease = -1000;
+				}
 				String section = module.getSection();
 				if (section == null) {
 					section = "";
@@ -190,7 +197,7 @@ public class UsageStats implements UsageStatsInfo {
 		BaseReportInfo report = null;
 		js.object();
 		js.key("id").value("root");
-		js.key("name").value("overview of usage");
+		js.key("name").value("");
 		js.key("data").object().key("$area").value(totalArea).endObject();
 		js.key("children").array();
 		// loop through sections
@@ -212,6 +219,11 @@ public class UsageStats implements UsageStatsInfo {
 				js.key("name").value(module.getModuleName().toLowerCase());
 				js.key("data").object().key("$area").value(moduleAreas.get(module)).endObject();
 				js.key("children").array();
+				//js.object(); // nest another empty node just to space out modules from each other
+				//js.key("id").value("m_sep_" + module.getInternalModuleName());
+				//js.key("name").value("");
+				//js.key("data").object().key("$area").value(moduleAreas.get(module)).endObject();
+				//js.key("children").array();
 				for (UsageStatsTreeMapNodeInfo leaf : leaves) {
 					js.object(); // start report object
 					report = leaf.getReport();
@@ -228,10 +240,12 @@ public class UsageStats implements UsageStatsInfo {
 					js.endObject(); // end report
 				}
 				js.endArray(); // end children
-				js.endObject(); // end module object
+				js.endObject(); // end module
 			}
 			js.endArray(); // end children of section
 			js.endObject(); // end section object
+			//js.endArray(); // end children of section
+			//js.endObject(); // end section object
 		}
 		js.endArray(); // end children of root
 		js.endObject(); // end root
