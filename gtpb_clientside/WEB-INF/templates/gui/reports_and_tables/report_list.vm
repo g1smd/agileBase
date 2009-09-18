@@ -115,7 +115,7 @@
 		#end
 	#end	
 	
-	<li id="$internalModuleName" #if($sessionReportModule.equals($module)) class="moduleexpanded $colourStyleName" #else class="modulecollapsed $colourStyleName" #end>
+	<li id="$internalModuleName" class="modulecollapsed $colourStyleName">
 	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> $module</span></h2>
 	  #set($moduleActions = $viewMethods.getModuleActions($internalModuleName))
 	  #if(($moduleActions.size()>0) && (!$mobile_device))

@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.model.interfaces;
 
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.List;
 import java.sql.SQLException;
@@ -50,12 +51,17 @@ public interface UsageStatsInfo {
 	 * Return data that can be used to build a treemap of report view
 	 * statistics. Reports are grouped by module
 	 */
-	public String getTreeMapJSON() throws ObjectNotFoundException, DisallowedException, SQLException, JSONException;
+	public String getTreeMapJSON() throws ObjectNotFoundException, DisallowedException,
+			SQLException, JSONException;
 
 	/**
 	 * Return module viewing stats, sorted by the total number of report views
 	 * per module
+	 * 
+	 * @Deprecated No current UI templates use this. Functionality replaced by
+	 *             getTreeMapJSON()
 	 */
+	@Deprecated
 	public SortedSet<ModuleUsageStatsInfo> getModuleStats() throws DisallowedException,
 			ObjectNotFoundException, SQLException;
 
@@ -97,14 +103,11 @@ public interface UsageStatsInfo {
 			SQLException, CodingErrorException, CantDoThatException;
 
 	/**
-	 * Get a list of users that have been viewing this report along with some
-	 * overview stats about each
-	 * 
-	 * Columns for each row returned are: username, last access date, total
-	 * access count
+	 * Get report view stats including a list of users that have been viewing a
+	 * report along with some overview stats about each
 	 */
-	public List<List<String>> getReportViewStats(BaseReportInfo report) throws DisallowedException,
-			SQLException, CodingErrorException, CantDoThatException;
+	public ReportViewStatsInfo getReportViewStats(BaseReportInfo report)
+			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException;
 
 	/**
 	 * Return any tables that have had no report views (from any child reports)

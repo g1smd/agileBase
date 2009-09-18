@@ -24,19 +24,25 @@ function fSetCurrentOption(sName, sRecordCount){
 	var jqCurrentItem = $("#"+sName);
 	jqCurrentItem.addClass("currentOption");
 	jqCurrentItem.find(".recordcount").html("("+sRecordCount+")");
+	// open the report's module, if not already open
+	var parentElem = jqCurrentItem.parent().parent();
+	if (parentElem.hasClass('modulecollapsed')) {
+		parentElem.children('ul').slideDown('fast');
+		parentElem.removeClass('modulecollapsed');
+		parentElem.addClass('moduleexpanded');
+	}
 }
 
 function fUpdateTitle(sName, sNewTitle) {
 	var jqCurrentItem = $("#"+sName);
 	jqCurrentItem.find('a').text(sNewTitle);
-	//this.dtitle.replaceData(0,this.dtitle.nodeValue.length,sNewTitle);
 }
 
 $(document).ready(function(){
 
 	// Tree expanding and contracting
 	$('h2').click(function(event){
-		var parentElem = $($(this).parent().get(0));
+		var parentElem = $(this).parent();
 
 		if (parentElem.hasClass('modulecollapsed')) {
 			parentElem.children('ul').slideDown('fast');

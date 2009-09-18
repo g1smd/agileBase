@@ -71,7 +71,7 @@ div#_md_blank.window_disable h1 {
 	position:absolute;
 	background: white;
 	left: 250px;
-	top: 60px;
+	top: 72px;
 	right: 0px;
 	bottom: 0px;
 	overflow: auto;
@@ -162,7 +162,12 @@ div#_md_blank.window_disable h1 {
     /* background-color:#A4D9FF;  */
 	background-color:#feb56e;
     color:black;  
-}  
+}
+
+/* added by Oliver*/
+#infovis #root > .head {
+  background-color: white!important;
+}
   
 /* tooltips style */  
 .tip {  
@@ -172,8 +177,9 @@ div#_md_blank.window_disable h1 {
     padding:5px;  
     position:absolute;
 	font-family: arial, helvetica, sans-serif;
-	opacity: 0.8;
-
+	opacity: 0.9;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 #key {

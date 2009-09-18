@@ -18,35 +18,40 @@
 <li branch="true" class="modulecollapsed silver">
 	<h2><span>Administration</span></h2>
   <ul>
+    <li id="administrationstats">
+	  <div class="tree-item-wrap">
+          <a class=title href="javascript:top.showStatsDashboard();" title="Show global usage statistics dashboard">
+            stats dashboard
+          </a>
+	  </div>
+	</li>
 	<li id="administrationmodules">
 	  <div class="tree-item-wrap">
     	  <a class="title" href="AppController.servlet?return=gui/administration/modules/list" target="pane_2" title="Manage application modules and assign icons">
-    		Modules
+    		modules
     	  </a>
 	  </div>
 	</li>
-	#if($viewMethods.loggedInUserAllowedTo('ADMINISTRATE'))
     <li id="administrationusers">
 	  <div class="tree-item-wrap">
           <a class=title href="AppController.servlet?return=gui/administration/users/list" target="pane_2" title="Set up users and user privileges">
-            Users
+            users
           </a>
 	  </div>
 	</li>
     <li id="administrationroles">
 	  <div class="tree-item-wrap">		
           <a class=title href="AppController.servlet?return=gui/administration/roles/list" target="pane_2" title="Set up roles and role privileges">
-            Roles
-          </a>  
+            roles
+          </a>
 	  </div>
 	</li>
     <li id="administrationinformation">
 	  <div class="tree-item-wrap">		
           <a class=title href="AppController.servlet?return=gui/administration/information/list" target="pane_2" title="Show company information and usage stats">
-            Usage Stats
+            organisation logs
           </a>  
 	  </div>
 	</li>
-	#end
   </ul>
 </li>

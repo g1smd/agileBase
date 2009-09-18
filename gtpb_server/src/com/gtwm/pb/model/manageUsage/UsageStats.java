@@ -18,6 +18,7 @@
 package com.gtwm.pb.model.manageUsage;
 
 import com.gtwm.pb.model.interfaces.ModuleUsageStatsInfo;
+import com.gtwm.pb.model.interfaces.ReportViewStatsInfo;
 import com.gtwm.pb.model.interfaces.UsageStatsInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
@@ -43,6 +44,7 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Set;
@@ -92,11 +94,6 @@ public class UsageStats implements UsageStatsInfo {
 
 	public String getTreeMapJSON() throws ObjectNotFoundException, DisallowedException,
 			SQLException, JSONException {
-		// data structure for the treemap for a particular section (a set of
-		// modules)
-		// Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> sectionTreeMap = new
-		// HashMap<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>();
-		// collection of section treemaps
 		Map<String, Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>> sectionTreeMaps = new HashMap<String, Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>>();
 		Map<ModuleInfo, Integer> moduleAreas = new HashMap<ModuleInfo, Integer>();
 		Map<String, Integer> sectionAreas = new HashMap<String, Integer>();
@@ -197,7 +194,7 @@ public class UsageStats implements UsageStatsInfo {
 		BaseReportInfo report = null;
 		js.object();
 		js.key("id").value("root");
-		js.key("name").value("");
+		js.key("name").value("stats map - complete overview of " + company + " reports");
 		js.key("data").object().key("$area").value(totalArea).endObject();
 		js.key("children").array();
 		// loop through sections
@@ -219,11 +216,6 @@ public class UsageStats implements UsageStatsInfo {
 				js.key("name").value(module.getModuleName().toLowerCase());
 				js.key("data").object().key("$area").value(moduleAreas.get(module)).endObject();
 				js.key("children").array();
-				//js.object(); // nest another empty node just to space out modules from each other
-				//js.key("id").value("m_sep_" + module.getInternalModuleName());
-				//js.key("name").value("");
-				//js.key("data").object().key("$area").value(moduleAreas.get(module)).endObject();
-				//js.key("children").array();
 				for (UsageStatsTreeMapNodeInfo leaf : leaves) {
 					js.object(); // start report object
 					report = leaf.getReport();
@@ -244,8 +236,6 @@ public class UsageStats implements UsageStatsInfo {
 			}
 			js.endArray(); // end children of section
 			js.endObject(); // end section object
-			//js.endArray(); // end children of section
-			//js.endObject(); // end section object
 		}
 		js.endArray(); // end children of root
 		js.endObject(); // end root
@@ -388,14 +378,16 @@ public class UsageStats implements UsageStatsInfo {
 		return unusedTables;
 	}
 
-	public List<List<String>> getReportViewStats(BaseReportInfo report) throws DisallowedException,
+	public ReportViewStatsInfo getReportViewStats(BaseReportInfo report) throws DisallowedException,
 			SQLException, CodingErrorException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable())) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
-		List<List<String>> userInfos = new LinkedList<List<String>>();
+		SortedSet<UserReportViewStatsInfo> userInfos = new TreeSet<UserReportViewStatsInfo>();
+		int averageViews = 0;
+		int percentageIncrease = 0;
 		String SQLCode = "SELECT app_user, max(app_timestamp), count(*)";
 		SQLCode += " FROM dbint_log_" + LogType.REPORT_VIEW.name().toLowerCase();
 		SQLCode += " WHERE report=?";
@@ -408,19 +400,30 @@ public class UsageStats implements UsageStatsInfo {
 			PreparedStatement statement = conn.prepareStatement(SQLCode);
 			statement.setString(1, report.getInternalReportName());
 			ResultSet results = statement.executeQuery();
-			Calendar calendar = Calendar.getInstance();
-			String appTimestampFormat = Helpers.generateJavaDateFormat(Calendar.DAY_OF_MONTH);
-			while (results.next()) {
-				List<String> row = new LinkedList<String>();
+			AppUserInfo user = null;
+			RESULTSLOOP: while (results.next()) {
 				String username = results.getString(1);
-				row.add(username);
-				Timestamp time = results.getTimestamp(2);
-				calendar.setTimeInMillis(time.getTime());
-				String lastAccessedTime = String.format(appTimestampFormat, calendar);
-				row.add(lastAccessedTime);
-				String viewCount = results.getString(3);
-				row.add(viewCount);
-				userInfos.add(row);
+				try {
+					user = this.databaseDefn.getAuthManager().getUserByUserName(this.request, username);
+				} catch(ObjectNotFoundException onex) {
+					// user no longer exists
+					continue RESULTSLOOP;
+				}
+				Date time = results.getDate(2);
+				int viewCount = results.getInt(3);
+				UserReportViewStatsInfo userInfo = new UserReportViewStats(user, viewCount, time);
+				userInfos.add(userInfo);
+			}
+			results.close();
+			statement.close();
+			SQLCode = "SELECT average_count, percentage_increase FROM dbint_report_view_stats_materialized";
+			SQLCode += " WHERE report=?";
+			statement = conn.prepareStatement(SQLCode);
+			statement.setString(1, report.getInternalReportName());
+			results = statement.executeQuery();
+			if (results.next()) {
+				averageViews = results.getInt(1);
+				percentageIncrease = results.getInt(2);
 			}
 			results.close();
 			statement.close();
@@ -433,7 +436,8 @@ public class UsageStats implements UsageStatsInfo {
 				conn.close();
 			}
 		}
-		return userInfos;
+		ReportViewStatsInfo reportViewStats = new ReportViewStats(averageViews, percentageIncrease, userInfos);
+		return reportViewStats;
 	}
 
 	public List<List<String>> getTableViewStats(TableInfo table) throws DisallowedException,

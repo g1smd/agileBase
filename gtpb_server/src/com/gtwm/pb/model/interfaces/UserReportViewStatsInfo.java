@@ -17,6 +17,8 @@
  */
 package com.gtwm.pb.model.interfaces;
 
+import java.util.Date;
+
 /**
  * Expected to be used in a Map<BaseReportInfo, UserReportViewStatsInfo>
  */
@@ -29,4 +31,5 @@ public interface UserReportViewStatsInfo {
 	 */
 	public int getReportViews();
 	
+	public Date getLastViewed();
 }

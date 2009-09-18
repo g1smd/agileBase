@@ -17,6 +17,8 @@
  */
 package com.gtwm.pb.model.manageUsage;
 
+import java.util.Date;
+
 import com.gtwm.pb.model.interfaces.UserReportViewStatsInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.auth.AppUser;
@@ -32,12 +34,22 @@ public class UserReportViewStats implements UserReportViewStatsInfo,
 		this.reportViews = reportViews;
 	}
 	
+	public UserReportViewStats(AppUserInfo appUser, int reportViews, Date lastViewed) {
+		this.appUser = appUser;
+		this.reportViews = reportViews;
+		this.lastViewed = lastViewed;
+	}
+	
 	public AppUserInfo getUser() {
 		return this.appUser;
 	}
 
 	public int getReportViews() {
 		return this.reportViews;
+	}
+	
+	public Date getLastViewed() {
+		return this.lastViewed;
 	}
 
 	/**
@@ -76,5 +88,6 @@ public class UserReportViewStats implements UserReportViewStatsInfo,
 	private AppUserInfo appUser;
 
 	private int reportViews = 0;
-
+	
+	private Date lastViewed = null;
 }

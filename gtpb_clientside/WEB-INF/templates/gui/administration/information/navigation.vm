@@ -16,7 +16,8 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 $viewTools.startTimer("gui/administration/information/navigation.vm")
-#parse('gui/administration/information/buttons/stats.vm')
+## functionality replaced by the stats treemap dashboard
+## #parse('gui/administration/information/buttons/stats.vm')
 #parse('gui/administration/information/buttons/pricing.vm')
 #parse('gui/administration/information/buttons/export.vm')
 $viewTools.stopTimer("gui/administration/information/navigation.vm")

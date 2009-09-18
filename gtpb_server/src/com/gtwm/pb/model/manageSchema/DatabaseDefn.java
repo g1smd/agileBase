@@ -585,10 +585,10 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	public synchronized BaseReportInfo addReport(SessionDataInfo sessionData,
 			HttpServletRequest request, Connection conn, TableInfo table,
-			String internalReportName, String reportName, String reportDesc,
-			boolean populateReport) throws SQLException, DisallowedException, CantDoThatException,
-			CodingErrorException, ObjectNotFoundException, ObjectNotFoundException,
-			ObjectNotFoundException, MissingParametersException {
+			String internalReportName, String reportName, String reportDesc, boolean populateReport)
+			throws SQLException, DisallowedException, CantDoThatException, CodingErrorException,
+			ObjectNotFoundException, ObjectNotFoundException, ObjectNotFoundException,
+			MissingParametersException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
@@ -1113,7 +1113,11 @@ public class DatabaseDefn implements DatabaseInfo {
 					} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
 						if (formInputName.equals("updateoption" + field.getInternalFieldName()
 								+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
-							textField.setDefault(formInputValue);
+							if (formInputValue.equals("")) {
+								textField.setDefault(null);
+							} else {
+								textField.setDefault(formInputValue);
+							}
 						}
 					}
 				}
@@ -1175,8 +1179,12 @@ public class DatabaseDefn implements DatabaseInfo {
 					} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
 						if (formInputName.equals("updateoption" + field.getInternalFieldName()
 								+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
-							Double defaultValue = Double.parseDouble(formInputValue);
-							decimalField.setDefault(defaultValue);
+							if (formInputValue.equals("")) {
+								decimalField.setDefault(null);
+							} else {
+								Double defaultValue = Double.parseDouble(formInputValue);
+								decimalField.setDefault(defaultValue);
+							}
 						}
 					}
 				}
@@ -1211,8 +1219,12 @@ public class DatabaseDefn implements DatabaseInfo {
 					} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
 						if (formInputName.equals("updateoption" + field.getInternalFieldName()
 								+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
-							Integer defaultValue = Integer.parseInt(formInputValue);
-							integerField.setDefault(defaultValue);
+							if (formInputValue.equals("")) {
+								integerField.setDefault(null);
+							} else {
+								Integer defaultValue = Integer.parseInt(formInputValue);
+								integerField.setDefault(defaultValue);
+							}
 						}
 					}
 				}
@@ -2052,8 +2064,8 @@ public class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public synchronized void addGroupingToSummaryReport(HttpServletRequest request,
-			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer) throws DisallowedException, CantDoThatException,
-			ObjectNotFoundException, SQLException {
+			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer)
+			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException {
 		HibernateUtil.activateObject(groupingReportField);
 		BaseReportInfo report = groupingReportField.getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,

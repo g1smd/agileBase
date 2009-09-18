@@ -52,9 +52,13 @@
 	});
     </script>
 </head>
-  <body #if($mobile_device) onload="window.scrollTo(0,1)" #else onload="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data'"#end>
+  #if($viewMethods.loggedInUserAllowedTo("ADMINISTRATE"))
+    <body #if($mobile_device) onload="window.scrollTo(0,1)" #end>
+  #else
+    <body #if($mobile_device) onload="window.scrollTo(0,1)" #else onload="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data'"#end>
+  #end
 	<ol id="tree"> <!-- ordered list for sections -->      
-	  #parse('gui/reports_and_tables/report_list.vm')  
+	  #parse('gui/reports_and_tables/report_list.vm')
       ##TODO: add logout button if mobile device
 	  #if($mobile_device)
 		<li><h1><span>Tools</span></h1>

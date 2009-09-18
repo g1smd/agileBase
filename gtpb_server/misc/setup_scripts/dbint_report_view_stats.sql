@@ -23,3 +23,4 @@ average_count double precision,
 percentage_increase double precision);
 
 create index drvsm_company_idx on dbint_report_view_stats_materialized(company);
+create index drvsm_report_idx on dbint_report_view_stats_materialized(report);

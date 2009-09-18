@@ -17,12 +17,12 @@
 ##
 This list shows users that are viewing this report<p>
 #set($report = $viewMethods.getSessionData().getReport())
-#set($usageStats = $viewMethods.getUsageStats())
+#set($reportViewStats = $viewMethods.getUsageStats().getReportViewStats($report).getUserStats())
 <table width="100%" border="0">
-<tr><td><b>Username</b></td><td><b>Last access date</b></td><td><b>Total access count</b></td></tr>
-#foreach($reportViewRow in $usageStats.getReportViewStats($report))
+<tr><td><b>User</b></td><td><b>Last access date</b></td><td><b>Total access count</b></td></tr>
+#foreach($reportViewStat in $reportViewStats)
   <tr>
-  #foreach($cell in $reportViewRow)<td>$cell</td>#end
+	<td>$reportViewStat.getUser()</td><td>$reportViewStat.getLastViewed()</td><td>$reportViewStat.getReportViews()</td>
   </tr>
 #end
 </table>

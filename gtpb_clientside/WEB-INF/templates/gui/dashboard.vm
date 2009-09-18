@@ -5,15 +5,33 @@ jQuery(document).ready(function(){
 	// fit treemap to window
 	jqInfovis = jQuery("#infovis");
 	ivWidth = jQuery("#dashboard").css("width");
+	ivWidth = ivWidth.substring(0,ivWidth.length - 2);
+	ivWidthInt = parseInt(ivWidth) -15;
+	ivWidth = ivWidthInt + "px";
 	jqInfovis.css("width",ivWidth);
 
     var json = $viewMethods.getUsageStats().getTreeMapJSON();
-		
+	
+	TM.Squarified.implement({  
+    'onLeftClick': function(elem) {  
+        var internalReportName = jQuery(elem).parent().attr("id");
+		// if a report node
+		if (internalReportName.substring(0,2) == "r_") {
+			internalReportName = internalReportName.substring(2);
+			var url = "AppController.servlet?return=gui/reports_and_tables/report_data";
+			url = url + "&set_report=" + internalReportName;
+			url = url + "&set_report_row_limit=100";
+			top.oViewPane.pane_2.location = url;
+		}
+    }  
+	});  
+
     var tm = new TM.Squarified({  
                 //Where to inject the Treemap  
                 rootId: 'infovis',
 				offset: 2,
 				selectPathOnHover: true,
+				addLeftClickHandler: true,
 				Color: {  
         			//Allow coloring  
         			allow: true,  
@@ -25,24 +43,33 @@ jQuery(document).ready(function(){
         			//greenish. It takes an array of three  
         			//integers as R, G and B values.  
         			//maxColorValue: [0, 255, 50],
-        			maxColorValue: [254, 50, 50],
-					minColorValue: [50, 150, 254]
+        			maxColorValue: [255, 50, 50],
+					minColorValue: [50, 150, 255]
      			},
 				Tips: {  
        				allow: true,  
        				//add positioning offsets  
        				offsetX: 20,  
-       				offsetY: 20,  
+       				offsetY: 20,
        				//implement the onShow method to  
        				//add content to the tooltip when a node  
        				//is hovered  
        				onShow: function(tip, node, isLeaf, domElement) {
 						if (isLeaf) {
-           					tip.innerHTML = node.name;
+							top.innerHTML = node.name;
+							var internalReportName = jQuery(domElement).parent().attr("id");
+							internalReportName = internalReportName.substring(2);
+							tipParams = {
+								"return": "gui/resources/report_view_stats",
+								"set_custom_report": "true",
+								"reportkey": "dashboard_report",
+								"custominternalreportname": internalReportName
+							}
+           					jQuery(tip).load("AppController.servlet", tipParams);
 						} else {
 							tip.innerHTML = node.name + " module";
 						}
-       				}  
+       				}
 				}
              });  
     tm.loadJSON(json);

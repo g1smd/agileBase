@@ -66,7 +66,7 @@
 	      </SCRIPT>
 	    #end
       	<SCRIPT language=Javascript src="resources/$resource_folder/new_delete.js"></SCRIPT>
-	    #if($isNotTable||$viewMethods.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
+	#if($isNotTable||$viewMethods.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
 		#if(!$mobile_device)
   	    <SCRIPT language=Javascript>
    	     top.document.getElementById('button_new').removeAttribute('disabled');
@@ -76,12 +76,13 @@
    	     top.document.getElementById('button_export').removeAttribute('disabled');
    	     top.document.getElementById('button_print').removeAttribute('disabled');
    	     top.document.getElementById('button_links').removeAttribute('disabled');
+   	     top.document.getElementById('button_info').removeAttribute('disabled');
         </SCRIPT>
 	    #end
     #else
 		#if(!$mobile_device)
       <SCRIPT language=Javascript>
-        		function fNew(){
+        	 function fNew(){
         		  // do nothing
         		}
    		
@@ -97,6 +98,7 @@
 	    	    top.document.getElementById('button_export').removeAttribute('disabled');
    	     		top.document.getElementById('button_print').removeAttribute('disabled');
    	     		top.document.getElementById('button_links').removeAttribute('disabled');
+   	     		top.document.getElementById('button_info').removeAttribute('disabled');
         	#else
         		top.document.getElementById('button_export').setAttribute('disabled');
         		top.document.getElementById('button_print').setAttribute('disabled');
@@ -311,6 +313,8 @@
     </SCRIPT>
 	<script type="text/javascript">
 	$(document).ready(function() {
+	  top.hideStatsDashboard();
+	  
 	  $("#filterhelp").cluetip({
 	    showTitle: false,
 		ajaxCache: true,
