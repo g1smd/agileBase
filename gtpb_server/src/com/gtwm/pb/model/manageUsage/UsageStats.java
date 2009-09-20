@@ -142,8 +142,10 @@ public class UsageStats implements UsageStatsInfo {
 				totalArea += averageCount;
 				int percentageIncrease = results.getInt(3);
 				// Hard code the max and min for now.
-				//TODO: These could become parameters
-				if (percentageIncrease > 1000) {
+				// TODO: These could become parameters
+				if (results.wasNull()) {
+					percentageIncrease = -1000;
+				} else if (percentageIncrease > 1000) {
 					percentageIncrease = 1000;
 				} else if (percentageIncrease < -1000) {
 					percentageIncrease = -1000;
@@ -207,8 +209,10 @@ public class UsageStats implements UsageStatsInfo {
 			js.key("data").object().key("$area").value(sectionAreas.get(section)).endObject();
 			js.key("children").array();
 			// loop through modules
-			Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> sectionTreeMap = sectionTreeMapsEntry.getValue();
-			for (Map.Entry<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> treeMapEntry : sectionTreeMap.entrySet()) {
+			Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> sectionTreeMap = sectionTreeMapsEntry
+					.getValue();
+			for (Map.Entry<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> treeMapEntry : sectionTreeMap
+					.entrySet()) {
 				ModuleInfo module = treeMapEntry.getKey();
 				Set<UsageStatsTreeMapNodeInfo> leaves = treeMapEntry.getValue();
 				js.object(); // start module object
@@ -227,8 +231,8 @@ public class UsageStats implements UsageStatsInfo {
 					js.key("$color").value(leaf.getColour());
 					js.endObject(); // end data object
 					js.key("children").array().endArray(); // no children, empty
-															// array still
-															// necessary
+					// array still
+					// necessary
 					js.endObject(); // end report
 				}
 				js.endArray(); // end children
@@ -378,8 +382,8 @@ public class UsageStats implements UsageStatsInfo {
 		return unusedTables;
 	}
 
-	public ReportViewStatsInfo getReportViewStats(BaseReportInfo report) throws DisallowedException,
-			SQLException, CodingErrorException, CantDoThatException {
+	public ReportViewStatsInfo getReportViewStats(BaseReportInfo report)
+			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable())) {
@@ -404,8 +408,9 @@ public class UsageStats implements UsageStatsInfo {
 			RESULTSLOOP: while (results.next()) {
 				String username = results.getString(1);
 				try {
-					user = this.databaseDefn.getAuthManager().getUserByUserName(this.request, username);
-				} catch(ObjectNotFoundException onex) {
+					user = this.databaseDefn.getAuthManager().getUserByUserName(this.request,
+							username);
+				} catch (ObjectNotFoundException onex) {
 					// user no longer exists
 					continue RESULTSLOOP;
 				}
@@ -436,7 +441,8 @@ public class UsageStats implements UsageStatsInfo {
 				conn.close();
 			}
 		}
-		ReportViewStatsInfo reportViewStats = new ReportViewStats(averageViews, percentageIncrease, userInfos);
+		ReportViewStatsInfo reportViewStats = new ReportViewStats(averageViews, percentageIncrease,
+				userInfos);
 		return reportViewStats;
 	}
 

@@ -313,8 +313,6 @@
     </SCRIPT>
 	<script type="text/javascript">
 	$(document).ready(function() {
-	  top.hideStatsDashboard();
-	  
 	  $("#filterhelp").cluetip({
 	    showTitle: false,
 		ajaxCache: true,

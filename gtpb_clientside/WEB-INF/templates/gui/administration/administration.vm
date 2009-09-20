@@ -18,13 +18,6 @@
 <li branch="true" class="modulecollapsed silver">
 	<h2><span>Administration</span></h2>
   <ul>
-    <li id="administrationstats">
-	  <div class="tree-item-wrap">
-          <a class=title href="javascript:top.showStatsDashboard();" title="Show global usage statistics dashboard">
-            stats dashboard
-          </a>
-	  </div>
-	</li>
 	<li id="administrationmodules">
 	  <div class="tree-item-wrap">
     	  <a class="title" href="AppController.servlet?return=gui/administration/modules/list" target="pane_2" title="Manage application modules and assign icons">

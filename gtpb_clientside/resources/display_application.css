@@ -68,14 +68,10 @@ div#_md_blank.window_disable h1 {
 }
 
 #dashboard {
-	position:absolute;
-	background: white;
-	left: 250px;
-	top: 72px;
-	right: 0px;
-	bottom: 0px;
+	background-color: white;
 	overflow: auto;
-	x-index: 100;
+	width: 100%;
+	position: relative;
 }
 
 #logout {
@@ -104,7 +100,7 @@ div#_md_blank.window_disable h1 {
 #infovis {  
     position:relative;  
     width:1000px;  
-    height:600px;  
+    height:700px;  
     /* margin:auto;   */
     background-color:#1D1D20;
 	font-size:8pt;
@@ -167,6 +163,7 @@ div#_md_blank.window_disable h1 {
 /* added by Oliver*/
 #infovis #root > .head {
   background-color: white!important;
+  color: gray;
 }
   
 /* tooltips style */  
@@ -186,6 +183,6 @@ div#_md_blank.window_disable h1 {
 	border: 1px solid #feb56e;
 	padding: 1em;
 	margin: 1em;
-	top: 600px;
+	top: 700px;
 	position: absolute;
 }

@@ -1,3 +1,13 @@
+<html>
+<head>
+	<title>Utilisation information</title>
+	<script src="resources/jquery.js" language="Javascript"></script>
+	<script language=Javascript src="resources/jit.js"></script>
+	<style>
+	@import url('resources/display_application.css');
+	</style>
+</head>
+<body>
 #set($treeMap = $viewMethods.getUsageStats().getTreeMap())
 <script language="JavaScript">
 jQuery(document).ready(function(){
@@ -105,11 +115,13 @@ jQuery(document).ready(function(){
 });
 </script>
 
+<div id="dashboard">
 <div id="key">
 	<img src="resources/dashboard/large.png"> large = widely used report <img src="resources/dashboard/small.png"> small = less use<p>
 	<img src="resources/dashboard/increasing.png"> red = increasing use <img src="resources/dashboard/decreasing.png"> blue = cooling (decreasing)<p>
 </div>
 
 <div id="infovis" /> 
-
-
+</div>
+</body>
+</html>
