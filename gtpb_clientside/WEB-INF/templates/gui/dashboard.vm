@@ -31,7 +31,8 @@ jQuery(document).ready(function(){
 			var url = "AppController.servlet?return=gui/reports_and_tables/report_data";
 			url = url + "&set_report=" + internalReportName;
 			url = url + "&set_report_row_limit=100";
-			top.oViewPane.pane_2.location = url;
+			opener.oViewPane.pane_2.location = url;
+			window.close();
 		}
     }  
 	});  

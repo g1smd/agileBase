@@ -426,7 +426,7 @@ public class ReportData implements ReportDataInfo {
 					SQLCode.append(" WHERE ").append(relatedValueFieldString).append(" = ").append(
 							this.report.getInternalReportName()).append(".").append(
 							relationField.getInternalFieldName());
-					SQLCode.append(")AS ").append(relationField.getInternalFieldName()).append(
+					SQLCode.append(") AS ").append(relationField.getInternalFieldName()).append(
 							"_display, ");
 				}
 			}
@@ -538,6 +538,8 @@ public class ReportData implements ReportDataInfo {
 				} else {
 					statement.setString(i, filter.getFilterValue());
 				}
+			} else if (filterType.equals(QuickFilterType.EMPTY)) {
+				statement.setString(i, "");
 			} else {
 				statement.setString(i, filter.getFilterValue());
 			}
