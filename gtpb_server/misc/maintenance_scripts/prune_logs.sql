@@ -1,5 +1,5 @@
--- routine to be run via OS scheduler at a frequency chosen by administrator, e.g. once a month
--- to prune log tables
+-- Routine to be run via OS scheduler at a frequency chosen by administrator
+-- Once a day is recommended so the statistics are materialized regularly
 
 -- remove old log entries
 

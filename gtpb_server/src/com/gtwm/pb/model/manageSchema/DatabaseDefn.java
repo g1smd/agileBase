@@ -662,7 +662,7 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	/**
 	 * Updates the definition of a view within the DB. This method will not work
-	 * if number of columns within the view are being changed.
+	 * if the number of columns within the view are being changed.
 	 */
 	private boolean updateViewDbActionWithCreateOrReplace(Connection conn, BaseReportInfo report,
 			boolean viewExists) throws SQLException, CantDoThatException, CodingErrorException,
@@ -719,14 +719,6 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		return dropAndCreateWorked;
 	}
-
-	// private String getReportName(String internalReportName) throws
-	// ObjectNotFoundException {
-	// TableInfo parentTable =
-	// this.findTableContainingReport(internalReportName);
-	// return
-	// parentTable.getReportByInternalName(internalReportName).getReportName();
-	// }
 
 	/**
 	 * Returns a Map whose keySet contains the names of the set of views

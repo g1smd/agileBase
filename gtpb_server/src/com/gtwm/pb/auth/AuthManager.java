@@ -27,7 +27,6 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.UserGeneralPrivilegeInfo;
 import com.gtwm.pb.model.interfaces.RoleGeneralPrivilegeInfo;
 import com.gtwm.pb.model.interfaces.UserObjectPrivilegeInfo;
-import com.gtwm.pb.model.manageUsage.UsageLogger.LogType;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.MissingParametersException;
@@ -40,9 +39,6 @@ import org.grlea.log.SimpleLogger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
@@ -70,11 +66,11 @@ public class AuthManager implements AuthManagerInfo {
 	 *             If there was an error bootstrapping the relational database
 	 *             authentication tables
 	 * 
-	 * Note: No exception handling (finally block) is done here, that's in the
-	 * DatabaseDefn constructor that calls this
+	 *             Note: No exception handling (finally block) is done here,
+	 *             that's in the DatabaseDefn constructor that calls this
 	 */
 	public AuthManager(DataSource relationalDataSource) throws ObjectNotFoundException,
-			SQLException, CantDoThatException, MissingParametersException {
+			CantDoThatException, MissingParametersException {
 		try {
 			Session hibernateSession = HibernateUtil.currentSession();
 			Transaction hibernateTransaction = hibernateSession.beginTransaction();
@@ -97,76 +93,6 @@ public class AuthManager implements AuthManagerInfo {
 						+ ((Authenticator) authenticator).getRolePrivileges());
 			}
 			if (this.authenticator == null) {
-				// If no authenticator is in the db, create a new one and
-				// bootstrap it with some default data
-				// Also assume that there are no usage logging tables and create
-				// them
-				// First do the relational database work
-				Connection conn = null;
-				conn = null;
-				try {
-					conn = relationalDataSource.getConnection();
-					conn.setAutoCommit(false);
-					// finally, create usage logging tables
-					String SQLCode = "CREATE TABLE dbint_log_"
-							+ LogType.DATA_CHANGE.name().toLowerCase() + "(";
-					SQLCode += "app_timestamp timestamp, ";
-					SQLCode += "company varchar(1000), ";
-					SQLCode += "app_user varchar(1000), ";
-					SQLCode += "app_table varchar(1000), ";
-					SQLCode += "app_action varchar(255), ";
-					SQLCode += "saved_data varchar(100000), ";
-					SQLCode += "row_id integer)";
-					PreparedStatement statement = conn.prepareStatement(SQLCode);
-					statement.execute();
-					statement.close();
-					SQLCode = "CREATE TABLE dbint_log_" + LogType.LOGIN.name().toLowerCase()
-							+ "(";
-					SQLCode += "app_timestamp timestamp, ";
-					SQLCode += "company varchar(1000), ";
-					SQLCode += "app_user varchar(1000), ";
-					SQLCode += "ip_address varchar(1000))";
-					statement = conn.prepareStatement(SQLCode);
-					statement.execute();
-					statement.close();
-					SQLCode = "CREATE TABLE dbint_log_"
-							+ LogType.REPORT_SCHEMA_CHANGE.name().toLowerCase() + "(";
-					SQLCode += "app_timestamp timestamp, ";
-					SQLCode += "company varchar(1000), ";
-					SQLCode += "app_user varchar(1000), ";
-					SQLCode += "report varchar(1000), ";
-					SQLCode += "app_action varchar(255), ";
-					SQLCode += "details varchar(100000))";
-					statement = conn.prepareStatement(SQLCode);
-					statement.execute();
-					statement.close();
-					SQLCode = "CREATE TABLE dbint_log_"
-							+ LogType.REPORT_VIEW.name().toLowerCase() + "(";
-					SQLCode += "app_timestamp timestamp, ";
-					SQLCode += "company varchar(1000), ";
-					SQLCode += "app_user varchar(1000), ";
-					SQLCode += "report varchar(1000), ";
-					SQLCode += "details varchar(100000))";
-					statement = conn.prepareStatement(SQLCode);
-					statement.execute();
-					statement.close();
-					SQLCode = "CREATE TABLE dbint_log_"
-							+ LogType.TABLE_SCHEMA_CHANGE.name().toLowerCase() + "(";
-					SQLCode += "app_timestamp timestamp, ";
-					SQLCode += "company varchar(1000), ";
-					SQLCode += "app_user varchar(1000), ";
-					SQLCode += "app_table varchar(1000), ";
-					SQLCode += "app_action varchar(255), ";
-					SQLCode += "details varchar(100000))";
-					statement = conn.prepareStatement(SQLCode);
-					statement.execute();
-					statement.close();
-					conn.commit();
-				} finally {
-					if (conn != null) {
-						conn.close();
-					}
-				}
 				try {
 					// Now the object database work
 					this.authenticator = new Authenticator();
@@ -187,8 +113,6 @@ public class AuthManager implements AuthManagerInfo {
 					throw hex;
 				}
 			}
-		} catch (SQLException sqlex) {
-			throw sqlex;
 		} catch (RuntimeException rtex) {
 			throw rtex;
 		}
@@ -206,8 +130,8 @@ public class AuthManager implements AuthManagerInfo {
 	}
 
 	/*
-	 * Security note: anyone can see the display names of tables belonging to their company
-	 * using this method, special privileges aren't required
+	 * Security note: anyone can see the display names of tables belonging to
+	 * their company using this method, special privileges aren't required
 	 */
 	public synchronized SortedSet<String> getCompanyTableNames(HttpServletRequest request)
 			throws ObjectNotFoundException {
@@ -279,7 +203,8 @@ public class AuthManager implements AuthManagerInfo {
 		this.tableCompaniesCache.put(table, company);
 	}
 
-	public boolean tableBelongsToCompany(CompanyInfo company, TableInfo table) throws ObjectNotFoundException {
+	public boolean tableBelongsToCompany(CompanyInfo company, TableInfo table)
+			throws ObjectNotFoundException {
 		CompanyInfo cachedTableCompany = this.tableCompaniesCache.get(table);
 		if (cachedTableCompany == null) {
 			// find out what company the table belongs to
@@ -430,8 +355,7 @@ public class AuthManager implements AuthManagerInfo {
 			Set<AppUserInfo> allUsers = ((Authenticator) this.authenticator).getUsers();
 			// check that the new username isn't already in use by someone else
 			for (AppUserInfo testUser : allUsers) {
-				if (testUser.getUserName().equals(userName) && 
-				(!testUser.equals(appUser))) {
+				if (testUser.getUserName().equals(userName) && (!testUser.equals(appUser))) {
 					throw new CantDoThatException("Username " + userName + " already exists");
 				}
 			}
@@ -648,12 +572,14 @@ public class AuthManager implements AuthManagerInfo {
 		HibernateUtil.currentSession().delete(removedPrivilege);
 	}
 
-	public Set<RoleObjectPrivilegeInfo> getRolePrivilegesOnTable(HttpServletRequest request, TableInfo table) throws DisallowedException {
+	public Set<RoleObjectPrivilegeInfo> getRolePrivilegesOnTable(HttpServletRequest request,
+			TableInfo table) throws DisallowedException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE, table);
 		}
 		Set<RoleObjectPrivilegeInfo> rolePrivilegesOnTable = new HashSet<RoleObjectPrivilegeInfo>();
-		Set<RoleGeneralPrivilegeInfo> rolePrivileges = ((Authenticator) this.authenticator).getRolePrivileges();
+		Set<RoleGeneralPrivilegeInfo> rolePrivileges = ((Authenticator) this.authenticator)
+				.getRolePrivileges();
 		for (RoleGeneralPrivilegeInfo rolePrivilege : rolePrivileges) {
 			if (rolePrivilege instanceof RoleObjectPrivilege) {
 				RoleObjectPrivilege roleObjectPrivilege = (RoleObjectPrivilege) rolePrivilege;
@@ -664,13 +590,15 @@ public class AuthManager implements AuthManagerInfo {
 		}
 		return rolePrivilegesOnTable;
 	}
-	
-	public Set<UserObjectPrivilegeInfo> getUserPrivilegesOnTable(HttpServletRequest request, TableInfo table) throws DisallowedException {
+
+	public Set<UserObjectPrivilegeInfo> getUserPrivilegesOnTable(HttpServletRequest request,
+			TableInfo table) throws DisallowedException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE, table);
 		}
 		Set<UserObjectPrivilegeInfo> userPrivilegesOnTable = new HashSet<UserObjectPrivilegeInfo>();
-		Set<UserGeneralPrivilegeInfo> userPrivileges = ((Authenticator) this.authenticator).getUserPrivileges();
+		Set<UserGeneralPrivilegeInfo> userPrivileges = ((Authenticator) this.authenticator)
+				.getUserPrivileges();
 		for (UserGeneralPrivilegeInfo userPrivilege : userPrivileges) {
 			if (userPrivilege instanceof UserObjectPrivilege) {
 				UserObjectPrivilege userObjectPrivilege = (UserObjectPrivilege) userPrivilege;
@@ -681,7 +609,7 @@ public class AuthManager implements AuthManagerInfo {
 		}
 		return userPrivilegesOnTable;
 	}
-	
+
 	public void removePrivilegesOnTable(HttpServletRequest request, TableInfo table)
 			throws DisallowedException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table))) {
