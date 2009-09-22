@@ -144,7 +144,7 @@ div#_md_blank.window_disable h1 {
 }  
   
 #infovis .over-leaf {  
-    /* border:1px solid #9FD4FF;  */
+    opacity: 0.8;
 	cursor: pointer;
 	color: white;
 }  

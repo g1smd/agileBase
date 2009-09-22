@@ -95,11 +95,11 @@
 	<script type="text/javascript"> 
 
 		function  loadFeedControl() {
-			var feed  = "http://gtwebmarque.co.uk/clients/non_gtwp/gtpb/?feed=rss2";
+			var feed  = "http://gtportalbase.wordpress.com/?feed=rss2";
 				var options = {
 				numResults : 6,
 						displayTime : 15000,
-						title : "<a href='http://www.gtportalbase.com/blog'>announcements</a>",
+						title : "<a href='http://gtportalbase.wordpress.com'>announcements</a>",
 						linkTarget : google.feeds.LINK_TARGET_SELF
 				};
 			var fg = new GFdynamicFeedControl(feed, "announce", options);

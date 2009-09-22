@@ -144,11 +144,11 @@ public class UsageStats implements UsageStatsInfo {
 				// Hard code the max and min for now.
 				// TODO: These could become parameters
 				if (results.wasNull()) {
-					percentageIncrease = -1000;
-				} else if (percentageIncrease > 1000) {
-					percentageIncrease = 1000;
-				} else if (percentageIncrease < -1000) {
-					percentageIncrease = -1000;
+					percentageIncrease = -750;
+				} else if (percentageIncrease > 750) {
+					percentageIncrease = 750;
+				} else if (percentageIncrease < -750) {
+					percentageIncrease = -750;
 				}
 				String section = module.getSection();
 				if (section == null) {

@@ -48,8 +48,8 @@ jQuery(document).ready(function(){
         			allow: true,  
         			//Select a value range for the $color  
     			    //property. Defaults to -100 and 100.  
-     			    minValue: -1000,  
-     			    maxValue: 1000,  
+     			    minValue: -750,  
+     			    maxValue: 750,  
         			//Set color range. Default's to reddish and  
         			//greenish. It takes an array of three  
         			//integers as R, G and B values.  
