@@ -65,7 +65,6 @@
 	<head>
 		<title>GT portalBase</title>
 		<link rel="icon" href="/portalBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
-	    <!--  <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 		<script type="text/javascript" src="/portalBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="/portalBase/website/scripts/thickbox.js"></script>
@@ -142,7 +141,7 @@
 				}
 			}
 			
-			// is enter is pressed in username field with no password, don't submit details
+			// if enter is pressed in username field with no password, don't submit details
 			$("#loginform").submit(function() {
 				if($('#j_password').val() == '') {
 					return false;
