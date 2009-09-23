@@ -118,7 +118,9 @@
       padding-top:13px;
     }                                      
    				   
-				   
+	.rolehasprivilege {
+	  background-color: #bddfed;
+	}
   </STYLE>
  
 </HEAD>

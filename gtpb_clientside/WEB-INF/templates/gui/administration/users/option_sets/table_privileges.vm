@@ -17,7 +17,7 @@
 ##
 #set($option_set_id='table_privileges')
 #set($option_set_title='table privileges')
-#set($option_set_subtitle="$sessionUser.getForename() has the following privileges")
+#set($option_set_subtitle="$sessionUser.getForename() has the following privileges. A shaded background shows that $sessionUser.getForename() is a member of a role that has that privilege.")
 #set($option_set_data_path='gui/administration/users/option_sets/table_privileges_data.vm')
 
 #parse('gui/administration/option_set.vm')
