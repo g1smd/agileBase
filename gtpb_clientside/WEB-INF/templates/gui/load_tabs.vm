@@ -23,6 +23,7 @@
 #end
 <html>
   <head>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <title>Loading intranet tabs...</title>
   </head>
   <body>

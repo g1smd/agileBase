@@ -19,6 +19,7 @@
 #set($sessionData=$viewMethods.getSessionData())
 <html>
   <head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<script type="text/javascript" src="resources/jquery.js"></script>
 	<script type="text/javascript" src="resources/jquery.bgiframe.js"></script>
 	<script type="text/javascript" src="resources/jquery.autocomplete.js"></script>

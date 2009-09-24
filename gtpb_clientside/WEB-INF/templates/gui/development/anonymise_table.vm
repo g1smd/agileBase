@@ -19,6 +19,7 @@
 #set($table = $sessionData.getTable())
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
 <title>Anonymise $table data</title>
 </head>
 <body>

@@ -19,7 +19,8 @@
 #set($sessionData = $viewMethods.getSessionData())
 <html>
   <head>
-  <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
     <title>
       #set($company_name=$viewMethods.getLoggedInUser().getCompany().getCompanyName())
       $viewMethods.getApplicationName() $viewMethods.getApplicationVersion() - $company_name

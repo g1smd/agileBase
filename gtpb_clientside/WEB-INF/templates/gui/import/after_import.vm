@@ -17,6 +17,7 @@
 ##
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
 <style>
 	@import url("styles/report.css");
 

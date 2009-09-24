@@ -19,6 +19,7 @@
 
 <HTML>
 <HEAD>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <script src="resources/jquery.js" language="Javascript"> </script>
   <SCRIPT language=Javascript src="resources/wait/request.js"></SCRIPT> 
   <SCRIPT language=Javascript src="resources/wait/editData.js"></SCRIPT>  

@@ -23,6 +23,7 @@
 #set($pane2_id=$viewMethods.getSessionData().getRowId())
 <html>
   <head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
     #parse('gui/display_error.vm')
   
     <title>Edit $viewMethods.getSessionData().getTable() data</title>

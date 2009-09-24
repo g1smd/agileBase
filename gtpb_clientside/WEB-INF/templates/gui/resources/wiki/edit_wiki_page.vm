@@ -18,6 +18,7 @@
 #set($wikiPageName = $viewMethods.getSessionData().getCustomString("wikipagename"))
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
 <title>Loading ${wikiPageName}...</title>
 </head>
 <body>

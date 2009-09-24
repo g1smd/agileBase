@@ -20,6 +20,7 @@
 #set($sessionData = $viewMethods.getSessionData())
 #set($table = $sessionData.getTable())
   <head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
     <title>
       PortalBase Development Tools

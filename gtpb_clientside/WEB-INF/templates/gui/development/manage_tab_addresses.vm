@@ -16,6 +16,9 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+</head>
 <body>
 #set($company = $viewMethods.getLoggedInUser().getCompany())
 <h1>Tab addresses for $company</h1>

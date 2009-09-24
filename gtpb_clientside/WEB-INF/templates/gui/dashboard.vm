@@ -1,5 +1,6 @@
 <html>
 <head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<title>Utilisation information</title>
 	<script src="resources/jquery.js" language="Javascript"></script>
 	<script language=Javascript src="resources/jit.js"></script>

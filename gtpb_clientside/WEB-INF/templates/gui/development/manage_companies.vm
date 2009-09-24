@@ -17,6 +17,7 @@
 ##
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
 <title>Manage Companies</title>
     #parse('gui/display_error.vm')
 </head>
