@@ -146,8 +146,8 @@ public class TagCloud implements TagCloudInfo {
 				if (wordFreq <= minFreq) {
 					weight = minWeight;
 				} else {
-					weight = (int) Math.ceil(new Double(wordFreq - minFreq) * scaleFactor)
-							+ minWeight;
+					weight = (int) (Math.ceil(new Double(wordFreq - minFreq) * scaleFactor)
+							+ minWeight);
 				}
 				TagInfo tag = new Tag(word, weight);
 				this.tags.add(tag);

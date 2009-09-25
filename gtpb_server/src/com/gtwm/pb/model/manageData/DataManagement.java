@@ -126,7 +126,7 @@ public class DataManagement implements DataManagementInfo {
 	}
 
 	public String getWebAppRoot() {
-		return new String(this.webAppRoot);
+		return this.webAppRoot;
 	}
 
 	public void saveRecord(HttpServletRequest request, TableInfo table,
@@ -1142,7 +1142,9 @@ public class DataManagement implements DataManagementInfo {
 						throw new FileUploadException("Rename of existing file from '"
 								+ selectedFile + "' to '" + renamedFile + "' failed");
 					}
-					renamedFile.setLastModified(lastModified);
+					if(!renamedFile.setLastModified(lastModified)) {
+						throw new FileUploadException("Error setting the last modified date of " + renamedFile);
+					}
 					// I think a File object's name is inviolable but just in
 					// case
 					selectedFile = new File(filePath);

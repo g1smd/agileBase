@@ -1990,7 +1990,11 @@ public class ServletSchemaMethods {
 			rollbackConnections(conn);
 			// remove join from memory
 			report.removeJoin(join);
-			throw new CantDoThatException("Join addition failed", sqlex);
+			String errorMessage = "Join addition failed";
+			if (sqlex.getMessage().contains("No operator matches the given name and argument type")) {
+				errorMessage += ". You're trying to join two fields of different types (e.g. a text field to a number field). They have to be the same";
+			}
+			throw new CantDoThatException("", sqlex);
 		} catch (HibernateException hex) {
 			rollbackConnections(conn);
 			// remove join from memory

@@ -1518,11 +1518,13 @@ public class DatabaseDefn implements DatabaseInfo {
 				if (testReport instanceof SimpleReportInfo) {
 					SimpleReportInfo simpleTestReport = (SimpleReportInfo) testReport;
 					for (ReportFilterInfo testReportFilter : simpleTestReport.getFilters()) {
-						BaseField filterField = testReportFilter.getFilterBaseField();
-						if (filterField == null) {
-							logger.warn("Filter field for filter " + testReportFilter
-									+ " in report + " + testTable + "." + testReport + " is null");
-						} else if (filterField.equals(field)) {
+						BaseField filterField = null;
+						if (testReportFilter.isFilterFieldFromReport()) {
+							filterField = testReportFilter.getFilterReportField().getBaseField();
+						} else {
+							filterField = testReportFilter.getFilterBaseField();
+						}
+						if (filterField.equals(field)) {
 							reportsUsedIn.add(testReport);
 						}
 					}

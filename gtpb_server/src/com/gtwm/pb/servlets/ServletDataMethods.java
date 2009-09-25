@@ -741,7 +741,8 @@ public class ServletDataMethods {
 	public static void setSessionModule(SessionDataInfo sessionData, HttpServletRequest request,
 			String internalModuleName, DatabaseInfo databaseDefn) throws PortalBaseException {
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
-		Set<ModuleInfo> modules = company.getModules();
+		//Findbugs found this unused variable
+		//Set<ModuleInfo> modules = company.getModules();
 		ModuleInfo module = company.getModuleByInternalName(internalModuleName);
 		sessionData.setModule(module);
 	}

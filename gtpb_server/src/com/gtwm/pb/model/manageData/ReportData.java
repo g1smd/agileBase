@@ -558,7 +558,8 @@ public class ReportData implements ReportDataInfo {
 	private String preprocessDateFilter(String filterValue) throws CantDoThatException {
 		String processedFilterValue = filterValue;
 		String[] tokens = filterValue.split("\\sand\\s|\\sor\\s");
-		Options options = new Options(false);
+		//Findbugs found this unused variable
+		//Options options = new Options(false);
 		for (String token : tokens) {
 			if (!(token.startsWith(">") || token.startsWith("<"))) {
 				Span timespan = this.parseTimestamp(token);
