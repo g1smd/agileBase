@@ -11,6 +11,9 @@
 <body>
 #set($treeMap = $viewMethods.getUsageStats().getTreeMap())
 <script language="JavaScript">
+
+var tipCache = [];
+
 jQuery(document).ready(function(){
 	
 	// fit treemap to window
@@ -77,16 +80,25 @@ jQuery(document).ready(function(){
        				//is hovered  
        				onShow: function(tip, node, isLeaf, domElement) {
 						if (isLeaf) {
+							var jqTip = jQuery(tip);
 							top.innerHTML = node.name;
 							var internalReportName = jQuery(domElement).parent().attr("id");
 							internalReportName = internalReportName.substring(2);
-							tipParams = {
-								"return": "gui/resources/report_view_stats",
-								"set_custom_report": "true",
-								"reportkey": "dashboard_report",
-								"custominternalreportname": internalReportName
+							if (tipCache[internalReportName]) {
+								jqTip.html(tipCache[internalReportName]);
+							} else {
+								tipParams = {
+									"return": "gui/resources/report_view_stats",
+									"set_custom_report": "true",
+									"reportkey": "dashboard_report",
+									"custominternalreportname": internalReportName
+								}
+								// save results to cache
+           						jqTip.load("AppController.servlet", tipParams, function() {
+									tipCache[internalReportName] = jqTip.html();
+								});
+								jqTip.fadeIn("normal");
 							}
-           					jQuery(tip).load("AppController.servlet", tipParams);
 						} else {
 							tip.innerHTML = node.name + " module";
 						}
