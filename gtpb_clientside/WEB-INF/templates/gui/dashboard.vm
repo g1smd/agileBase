@@ -28,14 +28,22 @@ jQuery(document).ready(function(){
         var internalReportName = jQuery(elem).parent().attr("id");
 		// if a report node
 		if (internalReportName.substring(0,2) == "r_") {
+			// close treemap and load that report
 			internalReportName = internalReportName.substring(2);
 			var url = "AppController.servlet?return=gui/reports_and_tables/report_data";
 			url = url + "&set_report=" + internalReportName;
 			url = url + "&set_report_row_limit=100";
 			opener.oViewPane.pane_2.location = url;
 			window.close();
+		} else {
+			this.enter(elem);
+			growLeaves();
 		}
-    }  
+    },
+	'onRightClick': function(elem) {
+		this.out(elem);
+		growLeaves();
+	}
 	});  
 
     var tm = new TM.Squarified({  
@@ -44,6 +52,7 @@ jQuery(document).ready(function(){
 				offset: 2,
 				selectPathOnHover: true,
 				addLeftClickHandler: true,
+				addRightClickHandler: true,
 				Color: {  
         			//Allow coloring  
         			allow: true,  
@@ -86,7 +95,13 @@ jQuery(document).ready(function(){
              });  
     tm.loadJSON(json);
 	
+	
 	// 'grow' leaves to remove the gaps between them and make groups of leaves look more contiguous
+function growLeaves() {
+	// only grow leaves when viewing the entire treemap
+	if (jQuery("#root").length == 0) {
+	  return;
+	}
 	jQuery(".leaf").each(function(i) {
 	  var jqLeaf = jQuery(this);
 	  var width = jqLeaf.css("width");
@@ -113,6 +128,9 @@ jQuery(document).ready(function(){
 	  	jqLeaf.css("font-size","8pt");
 	  }
 	});
+}
+	
+	growLeaves();
 	
 });
 </script>
