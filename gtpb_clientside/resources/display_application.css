@@ -157,7 +157,8 @@ div#_md_blank.window_disable h1 {
 #infovis .over-head { /* ...boy i'm funny */  
     /* background-color:#A4D9FF;  */
 	background-color:#feb56e;
-    color:black;  
+    color:black;
+	cursor: pointer;
 }
 
 /* added by Oliver*/
