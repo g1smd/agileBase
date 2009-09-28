@@ -231,7 +231,7 @@
 						</form>
 				</div>     
 				<ul id="navigation">
-					<li><a href="javascript:showSection('main');" id="nav_main" class="current"><span>main</span></a>
+					<li><a href="javascript:showSection('main');" id="nav_main" class="current"><span>business</span></a>
 					<li><a href="javascript:showSection('technical');" id="nav_technical"><span>technical</span></a>
 					<li id="li_analyst"><a href="javascript:showSection('analyst');" id="nav_analyst"><span>analyst</span></a>
 				</ul>
@@ -250,15 +250,26 @@
 								suited to those who understand in depth both technology and the business needs.
 								People who are best placed to make use of an enterprise database flexibility and power,
 								while appreciating the clear and pleasant user interface of a well designed web application.</p>
+								<p>Our vision was to make a product that allows business analysts
+								to create lean, agile, Just-In-Time (JIT) back offices.</p>
 							</div>
 							<div>
-								<h1>Documentation</h1>
-								<p><img border="0" src="/portalBase/website/images/download.png" style="float:left">See 
-								<a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#End_user_documentation">User</a> 
-								and <a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#Administrator_documentation">administrator</a> 
-							  documentation</p>
-								<p><a href="/portalBase/website/content/gtpb_overview.pdf">Download the brochure</a>
-							  portalBase is a <a href="http://www.gtwm.co.uk">GT webMarque</a> product, <a href="http://www.gtwm.co.uk">contact us</a> for more help and advice</p>
+								<h1>Why do I use it?</h1>
+								<p>There are many choices when deciding on software to suit your IT strategy, boiling down to
+								<ul>
+									<li><b>best of suites</b> - e.g. ERP systems are really popular for core and stable areas of the business. 
+									However, no system can possibly cover all organisational needs. 
+									(If it did it would probably sink the company that tried to adopt it!)</li>
+									<li><b>best of breed</b> - a popular approach that involves purchasing the best system for each specific function. 
+									However, huge replication of data across systems makes continuous improvement and 
+									a 'single view' of the data hard to achieve</li>
+									<li><b>bespoke</b> - relatively unpopular: costs an arm and a leg, slow to create</li>
+									<li><b>agile platform</b> - such as portalBase which has proven popular when used either as a wrapper around 
+									existing / legacy systems or starting as a prototyping and learning platform</li>
+								</ul>
+								</p>
+								<p>As a cutting edge lean provider, we believe an agile platform can enable companies to build what they need, 
+								at a pace to match a company's evolving learning, knowledge and understanding.</p>
 							</div>
 						</div>   <!-- end of main --> 
 						<div id="technical" class="detail">
@@ -296,7 +307,7 @@
 									</tr>
 								</table>        
 							</div>
-							<div>
+							<div class="divider">
 								<h1>Technology</h1>
 								portalBase is a web-based, usually hosted application. 
 								The <a href="http://en.wikipedia.org/wiki/AJAX">AJAX</a> user interface works on Firefox (recommended), Internet Explorer 7+, Google Chrome and Safari browsers.<p>
@@ -315,15 +326,29 @@
 								</table>
 								<a href="http://github.com/okohll/GT-portalBase/tree/"><img border="0" src="/portalBase/website/content/github.png" style="float:left;"></a>The source code for GT portalBase is <a href="http://github.com/okohll/GT-portalBase/tree/">available</a> on GitHub as open source.
 							</div>
+							<div>
+								<h1>Documentation</h1>
+								<p><img border="0" src="/portalBase/website/images/download.png" style="float:left">See 
+								<a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#End_user_documentation">User</a> 
+								and <a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#Administrator_documentation">administrator</a> 
+							  documentation</p>
+								<p><a href="/portalBase/website/content/gtpb_overview.pdf">Download the brochure</a></p>
+							  <p>portalBase is a <a href="http://www.gtwm.co.uk">GT webMarque</a> product, <a href="http://www.gtwm.co.uk">contact us</a> for more help and advice</p>
+							</div>
 						</div>  <!-- end of technical -->
 						<div id="analyst" class="detail">
 							<h1>A business analyst's view</h1>
-							Over the last 10 years the role of the Business Analyst has emerged as organisations grapple with the problem of how to ensure software development projects deliver applications that match the needs of their client.<p>
-							Traditionally this role has involved defining requirements and recording these in a formal specification document. However there is a growing recognition of the problems inherent in this approach and a more agile approach involving prototyping is often seen as an viable alternative.<p>
-							<b>GT portalbase requires no programming skills and thus allows analysts to convert schemas into fully working web based prototypes in hours. The prototype is immediately available via the web for client review and feedback from various stakeholders can be incorporated into the product often in real time.</b>
+							<p>Over the last 10 years the role of the Business Analyst has emerged as organisations grapple with the problem of how to 
+							ensure software development projects deliver applications that match the needs of their client.</p>
+							<p>Traditionally this role has involved defining requirements and recording these in a formal specification document. 
+							However there is a growing recognition of the problems inherent in this approach and a more agile approach 
+							involving prototyping is often seen as an viable alternative.</p>
+							<p>GT portalbase requires no programming skills and thus allows analysts to convert schemas into fully working 
+							web based prototypes in hours. The prototype is immediately available via the web for client review and feedback 
+							from various stakeholders can be incorporated into the product often in real time.</p>
 							<h1>GTpB as a long term solution</h1>
-							For many organisations these "prototypes" may even suffice, as the PostgreSQL database underlying GTpB is highly scalable & robust.<p>
-							For small organisations or applications GTpB therefore provides a cost effective, rapid, easy to use and robust web app. development tool.  
+							<p>For many organisations these "prototypes" may even suffice, as the PostgreSQL database underlying GTpB is highly scalable & robust.</p>
+							<p>For small organisations or applications GTpB therefore provides a cost effective, rapid, easy to use and robust web app. development tool.</p>
 						</div> <!-- end of anyalyst -->
 						<br clear="both" /> <!-- because of the right floated content -->
 					</div>  <!-- end of content -->
