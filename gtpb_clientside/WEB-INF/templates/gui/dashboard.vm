@@ -1,6 +1,7 @@
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
 	<title>Utilisation information</title>
 	<script src="resources/jquery.js" language="Javascript"></script>
 	<script language=Javascript src="resources/jit.js"></script>
@@ -63,7 +64,7 @@ jQuery(document).ready(function(){
     			    //property. Defaults to -100 and 100.  
      			    minValue: -750,  
      			    maxValue: 750,  
-        			//Set color range. Default's to reddish and  
+        			//Set color range. Defaults to reddish and  
         			//greenish. It takes an array of three  
         			//integers as R, G and B values.  
         			//maxColorValue: [0, 255, 50],
