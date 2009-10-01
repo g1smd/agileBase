@@ -21,13 +21,14 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<script type="text/javascript" src="resources/jquery.js"></script>
-	<script type="text/javascript" src="resources/jquery.bgiframe.js"></script>
-	<script type="text/javascript" src="resources/jquery.autocomplete.js"></script>
     <script type="text/javascript" src="resources/jquery.oembed.js"></script>
     #parse('gui/display_error.vm')
  	#if($mobile_device)
 	<meta name = "viewport" content = "width = device-width">
     <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
+	#else
+	<script type="text/javascript" src="resources/jquery.bgiframe.js"></script>
+	<script type="text/javascript" src="resources/jquery.autocomplete.js"></script>
 	<script language=JavaScript src="resources/wait/editData.js"></script>
 	<script language=JavaScript src="resources/wait/editBuffer.js"></script>
 	#end
@@ -55,24 +56,21 @@
 	}
 			
     </style>  
-    <!--[if IE]>
+
+    #if(!$mobile_device)
+		<!--[if IE]>
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/tabs-ie.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/edit-ie.css" />
-	<![endif]-->
-
-    <script language=Javascript src="resources/wait/request.js"></script> 
-    <SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
-    <script language=Javascript src="resources/wait/setFilter.js"></script>
-  	<script language=Javascript src="resources/wait/editData.js"></script>  
-    #if(!$mobile_device)
+		<![endif]-->
+		<script language=Javascript src="resources/wait/request.js"></script> 
+		<SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
+		<script language=Javascript src="resources/wait/setFilter.js"></script>
         #if($viewMethods.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
       	<script type="text/javascript" src="resources/jquery.tablednd.js"></script>
         #end
         <script type="text/javascript" src="resources/tabs/tabs.js"></script>
-    #end
-  	<script type="text/javascript" src="resources/tabs/edit.js"></script>
-  	<script type="text/javascript" src="resources/tabs/view.js"></script>
-  	<script language=Javascript> 
+		<script type="text/javascript" src="resources/tabs/edit.js"></script>
+		<script language=Javascript> 
 
   	  // When submitting the newfield form to create a table field
   	  // disable all input elements not in the addNewField row of the reportData table
@@ -83,16 +81,7 @@
   		  });
   	  }
 
-	</script>
-	  #if(($pane2_id) && (!$mobile_device))
-  	  <script language=Javascript>
-	  	  var rowFound = parent.pane_2.fSetRowSelection('$pane2_id');
-	  	  if (!rowFound) {
-	  		  jQuery.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
-	  	  }
-  	  </script>
-	  #end
-
+		</script>
     <script language="JavaScript" type="text/javascript">
 	## Used by individual tabs
     	  function fDeleteTabularItem(oObj) {
@@ -220,6 +209,16 @@
 				fDoDelete(oObj);
     	  }    
     </script>
+    #end ## end if not mobile device
+	<script type="text/javascript" src="resources/tabs/view.js"></script>
+	#if(($pane2_id) && (!$mobile_device))
+  	  <script language=Javascript>
+	  	  var rowFound = parent.pane_2.fSetRowSelection('$pane2_id');
+	  	  if (!rowFound) {
+	  		  jQuery.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
+	  	  }
+  	  </script>
+	#end
     #parse('gui/resources/google_maps_api_key.vm')
     <script src="http://maps.google.com/maps?file=api&v=2&key=$google_maps_api_key&sensor=false" type="text/javascript"></script>
   </head>
@@ -258,11 +257,5 @@
 	
 	
     	</div>
-    
-    ## Hack for filters section in report fields tab
-    ## Activate first filter option input box - moved from filters_data.vm
-    ##<script language="JavaScript">
-    ##  if(window.fSelectFilterOption) fSelectFilterOption(0);
-    ##</script>
   </body>
 </html>
