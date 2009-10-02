@@ -39,6 +39,8 @@ jQuery(document).ready(function(){
 			url = url + "&set_report_row_limit=100";
 			opener.oViewPane.pane_2.location = url;
 			window.close();
+		} else if (internalReportName.substring(0,9) == "nopriv_r_") {
+			alert("You don't currently have privileges to view this data");
 		} else {
 			this.enter(elem);
 			growLeaves();
@@ -84,21 +86,25 @@ jQuery(document).ready(function(){
 							var jqTip = jQuery(tip);
 							top.innerHTML = node.name;
 							var internalReportName = jQuery(domElement).parent().attr("id");
-							internalReportName = internalReportName.substring(2);
-							if (tipCache[internalReportName]) {
-								jqTip.html(tipCache[internalReportName]);
+							if (internalReportName.substring(0,9) == "nopriv_r_") {
+								tip.innerHTML = "You don't have privileges set to be able to view " + node.name;
 							} else {
-								tipParams = {
-									"return": "gui/resources/report_view_stats",
-									"set_custom_report": "true",
-									"reportkey": "dashboard_report",
-									"custominternalreportname": internalReportName
-								}
-								// save results to cache
-           						jqTip.load("AppController.servlet", tipParams, function() {
+								internalReportName = internalReportName.substring(2);
+								if (tipCache[internalReportName]) {
+									jqTip.html(tipCache[internalReportName]);
+								} else {
+									tipParams = {
+										"return": "gui/resources/report_view_stats",
+										"set_custom_report": "true",
+										"reportkey": "dashboard_report",
+										"custominternalreportname": internalReportName
+									}
+									// save results to cache
+           							jqTip.load("AppController.servlet", tipParams, function() {
 									tipCache[internalReportName] = jqTip.html();
-								});
-								jqTip.fadeIn("normal");
+									});
+									jqTip.fadeIn("normal");
+								}
 							}
 						} else {
 							tip.innerHTML = node.name + " module";

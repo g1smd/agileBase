@@ -93,7 +93,7 @@ public class UsageStats implements UsageStatsInfo {
 	}
 
 	public String getTreeMapJSON() throws ObjectNotFoundException, DisallowedException,
-			SQLException, JSONException {
+			SQLException, JSONException, CodingErrorException {
 		Map<String, Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>> sectionTreeMaps = new HashMap<String, Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>>();
 		Map<ModuleInfo, Integer> moduleAreas = new HashMap<ModuleInfo, Integer>();
 		Map<String, Integer> sectionAreas = new HashMap<String, Integer>();
@@ -223,7 +223,12 @@ public class UsageStats implements UsageStatsInfo {
 				for (UsageStatsTreeMapNodeInfo leaf : leaves) {
 					js.object(); // start report object
 					report = leaf.getReport();
-					js.key("id").value("r_" + report.getInternalReportName());
+					if (authManager.getAuthenticator().loggedInUserAllowedToViewReport(
+							this.request, report)) {
+						js.key("id").value("r_" + report.getInternalReportName());
+					} else {
+						js.key("id").value("nopriv_r_" + report.getInternalReportName());
+					}
 					js.key("name").value(report.getReportName().toLowerCase());
 					js.key("data");
 					js.object();

@@ -459,13 +459,6 @@ public class Authenticator implements AuthenticatorInfo {
 		return false;
 	}
 
-	/**
-	 * Similar to checkReportViewPrivileges, but returns false rather than
-	 * throwing an exception if privileges aren't sufficient. Throwing exception
-	 * is costly in terms of performance so use this when we don't need to
-	 * 
-	 * @see #checkReportViewPrivileges(BaseReportInfo)
-	 */
 	public boolean loggedInUserAllowedToViewReport(HttpServletRequest request, BaseReportInfo report)
 			throws CodingErrorException {
 		return this.loggedInUserAllowedToViewReport(request, report, new HashSet<BaseReportInfo>());

@@ -35,6 +35,8 @@ import com.gtwm.pb.auth.PrivilegeType;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Methods that are used by the view component of the MVC application to pass
  * data to the user interface. The user interface's 'view on the application'.
@@ -666,6 +668,13 @@ public interface ViewMethodsInfo {
 	 */
 	public boolean loggedInUserAllowedTo(String privilegeTypeToCheck, TableInfo table)
 			throws IllegalArgumentException;
+
+	/**
+	 * Checks whether a report is visible to the logged in user by checking
+	 * whether that user has VIEW privileges on the parent table, all joined
+	 * tables and recursively all joined reports
+	 */
+	public boolean loggedInUserAllowedToViewReport(BaseReportInfo report) throws CodingErrorException;
 
 	/**
 	 * 

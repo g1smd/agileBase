@@ -739,6 +739,10 @@ public class ViewMethods implements ViewMethodsInfo {
 		return getAuthenticator().loggedInUserAllowedTo(this.request, privilegeType, table);
 	}
 
+	public boolean loggedInUserAllowedToViewReport(BaseReportInfo report) throws CodingErrorException {
+		return getAuthenticator().loggedInUserAllowedToViewReport(this.request, report);
+	}
+
 	public boolean userHasPrivilege(String privilegeTypeToCheck) throws DisallowedException,
 			IllegalArgumentException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());

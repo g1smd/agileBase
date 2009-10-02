@@ -52,7 +52,7 @@ public interface UsageStatsInfo {
 	 * statistics. Reports are grouped by module
 	 */
 	public String getTreeMapJSON() throws ObjectNotFoundException, DisallowedException,
-			SQLException, JSONException;
+			SQLException, JSONException, CodingErrorException;
 
 	/**
 	 * Return module viewing stats, sorted by the total number of report views
