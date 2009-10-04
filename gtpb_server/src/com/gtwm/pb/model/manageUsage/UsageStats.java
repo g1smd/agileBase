@@ -390,8 +390,9 @@ public class UsageStats implements UsageStatsInfo {
 	public ReportViewStatsInfo getReportViewStats(BaseReportInfo report)
 			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, report.getParentTable())) {
+		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, report.getParentTable()) || authManager
+				.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		SortedSet<UserReportViewStatsInfo> userInfos = new TreeSet<UserReportViewStatsInfo>();
@@ -454,8 +455,9 @@ public class UsageStats implements UsageStatsInfo {
 	public List<List<String>> getTableViewStats(TableInfo table) throws DisallowedException,
 			SQLException, CodingErrorException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, table)) {
+		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, table) || authManager
+				.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
 		List<List<String>> reportInfos = new LinkedList<List<String>>();
@@ -534,8 +536,9 @@ public class UsageStats implements UsageStatsInfo {
 	public List<List<String>> getRawTableStats(LogType logType, TableInfo table, int rowLimit)
 			throws DisallowedException, SQLException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, table)) {
+		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, table) || authManager
+				.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
 		if (!(logType.equals(LogType.DATA_CHANGE) || logType.equals(LogType.TABLE_SCHEMA_CHANGE))) {
