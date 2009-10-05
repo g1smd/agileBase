@@ -256,17 +256,31 @@
 							<div>
 								<h1>Why do I use it?</h1>
 								<p>There are many choices when deciding on software to suit your IT strategy, boiling down to
-								<ul>
-									<li><b>best of suites</b> - e.g. ERP systems are really popular for core and stable areas of the business. 
-									However, no system can possibly cover all organisational needs. 
-									(If it did it would probably sink the company that tried to adopt it!)</li>
-									<li><b>best of breed</b> - a popular approach that involves purchasing the best system for each specific function. 
-									However, huge replication of data across systems makes continuous improvement and 
-									a 'single view' of the data hard to achieve</li>
-									<li><b>bespoke</b> - relatively unpopular: costs an arm and a leg, slow to create</li>
-									<li><b>agile platform</b> - such as portalBase which has proven popular when used either as a wrapper around 
-									existing / legacy systems or starting as a prototyping and learning platform</li>
-								</ul>
+								<table border="0" cellpadding="0" cellspacing="0">
+							      <tr>
+									<td style="width:50%">
+									  <h2>Best of suites</h2>
+									  e.g. ERP systems are really popular for core and stable areas of the business. 
+									  However, no system can possibly cover all organisational needs.  (If it did it would probably sink the company that tried to adopt it!)</li>               
+									</td>
+									<td style="width:50%">
+									  <h2>Agile platform</h2>
+									  Such as portalBase which has proven popular when used either as a wrapper around 
+									  existing / legacy systems or starting as a prototyping and learning platform</li>
+									</td>
+								  </tr>
+									<tr>
+									  <td style="width:50%">
+										<h2>Best of breed</h2>
+										A popular approach that involves purchasing the best system for each specific function. 
+										However, huge replication of data across systems makes continuous improvement and 
+										a 'single view' of the data hard to achieve</td>
+									  <td style="width:50%">
+										<h2>Bespoke</h2>
+										Relatively unpopular: costs an arm and a leg, slow to create</li>
+									  </td>
+									</tr>
+								  </table>								
 								</p>
 								<p>As a cutting edge lean provider, we believe an agile platform can enable companies to build what they need, 
 								at a pace to match a company's evolving learning, knowledge and understanding.</p>
@@ -324,15 +338,18 @@
 										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://velocity.apache.org/"><img border="0" src="/portalBase/website/content/velocity_logo.gif"></a></td>
 									 </tr>
 								</table>
-								<a href="http://github.com/okohll/GT-portalBase/tree/"><img border="0" src="/portalBase/website/content/github.png" style="float:left;"></a>The source code for GT portalBase is <a href="http://github.com/okohll/GT-portalBase/tree/">available</a> on GitHub as open source.
-							</div>
+							  </div>
 							<div>
-								<h1>Documentation</h1>
-								<p><img border="0" src="/portalBase/website/images/download.png" style="float:left">See 
-								<a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#End_user_documentation">User</a> 
-								and <a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#Administrator_documentation">administrator</a> 
-							  documentation</p>
-								<p><a href="/portalBase/website/content/gtpb_overview.pdf">Download the brochure</a></p>
+								<h1>Documentation &amp; Source</h1>
+								<p><a href="http://github.com/okohll/GT-portalBase/tree/"><img border="0" src="/portalBase/website/content/github.png" style="float:left;"></a>The source code for GT portalBase is <a href="http://github.com/okohll/GT-portalBase/tree/">available</a> on GitHub as open source.								
+								</p>
+								<p style="clear:both">See 
+								  <ul>
+								    <li><a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#End_user_documentation">User documentation</a></li> 
+									<li><a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#Administrator_documentation">Administrator Documentation</a></li> 
+									<li><a href="/portalBase/website/content/gtpb_overview.pdf">Brochure</a></li>
+								  </ul>
+								</p>
 							  <p>portalBase is a <a href="http://www.gtwm.co.uk">GT webMarque</a> product, <a href="http://www.gtwm.co.uk">contact us</a> for more help and advice</p>
 							</div>
 						</div>  <!-- end of technical -->

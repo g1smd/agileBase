@@ -344,35 +344,53 @@ body.mobile {
 	font-size:10pt;	
 }
 
+.detail ul {
+	margin-left:40px;
+}
+
+.detail ul li {
+	padding-bottom:5px;
+}
+
+.detail table {
+	margin-top:20px;
+}
+
 .detail td {
 	padding-right:10px;
 	vertical-align:top;
-	padding-bottom:10px;	
+	padding-bottom:15px;	
 }
+
 .detail td h2 {
-	margin-bottom:5px;	
-	padding-bottom:0;
+	
 }
 
 .detail div.divider {
 	padding-bottom:20px;
 	border-bottom:1px dashed #bbbbbb;
+	margin-bottom:20px;
 }
 
 .detail a {
 	color: #dddddd;
 }
 
-.detail h1 {
+.detail h1,
+.detail h2 {
 	font-weight:normal;
 	font-size:16pt;
 	color:#dddddd;
+	margin-bottom:5px;	
+	padding-bottom:0;
 }	
 		
-.detail h2 {
-	font-weight:normal;
+ .detail h2 {
 	font-size:14pt;
-	color:#dddddd;
+}
+
+.detail p {
+	margin-bottom:10px;	
 }
 
 #main {
