@@ -210,10 +210,9 @@
 			<div id="intro" class="wrapper">      
 					<div class="content">
 						<div id="bubble">
-							<h1>industrial strength platform for business applications</h1>
-							use to rapidly prototype and develop data entry and 
-							reporting applications that work over the 
-							internet or a local network 
+							<a href="http://2009.pgday.eu/"><img src="/portalBase/website/images/pgdayeu09.small_banner.en.png" border="0" style="float:right"></a>
+							<b>See our talk 'agile database development'</b>, 6th Nov, 3:10pm at the European PostgreSQL database conference, Paris.
+							<br><br><small>We're proud to be Bronze Partner of European PGDay 2009</small>
 						</div>
 				<div id="login">
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
@@ -245,7 +244,7 @@
 						</div>
 						<div id="main" class="detail">
 							<div class="divider">
-								<h1>How do I use it?</h1>
+								<h1>Industrial strength platform for business applications</h1>
 								<p>Use portalBase to create database web applications. It's most
 								suited to those who understand in depth both technology and the business needs.
 								People who are best placed to make use of an enterprise database flexibility and power,

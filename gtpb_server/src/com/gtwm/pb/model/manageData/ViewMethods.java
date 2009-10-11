@@ -331,10 +331,6 @@ public class ViewMethods implements ViewMethodsInfo {
 		return this.databaseDefn.getTableByInternalName(this.request, internalTableName);
 	}
 
-	public TableInfo getTableByName(String tableName) throws ObjectNotFoundException {
-		return this.databaseDefn.getTableByName(this.request, tableName);
-	}
-
 	public TableInfo findTableContainingReport(String reportInternalName)
 			throws ObjectNotFoundException, DisallowedException {
 		return this.databaseDefn.findTableContainingReport(this.request, reportInternalName);

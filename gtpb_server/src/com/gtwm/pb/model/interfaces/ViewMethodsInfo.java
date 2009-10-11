@@ -35,8 +35,6 @@ import com.gtwm.pb.auth.PrivilegeType;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Methods that are used by the view component of the MVC application to pass
  * data to the user interface. The user interface's 'view on the application'.
@@ -490,8 +488,6 @@ public interface ViewMethodsInfo {
 	 */
 	public TableInfo getTableByInternalName(String internalTableName)
 			throws ObjectNotFoundException, DisallowedException;
-
-	public TableInfo getTableByName(String tableName) throws ObjectNotFoundException;
 
 	/**
 	 * 
