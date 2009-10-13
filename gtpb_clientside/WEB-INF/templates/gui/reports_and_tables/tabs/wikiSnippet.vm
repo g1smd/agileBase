@@ -17,6 +17,6 @@
 ##
 			#set($sessionTable=$viewMethods.getSessionData().getTable())
 			#set($tableDataRow=$viewMethods.getTableDataRow())
-			#set($wikiTitle=$tableDataRow.get($sessionTable.getFieldByName('Wiki page [Auto]')))
+			#set($wikiTitle=$tableDataRow.get($sessionTable.getField('Wiki page [Auto]')))
 			#set($wikiSnippet = $viewMethods.getWikiPageSnippet($wikiTitle.toString(), 300))
 			$wikiSnippet ...

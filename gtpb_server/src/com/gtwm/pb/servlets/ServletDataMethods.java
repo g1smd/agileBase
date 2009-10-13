@@ -377,9 +377,9 @@ public class ServletDataMethods {
 			}
 		}
 		if (internalFieldName != null) {
-			field = parentTable.getFieldByInternalName(internalFieldName);
+			field = parentTable.getField(internalFieldName);
 		} else {
-			field = parentTable.getFieldByName(fieldName);
+			field = parentTable.getField(fieldName);
 		}
 		sessionData.setCustomField(key, field);
 	}
@@ -1116,7 +1116,7 @@ public class ServletDataMethods {
 				String recordIdentifierFieldInternalName = AppController.getParameter(request, "record_identifier", multipartItems);
 				if (recordIdentifierFieldInternalName != null) {
 					if(!recordIdentifierFieldInternalName.equals("")) {
-						recordIdentifierField = table.getFieldByInternalName(recordIdentifierFieldInternalName);
+						recordIdentifierField = table.getField(recordIdentifierFieldInternalName);
 						if(!recordIdentifierField.equals(table.getPrimaryKey()) && !recordIdentifierField.getUnique()) {
 							throw new CantDoThatException("The record identifier field " + recordIdentifierField + " must be unique - you can turn on the unique option in the field properties");
 						}

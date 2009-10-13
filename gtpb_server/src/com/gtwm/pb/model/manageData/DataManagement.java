@@ -235,7 +235,7 @@ public class DataManagement implements DataManagementInfo {
 		if (!table.getRecordsLockable()) {
 			throw new CantDoThatException("Records in the " + table + " table can't be locked");
 		}
-		String lockFieldInternalName = table.getFieldByName(HiddenFields.LOCKED.getFieldName())
+		String lockFieldInternalName = table.getField(HiddenFields.LOCKED.getFieldName())
 				.getInternalFieldName();
 		String SQLCode = "UPDATE " + table.getInternalTableName() + " SET " + lockFieldInternalName
 				+ " = true WHERE " + lockFieldInternalName + " = false";
@@ -268,7 +268,7 @@ public class DataManagement implements DataManagementInfo {
 		Map<BaseField, Boolean> sorts = new HashMap<BaseField, Boolean>();
 		List<DataRowInfo> dataRows = this.getReportDataRows(company, report, filters, false, sorts,
 				-1);
-		String lockFieldInternalName = table.getFieldByName(HiddenFields.LOCKED.getFieldName())
+		String lockFieldInternalName = table.getField(HiddenFields.LOCKED.getFieldName())
 				.getInternalFieldName();
 		String SQLCode = "UPDATE " + table.getInternalTableName() + " SET " + lockFieldInternalName
 				+ " = true WHERE " + lockFieldInternalName + " = false AND "
@@ -300,7 +300,7 @@ public class DataManagement implements DataManagementInfo {
 			throw new CantDoThatException("Records in the " + table + " table can't be locked");
 		}
 		String SQLCode = "UPDATE " + table.getInternalTableName() + " SET "
-				+ table.getFieldByName(HiddenFields.LOCKED.getFieldName()).getInternalFieldName()
+				+ table.getField(HiddenFields.LOCKED.getFieldName()).getInternalFieldName()
 				+ " = true WHERE " + table.getPrimaryKey().getInternalFieldName() + " = ?";
 		Connection conn = null;
 		try {

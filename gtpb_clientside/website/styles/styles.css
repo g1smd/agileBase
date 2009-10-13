@@ -1,29 +1,3 @@
-@font-face {
-	font-family: 'Pigiarniq';
-
-        /* for IE */
-	/* src: url('../fonts/Pigiarniq/Pigiarniq_Regular.ttf'); */
-
-        /*
-         * for non-IE: first see if the font exists locally on the browser's
-         * computer.  If so, use that copy of the font.  Otherwise, load it
-         * from the server
-         */
-	src: local('Pigiarniq'),
-	     url('../fonts/Pigiarniq/Pigiarniq_Regular.ttf') format('truetype');
-}
-
-/* Bold declaration only for non-IE browsers */
-/*
-@font-face {
-	font-family: 'Pigiarniq';
-	src: local('Pigiarniq Bold'),
-	     local('Pigiarniq-Bold'),
-	     url('../fonts/Pigiarniq/Pigiarniq_Bold.ttf') format('truetype');
-	font-weight: bold;
-}
-*/
-
 * {
 	font-family: tahoma, arial, sans-serif;
 }

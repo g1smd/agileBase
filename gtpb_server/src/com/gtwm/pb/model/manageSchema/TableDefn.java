@@ -210,28 +210,24 @@ public class TableDefn implements TableInfo {
 	}
 
 	@Transient
-	public synchronized BaseField getFieldByInternalName(String internalFieldName)
+	public synchronized BaseField getField(String fieldID)
 			throws ObjectNotFoundException {
 		// everyone's a suspect!
+		Set<BaseField> fields = this.getFieldsCollection();
+		for (BaseField suspectField : fields) {
+			if (suspectField.getInternalFieldName().equals(fieldID)) {
+				return suspectField;
+			}
+		}
+		// not found by internal name, try by public name
 		for (BaseField suspectField : this.getFieldsCollection()) {
-			if (suspectField.getInternalFieldName().equals(internalFieldName)) {
+			if (suspectField.getFieldName().equals(fieldID)) {
 				return suspectField;
 			}
 		}
 		// if we've got to here the field hasn't been found
-		throw new ObjectNotFoundException("The field with id '" + internalFieldName
+		throw new ObjectNotFoundException("The field with id '" + fieldID
 				+ "' doesn't exist in table " + this.getTableName());
-	}
-
-	@Transient
-	public synchronized BaseField getFieldByName(String fieldName) throws ObjectNotFoundException {
-		for (BaseField suspectField : this.getFieldsCollection()) {
-			if (suspectField.getFieldName().equals(fieldName)) {
-				return suspectField;
-			}
-		}
-		throw new ObjectNotFoundException("The field '" + fieldName + "' doesn't exist in table "
-				+ this.tableName);
 	}
 
 	public synchronized void addReport(BaseReportInfo reportToAdd, boolean isDefaultReport) {

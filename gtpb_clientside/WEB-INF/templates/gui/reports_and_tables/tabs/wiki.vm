@@ -54,7 +54,7 @@
 			  <td class="leading">&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class="trailing">&nbsp;</td>
 			</tr>
 			
-			#set($wikiTitle=$tableDataRow.get($sessionTable.getFieldByName('Wiki page [Auto]')))
+			#set($wikiTitle=$tableDataRow.get($sessionTable.getField('Wiki page [Auto]')))
 			#set($wikiSnippet = $viewMethods.getWikiPageSnippet($wikiTitle.toString(), 300))
 						<thead id="wikiHead" #if($wikiTitle.isNull())wikiExists="false"#else wikiExists="true"#end>
 			  <tr>
@@ -182,7 +182,7 @@
 						              $(oBox).keyup(fMarkAsChanged);
 						              oBox.setAttribute('type','text');
 						              oBox.setAttribute('value','$wikiTitle');
-						              oBox.setAttribute('name','$sessionTable.getFieldByName('Wiki page [Auto]').getInternalFieldName()');
+						              oBox.setAttribute('name','$sessionTable.getField('Wiki page [Auto]').getInternalFieldName()');
 						              oBox.setAttribute('style','width:300px');
 						              oBox.setAttribute('gtpb_update_record','true');
 						              // we don't want the XML handler to change the disabled state of the box

@@ -71,7 +71,7 @@ public class TableData implements TableDataInfo {
 				return false;
 			}
 		}
-		String SQLCode = "SELECT " + this.table.getFieldByName(HiddenFields.LOCKED.getFieldName()).getInternalFieldName() + " FROM " + this.table.getInternalTableName() + " WHERE " + this.table.getPrimaryKey().getInternalFieldName() + " = " + rowId;
+		String SQLCode = "SELECT " + this.table.getField(HiddenFields.LOCKED.getFieldName()).getInternalFieldName() + " FROM " + this.table.getInternalTableName() + " WHERE " + this.table.getPrimaryKey().getInternalFieldName() + " = " + rowId;
 		Statement statement = conn.createStatement();
 		ResultSet results = statement.executeQuery(SQLCode);
 		if (results.next()) {

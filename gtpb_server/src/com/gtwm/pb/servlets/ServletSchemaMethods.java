@@ -978,7 +978,7 @@ public class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' parameter needed in the request to remove a field");
 		}
-		BaseField field = tableToRemoveFrom.getFieldByInternalName(internalFieldName);
+		BaseField field = tableToRemoveFrom.getField(internalFieldName);
 		ReportFieldInfo reportField = null;
 		if (!field.getFieldCategory().equals(FieldCategory.SEPARATOR)) {
 			// Separator fields not included in default report
@@ -1049,7 +1049,7 @@ public class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' parameter needed in the request to remove a field");
 		}
-		BaseField field = table.getFieldByInternalName(internalFieldName);
+		BaseField field = table.getField(internalFieldName);
 		// store current values that may be overwritten by
 		// DatabaseDefn.updateFieldOption so they can be rolled back
 		Boolean textFieldUsesLookup = null;
@@ -1144,7 +1144,7 @@ public class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' parameter needed in the request to remove a field");
 		}
-		BaseField field = table.getFieldByInternalName(internalFieldName);
+		BaseField field = table.getField(internalFieldName);
 		// now collect new values for field properties:
 		String fieldName = request.getParameter("fieldname");
 		String fieldDesc = request.getParameter("fielddesc");
@@ -1190,7 +1190,7 @@ public class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' parameter needed in the request to re-order a field");
 		}
-		BaseField field = table.getFieldByInternalName(internalFieldName);
+		BaseField field = table.getField(internalFieldName);
 		Integer newFieldIndex = ServletDataMethods.getIntegerParameterValue(request,
 				"newfieldindex");
 		if (newFieldIndex == null) {
@@ -1286,7 +1286,7 @@ public class ServletSchemaMethods {
 		if (sourceReport != null) {
 			field = sourceReport.getReportFieldByInternalName(internalFieldName).getBaseField();
 		} else {
-			field = sourceTable.getFieldByInternalName(internalFieldName);
+			field = sourceTable.getField(internalFieldName);
 		}
 		// begin updating model and persisting changes
 		Connection conn = null;
@@ -1725,7 +1725,7 @@ public class ServletSchemaMethods {
 		BaseField field;
 		if (fieldTable.getDefaultReport().equals(reportContainingFilterField)) {
 			reportContainingFilterField = null;
-			field = fieldTable.getFieldByInternalName(internalFieldName);
+			field = fieldTable.getField(internalFieldName);
 		} else {
 			ReportFieldInfo reportField = reportContainingFilterField
 					.getReportFieldByInternalName(internalFieldName);
@@ -1889,7 +1889,7 @@ public class ServletSchemaMethods {
 		} else if (!leftInternalTableName.equals("")) {
 			TableInfo leftTable = databaseDefn.getTableByInternalName(request,
 					leftInternalTableName);
-			leftTableField = leftTable.getFieldByInternalName(leftInternalFieldName);
+			leftTableField = leftTable.getField(leftInternalFieldName);
 		} else {
 			throw new MissingParametersException(
 					"A field owner (either table or report) must be specified for both the left and right fields");
@@ -1905,7 +1905,7 @@ public class ServletSchemaMethods {
 		} else if (!rightInternalTableName.equals("")) {
 			TableInfo rightTable = databaseDefn.getTableByInternalName(request,
 					rightInternalTableName);
-			rightTableField = rightTable.getFieldByInternalName(rightInternalFieldName);
+			rightTableField = rightTable.getField(rightInternalFieldName);
 		} else {
 			throw new MissingParametersException(
 					"A field owner (either table or report) must be specified for both the left and right fields");

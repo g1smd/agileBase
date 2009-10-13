@@ -57,7 +57,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
    	       #end
 	     #end ## end loop through fields
 			    #if($viewMethods.isWikiIntegrated())
-				  #set($wikiTitle=$tableDataRow.get($sessionTable.getFieldByName('Wiki page [Auto]')))
+				  #set($wikiTitle=$tableDataRow.get($sessionTable.getField('Wiki page [Auto]')))
                   #if(!$wikiTitle.isNull())
 			        #parse("gui/reports_and_tables/tabs/wiki.vm")
 				  #end

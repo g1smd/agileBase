@@ -165,6 +165,7 @@
 		@import url("/portalBase/website/styles/thickbox.css");
 		@import url("/portalBase/website/styles/thickbox_override.css");
 		@import url("/portalBase/website/styles/styles.css");
+		@import url("/portalBase/website/styles/fonts.css");
 	</style>
 	</head>
 	

@@ -206,7 +206,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		for (TableInfo table : this.tables) {
 			String lockableFieldName = HiddenFields.LOCKED.getFieldName();
 			try {
-				BaseField lockingField = table.getFieldByName(lockableFieldName);
+				BaseField lockingField = table.getField(lockableFieldName);
 			} catch (ObjectNotFoundException onex) {
 				logger.warn("Locking field doesn't exist for table " + table + ", adding it");
 				Connection conn = null;
@@ -502,7 +502,7 @@ public class DatabaseDefn implements DatabaseInfo {
 				String SQLCode = "UPDATE "
 						+ table.getInternalTableName()
 						+ " SET "
-						+ table.getFieldByName(HiddenFields.LOCKED.getFieldName())
+						+ table.getField(HiddenFields.LOCKED.getFieldName())
 								.getInternalFieldName() + " = true";
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				statement.executeUpdate();
@@ -1437,19 +1437,19 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		// No fields are mandatory in portalBase
 		boolean notNull = false;
-		String listValueField = request.getParameter(PossibleListOptions.LISTVALUEFIELD
+		String listValueFieldInternalName = request.getParameter(PossibleListOptions.LISTVALUEFIELD
 				.getFormInputName());
 		// Create the relation object
 		RelationField relationToAdd = new RelationFieldDefn(this.relationalDataSource,
 				tableToAddTo, internalFieldName, relatedTable, relatedField, notNull);
 		relationToAdd.setFieldDescription(fieldDesc);
 		relationToAdd.setFieldName(fieldName);
-		if (listValueField == null) {
+		if (listValueFieldInternalName == null) {
 			// if no other field was specified for display purposes
 			// use the field on which the relation is based
 			relationToAdd.setDisplayField(relationToAdd.getRelatedField());
 		} else {
-			BaseField valueField = relatedTable.getFieldByInternalName(listValueField);
+			BaseField valueField = relatedTable.getField(listValueFieldInternalName);
 			relationToAdd.setDisplayField(valueField);
 		}
 		// Add it to the databases and in-memory cache

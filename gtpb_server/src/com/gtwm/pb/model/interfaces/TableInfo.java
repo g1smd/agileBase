@@ -51,10 +51,16 @@ public interface TableInfo extends Comparable<TableInfo> {
 
 	public String getTableDescription();
 
-	public BaseField getFieldByInternalName(String internalFieldName)
-			throws ObjectNotFoundException;
-
-	public BaseField getFieldByName(String fieldName) throws ObjectNotFoundException;
+	/**
+	 * Find a field in this table
+	 * 
+	 * @param fieldID
+	 *            Internal name of the field (preferable) or public name
+	 * @throws ObjectNotFoundException
+	 *             If the fieldID doesn't match any field either as an internal
+	 *             or public name
+	 */
+	public BaseField getField(String fieldID) throws ObjectNotFoundException;
 
 	/**
 	 * @return A read-only copy of the table's field collection, sorted by field
@@ -105,8 +111,6 @@ public interface TableInfo extends Comparable<TableInfo> {
 
 	@Deprecated
 	/*
-	 * *
-	 * 
 	 * @deprecated getReport now gets a report by either internal name
 	 * (preferred) or name
 	 */
