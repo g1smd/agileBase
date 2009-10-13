@@ -175,13 +175,13 @@ public class ServletDataMethods {
 			table = databaseDefn.findTableContainingReport(request, internalReportName);
 		}
 		try {
-			report = table.getReportByInternalName(internalReportName);
+			report = table.getReport(internalReportName);
 		} catch (ObjectNotFoundException onfex) {
 			// Still possible that table in session is a different one to that
 			// containing the report we're
 			// trying to set - fall back to looking up the correct table
 			table = databaseDefn.findTableContainingReport(request, internalReportName);
-			report = table.getReportByInternalName(internalReportName);
+			report = table.getReport(internalReportName);
 		}
 		sessionData.setReport(report);
 	}
@@ -343,7 +343,7 @@ public class ServletDataMethods {
 			}
 		}
 		if (internalReportName != null) {
-			report = parentTable.getReportByInternalName(internalReportName);
+			report = parentTable.getReport(internalReportName);
 		} else {
 			report = parentTable.getReportByName(reportName);
 		}

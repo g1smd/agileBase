@@ -50,7 +50,7 @@ public class ServletUtilMethods {
 			throw new MissingParametersException("'internalreportname' parameter needed in request");
 		} else {
 			TableInfo table = databaseDefn.findTableContainingReport(request, internalReportName);
-			report = table.getReportByInternalName(internalReportName);
+			report = table.getReport(internalReportName);
 		}
 		return report;
 	}

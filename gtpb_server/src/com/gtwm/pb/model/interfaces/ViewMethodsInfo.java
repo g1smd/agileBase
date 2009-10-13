@@ -54,8 +54,8 @@ public interface ViewMethodsInfo {
 	 * Return company usage statistics
 	 * 
 	 */
-	public UsageStatsInfo getUsageStats() throws DisallowedException,
-			ObjectNotFoundException, SQLException;
+	public UsageStatsInfo getUsageStats() throws DisallowedException, ObjectNotFoundException,
+			SQLException;
 
 	/**
 	 * Get the list of custom actions for a particular application group. This
@@ -481,13 +481,15 @@ public interface ViewMethodsInfo {
 	public SortedSet<BaseReportInfo> getAllViewableReports() throws CodingErrorException;
 
 	/**
-	 * @param internalTableName
-	 *            - unique internal identifier for the sought table
-	 * @return Table identified by internalTableName
+	 * @param tableID
+	 *            The internal table name of the table, or it's public facing
+	 *            name. Using the public facing name is more expensive, so the
+	 *            internal fixed name is preferred, however it may be easier to
+	 *            use the public name when rapid prototyping
+	 * @return Table identified
 	 * @throws ObjectNotFoundException
 	 */
-	public TableInfo getTableByInternalName(String internalTableName)
-			throws ObjectNotFoundException, DisallowedException;
+	public TableInfo getTable(String tableID) throws ObjectNotFoundException, DisallowedException;
 
 	/**
 	 * 
@@ -670,7 +672,8 @@ public interface ViewMethodsInfo {
 	 * whether that user has VIEW privileges on the parent table, all joined
 	 * tables and recursively all joined reports
 	 */
-	public boolean loggedInUserAllowedToViewReport(BaseReportInfo report) throws CodingErrorException;
+	public boolean loggedInUserAllowedToViewReport(BaseReportInfo report)
+			throws CodingErrorException;
 
 	/**
 	 * 

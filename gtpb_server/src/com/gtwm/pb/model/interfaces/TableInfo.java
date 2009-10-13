@@ -25,113 +25,143 @@ import com.gtwm.pb.util.CantDoThatException;
 import java.util.SortedSet;
 
 /**
- * Stores basic information about a database table and keeps a collection of fields NOTE: To create a new
- * table, use the method in DatabaseInfo rather than just calling the constructor - DatabaseInfo keeps a
- * collection of tables.
+ * Stores basic information about a database table and keeps a collection of
+ * fields NOTE: To create a new table, use the method in DatabaseInfo rather
+ * than just calling the constructor - DatabaseInfo keeps a collection of
+ * tables.
  * 
- * A note on compareTo, equals and hashCode, which should be implemented by concrete classes for TableInfo,
- * ReportInfo and all field types: All of these should compare on object name(s) case insensitively because
- * this is how they will often be displayed to the user. Internal names such as returned by
- * getInternalTableName are used by the database and sometimes code as identifiers but are not the primary
- * object identifiers.
+ * A note on compareTo, equals and hashCode, which should be implemented by
+ * concrete classes for TableInfo, ReportInfo and all field types: All of these
+ * should compare on object name(s) case insensitively because this is how they
+ * will often be displayed to the user. Internal names such as returned by
+ * getInternalTableName are used by the database and sometimes code as
+ * identifiers but are not the primary object identifiers.
  * 
  * @see com.gtwm.pb.model.interfaces.DatabaseInfo The DatabaseInfo interface
  */
 public interface TableInfo extends Comparable<TableInfo> {
 
-    public void setTableName(String tableName);
+	public void setTableName(String tableName);
 
-    public void setTableDescription(String tableDesc);
+	public void setTableDescription(String tableDesc);
 
-    public String getTableName();
+	public String getTableName();
 
-    public String getInternalTableName();
+	public String getInternalTableName();
 
-    public String getTableDescription();
+	public String getTableDescription();
 
-    public BaseField getFieldByInternalName(String internalFieldName) throws ObjectNotFoundException;
+	public BaseField getFieldByInternalName(String internalFieldName)
+			throws ObjectNotFoundException;
 
-    public BaseField getFieldByName(String fieldName) throws ObjectNotFoundException;
+	public BaseField getFieldByName(String fieldName) throws ObjectNotFoundException;
 
-    /**
-     * @return A read-only copy of the table's field collection, sorted by field index i.e. display position
-     */
-    public SortedSet<BaseField> getFields();
+	/**
+	 * @return A read-only copy of the table's field collection, sorted by field
+	 *         index i.e. display position
+	 */
+	public SortedSet<BaseField> getFields();
 
-    /**
-     * Add a new field to the table's set, giving it a field index greater than any other field, i.e. adding
-     * it to the end of the set of fields
-     */
-    public void addField(BaseField fieldToAdd) throws CantDoThatException;
+	/**
+	 * Add a new field to the table's set, giving it a field index greater than
+	 * any other field, i.e. adding it to the end of the set of fields
+	 */
+	public void addField(BaseField fieldToAdd) throws CantDoThatException;
 
-    public void setFieldIndex(int index, BaseField fieldToOrder) throws ObjectNotFoundException, CantDoThatException;
+	public void setFieldIndex(int index, BaseField fieldToOrder) throws ObjectNotFoundException,
+			CantDoThatException;
 
-    public void removeField(BaseField fieldToRemove);
+	public void removeField(BaseField fieldToRemove);
 
-    /**
-     * Each table has a collection of reports which show info from the table and related tables
-     * 
-     * @param reportToAdd
-     * @param thisIsTheDefaultReport
-     *            Each table has one default report which is not editable by the user but which the
-     *            application keeps up to date as fields are added and removed from the table
-     */
-    public void addReport(BaseReportInfo reportToAdd, boolean thisIsTheDefaultReport);
+	/**
+	 * Each table has a collection of reports which show info from the table and
+	 * related tables
+	 * 
+	 * @param reportToAdd
+	 * @param thisIsTheDefaultReport
+	 *            Each table has one default report which is not editable by the
+	 *            user but which the application keeps up to date as fields are
+	 *            added and removed from the table
+	 */
+	public void addReport(BaseReportInfo reportToAdd, boolean thisIsTheDefaultReport);
 
-    public void removeReport(BaseReportInfo reportToRemove);
+	public void removeReport(BaseReportInfo reportToRemove);
 
-    public void setDefaultReport(SimpleReportInfo report);
+	public void setDefaultReport(SimpleReportInfo report);
 
-    public SimpleReportInfo getDefaultReport();
+	public SimpleReportInfo getDefaultReport();
 
-    /**
-     * Note: The UI should <b>not</b> use this function to get the list of reports a user can view as this
-     * will return all tables without doing any privilege checks. Use
-     * ViewMethodsInfo.getViewableReports(TableInfo table) instead
-     * 
-     * @return All reports belonging to this table, in a read-only collection
-     * 
-     * @see com.gtwm.pb.model.interfaces.ViewMethodsInfo#getViewableReports(TableInfo)
-     */
-    public SortedSet<BaseReportInfo> getReports();
+	/**
+	 * Note: The UI should <b>not</b> use this function to get the list of
+	 * reports a user can view as this will return all tables without regard for
+	 * the user's privileges. Use ViewMethodsInfo.getViewableReports(TableInfo
+	 * table) instead
+	 * 
+	 * @return All reports belonging to this table, in a read-only collection
+	 * 
+	 * @see com.gtwm.pb.model.interfaces.ViewMethodsInfo#getViewableReports(TableInfo)
+	 */
+	public SortedSet<BaseReportInfo> getReports();
 
-    public BaseReportInfo getReportByName(String reportName) throws ObjectNotFoundException;
+	@Deprecated
+	/*
+	 * *
+	 * 
+	 * @deprecated getReport now gets a report by either internal name
+	 * (preferred) or name
+	 */
+	public BaseReportInfo getReportByName(String reportName) throws ObjectNotFoundException;
 
-    public BaseReportInfo getReportByInternalName(String internalReportName) throws ObjectNotFoundException;
+	/**
+	 * Get a report from this table's collection
+	 * 
+	 * @param reportID
+	 *            The internal name of the report (it's ID) or alternatively the
+	 *            public name of the report. Note it will be interpreted as an
+	 *            internal name first, so using the public name will be slower,
+	 *            but possibly easier when developing a template
+	 * @throws ObjectNotFoundException
+	 *             If no report with the internal or public name can be found
+	 *             belonging to this table
+	 */
+	public BaseReportInfo getReport(String reportID) throws ObjectNotFoundException;
 
-    /**
-     * @param table
-     * @return true if the current table object contains RelationFields sourced from the parameter table
-     */
-    public boolean isDependentOn(TableInfo table);
+	/**
+	 * @param table
+	 * @return true if the current table object contains RelationFields sourced
+	 *         from the parameter table
+	 */
+	public boolean isDependentOn(TableInfo table);
 
-    /**
-     * Set the primary key to the given sequence field
-     * 
-     * @throws CantDoThatException
-     *             If the field doesn't belong to the table
-     */
-    public void setPrimaryKey(SequenceField primaryKeyField) throws CantDoThatException;
+	/**
+	 * Set the primary key to the given sequence field
+	 * 
+	 * @throws CantDoThatException
+	 *             If the field doesn't belong to the table
+	 */
+	public void setPrimaryKey(SequenceField primaryKeyField) throws CantDoThatException;
 
-    /**
-     * Set the primary key to the given integer field. Note the field is specified as a concrete class, not an
-     * interface because it specifically must be an integer field, not something general like a number field
-     * 
-     * @throws CantDoThatException
-     *             If the field doesn't belong to the table
-     */
-    public void setPrimaryKey(IntegerFieldDefn primaryKeyField) throws CantDoThatException;
+	/**
+	 * Set the primary key to the given integer field. Note the field is
+	 * specified as a concrete class, not an interface because it specifically
+	 * must be an integer field, not something general like a number field
+	 * 
+	 * @throws CantDoThatException
+	 *             If the field doesn't belong to the table
+	 */
+	public void setPrimaryKey(IntegerFieldDefn primaryKeyField) throws CantDoThatException;
 
-    /**
-     * @return The primary key field of the table. This will be an integer or sequence field
-     */
-    public BaseField getPrimaryKey();
-    
-    /**
-     * Set whether records in this table can be locked for editing
-     */
-    public void setRecordsLockable(Boolean lockable);
-   
-    public Boolean getRecordsLockable();
+	/**
+	 * @return The primary key field of the table. This will be an integer or
+	 *         sequence field
+	 */
+	public BaseField getPrimaryKey();
+
+	/**
+	 * Set whether records in this table can be locked for editing
+	 */
+	public void setRecordsLockable(Boolean lockable);
+
+	public Boolean getRecordsLockable();
 
 }

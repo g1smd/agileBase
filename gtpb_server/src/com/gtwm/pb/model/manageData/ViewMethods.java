@@ -171,8 +171,8 @@ public class ViewMethods implements ViewMethodsInfo {
 	/**
 	 * Return usage stats for the current company
 	 */
-	public UsageStatsInfo getUsageStats() throws DisallowedException,
-			ObjectNotFoundException, SQLException {
+	public UsageStatsInfo getUsageStats() throws DisallowedException, ObjectNotFoundException,
+			SQLException {
 		return new UsageStats(this.request, this.databaseDefn);
 	}
 
@@ -186,7 +186,7 @@ public class ViewMethods implements ViewMethodsInfo {
 			ObjectNotFoundException {
 		return this.databaseDefn.getDataManagement().isRecordLocked(this.sessionData, table, rowId);
 	}
-	
+
 	public boolean isRowIdInReport() throws SQLException {
 		BaseReportInfo report = this.sessionData.getReport();
 		int rowId = this.sessionData.getRowId();
@@ -326,9 +326,15 @@ public class ViewMethods implements ViewMethodsInfo {
 		return reports;
 	}
 
-	public TableInfo getTableByInternalName(String internalTableName)
-			throws ObjectNotFoundException, DisallowedException {
-		return this.databaseDefn.getTableByInternalName(this.request, internalTableName);
+	public TableInfo getTable(String tableID) throws ObjectNotFoundException,
+			DisallowedException {
+		TableInfo table = null;
+		try {
+			table = this.databaseDefn.getTableByInternalName(this.request, tableID);
+		} catch (ObjectNotFoundException onex) {
+			table = this.databaseDefn.getTableByName(this.request, tableID);
+		}
+		return table;
 	}
 
 	public TableInfo findTableContainingReport(String reportInternalName)
@@ -735,7 +741,8 @@ public class ViewMethods implements ViewMethodsInfo {
 		return getAuthenticator().loggedInUserAllowedTo(this.request, privilegeType, table);
 	}
 
-	public boolean loggedInUserAllowedToViewReport(BaseReportInfo report) throws CodingErrorException {
+	public boolean loggedInUserAllowedToViewReport(BaseReportInfo report)
+			throws CodingErrorException {
 		return getAuthenticator().loggedInUserAllowedToViewReport(this.request, report);
 	}
 

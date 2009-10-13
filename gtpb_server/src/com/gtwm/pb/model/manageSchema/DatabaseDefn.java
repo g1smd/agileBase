@@ -791,7 +791,7 @@ public class DatabaseDefn implements DatabaseInfo {
 			for (String reportInternalName : deletedReports) {
 				TableInfo table = this.findTableContainingReportWithoutChecks(reportInternalName);
 				HibernateUtil.activateObject(table);
-				BaseReportInfo reportToRecreate = table.getReportByInternalName(reportInternalName);
+				BaseReportInfo reportToRecreate = table.getReport(reportInternalName);
 				String CreateViewSQL = "CREATE VIEW " + reportInternalName + " AS ("
 						+ reportToRecreate.getSQLForDetail() + ")";
 				PreparedStatement statement = conn.prepareStatement(CreateViewSQL);

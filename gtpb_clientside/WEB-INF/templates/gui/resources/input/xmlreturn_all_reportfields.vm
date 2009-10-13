@@ -18,7 +18,7 @@
 <request>
   #set($internalReportName = $viewMethods.getSessionData().getCustomVariable("parentreport"))
   #set($table = $viewMethods.findTableContainingReport($internalReportName))
-  #set($report = $table.getReportByInternalName($internalReportName))
+  #set($report = $table.getReport($internalReportName))
   ## send the default report when requiring the fields of a table
   #foreach($reportField in $report.getReportFields())
 				##    #if(! $reportField.getBaseField().getClass().getSimpleName().equals("RelationFieldDefn"))

@@ -17,7 +17,7 @@
 ##
 <request>
   #set($internalTableName = $viewMethods.getSessionData().getCustomVariable("parenttable"))
-  #set($table = $viewMethods.getTableByInternalName($internalTableName))
+  #set($table = $viewMethods.getTable($internalTableName))
   #foreach($report in $viewMethods.getViewableReports($table))
   <option>
     <display_value>$report.getReportName()</display_value>

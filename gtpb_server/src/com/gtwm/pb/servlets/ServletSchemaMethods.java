@@ -1273,7 +1273,7 @@ public class ServletSchemaMethods {
 				if (!sourceTable.getDefaultReport().getInternalReportName().equals(
 						internalReportName)) {
 					sourceReport = (SimpleReportInfo) sourceTable
-							.getReportByInternalName(internalReportName);
+							.getReport(internalReportName);
 				}
 			}
 		}
@@ -1717,7 +1717,7 @@ public class ServletSchemaMethods {
 		BaseReportInfo reportContainingFilterField = null;
 		if ((internalReportName != null) && (internalReportName != "")) {
 			fieldTable = databaseDefn.findTableContainingReport(request, internalReportName);
-			reportContainingFilterField = fieldTable.getReportByInternalName(internalReportName);
+			reportContainingFilterField = fieldTable.getReport(internalReportName);
 		} else {
 			fieldTable = databaseDefn.getTableByInternalName(request, internalTableName);
 			reportContainingFilterField = fieldTable.getDefaultReport();
@@ -1884,7 +1884,7 @@ public class ServletSchemaMethods {
 		if (!leftInternalReportName.equals("")) {
 			TableInfo leftTable = databaseDefn.findTableContainingReport(request,
 					leftInternalReportName);
-			BaseReportInfo leftReport = leftTable.getReportByInternalName(leftInternalReportName);
+			BaseReportInfo leftReport = leftTable.getReport(leftInternalReportName);
 			leftReportField = leftReport.getReportFieldByInternalName(leftInternalFieldName);
 		} else if (!leftInternalTableName.equals("")) {
 			TableInfo leftTable = databaseDefn.getTableByInternalName(request,
@@ -1900,7 +1900,7 @@ public class ServletSchemaMethods {
 			TableInfo rightTable = databaseDefn.findTableContainingReport(request,
 					rightInternalReportName);
 			BaseReportInfo rightReport = rightTable
-					.getReportByInternalName(rightInternalReportName);
+					.getReport(rightInternalReportName);
 			rightReportField = rightReport.getReportFieldByInternalName(rightInternalFieldName);
 		} else if (!rightInternalTableName.equals("")) {
 			TableInfo rightTable = databaseDefn.getTableByInternalName(request,
