@@ -768,7 +768,7 @@ public class ServletDataMethods {
 		// get the actual field object from the field name
 		BaseField filterField;
 		try {
-			filterField = sessionData.getReport().getReportFieldByInternalName(internalFieldName)
+			filterField = sessionData.getReport().getReportField(internalFieldName)
 					.getBaseField();
 		} catch (ObjectNotFoundException onfex) {
 			// If not in session report, fall back to looking in entire
@@ -814,10 +814,10 @@ public class ServletDataMethods {
 		// get the actual field object from the field name
 		BaseField sortField;
 		if (!internalFieldName.equals("")) {
-			sortField = sessionData.getReport().getReportFieldByInternalName(internalFieldName)
+			sortField = sessionData.getReport().getReportField(internalFieldName)
 					.getBaseField();
 		} else {
-			sortField = sessionData.getReport().getReportFieldByName(fieldName).getBaseField();
+			sortField = sessionData.getReport().getReportField(fieldName).getBaseField();
 		}
 		// throw an exception if we're trying to sort on a field type which
 		// hasn't been implemented/tested yet
@@ -846,10 +846,10 @@ public class ServletDataMethods {
 		// get the actual field object from the field name
 		BaseField sortField;
 		if (!internalFieldName.equals("")) {
-			sortField = sessionData.getReport().getReportFieldByInternalName(internalFieldName)
+			sortField = sessionData.getReport().getReportField(internalFieldName)
 					.getBaseField();
 		} else {
-			sortField = sessionData.getReport().getReportFieldByName(fieldName).getBaseField();
+			sortField = sessionData.getReport().getReportField(fieldName).getBaseField();
 		}
 		sessionData.clearReportSort(sortField);
 	}

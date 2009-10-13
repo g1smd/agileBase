@@ -68,7 +68,7 @@ public class ReportFilterDefn implements ReportFilterInfo {
 		this.setParentReport(parentReport);
 		if (reportContainingFilterField != null) {
 			this.setFilterReportFieldDirect(reportContainingFilterField
-					.getReportFieldByInternalName(filterField.getInternalFieldName()));
+					.getReportField(filterField.getInternalFieldName()));
 		} else {
 			this.setFilterBaseField(filterField);
 		}
@@ -103,7 +103,7 @@ public class ReportFilterDefn implements ReportFilterInfo {
 			throws CantDoThatException, ObjectNotFoundException {
 		this.setParentReport(parentReport);
 		if (reportContainingFilterField != null) {
-			this.setFilterReportFieldDirect(reportContainingFilterField.getReportFieldByInternalName(filterField.getInternalFieldName()));
+			this.setFilterReportFieldDirect(reportContainingFilterField.getReportField(filterField.getInternalFieldName()));
 		} else {
 			this.setFilterBaseField(filterField);
 		}

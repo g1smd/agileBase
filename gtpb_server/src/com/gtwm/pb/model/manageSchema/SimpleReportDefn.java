@@ -334,27 +334,23 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	}
 
 	@Transient
-	public synchronized ReportFieldInfo getReportFieldByInternalName(String internalFieldName)
+	public synchronized ReportFieldInfo getReportField(String fieldID)
 			throws ObjectNotFoundException {
-		for (ReportFieldInfo reportField : this.getReportFieldsDirect()) {
-			if (internalFieldName.equals(reportField.getBaseField().getInternalFieldName())) {
+		Set<ReportFieldInfo> reportFields = this.getReportFieldsDirect();
+		// Search by internal name
+		for (ReportFieldInfo reportField : reportFields) {
+			if (fieldID.equals(reportField.getBaseField().getInternalFieldName())) {
 				return reportField;
 			}
 		}
-		throw new ObjectNotFoundException("Field with internal name " + internalFieldName
-				+ " not found in report " + super.getReportName());
-	}
-
-	@Transient
-	public synchronized ReportFieldInfo getReportFieldByName(String fieldName)
-			throws ObjectNotFoundException {
-		for (ReportFieldInfo reportField : this.getReportFieldsDirect()) {
-			if (fieldName.equals(reportField.getBaseField().getFieldName())) {
+		// Search by public name
+		for (ReportFieldInfo reportField : reportFields) {
+			if (fieldID.equals(reportField.getBaseField().getFieldName())) {
 				return reportField;
 			}
 		}
-		throw new ObjectNotFoundException("Field with name " + fieldName + " not found in report "
-				+ super.getReportName());
+		throw new ObjectNotFoundException("No field with internal or public name " + fieldID
+				+ " found in report " + super.getReportName());
 	}
 
 	public synchronized void removeField(ReportFieldInfo reportFieldToRemove)
@@ -988,7 +984,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 			// if a relation, sort on the display field, not the key field
 			BaseField displayField = ((RelationField) sortBaseField).getDisplayField();
 			ReportFieldInfo displayReportField = sortBaseField.getTableContainingField()
-					.getDefaultReport().getReportFieldByInternalName(
+					.getDefaultReport().getReportField(
 							displayField.getInternalFieldName());
 			ReportSort sort = new ReportSort(displayReportField, ascendingSort);
 			// HibernateUtil.currentSession().save(sort);

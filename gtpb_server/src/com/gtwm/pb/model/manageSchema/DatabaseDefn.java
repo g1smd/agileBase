@@ -1645,7 +1645,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		if (sourceReport == null) {
 			newReportField = report.addTableField(field);
 		} else {
-			ReportFieldInfo reportField = sourceReport.getReportFieldByInternalName(field
+			ReportFieldInfo reportField = sourceReport.getReportField(field
 					.getInternalFieldName());
 			newReportField = report.addReportField(reportField);
 		}

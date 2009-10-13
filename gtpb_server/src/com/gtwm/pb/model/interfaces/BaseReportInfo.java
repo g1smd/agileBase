@@ -53,9 +53,9 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	public String getReportName();
 
 	public String getReportDescription();
-	
+
 	public ModuleInfo getModule();
-	
+
 	public void setModule(ModuleInfo module);
 
 	public String getInternalReportName();
@@ -82,28 +82,24 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	public Set<BaseField> getReportBaseFields();
 
 	/**
-	 * Return the report field object with the specified internalFieldName
+	 * Return the report field object with the specified ID, either an internal
+	 * name (preferred) or a public name
 	 */
-	public ReportFieldInfo getReportFieldByInternalName(String internalFieldName)
-			throws ObjectNotFoundException;
-
-	/**
-	 * Return the report field object with the specified name
-	 */
-	public ReportFieldInfo getReportFieldByName(String fieldName) throws ObjectNotFoundException;
+	public ReportFieldInfo getReportField(String reportFieldID) throws ObjectNotFoundException;
 
 	public TableInfo getParentTable();
 
 	public ReportSummaryInfo getReportSummary();
-	
+
 	public int getRowCount();
-	
+
 	public void setRowCount(int rowCountEstimate);
-	
+
 	/**
-	 * Return whether the row count is definitive or an estimate based on a sample of data
+	 * Return whether the row count is definitive or an estimate based on a
+	 * sample of data
 	 */
 	public boolean isRowCountEstimate();
-	
+
 	public void setRowCountEstimate(boolean rowCountIsEstimate);
 }

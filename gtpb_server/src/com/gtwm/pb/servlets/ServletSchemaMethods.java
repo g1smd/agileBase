@@ -828,7 +828,7 @@ public class ServletSchemaMethods {
 					table.removeField(newField);
 					if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
 						ReportFieldInfo reportField = table.getDefaultReport()
-								.getReportFieldByInternalName(newField.getInternalFieldName());
+								.getReportField(newField.getInternalFieldName());
 						table.getDefaultReport().removeField(reportField);
 					}
 				}
@@ -841,7 +841,7 @@ public class ServletSchemaMethods {
 					table.removeField(newField);
 					if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
 						ReportFieldInfo reportField = table.getDefaultReport()
-								.getReportFieldByInternalName(newField.getInternalFieldName());
+								.getReportField(newField.getInternalFieldName());
 						table.getDefaultReport().removeField(reportField);
 					}
 				}
@@ -854,7 +854,7 @@ public class ServletSchemaMethods {
 					table.removeField(newField);
 					if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
 						ReportFieldInfo reportField = table.getDefaultReport()
-								.getReportFieldByInternalName(newField.getInternalFieldName());
+								.getReportField(newField.getInternalFieldName());
 						table.getDefaultReport().removeField(reportField);
 					}
 				}
@@ -932,7 +932,7 @@ public class ServletSchemaMethods {
 				table.removeField(newField);
 				if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
 					ReportFieldInfo reportField = table.getDefaultReport()
-							.getReportFieldByInternalName(newField.getInternalFieldName());
+							.getReportField(newField.getInternalFieldName());
 					table.getDefaultReport().removeField(reportField);
 				}
 			}
@@ -943,7 +943,7 @@ public class ServletSchemaMethods {
 				table.removeField(newField);
 				if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
 					ReportFieldInfo reportField = table.getDefaultReport()
-							.getReportFieldByInternalName(newField.getInternalFieldName());
+							.getReportField(newField.getInternalFieldName());
 					table.getDefaultReport().removeField(reportField);
 				}
 			}
@@ -955,7 +955,7 @@ public class ServletSchemaMethods {
 				table.removeField(newField);
 				if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
 					ReportFieldInfo reportField = table.getDefaultReport()
-							.getReportFieldByInternalName(newField.getInternalFieldName());
+							.getReportField(newField.getInternalFieldName());
 					table.getDefaultReport().removeField(reportField);
 				}
 			}
@@ -982,7 +982,7 @@ public class ServletSchemaMethods {
 		ReportFieldInfo reportField = null;
 		if (!field.getFieldCategory().equals(FieldCategory.SEPARATOR)) {
 			// Separator fields not included in default report
-			reportField = tableToRemoveFrom.getDefaultReport().getReportFieldByInternalName(
+			reportField = tableToRemoveFrom.getDefaultReport().getReportField(
 					internalFieldName);
 		}
 		// begin updating model and persisting changes
@@ -1210,7 +1210,7 @@ public class ServletSchemaMethods {
 			table.setFieldIndex(oldFieldIndex, field);
 			if (table.getDefaultReport().getReportBaseFields().contains(field)) {
 				ReportFieldInfo reportField = table.getDefaultReport()
-						.getReportFieldByInternalName(internalFieldName);
+						.getReportField(internalFieldName);
 				table.getDefaultReport().setFieldIndex(oldFieldIndex, reportField);
 			}
 			throw new CantDoThatException("Setting field index failed", hex);
@@ -1220,7 +1220,7 @@ public class ServletSchemaMethods {
 			table.setFieldIndex(oldFieldIndex, field);
 			if (table.getDefaultReport().getReportBaseFields().contains(field)) {
 				ReportFieldInfo reportField = table.getDefaultReport()
-						.getReportFieldByInternalName(internalFieldName);
+						.getReportField(internalFieldName);
 				table.getDefaultReport().setFieldIndex(oldFieldIndex, reportField);
 			}
 			throw new CantDoThatException("Setting field index failed", pex);
@@ -1284,7 +1284,7 @@ public class ServletSchemaMethods {
 		}
 		BaseField field;
 		if (sourceReport != null) {
-			field = sourceReport.getReportFieldByInternalName(internalFieldName).getBaseField();
+			field = sourceReport.getReportField(internalFieldName).getBaseField();
 		} else {
 			field = sourceTable.getField(internalFieldName);
 		}
@@ -1351,7 +1351,7 @@ public class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' parameter needed in request to add a field to a report");
 		}
-		ReportFieldInfo reportField = report.getReportFieldByInternalName(internalFieldName);
+		ReportFieldInfo reportField = report.getReportField(internalFieldName);
 		// begin updating model and persisting changes
 		Connection conn = null;
 		try {
@@ -1419,7 +1419,7 @@ public class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' parameter needed in request to reorder a field in a report");
 		}
-		ReportFieldInfo field = report.getReportFieldByInternalName(internalFieldName);
+		ReportFieldInfo field = report.getReportField(internalFieldName);
 		Integer newFieldIndex = ServletDataMethods.getIntegerParameterValue(request,
 				"newfieldindex");
 		if (newFieldIndex == null) {
@@ -1477,7 +1477,7 @@ public class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' parameter needed in request to set sorting on a field in a report");
 		}
-		ReportFieldInfo field = report.getReportFieldByInternalName(internalFieldName);
+		ReportFieldInfo field = report.getReportField(internalFieldName);
 		String sorting = request.getParameter("sortdirection" + field.getInternalFieldName());
 		if (sorting == null) {
 			throw new MissingParametersException(
@@ -1644,7 +1644,7 @@ public class ServletSchemaMethods {
 		}
 		// begin updating model and persisting changes
 		ReportCalcFieldInfo calculationField = (ReportCalcFieldInfo) report
-				.getReportFieldByInternalName(internalCalculationName);
+				.getReportField(internalCalculationName);
 		String oldCalculationName = calculationField.getBaseFieldName();
 		String oldCalculationDefn = calculationField.getCalculationDefinition();
 		DatabaseFieldType oldDbFieldType = calculationField.getDbType();
@@ -1728,7 +1728,7 @@ public class ServletSchemaMethods {
 			field = fieldTable.getField(internalFieldName);
 		} else {
 			ReportFieldInfo reportField = reportContainingFilterField
-					.getReportFieldByInternalName(internalFieldName);
+					.getReportField(internalFieldName);
 			if (reportField == null) {
 				throw new ObjectNotFoundException("Unable to locate field within report "
 						+ reportContainingFilterField.getReportName());
@@ -1885,7 +1885,7 @@ public class ServletSchemaMethods {
 			TableInfo leftTable = databaseDefn.findTableContainingReport(request,
 					leftInternalReportName);
 			BaseReportInfo leftReport = leftTable.getReport(leftInternalReportName);
-			leftReportField = leftReport.getReportFieldByInternalName(leftInternalFieldName);
+			leftReportField = leftReport.getReportField(leftInternalFieldName);
 		} else if (!leftInternalTableName.equals("")) {
 			TableInfo leftTable = databaseDefn.getTableByInternalName(request,
 					leftInternalTableName);
@@ -1901,7 +1901,7 @@ public class ServletSchemaMethods {
 					rightInternalReportName);
 			BaseReportInfo rightReport = rightTable
 					.getReport(rightInternalReportName);
-			rightReportField = rightReport.getReportFieldByInternalName(rightInternalFieldName);
+			rightReportField = rightReport.getReportField(rightInternalFieldName);
 		} else if (!rightInternalTableName.equals("")) {
 			TableInfo rightTable = databaseDefn.getTableByInternalName(request,
 					rightInternalTableName);
@@ -2084,7 +2084,7 @@ public class ServletSchemaMethods {
 			internalFieldName = internalFieldName.replaceAll("\\_.*$", "");
 		}
 		ReportFieldInfo groupingReportField = report
-				.getReportFieldByInternalName(internalFieldName);
+				.getReportField(internalFieldName);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			databaseDefn.addGroupingToSummaryReport(request, groupingReportField, groupingModifer);
@@ -2161,12 +2161,12 @@ public class ServletSchemaMethods {
 					"'internalfieldname' and 'function' parameters are required to add an aggregate function to a report summary");
 		}
 		ReportFieldInfo functionReportField = report
-				.getReportFieldByInternalName(internalFieldName);
+				.getReportField(internalFieldName);
 		ReportFieldInfo secondaryFunctionReportField = null;
 		if (secondaryInternalFieldName != null) {
 			if (!secondaryInternalFieldName.equals("")) {
 				secondaryFunctionReportField = report
-						.getReportFieldByInternalName(secondaryInternalFieldName);
+						.getReportField(secondaryInternalFieldName);
 			}
 		}
 		AggregateFunction function = AggregateFunction.valueOf(functionName.toUpperCase());
