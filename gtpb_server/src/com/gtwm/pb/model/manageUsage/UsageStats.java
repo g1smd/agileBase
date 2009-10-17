@@ -191,6 +191,9 @@ public class UsageStats implements UsageStatsInfo {
 				conn.close();
 			}
 		}
+		if (sectionTreeMaps.size() == 0) {
+			return "Not enough data has been gathered to display a map of utilisation. Please try again tomorrow";
+		}
 		// transfer the data into JSON
 		JSONStringer js = new JSONStringer();
 		BaseReportInfo report = null;

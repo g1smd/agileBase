@@ -7,10 +7,12 @@
 	<script language=Javascript src="resources/jit.js"></script>
 	<style>
 	@import url('resources/display_application.css');
+	@import url('styles/main.css');
 	</style>
 </head>
 <body>
-#set($treeMap = $viewMethods.getUsageStats().getTreeMap())
+#set($treeMapJSON = $viewMethods.getUsageStats().getTreeMapJSON())
+#if($treeMapJSON.startsWith("{")) ##if valid JSON
 <script language="JavaScript">
 
 var tipCache = [];
@@ -25,7 +27,7 @@ jQuery(document).ready(function(){
 	ivWidth = ivWidthInt + "px";
 	jqInfovis.css("width",ivWidth);
 
-    var json = $viewMethods.getUsageStats().getTreeMapJSON();
+    var json = $treeMapJSON;
 	
 	TM.Squarified.implement({  
     'onLeftClick': function(elem) {  
@@ -162,5 +164,11 @@ function growLeaves() {
 
 <div id="infovis" /> 
 </div>
+#else ##not valid JSON
+<div class="warningmessage">
+	<b>Stats not available:</b><p>
+	$treeMapJSON
+</div>
+#end
 </body>
 </html>
