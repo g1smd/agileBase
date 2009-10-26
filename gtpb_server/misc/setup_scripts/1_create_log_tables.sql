@@ -1,3 +1,4 @@
+BEGIN;
 -- portalBase will log to these tables
 -- and make the info available in various forms to managers and administrators
 -- e.g. the management info treemap
@@ -56,3 +57,5 @@ log_entry_id serial
 CREATE INDEX report_view_company ON dbint_log_report_view(company);
 CREATE INDEX report_view_report ON dbint_log_report_view(report);
 CREATE INDEX report_view_timestamp ON dbint_log_report_view(app_timestamp);
+
+COMMIT;
