@@ -301,6 +301,7 @@
 		  #else
 		    var rowId = -1;
 		  #end
+		  #if($sessionTable)
 			  #if($sessionTable.getDefaultReport().equals($sessionReport))
 				#set($numberOfTabs = '-1')
 			  #else
@@ -311,7 +312,7 @@
 				  #set($numberOfTabs = '3')
 				#end
 			  #end
-
+		  #end
 		  loadIntoPane3(url,rowId,$numberOfTabs);
 	  }
     </SCRIPT>
