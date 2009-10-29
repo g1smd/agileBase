@@ -20,8 +20,10 @@
 #if($mobile_device)
   #parse('gui/browser_incapabilities.vm')
   #set($pane2_template = "gui/mobile/pane2_selector")
+  #set($reportRowLimit=20)
 #else
   #set($pane2_template = "gui/reports_and_tables/report_data")
+  #set($reportRowLimit=100)
 #end
 
 ## a list of reports by module for pane1
@@ -130,7 +132,7 @@
 		#set($table=$report.getParentTable())
 		<li id="$table.getInternalTableName()$report.getInternalReportName()">
 		  <div class="module-tree-item-wrap">
-			<a href="AppController.servlet?return=$pane2_template&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()&set_report_row_limit=100&clear_all_report_sorts=true&set_module=$module.getInternalModuleName()" #if(!$mobile_device)target="pane_2" class="report_tooltip" rel="AppController.servlet?return=gui/reports_and_tables/report_tooltip&set_custom_report=true&reportkey=tooltip_report&custominternalreportname=$report.getInternalReportName()"#end >
+			<a href="AppController.servlet?return=$pane2_template&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()&set_report_row_limit=$reportRowLimit&clear_all_report_sorts=true&set_module=$module.getInternalModuleName()" #if(!$mobile_device)target="pane_2" class="report_tooltip" rel="AppController.servlet?return=gui/reports_and_tables/report_tooltip&set_custom_report=true&reportkey=tooltip_report&custominternalreportname=$report.getInternalReportName()"#end >
 				$report
 			</a>
 			<span class="recordcount">()</span>

@@ -1,7 +1,0 @@
-
-alter table sortedsetappusers_appuser
-rename column appusers_internalusername to appusersdirect_internalusername;
-
-alter table sortedsetappusers_appuser_appusers_internalusername_key
-rename to sortedsetappusers_appuser_appusersdirect_internalusername_key;
-

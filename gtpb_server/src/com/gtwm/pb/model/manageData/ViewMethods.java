@@ -659,8 +659,9 @@ public class ViewMethods implements ViewMethodsInfo {
 		if (textFields.size() == 0) {
 			return new TreeSet<TagInfo>();
 		}
-
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(report, -1);
+		//TODO: just get the fields necessary
+		// not the whole report
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(report, 1000000);
 		StringBuilder conglomoratedText = new StringBuilder(500);
 		for (DataRowInfo reportDataRow : reportDataRows) {
 			Map<BaseField, DataRowFieldInfo> dataRowFields = reportDataRow.getDataRowFields();
