@@ -661,15 +661,11 @@ public class ViewMethods implements ViewMethodsInfo {
 		}
 		//TODO: just get the fields necessary
 		// not the whole report
+		logger.debug("About to get report data rows for tag cloud");
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(report, 1000000);
-		StringBuilder conglomoratedText = new StringBuilder(500);
-		for (DataRowInfo reportDataRow : reportDataRows) {
-			Map<BaseField, DataRowFieldInfo> dataRowFields = reportDataRow.getDataRowFields();
-			for (BaseField field : textFields) {
-				conglomoratedText.append(dataRowFields.get(field).getKeyValue()).append(" ");
-			}
-		}
-		TagCloud cloud = new TagCloud(conglomoratedText.toString(), minWeight, maxWeight, maxTags,
+		logger.debug("Building conglomorated text");
+		String conglomoratedText = this.databaseDefn.getDataManagement().getReportDataText(report, textFields, 1000000);
+		TagCloud cloud = new TagCloud(conglomoratedText, minWeight, maxWeight, maxTags,
 				stopWords);
 		return cloud.getTags();
 	}

@@ -38,6 +38,7 @@ import java.util.LinkedHashSet;
 import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.Calendar;
+import java.util.TreeSet;
 import java.io.File;
 import java.io.Reader;
 import java.io.InputStreamReader;
@@ -1142,8 +1143,9 @@ public class DataManagement implements DataManagementInfo {
 						throw new FileUploadException("Rename of existing file from '"
 								+ selectedFile + "' to '" + renamedFile + "' failed");
 					}
-					if(!renamedFile.setLastModified(lastModified)) {
-						throw new FileUploadException("Error setting the last modified date of " + renamedFile);
+					if (!renamedFile.setLastModified(lastModified)) {
+						throw new FileUploadException("Error setting the last modified date of "
+								+ renamedFile);
 					}
 					// I think a File object's name is inviolable but just in
 					// case
@@ -1348,6 +1350,40 @@ public class DataManagement implements DataManagementInfo {
 			}
 		}
 		return reportDataRows;
+	}
+
+	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> textFields,
+			int rowLimit) throws SQLException {
+		SortedSet<BaseField> sortedFields = new TreeSet<BaseField>(textFields);
+		String SQLCode = "SELECT lower(";
+		for (BaseField textField : textFields) {
+			SQLCode += textField.getInternalFieldName();
+			if (textField.equals(sortedFields.last())) {
+				SQLCode += " || ' ' ) ";
+			} else {
+				SQLCode += " || ";
+			}
+		}
+		SQLCode += " FROM " + reportDefn.getInternalReportName();
+		SQLCode += " LIMIT " + rowLimit;
+		StringBuilder conglomoratedText = new StringBuilder(8192);
+		Connection conn = null;
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			Statement statement = conn.createStatement();
+			ResultSet results = statement.executeQuery(SQLCode);
+			while(results.next()) {
+				conglomoratedText.append(results.getString(1));
+			}
+			results.close();
+			statement.close();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return conglomoratedText.toString();
 	}
 
 	public boolean isRowIdInReport(BaseReportInfo report, int rowId) throws SQLException {

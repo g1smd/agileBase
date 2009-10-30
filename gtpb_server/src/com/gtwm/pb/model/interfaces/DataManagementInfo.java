@@ -69,8 +69,16 @@ public interface DataManagementInfo {
 			Map<BaseField, Boolean> sessionSorts, int rowLimit) throws SQLException,
 			CodingErrorException, CantDoThatException;
 
+	/**
+	 * Return all the text from the specified fields in the report as one big
+	 * String of words. Useful for generating tag clouds with. Text will be
+	 * returned lower case
+	 */
+	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> fields, int rowLimit)
+			throws SQLException;
+
 	public boolean isRowIdInReport(BaseReportInfo reportDefn, int rowId) throws SQLException;
-	
+
 	/**
 	 * Return the full path of the root of the web application
 	 */
