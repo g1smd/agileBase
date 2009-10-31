@@ -661,8 +661,6 @@ public class ViewMethods implements ViewMethodsInfo {
 		}
 		//TODO: just get the fields necessary
 		// not the whole report
-		logger.debug("About to get report data rows for tag cloud");
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(report, 1000000);
 		logger.debug("Building conglomorated text");
 		String conglomoratedText = this.databaseDefn.getDataManagement().getReportDataText(report, textFields, 1000000);
 		TagCloud cloud = new TagCloud(conglomoratedText, minWeight, maxWeight, maxTags,

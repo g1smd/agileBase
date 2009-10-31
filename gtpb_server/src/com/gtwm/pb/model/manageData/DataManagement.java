@@ -1356,7 +1356,7 @@ public class DataManagement implements DataManagementInfo {
 			int rowLimit) throws SQLException {
 		SortedSet<BaseField> sortedFields = new TreeSet<BaseField>(textFields);
 		String SQLCode = "SELECT lower(";
-		for (BaseField textField : textFields) {
+		for (BaseField textField : sortedFields) {
 			SQLCode += textField.getInternalFieldName();
 			if (textField.equals(sortedFields.last())) {
 				SQLCode += " || ' ' ) ";
