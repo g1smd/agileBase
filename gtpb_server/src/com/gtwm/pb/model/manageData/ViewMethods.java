@@ -663,6 +663,7 @@ public class ViewMethods implements ViewMethodsInfo {
 		// not the whole report
 		logger.debug("Building conglomorated text");
 		String conglomoratedText = this.databaseDefn.getDataManagement().getReportDataText(report, textFields, 1000000);
+		logger.debug("conglomoratedText length " + conglomoratedText.length());
 		TagCloud cloud = new TagCloud(conglomoratedText, minWeight, maxWeight, maxTags,
 				stopWords);
 		return cloud.getTags();

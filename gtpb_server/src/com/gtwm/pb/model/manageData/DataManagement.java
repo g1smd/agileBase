@@ -1354,16 +1354,11 @@ public class DataManagement implements DataManagementInfo {
 
 	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> textFields,
 			int rowLimit) throws SQLException {
-		SortedSet<BaseField> sortedFields = new TreeSet<BaseField>(textFields);
-		String SQLCode = "SELECT lower(";
-		for (BaseField textField : sortedFields) {
-			SQLCode += textField.getInternalFieldName();
-			if (textField.equals(sortedFields.last())) {
-				SQLCode += " || ' ' ) ";
-			} else {
-				SQLCode += " || ";
-			}
+		String SQLCode = "SELECT ";
+		for (BaseField textField : textFields) {
+			SQLCode += "lower(" + textField.getInternalFieldName() + "), ";
 		}
+		SQLCode = SQLCode.substring(1, SQLCode.length() - 2);
 		SQLCode += " FROM " + reportDefn.getInternalReportName();
 		SQLCode += " LIMIT " + rowLimit;
 		StringBuilder conglomoratedText = new StringBuilder(8192);
@@ -1373,8 +1368,15 @@ public class DataManagement implements DataManagementInfo {
 			conn.setAutoCommit(false);
 			Statement statement = conn.createStatement();
 			ResultSet results = statement.executeQuery(SQLCode);
-			while(results.next()) {
-				conglomoratedText.append(results.getString(1));
+			int colNum = 0;
+			int numCols = textFields.size();
+			while (results.next()) {
+				for (colNum = 1; colNum <= numCols; colNum++) {
+					String colString = results.getString(colNum);
+					if (!results.wasNull()) {
+						conglomoratedText.append(results.getString(colNum));
+					}
+				}
 			}
 			results.close();
 			statement.close();

@@ -55,7 +55,7 @@ public class TagCloud implements TagCloudInfo {
 		for (String additionalStopWord : additionalStopWords) {
 			stopWords.add(additionalStopWord.toLowerCase().trim());
 		}
-		logger.debug("Creating frequency bins");
+		logger.debug("Creating frequency bins from array of " + wordArray.length + " items");
 		Frequency frequencies = new Frequency();
 		for (String word : wordArray) {
 			if ((!stopWords.contains(word)) && (word.length() > 1)) {
