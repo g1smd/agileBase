@@ -659,11 +659,7 @@ public class ViewMethods implements ViewMethodsInfo {
 		if (textFields.size() == 0) {
 			return new TreeSet<TagInfo>();
 		}
-		//TODO: just get the fields necessary
-		// not the whole report
-		logger.debug("Building conglomorated text");
 		String conglomoratedText = this.databaseDefn.getDataManagement().getReportDataText(report, textFields, 1000000);
-		logger.debug("conglomoratedText length " + conglomoratedText.length());
 		TagCloud cloud = new TagCloud(conglomoratedText, minWeight, maxWeight, maxTags,
 				stopWords);
 		return cloud.getTags();

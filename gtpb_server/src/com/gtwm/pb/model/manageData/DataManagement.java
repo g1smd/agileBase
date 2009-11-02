@@ -1358,7 +1358,7 @@ public class DataManagement implements DataManagementInfo {
 		for (BaseField textField : textFields) {
 			SQLCode += "lower(" + textField.getInternalFieldName() + "), ";
 		}
-		SQLCode = SQLCode.substring(1, SQLCode.length() - 2);
+		SQLCode = SQLCode.substring(0, SQLCode.length() - 2);
 		SQLCode += " FROM " + reportDefn.getInternalReportName();
 		SQLCode += " LIMIT " + rowLimit;
 		StringBuilder conglomoratedText = new StringBuilder(8192);
@@ -1374,7 +1374,7 @@ public class DataManagement implements DataManagementInfo {
 				for (colNum = 1; colNum <= numCols; colNum++) {
 					String colString = results.getString(colNum);
 					if (!results.wasNull()) {
-						conglomoratedText.append(results.getString(colNum));
+						conglomoratedText.append(results.getString(colNum)).append(" ");
 					}
 				}
 			}

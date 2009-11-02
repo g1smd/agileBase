@@ -49,20 +49,17 @@ public class TagCloud implements TagCloudInfo {
 	 */
 	public TagCloud(String textLowerCase, int minWeight, int maxWeight, int maxTags,
 			Set<String> additionalStopWords) {
-		logger.debug("Splitting into an array");
 		String[] wordArray = textLowerCase.split("\\W");
 		Set<String> stopWords = new HashSet<String>(Arrays.asList(stopWordsArray));
 		for (String additionalStopWord : additionalStopWords) {
 			stopWords.add(additionalStopWord.toLowerCase().trim());
 		}
-		logger.debug("Creating frequency bins from array of " + wordArray.length + " items");
 		Frequency frequencies = new Frequency();
 		for (String word : wordArray) {
 			if ((!stopWords.contains(word)) && (word.length() > 1)) {
 				frequencies.addValue(word);
 			}
 		}
-		logger.debug("Calculating statistics");
 		// Compute std. dev of frequencies so we can remove outliers
 		DescriptiveStatistics stats = new DescriptiveStatistics();
 		Iterator freqIt = frequencies.valuesIterator();
@@ -86,7 +83,6 @@ public class TagCloud implements TagCloudInfo {
 		int numWords = 0;
 		int numRawWords = wordArray.length;
 		boolean removeLowOutliers = (numRawWords > (maxTags * 10));
-		logger.debug("Removing outliers");
 		while (freqIt.hasNext()) {
 			word = (String) freqIt.next();
 			wordFreq = frequencies.getCount(word);
@@ -109,7 +105,6 @@ public class TagCloud implements TagCloudInfo {
 		}
 		if (numWords > maxTags) {
 			while (numWords > maxTags) {
-				logger.debug("numWords " + numWords + " > maxTags " + maxTags + ", removing freqs. less than " + lowerLimit);
 				freqIt = frequencies.valuesIterator();
 				SMALLREMOVAL: while (freqIt.hasNext()) {
 					wordFreq = frequencies.getCount(freqIt.next());
@@ -136,7 +131,6 @@ public class TagCloud implements TagCloudInfo {
 				}
 			}
 		}
-		logger.debug("Creating tag objects");
 		// Scale and create tag objects
 		double scaleFactor = new Double(maxWeight - minWeight) / new Double(maxFreq - minFreq);
 		freqIt = frequencies.valuesIterator();
