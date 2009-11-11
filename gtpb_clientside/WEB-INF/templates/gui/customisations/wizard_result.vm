@@ -1,0 +1,18 @@
+<wizardResult>#if($viewMethods.getWhetherExceptionOccurred())
+  <errorData>
+    <type>#if($viewMethods.getException().getFieldCausingException())field#else
+general#end</type>
+    #if($viewMethods.getException().getFieldCausingException())
+      <internalFieldName>$viewMethods.getException().getFieldCausingException().getInternalFieldName()</internalFieldName>
+      <fieldName>$viewMethods.getException().getFieldCausingException()</fieldName>
+    #end
+    <message><![CDATA[
+      #if($viewMethods.getException().getFieldCausingException())
+        Error entering data into field '$viewMethods.getException().getFieldCausingException()':
+      #end
+$viewMethods.getException().getMessage()
+      ]]>
+    </message>
+  </errorData>
+#else 
+ok#end</wizardResult> 

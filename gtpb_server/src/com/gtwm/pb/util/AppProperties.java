@@ -23,7 +23,7 @@ package com.gtwm.pb.util;
 public class AppProperties {
 	public static final String applicationName = "GT portalBase";
 
-	public static final String applicationVersion = "2.3.2";
+	public static final String applicationVersion = "2.3.3";
 
 	/**
 	 * Location of the Velocity template used to report template processing

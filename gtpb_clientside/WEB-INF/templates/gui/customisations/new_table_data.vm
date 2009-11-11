@@ -1,0 +1,73 @@
+#set($SQ="'")
+#set($sessionTable=$viewMethods.getSessionData().getTable())
+#set($updateAsType = false)
+#set($customAction = true)
+
+## Check that the user has edit privileges
+#if($viewMethods.loggedInUserAllowedTo("EDIT_TABLE_DATA", $sessionTable))
+
+<style>
+  div#_md_blank div#_md_dialog div#_md_content table#reportData {
+    border-bottom:1px solid #cecece;
+    border-top:1px solid #cecece;
+  }
+  
+  div#_md_blank div#_md_dialog div#_md_content table#reportData td i {
+    font-size:8pt;
+  }
+  
+  div#_md_blank div#_md_dialog div#_md_content table#reportData td input[type="text"] {
+    width:300px;
+  }
+  
+  div#_md_blank div#_md_dialog div#_md_content table#reportData td input[isComboComponent] {
+    width:auto!important;
+  }
+  
+</style>
+
+<form name="data_form" method="post" action="AppController.servlet" onsubmit="return false">
+  <input type="hidden" name="save_new_record" value="true">
+        		#if($viewMethods.getWhetherExceptionOccurred())
+        		    #parse('report_error.vm')
+          		#end
+		
+  ## copied from gui/reports_and_tables/edit.vm
+  <table cellspacing="0" cellpadding="0" border="0" id="reportData">
+    <tr class="first">
+    			  <td class="leading">&nbsp;</td>
+			      <td>&nbsp;</td>
+			      <td>&nbsp;</td>
+			      <td class="trailing">&nbsp;</td>
+			    </tr>
+		      #set($fields = $sessionTable.getFields())
+			      #foreach($field in $fields)
+					    ## Skip hidden, file and relation fields in the wizard
+				        #if(($field.getHidden() == false) && ($field.getClass().getSimpleName() != "FileFieldDefn") && ($field.getClass().getSimpleName() != "RelationFieldDefn"))
+          #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+						#end
+## If we come across a relation, add it's value to the wizard caption
+#if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+  #set($relatedField=$field.getRelatedField())##
+  #set($fieldValue="$viewMethods.getSessionData().getRowId($relatedField.getTableContainingField())")##
+  #set($fieldDisplayValue = $field.getDisplayValue($fieldValue))##
+  #if($fieldDisplayValue != "")
+    #set($app_action_caption = "$app_action_caption for ${SQ}$fieldDisplayValue${SQ}")
+  #end
+#end
+
+			      #end ## end loop through fields
+			      <tr class="last">
+			        <td class="leading">&nbsp;</td>
+			        <td>&nbsp;</td>
+			        <td>&nbsp;</td>
+			        <td class="trailing">&nbsp;</td>
+			      </tr>
+  </table>				
+</form>
+	
+#else ## user doesn't have edit privileges
+  Error:<p>
+  <img src="resources/icons/warning.png" style="align:left; vertical-align:middle" /> 
+  You haven't got sufficient privileges to create a new <i>$sessionTable</i> record.
+#end
