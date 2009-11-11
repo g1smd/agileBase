@@ -220,16 +220,12 @@
   	  </script>
 	#end
     #parse('gui/resources/google_maps_api_key.vm')
+	#if($google_maps_api_key)
     <script src="http://maps.google.com/maps?file=api&v=2&key=$google_maps_api_key&sensor=false" type="text/javascript"></script>
+	#end
   </head>
   <body #if($mobile_device) onload="window.scrollTo(0,1)" #end>
-  
-  ## Put fInit() into tab content logic (probably only edit tab)
-  ##<body #if($mobile_device) onload="window.scrollTo(0,1)" #else onload=fInitiateTabs();fInit(); #end>
-	
-	    <div class="wrapper tab-interface" id="gtpb_wrapper">
-	    	
-	    	
+  	<div class="wrapper tab-interface" id="gtpb_wrapper">    	
 	#if($mobile_device)
 		#parse('gui/mobile/pane3_selector.vm')
 	#else

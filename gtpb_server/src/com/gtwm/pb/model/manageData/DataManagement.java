@@ -38,7 +38,6 @@ import java.util.LinkedHashSet;
 import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.Calendar;
-import java.util.TreeSet;
 import java.io.File;
 import java.io.Reader;
 import java.io.InputStreamReader;
@@ -885,6 +884,7 @@ public class DataManagement implements DataManagementInfo {
 										String internalValueString = valueKeyMap.get(lineValue);
 										if (internalValueString == null) {
 											if (!requireExactRelationMatches) {
+												// A very basic fuzzy matching algorithm
 												String potentialDisplayValue = null;
 												String lineValueLowerCase = lineValue.toLowerCase();
 												FUZZYMATCH: for (Map.Entry<String, String> entry : valueKeyMap

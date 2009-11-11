@@ -16,7 +16,12 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
+## Set a Google Maps API key for your domain if you wish integration with Google Maps
+## functions that require the key, e.g. map previews next to addresses.
+## If not, comment out the 'set' function to leave the variable undefined
+
 ## https://appserver.gtportalbase.com
 #set($google_maps_api_key = "ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg")
 ## http://gtwmbackup.dh.bytemark.co.uk
 ##set($google_maps_api_key = "ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSbq2QrGLH6-sTBZsRN5v8hkZ_JVhQGcNdjP-HAyidfOtRG3ZJil2yTyw")
+## http://localhost

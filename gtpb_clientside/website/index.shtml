@@ -259,20 +259,20 @@
 								<table border="0" cellpadding="0" cellspacing="0">
 							      <tr>
 									<td style="width:50%">
+									  <h2>* Agile platform *</h2>
+									  Such as portalBase which has proven popular when used either as a wrapper around 
+									  existing / legacy systems or starting as a prototyping and learning platform</li>
+									</td>
+									<td style="width:50%">
 									  <h2>Best of suites</h2>
 									  e.g. ERP systems are really popular for core and stable areas of the business. 
 									  However, no system can possibly cover all organisational needs.  (If it did it would probably sink the company that tried to adopt it!)</li>               
-									</td>
-									<td style="width:50%">
-									  <h2>Agile platform</h2>
-									  Such as portalBase which has proven popular when used either as a wrapper around 
-									  existing / legacy systems or starting as a prototyping and learning platform</li>
 									</td>
 								  </tr>
 									<tr>
 									  <td style="width:50%">
 										<h2>Best of breed</h2>
-										A popular approach that involves purchasing the best system for each specific function. 
+										An approach that involves purchasing the best system for each specific function. 
 										However, huge replication of data across systems makes continuous improvement and 
 										a 'single view' of the data hard to achieve</td>
 									  <td style="width:50%">
@@ -366,6 +366,10 @@
 							<h1>GTpB as a long term solution</h1>
 							<p>For many organisations these "prototypes" may even suffice, as the PostgreSQL database underlying GTpB is highly scalable & robust.</p>
 							<p>For small organisations or applications GTpB therefore provides a cost effective, rapid, easy to use and robust web app. development tool.</p>
+							<h1>Customisations</h1>
+							<p>If custom features are necessary, wizards for complex processes or custom printouts for example, an plugin engine and <a href="http://gtwebmarque.com/wikis/gtwm/index.php/Javadoc">API</a> is available to build these with. 
+							Any developer has to be comfortable with using the <a href="http://velocity.apache.org">Apache Velocity</a> templating language. 
+							We are happy to take this type of work or support on as a consultancy service if necessary.
 						</div> <!-- end of anyalyst -->
 						<br clear="both" /> <!-- because of the right floated content -->
 					</div>  <!-- end of content -->
