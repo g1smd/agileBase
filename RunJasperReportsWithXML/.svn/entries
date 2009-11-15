@@ -1,0 +1,136 @@
+8
+
+dir
+3
+https://runjasperreports.googlecode.com/svn/trunk/RunJasperReports
+https://runjasperreports.googlecode.com/svn
+
+
+
+2008-01-09T15:42:08.328988Z
+3
+oliver.kohll
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4e446e8f-2643-0410-b702-9fb6bfcfdbfc
+
+CHANGELOG
+file
+4
+
+
+
+2007-12-12T19:41:12.000000Z
+9ec2bd15825cea3d57a7b77d32c7a5d0
+2008-01-09T15:58:33.512612Z
+4
+oliver.kohll
+
+README.TXT
+file
+4
+
+
+
+2007-07-05T10:11:53.000000Z
+8813e3717e13c73933252794bb5d1885
+2008-01-09T15:58:33.512612Z
+4
+oliver.kohll
+
+build.xml
+file
+17
+
+
+
+2008-08-06T08:57:57.000000Z
+59c88933cf8da2165fb6e701a125b401
+2008-04-25T06:25:23.834977Z
+17
+egwada
+
+build_okohll_linux.xml
+file
+4
+
+
+
+2007-12-12T19:43:49.000000Z
+22f2c58d48771421dd2435e233ff8a5c
+2008-01-09T15:58:33.512612Z
+4
+oliver.kohll
+
+build_okohll_osx.xml
+file
+4
+
+
+
+2007-12-12T19:44:44.000000Z
+9704be5ce1d64127ce0402b30a18ef8e
+2008-01-09T15:58:33.512612Z
+4
+oliver.kohll
+
+docs
+dir
+
+lib
+dir
+
+maven-build.properties
+file
+17
+
+
+
+2008-08-06T08:58:10.000000Z
+b22bc3ecb49021d630e47eb8a4fa974a
+2008-04-25T06:25:23.834977Z
+17
+egwada
+
+maven-build.xml
+file
+17
+
+
+
+2008-08-06T08:58:08.000000Z
+2d239ad06ccf44a4e79eef9f674e6018
+2008-04-25T06:25:23.834977Z
+17
+egwada
+
+pom.xml
+file
+17
+
+
+
+2008-08-06T08:58:10.000000Z
+142578205f6fcc2b42acdc9fa61a9d71
+2008-04-25T06:25:23.834977Z
+17
+egwada
+
+resources
+dir
+
+src
+dir
+

@@ -196,10 +196,16 @@
 						Please contact us for custom demos
 					</div>
 					<div id="popupHelpContent" class="popup">
-								See <a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#End_user_documentation">User</a> 
-								and <a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#Administrator_documentation">administrator</a> 
-								documentation.<br>
-								portalBase is a <a href="http://www.gtwm.co.uk">GT webMarque</a> product, <a href="http://www.gtwm.co.uk">contact us</a> for more help and advice
+						Our support centre is<p><a href="http://www.gtportalbase.com/help">www.gtportalbase.com/help</a><p>
+						In brief, support for portalBase is organised into three types
+						<ul>
+						<li><a href="http://www.gtportalbase.com/help">Support Forum (free)</a></li>
+						<li>Business specific support (charged)<br>
+						For private support issues regarding confidential client data, e.g. data restore requests, please email support@gtportalbase.com
+						</li>
+						<li>Open source support (hybrid)<br>For details, see the support centre</li>
+						</ul>
+						<p>User and administrator documentation is also freely available online at the support centre
 					</div>
 					<div id="popupContactContent" class="popup">
 						Email <a href="mailto:oliver@gtportalbase.com">oliver@gtportalbase.com</a><br>

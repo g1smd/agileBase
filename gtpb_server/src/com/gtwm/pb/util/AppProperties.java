@@ -23,7 +23,7 @@ package com.gtwm.pb.util;
 public class AppProperties {
 	public static final String applicationName = "GT portalBase";
 
-	public static final String applicationVersion = "2.3.3";
+	public static final String applicationVersion = "2.3.4";
 
 	/**
 	 * Location of the Velocity template used to report template processing
@@ -84,5 +84,5 @@ public class AppProperties {
 	/**
 	 * Number of tables a company must have before discounting kicks in
 	 */
-	public static final int numFullPriceTables = 10;
+	public static final int numFullPriceTables = 20;
 }

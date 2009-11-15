@@ -184,24 +184,6 @@ public class Authenticator implements AuthenticatorInfo {
 	}
 
 	/**
-	 * replacement for using this.users.contains() which doesn't work because
-	 * equals() isn't consistent with contains() for user objects
-	 * 
-	 * Q:Surely not
-	 */
-	/*
-	private boolean usersContains(AppUserInfo appUser) {
-		String appUserInternalName = appUser.getInternalUserName();
-		for (AppUserInfo testUser : this.getUsersDirect()) {
-			if (testUser.getInternalUserName().equals(appUserInternalName)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	*/
-
-	/**
 	 * Add a general application functionality privilege for a role.
 	 * 
 	 * @throws CantDoThatException
@@ -683,9 +665,5 @@ public class Authenticator implements AuthenticatorInfo {
 	
 	private long id;
 	
-	//private int cacheHits = 0;
-	
-	//private int cacheMisses = 0;
-
 	private static final SimpleLogger logger = new SimpleLogger(Authenticator.class);
 }

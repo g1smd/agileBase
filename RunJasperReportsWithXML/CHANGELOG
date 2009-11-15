@@ -1,0 +1,15 @@
+==12th Dec 2007
+* Upgrade jasperreports and postgresql JAR libraries to the latest versions
+
+==14th Sept 2007
+* When outputting HTML, copy images to new files with .png extensions. JasperReports doesn't add extensions itself
+
+==1st Sept 2007==
+* Send to multiple email addresses, separated by commas
+* Report parameters can be passed
+
+==9th August 2007==
+* Allow multiple recipient addresses, separated by commas
+
+==Sometime before==
+* Initial release

@@ -553,17 +553,17 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		// No dependencies exist so remove the table & its default report:
 		BaseReportInfo defaultReport = tableToRemove.getDefaultReport();
-		removeReportWithoutChecks(sessionData, request, defaultReport, conn);
+		this.removeReportWithoutChecks(sessionData, request, defaultReport, conn);
 		// Remove any privileges on the table
-		getAuthManager().removePrivilegesOnTable(request, tableToRemove);
+		this.getAuthManager().removePrivilegesOnTable(request, tableToRemove);
 		// Delete from persistent store
 		this.tableCache.remove(tableToRemove.getInternalTableName());
 		this.tables.remove(tableToRemove);
 		HibernateUtil.currentSession().delete(tableToRemove);
 		try {
 			// Delete the table from the relational database.
-			// The CASCADE is to drop the related sequence. TODO: replace this
-			// with a specific sequence drop
+			// The CASCADE is to drop the related sequence.
+			//TODO: replace this with a specific sequence drop
 			PreparedStatement statement = conn.prepareStatement("DROP TABLE "
 					+ tableToRemove.getInternalTableName() + " CASCADE");
 			statement.execute();
@@ -895,7 +895,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		String internalReportName = reportToRemove.getInternalReportName();
 		try {
 			// Drop database view
-			PreparedStatement statement = conn.prepareStatement("DROP VIEW " + internalReportName);
+			//debug: IF EXISTS added temporarily(?) to help when dropping problem tables
+			PreparedStatement statement = conn.prepareStatement("DROP VIEW IF EXISTS " + internalReportName);
 			statement.execute();
 			statement.close();
 			HibernateUtil.currentSession().delete(reportToRemove);

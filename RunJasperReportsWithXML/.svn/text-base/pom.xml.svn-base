@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>RunJasperReports</groupId>
+  <artifactId>RunJasperReports</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <description>RunJasperReports allow an easy JasperReports documents
+		deployemnt</description>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <includes>
+          <include>**/*.dtd</include>
+          <include>**/*.properties</include>
+          <include>**/*.GIF</include>
+        </includes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>./lib</directory>
+              <includes>
+                <include>**/*.jar</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <property value="." name="rjr.base.dir" />
+                <property value="${rjr.base.dir}/src" name="rjr.src.dir" />
+                <property value="${rjr.base.dir}/target" name="rjr.build.dir" />
+                <property value="${rjr.build.dir}/RunJasperReports" name="rjr.export.dir" />
+                <mkdir dir="${rjr.export.dir}" />
+                <mkdir dir="${rjr.export.dir}/lib" />
+              </tasks>
+              <outputDirectory>${project.build.directory}/RunJasperReports/lib</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <property value="." name="rjr.base.dir" />
+                <property value="${rjr.base.dir}/src" name="rjr.src.dir" />
+                <property value="${rjr.base.dir}/target" name="rjr.build.dir" />
+                <property value="${rjr.build.dir}/RunJasperReports" name="rjr.export.dir" />
+                <echo>Deploy the RunJasperReports Project</echo>
+                <copy todir="${rjr.export.dir}/lib">
+                  <fileset dir="${rjr.build.dir}/">
+                    <include name="*.jar" />
+                  </fileset>
+                </copy>
+                <echo>Create the config directory</echo>
+                <mkdir dir="${rjr.export.dir}/config" />
+                <copy todir="${rjr.export.dir}/config">
+                  <fileset dir="${rjr.base.dir}/resources/config">
+                    <include name="*.xml" />
+                  </fileset>
+                </copy>
+                <echo>Copy bat files for windows</echo>
+                <mkdir dir="${rjr.export.dir}/bin" />
+                <copy todir="${rjr.export.dir}/">
+                  <fileset dir="${rjr.base.dir}/resources/windows">
+                    <include name="*.bat" />
+                  </fileset>
+                </copy>
+                <copy todir="${rjr.export.dir}/bin">
+                  <fileset dir="${rjr.base.dir}/resources/windows/bin">
+                    <include name="*.bat" />
+                  </fileset>
+                </copy>
+                <echo>Copy sh files for linux</echo>
+                <copy todir="${rjr.export.dir}/">
+                  <fileset dir="${rjr.base.dir}/resources/linux">
+                    <include name="*.sh" />
+                  </fileset>
+                </copy>
+                <copy todir="${rjr.export.dir}/bin">
+                  <fileset dir="${rjr.base.dir}/resources/linux/bin">
+                    <include name="*.sh" />
+                  </fileset>
+                </copy>
+                <mkdir dir="${rjr.export.dir}/templates" />
+                <mkdir dir="${rjr.export.dir}/reports" />
+                <echo>Create an archive for windows</echo>
+                <zip destfile="${rjr.build.dir}/RunJasperReports.zip" basedir="${rjr.export.dir}" />
+                <echo>Create an archive for linux</echo>
+                <tar tarfile="${rjr.build.dir}/RunJasperReports.tar" basedir="${rjr.export.dir}" />
+                <gzip zipfile="${rjr.build.dir}/RunJasperReports.tar.gz" src="${rjr.build.dir}/RunJasperReports.tar" />
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <repositories>
+    <repository>
+      <id>jaspersoft</id>
+      <url>http://www.jasperforge.org/maven2</url>
+    </repository>
+    <repository>
+      <id>iBiblio</id>
+      <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+    </repository>
+    <repository>
+      <id>Dev.Java.Net</id>
+      <url>https://maven-repository.dev.java.net/nonav/repository</url>
+    </repository>
+  </repositories>
+  <dependencies>
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.7.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>[2.1,)</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-digester</groupId>
+      <artifactId>commons-digester</artifactId>
+      <version>[1.7,)</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>[1.0,)</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate</artifactId>
+      <version>[3.0.1,)</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>jta</artifactId>
+          <groupId>javax.transaction</groupId>
+        </exclusion>
+      </exclusions>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.lowagie</groupId>
+      <artifactId>itext</artifactId>
+      <version>[1.02b,)</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jcommon</artifactId>
+      <version>[1.0.0,)</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>gnujaxp</artifactId>
+          <groupId>gnujaxp</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jfreechart</artifactId>
+      <version>[1.0.0,)</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>gnujaxp</artifactId>
+          <groupId>gnujaxp</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>3.0.1-FINAL</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.2</version>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>xalan</artifactId>
+      <version>[2.6.0,)</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+      <version>1.3.02</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>eclipse</groupId>
+      <artifactId>jdtcore</artifactId>
+      <version>[3.1.0,)</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-all</artifactId>
+      <version>1.5.5</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>ant</groupId>
+      <artifactId>ant</artifactId>
+      <version>[1.5.1,)</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.jexcelapi</groupId>
+      <artifactId>jxl</artifactId>
+      <version>2.6</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.keypoint</groupId>
+      <artifactId>png-encoder</artifactId>
+      <version>1.5</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>commons-javaflow</groupId>
+      <artifactId>commons-javaflow</artifactId>
+      <version>20060411</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>mondrian</groupId>
+      <artifactId>mondrian</artifactId>
+      <version>2.3.2.8944</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>javax.persistence</groupId>
+      <artifactId>persistence-api</artifactId>
+      <version>1.0</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>antlr</groupId>
+      <artifactId>antlr</artifactId>
+      <version>2.7.5</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>javax.xml.soap</groupId>
+      <artifactId>saaj-api</artifactId>
+      <version>1.3</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>activation</artifactId>
+          <groupId>javax.activation</groupId>
+        </exclusion>
+      </exclusions>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <version>1.1.1</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.beanshell</groupId>
+      <artifactId>bsh</artifactId>
+      <version>2.0b4</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-bridge</artifactId>
+      <version>1.7</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-gvt</artifactId>
+      <version>1.7</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-util</artifactId>
+      <version>1.7</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-svg-dom</artifactId>
+      <version>1.7</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-dom</artifactId>
+      <version>1.7</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-script</artifactId>
+      <version>1.7</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-css</artifactId>
+      <version>1.7</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-svggen</artifactId>
+      <version>1.7</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-awt-util</artifactId>
+      <version>1.7</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>jasperreports</groupId>
+      <artifactId>jasperreports</artifactId>
+      <version>2.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.xml</groupId>
+      <artifactId>jsr173</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.xml</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.xml</groupId>
+      <artifactId>jaxb-impl</artifactId>
+      <version>2.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>javaee</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-cli</groupId>
+      <artifactId>commons-cli</artifactId>
+      <version>1.1</version>
+    </dependency>
+  </dependencies>
+</project>
