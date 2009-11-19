@@ -16,8 +16,8 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <request>
-  #set($internalTableName = $viewMethods.getSessionData().getCustomVariable("parenttable"))
-  #set($table = $viewMethods.getTable($internalTableName))
+  #set($internalTableName = $view.getSessionData().getCustomVariable("parenttable"))
+  #set($table = $view.getTable($internalTableName))
   #foreach($field in $table.getFields())
   <option>
     <display_value>$field.getFieldName()</display_value>

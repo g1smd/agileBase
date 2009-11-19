@@ -17,7 +17,7 @@
 ##
 $viewTools.startTimer("gui/reports_and_tables/pane3")
 
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 
 #if ($sessionData.getTable().getDefaultReport().equals($sessionData.getReport()))

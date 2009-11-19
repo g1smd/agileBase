@@ -16,18 +16,18 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## pane3 for a report
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($tabs=[])
 #set($styles=[])
 #set($success=$tabs.add({'tabName':'view', 'tabSource':'gui/reports_and_tables/tabs/view'}))
 #set($success=$styles.add('resources/tabs/view.css'))
-#if($viewMethods.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionData.getTable()))
+#if($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionData.getTable()))
 	#set($success=$tabs.add({'tabName':'edit', 'tabSource':'gui/reports_and_tables/tabs/edit'}))
 	#set($success=$styles.add('resources/tabs/edit.css'))	
 #end
 #set($success=$tabs.add({'tabName':'summary', 'tabSource':'gui/reports_and_tables/tabs/summary'}))
 #set($success=$styles.add('resources/tabs/summary.css'))
-#if($viewMethods.loggedInUserAllowedTo('MANAGE_TABLE',$sessionData.getTable()))
+#if($view.loggedInUserAllowedTo('MANAGE_TABLE',$sessionData.getTable()))
 	  ## the current user can manage the table so show them admin options as well
 	  ## as the data and summary in tabs
 	  #set($success=$tabs.add({'tabName':'global edit', 'tabSource':'gui/reports_and_tables/tabs/global_edit'}))

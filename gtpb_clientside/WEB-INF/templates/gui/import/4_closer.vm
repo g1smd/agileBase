@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($company = $viewMethods.getLoggedInUser().getCompany())
+#set($company = $view.getLoggedInUser().getCompany())
 #set($companyName = $viewTools.cleanString($company.getCompanyName()))
 
 #if(!$top_level_xml_element_set)<request>#end

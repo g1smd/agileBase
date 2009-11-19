@@ -32,7 +32,7 @@
 </head>
 <body>
 #parse("gui/error.vm")
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($sessionTable = $sessionData.getTable())
 #set($sessionReport = $sessionData.getReport())
 #if($sessionReport && $return)
@@ -49,9 +49,9 @@
 				#set($numberOfTabs = '-1')
 			  #else
 			    #set($numberOfTabs = '2')
-			    #if($viewMethods.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))
+			    #if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))
 				  #set($numberOfTabs = '6')
-			    #elseif($viewMethods.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))
+			    #elseif($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))
 				  #set($numberOfTabs = '3')
 				#end
 			  #end

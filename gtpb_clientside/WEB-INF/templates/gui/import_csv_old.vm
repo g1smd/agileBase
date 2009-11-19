@@ -31,7 +31,7 @@
 #parse("gui/display_error.vm")
 </head>
 <body>
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #if($sessionData.hasTable())
 #set($sessionTable = $sessionData.getTable())
 <h2>Import to '$sessionTable'</h2>
@@ -49,7 +49,7 @@
   <td>Table to import into</td>
   <td>
     <select name="internaltablename">
-    #foreach($table in $viewMethods.getTablesAllowedTo("VIEW_TABLE_DATA")) <option value="$table.getInternalTableName">$table</option> #end
+    #foreach($table in $view.getTablesAllowedTo("VIEW_TABLE_DATA")) <option value="$table.getInternalTableName">$table</option> #end
     </select>
   </td>
 </tr>

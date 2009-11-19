@@ -16,13 +16,13 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## session user will be used often
-#set($sessionUser = $viewMethods.getSessionData().getUser())
+#set($sessionUser = $view.getSessionData().getUser())
 
 #parse('gui/administration/reports/option_sets/report_details.vm')
 #parse('gui/administration/reports/option_sets/report_usage.vm')
 
 ## Privileges are per table not per report so they shouldn't be here
-###if($viewMethods.loggedInUserAllowedTo('ADMINISTRATE'))
+###if($view.loggedInUserAllowedTo('ADMINISTRATE'))
 ## 	    #parse('gui/administration/reports/option_sets/user_privileges.vm')
 ##		#parse('gui/administration/reports/option_sets/role_privileges.vm')
 ###end

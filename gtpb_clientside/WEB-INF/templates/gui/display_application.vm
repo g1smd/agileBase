@@ -16,14 +16,14 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 <html>
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
     <title>
-      #set($company_name=$viewMethods.getLoggedInUser().getCompany().getCompanyName())
-      $viewMethods.getApplicationName() $viewMethods.getApplicationVersion() - $company_name
+      #set($company_name=$view.getLoggedInUser().getCompany().getCompanyName())
+      $view.getApplicationName() $view.getApplicationVersion() - $company_name
     </title>
    	  <script src="resources/jquery.js" language="Javascript"></script>
 	  ## <script type="text/javascript" src="resources/fauxconsole.js"></script>	
@@ -170,15 +170,15 @@
 			        <div class=buttonGroup> ## external applications, built in and customised
 			          ## #parse('gui/toolbar/buttons/calendar.vm')
 			          ## #parse('gui/toolbar/buttons/wiki.vm')
-					  #if($viewMethods.loggedInUserAllowedTo("ADMINISTRATE"))
+					  #if($view.loggedInUserAllowedTo("ADMINISTRATE"))
 						#parse('gui/toolbar/buttons/info.vm')
 					  #end
 			          #set($sessionContext = $sessionData.getContext().toString())
 			          #if($sessionContext == "SYSADMIN")
 			            #parse('gui/toolbar/buttons/dev_tools.vm')
 			          #end
-			          #if($viewMethods.usesToolbarPlugin())
-			            #set($toolbarPluginName = $viewMethods.getToolbarPluginName())
+			          #if($view.usesToolbarPlugin())
+			            #set($toolbarPluginName = $view.getToolbarPluginName())
 			            #parse("gui/plugins/$toolbarPluginName/toolbar.vm")
 			          #end
 			        </div>

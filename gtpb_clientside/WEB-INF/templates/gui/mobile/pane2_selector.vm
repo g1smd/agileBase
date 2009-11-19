@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## What content to display in pane 2? Report, summary etc.
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 #set($report = $sessionData.getReport())
 #set($sessionReport = $report)

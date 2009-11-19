@@ -16,13 +16,13 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <request>
-  #set($record_is_locked=$viewMethods.isRecordLocked())
+  #set($record_is_locked=$view.isRecordLocked())
   ## the recird should have unlocked.  If it's still locked, raise an exception...
   #if($record_is_locked)
-    <exception type="event failure">Record didn't unlock.  #if($viewMethods.getWhetherExceptionOccurred())Possible cause is: $viewMethods.getException().getMessage()#end</exception>
+    <exception type="event failure">Record didn't unlock.  #if($view.getWhetherExceptionOccurred())Possible cause is: $view.getException().getMessage()#end</exception>
     <response>exception</response>  
-  #elseif($viewMethods.getWhetherExceptionOccurred())
-    <exception type="$viewMethods.getException().getClass().getSimpleName()">$viewMethods.getException().getMessage()</exception>
+  #elseif($view.getWhetherExceptionOccurred())
+    <exception type="$view.getException().getClass().getSimpleName()">$view.getException().getMessage()</exception>
     <response>exception</response>
   #else
     <response>ok</response>

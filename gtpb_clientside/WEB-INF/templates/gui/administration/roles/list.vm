@@ -20,11 +20,11 @@
 #set($pane1_id='administrationroles')
 #set($isNotTable=true)
 ##test to see whether a record has previously been selected and is stored in the session
-#set($selection=$viewMethods.getSessionData().getRole())
+#set($selection=$view.getSessionData().getRole())
 
 #set($fields=[['rolename','Role name']])
 #set($data=[])
-#foreach($role in $viewMethods.adminGetRoles())
+#foreach($role in $view.adminGetRoles())
   ## item to display on screen for this role - the row array is only one item long because we're only displaying one thing - role name
   #set($row=[$role.getRoleName()])
   #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_role=$role.getInternalRoleName()'")

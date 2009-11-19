@@ -20,8 +20,8 @@
 </style>
 <div id="errormessage">
 <b>Error:</b><p>
-#if($viewMethods.getWhetherExceptionOccurred())
-  $viewMethods.getException().getMessage()<p>
+#if($view.getWhetherExceptionOccurred())
+  $view.getException().getMessage()<p>
 #else
   The error handling template has been called but there's no exception available - I can't tell what happened
 #end

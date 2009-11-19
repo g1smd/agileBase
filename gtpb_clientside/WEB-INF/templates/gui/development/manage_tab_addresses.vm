@@ -20,7 +20,7 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
 </head>
 <body>
-#set($company = $viewMethods.getLoggedInUser().getCompany())
+#set($company = $view.getLoggedInUser().getCompany())
 <h1>Tab addresses for $company</h1>
 #set($tabAddresses = $company.getTabAddresses())
 #foreach($tabAddress in $tabAddresses)

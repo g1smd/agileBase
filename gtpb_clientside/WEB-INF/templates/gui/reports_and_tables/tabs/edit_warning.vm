@@ -1,5 +1,5 @@
-#set($sessionReport = $viewMethods.getSessionData().getReport())
-		#if(!$viewMethods.isRowIdInReport())
+#set($sessionReport = $view.getSessionData().getReport())
+		#if(!$view.isRowIdInReport())
 		<tr>
 		  <td class="leading">&nbsp;</td>
 		  <td colspan="2">

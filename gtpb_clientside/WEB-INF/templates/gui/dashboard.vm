@@ -11,7 +11,7 @@
 	</style>
 </head>
 <body>
-#set($treeMapJSON = $viewMethods.getUsageStats().getTreeMapJSON())
+#set($treeMapJSON = $view.getUsageStats().getTreeMapJSON())
 #if($treeMapJSON.startsWith("{")) ##if valid JSON
 <script language="JavaScript">
 

@@ -1,9 +1,9 @@
-#set($user = $viewMethods.getLoggedInUser())
+#set($user = $view.getLoggedInUser())
 #set($company = $user.getCompany())
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($table=$sessionData.getTable())
 #set($report = $table.getDefaultReport())
-#set($reportDataRows = $viewMethods.getReportDataRows($report))
+#set($reportDataRows = $view.getReportDataRows($report))
 
 #set($fields = $table.getFields())
 #foreach($field in $fields)

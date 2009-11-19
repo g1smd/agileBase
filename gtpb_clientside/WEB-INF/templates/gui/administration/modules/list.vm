@@ -20,11 +20,11 @@
 #set($pane1_id='administrationmodules')
 #set($isNotTable=true)
 ##test to see whether a record has previously been selected and is stored in the session
-#set($selection=$viewMethods.getSessionData().getModule())
+#set($selection=$view.getSessionData().getModule())
 
 #set($fields=[['index','index'],['modulename','module name'],['iconpath','icon'],['colour','colour']])
 #set($data=[])
-#set($modules = $viewMethods.getLoggedInUser().getCompany().getModules())
+#set($modules = $view.getLoggedInUser().getCompany().getModules())
 
 ## Get colours array
 #parse('gui/resources/module_color_colors.vm')

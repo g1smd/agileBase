@@ -29,7 +29,7 @@
 <input type="submit" value="Add company" />
 </form><p />
 <table>
-#foreach($company in $viewMethods.getCompanies())
+#foreach($company in $view.getCompanies())
   <tr><td>$company</td><td><a href="AppController.servlet?return=gui/development/manage_companies&remove_company=1&internalcompanyname=$company.getInternalCompanyName()">remove</a></td></tr>
 #end
 </table>

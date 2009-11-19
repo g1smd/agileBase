@@ -22,7 +22,7 @@
     background-color:#ECF0FF;
   }
 </style>
-#set($table = $viewMethods.getSessionData().getTable())
+#set($table = $view.getSessionData().getTable())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr valign="top">
     <td class="table_details">
@@ -34,7 +34,7 @@
 	  Records lockable<br>
 	  <span class="greytext" style="font-size:8pt">Allow custom actions (such as 'print invoice') to lock records against future editing</span><p>
       <!-- table deletion button -->
-	<input type=button value="Delete Table" #if($viewMethods.loggedInUserAllowedTo('ADMINISTRATE')) onclick="top.location='AppController.servlet?return=gui/display_application&remove_table=true&internaltablename=$table.getInternalTableName()'" #else disabled=true #end>
+	<input type=button value="Delete Table" #if($view.loggedInUserAllowedTo('ADMINISTRATE')) onclick="top.location='AppController.servlet?return=gui/display_application&remove_table=true&internaltablename=$table.getInternalTableName()'" #else disabled=true #end>
     </td>
 	<td class="table_details" style="background-color:#f4f4f4">
 <form method="POST" action="/portalBase/AppController.servlet" target="pane_1">

@@ -16,12 +16,12 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## a list of all the reports and tables for pane1
-#set($sessionData=$viewMethods.getSessionData())
+#set($sessionData=$view.getSessionData())
 #set($sessionContext=$sessionData.getContext().toString())
 
 ## Only show the table list if the user has manage privileges on at least one table
 ## or user is an administrator
-#if(($manageableTables.size() > 0) || $viewMethods.loggedInUserAllowedTo('ADMINISTRATE'))
+#if(($manageableTables.size() > 0) || $view.loggedInUserAllowedTo('ADMINISTRATE'))
 
 
 	
@@ -35,7 +35,7 @@
 	<ul>
 	  
     #foreach($table in $manageableTables)
-        #set($tableReports = $viewMethods.getViewableReports($table))
+        #set($tableReports = $view.getViewableReports($table))
         ##find out whether only the default report exists
         #set($reportsExist=false)
         ## Find which modules contain reports from this table
@@ -52,7 +52,7 @@
           #end
         #end
         ###set($expanded=false)
-        ###if($table.equals($viewMethods.getSessionData().getTable()))
+        ###if($table.equals($view.getSessionData().getTable()))
         ##  #set($expanded=true)
         ###end    
     
@@ -76,7 +76,7 @@
         ##  oLink.dtitle=oLinkTitle;	
                 <span class="recordcount">()</span>
             	
-            	###if($viewMethods.loggedInUserAllowedTo('MANAGE_TABLE',$table))	
+            	###if($view.loggedInUserAllowedTo('MANAGE_TABLE',$table))	
             	##<ul>
             	##	<li option="true">
             	##		<a href="AppController.servlet?return=gui/pane1&add_report&set_table=${table.getInternalTableName()}&set_custom_string=true&key=report_tabindex&value=6">create new report</a>
@@ -87,7 +87,7 @@
     	</li>
 	#end
 	
-		#if($viewMethods.loggedInUserAllowedTo('ADMINISTRATE'))
+		#if($view.loggedInUserAllowedTo('ADMINISTRATE'))
 		<li option="true">
 			<a href="AppController.servlet?return=gui/pane1&add_table&set_custom_string=true&key=table_tabindex&value=5">create a new table</a>
 		</li>

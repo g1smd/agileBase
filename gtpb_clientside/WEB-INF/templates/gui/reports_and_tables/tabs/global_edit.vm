@@ -27,8 +27,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
     </SCRIPT>
 #set($tabCaption='global edit')
 #set($rowCount = 0)
-#set($sessionTable=$viewMethods.getSessionData().getTable())
-#set($sessionRowId=$viewMethods.getSessionData().getRowId())
+#set($sessionTable=$view.getSessionData().getTable())
+#set($sessionRowId=$view.getSessionData().getRowId())
 #if($sessionRowId == -1)
 	  Select a record to edit data
 #else
@@ -43,7 +43,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
 			        <th class="trailing">&nbsp;</th>
 			      </tr>
 		    </thead>
-		    #set($tableDataRow=$viewMethods.getTableDataRow())
+		    #set($tableDataRow=$view.getTableDataRow())
 		    #if ($tableDataRow.size() == 0)
 		      Please select a record to edit, or press the 'New' button in the toolbar to create one
 		    #else
@@ -55,7 +55,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
           #parse("gui/reports_and_tables/tabs/table_data_row.vm")
 				        #end
 			      #end ## end loop through fields
-			      #if($viewMethods.isWikiIntegrated())
+			      #if($view.isWikiIntegrated())
 			        #parse("gui/reports_and_tables/tabs/wiki.vm")  
 			      					  <tr class="trailing">
 			          <td>&nbsp;</td>

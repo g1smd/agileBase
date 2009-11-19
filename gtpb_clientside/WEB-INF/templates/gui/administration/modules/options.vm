@@ -18,5 +18,5 @@
 #set($admin_folder='modules')
 #set($optionset_id='modules')
 ##pane2_id is the unique identifier of the record in the pane2 report
-#set($pane2_id=$viewMethods.getSessionData().getModule().getInternalModuleName())
+#set($pane2_id=$view.getSessionData().getModule().getInternalModuleName())
 #parse('gui/administration/pane3.vm')

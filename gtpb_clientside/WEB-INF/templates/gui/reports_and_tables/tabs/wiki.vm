@@ -55,7 +55,7 @@
 			</tr>
 			
 			#set($wikiTitle=$tableDataRow.get($sessionTable.getField('Wiki page [Auto]')))
-			#set($wikiSnippet = $viewMethods.getWikiPageSnippet($wikiTitle.toString(), 300))
+			#set($wikiSnippet = $view.getWikiPageSnippet($wikiTitle.toString(), 300))
 						<thead id="wikiHead" #if($wikiTitle.isNull())wikiExists="false"#else wikiExists="true"#end>
 			  <tr>
 			    <th class="leading">&nbsp;</th>			
@@ -168,7 +168,7 @@
 						                // this string will need to be cleaned...!
 						                oBox.setAttribute('disabled','true');
 						                oBox.oCreateButton.setAttribute('disabled','true');
-						                ##oWikiWindow=window.open('../jamwiki/$viewTools.cleanString($viewMethods.getLoggedInUser().getCompany().getCompanyName().toLowerCase())/Special:Edit?topic='+oBox.value,'gtpb_record_wiki');
+						                ##oWikiWindow=window.open('../jamwiki/$viewTools.cleanString($view.getLoggedInUser().getCompany().getCompanyName().toLowerCase())/Special:Edit?topic='+oBox.value,'gtpb_record_wiki');
 						                oWikiWindow=window.open('?return=/gui/resources/wiki/edit_wiki_page&set_custom_string=1&stringkey=wikipagename&customstringvalue='+oBox.value,'gtpb_record_wiki');
 						                oWikiWindow.focus();
 						                setTimeout('fCheckWikiWindow()',500);
@@ -238,7 +238,7 @@
 						      </script>
 												      $wikiSnippet 
 												      #if($tabCaption=="view")
-												        ##<a href="../jamwiki/$viewTools.cleanString($viewMethods.getLoggedInUser().getCompany().getCompanyName().toLowerCase())/$wikiTitle" target="_blank"> more...</a> 
+												        ##<a href="../jamwiki/$viewTools.cleanString($view.getLoggedInUser().getCompany().getCompanyName().toLowerCase())/$wikiTitle" target="_blank"> more...</a> 
 												        <a href="?return=/gui/resources/wiki/view_wiki_page&set_custom_string=1&stringkey=wikipagename&customstringvalue=$wikiTitle" target="_blank"> more...</a> 
 												      #else     
 												         ...

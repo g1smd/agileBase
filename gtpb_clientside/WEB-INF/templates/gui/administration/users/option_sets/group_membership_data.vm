@@ -16,8 +16,8 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <table cellspacing=0 border=0 cellpadding=0>
-  #set($userRoles = $viewMethods.adminGetRolesForUser($sessionUser))
-  #foreach($role in $viewMethods.adminGetRoles())
+  #set($userRoles = $view.adminGetRolesForUser($sessionUser))
+  #foreach($role in $view.adminGetRoles())
   <tr>
     <td>$role.getRoleName()</td>
     <td>

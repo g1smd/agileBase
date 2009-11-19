@@ -35,8 +35,8 @@
 }
 </style>
 
-#set($table = $viewMethods.getSessionData().getTable())
-#if($viewMethods.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
+#set($table = $view.getSessionData().getTable())
+#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
 
 <form method="post" action="AppController.servlet" name="footerform">
 <input type="hidden" name="return" value="gui/reports_and_tables/pane3">

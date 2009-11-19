@@ -17,7 +17,7 @@
 ##
 <portalbaseschema>
 <tables>
-#foreach($table in $viewMethods.adminGetCompanyTables())
+#foreach($table in $view.adminGetCompanyTables())
 	#if(! $table.isAuditTable())
 	<table name="$table.getTableName()" description="$table.getTableDescription()" internalTableName="$table.getInternalTableName()">
 		<fields>

@@ -61,9 +61,9 @@
 </script>
 
 <div class="tab_content"
-  #if ($viewMethods.getSessionData().getCustomVariable($tabset_id)=='true')
+  #if ($view.getSessionData().getCustomVariable($tabset_id)=='true')
     	#set($sTI='_tabindex')
-  	  #if ($viewMethods.getSessionData().getCustomVariable("$tabset_id$sTI")=="$velocityCount")
+  	  #if ($view.getSessionData().getCustomVariable("$tabset_id$sTI")=="$velocityCount")
   		    id="selected_tab"
   	  #end
   #elseif ($velocityCount==1)

@@ -152,7 +152,7 @@ ${dollar}url_prefix = "http://".${dollar}username.":".${dollar}password."@localh
 
 #set($random_string_request = "file_get_contents(${dollar}url_prefix.${quotes}return=gui/development/random_string${quotes})")
 
-#foreach ($table in $viewMethods.adminGetCompanyTables())
+#foreach ($table in $view.adminGetCompanyTables())
   #if (! $table.isAuditTable())
     #set($internalTableName = $table.getInternalTableName())
     #set($internalDefaultReportName = $table.getDefaultReport().getInternalReportName())
@@ -323,7 +323,7 @@ ${dollar}url_prefix = "http://".${dollar}username.":".${dollar}password."@localh
   #end ## if not audit table
 #end ## tables
 <br /><b>Users</b><br /><br />
-#foreach($user in $viewMethods.adminGetUsers())
+#foreach($user in $view.adminGetUsers())
   #set($internalUserName = "")
   #set($userName = "")
   #set($forename = "")
@@ -337,7 +337,7 @@ ${dollar}url_prefix = "http://".${dollar}username.":".${dollar}password."@localh
   $VELOCITY_RETURN&add_user=true&internalusername=$internalUserName&username=$userName&forename=$forename&surname=$surname&password=$passwd<br />
 #end
 <br /><b>Roles</b><br /><br />
-#foreach($role in $viewMethods.adminGetRoles())
+#foreach($role in $view.adminGetRoles())
   #set($internalRoleName = "")
   #set($roleName = "")
   #set($internalRoleName = $role.getInternalRoleName())
@@ -346,16 +346,16 @@ ${dollar}url_prefix = "http://".${dollar}username.":".${dollar}password."@localh
 #end
 <br />
 <br /><b>Privileges</b><br /><br />
-#foreach ($table in $viewMethods.adminGetAllTables())
+#foreach ($table in $view.adminGetAllTables())
   #if (! $table.isAuditTable())
     #set($internalTableName = $table.getInternalTableName())
-    #foreach($role in $viewMethods.adminGetRoles())
+    #foreach($role in $view.adminGetRoles())
       #set($internalRoleName = "")
       #set($internalRoleName = $role.getInternalRoleName())
       $VELOCITY_RETURN&privilegetype=MANAGE_TABLE&internaltablename=$internalTableName&assignto=role&internalrolename=$internalRoleName&set_max_table_privilege=&internalusername=<br />
     #end ## roles
     
-    #foreach($user in $viewMethods.adminGetUsers())
+    #foreach($user in $view.adminGetUsers())
       #set($internalUserName = "")
       #set($internalUserName = $user.getInternalUserName())
       $VELOCITY_RETURN&privilegetype=MANAGE_TABLE&internaltablename=$internalTableName&assignto=user&internalusername=$internalUserName&set_max_table_privilege=&internalrolename<br />

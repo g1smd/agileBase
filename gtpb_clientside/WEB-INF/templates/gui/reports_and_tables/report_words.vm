@@ -20,7 +20,7 @@
 ## $report has been defined as the current session report
 
 #set($reportBaseFields = $report.getReportBaseFields())
-#set($reportDataRows = $viewMethods.getReportDataRows($report,-1))
+#set($reportDataRows = $view.getReportDataRows($report,-1))
 #foreach($datarow in $reportDataRows)
   #set($dataRowFields = $datarow.getDataRowFields())
   #foreach($field in $reportBaseFields)

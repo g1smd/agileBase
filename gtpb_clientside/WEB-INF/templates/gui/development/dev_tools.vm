@@ -17,7 +17,7 @@
 ##
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($table = $sessionData.getTable())
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -37,7 +37,7 @@
     <div id="bodyContent">
     
     <h2>Schema development</h2>
-    #if($viewMethods.loggedInUserAllowedTo('MASTER'))
+    #if($view.loggedInUserAllowedTo('MASTER'))
       <!-- Company Management Console should only be available to MASTER gtpb user -->
       <a href="AppController.servlet?return=gui/development/manage_companies">Manage companies</a><p>
     #end
@@ -53,7 +53,7 @@
     <a href="AppController.servlet?return=gui/development/translator">Translate to internal names</a><p>
     <!-- <a href="AppController.servlet?return=gui/development/import_tables">Import Tables</a><p> -->
     <a href="AppController.servlet?return=gui/development/send_requests">Send a sequence of preformatted post requests</a><p>
-    <a href="AppController.servlet?return=gui/development/manage_tab_addresses">Manage tab addresses for $viewMethods.getLoggedInUser().getCompany()</a><p>
+    <a href="AppController.servlet?return=gui/development/manage_tab_addresses">Manage tab addresses for $view.getLoggedInUser().getCompany()</a><p>
   </div>
   </div>
   </div>

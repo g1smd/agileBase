@@ -15,15 +15,15 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($sourceText = $viewMethods.getSessionData().getCustomVariable("sourcetext"))
-#set($outputText = $viewMethods.toInternalNames($sourceText))
-###set($outputText = $viewMethods.toExternalNames($sourceText))
+#set($sourceText = $view.getSessionData().getCustomVariable("sourcetext"))
+#set($outputText = $view.toInternalNames($sourceText))
+###set($outputText = $view.toExternalNames($sourceText))
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>
-      $viewMethods.getApplicationName() version $viewMethods.getApplicationVersion() translation
+      $view.getApplicationName() version $view.getApplicationVersion() translation
     </title>
     <style>
       * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }

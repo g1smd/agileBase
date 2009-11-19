@@ -21,12 +21,12 @@ $viewTools.startTimer("gui/reports_and_tables/default_pane3")
 #set($tabs=[])
 #set($styles=[])
 #set($success=$tabs.add({'tabName':'view', 'tabSource':'gui/reports_and_tables/tabs/view'}))
-#if($viewMethods.loggedInUserAllowedTo('EDIT_TABLE_DATA',$viewMethods.getSessionData().getTable()))
+#if($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$view.getSessionData().getTable()))
 	#set($success=$tabs.add({'tabName':'edit', 'tabSource':'gui/reports_and_tables/tabs/edit'}))
 	#set($success=$styles.add('resources/tabs/edit.css'))	
 #end
 
-#if($viewMethods.loggedInUserAllowedTo('MANAGE_TABLE',$viewMethods.getSessionData().getTable()))
+#if($view.loggedInUserAllowedTo('MANAGE_TABLE',$view.getSessionData().getTable()))
 	  ## the current user can manage the table so show them admin options as well
 	  ## as the data and summary in tabs
 	  #set($success=$tabs.add({'tabName':'global edit', 'tabSource':'gui/reports_and_tables/tabs/global_edit'}))
@@ -37,7 +37,7 @@ $viewTools.startTimer("gui/reports_and_tables/default_pane3")
 	  #set($success=$styles.add('resources/tabs/table_administration.css'))
 #end
 
-#set($pane2_id=$viewMethods.getSessionData().getRowId())
+#set($pane2_id=$view.getSessionData().getRowId())
 #set($tabset_id='table')
 
 #parse('gui/resources/pane3_tab_set.vm')

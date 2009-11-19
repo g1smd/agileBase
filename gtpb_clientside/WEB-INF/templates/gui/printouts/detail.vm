@@ -24,7 +24,7 @@
 </style>
 <div style="page-break-after: always"></div>
 <h2>Details</h2>
-#foreach($dataRow in $viewMethods.getReportDataRows())
+#foreach($dataRow in $view.getReportDataRows())
   ## override the session row ID
   #set($sessionRowId = $dataRow.getRowId())
   #parse('gui/reports_and_tables/tabs/view.vm')

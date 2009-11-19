@@ -17,11 +17,11 @@
 ##
 $viewTools.startTimer("gui/administration/tables/options_set")
 ## session user will be used often
-#set($sessionUser = $viewMethods.getSessionData().getUser())
+#set($sessionUser = $view.getSessionData().getUser())
 
 #parse('gui/administration/tables/option_sets/table_details.vm')
 #parse('gui/administration/tables/option_sets/table_usage.vm')
-#if($viewMethods.loggedInUserAllowedTo('ADMINISTRATE'))
+#if($view.loggedInUserAllowedTo('ADMINISTRATE'))
   #parse('gui/administration/tables/option_sets/user_privileges.vm')
   #parse('gui/administration/tables/option_sets/role_privileges.vm')
 #end

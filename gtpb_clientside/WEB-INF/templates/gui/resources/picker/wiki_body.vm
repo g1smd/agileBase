@@ -15,12 +15,12 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-	#set($sessionData = $viewMethods.getSessionData())
+	#set($sessionData = $view.getSessionData())
 	#set($pageNameFilter = $sessionData.getCustomString("gtwm_wiki_page_name_filter"))
 	#set($pageContentFilter = $sessionData.getCustomString("gtwm_wiki_page_content_filter"))
 	
 	#set($data=[])
-	#foreach($datarow in $viewMethods.getWikiRecordDataRows($pageNameFilter, $pageContentFilter))
+	#foreach($datarow in $view.getWikiRecordDataRows($pageNameFilter, $pageContentFilter))
 		  #set($row=[])
 		  #set($colours=[])
 			 #set($success=$row.add($datarow.getPageName()))

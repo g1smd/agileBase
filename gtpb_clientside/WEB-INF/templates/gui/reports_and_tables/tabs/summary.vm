@@ -20,14 +20,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 ## Show summary data for the report
 
 #set($tabCaption='summary')
-#set($report = $viewMethods.getSessionData().getReport())
+#set($report = $view.getSessionData().getReport())
 #set($reportSummary = $report.getReportSummary())
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
 #set($numCols = 1 + $groupings.size() + $aggregateFunctions.size())
-#set($reportSummaryData = $viewMethods.getReportSummaryData())
+#set($reportSummaryData = $view.getReportSummaryData())
 #set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
-#set($loggedInUserAllowedToManage = $viewMethods.loggedInUserAllowedTo("MANAGE_TABLE", $report.getParentTable()))
+#set($loggedInUserAllowedToManage = $view.loggedInUserAllowedTo("MANAGE_TABLE", $report.getParentTable()))
 #set($showManageUi = false)
 ##$printout set in gui/reports_and_tables/report_data_print.vm
 #if((!$printout) && (!$mobile_device) && ($loggedInUserAllowedToManage))
@@ -110,7 +110,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 						#if(($velocityCount == 1) && ($numCols < 5))
 						<div style="position:relative; width:100%">
 						<div class="tagCloud">
-						  #set($tagCloud = $viewMethods.getReportTagCloud(8,20,40))
+						  #set($tagCloud = $view.getReportTagCloud(8,20,40))
 						  #foreach($tag in $tagCloud)
 							<span style="font-size:${tag.getWeight()}pt">$tag</span>
 						  #end
@@ -146,7 +146,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 						<div class="tagCloud" style="position:relative"> ## relative overrides absolute when the tag cloud is the only thing in the summary
 						  #set($minFontSize = 9)
 						  #set($maxFontSize = 25)
-						  #set($tagCloud = $viewMethods.getReportTagCloud($minFontSize,$maxFontSize,60))
+						  #set($tagCloud = $view.getReportTagCloud($minFontSize,$maxFontSize,60))
 						  #foreach($tag in $tagCloud)
 							<span style="font-size:${tag.getWeight()}pt">&nbsp;$tag&nbsp;</span>
 						  #end

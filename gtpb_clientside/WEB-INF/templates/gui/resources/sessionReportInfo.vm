@@ -16,10 +16,10 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <reportData>
-  #set($sessionData = $viewMethods.getSessionData())
+  #set($sessionData = $view.getSessionData())
   #set($sessionReport=$sessionData.getReport())
   <name>$sessionReport.getReportName()</name>
-  <rowsShown>#* $viewMethods.getReportDataRows().size() *#</rowsShown>
+  <rowsShown>#* $view.getReportDataRows().size() *#</rowsShown>
   ## need a way to find the total number of rows in the report including the filter but not including the limit set in the session
-  <rowsTotal>$viewMethods.getReportDataRows($sessionReport,-1).size()</rowsTotal>
+  <rowsTotal>$view.getReportDataRows($sessionReport,-1).size()</rowsTotal>
 </reportData>

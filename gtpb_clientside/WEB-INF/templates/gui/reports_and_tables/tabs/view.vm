@@ -19,7 +19,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 #set($rowCount = 0)
 
 ## view the data in the session table, plus related data
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($tabCaption='view')
 #set($sessionTable=$sessionData.getTable())
 #set($sessionReport=$sessionData.getReport())
@@ -39,7 +39,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 			<th>value</th>			
 			<th class=trailing>&nbsp;</th></tr>			
 		</thead>
-		#set($sessionTableDataRow=$viewMethods.getTableDataRow($sessionTable, $sessionRowId))
+		#set($sessionTableDataRow=$view.getTableDataRow($sessionTable, $sessionRowId))
 		#set($tableDataRow = $sessionTableDataRow)
 		#if ($tableDataRow.size() == 0)
 		 No data found for row id $sessionRowId
@@ -56,7 +56,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
              #end
    	       #end
 	     #end ## end loop through fields
-			    #if($viewMethods.isWikiIntegrated())
+			    #if($view.isWikiIntegrated())
 				  #set($wikiTitle=$tableDataRow.get($sessionTable.getField('Wiki page [Auto]')))
                   #if(!$wikiTitle.isNull())
 			        #parse("gui/reports_and_tables/tabs/wiki.vm")
@@ -84,7 +84,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		    ## if we have a relation to another table, show that table's data
 		    ## (if it has any related data)
 		    #if($field.equals($fieldTable.getPrimaryKey()))
-		     #set($relatedRowIds = $viewMethods.getRelatedRowIds($sessionRowId, $fieldTable))
+		     #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $fieldTable))
 		     #set($numRelatedRows = $relatedRowIds.size())
        #if ($numRelatedRows > 0)
 	     	   <thead>
@@ -96,7 +96,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 	 	      ## attempt to only display related data if it's a managable amount
 		       #if(($numRelatedRows == 1) || (($numRelatedRows * ($fieldTable.getFields().size() - 1)) < 30))
 		        #foreach($relatedRowId in $relatedRowIds)
-		         #set($tableDataRow=$viewMethods.getTableDataRow($fieldTable, $relatedRowId))
+		         #set($tableDataRow=$view.getTableDataRow($fieldTable, $relatedRowId))
 		         #if ($tableDataRow.size() != 0)
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))

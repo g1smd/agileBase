@@ -18,8 +18,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 ## Deal with any plugin
 #set($app_params = 'return=gui/display_application')
-#if($viewMethods.usesToolbarPlugin())
-  #set($app_params = "return=gui/display_application&include_toolbar_plugin=$viewMethods.getToolbarPluginName()")
+#if($view.usesToolbarPlugin())
+  #set($app_params = "return=gui/display_application&include_toolbar_plugin=$view.getToolbarPluginName()")
 #end
 <html>
   <head>
@@ -27,7 +27,7 @@
   <title>Loading intranet tabs...</title>
   </head>
   <body>
-	#set($company = $viewMethods.getLoggedInUser().getCompany())
+	#set($company = $view.getLoggedInUser().getCompany())
 	#set($tabAddresses = $company.getTabAddresses())
       <script language="JavaScript" type="text/javascript">
 	       #foreach($tabAddress in $tabAddresses)

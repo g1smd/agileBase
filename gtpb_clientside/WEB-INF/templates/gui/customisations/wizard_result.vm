@@ -1,16 +1,16 @@
-<wizardResult>#if($viewMethods.getWhetherExceptionOccurred())
+<wizardResult>#if($view.getWhetherExceptionOccurred())
   <errorData>
-    <type>#if($viewMethods.getException().getFieldCausingException())field#else
+    <type>#if($view.getException().getFieldCausingException())field#else
 general#end</type>
-    #if($viewMethods.getException().getFieldCausingException())
-      <internalFieldName>$viewMethods.getException().getFieldCausingException().getInternalFieldName()</internalFieldName>
-      <fieldName>$viewMethods.getException().getFieldCausingException()</fieldName>
+    #if($view.getException().getFieldCausingException())
+      <internalFieldName>$view.getException().getFieldCausingException().getInternalFieldName()</internalFieldName>
+      <fieldName>$view.getException().getFieldCausingException()</fieldName>
     #end
     <message><![CDATA[
-      #if($viewMethods.getException().getFieldCausingException())
-        Error entering data into field '$viewMethods.getException().getFieldCausingException()':
+      #if($view.getException().getFieldCausingException())
+        Error entering data into field '$view.getException().getFieldCausingException()':
       #end
-$viewMethods.getException().getMessage()
+$view.getException().getMessage()
       ]]>
     </message>
   </errorData>

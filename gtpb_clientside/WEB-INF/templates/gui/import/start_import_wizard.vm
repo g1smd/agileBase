@@ -15,9 +15,9 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($company = $viewMethods.getLoggedInUser().getCompany())
+#set($company = $view.getLoggedInUser().getCompany())
 #set($companyName = $viewTools.cleanString($company.getCompanyName()))
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($sessionTable = $sessionData.getTable())
 <request>
   <nextTemplate>gui/import/goto_wizard_start_point</nextTemplate>

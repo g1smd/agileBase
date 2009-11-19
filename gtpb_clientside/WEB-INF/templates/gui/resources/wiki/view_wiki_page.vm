@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($wikiPageName = $viewMethods.getSessionData().getCustomString("wikipagename"))
+#set($wikiPageName = $view.getSessionData().getCustomString("wikipagename"))
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -24,7 +24,7 @@
 <body>
 <script language="JavaScript">
 ##document.location="../jamwiki/$cleanCompanyName/StartingPoints";
-document.location="$viewMethods.getWikiPageUrl($wikiPageName, false)";
+document.location="$view.getWikiPageUrl($wikiPageName, false)";
 </script>
 </script>
 </body>

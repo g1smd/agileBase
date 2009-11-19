@@ -15,9 +15,9 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($company = $viewMethods.getLoggedInUser().getCompany())
+#set($company = $view.getLoggedInUser().getCompany())
 #set($companyName = $viewTools.cleanString($company.getCompanyName()))
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($import_type = $sessionData.getCustomString("import_type"))
 #if($sessionData.hasTable())
   #set($sessionTable = $sessionData.getTable())
@@ -48,7 +48,7 @@
   <td>Table to import into</td>
   <td>
     <select name="internaltablename">
-    #foreach($table in $viewMethods.getTablesAllowedTo("VIEW_TABLE_DATA")) <option value="$table.getInternalTableName">$table</option> #end
+    #foreach($table in $view.getTablesAllowedTo("VIEW_TABLE_DATA")) <option value="$table.getInternalTableName">$table</option> #end
     </select>
   </td>
 </tr>

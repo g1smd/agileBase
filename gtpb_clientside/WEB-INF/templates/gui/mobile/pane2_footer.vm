@@ -35,7 +35,7 @@
 </style>
 
 <div id="mobile_footer">
-#set($report = $viewMethods.getSessionData().getReport())
+#set($report = $view.getSessionData().getReport())
 <form method="post" action="AppController.servlet" name="footerform">
 <input type="hidden" name="return" value="gui/mobile/pane2_selector">
 <input type="hidden" name="set_custom_string" value="1">

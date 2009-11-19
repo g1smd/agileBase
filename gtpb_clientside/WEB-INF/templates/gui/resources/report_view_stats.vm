@@ -1,9 +1,9 @@
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($report = $sessionData.getCustomReport("dashboard_report"))
 #set($module = $report.getModule())
 <img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/>
 $report<p>	
-#set($usageStats = $viewMethods.getUsageStats())
+#set($usageStats = $view.getUsageStats())
 #set($reportViewStats = $usageStats.getReportViewStats($report))
 $reportViewStats.getAverageViews() views per month<br>
 #set($userStats = $reportViewStats.getUserStats())

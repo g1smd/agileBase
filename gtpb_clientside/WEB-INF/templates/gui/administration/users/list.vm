@@ -20,11 +20,11 @@
 #set($pane1_id='administrationusers')
 #set($isNotTable=true)
 ##test to see whether a record has previously been selected and is stored in the session
-#set($selection=$viewMethods.getSessionData().getUser())
+#set($selection=$view.getSessionData().getUser())
 
 #set($fields=[['username','username'],['forename','forename'],['surname','surname']])
 #set($data=[])
-#foreach($user in $viewMethods.adminGetUsers())
+#foreach($user in $view.adminGetUsers())
  #set($row=[$user.getUserName(),$user.getForename(),$user.getSurname()])
  #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_user=$user.getInternalUserName()'")
  #set($uniqueid=$user.getInternalUserName())

@@ -21,7 +21,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     #parse('gui/display_error.vm')
-    #set($sessionData = $viewMethods.getSessionData())
+    #set($sessionData = $view.getSessionData())
     #set($report = $sessionData.getReport())
     #if($report.getModule())
       #set($module=$report.getModule())

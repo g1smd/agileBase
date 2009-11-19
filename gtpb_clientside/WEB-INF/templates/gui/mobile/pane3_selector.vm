@@ -17,7 +17,7 @@
 ##
 <div class="tab_content" id="selected_tab">
 <div id="html_content" class="content">
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 
 <style>
 #mobile_header {

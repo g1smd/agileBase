@@ -20,7 +20,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>
-      $viewMethods.getApplicationName() version $viewMethods.getApplicationVersion() translator
+      $view.getApplicationName() version $view.getApplicationVersion() translator
     </title>
     <style>
       * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }

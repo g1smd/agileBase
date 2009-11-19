@@ -15,8 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($table = $viewMethods.getSessionData().getTable())
-#set($reports = $viewMethods.getViewableReports($table))
+#set($table = $view.getSessionData().getTable())
+#set($reports = $view.getViewableReports($table))
 
 #set($reportCount = 0)
 

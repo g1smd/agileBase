@@ -1,10 +1,10 @@
 #set($SQ="'")
-#set($sessionTable=$viewMethods.getSessionData().getTable())
+#set($sessionTable=$view.getSessionData().getTable())
 #set($updateAsType = false)
 #set($customAction = true)
 
 ## Check that the user has edit privileges
-#if($viewMethods.loggedInUserAllowedTo("EDIT_TABLE_DATA", $sessionTable))
+#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA", $sessionTable))
 
 <style>
   div#_md_blank div#_md_dialog div#_md_content table#reportData {
@@ -28,7 +28,7 @@
 
 <form name="data_form" method="post" action="AppController.servlet" onsubmit="return false">
   <input type="hidden" name="save_new_record" value="true">
-        		#if($viewMethods.getWhetherExceptionOccurred())
+        		#if($view.getWhetherExceptionOccurred())
         		    #parse('report_error.vm')
           		#end
 		
@@ -49,7 +49,7 @@
 ## If we come across a relation, add it's value to the wizard caption
 #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
   #set($relatedField=$field.getRelatedField())##
-  #set($fieldValue="$viewMethods.getSessionData().getRowId($relatedField.getTableContainingField())")##
+  #set($fieldValue="$view.getSessionData().getRowId($relatedField.getTableContainingField())")##
   #set($fieldDisplayValue = $field.getDisplayValue($fieldValue))##
   #if($fieldDisplayValue != "")
     #set($app_action_caption = "$app_action_caption for ${SQ}$fieldDisplayValue${SQ}")

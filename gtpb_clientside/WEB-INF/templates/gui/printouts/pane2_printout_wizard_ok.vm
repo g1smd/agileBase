@@ -17,5 +17,5 @@
 ##
 #if(!$top_level_xml_element_set)<request>#end
   #parse('gui/customisations/wizard_result.vm')
-  <record_lock_attempt>$viewMethods.getSessionData().getCustomString('record_lock_attempted')</record_lock_attempt>  
+  <record_lock_attempt>$view.getSessionData().getCustomString('record_lock_attempted')</record_lock_attempt>  
 #if(!$top_level_xml_element_set)</request>#end

@@ -15,6 +15,6 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($usageStats = $viewMethods.getUsageStats())
+#set($usageStats = $view.getUsageStats())
 #set($data = $usageStats.getRawStats("data_change"))
 #parse("gui/administration/information/export/export.vm")

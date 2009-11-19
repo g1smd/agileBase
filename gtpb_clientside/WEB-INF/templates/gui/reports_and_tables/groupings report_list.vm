@@ -18,14 +18,14 @@
 #set($SQ = "'")
 
 ## a list of reports by grouping (where a grouping has been defined) for pane1
-#set($sessionData=$viewMethods.getSessionData())
+#set($sessionData=$view.getSessionData())
 #set($sessionReport = $sessionData.getReport())
 #set($sessionReportGrouping = $sessionReport.getReportGrouping())
 #set($sessionTable = $sessionData.getTable())
 #set($sessionContext=$sessionData.getContext().toString())
 
 ## include custom per-company actions
-#set($company = $viewMethods.getLoggedInUser().getCompany())
+#set($company = $view.getLoggedInUser().getCompany())
 #set($companyName = $viewTools.cleanString($company.getCompanyName()))
 #set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
 #if($viewTools.templateExists($customisationsTemplateLocation))
@@ -36,7 +36,7 @@
 ## don't add groups/reports where the report is the default report
 ## or a calculation/criteria report
 #set($reportGroupings=$viewTools.getNewSortedStringObjectMap())
-#set($reports=$viewMethods.getAllViewableReports())
+#set($reports=$view.getAllViewableReports())
 #foreach($report in $reports)
   #set($displayReport = true)
   #if($report.getParentTable().getDefaultReport().equals($report))
@@ -82,7 +82,7 @@
 		    #end
 		    #set($icon = "")
 		  		  ## group actions
-		    #set($groupActions = $viewMethods.getModuleActions($grouping))
+		    #set($groupActions = $view.getModuleActions($grouping))
 		    #if($groupActions.size()>0)
 		      <ul class="appActions">
 		        #foreach($groupAction in $groupActions)

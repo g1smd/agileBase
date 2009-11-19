@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($sessionData = $viewMethods.getSessionData())##
+#set($sessionData = $view.getSessionData())##
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))##
 ## data from a report for pane2
 #set($resource_folder='tables')##
@@ -38,7 +38,7 @@
 			#end ## added to show display field name for relation fields
 	  #end##
 	  #set($data=[])##
-	  #foreach($datarow in $viewMethods.getReportDataRows())##
+	  #foreach($datarow in $view.getReportDataRows())##
 		    #set($row=[])##
 		    #set($colours=[])##
 		    #set($dataRowFields = $datarow.getDataRowFields())##
@@ -56,16 +56,16 @@
 		    #set($success=$colours.add("")) ## needs an extra one for some reason
 		    #if($printout)##
 		      #set($click='')##
-		      #set($locked=$viewMethods.isRecordLocked($sessionTable,$datarow.getRowId()))##
+		      #set($locked=$view.isRecordLocked($sessionTable,$datarow.getRowId()))##
 		    #else##
 		      #set($locked='')##
 			  #if($sessionTable.getDefaultReport().equals($sessionReport))
 				#set($numberOfTabs = '-1')
 			  #else
 			    #set($numberOfTabs = '2')
-			    #if($viewMethods.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))
+			    #if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))
 				  #set($numberOfTabs = '6')
-			    #elseif($viewMethods.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))
+			    #elseif($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))
 				  #set($numberOfTabs = '3')
 				#end
 			  #end

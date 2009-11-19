@@ -20,13 +20,13 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 
-#set($pane2_id=$viewMethods.getSessionData().getRowId())
+#set($pane2_id=$view.getSessionData().getRowId())
 <html>
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     #parse('gui/display_error.vm')
   
-    <title>Edit $viewMethods.getSessionData().getTable() data</title>
+    <title>Edit $view.getSessionData().getTable() data</title>
     <style type="text/css">
       * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
 			

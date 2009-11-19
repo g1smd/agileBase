@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
-#set($sessionData=$viewMethods.getSessionData())
+#set($sessionData=$view.getSessionData())
 <html>
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -65,7 +65,7 @@
 		<script language=Javascript src="resources/wait/request.js"></script> 
 		<SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
 		<script language=Javascript src="resources/wait/setFilter.js"></script>
-        #if($viewMethods.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
+        #if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
       	<script type="text/javascript" src="resources/jquery.tablednd.js"></script>
         #end
         <script type="text/javascript" src="resources/tabs/tabs.js"></script>

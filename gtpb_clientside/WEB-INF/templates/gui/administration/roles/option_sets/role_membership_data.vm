@@ -17,7 +17,7 @@
 ##
 <table cellspacing=0 border=0 cellpadding=0>
   #set($roleMembers = $sessionRole.getUsers())
-  #foreach($user in $viewMethods.adminGetUsers())
+  #foreach($user in $view.adminGetUsers())
     <tr>
       <td>$user.getForename() $user.getSurname()<BR>$user.getUserName()</td>
       <td>

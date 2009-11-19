@@ -22,7 +22,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #set($updateAsType = true)
 #set($rowCount = 0)
 #set($tabCaption='edit')
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($sessionTable=$sessionData.getTable())
 #set($sessionReport=$sessionData.getReport())
 #set($sessionRowId=$sessionData.getRowId())
@@ -42,7 +42,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			        <th class="trailing">&nbsp;</th>
 			      </tr>
 		    </thead>
-		    #set($tableDataRow=$viewMethods.getTableDataRow())
+		    #set($tableDataRow=$view.getTableDataRow())
 		    #if ($tableDataRow.size() == 0)
 		      Please select a record to edit, or press the 'New' button in the toolbar to create one
 		    #else
@@ -53,7 +53,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
           #parse("gui/reports_and_tables/tabs/table_data_row.vm")
 				        #end
 			      #end ## end loop through fields
-			      #if($viewMethods.isWikiIntegrated() && (!$mobile_device))
+			      #if($view.isWikiIntegrated() && (!$mobile_device))
 			        #parse("gui/reports_and_tables/tabs/wiki.vm")  
 			      					  <tr class="trailing">
 			          <td>&nbsp;</td>
@@ -70,10 +70,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 					      #end
 		    #end 
 	  </table>
-	  #if($viewMethods.isRecordLocked())
+	  #if($view.isRecordLocked())
 	  		  <div id="recordBlank"></div>
 	  		  
-	  	#if($viewMethods.loggedInUserAllowedTo('MANAGE_TABLE',$sessionTable))
+	  	#if($view.loggedInUserAllowedTo('MANAGE_TABLE',$sessionTable))
 	  		<div id="recordUnlock">
 	  		  <button id="recordUnlockButton">
 	  		  	<div>

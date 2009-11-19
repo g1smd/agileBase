@@ -67,7 +67,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 	    </tr>
 	  </thead>
 	  <tbody>
-		#set($sessionTable = $viewMethods.getSessionData().getTable())
+		#set($sessionTable = $view.getSessionData().getTable())
 	    #set($tableFields = $sessionTable.getFields())
 	    #set($numTableFields = $tableFields.size())
 	    #foreach ($field in $tableFields)

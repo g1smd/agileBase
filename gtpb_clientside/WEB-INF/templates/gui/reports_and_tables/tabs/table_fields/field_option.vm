@@ -59,7 +59,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/field_option ($f
     #elseif ($FormInputName.endsWith("report"))
       #foreach($table in $viewableTables)
         <optgroup label="$table.getTableName()">
-          #foreach($report in $viewMethods.getViewableReports($table))
+          #foreach($report in $view.getViewableReports($table))
             <option value="$report.getInternalReportName()">$report.getReportName()</option>
           				#end
         			</optgroup>
@@ -71,7 +71,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/field_option ($f
             <option value="$field.getInternalFieldName()">$field.getFieldName()</option>
           #end
         				</optgroup>
-        #foreach($report in $viewMethods.getViewableReports($table))
+        #foreach($report in $view.getViewableReports($table))
 						          <optgroup label="$report.getReportName()">
 						            #foreach($field in $report.getReportFields())
               <option value="$field.getInternalFieldName()">$field.getFieldName()</option>

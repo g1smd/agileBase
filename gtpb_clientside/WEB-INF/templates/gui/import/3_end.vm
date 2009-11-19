@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($company = $viewMethods.getLoggedInUser().getCompany())
+#set($company = $view.getLoggedInUser().getCompany())
 #set($companyName = $viewTools.cleanString($company.getCompanyName()))
 
 #if(!$top_level_xml_element_set)<request>#end
@@ -24,7 +24,7 @@
   #parse('gui/customisations/wizard_result.vm') 
   <htmlContent onload="oToolbar.cancelButton.switchOff()"><![CDATA[
     <form style="padding:10px">
-      #if($viewMethods.getWhetherExceptionOccurred())
+      #if($view.getWhetherExceptionOccurred())
         ## this is only a failsafe.  As this template doesn't submit any user data, it shouldn't fail ;)
         <h1>Ooops!</h1>
         an unexpected error has occurred

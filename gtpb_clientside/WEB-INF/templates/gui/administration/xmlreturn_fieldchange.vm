@@ -16,8 +16,8 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <request>
-  #if($viewMethods.getWhetherExceptionOccurred())
-    <exception type="$viewMethods.getException().getClass().getSimpleName()">$viewMethods.getException().getMessage()</exception>
+  #if($view.getWhetherExceptionOccurred())
+    <exception type="$view.getException().getClass().getSimpleName()">$view.getException().getMessage()</exception>
     <response>exception</response>
   #else
     <response>ok</response>

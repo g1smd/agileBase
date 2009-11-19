@@ -55,7 +55,7 @@
 <form action="AppController.servlet" target="pane_2" method=post id=newfield>
 
   ##defined in ../../report_fields.vm
-  ##set($report = $viewMethods.getSessionData().getReport())
+  ##set($report = $view.getSessionData().getReport())
   #set($sorts = $report.getSorts())
   <table id=reportData cellspacing="0" class="draggable">
 	    <thead>

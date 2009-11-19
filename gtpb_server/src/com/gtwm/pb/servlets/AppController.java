@@ -797,7 +797,7 @@ public class AppController extends VelocityViewServlet {
 			if (exceptionCaught != null) {
 				viewMethods.setException(exceptionCaught);
 			}
-			context.put("viewMethods", viewMethods);
+			context.put("view", viewMethods);
 			// Also some helper tools
 			context.put("viewTools", new ViewTools(request, response, this.webAppRoot));
 		} catch (ObjectNotFoundException onfex) {
@@ -849,7 +849,7 @@ public class AppController extends VelocityViewServlet {
 				// reporting
 				ViewMethodsInfo viewMethods = (ViewMethodsInfo) context.get("viewMethods");
 				viewMethods.setException(ex);
-				context.put("viewMethods", viewMethods);
+				context.put("view", viewMethods);
 				Template errorTemplate = getTemplate(AppProperties.errorTemplateLocation);
 				super.mergeTemplate(errorTemplate, context, response);
 			} catch (ResourceNotFoundException rnfe) {

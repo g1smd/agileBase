@@ -22,7 +22,7 @@
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <SCRIPT language="Javascript" src="resources/wait/request.js"></SCRIPT>
   <SCRIPT language=javascript>
-    parent.pane_2.fSetRowSelection('$viewMethods.getSessionData().getRole()');
+    parent.pane_2.fSetRowSelection('$view.getSessionData().getRole()');
     
 	// Deletion candidate
     function fCallback(sResponseText,sResponseXML)
@@ -99,7 +99,7 @@
 </HEAD>
 <BODY onload="fInit()">
   ## session role will be used often
-  #set($sessionRole = $viewMethods.getSessionData().getRole())
+  #set($sessionRole = $view.getSessionData().getRole())
   <DIV id=navigation class=buttonRadioGroup>
     #parse('gui/administration/users/button_group.vm')<br>
     #parse('gui/administration/users/button_privileges.vm')
@@ -110,7 +110,7 @@
       The $sessionRole role has the following members<p />
       <table cellspacing=0 border=0 cellpadding=0>
       #set($roleMembers = $sessionRole.getUsers())
-      #foreach($user in $viewMethods.adminGetUsers())
+      #foreach($user in $view.adminGetUsers())
         <tr>
           <td>$user.getForename() $user.getSurname() ($user.getUserName())</td>
           #if($roleMembers.contains($user))
@@ -128,13 +128,13 @@
       $sessionRole members have the following privileges<p />
       <table cellspacing=0 border=0 cellpadding=0>
       <tr><td>&nbsp;</td><th colspan=4>privileges</th></tr>
-      #foreach($table in $viewMethods.adminGetCompanyTables())
+      #foreach($table in $view.adminGetCompanyTables())
         #set($highestTablePrivilege = "")
-        #if($viewMethods.roleHasPrivilege("MANAGE_TABLE", $table))
+        #if($view.roleHasPrivilege("MANAGE_TABLE", $table))
           #set($highestTablePrivilege = "MANAGE_TABLE")
-        #elseif($viewMethods.roleHasPrivilege("EDIT_TABLE_DATA", $table))
+        #elseif($view.roleHasPrivilege("EDIT_TABLE_DATA", $table))
           #set($highestTablePrivilege = "EDIT_TABLE_DATA")
-        #elseif($viewMethods.roleHasPrivilege("VIEW_TABLE_DATA", $table))
+        #elseif($view.roleHasPrivilege("VIEW_TABLE_DATA", $table))
           #set($highestTablePrivilege = "VIEW_TABLE_DATA")          
         #end
         <tr>

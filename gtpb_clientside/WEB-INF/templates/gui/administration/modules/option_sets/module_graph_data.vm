@@ -15,10 +15,10 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($module = $viewMethods.getSessionData().getModule())
+#set($module = $view.getSessionData().getModule())
 #set($internalModuleName = $module.getInternalModuleName())
 ## Force refresh of graph and image if necessary
-#set($moduleGraphCode = $viewMethods.getModuleGraphCode($module))
+#set($moduleGraphCode = $view.getModuleGraphCode($module))
 <a href="module_graphs/${internalModuleName}.png" target="module_graph">
 <img src="module_graphs/${internalModuleName}.png" border="0" style="max-width:100%" />
 </a>

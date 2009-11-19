@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
@@ -27,7 +27,7 @@
 	<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
 	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 	#end
-	<title>$viewMethods.getApplicationName() version $viewMethods.getApplicationVersion() - $viewMethods.getLoggedInUser().getCompany()</title>
+	<title>$view.getApplicationName() version $view.getApplicationVersion() - $view.getLoggedInUser().getCompany()</title>
 
 	<style type="text/css">
 		 @import url("resources/tree/tree.css");
@@ -72,12 +72,12 @@
 			</ul>
 		</li>
 	  #else
-        #set($manageableTables = $viewMethods.getTablesAllowedTo("MANAGE_TABLE"))
-	    #if(($manageableTables.size() > 0) || $viewMethods.loggedInUserAllowedTo('ADMINISTRATE'))
+        #set($manageableTables = $view.getTablesAllowedTo("MANAGE_TABLE"))
+	    #if(($manageableTables.size() > 0) || $view.loggedInUserAllowedTo('ADMINISTRATE'))
 	    <li><h1><span>Setup</span></h1>
   		  <ul>
 		  #parse('gui/reports_and_tables/table_list.vm')
-          #if($viewMethods.loggedInUserAllowedTo('ADMINISTRATE'))
+          #if($view.loggedInUserAllowedTo('ADMINISTRATE'))
 			#parse('gui/administration/administration.vm')
 	 	  #end
 		  </ul>
@@ -85,9 +85,9 @@
 	    #end
 	  #end
 	</ol> ## end list of sections	  
-	  #if($viewMethods.getException().getMessage())
+	  #if($view.getException().getMessage())
 		   <script language="javascript">
-		      alert('$viewTools.escape($viewMethods.getException().getMessage())');
+		      alert('$viewTools.escape($view.getException().getMessage())');
 		   </script>
 	  #end
   </body>

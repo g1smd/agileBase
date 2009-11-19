@@ -129,8 +129,8 @@
 #end
 
 $viewTools.log("about to analyse tables")
-$viewTools.log("$viewMethods.adminGetCompanyTables()")
-#foreach ($table in $viewMethods.adminGetCompanyTables())
+$viewTools.log("$view.adminGetCompanyTables()")
+#foreach ($table in $view.adminGetCompanyTables())
   $viewTools.log("analysing $table")
   #if (! $table.isAuditTable())
     #set($internalTableName = $table.getInternalTableName())
@@ -295,7 +295,7 @@ $viewTools.log("$viewMethods.adminGetCompanyTables()")
   #end ## if not audit table
 #end ## tables
 <br /><b>Users</b><br /><br />
-#foreach($user in $viewMethods.adminGetUsers())
+#foreach($user in $view.adminGetUsers())
   #set($internalUserName = "")
   #set($userName = "")
   #set($forename = "")
@@ -309,7 +309,7 @@ $viewTools.log("$viewMethods.adminGetCompanyTables()")
   $VELOCITY_RETURN&add_user=true&internalusername=$internalUserName&username=$userName&forename=$forename&surname=$surname&password=$passwd<br />
 #end
 <br /><b>Roles</b><br /><br />
-#foreach($role in $viewMethods.adminGetRoles())
+#foreach($role in $view.adminGetRoles())
   #set($internalRoleName = "")
   #set($roleName = "")
   #set($internalRoleName = $role.getInternalRoleName())
@@ -318,16 +318,16 @@ $viewTools.log("$viewMethods.adminGetCompanyTables()")
 #end
 <br />
 <br /><b>Privileges</b><br /><br />
-#foreach ($table in $viewMethods.adminGetAllTables())
+#foreach ($table in $view.adminGetAllTables())
   #if (! $table.isAuditTable())
     #set($internalTableName = $table.getInternalTableName())
-    #foreach($role in $viewMethods.adminGetRoles())
+    #foreach($role in $view.adminGetRoles())
       #set($internalRoleName = "")
       #set($internalRoleName = $role.getInternalRoleName())
       $VELOCITY_RETURN&privilegetype=MANAGE_TABLE&internaltablename=$internalTableName&assignto=role&internalrolename=$internalRoleName&set_max_table_privilege=&internalusername=<br />
     #end ## roles
     
-    #foreach($user in $viewMethods.adminGetUsers())
+    #foreach($user in $view.adminGetUsers())
       #set($internalUserName = "")
       #set($internalUserName = $user.getInternalUserName())
       $VELOCITY_RETURN&privilegetype=MANAGE_TABLE&internaltablename=$internalTableName&assignto=user&internalusername=$internalUserName&set_max_table_privilege=&internalrolename<br />

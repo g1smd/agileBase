@@ -17,13 +17,13 @@
 ##
 #set($resource_folder='fields')
 #set($return='gui/administration/tables/options')
-#set($pane1_id=$viewMethods.getSessionData().getTable().getInternalTableName())
+#set($pane1_id=$view.getSessionData().getTable().getInternalTableName())
 ##test to see whether a record has previously been selected and is stored in the session
-#set($selection=$viewMethods.getSessionData().getField())
+#set($selection=$view.getSessionData().getField())
 
 #set($fields=['fieldname','fieldtype'])
 #set($data=[])
-#foreach($field in $viewMethods.getSessionData().getTable().getFields())
+#foreach($field in $view.getSessionData().getTable().getFields())
  #set($row=[$field.getFieldName(),$field.getUiType()])
  #set($click="return=$return&set_user=$user.getInternalUserName()")
  #set($uniqueid=$field.getFieldName())

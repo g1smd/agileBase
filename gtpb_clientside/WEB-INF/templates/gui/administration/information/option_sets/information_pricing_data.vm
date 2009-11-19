@@ -17,19 +17,19 @@
 ##
 $viewTools.startTimer("gui/administration/information/option_sets/information_pricing_data.vm")
 #if(!$usageStats)
-	#set($usageStats = $viewMethods.getUsageStats())
+	#set($usageStats = $view.getUsageStats())
 #end
 
-#set($appUser = $viewMethods.getLoggedInUser())
+#set($appUser = $view.getLoggedInUser())
 ## Hard code the list of usernames not allowed to view pricing data
 #set($disallowedUsernames = [])
 General information about the $appUser.getCompany() portalBase service<p>
 
 #if(!$disallowedUsernames.contains($appUser.getUserName()))
 <h2>Cost Calculation</h2>
-Monthly cost per table is &pound;10 for the first ten tables and &pound;5 for any subsequent.<p>
+Monthly cost per table is &pound;10 for the first twenty tables and &pound;5 for any subsequent.<p>
 
-$viewMethods.getLoggedInUser().getCompany() has $usageStats.getNumberOfTables() tables<p>
+$view.getLoggedInUser().getCompany() has $usageStats.getNumberOfTables() tables<p>
 
 Total monthly cost = <b>&pound;$usageStats.getMonthlyTableCost()</b><p>
 

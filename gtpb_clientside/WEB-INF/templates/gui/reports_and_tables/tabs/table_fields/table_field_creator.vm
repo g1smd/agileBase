@@ -18,7 +18,7 @@
 $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/table_field_creator")
 ## Form for user to create a new table field with
 ## Called from ../table_fields.vm
-#set($viewableTables = $viewMethods.getTablesAllowedTo("VIEW_TABLE_DATA"))
+#set($viewableTables = $view.getTablesAllowedTo("VIEW_TABLE_DATA"))
 <style>  
   input[focused][type='text'],
   textarea[focused] {

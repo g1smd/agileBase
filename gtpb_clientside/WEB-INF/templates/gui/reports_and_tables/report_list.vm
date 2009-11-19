@@ -27,14 +27,14 @@
 #end
 
 ## a list of reports by module for pane1
-#set($sessionData=$viewMethods.getSessionData())
+#set($sessionData=$view.getSessionData())
 #set($sessionReport = $sessionData.getReport())
 #set($sessionReportModule = $sessionReport.getModule())
 #set($sessionTable = $sessionData.getTable())
 #set($sessionContext=$sessionData.getContext().toString())
 
 ## include custom per-company actions
-#set($company = $viewMethods.getLoggedInUser().getCompany())
+#set($company = $view.getLoggedInUser().getCompany())
 #set($companyName = $viewTools.cleanString($company.getCompanyName()))
 #set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
 #if($viewTools.templateExists($customisationsTemplateLocation))
@@ -45,7 +45,7 @@
 ## don't add groups/reports where the report is the default report
 ## or a calculation/criteria report
 #set($reportModules=$viewTools.getNewSortedModuleObjectMap())
-#set($reports=$viewMethods.getAllViewableReports())
+#set($reports=$view.getAllViewableReports())
 #foreach($report in $reports)
   #set($displayReport = true)
   #if($report.getParentTable().getDefaultReport().equals($report))
@@ -119,7 +119,7 @@
 	
 	<li id="$internalModuleName" class="modulecollapsed $colourStyleName">
 	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> $module</span></h2>
-	  #set($moduleActions = $viewMethods.getModuleActions($internalModuleName))
+	  #set($moduleActions = $view.getModuleActions($internalModuleName))
 	  #if(($moduleActions.size()>0) && (!$mobile_device))
 	    <ul parent="$internalModuleName" class="moduleaction">
 		  #foreach($moduleAction in $moduleActions)

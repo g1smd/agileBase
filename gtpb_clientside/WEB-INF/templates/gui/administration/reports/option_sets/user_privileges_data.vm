@@ -17,18 +17,18 @@
 ##
 #parse("gui/administration/users/option_sets/radio_user_macro.vm")
 
-#set($table=$viewMethods.getSessionData().getTable())
+#set($table=$view.getSessionData().getTable())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr>
     <td>&nbsp;</td>
     <th colspan=4>privileges</th></tr>
-      #foreach($user in $viewMethods.adminGetUsers())
+      #foreach($user in $view.adminGetUsers())
 		#set($highestReportPrivilege = "")
-		#if($viewMethods.userHasPrivilege($user, "MANAGE_TABLE", $table))
+		#if($view.userHasPrivilege($user, "MANAGE_TABLE", $table))
           #set($highestTablePrivilege = "MANAGE_TABLE")
-		#elseif($viewMethods.userHasPrivilege($user, "EDIT_TABLE_DATA", $table))
+		#elseif($view.userHasPrivilege($user, "EDIT_TABLE_DATA", $table))
           #set($highestTablePrivilege = "EDIT_TABLE_DATA")
-		#elseif($viewMethods.userHasPrivilege($user, "VIEW_TABLE_DATA", $table))
+		#elseif($view.userHasPrivilege($user, "VIEW_TABLE_DATA", $table))
           #set($highestTablePrivilege = "VIEW_TABLE_DATA")  
 		#end
 

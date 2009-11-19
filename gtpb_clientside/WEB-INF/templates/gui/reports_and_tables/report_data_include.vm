@@ -21,7 +21,7 @@
 
 ## data from a report for pane2
 #set($resource_folder='tables')
-#set($sessionData = $viewMethods.getSessionData())
+#set($sessionData = $view.getSessionData())
 #set($sessionContext = $sessionData.getContext().toString())
 ##Added by Oliver to stop exception on empty report
 #if($sessionData.hasTable())
@@ -51,7 +51,7 @@
 			##    #end ## uncomment to remove to show primary key field
 	  #end
 	  #set($data=[])
-	  #foreach($datarow in $viewMethods.getReportDataRows())
+	  #foreach($datarow in $view.getReportDataRows())
 		    #set($row=[])
 		    #set($colours=[])
 		    #set($dataRowFields = $datarow.getDataRowFields())
@@ -62,7 +62,7 @@
 			       #if(($printout) && ($field.getClass().getSimpleName().equals("BigTextFieldDefn")))
 			         #set($success=$row.add($dataRowField.getKeyValue()))
 			       #elseif($field.getFieldName().equals("Wiki page [Auto]")) ## these parts only for wiki inclusion
-			         #set($wikiPageUrl = $viewMethods.getWikiPageUrl($dataRowField.getKeyValue(), false))
+			         #set($wikiPageUrl = $view.getWikiPageUrl($dataRowField.getKeyValue(), false))
 			         #set($success=$row.add("<a href='$wikiPageUrl'>$dataRowField.getDisplayValue()</a>"))
 			       #elseif(($field.getClass().getSimpleName().equals("TextFieldDefn")) && ($textValue.isURL()))
 			         #set($success=$row.add("<a href='$textValue.getFormattedURL()'>$dataRowField.getDisplayValue()</a>"))		         

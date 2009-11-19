@@ -39,13 +39,13 @@
   <tr>
     <td>&nbsp;</td>
     <th colspan=4>privileges</th></tr>
-    #foreach($table in $viewMethods.adminGetCompanyTables())
+    #foreach($table in $view.adminGetCompanyTables())
       #set($highestTablePrivilege = "")
-      #if($viewMethods.roleHasPrivilege("MANAGE_TABLE", $table))
+      #if($view.roleHasPrivilege("MANAGE_TABLE", $table))
         #set($highestTablePrivilege = "MANAGE_TABLE")
-      #elseif($viewMethods.roleHasPrivilege("EDIT_TABLE_DATA", $table))
+      #elseif($view.roleHasPrivilege("EDIT_TABLE_DATA", $table))
         #set($highestTablePrivilege = "EDIT_TABLE_DATA")
-      #elseif($viewMethods.roleHasPrivilege("VIEW_TABLE_DATA", $table))
+      #elseif($view.roleHasPrivilege("VIEW_TABLE_DATA", $table))
         #set($highestTablePrivilege = "VIEW_TABLE_DATA")          
       #end
       <tr>

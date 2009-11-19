@@ -29,7 +29,7 @@
     background-color:#ECF0FF;
   }
 </style>
-#set($report = $viewMethods.getSessionData().getReport())
+#set($report = $view.getSessionData().getReport())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr>
     <td>Name:</td>
@@ -45,7 +45,7 @@
     </td>
   </tr>
   <tr>
-    #set($modules = $viewMethods.getLoggedInUser().getCompany().getModules())
+    #set($modules = $view.getLoggedInUser().getCompany().getModules())
     <td>
       Module:<br><span class='greytext'><i>Please choose a module to place this report in</i></span>
     </td>

@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($sessionRole = $viewMethods.getSessionData().getRole())
+#set($sessionRole = $view.getSessionData().getRole())
 
 #parse('gui/administration/roles/option_sets/role_details.vm')
 #parse('gui/administration/roles/option_sets/role_membership.vm')

@@ -28,7 +28,7 @@
 	  <script src="resources/jquery.hoverIntent.js" type="text/javascript"></script> <!-- for cluetip, optional -->
 	  <script src="resources/jquery.cluetip.js" type="text/javascript"></script> 
 	#end
-    #set($sessionData = $viewMethods.getSessionData())
+    #set($sessionData = $view.getSessionData())
 	#set($sessionReport = $sessionData.getReport())
 	#set($sessionTable = $sessionData.getTable())
     <title>$sessionReport.getModule() - $sessionReport</title>
@@ -70,7 +70,7 @@
 	      </SCRIPT>
 	    #end
       	<SCRIPT language=Javascript src="resources/$resource_folder/new_delete.js"></SCRIPT>
-	#if($isNotTable||$viewMethods.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
+	#if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
 		#if(!$mobile_device)
   	    <SCRIPT language=Javascript>
    	     top.document.getElementById('button_new').removeAttribute('disabled');
@@ -98,7 +98,7 @@
    	            top.document.getElementById('button_clone').setAttribute('disabled');
    		        top.document.getElementById('button_delete').setAttribute('disabled');
         		top.document.getElementById('button_import').setAttribute('disabled');
-        	#if($viewMethods.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
+        	#if($view.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
 	    	    top.document.getElementById('button_export').removeAttribute('disabled');
    	     		top.document.getElementById('button_print').removeAttribute('disabled');
    	     		top.document.getElementById('button_links').removeAttribute('disabled');
@@ -306,9 +306,9 @@
 				#set($numberOfTabs = '-1')
 			  #else
 			    #set($numberOfTabs = '2')
-			    #if($viewMethods.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))
+			    #if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))
 				  #set($numberOfTabs = '6')
-			    #elseif($viewMethods.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))
+			    #elseif($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))
 				  #set($numberOfTabs = '3')
 				#end
 			  #end
@@ -328,15 +328,15 @@
 	<script src="resources/pane2.js" language="Javascript"> </script>
   </head>
 
-  #if($viewMethods.getWhetherExceptionOccurred())
+  #if($view.getWhetherExceptionOccurred())
 	<body onload="loadPane3();">
 		#parse("gui/error.vm")
 	</body>
 	#stop
   #end
   
-  #set($filters = $viewMethods.getSessionData().getReportFilterValues())
-  #if(($viewMethods.getSessionData().getCustomString('filtering_on')=='true') || $mobile_device)
+  #set($filters = $view.getSessionData().getReportFilterValues())
+  #if(($view.getSessionData().getCustomString('filtering_on')=='true') || $mobile_device)
     #set($filtersShouldBeShown='true')
   #else
     #set($filtersShouldBeShown='false')

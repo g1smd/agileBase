@@ -33,18 +33,18 @@
   </label>
 #end
 
-#set($table=$viewMethods.getSessionData().getTable())
+#set($table=$view.getSessionData().getTable())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr>
     <td>&nbsp;</td>
     <th colspan=4>privileges</th></tr>
-    #foreach($role in $viewMethods.adminGetRoles())
+    #foreach($role in $view.adminGetRoles())
       #set($highestTablePrivilege = "")
-      #if($viewMethods.roleHasPrivilege($role, "MANAGE_TABLE", $table))
+      #if($view.roleHasPrivilege($role, "MANAGE_TABLE", $table))
         #set($highestTablePrivilege = "MANAGE_TABLE")
-      #elseif($viewMethods.roleHasPrivilege($role, "EDIT_TABLE_DATA", $table))
+      #elseif($view.roleHasPrivilege($role, "EDIT_TABLE_DATA", $table))
         #set($highestTablePrivilege = "EDIT_TABLE_DATA")
-      #elseif($viewMethods.roleHasPrivilege($role, "VIEW_TABLE_DATA", $table))
+      #elseif($view.roleHasPrivilege($role, "VIEW_TABLE_DATA", $table))
         #set($highestTablePrivilege = "VIEW_TABLE_DATA")          
       #end
       <tr>

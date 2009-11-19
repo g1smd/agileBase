@@ -15,8 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($temp = $viewMethods.getSessionData().setReportRowLimit(-1))
-#set($sessionReport = $viewMethods.getSessionData().getReport())
+#set($temp = $view.getSessionData().setReportRowLimit(-1))
+#set($sessionReport = $view.getSessionData().getReport())
 ## Column headings
 #foreach ($field in $sessionReport.getReportFields())
 $viewTools.escapeForCSV($field.toString().toLowerCase()),## no linebreak
@@ -24,7 +24,7 @@ $viewTools.escapeForCSV($field.toString().toLowerCase()),## no linebreak
 ## linebreak
 
 ## CSV output
-#foreach($datarow in $viewMethods.getReportDataRows())
+#foreach($datarow in $view.getReportDataRows())
 #foreach($field in $sessionReport.getReportFields())
 ## Make sure full text of big text fields is exported
 #if($field.getBaseField().getClass().getSimpleName().endsWith("TextFieldDefn"))
@@ -40,5 +40,5 @@ $cellValue,## no linebreak
 
 #end
 
-#set($user = $viewMethods.getLoggedInUser())
+#set($user = $view.getLoggedInUser())
 ,Exported from the $user.getCompany() portalBase report '$sessionReport.getModule() - $sessionReport' on $viewTools.getDatestampString() by $user.getForename() $user.getSurname(). Live data at www.gtportalbase.com/start
