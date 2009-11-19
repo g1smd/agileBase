@@ -221,7 +221,7 @@ public class TableDefn implements TableInfo {
 		}
 		// not found by internal name, try by public name
 		for (BaseField suspectField : this.getFieldsCollection()) {
-			if (suspectField.getFieldName().equals(fieldID)) {
+			if (suspectField.getFieldName().equalsIgnoreCase(fieldID)) {
 				return suspectField;
 			}
 		}

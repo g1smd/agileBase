@@ -20,51 +20,49 @@ package com.gtwm.pb.model.interfaces;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.manageData.DataRow;
-import com.gtwm.pb.model.manageData.DataRowField;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * @author Craig McDonnell
- *
+ * Represents one row in a set of results data for a report, i.e. basically a
+ * set of field=value pairs
  */
 public interface DataRowInfo {
 
-    /**
-     * 
-     * @param fieldSchema
-     * @param field
-     */
-	public void addDataRowField (BaseField fieldSchema, DataRowField field);
-	
 	/**
-     * @return A read-only copy of the collection of fields this report data row contains
-     */
-    public Map<BaseField, DataRowFieldInfo> getDataRowFields();
-    
-    /**
-     * 
-     * @param rowid
-     */
-    public void setRowId( int rowid );
-    
-    public int getRowId();
-    
-    /**
-     * @return A List of related records for each RelationField in this row of data
-     *         The lists are stored in a Map via the RelationField object
-     * 
-     * @param conn
-     * 
-     * @throws SQLException
-     * @throws ObjectNotFoundException
-     */
-    public Map<RelationField, List<DataRow>> getChildDataRows( DatabaseInfo databaseDefn, Connection conn) throws SQLException, ObjectNotFoundException, CodingErrorException;
+	 * Return the primary key for this row
+	 */
+	public int getRowId();
+
+	/**
+	 * Return the value of a particular field in the row
+	 */
+	public DataRowFieldInfo getValue(BaseField field);
+
+	/**
+	 * Return the value of a particular field, identified by internal field ID
+	 * or field name
+	 * 
+	 * @throws ObjectNotFoundException
+	 *             if the given fieldID doesn't match any field in the report by
+	 *             ID or name
+	 */
+	public DataRowFieldInfo getValue(String fieldID) throws ObjectNotFoundException;
+
+	/**
+	 * Return the fields and values this report data row contains
+	 */
+	public Map<BaseField, DataRowFieldInfo> getDataRowFields();
+
+	/**
+	 * Return a list of related records for each RelationField in this row of
+	 * data The lists are stored in a Map via the RelationField object
+	 */
+	public Map<RelationField, List<DataRow>> getChildDataRows(DatabaseInfo databaseDefn,
+			Connection conn) throws SQLException, ObjectNotFoundException, CodingErrorException;
 }

@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.model.manageData;
 
+import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -43,6 +44,7 @@ import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.AppProperties;
 import java.sql.*;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
@@ -117,7 +119,8 @@ public class ReportData implements ReportDataInfo {
 			String SQLCode = "SELECT " + SQLPart + " FROM " + report.getInternalReportName();
 			if (useSample) {
 				// Take a random sample of about 10% of rows to speed the
-				// query. NB Don't use random() as very slow for large no. rows
+				// query. NB Don't use random() in SQL as it's very slow for a
+				// large no. rows
 				// SQLCode += " WHERE random() > 0.9 ORDER BY random()";
 				String pKeyInternalName = report.getParentTable().getPrimaryKey()
 						.getInternalFieldName();
@@ -558,8 +561,8 @@ public class ReportData implements ReportDataInfo {
 	private String preprocessDateFilter(String filterValue) throws CantDoThatException {
 		String processedFilterValue = filterValue;
 		String[] tokens = filterValue.split("\\sand\\s|\\sor\\s");
-		//Findbugs found this unused variable
-		//Options options = new Options(false);
+		// Findbugs found this unused variable
+		// Options options = new Options(false);
 		for (String token : tokens) {
 			if (!(token.startsWith(">") || token.startsWith("<"))) {
 				Span timespan = this.parseTimestamp(token);
@@ -718,7 +721,11 @@ public class ReportData implements ReportDataInfo {
 		BaseField primaryKeyField = parentTable.getPrimaryKey();
 		while (results.next()) {
 			int rowid = results.getInt(primaryKeyField.getInternalFieldName());
-			reportDataRow = new DataRow(parentTable, rowid);
+			// TODO: performance tests to see whether
+			// row.clear()
+			// or
+			// new map creation is better in this loop
+			Map<BaseField, DataRowFieldInfo> row = new LinkedHashMap<BaseField, DataRowFieldInfo>();
 			// add all columns to the row:
 			for (ReportFieldInfo reportField : this.report.getReportFields()) {
 				BaseField fieldSchema = reportField.getBaseField();
@@ -916,9 +923,9 @@ public class ReportData implements ReportDataInfo {
 				} else {
 					reportDataRowField = new DataRowField(keyValue, keyValue, colourRepresentation);
 				}
-				// store in ReportDataRow object:
-				reportDataRow.addDataRowField(fieldSchema, reportDataRowField);
+				row.put(fieldSchema, reportDataRowField);
 			}
+			reportDataRow = new DataRow(parentTable, rowid, row);
 			reportData.add(reportDataRow);
 		}
 		results.close();

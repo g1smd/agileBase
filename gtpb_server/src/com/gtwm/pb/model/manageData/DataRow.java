@@ -51,18 +51,40 @@ public class DataRow implements DataRowInfo {
 	private DataRow() {
 	}
 
-	public DataRow(TableInfo table, int rowid) {
-		this.row = new LinkedHashMap<BaseField, DataRowFieldInfo>();
+	public DataRow(TableInfo table, int rowid, Map<BaseField, DataRowFieldInfo> row) {
+		this.row = row;
 		this.rowid = rowid;
 		this.table = table;
 	}
 
-	private Map<String, String> getKeyToDisplayMapping(Connection conn,
-			String internalSourceName, String internalKeyFieldName,
-			String internalDisplayFieldName) throws SQLException {
+	public DataRow(TableInfo table, int rowid, Connection conn) throws SQLException,
+			ObjectNotFoundException, CodingErrorException {
+		this.rowid = rowid;
+		this.table = table;
+		this.row = new LinkedHashMap<BaseField, DataRowFieldInfo>();
+		// load raw data from database:
+		PreparedStatement statement = conn.prepareStatement("SELECT * FROM "
+				+ table.getInternalTableName() + " WHERE "
+				+ table.getPrimaryKey().getInternalFieldName() + " = ?");
+		this.loadDataRow(conn, statement);
+	}
+
+	public DataRow(TableInfo table, BaseField whereRowField, int rowid, Connection conn)
+			throws SQLException, ObjectNotFoundException, CodingErrorException {
+		this.rowid = rowid;
+		this.table = table;
+		this.row = new LinkedHashMap<BaseField, DataRowFieldInfo>();
+		// load raw data from database:
+		PreparedStatement statement = conn.prepareStatement("SELECT * FROM "
+				+ table.getInternalTableName() + " WHERE " + whereRowField.getInternalFieldName()
+				+ " = ?");
+		this.loadDataRow(conn, statement);
+	}
+
+	private Map<String, String> getKeyToDisplayMapping(Connection conn, String internalSourceName,
+			String internalKeyFieldName, String internalDisplayFieldName) throws SQLException {
 		// Buffer the set of display values for this field:
-		String SQLCode = "SELECT " + internalKeyFieldName + ", "
-				+ internalDisplayFieldName;
+		String SQLCode = "SELECT " + internalKeyFieldName + ", " + internalDisplayFieldName;
 		SQLCode += " FROM " + internalSourceName;
 		PreparedStatement statement = conn.prepareStatement(SQLCode);
 		ResultSet results = statement.executeQuery();
@@ -74,22 +96,19 @@ public class DataRow implements DataRowInfo {
 		return displayLookup;
 	}
 
-	private void loadDataRow(Connection conn, PreparedStatement statement)
-			throws SQLException, ObjectNotFoundException, CodingErrorException {
+	private void loadDataRow(Connection conn, PreparedStatement statement) throws SQLException,
+			ObjectNotFoundException, CodingErrorException {
 		// 0) Obtain all display values taken from other sources:
 		Map<BaseField, Map<String, String>> displayLookups = new HashMap<BaseField, Map<String, String>>();
 		for (BaseField field : this.table.getFields()) {
 			if (field instanceof RelationField) {
 				// Buffer the set of display values for this field:
 				RelationField relationField = (RelationField) field;
-				String relatedKey = relationField.getRelatedField()
-						.getInternalFieldName();
-				String relatedDisplay = relationField.getDisplayField()
-						.getInternalFieldName();
-				String relatedSource = relationField.getRelatedTable()
-						.getInternalTableName();
-				Map<String, String> displayLookup = getKeyToDisplayMapping(
-						conn, relatedSource, relatedKey, relatedDisplay);
+				String relatedKey = relationField.getRelatedField().getInternalFieldName();
+				String relatedDisplay = relationField.getDisplayField().getInternalFieldName();
+				String relatedSource = relationField.getRelatedTable().getInternalTableName();
+				Map<String, String> displayLookup = getKeyToDisplayMapping(conn, relatedSource,
+						relatedKey, relatedDisplay);
 				displayLookups.put(relationField, displayLookup);
 			}
 		}
@@ -102,25 +121,19 @@ public class DataRow implements DataRowInfo {
 				if (field instanceof RelationField) {
 					RelationField relationField = (RelationField) field;
 					keyValue = results.getString(relationField.getInternalFieldName());
-					displayValue = displayLookups.get(relationField).get(
-							keyValue);
+					displayValue = displayLookups.get(relationField).get(keyValue);
 				} else if (field instanceof DateField) {
 					// need a lot of converting between different types
-					Timestamp keyValueDate = results.getTimestamp(field
-							.getInternalFieldName());
+					Timestamp keyValueDate = results.getTimestamp(field.getInternalFieldName());
 					if (keyValueDate != null) {
-						DateValue keyValueDateValue = new DateValueDefn(
-								keyValueDate.getTime());
+						DateValue keyValueDateValue = new DateValueDefn(keyValueDate.getTime());
 						try {
-							keyValueDateValue
-									.setDateResolution(((DateField) field)
-											.getDateResolution());
+							keyValueDateValue.setDateResolution(((DateField) field)
+									.getDateResolution());
 						} catch (CantDoThatException cdtex) {
 							throw new CodingErrorException(
-									"Date resolution value for field "
-											+ field.getFieldName()
-											+ " not recognised by date value object",
-									cdtex);
+									"Date resolution value for field " + field.getFieldName()
+											+ " not recognised by date value object", cdtex);
 						}
 						keyValue = keyValueDateValue.toString();
 						displayValue = keyValue;
@@ -131,65 +144,49 @@ public class DataRow implements DataRowInfo {
 					keyValue = results.getString(field.getInternalFieldName());
 					displayValue = keyValue;
 				}
-				DataRowField dataRowField = new DataRowField(keyValue,
-						displayValue);
+				DataRowField dataRowField = new DataRowField(keyValue, displayValue);
 				this.row.put(field, dataRowField);
 			}
 		} else {
-			throw new ObjectNotFoundException("Record with identifier " + rowid
-					+ " not found");
+			throw new ObjectNotFoundException("Record with identifier " + rowid + " not found");
 		}
 		results.close();
 		statement.close();
-	}
-
-	public DataRow(TableInfo table, int rowid, Connection conn)
-			throws SQLException, ObjectNotFoundException, CodingErrorException {
-		this.rowid = rowid;
-		this.table = table;
-		this.row = new LinkedHashMap<BaseField, DataRowFieldInfo>();
-		// load raw data from database:
-		PreparedStatement statement = conn.prepareStatement("SELECT * FROM "
-				+ table.getInternalTableName() + " WHERE "
-				+ table.getPrimaryKey().getInternalFieldName() + " = ?");
-		loadDataRow(conn, statement);
-	}
-
-	public DataRow(TableInfo table, BaseField whereRowField, int rowid, Connection conn) throws SQLException, ObjectNotFoundException, CodingErrorException {
-        this.rowid = rowid;
-        this.table = table;
-        this.row = new LinkedHashMap<BaseField, DataRowFieldInfo>();
-        // load raw data from database:
-        PreparedStatement statement = conn.prepareStatement("SELECT * FROM " + table.getInternalTableName() + " WHERE " + whereRowField.getInternalFieldName()
-                + " = ?");
-        loadDataRow(conn, statement);
-    }
-
-	public synchronized void addDataRowField(BaseField fieldSchema,
-			DataRowField field) {
-		this.row.put(fieldSchema, field);
-	}
-
-	public synchronized Map<BaseField, DataRowFieldInfo> getDataRowFields() {
-		if (AppProperties.optimiseForPerformance) {
-			return this.row;
-		}
-		return Collections
-				.unmodifiableMap(new LinkedHashMap<BaseField, DataRowFieldInfo>(
-						this.row));
-	}
-
-	public void setRowId(int rowid) {
-		this.rowid = rowid;
 	}
 
 	public int getRowId() {
 		return this.rowid;
 	}
 
-	public Map<RelationField, List<DataRow>> getChildDataRows(
-			DatabaseInfo databaseDefn, Connection conn) throws SQLException,
-			ObjectNotFoundException, CodingErrorException {
+	public Map<BaseField, DataRowFieldInfo> getDataRowFields() {
+		if (AppProperties.optimiseForPerformance) {
+			return this.row;
+		}
+		return Collections
+				.unmodifiableMap(new LinkedHashMap<BaseField, DataRowFieldInfo>(this.row));
+	}
+	
+	public DataRowFieldInfo getValue(BaseField field) {
+		return this.row.get(field);
+	}
+	
+	public DataRowFieldInfo getValue(String fieldID) throws ObjectNotFoundException {
+		for (Map.Entry<BaseField, DataRowFieldInfo> entry : this.row.entrySet()) {
+			if (entry.getKey().getInternalFieldName().equals(fieldID)) {
+				return entry.getValue();
+			}
+		}
+		// fieldID is not an internal ID, try the field name
+		for (Map.Entry<BaseField, DataRowFieldInfo> entry : this.row.entrySet()) {
+			if (entry.getKey().getFieldName().equalsIgnoreCase(fieldID)) {
+				return entry.getValue();
+			}
+		}
+		throw new ObjectNotFoundException("Field with ID or name '" + fieldID + "' not found in data row " + this.row);
+	}
+
+	public Map<RelationField, List<DataRow>> getChildDataRows(DatabaseInfo databaseDefn,
+			Connection conn) throws SQLException, ObjectNotFoundException, CodingErrorException {
 		// declare the return value:
 		Map<RelationField, List<DataRow>> childDataRows = new HashMap<RelationField, List<DataRow>>();
 		// obtain a set of all tables containing any field from this table as a
@@ -197,15 +194,12 @@ public class DataRow implements DataRowInfo {
 		SortedSet<TableInfo> relationTables = new TreeSet<TableInfo>();
 		databaseDefn.getDirectlyDependentTables(this.table, relationTables);
 		String localTableInternalName = this.table.getInternalTableName();
-		String localTablePrimaryKeyName = this.table.getPrimaryKey()
-				.getInternalFieldName();
+		String localTablePrimaryKeyName = this.table.getPrimaryKey().getInternalFieldName();
 		// obtain the relation field(s) for each table & generate sql to get
 		// rows where related:
 		for (TableInfo relatedTable : relationTables) {
-			String relatedTableInternalName = relatedTable
-					.getInternalTableName();
-			String relatedTablePrimaryKeyName = relatedTable.getPrimaryKey()
-					.getInternalFieldName();
+			String relatedTableInternalName = relatedTable.getInternalTableName();
+			String relatedTablePrimaryKeyName = relatedTable.getPrimaryKey().getInternalFieldName();
 			for (BaseField baseField : relatedTable.getFields()) {
 				if (baseField instanceof RelationField) {
 					RelationField relationField = (RelationField) baseField;
@@ -220,7 +214,7 @@ public class DataRow implements DataRowInfo {
 					// select b1.b1rowid from a1, b1
 					// where b1.a1rowid = a1.a1rowid
 					// and a1.a1rowid = 5
-					
+
 					sql.append("SELECT "); // change
 					sql.append(relatedTableInternalName);
 					sql.append(".");
@@ -245,16 +239,13 @@ public class DataRow implements DataRowInfo {
 					sql.append(this.rowid);
 					sql.append(")");
 
-					PreparedStatement statement = conn.prepareStatement(sql
-							.toString());
+					PreparedStatement statement = conn.prepareStatement(sql.toString());
 					ResultSet results = statement.executeQuery();
 					List<DataRow> relationDataRows = new ArrayList<DataRow>();
 					while (results.next()) {
-						int foreign_rowid = results
-								.getInt(relatedTablePrimaryKeyName);
-						DataRow dataRow = new DataRow(relationField
-								.getTableContainingField(), relationField
-								.getTableContainingField().getPrimaryKey(),
+						int foreign_rowid = results.getInt(relatedTablePrimaryKeyName);
+						DataRow dataRow = new DataRow(relationField.getTableContainingField(),
+								relationField.getTableContainingField().getPrimaryKey(),
 								foreign_rowid, conn);
 						relationDataRows.add(dataRow);
 					}
@@ -271,7 +262,7 @@ public class DataRow implements DataRowInfo {
 		return this.row.toString();
 	}
 
-	private LinkedHashMap<BaseField, DataRowFieldInfo> row;
+	private Map<BaseField, DataRowFieldInfo> row;
 
 	private int rowid;
 
