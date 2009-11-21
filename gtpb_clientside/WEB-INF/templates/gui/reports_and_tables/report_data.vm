@@ -15,20 +15,19 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($sessionData = $view.getSessionData())##
-#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))##
+#set($mobile_device = $session.getCustomBoolean("mobile_device"))##
 ## data from a report for pane2
 #set($resource_folder='tables')##
-#set($sessionContext = $sessionData.getContext().toString())##
+#set($sessionContext = $session.getContext().toString())##
 ##Check there's stuff in the session to stop an exception when there's not
-#if($sessionData.hasTable())##
-	  #set($sessionReport=$sessionData.getReport())##
-	  #set($sessionTable=$sessionData.getTable())##
+#if($session.hasTable())##
+	  #set($sessionReport=$session.getReport())##
+	  #set($sessionTable=$session.getTable())##
 	  #set($return='gui/reports_and_tables/pane3')##
 	  #set($pane1_id="$sessionTable.getInternalTableName()$sessionReport.getInternalReportName()")##
 	  ##test to see whether a record has previously been selected and is stored in the session
-	  #if ($sessionData.getRowId())##
-		    #set($selection=$sessionData.getRowId())##
+	  #if ($session.getRowId())##
+		    #set($selection=$session.getRowId())##
 	  #end##
 	  #set($fields=[])##
 	  #set($reportBaseFields = $sessionReport.getReportBaseFields())##

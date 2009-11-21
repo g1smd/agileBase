@@ -21,7 +21,7 @@ $viewTools.startTimer("gui/administration/information/list.vm")
 #set($pane1_id='administrationinformation')
 #set($isNotTable=true)
 ##test to see whether a record has previously been selected and is stored in the session
-#set($selection=$view.getSessionData().getModule())
+#set($selection=$session.getModule())
 
 ## No data in pane 2
 #set($fields=[['','']])

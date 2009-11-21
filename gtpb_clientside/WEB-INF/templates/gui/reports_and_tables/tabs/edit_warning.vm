@@ -1,4 +1,4 @@
-#set($sessionReport = $view.getSessionData().getReport())
+#set($sessionReport = $session.getReport())
 		#if(!$view.isRowIdInReport())
 		<tr>
 		  <td class="leading">&nbsp;</td>

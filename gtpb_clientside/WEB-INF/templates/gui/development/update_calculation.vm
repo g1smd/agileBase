@@ -33,8 +33,7 @@
 	  <div id="content">
 				    <h1 class="firstHeading">Calculation Update</h1>
     <div id="bodyContent">
-    #set($sessionData = $view.getSessionData())
-    #set($report = $sessionData.getReport())
+    #set($report = $session.getReport())
     #foreach($reportField in $report.getReportFields())
       #set($reportFieldClass = $reportField.getClass().getSimpleName())
       #if($reportFieldClass.equals("ReportCalcFieldDefn"))

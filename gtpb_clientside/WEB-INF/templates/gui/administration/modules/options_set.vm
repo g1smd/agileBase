@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($sessionModule = $view.getSessionData().getModule())
+#set($sessionModule = $session.getModule())
 
 #parse('gui/administration/modules/option_sets/module_details.vm')
 #parse('gui/administration/modules/option_sets/module_icon.vm')

@@ -20,7 +20,7 @@
 #set($pane1_id='administrationmodules')
 #set($isNotTable=true)
 ##test to see whether a record has previously been selected and is stored in the session
-#set($selection=$view.getSessionData().getModule())
+#set($selection=$session.getModule())
 
 #set($fields=[['index','index'],['modulename','module name'],['iconpath','icon'],['colour','colour']])
 #set($data=[])

@@ -27,11 +27,10 @@
 #end
 
 ## a list of reports by module for pane1
-#set($sessionData=$view.getSessionData())
-#set($sessionReport = $sessionData.getReport())
+#set($sessionReport = $session.getReport())
 #set($sessionReportModule = $sessionReport.getModule())
-#set($sessionTable = $sessionData.getTable())
-#set($sessionContext=$sessionData.getContext().toString())
+#set($sessionTable = $session.getTable())
+#set($sessionContext=$session.getContext().toString())
 
 ## include custom per-company actions
 #set($company = $view.getLoggedInUser().getCompany())

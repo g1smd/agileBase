@@ -16,7 +16,6 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
-#set($sessionData = $view.getSessionData())
 <html>
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -173,7 +172,7 @@
 					  #if($view.loggedInUserAllowedTo("ADMINISTRATE"))
 						#parse('gui/toolbar/buttons/info.vm')
 					  #end
-			          #set($sessionContext = $sessionData.getContext().toString())
+			          #set($sessionContext = $session.getContext().toString())
 			          #if($sessionContext == "SYSADMIN")
 			            #parse('gui/toolbar/buttons/dev_tools.vm')
 			          #end

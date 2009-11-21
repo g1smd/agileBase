@@ -19,7 +19,7 @@
 
 #if($viewOnly)
   #set($userCanEdit=false)
-#elseif($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$view.getSessionData().getTable()))
+#elseif($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$session.getTable()))
 	  ## the user is allowed to edit data in the table
 	  #set($userCanEdit=true)
 #else

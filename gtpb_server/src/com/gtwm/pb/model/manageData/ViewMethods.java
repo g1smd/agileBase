@@ -38,7 +38,6 @@ import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
-import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
@@ -82,6 +81,37 @@ import org.grlea.log.SimpleLogger;
 import java.util.TreeSet;
 
 public class ViewMethods implements ViewMethodsInfo {
+
+	/**
+	 * Create and initialise the viewMethods object that'll be used by templates
+	 * to display the application
+	 * 
+	 * @param request
+	 *            Allows methods to get session data, also used when we need to
+	 *            know the current user
+	 * @param databaseDefn
+	 *            Window on the application data
+	 * @throws ObjectNotFoundException
+	 *             If session data can't be retrieved from the request
+	 */
+	public ViewMethods(HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws ObjectNotFoundException {
+		this.request = request;
+		// Check user's logged in
+		if (request.isRequestedSessionIdValid()) {
+			// Separate out session data so we don't have to use a long method
+			// call
+			// chain all the time
+			this.sessionData = (SessionDataInfo) request.getSession().getAttribute(
+					"com.gtwm.pb.servlets.sessionData");
+			if (sessionData == null) {
+				throw new ObjectNotFoundException("Session data not retrieved");
+			}
+		}
+		this.toolbarPluginName = request.getParameter(ExtraAction.INCLUDE_TOOLBAR_PLUGIN.toString()
+				.toLowerCase(Locale.UK));
+		this.databaseDefn = databaseDefn;
+	}
 
 	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException {
 		Set<String> graphCodeLines = new LinkedHashSet<String>();
@@ -239,37 +269,6 @@ public class ViewMethods implements ViewMethodsInfo {
 		return this.databaseDefn.getWikiManagement(company).getWikiUrl(wikiPageName, edit);
 	}
 
-	/**
-	 * Create and initialise the viewMethods object that'll be used by templates
-	 * to display the application
-	 * 
-	 * @param request
-	 *            Allows methods to get session data, also used when we need to
-	 *            know the current user
-	 * @param databaseDefn
-	 *            Window on the application data
-	 * @throws ObjectNotFoundException
-	 *             If session data can't be retrieved from the request
-	 */
-	public ViewMethods(HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws ObjectNotFoundException {
-		this.request = request;
-		// Check user's logged in
-		if (request.isRequestedSessionIdValid()) {
-			// Separate out session data so we don't have to use a long method
-			// call
-			// chain all the time
-			this.sessionData = (SessionDataInfo) request.getSession().getAttribute(
-					"com.gtwm.pb.servlets.sessionData");
-			if (sessionData == null) {
-				throw new ObjectNotFoundException("Session data not retrieved");
-			}
-		}
-		this.toolbarPluginName = request.getParameter(ExtraAction.INCLUDE_TOOLBAR_PLUGIN.toString()
-				.toLowerCase(Locale.UK));
-		this.databaseDefn = databaseDefn;
-	}
-
 	public String getRandomString() {
 		return new RandomString().toString();
 	}
@@ -393,12 +392,8 @@ public class ViewMethods implements ViewMethodsInfo {
 		return AppProperties.applicationVersion;
 	}
 
-	public SessionDataInfo getSessionData() {
-		return this.sessionData;
-	}
-
 	public List<RelationField> getUnchosenRelationFields() throws DisallowedException {
-		return this.getUnchosenRelationFields(this.getSessionData().getTable());
+		return this.getUnchosenRelationFields(this.sessionData.getTable());
 	}
 
 	public List<RelationField> getUnchosenRelationFields(TableInfo table)
@@ -408,11 +403,10 @@ public class ViewMethods implements ViewMethodsInfo {
 			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
 		}
 		List<RelationField> unchosenRelationFields = new LinkedList<RelationField>();
-		SessionDataInfo sessionData = this.getSessionData();
 		for (BaseField field : table.getFields()) {
 			if (field instanceof RelationField) {
 				RelationField relationField = (RelationField) field;
-				if (sessionData.getRowId(relationField.getRelatedTable()) == -1) {
+				if (this.sessionData.getRowId(relationField.getRelatedTable()) == -1) {
 					unchosenRelationFields.add(relationField);
 				}
 			}
@@ -623,7 +617,7 @@ public class ViewMethods implements ViewMethodsInfo {
 			Set<BaseField> reportBaseFields, Set<String> stopWords, int minWeight, int maxWeight,
 			int maxTags) throws ObjectNotFoundException, DisallowedException, CodingErrorException,
 			CantDoThatException, SQLException {
-		Map<BaseField, String> filters = this.getSessionData().getReportFilterValues();
+		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
 		Set<BaseField> textFields = new HashSet<BaseField>();
 		FIELDS: for (BaseField field : reportBaseFields) {
 			// Get a list of suitable fields from those specified for which to
@@ -667,7 +661,7 @@ public class ViewMethods implements ViewMethodsInfo {
 
 	public SortedMap<TableInfo, SortedSet<BaseField>> adminGetRelationCandidates()
 			throws DisallowedException {
-		TableInfo table = this.getSessionData().getTable();
+		TableInfo table = this.sessionData.getTable();
 		if (!(getAuthenticator().loggedInUserAllowedTo(this.request, PrivilegeType.MANAGE_TABLE,
 				table))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
@@ -741,14 +735,14 @@ public class ViewMethods implements ViewMethodsInfo {
 	public boolean userHasPrivilege(String privilegeTypeToCheck) throws DisallowedException,
 			IllegalArgumentException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
-		AppUserInfo sessionUser = getSessionData().getUser();
+		AppUserInfo sessionUser = this.sessionData.getUser();
 		return getAuthManager().specifiedUserHasPrivilege(request, privilegeType, sessionUser);
 	}
 
 	public boolean userHasPrivilege(String privilegeTypeToCheck, TableInfo table)
 			throws IllegalArgumentException, ObjectNotFoundException, DisallowedException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
-		AppUserInfo sessionUser = getSessionData().getUser();
+		AppUserInfo sessionUser = this.sessionData.getUser();
 		return getAuthManager().specifiedUserHasPrivilege(request, privilegeType, sessionUser,
 				table);
 	}
@@ -770,14 +764,14 @@ public class ViewMethods implements ViewMethodsInfo {
 	public boolean roleHasPrivilege(String privilegeTypeToCheck) throws IllegalArgumentException,
 			DisallowedException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
-		AppRoleInfo sessionRole = getSessionData().getRole();
+		AppRoleInfo sessionRole = this.sessionData.getRole();
 		return getAuthManager().specifiedRoleHasPrivilege(request, privilegeType, sessionRole);
 	}
 
 	public boolean roleHasPrivilege(String privilegeTypeToCheck, TableInfo table)
 			throws IllegalArgumentException, DisallowedException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
-		AppRoleInfo sessionRole = getSessionData().getRole();
+		AppRoleInfo sessionRole = this.sessionData.getRole();
 		return getAuthManager().specifiedRoleHasPrivilege(request, privilegeType, sessionRole,
 				table);
 	}

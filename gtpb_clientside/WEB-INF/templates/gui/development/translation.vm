@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($sourceText = $view.getSessionData().getCustomVariable("sourcetext"))
+#set($sourceText = $session.getCustomVariable("sourcetext"))
 #set($outputText = $view.toInternalNames($sourceText))
 ###set($outputText = $view.toExternalNames($sourceText))
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">

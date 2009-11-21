@@ -460,15 +460,6 @@ public interface ViewMethodsInfo {
 			CantDoThatException, SQLException;
 
 	/**
-	 * Exposes session data to the user interface
-	 * 
-	 * @return An object containing methods to return various session data such
-	 *         as the current table, report and record
-	 * @see com.gtwm.pb.model.interfaces.SessionDataInfo
-	 */
-	public SessionDataInfo getSessionData();
-
-	/**
 	 * @return All reports in the table provided, that the user has privileges
 	 *         to view
 	 */

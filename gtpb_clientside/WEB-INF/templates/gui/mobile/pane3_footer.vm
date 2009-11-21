@@ -35,7 +35,7 @@
 }
 </style>
 
-#set($table = $view.getSessionData().getTable())
+#set($table = $session.getTable())
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
 
 <form method="post" action="AppController.servlet" name="footerform">

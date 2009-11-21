@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 This list shows users that are viewing this report<p>
-#set($report = $view.getSessionData().getReport())
+#set($report = $session.getReport())
 #set($reportViewStats = $view.getUsageStats().getReportViewStats($report).getUserStats())
 <table width="100%" border="0">
 <tr><td><b>User</b></td><td><b>Last access date</b></td><td><b>Total access count</b></td></tr>

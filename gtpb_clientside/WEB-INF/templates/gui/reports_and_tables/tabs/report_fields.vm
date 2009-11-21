@@ -17,7 +17,7 @@
 ##
 ## 
 ##Used by fields_data, filters_data and joins_data
-#set($report = $view.getSessionData().getReport())
+#set($report = $session.getReport())
 #set($joinReferencedTables = $report.getJoinReferencedTables())
 #set($joinedTables = $report.getJoinedTables())
 #set($joinedReports = $report.getJoinedReports())

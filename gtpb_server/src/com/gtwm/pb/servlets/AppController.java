@@ -550,11 +550,14 @@ public class AppController extends VelocityViewServlet {
 			} catch (SQLException sqlex) {
 				logException(sqlex, request, "SQL error creating session data object: " + sqlex);
 				sessionData = new SessionData();
-				//throw new ServletException("SQL error creating session data object", sqlex);
+				// throw new
+				// ServletException("SQL error creating session data object",
+				// sqlex);
 			} catch (PortalBaseException pbex) {
 				logException(pbex, request, "Error creating session data object: " + pbex);
 				sessionData = new SessionData();
-				//throw new ServletException("Error creating session data object", pbex);
+				// throw new
+				// ServletException("Error creating session data object", pbex);
 			}
 			// set up the wiki if the user is the first user logging in from a
 			// particular company
@@ -786,18 +789,18 @@ public class AppController extends VelocityViewServlet {
 			HttpServletResponse response, String templateName, Context context,
 			HttpSession session, SessionDataInfo sessionData, Exception exceptionCaught,
 			List<FileItem> multipartItems) throws ServletException {
-		// Check user's not logged out otherwise an exception will be thrown
-		if (request.isRequestedSessionIdValid()) {
-			// Save any changes to the session data
-			session.setAttribute("com.gtwm.pb.servlets.sessionData", sessionData);
-		}
-		// Obtain methods to let the user interface work
 		try {
 			ViewMethodsInfo viewMethods = new ViewMethods(request, this.databaseDefn);
 			if (exceptionCaught != null) {
 				viewMethods.setException(exceptionCaught);
 			}
 			context.put("view", viewMethods);
+			// Check user's logged in otherwise an exception will be thrown
+			if (request.isRequestedSessionIdValid()) {
+				// Save any changes to the session data
+				session.setAttribute("com.gtwm.pb.servlets.sessionData", sessionData);
+				context.put("session", sessionData);
+			}
 			// Also some helper tools
 			context.put("viewTools", new ViewTools(request, response, this.webAppRoot));
 		} catch (ObjectNotFoundException onfex) {

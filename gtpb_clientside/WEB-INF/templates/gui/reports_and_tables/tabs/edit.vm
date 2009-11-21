@@ -22,15 +22,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #set($updateAsType = true)
 #set($rowCount = 0)
 #set($tabCaption='edit')
-#set($sessionData = $view.getSessionData())
-#set($sessionTable=$sessionData.getTable())
-#set($sessionReport=$sessionData.getReport())
-#set($sessionRowId=$sessionData.getRowId())
+#set($sessionTable=$session.getTable())
+#set($sessionReport=$session.getReport())
+#set($sessionRowId=$session.getRowId())
 #if($sessionRowId == -1)
 	  Select a record to edit data
 #else
   ## show the interface to edit the record
-  #if(($sessionData.getLastAppAction() == "CLONE_RECORD") && ($sessionData.getLastAppActionRowId() == $sessionRowId))
+  #if(($session.getLastAppAction() == "CLONE_RECORD") && ($session.getLastAppActionRowId() == $sessionRowId))
     #set($cloned_record = true)
   #end
 	  <table cellspacing="0" cellpadding="0" border="0" id="reportData" #if($cloned_record) style="background:url('styles/cloned.png') no-repeat top right !important;" #end>

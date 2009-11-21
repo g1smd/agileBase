@@ -17,8 +17,6 @@
 ##
 <div class="tab_content" id="selected_tab">
 <div id="html_content" class="content">
-#set($sessionData = $view.getSessionData())
-
 <style>
 #mobile_header {
   position: relative;
@@ -38,10 +36,10 @@
 </style>
 
 <div id="mobile_header">
-<button onclick="document.location='?return=gui/mobile/pane2_selector'">&lt; $sessionData.getReport()</button> Details
+<button onclick="document.location='?return=gui/mobile/pane2_selector'">&lt; $session.getReport()</button> Details
 </div>
 ## What content to display in pane 3? View, edit etc.
-#set($mobile_pane3_selection = $sessionData.getCustomString("mobile_pane3_selection"))
+#set($mobile_pane3_selection = $session.getCustomString("mobile_pane3_selection"))
 #if($mobile_pane3_selection == "edit")
   #parse("gui/reports_and_tables/tabs/edit.vm")
   #parse("gui/mobile/pane3_footer.vm")

@@ -19,9 +19,8 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 #set($numRows=$data.size())
 #set($uniqueIdCount = 0)
 #set($thisUniqueId = -1)
-#set($sessionData = $view.getSessionData())
-#set($sessionRowId= $sessionData.getRowId())
-#set($sessionTable = $sessionTable.getTable())
+#set($sessionRowId= $session.getRowId())
+#set($sessionTable = $session.getTable())
 
 ## Make an extra blank row for the record being edited if it's not already in the dataset on screen
 ## #if((!$selectionFound) && ($numRows > 0) && ($filtersShouldBeShown != 'true') && (!$isNotTable))
@@ -69,7 +68,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	    #end
 	  #end
 	  <td>
-		#if($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$view.getSessionData().getTable()))
+		#if($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$session.getTable()))
 		  <input type="checkbox" onclick="fLocateDeleteMarkers(this)">
 		#end
 	  </td>		
@@ -142,13 +141,13 @@ $viewTools.startTimer("gui/pane2/pane2_body")
   <td class=leading>&nbsp;##
   	## enable UI to pick up the number of rows returned, to display in pane 1
 	#set($numRowsToDisplay = $numRows)
-	#if($numRowsToDisplay == $sessionData.getReportRowLimit())
+	#if($numRowsToDisplay == $session.getReportRowLimit())
 		#set($numRowsToDisplay = "<i>&gt;$numRowsToDisplay</i>")
 	#end
 	<div style="display:none" id="numrows">$numRowsToDisplay</div>##
-    #set($sessionReport = $sessionData.getReport())##
+    #set($sessionReport = $session.getReport())##
 	<div style="display:none" id="pane1id">${sessionReport.getParentTable().getInternalTableName()}${sessionReport.getInternalReportName()}</div>##
-    <div style="display:none" id="pane3tab">#if(! $sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))$sessionData.getCustomString('report_tabindex')#end</div>
+    <div style="display:none" id="pane3tab">#if(! $sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))$session.getCustomString('report_tabindex')#end</div>
   </td>
   #if($data.size() > 0)
     #set($firstRowCells = $data.get(0).get(0))
@@ -161,13 +160,13 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 ## A row to see more data if the full dataset isn't displayed
 #set($totalRows = $sessionReport.getRowCount())
 #set($totalRowsIsEstimate = $sessionReport.isRowCountEstimate())
-#if(($numRows == $sessionData.getReportRowLimit()) && ($totalRows > $numRows))
+#if(($numRows == $session.getReportRowLimit()) && ($totalRows > $numRows))
 <tr class="seemorerows">
 	#set($numCols = $firstRowCells.size() + 2)
   <td colspan="$numCols">
     $numRows records out of #if($totalRowsIsEstimate)approximately#end $totalRows are displayed.<br>
 	view 
-	#set($viewMoreAmount = $sessionData.getReportRowLimit())
+	#set($viewMoreAmount = $session.getReportRowLimit())
 	## workaround for not having a while loop in Velocity
 	#foreach($tmp in [1,2,3,4,5,6,7,8,9,10])
 		#set($viewMoreAmount = $viewMoreAmount * 10)

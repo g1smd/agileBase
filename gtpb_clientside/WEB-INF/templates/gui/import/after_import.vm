@@ -31,7 +31,6 @@
 <title>portalBase data import</title>
 </head>
 <body>
-#set($sessionData = $view.getSessionData())
 #if($view.getWhetherExceptionOccurred())
   #parse("gui/error.vm")
 #else

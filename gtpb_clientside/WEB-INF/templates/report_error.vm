@@ -32,14 +32,13 @@
 </head>
 <body>
 #parse("gui/error.vm")
-#set($sessionData = $view.getSessionData())
-#set($sessionTable = $sessionData.getTable())
-#set($sessionReport = $sessionData.getReport())
+#set($sessionTable = $session.getTable())
+#set($sessionReport = $session.getReport())
 #if($sessionReport && $return)
 <script language="JavaScript">
 	  function loadPane3() {
 		  var url = 'AppController.servlet?return=$return';
-		  #set($rowId = $sessionData.getRowId())
+		  #set($rowId = $session.getRowId())
 		  #if($rowId)
 		    var rowId = $rowId;
 		  #else

@@ -20,7 +20,7 @@
 #set($pane1_id='administrationroles')
 #set($isNotTable=true)
 ##test to see whether a record has previously been selected and is stored in the session
-#set($selection=$view.getSessionData().getRole())
+#set($selection=$session.getRole())
 
 #set($fields=[['rolename','Role name']])
 #set($data=[])

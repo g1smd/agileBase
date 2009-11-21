@@ -17,10 +17,9 @@
 ##
 #set($company = $view.getLoggedInUser().getCompany())
 #set($companyName = $viewTools.cleanString($company.getCompanyName()))
-#set($sessionData = $view.getSessionData())
-#set($import_type = $sessionData.getCustomString("import_type"))
-#if($sessionData.hasTable())
-  #set($sessionTable = $sessionData.getTable())
+#set($import_type = $session.getCustomString("import_type"))
+#if($session.hasTable())
+  #set($sessionTable = $session.getTable())
   #set($primaryKey = $sessionTable.getPrimaryKey())
   #set($primaryKeyInternalName = $primaryKey.getInternalFieldName())
 #end
@@ -42,7 +41,7 @@
   <td>File to import</td>
   <td><input type="file" name="importfile"></td>
 </tr>
-#if(!$sessionData.hasTable())
+#if(!$session.hasTable())
 #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
 <tr class="$rowClass">
   <td>Table to import into</td>

@@ -22,7 +22,7 @@
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <SCRIPT language="Javascript" src="resources/wait/request.js"></SCRIPT>
   <SCRIPT language=javascript>
-    parent.pane_2.fSetRowSelection('$view.getSessionData().getRole()');
+    parent.pane_2.fSetRowSelection('$session.getRole()');
     
 	// Deletion candidate
     function fCallback(sResponseText,sResponseXML)
@@ -99,7 +99,7 @@
 </HEAD>
 <BODY onload="fInit()">
   ## session role will be used often
-  #set($sessionRole = $view.getSessionData().getRole())
+  #set($sessionRole = $session.getRole())
   <DIV id=navigation class=buttonRadioGroup>
     #parse('gui/administration/users/button_group.vm')<br>
     #parse('gui/administration/users/button_privileges.vm')

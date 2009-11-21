@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## session user will be used often
-#set($sessionUser = $view.getSessionData().getUser())
+#set($sessionUser = $session.getUser())
 
 #parse('gui/reports_and_tables/tabs/report_fields/option_sets/fields.vm')
 #parse('gui/reports_and_tables/tabs/report_fields/option_sets/filters.vm')

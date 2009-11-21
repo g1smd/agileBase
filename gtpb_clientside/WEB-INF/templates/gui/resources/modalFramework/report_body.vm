@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 	#if(!$pickerReport)
-	  #set($pickerReport=$view.getSessionData().getCustomReport('picker_report'))
+	  #set($pickerReport=$session.getCustomReport('picker_report'))
 	  #set($reportBaseFields = $pickerReport.getReportBaseFields())
 	#end
 	

@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($pickerReport=$view.getSessionData().getCustomReport('picker_report'))
+#set($pickerReport=$session.getCustomReport('picker_report'))
 #set($fields=[])
 	#set($reportBaseFields = $pickerReport.getReportBaseFields())
 	#foreach ($field in $reportBaseFields)
@@ -29,7 +29,7 @@
 			  #end ## uncomment to remove to show primary key field
 	#end
   
-#set($filters = $view.getSessionData().getReportFilterValues())
+#set($filters = $session.getReportFilterValues())
 <table id="reportData" cellspacing="0">
   <thead>
     <tr>

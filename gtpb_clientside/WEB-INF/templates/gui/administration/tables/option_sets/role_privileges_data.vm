@@ -33,7 +33,7 @@
   </label>
 #end
 
-#set($table=$view.getSessionData().getTable())
+#set($table=$session.getTable())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr>
     <td>&nbsp;</td>

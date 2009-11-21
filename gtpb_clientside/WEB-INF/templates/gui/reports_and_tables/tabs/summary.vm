@@ -20,7 +20,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 ## Show summary data for the report
 
 #set($tabCaption='summary')
-#set($report = $view.getSessionData().getReport())
+#set($report = $session.getReport())
 #set($reportSummary = $report.getReportSummary())
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())

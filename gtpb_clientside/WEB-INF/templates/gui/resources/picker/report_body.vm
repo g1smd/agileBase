@@ -16,16 +16,16 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 	#if(!$pickerReport)
-	  #set($pickerReport=$view.getSessionData().getCustomReport('picker_report'))
+	  #set($pickerReport=$session.getCustomReport('picker_report'))
 	  #set($reportBaseFields = $pickerReport.getReportBaseFields())
 	#end
 	
-	#set($pickerField=$view.getSessionData().getCustomField('picker_field'))
+	#set($pickerField=$session.getCustomField('picker_field'))
 	#set($keyField=$pickerField.getRelatedField())
 	#set($displayField=$pickerField.getDisplayField())
 	
 	#set($data=[])
-	#set($pickerFilters = $view.getSessionData().getCustomReportFilterValues("picker"))
+	#set($pickerFilters = $session.getCustomReportFilterValues("picker"))
 	#if(!$pickerReportRowLimit)
 		#set($pickerReportRowLimit = 50)
 	#end

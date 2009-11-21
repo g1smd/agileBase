@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-			#set($sessionTable=$view.getSessionData().getTable())
+			#set($sessionTable=$session.getTable())
 			#set($tableDataRow=$view.getTableDataRow())
 			#set($wikiTitle=$tableDataRow.get($sessionTable.getField('Wiki page [Auto]')))
 			#set($wikiSnippet = $view.getWikiPageSnippet($wikiTitle.toString(), 300))

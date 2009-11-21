@@ -27,8 +27,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
     </SCRIPT>
 #set($tabCaption='global edit')
 #set($rowCount = 0)
-#set($sessionTable=$view.getSessionData().getTable())
-#set($sessionRowId=$view.getSessionData().getRowId())
+#set($sessionTable=$session.getTable())
+#set($sessionRowId=$session.getRowId())
 #if($sessionRowId == -1)
 	  Select a record to edit data
 #else

@@ -17,8 +17,7 @@
 ##
 #set($company = $view.getLoggedInUser().getCompany())
 #set($companyName = $viewTools.cleanString($company.getCompanyName()))
-#set($sessionData = $view.getSessionData())
-#set($sessionTable = $sessionData.getTable())
+#set($sessionTable = $session.getTable())
 <request>
   <nextTemplate>gui/import/goto_wizard_start_point</nextTemplate>
   <caption>Import data</caption>

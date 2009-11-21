@@ -17,8 +17,7 @@
 ##
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
-#set($sessionData = $view.getSessionData())
-#set($table = $sessionData.getTable())
+#set($table = $session.getTable())
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->

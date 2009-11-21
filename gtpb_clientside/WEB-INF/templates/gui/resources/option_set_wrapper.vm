@@ -80,9 +80,9 @@ $viewTools.startTimer("gui/resources/option_set_wrapper")
   
   <SCRIPT language=Javascript>  
     // show the first option
-    #if ($view.getSessionData().getCustomVariable($optionset_id)=='true')
+    #if ($session.getCustomVariable($optionset_id)=='true')
 	  #set($sOid='_option')
-	  #set($option=$view.getSessionData().getCustomVariable("$optionset_id$sOid"))
+	  #set($option=$session.getCustomVariable("$optionset_id$sOid"))
 	  var oButton=document.getElementById('button_$option');
 	  if (oButton) oButton.click();
 	  else document.getElementById('navigation').getElementsByTagName('BUTTON')[0].click();
