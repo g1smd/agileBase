@@ -27,7 +27,7 @@ public interface UserReportViewStatsInfo {
 	public AppUserInfo getUser();
 	
 	/**
-	 * The number of times a user viewed a report
+	 * The number of times the user returned by getUser has viewed a report
 	 */
 	public int getReportViews();
 	

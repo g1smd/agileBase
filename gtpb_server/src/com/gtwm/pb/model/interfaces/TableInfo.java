@@ -26,16 +26,9 @@ import java.util.SortedSet;
 
 /**
  * Stores basic information about a database table and keeps a collection of
- * fields NOTE: To create a new table, use the method in DatabaseInfo rather
+ * fields. NOTE: To create a new table, use the method in DatabaseInfo rather
  * than just calling the constructor - DatabaseInfo keeps a collection of
  * tables.
- * 
- * A note on compareTo, equals and hashCode, which should be implemented by
- * concrete classes for TableInfo, ReportInfo and all field types: All of these
- * should compare on object name(s) case insensitively because this is how they
- * will often be displayed to the user. Internal names such as returned by
- * getInternalTableName are used by the database and sometimes code as
- * identifiers but are not the primary object identifiers.
  * 
  * @see com.gtwm.pb.model.interfaces.DatabaseInfo The DatabaseInfo interface
  */
@@ -108,13 +101,6 @@ public interface TableInfo extends Comparable<TableInfo> {
 	 * @see com.gtwm.pb.model.interfaces.ViewMethodsInfo#getViewableReports(TableInfo)
 	 */
 	public SortedSet<BaseReportInfo> getReports();
-
-	@Deprecated
-	/*
-	 * @deprecated getReport now gets a report by either internal name
-	 * (preferred) or name
-	 */
-	public BaseReportInfo getReportByName(String reportName) throws ObjectNotFoundException;
 
 	/**
 	 * Get a report from this table's collection

@@ -282,19 +282,6 @@ public class TableDefn implements TableInfo {
 	}
 
 	@Transient
-	public synchronized BaseReportInfo getReportByName(String reportName)
-			throws ObjectNotFoundException {
-		for (BaseReportInfo report : this.getReportsCollection()) {
-			if (report.getReportName().equals(reportName)) {
-				return report;
-			}
-		}
-		// if we've got to here the report hasn't been found
-		throw new ObjectNotFoundException("The report with name '" + reportName
-				+ "' doesn't exist in table " + this.tableName);
-	}
-
-	@Transient
 	public synchronized BaseReportInfo getReport(String reportID)
 			throws ObjectNotFoundException {
 		Set<BaseReportInfo> reports = this.getReportsCollection();
@@ -306,7 +293,7 @@ public class TableDefn implements TableInfo {
 		// Report with that internal name doesn't exist
 		// Try treating it as a public name
 		for (BaseReportInfo report : reports) {
-			if (report.getReportName().equals(reportID)) {
+			if (report.getReportName().equalsIgnoreCase(reportID)) {
 				return report;
 			}
 		}

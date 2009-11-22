@@ -345,7 +345,7 @@ public class ServletDataMethods {
 		if (internalReportName != null) {
 			report = parentTable.getReport(internalReportName);
 		} else {
-			report = parentTable.getReportByName(reportName);
+			report = parentTable.getReport(reportName);
 		}
 		sessionData.setCustomReport(key, report);
 	}

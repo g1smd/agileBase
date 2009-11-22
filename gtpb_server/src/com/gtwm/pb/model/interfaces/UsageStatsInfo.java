@@ -34,8 +34,7 @@ import com.gtwm.pb.util.CantDoThatException;
 public interface UsageStatsInfo {
 
 	/**
-	 * Monthly charge is calculated as £10/table for the first ten tables then
-	 * £5/table for any more
+	 * Return the hosted cost of portalBase, based on the number of tables present
 	 */
 	public int getMonthlyTableCost();
 
