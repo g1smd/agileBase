@@ -94,10 +94,6 @@ public interface SimpleReportInfo extends BaseReportInfo {
 	public void removeJoin(JoinClauseInfo join) throws ObjectNotFoundException,
 			CantDoThatException, CodingErrorException;
 
-	/**
-	 * 
-	 * @param join
-	 */
 	public void addJoin(JoinClauseInfo join);
 
 	/**

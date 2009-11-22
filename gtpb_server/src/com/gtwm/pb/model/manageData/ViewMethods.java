@@ -180,9 +180,6 @@ public class ViewMethods implements ViewMethodsInfo {
 
 	/**
 	 * Return all report in a module that the logged in user can see
-	 * 
-	 * @param module
-	 * @return
 	 */
 	private SortedSet<BaseReportInfo> getReportsInModule(ModuleInfo module)
 			throws CodingErrorException {
@@ -198,9 +195,6 @@ public class ViewMethods implements ViewMethodsInfo {
 		return reportsInModule;
 	}
 
-	/**
-	 * Return usage stats for the current company
-	 */
 	public UsageStatsInfo getUsageStats() throws DisallowedException, ObjectNotFoundException,
 			SQLException {
 		return new UsageStats(this.request, this.databaseDefn);
@@ -267,10 +261,6 @@ public class ViewMethods implements ViewMethodsInfo {
 		AppUserInfo loggedInUser = this.getLoggedInUser();
 		CompanyInfo company = loggedInUser.getCompany();
 		return this.databaseDefn.getWikiManagement(company).getWikiUrl(wikiPageName, edit);
-	}
-
-	public String getRandomString() {
-		return new RandomString().toString();
 	}
 
 	public boolean usesToolbarPlugin() {

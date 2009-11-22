@@ -123,7 +123,7 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 		return this.getAggregateFunction().equals(AggregateFunction.COUNT);
 	}
 
-	public String yAxisLabel() {
+	private String yAxisLabel() {
 		return this.getAggregateFunction().getLabel();
 	}
 

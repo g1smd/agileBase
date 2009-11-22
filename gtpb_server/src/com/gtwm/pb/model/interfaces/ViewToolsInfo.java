@@ -69,8 +69,11 @@ public interface ViewToolsInfo {
 	 * instead.
 	 * 
 	 * In the template, you would use something like this to get the current
-	 * year for example: #set($calendar = $vewTools.getCalendar()) #set($year =
-	 * $calendar.get($viewTools.getCalendarConstant("YEAR")))
+	 * year for example:
+	 * 
+	 * #set($calendar = $viewTools.getCalendar())
+	 * 
+	 * #set($year = $calendar.get($viewTools.getCalendarConstant("YEAR")))
 	 * 
 	 * @param constantName
 	 *            String representation of one of the calendar constants, e.g.
@@ -84,8 +87,8 @@ public interface ViewToolsInfo {
 	public int getCalendarConstant(String constantName) throws CantDoThatException;
 
 	/**
-	 * e.g. given 01792 367514, return Swansea Return an empty string if the
-	 * area can't be found
+	 * e.g. given 01792 367514, return Swansea. Return an empty string if the
+	 * area can't be found. Currently works for numbers in the UK.
 	 */
 	public String getAreaForPhoneNumber(String phoneNumber);
 
@@ -121,8 +124,7 @@ public interface ViewToolsInfo {
 	 * purposes. If a string is passed, then that string will be logged, if
 	 * another object is passed then that object's toString() will be logged
 	 * 
-	 * The log file is currently located at [tomcat
-	 * root]/logs/portalBase.[today's date]
+	 * The log file is located at [tomcat root]/logs/catalina.out
 	 */
 	public void log(Object itemToLog);
 
@@ -134,6 +136,8 @@ public interface ViewToolsInfo {
 	/**
 	 * Stops the timer specified and logs the time spent since startTimer was
 	 * called
+	 * 
+	 * @see log(Object)
 	 */
 	public void stopTimer(String timerName);
 
@@ -196,7 +200,9 @@ public interface ViewToolsInfo {
 	public Double roundTo(int decimalPlaces, double number);
 
 	/**
-	 * Useful for browser detect template code.
+	 * Useful for browser detect template code. NB JavaScript methods are
+	 * generally preferred for detection of specific abilities but this method
+	 * can be used if the detection needs to be done during template rendering
 	 */
 	public Browsers getBrowser();
 
@@ -227,6 +233,11 @@ public interface ViewToolsInfo {
 	public boolean isRunningLocally();
 
 	/**
+	 * Return a random string, typically for use as an ID
+	 */
+	public String getRandomString();
+
+	/**
 	 * Return an empty map of BaseField to String objects - useful for creating
 	 * report filters in templates
 	 * 
@@ -250,7 +261,6 @@ public interface ViewToolsInfo {
 	public Map<BaseField, String> getNewFilterMap();
 
 	/**
-	 * 
 	 * Return an empty map of String to Object
 	 */
 	public Map<String, Object> getNewStringObjectMap();

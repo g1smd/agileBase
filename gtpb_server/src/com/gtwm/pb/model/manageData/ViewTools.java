@@ -39,6 +39,8 @@ import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageData.fields.FileValueDefn;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AppProperties;
+import com.gtwm.pb.util.RandomString;
+
 import org.apache.velocity.tools.generic.MathTool;
 import org.grlea.log.SimpleLogger;
 import com.ibm.icu.text.RuleBasedNumberFormat;
@@ -1051,6 +1053,10 @@ public class ViewTools implements ViewToolsInfo {
 
 	public String getContentType() {
 		return this.response.getContentType();
+	}
+
+	public String getRandomString() {
+		return new RandomString().toString();
 	}
 
 	public String getAppUrl() {

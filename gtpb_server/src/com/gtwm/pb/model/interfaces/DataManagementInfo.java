@@ -77,10 +77,13 @@ public interface DataManagementInfo {
 	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> fields, int rowLimit)
 			throws SQLException;
 
+	/**
+	 * Return true if the record with the given primary key is visible in the report
+	 */
 	public boolean isRowIdInReport(BaseReportInfo reportDefn, int rowId) throws SQLException;
 
 	/**
-	 * Return the full path of the root of the web application
+	 * Return the full path of the root of the web application on the server
 	 */
 	public String getWebAppRoot();
 
@@ -101,8 +104,6 @@ public interface DataManagementInfo {
 	 *            Report to show summary for
 	 * @param company
 	 *            Used to inform per-company caching
-	 * @return Tabular data in the summary, for display by the templating engine
-	 * @throws SQLException
 	 */
 	public ReportSummaryDataInfo getReportSummaryData(CompanyInfo company,
 			BaseReportInfo reportDefn, Map<BaseField, String> reportFilterValues)
@@ -188,8 +189,8 @@ public interface DataManagementInfo {
 	 * on.
 	 * 
 	 * NB This can be quite slow for a large number of rows. To speed things up,
-	 * pass in filters which reduce the number of rows or use lockTableRecords
-	 * instead
+	 * pass in filters which reduce the number of rows or use lockAllTableRecords
+	 * instead if appropriate which is a lot faster
 	 */
 	public void lockReportRecords(HttpServletRequest request, SessionDataInfo sessionData)
 			throws ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException;

@@ -52,7 +52,6 @@ public interface ViewMethodsInfo {
 
 	/**
 	 * Return company usage statistics
-	 * 
 	 */
 	public UsageStatsInfo getUsageStats() throws DisallowedException, ObjectNotFoundException,
 			SQLException;

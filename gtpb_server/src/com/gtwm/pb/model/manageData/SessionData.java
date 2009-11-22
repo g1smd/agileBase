@@ -106,7 +106,7 @@ public class SessionData implements SessionDataInfo {
             this.currentTableReports.put(table, table.getDefaultReport());
         }
         // If no row ID exists, set the record to that identified by the first line of the current report
-        autoSetRowId();
+        this.autoSetRowId();
     }
 
     public synchronized void setReport(BaseReportInfo report) throws SQLException {
@@ -116,7 +116,7 @@ public class SessionData implements SessionDataInfo {
             this.table = report.getParentTable();
             this.currentTableReports.put(report.getParentTable(), report);
             // If no row ID exists, set the record to that identified by the first line of the current report
-            autoSetRowId();
+            this.autoSetRowId();
         }
     }
 
@@ -137,7 +137,7 @@ public class SessionData implements SessionDataInfo {
                 // If resultSet.next() is false, there is no data in the report
                 if (resultSet.next()) {
                     int rowId = resultSet.getInt(1);
-                    setRowId(rowId);
+                    this.setRowId(rowId);
                 }
                 resultSet.close();
                 statement.close();

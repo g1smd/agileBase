@@ -25,6 +25,7 @@ import com.gtwm.pb.util.MissingParametersException;
  * carried out before returning an AppUserInfo object
  */
 public interface AppUserInfo {
+	
 	public static final String USERNAME = "userName";
 
 	public static final String PASSWORD = "password";

@@ -58,6 +58,4 @@ public interface ReportSummaryAggregateInfo {
 	 * Used when comparing objects for equality
 	 */
 	public String getInternalAggregateName();
-
-	public String yAxisLabel();
 }

@@ -24,7 +24,7 @@ import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
 /**
- * The application uses companies to separate data, i.e. each company can only see their own data, users etc.
+ * portalBase uses companies to separate data, i.e. each company can only see their own data, users etc.
  * 
  * Users and roles will belong to companies. By extension, tables will also belong to companies since in order
  * to use a table at all, a privilege must exist on it and privileges apply to users and roles

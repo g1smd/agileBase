@@ -561,8 +561,6 @@ public class ReportData implements ReportDataInfo {
 	private String preprocessDateFilter(String filterValue) throws CantDoThatException {
 		String processedFilterValue = filterValue;
 		String[] tokens = filterValue.split("\\sand\\s|\\sor\\s");
-		// Findbugs found this unused variable
-		// Options options = new Options(false);
 		for (String token : tokens) {
 			if (!(token.startsWith(">") || token.startsWith("<"))) {
 				Span timespan = this.parseTimestamp(token);
@@ -582,7 +580,7 @@ public class ReportData implements ReportDataInfo {
 		Set<BaseField> reportBaseFields = this.report.getReportBaseFields();
 		List<ReportQuickFilterInfo> filtersUsed = new LinkedList<ReportQuickFilterInfo>();
 		for (Map.Entry<BaseField, String> filterValueEntry : filterValues.entrySet()) {
-			// generate the filter for a field
+			// Generate the filter for a field
 			BaseField filterField = filterValueEntry.getKey();
 			// Only apply filter if the field is actually in the report
 			if (!reportBaseFields.contains(filterField)) {
@@ -971,8 +969,7 @@ public class ReportData implements ReportDataInfo {
 		// loading).
 		//
 		// Also, if a report has a lot of rows, can cache it for longer again
-		// because
-		// the data is less likely to change
+		// because the data is less likely to change
 		long cacheForMillis = this.millisecsTakenToGenerateStats * 600;
 		int rowNumFactor = this.report.getRowCount() / 1000;
 		if (rowNumFactor > 1) {

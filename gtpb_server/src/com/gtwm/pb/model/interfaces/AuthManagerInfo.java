@@ -37,6 +37,7 @@ import com.gtwm.pb.util.CantDoThatException;
  * carrying out requested actions
  */
 public interface AuthManagerInfo {
+	
 	/**
 	 * @return The application's authenticator object, used to check privileges
 	 *         of the logged in user

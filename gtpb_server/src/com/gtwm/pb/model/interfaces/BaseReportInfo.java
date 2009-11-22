@@ -37,7 +37,6 @@ import com.gtwm.pb.util.ObjectNotFoundException;
  */
 public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 
-	// public void addSort(BaseField fieldToSortBy, boolean sortAscending);
 	/**
 	 * @return The SQL code needed to generate a database view to return report
 	 *         data, given the current report properties - fields, filters etc.
@@ -45,7 +44,6 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	public String getSQLForDetail() throws CantDoThatException, CodingErrorException,
 			ObjectNotFoundException;
 
-	// public Set getSQLForSummary();
 	public void setReportName(String reportName);
 
 	public void setReportDescription(String reportDesc);
