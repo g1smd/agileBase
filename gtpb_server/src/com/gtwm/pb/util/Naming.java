@@ -35,7 +35,7 @@ public class Naming {
 	 * Replace invalid characters in XML, i.e. angle brackets, ampersands and
 	 * double quotes with their HTML codes
 	 * 
-	 * NB: Sure there is a 3rd party utility e.g. an apache commons one to do
+	 * TODO: Sure there is a 3rd party utility e.g. an apache commons one to do
 	 * this better
 	 */
 	public static String makeValidXML(String xmlValue) {
@@ -47,21 +47,6 @@ public class Naming {
 		returnValue = returnValue.replaceAll("&", "&amp;");
 		returnValue = returnValue.replaceAll("\"", "&quot;");
 		return returnValue;
-	}
-
-	/**
-	 * Tells you whether the string is valid for a name for a schema object,
-	 * e.g. a user, company, table etc. Checks for too long/short strings, and
-	 * presence of control characters
-	 */
-	public static boolean isSchemaNameValid(String candidateName) {
-		if (candidateName.length() == 0 || candidateName.length() > 256) {
-			return false;
-		}
-		if (candidateName.matches("[\\t\\n\\r\\f\\a\\a]")) {
-			return false;
-		}
-		return true;
 	}
 
 	/**

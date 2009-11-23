@@ -217,9 +217,10 @@
 			<div id="intro" class="wrapper">      
 					<div class="content">
 						<div id="bubble">
-							<a href="http://2009.pgday.eu/"><img src="/portalBase/website/images/pgdayeu09.small_banner.en.png" border="0" style="float:right"></a>
-							<b>See our talk 'agile database development'</b>, 7th Nov, 1:10pm at the European PostgreSQL database conference, Paris.
-							<br><br><small>We're proud to be Bronze Partner of European PGDay 2009</small>
+							<h1>industrial strength platform for business applications</h1>
+							use to rapidly prototype and develop data entry and 
+							reporting applications that work over the 
+							internet or a local network 
 						</div>
 				<div id="login">
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
@@ -251,13 +252,13 @@
 						</div>
 						<div id="main" class="detail">
 							<div class="divider">
-								<h1>Industrial strength platform for business applications</h1>
+								<h1>How do I use it?</h1>
 								<p>Use portalBase to create database web applications. It's most
-								suited to those who understand in depth both technology and the business needs.
-								People who are best placed to make use of an enterprise database flexibility and power,
-								while appreciating the clear and pleasant user interface of a well designed web application.</p>
+								suited to analysts who understand in depth both technology and the business needs.</p>
 								<p>Our vision was to make a product that allows business analysts
 								to create lean, agile, Just-In-Time (JIT) back offices.</p>
+								Typically, rapidly changing environments are a growth medium for portalBase, 
+								where scalability goes hand in hand with the need for a rapid build / alter cycle.</p>
 							</div>
 							<div>
 								<h1>Why do I use it?</h1>
@@ -288,7 +289,7 @@
 									</tr>
 								  </table>								
 								</p>
-								<p>As a cutting edge lean provider, we believe an agile platform can enable companies to build what they need, 
+								<p>As a cutting edge lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 
 								at a pace to match a company's evolving learning, knowledge and understanding.</p>
 							</div>
 						</div>   <!-- end of main --> 
