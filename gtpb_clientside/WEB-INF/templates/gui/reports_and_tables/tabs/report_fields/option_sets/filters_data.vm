@@ -42,7 +42,7 @@
 <FORM action="AppController.servlet" target="pane_2" method=post id=newfilter>
 
 ##defined in ../../report_fields.vm
-##set($report = $session.getReport())
+##set($report = $sessionData.getReport())
 
 <table id=reportData cellspacing="0">
 	<THEAD >

@@ -17,7 +17,7 @@
 ##
 #parse("gui/administration/users/option_sets/radio_user_macro.vm")
 
-#set($table=$session.getTable())
+#set($table=$sessionData.getTable())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr>
     <td>&nbsp;</td>

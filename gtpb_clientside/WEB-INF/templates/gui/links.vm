@@ -15,11 +15,11 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($session_report = $session.getReport())##
-#set($session_table = $session.getTable())##
+#set($session_report = $sessionData.getReport())##
+#set($session_table = $sessionData.getTable())##
 #set($session_table_id = $session_table.getInternalTableName())##
 #set($session_report_id = $session_report.getInternalReportName())##
-#set($session_row_id = $session.getRowId())##
+#set($session_row_id = $sessionData.getRowId())##
 #set($company = $view.getLoggedInUser().getCompany())##
 #set($report_url = "${viewTools.getAppUrl()}?return=gui/display_application&set_report=$session_report_id&set_row_id=$session_row_id")##
 #set($report_url_escaped = $viewTools.escapeForURL($report_url))##

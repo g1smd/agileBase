@@ -172,7 +172,7 @@
 					  #if($view.loggedInUserAllowedTo("ADMINISTRATE"))
 						#parse('gui/toolbar/buttons/info.vm')
 					  #end
-			          #set($sessionContext = $session.getContext().toString())
+			          #set($sessionContext = $sessionData.getContext().toString())
 			          #if($sessionContext == "SYSADMIN")
 			            #parse('gui/toolbar/buttons/dev_tools.vm')
 			          #end

@@ -20,10 +20,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 
 ## view the data in the session table, plus related data
 #set($tabCaption='view')
-#set($sessionTable=$session.getTable())
-#set($sessionReport=$session.getReport())
+#set($sessionTable=$sessionData.getTable())
+#set($sessionReport=$sessionData.getReport())
 #if(!$sessionRowId)
-  #set($sessionRowId=$session.getRowId())
+  #set($sessionRowId=$sessionData.getRowId())
 #end
 #if($sessionRowId == -1)
 	<div class="warningmessage">

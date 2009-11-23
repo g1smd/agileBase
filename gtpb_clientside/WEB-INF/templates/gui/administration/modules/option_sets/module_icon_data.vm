@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($module = $session.getModule())
+#set($module = $sessionData.getModule())
 #set($currentIconPath = $module.getIconPath())
 <style>
   div#moduleIconPicker table.iconPickerTable {

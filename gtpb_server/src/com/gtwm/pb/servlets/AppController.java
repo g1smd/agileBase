@@ -790,18 +790,20 @@ public class AppController extends VelocityViewServlet {
 			HttpSession session, SessionDataInfo sessionData, Exception exceptionCaught,
 			List<FileItem> multipartItems) throws ServletException {
 		try {
+			boolean sessionValid = request.isRequestedSessionIdValid();
+			// Check user's logged in otherwise an exception will be thrown
+			if (sessionValid) {
+				// Save any changes to the session data
+				session.setAttribute("com.gtwm.pb.servlets.sessionData", sessionData);
+			}
 			ViewMethodsInfo viewMethods = new ViewMethods(request, this.databaseDefn);
 			if (exceptionCaught != null) {
 				viewMethods.setException(exceptionCaught);
 			}
 			context.put("view", viewMethods);
-			// Check user's logged in otherwise an exception will be thrown
-			if (request.isRequestedSessionIdValid()) {
-				// Save any changes to the session data
-				session.setAttribute("com.gtwm.pb.servlets.sessionData", sessionData);
-				context.put("session", sessionData);
+			if (sessionValid) {
+				context.put("sessionData", sessionData);
 			}
-			// Also some helper tools
 			context.put("viewTools", new ViewTools(request, response, this.webAppRoot));
 		} catch (ObjectNotFoundException onfex) {
 			logException(onfex, request, "Error creating view methods object");
@@ -850,7 +852,7 @@ public class AppController extends VelocityViewServlet {
 			try {
 				// Make the exception that just occurred accessible for
 				// reporting
-				ViewMethodsInfo viewMethods = (ViewMethodsInfo) context.get("viewMethods");
+				ViewMethodsInfo viewMethods = (ViewMethodsInfo) context.get("view");
 				viewMethods.setException(ex);
 				context.put("view", viewMethods);
 				Template errorTemplate = getTemplate(AppProperties.errorTemplateLocation);

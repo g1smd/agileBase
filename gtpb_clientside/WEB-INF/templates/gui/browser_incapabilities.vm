@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($browser_name=$viewTools.getBrowser())
-#set($mobile_device = $session.getCustomBoolean("mobile_device"))
+#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 #if($mobile_device)
   #if($browser_name=='Safari on Symbian mobile') ## e.g. Nokia E-series
     #set($browser_cannot_expand_p1=true)

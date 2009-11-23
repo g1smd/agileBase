@@ -21,11 +21,11 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     #parse('gui/display_error.vm')
-    #set($report = $session.getReport())
+    #set($report = $sessionData.getReport())
     #if($report.getModule())
       #set($module=$report.getModule())
     #else
-      #set($module=$session.getTable().getTableName())
+      #set($module=$sessionData.getTable().getTableName())
     #end
     <title>$module - $report</title>      
  	<script src="resources/jquery.js" language="Javascript"></script>

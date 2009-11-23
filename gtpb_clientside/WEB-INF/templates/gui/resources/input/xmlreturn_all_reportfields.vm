@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <request>
-  #set($internalReportName = $session.getCustomVariable("parentreport"))
+  #set($internalReportName = $sessionData.getCustomVariable("parentreport"))
   #set($table = $view.findTableContainingReport($internalReportName))
   #set($report = $table.getReport($internalReportName))
   ## send the default report when requiring the fields of a table

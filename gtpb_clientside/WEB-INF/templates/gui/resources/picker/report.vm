@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #parse('gui/browser_incapabilities.vm')
-#set($pickerReport=$session.getCustomReport('picker_report'))
+#set($pickerReport=$sessionData.getCustomReport('picker_report'))
 #set($fields=[])
 	#set($reportBaseFields = $pickerReport.getReportBaseFields())
 	#foreach ($field in $reportBaseFields)
@@ -25,7 +25,7 @@
 		#end ## uncomment to remove to show primary key field
 	#end
 
-#set($filters = $session.getCustomReportFilterValues("picker"))
+#set($filters = $sessionData.getCustomReportFilterValues("picker"))
 <table id="reportData" cellspacing="0">
   <thead>
     <tr>

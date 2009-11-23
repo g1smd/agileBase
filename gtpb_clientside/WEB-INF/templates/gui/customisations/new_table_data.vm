@@ -1,5 +1,5 @@
 #set($SQ="'")
-#set($sessionTable=$session.getTable())
+#set($sessionTable=$sessionData.getTable())
 #set($updateAsType = false)
 #set($customAction = true)
 
@@ -49,7 +49,7 @@
 ## If we come across a relation, add it's value to the wizard caption
 #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
   #set($relatedField=$field.getRelatedField())##
-  #set($fieldValue="$session.getRowId($relatedField.getTableContainingField())")##
+  #set($fieldValue="$sessionData.getRowId($relatedField.getTableContainingField())")##
   #set($fieldDisplayValue = $field.getDisplayValue($fieldValue))##
   #if($fieldDisplayValue != "")
     #set($app_action_caption = "$app_action_caption for ${SQ}$fieldDisplayValue${SQ}")

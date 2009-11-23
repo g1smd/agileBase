@@ -28,8 +28,8 @@
 	  <script src="resources/jquery.hoverIntent.js" type="text/javascript"></script> <!-- for cluetip, optional -->
 	  <script src="resources/jquery.cluetip.js" type="text/javascript"></script> 
 	#end
-	#set($sessionReport = $session.getReport())
-	#set($sessionTable = $session.getTable())
+	#set($sessionReport = $sessionData.getReport())
+	#set($sessionTable = $sessionData.getTable())
     <title>$sessionReport.getModule() - $sessionReport</title>
     <style>
 	      @import url("styles/report.css");
@@ -115,7 +115,7 @@
     <SCRIPT language=Javascript src="resources/wait/setFilter.js"></SCRIPT>
     <SCRIPT language=Javascript>
       #set($numRows = $data.size())
-      #set($reportRowLimit = $session.getReportRowLimit())
+      #set($reportRowLimit = $sessionData.getReportRowLimit())
 	  #if(!$mobile_device)
         #if($numRows < $reportRowLimit)
           parent.pane_1.fSetCurrentOption('$pane1_id','$numRows');##
@@ -294,7 +294,7 @@
 	  
 	  function loadPane3() {
 		  var url = 'AppController.servlet?return=$return';
-		  #set($rowId = $session.getRowId())
+		  #set($rowId = $sessionData.getRowId())
 		  #if($rowId)
 		    var rowId = $rowId;
 		  #else
@@ -334,8 +334,8 @@
 	#stop
   #end
   
-  #set($filters = $session.getReportFilterValues())
-  #if(($session.getCustomString('filtering_on')=='true') || $mobile_device)
+  #set($filters = $sessionData.getReportFilterValues())
+  #if(($sessionData.getCustomString('filtering_on')=='true') || $mobile_device)
     #set($filtersShouldBeShown='true')
   #else
     #set($filtersShouldBeShown='false')

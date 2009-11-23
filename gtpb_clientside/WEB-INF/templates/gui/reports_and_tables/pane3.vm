@@ -17,9 +17,9 @@
 ##
 $viewTools.startTimer("gui/reports_and_tables/pane3")
 
-#set($mobile_device = $session.getCustomBoolean("mobile_device"))
+#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 
-#if ($session.getTable().getDefaultReport().equals($session.getReport()))
+#if ($sessionData.getTable().getDefaultReport().equals($sessionData.getReport()))
 	## if the current report is the default report, edit the table
 	#parse('gui/reports_and_tables/default_pane3.vm')
 #else

@@ -16,10 +16,10 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## Used to get the display value of a relation - this is the value that should be set on the screen when the picker returns, having picked a row
-#set($table = $session.getTable())
+#set($table = $sessionData.getTable())
 ## The relation field
-#set($pickerField = $session.getCustomField('picker_field'))
-#set($pickerValue = $session.getCustomString('picker_value'))
+#set($pickerField = $sessionData.getCustomField('picker_field'))
+#set($pickerValue = $sessionData.getCustomString('picker_value'))
 
 ##TODO: when relating to another relation. this doesn't work
 ##Check it out

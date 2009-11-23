@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($wikiPageName = $session.getCustomString("wikipagename"))
+#set($wikiPageName = $sessionData.getCustomString("wikipagename"))
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="chrome=1">

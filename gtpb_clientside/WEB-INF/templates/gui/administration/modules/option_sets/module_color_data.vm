@@ -127,7 +127,7 @@
 		    $(oColorDiv).addClass('colorPickerTable');
 		    ##oColorDiv.addEventListener('click',fDivClick,false);
 		    $(oColorDiv).click(fDivClick);
-		    #set($module = $session.getModule())
+		    #set($module = $sessionData.getModule())
 		    #set($currentColor=$module.getColour())
 		    #set($innerHTML='<table class="colorPickerTable" border="0" cellpadding="0" cellspacing="5"><tr>')
 		    #set($cellCount=0)

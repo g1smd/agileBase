@@ -15,11 +15,11 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($report = $session.getReport())
+#set($report = $sessionData.getReport())
 #if($report.getModule())
   #set($module=$report.getModule())
 #else
-  #set($module=$session.getTable().getTableName())
+  #set($module=$sessionData.getTable().getTableName())
 #end
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
@@ -121,7 +121,7 @@
           
           *#
 		  
-          #if($view.loggedInUserAllowedTo('MANAGE_TABLE',$session.getTable())) ## the user has permission to lock records
+          #if($view.loggedInUserAllowedTo('MANAGE_TABLE',$sessionData.getTable())) ## the user has permission to lock records
             if(oIframe.contentWindow.isDraft) { //show the wizard to see if any records should be locked
               document.body.removeAttribute('printStatusSet'); // the dialog might change the print status
               fShowModalDialog('gui/printouts/pane2_printout_wizard', 'Print Wizard', fDoPrint, 'ok cancel', 'width=650px; height=500px');

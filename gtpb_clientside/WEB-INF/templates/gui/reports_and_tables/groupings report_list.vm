@@ -18,10 +18,10 @@
 #set($SQ = "'")
 
 ## a list of reports by grouping (where a grouping has been defined) for pane1
-#set($sessionReport = $session.getReport())
+#set($sessionReport = $sessionData.getReport())
 #set($sessionReportGrouping = $sessionReport.getReportGrouping())
-#set($sessionTable = $session.getTable())
-#set($sessionContext=$session.getContext().toString())
+#set($sessionTable = $sessionData.getTable())
+#set($sessionContext=$sessionData.getContext().toString())
 
 ## include custom per-company actions
 #set($company = $view.getLoggedInUser().getCompany())

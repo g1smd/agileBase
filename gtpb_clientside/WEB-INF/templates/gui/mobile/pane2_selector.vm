@@ -16,10 +16,10 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## What content to display in pane 2? Report, summary etc.
-#set($mobile_device = $session.getCustomBoolean("mobile_device"))
-#set($report = $session.getReport())
+#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
+#set($report = $sessionData.getReport())
 #set($sessionReport = $report)
-#set($mobile_pane2_selection = $session.getCustomString("mobile_pane2_selection"))
+#set($mobile_pane2_selection = $sessionData.getCustomString("mobile_pane2_selection"))
 #parse('gui/browser_incapabilities.vm')
 #if($mobile_pane2_selection == "report")
   #parse("gui/reports_and_tables/report_data.vm")

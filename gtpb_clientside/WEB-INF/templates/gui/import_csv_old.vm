@@ -31,8 +31,8 @@
 #parse("gui/display_error.vm")
 </head>
 <body>
-#if($session.hasTable())
-#set($sessionTable = $session.getTable())
+#if($sessionData.hasTable())
+#set($sessionTable = $sessionData.getTable())
 <h2>Import to '$sessionTable'</h2>
 #end
 <form method="post" enctype="multipart/form-data" action="AppController.servlet">
@@ -43,7 +43,7 @@
   <td>File to import</td>
   <td><input type="file" name="importfile"></td>
 </tr>
-#if(!$session.hasTable())
+#if(!$sessionData.hasTable())
 <tr class="rowa">
   <td>Table to import into</td>
   <td>

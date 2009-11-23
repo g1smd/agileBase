@@ -1,4 +1,4 @@
-#set($report = $session.getCustomReport("dashboard_report"))
+#set($report = $sessionData.getCustomReport("dashboard_report"))
 #set($module = $report.getModule())
 <img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/>
 $report<p>	

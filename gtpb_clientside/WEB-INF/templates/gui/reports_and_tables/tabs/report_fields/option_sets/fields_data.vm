@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## edit the fields in a report
-#set($sessionContext = $session.getContext().toString())
+#set($sessionContext = $sessionData.getContext().toString())
 
 <style>
 	  @import url("styles/report.css");
@@ -55,7 +55,7 @@
 <form action="AppController.servlet" target="pane_2" method=post id=newfield>
 
   ##defined in ../../report_fields.vm
-  ##set($report = $session.getReport())
+  ##set($report = $sessionData.getReport())
   #set($sorts = $report.getSorts())
   <table id=reportData cellspacing="0" class="draggable">
 	    <thead>

@@ -15,8 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($temp = $session.setReportRowLimit(-1))
-#set($sessionReport = $session.getReport())
+#set($temp = $sessionData.setReportRowLimit(-1))
+#set($sessionReport = $sessionData.getReport())
 ## Column headings
 #foreach ($field in $sessionReport.getReportFields())
 $viewTools.escapeForCSV($field.toString().toLowerCase()),## no linebreak

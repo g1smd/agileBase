@@ -20,7 +20,7 @@
 #set($pane1_id='administrationusers')
 #set($isNotTable=true)
 ##test to see whether a record has previously been selected and is stored in the session
-#set($selection=$session.getUser())
+#set($selection=$sessionData.getUser())
 
 #set($fields=[['username','username'],['forename','forename'],['surname','surname']])
 #set($data=[])

@@ -21,12 +21,12 @@
 
 ## data from a report for pane2
 #set($resource_folder='tables')
-#set($sessionContext = $session.getContext().toString())
+#set($sessionContext = $sessionData.getContext().toString())
 ##Added by Oliver to stop exception on empty report
-#if($session.hasTable())
-	  #set($sessionReport=$session.getReport())
-	  #set($sessionTable=$session.getTable())
-	  ###if ($session.getTable().getDefaultReport().equals($sessionReport))
+#if($sessionData.hasTable())
+	  #set($sessionReport=$sessionData.getReport())
+	  #set($sessionTable=$sessionData.getTable())
+	  ###if ($sessionData.getTable().getDefaultReport().equals($sessionReport))
 	    ##	#set($return='gui/reports_and_tables/default_pane3')
 	  ###else
 	    ##	#set($return='gui/reports_and_tables/report_pane3')
@@ -34,8 +34,8 @@
 	  #set($return='gui/reports_and_tables/pane3')
 	  #set($pane1_id="$sessionTable.getInternalTableName()$sessionReport.getInternalReportName()")
 	  ##test to see whether a record has previously been selected and is stored in the session
-	  #if ($session.getRowId())
-		    #set($selection=$session.getRowId())
+	  #if ($sessionData.getRowId())
+		    #set($selection=$sessionData.getRowId())
 	  #end
 	  #set($fields=[])
 	  #set($reportBaseFields = $sessionReport.getReportBaseFields())

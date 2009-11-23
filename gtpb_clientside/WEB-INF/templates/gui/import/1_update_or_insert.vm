@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($table = $session.getTable())
+#set($table = $sessionData.getTable())
 <request>
   <nextTemplate>gui/import/2_import_details</nextTemplate>
   <caption>Import into $table</caption>

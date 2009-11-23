@@ -32,7 +32,7 @@
 	<script language=JavaScript src="resources/wait/editBuffer.js"></script>
 	#end
  
-<title>$session.getTable() data</title>
+<title>$sessionData.getTable() data</title>
     <style type="text/css">
     @import url("styles/report.css");
     @import url('resources/tabs/tabs.css');	
@@ -64,7 +64,7 @@
 		<script language=Javascript src="resources/wait/request.js"></script> 
 		<SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
 		<script language=Javascript src="resources/wait/setFilter.js"></script>
-        #if($view.loggedInUserAllowedTo("MANAGE_TABLE",$session.getTable()))
+        #if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
       	<script type="text/javascript" src="resources/jquery.tablednd.js"></script>
         #end
         <script type="text/javascript" src="resources/tabs/tabs.js"></script>
@@ -230,7 +230,7 @@
 	#else
 		## Create tab interface
 
-		#set($currentTab = $session.getCustomString('report_tabindex'))
+		#set($currentTab = $sessionData.getCustomString('report_tabindex'))
 		#if(!$currentTab)
 			#set($currentTab = "1")
 		#end		

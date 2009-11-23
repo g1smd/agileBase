@@ -29,7 +29,7 @@
     background-color:#ECF0FF;
   }
 </style>
-#set($report = $session.getReport())
+#set($report = $sessionData.getReport())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr>
     <td>Name:</td>

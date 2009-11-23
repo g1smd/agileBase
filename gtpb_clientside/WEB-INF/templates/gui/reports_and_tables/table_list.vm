@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## a list of all the reports and tables for pane1
-#set($sessionContext=$session.getContext().toString())
+#set($sessionContext=$sessionData.getContext().toString())
 
 ## Only show the table list if the user has manage privileges on at least one table
 ## or user is an administrator
@@ -51,7 +51,7 @@
           #end
         #end
         ###set($expanded=false)
-        ###if($table.equals($session.getTable()))
+        ###if($table.equals($sessionData.getTable()))
         ##  #set($expanded=true)
         ###end    
     

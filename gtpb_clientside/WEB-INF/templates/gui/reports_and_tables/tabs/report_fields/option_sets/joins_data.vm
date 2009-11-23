@@ -51,7 +51,7 @@
 <input type="hidden" name="add_join_to_report" value="true" />
 
 ##defined in ../../report_fields.vm
-##set($report = $session.getReport())
+##set($report = $sessionData.getReport())
 
 <table id=reportData cellspacing="0">
 	<THEAD >

@@ -74,7 +74,6 @@ import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.ExtraAction;
-import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
 import org.grlea.log.SimpleLogger;

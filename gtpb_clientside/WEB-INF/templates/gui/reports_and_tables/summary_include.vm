@@ -15,8 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($table = $session.getTable())
-#set($report = $session.getReport())
+#set($table = $sessionData.getTable())
+#set($report = $sessionData.getReport())
 <h2>Summary for <a target="portalBase" href="${viewTools.getAppUrl()}?return=gui/display_application&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()">$report</a>
 </h2>
 

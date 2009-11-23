@@ -22,7 +22,7 @@
     background-color:#ECF0FF;
   }
 </style>
-#set($table = $session.getTable())
+#set($table = $sessionData.getTable())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr valign="top">
     <td class="table_details">

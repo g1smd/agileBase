@@ -1,6 +1,6 @@
 #set($user = $view.getLoggedInUser())
 #set($company = $user.getCompany())
-#set($table=$session.getTable())
+#set($table=$sessionData.getTable())
 #set($report = $table.getDefaultReport())
 #set($reportDataRows = $view.getReportDataRows($report))
 

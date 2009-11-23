@@ -33,7 +33,7 @@
   </label>
 #end
 
-#set($table=$session.getTable())
+#set($table=$sessionData.getTable())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr>
     <td>&nbsp;</td>
