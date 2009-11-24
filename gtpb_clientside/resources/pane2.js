@@ -21,6 +21,17 @@
 // null will always force a single tab refresh only
 // Any other number will refresh if there are that many tabs in pane 3, otherwise reload
 function loadIntoPane3(url, rowId, numberOfTabsExpected) {
+	try {
+		var pane_3_doc = parent.pane_3.document;
+	} catch (err) {
+		// If accessing the document property causes an error then it's most likely there's
+		// not a HTML document in pane 3. It could be a document the user downloaded that has
+		// displayed in an embedded fashion. The Adobe Acrobat Reader does this for PDF files
+		// for example.
+		// In this case, reload completely with window.open targeted at the pane_3 frame.
+		window.open(url,"pane_3");
+		return;
+	}
 	// POST session variables
 	$.post(url, null, function(data) {
 		// Refresh frame 3
