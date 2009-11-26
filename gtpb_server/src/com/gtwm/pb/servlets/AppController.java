@@ -877,6 +877,14 @@ public class AppController extends VelocityViewServlet {
 			logger.warn("Long template request processing time of "
 					+ String.valueOf(secondsToHandleMerge) + " seconds for template "
 					+ template.getName());
+			ViewMethodsInfo viewMethods = (ViewMethodsInfo) context.get("view");
+			try {
+				logger.warn("Logged in user: " + viewMethods.getLoggedInUser());
+			} catch (DisallowedException dex) {
+				logger.warn("Not allowed to get logged in user: " + dex);
+			} catch (ObjectNotFoundException onfex) {
+				logger.warn("Unable to find logged in user: " + onfex);
+			}
 		}
 	}
 
