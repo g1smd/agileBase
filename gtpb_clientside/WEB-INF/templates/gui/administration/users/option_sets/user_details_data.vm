@@ -28,7 +28,7 @@
     </td>
   </tr>
   <tr>
-    <td>Login detail:</td>
+    <td>Login:</td>
     <td>
       <input type="text" name="username" gtpb_internalusername="$sessionUser.getInternalUserName()" gtpb_update_user value="$sessionUser.getUserName()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
       <br />username

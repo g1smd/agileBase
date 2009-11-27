@@ -717,15 +717,15 @@ public class ReportData implements ReportDataInfo {
 		DataRowField reportDataRowField;
 		TableInfo parentTable = this.report.getParentTable();
 		BaseField primaryKeyField = parentTable.getPrimaryKey();
-		Map<BaseField, DataRowFieldInfo> row = new LinkedHashMap<BaseField, DataRowFieldInfo>();
+		Map<BaseField, DataRowFieldInfo> row;
 		while (results.next()) {
 			int rowid = results.getInt(primaryKeyField.getInternalFieldName());
 			// TODO: performance tests to see whether
 			// row.clear()
 			// or
 			// new map creation is better in this loop
-			//row = new LinkedHashMap<BaseField, DataRowFieldInfo>();
-			row.clear();
+			row = new LinkedHashMap<BaseField, DataRowFieldInfo>();
+			//row.clear();
 			// add all columns to the row:
 			for (ReportFieldInfo reportField : this.report.getReportFields()) {
 				BaseField fieldSchema = reportField.getBaseField();

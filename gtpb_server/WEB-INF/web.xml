@@ -16,7 +16,7 @@
       Dynamic database application - a user friendly web application for creating, managing and using databases
     </description>
 
-	<!-- for JavaMelody monitoring
+	<!-- JavaMelody system monitoring -->
 	<filter>
             <filter-name>monitoring</filter-name>
             <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
@@ -28,7 +28,6 @@
     <listener>
             <listener-class>net.bull.javamelody.SessionListener</listener-class>
     </listener>
-    -->
         
     <servlet>
       <servlet-name>AppController</servlet-name>
