@@ -15,12 +15,11 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($table = $sessionData.getTable())
 <request>
-  <nextTemplate>gui/import/2_import_details</nextTemplate>
-  <caption>Import into $table</caption>
-  #parse('gui/customisations/wizard_result.vm') 
-  <htmlContent><![CDATA[
+	<caption>Help Centre</caption>
+	#parse('gui/customisations/wizard_result.vm') 
+    <okTemplate>gui/help/end</okTemplate>
+	  <htmlContent><![CDATA[
       <style>
          table#_choice_table {
            width:85%;
@@ -34,31 +33,42 @@
          table#_choice_table tr.labels td {
            padding-top:30px;
          }
+		 
+		 .helpfooter {
+		   vertical-align:bottom;
+		   padding: 5px;
+		   margin-top:90px;
+		   text-align:right;
+		 }
       </style>
-  
-      <form style="padding:5px">
-        <h1>How would you like to import?</h1>
+	  
+  		<div style="padding:5px">
+        <h1>Choose a link to get help</h1>
         <table id="_choice_table" border="0" cellpadding="0" cellspacing="0" align="center">
           <tr>
             <td>
-              <label for="insert"><img src="resources/icons/import/new.png" /></label>
+              <img src="resources/icons/help/book.png" />
             </td>
             <td>
-              <label for="update"><img src="resources/icons/import/update.png" /></label>
+              <img src="resources/icons/help/questions.png" />
             </td>
           </tr>
           <tr class="labels">
             <td>
-              <input type="radio" name="import_type" id="insert" value="insert" gtpb_set_custom_string="true" gtpb_stringkey="import_type" gtpb_customstringvalue="insert" checked>
-              <label for="insert">Insert all new records</label>
+              Read documentation<p>
+			  <a href="http://gtwebmarque.com/wikis/gtwm/index.php/Annotated_Screenshot" target="_blank" title="Quick start guide in the documentation wiki">Introductory tour</a> or 
+			  <a href="http://gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase" target="_blank" title="The documentation wiki">comprehensive guide</a>
             </td>
             <td>
-              <input type="radio" name="import_type" id="update" value="update" gtpb_set_custom_string="true" gtpb_stringkey="import_type" gtpb_customstringvalue="update" >
-              <label for="update">Update existing records</label>
+              Send a question via the forum<p>
+			  <a href="http://www.gtportalbase.com/forum" target="_blank">Visit forum</a>
             </td>
           </tr>          
         </table>
-      </form>
+		</div>
+		<div class="helpfooter">
+		  View our <a href="http://www.gtportalbase.com/help" target="_blank">support policy</a>
+		</div>
     ]]>
   </htmlContent>
 </request>

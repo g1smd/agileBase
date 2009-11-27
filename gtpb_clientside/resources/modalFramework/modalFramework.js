@@ -447,12 +447,14 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
 		// foreach item separated by ;
   	    var aAttributes=sAttributes.split(';');
   	    for(var i=0; i<aAttributes.length; i++) {
-  	      aAttribute=aAttributes[i].split('=');
-  	      // can't find a standards method for adding styles to an object.  Instead create a string to add the
-  	      // style and evaluate it.
-  		  eval('oDialog.style.'+fTrim(aAttribute[0])+'=\''+fTrim(aAttribute[1])+'\'');
-  		  // if the attribute is a positioning element, need to absolutely position the dialog div (stylesheet sets it to relative by default)
-  		  if (fTrim(aAttribute[0]).match(/^(top|bottom|left|right)$/i)) oDialog.style.position='absolute';	
+  	      if(aAttributes[i].match(/=/)) {
+  	        aAttribute=aAttributes[i].split('=');
+  	        // can't find a standards method for adding styles to an object.  Instead create a string to add the
+  	        // style and evaluate it.
+  		    eval('oDialog.style.'+fTrim(aAttribute[0])+'=\''+fTrim(aAttribute[1])+'\'');
+  		    // if the attribute is a positioning element, need to absolutely position the dialog div (stylesheet sets it to relative by default)
+  		    if (fTrim(aAttribute[0]).match(/^(top|bottom|left|right)$/i)) oDialog.style.position='absolute';
+  	      }
   	    }
   	  }
   	  

@@ -59,6 +59,10 @@
         	function fImport() {  
         	  document.getElementById('oViewPane').contentWindow.pane_2.fImport();
         	}
+			
+			function fHelp() {
+			  document.getElementById('oViewPane').contentWindow.pane_2.fHelp();
+			}
 
         	function fExport() {  
         	  document.getElementById('oViewPane').contentWindow.pane_2.fExport();
@@ -141,11 +145,7 @@
 	<![endif]-->
  
     </head>
-	#if ($viewTools.isRunningLocally())
-		<body class="localhost">
-	#else
-		<body>
-	#end	
+	<body #if($viewTools.isRunningLocally()) class="localhost" #end>	
     	      <div id=toolbarDiv>
 			        <div class=buttonGroup> ## record actions
 			          #parse('gui/toolbar/buttons/new.vm')
@@ -184,6 +184,8 @@
 					<div id="logout">
 						<img style="float:left" src="resources/toolbar/logout_left.png">
 						<span>
+                        <a onclick="fHelp();" href="#" title="load help centre to view documentation or ask a question">help</a>
+						&nbsp;<span style="color:#f1f2ed">|</span>&nbsp;
 						<a href="AppController.servlet?return=gui/display_application&logout=true" target="_top">logout</a>
 						</span>
 					</div>
