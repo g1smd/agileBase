@@ -15,6 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+#set($button_img='resources/tables/table.png')
 #set($click="fShowOption('options_wrapper_$options_wrapper_no','table_details')")
 #set($caption='Table')
 #set($id='button_table_details')
