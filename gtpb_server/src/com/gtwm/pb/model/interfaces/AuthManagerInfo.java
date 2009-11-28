@@ -81,29 +81,6 @@ public interface AuthManagerInfo {
 	public CompanyInfo getCompanyForLoggedInUser(HttpServletRequest request)
 			throws ObjectNotFoundException;
 
-	public SortedSet<String> getCompanyTableNames(HttpServletRequest request)
-			throws ObjectNotFoundException;
-
-	/**
-	 * Get the set of tables in the company of the logged in user
-	 */
-	public Set<TableInfo> getCompanyTables(HttpServletRequest request)
-			throws ObjectNotFoundException, DisallowedException;
-
-	/**
-	 * Get the set of tables in the given company
-	 */
-	public Set<TableInfo> getCompanyTables(HttpServletRequest request, CompanyInfo company)
-			throws ObjectNotFoundException, DisallowedException;
-
-	/**
-	 * Return true if the table is in the company. Note that no privilege checks
-	 * need to be done as the table object itself is passed in. If the user
-	 * didn't have VIEW_TABLE privileges on the table, they wouldn't have been
-	 * able to get hold of the object
-	 */
-	public boolean tableBelongsToCompany(CompanyInfo company, TableInfo table) throws ObjectNotFoundException;
-
 	/**
 	 * @throws DisallowedException
 	 *             If the logged in user doesn't have MASTER privileges

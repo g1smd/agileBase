@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 $viewTools.startTimer("gui/administration/information/options_set.vm")
-#parse('gui/administration/information/option_sets/information_stats.vm')
+###parse('gui/administration/information/option_sets/information_stats.vm')
 #parse('gui/administration/information/option_sets/information_pricing.vm')
 #parse('gui/administration/information/option_sets/information_export.vm')
 $viewTools.stopTimer("gui/administration/information/options_set.vm")

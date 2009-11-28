@@ -478,10 +478,12 @@ public class DatabaseDefn implements DatabaseInfo {
 				// if no change to table name ignore request
 				return;
 			}
-			Set<String> existingCompanyTableNames = this.authManager.getCompanyTableNames(request);
-			if (existingCompanyTableNames.contains(newTableName)) {
-				throw new CantDoThatException("A table called '" + newTableName
-						+ "' already exists");
+			CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
+			for (TableInfo existingTable : company.getTables()) {
+				if (existingTable.getTableName().equals(newTableName)) {
+					throw new CantDoThatException("A table called '" + newTableName
+							+ "' already exists");
+				}
 			}
 			table.setTableName(newTableName);
 			// Also re-name primary key to match
@@ -573,8 +575,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		} catch (SQLException sqlex) {
 			String errorCode = sqlex.getSQLState();
 			if (errorCode.equals("42P01")) {
-				// table does not exist within SQL DB
-				// start of object database updating
+				logger.warn("Can't delete table " + tableToRemove + " from relational database, it's not there");
+				// TODO: review why we're swallowing this error
 			} else {
 				throw new SQLException(sqlex + ": error code " + errorCode);
 			}
@@ -2183,7 +2185,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/**
-	 * to access a table, the logged in user either has to have view privileges
+	 * To access a table, the logged in user either has to have view privileges
 	 * on that table, or be an administrator of the company the table is in
 	 */
 	private boolean userAllowedToAccessTable(HttpServletRequest request, TableInfo table)
@@ -2195,7 +2197,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		if (this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.ADMINISTRATE)
-				&& this.authManager.tableBelongsToCompany(company, table)) {
+				&& company.getTables().contains(table)) {
 			return true;
 		}
 		return false;

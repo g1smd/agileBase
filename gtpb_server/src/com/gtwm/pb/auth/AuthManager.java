@@ -150,104 +150,6 @@ public class AuthManager implements AuthManagerInfo {
 		return loggedInUser.getCompany();
 	}
 
-	/*
-	 * Security note: anyone can see the display names of tables belonging to
-	 * their company using this method, special privileges aren't required
-	 */
-	public synchronized SortedSet<String> getCompanyTableNames(HttpServletRequest request)
-			throws ObjectNotFoundException {
-		SortedSet<String> companyTableNames = new TreeSet<String>();
-		CompanyInfo company = this.getCompanyForLoggedInUser(request);
-		for (AppUserInfo user : company.getUsers()) {
-			Set<UserGeneralPrivilegeInfo> userPrivileges = ((Authenticator) this.authenticator)
-					.getPrivilegesForUser(user);
-			for (UserGeneralPrivilegeInfo userPrivilege : userPrivileges) {
-				if (userPrivilege instanceof UserObjectPrivilegeInfo) {
-					companyTableNames.add(((UserObjectPrivilegeInfo) userPrivilege).getTable()
-							.getTableName());
-				}
-			}
-		}
-		for (AppRoleInfo role : company.getRoles()) {
-			Set<RoleGeneralPrivilegeInfo> rolePrivileges = ((Authenticator) this.authenticator)
-					.getPrivilegesForRole(role);
-			for (RoleGeneralPrivilegeInfo rolePrivilege : rolePrivileges) {
-				if (rolePrivilege instanceof RoleObjectPrivilegeInfo) {
-					companyTableNames.add(((RoleObjectPrivilegeInfo) rolePrivilege).getTable()
-							.getTableName());
-				}
-			}
-		}
-		return companyTableNames;
-	}
-
-	public synchronized Set<TableInfo> getCompanyTables(HttpServletRequest request)
-			throws ObjectNotFoundException, DisallowedException {
-		CompanyInfo company = this.getCompanyForLoggedInUser(request);
-		return getCompanyTables(request, company);
-	}
-
-	public Set<TableInfo> getCompanyTables(HttpServletRequest request, CompanyInfo company)
-			throws DisallowedException {
-		// these tables should only be returned for a company administrator
-		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || this.authenticator
-				.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
-		}
-		return this.getCompanyTablesWithoutChecks(company);
-	}
-
-	private Set<TableInfo> getCompanyTablesWithoutChecks(CompanyInfo company) {
-		Set<TableInfo> companyTables = new TreeSet<TableInfo>();
-		for (AppUserInfo user : company.getUsers()) {
-			Set<UserGeneralPrivilegeInfo> userPrivileges = ((Authenticator) this.authenticator)
-					.getPrivilegesForUser(user);
-			for (UserGeneralPrivilegeInfo userPrivilege : userPrivileges) {
-				if (userPrivilege instanceof UserObjectPrivilegeInfo) {
-					companyTables.add(((UserObjectPrivilegeInfo) userPrivilege).getTable());
-				}
-			}
-		}
-		for (AppRoleInfo role : company.getRoles()) {
-			Set<RoleGeneralPrivilegeInfo> rolePrivileges = ((Authenticator) this.authenticator)
-					.getPrivilegesForRole(role);
-			for (RoleGeneralPrivilegeInfo rolePrivilege : rolePrivileges) {
-				if (rolePrivilege instanceof RoleObjectPrivilegeInfo) {
-					companyTables.add(((RoleObjectPrivilegeInfo) rolePrivilege).getTable());
-				}
-			}
-		}
-		return companyTables;
-	}
-
-	private synchronized void addToTableCompanyCache(TableInfo table, CompanyInfo company) {
-		this.tableCompaniesCache.put(table, company);
-	}
-
-	public boolean tableBelongsToCompany(CompanyInfo company, TableInfo table)
-			throws ObjectNotFoundException {
-		CompanyInfo cachedTableCompany = this.tableCompaniesCache.get(table);
-		if (cachedTableCompany == null) {
-			// find out what company the table belongs to
-			for (CompanyInfo testCompany : ((Authenticator) this.authenticator).getCompanies()) {
-				Set<TableInfo> companyTables = this.getCompanyTablesWithoutChecks(testCompany);
-				if (companyTables.contains(table)) {
-					this.addToTableCompanyCache(table, testCompany);
-					if (company.equals(testCompany)) {
-						return true;
-					} else {
-						return false;
-					}
-				}
-			}
-			throw new ObjectNotFoundException("Table " + table + " was not found in any company!");
-		}
-		if (cachedTableCompany.equals(company)) {
-			return true;
-		}
-		return false;
-	}
-
 	public SortedSet<CompanyInfo> getCompanies(HttpServletRequest request)
 			throws DisallowedException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
@@ -295,7 +197,7 @@ public class AuthManager implements AuthManagerInfo {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
 			throw new DisallowedException(PrivilegeType.MASTER);
 		}
-		Set<TableInfo> companyTables = this.getCompanyTables(request, company);
+		Set<TableInfo> companyTables = company.getTables();
 		if (companyTables.size() > 0) {
 			throw new CantDoThatException(
 					"All tables must be removed before removing the company. Remaining tables are "
@@ -848,11 +750,6 @@ public class AuthManager implements AuthManagerInfo {
 	}
 
 	private AuthenticatorInfo authenticator = null;
-
-	/**
-	 * A cache of which company each table belongs to
-	 */
-	private Map<TableInfo, CompanyInfo> tableCompaniesCache = new HashMap<TableInfo, CompanyInfo>();
 
 	private static final SimpleLogger logger = new SimpleLogger(AuthManager.class);
 }

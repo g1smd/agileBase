@@ -76,7 +76,8 @@ public class UsageStats implements UsageStatsInfo {
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		if (authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.ADMINISTRATE)) {
-			Set<TableInfo> companyTables = authManager.getCompanyTables(request);
+			CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
+			Set<TableInfo> companyTables = company.getTables();
 			int numTables = companyTables.size();
 			this.numTables = numTables;
 			if (numTables > AppProperties.numFullPriceTables) {
@@ -111,7 +112,7 @@ public class UsageStats implements UsageStatsInfo {
 		int totalArea = 0;
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
-		Set<TableInfo> companyTables = authManager.getCompanyTables(this.request);
+		Set<TableInfo> companyTables = company.getTables();
 		String SQLCode = "SELECT report, average_count, percentage_increase FROM dbint_report_view_stats_materialized";
 		SQLCode += " WHERE company=?";
 		Connection conn = null;
@@ -270,8 +271,8 @@ public class UsageStats implements UsageStatsInfo {
 			ObjectNotFoundException, SQLException {
 		SortedSet<ModuleUsageStatsInfo> moduleStats = new TreeSet<ModuleUsageStatsInfo>();
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		Set<TableInfo> companyTables = authManager.getCompanyTables(request);
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
+		Set<TableInfo> companyTables = company.getTables();
 		Map<ModuleInfo, ModuleUsageStatsInfo> moduleStatsMap = new HashMap<ModuleInfo, ModuleUsageStatsInfo>();
 		String SQLCode = "SELECT app_user, report, count(*) FROM dbint_log_";
 		SQLCode += LogType.REPORT_VIEW.name().toLowerCase();
@@ -358,12 +359,12 @@ public class UsageStats implements UsageStatsInfo {
 				PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
-		Set<TableInfo> companyTables = authManager.getCompanyTables(request);
+		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
+		Set<TableInfo> companyTables = company.getTables();
 		SortedSet<TableInfo> unusedTables = new TreeSet<TableInfo>();
 		Set<TableInfo> usedTables = new HashSet<TableInfo>();
 		String SQLCode = "SELECT DISTINCT report FROM dbint_log_"
 				+ LogType.REPORT_VIEW.name().toLowerCase() + " WHERE company=?";
-		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
 		Connection conn = null;
 		try {
 			conn = this.databaseDefn.getDataSource().getConnection();
@@ -629,7 +630,8 @@ public class UsageStats implements UsageStatsInfo {
 				PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
-		Set<TableInfo> companyTables = authManager.getCompanyTables(request);
+		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
+		Set<TableInfo> companyTables = company.getTables();
 		List<List<String>> rawStats = new LinkedList<List<String>>();
 		// First row is the column headings
 		List<String> columnHeadings = new LinkedList<String>();
@@ -669,7 +671,6 @@ public class UsageStats implements UsageStatsInfo {
 		rawStats.add(columnHeadings);
 		SQLCode += "FROM " + "dbint_log_" + logType.name().toLowerCase();
 		SQLCode += " WHERE company=? ORDER BY app_timestamp desc";
-		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
 		Connection conn = null;
 		try {
 			conn = this.databaseDefn.getDataSource().getConnection();
