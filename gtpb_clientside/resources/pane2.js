@@ -33,7 +33,12 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 		return;
 	}
 	// POST session variables
-	$.post(url, null, function(data) {
+	// When posting, we don't want the server to waste time actually parsing the contents of the return template,
+	// we just want any session commands to be posted. So replace the template name with the blank template
+	var templateName = url.replace(/^.*return=/,'');
+	templateName = templateName.replace(/\&.*$/,'');
+	replacedTemplateUrl = url.replace('return='+templateName,'return=blank');
+	$.post(replacedTemplateUrl, null, function(data) {
 		// Refresh frame 3
 		if (typeof(parent.pane_3) != "undefined") {
 			// If user is loading a new report, it may have different privileges to the last one.

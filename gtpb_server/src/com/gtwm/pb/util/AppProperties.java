@@ -50,7 +50,7 @@ public class AppProperties {
 	 * 
 	 * @see com.gtwm.pb.model.interfaces.ViewToolsInfo#startTimer(String)
 	 */
-	public static final boolean enableTemplateTimers = false;
+	public static final boolean enableTemplateTimers = true;
 
 	/**
 	 * If false, the app will be optimised for correctness in some cases and

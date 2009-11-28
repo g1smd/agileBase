@@ -32,7 +32,7 @@ $viewTools.startTimer("gui/resources/option_set_wrapper")
     function fShowOption(sWrapperID, sOptionID)
     { function fSetOptionSessionVars(sOption)
        { function fSetSessionOptionset(aPostVars)
-	     {	aPostVars['key']='$optionset_id';  ##note that this is a smarty variable
+	     {	aPostVars['key']='$optionset_id';  ##note that this is a Velocity variable
 	        aPostVars['value']='true'; 
 	     	var oReq=new fRequest('AppController.servlet',aPostVars,fNothing,-1);
 	     }

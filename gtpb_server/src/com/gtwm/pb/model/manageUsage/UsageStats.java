@@ -67,6 +67,12 @@ public class UsageStats implements UsageStatsInfo {
 			throws DisallowedException, ObjectNotFoundException {
 		this.request = request;
 		this.databaseDefn = databaseDefn;
+	}
+
+	/**
+	 * Set monthlyTableCost and numTables variables
+	 */
+	private void setCostDetails() throws ObjectNotFoundException, DisallowedException {
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		if (authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.ADMINISTRATE)) {
@@ -80,15 +86,20 @@ public class UsageStats implements UsageStatsInfo {
 			} else {
 				this.monthlyTableCost = numTables * AppProperties.tableCost;
 			}
-
 		}
 	}
 
-	public int getMonthlyTableCost() {
+	public synchronized int getMonthlyTableCost() throws ObjectNotFoundException, DisallowedException {
+		if (this.numTables == 0) {
+			this.setCostDetails();
+		}
 		return this.monthlyTableCost;
 	}
 
-	public int getNumberOfTables() {
+	public synchronized int getNumberOfTables() throws ObjectNotFoundException, DisallowedException {
+		if (this.numTables == 0) {
+			this.setCostDetails();
+		}
 		return this.numTables;
 	}
 
@@ -459,8 +470,8 @@ public class UsageStats implements UsageStatsInfo {
 			SQLException, CodingErrorException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, table) || authManager
-				.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
+				PrivilegeType.MANAGE_TABLE, table) || authManager.getAuthenticator()
+				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
 		List<List<String>> reportInfos = new LinkedList<List<String>>();
@@ -540,8 +551,8 @@ public class UsageStats implements UsageStatsInfo {
 			throws DisallowedException, SQLException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, table) || authManager
-				.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
+				PrivilegeType.MANAGE_TABLE, table) || authManager.getAuthenticator()
+				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
 		if (!(logType.equals(LogType.DATA_CHANGE) || logType.equals(LogType.TABLE_SCHEMA_CHANGE))) {
@@ -776,8 +787,52 @@ public class UsageStats implements UsageStatsInfo {
 		return rawStats;
 	}
 
+	public List<Integer> getTimelineCounts(String logType, int options) throws DisallowedException,
+			SQLException, ObjectNotFoundException {
+		return this.getTimelineCounts(LogType.valueOf(logType.toUpperCase()), options);
+	}
+
+	private List<Integer> getTimelineCounts(LogType logType, int options)
+			throws DisallowedException, SQLException, ObjectNotFoundException {
+		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.ADMINISTRATE)) {
+			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+		}
+		String SQLCode = "SELECT coalesce(log_records.day, days.day) as day,";
+		SQLCode += " coalesce(log_records.count, 0) as count";
+		SQLCode += " FROM";
+		SQLCode += "  (SELECT date_trunc('day',app_timestamp) as day, count(*) as count";
+		SQLCode += "   FROM " + "dbint_log_" + logType.name().toLowerCase();
+		SQLCode += "   WHERE company=? AND app_timestamp > (now() - '180 days'::interval) GROUP BY day";
+		SQLCode += "  ) AS log_records";
+		SQLCode += "  RIGHT OUTER JOIN (SELECT now()::date - generate_series(0,180)) as days(day)";
+		SQLCode += "  ON log_records.day = days.day";
+		SQLCode += " ORDER BY day";
+		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
+		List<Integer> timelineCounts = new LinkedList<Integer>();
+		Connection conn = null;
+		try {
+			conn = this.databaseDefn.getDataSource().getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			statement.setString(1, company.getCompanyName());
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				timelineCounts.add(results.getInt(1));
+			}
+			results.close();
+			statement.close();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}			
+		}
+		return timelineCounts;
+	}
+
 	public String toString() {
-		return "Monthly table cost = " + this.monthlyTableCost;
+		return "Usage Stats object";
 	}
 
 	private int monthlyTableCost = 0;

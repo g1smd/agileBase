@@ -19,6 +19,7 @@ package com.gtwm.pb.auth;
 
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
+import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.Module;
 import java.util.Set;
 import java.util.SortedSet;
@@ -65,6 +66,19 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
         return this.companyName;
     }
 
+    @Transient
+    public synchronized SortedSet<TableInfo> getTables() {
+    	return Collections.unmodifiableSortedSet(new TreeSet<TableInfo>(this.tables));
+    }
+    
+    public synchronized void addTable(TableInfo table) {
+    	this.tables.add(table);
+    }
+    
+    public synchronized void removeTable(TableInfo table) {
+    	this.tables.remove(table);
+    }
+    
     @Transient
     public SortedSet<AppUserInfo> getUsers() {
         return Collections.unmodifiableSortedSet(new TreeSet<AppUserInfo>(this.getUsersCollection()));
@@ -196,6 +210,8 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
     private Set<AppUserInfo> usersCollection = new HashSet<AppUserInfo>();
     
     private Set<AppRoleInfo> roles = new HashSet<AppRoleInfo>();
+    
+    private Set<TableInfo> tables = new HashSet<TableInfo>();
     
     private Set<ModuleInfo> modules = new HashSet<ModuleInfo>();
     

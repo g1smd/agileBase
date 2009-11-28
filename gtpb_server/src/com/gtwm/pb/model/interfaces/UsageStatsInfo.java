@@ -28,20 +28,21 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 
 /**
- * Stores usage stats for the company and calculates the monthly charge based on
- * the number of tables
+ * Allows access to usage stats for the company and calculates the monthly
+ * charge based on the number of tables
  */
 public interface UsageStatsInfo {
 
 	/**
-	 * Return the hosted cost of portalBase, based on the number of tables present
+	 * Return the hosted cost of portalBase, based on the number of tables
+	 * present
 	 */
-	public int getMonthlyTableCost();
+	public int getMonthlyTableCost() throws ObjectNotFoundException, DisallowedException;
 
 	/**
 	 * Return the number of tables in the company
 	 */
-	public int getNumberOfTables();
+	public int getNumberOfTables() throws ObjectNotFoundException, DisallowedException;
 
 	/**
 	 * Return data that can be used to build a treemap of report view
@@ -65,8 +66,8 @@ public interface UsageStatsInfo {
 			ObjectNotFoundException, SQLException;
 
 	/**
-	 * Return raw data from the log tables, suitable for exporting to a
-	 * spreadsheet for example
+	 * Return raw data about the current company from the log tables, suitable
+	 * for exporting to a spreadsheet for example
 	 * 
 	 * Format is a list of rows, each row consisting of a list of columns.
 	 * 
@@ -87,6 +88,7 @@ public interface UsageStatsInfo {
 	 *            Can be DATA_CHANGE or TABLE_SCHEMA_CHANGE
 	 * @param rowLimit
 	 *            Limit results to the top rowLimit newest log entries
+	 * @deprecated Nothing seems to use this currently
 	 */
 	public List<List<String>> getRawTableStats(LogType logType, TableInfo table, int rowLimit)
 			throws DisallowedException, SQLException, CantDoThatException;
@@ -109,9 +111,26 @@ public interface UsageStatsInfo {
 			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException;
 
 	/**
-	 * Return any tables that have had no report views (from any child reports)
+	 * Return any tables in the company that have had no report views (from any
+	 * child reports)
 	 */
 	public SortedSet<TableInfo> getUnusedTables() throws DisallowedException, SQLException,
 			ObjectNotFoundException;
+
+	/**
+	 * Return counts of the total no. log entries per day (or per week, for some
+	 * log types), in order from oldest to newest
+	 * 
+	 * @param options
+	 *            For the schema change logs, the constant BUILD_ENTRIES means
+	 *            only return log entries that are to do with schema building.
+	 *            TEARDOWN_ENTRIES and ALL_ENTRIES are also valid. The parameter
+	 *            is ignored for other log types
+	 * 
+	 * @see com.gtwm.pb.model.manageUsage.LogType See LogType for a list of
+	 *      allowed log types
+	 */
+	public List<Integer> getTimelineCounts(String logType, int options) throws DisallowedException,
+			SQLException, ObjectNotFoundException;
 
 }

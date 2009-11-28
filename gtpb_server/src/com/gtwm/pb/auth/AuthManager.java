@@ -77,24 +77,45 @@ public class AuthManager implements AuthManagerInfo {
 			this.authenticator = (AuthenticatorInfo) hibernateSession.createQuery(
 					"from Authenticator").uniqueResult();
 			if (this.authenticator != null) {
-				for (CompanyInfo company : ((Authenticator) authenticator).getCompanies()) {
+				Authenticator auth = (Authenticator) this.authenticator;
+				for (CompanyInfo company : auth.getCompanies()) {
+					// All the logger.info lines below are basically to force Hibernate
+					// to read the objects into memory by printing out their details
 					logger.info("" + company + " roles: " + company.getRoles());
 					logger.info("" + company + " users: " + company.getUsers());
 					logger.info("" + company + " modules: " + company.getModules());
 					logger.info("" + company + " tabs: " + company.getTabAddresses());
 				}
-				logger.info("Users: " + ((Authenticator) authenticator).getUsers());
-				for (AppRoleInfo role : ((Authenticator) authenticator).getRoles()) {
+				logger.info("Users: " + auth.getUsers());
+				for (AppRoleInfo role : auth.getRoles()) {
 					logger.info("Role " + role + " users: " + role.getUsers());
 				}
+				// Cache tables into companies.
+				// Don't need to print out tables, they've already been loaded by DatabaseDefn.
+				// This is just a cache
+				for (UserGeneralPrivilegeInfo privilege : auth.getUserPrivileges()) {
+					if (privilege instanceof UserObjectPrivilege) {
+						UserObjectPrivilege priv = (UserObjectPrivilege) privilege;
+						CompanyInfo company = priv.getUser().getCompany();
+						company.addTable(priv.getTable());
+					}
+				}
+				for (RoleGeneralPrivilegeInfo privilege : auth.getRolePrivileges()) {
+					if (privilege instanceof RoleObjectPrivilege) {
+						RoleObjectPrivilege priv = (RoleObjectPrivilege) privilege;
+						CompanyInfo company = priv.getRole().getCompany();
+						company.addTable(priv.getTable());
+					}
+				}
 				logger.info("User privileges: "
-						+ ((Authenticator) authenticator).getUserPrivileges());
+						+ auth.getUserPrivileges());
 				logger.info("Role privileges: "
-						+ ((Authenticator) authenticator).getRolePrivileges());
+						+ auth.getRolePrivileges());
 			}
 			if (this.authenticator == null) {
+				// There must be one and only one Authenticator object persisted. If there isn't one,
+				// we're doing the first boot of portalBase, create one and set up the master user
 				try {
-					// Now the object database work
 					this.authenticator = new Authenticator();
 					hibernateSession.save(this.authenticator);
 					String masterPassword = (new RandomString()).toString();

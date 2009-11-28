@@ -16,10 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 $viewTools.startTimer("gui/administration/information/option_sets/information_export_data.vm")
-#if(!$usageStats)
-	#set($usageStats = $view.getUsageStats())
-#end
-
+$viewTools.log("data export template")
 Please click on a link to export data to spreadsheet format:<p>
 	
 <a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">Logins</a><br>

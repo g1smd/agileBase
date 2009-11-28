@@ -43,6 +43,8 @@ public interface CompanyInfo {
     
     public SortedSet<ModuleInfo> getModules();
     
+    public SortedSet<TableInfo> getTables();
+    
     /**
      * URLs for tabs that are loaded when portalBase starts
      */
@@ -65,4 +67,8 @@ public interface CompanyInfo {
     public void removeModule(ModuleInfo module);
     
     public void removeTabAddress(String tabAddress);
+    
+    public void addTable(TableInfo table);
+    
+    public void removeTable(TableInfo table);
 }

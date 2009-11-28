@@ -312,7 +312,7 @@ function fChange(oObj)  {
   // show the form object as busy
   fEnableDisable('disable', oObj);
   var aPostVars=fSetPostVars();
-   
+  
   var oReq=new fRequest('AppController.servlet', aPostVars, fReqComplete, -1); 
   this.xml_http_request=oReq.xml_http_request;      
 }

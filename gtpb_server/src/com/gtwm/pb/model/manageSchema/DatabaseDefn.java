@@ -375,7 +375,7 @@ public class DatabaseDefn implements DatabaseInfo {
 			this.addRecordLockedFieldToTable(conn, newTable);
 			this.tables.add(newTable);
 		} catch (SQLException sqlex) {
-			// reformat the error message to be more user friendly
+			// Reformat the error message to be more user friendly.
 			// Use SQLState as an error identifier because it is standard across
 			// databases
 			String errorCode = sqlex.getSQLState();
@@ -389,6 +389,8 @@ public class DatabaseDefn implements DatabaseInfo {
 				throw new SQLException(sqlex + ": error code " + errorCode);
 			}
 		}
+		// Cache the table in the company object
+		this.authManager.getCompanyForLoggedInUser(request).addTable(newTable);
 		return newTable;
 		// this.dataManagement.logLastSchemaChangeTime(request);
 	}
@@ -577,6 +579,7 @@ public class DatabaseDefn implements DatabaseInfo {
 				throw new SQLException(sqlex + ": error code " + errorCode);
 			}
 		}
+		this.authManager.getCompanyForLoggedInUser(request).removeTable(tableToRemove);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		usageLogger.logTableSchemaChange(user, tableToRemove, AppAction.REMOVE_TABLE, "");
