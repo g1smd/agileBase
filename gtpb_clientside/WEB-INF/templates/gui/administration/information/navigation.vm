@@ -18,6 +18,6 @@
 $viewTools.startTimer("gui/administration/information/navigation.vm")
 ## functionality replaced by the stats treemap dashboard
 ## #parse('gui/administration/information/buttons/stats.vm')
-#parse('gui/administration/information/buttons/pricing.vm')
 #parse('gui/administration/information/buttons/export.vm')
+#parse('gui/administration/information/buttons/pricing.vm')
 $viewTools.stopTimer("gui/administration/information/navigation.vm")

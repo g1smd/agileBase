@@ -19,18 +19,31 @@ $viewTools.startTimer("gui/administration/information/option_sets/information_ex
 $viewTools.log("data export template")
 Please click on a link to export data to spreadsheet format:<p>
 	
-<a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">Logins</a><br>
+<a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">Logins</a>
+ <span class="sparkline" title="logins">...</span>
+<br>
 Date, time and IP address of each user's login<p>
 
-<a href="?return=gui/administration/information/export/report_view&returntype=download&returnfilename=report_views.csv">Report views</a><br>
+<a href="?return=gui/administration/information/export/report_view&returntype=download&returnfilename=report_views.csv">Report views</a>
+ <span class="sparkline" title="report_views">...</span>
+<br>
 Which users viewed which reports<p>
 
-<a href="?return=gui/administration/information/export/data_change&returntype=download&returnfilename=data_changes.csv">Data changes</a><br>
+<a href="?return=gui/administration/information/export/data_change&returntype=download&returnfilename=data_changes.csv">Data changes</a>
+ <span class="sparkline" title="data_edits">...</span>
+<br>
 Date, time, user and record identifier for each insertion, edit or record delete<p>
 
-<a href="?return=gui/administration/information/export/report_schema_change&returntype=download&returnfilename=report_schema_changes.csv">Report schema changes</a><br>
+<a href="?return=gui/administration/information/export/report_schema_change&returntype=download&returnfilename=report_schema_changes.csv">Report schema changes</a>
+ <span class="sparkline" title="report_changes">...</span>
+<br>
 Details of changes to a report structure, such as the addition or removal of a field<p>
 
-<a href="?return=gui/administration/information/export/table_schema_change&returntype=download&returnfilename=table_schema_changes.csv">Table schema changes</a><br>
+<a href="?return=gui/administration/information/export/table_schema_change&returntype=download&returnfilename=table_schema_changes.csv">Table schema changes</a>
+ <span class="sparkline" title="table_changes">...</span>
+<br>
 Details of changes to a table structure<p>
 $viewTools.stopTimer("gui/administration/information/option_sets/information_export_data.vm")
+
+<script language="JavaScript">
+</script>

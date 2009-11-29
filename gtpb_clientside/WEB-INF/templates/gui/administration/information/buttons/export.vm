@@ -15,8 +15,22 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+
+<script language="JavaScript">
+//Sparklines - see gui/administration/information/option_sets/information_export_data.vm
+function fSparkLines() {
+	  jQuery(".sparkline").each(function(i) {
+	    var jqThis = $(this);
+	    var template="gui/administration/information/sparkline_data/" + jqThis.attr("title");
+		jQuery.get("AppController.servlet", {return: template}, function(returned_data) {
+		  jqThis.sparkline(eval(returned_data));
+		});
+	  });
+}
+</script>
+
 #set($button_img='resources/usage/export.png')
-#set($click="fShowOption('options_wrapper_$options_wrapper_no','information_export')")
-#set($caption='All&nbsp;Logs')
+#set($click="fShowOption('options_wrapper_$options_wrapper_no','information_export'); fSparkLines();")
+#set($caption='Logs')
 #set($id='button_information_export')
 #parse('gui/resources/button.vm')

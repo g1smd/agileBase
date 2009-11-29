@@ -364,7 +364,7 @@ public class UsageStats implements UsageStatsInfo {
 		SortedSet<TableInfo> unusedTables = new TreeSet<TableInfo>();
 		Set<TableInfo> usedTables = new HashSet<TableInfo>();
 		String SQLCode = "SELECT DISTINCT report FROM dbint_log_"
-				+ LogType.REPORT_VIEW.name().toLowerCase() + " WHERE company=?";
+				+ LogType.REPORT_VIEW.name().toLowerCase() + " WHERE company=? AND app_timestamp > now() - '6 months'::interval";
 		Connection conn = null;
 		try {
 			conn = this.databaseDefn.getDataSource().getConnection();
@@ -415,7 +415,7 @@ public class UsageStats implements UsageStatsInfo {
 		int percentageIncrease = 0;
 		String SQLCode = "SELECT app_user, max(app_timestamp), count(*)";
 		SQLCode += " FROM dbint_log_" + LogType.REPORT_VIEW.name().toLowerCase();
-		SQLCode += " WHERE report=?";
+		SQLCode += " WHERE report=? AND app_timestamp > now() - '6 months'::interval";
 		SQLCode += " GROUP BY app_user";
 		SQLCode += " ORDER BY max(app_timestamp) DESC";
 		Connection conn = null;
@@ -502,7 +502,7 @@ public class UsageStats implements UsageStatsInfo {
 		// at each report
 		String SQLCode = "SELECT max(app_timestamp), app_user, count(*) ";
 		SQLCode += "FROM dbint_log_" + LogType.REPORT_VIEW.name().toLowerCase() + " ";
-		SQLCode += "WHERE report=? ";
+		SQLCode += "WHERE report=? AND app_timestamp > now() - '6 months'::interval";
 		SQLCode += "GROUP BY app_user ";
 		SQLCode += "ORDER BY max(app_timestamp) DESC";
 		Connection conn = null;
@@ -670,7 +670,7 @@ public class UsageStats implements UsageStatsInfo {
 		}
 		rawStats.add(columnHeadings);
 		SQLCode += "FROM " + "dbint_log_" + logType.name().toLowerCase();
-		SQLCode += " WHERE company=? ORDER BY app_timestamp desc";
+		SQLCode += " WHERE company=? ORDER BY app_timestamp desc LIMIT 65536";
 		Connection conn = null;
 		try {
 			conn = this.databaseDefn.getDataSource().getConnection();
@@ -800,16 +800,16 @@ public class UsageStats implements UsageStatsInfo {
 				PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
-		String SQLCode = "SELECT coalesce(log_records.day, days.day) as day,";
-		SQLCode += " coalesce(log_records.count, 0) as count";
+		// Count entries per week, filling in weeks where there are no entries with 0
+		String SQLCode = "SELECT coalesce(log_records.count, 0) as count";
 		SQLCode += " FROM";
-		SQLCode += "  (SELECT date_trunc('day',app_timestamp) as day, count(*) as count";
+		SQLCode += "  (SELECT date_trunc('week',app_timestamp) as week, count(*) as count";
 		SQLCode += "   FROM " + "dbint_log_" + logType.name().toLowerCase();
-		SQLCode += "   WHERE company=? AND app_timestamp > (now() - '180 days'::interval) GROUP BY day";
+		SQLCode += "   WHERE company=? AND app_timestamp > (now() - '52 weeks'::interval) GROUP BY week";
 		SQLCode += "  ) AS log_records";
-		SQLCode += "  RIGHT OUTER JOIN (SELECT now()::date - generate_series(0,180)) as days(day)";
-		SQLCode += "  ON log_records.day = days.day";
-		SQLCode += " ORDER BY day";
+		SQLCode += "  RIGHT OUTER JOIN (SELECT date_trunc('week',now()) - generate_series(0,52) * '1 week'::interval) as weeks(week)";
+		SQLCode += "  ON log_records.week = weeks.week";
+		SQLCode += " ORDER BY weeks.week";
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
 		List<Integer> timelineCounts = new LinkedList<Integer>();
 		Connection conn = null;

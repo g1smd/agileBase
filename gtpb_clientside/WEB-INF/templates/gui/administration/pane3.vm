@@ -21,12 +21,16 @@
 <HEAD>
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <script src="resources/jquery.js" language="Javascript"> </script>
+  <script src="resources/jquery.sparkline.js" language="Javascript"> </script>
   <SCRIPT language=Javascript src="resources/wait/request.js"></SCRIPT> 
   <SCRIPT language=Javascript src="resources/wait/editData.js"></SCRIPT>  
   <SCRIPT language=Javascript>
-    #if($pane2_id)
-	  parent.pane_2.fSetRowSelection('$pane2_id');
-	#end;    
+    jQuery(document).ready(function(){
+      #if($pane2_id)
+	    parent.pane_2.fSetRowSelection('$pane2_id');
+	  #end
+	  fInit();
+	}
   </SCRIPT>
 
   <STYLE>
@@ -123,9 +127,8 @@
 	  background-color: #bddfed;
 	}
   </STYLE>
- 
 </HEAD>
-<BODY onload="fInit()">
+<BODY>
   #parse('gui/resources/option_set_wrapper.vm')
 </BODY>
 </HTML>

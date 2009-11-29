@@ -12,7 +12,7 @@ GROUP BY company, report;
 create or replace view dbint_report_average_counts as
 SELECT company, report, count(*)::double precision / (GREATEST(date_part('epoch'::text, age(min(dbint_log_report_view.app_timestamp))), 2592000::double precision) / 2592000::double precision) AS average_count
 FROM dbint_log_report_view
-WHERE age(app_timestamp) > '1 day'::interval
+WHERE age(app_timestamp) > '1 day'::interval AND age(app_timestamp) < '6 months'::interval
 GROUP BY dbint_log_report_view.company, dbint_log_report_view.report;
 
 create or replace view dbint_report_view_stats AS
