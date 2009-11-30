@@ -122,10 +122,10 @@ public interface UsageStatsInfo {
 	 * log types), in order from oldest to newest
 	 * 
 	 * @param options
-	 *            For the schema change logs, the constant BUILD_ENTRIES means
+	 *            For the schema change logs, the constant 1 means
 	 *            only return log entries that are to do with schema building.
-	 *            TEARDOWN_ENTRIES and ALL_ENTRIES are also valid. The parameter
-	 *            is ignored for other log types
+	 *            -1 means return those that are to do with demolishing, e.g. remove a field, remove a table. 
+	 *            The parameter is ignored for other log types
 	 * 
 	 * @see com.gtwm.pb.model.manageUsage.LogType See LogType for a list of
 	 *      allowed log types

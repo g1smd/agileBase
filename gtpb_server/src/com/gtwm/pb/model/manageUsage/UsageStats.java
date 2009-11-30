@@ -805,7 +805,13 @@ public class UsageStats implements UsageStatsInfo {
 		SQLCode += " FROM";
 		SQLCode += "  (SELECT date_trunc('week',app_timestamp) as week, count(*) as count";
 		SQLCode += "   FROM " + "dbint_log_" + logType.name().toLowerCase();
-		SQLCode += "   WHERE company=? AND app_timestamp > (now() - '52 weeks'::interval) GROUP BY week";
+		SQLCode += "   WHERE company=? AND app_timestamp > (now() - '52 weeks'::interval)";
+		if (options == 1) {
+			SQLCode += "   AND NOT (app_action like 'remove%')";
+		} else if (options == -1) {
+			SQLCode += "   AND app_action like 'remove%'";
+		}
+		SQLCode += "   GROUP BY week";
 		SQLCode += "  ) AS log_records";
 		SQLCode += "  RIGHT OUTER JOIN (SELECT date_trunc('week',now()) - generate_series(0,52) * '1 week'::interval) as weeks(week)";
 		SQLCode += "  ON log_records.week = weeks.week";

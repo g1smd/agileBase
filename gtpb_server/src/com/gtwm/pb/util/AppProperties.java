@@ -23,7 +23,7 @@ package com.gtwm.pb.util;
 public class AppProperties {
 	public static final String applicationName = "GT portalBase";
 
-	public static final String applicationVersion = "2.4";
+	public static final String applicationVersion = "2.4.1";
 
 	/**
 	 * Location of the Velocity template used to report template processing
@@ -46,7 +46,9 @@ public class AppProperties {
 	public static final float longSqlTime = 0.2f;
 
 	/**
-	 * Enable startTimer and stopTimer in ViewTools
+	 * Enable startTimer and stopTimer in ViewTools. Useful for tracking down
+	 * any performance issues in the GUI to an individual template, as one HTTP
+	 * request may result in parsing many templates
 	 * 
 	 * @see com.gtwm.pb.model.interfaces.ViewToolsInfo#startTimer(String)
 	 */
@@ -67,20 +69,21 @@ public class AppProperties {
 	public static final boolean optimiseForPerformance = true;
 
 	/**
-	 * Used when getting items for a lookup field - how long to cache items for, in milliseconds
+	 * Used when getting items for a lookup field - how long to cache items for,
+	 * in milliseconds
 	 */
 	public static final int lookupCacheTime = 1000 * 10;
-	
+
 	/**
 	 * Monthly price per table
 	 */
 	public static final int tableCost = 10;
-	
+
 	/**
 	 * Price per table for every table above the discount level
 	 */
 	public static final int discountTableCost = 5;
-	
+
 	/**
 	 * Number of tables a company must have before discounting kicks in
 	 */

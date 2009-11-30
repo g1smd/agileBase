@@ -24,13 +24,58 @@
   <script src="resources/jquery.sparkline.js" language="Javascript"> </script>
   <SCRIPT language=Javascript src="resources/wait/request.js"></SCRIPT> 
   <SCRIPT language=Javascript src="resources/wait/editData.js"></SCRIPT>  
-  <SCRIPT language=Javascript>
+  <SCRIPT language="JavaScript">
     jQuery(document).ready(function(){
       #if($pane2_id)
-	    parent.pane_2.fSetRowSelection('$pane2_id');
-	  #end
-	  fInit();
-	}
+        parent.pane_2.fSetRowSelection('$pane2_id');
+      #end
+      fInit(); // in editData.js
+     });
+
+//Sparklines - see gui/administration/information/option_sets/information_export_data.vm
+function fSparkLines() {
+    var template_base="gui/administration/information/sparkline_data/";
+    var template = template_base + "logins";
+    jQuery.get("AppController.servlet",
+	  {"return": template},
+	  function(returned_data) { jQuery(".sparkline_logins").sparkline(eval(returned_data), {minSpotColor: false, maxSpotColor: false}); }
+	);
+	template = template_base + "report_views";
+	jQuery.get("AppController.servlet",
+	  {"return": template},
+	  function(returned_data) { jQuery(".sparkline_report_views").sparkline(eval(returned_data), {minSpotColor: false, maxSpotColor: false}); }
+	);
+	template = template_base + "data_edits";
+	jQuery.get("AppController.servlet",
+	  {"return": template},
+	  function(returned_data) { jQuery(".sparkline_data_edits").sparkline(eval(returned_data), {minSpotColor: false, maxSpotColor: false}); }
+	);
+	template = template_base + "report_changes_build";
+	jQuery.get("AppController.servlet",
+	  {"return": template},
+	  function(returned_data) {
+	    jQuery(".sparkline_report_changes").sparkline(eval(returned_data), {minSpotColor: false, maxSpotColor: false}); 
+	    template = template_base + "report_changes_demolish";
+		jQuery.get("AppController.servlet",
+	  	  {"return": template},
+	  	  function(returned_data) { jQuery(".sparkline_report_changes").sparkline(eval(returned_data), {composite:true, lineColor:'red', fillColor:false, minSpotColor: false, maxSpotColor: false} ); }
+		);
+	  }
+	);
+	template = template_base + "table_changes_build";
+	jQuery.get("AppController.servlet",
+	  {"return": template},
+	  function(returned_data) {
+	    jQuery(".sparkline_table_changes").sparkline(eval(returned_data), {minSpotColor: false, maxSpotColor: false}); 
+		template = template_base + "table_changes_demolish";
+		jQuery.get("AppController.servlet",
+	      {"return": template},
+	  	  function(returned_data) { jQuery(".sparkline_table_changes").sparkline(eval(returned_data), {composite:true, lineColor:'red', fillColor:false, minSpotColor: false, maxSpotColor: false} ); }
+		);
+	  }
+	);
+}
+
   </SCRIPT>
 
   <STYLE>
