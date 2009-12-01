@@ -715,9 +715,12 @@ public class AppController extends VelocityViewServlet {
 		float secondsToHandleRequest = (System.currentTimeMillis() - handleRequestStartTime)
 				/ ((float) 1000);
 		if (secondsToHandleRequest > AppProperties.longProcessingTime) {
-			logger.warn("Long server request processing time of "
+			String warnMessage = 
+			"Long server request processing time of "
 					+ String.valueOf(secondsToHandleRequest) + " seconds for URL "
-					+ getRequestQuery(request));
+					+ getRequestQuery(request) + "\r\n";
+			warnMessage += "Logged in user: " + request.getRemoteUser();
+			logger.warn(warnMessage);
 		}
 		// Don't to HibernateUtil.closeSession() here, leave it open for the
 		// view to display
@@ -761,6 +764,9 @@ public class AppController extends VelocityViewServlet {
 		String requestQuery = request.getQueryString();
 		if (requestQuery != null) {
 			return "GET: " + requestQuery;
+		}
+		if (FileUpload.isMultipartContent(new ServletRequestContext(request))) {
+			return "POST: file upload";
 		}
 		requestQuery = "POST: ";
 		Map<String, String[]> parameterMap = request.getParameterMap();
@@ -903,7 +909,7 @@ public class AppController extends VelocityViewServlet {
 		}
 		errorMessage += ex.toString() + "\r\n";
 		errorMessage += " - URL = " + getRequestQuery(request) + "\r\n";
-		errorMessage += " - Logged in user = " + request.getRemoteUser() + "\r\n";
+		errorMessage += " - Logged in user: " + request.getRemoteUser() + "\r\n";
 		errorMessage += getExceptionCauses(ex);
 		logger.error(errorMessage);
 	}
