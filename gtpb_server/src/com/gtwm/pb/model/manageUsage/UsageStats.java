@@ -500,11 +500,11 @@ public class UsageStats implements UsageStatsInfo {
 		}
 		// Find the last access time and access count for each user who looked
 		// at each report
-		String SQLCode = "SELECT max(app_timestamp), app_user, count(*) ";
-		SQLCode += "FROM dbint_log_" + LogType.REPORT_VIEW.name().toLowerCase() + " ";
-		SQLCode += "WHERE report=? AND app_timestamp > now() - '6 months'::interval";
-		SQLCode += "GROUP BY app_user ";
-		SQLCode += "ORDER BY max(app_timestamp) DESC";
+		String SQLCode = "SELECT max(app_timestamp), app_user, count(*)";
+		SQLCode += " FROM dbint_log_" + LogType.REPORT_VIEW.name().toLowerCase();
+		SQLCode += " WHERE report=? AND app_timestamp > now() - '6 months'::interval";
+		SQLCode += " GROUP BY app_user ";
+		SQLCode += " ORDER BY max(app_timestamp) DESC";
 		Connection conn = null;
 		try {
 			conn = this.databaseDefn.getDataSource().getConnection();
