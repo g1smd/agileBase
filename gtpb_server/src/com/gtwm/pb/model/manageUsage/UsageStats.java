@@ -800,6 +800,13 @@ public class UsageStats implements UsageStatsInfo {
 				PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
+		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
+		// Check cache
+		List<Integer> timelineCounts = new LinkedList<Integer>();
+		timelineCounts = company.getCachedSparkline(logType, options);
+		if (timelineCounts.size() > 0) {
+			return timelineCounts;
+		}
 		// Count entries per week, filling in weeks where there are no entries with 0
 		String SQLCode = "SELECT coalesce(log_records.count, 0) as count";
 		SQLCode += " FROM";
@@ -816,8 +823,6 @@ public class UsageStats implements UsageStatsInfo {
 		SQLCode += "  RIGHT OUTER JOIN (SELECT date_trunc('week',now()) - generate_series(0,52) * '1 week'::interval) as weeks(week)";
 		SQLCode += "  ON log_records.week = weeks.week";
 		SQLCode += " ORDER BY weeks.week";
-		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
-		List<Integer> timelineCounts = new LinkedList<Integer>();
 		Connection conn = null;
 		try {
 			conn = this.databaseDefn.getDataSource().getConnection();
@@ -835,6 +840,7 @@ public class UsageStats implements UsageStatsInfo {
 				conn.close();
 			}			
 		}
+		company.setCachedSparkline(logType, options, timelineCounts);
 		return timelineCounts;
 	}
 

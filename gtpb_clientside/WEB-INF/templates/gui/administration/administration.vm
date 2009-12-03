@@ -42,7 +42,7 @@
     <li id="administrationinformation">
 	  <div class="tree-item-wrap">		
           <a class=title href="AppController.servlet?return=gui/administration/information/list" target="pane_2" title="Show company information and usage stats">
-            organisation logs
+            admin dashboard
           </a>  
 	  </div>
 	</li>

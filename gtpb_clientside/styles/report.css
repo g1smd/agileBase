@@ -155,7 +155,7 @@ table#reportData tr.excludedRecord td {
 .small { font-size: 8pt!important }
 
 .load-spinner {
-	background: #fff url('ajax-loader.gif') no-repeat 50% 50%;
+	background: white url('ajax-loader.gif') no-repeat 50% 50%;
 	position: absolute;
 	width: 100%;
 	height: 100%;

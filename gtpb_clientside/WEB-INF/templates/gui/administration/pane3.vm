@@ -53,30 +53,49 @@ function fSparkLines() {
 	template = template_base + "report_changes_build";
 	jQuery.get("AppController.servlet",
 	  {"return": template},
-	  function(returned_data) {
-	    jQuery(".sparkline_report_changes").sparkline(eval(returned_data), {minSpotColor: false, maxSpotColor: false}); 
-	    template = template_base + "report_changes_demolish";
-		jQuery.get("AppController.servlet",
-	  	  {"return": template},
-	  	  function(returned_data) { jQuery(".sparkline_report_changes").sparkline(eval(returned_data), {composite:true, lineColor:'red', fillColor:false, minSpotColor: false, maxSpotColor: false} ); }
-		);
+	  function(returned_data) { jQuery(".sparkline_report_additions").sparkline(eval(returned_data), {type:"bar"}); }
+	);
+	template = template_base + "report_changes_demolish";
+	jQuery.get("AppController.servlet",
+	  {"return": template},
+	  function(returned_data) { 
+	    var returned_data_values = eval(returned_data);
+		for(var i=0; i < returned_data_values.length; i++) {
+		  returned_data_values[i] = returned_data_values[i] * -1;
+		}
+	    jQuery(".sparkline_report_removals").sparkline(returned_data_values, {type:"bar"} ); 
 	  }
 	);
 	template = template_base + "table_changes_build";
 	jQuery.get("AppController.servlet",
 	  {"return": template},
 	  function(returned_data) {
-	    jQuery(".sparkline_table_changes").sparkline(eval(returned_data), {minSpotColor: false, maxSpotColor: false}); 
-		template = template_base + "table_changes_demolish";
-		jQuery.get("AppController.servlet",
-	      {"return": template},
-	  	  function(returned_data) { jQuery(".sparkline_table_changes").sparkline(eval(returned_data), {composite:true, lineColor:'red', fillColor:false, minSpotColor: false, maxSpotColor: false} ); }
-		);
+	    jQuery(".sparkline_table_additions").sparkline(eval(returned_data), {type:"bar"} ); 
+	  }
+	);
+	template = template_base + "table_changes_demolish";
+	jQuery.get("AppController.servlet",
+	  {"return": template},
+	  function(returned_data) { 
+	    var returned_data_values = eval(returned_data);
+		for(var i=0; i < returned_data_values.length; i++) {
+		  returned_data_values[i] = returned_data_values[i] * -1;
+		}
+	    jQuery(".sparkline_table_removals").sparkline(returned_data_values, {type:"bar"} );
 	  }
 	);
 }
 
-  </SCRIPT>
+function fShowTableUsage() {
+  jQuery.get("AppController.servlet",
+  {"return":"gui/administration/tables/option_sets/table_usage_data_loader"},
+  function(returned_content) {
+    jquery("#table_usage").html(returned_content);
+	jQuery("#table_usage").removeClass("load_spinner"));
+  }
+}
+
+</SCRIPT>
 
   <STYLE>
 

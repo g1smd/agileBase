@@ -17,7 +17,7 @@
 ##
 $viewTools.startTimer("gui/administration/information/option_sets/information_export.vm")
 #set($option_set_id='information_export')
-#set($option_set_title='Export Activity Logs')
+#set($option_set_title='Administration Dashboard')
 #set($option_set_data_path='gui/administration/information/option_sets/information_export_data.vm')
 #parse('gui/administration/option_set.vm')
 $viewTools.stopTimer("gui/administration/information/option_sets/information_export.vm")

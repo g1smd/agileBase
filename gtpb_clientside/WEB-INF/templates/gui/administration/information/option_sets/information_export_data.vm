@@ -15,9 +15,37 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-$viewTools.startTimer("gui/administration/information/option_sets/information_export_data.vm")
-Mini-graphs summarise a year's data. Please click a link to download the detail.<p>
+<style>
+	#information_export {
+		background-color: #f1f2ed;
+	}
 	
+	.dashboard_blob {
+		background-color: white;
+		margin: 2em;
+		padding: 1.5em;
+		margin-left: 0px;
+		-webkit-border-radius: 1em;
+		-moz-border-radius: 1em;
+	}
+	
+	.dashboard_blob td {
+		font-size: 10pt!important;
+		width:50%;
+	}
+	
+	/* override report_administration.css */
+	.options_wrapper div.options_set td:first-child:first-line {
+		font-weight: normal;
+	}
+</style>
+
+$viewTools.startTimer("gui/administration/information/option_sets/information_export_data.vm")
+Please click a link to download full detail for each graph.<p>
+
+<div class="dashboard_blob">
+<table border="0"><tr>
+<td style="border-right: 1em solid #f1f2ed">
 <span class="sparkline_logins">...</span> 
 <a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">Logins</a>
 <br>
@@ -32,14 +60,41 @@ Which users viewed which reports<p>
 <a href="?return=gui/administration/information/export/data_change&returntype=download&returnfilename=data_changes.csv">Data changes</a>
 <br>
 Date, time, user and record identifier for each insertion, edit or record delete<p>
+</td>
+<td><h2>Operational</h2>
+These 'sparkline' charts show trends in adoption and usage of portalBase over the past year
+</td>
+</tr></table>
+</div>
 
-<span class="sparkline_report_changes">...</span> 
-<a href="?return=gui/administration/information/export/report_schema_change&returntype=download&returnfilename=report_schema_changes.csv">Report schema changes</a>
-<br>
-<span style="color:blue">Additions</span> and <span style="color:red">removals</span> of reports, report fields, filters etc.<p>
+<div class="dashboard_blob">
+<table border="0"><tr>
+<td style="border-right: 1em solid #f1f2ed">
+<span class="sparkline_report_additions">...</span> <span style="color:blue">Report building</span><br>
+<span class="sparkline_report_removals">...</span> <span style="color:red">Demolishing</span><br>
+Report building includes report creation, field additions etc.<br>
+Demolishing includes field deletions and report deletions<br>
+<a href="?return=gui/administration/information/export/report_schema_change&returntype=download&returnfilename=report_schema_changes.csv">Download all changes</a>
+</td>
+<td><h2>Tactical</h2>
+These charts are a pointer to levels of analysis rather than pure data entry
+</td>
+</tr></table>
+</div>
 
-<span class="sparkline_table_changes">...</span> 
-<a href="?return=gui/administration/information/export/table_schema_change&returntype=download&returnfilename=table_schema_changes.csv">Table schema changes</a>
-<br>
-<span style="color:blue">Additions</span> and <span style="color:red">removals</span> of tables and table fields<p>
+<div class="dashboard_blob">
+<table border="0"><tr>
+<td style="border-right: 1em solid #f1f2ed">
+<span class="sparkline_table_additions">...</span> <span style="color:blue">Table building</span><br>
+<span class="sparkline_table_removals">...</span> <span style="color:red">Demolishing</span><br>
+Data includes table creations, field creations, table deletions and field deletions<br>
+<a href="?return=gui/administration/information/export/table_schema_change&returntype=download&returnfilename=table_schema_changes.csv">Download all changes</a>
+</td>
+<td><h2>Strategic</h2>
+Table building points to portalBase use in new areas or projects. Removals suggest haltings and cost reductions.
+</td>
+</tr></table>
+</div>
+
+
 $viewTools.stopTimer("gui/administration/information/option_sets/information_export_data.vm")

@@ -85,7 +85,7 @@
 }
 
 .gfg-listentry-highlight { 
-  background-image : url('garrow.gif');
+  /* background-image : url('garrow.gif'); */
   background-repeat: no-repeat;
   background-position : center left;
 }
