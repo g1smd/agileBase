@@ -163,6 +163,31 @@ function appendWarning(warningRowHtml) {
 
 var warningRowHtmlSaved = '';
 
+/* Manage functions */
+function fShowTableUsage() {
+  // If no usage log table exists yet, get from server
+  if (jQuery("#table_usage_loader table").size() == 0) {
+	  jQuery.get("AppController.servlet",
+	  {"return":"gui/administration/tables/option_sets/table_usage_data_loader"},
+	  function(returned_content) {
+	    jQuery("#table_usage_loader").html(returned_content);
+		jQuery("#table_usage_loader").removeClass("load_spinner");
+	  });
+  }
+}
+
+function fShowReportUsage() {
+  // If no usage log table exists yet, get from server
+  if (jQuery("#report_usage_loader table").size() == 0) {
+	  jQuery.get("AppController.servlet",
+	  {"return":"gui/administration/reports/option_sets/report_usage_data_loader"},
+	  function(returned_content) {
+	    jQuery("#report_usage_loader").html(returned_content);
+		jQuery("#report_usage_loader").removeClass("load_spinner");
+	  });
+  }
+}
+
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
 

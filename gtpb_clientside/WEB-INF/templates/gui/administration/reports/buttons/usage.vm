@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($button_img='resources/usage/stats.png')
-#set($click="fShowOption('options_wrapper_$options_wrapper_no','report_usage')")
+#set($click="fShowOption('options_wrapper_$options_wrapper_no','report_usage'); fShowReportUsage();")
 #set($caption='Usage')
 #set($id='button_report_usage')
 #parse('gui/resources/button.vm')

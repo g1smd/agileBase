@@ -86,15 +86,6 @@ function fSparkLines() {
 	);
 }
 
-function fShowTableUsage() {
-  jQuery.get("AppController.servlet",
-  {"return":"gui/administration/tables/option_sets/table_usage_data_loader"},
-  function(returned_content) {
-    jquery("#table_usage").html(returned_content);
-	jQuery("#table_usage").removeClass("load_spinner"));
-  }
-}
-
 </SCRIPT>
 
   <STYLE>

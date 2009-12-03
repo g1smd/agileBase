@@ -16,13 +16,6 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 This list shows users that are viewing this report<p>
-#set($report = $sessionData.getReport())
-#set($reportViewStats = $view.getUsageStats().getReportViewStats($report).getUserStats())
-<table width="100%" border="0">
-<tr><td><b>User</b></td><td><b>Last access date</b></td><td><b>Total access count</b></td></tr>
-#foreach($reportViewStat in $reportViewStats)
-  <tr>
-	<td>$reportViewStat.getUser()</td><td>$reportViewStat.getLastViewed()</td><td>$reportViewStat.getReportViews()</td>
-  </tr>
-#end
-</table>
+<div class="load_spinner" id="report_usage_loader" style="width:100%">
+<!-- Content will be loaded over Ajax triggered by a call in buttons/usage.vm -->
+</div>
