@@ -41,7 +41,7 @@
 </style>
 
 $viewTools.startTimer("gui/administration/information/option_sets/information_export_data.vm")
-Please click a link to download full detail for each graph.<p>
+Please click a link below to download full detail for each graph.<p>
 
 <div class="dashboard_blob">
 <table border="0"><tr>
