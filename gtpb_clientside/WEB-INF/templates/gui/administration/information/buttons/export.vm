@@ -15,8 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($button_img='resources/usage/export.png')
+#set($button_img='resources/icons/applications/tango/mimetypes/x-office-spreadsheet.png')
 #set($click="fShowOption('options_wrapper_$options_wrapper_no','information_export'); fSparkLines();")
-#set($caption='Logs')
+#set($caption='Stats')
 #set($id='button_information_export')
 #parse('gui/resources/button.vm')

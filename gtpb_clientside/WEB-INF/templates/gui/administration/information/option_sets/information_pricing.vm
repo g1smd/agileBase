@@ -17,7 +17,7 @@
 ##
 $viewTools.startTimer("gui/administration/information/option_sets/information_pricing.vm")
 #set($option_set_id='information_pricing')
-#set($option_set_title='Company Information')
+#set($option_set_title='Administration Dashboard - Company Info')
 #set($option_set_data_path='gui/administration/information/option_sets/information_pricing_data.vm')
 #parse('gui/administration/option_set.vm')
 $viewTools.stopTimer("gui/administration/information/option_sets/information_pricing.vm")
