@@ -1,6 +1,7 @@
 package com.gtwm.pb.model.manageData;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -873,15 +874,14 @@ public class ViewTools implements ViewToolsInfo {
 		return escapedString;
 	}
 
+	//TODO: rename method to urlEncode
 	public String escapeForURL(String string) {
-		String escapedString = string.replace(":", "%3A");
-		escapedString = escapedString.replace("?", "%3F");
-		escapedString = escapedString.replace("=", "%3D");
-		escapedString = escapedString.replace("&", "%26");
-		escapedString = escapedString.replace(" ", "%20");
-		escapedString = escapedString.replace("-", "%2D");
-		escapedString = escapedString.replace("\\n","%0A");
-		return escapedString;
+		try {
+			return java.net.URLEncoder.encode(string, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			logger.error("Error URL encoding string '" + string + "': " + e);
+			return string;
+		}
 	}
 
 	public MathTool getMathTool() {
