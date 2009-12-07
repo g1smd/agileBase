@@ -18,7 +18,24 @@
 var tipCache = [];
 
 jQuery(document).ready(function(){
+	//Maximize window
+	if (window.screen) { 
+		window.moveTo(0,0); 
+		window.outerHeight = screen.availHeight; 
+		window.outerWidth = screen.availWidth; 
+	}
+	displayTreemap();
+	// Our customisation to make it look more as we want it
+	growLeaves();
+});
+
+jQuery(window).bind("resize", function(e) {
+	displayTreemap();
+	// Our customisation to make it look more as we want it
+	growLeaves();
+});
 	
+function displayTreemap() {
 	// fit treemap to window
 	jqInfovis = jQuery("#infovis");
 	ivWidth = jQuery("#dashboard").css("width");
@@ -115,7 +132,7 @@ jQuery(document).ready(function(){
 				}
              });  
     tm.loadJSON(json);
-	
+}
 	
 	// 'grow' leaves to remove the gaps between them and make groups of leaves look more contiguous
 function growLeaves() {
@@ -150,10 +167,6 @@ function growLeaves() {
 	  }
 	});
 }
-	
-	growLeaves();
-	
-});
 </script>
 
 <div id="dashboard">

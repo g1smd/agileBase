@@ -23,14 +23,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-
 import org.grlea.log.SimpleLogger;
-
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.FileField;
 import com.gtwm.pb.model.interfaces.fields.FileVersion;
-import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.model.manageData.fields.FileVersionDefn;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
