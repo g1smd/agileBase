@@ -36,26 +36,26 @@
 				#set($success=$fields.add([$field.getInternalFieldName(),$field]))##
 			#end ## added to show display field name for relation fields
 	  #end##
-	  #if($sessionTable.getDefaultReport().equals($sessionReport))
-				#set($numberOfTabs = '-1')
-	  #else
-			    #set($numberOfTabs = '2')
-			    #if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))
-				  #set($numberOfTabs = '6')
-			    #elseif($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))
-				  #set($numberOfTabs = '3')
-				#end
-	  #end
-	  #set($datarows = $view.getReportDataRows())
+	  #if($sessionTable.getDefaultReport().equals($sessionReport))##
+		#set($numberOfTabs = '-1')##
+	  #else##
+		#set($numberOfTabs = '2')##
+		#if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))##
+			#set($numberOfTabs = '6')##
+		#elseif($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))##
+			#set($numberOfTabs = '3')##
+		#end##
+	  #end##
+	  #set($datarows = $view.getReportDataRows())##
 	  #set($data=[])##
-	  #set($dataCapacity = $datarows.size() + 1)
-	  #set($success = $data.ensureCapacity($dataCapacity))
-	  #set($colsCapacity = $reportBaseFields.size() + 2)
+	  #set($dataCapacity = $datarows.size() + 1)##
+	  #set($success = $data.ensureCapacity($dataCapacity))##
+	  #set($colsCapacity = $reportBaseFields.size() + 2)##
 	  #foreach($datarow in $datarows)##
 		    #set($row=[])##
 		    #set($colours=[])##
-			#set($success = $row.ensureCapacity($colsCapacity))
-			#set($success = $colours.ensureCapacity($colsCapacity))
+			#set($success = $row.ensureCapacity($colsCapacity))##
+			#set($success = $colours.ensureCapacity($colsCapacity))##
 		    #set($dataRowFields = $datarow.getDataRowFields())##
 		    #foreach($field in $reportBaseFields)##
 		      #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##

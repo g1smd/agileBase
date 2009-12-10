@@ -113,8 +113,20 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #foreach($cell in $thisValues)
           #set($cellNumber = $velocityCount - 1)
           #set($colour = $rowColours.get($cellNumber))
+		  #set($rightAlign = false)
+		  #if($cellNumber < $fields.size())
+		    #set($field = $fields.get($cellNumber).get(1))
+			#set($fieldCategory = $field.getFieldCategory().toString())
+			#if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
+			  #set($rightAlign = true)
+			#end
+		  #end
           #set($cellContentLength=$cell.length() / 2)
-          <td #if($cellContentLength<=10)nowrap="true"#end #if($colour != "") style="background-color:$colour" class="colored"#end>
+		  #set($style="")
+		  #set($class="")
+		  #if($color != "") #set($style="background-color:$colour; ") #set($class="colored") #end
+		  #if($rightAlign) #set($style = "$style text-align:right; ") #end
+          <td #if($cellContentLength<=10)nowrap="true"#end #if($style != "")style="$style"#end #if($class != "")class="$class"#end>
             <div style="min-width:${cellContentLength}">
               #if(!(($thisUniqueId == $lastUniqueId) && ($cell == $lastValues.get($cellNumber))))$cell#else<span class="greytext">$cell</span>#end
             </div>
