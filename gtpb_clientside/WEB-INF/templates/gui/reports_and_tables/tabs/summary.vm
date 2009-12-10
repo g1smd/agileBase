@@ -25,8 +25,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
 #set($numCols = 1 + $groupings.size() + $aggregateFunctions.size())
-#set($reportSummaryData = $view.getReportSummaryData())
-#set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
 #set($loggedInUserAllowedToManage = $view.loggedInUserAllowedTo("MANAGE_TABLE", $report.getParentTable()))
 #set($showManageUi = false)
 ##$printout set in gui/reports_and_tables/report_data_print.vm
@@ -94,6 +92,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 		    </tr>
 	  </thead>
 	  <tbody>
+			#set($reportSummaryData = $view.getReportSummaryData())
+			#set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
 		    #foreach ($summaryRow in $reportSummaryRows)
 			      <tr #if($velocityCount%2!=0) class=rowa #else class=rowb #end>
 				        <td class=leading>&nbsp;</td>
