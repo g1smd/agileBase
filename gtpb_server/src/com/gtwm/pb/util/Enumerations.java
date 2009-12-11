@@ -327,4 +327,15 @@ public class Enumerations {
 		}
 	}
 
+	public enum Period {
+		DAY, WEEK, MONTH, YEAR;
+	}
+	
+	/**
+	 * Possible types of user who can log in to portalBase
+	 */
+	public enum UserType {
+		OPERATIONAL, MANAGERIAL, EXECUTIVE;
+	}
+	
 }

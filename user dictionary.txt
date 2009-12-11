@@ -11,3 +11,4 @@ lowercase
 timestamp
 findbugs
 sourced
+outlier

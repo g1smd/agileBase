@@ -26,7 +26,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #set($sessionReport=$sessionData.getReport())
 #set($sessionRowId=$sessionData.getRowId())
 #if($sessionRowId == -1)
-	  Select a record to edit data
+	<div class="warningmessage">
+		<b>No record selected:</b><p>
+		Pick a record from above to view data or press the 'New' button to create a record
+	</div>
 #else
   ## show the interface to edit the record
   #if(($sessionData.getLastAppAction() == "CLONE_RECORD") && ($sessionData.getLastAppActionRowId() == $sessionRowId))

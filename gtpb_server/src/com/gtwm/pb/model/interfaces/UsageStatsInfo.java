@@ -118,8 +118,7 @@ public interface UsageStatsInfo {
 			ObjectNotFoundException;
 
 	/**
-	 * Return counts of the total no. log entries per day (or per week, for some
-	 * log types), in order from oldest to newest
+	 * Return counts of the total no. log entries per week, in order from oldest to newest
 	 * 
 	 * @param options
 	 *            For the schema change logs, the constant 1 means
