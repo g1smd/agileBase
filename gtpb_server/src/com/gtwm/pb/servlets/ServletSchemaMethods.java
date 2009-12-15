@@ -267,7 +267,7 @@ public class ServletSchemaMethods {
 		}
 		ModuleInfo module = company.getModuleByInternalName(internalModuleName);
 		// Check that the module hasn't got any reports in it
-		Set<TableInfo> tables = databaseDefn.getTables();
+		Set<TableInfo> tables = company.getTables();
 		SortedSet<BaseReportInfo> memberReports = new TreeSet<BaseReportInfo>();
 		for (TableInfo table : tables) {
 			for (BaseReportInfo report : table.getReports()) {

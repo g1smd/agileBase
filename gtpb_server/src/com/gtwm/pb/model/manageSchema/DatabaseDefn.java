@@ -2357,7 +2357,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public String toString() {
-		return "Database tables: " + this.tables;
+		return "DatabaseDefn: Core portalBase methods";
 	}
 
 	/**

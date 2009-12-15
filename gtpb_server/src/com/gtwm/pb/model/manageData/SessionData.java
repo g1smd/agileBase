@@ -79,7 +79,7 @@ public class SessionData implements SessionDataInfo {
         AuthenticatorInfo authenticator = databaseDefn.getAuthManager().getAuthenticator();
         CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
         for (ModuleInfo module : company.getModules()) {
-        	for (TableInfo table : databaseDefn.getTables()) {
+        	for (TableInfo table : company.getTables()) {
         		for (BaseReportInfo report : table.getReports()) {
         			ModuleInfo reportModule = report.getModule();
         			if (module.equals(reportModule)) {
