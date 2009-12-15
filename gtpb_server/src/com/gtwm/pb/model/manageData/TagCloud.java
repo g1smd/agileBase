@@ -56,7 +56,7 @@ public class TagCloud implements TagCloudInfo {
 		}
 		Frequency frequencies = new Frequency();
 		for (String word : wordArray) {
-			if ((!stopWords.contains(word)) && (word.length() > 1)) {
+			if ((!stopWords.contains(word)) && (word.length() > 2)) {
 				frequencies.addValue(word);
 			}
 		}
@@ -145,8 +145,7 @@ public class TagCloud implements TagCloudInfo {
 				if (wordFreq <= minFreq) {
 					weight = minWeight;
 				} else {
-					weight = (int) (Math.ceil(new Double(wordFreq - minFreq) * scaleFactor)
-							+ minWeight);
+					weight = (int) (Math.ceil(new Double(wordFreq - minFreq) * scaleFactor) + minWeight);
 				}
 				TagInfo tag = new Tag(word, weight);
 				this.tags.add(tag);
@@ -181,7 +180,8 @@ public class TagCloud implements TagCloudInfo {
 			"throughout", "thus", "to", "too", "toward", "unless", "until", "up", "upon", "us",
 			"ve", "very", "was", "we", "were", "what", "whatever", "when", "where", "which",
 			"while", "who", "whom", "whomever", "whose", "why", "with", "within", "without",
-			"would", "yes", "your", "yours", "yourself", "yourselves", "quot", "amp", "doesn" };
+			"would", "yes", "your", "yours", "yourself", "yourselves", "quot", "amp", "doesn",
+			"better", "rather", "you", "most", "need", "however", "whilst", "because" };
 
 	private static final SimpleLogger logger = new SimpleLogger(TagCloud.class);
 
