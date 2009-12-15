@@ -51,7 +51,7 @@ public abstract class AbstractField implements BaseField {
 	public String getFieldName() {
 		return Naming.makeValidXML(this.getFieldNameDirect());
 	}
-	
+
 	/**
 	 * For hibernate: we want to persist this.fieldName directly, not
 	 * Naming.makeValidXML(this.getFieldNameDirect())
@@ -156,17 +156,21 @@ public abstract class AbstractField implements BaseField {
 			return tableCompare;
 		}
 		Integer otherFieldIndex = otherField.getFieldIndex();
-		// Hidden fields should come at the end
-		if (otherField.getHidden()) {
-			otherFieldIndex += 10000;
-		}
-		Integer thisFieldIndex = this.getFieldIndex();
-		if (this.getHidden()) {
-			thisFieldIndex += 10000;
-		}
-		int indexCompare = thisFieldIndex.compareTo(otherFieldIndex);
-		if (indexCompare != 0) {
-			return indexCompare;
+		if (otherFieldIndex != null) {
+			// Hidden fields should come at the end
+			if (otherField.getHidden()) {
+				otherFieldIndex += 10000;
+			}
+			Integer thisFieldIndex = this.getFieldIndex();
+			if (thisFieldIndex != null) {
+				if (this.getHidden()) {
+					thisFieldIndex += 10000;
+				}
+				int indexCompare = thisFieldIndex.compareTo(otherFieldIndex);
+				if (indexCompare != 0) {
+					return indexCompare;
+				}
+			}
 		}
 		String otherFieldName = otherField.getFieldName();
 		String otherFieldInternalName = otherField.getInternalFieldName();

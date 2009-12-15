@@ -20,10 +20,7 @@ package com.gtwm.pb.model.manageData;
 import com.gtwm.pb.model.interfaces.ReportDataFieldStatsInfo;
 
 public class ReportDataFieldStats implements ReportDataFieldStatsInfo {
-	/**
-	 * Private constructor only used by the object database db4o Provided for
-	 * performance reasons, see the 'Tuning' section 21.2 of the db4o tutorial
-	 */
+
 	private ReportDataFieldStats() {
 	}
 

@@ -112,7 +112,7 @@ public class ViewMethods implements ViewMethodsInfo {
 		this.databaseDefn = databaseDefn;
 	}
 
-	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException {
+	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException, ObjectNotFoundException {
 		Set<String> graphCodeLines = new LinkedHashSet<String>();
 		SortedSet<BaseReportInfo> reportsInModule = this.getReportsInModule(module);
 		for (BaseReportInfo report : reportsInModule) {
@@ -181,7 +181,7 @@ public class ViewMethods implements ViewMethodsInfo {
 	 * Return all report in a module that the logged in user can see
 	 */
 	private SortedSet<BaseReportInfo> getReportsInModule(ModuleInfo module)
-			throws CodingErrorException {
+			throws CodingErrorException, ObjectNotFoundException {
 		SortedSet<BaseReportInfo> reportsInModule = new TreeSet<BaseReportInfo>();
 		for (BaseReportInfo report : this.getAllViewableReports()) {
 			ModuleInfo reportModule = report.getModule();
@@ -274,16 +274,17 @@ public class ViewMethods implements ViewMethodsInfo {
 		return this.databaseDefn.getAuthManager().getCompanies(this.request);
 	}
 
-	public SortedSet<TableInfo> getTablesAllowedTo(String privilegeString) {
+	public SortedSet<TableInfo> getTablesAllowedTo(String privilegeString) throws ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeString.toUpperCase());
 		return this.getTablesAllowedTo(privilegeType);
 	}
 
-	private SortedSet<TableInfo> getTablesAllowedTo(PrivilegeType privilegeType) {
-		SortedSet<TableInfo> allTables = this.databaseDefn.getTables();
+	private SortedSet<TableInfo> getTablesAllowedTo(PrivilegeType privilegeType) throws ObjectNotFoundException {
+		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(this.request);
+		SortedSet<TableInfo> companyTables = company.getTables();
 		// Strip down to the set of tables the user has privileges on
 		SortedSet<TableInfo> tablesAllowedTo = new TreeSet<TableInfo>();
-		for (TableInfo table : allTables) {
+		for (TableInfo table : companyTables) {
 			if (this.getAuthenticator().loggedInUserAllowedTo(this.request, privilegeType, table)) {
 				tablesAllowedTo.add(table);
 			}
@@ -304,7 +305,7 @@ public class ViewMethods implements ViewMethodsInfo {
 		return viewableReports;
 	}
 
-	public SortedSet<BaseReportInfo> getAllViewableReports() throws CodingErrorException {
+	public SortedSet<BaseReportInfo> getAllViewableReports() throws CodingErrorException, ObjectNotFoundException {
 		SortedSet<BaseReportInfo> reports = new TreeSet<BaseReportInfo>();
 		SortedSet<TableInfo> tables = this.getTablesAllowedTo(PrivilegeType.VIEW_TABLE_DATA);
 		for (TableInfo table : tables) {
@@ -778,7 +779,7 @@ public class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public List<JoinClauseInfo> getCandidateJoins(SimpleReportInfo report)
-			throws CodingErrorException {
+			throws CodingErrorException, ObjectNotFoundException {
 		List<JoinClauseInfo> candidateJoins = new LinkedList<JoinClauseInfo>();
 		// Collect all tables which are already joined or have child reports
 		// which are joined.
@@ -835,10 +836,10 @@ public class ViewMethods implements ViewMethodsInfo {
 	}
 
 	private AuthenticatorInfo getAuthenticator() {
-		return getAuthManager().getAuthenticator();
+		return this.getAuthManager().getAuthenticator();
 	}
 
-	public String toInternalNames(String sourceText) {
+	public String toInternalNames(String sourceText) throws ObjectNotFoundException {
 		sourceText = sourceText.toLowerCase(Locale.UK);
 		if (sourceText.contains("{")) {
 			for (TableInfo table : this.getTablesAllowedTo(PrivilegeType.VIEW_TABLE_DATA)) {
@@ -883,7 +884,7 @@ public class ViewMethods implements ViewMethodsInfo {
 		return sourceText;
 	}
 
-	public String toExternalNames(String sourceText) {
+	public String toExternalNames(String sourceText) throws ObjectNotFoundException {
 		for (TableInfo table : this.getTablesAllowedTo(PrivilegeType.VIEW_TABLE_DATA)) {
 			sourceText = sourceText.replaceAll(table.getInternalTableName(), table.getTableName());
 			for (BaseReportInfo report : table.getReports()) {

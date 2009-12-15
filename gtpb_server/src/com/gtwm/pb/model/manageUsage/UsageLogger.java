@@ -45,8 +45,10 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	}
 
 	/*
-	 * Actually do the logging to the database Note: Thread.yield() statements
-	 * are between potentially long running operations
+	 * Actually do the logging to the database.
+	 * 
+	 * Note: Thread.yield() statements are between potentially long running
+	 * operations
 	 */
 	public void run() {
 		// Delay execution to give the original action we're logging time to
@@ -58,14 +60,14 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 		} catch (InterruptedException e) {
 			logger.error("UsageLogger interrupted while sleeping");
 		}
-		String SQLCode = "INSERT INTO dbint_log_" + this.logType.toString().toLowerCase();
-		Connection conn = null;
 		String companyName = this.user.getCompany().getCompanyName();
 		String userName = this.user.getUserName();
 		String appActionName = "";
 		if (this.appAction != null) {
 			appActionName = this.appAction.toString().toLowerCase().replace('_', ' ');
 		}
+		String SQLCode = "INSERT INTO dbint_log_" + this.logType.toString().toLowerCase();
+		Connection conn = null;
 		try {
 			conn = relationalDataSource.getConnection();
 			conn.setAutoCommit(false);

@@ -75,6 +75,18 @@ public class AppProperties {
 	public static final int lookupCacheTime = 1000 * 10;
 
 	/**
+	 * An hour of the day when portalBase is expected to have low activity and
+	 * background tasks can be started in
+	 */
+	public static final int lowActivityHour = 3;
+
+	/**
+	 * For dashboard display, the number of standard deviations above which a
+	 * value is considered an outlier and an exception will be reported
+	 */
+	public static final int stdDevsThreshold = 6;
+
+	/**
 	 * Monthly price per table
 	 */
 	public static final int tableCost = 10;

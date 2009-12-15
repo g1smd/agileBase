@@ -101,8 +101,7 @@ public class FileFieldDefn extends AbstractField implements FileField {
 
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.FILE);
-		return fieldDescriptor;
+		return new FieldTypeDescriptor(FieldCategory.FILE);
 	}
 
 	private static final SimpleLogger logger = new SimpleLogger(FileFieldDefn.class);

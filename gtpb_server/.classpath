@@ -61,7 +61,6 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/simple-log.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/swarmcache-1.0rc2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/syndiag2.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/treemap.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/trove-1.0.2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/versioncheck.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/werken-xpath-0.9.4.jar"/>

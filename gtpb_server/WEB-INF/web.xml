@@ -23,7 +23,8 @@
     </filter>
     <filter-mapping>
             <filter-name>monitoring</filter-name>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>*.servlet</url-pattern>
+            <url-pattern>/monitoring</url-pattern>
     </filter-mapping>
     <listener>
             <listener-class>net.bull.javamelody.SessionListener</listener-class>

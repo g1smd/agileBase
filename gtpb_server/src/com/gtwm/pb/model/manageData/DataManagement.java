@@ -1001,12 +1001,12 @@ public class DataManagement implements DataManagementInfo {
 			}
 			statement.close();
 			// reset the primary key ID sequence so new records can be added
-			this.resetSequence((SequenceField) primaryKey, conn);
+			resetSequence((SequenceField) primaryKey, conn);
 			// and any other sequence fields
 			if (importSequenceValues) {
 				for (BaseField field : table.getFields()) {
 					if ((!field.equals(primaryKey)) && field instanceof SequenceField) {
-						this.resetSequence((SequenceField) field, conn);
+						resetSequence((SequenceField) field, conn);
 					}
 				}
 			}
@@ -1054,7 +1054,7 @@ public class DataManagement implements DataManagementInfo {
 	 * next number above the highest value in the database. This ensures that
 	 * record inserts will work
 	 */
-	private void resetSequence(SequenceField sequenceField, Connection conn) throws SQLException {
+	private static void resetSequence(SequenceField sequenceField, Connection conn) throws SQLException {
 		TableInfo table = sequenceField.getTableContainingField();
 		// Find the max value
 		String SQLCode = "SELECT MAX(" + sequenceField.getInternalFieldName() + ") FROM "
@@ -1170,7 +1170,7 @@ public class DataManagement implements DataManagementInfo {
 	 * Also throw an exception immediately if any locked records are found as
 	 * this means the deletion should fail
 	 */
-	private Set<TableInfo> getTablesWithDependentRecords(Connection conn,
+	private static Set<TableInfo> getTablesWithDependentRecords(Connection conn,
 			HttpServletRequest request, SessionDataInfo sessionData, DatabaseInfo databaseDefn,
 			TableInfo table, int rowId, Set<TableInfo> tablesWithDependentRecords)
 			throws SQLException, ObjectNotFoundException, CantDoThatException {
@@ -1204,7 +1204,7 @@ public class DataManagement implements DataManagementInfo {
 					}
 					// recurse
 					if (!tablesWithDependentRecords.contains(otherTable)) {
-						tablesWithDependentRecords.addAll(this.getTablesWithDependentRecords(conn,
+						tablesWithDependentRecords.addAll(getTablesWithDependentRecords(conn,
 								request, sessionData, databaseDefn, otherTable, otherRowId,
 								tablesWithDependentRecords));
 					}
@@ -1226,7 +1226,7 @@ public class DataManagement implements DataManagementInfo {
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			tablesWithDependentRecords = this.getTablesWithDependentRecords(conn, request,
+			tablesWithDependentRecords = getTablesWithDependentRecords(conn, request,
 					sessionData, databaseDefn, table, rowId, tablesWithDependentRecords);
 		} finally {
 			if (conn != null) {
@@ -1424,7 +1424,7 @@ public class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	private Map<String, String> getKeyToDisplayMapping(Connection conn, String internalSourceName,
+	private static Map<String, String> getKeyToDisplayMapping(Connection conn, String internalSourceName,
 			String internalKeyFieldName, String internalDisplayFieldName) throws SQLException {
 		// Buffer the set of display values for this field:
 		String SQLCode = "SELECT " + internalKeyFieldName + ", " + internalDisplayFieldName;
@@ -1466,7 +1466,7 @@ public class DataManagement implements DataManagementInfo {
 								.getInternalFieldName();
 						String relatedSource = ((RelationField) baseField).getRelatedTable()
 								.getInternalTableName();
-						Map<String, String> displayLookup = this.getKeyToDisplayMapping(conn,
+						Map<String, String> displayLookup = getKeyToDisplayMapping(conn,
 								relatedSource, relatedKey, relatedDisplay);
 						displayLookups.put(groupingReportField, displayLookup);
 					}

@@ -81,7 +81,7 @@ public class DataRow implements DataRowInfo {
 		this.loadDataRow(conn, statement);
 	}
 
-	private Map<String, String> getKeyToDisplayMapping(Connection conn, String internalSourceName,
+	private static Map<String, String> getKeyToDisplayMapping(Connection conn, String internalSourceName,
 			String internalKeyFieldName, String internalDisplayFieldName) throws SQLException {
 		// Buffer the set of display values for this field:
 		String SQLCode = "SELECT " + internalKeyFieldName + ", " + internalDisplayFieldName;

@@ -147,8 +147,8 @@ public class AppController extends VelocityViewServlet {
 
 	public void destroy() {
 		super.destroy();
-		// release memory
-		// for good measure
+		this.databaseDefn.cancelScheduledEvents();
+		// Release memory - still not sure if this is actually necessary
 		this.databaseDefn = null;
 		this.relationalDataSource = null;
 		logger.info("portalBase shut down");

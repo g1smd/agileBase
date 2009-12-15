@@ -1,6 +1,7 @@
 package com.gtwm.pb.model.interfaces;
 
-import java.util.Calendar;
+import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.DateValue;
 
 /**
  * A single value exception, i.e. outlier value
@@ -14,22 +15,15 @@ public interface DashboardOutlierInfo {
 	
 	public int getRowID();
 	
-	public ReportFieldInfo getReportField();
-	
-	public double getValue();
+	public BaseField getField();
 	
 	/**
-	 * Return standard deviation of the values in the field the outlier is in, for comparison
+	 * Return the value itself
 	 */
-	public double getStdDev();
-	
-	/**
-	 * Return mean of the values in the field the outlier is in, for comparison
-	 */
-	public double getMean();
-	
+	public DataRowFieldInfo getDataRowField();
+		
 	/**
 	 * Return the date the row was last edited
 	 */
-	public Calendar getModificationDate();
+	public DateValue getModificationDate();
 }

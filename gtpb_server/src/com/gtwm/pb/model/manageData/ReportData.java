@@ -42,7 +42,12 @@ import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.AppProperties;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Set;
@@ -170,7 +175,7 @@ public class ReportData implements ReportDataInfo {
 		}
 	}
 
-	private QuickFilterType getFilterTypeFromFilterValueString(String filterValue) {
+	private static QuickFilterType getFilterTypeFromFilterValueString(String filterValue) {
 		// perform filter type specific filter value cleansing:
 		QuickFilterType filterType = QuickFilterType.LIKE; // LIKE is default
 		// case
@@ -186,7 +191,7 @@ public class ReportData implements ReportDataInfo {
 		return filterType;
 	}
 
-	private String getCleansedFilterValueString(BaseField filterField, String filterValue,
+	private static String getCleansedFilterValueString(BaseField filterField, String filterValue,
 			QuickFilterType filterType, boolean exactFilters) {
 		DatabaseFieldType dbType = filterField.getDbType();
 		// clean-up filter value:
@@ -237,7 +242,8 @@ public class ReportData implements ReportDataInfo {
 		return filterValue;
 	}
 
-	private String getFilterTypeSqlRepresentation(BaseField filterField, QuickFilterType filterType) {
+	private static String getFilterTypeSqlRepresentation(BaseField filterField,
+			QuickFilterType filterType) {
 		String filterTypeSqlRepresentation = filterType.getSqlRepresentation();
 		if (filterType.equals(QuickFilterType.EMPTY)) {
 			filterTypeSqlRepresentation = filterTypeSqlRepresentation.replaceAll(
@@ -249,7 +255,7 @@ public class ReportData implements ReportDataInfo {
 	/**
 	 * Filter on the display value
 	 */
-	private String generateSqlFilterStringForRelation(RelationField relationField,
+	private static String generateSqlFilterStringForRelation(RelationField relationField,
 			QuickFilterType filterType) {
 		StringBuilder sqlFilterString = new StringBuilder();
 		String filterFieldInternalName = relationField.getInternalFieldName();
@@ -284,7 +290,7 @@ public class ReportData implements ReportDataInfo {
 	 * Filter for date/time values that can't be parsed as actual date/times but
 	 * should be filtered as text, e.g *Jan
 	 */
-	private String generateSqlFilterStringForDateAsText(BaseField filterField,
+	private static String generateSqlFilterStringForDateAsText(BaseField filterField,
 			QuickFilterType filterType) throws CantDoThatException {
 		String sqlFilterString = "";
 		// Filter dates in the correct format
@@ -296,14 +302,13 @@ public class ReportData implements ReportDataInfo {
 					.getReportCalcField().getDateResolution());
 		}
 		String filterFieldInternalName = filterField.getInternalFieldName();
-		String filterTypeSqlRepresentation = this.getFilterTypeSqlRepresentation(filterField,
-				filterType);
+		String filterTypeSqlRepresentation = getFilterTypeSqlRepresentation(filterField, filterType);
 		sqlFilterString = "lower(to_char(" + filterFieldInternalName + ", '" + dateFormat + "'))";
 		sqlFilterString += " " + filterTypeSqlRepresentation + " ? ";
 		return sqlFilterString;
 	}
 
-	private String generateSqlFilterStringForBoolean(BaseField filterField) {
+	private static String generateSqlFilterStringForBoolean(BaseField filterField) {
 		// filters on boolean have to use =, ILIKE doesn't work
 		String filterFieldInternalName = filterField.getInternalFieldName();
 		String sqlFilterString = "CASE WHEN " + filterFieldInternalName
@@ -318,7 +323,7 @@ public class ReportData implements ReportDataInfo {
 	 * @return A JChronic Span representing the time period, or null if
 	 *         unparseable
 	 */
-	private Span parseTimestamp(String valueToParse) {
+	private static Span parseTimestamp(String valueToParse) {
 		// Check any patterns that we know won't be interpreted as timestamps
 		// properly
 		if (valueToParse.contains("%") || valueToParse.contains("*")
@@ -340,12 +345,12 @@ public class ReportData implements ReportDataInfo {
 		}
 	}
 
-	private String generateFilterStringForField(BaseField filterField, String filterValue,
+	private static String generateFilterStringForField(BaseField filterField, String filterValue,
 			List<ReportQuickFilterInfo> filtersUsed, boolean exactFilters)
 			throws CantDoThatException {
 		StringBuilder filterStringForField = new StringBuilder();
-		QuickFilterType filterType = this.getFilterTypeFromFilterValueString(filterValue);
-		filterValue = this.getCleansedFilterValueString(filterField, filterValue, filterType,
+		QuickFilterType filterType = getFilterTypeFromFilterValueString(filterValue);
+		filterValue = getCleansedFilterValueString(filterField, filterValue, filterType,
 				exactFilters);
 		String sqlFilterString = "";
 		DatabaseFieldType dbType = filterField.getDbType();
@@ -356,19 +361,19 @@ public class ReportData implements ReportDataInfo {
 			if (valueToParse.endsWith("%")) {
 				valueToParse = valueToParse.substring(0, valueToParse.length() - 1);
 			}
-			if (this.parseTimestamp(valueToParse) == null) {
+			if (parseTimestamp(valueToParse) == null) {
 				timespanCanBeParsed = false;
 			}
 		}
 		if (filterField instanceof RelationField) {
-			sqlFilterString = this.generateSqlFilterStringForRelation((RelationField) filterField,
+			sqlFilterString = generateSqlFilterStringForRelation((RelationField) filterField,
 					filterType);
 			filterStringForField.append(sqlFilterString);
 		} else if (dbType.equals(DatabaseFieldType.TIMESTAMP) && !timespanCanBeParsed) {
-			sqlFilterString = this.generateSqlFilterStringForDateAsText(filterField, filterType);
+			sqlFilterString = generateSqlFilterStringForDateAsText(filterField, filterType);
 			filterStringForField.append(sqlFilterString);
 		} else if (dbType.equals(DatabaseFieldType.BOOLEAN)) {
-			sqlFilterString = this.generateSqlFilterStringForBoolean(filterField);
+			sqlFilterString = generateSqlFilterStringForBoolean(filterField);
 			filterStringForField.append(sqlFilterString);
 		} else {
 			// filter on the stored value:
@@ -388,7 +393,7 @@ public class ReportData implements ReportDataInfo {
 			} else {
 				filterStringForField.append(filterFieldInternalName + "::text");
 			}
-			String filterTypeSqlRepresentation = this.getFilterTypeSqlRepresentation(filterField,
+			String filterTypeSqlRepresentation = getFilterTypeSqlRepresentation(filterField,
 					filterType);
 			filterStringForField.append(" " + filterTypeSqlRepresentation + " ? ");
 		}
@@ -526,7 +531,7 @@ public class ReportData implements ReportDataInfo {
 					if (filterValue.endsWith("%")) {
 						filterValue = filterValue.substring(0, filterValue.length() - 1);
 					}
-					Span timespan = this.parseTimestamp(filterValue);
+					Span timespan = parseTimestamp(filterValue);
 					if (timespan == null) {
 						statement.setString(i, filter.getFilterValue());
 					} else {
@@ -558,12 +563,12 @@ public class ReportData implements ReportDataInfo {
 	 * 
 	 * '>today and <today'
 	 */
-	private String preprocessDateFilter(String filterValue) throws CantDoThatException {
+	private static String preprocessDateFilter(String filterValue) throws CantDoThatException {
 		String processedFilterValue = filterValue;
 		String[] tokens = filterValue.split("\\sand\\s|\\sor\\s");
 		for (String token : tokens) {
 			if (!(token.startsWith(">") || token.startsWith("<"))) {
-				Span timespan = this.parseTimestamp(token);
+				Span timespan = parseTimestamp(token);
 				if (timespan != null) {
 					String replacement = ">" + token + " and <" + token;
 					processedFilterValue = processedFilterValue.replaceAll("\\Q" + token + "\\E",
@@ -605,7 +610,7 @@ public class ReportData implements ReportDataInfo {
 					|| filterFieldDbType.equals(DatabaseFieldType.SERIAL)) {
 				filterValue = filterValue.replaceAll(",", "");
 			} else if (filterFieldDbType.equals(DatabaseFieldType.TIMESTAMP)) {
-				filterValue = this.preprocessDateFilter(filterValue);
+				filterValue = preprocessDateFilter(filterValue);
 			}
 			// OR/AND filtering of values (restricted to a given field)
 			String[] orFilterParts = filterValue.split(QuickFilterType.OR.getUserRepresentation()
@@ -659,8 +664,9 @@ public class ReportData implements ReportDataInfo {
 		return whereClause;
 	}
 
-	private Map<String, String> getKeyToDisplayMapping(Connection conn, String internalSourceName,
-			String internalKeyFieldName, String internalDisplayFieldName) throws SQLException {
+	private static Map<String, String> getKeyToDisplayMapping(Connection conn,
+			String internalSourceName, String internalKeyFieldName, String internalDisplayFieldName)
+			throws SQLException {
 		// Buffer the set of display values for this field:
 		// Note: don't need to cache these as relation fields shouldn't be used
 		// in general reports, just in table default reports
@@ -691,8 +697,8 @@ public class ReportData implements ReportDataInfo {
 				String relatedKey = relationField.getRelatedField().getInternalFieldName();
 				String relatedDisplay = relationField.getDisplayField().getInternalFieldName();
 				String relatedSource = relationField.getRelatedTable().getInternalTableName();
-				Map<String, String> displayLookup = this.getKeyToDisplayMapping(conn,
-						relatedSource, relatedKey, relatedDisplay);
+				Map<String, String> displayLookup = getKeyToDisplayMapping(conn, relatedSource,
+						relatedKey, relatedDisplay);
 				displayLookups.put(relationField.getRelatedField(), displayLookup);
 			}
 		}
@@ -720,18 +726,15 @@ public class ReportData implements ReportDataInfo {
 		Map<BaseField, DataRowFieldInfo> row;
 		while (results.next()) {
 			int rowid = results.getInt(primaryKeyField.getInternalFieldName());
-			// TODO: performance tests to see whether
-			// row.clear()
-			// or
-			// new map creation is better in this loop
 			row = new LinkedHashMap<BaseField, DataRowFieldInfo>();
-			//row.clear();
+			// row.clear();
 			// add all columns to the row:
 			for (ReportFieldInfo reportField : this.report.getReportFields()) {
 				BaseField fieldSchema = reportField.getBaseField();
 				String colourRepresentation = null;
+				double numberOfStdDevsFromMean = 0d;
 				String keyValue = "";
-				String displayValue = "";
+				String displayValue = null;
 				// If cell should be coloured, calculate colour hex string
 				boolean fieldShouldBeColoured = this.cachedFieldStats.containsKey(reportField);
 				String colourableFieldInternalName = reportField.getInternalFieldName();
@@ -748,26 +751,9 @@ public class ReportData implements ReportDataInfo {
 				}
 				if (fieldShouldBeColoured) {
 					ReportDataFieldStatsInfo fieldStats = this.cachedFieldStats.get(reportField);
-					double numberOfStdDevsFromMean = 0d;
 					double stdDev = fieldStats.getStdDev();
 					if (stdDev != 0d) {
 						numberOfStdDevsFromMean = (fieldValue - fieldStats.getMean()) / stdDev;
-					}
-					int colourVal = (int) (numberOfStdDevsFromMean * colourScalingFactor);
-					int absColourVal = Math.abs(colourVal);
-					if (absColourVal > 255) {
-						absColourVal = 255;
-					}
-					colourRepresentation = Integer.toHexString(255 - absColourVal);
-					if (colourRepresentation.length() == 1) {
-						colourRepresentation = "0" + colourRepresentation;
-					}
-					// +ve = green shade, -ve = red
-					if (colourVal > 0) {
-						colourRepresentation = "#" + colourRepresentation + "ff"
-								+ colourRepresentation;
-					} else {
-						colourRepresentation = "#ff" + colourRepresentation + colourRepresentation;
 					}
 					// generate new ReportDataRowField object:
 					if (fieldSchema.getDbType().equals(DatabaseFieldType.INTEGER)) {
@@ -804,7 +790,6 @@ public class ReportData implements ReportDataInfo {
 								keyValue = ((DateField) fieldSchema).formatDate(dbValue);
 							}
 						}
-						displayValue = keyValue;
 					} else {
 						// fallback to getting as a String and let the db
 						// driver work out the formatting
@@ -837,7 +822,6 @@ public class ReportData implements ReportDataInfo {
 									keyValue = ((DateField) fieldSchema).formatDate(dbValue);
 								}
 							}
-							displayValue = keyValue;
 						} else if (fieldSchema.getDbType().equals(DatabaseFieldType.FLOAT)) {
 							double dbValue = results.getDouble(fieldSchema.getInternalFieldName());
 							if (results.wasNull()) {
@@ -847,7 +831,6 @@ public class ReportData implements ReportDataInfo {
 							} else {
 								keyValue = ((DecimalField) fieldSchema).formatFloat(dbValue);
 							}
-							displayValue = keyValue;
 							// Override with 'not applicable' string if
 							// necessary
 							if (fieldSchema instanceof DecimalField) {
@@ -872,7 +855,6 @@ public class ReportData implements ReportDataInfo {
 							} else {
 								keyValue = ((IntegerField) fieldSchema).formatInteger(dbValue);
 							}
-							displayValue = keyValue;
 						} else if (fieldSchema.getDbType().equals(DatabaseFieldType.BOOLEAN)) {
 							keyValue = results.getString(fieldSchema.getInternalFieldName());
 							// Note: we do need a null check. Boolean values are
@@ -889,16 +871,14 @@ public class ReportData implements ReportDataInfo {
 									keyValue = "false";
 								}
 							}
-							displayValue = keyValue;
 						} else {
 							keyValue = results.getString(fieldSchema.getInternalFieldName());
 							if (keyValue == null) {
 								keyValue = "";
 							}
-							displayValue = keyValue;
 							if (fieldSchema instanceof TextField) {
 								TextField fieldSchemaText = (TextField) fieldSchema;
-								// Override with 'not applicable' string if
+								// Set displayValue to 'not applicable' string if
 								// necessary
 								if (fieldSchemaText.allowNotApplicable()) {
 									if (fieldSchemaText.getNotApplicableValue().equals(keyValue)) {
@@ -907,8 +887,8 @@ public class ReportData implements ReportDataInfo {
 									}
 								} else {
 									int textFieldSize = fieldSchemaText.getContentSize();
-									if (displayValue.length() > (textFieldSize + 1)) {
-										displayValue = displayValue.substring(0, textFieldSize)
+									if (keyValue.length() > (textFieldSize + 1)) {
+										displayValue = keyValue.substring(0, textFieldSize)
 												+ "&hellip;";
 									}
 								}
@@ -916,12 +896,19 @@ public class ReportData implements ReportDataInfo {
 						}
 					}
 				}
-				// keyValue, displayValue and colourRepresentation (if
-				// appropriate) should all be calculated now
-				if (colourRepresentation == null) {
-					reportDataRowField = new DataRowField(keyValue, displayValue);
+				if(displayValue == null) {
+					displayValue = keyValue;
+				}
+				if (numberOfStdDevsFromMean != 0d) {
+					// colour will be calculated from std. dev
+					reportDataRowField = new DataRowField(keyValue, displayValue,
+							numberOfStdDevsFromMean);
+				} else if (colourRepresentation != null) {
+					// colour explicitly set (e.g. a boolean field)
+					reportDataRowField = new DataRowField(keyValue, displayValue, colourRepresentation);
 				} else {
-					reportDataRowField = new DataRowField(keyValue, keyValue, colourRepresentation);
+					// no colour
+					reportDataRowField = new DataRowField(keyValue, displayValue);
 				}
 				row.put(fieldSchema, reportDataRowField);
 			}
@@ -1009,14 +996,6 @@ public class ReportData implements ReportDataInfo {
 	 * Avg. / std. dev. calcs used for field colouring
 	 */
 	private Map<ReportFieldInfo, ReportDataFieldStatsInfo> cachedFieldStats = new HashMap<ReportFieldInfo, ReportDataFieldStatsInfo>();
-
-	/**
-	 * Increase this number to make field colours brighter, reduce to make more
-	 * pastel. A value of 25 means the brightest green will be about 10 standard
-	 * deviations away from the mean and the brightest red about 10 the other
-	 * way
-	 */
-	private static final int colourScalingFactor = 25;
 
 	private static final SimpleLogger logger = new SimpleLogger(ReportData.class);
 }

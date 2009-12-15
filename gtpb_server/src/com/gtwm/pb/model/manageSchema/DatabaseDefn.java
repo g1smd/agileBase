@@ -36,6 +36,10 @@ import java.util.LinkedHashSet;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Calendar;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import javax.sql.DataSource;
 import com.gtwm.pb.auth.AuthManager;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
@@ -73,6 +77,7 @@ import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.manageData.fields.DurationValueDefn;
+import com.gtwm.pb.auth.DashboardPopulator;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.manageData.DataManagement;
@@ -96,6 +101,7 @@ import com.gtwm.pb.model.manageSchema.fields.SequenceFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.FileFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SeparatorFieldDefn;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
+import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.HttpRequestUtil;
@@ -138,7 +144,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		try {
 			logger.info("Loading schema into memory...");
 			Transaction hibernateTransaction = hibernateSession.beginTransaction();
-			List result = hibernateSession.createQuery("from TableDefn").list();
+			List<?> result = hibernateSession.createQuery("from TableDefn").list();
 			for (Object resultObj : result) {
 				TableInfo table = (TableInfo) resultObj;
 				this.populateTableFromHibernate(table);
@@ -152,10 +158,28 @@ public class DatabaseDefn implements DatabaseInfo {
 		// Methods and objects dealing with data as opposed to the schema are
 		// kept in DataManagement
 		this.dataManagement = new DataManagement(relationalDataSource, webAppRoot, this.authManager);
+		DashboardPopulator dashboardPopulator = new DashboardPopulator(this);
+		// Start first dashboard population immediately
+		this.initialDashboardPopulatorThread = new Thread(dashboardPopulator);
+		this.initialDashboardPopulatorThread.start();
+		// and schedule regular dashboard population once a day at a time of low activity
+		int hourNow = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		int initialDelay = 24 + AppProperties.lowActivityHour - hourNow;
+		final ScheduledExecutorService dashboardScheduler = Executors
+				.newSingleThreadScheduledExecutor();
+		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
+				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
 		// one-off boot actions
-		// this.makeIndexes();
 		// this.addLockableFields();
-		// this.addObjectComments();
+	}
+
+	public void cancelScheduledEvents() {
+		if (this.initialDashboardPopulatorThread != null) {
+			this.initialDashboardPopulatorThread.interrupt();
+		}
+		if (this.scheduledDashboardPopulate != null) {
+			this.scheduledDashboardPopulate.cancel(true);
+		}
 	}
 
 	/**
@@ -503,11 +527,9 @@ public class DatabaseDefn implements DatabaseInfo {
 			table.setRecordsLockable(lockable);
 			if (lockable) {
 				// Lock all existing records
-				String SQLCode = "UPDATE "
-						+ table.getInternalTableName()
-						+ " SET "
-						+ table.getField(HiddenFields.LOCKED.getFieldName())
-								.getInternalFieldName() + " = true";
+				String SQLCode = "UPDATE " + table.getInternalTableName() + " SET "
+						+ table.getField(HiddenFields.LOCKED.getFieldName()).getInternalFieldName()
+						+ " = true";
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				statement.executeUpdate();
 				statement.close();
@@ -567,7 +589,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		try {
 			// Delete the table from the relational database.
 			// The CASCADE is to drop the related sequence.
-			//TODO: replace this with a specific sequence drop
+			// TODO: replace this with a specific sequence drop
 			PreparedStatement statement = conn.prepareStatement("DROP TABLE "
 					+ tableToRemove.getInternalTableName() + " CASCADE");
 			statement.execute();
@@ -575,7 +597,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		} catch (SQLException sqlex) {
 			String errorCode = sqlex.getSQLState();
 			if (errorCode.equals("42P01")) {
-				logger.warn("Can't delete table " + tableToRemove + " from relational database, it's not there");
+				logger.warn("Can't delete table " + tableToRemove
+						+ " from relational database, it's not there");
 				// TODO: review why we're swallowing this error
 			} else {
 				throw new SQLException(sqlex + ": error code " + errorCode);
@@ -900,8 +923,10 @@ public class DatabaseDefn implements DatabaseInfo {
 		String internalReportName = reportToRemove.getInternalReportName();
 		try {
 			// Drop database view
-			//debug: IF EXISTS added temporarily(?) to help when dropping problem tables
-			PreparedStatement statement = conn.prepareStatement("DROP VIEW IF EXISTS " + internalReportName);
+			// debug: IF EXISTS added temporarily(?) to help when dropping
+			// problem tables
+			PreparedStatement statement = conn.prepareStatement("DROP VIEW IF EXISTS "
+					+ internalReportName);
 			statement.execute();
 			statement.close();
 			HibernateUtil.currentSession().delete(reportToRemove);
@@ -1651,8 +1676,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		if (sourceReport == null) {
 			newReportField = report.addTableField(field);
 		} else {
-			ReportFieldInfo reportField = sourceReport.getReportField(field
-					.getInternalFieldName());
+			ReportFieldInfo reportField = sourceReport.getReportField(field.getInternalFieldName());
 			newReportField = report.addReportField(reportField);
 		}
 		updateViewDbAction(conn, report);
@@ -2529,6 +2553,10 @@ public class DatabaseDefn implements DatabaseInfo {
 	private AuthManagerInfo authManager = null;
 
 	public static final String PRIMARY_KEY_DESCRIPTION = "Unique record identifier";
+
+	private ScheduledFuture<?> scheduledDashboardPopulate = null;
+	
+	private Thread initialDashboardPopulatorThread = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(DatabaseDefn.class);
 }

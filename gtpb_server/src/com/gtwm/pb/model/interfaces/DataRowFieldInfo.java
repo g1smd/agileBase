@@ -19,9 +19,6 @@ package com.gtwm.pb.model.interfaces;
 
 /**
  * Represents one field value in a database record
- * 
- * @author Craig McDonnell
- * 
  */
 public interface DataRowFieldInfo {
 
@@ -45,4 +42,6 @@ public interface DataRowFieldInfo {
      *         mean value. This returns the hex representation of that colour for use in HTML
      */
     public String getStandardDevHexColour();
+    
+    public double getNumberOfStdDevsFromMean();
 }

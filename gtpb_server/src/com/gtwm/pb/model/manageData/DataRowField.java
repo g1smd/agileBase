@@ -21,50 +21,99 @@ import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 
 public class DataRowField implements DataRowFieldInfo {
 
-    public static final String NULL_COLOR = "";
+	public static final String NULL_COLOR = "";
 
-    private DataRowField() {
-    }
+	private DataRowField() {
+	}
 
-    public DataRowField(String keyValue, String displayValue, String standardDevHexColor) {
-        this.keyValue = keyValue;
-        this.displayValue = displayValue;        
-        this.standardDevHexColor = standardDevHexColor;
-    }
+	/**
+	 * @param numberOfStdDevsFromMean
+	 *            Field colour will be calculated from this parameter
+	 */
+	public DataRowField(String keyValue, String displayValue, double numberOfStdDevsFromMean) {
+		this.keyValue = keyValue;
+		this.displayValue = displayValue;
+		this.numberOfStdDevsFromMean = numberOfStdDevsFromMean;
+		this.standardDevHexColor = calcStandardDevHexColour(numberOfStdDevsFromMean);
+	}
 
-    public DataRowField(String keyValue, String displayValue) {
-        this.keyValue = keyValue;
-        this.displayValue = displayValue;        
-        this.standardDevHexColor = DataRowField.NULL_COLOR;
-    }
+	/**
+	 * @param standardDevHexColor
+	 *            Set field colour explicitly
+	 */
+	public DataRowField(String keyValue, String displayValue, String standardDevHexColor) {
+		this.keyValue = keyValue;
+		this.displayValue = displayValue;
+		this.standardDevHexColor = standardDevHexColor;
+	}
 
-    public String getKeyValue() {
-        if (this.keyValue == null) {
-            return "";
-        } else {
-            return this.keyValue;
-        }
-    }
-    
-    public String getDisplayValue() {
-        if (this.displayValue == null) {
-            return "";
-        } else {
-            return this.displayValue;
-        }
-    }
+	private static String calcStandardDevHexColour(double numberOfStdDevsFromMean) {
+		int colourVal = (int) (numberOfStdDevsFromMean * colourScalingFactor);
+		int absColourVal = Math.abs(colourVal);
+		if (absColourVal > 255) {
+			absColourVal = 255;
+		}
+		String colourRepresentation = Integer.toHexString(255 - absColourVal);
+		if (colourRepresentation.length() == 1) {
+			colourRepresentation = "0" + colourRepresentation;
+		}
+		// +ve = green shade, -ve = red
+		if (colourVal > 0) {
+			colourRepresentation = "#" + colourRepresentation + "ff" + colourRepresentation;
+		} else {
+			colourRepresentation = "#ff" + colourRepresentation + colourRepresentation;
+		}
+		return colourRepresentation;
+	}
 
-    public String getStandardDevHexColour() {
-        return standardDevHexColor;
-    }
-    
-    public String toString() {
-        return this.getDisplayValue();
-    }
+	public DataRowField(String keyValue, String displayValue) {
+		this.keyValue = keyValue;
+		this.displayValue = displayValue;
+		this.standardDevHexColor = DataRowField.NULL_COLOR;
+	}
 
-    private String keyValue = null;
-    
-    private String displayValue = null;
+	public String getKeyValue() {
+		if (this.keyValue == null) {
+			return "";
+		} else {
+			return this.keyValue;
+		}
+	}
 
-    private String standardDevHexColor = NULL_COLOR;
+	public String getDisplayValue() {
+		if (this.displayValue == null) {
+			return "";
+		} else {
+			return this.displayValue;
+		}
+	}
+
+	public double getNumberOfStdDevsFromMean() {
+		return this.numberOfStdDevsFromMean;
+	}
+
+	public String getStandardDevHexColour() {
+		return this.standardDevHexColor;
+	}
+
+	public String toString() {
+		return this.getDisplayValue();
+	}
+
+	private String keyValue = null;
+
+	private String displayValue = null;
+
+	private double numberOfStdDevsFromMean = 0d;
+
+	private String standardDevHexColor = NULL_COLOR;
+
+	/**
+	 * Increase this number to make field colours brighter, reduce to make more
+	 * pastel. A value of 25 means the brightest green will be about 10 standard
+	 * deviations away from the mean and the brightest red about 10 the other
+	 * way
+	 */
+	private static final int colourScalingFactor = 25;
+
 }

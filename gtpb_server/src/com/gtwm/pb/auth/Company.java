@@ -18,6 +18,7 @@
 package com.gtwm.pb.auth;
 
 import com.gtwm.pb.model.interfaces.CompanyInfo;
+import com.gtwm.pb.model.interfaces.DashboardInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.Module;
@@ -213,6 +214,15 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return cachedSparkLine;
 	}
 
+	@Transient
+	public DashboardInfo getDashboard() {
+		return this.dashboard;
+	}
+
+	protected void setDashboard(DashboardInfo dashboard) {
+		this.dashboard = dashboard;
+	}
+
 	public int compareTo(CompanyInfo otherCompany) {
 		if (this == otherCompany) {
 			return 0;
@@ -263,4 +273,5 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 
 	private Map<String, List<Integer>> cachedSparkLines = new HashMap<String, List<Integer>>();
 
+	private DashboardInfo dashboard = null;
 }

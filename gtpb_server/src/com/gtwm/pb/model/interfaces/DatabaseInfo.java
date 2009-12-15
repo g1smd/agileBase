@@ -524,4 +524,9 @@ public interface DatabaseInfo {
 	 */
 	public AuthManagerInfo getAuthManager();
 
+	/**
+	 * Should be run at application shutdown to cancel any background tasks
+	 */
+	public void cancelScheduledEvents();
+
 }

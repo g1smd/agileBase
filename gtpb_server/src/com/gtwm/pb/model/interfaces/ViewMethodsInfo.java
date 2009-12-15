@@ -226,7 +226,7 @@ public interface ViewMethodsInfo {
 	 * that are already joined
 	 */
 	public List<JoinClauseInfo> getCandidateJoins(SimpleReportInfo report)
-			throws CodingErrorException;
+			throws CodingErrorException, ObjectNotFoundException;
 
 	/**
 	 * Return a list of related records in the related table for each
@@ -468,7 +468,7 @@ public interface ViewMethodsInfo {
 	/**
 	 * Return all viewable reports from all viewable tables, in one list
 	 */
-	public SortedSet<BaseReportInfo> getAllViewableReports() throws CodingErrorException;
+	public SortedSet<BaseReportInfo> getAllViewableReports() throws CodingErrorException, ObjectNotFoundException;
 
 	/**
 	 * @param tableID
@@ -500,7 +500,7 @@ public interface ViewMethodsInfo {
 	 * @see com.gtwm.pb.auth#PrivilegeType See PrivilegeType for a list of valid
 	 *      privilege types
 	 */
-	public SortedSet<TableInfo> getTablesAllowedTo(String privilegeString);
+	public SortedSet<TableInfo> getTablesAllowedTo(String privilegeString) throws ObjectNotFoundException;
 
 	/**
 	 * Return a user object for the currently logged in user, allowing access to
@@ -531,7 +531,7 @@ public interface ViewMethodsInfo {
 	 * 
 	 * @see http://www.graphviz.org/
 	 */
-	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException;
+	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException, ObjectNotFoundException;
 
 	/**
 	 * @return Whether an exception (error) occurred when processing the request
@@ -671,12 +671,12 @@ public interface ViewMethodsInfo {
 	 * @return sourceText after portalBase object names (enclosed within curly
 	 *         braces) have been replaced by internal object identifiers
 	 */
-	public String toInternalNames(String sourceText);
+	public String toInternalNames(String sourceText) throws ObjectNotFoundException;
 
 	/**
 	 * @param sourceText
 	 * @return sourceText after portalBase internal object identifiers have been
 	 *         replaced by their display names
 	 */
-	public String toExternalNames(String sourceText);
+	public String toExternalNames(String sourceText) throws ObjectNotFoundException;
 }
