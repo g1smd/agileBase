@@ -152,7 +152,7 @@ ${dollar}url_prefix = "http://".${dollar}username.":".${dollar}password."@localh
 
 #set($random_string_request = "file_get_contents(${dollar}url_prefix.${quotes}return=gui/development/random_string${quotes})")
 
-#foreach ($table in $view.adminGetCompanyTables())
+#foreach ($table in $view.getLoggedInUser().getCompany().getTables())
   #if (! $table.isAuditTable())
     #set($internalTableName = $table.getInternalTableName())
     #set($internalDefaultReportName = $table.getDefaultReport().getInternalReportName())

@@ -129,8 +129,8 @@
 #end
 
 $viewTools.log("about to analyse tables")
-$viewTools.log("$view.adminGetCompanyTables()")
-#foreach ($table in $view.adminGetCompanyTables())
+$viewTools.log("$view.getLoggedInUser().getCompany().getTables()")
+#foreach ($table in $view.getLoggedInUser().getCompany().getTables())
   $viewTools.log("analysing $table")
   #if (! $table.isAuditTable())
     #set($internalTableName = $table.getInternalTableName())

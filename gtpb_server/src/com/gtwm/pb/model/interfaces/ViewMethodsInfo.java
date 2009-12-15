@@ -155,15 +155,6 @@ public interface ViewMethodsInfo {
 	public SortedSet<CompanyInfo> getCompanies() throws DisallowedException;
 
 	/**
-	 * Return all tables in the company the logged in user belongs to
-	 * 
-	 * @throws DisallowedException
-	 *             If the user doesn't have ADMINISTRATE privileges
-	 */
-	public SortedSet<TableInfo> adminGetCompanyTables() throws DisallowedException,
-			ObjectNotFoundException;
-
-	/**
 	 * @see com.gtwm.pb.model.interfaces.AuthManagerInfo#getPrivilegeTypes(HttpServletRequest)
 	 */
 	public EnumSet<PrivilegeType> adminGetPrivilegeTypes() throws DisallowedException;
@@ -177,7 +168,7 @@ public interface ViewMethodsInfo {
 	 * Relations can also only be created to tables that the user has privileges
 	 * to view. This is more for convenience than security (it may not be the
 	 * admin who'se going to be viewing the report anyway) - we don't want the
-	 * admin to see masses of unecessary tables
+	 * admin to see masses of unnecessary tables
 	 * 
 	 * The return data structure is a map of tables to the set of unique fields
 	 * in each table.

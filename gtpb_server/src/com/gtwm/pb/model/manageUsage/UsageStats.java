@@ -468,7 +468,7 @@ public class UsageStats implements UsageStatsInfo {
 	}
 
 	public List<List<String>> getTableViewStats(TableInfo table) throws DisallowedException,
-			SQLException, CodingErrorException, CantDoThatException {
+			SQLException, CodingErrorException, CantDoThatException, ObjectNotFoundException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table) || authManager.getAuthenticator()

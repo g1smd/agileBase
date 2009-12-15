@@ -348,32 +348,6 @@ public class ViewMethods implements ViewMethodsInfo {
 		return dependentTables;
 	}
 
-	public SortedSet<TableInfo> adminGetCompanyTables() throws DisallowedException,
-			ObjectNotFoundException {
-		AuthManagerInfo authManager = this.getAuthManager();
-		SortedSet<TableInfo> companyTables = new TreeSet<TableInfo>();
-		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
-		for (AppUserInfo user : company.getUsers()) {
-			Set<UserGeneralPrivilegeInfo> userPrivileges = authManager.getPrivilegesForUser(
-					request, user);
-			for (UserGeneralPrivilegeInfo userPrivilege : userPrivileges) {
-				if (userPrivilege instanceof UserObjectPrivilegeInfo) {
-					companyTables.add(((UserObjectPrivilegeInfo) userPrivilege).getTable());
-				}
-			}
-		}
-		for (AppRoleInfo role : company.getRoles()) {
-			Set<RoleGeneralPrivilegeInfo> rolePrivileges = authManager.getPrivilegesForRole(
-					request, role);
-			for (RoleGeneralPrivilegeInfo rolePrivilege : rolePrivileges) {
-				if (rolePrivilege instanceof RoleObjectPrivilegeInfo) {
-					companyTables.add(((RoleObjectPrivilegeInfo) rolePrivilege).getTable());
-				}
-			}
-		}
-		return companyTables;
-	}
-
 	public String getApplicationName() {
 		return AppProperties.applicationName;
 	}

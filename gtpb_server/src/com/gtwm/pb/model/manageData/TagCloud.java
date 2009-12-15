@@ -56,7 +56,7 @@ public class TagCloud implements TagCloudInfo {
 		}
 		Frequency frequencies = new Frequency();
 		for (String word : wordArray) {
-			if ((!stopWords.contains(word)) && (word.length() > 2)) {
+			if ((!stopWords.contains(word)) && (word.length() >= minWordLength)) {
 				frequencies.addValue(word);
 			}
 		}
@@ -159,10 +159,12 @@ public class TagCloud implements TagCloudInfo {
 
 	private SortedSet<TagInfo> tags = new TreeSet<TagInfo>();
 
+	static private final int minWordLength = 3;
+	
 	/**
 	 * We don't want these
 	 */
-	static private String[] stopWordsArray = { "a", "about", "above", "accordingly", "after",
+	static private final String[] stopWordsArray = { "a", "about", "above", "accordingly", "after",
 			"again", "against", "ah", "all", "also", "although", "always", "am", "among",
 			"amongst", "an", "and", "any", "anymore", "anyone", "are", "as", "at", "away", "be",
 			"been", "begin", "beginning", "beginnings", "begins", "begone", "begun", "being",

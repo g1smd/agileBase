@@ -344,7 +344,7 @@ public interface DatabaseInfo {
 	public void returnCalculationInReportToMemory(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportCalcFieldInfo calculationField,
 			String oldCalculationName, String oldCalculationDefn, DatabaseFieldType oldDbFieldType)
-			throws DisallowedException, CodingErrorException, CantDoThatException;
+			throws DisallowedException, CodingErrorException, CantDoThatException, ObjectNotFoundException;
 
 	/**
 	 * Create a filter object, add it to the report, update the database view
@@ -373,7 +373,7 @@ public interface DatabaseInfo {
 			DisallowedException, CantDoThatException, CodingErrorException, ObjectNotFoundException;
 
 	public Map<TableInfo, Set<BaseReportInfo>> getViewableDataStores(HttpServletRequest request)
-			throws CodingErrorException;
+			throws CodingErrorException, ObjectNotFoundException;
 
 	/**
 	 * @param internalFilterName

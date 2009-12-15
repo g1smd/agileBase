@@ -42,6 +42,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import javax.sql.DataSource;
 import com.gtwm.pb.auth.AuthManager;
+import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
@@ -119,6 +120,8 @@ import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import sun.tools.tree.ThisExpression;
 
 public class DatabaseDefn implements DatabaseInfo {
 
@@ -582,9 +585,9 @@ public class DatabaseDefn implements DatabaseInfo {
 		this.removeReportWithoutChecks(sessionData, request, defaultReport, conn);
 		// Remove any privileges on the table
 		this.getAuthManager().removePrivilegesOnTable(request, tableToRemove);
-		// Delete from persistent store
 		this.tableCache.remove(tableToRemove.getInternalTableName());
 		this.tables.remove(tableToRemove);
+		// Delete from persistent store
 		HibernateUtil.currentSession().delete(tableToRemove);
 		try {
 			// Delete the table from the relational database.
@@ -1797,7 +1800,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public Map<TableInfo, Set<BaseReportInfo>> getViewableDataStores(HttpServletRequest request)
-			throws CodingErrorException {
+			throws CodingErrorException, ObjectNotFoundException {
 		// Get the list of viewable tables and reports, for possible use in
 		// replacing user input fields etc. with internal names
 		// TODO: Shares common code with ViewMethods.getViewableReports/Tables,
@@ -1805,15 +1808,17 @@ public class DatabaseDefn implements DatabaseInfo {
 		// Actually, if/when we add report privileges this will be obsolete
 		// anyway
 		Map<TableInfo, Set<BaseReportInfo>> availableDataStores = new HashMap<TableInfo, Set<BaseReportInfo>>();
-		for (TableInfo testTable : this.tables) {
-			if (this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
+		for (TableInfo testTable : companyTables) {
+			if (authenticator.loggedInUserAllowedTo(request,
 					PrivilegeType.VIEW_TABLE_DATA, testTable)) {
 				SortedSet<BaseReportInfo> allTableReports = testTable.getReports();
 				// Strip down to the set of reports the user has privileges to
 				// view
 				SortedSet<BaseReportInfo> viewableReports = new TreeSet<BaseReportInfo>();
 				for (BaseReportInfo report : allTableReports) {
-					if (this.authManager.getAuthenticator().loggedInUserAllowedToViewReport(
+					if (authenticator.loggedInUserAllowedToViewReport(
 							request, report)) {
 						viewableReports.add(report);
 					}
@@ -1958,7 +1963,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	public synchronized void returnCalculationInReportToMemory(HttpServletRequest request,
 			Connection conn, SimpleReportInfo report, ReportCalcFieldInfo calculationField,
 			String oldCalculationName, String oldCalculationDefn, DatabaseFieldType oldDbFieldType)
-			throws DisallowedException, CodingErrorException, CantDoThatException {
+			throws DisallowedException, CodingErrorException, CantDoThatException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
@@ -2196,7 +2201,8 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	public synchronized TableInfo getTableByName(HttpServletRequest request, String tableName)
 			throws ObjectNotFoundException {
-		for (TableInfo table : this.tables) {
+		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+		for (TableInfo table : companyTables) {
 			if (table.getTableName().equals(tableName)) {
 				if (this.userAllowedToAccessTable(request, table)) {
 					return table;
@@ -2233,7 +2239,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		if (cachedTable != null) {
 			return cachedTable;
 		}
-		for (TableInfo table : this.tables) {
+		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+		for (TableInfo table : companyTables) {
 			if (table.getInternalTableName().equals(internalTableName)) {
 				// to retrieve a table, user either has to have view privileges
 				// on that table,
@@ -2252,10 +2259,12 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	public synchronized TableInfo findTableContainingReport(HttpServletRequest request,
 			String reportInternalName) throws ObjectNotFoundException, DisallowedException {
-		for (TableInfo table : this.tables) {
+		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
+		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+		for (TableInfo table : companyTables) {
 			for (BaseReportInfo report : table.getReports()) {
 				if (report.getInternalReportName().equals(reportInternalName)) {
-					if (this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+					if (authenticator.loggedInUserAllowedTo(request,
 							PrivilegeType.VIEW_TABLE_DATA, table)) {
 						return table;
 					} else {
@@ -2300,11 +2309,13 @@ public class DatabaseDefn implements DatabaseInfo {
 			String internalFieldName) throws ObjectNotFoundException, DisallowedException,
 			CodingErrorException {
 		// look through report fields, some of which are calculations
-		for (TableInfo table : this.tables) {
+		Set<TableInfo> companyTables =this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+		AuthenticatorInfo authenticator = this.authManager.getAuthenticator();
+		for (TableInfo table : companyTables) {
 			for (BaseReportInfo report : table.getReports()) {
 				for (ReportFieldInfo reportField : report.getReportFields()) {
 					if (reportField.getInternalFieldName().equals(internalFieldName)) {
-						if (this.authManager.getAuthenticator().loggedInUserAllowedToViewReport(
+						if (authenticator.loggedInUserAllowedToViewReport(
 								request, report)) {
 							return reportField;
 						} else {
@@ -2321,7 +2332,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		// not in any calculations either
 		throw new ObjectNotFoundException("Can't find a field with the internal name "
-				+ internalFieldName + "  anywhere in the database");
+				+ internalFieldName + "  anywhere in the organisation");
 	}
 
 	public AuthManagerInfo getAuthManager() {

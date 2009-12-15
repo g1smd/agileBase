@@ -39,7 +39,7 @@
     <td>&nbsp;</td>
     <th colspan=4>privileges</th>
   </tr>
-      #foreach($table in $view.adminGetCompanyTables())
+      #foreach($table in $view.getLoggedInUser().getCompany().getTables())
 		## Find the highest privilege the *user* object has
         #set($highestTablePrivilege = "")
         #if($view.userHasPrivilege("MANAGE_TABLE", $table))

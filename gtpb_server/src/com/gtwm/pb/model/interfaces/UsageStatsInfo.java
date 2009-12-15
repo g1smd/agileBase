@@ -101,7 +101,7 @@ public interface UsageStatsInfo {
 	 * total access count
 	 */
 	public List<List<String>> getTableViewStats(TableInfo table) throws DisallowedException,
-			SQLException, CodingErrorException, CantDoThatException;
+			SQLException, CodingErrorException, CantDoThatException, ObjectNotFoundException;
 
 	/**
 	 * Get report view stats including a list of users that have been viewing a

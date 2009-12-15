@@ -67,7 +67,7 @@
   #end
 
 ## main:
-#set($companyTables = $view.adminGetCompanyTables())
+#set($companyTables = $view.getLoggedInUser().getCompany().getTables())
 #foreach($companyTable in $companyTables)
 
   #tableContainsField($containsWikiPageField     $companyTable 'Wiki page')
