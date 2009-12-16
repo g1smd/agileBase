@@ -54,7 +54,6 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/opencsv-1.5.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/oscache-2.1.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/poi-3.1-FINAL-20080629.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/proxool-0.8.3.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/qdox-1.4.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/simple-log-rollover.jar"/>
@@ -69,14 +68,12 @@
 	<classpathentry kind="lib" path="external_libs/postgresql-8.3-603.jdbc4.jar"/>
 	<classpathentry kind="lib" path="external_libs/servlet-api.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/hibernate-cglib-repack-2.1_3.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/javassist-3.4.GA.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/slf4j-api-1.5.2.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/slf4j-simple-1.5.2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-math-1.2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/ERChronic.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/velocity-1.6.2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/velocity-tools-view-1.4.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/junit-4.6.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/poi-3.6-20091214.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

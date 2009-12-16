@@ -69,9 +69,6 @@
 		        <pathelement location="WEB-INF/lib/ejb3-persistence.jar"/>
 		        <pathelement location="WEB-INF/lib/hibernate-cglib-repack-2.1_3.jar"/>
 		        <pathelement location="WEB-INF/lib/jta-1.1.jar"/>
-		        <pathelement location="WEB-INF/lib/javassist-3.4.GA.jar"/>
-		        <pathelement location="WEB-INF/lib/slf4j-api-1.5.2.jar"/>
-		        <pathelement location="WEB-INF/lib/slf4j-simple-1.5.2.jar"/>
 				<!-- CSV import/export -->
 		        <pathelement location="WEB-INF/lib/opencsv-1.5.jar"/>
 				<!-- Google client API -->
@@ -99,7 +96,7 @@
 				<pathelement location="WEB-INF/lib/simple-log.jar"/>
 				<pathelement location="WEB-INF/lib/simple-log-rollover.jar"/>
 				<!-- Excel spreadsheets -->
-				<pathelement location="WEB-INF/lib/poi-3.1-FINAL-20080629.jar"/>
+				<pathelement location="WEB-INF/lib/poi-3.6-20091214.jar"/>
 				<!-- date/time parsing -->
 				<pathelement location="WEB-INF/lib/ERChronic.jar"/>
 			</classpath>
