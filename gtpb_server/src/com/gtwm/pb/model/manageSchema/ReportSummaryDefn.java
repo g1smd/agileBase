@@ -91,8 +91,8 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	}
 
 	public synchronized ReportSummaryGroupingInfo removeGrouping(ReportFieldInfo reportFieldToRemove) {
-		for (Iterator iterator = this.getGroupingsDirect().iterator(); iterator.hasNext();) {
-			ReportSummaryGroupingInfo grouping = (ReportSummaryGroupingInfo) iterator.next();
+		for (Iterator<ReportSummaryGroupingInfo> iterator = this.getGroupingsDirect().iterator(); iterator.hasNext();) {
+			ReportSummaryGroupingInfo grouping = iterator.next();
 			if (grouping.getGroupingReportField().equals(reportFieldToRemove)) {
 				iterator.remove();
 				HibernateUtil.currentSession().delete(grouping);

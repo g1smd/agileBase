@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
+
 import org.json.JSONException;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -49,7 +51,7 @@ public interface DashboardInfo {
 	
 	public List<Integer> getDataChangesPerWeek();
 	
-	public Set<DashboardOutlierInfo> getDashboardOutliers();
+	public SortedSet<DashboardOutlierInfo> getDashboardOutliers();
 	
 	public Set<DashboardTrendOutlierInfo> getDashboardTrendOutliers();
 	

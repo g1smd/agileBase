@@ -75,5 +75,7 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/velocity-tools-view-1.4.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/junit-4.6.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/poi-3.6-20091214.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/slf4j-api-1.5.10.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/slf4j-simple-1.5.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

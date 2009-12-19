@@ -6,15 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import org.grlea.log.SimpleLogger;
+
+import com.gtwm.pb.dashboard.Dashboard;
 import com.gtwm.pb.dashboard.DashboardOutlier;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
+import com.gtwm.pb.model.interfaces.DashboardInfo;
 import com.gtwm.pb.model.interfaces.DashboardOutlierInfo;
 import com.gtwm.pb.model.interfaces.DataManagementInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
@@ -25,7 +29,6 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.interfaces.fields.DateValue;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
-import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.PortalBaseException;
 import com.gtwm.pb.util.Enumerations.HiddenFields;
@@ -48,14 +51,14 @@ public class DashboardPopulator implements Runnable {
 		Thread.currentThread().setPriority(Thread.NORM_PRIORITY - 1);
 		logger.info("Starting dashboard populations");
 		long startTime = System.currentTimeMillis();
+		Authenticator authenticator = (Authenticator) this.databaseDefn.getAuthManager()
+		.getAuthenticator();
 		try {
 			Map<CompanyInfo, SortedSet<DashboardOutlierInfo>> dashboardOutliers = findDashboardOutliers();
-			for (CompanyInfo company : dashboardOutliers.keySet()) {
-				logger.debug("Outliers for " + company);
-				SortedSet<DashboardOutlierInfo> outliers = dashboardOutliers.get(company);
-				for (DashboardOutlierInfo outlier : outliers) {
-					logger.debug(outlier.toString());
-				}
+			for (CompanyInfo company : authenticator.getCompanies()) {
+				SortedSet<DashboardOutlierInfo> companyOutliers = dashboardOutliers.get(company);
+				DashboardInfo dashboard = new Dashboard(companyOutliers);
+				company.setDashboard(dashboard);
 			}
 		} catch (InterruptedException iex) {
 			logger.info("Dashboard population not completed due to interruption");
@@ -156,7 +159,7 @@ public class DashboardPopulator implements Runnable {
 										DataRowFieldInfo dataRowField = reportDataRow
 												.getValue(field);
 										double stdDevs = dataRowField.getNumberOfStdDevsFromMean();
-										if (stdDevs > AppProperties.stdDevsThreshold) {
+										if (Math.abs(stdDevs) > 1) {
 											// We've found an outlier, get some
 											// info about it to report
 											int rowId = reportDataRow.getRowId();
@@ -185,6 +188,16 @@ public class DashboardPopulator implements Runnable {
 					logger.error("SQL exception populating dashboard for " + company
 							+ ", working on table " + table + ". " + sqlex);
 				}
+			}
+			int minStdDev = 1;
+			while(dashboardOutliers.size() > 100) {
+				for (Iterator<DashboardOutlierInfo> iterator = dashboardOutliers.iterator(); iterator.hasNext();) {
+					DashboardOutlierInfo dashboardOutlier = iterator.next();
+					if (Math.abs(dashboardOutlier.getDataRowField().getNumberOfStdDevsFromMean()) < minStdDev) {
+						iterator.remove();
+					}
+				}
+				minStdDev++;
 			}
 			companyOutliers.put(company, dashboardOutliers);
 		}

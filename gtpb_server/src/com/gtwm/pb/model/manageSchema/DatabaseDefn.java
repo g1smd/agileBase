@@ -121,8 +121,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import sun.tools.tree.ThisExpression;
-
 public class DatabaseDefn implements DatabaseInfo {
 
 	/**

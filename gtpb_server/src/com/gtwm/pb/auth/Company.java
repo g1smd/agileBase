@@ -219,7 +219,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return this.dashboard;
 	}
 
-	protected void setDashboard(DashboardInfo dashboard) {
+	public void setDashboard(DashboardInfo dashboard) {
 		this.dashboard = dashboard;
 	}
 

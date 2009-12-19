@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import org.json.JSONException;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
-import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DashboardInfo;
 import com.gtwm.pb.model.interfaces.DashboardOutlierInfo;
 import com.gtwm.pb.model.interfaces.DashboardTrendOutlierInfo;
@@ -22,8 +22,8 @@ public class Dashboard implements DashboardInfo {
 	private Dashboard() {
 	}
 	
-	public Dashboard(CompanyInfo company) {
-		
+	public Dashboard(SortedSet<DashboardOutlierInfo> outliers) {
+		this.outliers = outliers;
 	}
 	
 	public Map<ReportSummaryInfo, ReportSummaryDataInfo> getCompanyReportSummaries() {
@@ -31,9 +31,8 @@ public class Dashboard implements DashboardInfo {
 		return null;
 	}
 
-	public Set<DashboardOutlierInfo> getDashboardOutliers() {
-		// TODO Auto-generated method stub
-		return null;
+	public SortedSet<DashboardOutlierInfo> getDashboardOutliers() {
+		return this.outliers;
 	}
 
 	public Set<DashboardTrendOutlierInfo> getDashboardTrendOutliers() {
@@ -96,5 +95,6 @@ public class Dashboard implements DashboardInfo {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	SortedSet<DashboardOutlierInfo> outliers = null;
 }
