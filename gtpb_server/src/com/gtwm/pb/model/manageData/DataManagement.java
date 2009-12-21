@@ -585,6 +585,7 @@ public class DataManagement implements DataManagementInfo {
 			// Find out which field caused the error by looking for internal
 			// field names in the error message
 			String errorMessage = sqlex.getMessage();
+			
 			for (BaseField possibleCauseField : dataToSave.keySet()) {
 				if (errorMessage.contains(possibleCauseField.getInternalFieldName())) {
 					if (errorMessage.contains("check constraint")) {
@@ -595,14 +596,17 @@ public class DataManagement implements DataManagementInfo {
 					} else if (errorMessage.contains("unique constraint")) {
 						errorMessage = "Value " + dataToSave.get(possibleCauseField)
 								+ " is already in the database and cannot be entered again";
+					} else if (errorMessage.contains("foreign key constraint") && possibleCauseField instanceof RelationField) {
+						errorMessage = "Please select a valid " + ((RelationField) possibleCauseField).getRelatedTable() + " record first";
 					} else {
 						errorMessage = "Value " + dataToSave.get(possibleCauseField)
-								+ " not allowed (" + errorMessage + ")";
+								+ " not allowed (" + Helpers.replaceInternalNames(errorMessage, table.getDefaultReport()) + ")";
 					}
 					throw new InputRecordException(errorMessage, possibleCauseField);
 				}
 			}
 			// Not able to find field
+			errorMessage = Helpers.replaceInternalNames(errorMessage, table.getDefaultReport());
 			throw new InputRecordException(errorMessage, null);
 		} finally {
 			if (conn != null) {
