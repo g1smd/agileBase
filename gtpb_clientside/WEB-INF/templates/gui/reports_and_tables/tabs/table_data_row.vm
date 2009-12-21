@@ -18,12 +18,14 @@
 ## Used by view.vm and edit.vm
 ## $tableDataRow and $field must be defined by them
 #if (! $field.getTableContainingField().getPrimaryKey().equals($field)) ## remove to show primary key field
-  #if($address.size() > 0)
-	#if($address.firstKey().equals($field)) #set($partOfAddress = true) #end
-    #if($partOfAddress && $address.firstKey().equals($field))
-	  #set($firstLineOfAddress = true)
-	#else
-	  #set($firstLineOfAddress = false)
+  #if($address)
+	#if($address.size() > 0)
+	  #if($address.firstKey().equals($field)) #set($partOfAddress = true) #end
+      #if($partOfAddress && $address.firstKey().equals($field))
+	    #set($firstLineOfAddress = true)
+	  #else
+	    #set($firstLineOfAddress = false)
+	  #end
 	#end
   #end
   #if($partOfAddress)
