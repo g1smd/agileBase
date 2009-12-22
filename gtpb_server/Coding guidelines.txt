@@ -1,4 +1,4 @@
-portalBase programming information and practices:
+GT portalBase programming information and practices:
 
 *) Interfaces should be defined for all classes prior to implementing them apart from those in:
 com.gtwm.pb.util most of which contain only static methods
