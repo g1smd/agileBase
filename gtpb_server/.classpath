@@ -2,7 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="tests"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="external_libs/postgresql-8.3-603.jdbc4.jar"/>
+	<classpathentry kind="lib" path="external_libs/servlet-api.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/ant-1.6.5.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/ant-antlr-1.6.5.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/ant-junit-1.6.5.jar"/>
@@ -23,21 +24,26 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-io-1.2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-lang-2.3.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/commons-math-1.2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/commons-validator-1.3.1.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/concurrent-1.3.2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/connector.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/ehcache-1.2.3.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/ERChronic.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/findbugs-ant.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/gdata-client-1.0.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/hibernate-cglib-repack-2.1_3.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/hibernate-commons-annotations.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/hibernate3.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/icu4j-3_6.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jaas.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jacc-1_0-fr.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jarjar-0.3.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/javamelody.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/javassist-3.9.0.GA.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jaxen-1.1-beta-7.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jboss-cache.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jboss-common.jar"/>
@@ -47,6 +53,9 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/jdom-1.0.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jgroups-2.2.8.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/jrexx-1.1.1.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/jrobin-1.5.9.1.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/junit-4.6.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/JUnitDoclet.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/junitperf.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/log4j-1.2.12.jar"/>
@@ -54,28 +63,22 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/opencsv-1.5.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/oro-2.0.8.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/oscache-2.1.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/poi-3.6-20091214.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/proxool-0.8.3.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/qdox-1.4.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/simple-log-rollover.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/simple-log.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/slf4j-api-1.5.10.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/slf4j-simple-1.5.10.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/swarmcache-1.0rc2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/syndiag2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/trove-1.0.2.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/velocity-1.6.2.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/velocity-tools-view-1.4.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/versioncheck.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/werken-xpath-0.9.4.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/xerces-2.6.2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="external_libs/postgresql-8.3-603.jdbc4.jar"/>
-	<classpathentry kind="lib" path="external_libs/servlet-api.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/hibernate-cglib-repack-2.1_3.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/commons-math-1.2.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/ERChronic.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/velocity-1.6.2.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/velocity-tools-view-1.4.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/junit-4.6.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/poi-3.6-20091214.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/slf4j-api-1.5.10.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/slf4j-simple-1.5.10.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
