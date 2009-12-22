@@ -96,7 +96,7 @@ public interface DataManagementInfo {
 	 *             If a record with the provided rowid is not found in the table
 	 */
 	public Map<RelationField, List<DataRow>> getChildDataTableRows(DatabaseInfo databaseDefn,
-			TableInfo tableDefn, int rowid) throws SQLException, ObjectNotFoundException,
+			TableInfo tableDefn, int rowid, HttpServletRequest request) throws SQLException, ObjectNotFoundException,
 			CodingErrorException;
 
 	/**

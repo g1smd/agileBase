@@ -331,9 +331,9 @@ public class ViewMethods implements ViewMethodsInfo {
 		return this.databaseDefn.findTableContainingReport(this.request, reportInternalName);
 	}
 
-	public Set<TableInfo> getDependentTables(TableInfo baseTable) {
+	public Set<TableInfo> getDependentTables(TableInfo baseTable) throws ObjectNotFoundException {
 		Set<TableInfo> dependentTables = new LinkedHashSet<TableInfo>();
-		this.databaseDefn.getDependentTables(baseTable, dependentTables);
+		this.databaseDefn.getDependentTables(baseTable, dependentTables, this.request);
 		return dependentTables;
 	}
 
@@ -344,7 +344,7 @@ public class ViewMethods implements ViewMethodsInfo {
 					"Can't select dependent tables prior to table selection");
 		}
 		Set<TableInfo> dependentTables = new LinkedHashSet<TableInfo>();
-		this.databaseDefn.getDependentTables(baseTable, dependentTables);
+		this.databaseDefn.getDependentTables(baseTable, dependentTables, this.request);
 		return dependentTables;
 	}
 
@@ -521,12 +521,13 @@ public class ViewMethods implements ViewMethodsInfo {
 	public Map<RelationField, List<DataRow>> getChildDataTableRows(TableInfo table, int rowid)
 			throws DisallowedException, SQLException, ObjectNotFoundException, CodingErrorException {
 		Map<RelationField, List<DataRow>> childDataTableRows = this.databaseDefn
-				.getDataManagement().getChildDataTableRows(this.databaseDefn, table, rowid);
+				.getDataManagement().getChildDataTableRows(this.databaseDefn, table, rowid, this.request);
 		// remove any recordsets belonging to tables the user is not authorised
 		// to view:
 		for (RelationField relationField : childDataTableRows.keySet()) {
+			TableInfo relatedTable = relationField.getRelatedTable();
 			if (!this.getAuthenticator().loggedInUserAllowedTo(this.request,
-					PrivilegeType.VIEW_TABLE_DATA, table)) {
+					PrivilegeType.VIEW_TABLE_DATA, relatedTable)) {
 				childDataTableRows.remove(relationField);
 			}
 		}
@@ -624,16 +625,17 @@ public class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public SortedMap<TableInfo, SortedSet<BaseField>> adminGetRelationCandidates()
-			throws DisallowedException {
+			throws DisallowedException, ObjectNotFoundException {
 		TableInfo table = this.sessionData.getTable();
 		if (!(getAuthenticator().loggedInUserAllowedTo(this.request, PrivilegeType.MANAGE_TABLE,
 				table))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
-		SortedSet<TableInfo> allTables = this.databaseDefn.getTables();
+		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
+		SortedSet<TableInfo> companyTables = company.getTables();
 		SortedMap<TableInfo, SortedSet<BaseField>> relationCandidates = new TreeMap<TableInfo, SortedSet<BaseField>>();
 		// check each table for candidate fields
-		for (TableInfo testTable : allTables) {
+		for (TableInfo testTable : companyTables) {
 			// related fields must be in different tables to the current one
 			if (!(testTable.equals(table))) {
 				// Check whether the user has privileges to view the table

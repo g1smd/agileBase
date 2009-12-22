@@ -180,7 +180,7 @@ public interface ViewMethodsInfo {
 	 *             current session table
 	 */
 	public SortedMap<TableInfo, SortedSet<BaseField>> adminGetRelationCandidates()
-			throws DisallowedException;
+			throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @see com.gtwm.pb.model.interfaces.AuthManagerInfo#getRoles(HttpServletRequest)
@@ -227,10 +227,17 @@ public interface ViewMethodsInfo {
 	 * 
 	 * DataRowObjects have a method of the same name, so you can use this
 	 * recursively to get child rows of child rows
+	 * 
+	 * @deprecated Functionality replaced by getRelatedRowIds
 	 */
+	@Deprecated
 	public Map<RelationField, List<DataRow>> getChildDataTableRows() throws DisallowedException,
 			SQLException, ObjectNotFoundException, CodingErrorException;
 
+	/**
+	 * @deprecated Functionality replaced by getRelatedRowIds
+	 */
+	@Deprecated
 	public Map<RelationField, List<DataRow>> getChildDataTableRows(TableInfo table, int rowid)
 			throws DisallowedException, SQLException, ObjectNotFoundException, CodingErrorException;
 
@@ -250,7 +257,7 @@ public interface ViewMethodsInfo {
 	 * @see com.gtwm.pb.model.interfaces.DatabaseInfo#getDependentTables(TableInfo,
 	 *      LinkedHashSet)
 	 */
-	public Set<TableInfo> getDependentTables(TableInfo baseTable);
+	public Set<TableInfo> getDependentTables(TableInfo baseTable) throws ObjectNotFoundException;
 
 	/**
 	 * If an exception occurred during request processing, this method can be

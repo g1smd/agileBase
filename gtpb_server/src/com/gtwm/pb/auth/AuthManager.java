@@ -17,16 +17,24 @@
  */
 package com.gtwm.pb.auth;
 
+import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
+import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
 import com.gtwm.pb.model.interfaces.RoleObjectPrivilegeInfo;
+import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.UserGeneralPrivilegeInfo;
 import com.gtwm.pb.model.interfaces.RoleGeneralPrivilegeInfo;
 import com.gtwm.pb.model.interfaces.UserObjectPrivilegeInfo;
+import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.manageSchema.fields.DecimalFieldDefn;
+import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
+import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
+import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.MissingParametersException;
@@ -39,13 +47,10 @@ import org.grlea.log.SimpleLogger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.HashSet;
 import java.util.EnumSet;
-import java.util.TreeSet;
 
 /**
  * Manages the application's Authenticator object - use the static methods in
@@ -71,6 +76,7 @@ public class AuthManager implements AuthManagerInfo {
 	 */
 	public AuthManager(DataSource relationalDataSource) throws ObjectNotFoundException,
 			CantDoThatException, MissingParametersException {
+		logger.info("Loading schema and authentication objects into memory...");
 		try {
 			Session hibernateSession = HibernateUtil.currentSession();
 			Transaction hibernateTransaction = hibernateSession.beginTransaction();
@@ -79,8 +85,9 @@ public class AuthManager implements AuthManagerInfo {
 			if (this.authenticator != null) {
 				Authenticator auth = (Authenticator) this.authenticator;
 				for (CompanyInfo company : auth.getCompanies()) {
-					// All the logger.info lines below are basically to force Hibernate
-					// to read the objects into memory by printing out their details
+					// All the logger.info lines below are basically to force
+					// Hibernate to read the objects into memory by printing out
+					// their details
 					logger.info("" + company + " roles: " + company.getRoles());
 					logger.info("" + company + " users: " + company.getUsers());
 					logger.info("" + company + " modules: " + company.getModules());
@@ -91,30 +98,36 @@ public class AuthManager implements AuthManagerInfo {
 					logger.info("Role " + role + " users: " + role.getUsers());
 				}
 				// Cache tables into companies.
-				// Don't need to print out tables, they've already been loaded by DatabaseDefn.
-				// This is just a cache
 				for (UserGeneralPrivilegeInfo privilege : auth.getUserPrivileges()) {
 					if (privilege instanceof UserObjectPrivilege) {
 						UserObjectPrivilege priv = (UserObjectPrivilege) privilege;
 						CompanyInfo company = priv.getUser().getCompany();
-						company.addTable(priv.getTable());
+						TableInfo table = priv.getTable();
+						if (!company.getTables().contains(table)) {
+							populateTableFromHibernate(table, relationalDataSource);
+							company.addTable(table);
+						}
 					}
 				}
 				for (RoleGeneralPrivilegeInfo privilege : auth.getRolePrivileges()) {
 					if (privilege instanceof RoleObjectPrivilege) {
 						RoleObjectPrivilege priv = (RoleObjectPrivilege) privilege;
 						CompanyInfo company = priv.getRole().getCompany();
-						company.addTable(priv.getTable());
+						TableInfo table = priv.getTable();
+						if (!company.getTables().contains(table)) {
+							populateTableFromHibernate(table, relationalDataSource);
+							company.addTable(table);
+						}
 					}
 				}
-				logger.info("User privileges: "
-						+ auth.getUserPrivileges());
-				logger.info("Role privileges: "
-						+ auth.getRolePrivileges());
+				logger.info("User privileges: " + auth.getUserPrivileges());
+				logger.info("Role privileges: " + auth.getRolePrivileges());
 			}
 			if (this.authenticator == null) {
-				// There must be one and only one Authenticator object persisted. If there isn't one,
-				// we're doing the first boot of portalBase, create one and set up the master user
+				// There must be one and only one Authenticator object
+				// persisted. If there isn't one,
+				// we're doing the first boot of portalBase, create one and set
+				// up the master user
 				try {
 					this.authenticator = new Authenticator();
 					hibernateSession.save(this.authenticator);
@@ -137,6 +150,47 @@ public class AuthManager implements AuthManagerInfo {
 		} catch (RuntimeException rtex) {
 			throw rtex;
 		}
+	}
+
+	/**
+	 * This method makes sure all properties of a table are loaded, assuming
+	 * we're inside a hibernate transaction
+	 */
+	private static void populateTableFromHibernate(TableInfo table, DataSource relationalDataSource)
+			throws CantDoThatException {
+		// Make sure all child objects are activated by calling toString()
+		// (indirectly)
+		logger.info("Loading table " + table);
+		logger.info("...Table Fields: " + table.getFields());
+		for (BaseReportInfo report : table.getReports()) {
+			logger.info("...Report " + table + "." + report);
+			if (report instanceof SimpleReportInfo) {
+				SimpleReportInfo simpleReport = (SimpleReportInfo) report;
+				logger.info("......Report fields: " + simpleReport.getReportFields());
+				logger.info("......Report filters: " + simpleReport.getFilters());
+				logger.info("......Report joins: " + simpleReport.getJoins());
+				logger.info("......Report sorts: " + simpleReport.getSorts());
+			}
+			ReportSummaryInfo reportSummary = report.getReportSummary();
+			logger.info("......Report summary: " + reportSummary);
+		}
+		// evict the table
+		HibernateUtil.currentSession().evict(table);
+		// Some fields need a relational datasource property. That isn't
+		// persisted so must be set here.
+		for (BaseField field : table.getFields()) {
+			if (field instanceof TextFieldDefn) {
+				((TextFieldDefn) field).setDataSource(relationalDataSource);
+			} else if (field instanceof IntegerFieldDefn) {
+				((IntegerFieldDefn) field).setDataSource(relationalDataSource);
+			} else if (field instanceof DecimalFieldDefn) {
+				((DecimalFieldDefn) field).setDataSource(relationalDataSource);
+			} else if (field instanceof RelationFieldDefn) {
+				((RelationFieldDefn) field).setDataSource(relationalDataSource);
+			}
+		}
+		// re-activate after call to evict above
+		HibernateUtil.activateObject(table);
 	}
 
 	public AuthenticatorInfo getAuthenticator() {

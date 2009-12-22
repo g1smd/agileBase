@@ -88,16 +88,6 @@ public interface DatabaseInfo {
 			CantDoThatException, ObjectNotFoundException, SQLException;
 
 	/**
-	 * This method doesn't make checks against permissions
-	 */
-	public void removeTableFromMemory(TableInfo tableToRemove);
-
-	/**
-	 * This method doesn't make checks against permissions
-	 */
-	public void returnTableToMemory(TableInfo table);
-
-	/**
 	 * Remove table tableToRemove provided no dependencies exist; otherwise
 	 * throw a TableDependencyException
 	 * 
@@ -126,7 +116,7 @@ public interface DatabaseInfo {
 	 * @param baseTable
 	 * @param dependentTables
 	 */
-	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables);
+	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, HttpServletRequest request) throws ObjectNotFoundException;
 
 	/**
 	 * Adds TableInfo objects to dependentTables where all tables added are
@@ -136,7 +126,7 @@ public interface DatabaseInfo {
 	 * @param baseTable
 	 * @param dependentTables
 	 */
-	public void getDirectlyDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables);
+	public void getDirectlyDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, HttpServletRequest request) throws ObjectNotFoundException;
 
 	/**
 	 * Create a report and add it to the database
@@ -239,7 +229,7 @@ public interface DatabaseInfo {
 			throws ObjectNotFoundException, CantDoThatException;
 
 	public void setReportFieldIndex(Connection conn, SimpleReportInfo report,
-			ReportFieldInfo field, int newindex) throws SQLException, CodingErrorException,
+			ReportFieldInfo field, int newindex, HttpServletRequest request) throws SQLException, CodingErrorException,
 			ObjectNotFoundException, CantDoThatException;
 
 	/**
@@ -495,13 +485,6 @@ public interface DatabaseInfo {
 	public ReportFieldInfo findReportFieldByInternalName(HttpServletRequest request,
 			String internalFieldName) throws ObjectNotFoundException, DisallowedException,
 			CodingErrorException;
-
-	/**
-	 * NB No privilege checks done - careful not to make available to client
-	 * 
-	 * @return A read-only copy of all tables in all companies
-	 */
-	public SortedSet<TableInfo> getTables();
 
 	/**
 	 * Return a reference to the object that manages and caches database data.

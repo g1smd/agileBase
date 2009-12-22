@@ -30,6 +30,9 @@ import java.util.SortedSet;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.TreeSet;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
@@ -186,13 +189,13 @@ public class DataRow implements DataRowInfo {
 	}
 
 	public Map<RelationField, List<DataRow>> getChildDataRows(DatabaseInfo databaseDefn,
-			Connection conn) throws SQLException, ObjectNotFoundException, CodingErrorException {
+			Connection conn, HttpServletRequest request) throws SQLException, ObjectNotFoundException, CodingErrorException {
 		// declare the return value:
 		Map<RelationField, List<DataRow>> childDataRows = new HashMap<RelationField, List<DataRow>>();
 		// obtain a set of all tables containing any field from this table as a
 		// RelationField
 		SortedSet<TableInfo> relationTables = new TreeSet<TableInfo>();
-		databaseDefn.getDirectlyDependentTables(this.table, relationTables);
+		databaseDefn.getDirectlyDependentTables(this.table, relationTables, request);
 		String localTableInternalName = this.table.getInternalTableName();
 		String localTablePrimaryKeyName = this.table.getPrimaryKey().getInternalFieldName();
 		// obtain the relation field(s) for each table & generate sql to get

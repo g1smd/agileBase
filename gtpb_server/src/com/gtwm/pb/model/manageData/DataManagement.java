@@ -1178,7 +1178,9 @@ public class DataManagement implements DataManagementInfo {
 			HttpServletRequest request, SessionDataInfo sessionData, DatabaseInfo databaseDefn,
 			TableInfo table, int rowId, Set<TableInfo> tablesWithDependentRecords)
 			throws SQLException, ObjectNotFoundException, CantDoThatException {
-		for (TableInfo otherTable : databaseDefn.getTables()) {
+		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
+		Set<TableInfo> tables = company.getTables();
+		for (TableInfo otherTable : tables) {
 			for (BaseField field : otherTable.getFields()) {
 				if (!(field instanceof RelationField)) {
 					continue;
@@ -1406,7 +1408,7 @@ public class DataManagement implements DataManagementInfo {
 	}
 
 	public Map<RelationField, List<DataRow>> getChildDataTableRows(DatabaseInfo databaseDefn,
-			TableInfo tableDefn, int rowid) throws SQLException, ObjectNotFoundException,
+			TableInfo tableDefn, int rowid, HttpServletRequest request) throws SQLException, ObjectNotFoundException,
 			CodingErrorException {
 		Connection conn = null;
 		Map<RelationField, List<DataRow>> childDataTableRows = null;
@@ -1415,7 +1417,7 @@ public class DataManagement implements DataManagementInfo {
 			conn.setAutoCommit(false);
 			// retrieve the related sets of records:
 			DataRow tableRow = new DataRow(tableDefn, rowid, conn);
-			childDataTableRows = tableRow.getChildDataRows(databaseDefn, conn);
+			childDataTableRows = tableRow.getChildDataRows(databaseDefn, conn, request);
 		} finally {
 			if (conn != null) {
 				conn.close();

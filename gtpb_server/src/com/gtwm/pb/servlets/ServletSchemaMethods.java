@@ -383,8 +383,9 @@ public class ServletSchemaMethods {
 		if (baseTableName == null) {
 			baseTableName = "New Table";
 			tableName = baseTableName;
-			// Make sure table name is unique
-			SortedSet<TableInfo> tables = databaseDefn.getTables();
+			// Make sure table name is unique in the company
+			CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
+			SortedSet<TableInfo> tables = company.getTables();
 			Set<String> existingTableNames = new HashSet<String>();
 			for (TableInfo existingTable : tables) {
 				existingTableNames.add(existingTable.getTableName());
@@ -416,17 +417,20 @@ public class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (SQLException sqlex) {
 			rollbackConnections(conn);
-			databaseDefn.removeTableFromMemory(newTable);
+			CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
+			company.removeTable(newTable);
 			databaseDefn.getAuthManager().removePrivilegesOnTable(request, newTable);
 			throw new CantDoThatException("table addition failed", sqlex);
 		} catch (HibernateException hex) {
 			rollbackConnections(conn);
-			databaseDefn.removeTableFromMemory(newTable);
+			CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
+			company.removeTable(newTable);
 			databaseDefn.getAuthManager().removePrivilegesOnTable(request, newTable);
 			throw new CantDoThatException("table addition failed", hex);
 		} catch (PortalBaseException pex) {
 			rollbackConnections(conn);
-			databaseDefn.removeTableFromMemory(newTable);
+			CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
+			company.removeTable(newTable);
 			databaseDefn.getAuthManager().removePrivilegesOnTable(request, newTable);
 			throw new CantDoThatException("table addition failed", pex);
 		} finally {
@@ -548,22 +552,28 @@ public class ServletSchemaMethods {
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (SQLException sqlex) {
-			if (!databaseDefn.getTables().contains(tableToRemove)) {
-				databaseDefn.returnTableToMemory(tableToRemove);
+			CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
+			Set<TableInfo> tables = company.getTables();
+			if (!tables.contains(tableToRemove)) {
+				company.addTable(tableToRemove);
 				databaseDefn.setDefaultTablePrivileges(request, tableToRemove);
 			}
 			rollbackConnections(conn);
 			throw new CantDoThatException("table removal failed", sqlex);
 		} catch (HibernateException hex) {
-			if (!databaseDefn.getTables().contains(tableToRemove)) {
-				databaseDefn.returnTableToMemory(tableToRemove);
+			CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
+			Set<TableInfo> tables = company.getTables();
+			if (!tables.contains(tableToRemove)) {
+				company.addTable(tableToRemove);
 				databaseDefn.setDefaultTablePrivileges(request, tableToRemove);
 			}
 			rollbackConnections(conn);
 			throw new CantDoThatException("table removal failed", hex);
 		} catch (PortalBaseException pbex) {
-			if (!databaseDefn.getTables().contains(tableToRemove)) {
-				databaseDefn.returnTableToMemory(tableToRemove);
+			CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
+			Set<TableInfo> tables = company.getTables();
+			if (!tables.contains(tableToRemove)) {
+				company.addTable(tableToRemove);
 				databaseDefn.setDefaultTablePrivileges(request, tableToRemove);
 			}
 			rollbackConnections(conn);
@@ -1434,7 +1444,7 @@ public class ServletSchemaMethods {
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
 			// set the report field index:
-			databaseDefn.setReportFieldIndex(conn, report, field, newFieldIndex);
+			databaseDefn.setReportFieldIndex(conn, report, field, newFieldIndex, request);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (SQLException sqlex) {

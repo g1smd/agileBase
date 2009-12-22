@@ -28,6 +28,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Represents one row in a set of results data for a report, i.e. basically a
  * set of field=value pairs
@@ -64,5 +66,5 @@ public interface DataRowInfo {
 	 * data The lists are stored in a Map via the RelationField object
 	 */
 	public Map<RelationField, List<DataRow>> getChildDataRows(DatabaseInfo databaseDefn,
-			Connection conn) throws SQLException, ObjectNotFoundException, CodingErrorException;
+			Connection conn, HttpServletRequest request) throws SQLException, ObjectNotFoundException, CodingErrorException;
 }

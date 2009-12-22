@@ -78,6 +78,7 @@ import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.manageData.fields.DurationValueDefn;
+import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.DashboardPopulator;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
@@ -119,7 +120,6 @@ import com.gtwm.pb.model.interfaces.WikiManagementInfo;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 public class DatabaseDefn implements DatabaseInfo {
 
@@ -143,15 +143,6 @@ public class DatabaseDefn implements DatabaseInfo {
 		// Load table schema objects
 		Session hibernateSession = HibernateUtil.currentSession();
 		try {
-			logger.info("Loading schema into memory...");
-			Transaction hibernateTransaction = hibernateSession.beginTransaction();
-			List<?> result = hibernateSession.createQuery("from TableDefn").list();
-			for (Object resultObj : result) {
-				TableInfo table = (TableInfo) resultObj;
-				this.populateTableFromHibernate(table);
-				this.tables.add(table);
-			}
-			hibernateTransaction.commit();
 			this.authManager = new AuthManager(relationalDataSource);
 		} finally {
 			HibernateUtil.closeSession();
@@ -184,51 +175,11 @@ public class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/**
-	 * This method makes sure all properties of a table are loaded, assuming
-	 * we're inside a hibernate transaction
-	 */
-	private void populateTableFromHibernate(TableInfo table) throws CantDoThatException {
-		// Make sure all child objects are activated by calling toString()
-		// (indirectly)
-		logger.info("Loading table " + table);
-		logger.info("...Table Fields: " + table.getFields());
-		for (BaseReportInfo report : table.getReports()) {
-			logger.info("...Report " + table + "." + report);
-			if (report instanceof SimpleReportInfo) {
-				SimpleReportInfo simpleReport = (SimpleReportInfo) report;
-				logger.info("......Report fields: " + simpleReport.getReportFields());
-				logger.info("......Report filters: " + simpleReport.getFilters());
-				logger.info("......Report joins: " + simpleReport.getJoins());
-				logger.info("......Report sorts: " + simpleReport.getSorts());
-			}
-			ReportSummaryInfo reportSummary = report.getReportSummary();
-			logger.info("......Report summary: " + reportSummary);
-		}
-		// evict the table
-		HibernateUtil.currentSession().evict(table);
-		// Some fields need a relational datasource property. That isn't
-		// persisted so must be set here.
-		for (BaseField field : table.getFields()) {
-			if (field instanceof TextFieldDefn) {
-				((TextFieldDefn) field).setDataSource(this.relationalDataSource);
-			} else if (field instanceof IntegerFieldDefn) {
-				((IntegerFieldDefn) field).setDataSource(this.relationalDataSource);
-			} else if (field instanceof DecimalFieldDefn) {
-				((DecimalFieldDefn) field).setDataSource(this.relationalDataSource);
-			} else if (field instanceof RelationFieldDefn) {
-				((RelationFieldDefn) field).setDataSource(this.relationalDataSource);
-			}
-		}
-		// re-activate after call to evict above
-		HibernateUtil.activateObject(table);
-	}
-
-	/**
 	 * Was only used once but is an example of how to add a new type of hidden
 	 * field so worth keeping around
 	 */
-	private void addLockableFields() throws SQLException {
-		for (TableInfo table : this.tables) {
+	private void addLockableFields(Set<TableInfo> allTables) throws SQLException {
+		for (TableInfo table : allTables) {
 			String lockableFieldName = HiddenFields.LOCKED.getFieldName();
 			try {
 				BaseField lockingField = table.getField(lockableFieldName);
@@ -390,7 +341,7 @@ public class DatabaseDefn implements DatabaseInfo {
 			// records at the top
 			defaultReport.addSort(primaryKeyReportField, false);
 			// Save default report definition to the database
-			this.updateViewDbAction(conn, defaultReport);
+			this.updateViewDbAction(conn, defaultReport, request);
 			// Add hidden table fields
 			this.addWikiFieldToTable(conn, newTable);
 			this.addDateCreatedFieldToTable(conn, newTable);
@@ -398,7 +349,6 @@ public class DatabaseDefn implements DatabaseInfo {
 			this.addLastModifiedFieldToTable(conn, newTable);
 			this.addModifiedByFieldToTable(conn, newTable);
 			this.addRecordLockedFieldToTable(conn, newTable);
-			this.tables.add(newTable);
 		} catch (SQLException sqlex) {
 			// Reformat the error message to be more user friendly.
 			// Use SQLState as an error identifier because it is standard across
@@ -456,8 +406,9 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables) {
-		Set<TableInfo> tables = this.getTables();
+	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, HttpServletRequest request) throws ObjectNotFoundException {
+		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
+		Set<TableInfo> tables = company.getTables();
 		for (TableInfo table : tables) {
 			// check relation fields in table itself:
 			if (table.equals(baseTable)) {
@@ -468,14 +419,15 @@ public class DatabaseDefn implements DatabaseInfo {
 			if (table.isDependentOn(baseTable)) {
 				if (!dependentTables.contains(table)) {
 					dependentTables.add(table);
-					getDependentTables(table, dependentTables);
+					getDependentTables(table, dependentTables, request);
 				}
 			}
 		}
 	}
 
-	public void getDirectlyDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables) {
-		Set<TableInfo> tables = this.getTables();
+	public void getDirectlyDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, HttpServletRequest request) throws ObjectNotFoundException {
+		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
+		Set<TableInfo> tables = company.getTables();
 		for (TableInfo table : tables) {
 			// check relation fields in table itself:
 			if (table.equals(baseTable))
@@ -538,14 +490,6 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public synchronized void removeTableFromMemory(TableInfo table) {
-		this.tables.remove(table);
-	}
-
-	public synchronized void returnTableToMemory(TableInfo table) {
-		this.tables.add(table);
-	}
-
 	public synchronized void removeTable(SessionDataInfo sessionData, HttpServletRequest request,
 			TableInfo tableToRemove, Connection conn) throws SQLException, DisallowedException,
 			CantDoThatException, TableDependencyException, CodingErrorException,
@@ -568,7 +512,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		// Get a set of dependent tables. If empty proceed with the deletion of
 		// the table, otherwise, raise an exception
 		LinkedHashSet<TableInfo> dependentTables = new LinkedHashSet<TableInfo>();
-		this.getDependentTables(tableToRemove, dependentTables);
+		this.getDependentTables(tableToRemove, dependentTables, request);
 		if (dependentTables.size() > 0) {
 			LinkedHashSet<BaseReportInfo> dependentReports = new LinkedHashSet<BaseReportInfo>();
 			for (TableInfo dependentTable : dependentTables) {
@@ -584,7 +528,6 @@ public class DatabaseDefn implements DatabaseInfo {
 		// Remove any privileges on the table
 		this.getAuthManager().removePrivilegesOnTable(request, tableToRemove);
 		this.tableCache.remove(tableToRemove.getInternalTableName());
-		this.tables.remove(tableToRemove);
 		// Delete from persistent store
 		HibernateUtil.currentSession().delete(tableToRemove);
 		try {
@@ -660,7 +603,7 @@ public class DatabaseDefn implements DatabaseInfo {
 			}
 		}
 		HibernateUtil.currentSession().save(report);
-		this.updateViewDbAction(conn, report);
+		this.updateViewDbAction(conn, report, request);
 		HibernateUtil.activateObject(table);
 		table.addReport(report, false);
 		// this.dataManagement.logLastSchemaChangeTime(request);
@@ -786,7 +729,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	 * views are recreated.
 	 */
 	private void updateViewDbActionWithDropAndCreateDependencies(Connection conn,
-			BaseReportInfo report) throws SQLException, ObjectNotFoundException,
+			BaseReportInfo report, HttpServletRequest request) throws SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException {
 		Savepoint savepoint = null;
 		try {
@@ -818,7 +761,7 @@ public class DatabaseDefn implements DatabaseInfo {
 			// Recreate reports...
 			Collections.reverse(deletedReports);
 			for (String reportInternalName : deletedReports) {
-				TableInfo table = this.findTableContainingReportWithoutChecks(reportInternalName);
+				TableInfo table = this.findTableContainingReportWithoutChecks(reportInternalName, request);
 				HibernateUtil.activateObject(table);
 				BaseReportInfo reportToRecreate = table.getReport(reportInternalName);
 				String CreateViewSQL = "CREATE VIEW " + reportInternalName + " AS ("
@@ -866,7 +809,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Create the database VIEW for the report
 	 */
-	private void updateViewDbAction(Connection conn, BaseReportInfo report) throws SQLException,
+	private void updateViewDbAction(Connection conn, BaseReportInfo report, HttpServletRequest request) throws SQLException,
 			CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		boolean viewExists = viewExistsInPostgres(conn, report);
 		boolean createOrReplaceWorked = updateViewDbActionWithCreateOrReplace(conn, report,
@@ -874,7 +817,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		if (viewExists && !createOrReplaceWorked) {
 			boolean dropAndCreateWorked = updateViewDbActionWithDropAndCreate(conn, report);
 			if (!dropAndCreateWorked) {
-				updateViewDbActionWithDropAndCreateDependencies(conn, report);
+				updateViewDbActionWithDropAndCreateDependencies(conn, report, request);
 			}
 		}
 		throwExceptionIfDbViewIsBroken(conn, report);
@@ -893,7 +836,7 @@ public class DatabaseDefn implements DatabaseInfo {
 			throw new CantDoThatException("Can't remove the default report");
 		}
 		Set<BaseReportInfo> dependentReports = this
-				.getDependentReports((SimpleReportInfo) reportToRemove);
+				.getDependentReports((SimpleReportInfo) reportToRemove, request);
 		if (dependentReports.size() > 0) {
 			throw new CantDoThatException("Reports " + dependentReports + " depend on this one");
 		}
@@ -1086,7 +1029,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		BaseField field = null;
 		field = this.generateFieldObject(request, table, fieldType, internalFieldName, fieldName,
 				fieldDesc, unique, hidden);
-		this.addField(conn, table, field);
+		this.addField(conn, table, field, request);
 		field.setHidden(hidden);
 		// schema change time not recorded in memory because it doesn't affect
 		// summary reports
@@ -1289,7 +1232,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Adds field to relational database, object database and memory.
 	 */
-	private synchronized void addField(Connection conn, TableInfo tableToAddTo, BaseField fieldToAdd)
+	private synchronized void addField(Connection conn, TableInfo tableToAddTo, BaseField fieldToAdd, HttpServletRequest request)
 			throws SQLException, CantDoThatException, ObjectNotFoundException, CodingErrorException {
 		HibernateUtil.activateObject(tableToAddTo);
 		HibernateUtil.currentSession().save(fieldToAdd);
@@ -1299,7 +1242,7 @@ public class DatabaseDefn implements DatabaseInfo {
 			defaultReport.addTableField(fieldToAdd);
 			// Do SQL
 			this.addFieldToRelationalDb(conn, tableToAddTo, fieldToAdd);
-			this.updateViewDbAction(conn, defaultReport);
+			this.updateViewDbAction(conn, defaultReport, request);
 		}
 	}
 
@@ -1485,7 +1428,7 @@ public class DatabaseDefn implements DatabaseInfo {
 			relationToAdd.setDisplayField(valueField);
 		}
 		// Add it to the databases and in-memory cache
-		addField(conn, tableToAddTo, relationToAdd);
+		addField(conn, tableToAddTo, relationToAdd, request);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
@@ -1502,15 +1445,16 @@ public class DatabaseDefn implements DatabaseInfo {
 	 *             Thrown if the field shouldn't be removed from it's parent
 	 *             table, with a message explaining why not
 	 */
-	private synchronized void removeFieldChecks(BaseField field) throws CantDoThatException,
-			CodingErrorException {
+	private synchronized void removeFieldChecks(BaseField field, HttpServletRequest request) throws CantDoThatException,
+			CodingErrorException, ObjectNotFoundException {
 		// Don't allow deletion of the primary key
 		if (field.equals(field.getTableContainingField().getPrimaryKey())) {
 			throw new CantDoThatException("Can't delete the primary key field");
 		}
 		// Check the field isn't used in a relation
 		SortedSet<TableInfo> relatedTables = new TreeSet<TableInfo>();
-		Set<TableInfo> allTables = this.getTables();
+		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
+		Set<TableInfo> allTables = company.getTables();
 		for (TableInfo testTable : allTables) {
 			for (BaseField testField : testTable.getFields()) {
 				if (testField instanceof RelationField) {
@@ -1624,7 +1568,7 @@ public class DatabaseDefn implements DatabaseInfo {
 				PrivilegeType.MANAGE_TABLE, table))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
-		this.removeFieldChecks(field);
+		this.removeFieldChecks(field, request);
 		// Don't allow deletion of the primary key
 		if (field.equals(field.getTableContainingField().getPrimaryKey())) {
 			throw new CantDoThatException("Can't delete the primary key field");
@@ -1640,7 +1584,7 @@ public class DatabaseDefn implements DatabaseInfo {
 					logger.info("Removing " + reportField + " from report " + defaultReport);
 					defaultReport.removeField(reportField);
 					removedReportField = reportField;
-					updateViewDbAction(conn, defaultReport);
+					updateViewDbAction(conn, defaultReport, request);
 				}
 			}
 		}
@@ -1680,7 +1624,7 @@ public class DatabaseDefn implements DatabaseInfo {
 			ReportFieldInfo reportField = sourceReport.getReportField(field.getInternalFieldName());
 			newReportField = report.addReportField(reportField);
 		}
-		updateViewDbAction(conn, report);
+		updateViewDbAction(conn, report, request);
 		// this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
@@ -1691,11 +1635,11 @@ public class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public synchronized void setReportFieldIndex(Connection conn, SimpleReportInfo report,
-			ReportFieldInfo field, int newindex) throws SQLException, CodingErrorException,
+			ReportFieldInfo field, int newindex, HttpServletRequest request) throws SQLException, CodingErrorException,
 			ObjectNotFoundException, CantDoThatException {
 		HibernateUtil.activateObject(report);
 		report.setFieldIndex(newindex, field);
-		this.updateViewDbAction(conn, report);
+		this.updateViewDbAction(conn, report, request);
 	}
 
 	public synchronized void addJoinToReport(HttpServletRequest request, Connection conn,
@@ -1707,7 +1651,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		report.addJoin(join);
-		this.updateViewDbAction(conn, report);
+		this.updateViewDbAction(conn, report, request);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
@@ -1725,7 +1669,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		report.removeJoin(join);
-		updateViewDbAction(conn, report);
+		updateViewDbAction(conn, report, request);
 		HibernateUtil.currentSession().delete(join);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
@@ -1745,7 +1689,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		report.addSort(reportField, ascending);
-		updateViewDbAction(conn, report);
+		updateViewDbAction(conn, report, request);
 		// this.dataManagement.logLastSchemaChangeTime(request);
 	}
 
@@ -1759,7 +1703,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		report.updateSort(reportField, ascending);
-		updateViewDbAction(conn, report);
+		updateViewDbAction(conn, report, request);
 		// this.dataManagement.logLastSchemaChangeTime(request);
 	}
 
@@ -1772,7 +1716,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		ReportSortInfo removedSort = report.removeSort(reportField);
-		updateViewDbAction(conn, report);
+		updateViewDbAction(conn, report, request);
 		if (removedSort != null) {
 			HibernateUtil.currentSession().delete(removedSort);
 		}
@@ -1788,7 +1732,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		report.addFilter(filter);
-		updateViewDbAction(conn, report);
+		updateViewDbAction(conn, report, request);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
@@ -1837,7 +1781,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		report.removeFilter(filter);
-		updateViewDbAction(conn, report);
+		updateViewDbAction(conn, report, request);
 		HibernateUtil.currentSession().delete(filter);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
@@ -1851,10 +1795,12 @@ public class DatabaseDefn implements DatabaseInfo {
 	 * Return a set of all reports that join to this one, i.e. those that would
 	 * have to be modified before dropping the given report
 	 */
-	private SortedSet<BaseReportInfo> getDependentReports(SimpleReportInfo report)
-			throws CantDoThatException {
+	private SortedSet<BaseReportInfo> getDependentReports(SimpleReportInfo report, HttpServletRequest request)
+			throws CantDoThatException, ObjectNotFoundException {
+		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
+		Set<TableInfo> tables = company.getTables();
 		SortedSet<BaseReportInfo> reportsUsedIn = new TreeSet<BaseReportInfo>();
-		for (TableInfo table : this.getTables()) {
+		for (TableInfo table :tables) {
 			for (BaseReportInfo testReport : table.getReports()) {
 				// default reports won't have joins
 				// and don't test for joins to self
@@ -1899,14 +1845,14 @@ public class DatabaseDefn implements DatabaseInfo {
 		report.addCalculation(calculationField);
 		savepoint = conn.setSavepoint("addCalculationSavepoint");
 		try {
-			this.updateViewDbAction(conn, report);
+			this.updateViewDbAction(conn, report, request);
 		} catch (SQLException sqlex) {
 			// detect aggregate functions
 			if (sqlex.getMessage().contains("must appear in the GROUP BY clause")
 					|| sqlex.getMessage().contains("aggregates not allowed in GROUP BY clause")) {
 				conn.rollback(savepoint);
 				calculationField.setAggregateFunction(true);
-				updateViewDbAction(conn, report);
+				updateViewDbAction(conn, report, request);
 			} else {
 				throw sqlex;
 			}
@@ -1939,14 +1885,14 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		savepoint = conn.setSavepoint("updateCalculationSavepoint");
 		try {
-			this.updateViewDbAction(conn, report);
+			this.updateViewDbAction(conn, report, request);
 		} catch (SQLException sqlex) {
 			// detect aggregate functions
 			if (sqlex.getMessage().contains("must appear in the GROUP BY clause")
 					|| sqlex.getMessage().contains("aggregates not allowed in GROUP BY clause")) {
 				conn.rollback(savepoint);
 				calculationField.setAggregateFunction(true);
-				updateViewDbAction(conn, report);
+				updateViewDbAction(conn, report, request);
 			} else {
 				throw sqlex;
 			}
@@ -1973,8 +1919,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		((ReportCalcFieldDefn) calculationField).setBaseFieldName(oldCalculationName);
 	}
 
-	private synchronized void removeFieldFromReportChecks(ReportFieldInfo reportField)
-			throws CantDoThatException, CodingErrorException {
+	private synchronized void removeFieldFromReportChecks(ReportFieldInfo reportField, HttpServletRequest request)
+			throws CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		// check the field isn't used in its parent report's own summary
 		ReportSummaryInfo reportSummary = reportField.getParentReport().getReportSummary();
 		Set<ReportSummaryAggregateInfo> aggFns = reportSummary.getAggregateFunctions();
@@ -2000,7 +1946,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		// check the field isn't referenced from any other reports
 		SortedSet<BaseReportInfo> reportsUsedIn = new TreeSet<BaseReportInfo>();
-		Set<TableInfo> allTables = this.getTables();
+		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
+		Set<TableInfo> allTables = company.getTables();
 		for (TableInfo testTable : allTables) {
 			for (BaseReportInfo testReport : testTable.getReports()) {
 				if (testReport.equals(testReport.getParentTable().getDefaultReport())) {
@@ -2075,13 +2022,9 @@ public class DatabaseDefn implements DatabaseInfo {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
-		this.removeFieldFromReportChecks(reportField);
-		// Connection conn = null;
-		// try {
+		this.removeFieldFromReportChecks(reportField, request);
 		report.removeField(reportField);
-		// conn = this.relationalDataSource.getConnection();
-		// conn.setAutoCommit(false);
-		updateViewDbAction(conn, report);
+		updateViewDbAction(conn, report, request);
 		HibernateUtil.currentSession().delete(reportField);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
@@ -2189,14 +2132,6 @@ public class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	/*
-	 * Warning: no privilege checks, make sure this is only used internally and
-	 * not accessible from the client side
-	 */
-	public synchronized SortedSet<TableInfo> getTables() {
-		return Collections.unmodifiableSortedSet(new TreeSet<TableInfo>(this.tables));
-	}
-
 	public synchronized TableInfo getTableByName(HttpServletRequest request, String tableName)
 			throws ObjectNotFoundException {
 		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
@@ -2274,9 +2209,10 @@ public class DatabaseDefn implements DatabaseInfo {
 		throw new ObjectNotFoundException("Report '" + reportInternalName + "' is not in any table");
 	}
 
-	private synchronized TableInfo findTableContainingReportWithoutChecks(String reportInternalName)
+	private synchronized TableInfo findTableContainingReportWithoutChecks(String reportInternalName, HttpServletRequest request)
 			throws ObjectNotFoundException {
-		for (TableInfo table : this.tables) {
+		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+		for (TableInfo table : companyTables) {
 			for (BaseReportInfo report : table.getReports()) {
 				if (report.getInternalReportName().equals(reportInternalName)) {
 					return table;
@@ -2288,7 +2224,9 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	public synchronized TableInfo findTableContainingField(HttpServletRequest request,
 			String internalFieldName) throws ObjectNotFoundException, DisallowedException {
-		for (TableInfo table : this.tables) {
+		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
+		Set<TableInfo> tables = company.getTables();
+		for (TableInfo table : tables) {
 			for (BaseField field : table.getFields()) {
 				if (field.getInternalFieldName().equals(internalFieldName)) {
 					if (this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2542,8 +2480,6 @@ public class DatabaseDefn implements DatabaseInfo {
 			logger.error("Error getting SQL connection: " + sqlex);
 		}
 	}
-
-	private SortedSet<TableInfo> tables = new TreeSet<TableInfo>();
 
 	/**
 	 * Lookup of internal table name to table
