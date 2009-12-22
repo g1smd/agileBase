@@ -18,7 +18,6 @@
 package com.gtwm.pb.util;
 
 import org.apache.commons.lang.RandomStringUtils;
-import org.grlea.log.SimpleLogger;
 
 /**
  * Instantiating an object of this class generates a random string.
@@ -48,5 +47,5 @@ public class RandomString {
 
 	private String generatedHexString = null;
 
-	private static final SimpleLogger logger = new SimpleLogger(RandomString.class);
+	//private static final SimpleLogger logger = new SimpleLogger(RandomString.class);
 }

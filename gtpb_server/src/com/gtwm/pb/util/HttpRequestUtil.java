@@ -75,5 +75,5 @@ public class HttpRequestUtil {
 		return textValue;
 	}
 	
-	private static final SimpleLogger logger = new SimpleLogger(HttpRequestUtil.class);
+	//private static final SimpleLogger logger = new SimpleLogger(HttpRequestUtil.class);
 }
