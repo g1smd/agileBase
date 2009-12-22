@@ -86,7 +86,7 @@
 				<!-- date/time parsing -->
 				<pathelement location="WEB-INF/lib/ERChronic.jar"/>
 				<!-- closed source dashboard -->
-				<pathelement location="WEB-INF/lig/gtpb-dashboard.jar"/>
+				<pathelement location="WEB-INF/lib/gtpb-dashboard.jar"/>
 			</classpath>
 		</javac>
 	</target>
