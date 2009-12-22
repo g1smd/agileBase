@@ -80,5 +80,6 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/xerces-2.6.2.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/xml-apis.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/gtpb-dashboard.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
