@@ -99,6 +99,8 @@
 				<pathelement location="WEB-INF/lib/poi-3.6-20091214.jar"/>
 				<!-- date/time parsing -->
 				<pathelement location="WEB-INF/lib/ERChronic.jar"/>
+				<!-- closed source dashboard -->
+				<pathelement location="WEB-INF/lig/gtpb-dashboard.jar"/>
 			</classpath>
 		</javac>
 	</target>
