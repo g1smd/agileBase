@@ -1,3 +1,3 @@
 #!/bin/bash
-cvs update -d
+git pull origin master
 ant -f build_ubuntu.xml deploy
