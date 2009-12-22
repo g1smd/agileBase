@@ -14,9 +14,6 @@
 		<copy todir="${tomcat.dir}/webapps/${webapp}/resources">
 			<fileset dir="resources"/>
 		</copy>
-		<copy todir="${tomcat.dir}/webapps/${webapp}/selenium">
-			<fileset dir="selenium"/>
-		</copy>
 		<copy todir="${tomcat.dir}/webapps/${webapp}/website">
 			<fileset dir="website"/>
 		</copy>
