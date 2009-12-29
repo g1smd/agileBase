@@ -19,7 +19,6 @@ package com.gtwm.pb.model.interfaces;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import com.gtwm.pb.util.MissingParametersException;
@@ -33,7 +32,6 @@ import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 

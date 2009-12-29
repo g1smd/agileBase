@@ -40,7 +40,7 @@
   #parse($customisationsTemplateLocation)
 #end
 
-## obtain a mapping of group to reports (Map<String, BaseReport[]>)
+## obtain a mapping of module to reports (Map<Module, BaseReport[]>)
 ## don't add groups/reports where the report is the default report
 ## or a calculation/criteria report
 #set($reportModules=$viewTools.getNewSortedModuleObjectMap())

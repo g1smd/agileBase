@@ -51,13 +51,27 @@ public interface DashboardInfo {
 	
 	public List<Integer> getDataChangesPerWeek();
 	
+	/**
+	 * Return list of exceptions found by looking through all reports in the company
+	 */
 	public SortedSet<DashboardOutlierInfo> getDashboardOutliers();
 	
 	public Set<DashboardTrendOutlierInfo> getDashboardTrendOutliers();
 	
+	/**
+	 * Get report summary charts that have been mandated for the company
+	 */
 	public Map<ReportSummaryInfo, ReportSummaryDataInfo> getCompanyReportSummaries();
 	
+	/**
+	 * Get report summary charts that an individual user has chosen to see
+	 */
 	public Map<ReportSummaryInfo, ReportSummaryDataInfo> getUserReportSummaries(AppUserInfo user);
+	
+	/**
+	 * Get report summary charts that portalBase automatically selects
+	 */
+	public SortedSet<DashboardReportSummaryInfo> getSuggestedReportSummaries();
 	
 	/**
 	 * Return data that can be used to build a treemap of report view
