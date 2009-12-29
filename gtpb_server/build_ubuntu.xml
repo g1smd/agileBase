@@ -22,7 +22,7 @@
 		<delete dir="${doc.dir}" />
 	</target>
 
-	<target name="build" depends="init">
+	<target name="build" depends="clean, init">
 		<javac destdir="${build.dir}" executable="${compiler}" fork="true" listfiles="true" source="1.5" target="1.5">
 			<compilerarg value="-Xlint:unchecked" />
 			<src>
