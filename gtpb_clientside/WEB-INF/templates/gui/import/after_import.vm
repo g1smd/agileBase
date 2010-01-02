@@ -18,9 +18,8 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
+<link href="styles/report.css" type="text/css" rel="stylesheet" />
 <style>
-	@import url("styles/report.css");
-
 	html, body { font-family: "Arial", sans-serif; 
     			 color: black; 
     			 font-size: 11pt; 

@@ -52,7 +52,7 @@
 			table#reportData tbody tr.rowb:hover td { background-color:transparent!important }
 			
     </style>  
-  	<script src="resources/jquery.js" language="Javascript"> </script>
+  	<script language="JavaScript" src="resources/jquery.js"> </script>
     <SCRIPT language="Javascript" src="resources/wait/request.js"></SCRIPT> 
   	<SCRIPT language="Javascript" src="resources/wait/editData.js"></SCRIPT>  
   	<SCRIPT language="Javascript">

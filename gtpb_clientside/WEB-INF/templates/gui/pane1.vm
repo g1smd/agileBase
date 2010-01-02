@@ -27,14 +27,11 @@
 	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 	#end
 	<title>$view.getApplicationName() version $view.getApplicationVersion() - $view.getLoggedInUser().getCompany()</title>
-
-	<style type="text/css">
-		 @import url("resources/tree/tree.css");
-		 @import url("resources/module-colours.css");	
-		 #if(!$mobile_device)
-		 @import url("styles/jquery.cluetip.css");
-		 #end
-	</style>
+	<link href="resources/tree/tree.css" type="text/css" rel="stylesheet" />
+	<link href="resources/module-colours.css" type="text/css" rel="stylesheet" />
+	#if(!$mobile_device)
+	  <link href="styles/jquery.cluetip.css" type="text/css" rel="stylesheet" />
+	#end
 	<script type="text/javascript" src="resources/jquery.js"></script>
 	<script type="text/javascript" src="resources/tree/tree.js"></script>
 	#if(!$mobile_device)

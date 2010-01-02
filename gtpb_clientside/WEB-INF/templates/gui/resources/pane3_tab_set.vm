@@ -19,6 +19,26 @@
 <html>
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<link href="styles/report.css" type="text/css" rel="stylesheet" />
+	<link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
+	<link href="resources/jquery.autocomplete.css" type="text/css" rel="stylesheet" />
+	## Import required stylesheets
+	#foreach($style in $styles)
+	  <link href="$style" type="text/css" rel="stylesheet" />
+	#end
+    #if($mobile_device)
+	  *[changed] { text-decoration:underline }
+	  *[error] { color:red }
+	  a[error] { font-size:8pt }
+	#end
+    * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+										
+	td.trailing input[type=button] { 
+	  font-size:8pt; 
+	}
+			
+    </style>  
+
 	<script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jquery.oembed.js"></script>
     #parse('gui/display_error.vm')
@@ -33,29 +53,6 @@
 	#end
  
 <title>$sessionData.getTable() data</title>
-    <style type="text/css">
-    @import url("styles/report.css");
-    @import url('resources/tabs/tabs.css');	
-    @import url('resources/jquery.autocomplete.css');	
-	
-	## Import required stylesheets
-	#foreach($style in $styles)
-		@import url('$style');
-	#end	
-    	
-    #if($mobile_device)
-	  *[changed] { text-decoration:underline }
-	  *[error] { color:red }
-	  a[error] { font-size:8pt }
-	#end
-    * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
-										
-	td.trailing input[type=button] { 
-	  font-size:8pt; 
-	}
-			
-    </style>  
-
     #if(!$mobile_device)
 		<!--[if IE]>
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/tabs-ie.css" />

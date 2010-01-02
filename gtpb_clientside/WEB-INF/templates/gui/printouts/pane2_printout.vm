@@ -20,29 +20,10 @@
 <html>
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    #parse('gui/display_error.vm')
-    #set($report = $sessionData.getReport())
-    #if($report.getModule())
-      #set($module=$report.getModule())
-    #else
-      #set($module=$sessionData.getTable().getTableName())
-    #end
-    <title>$module - $report</title>      
- 	<script src="resources/jquery.js" language="Javascript"></script>
-    <script language="JavaScript" src="resources/wait/request.js"></script>
-    <script language="JavaScript" src="resources/modalFramework/modalFramework.js"></script>   
-    <script language="JavaScript">
-	function loadDetail() {
-		$('#detail').text('loading...');
-		$('#detail').load('AppController.servlet?return=gui/printouts/detail');
-		$('#detail').removeAttr('id');
-	}
-    </script>
+	<link href="styles/report.css" type="text/css" rel="stylesheet" />
+	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
+	<link href="resources/button/button.css" type="text/css" rel="stylesheet" />
     <style>
-	  @import url("styles/report.css");
-	  @import url('resources/modalFramework/modalFramework.css'); 
-      @import url("resources/button/button.css");	             
-	
 	      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
 	
 	      html, body { 
@@ -93,6 +74,24 @@
 	      }
 	      
 	    </style>
+    #parse('gui/display_error.vm')
+    #set($report = $sessionData.getReport())
+    #if($report.getModule())
+      #set($module=$report.getModule())
+    #else
+      #set($module=$sessionData.getTable().getTableName())
+    #end
+    <title>$module - $report</title>      
+ 	<script src="resources/jquery.js" language="Javascript"></script>
+    <script language="JavaScript" src="resources/wait/request.js"></script>
+    <script language="JavaScript" src="resources/modalFramework/modalFramework.js"></script>   
+    <script language="JavaScript">
+	function loadDetail() {
+		$('#detail').text('loading...');
+		$('#detail').load('AppController.servlet?return=gui/printouts/detail');
+		$('#detail').removeAttr('id');
+	}
+    </script>
   </head>
   <body oncontextmenu="return false" isDraft="true"> ## err on the side of caution and mark as a draft by default.  This will be changed when the doc loads if it's not a draft
     <h1 class="draftMarker">DRAFT ONLY</h1>

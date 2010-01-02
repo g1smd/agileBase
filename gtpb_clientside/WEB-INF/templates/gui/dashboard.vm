@@ -2,13 +2,11 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+	<link href="resources/display_application.css" type="text/css" rel="stylesheet" />
+	<link href="styles/main.css" type="text/css" rel="stylesheet" />
 	<title>Utilisation information</title>
 	<script src="resources/jquery.js" language="Javascript"></script>
 	<script language=Javascript src="resources/jit.js"></script>
-	<style>
-	@import url('resources/display_application.css');
-	@import url('styles/main.css');
-	</style>
 </head>
 <body>
 #set($treeMapJSON = $view.getUsageStats().getTreeMapJSON())

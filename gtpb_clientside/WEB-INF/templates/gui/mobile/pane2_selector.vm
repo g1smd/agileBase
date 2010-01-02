@@ -27,43 +27,17 @@
   <html>
 	<head><title>$report summary</title>
 	  <meta name = "viewport" content = "width = device-width">
+	  <link href="styles/report.css" type="text/css" rel="stylesheet" />
+	  <link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
+	  <link href="resources/tabs/summary.css" type="text/css" rel="stylesheet" />
 	  <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
   	  <script src="resources/jquery.js" language="Javascript"> </script>
-	      <style type="text/css">
-			@import url("styles/report.css");
-			@import url('resources/tabs/tabs.css');	
-			@import url('resources/tabs/summary.css');	
-		  </style>
     </head>
 	<body>
 	  #parse("gui/mobile/pane2_header.vm")
       #parse("gui/reports_and_tables/tabs/summary.vm")
 	</body></head>
   </html>
-## Mobile users can't edit or manage reports 
-##  
-###elseif($mobile_pane2_selection == "edit_report")
-##  <html>
-##	<head><title>edit report $report</title>
-##	  <meta name = "viewport" content = "width = 700">
-##	  <meta name="apple-mobile-web-app-capable" content="yes" />
-##  	  <script src="resources/jquery.js" language="Javascript"> </script>
-##    </head>
-##	<body>
-##      #parse("gui/reports_and_tables/tabs/report_fields.vm")
-##	</body></head>
-##  </html>
-###elseif($mobile_pane2_selection == "manage_report")
-##  <html>
-##	<head><title>manage report $report</title>
-##	  <meta name = "viewport" content = "width = device-width">
-##      <meta name="apple-mobile-web-app-capable" content="yes" />
-##  	  <script src="resources/jquery.js" language="Javascript"> </script>
-##    </head>
-##	<body>
-##      #parse("gui/reports_and_tables/tabs/report_administration.vm")
-##	</body></head>
-##  </html>
 #else
   #set($mobile_pane2_selection = "report")
   #parse("gui/reports_and_tables/report_data.vm")

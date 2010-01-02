@@ -18,10 +18,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
   <head>
+    #set($company_name=$view.getLoggedInUser().getCompany().getCompanyName())
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
+	<link href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" type="text/css" rel="stylesheet" />
+	<link href="resources/display_application.css" type="text/css" rel="stylesheet" />      
+ 	<!--[if IE 7]>
+    <style>
+		@import url('resources/display_application-ie.css');
+		html {
+		  overflow:auto;
+		}
+    </style>		
+	<![endif]-->
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
     <title>
-      #set($company_name=$view.getLoggedInUser().getCompany().getCompanyName())
       $view.getApplicationName() $view.getApplicationVersion() - $company_name
     </title>
    	  <script src="resources/jquery.js" language="Javascript"></script>
@@ -31,7 +42,7 @@
       <script language=JavaScript src="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.js"></script>      
       <script language=JavaScript src="resources/modalFramework/modalFramework.js"></script>
       <script language=JavaScript src="resources/wait/editData.js"></script>
-      <SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
+      <script language=Javascript src="resources/wait/jquery.ajaxmanager.js"></script>
       <script language=JavaScript src="resources/wait/setFilter.js"></script>
       <script language=JavaScript src="resources/wait/editBuffer.js"></script>
       <script language="JavaScript" type="text/javascript">
@@ -127,23 +138,7 @@
         	  	
         window.spawnWindow=fSpawnWindow;
         		
-      </script> 
-      <style>
-		## @import url('resources/fauxconsole.css');
-        @import url('resources/modalFramework/modalFramework.css');
-        @import url('customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css');
-		@import url('resources/display_application.css');
-      </style>
-      
- 	<!--[if IE 7]>
-    <style>
-		@import url('resources/display_application-ie.css');
-		html {
-		  overflow:auto;
-		}
-    </style>		
-	<![endif]-->
- 
+      </script>  
     </head>
 	<body #if($viewTools.isRunningLocally()) class="localhost" #end>	
     	      <div id=toolbarDiv>
