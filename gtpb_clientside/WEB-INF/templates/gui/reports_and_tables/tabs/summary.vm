@@ -56,6 +56,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   #set($success = $xAxisCategories.add("'$xAxisCategory'"))
 #end
 #set($series = [])
+#set($seriesString = "")
 #foreach($aggregateFunction in $aggregateFunctions)
   #set($seriesString = "$seriesString { name:'$aggregateFunction', data: ");
   #set($seriesData = [])
