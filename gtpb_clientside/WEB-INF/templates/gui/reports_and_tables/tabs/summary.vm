@@ -58,7 +58,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($series = [])
 #set($seriesString = "")
 #foreach($aggregateFunction in $aggregateFunctions)
-  #set($seriesString = "$seriesString { name:'$aggregateFunction', data: ");
+  #set($seriesString = "$seriesString { name:'$aggregateFunction', data: ")
   #set($seriesData = [])
   #foreach($summaryRow in $reportSummaryRows)
 	#set($success = $seriesData.add($summaryRow.getAggregateValue($aggregateFunction)))

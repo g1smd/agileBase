@@ -887,10 +887,10 @@ public class ViewTools implements ViewToolsInfo {
 
 	public String joinWith(Collection<Object> collection, String joiner) {
 		String result = "";
-		if (collection.size() > 0) {
-			for (Object obj : collection) {
-				result = result + obj + joiner;
-			}
+		for (Object obj : collection) {
+			result = result + obj + joiner;
+		}
+		if (result.length() > joiner.length()) {
 			result = result.substring(0, result.length() - joiner.length());
 		}
 		return result;
