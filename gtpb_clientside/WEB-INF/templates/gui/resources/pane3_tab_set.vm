@@ -28,6 +28,7 @@
 	#foreach($style in $styles)
 	  <link href="$style" type="text/css" rel="stylesheet" />
 	#end
+	<style>
     #if($mobile_device)
 	  *[changed] { text-decoration:underline }
 	  *[error] { color:red }
@@ -37,8 +38,7 @@
 										
 	td.trailing input[type=button] { 
 	  font-size:8pt; 
-	}
-			
+	}	
     </style>  
 
 	<script type="text/javascript" src="resources/jquery.js"></script>
@@ -70,7 +70,6 @@
         <script type="text/javascript" src="resources/tabs/tabs.js"></script>
 		<script type="text/javascript" src="resources/tabs/edit.js"></script>
 		<script language=Javascript> 
-
   	  // When submitting the newfield form to create a table field
   	  // disable all input elements not in the addNewField row of the reportData table
   	  // as they'll be irrelevant to the field creation
@@ -79,7 +78,6 @@
   			    this.disabled = true;
   		  });
   	  }
-
 		</script>
     <script language="JavaScript" type="text/javascript">
 	## Used by individual tabs
