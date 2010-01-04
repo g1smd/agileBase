@@ -47,7 +47,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #foreach($summaryRow in $reportSummaryRows)
   #set($xAxisCategory = "")
   #foreach($grouping in $groupings)
-	#if($grouping.equals($groupings.first())
+	#if($grouping.equals($groupings.first()))
 	  #set($xAxisCategory = $summaryRow.getGroupingValue($grouping))
 	#else
 	  #set($xAxisCategory = "$xAxisCategory | $summaryRow.getGroupingValue($grouping)")
