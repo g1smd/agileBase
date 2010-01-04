@@ -61,7 +61,7 @@ public class ViewTools implements ViewToolsInfo {
 	public String getWebAppRoot() {
 		return this.webAppRoot;
 	}
-	
+
 	public String spelloutDecimal(double number) {
 		RuleBasedNumberFormat rbnf = new RuleBasedNumberFormat(RuleBasedNumberFormat.SPELLOUT);
 		return rbnf.format(number);
@@ -875,7 +875,7 @@ public class ViewTools implements ViewToolsInfo {
 		return escapedString;
 	}
 
-	//TODO: rename method to urlEncode
+	// TODO: rename method to urlEncode
 	public String escapeForURL(String string) {
 		try {
 			return java.net.URLEncoder.encode(string, "UTF-8");
@@ -887,13 +887,15 @@ public class ViewTools implements ViewToolsInfo {
 
 	public String joinWith(Collection<Object> collection, String joiner) {
 		String result = "";
-		for(Object obj : collection) {
-			result = result + obj + joiner;
+		if (collection.size() > 0) {
+			for (Object obj : collection) {
+				result = result + obj + joiner;
+			}
+			result = result.substring(0, result.length() - joiner.length());
 		}
-		result = result.substring(0, result.length() - joiner.length());
 		return result;
 	}
-	
+
 	public MathTool getMathTool() {
 		return this.mathTool;
 	}
@@ -1048,7 +1050,7 @@ public class ViewTools implements ViewToolsInfo {
 	public Set<String> getNewStringSet() {
 		return new HashSet<String>();
 	}
-	
+
 	public void reverseList(List list) {
 		Collections.reverse(list);
 	}
@@ -1138,7 +1140,7 @@ public class ViewTools implements ViewToolsInfo {
 	private HttpServletRequest request = null;
 
 	private HttpServletResponse response = null;
-	
+
 	private String webAppRoot = null;
 
 	private MathTool mathTool = new MathTool();

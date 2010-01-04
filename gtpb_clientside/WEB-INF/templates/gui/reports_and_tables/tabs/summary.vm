@@ -28,7 +28,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($loggedInUserAllowedToManage = $view.loggedInUserAllowedTo("MANAGE_TABLE", $report.getParentTable()))
 #set($showManageUi = false)
 ##$printout set in gui/reports_and_tables/report_data_print.vm
-#if((!$printout) && (!$mobile_device) && ($loggedInUserAllowedToManage))
+#if((!$dashboard) && (!$printout) && (!$mobile_device) && ($loggedInUserAllowedToManage))
   #set($showManageUi = true)
 #end
 #if($mobile_device)
@@ -37,249 +37,39 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   #set($return_template="gui/reports_and_tables/pane3")
 #end
 
-<table cellspacing=0 cellpadding=0 border=0 id=reportData>
-  <thead>
-	  <tr>
-		<th class=leading>&nbsp;</th>
-		<th #if($numCols == 1) colspan="3" #end><div style="position:relative; padding-top:15px" title="Summarises the most frequent words in the report">
-			Tag Cloud
-		</div></th>
-      #foreach($grouping in $groupings)
-		#set($groupingReportField = $grouping.getGroupingReportField())
-        <th>##
-          <div style="position:relative; padding-top:15px">
-            #set($groupingBaseField = $groupingReportField.getBaseField())##
-          <i>##
-            #if ($groupingBaseField.getFieldCategory().getDescription().equals("Relation")) ## added to show display field name for relation fields
-              $groupingBaseField.getRelatedTable(): $groupingBaseField.getDisplayField()
-            #else
-              $groupingReportField.getFieldName()
-			  #set($groupingModifier = $grouping.getGroupingModifier())
-			  #if($groupingModifier)
-				- $groupingModifier.getDescription()
-			  #end
-            #end
-          </i>##
-            #if($showManageUi)##
-              <img style="position:absolute; top: 0; right:5px; cursor: pointer;" src="resources/icons/remove.png" alt="remove column" title="remove column" onclick="new fDeleteTabularItem(this)" deleteColumn="true" gtpb_remove_grouping_from_summary_report=true gtpb_internalfieldname="$groupingReportField.getInternalFieldName()" />	
-            #end ##
-          </div>
-        </th>##
-	  #end
-	  #if(($groupings.size() == 0) && ($aggregateFunctions.size() > 0))
-		<th>&nbsp;</th>
-	  #end
+<div id="chart_$report.getInternalReportName()" style="width:100%"></div>
 
-			      #foreach($aggregateFunction in $aggregateFunctions)
-				        <th>
-				        	<div style="position:relative; padding-top:15px">
-					          #if($showManageUi)
-						            <img style="position:absolute; top: 0; right:5px; cursor: pointer;" src="resources/icons/remove.png" onclick="new fDeleteTabularItem(this)" deleteColumn="true" gtpb_remove_function_from_summary_report=true gtpb_internalaggregatename="$aggregateFunction.getInternalAggregateName()"/>
-					          #end
-          $aggregateFunction.toString()
-          					</div>
-				        </th>
-			      #end
-			
-			      ## Ensure there are enough cols for form at bottom of page - need at least two
-			      #if($numCols < 3)
-				        #set($numCols = 3)
-				  #end
-			      #if(($groupings.size() > 0) && ($aggregateFunctions.size() == 0))
-				        <th>&nbsp;</th>
-			      #end
-			      <th class=trailing>&nbsp;</th>
-		    </tr>
-	  </thead>
-	  <tbody>
-			#set($reportSummaryData = $view.getReportSummaryData())
-			#set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
-		    #foreach ($summaryRow in $reportSummaryRows)
-			      <tr #if($velocityCount%2!=0) class=rowa #else class=rowb #end>
-				        <td class=leading>&nbsp;</td>
-						#if($numCols < 5)
-							#set($tagCloudWidth = (100 / $numCols))
-							#set($tagCloudWidth = "${tagCloudWidth}%")
-						#else
-							## at some point, just don't show the tag cloud
-							##if there are too many other columns
-							#set($tagCloudWidth = "0%")
-						#end
-						<td width="$tagCloudWidth">&nbsp; ## tag cloud cell needs a width because the cloud's in an absolute div in the cell so the cell won't auto-size
-						## Cloud tag in the first row
-						#if(($velocityCount == 1) && ($numCols < 5))
-						<div style="position:relative; width:100%">
-						<div class="tagCloud">
-						  #set($tagCloud = $view.getReportTagCloud(8,20,40))
-						  #foreach($tag in $tagCloud)
-							<span style="font-size:${tag.getWeight()}pt">$tag</span>
-						  #end
-						</div></div>
-						#end
-						</td>
-    			    #foreach($grouping in $groupings)
-						#set($groupingReportField = $grouping.getGroupingReportField())
-    				      <td>$summaryRow.getGroupingValue($grouping)</td>
-					#end
-					#if(($groupings.size() == 0) && ($aggregateFunctions.size() > 0))
-						<td>&nbsp;</td>
-					#end
-    			    #foreach($aggregateFunction in $aggregateFunctions)
-    				      <td>
-						            #set($value = $summaryRow.getAggregateValue($aggregateFunction))
-									#set($width = ${reportSummaryData.getValueAsPercentage($aggregateFunction,$value)})
-									#if($width < 0) #set($width = -1 * $width) #end
-						            <div #if($value >= 0)class="chartBar" #else class="chartBarNegative" #end style="width:${width}%; #if($value < 0) left:-${width}%; #end">$value</div>
-				          	</td>
-					#end
-					#if(($groupings.size() > 0) && ($aggregateFunctions.size() == 0))
-						<td>&nbsp;</td>
-					#end
-				    <td class=trailing>&nbsp;</td>
-    		  </tr>
-		    #end ## end summary rows
-			## if no summary, show tag cloud on its own
-			#if((!$reportSummaryRows) || $reportSummaryRows.size() == 0)
-			<tr class="rowa">
-				<td class=leading>&nbsp;</td>
-				<td colspan="$numCols">
-						<div class="tagCloud" style="position:relative"> ## relative overrides absolute when the tag cloud is the only thing in the summary
-						  #set($minFontSize = 9)
-						  #set($maxFontSize = 25)
-						  #set($tagCloud = $view.getReportTagCloud($minFontSize,$maxFontSize,60))
-						  #foreach($tag in $tagCloud)
-							<span style="font-size:${tag.getWeight()}pt">&nbsp;$tag&nbsp;</span>
-						  #end
-						</div>
-				<td class=trailing>&nbsp;</td>
-			</tr>
-			#end 
-			## Grand totals
-			#if($reportSummaryRows.size() > 1)
-				<tr>
-					<td class=leading>&nbsp;</td>
-					<td>&nbsp;</td> ## tag cloud in the column above this cell
-    			    #foreach($grouping in $groupings)
-						#if($velocityCount == 1)
-    				      <td>#if($aggregateFunctions.size() > 0)<b>Grand totals</b>#else &nbsp; #end</td>
-						#else
-						  <td>&nbsp;</td>
-						#end
-    			    #end
-					#if(($groupings.size() == 0) && ($aggregateFunctions.size() > 0))
-						<td>&nbsp;</td>
-					#end
-    			    #foreach($aggregateFunction in $aggregateFunctions)
-						<td>
-						#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
-						  <b>$mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction))</b>
-						#else &nbsp;
-						#end
-						</td>
-    			    #end
-					#if(($groupings.size() > 0) && ($aggregateFunctions.size() == 0))
-						<td>&nbsp;</td>
-					#end
-				    <td class=trailing>&nbsp;</td>
-				</tr>
-			#end
-		    ## padding row
-			#if($reportSummaryRows.size() > 0)
-  		  <tr class=trailing> <!-- a padding row -->
-			      <td class=leading>&nbsp;</td>
-				  <td>&nbsp;</td>
-			  #foreach($grouping in $groupings)
-				        <td>&nbsp;</td>
-    		  #end
-    		  #foreach($aggregateFunction in $aggregateFunctions)
-    			    <td>&nbsp;</td>
-			      #end
-			      #if(($groupings.size() + $aggregateFunctions.size()) == 0)
-				        <td>&nbsp;</td><td>&nbsp;</td>
-				  #elseif(($groupings.size() + $aggregateFunctions.size()) == 1)
-    				    <td>&nbsp;</td>
-			      #end
-			      <td class=trailing>&nbsp;</td>
-		    </tr>
-			#end ## end padding row
-	  </tbody>
-	  <tfoot>
-		    ## Summary report editing, if user has MANAGE_TABLE privileges on the parent table
-		    #if($showManageUi)
-			      <tr id=addNewField>
-				        <td class=leading height=20>&nbsp;</td>
-						  <td>
-							#if(($groupings.size() == 0) && ($aggregateFunctions.size() == 0))
-							You can add calculations and groupings to further analyze data
-							#else &nbsp;
-							#end
-						  </td>
-				        <td height=20 #if($groupings.size() > 1) colspan="$groupings.size()" #end>
-					          ## Form to add a grouping
-					          <form name=addgrouping method=post action="/portalBase/AppController.servlet">
-						            <input type="hidden" name="return" value="$return_template" />
-						            <input type="hidden" name="add_grouping_to_summary_report" value="1" />
-						            <select name="internalfieldname">
-							              #foreach($reportField in $report.getReportFields())
-								                #if ($reportField.getBaseField().getFieldCategory().getDescription().equals("Relation")) ## added to show display field name for relation fields
-								                  	<option value="$reportField.getInternalFieldName()">$reportField.getBaseField().getRelatedTable().getTableName(): $reportField.getBaseField().getDisplayField()</option>
-								                #else
-							              			#set($baseField = $reportField.getBaseField())
-							              			#if(!($baseField.equals($baseField.getTableContainingField().getPrimaryKey())))
-														#if($baseField.getFieldCategory() == "DATE")
-															<option value="$reportField.getInternalFieldName()_year">$reportField - year</option>
-															<option value="$reportField.getInternalFieldName()_quarter">$reportField - quarter</option>
-															<option value="$reportField.getInternalFieldName()_month">$reportField - month</option>
-															<option value="$reportField.getInternalFieldName()_day">$reportField - day</option>
-														#else
-															<option value="$reportField.getInternalFieldName()">$reportField</option>
-														#end
-													#end
-								                #end
-							              #end
-					            	</select>
-						            <input type="submit" value="add grouping">
-		          </form>
-				        </td>
-				        <td height=20 #if($aggregateFunctions.size() > 1) colspan="$aggregateFunctions.size()" #end>
-					          ## Form to add an aggregate function
-					          <form name=addgrouping method=post action="/portalBase/AppController.servlet">
-					            	<input type="hidden" name="return" value="$return_template" />
-						            <input type="hidden" name="add_function_to_summary_report" value="1" />
-						            <select name="function" id="aggregatefunction">
-						              	#foreach($function in $reportSummary.getPossibleFunctionTypes())
-							              	  <option value="$function.toString()">$function.getLabel()</option>
-							              #end
-						            </select> 
-					            	<select name="internalfieldname">
-							              #foreach($reportField in $report.getReportFields())
-							              	#set($baseField = $reportField.getBaseField())
-							              	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
-							                  <option value="$reportField.getInternalFieldName()">each '$baseField.getTableContainingField()' record</option>
-											#else
-							                  <option value="$reportField.getInternalFieldName()">$reportField.getFieldName()</option>
-							                #end
-							              #end
-						            </select><br>
-					            	<select name="secondaryinternalfieldname" id="secondaryfield" style="display:none">
-					            		  <option value="">--choose a second argument--</option>
-							              #foreach($reportField in $report.getReportFields())
-							              	#set($baseField = $reportField.getBaseField())
-							              	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
-							                  <option value="$reportField.getInternalFieldName()">each '$baseField.getTableContainingField()' record</option>
-											#else
-							                  <option value="$reportField.getInternalFieldName()">$reportField.getFieldName()</option>
-							                #end
-							              #end
-						            </select><br>
-						            <input type="submit" value="add calculation">
-			          </form>
-			        </td>
-				    <td class=trailing height=20>&nbsp;</td>
-			      </tr>
-		    #end	## End summary report editing
-	  </tfoot>
-</table> ##summary table
+<script language="JavaScript">
+var chart1 = new Highcharts.Chart({
+         chart: {
+            renderTo: "chart_$report.getInternalReportName()",
+            defaultSeriesType: 'bar'
+         },
+         title: {
+            text: 'Fruit Consumption'
+         },
+         xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges']
+         },
+         yAxis: {
+            title: {
+               text: 'Fruit eaten'
+            }
+         },
+         series: [{
+            name: 'Jane',
+            data: [1, 0, 4]
+         }, {
+            name: 'John',
+            data: [5, 7, 3]
+         }]
+      });
+</script>
+
+
+
+
+
 #if($mobile_device)<p>
 	#parse("gui/mobile/pane2_footer.vm")
 #end

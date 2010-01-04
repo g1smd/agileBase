@@ -120,7 +120,7 @@ public class CalculationFieldDefn implements CalculationField {
 
 	public Integer getFieldIndex() {
 		// not relevant as calculations are never stored in tables
-		logger.warn("Call to irrelevant calculation method getFieldIndex from calculation " + this);
+		//logger.warn("Call to irrelevant calculation method getFieldIndex from calculation " + this);
 		return null;
 	}
 
@@ -129,8 +129,8 @@ public class CalculationFieldDefn implements CalculationField {
 	}
 
 	public Boolean getHidden() {
+		// not relevant as calculations can't be hidden
 		//logger.warn("Call to irrelevant calculation method getHidden from calculation " + this);
-		// not relevant as calculations are never stored in tables
 		return false;
 	}
 
