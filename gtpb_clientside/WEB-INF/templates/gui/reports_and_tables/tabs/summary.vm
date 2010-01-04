@@ -75,7 +75,7 @@ var chart1 = new Highcharts.Chart({
          chart: {
             renderTo: "chart_$report.getInternalReportName()",
             defaultSeriesType: 'bar',
-			zoomType: 'y'
+			zoomType: 'x'
          },
          title: {
             text: '$chartTitle'
