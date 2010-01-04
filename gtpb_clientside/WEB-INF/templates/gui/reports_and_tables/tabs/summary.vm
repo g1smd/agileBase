@@ -88,7 +88,7 @@ var chart1 = new Highcharts.Chart({
             }
          },
          series: $series,
-		 zoomType: 'y'
+		 zoomType: 'xy'
       });
 </script>
 
