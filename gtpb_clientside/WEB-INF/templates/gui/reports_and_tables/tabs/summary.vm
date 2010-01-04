@@ -69,16 +69,17 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   #end
 #end
 #set($success = $series.add($seriesString))
-
+#set($height="100%")
+#if($xAxisCategories.size() > 10)
+  #set($height = $xAxisCategories.size() * 20)
+  #set($height = "${height}px")
+#end
 <script language="JavaScript">
 var chart1 = new Highcharts.Chart({
          chart: {
             renderTo: "chart_$report.getInternalReportName()",
-            defaultSeriesType: 'bar'
-			#if($xAxisCategories.size() > 10)
-			  #set($height = $xAxisCategories.size() * 20)
-			  ,
-			  height: "${height}px
+            defaultSeriesType: 'bar',
+			  height: $height
 			#end
          },
 		 credits {
