@@ -78,7 +78,7 @@ var chart1 = new Highcharts.Chart({
          chart: {
             renderTo: "chart_$report.getInternalReportName()",
             defaultSeriesType: 'bar',
-			height: $height
+			height: 200
          },
 		 credits {
 		 	enabled: false
