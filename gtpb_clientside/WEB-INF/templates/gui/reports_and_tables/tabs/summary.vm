@@ -77,8 +77,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 var chart1 = new Highcharts.Chart({
          chart: {
             renderTo: "chart_$report.getInternalReportName()",
-            defaultSeriesType: 'bar',
-			height: 200
+            defaultSeriesType: 'bar'
          },
 		 credits {
 		 	enabled: false
