@@ -74,9 +74,16 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 var chart1 = new Highcharts.Chart({
          chart: {
             renderTo: "chart_$report.getInternalReportName()",
-            defaultSeriesType: 'bar',
-			zoomType: 'x'
+            defaultSeriesType: 'bar'
+			#if($xAxisCategories.size() > 10)
+			  #set($height = $xAxisCategories.size() * 20)
+			  ,
+			  height: "${height}px
+			#end
          },
+		 credits {
+		 	enabled: false
+		 },
          title: {
             text: '$chartTitle'
          },
@@ -91,10 +98,6 @@ var chart1 = new Highcharts.Chart({
          series: $series
       });
 </script>
-
-
-
-
 
 #if($mobile_device)<p>
 	#parse("gui/mobile/pane2_footer.vm")
