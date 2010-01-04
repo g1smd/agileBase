@@ -74,7 +74,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 var chart1 = new Highcharts.Chart({
          chart: {
             renderTo: "chart_$report.getInternalReportName()",
-            defaultSeriesType: 'bar'
+            defaultSeriesType: 'bar',
+			zoomType: 'y'
          },
          title: {
             text: '$chartTitle'
@@ -87,8 +88,7 @@ var chart1 = new Highcharts.Chart({
                text: '$yAxisTitle'
             }
          },
-         series: $series,
-		 zoomType: 'xy'
+         series: $series
       });
 </script>
 
