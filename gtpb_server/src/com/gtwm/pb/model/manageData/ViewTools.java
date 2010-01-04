@@ -3,6 +3,7 @@ package com.gtwm.pb.model.manageData;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -884,6 +885,15 @@ public class ViewTools implements ViewToolsInfo {
 		}
 	}
 
+	public String joinWith(Collection<Object> collection, String joiner) {
+		String result = "";
+		for(Object obj : collection) {
+			result = result + obj + joiner;
+		}
+		result = result.substring(0, result.length() - joiner.length());
+		return result;
+	}
+	
 	public MathTool getMathTool() {
 		return this.mathTool;
 	}

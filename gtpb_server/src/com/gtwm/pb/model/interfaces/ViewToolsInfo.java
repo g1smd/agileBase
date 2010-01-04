@@ -18,6 +18,7 @@
 package com.gtwm.pb.model.interfaces;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -334,6 +335,18 @@ public interface ViewToolsInfo {
 	 * Removes all non-word characters apart from spaces. Doesn't change case
 	 */
 	public String rinseString(String stringToRinse);
+
+	/**
+	 * Return a the String representation of every object in the collection,
+	 * with the joiner string inbetween them, e.g.
+	 * 
+	 * a collection of [Object1 Object2 Object3]
+	 * 
+	 * and joiner ", " would give
+	 * 
+	 * "Object1, Object2, Object3"
+	 */
+	public String joinWith(Collection<Object> collection, String joiner);
 
 	/**
 	 * Replace any linebreak characters in text with html paragraphs allowing
