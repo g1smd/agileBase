@@ -39,7 +39,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 <div id="chart_groupings">
 Grouped by
 #foreach($grouping in $groupings)
-  <span class="existing_element"><a href="AppController.servlet?return=gui/reports_and_tables/pane3&gtpb_remove_grouping_from_summary_report=true&gtpb_internalfieldname=$grouping.getGroupingReportField().getInternalFieldName()">
+  <span class="existing_element"><a href="AppController.servlet?return=gui/reports_and_tables/pane3&remove_grouping_from_summary_report=true&internalfieldname=$grouping.getGroupingReportField().getInternalFieldName()">
     $grouping
 	#set($groupingModifier = $grouping.getGroupingModifier())
 	#if($groupingModifier)
@@ -51,7 +51,7 @@ Grouped by
 <div id="chart_aggregates">
 Showing
 #foreach($aggregateFunction in $aggregateFunctions)
-  <span class="existing_element"><a href="AppController.servlet?return=gui/reports_and_tables/pane3&gtpb_remove_function_from_summary_report=true&gtpb_internalaggregatename=$aggregateFunction.getInternalAggregateName()">
+  <span class="existing_element"><a href="AppController.servlet?return=gui/reports_and_tables/pane3&remove_function_from_summary_report=true&internalaggregatename=$aggregateFunction.getInternalAggregateName()">
     $aggregateFunction
   </a></span>
 #end
