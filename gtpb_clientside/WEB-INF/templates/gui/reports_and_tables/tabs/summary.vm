@@ -42,6 +42,7 @@ Grouped by:
   <span class="existing_element"><a href="AppController.servlet?return=gui/reports_and_tables/pane3&gtpb_remove_grouping_from_summary_report=true&gtpb_internalfieldname=$grouping.getGroupingReportField().getInternalFieldName()">
     $grouping
   </a></span>
+#end
 </div>
 <div id="chart_aggregates">
 #foreach($aggregateFunction in $aggregateFunctions)
