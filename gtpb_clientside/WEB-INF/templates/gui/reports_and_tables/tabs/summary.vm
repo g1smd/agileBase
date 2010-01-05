@@ -36,9 +36,21 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #else
   #set($return_template="gui/reports_and_tables/pane3")
 #end
-
+<div id="chart_groupings">
+Grouped by:
+#foreach($grouping in $groupings)
+  <span class="existing_element"><a href="AppController.servlet?return=gui/reports_and_tables/pane3&gtpb_remove_grouping_from_summary_report=true&gtpb_internalfieldname=$grouping.getGroupingReportField().getInternalFieldName()">
+    $grouping
+  </a></span>
+</div>
+<div id="chart_aggregates">
+#foreach($aggregateFunction in $aggregateFunctions)
+  <span class="existing_element"><a href="AppController.servlet?return=gui/reports_and_tables/pane3&gtpb_remove_function_from_summary_report=true&gtpb_internalaggregatename=$aggregateFunction.getInternalAggregateName()">
+    $aggregateFunction
+  </a></span>
+#end
+</div>
 <div id="chart_$report.getInternalReportName()" style="width:100%"></div>
-
 #set($chartTitle = "$report - $viewTools.joinWith($aggregateFunctions,', ')")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
 #set($xAxisCategories = [])
@@ -73,6 +85,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #if($xAxisCategories.size() > 10)
   #set($height = $xAxisCategories.size() * 20)
 #end
+#if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
 <script language="JavaScript">
 var chart1 = new Highcharts.Chart({
          chart: {
@@ -97,7 +110,7 @@ var chart1 = new Highcharts.Chart({
          series: $series
       });
 </script>
-
+#end
 #if($mobile_device)<p>
 	#parse("gui/mobile/pane2_footer.vm")
 #end
