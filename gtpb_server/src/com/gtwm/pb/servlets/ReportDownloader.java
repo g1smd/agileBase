@@ -136,7 +136,7 @@ public class ReportDownloader extends HttpServlet {
 		// exported from portalBase message
 		int rowNum = 0;
 		HSSFRow row = reportSheet.createRow(rowNum);
-		HSSFCell cell = row.createCell((short) 1);
+		HSSFCell cell = row.createCell(1);
 		cell.setCellValue(new HSSFRichTextString("Exported from the " + company
 				+ " portalBase report '" + report.getModule() + " - " + report
 				+ "'. Live data at www.gtportalbase.com/start"));
@@ -150,7 +150,7 @@ public class ReportDownloader extends HttpServlet {
 		int columnNum = 0;
 		Set<ReportFieldInfo> reportFields = report.getReportFields();
 		for (ReportFieldInfo reportField : reportFields) {
-			cell = row.createCell((short) columnNum);
+			cell = row.createCell(columnNum);
 			cell.setCellValue(new HSSFRichTextString(reportField.getFieldName()));
 			cell.setCellStyle(boldCellStyle);
 			columnNum++;
@@ -178,7 +178,7 @@ public class ReportDownloader extends HttpServlet {
 						|| field.getDbType().equals(DatabaseFieldType.SERIAL)) {
 					cellType = HSSFCell.CELL_TYPE_NUMERIC;
 				}
-				row.createCell((short) columnNum, cellType).setCellValue(
+				row.createCell(columnNum, cellType).setCellValue(
 						new HSSFRichTextString(fieldValue));
 				columnNum++;
 			}
@@ -203,14 +203,14 @@ public class ReportDownloader extends HttpServlet {
 				} else {
 					fieldValue = groupingBaseField.getFieldName();
 				}
-				cell = row.createCell((short) columnNum);
+				cell = row.createCell(columnNum);
 				cell.setCellValue(new HSSFRichTextString(fieldValue));
 				cell.setCellStyle(boldCellStyle);
 				columnNum++;
 			}
 			for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
 				fieldValue = aggregateFunction.toString();
-				cell = row.createCell((short) columnNum);
+				cell = row.createCell(columnNum);
 				cell.setCellValue(new HSSFRichTextString(fieldValue));
 				cell.setCellStyle(boldCellStyle);
 				columnNum++;
@@ -226,13 +226,13 @@ public class ReportDownloader extends HttpServlet {
 				columnNum = 0;
 				for (ReportSummaryGroupingInfo grouping : groupings) {
 					fieldValue = summaryDataRow.getGroupingValue(grouping);
-					row.createCell((short) columnNum).setCellValue(
+					row.createCell(columnNum).setCellValue(
 							new HSSFRichTextString(fieldValue));
 					columnNum++;
 				}
 				for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
 					fieldValue = summaryDataRow.getAggregateValue(aggregateFunction).toString();
-					row.createCell((short) columnNum, HSSFCell.CELL_TYPE_NUMERIC).setCellValue(
+					row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC).setCellValue(
 							new HSSFRichTextString(fieldValue));
 					columnNum++;
 				}

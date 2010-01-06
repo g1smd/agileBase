@@ -10,17 +10,21 @@
 	<property name="build.dir" location="build" />
 	<property name="doc.dir" location="doc" />
 	<!-- server directories -->
-	<property name="tomcat.dir" location="/usr/local/tomcat/apache-tomcat-6.0.13" />
+	<property name="tomcat.dir" location="/usr/local/tomcat/apache-tomcat" />
 	<property name="webapp" value="portalBase" />
 
 	<target name="init">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${doc.dir}" />
+		<mkdir dir="${tomcat.dir}/webapps/${webapp}/WEB-INF/classes" />
+		<mkdir dir="${tomcat.dir}/webapps/${webapp}/WEB-INF/lib" />
 	</target>
 
 	<target name="clean">
 		<delete dir="${build.dir}" />
 		<delete dir="${doc.dir}" />
+		<delete dir="${tomcat.dir}/webapps/${webapp}/WEB-INF/classes" />
+		<delete dir="${tomcat.dir}/webapps/${webapp}/WEB-INF/lib" />
 	</target>
 
 	<!-- Depends on clean because changes to constants in AppProperties.java won't filter through otherwise -->

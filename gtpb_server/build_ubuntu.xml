@@ -20,6 +20,8 @@
 	<target name="clean">
 		<delete dir="${build.dir}" />
 		<delete dir="${doc.dir}" />
+		<delete dir="${tomcat.dir}/webapps/${webapp}/WEB-INF/classes" />
+		<delete dir="${tomcat.dir}/webapps/${webapp}/WEB-INF/lib" />
 	</target>
 
 	<target name="build" depends="clean, init">
@@ -97,9 +99,6 @@
 		</copy>
 		<copy file="velocity.properties" todir="${tomcat.dir}/webapps/${webapp}" />
 		<copy file="hibernate.properties" todir="${tomcat.dir}/webapps/${webapp}/WEB-INF/classes" />
-		<copy todir="${tomcat.dir}/webapps/${webapp}/WEB-INF">
-			<fileset dir="WEB-INF" />
-		</copy>
 		<copy todir="${tomcat.dir}/webapps/${webapp}/WEB-INF/classes">
 			<fileset dir="build" />
 		</copy>
