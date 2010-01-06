@@ -66,8 +66,8 @@
     background-repeat:no-repeat;
     background-position:center right;
     border: #a4bdec solid 1px;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
   }
   
   .chart_controls .existing_element a:hover {

@@ -52,8 +52,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 	#end
   </a></span>
   #end
-#end
- | 
+#end 
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_summary_report" value="1" />
   						            <select name="internalfieldname">
@@ -90,7 +89,6 @@ Showing
     $aggregateFunction
   </a></span>
 #end
- | 
 					            	<input type="hidden" name="return" value="$return_template" />
 						            <input type="hidden" name="add_function_to_summary_report" value="1" />
 						            <select name="function" id="aggregatefunction">
