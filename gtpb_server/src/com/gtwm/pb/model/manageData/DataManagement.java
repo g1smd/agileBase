@@ -1115,6 +1115,9 @@ public class DataManagement implements DataManagementInfo {
 				if (item.getSize() == 0) {
 					throw new CantDoThatException("An empty file was submitted, no upload done");
 				}
+				if (fileValue.toString().contains("/")) {
+					throw new CantDoThatException("Filename contains a slash character which is not allowed, no uploda done");
+				}
 				String filePath = uploadFolderName + "/" + fileValue.toString();
 				File selectedFile = new File(filePath);
 				if (selectedFile.exists()) {
