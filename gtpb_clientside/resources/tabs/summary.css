@@ -64,9 +64,6 @@
     text-decoration:none;
     padding:3px;
     background-image: url('remove.png');
-    background-repeat:no-repeat;
-    background-attachment:fixed;
-    background-position:center right;
   }
   
   .chart_controls .existing_element a:hover {
