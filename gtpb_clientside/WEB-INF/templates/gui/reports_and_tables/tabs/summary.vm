@@ -50,10 +50,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   </a></span>
   #end
 #end
- | Add grouping: 
+ | 
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_summary_report" value="1" />
-  						            <select name="internalfieldname" onchange="form.submit();">
+  						            <select name="internalfieldname">
 							              #foreach($reportField in $report.getReportFields())
 												#set($baseField = $reportField.getBaseField())
 								                #if ($reportField.getBaseField().getFieldCategory().getDescription().equals("Relation")) ## added to show display field name for relation fields
@@ -75,6 +75,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 								                #end
 							              #end
 					            	</select>
+									<input type="submit" value="add grouping">
 </form>
 </div>
 <div id="chart_aggregates">
