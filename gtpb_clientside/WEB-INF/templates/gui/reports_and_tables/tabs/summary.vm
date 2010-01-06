@@ -86,6 +86,7 @@ Showing
     $aggregateFunction
   </a></span>
 #end
+ | 
 					            	<input type="hidden" name="return" value="$return_template" />
 						            <input type="hidden" name="add_function_to_summary_report" value="1" />
 						            <select name="function" id="aggregatefunction">
