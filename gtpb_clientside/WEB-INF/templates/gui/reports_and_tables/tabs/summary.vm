@@ -64,7 +64,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 								                #else
 							              			#if(!($baseField.equals($baseField.getTableContainingField().getPrimaryKey())))
 														#set($category = $baseField.getFieldCategory())
-														#if(!( ($category == "TEXT") && ($baseField.usesLookup() == false) ))
+														## Dont't allow grouping by files or text without lookups
+														#if(!( (($category == "TEXT") && ($baseField.usesLookup() == false)) || ($category =="FILE") ))
 															#if($category == "DATE")
 																<option value="$reportField.getInternalFieldName()_year">$reportField - year</option>
 																<option value="$reportField.getInternalFieldName()_quarter">$reportField - quarter</option>
