@@ -75,16 +75,36 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 								                #end
 							              #end
 					            	</select>
-									<input type="submit" value="add grouping">
+									<input type="submit" value="group">
 </form>
 </div>
 <div id="chart_aggregates">
+<form name=addaggregate method=post action="/portalBase/AppController.servlet">
 Showing
 #foreach($aggregateFunction in $aggregateFunctions)
   <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_function_from_summary_report=true&internalaggregatename=$aggregateFunction.getInternalAggregateName()">
     $aggregateFunction
   </a></span>
 #end
+					            	<input type="hidden" name="return" value="$return_template" />
+						            <input type="hidden" name="add_function_to_summary_report" value="1" />
+						            <select name="function" id="aggregatefunction">
+						              	#foreach($function in $reportSummary.getPossibleFunctionTypes())
+							              	  <option value="$function.toString()">$function.getLabel()</option>
+							              #end
+						            </select> 
+									<select name="internalfieldname">
+							              #foreach($reportField in $report.getReportFields())
+							              	#set($baseField = $reportField.getBaseField())
+							              	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
+							                  <option value="$reportField.getInternalFieldName()">each '$baseField.getTableContainingField()' record</option>
+											#else
+							                  <option value="$reportField.getInternalFieldName()">$reportField.getFieldName()</option>
+							                #end
+							              #end
+						            </select>
+									<input type="submit" value="add calculation">
+</form>
 </div>
 <div id="chart_$report.getInternalReportName()" style="width:100%"></div>
 #set($chartTitle = "$report - $viewTools.joinWith($aggregateFunctions,', ')")
