@@ -53,8 +53,22 @@
   .chart_controls {
   	width:100%;
   	margin-top:.1em;
-  	margin-bottom:.5em;
+  	margin-bottom:.2em;
   	background-color: #f1f2ed;
   	padding: 0.5em;
+  }
+  
+  .chart_controls .existing_element a {
+    background-color: #dee7f8; /* Colour of names in to: field in Apple Mail */
+    color: black;
+  }
+  
+  .chart_controls .existing_element a:hover {
+    background-color: #bbcef1;
+    color: black;
+    background-image: url('../icons/remove.png');
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-position:center right;
   }
   
