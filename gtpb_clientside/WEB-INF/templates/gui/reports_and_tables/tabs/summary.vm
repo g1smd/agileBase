@@ -37,6 +37,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   #set($return_template="gui/reports_and_tables/pane3")
 #end
 <div id="chart_groupings">
+<form name=addgrouping method=post action="/portalBase/AppController.servlet">
 #if($groupings.size() > 0)
   Grouped by
   #foreach($grouping in $groupings)
@@ -49,8 +50,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   </a></span>
   #end
 #end
-Add grouping: 
-<form name=addgrouping method=post action="/portalBase/AppController.servlet">
+ | Add grouping: 
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_summary_report" value="1" />
   						            <select name="internalfieldname" onchange="form.submit();">
