@@ -879,11 +879,13 @@ public class ViewTools implements ViewToolsInfo {
 	public String escapeForURL(String string) {
 		String encoded = string;
 		try {
-			// first replace all spaces with %20
-			encoded = string.replaceAll("\\s", "\\%20");
-			String start = encoded.replaceAll("\\/.*$", "");
-			String end = encoded.replaceAll("^.*\\/", "");
-			encoded = start + "/" + java.net.URLEncoder.encode(end, "UTF-8");
+			// URLEncoder.encode replaces spaces with plus signs which is not what we want
+			encoded = string.replaceAll("\\s", "gtpb_special_variable_space");
+			// Only encode content after the path
+			String path = encoded.replaceAll("\\/.*$", "");
+			String filename = encoded.replaceAll("^.*\\/", "");
+			encoded = path + "/" + java.net.URLEncoder.encode(filename, "UTF-8");
+			encoded = encoded.replace("gtpb_special_variable_space", "%20");
 		} catch (UnsupportedEncodingException e) {
 			logger.error("Error URL encoding string '" + string + "': " + e);
 		}
