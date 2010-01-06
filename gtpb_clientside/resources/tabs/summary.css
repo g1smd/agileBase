@@ -52,8 +52,6 @@
   
   .chart_controls {
   	width:100%;
-  	margin-top:.1em;
-  	margin-bottom:.2em;
   	background-color: #f1f2ed;
   	padding: 0.5em;
   }
@@ -63,18 +61,19 @@
   	background-color: #dee7f8; /* Colour of names in to: field in Apple Mail */
     text-decoration:none;
     padding:3px;
-    padding-right: 6px;
-    background-image: url('remove.png');
+    padding-right: 8px;
+    background-image: url('remove-light.png');
     background-repeat:no-repeat;
     background-position:center right;
     border: #a4bdec solid 1px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
   }
   
   .chart_controls .existing_element a:hover {
     color: black;
   	background-color: #bbcef1;
     border: #6d95e0 solid 1px;
+    background-image: url('remove-dark.png');
   }
   
