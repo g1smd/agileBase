@@ -55,11 +55,11 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   <input type="hidden" name="add_grouping_to_summary_report" value="1" />
   						            <select name="internalfieldname" onchange="form.submit();">
 							              #foreach($reportField in $report.getReportFields())
+												#set($baseField = $reportField.getBaseField())
 								                #if ($reportField.getBaseField().getFieldCategory().getDescription().equals("Relation")) ## added to show display field name for relation fields
 								                  	<option value="$reportField.getInternalFieldName()">$reportField.getBaseField().getRelatedTable().getTableName(): $reportField.getBaseField().getDisplayField()</option>
 								                #else
 							              			#if(!($baseField.equals($baseField.getTableContainingField().getPrimaryKey())))
-														#set($baseField = $reportField.getBaseField())
 														#set($category = $baseField.getFieldCategory())
 														#if(!( ($category == "TEXT") && ($baseField.usesLookup() == false) ))
 															#if($category == "DATE")
@@ -67,7 +67,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 																<option value="$reportField.getInternalFieldName()_quarter">$reportField - quarter</option>
 																<option value="$reportField.getInternalFieldName()_month">$reportField - month</option>
 																<option value="$reportField.getInternalFieldName()_day">$reportField - day</option>
-																#else
+															#else
 																<option value="$reportField.getInternalFieldName()">$reportField</option>
 															#end
 														#end
