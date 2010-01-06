@@ -880,7 +880,7 @@ public class ViewTools implements ViewToolsInfo {
 		String encoded = string;
 		try {
 			// first replace all spaces with %20
-			encoded = string.replaceAll("\\s", "%20");
+			encoded = string.replaceAll("\\s", "\\%20");
 			String start = encoded.replaceAll("\\/.*$", "");
 			String end = encoded.replaceAll("^.*\\/", "");
 			encoded = start + "/" + java.net.URLEncoder.encode(end, "UTF-8");
