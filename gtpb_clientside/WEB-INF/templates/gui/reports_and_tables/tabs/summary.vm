@@ -153,7 +153,8 @@ var chart1 = new Highcharts.Chart({
          chart: {
             renderTo: "chart_$report.getInternalReportName()",
             defaultSeriesType: 'bar',
-			height: $height
+			height: $height,
+			margin: [50, 50, 60, 100]
          },
 		 credits: {
 		 	enabled: false

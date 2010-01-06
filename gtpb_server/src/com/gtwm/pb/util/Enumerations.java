@@ -199,8 +199,8 @@ public class Enumerations {
 	 * charting
 	 */
 	public enum AggregateFunction {
-		COUNT("Count"), SUM("Sum"), MIN("Minimum"), MAX("Maximum"), AVG("Average"), WTDAVG(
-				"Weighted Avg.");
+		COUNT("count"), SUM("sum"), MIN("minimum"), MAX("maximum"), AVG("average"), WTDAVG(
+				"weighted avg.");
 
 		private String label;
 
