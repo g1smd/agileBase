@@ -146,7 +146,7 @@ Showing
   #set($height = $xAxisCategories.size() * 20)
 #end
 #if($aggregateFunctions.size() > 1)
-  #set($height = $height * ($aggregateFunctions.size() * 0.5))
+  #set($height = $height * ($aggregateFunctions.size() * 0.8))
 #end
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
 <script language="JavaScript">
