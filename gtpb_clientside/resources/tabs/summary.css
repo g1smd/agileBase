@@ -61,7 +61,7 @@
   	background-color: #dee7f8; /* Colour of names in to: field in Apple Mail */
     text-decoration:none;
     padding:3px;
-    padding-right: 8px;
+    padding-right: 10px;
     background-image: url('remove-light.png');
     background-repeat:no-repeat;
     background-position:center right;
