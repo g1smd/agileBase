@@ -880,19 +880,21 @@ public class ViewTools implements ViewToolsInfo {
 		String encoded = string;
 		try {
 			// URLEncoder.encode replaces spaces with plus signs which is not
-			// what we want
+			// what we want. We want to keep newlines too
 			encoded = string.replaceAll("\\s", "gtpb_special_variable_space");
+			encoded = encoded.replaceAll("\\n", "gtpb_special_variable_newline");
 			if (encoded.contains("/")) {
 				// Only encode content after the path
 				String filename = encoded.replaceAll("^.*\\/", "");
 				String path = encoded.substring(0, encoded.length() - filename.length());
-				encoded = path + "/" + java.net.URLEncoder.encode(filename, "UTF-8");
+				encoded = path + java.net.URLEncoder.encode(filename, "UTF-8");
 			} else {
 				encoded = java.net.URLEncoder.encode(encoded, "UTF-8");
 			}
 			encoded = encoded.replace("gtpb_special_variable_space", "%20");
-		} catch (UnsupportedEncodingException e) {
-			logger.error("Error URL encoding string '" + string + "': " + e);
+			encoded = encoded.replace("gtpb_special_variable_newline", "\n");
+		} catch (UnsupportedEncodingException ueex) {
+			logger.error("Error URL encoding string '" + string + "': " + ueex);
 		}
 		return encoded;
 	}
