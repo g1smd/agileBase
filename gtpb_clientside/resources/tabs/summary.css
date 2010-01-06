@@ -61,12 +61,14 @@
   .chart_controls .existing_element a {
     background-color: #dee7f8; /* Colour of names in to: field in Apple Mail */
     color: black;
+    text-decoration:none;
+    padding:3px;
   }
   
   .chart_controls .existing_element a:hover {
     background-color: #bbcef1;
     color: black;
-    background-image: url('../icons/remove.png');
+    background-image: url('remove.png');
     background-repeat:no-repeat;
     background-attachment:fixed;
     background-position:center right;
