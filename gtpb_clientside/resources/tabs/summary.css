@@ -59,17 +59,22 @@
   }
   
   .chart_controls .existing_element a {
-    background-color: #dee7f8; /* Colour of names in to: field in Apple Mail */
     color: black;
+  	background-color: #dee7f8; /* Colour of names in to: field in Apple Mail */
     text-decoration:none;
     padding:3px;
+    padding-right: 6px;
     background-image: url('remove.png');
     background-repeat:no-repeat;
     background-position:center right;
+    border: #a4bdec solid 1px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
   }
   
   .chart_controls .existing_element a:hover {
-    background-color: #bbcef1;
     color: black;
+  	background-color: #bbcef1;
+    border: #6d95e0 solid 1px;
   }
   
