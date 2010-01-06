@@ -36,6 +36,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #else
   #set($return_template="gui/reports_and_tables/pane3")
 #end
+
+<div id="chart_$report.getInternalReportName()" style="width:100%"></div>
+
 <div id="chart_groupings">
 <form name=addgrouping method=post action="/portalBase/AppController.servlet">
 #if($groupings.size() > 0)
@@ -107,7 +110,7 @@ Showing
 									<input type="submit" value="add calculation">
 </form>
 </div>
-<div id="chart_$report.getInternalReportName()" style="width:100%"></div>
+
 #set($chartTitle = "$report - $viewTools.joinWith($aggregateFunctions,', ')")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
 #set($xAxisCategories = [])
