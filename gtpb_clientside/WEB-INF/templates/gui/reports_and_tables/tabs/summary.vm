@@ -141,9 +141,12 @@ Showing
   #end
 #end
 #set($success = $series.add($seriesString))
-#set($height=190+($aggregateFunctions.size() * 10))
+#set($height=200)
 #if($xAxisCategories.size() > 10)
   #set($height = $xAxisCategories.size() * 20)
+#end
+#if($aggregateFunctions.size() > 1)
+  #set($height = $height * ($aggregateFunctions.size() * 0.5))
 #end
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
 <script language="JavaScript">
