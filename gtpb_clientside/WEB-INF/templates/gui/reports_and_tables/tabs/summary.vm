@@ -39,7 +39,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 
 <div id="chart_$report.getInternalReportName()" style="width:100%"></div>
 
-<div id="chart_groupings">
+<div id="chart_groupings" class="chart_controls">
 <form name=addgrouping method=post action="/portalBase/AppController.servlet">
 #if($groupings.size() > 0)
   Grouped by
@@ -81,7 +81,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 									<input type="submit" value="group">
 </form>
 </div>
-<div id="chart_aggregates">
+<div id="chart_aggregates" class="chart_controls">
 <form name=addaggregate method=post action="/portalBase/AppController.servlet">
 Showing
 #foreach($aggregateFunction in $aggregateFunctions)
@@ -141,7 +141,7 @@ Showing
   #end
 #end
 #set($success = $series.add($seriesString))
-#set($height=200)
+#set($height=190+($aggregateFunctions.size() * 10))
 #if($xAxisCategories.size() > 10)
   #set($height = $xAxisCategories.size() * 20)
 #end
