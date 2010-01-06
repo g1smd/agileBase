@@ -27,7 +27,8 @@
       ## if we're parsing non-parent table data in the view tab
     #else
       #set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/")
-    #end
+	#end
+	$viewTools.log("downloadBase is $downloadBase")
 	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValue"))
     ## File icon
     #if(!$fieldValueObject.isImage())
