@@ -48,6 +48,7 @@ Dashboard is $dashboard
   #set($grandTotalsText = "")
   #foreach($aggregateFunction in $aggregateFunctions)
 	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
+	  Getting grand total for $aggregateFunction
 	  #set($grandTotalsText = "$grandTotalsText $aggregateFunction = $mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction)), ")
 	#end
   #end
