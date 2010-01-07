@@ -32,7 +32,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($loggedInUserAllowedToManage = $view.loggedInUserAllowedTo("MANAGE_TABLE", $report.getParentTable()))
 #set($showManageUi = false)
 ##$printout set in gui/reports_and_tables/report_data_print.vm
-Dashboard is $dashboard
 #if((!$dashboard) && (!$printout) && (!$mobile_device) && ($loggedInUserAllowedToManage))
   #set($showManageUi = true)
 #end
@@ -48,7 +47,6 @@ Dashboard is $dashboard
   #set($grandTotalsText = "")
   #foreach($aggregateFunction in $aggregateFunctions)
 	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
-	  Getting grand total for $aggregateFunction
 	  #set($grandTotalsText = "$grandTotalsText $aggregateFunction = $mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction)), ")
 	#end
   #end
