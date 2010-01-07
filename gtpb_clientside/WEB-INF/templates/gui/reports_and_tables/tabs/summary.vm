@@ -107,7 +107,7 @@ function fShowAddAgg() {
 #else
   No functions 
 #end
-<a href="#" onclick="fShowAddAdd();">add...</a>
+<a href="#" onclick="fShowAddAgg();">add...</a>
 <div id="addAgg" style="display:none">
 					            	<input type="hidden" name="return" value="$return_template" />
 						            <input type="hidden" name="add_function_to_summary_report" value="1" />
