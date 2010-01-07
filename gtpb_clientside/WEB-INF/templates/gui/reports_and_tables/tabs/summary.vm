@@ -179,7 +179,7 @@ var chart1 = new Highcharts.Chart({
 				position: 'absolute',
 				zIndex: 10,
 				bottom: '10px',
-				text-align: 'center',
+				textAlign: 'center',
 				padding: '5px'
 			}
 		 },
