@@ -164,7 +164,7 @@ function fShowAddAgg() {
 	  #if($grandTotal.endsWith(".00"))
 		#set($endPos = $grandTotal.length() - 3)
 		#set($grandTotal = $grandTotal.substring(0, $endPos))
-	  #elsif($grandTotal.endsWith(".0"))
+	  #elseif($grandTotal.endsWith(".0"))
 		#set($endPos = $grandTotal.length() - 2)
 		#set($grandTotal = $grandTotal.substring(0, $endPos))
 	  #end
