@@ -39,7 +39,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 
 <div id="chart_$report.getInternalReportName()" style="width:100%"></div>
 
-<div id="chart_groupings" class="chart_controls">
+<table border="0" class="chart_controls"><tr>
+<td width="50%">
 <form name=addgrouping method=post action="/portalBase/AppController.servlet">
 #if($groupings.size() > 0)
   Grouped by
@@ -50,9 +51,22 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 	#if($groupingModifier)
 	  - $groupingModifier.getDescription()
 	#end
-  </a></span>
+  </a></span>&nbsp;
   #end
-#end &nbsp;
+#else
+  No groupings 
+#end
+<script language="JavaScript">
+function fShowAddGroup() {
+  jQuery("#addGroup").show("normal");
+}
+
+function fShowAddAgg() {
+  jQuery("#addAgg").show("normal");
+}
+</script>
+<a href="#" onclick="fShowAddGroup();">add...</a>
+<div id="addGroup" style="display:none">
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_summary_report" value="1" />
   						            <select name="internalfieldname">
@@ -78,17 +92,23 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 								                #end
 							              #end
 					            	</select>
-									<input type="submit" value="group">
-</form>
+									<input type="submit" value="add group">
 </div>
-<div id="chart_aggregates" class="chart_controls">
+</form>
+</td><td width="50%">
 <form name=addaggregate method=post action="/portalBase/AppController.servlet">
-Showing
-#foreach($aggregateFunction in $aggregateFunctions)
-  <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_function_from_summary_report=true&internalaggregatename=$aggregateFunction.getInternalAggregateName()">
-    $aggregateFunction
-  </a></span>
-#end &nbsp;
+#if($aggregateFunctions.size() >0)
+  Showing
+  #foreach($aggregateFunction in $aggregateFunctions)
+    <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_function_from_summary_report=true&internalaggregatename=$aggregateFunction.getInternalAggregateName()">
+      $aggregateFunction
+    </a></span>&nbsp;
+  #end
+#else
+  No functions 
+#end
+<a href="#" onclick="fShowAddAdd();">add...</a>
+<div id="addAgg" style="display:none">
 					            	<input type="hidden" name="return" value="$return_template" />
 						            <input type="hidden" name="add_function_to_summary_report" value="1" />
 						            <select name="function" id="aggregatefunction">
@@ -107,8 +127,10 @@ Showing
 							              #end
 						            </select>
 									<input type="submit" value="add calculation">
-</form>
 </div>
+</form>
+</td>
+</tr></table>
 
 #set($chartTitle = "$report - $viewTools.joinWith($aggregateFunctions,', ')")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
@@ -180,7 +202,8 @@ var chart1 = new Highcharts.Chart({
 				zIndex: 10,
 				bottom: '10px',
 				left: '120px',
-				padding: '5px'
+				padding: '5px',
+				textTransform: 'lowercase'
 			}
 		 },
          series: $series
