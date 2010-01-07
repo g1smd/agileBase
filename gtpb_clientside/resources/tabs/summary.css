@@ -54,7 +54,10 @@
   	width:100%;
   	background-color: #f1f2ed;
   	padding: 0.5em;
-  	vertical-align: top;
+  }
+  
+  .chart_controls table tr td {
+    vertical-align: top;
   }
   
   .chart_controls .existing_element a {
