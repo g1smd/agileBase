@@ -59,13 +59,15 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 <script language="JavaScript">
 function fShowAddGroup() {
   jQuery("#addGroup").show("normal");
+  jQuery("#addGroupLink").hide();
 }
 
 function fShowAddAgg() {
   jQuery("#addAgg").show("normal");
+  jQuery("#addAggLink").hide();
 }
 </script>
-<a href="#" onclick="fShowAddGroup();">add...</a>
+<a href="#" onclick="fShowAddGroup();" id="addGroupLink">add...</a>
 <div id="addGroup" style="display:none"><br>
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_summary_report" value="1" />
@@ -107,7 +109,7 @@ function fShowAddAgg() {
 #else
   No functions 
 #end
-<a href="#" onclick="fShowAddAgg();">add...</a>
+<a href="#" onclick="fShowAddAgg();" id="addAggLink">add...</a>
 <div id="addAgg" style="display:none"><br>
 					            	<input type="hidden" name="return" value="$return_template" />
 						            <input type="hidden" name="add_function_to_summary_report" value="1" />
