@@ -48,8 +48,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 	  #set($grandTotalsText = "$grandTotalsText $aggregateFunction = $mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction)), ")
 	#end
   #end
-  $grandTotalsText
-  #if($grandTotalsText > "")
+  #if($grandTotalsText != "")
 	#set($textLength = $grandTotalsText.length() - 2)
 	#set($grandTotalsText = $grandTotalsText.substring(0,$textLength))
     <div id="grand_totals">
