@@ -20,7 +20,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 ## Show summary data for the report
 
 #set($tabCaption='summary')
-#set($report = $sessionData.getReport())
+#if(!$report)
+  #set($report = $sessionData.getReport())
+#end
 #set($reportSummary = $report.getReportSummary())
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
@@ -30,6 +32,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($loggedInUserAllowedToManage = $view.loggedInUserAllowedTo("MANAGE_TABLE", $report.getParentTable()))
 #set($showManageUi = false)
 ##$printout set in gui/reports_and_tables/report_data_print.vm
+Dashboard is $dashboard
 #if((!$dashboard) && (!$printout) && (!$mobile_device) && ($loggedInUserAllowedToManage))
   #set($showManageUi = true)
 #end
@@ -56,7 +59,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     </div>
   #end
 #end
-
+#if($showManageUi)
 <table border="0" class="chart_controls"><tr>
 <td width="50%">
 <form name=addgrouping method=post action="/portalBase/AppController.servlet">
@@ -151,7 +154,7 @@ function fShowAddAgg() {
 </form>
 </td>
 </tr></table>
-
+#end
 #set($chartTitle = "$report - $viewTools.joinWith($aggregateFunctions,', ')")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
 #set($xAxisCategories = [])
