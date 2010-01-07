@@ -174,7 +174,7 @@ var chart1 = new Highcharts.Chart({
                enabled: false
             }
          },
-		 legend {
+		 legend: {
 		 	style: {
 				position: 'absolute',
 				zIndex: 10,
