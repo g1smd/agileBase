@@ -161,13 +161,13 @@ function fShowAddAgg() {
   #if((!$dashboard) && ($reportSummaryRows.size() >1))
 	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
 	  #set($grandTotal = "$mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction))")
-	  #if($grandTotal.endsWith("0"))
-		#set($endPos = $grandTotal.length() - 1)
+	  #if($grandTotal.endsWith(".00"))
+		#set($endPos = $grandTotal.length() - 3)
 		#set($grandTotal = $grandTotal.substring(0, $endPos))
-	    #if($grandTotal.endsWith(".0"))
-		  #set($endPos = $grandTotal.length() - 3)
-		  #set($grandTotal = $grandTotal.substring(0, $endPos))
-		#end
+	  #elsif($grandTotal.endsWith(".0"))
+		#set($endPos = $grandTotal.length() - 2)
+		#set($grandTotal = $grandTotal.substring(0, $endPos))
+	  #end
 	  #end
 	  #set($seriesName = "$seriesName = $grandTotal")
 	#end

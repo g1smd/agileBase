@@ -83,10 +83,3 @@
     background-image: url('remove-dark.png');
   }
   
-  #grand_totals {
-    margin-right: 1em;
-    text-align: right;
-    font-size: 10pt;
-    color: #666666; /* Match HighCharts */
-  }
-  
