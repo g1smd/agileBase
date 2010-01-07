@@ -66,7 +66,7 @@ function fShowAddAgg() {
 }
 </script>
 <a href="#" onclick="fShowAddGroup();">add...</a>
-<div id="addGroup" style="display:none">
+<div id="addGroup" style="display:none"><br>
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_summary_report" value="1" />
   						            <select name="internalfieldname">
@@ -108,7 +108,7 @@ function fShowAddAgg() {
   No functions 
 #end
 <a href="#" onclick="fShowAddAgg();">add...</a>
-<div id="addAgg" style="display:none">
+<div id="addAgg" style="display:none"><br>
 					            	<input type="hidden" name="return" value="$return_template" />
 						            <input type="hidden" name="add_function_to_summary_report" value="1" />
 						            <select name="function" id="aggregatefunction">
