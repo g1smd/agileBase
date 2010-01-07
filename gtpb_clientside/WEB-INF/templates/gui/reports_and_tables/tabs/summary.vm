@@ -168,7 +168,6 @@ function fShowAddAgg() {
 		#set($endPos = $grandTotal.length() - 2)
 		#set($grandTotal = $grandTotal.substring(0, $endPos))
 	  #end
-	  #end
 	  #set($seriesName = "$seriesName = $grandTotal")
 	#end
   #end
