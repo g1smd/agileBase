@@ -161,8 +161,9 @@ var chart1 = new Highcharts.Chart({
 		 },
          title: {
             style: {
-				margin: 0;
-				height: 0;
+				margin: 0,
+				height: 0,
+				display: none
 			}
          },
          xAxis: {
