@@ -52,7 +52,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 	#set($textLength = $grandTotalsText.length() - 2)
 	#set($grandTotalsText = $grandTotalsText.substring(0,$textLength))
     <div id="grand_totals">
-	  Grand totals: $grandTotalsText
+	  Grand totals: $grandTotalsText.toLowerCase()
     </div>
   #end
 #end
