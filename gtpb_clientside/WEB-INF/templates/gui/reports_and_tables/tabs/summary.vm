@@ -49,7 +49,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 	#end
   #end
   #if($grandTotalsText > "")
-	#set($grandTotalsText = $grandTotalsText.substring(0,$grandTotalsText.length() - 2))
+	#set($textLength = $grandTotalsText.length() - 2)
+	#set($grandTotalsText = $grandTotalsText.substring(0,$textLength))
     <div id="grand_totals">
 	  Grand totals: $grandTotalsText
     </div>
