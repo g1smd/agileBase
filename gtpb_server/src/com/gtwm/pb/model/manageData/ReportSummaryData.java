@@ -70,6 +70,7 @@ public class ReportSummaryData implements ReportSummaryDataInfo {
     }
     
     public double getGrandTotal(ReportSummaryAggregateInfo aggregate) {
+    	logger.debug("Grand totals are " + this.grandTotals);
     	Number grandTotal = this.grandTotals.get(aggregate);
     	return grandTotal.doubleValue();
     }
