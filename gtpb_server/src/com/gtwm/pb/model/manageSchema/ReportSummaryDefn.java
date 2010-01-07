@@ -330,7 +330,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 
 	public String toString() {
 		return this.getReport().getReportName() + " summary schema - functions: "
-				+ this.getAggregateFunctionsDirect() + ", groupings: " + this.getGroupings();
+				+ this.getAggregateFunctions() + ", groupings: " + this.getGroupings();
 	}
 
 	private Set<ReportSummaryGroupingInfo> groupings = new HashSet<ReportSummaryGroupingInfo>();

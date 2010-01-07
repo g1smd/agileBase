@@ -23,6 +23,7 @@ import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
+import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
 import com.gtwm.pb.model.interfaces.RoleObjectPrivilegeInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
@@ -173,6 +174,9 @@ public class AuthManager implements AuthManagerInfo {
 			}
 			ReportSummaryInfo reportSummary = report.getReportSummary();
 			logger.info("......Report summary: " + reportSummary);
+			for (ReportSummaryGroupingInfo grouping : reportSummary.getGroupings()) {
+				logger.info(".........Grouping details: " + grouping + " - " + grouping.getCreationTime() + " " + grouping.getGroupingModifier() + " " + grouping.getGroupingReportField());
+			}
 		}
 		// evict the table
 		HibernateUtil.currentSession().evict(table);
