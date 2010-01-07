@@ -159,6 +159,13 @@ var chart1 = new Highcharts.Chart({
 		 credits: {
 		 	enabled: false
 		 },
+         title: {
+            style: {
+				margin: 0;
+				height: 0;
+				display: none;
+			}
+         },
          xAxis: {
             categories: $xAxisCategories
          },
