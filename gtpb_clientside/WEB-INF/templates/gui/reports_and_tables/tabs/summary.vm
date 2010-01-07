@@ -176,12 +176,7 @@ var chart1 = new Highcharts.Chart({
          },
 		 legend: {
 		 	style: {
-				position: 'absolute',
-				zIndex: 10,
-				bottom: '10px',
-				left: 'auto',
-				right: 'auto',
-				padding: '5px'
+				left: 120
 			}
 		 },
          series: $series
