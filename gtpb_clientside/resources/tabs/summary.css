@@ -84,7 +84,9 @@
   }
   
   #grand_totals {
-    padding: 0.5em;
+    padding-left: 0.5em;
+    text-align: right;
     font-size: 10pt;
+    color: #666666; /* Match HighCharts */
   }
   
