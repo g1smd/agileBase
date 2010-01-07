@@ -162,9 +162,11 @@ function fShowAddAgg() {
 	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
 	  #set($grandTotal = "$mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction))")
 	  #if($grandTotal.endsWith("0"))
-		#set($grandTotal = $grandTotal.substring(0, $grandTotal.length() - 1))
+		#set($endPos = $grandTotal.length() - 1)
+		#set($grandTotal = $grandTotal.substring(0, $endPos))
 	    #if($grandTotal.endsWith(".0"))
-		  #set($grandTotal = $grandTotal.substring(0, $grandTotal.length() - 2))
+		  #set($endPos = $grandTotal.length() - 3)
+		  #set($grandTotal = $grandTotal.substring(0, $endPos))
 		#end
 	  #end
 	  #set($seriesName = "$seriesName = $grandTotal")
