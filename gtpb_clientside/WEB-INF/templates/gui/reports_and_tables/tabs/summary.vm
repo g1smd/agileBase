@@ -25,6 +25,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
 #set($numCols = 1 + $groupings.size() + $aggregateFunctions.size())
+#set($reportSummaryData = $view.getReportSummaryData())
+#set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
 #set($loggedInUserAllowedToManage = $view.loggedInUserAllowedTo("MANAGE_TABLE", $report.getParentTable()))
 #set($showManageUi = false)
 ##$printout set in gui/reports_and_tables/report_data_print.vm
@@ -38,6 +40,21 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #end
 
 <div id="chart_$report.getInternalReportName()" style="width:100%"></div>
+
+#if($reportSummaryRows.size() >1)
+  #set($grandTotalsText = "")
+  #foreach($aggregateFunction in $aggregateFunctions)
+	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
+	  #set($grandTotalsText = "$grandTotalsText $aggregateFunction = $mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction)), ")
+	#end
+  #end
+  #if($grandTotalsText > "")
+	#set($grandTotalsText = $grandTotalsText.substring(0,$grandTotalsText.length() - 2))
+    <div id="grand_totals">
+	  Grand totals: $grandTotalsText
+    </div>
+  #end
+#end
 
 <table border="0" class="chart_controls"><tr>
 <td width="50%">
@@ -116,7 +133,7 @@ function fShowAddAgg() {
 						            <select name="function" id="aggregatefunction">
 						              	#foreach($function in $reportSummary.getPossibleFunctionTypes())
 							              	  <option value="$function.toString()">$function.getLabel()</option>
-							              #end
+							            #end
 						            </select> 
 									<select name="internalfieldname">
 							              #foreach($reportField in $report.getReportFields())
@@ -137,8 +154,6 @@ function fShowAddAgg() {
 #set($chartTitle = "$report - $viewTools.joinWith($aggregateFunctions,', ')")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
 #set($xAxisCategories = [])
-#set($reportSummaryData = $view.getReportSummaryData())
-#set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
 #foreach($summaryRow in $reportSummaryRows)
   #set($xAxisCategory = "")
   #foreach($grouping in $groupings)

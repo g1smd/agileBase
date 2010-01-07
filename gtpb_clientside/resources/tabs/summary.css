@@ -54,6 +54,7 @@
   	width:100%;
   	background-color: #f1f2ed;
   	padding: 0.5em;
+  	font-size: 10pt;
   }
   
   .chart_controls td {
@@ -80,5 +81,9 @@
   	background-color: #bbcef1;
     border: #6d95e0 solid 1px;
     background-image: url('remove-dark.png');
+  }
+  
+  .grand_totals {
+    font-size: 10pt;
   }
   
