@@ -172,7 +172,7 @@ function fShowAddAgg() {
 	  #set($seriesName = "$seriesName = $grandTotal")
 	#end
   #end
-  #set($seriesString = "$seriesString { name:'$aggregateFunction', data: ")
+  #set($seriesString = "$seriesString { name:'$seriesName', data: ")
   #set($seriesData = [])
   #foreach($summaryRow in $reportSummaryRows)
 	#set($success = $seriesData.add($summaryRow.getAggregateValue($aggregateFunction)))
