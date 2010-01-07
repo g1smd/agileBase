@@ -43,21 +43,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 
 <div id="chart_$report.getInternalReportName()" style="width:100%"></div>
 
-#if($reportSummaryRows.size() >1)
-  #set($grandTotalsText = "")
-  #foreach($aggregateFunction in $aggregateFunctions)
-	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
-	  #set($grandTotalsText = "$grandTotalsText $aggregateFunction = $mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction)), ")
-	#end
-  #end
-  #if($grandTotalsText != "")
-	#set($textLength = $grandTotalsText.length() - 2)
-	#set($grandTotalsText = $grandTotalsText.substring(0,$textLength))
-    <div id="grand_totals">
-	  Grand totals: $grandTotalsText.toLowerCase()
-    </div>
-  #end
-#end
 #if($showManageUi)
 <table border="0" class="chart_controls"><tr>
 <td width="50%">
@@ -171,6 +156,20 @@ function fShowAddAgg() {
 #set($series = [])
 #set($seriesString = "")
 #foreach($aggregateFunction in $aggregateFunctions)
+  #set($seriesName = $aggregateFunction.toString().toLowerCase())
+  ## Add grand total to series if appropriate
+  #if((!$dashboard) && ($reportSummaryRows.size() >1))
+	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
+	  #set($grandTotal = "$mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction))")
+	  #if($grandTotal.endsWith("0"))
+		#set($grandTotal = $grandTotal.substring(0, $grandTotal.length() - 1))
+	    #if($grandTotal.endsWith(".0"))
+		  #set($grandTotal = $grandTotal.substring(0, $grandTotal.length() - 2))
+		#end
+	  #end
+	  #set($seriesName = "$seriesName = $grandTotal")
+	#end
+  #end
   #set($seriesString = "$seriesString { name:'$aggregateFunction', data: ")
   #set($seriesData = [])
   #foreach($summaryRow in $reportSummaryRows)
