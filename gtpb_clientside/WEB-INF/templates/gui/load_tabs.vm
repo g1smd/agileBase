@@ -35,21 +35,10 @@
 		   ## Unless opening tabs doesn't work (e.g. due to popup blocker)
 		   ## In which case open portalBase with document.location
 	       #foreach($tabAddress in $tabAddresses)
-		     #if($velocityCount == ($tabAddresses.size()) && ($tabAddresses.size() > 1))
-			   var lastTab = '$tabAddress';
-			   $viewTools.log("Last tab is $tabAddress")
-			 #else
-               var tab$velocityCount = window.open('$tabAddress','tab$velocityCount','');
-			   var openedTab = tab$velocityCount;
-			   $viewTools.log("Opened tab is $tabAddress")
-			 #end
+		     var tab$velocityCount = window.open('$tabAddress','tab$velocityCount','');
 	       #end
-		   if(openedTab.open) {
-             var tab_gtpb = window.open('AppController.servlet?$app_params','gtpb','');
-			 document.location = lastTab;
-		   } else {
-		     document.location = 'AppController.servlet?$app_params';
-		   }
+		   document.location='AppController.servlet?$app_params';
+		   window.focus();
       </script>
   </body>
 </html>
