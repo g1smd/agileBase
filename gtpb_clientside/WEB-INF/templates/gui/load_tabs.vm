@@ -40,7 +40,7 @@
 			   $viewTools.log("Last tab is $tabAddress")
 			 #else
                var tab$velocityCount = window.open('$tabAddress','tab$velocityCount','');
-			   var openedTab = tab$VelocityCount;
+			   var openedTab = tab$velocityCount;
 			   $viewTools.log("Opened tab is $tabAddress")
 			 #end
 	       #end
