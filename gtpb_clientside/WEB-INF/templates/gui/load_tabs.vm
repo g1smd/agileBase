@@ -45,9 +45,9 @@
 			 #end
 	       #end
 		   if(openedTab.open) {
+			 alert("Opening portalBase and setting document.location to lastTab");
              var tab_gtpb = window.open('AppController.servlet?$app_params','gtpb','');
 			 document.location = lastTab;
-			 alert("Opening portalBase and setting document.location to lastTab");
 		   } else {
 			 alert("document.location being set to portalBase");
 		     document.location = 'AppController.servlet?$app_params';
