@@ -37,16 +37,20 @@
 	       #foreach($tabAddress in $tabAddresses)
 		     #if($velocityCount == ($tabAddresses.size()) && ($tabAddresses.size() > 1))
 			   var lastTab = '$tabAddress';
+			   $viewTools.log("Last tab is $tabAddress")
 			 #else
                var tab$velocityCount = window.open('$tabAddress','tab$velocityCount','');
 			   var openedTab = tab$VelocityCount;
+			   $viewTools.log("Opened tab is $tabAddress")
 			 #end
 	       #end
 		   if(openedTab.open) {
              var tab_gtpb = window.open('AppController.servlet?$app_params','gtpb','');
 			 document.location = lastTab;
+			 $viewTools.log("portalBase opened and document.location set to lastTab")
 		   } else {
 		     document.location = 'AppController.servlet?$app_params';
+			 $viewTools.log("document.location set to portalBase")
 		   }
       </script>
   </body>
