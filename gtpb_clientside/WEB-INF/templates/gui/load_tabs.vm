@@ -36,7 +36,7 @@
 		   ## In which case open portalBase with document.location
 	       #foreach($tabAddress in $tabAddresses)
 		     #if($velocityCount == ($tabAddresses.size()) && ($tabAddresses.size() > 1))
-			   var lastTab = $tabAddress;
+			   var lastTab = '$tabAddress';
 			 #else
                var tab$velocityCount = window.open('$tabAddress','tab$velocityCount','');
 			   var openedTab = tab$VelocityCount;
