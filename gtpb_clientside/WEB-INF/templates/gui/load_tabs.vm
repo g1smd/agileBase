@@ -43,7 +43,7 @@
 			 #end
 	       #end
 		   if(openedTab.open) {
-             var tab_gtpb = window.open('AppController.servlet?$app_params',gtpb','');
+             var tab_gtpb = window.open('AppController.servlet?$app_params','gtpb','');
 			 document.location = lastTab;
 		   } else {
 		     document.location = AppController.servlet?$app_params;
