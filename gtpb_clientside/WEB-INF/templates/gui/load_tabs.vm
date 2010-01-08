@@ -30,11 +30,24 @@
 	#set($company = $view.getLoggedInUser().getCompany())
 	#set($tabAddresses = $company.getTabAddresses())
       <script language="JavaScript" type="text/javascript">
+	       ## Make sure portalBase is the focussed tab
+		   ## by opening it last
+		   ## Unless opening tabs doesn't work (e.g. due to popup blocker)
+		   ## In which case open portalBase with document.location
 	       #foreach($tabAddress in $tabAddresses)
-             var tab$velocityCount = window.open('$tabAddress','tab$velocityCount','');
+		     #if($velocityCount == ($tabAddresses.size()) && ($tabAddresses.size() > 1))
+			   var lastTab = $tabAddress;
+			 #else
+               var tab$velocityCount = window.open('$tabAddress','tab$velocityCount','');
+			   var openedTab = tab$VelocityCount;
+			 #end
 	       #end
-           document.location='AppController.servlet?$app_params';
-		   window.focus();
+		   if(openedTab.open) {
+             var tab_gtpb = window.open('AppController.servlet?$app_params',gtpb','');
+			 document.location = lastTab;
+		   } else {
+		     document.location = AppController.servlet?$app_params;
+		   }
       </script>
   </body>
 </html>
