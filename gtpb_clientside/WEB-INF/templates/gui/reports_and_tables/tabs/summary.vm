@@ -153,7 +153,7 @@ function fShowAddAgg() {
 	  #set($xAxisCategory = "$xAxisCategory | $summaryRow.getGroupingValue($grouping)")
 	#end
   #end
-  #set($success = $xAxisCategories.add("'$xAxisCategory'"))
+  #set($success = $xAxisCategories.add("'$viewTools.escape($xAxisCategory)'"))
 #end
 #set($series = [])
 #set($seriesString = "")
@@ -192,8 +192,6 @@ function fShowAddAgg() {
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
 #end
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
-Categories: $xAxisCategories<br>
-Series: $series<br>
 <script language="JavaScript">
 var chart1 = new Highcharts.Chart({
          chart: {
