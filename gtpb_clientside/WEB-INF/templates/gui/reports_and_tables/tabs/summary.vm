@@ -79,13 +79,15 @@ function fShowAddAgg() {
   						            <select name="internalfieldname">
 							              #foreach($reportField in $report.getReportFields())
 												#set($baseField = $reportField.getBaseField())
-								                #if ($reportField.getBaseField().getFieldCategory().getDescription().equals("Relation")) ## added to show display field name for relation fields
+												#set($category = $baseField.getFieldCategory())
+								                #if ($category == "RELATION") ## added to show display field name for relation fields
 								                  	<option value="$reportField.getInternalFieldName()">$reportField.getBaseField().getRelatedTable().getTableName(): $reportField.getBaseField().getDisplayField()</option>
 								                #else
 							              			#if(!($baseField.equals($baseField.getTableContainingField().getPrimaryKey())))
-														#set($category = $baseField.getFieldCategory())
-														## Dont't allow grouping by files or text without lookups
-														#if(!( (($category == "TEXT") && ($baseField.usesLookup() == false)) || ($category =="FILE") ))
+														## Dont't allow grouping by text without lookups
+														## unless the field is from a different table.
+														## Don't allow files in any situation
+														#if(!( (($category == "TEXT") && ($baseField.usesLookup() == false) && ($baseField.getTableContainingField().equals($report.getParentTable()))) || ($category =="FILE") ))
 															#if($category == "DATE")
 																<option value="$reportField.getInternalFieldName()_year">$reportField - year</option>
 																<option value="$reportField.getInternalFieldName()_quarter">$reportField - quarter</option>
@@ -157,8 +159,8 @@ function fShowAddAgg() {
 #set($seriesString = "")
 #foreach($aggregateFunction in $aggregateFunctions)
   #set($seriesName = $aggregateFunction.toString().toLowerCase())
-  ## Add grand total to series if appropriate
-  #if((!$dashboard) && ($reportSummaryRows.size() >1))
+  #if(!$dashboard)
+    ## Add grand total to series
 	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
 	  #set($grandTotal = "$mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction))")
 	  #if($grandTotal.endsWith(".00"))
