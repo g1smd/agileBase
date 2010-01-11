@@ -19,6 +19,8 @@ package com.gtwm.pb.model.interfaces;
 
 import java.util.List;
 
+import com.gtwm.pb.util.ObjectNotFoundException;
+
 public interface ReportSummaryDataInfo {
 	/**
 	 * @return The data that this summary holds
@@ -36,5 +38,5 @@ public interface ReportSummaryDataInfo {
 	/**
 	 * For sum and count aggregates, grand totals are stored
 	 */
-	public double getGrandTotal(ReportSummaryAggregateInfo aggregate);
+	public double getGrandTotal(ReportSummaryAggregateInfo aggregate) throws ObjectNotFoundException;
 }

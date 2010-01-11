@@ -27,7 +27,8 @@
   #set($reportCount = $reportCount + 1)
   #set($reportName = $report.getReportName())
   #if((!$reportName.contains("dbvcalc")) && (!$reportName.contains("dbvcrit")) && (!$report.equals($relatedTable.getDefaultReport())))
-    <option value="$report.getInternalReportName()" #if($reportCount == 1)selected#end>$reportName</option>
+	#set($module = $report.getModule())
+    <option value="$report.getInternalReportName()" #if($reportCount == 1)selected#end>#if($module)$module - #end$reportName</option>
   #end
 #end
 <option value="$relatedTable.getDefaultReport().getInternalReportName()" #if($reportCount == 0)selected#end>All fields and records</option>  

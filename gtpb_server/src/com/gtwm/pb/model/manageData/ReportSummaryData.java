@@ -23,6 +23,7 @@ import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryDataRowInfo;
+import com.gtwm.pb.util.ObjectNotFoundException;
 
 public class ReportSummaryData implements ReportSummaryDataInfo {
 
@@ -69,9 +70,11 @@ public class ReportSummaryData implements ReportSummaryDataInfo {
     	return percentage.intValue();
     }
     
-    public double getGrandTotal(ReportSummaryAggregateInfo aggregate) {
-    	logger.debug("Grand totals are " + this.grandTotals);
+    public double getGrandTotal(ReportSummaryAggregateInfo aggregate) throws ObjectNotFoundException {
     	Number grandTotal = this.grandTotals.get(aggregate);
+    	if (grandTotal == null) {
+    		throw new ObjectNotFoundException("Grand total not found for aggregate " + aggregate);
+    	}
     	return grandTotal.doubleValue();
     }
     

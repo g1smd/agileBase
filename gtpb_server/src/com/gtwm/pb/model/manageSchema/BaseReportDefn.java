@@ -133,15 +133,21 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	}
 	
 	/**
-	 * Provide a natural sort order by report name case insensitively. Use table
+	 * Provide a natural sort order by report name case insensitively. Use module and table
 	 * name in the comparison as well as we may make a collection of reports
-	 * from different tables
+	 * from different modules/tables
 	 */
 	public int compareTo(BaseReportInfo anotherReportDefn) {
 		if (this == anotherReportDefn) {
 			return 0;
 		}
-		String otherReportName = anotherReportDefn.getReportName();
+		ModuleInfo otherModule = anotherReportDefn.getModule();
+		if (this.module != null && otherModule != null) {
+			int moduleCompare = ((Module) this.module).compareTo(otherModule);
+			if (moduleCompare != 0) {
+				return moduleCompare;
+			}
+		}
 		TableInfo otherTable = anotherReportDefn.getParentTable();
 		int tableCompare = this.getParentTable().compareTo(otherTable);
 		if (tableCompare != 0) {
@@ -149,6 +155,7 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 			// compare report properties at all
 			return tableCompare;
 		}
+		String otherReportName = anotherReportDefn.getReportName();
 		// Also include internalReportName as that is what equals() is based on
 		String otherInternalReportName = anotherReportDefn.getInternalReportName();
 		return (this.getReportName().toLowerCase(Locale.UK) + this.getInternalReportName())

@@ -52,6 +52,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   #foreach($grouping in $groupings)
   <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_grouping_from_summary_report=true&internalfieldname=$grouping.getGroupingReportField().getInternalFieldName()">
     $grouping
+	#set($groupingModifier = false)
 	#set($groupingModifier = $grouping.getGroupingModifier())
 	#if($groupingModifier)
 	  - $groupingModifier.getDescription()
