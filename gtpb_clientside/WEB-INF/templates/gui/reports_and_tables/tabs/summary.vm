@@ -192,6 +192,8 @@ function fShowAddAgg() {
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
 #end
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
+Categories: $xAxisCategories<br>
+Series: $series<br>
 <script language="JavaScript">
 var chart1 = new Highcharts.Chart({
          chart: {
