@@ -33,7 +33,7 @@
 		border-top:1px solid orange;
 	  }
 	  
-	  div#toolbar_1.area_toolbar table {
+	  .area_toolbar {
 	    display:none;
 	  }
 </style>
