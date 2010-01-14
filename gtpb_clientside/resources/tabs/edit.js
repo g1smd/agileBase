@@ -205,7 +205,7 @@ function fEnableCalcSyntaxHighlight() {
 }
 
 function fEALoaded() {
-  $('#frame_calculationdefn').contents().find('.area_toolbar').hide());
+  $('#frame_calculationdefn').contents().find('.area_toolbar').hide();
 }
 
 /* ---------- Add functions to the callFunctions list ---------- */
