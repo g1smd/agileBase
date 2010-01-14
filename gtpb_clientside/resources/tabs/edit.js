@@ -212,4 +212,4 @@ function fEnableCalcSyntaxHighlight() {
 pane3Scripts.functionList.push(fUnlockButton);
 pane3Scripts.functionList.push(fComboComponents);
 pane3Scripts.functionList.push(fRelationPickers);
-pane3Scripts.functionList.push(fEnableCalcSyntaxHighlight);
+//pane3Scripts.functionList.push(fEnableCalcSyntaxHighlight);
