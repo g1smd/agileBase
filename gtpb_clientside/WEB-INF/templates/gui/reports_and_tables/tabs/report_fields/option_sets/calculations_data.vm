@@ -33,13 +33,8 @@
 		border-top:1px solid orange;
 	  }
 	  
-      input[focused][type='text'] {
-        border:2px solid #A2B6FF;
-        background-color:#ECF0FF;
-	  }
-	  
-	  span#tmp_tool_ {
-	    display: none;
+	  div#toolbar_1.area_toolbar {
+	    display:none;
 	  }
 </style>
 
