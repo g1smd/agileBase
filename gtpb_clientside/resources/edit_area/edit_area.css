@@ -255,7 +255,6 @@ div#area_search_replace  #area_search_msg{
 
 /* area_toolbar */
 .area_toolbar{
-	display: none; /* Added by Oliver to hide toolbars */
 	/*font: 11px sans-serif;*/
 	width: 100%; 
 	/*height: 21px; */

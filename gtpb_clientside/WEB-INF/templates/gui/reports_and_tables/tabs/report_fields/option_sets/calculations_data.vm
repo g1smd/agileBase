@@ -47,11 +47,11 @@
 		  <input type=hidden name=add_calculation_to_report value=true>
     <table>
       <tr>
-        <td>Calculation name</td>
+        <td style="vertical-align:top">Calculation name</td>
         <td><input type="text" name="calculationname" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')" /></td>
       </tr>
       <tr>
-        <td>Return type</td>
+        <td style="vertical-align:top">Return type</td>
         <td>
 		          <select name="databasetype">
 		            <option value="VARCHAR">Text</option>
@@ -63,7 +63,7 @@
 	    </td>
       </tr>
 	  <tr>
-	    <td style="vertical-align:top">Calculation definition (SQL)</td>
+	    <td style="vertical-align:top">Calculation definition<br>(SQL)</td>
 		<td><textarea name="calculationdefn" id="calculationdefn" cols="80" rows="5"></textarea></td>
 	  </tr>
 	  <tr>
