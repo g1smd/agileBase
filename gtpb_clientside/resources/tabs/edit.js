@@ -188,9 +188,24 @@ function fShowReportUsage() {
   }
 }
 
+/* Calculation editor */
+function fEnableCalcSyntaxHighlight() {
+editAreaLoader.init({
+	id : "calculationdefn"		// textarea id
+	,syntax: "sql"			// syntax to be uses for highgliting
+	,start_highlight: true		// to display with highlight mode on start-up
+	,allow_toggle: false
+	,browsers: "all"
+	,toolbar: ""
+	,replace_tab_by_spaces: 2
+});
+}
+
+
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
 
 pane3Scripts.functionList.push(fUnlockButton);
 pane3Scripts.functionList.push(fComboComponents);
 pane3Scripts.functionList.push(fRelationPickers);
+pane3Scripts.functionList.push(fEnableCalcSyntaxHighlight);
