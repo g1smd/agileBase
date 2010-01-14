@@ -191,6 +191,7 @@ function fShowReportUsage() {
 /* Calculation editor */
 function fEnableCalcSyntaxHighlight() {
   if($("#calculationdefn").length > 0) {
+	if($("#calculationdefn").is(":visible")) {
     editAreaLoader.init({
 	  id : "calculationdefn"		// textarea id
 	  ,syntax: "sql"			// syntax to be uses for highgliting
@@ -200,6 +201,7 @@ function fEnableCalcSyntaxHighlight() {
 	  ,toolbar: ""
 	  ,replace_tab_by_spaces: 2
     });
+	}
   }
 }
 
