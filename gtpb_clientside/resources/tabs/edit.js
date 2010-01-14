@@ -205,7 +205,7 @@ function fEnableCalcSyntaxHighlight() {
 }
 
 function fEALoaded() {
-  setTimeout("alert('editor ' + $('#editor').length)",1000);
+  alert('editor ' + $('#frame_calculationdefn').contents().find('.area_toolbar').length);
 }
 
 /* ---------- Add functions to the callFunctions list ---------- */
