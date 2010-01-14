@@ -205,7 +205,7 @@ function fEnableCalcSyntaxHighlight() {
 }
 
 function fEALoaded() {
-  alert("calculations " + $("#calculations").length);
+  alert("area_toolbar " + $(".area_toolbar").length);
 }
 
 /* ---------- Add functions to the callFunctions list ---------- */
