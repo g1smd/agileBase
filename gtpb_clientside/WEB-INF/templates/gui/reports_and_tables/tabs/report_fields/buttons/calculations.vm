@@ -16,7 +16,7 @@
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($button_img='resources/reports/calculation.png')
-#set($click="fShowOption('options_wrapper_$options_wrapper_no','calculations'); fEnableCalcSyntaxHighlight(); jQuery('.area_toolbar').css('display','none!important');")
+#set($click="fShowOption('options_wrapper_$options_wrapper_no','calculations'); fEnableCalcSyntaxHighlight(); jQuery('#tmp_tool_').text('');")
 #set($caption='Calculations')
 #set($id='button_calculations')
 #parse('gui/resources/button.vm')
