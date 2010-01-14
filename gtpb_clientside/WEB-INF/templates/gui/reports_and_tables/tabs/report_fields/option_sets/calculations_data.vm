@@ -38,7 +38,7 @@
       background-color:#ECF0FF;
 	  }
 	  /* hide syntax highlighter toolbar */
-	  #toolbar_1 .area_toolbar {
+	  span#tmp_tool_ {
 	    display: none;
 	  }
 </style>
