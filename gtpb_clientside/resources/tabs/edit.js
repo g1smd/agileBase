@@ -199,10 +199,14 @@ function fEnableCalcSyntaxHighlight() {
 	  ,browsers: "all"
 	  ,toolbar: ""
 	  ,replace_tab_by_spaces: 2
+	  ,EA_load_callback: "fEALoaded"
     });
   }
 }
 
+function fEALoaded() {
+  alert($("#tmp_tool_").length);
+}
 
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
