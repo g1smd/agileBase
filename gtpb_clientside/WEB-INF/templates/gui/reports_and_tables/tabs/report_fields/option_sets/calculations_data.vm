@@ -36,7 +36,11 @@
       input[focused][type='text'] {
       border:2px solid #A2B6FF;
       background-color:#ECF0FF;
-	  }						  
+	  }
+	  /* hide syntax highlighter toolbar */
+	  #toolbar_1 {
+	    display: none;
+	  }
 </style>
 
 <script language=javascript>
