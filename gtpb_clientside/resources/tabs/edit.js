@@ -205,7 +205,7 @@ function fEnableCalcSyntaxHighlight() {
 }
 
 function fEALoaded() {
-  alert("area_toolbar " + $(".area_toolbar").length);
+  setTimeout("alert('area_toolbar ' + $('.area_toolbar').length)",1000);
 }
 
 /* ---------- Add functions to the callFunctions list ---------- */
