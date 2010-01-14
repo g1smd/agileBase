@@ -14,12 +14,7 @@
 ##
 ##  You should have received a copy of the GNU General Public License
 ##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
-##
-## edit the fields in a table
-
-<style>
-	  @import url("styles/report.css");
-	
+<style>	
 	  div#fieldOptionsSet { 
 	    display:none;
 	  }
@@ -34,15 +29,14 @@
 	
 	  tr#addNewField td { 
 	    vertical-align:top;
-    font-size:8pt;
-						    border-top:1px solid orange;
-						  }
-						  
-  input[focused][type='text'],
-  textarea[focused] {
-    border:2px solid #A2B6FF;
-    background-color:#ECF0FF;
-  }						  
+		font-size:8pt;
+		border-top:1px solid orange;
+	  }
+	  ##TODO: this input style defn can be removed and possible some of the above too			  
+      input[focused][type='text'] {
+      border:2px solid #A2B6FF;
+      background-color:#ECF0FF;
+	  }						  
 </style>
 
 <script language=javascript>
@@ -71,15 +65,27 @@
 		            <option value="TIMESTAMP">Date/time</option>
 		            <option value="INTERVAL">Time interval</option>
 		          </select>
-	        </td>
+	    </td>
       </tr>
-	      <tr>
-		      <td>Calculation definition (SQL)</td>
-		      <td><textarea name="calculationdefn" cols="60" rows="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"></textarea></td>
-	    </tr>
-	    <tr>
-		      <td>&nbsp;</td>
-		      <td><input type="submit" value="Create Calculation" /></td>
-	    </tr>
+	  <tr>
+	    <td>Calculation definition (SQL)</td>
+		<td><textarea name="calculationdefn" id="calculationdefn" cols="80" rows="5"></textarea></td>
+	  </tr>
+	  <tr>
+		<td>&nbsp;</td>
+		<td><input type="submit" value="Create Calculation" /></td>
+	  </tr>
   </table>
 </form>
+<!-- Syntax highlighter -->
+<script language="javascript" type="text/javascript">
+editAreaLoader.init({
+	id : "calculationdefn"		// textarea id
+	,syntax: "sql"			// syntax to be uses for highgliting
+	,start_highlight: true		// to display with highlight mode on start-up
+	,allow_toggle: false
+	,browsers: all
+	,toolbar: ""
+	,replace_tab_by_spaces: 2
+});
+</script>

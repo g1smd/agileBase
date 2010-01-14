@@ -18,7 +18,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <!-- <meta http-equiv="X-UA-Compatible" content="chrome=1"> -->
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" >
+	<title>$sessionData.getTable() data</title>
 	<link href="styles/report.css" type="text/css" rel="stylesheet" />
 	<link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
 	#if(!$mobile_device)
@@ -46,17 +48,13 @@
     <script type="text/javascript" src="resources/highcharts.js"></script>
     #parse('gui/display_error.vm')
  	#if($mobile_device)
-	<meta name = "viewport" content = "width = device-width">
-    <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
+		<meta name = "viewport" content = "width = device-width">
+		<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
 	#else
-	<script type="text/javascript" src="resources/jquery.bgiframe.js"></script>
-	<script type="text/javascript" src="resources/jquery.autocomplete.js"></script>
-	<script language=JavaScript src="resources/wait/editData.js"></script>
-	<script language=JavaScript src="resources/wait/editBuffer.js"></script>
-	#end
- 
-<title>$sessionData.getTable() data</title>
-    #if(!$mobile_device)
+		<script type="text/javascript" src="resources/jquery.bgiframe.js"></script>
+		<script type="text/javascript" src="resources/jquery.autocomplete.js"></script>
+		<script language=JavaScript src="resources/wait/editData.js"></script>
+		<script language=JavaScript src="resources/wait/editBuffer.js"></script>
 		<!--[if IE]>
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/tabs-ie.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/edit-ie.css" />
@@ -65,7 +63,8 @@
 		<SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
 		<script language=Javascript src="resources/wait/setFilter.js"></script>
         #if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
-      	<script type="text/javascript" src="resources/jquery.tablednd.js"></script>
+      	  <script type="text/javascript" src="resources/jquery.tablednd.js"></script>
+		  <script type="text/javascript" src="resources/edit_area/edit_area_full.gz"></script>
         #end
         <script type="text/javascript" src="resources/tabs/tabs.js"></script>
 		<script type="text/javascript" src="resources/tabs/edit.js"></script>
