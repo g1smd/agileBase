@@ -38,7 +38,7 @@
       background-color:#ECF0FF;
 	  }
 	  /* hide syntax highlighter toolbar */
-	  .area_toolbar #toolbar_1 {
+	  #toolbar_1 .area_toolbar {
 	    display: none;
 	  }
 </style>
