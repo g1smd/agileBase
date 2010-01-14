@@ -68,7 +68,7 @@
 	    </td>
       </tr>
 	  <tr>
-	    <td>Calculation definition (SQL)</td>
+	    <td style="vertical-align:top">Calculation definition (SQL)</td>
 		<td><textarea name="calculationdefn" id="calculationdefn" cols="80" rows="5"></textarea></td>
 	  </tr>
 	  <tr>
