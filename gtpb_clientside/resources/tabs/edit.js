@@ -166,39 +166,41 @@ var warningRowHtmlSaved = '';
 /* Manage functions */
 function fShowTableUsage() {
   // If no usage log table exists yet, get from server
-  if (jQuery("#table_usage_loader table").size() == 0) {
-	  jQuery.get("AppController.servlet",
+  if ($("#table_usage_loader table").size() == 0) {
+	  $.get("AppController.servlet",
 	  {"return":"gui/administration/tables/option_sets/table_usage_data_loader"},
 	  function(returned_content) {
-	    jQuery("#table_usage_loader").html(returned_content);
-		jQuery("#table_usage_loader").removeClass("load_spinner");
+	    $("#table_usage_loader").html(returned_content);
+		$("#table_usage_loader").removeClass("load_spinner");
 	  });
   }
 }
 
 function fShowReportUsage() {
   // If no usage log table exists yet, get from server
-  if (jQuery("#report_usage_loader table").size() == 0) {
-	  jQuery.get("AppController.servlet",
+  if ($("#report_usage_loader table").size() == 0) {
+	  $.get("AppController.servlet",
 	  {"return":"gui/administration/reports/option_sets/report_usage_data_loader"},
 	  function(returned_content) {
-	    jQuery("#report_usage_loader").html(returned_content);
-		jQuery("#report_usage_loader").removeClass("load_spinner");
+	    $("#report_usage_loader").html(returned_content);
+		$("#report_usage_loader").removeClass("load_spinner");
 	  });
   }
 }
 
 /* Calculation editor */
 function fEnableCalcSyntaxHighlight() {
-editAreaLoader.init({
-	id : "calculationdefn"		// textarea id
-	,syntax: "sql"			// syntax to be uses for highgliting
-	,start_highlight: true		// to display with highlight mode on start-up
-	,allow_toggle: false
-	,browsers: "all"
-	,toolbar: ""
-	,replace_tab_by_spaces: 2
-});
+  if($("#calculationdefn").length > 0) {
+    editAreaLoader.init({
+	  id : "calculationdefn"		// textarea id
+	  ,syntax: "sql"			// syntax to be uses for highgliting
+	  ,start_highlight: true		// to display with highlight mode on start-up
+	  ,allow_toggle: false
+	  ,browsers: "all"
+	  ,toolbar: ""
+	  ,replace_tab_by_spaces: 2
+    });
+  }
 }
 
 
