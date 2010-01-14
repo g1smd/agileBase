@@ -32,12 +32,12 @@
 		font-size:8pt;
 		border-top:1px solid orange;
 	  }
-	  ##TODO: this input style defn can be removed and possible some of the above too			  
+	  
       input[focused][type='text'] {
-      border:2px solid #A2B6FF;
-      background-color:#ECF0FF;
+        border:2px solid #A2B6FF;
+        background-color:#ECF0FF;
 	  }
-	  /* hide syntax highlighter toolbar */
+	  
 	  span#tmp_tool_ {
 	    display: none;
 	  }
