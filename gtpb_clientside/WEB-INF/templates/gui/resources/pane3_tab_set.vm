@@ -19,7 +19,7 @@
 <html>
   <head>
     <!-- <meta http-equiv="X-UA-Compatible" content="chrome=1"> -->
-	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" >
+	<!-- <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" > -->
 	<title>$sessionData.getTable() data</title>
 	<link href="styles/report.css" type="text/css" rel="stylesheet" />
 	<link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
@@ -64,7 +64,7 @@
 		<script language=Javascript src="resources/wait/setFilter.js"></script>
         #if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
       	  <script type="text/javascript" src="resources/jquery.tablednd.js"></script>
-		  <script type="text/javascript" src="resources/edit_area/edit_area_full.js"></script>
+		  ## <script type="text/javascript" src="resources/edit_area/edit_area_full.js"></script>
         #end
         <script type="text/javascript" src="resources/tabs/tabs.js"></script>
 		<script type="text/javascript" src="resources/tabs/edit.js"></script>
