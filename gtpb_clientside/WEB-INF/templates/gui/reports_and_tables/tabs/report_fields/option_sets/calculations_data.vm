@@ -50,8 +50,7 @@
         <td style="vertical-align:top">Field name</td>
         <td>
 			<input type="text" name="calculationname" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')" />
-			Return type
-			      <select name="databasetype">
+			      &nbsp;<select name="databasetype">
 		            <option value="VARCHAR">Text</option>
 		            <option value="INTEGER">Whole number</option>
 		            <option value="FLOAT">Decimal number</option>
