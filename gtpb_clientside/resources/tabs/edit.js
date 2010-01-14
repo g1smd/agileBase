@@ -199,13 +199,11 @@ function fEnableCalcSyntaxHighlight() {
 	  ,browsers: "all"
 	  ,toolbar: ""
 	  ,replace_tab_by_spaces: 2
-	  ,EA_load_callback: "fEALoaded"
+	  ,EA_load_callback: function() {
+    	$('#frame_calculationdefn').contents().find('.area_toolbar').hide();
+      }
     });
   }
-}
-
-function fEALoaded() {
-  $('#frame_calculationdefn').contents().find('.area_toolbar').hide();
 }
 
 /* ---------- Add functions to the callFunctions list ---------- */
