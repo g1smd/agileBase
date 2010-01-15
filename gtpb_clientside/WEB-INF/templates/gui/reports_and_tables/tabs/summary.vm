@@ -142,6 +142,7 @@ function fShowAddAgg() {
 </td>
 </tr></table>
 #end
+#if($reportSummaryRows.size() > 0)
 #set($chartTitle = "$report - $viewTools.joinWith($aggregateFunctions,', ')")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
 #set($xAxisCategories = [])
@@ -233,6 +234,7 @@ var chart1 = new Highcharts.Chart({
       });
 </script>
 #end
+#end   ## end if reportSummaryRows.size > 0
 #if($mobile_device)<p>
 	#parse("gui/mobile/pane2_footer.vm")
 #end
