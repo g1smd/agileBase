@@ -42,7 +42,7 @@
 	  }
 	</script>
 
-<form action="AppController.servlet" target="pane_2" method=post id=newcalculation>
+<form action="AppController.servlet" target="pane_2" method="post" id="newcalculation" onsubmit="editAreaLoader.delete_instance('calculationdefn');">
   <input type=hidden name=return value="gui/reports_and_tables/report_data" />
 		  <input type=hidden name=add_calculation_to_report value=true>
     <table>
