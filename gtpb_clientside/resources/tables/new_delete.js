@@ -32,8 +32,6 @@ function fDelete()
 }
 
 function fImport() { 
-	//window.open("https://appserver.gtportalbase.com/portalBase/AppController.servlet?return=gui/import_csv","Data import");
-	//top.spawnWindow('AppController.servlet?return=gui/import_csv','data_import','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')
 	top.fShowModalDialog('gui/import/1_update_or_insert','import data','fImportOK()','ok cancel next','width=800px; height=600px');
 }
 
@@ -53,6 +51,5 @@ function fLinks()
 		document.location.href=mailtoUrl;
 	  }
 	);
-	//this.location.href='AppController.servlet?return=gui/links&returntype=download&returnfilename=links.htm';
 }
 

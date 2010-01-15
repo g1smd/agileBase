@@ -71,7 +71,7 @@
 			         #set($success=$row.add("<a href='mailto:$dataRowField.getKeyValue()'>$dataRowField.getDisplayValue()</a>"))
 				   #elseif(($field.getClass().getSimpleName().equals("FileFieldDefn")) && ($dataRowField.getKeyValue() != ""))
 					 #set($fileValue = $viewTools.getFileValueTool($dataRowField.getKeyValue()))
-					 #set($downloadUrl = "http://appserver.gtportalbase.com/portalBase/uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$datarow.getRowId()/$fileValue")
+					 #set($downloadUrl = "/portalBase/uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$datarow.getRowId()/$fileValue")
 					 #if(!$fieldValueObject.isImage())
 					   #set($fileCellContents = "<img border='0' style='float:left' src=${Q}http://gtwebmarque.com/static_features/filetypes/${fileValue.getIconName()}.png${Q}><a href=${Q}${downloadUrl}${Q}>$fileValue</a>")
                      #end
