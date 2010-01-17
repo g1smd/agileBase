@@ -77,6 +77,11 @@ public interface ReportSummaryInfo {
 			throws ObjectNotFoundException;
 
 	/**
+	 * Return the title given to this report summary, e.g. to be used as a chart title
+	 */
+	public String getTitle();
+	
+	/**
 	 * Return a prepared statement that is for getting the summary (aggregate)
 	 * data for a report
 	 * 

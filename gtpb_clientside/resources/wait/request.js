@@ -31,7 +31,7 @@ function fRequest(sURL, aPostVars, fCallback, iShowWait){
     try {
       if (oReqObj.readyState == 4){ 
         if (oReqObj.status != 200){  
-          alert('Warning - network connection problem!\n'+oReqObj.statusText);
+          //alert('Warning - network connection problem!\n'+oReqObj.statusText);
 		  return false;
 	    }
 	    return true;

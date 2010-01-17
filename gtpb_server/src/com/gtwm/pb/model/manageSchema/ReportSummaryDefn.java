@@ -78,14 +78,21 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	private void setId(long id) {
 		this.id = id;
 	}
+	
+	public String getTitle() {
+		return this.title;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public synchronized void addGrouping(ReportFieldInfo groupByReportField,
 			SummaryGroupingModifier groupingModifier) {
 		ReportSummaryGroupingInfo grouping = new ReportSummaryGrouping(groupByReportField,
 				groupingModifier);
 		// Need a save here because no link from grouping back to report summary
-		// so
-		// Hibernate can't save automatically
+		// so Hibernate can't save automatically
 		HibernateUtil.currentSession().save(grouping);
 		this.getGroupingsDirect().add(grouping);
 	}
@@ -338,6 +345,8 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	private Set<ReportSummaryAggregateInfo> aggregateFunctions = new LinkedHashSet<ReportSummaryAggregateInfo>();
 
 	private BaseReportInfo report;
+	
+	private String title = "";
 
 	private long id;
 
