@@ -56,7 +56,7 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.HibernateUtil;
 
 @Entity
-public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSummaryInfo> {
+public class ReportSummaryDefn implements ReportSummaryInfo {
 
 	protected ReportSummaryDefn() {
 	}

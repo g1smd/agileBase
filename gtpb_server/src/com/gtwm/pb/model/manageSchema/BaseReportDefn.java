@@ -23,6 +23,8 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.util.Naming;
 import java.util.Locale;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -112,6 +114,22 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	protected void setReportSummary(ReportSummaryInfo reportSummary) {
 		this.reportSummary = reportSummary;
 	}
+	
+	public Set<ReportSummaryInfo> getSavedReportSummaries() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void removeSavedReportSummary(ReportSummaryInfo reportSummary) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void saveReportSummary(ReportSummaryInfo reportSummary) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	@Transient
 	public int getRowCount() {
