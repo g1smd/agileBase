@@ -641,16 +641,25 @@ public class DataManagement implements DataManagementInfo {
 		this.logLastDataChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		// Log everything apart from hidden (auto set) fields
+		Map<BaseField, BaseValue> dataToLog = new LinkedHashMap<BaseField, BaseValue>(dataToSave.size());
+		for (Map.Entry<BaseField, BaseValue> entrySet : dataToSave.entrySet()) {
+			BaseField field = entrySet.getKey();
+			if (!field.getHidden()) {
+				BaseValue value = entrySet.getValue();
+				dataToLog.put(field, value);
+			}
+		}
 		if (newRecord) {
 			usageLogger.logDataChange(user, table, AppAction.SAVE_NEW_RECORD, newRowId,
-					"New data = " + dataToSave);
+					"New data = " + dataToLog);
 		} else if (globalEdit) {
 			// TODO: need better logging of global edits
 			usageLogger.logDataChange(user, table, AppAction.GLOBAL_EDIT, rowId, "New data = "
-					+ dataToSave);
+					+ dataToLog);
 		} else {
 			usageLogger.logDataChange(user, table, AppAction.UPDATE_RECORD, rowId, "New data = "
-					+ dataToSave);
+					+ dataToLog);
 		}
 		UsageLogger.startLoggingThread(usageLogger);
 	}
