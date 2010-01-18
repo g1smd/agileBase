@@ -45,8 +45,9 @@
 		ajaxCache: true,
 		waitImage: false,
 		width: 229,
+		delayedClose: 10000,
 		hoverIntent: {  
-		  interval: 150
+		  interval: 500
 		}
 	  });
 	});

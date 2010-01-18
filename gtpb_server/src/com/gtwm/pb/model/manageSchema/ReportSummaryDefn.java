@@ -56,7 +56,7 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.HibernateUtil;
 
 @Entity
-public class ReportSummaryDefn implements ReportSummaryInfo {
+public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSummaryInfo> {
 
 	protected ReportSummaryDefn() {
 	}
@@ -336,10 +336,49 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	}
 
 	public String toString() {
-		return this.getReport().getReportName() + " summary schema - functions: "
+		return "" + this.getReport()+ " summary schema - functions: "
 				+ this.getAggregateFunctions() + ", groupings: " + this.getGroupings();
 	}
 
+	/**
+	 * equals is based on report, functions and groupings
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if ((obj == null) || (obj.getClass() != this.getClass())) {
+			return false;
+		}
+		ReportSummaryDefn otherSummary = (ReportSummaryDefn) obj;
+		if (!this.getReport().equals(otherSummary.getReport())) {
+			return false;
+		}
+		if (!this.getGroupings().equals(otherSummary.getGroupings())) {
+			return false;
+		}
+		if (!this.getAggregateFunctions().equals(otherSummary.getAggregateFunctions())) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * hashCode consistent with equals
+	 */
+	public int hashCode() {
+		if (this.hashCode == 0) {
+			int result = 17;
+			result = 37 * result + this.getReport().hashCode();
+			result = 37 * result + this.getGroupings().hashCode();
+			result = 37 * result + this.getAggregateFunctions().hashCode();
+			this.hashCode = result;
+		}
+		return this.hashCode;
+	}
+	
+	private volatile int hashCode = 0;
+	
 	private Set<ReportSummaryGroupingInfo> groupings = new HashSet<ReportSummaryGroupingInfo>();
 
 	private Set<ReportSummaryAggregateInfo> aggregateFunctions = new LinkedHashSet<ReportSummaryAggregateInfo>();
