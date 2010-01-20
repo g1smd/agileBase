@@ -60,7 +60,7 @@ public class ReportSort implements ReportSortInfo {
 	}
 
 	@ManyToOne(targetEntity = AbstractReportField.class)
-	// Uni-directional many to one: is this right?
+	// Uni-directional many to one
 	public ReportFieldInfo getSortReportField() {
 		return this.sortReportField;
 	}

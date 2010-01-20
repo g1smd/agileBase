@@ -323,8 +323,8 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 		return false;
 	}
 
-	@OneToOne(mappedBy = "reportSummary", targetEntity = BaseReportDefn.class)
 	@ManyToOne(targetEntity=BaseReportDefn.class)
+	//@OneToOne(mappedBy = "reportSummary", targetEntity = BaseReportDefn.class)
 	public BaseReportInfo getReport() {
 		return this.report;
 	}
