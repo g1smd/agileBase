@@ -628,7 +628,6 @@ public class AppController extends VelocityViewServlet {
 						sessionData, ex, multipartItems);
 			}
 		}
-
 		// Use StringBuffer to get a mutable string that can be altered by
 		// carryOutAppActions
 		StringBuffer appActionName = new StringBuffer("");

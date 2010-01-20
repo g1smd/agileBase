@@ -120,11 +120,11 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	}
 
 	@OneToMany(mappedBy = "report", targetEntity = ReportSummaryDefn.class, cascade = CascadeType.ALL)
-	public Set<ReportSummaryInfo> getSavedReportSummariesDirect() {
+	private Set<ReportSummaryInfo> getSavedReportSummariesDirect() {
 		return this.savedReportSummaries;
 	}
 
-	public void setSavedReportSummariesDirect(Set<ReportSummaryInfo> savedReportSummaries) {
+	private void setSavedReportSummariesDirect(Set<ReportSummaryInfo> savedReportSummaries) {
 		this.savedReportSummaries = savedReportSummaries;
 	}
 
