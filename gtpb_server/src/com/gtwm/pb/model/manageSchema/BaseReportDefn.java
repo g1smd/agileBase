@@ -114,6 +114,7 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		this.reportSummary = reportSummary;
 	}
 
+	@Transient
 	public Set<ReportSummaryInfo> getSavedReportSummaries() {
 		return Collections.unmodifiableSet(new LinkedHashSet<ReportSummaryInfo>(this
 				.getSavedReportSummariesDirect()));
