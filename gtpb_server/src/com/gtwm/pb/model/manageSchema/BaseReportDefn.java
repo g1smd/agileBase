@@ -105,7 +105,7 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		this.parentTable = parentTable;
 	}
 
-	@OneToOne(mappedBy="report", targetEntity = ReportSummaryDefn.class, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity = ReportSummaryDefn.class, cascade = CascadeType.ALL)
 	public ReportSummaryInfo getReportSummary() {
 		return this.reportSummary;
 	}
