@@ -114,7 +114,8 @@ public interface DatabaseInfo {
 	 * @param baseTable
 	 * @param dependentTables
 	 */
-	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, HttpServletRequest request) throws ObjectNotFoundException;
+	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables,
+			HttpServletRequest request) throws ObjectNotFoundException;
 
 	/**
 	 * Adds TableInfo objects to dependentTables where all tables added are
@@ -124,7 +125,8 @@ public interface DatabaseInfo {
 	 * @param baseTable
 	 * @param dependentTables
 	 */
-	public void getDirectlyDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, HttpServletRequest request) throws ObjectNotFoundException;
+	public void getDirectlyDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables,
+			HttpServletRequest request) throws ObjectNotFoundException;
 
 	/**
 	 * Create a report and add it to the database
@@ -143,9 +145,9 @@ public interface DatabaseInfo {
 	 */
 	public BaseReportInfo addReport(SessionDataInfo sessionData, HttpServletRequest request,
 			Connection conn, TableInfo table, String internalReportName, String reportName,
-			String reportDesc, boolean populateReport) throws SQLException,
-			DisallowedException, CantDoThatException, CodingErrorException,
-			ObjectNotFoundException, MissingParametersException;
+			String reportDesc, boolean populateReport) throws SQLException, DisallowedException,
+			CantDoThatException, CodingErrorException, ObjectNotFoundException,
+			MissingParametersException;
 
 	/**
 	 * Change the name and/or description of a report
@@ -227,8 +229,8 @@ public interface DatabaseInfo {
 			throws ObjectNotFoundException, CantDoThatException;
 
 	public void setReportFieldIndex(Connection conn, SimpleReportInfo report,
-			ReportFieldInfo field, int newindex, HttpServletRequest request) throws SQLException, CodingErrorException,
-			ObjectNotFoundException, CantDoThatException;
+			ReportFieldInfo field, int newindex, HttpServletRequest request) throws SQLException,
+			CodingErrorException, ObjectNotFoundException, CantDoThatException;
 
 	/**
 	 * Add a foreign key database relation between tables
@@ -332,7 +334,8 @@ public interface DatabaseInfo {
 	public void returnCalculationInReportToMemory(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportCalcFieldInfo calculationField,
 			String oldCalculationName, String oldCalculationDefn, DatabaseFieldType oldDbFieldType)
-			throws DisallowedException, CodingErrorException, CantDoThatException, ObjectNotFoundException;
+			throws DisallowedException, CodingErrorException, CantDoThatException,
+			ObjectNotFoundException;
 
 	/**
 	 * Create a filter object, add it to the report, update the database view
@@ -396,8 +399,8 @@ public interface DatabaseInfo {
 	 *             the report's parent table
 	 */
 	public void addGroupingToSummaryReport(HttpServletRequest request,
-			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer) throws DisallowedException, CantDoThatException,
-			ObjectNotFoundException, SQLException;
+			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer)
+			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException;
 
 	/**
 	 * Remove groupings on groupingReportField from the summary of its parent
@@ -421,6 +424,14 @@ public interface DatabaseInfo {
 	public void removeFunctionFromSummaryReport(HttpServletRequest request, BaseReportInfo report,
 			String internalAggregateName) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException, SQLException;
+
+	/**
+	 * Makes a copy of the current summary report and saves it in the collection
+	 * of named summary reports for the report. The current summary report will
+	 * then be reset - all groupings and calculations removed.
+	 */
+	public void saveSummaryReport(HttpServletRequest request, BaseReportInfo report,
+			String summaryTitle) throws DisallowedException, CantDoThatException, ObjectNotFoundException;
 
 	/**
 	 * Returns the TableInfo object that has the required internal name

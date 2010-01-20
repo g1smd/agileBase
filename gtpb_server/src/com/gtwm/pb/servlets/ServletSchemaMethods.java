@@ -837,8 +837,8 @@ public class ServletSchemaMethods {
 				if (newField != null) {
 					table.removeField(newField);
 					if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
-						ReportFieldInfo reportField = table.getDefaultReport()
-								.getReportField(newField.getInternalFieldName());
+						ReportFieldInfo reportField = table.getDefaultReport().getReportField(
+								newField.getInternalFieldName());
 						table.getDefaultReport().removeField(reportField);
 					}
 				}
@@ -850,8 +850,8 @@ public class ServletSchemaMethods {
 				if (newField != null) {
 					table.removeField(newField);
 					if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
-						ReportFieldInfo reportField = table.getDefaultReport()
-								.getReportField(newField.getInternalFieldName());
+						ReportFieldInfo reportField = table.getDefaultReport().getReportField(
+								newField.getInternalFieldName());
 						table.getDefaultReport().removeField(reportField);
 					}
 				}
@@ -863,8 +863,8 @@ public class ServletSchemaMethods {
 				if (newField != null) {
 					table.removeField(newField);
 					if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
-						ReportFieldInfo reportField = table.getDefaultReport()
-								.getReportField(newField.getInternalFieldName());
+						ReportFieldInfo reportField = table.getDefaultReport().getReportField(
+								newField.getInternalFieldName());
 						table.getDefaultReport().removeField(reportField);
 					}
 				}
@@ -941,8 +941,8 @@ public class ServletSchemaMethods {
 			if (newField != null) {
 				table.removeField(newField);
 				if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
-					ReportFieldInfo reportField = table.getDefaultReport()
-							.getReportField(newField.getInternalFieldName());
+					ReportFieldInfo reportField = table.getDefaultReport().getReportField(
+							newField.getInternalFieldName());
 					table.getDefaultReport().removeField(reportField);
 				}
 			}
@@ -952,8 +952,8 @@ public class ServletSchemaMethods {
 			if (newField != null) {
 				table.removeField(newField);
 				if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
-					ReportFieldInfo reportField = table.getDefaultReport()
-							.getReportField(newField.getInternalFieldName());
+					ReportFieldInfo reportField = table.getDefaultReport().getReportField(
+							newField.getInternalFieldName());
 					table.getDefaultReport().removeField(reportField);
 				}
 			}
@@ -964,8 +964,8 @@ public class ServletSchemaMethods {
 			if (newField != null) {
 				table.removeField(newField);
 				if (table.getDefaultReport().getReportBaseFields().contains(newField)) {
-					ReportFieldInfo reportField = table.getDefaultReport()
-							.getReportField(newField.getInternalFieldName());
+					ReportFieldInfo reportField = table.getDefaultReport().getReportField(
+							newField.getInternalFieldName());
 					table.getDefaultReport().removeField(reportField);
 				}
 			}
@@ -992,8 +992,7 @@ public class ServletSchemaMethods {
 		ReportFieldInfo reportField = null;
 		if (!field.getFieldCategory().equals(FieldCategory.SEPARATOR)) {
 			// Separator fields not included in default report
-			reportField = tableToRemoveFrom.getDefaultReport().getReportField(
-					internalFieldName);
+			reportField = tableToRemoveFrom.getDefaultReport().getReportField(internalFieldName);
 		}
 		// begin updating model and persisting changes
 		Connection conn = null;
@@ -1219,8 +1218,8 @@ public class ServletSchemaMethods {
 			// restore old field index
 			table.setFieldIndex(oldFieldIndex, field);
 			if (table.getDefaultReport().getReportBaseFields().contains(field)) {
-				ReportFieldInfo reportField = table.getDefaultReport()
-						.getReportField(internalFieldName);
+				ReportFieldInfo reportField = table.getDefaultReport().getReportField(
+						internalFieldName);
 				table.getDefaultReport().setFieldIndex(oldFieldIndex, reportField);
 			}
 			throw new CantDoThatException("Setting field index failed", hex);
@@ -1229,8 +1228,8 @@ public class ServletSchemaMethods {
 			// restore old field index
 			table.setFieldIndex(oldFieldIndex, field);
 			if (table.getDefaultReport().getReportBaseFields().contains(field)) {
-				ReportFieldInfo reportField = table.getDefaultReport()
-						.getReportField(internalFieldName);
+				ReportFieldInfo reportField = table.getDefaultReport().getReportField(
+						internalFieldName);
 				table.getDefaultReport().setFieldIndex(oldFieldIndex, reportField);
 			}
 			throw new CantDoThatException("Setting field index failed", pex);
@@ -1282,8 +1281,7 @@ public class ServletSchemaMethods {
 				sourceTable = databaseDefn.findTableContainingReport(request, internalReportName);
 				if (!sourceTable.getDefaultReport().getInternalReportName().equals(
 						internalReportName)) {
-					sourceReport = (SimpleReportInfo) sourceTable
-							.getReport(internalReportName);
+					sourceReport = (SimpleReportInfo) sourceTable.getReport(internalReportName);
 				}
 			}
 		}
@@ -1909,8 +1907,7 @@ public class ServletSchemaMethods {
 		if (!rightInternalReportName.equals("")) {
 			TableInfo rightTable = databaseDefn.findTableContainingReport(request,
 					rightInternalReportName);
-			BaseReportInfo rightReport = rightTable
-					.getReport(rightInternalReportName);
+			BaseReportInfo rightReport = rightTable.getReport(rightInternalReportName);
 			rightReportField = rightReport.getReportField(rightInternalFieldName);
 		} else if (!rightInternalTableName.equals("")) {
 			TableInfo rightTable = databaseDefn.getTableByInternalName(request,
@@ -2093,8 +2090,7 @@ public class ServletSchemaMethods {
 			}
 			internalFieldName = internalFieldName.replaceAll("\\_.*$", "");
 		}
-		ReportFieldInfo groupingReportField = report
-				.getReportField(internalFieldName);
+		ReportFieldInfo groupingReportField = report.getReportField(internalFieldName);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			databaseDefn.addGroupingToSummaryReport(request, groupingReportField, groupingModifer);
@@ -2170,13 +2166,11 @@ public class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' and 'function' parameters are required to add an aggregate function to a report summary");
 		}
-		ReportFieldInfo functionReportField = report
-				.getReportField(internalFieldName);
+		ReportFieldInfo functionReportField = report.getReportField(internalFieldName);
 		ReportFieldInfo secondaryFunctionReportField = null;
 		if (secondaryInternalFieldName != null) {
 			if (!secondaryInternalFieldName.equals("")) {
-				secondaryFunctionReportField = report
-						.getReportField(secondaryInternalFieldName);
+				secondaryFunctionReportField = report.getReportField(secondaryInternalFieldName);
 			}
 		}
 		AggregateFunction function = AggregateFunction.valueOf(functionName.toUpperCase());
@@ -2255,6 +2249,38 @@ public class ServletSchemaMethods {
 			rollbackConnections(null);
 			functionReportField.getParentReport().getReportSummary().addFunction(aggregateToRemove);
 			throw new CantDoThatException("summary function removal failed", sqlex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+
+	/**
+	 * Takes the existing 'scratchpad' summary report, gives it a name
+	 * (specified by the user) and saves it to a permanent collection of
+	 * summaries in the report. Then the scratchpad summary is blanked
+	 */
+	public synchronized static void saveSummaryReport(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
+			MissingParametersException, ObjectNotFoundException, CantDoThatException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, ServletUtilMethods.USE_SESSION);
+		String summaryTitle = request.getParameter("summarytitle");
+		if (summaryTitle == null) {
+			throw new MissingParametersException(
+					"'summarytitle' parameter is required to save a report summary");
+		}
+		try {
+			HibernateUtil.startHibernateTransaction();
+			databaseDefn.saveSummaryReport(request, report, summaryTitle);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			// Could have some code to roll back memory state here
+			// but will only add it if it becomes necessary
+			throw new CantDoThatException("summary saving failed", hex);
+		} catch (PortalBaseException pex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("summary saving failed", pex);
 		} finally {
 			HibernateUtil.closeSession();
 		}

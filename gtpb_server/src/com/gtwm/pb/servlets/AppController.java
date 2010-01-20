@@ -430,6 +430,9 @@ public class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.removeFunctionFromSummaryReport(sessionData, request,
 							databaseDefn);
 					break;
+				case SAVE_SUMMARY_REPORT:
+					ServletSchemaMethods.saveSummaryReport(sessionData, request, databaseDefn);
+					break;
 				case SAVE_NEW_RECORD:
 					ServletDataMethods.saveRecord(sessionData, request, true, databaseDefn,
 							multipartItems);
@@ -529,8 +532,6 @@ public class AppController extends VelocityViewServlet {
 	 * 2) Performs any actions requested by the UI, if any
 	 * 
 	 * 3) Parses and returns the template requested by the UI
-	 * 
-	 * TODO: handle user input errors gracefully
 	 */
 	public Template handleRequest(HttpServletRequest request, HttpServletResponse response,
 			Context context) throws ServletException, ObjectNotFoundException {

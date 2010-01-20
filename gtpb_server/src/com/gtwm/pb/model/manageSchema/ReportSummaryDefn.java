@@ -64,6 +64,11 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	public ReportSummaryDefn(BaseReportInfo report) {
 		this.setReport(report);
 	}
+	
+	public ReportSummaryDefn(BaseReportInfo report, String title) {
+		this.setReport(report);
+		this.setTitle(title);
+	}
 
 	@Id
 	@GeneratedValue
@@ -83,7 +88,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 		return this.title;
 	}
 	
-	public void setTitle(String title) {
+	private void setTitle(String title) {
 		this.title = title;
 	}
 

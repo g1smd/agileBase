@@ -153,7 +153,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		// Start first dashboard population immediately
 		this.initialDashboardPopulatorThread = new Thread(dashboardPopulator);
 		this.initialDashboardPopulatorThread.start();
-		// and schedule regular dashboard population once a day at a time of low activity
+		// and schedule regular dashboard population once a day at a time of low
+		// activity
 		int hourNow = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 		int initialDelay = 24 + AppProperties.lowActivityHour - hourNow;
 		final ScheduledExecutorService dashboardScheduler = Executors
@@ -405,7 +406,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, HttpServletRequest request) throws ObjectNotFoundException {
+	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables,
+			HttpServletRequest request) throws ObjectNotFoundException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		Set<TableInfo> tables = company.getTables();
 		for (TableInfo table : tables) {
@@ -424,7 +426,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public void getDirectlyDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, HttpServletRequest request) throws ObjectNotFoundException {
+	public void getDirectlyDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables,
+			HttpServletRequest request) throws ObjectNotFoundException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		Set<TableInfo> tables = company.getTables();
 		for (TableInfo table : tables) {
@@ -728,8 +731,8 @@ public class DatabaseDefn implements DatabaseInfo {
 	 * views are recreated.
 	 */
 	private void updateViewDbActionWithDropAndCreateDependencies(Connection conn,
-			BaseReportInfo report, HttpServletRequest request) throws SQLException, ObjectNotFoundException,
-			CodingErrorException, CantDoThatException {
+			BaseReportInfo report, HttpServletRequest request) throws SQLException,
+			ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		Savepoint savepoint = null;
 		try {
 			savepoint = conn.setSavepoint("dropAndCreateDependenciesSavepoint");
@@ -760,7 +763,8 @@ public class DatabaseDefn implements DatabaseInfo {
 			// Recreate reports...
 			Collections.reverse(deletedReports);
 			for (String reportInternalName : deletedReports) {
-				TableInfo table = this.findTableContainingReportWithoutChecks(reportInternalName, request);
+				TableInfo table = this.findTableContainingReportWithoutChecks(reportInternalName,
+						request);
 				HibernateUtil.activateObject(table);
 				BaseReportInfo reportToRecreate = table.getReport(reportInternalName);
 				String CreateViewSQL = "CREATE VIEW " + reportInternalName + " AS ("
@@ -808,8 +812,9 @@ public class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Create the database VIEW for the report
 	 */
-	private void updateViewDbAction(Connection conn, BaseReportInfo report, HttpServletRequest request) throws SQLException,
-			CantDoThatException, CodingErrorException, ObjectNotFoundException {
+	private void updateViewDbAction(Connection conn, BaseReportInfo report,
+			HttpServletRequest request) throws SQLException, CantDoThatException,
+			CodingErrorException, ObjectNotFoundException {
 		boolean viewExists = viewExistsInPostgres(conn, report);
 		boolean createOrReplaceWorked = updateViewDbActionWithCreateOrReplace(conn, report,
 				viewExists);
@@ -834,8 +839,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		if (reportToRemove.equals(parentTable.getDefaultReport())) {
 			throw new CantDoThatException("Can't remove the default report");
 		}
-		Set<BaseReportInfo> dependentReports = this
-				.getDependentReports((SimpleReportInfo) reportToRemove, request);
+		Set<BaseReportInfo> dependentReports = this.getDependentReports(
+				(SimpleReportInfo) reportToRemove, request);
 		if (dependentReports.size() > 0) {
 			throw new CantDoThatException("Reports " + dependentReports + " depend on this one");
 		}
@@ -1231,8 +1236,9 @@ public class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Adds field to relational database, object database and memory.
 	 */
-	private synchronized void addField(Connection conn, TableInfo tableToAddTo, BaseField fieldToAdd, HttpServletRequest request)
-			throws SQLException, CantDoThatException, ObjectNotFoundException, CodingErrorException {
+	private synchronized void addField(Connection conn, TableInfo tableToAddTo,
+			BaseField fieldToAdd, HttpServletRequest request) throws SQLException,
+			CantDoThatException, ObjectNotFoundException, CodingErrorException {
 		HibernateUtil.activateObject(tableToAddTo);
 		HibernateUtil.currentSession().save(fieldToAdd);
 		tableToAddTo.addField(fieldToAdd);
@@ -1444,8 +1450,8 @@ public class DatabaseDefn implements DatabaseInfo {
 	 *             Thrown if the field shouldn't be removed from it's parent
 	 *             table, with a message explaining why not
 	 */
-	private synchronized void removeFieldChecks(BaseField field, HttpServletRequest request) throws CantDoThatException,
-			CodingErrorException, ObjectNotFoundException {
+	private synchronized void removeFieldChecks(BaseField field, HttpServletRequest request)
+			throws CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		// Don't allow deletion of the primary key
 		if (field.equals(field.getTableContainingField().getPrimaryKey())) {
 			throw new CantDoThatException("Can't delete the primary key field");
@@ -1634,8 +1640,8 @@ public class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public synchronized void setReportFieldIndex(Connection conn, SimpleReportInfo report,
-			ReportFieldInfo field, int newindex, HttpServletRequest request) throws SQLException, CodingErrorException,
-			ObjectNotFoundException, CantDoThatException {
+			ReportFieldInfo field, int newindex, HttpServletRequest request) throws SQLException,
+			CodingErrorException, ObjectNotFoundException, CantDoThatException {
 		HibernateUtil.activateObject(report);
 		report.setFieldIndex(newindex, field);
 		this.updateViewDbAction(conn, report, request);
@@ -1749,18 +1755,18 @@ public class DatabaseDefn implements DatabaseInfo {
 		// Actually, if/when we add report privileges this will be obsolete
 		// anyway
 		Map<TableInfo, Set<BaseReportInfo>> availableDataStores = new HashMap<TableInfo, Set<BaseReportInfo>>();
-		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
+				.getTables();
 		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
 		for (TableInfo testTable : companyTables) {
-			if (authenticator.loggedInUserAllowedTo(request,
-					PrivilegeType.VIEW_TABLE_DATA, testTable)) {
+			if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
+					testTable)) {
 				SortedSet<BaseReportInfo> allTableReports = testTable.getReports();
 				// Strip down to the set of reports the user has privileges to
 				// view
 				SortedSet<BaseReportInfo> viewableReports = new TreeSet<BaseReportInfo>();
 				for (BaseReportInfo report : allTableReports) {
-					if (authenticator.loggedInUserAllowedToViewReport(
-							request, report)) {
+					if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
 						viewableReports.add(report);
 					}
 				}
@@ -1794,12 +1800,12 @@ public class DatabaseDefn implements DatabaseInfo {
 	 * Return a set of all reports that join to this one, i.e. those that would
 	 * have to be modified before dropping the given report
 	 */
-	private SortedSet<BaseReportInfo> getDependentReports(SimpleReportInfo report, HttpServletRequest request)
-			throws CantDoThatException, ObjectNotFoundException {
+	private SortedSet<BaseReportInfo> getDependentReports(SimpleReportInfo report,
+			HttpServletRequest request) throws CantDoThatException, ObjectNotFoundException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		Set<TableInfo> tables = company.getTables();
 		SortedSet<BaseReportInfo> reportsUsedIn = new TreeSet<BaseReportInfo>();
-		for (TableInfo table :tables) {
+		for (TableInfo table : tables) {
 			for (BaseReportInfo testReport : table.getReports()) {
 				// default reports won't have joins
 				// and don't test for joins to self
@@ -1906,7 +1912,8 @@ public class DatabaseDefn implements DatabaseInfo {
 	public synchronized void returnCalculationInReportToMemory(HttpServletRequest request,
 			Connection conn, SimpleReportInfo report, ReportCalcFieldInfo calculationField,
 			String oldCalculationName, String oldCalculationDefn, DatabaseFieldType oldDbFieldType)
-			throws DisallowedException, CodingErrorException, CantDoThatException, ObjectNotFoundException {
+			throws DisallowedException, CodingErrorException, CantDoThatException,
+			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
@@ -1918,8 +1925,9 @@ public class DatabaseDefn implements DatabaseInfo {
 		((ReportCalcFieldDefn) calculationField).setBaseFieldName(oldCalculationName);
 	}
 
-	private synchronized void removeFieldFromReportChecks(ReportFieldInfo reportField, HttpServletRequest request)
-			throws CantDoThatException, CodingErrorException, ObjectNotFoundException {
+	private synchronized void removeFieldFromReportChecks(ReportFieldInfo reportField,
+			HttpServletRequest request) throws CantDoThatException, CodingErrorException,
+			ObjectNotFoundException {
 		// check the field isn't used in its parent report's own summary
 		ReportSummaryInfo reportSummary = reportField.getParentReport().getReportSummary();
 		Set<ReportSummaryAggregateInfo> aggFns = reportSummary.getAggregateFunctions();
@@ -2131,9 +2139,45 @@ public class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
+	public synchronized void saveSummaryReport(HttpServletRequest request, BaseReportInfo report,
+			String summaryTitle) throws DisallowedException, CantDoThatException,
+			ObjectNotFoundException {
+		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+		}
+		ReportSummaryInfo templateSummary = report.getReportSummary();
+		HibernateUtil.activateObject(templateSummary);
+		ReportSummaryInfo savedSummary = new ReportSummaryDefn(report, summaryTitle);
+		HibernateUtil.currentSession().save(savedSummary);
+		Set<ReportSummaryAggregateInfo> aggregates = templateSummary.getAggregateFunctions();
+		// Move aggregates from template summary to new summary
+		for (ReportSummaryAggregateInfo aggregate : aggregates) {
+			savedSummary.addFunction(aggregate);
+			ReportSummaryAggregateInfo removedFunction = templateSummary.removeFunction(aggregate
+					.getInternalAggregateName());
+		}
+		// Move groupings from template summary to new summary
+		Set<ReportSummaryGroupingInfo> groupings = templateSummary.getGroupings();
+		for (ReportSummaryGroupingInfo grouping : groupings) {
+			savedSummary.addGrouping(grouping.getGroupingReportField(), grouping
+					.getGroupingModifier());
+			ReportSummaryGroupingInfo removedGrouping = templateSummary.removeGrouping(grouping
+					.getGroupingReportField());
+		}
+		report.saveReportSummary(savedSummary);
+		this.dataManagement.logLastSchemaChangeTime(request);
+		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
+		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		usageLogger.logReportSchemaChange(user, report,
+				AppAction.SAVE_SUMMARY_REPORT, "title: " + summaryTitle);
+		UsageLogger.startLoggingThread(usageLogger);
+	}
+
 	public synchronized TableInfo getTableByName(HttpServletRequest request, String tableName)
 			throws ObjectNotFoundException {
-		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
+				.getTables();
 		for (TableInfo table : companyTables) {
 			if (table.getTableName().equals(tableName)) {
 				if (this.userAllowedToAccessTable(request, table)) {
@@ -2171,7 +2215,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		if (cachedTable != null) {
 			return cachedTable;
 		}
-		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
+				.getTables();
 		for (TableInfo table : companyTables) {
 			if (table.getInternalTableName().equals(internalTableName)) {
 				// to retrieve a table, user either has to have view privileges
@@ -2192,12 +2237,13 @@ public class DatabaseDefn implements DatabaseInfo {
 	public synchronized TableInfo findTableContainingReport(HttpServletRequest request,
 			String reportInternalName) throws ObjectNotFoundException, DisallowedException {
 		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
-		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
+				.getTables();
 		for (TableInfo table : companyTables) {
 			for (BaseReportInfo report : table.getReports()) {
 				if (report.getInternalReportName().equals(reportInternalName)) {
-					if (authenticator.loggedInUserAllowedTo(request,
-							PrivilegeType.VIEW_TABLE_DATA, table)) {
+					if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
+							table)) {
 						return table;
 					} else {
 						throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
@@ -2208,9 +2254,10 @@ public class DatabaseDefn implements DatabaseInfo {
 		throw new ObjectNotFoundException("Report '" + reportInternalName + "' is not in any table");
 	}
 
-	private synchronized TableInfo findTableContainingReportWithoutChecks(String reportInternalName, HttpServletRequest request)
-			throws ObjectNotFoundException {
-		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+	private synchronized TableInfo findTableContainingReportWithoutChecks(
+			String reportInternalName, HttpServletRequest request) throws ObjectNotFoundException {
+		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
+				.getTables();
 		for (TableInfo table : companyTables) {
 			for (BaseReportInfo report : table.getReports()) {
 				if (report.getInternalReportName().equals(reportInternalName)) {
@@ -2244,14 +2291,14 @@ public class DatabaseDefn implements DatabaseInfo {
 			String internalFieldName) throws ObjectNotFoundException, DisallowedException,
 			CodingErrorException {
 		// look through report fields, some of which are calculations
-		Set<TableInfo> companyTables =this.getAuthManager().getCompanyForLoggedInUser(request).getTables();
+		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
+				.getTables();
 		AuthenticatorInfo authenticator = this.authManager.getAuthenticator();
 		for (TableInfo table : companyTables) {
 			for (BaseReportInfo report : table.getReports()) {
 				for (ReportFieldInfo reportField : report.getReportFields()) {
 					if (reportField.getInternalFieldName().equals(internalFieldName)) {
-						if (authenticator.loggedInUserAllowedToViewReport(
-								request, report)) {
+						if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
 							return reportField;
 						} else {
 							// Not strictly the right exception, but the best we
@@ -2499,7 +2546,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	public static final String PRIMARY_KEY_DESCRIPTION = "Unique record identifier";
 
 	private ScheduledFuture<?> scheduledDashboardPopulate = null;
-	
+
 	private Thread initialDashboardPopulatorThread = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(DatabaseDefn.class);

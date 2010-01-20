@@ -22,14 +22,16 @@ import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.util.Naming;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -69,12 +71,12 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	public String getReportDescription() {
 		return this.reportDesc;
 	}
-	
+
 	@ManyToOne(targetEntity = Module.class)
 	public ModuleInfo getModule() {
 		return this.module;
 	}
-	
+
 	public void setModule(ModuleInfo module) {
 		this.module = module;
 	}
@@ -91,9 +93,6 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		this.internalReportName = internalReportName;
 	}
 
-	// public abstract Set<ReportFieldInfo> getReportFields();
-	// public abstract Set<BaseField> getReportBaseFields();
-	// public abstract ReportFieldInfo getReportField(String internalFieldName);
 	@ManyToOne(targetEntity = TableDefn.class)
 	// Other side of table.getReports()
 	// @OneToOne(mappedBy="defaultReportDirect", targetEntity=TableDefn.class)
@@ -114,46 +113,52 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	protected void setReportSummary(ReportSummaryInfo reportSummary) {
 		this.reportSummary = reportSummary;
 	}
-	
+
 	public Set<ReportSummaryInfo> getSavedReportSummaries() {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.unmodifiableSet(new LinkedHashSet<ReportSummaryInfo>(this
+				.getSavedReportSummariesDirect()));
+	}
+
+	@OneToMany(mappedBy = "report", targetEntity = ReportSummaryDefn.class, cascade = CascadeType.ALL)
+	public Set<ReportSummaryInfo> getSavedReportSummariesDirect() {
+		return this.savedReportSummaries;
+	}
+
+	public void setSavedReportSummariesDirect(Set<ReportSummaryInfo> savedReportSummaries) {
+		this.savedReportSummaries = savedReportSummaries;
 	}
 
 	public void removeSavedReportSummary(ReportSummaryInfo reportSummary) {
-		// TODO Auto-generated method stub
-		
+		this.getSavedReportSummariesDirect().remove(reportSummary);
 	}
 
 	public void saveReportSummary(ReportSummaryInfo reportSummary) {
-		// TODO Auto-generated method stub
-		
+		this.getSavedReportSummariesDirect().add(reportSummary);
 	}
 
-	
 	@Transient
 	public int getRowCount() {
 		return this.rowCount;
 	}
-	
+
 	public void setRowCount(int rowCount) {
 		this.rowCount = rowCount;
 	}
-	
+
 	@Transient
 	public boolean isRowCountEstimate() {
 		return this.rowCountIsEstimate;
 	}
-	
+
 	@Transient
 	public void setRowCountEstimate(boolean rowCountIsEstimate) {
 		this.rowCountIsEstimate = rowCountIsEstimate;
 	}
-	
+
 	/**
-	 * Provide a natural sort order by report name case insensitively. Use module and table
-	 * name in the comparison as well as we may make a collection of reports
-	 * from different modules/tables
+	 * Provide a natural sort order by report name case insensitively. Use
+	 * module and table in the comparison as well as we may make a collection of
+	 * reports from different modules/tables
 	 */
 	public int compareTo(BaseReportInfo anotherReportDefn) {
 		if (this == anotherReportDefn) {
@@ -198,10 +203,12 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		return this.getInternalReportName().hashCode();
 	}
 
+	private Set<ReportSummaryInfo> savedReportSummaries = new LinkedHashSet<ReportSummaryInfo>(1);
+
 	private String reportName = "";
 
 	private String reportDesc = "";
-	
+
 	private ModuleInfo module;
 
 	private String internalReportName = "";
@@ -209,8 +216,8 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	private TableInfo parentTable;
 
 	private ReportSummaryInfo reportSummary = null;
-	
+
 	private int rowCount = 0;
-	
+
 	private boolean rowCountIsEstimate = false;
 }

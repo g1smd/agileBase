@@ -642,7 +642,7 @@ public class DataManagement implements DataManagementInfo {
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		// Log everything apart from hidden (auto set) fields
-		Map<BaseField, BaseValue> dataToLog = new LinkedHashMap<BaseField, BaseValue>(dataToSave.size());
+		Map<BaseField, BaseValue> dataToLog = new LinkedHashMap<BaseField, BaseValue>();
 		for (Map.Entry<BaseField, BaseValue> entrySet : dataToSave.entrySet()) {
 			BaseField field = entrySet.getKey();
 			if (!field.getHidden()) {

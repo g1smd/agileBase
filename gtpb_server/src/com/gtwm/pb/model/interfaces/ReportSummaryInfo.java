@@ -125,5 +125,5 @@ public interface ReportSummaryInfo {
 	 * @return The report that is being summarized. Each report maps one to one
 	 *         to a summary
 	 */
-	public BaseReportInfo getReport();
+	public BaseReportInfo getReport();	
 }
