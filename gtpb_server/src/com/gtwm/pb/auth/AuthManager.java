@@ -23,6 +23,7 @@ import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
+import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
 import com.gtwm.pb.model.interfaces.RoleObjectPrivilegeInfo;
@@ -176,6 +177,18 @@ public class AuthManager implements AuthManagerInfo {
 			logger.info("......Report summary: " + reportSummary);
 			for (ReportSummaryGroupingInfo grouping : reportSummary.getGroupings()) {
 				logger.info(".........Grouping details: " + grouping + " - " + grouping.getCreationTime() + " " + grouping.getGroupingModifier() + " " + grouping.getGroupingReportField());
+			}
+			for (ReportSummaryAggregateInfo aggregate : reportSummary.getAggregateFunctions()) {
+				logger.info(".........Aggregate details: " + aggregate);
+			}
+			for (ReportSummaryInfo savedReportSummary : report.getSavedReportSummaries()) {
+				logger.info("......Report summary: " + savedReportSummary);
+				for (ReportSummaryGroupingInfo grouping : savedReportSummary.getGroupings()) {
+					logger.info(".........Grouping details: " + grouping + " - " + grouping.getCreationTime() + " " + grouping.getGroupingModifier() + " " + grouping.getGroupingReportField());
+				}
+				for (ReportSummaryAggregateInfo aggregate : savedReportSummary.getAggregateFunctions()) {
+					logger.info(".........Aggregate details: " + aggregate);
+				}
 			}
 		}
 		// evict the table
