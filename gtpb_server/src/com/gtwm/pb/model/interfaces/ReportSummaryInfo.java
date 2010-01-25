@@ -82,6 +82,11 @@ public interface ReportSummaryInfo {
 	public String getTitle();
 	
 	/**
+	 * Return a unique ID for the summary
+	 */
+	public long getId();
+	
+	/**
 	 * Return a prepared statement that is for getting the summary (aggregate)
 	 * data for a report
 	 * 

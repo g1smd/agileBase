@@ -38,7 +38,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -73,11 +72,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 
 	@Id
 	@GeneratedValue
-	/*
-	 * Hibernate needs an ID for a persistent class - this isn't actually used
-	 * by the app otherwise
-	 */
-	private long getId() {
+	public long getId() {
 		return this.id;
 	}
 
