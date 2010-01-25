@@ -72,7 +72,7 @@ function fShowAddAgg() {
 }
 </script>
 <a href="#" onclick="fShowAddGroup();" id="addGroupLink">add...</a>
-<span id="addGroup" style="display:none"><br>
+<div id="addGroup" style="display:none"><br>
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_summary_report" value="1" />
   						            <select name="internalfieldname">
@@ -101,7 +101,7 @@ function fShowAddAgg() {
 							              #end
 					            	</select>
 									<input type="submit" value="add group">
-</span>
+</div>
 </form>
 <br>
 <form name=addaggregate method=post action="/portalBase/AppController.servlet">
@@ -116,7 +116,7 @@ function fShowAddAgg() {
   No functions 
 #end
 <a href="#" onclick="fShowAddAgg();" id="addAggLink">add...</a>
-<span id="addAgg" style="display:none"><br>
+<div id="addAgg" style="display:none"><br>
 					            	<input type="hidden" name="return" value="$return_template" />
 						            <input type="hidden" name="add_function_to_summary_report" value="1" />
 						            <select name="function" id="aggregatefunction">
@@ -135,7 +135,7 @@ function fShowAddAgg() {
 							              #end
 						            </select>
 									<input type="submit" value="add calculation">
-</span>
+</div>
 </form><br>
 <form name="savechart">
 	3. Choose title: 
