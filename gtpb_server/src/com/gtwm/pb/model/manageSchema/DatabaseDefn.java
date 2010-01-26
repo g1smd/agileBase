@@ -2056,7 +2056,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
 		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report, blankFilterValues);
+				company, report.getReportSummary(), blankFilterValues);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
@@ -2081,7 +2081,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
 		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report, blankFilterValues);
+				company, report.getReportSummary(), blankFilterValues);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
@@ -2111,7 +2111,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
 		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report, blankFilterValues);
+				company, report.getReportSummary(), blankFilterValues);
 	}
 
 	public synchronized void removeFunctionFromSummaryReport(HttpServletRequest request,
@@ -2129,7 +2129,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
 		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report, blankFilterValues);
+				company, report.getReportSummary(), blankFilterValues);
 		HibernateUtil.currentSession().delete(removedFunction);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
@@ -2139,7 +2139,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void saveSummaryReport(HttpServletRequest request, BaseReportInfo report,
+	public synchronized void saveReportSummary(HttpServletRequest request, BaseReportInfo report,
 			String summaryTitle) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2147,10 +2147,14 @@ public class DatabaseDefn implements DatabaseInfo {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		ReportSummaryInfo templateSummary = report.getReportSummary();
+		Set<ReportSummaryAggregateInfo> aggregates = templateSummary.getAggregateFunctions();
+		Set<ReportSummaryGroupingInfo> groupings = templateSummary.getGroupings();
+		if (aggregates.size() == 0) {
+			throw new CantDoThatException("To save a report summary, it must contain one or more functions");
+		}
 		HibernateUtil.activateObject(templateSummary);
 		ReportSummaryInfo savedSummary = new ReportSummaryDefn(report, summaryTitle);
 		HibernateUtil.currentSession().save(savedSummary);
-		Set<ReportSummaryAggregateInfo> aggregates = templateSummary.getAggregateFunctions();
 		// Move aggregates from template summary to new summary
 		for (ReportSummaryAggregateInfo aggregate : aggregates) {
 			savedSummary.addFunction(aggregate);
@@ -2158,7 +2162,6 @@ public class DatabaseDefn implements DatabaseInfo {
 					.getInternalAggregateName());
 		}
 		// Move groupings from template summary to new summary
-		Set<ReportSummaryGroupingInfo> groupings = templateSummary.getGroupings();
 		for (ReportSummaryGroupingInfo grouping : groupings) {
 			savedSummary.addGrouping(grouping.getGroupingReportField(), grouping
 					.getGroupingModifier());
@@ -2170,7 +2173,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		usageLogger.logReportSchemaChange(user, report,
-				AppAction.SAVE_SUMMARY_REPORT, "title: " + summaryTitle);
+				AppAction.SAVE_REPORT_SUMMARY, "title: " + summaryTitle);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 

@@ -2271,7 +2271,7 @@ public class ServletSchemaMethods {
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
-			databaseDefn.saveSummaryReport(request, report, summaryTitle);
+			databaseDefn.saveReportSummary(request, report, summaryTitle);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);

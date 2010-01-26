@@ -27,8 +27,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
 #set($numCols = 1 + $groupings.size() + $aggregateFunctions.size())
-#set($reportSummaryData = $view.getReportSummaryData($report))
-#set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
 #set($loggedInUserAllowedToEdit = $view.loggedInUserAllowedTo("EDIT_TABLE_DATA", $report.getParentTable()))
 #set($showManageUi = false)
 ##$printout set in gui/reports_and_tables/report_data_print.vm
@@ -40,8 +38,21 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #else
   #set($return_template="gui/reports_and_tables/pane3")
 #end
-
-#set($chart_id = "chart_$reportSummary.getId()")
+## Saved charts
+#set($savedSummaries = $report.getSavedReportSummaries())
+<div id="saved_charts" #if($savedCharts.size() > 1) class="two_cols">
+#foreach($reportSummary in $savedSummaries)
+  #set($reportSummaryData = $view.getReportSummaryData($reportSummary))
+  #set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
+  #parse('gui/reports_and_tabls/tabs/summary_chart.vm')
+#end
+</div>
+## Reset to the default report summary - the chart being edited
+#set($reportSummary = $report.getReportSummary())
+#set($reportSummaryData = $view.getReportSummaryData($reportSummary))
+#set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
+#set($groupings = $reportSummary.getGroupings())
+#set($aggregateFunctions = $reportSummary.getAggregateFunctions())
 #if($showManageUi)
 <div class="chart_controls">
 <form name=addgrouping method=post action="/portalBase/AppController.servlet">
@@ -139,105 +150,15 @@ function fShowAddAgg() {
 </form><br>
 <form name="savechart">
 	3. Choose title: 
-	<input type="text" name="charttitle" />
+	<input type="text" name="summarytitle" />
+	<input type="hidden" name="return" value="$return_template" />
+	<input type="hidden" name="save_report_summary" value="true" />
 	<input type="submit" value="save chart" />
 </form>
 </div> ## End chart_controls div
 #end
-<div id="$chart_id" style="width:100%; background-color:#f4f4f4;"></div>
-#if($reportSummaryRows.size() > 0)
-#set($chartTitle = "$report - $viewTools.joinWith($aggregateFunctions,', ')")
-#set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
-#set($xAxisCategories = [])
-#foreach($summaryRow in $reportSummaryRows)
-  #set($xAxisCategory = "")
-  #foreach($grouping in $groupings)
-	#if($grouping.equals($groupings.first()))
-	  #set($xAxisCategory = $summaryRow.getGroupingValue($grouping))
-	#else
-	  #set($xAxisCategory = "$xAxisCategory | $summaryRow.getGroupingValue($grouping)")
-	#end
-  #end
-  #set($success = $xAxisCategories.add("'$viewTools.escape($xAxisCategory)'"))
-#end
-#set($series = [])
-#set($seriesString = "")
-#foreach($aggregateFunction in $aggregateFunctions)
-  #set($seriesName = $aggregateFunction.toString().toLowerCase())
-  #if(!$dashboard)
-    ## Add grand total to series
-	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
-	  #set($grandTotal = "$mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction))")
-	  #if($grandTotal.endsWith(".00"))
-		#set($endPos = $grandTotal.length() - 3)
-		#set($grandTotal = $grandTotal.substring(0, $endPos))
-	  #elseif($grandTotal.endsWith(".0"))
-		#set($endPos = $grandTotal.length() - 2)
-		#set($grandTotal = $grandTotal.substring(0, $endPos))
-	  #end
-	  #set($seriesName = "$seriesName = $grandTotal")
-	#end
-  #end
-  #set($seriesString = "$seriesString { name:'$seriesName', data: ")
-  #set($seriesData = [])
-  #foreach($summaryRow in $reportSummaryRows)
-	#set($success = $seriesData.add($summaryRow.getAggregateValue($aggregateFunction)))
-  #end
-  #set($seriesString = "$seriesString $seriesData }")
-  #if(($velocityCount + 1) == $aggregateFunctions.size())
-	#set($seriesString = "$seriesString, ")
-  #end
-#end
-#set($success = $series.add($seriesString))
-#set($height=200)
-#if($xAxisCategories.size() > 10)
-  #set($height = $xAxisCategories.size() * 20)
-#end
-#if($aggregateFunctions.size() > 1)
-  #set($height = $height * ($aggregateFunctions.size() * 0.8))
-#end
-#if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
-<script language="JavaScript">
-var chart1 = new Highcharts.Chart({
-         chart: {
-            renderTo: "$chart_id",
-            defaultSeriesType: 'bar',
-			height: $height,
-			margin: [10, 50, 60, 120]
-         },
-		 credits: {
-		 	enabled: false
-		 },
-         title: {
-            style: {
-				margin: '0px',
-				height: '0px',
-				display: 'none'
-			}
-         },
-         xAxis: {
-            categories: $xAxisCategories
-         },
-         yAxis: {
-            title: {
-               enabled: false
-            }
-         },
-		 legend: {
-		 	style: {
-				position: 'absolute',
-				zIndex: 10,
-				bottom: '10px',
-				left: '120px',
-				padding: '5px',
-				textTransform: 'lowercase'
-			}
-		 },
-         series: $series
-      });
-</script>
-#end
-#end   ## end if reportSummaryRows.size > 0
+## Display the chart
+#parse('gui/reports_and_tabls/tabs/summary_chart.vm')
 #if($mobile_device)<p>
 	#parse("gui/mobile/pane2_footer.vm")
 #end

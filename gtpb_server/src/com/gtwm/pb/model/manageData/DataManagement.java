@@ -1458,9 +1458,8 @@ public class DataManagement implements DataManagementInfo {
 	}
 
 	public synchronized ReportSummaryDataInfo getReportSummaryData(CompanyInfo company,
-			BaseReportInfo report, Map<BaseField, String> reportFilterValues) throws SQLException,
+			ReportSummaryInfo reportSummary, Map<BaseField, String> reportFilterValues) throws SQLException,
 			CantDoThatException {
-		ReportSummaryInfo reportSummary = report.getReportSummary();
 		Set<ReportSummaryAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
 		Set<ReportSummaryGroupingInfo> groupings = reportSummary.getGroupings();
 		List<ReportSummaryDataRowInfo> reportSummaryRows;
@@ -1639,7 +1638,7 @@ public class DataManagement implements DataManagementInfo {
 				float durationSecs = (System.currentTimeMillis() - startTime) / ((float) 1000);
 				if (durationSecs > AppProperties.longSqlTime) {
 					logger.warn("Long SELECT SQL execution time of " + durationSecs
-							+ " seconds for summary report on " + report + ", statement = "
+							+ " seconds for summary '" + reportSummary + "', statement = "
 							+ statement);
 				}
 				reportSummaryData = new ReportSummaryData(reportSummaryRows, minAggValues,

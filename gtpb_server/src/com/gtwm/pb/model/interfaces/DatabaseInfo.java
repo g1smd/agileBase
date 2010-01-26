@@ -430,7 +430,7 @@ public interface DatabaseInfo {
 	 * of named summary reports for the report. The current summary report will
 	 * then be reset - all groupings and calculations removed.
 	 */
-	public void saveSummaryReport(HttpServletRequest request, BaseReportInfo report,
+	public void saveReportSummary(HttpServletRequest request, BaseReportInfo report,
 			String summaryTitle) throws DisallowedException, CantDoThatException, ObjectNotFoundException;
 
 	/**

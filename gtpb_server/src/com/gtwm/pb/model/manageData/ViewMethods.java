@@ -41,14 +41,11 @@ import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
+import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ModuleActionInfo;
 import com.gtwm.pb.model.interfaces.TagInfo;
 import com.gtwm.pb.model.interfaces.UsageStatsInfo;
-import com.gtwm.pb.model.interfaces.UserGeneralPrivilegeInfo;
-import com.gtwm.pb.model.interfaces.UserObjectPrivilegeInfo;
-import com.gtwm.pb.model.interfaces.RoleGeneralPrivilegeInfo;
-import com.gtwm.pb.model.interfaces.RoleObjectPrivilegeInfo;
 import com.gtwm.pb.model.interfaces.ViewMethodsInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
@@ -538,21 +535,21 @@ public class ViewMethods implements ViewMethodsInfo {
 	public ReportSummaryDataInfo getReportSummaryData() throws DisallowedException, SQLException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		BaseReportInfo report = this.sessionData.getReport();
-		return this.getReportSummaryData(report);
+		return this.getReportSummaryData(report.getReportSummary());
 	}
 
-	public ReportSummaryDataInfo getReportSummaryData(BaseReportInfo report)
+	public ReportSummaryDataInfo getReportSummaryData(ReportSummaryInfo reportSummary)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException {
 		// Check privileges for all tables from which data in the report is
 		// displayed from, throw
 		// DisallowedException if privileges not sufficient
-		this.checkReportViewPrivileges(report);
+		this.checkReportViewPrivileges(reportSummary.getReport());
 		ReportSummaryDataInfo reportSummaryData;
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues();
 		reportSummaryData = this.databaseDefn.getDataManagement().getReportSummaryData(company,
-				report, reportFilterValues);
+				reportSummary, reportFilterValues);
 		return reportSummaryData;
 	}
 

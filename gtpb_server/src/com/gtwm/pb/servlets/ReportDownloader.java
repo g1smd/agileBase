@@ -54,6 +54,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
+import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.PortalBaseException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
@@ -184,65 +185,87 @@ public class ReportDownloader extends HttpServlet {
 			}
 			rowNum++;
 		}
-		// the summary pane
+		// one worksheet for each of the report summaries
+		for(ReportSummaryInfo savedReportSummary : report.getSavedReportSummaries()) {
+			addSummaryWorksheet(company, sessionData, savedReportSummary, workbook);
+		}
+		// the default summary
 		ReportSummaryInfo reportSummary = report.getReportSummary();
 		Set<ReportSummaryAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
 		Set<ReportSummaryGroupingInfo> groupings = reportSummary.getGroupings();
-		boolean needSummary = (groupings.size() > 0) || (aggregateFunctions.size() > 0);
-		if (needSummary) {
-			HSSFSheet summarySheet = workbook.createSheet("Summary");
-			// header
-			rowNum = 0;
-			row = summarySheet.createRow(rowNum);
-			columnNum = 0;
-			for (ReportSummaryGroupingInfo grouping : groupings) {
-				BaseField groupingBaseField = grouping.getGroupingReportField().getBaseField();
-				if (groupingBaseField instanceof RelationField) {
-					fieldValue = groupingBaseField.getTableContainingField() + ": "
-							+ ((RelationField) groupingBaseField).getDisplayField();
-				} else {
-					fieldValue = groupingBaseField.getFieldName();
-				}
-				cell = row.createCell(columnNum);
-				cell.setCellValue(new HSSFRichTextString(fieldValue));
-				cell.setCellStyle(boldCellStyle);
-				columnNum++;
-			}
-			for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
-				fieldValue = aggregateFunction.toString();
-				cell = row.createCell(columnNum);
-				cell.setCellValue(new HSSFRichTextString(fieldValue));
-				cell.setCellStyle(boldCellStyle);
-				columnNum++;
-			}
-			// summary data
-			ReportSummaryDataInfo reportSummaryData = this.databaseDefn.getDataManagement()
-					.getReportSummaryData(company, report, sessionData.getReportFilterValues());
-			List<ReportSummaryDataRowInfo> reportSummaryDataRows = reportSummaryData
-					.getReportSummaryDataRows();
-			rowNum++;
-			for (ReportSummaryDataRowInfo summaryDataRow : reportSummaryDataRows) {
-				row = summarySheet.createRow(rowNum);
-				columnNum = 0;
-				for (ReportSummaryGroupingInfo grouping : groupings) {
-					fieldValue = summaryDataRow.getGroupingValue(grouping);
-					row.createCell(columnNum).setCellValue(
-							new HSSFRichTextString(fieldValue));
-					columnNum++;
-				}
-				for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
-					fieldValue = summaryDataRow.getAggregateValue(aggregateFunction).toString();
-					row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC).setCellValue(
-							new HSSFRichTextString(fieldValue));
-					columnNum++;
-				}
-				rowNum++;
-			}
+		if ((groupings.size() > 0) || (aggregateFunctions.size() > 0)) {
+			addSummaryWorksheet(company, sessionData, reportSummary, workbook);
 		}
 		// write to output
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		workbook.write(outputStream);
 		return outputStream;
+	}
+
+	/**
+	 * Add a worksheet to the report for the specified summary report
+	 */
+	private void addSummaryWorksheet(CompanyInfo company, SessionDataInfo sessionData,
+			ReportSummaryInfo reportSummary, HSSFWorkbook workbook) throws SQLException, CantDoThatException {
+		int rowNum;
+		HSSFRow row;
+		HSSFCell cell;
+		int columnNum;
+		String fieldValue;
+		HSSFSheet summarySheet = workbook.createSheet("Summary");
+		// header
+		rowNum = 0;
+		row = summarySheet.createRow(rowNum);
+		columnNum = 0;
+		HSSFCellStyle boldCellStyle = workbook.createCellStyle();
+		HSSFFont font = workbook.createFont();
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		boldCellStyle.setFont(font);
+		Set<ReportSummaryAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
+		Set<ReportSummaryGroupingInfo> groupings = reportSummary.getGroupings();
+		for (ReportSummaryGroupingInfo grouping : groupings) {
+			BaseField groupingBaseField = grouping.getGroupingReportField().getBaseField();
+			if (groupingBaseField instanceof RelationField) {
+				fieldValue = groupingBaseField.getTableContainingField() + ": "
+						+ ((RelationField) groupingBaseField).getDisplayField();
+			} else {
+				fieldValue = groupingBaseField.getFieldName();
+			}
+			cell = row.createCell(columnNum);
+			cell.setCellValue(new HSSFRichTextString(fieldValue));
+			cell.setCellStyle(boldCellStyle);
+			columnNum++;
+		}
+		for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
+			fieldValue = aggregateFunction.toString();
+			cell = row.createCell(columnNum);
+			cell.setCellValue(new HSSFRichTextString(fieldValue));
+			cell.setCellStyle(boldCellStyle);
+			columnNum++;
+		}
+		// summary data
+		ReportSummaryDataInfo reportSummaryData = this.databaseDefn.getDataManagement()
+				.getReportSummaryData(company, reportSummary, sessionData.getReportFilterValues());
+		List<ReportSummaryDataRowInfo> reportSummaryDataRows = reportSummaryData
+				.getReportSummaryDataRows();
+		rowNum++;
+		for (ReportSummaryDataRowInfo summaryDataRow : reportSummaryDataRows) {
+			row = summarySheet.createRow(rowNum);
+			columnNum = 0;
+			for (ReportSummaryGroupingInfo grouping : groupings) {
+				fieldValue = summaryDataRow.getGroupingValue(grouping);
+				row.createCell(columnNum).setCellValue(
+						new HSSFRichTextString(fieldValue));
+				columnNum++;
+			}
+			for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
+				fieldValue = summaryDataRow.getAggregateValue(aggregateFunction).toString();
+				row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC).setCellValue(
+						new HSSFRichTextString(fieldValue));
+				columnNum++;
+			}
+			rowNum++;
+		}
 	}
 
 	private DatabaseInfo databaseDefn = null;

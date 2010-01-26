@@ -415,8 +415,8 @@ public interface ViewMethodsInfo {
 			DisallowedException, ObjectNotFoundException;
 
 	/**
-	 * @return Report summary data for the session report - can be used to
-	 *         display a table of report summary data, i.e aggregate data
+	 * @return Report summary data for the default summary in the session report - can be used to
+	 *         display a chart/table of report summary data, i.e aggregate data
 	 * @throws DisallowedException
 	 *             If the user doesn't have VIEW_TABLE_DATA privileges on all
 	 *             tables from which report data is taken
@@ -424,7 +424,7 @@ public interface ViewMethodsInfo {
 	public ReportSummaryDataInfo getReportSummaryData() throws DisallowedException, SQLException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
-	public ReportSummaryDataInfo getReportSummaryData(BaseReportInfo report)
+	public ReportSummaryDataInfo getReportSummaryData(ReportSummaryInfo reportSummary)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException;
 

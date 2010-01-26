@@ -106,7 +106,7 @@ public interface DataManagementInfo {
 	 *            Used to inform per-company caching
 	 */
 	public ReportSummaryDataInfo getReportSummaryData(CompanyInfo company,
-			BaseReportInfo reportDefn, Map<BaseField, String> reportFilterValues)
+			ReportSummaryInfo reportSummaryDefn, Map<BaseField, String> reportFilterValues)
 			throws SQLException, CantDoThatException;
 
 	/**
