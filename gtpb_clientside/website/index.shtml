@@ -31,7 +31,7 @@
     <body class="mobile">
 		<div id="header" class="wrapper">
 			<div class="content">
-				<a id="home" href="#" alt="GT portalBase"><img src="/portalBase/website/images/logo-gtpb.png"></a>
+				<a id="home" href="#" alt="GT portalBase"><img src="/portalBase/website/images/logo-agilebase.png"></a>
 				<div style="position:relative; top:110px">
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
 					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/portalBase/j_security_check" name="loginform" id="loginform">
@@ -174,7 +174,7 @@
 		<div id="tl_wrapper">
 			<div id="header" class="wrapper">
 					<div class="content">
-						<a id="home" href="#" alt="GT portalBase"><img src="/portalBase/website/images/logo-gtpb.png"></a>
+						<a id="home" href="#" alt="GT portalBase"><img src="/portalBase/website/images/logo-agilebase.png"></a>
 						<table cellspacing="0" cellpadding="0" border="0">
 							<tr class="row1">
 								<td class="col1"><a href="#TB_inline&inlineId=popupPricingContent" class="thickbox">pricing</a></td>

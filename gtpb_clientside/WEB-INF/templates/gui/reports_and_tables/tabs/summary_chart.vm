@@ -1,0 +1,118 @@
+##
+##  Copyright 2009 GT webMarque Ltd
+## 
+##  This file is part of GT portalBase.
+##
+##  GT portalBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  GT portalBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## This template displays a single chart. It expects these variables to be defined:
+## - $report
+## - $reportSummary
+## - $reportSummaryRows
+#set($chart_id = "chart_$reportSummary.getId()")
+#set($groupings = $reportSummary.getGroupings())
+#set($aggregateFunctions = $reportSummary.getAggregateFunctions())
+<div id="$chart_id" style="width:100%; background-color:#f4f4f4;"></div>
+#if($reportSummaryRows.size() > 0)
+#set($chartTitle = "$reportSummary.getTitle()")
+#set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
+#set($xAxisCategories = [])
+#foreach($summaryRow in $reportSummaryRows)
+  #set($xAxisCategory = "")
+  #foreach($grouping in $groupings)
+	#if($grouping.equals($groupings.first()))
+	  #set($xAxisCategory = $summaryRow.getGroupingValue($grouping))
+	#else
+	  #set($xAxisCategory = "$xAxisCategory | $summaryRow.getGroupingValue($grouping)")
+	#end
+  #end
+  #set($success = $xAxisCategories.add("'$viewTools.escape($xAxisCategory)'"))
+#end
+#set($series = [])
+#set($seriesString = "")
+#foreach($aggregateFunction in $aggregateFunctions)
+  #set($seriesName = $aggregateFunction.toString().toLowerCase())
+  #if(!$dashboard)
+    ## Add grand total to series
+	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
+	  #set($grandTotal = "$mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction))")
+	  #if($grandTotal.endsWith(".00"))
+		#set($endPos = $grandTotal.length() - 3)
+		#set($grandTotal = $grandTotal.substring(0, $endPos))
+	  #elseif($grandTotal.endsWith(".0"))
+		#set($endPos = $grandTotal.length() - 2)
+		#set($grandTotal = $grandTotal.substring(0, $endPos))
+	  #end
+	  #set($seriesName = "$seriesName = $grandTotal")
+	#end
+  #end
+  #set($seriesString = "$seriesString { name:'$seriesName', data: ")
+  #set($seriesData = [])
+  #foreach($summaryRow in $reportSummaryRows)
+	#set($success = $seriesData.add($summaryRow.getAggregateValue($aggregateFunction)))
+  #end
+  #set($seriesString = "$seriesString $seriesData }")
+  #if(($velocityCount + 1) == $aggregateFunctions.size())
+	#set($seriesString = "$seriesString, ")
+  #end
+#end
+#set($success = $series.add($seriesString))
+#set($height=200)
+#if($xAxisCategories.size() > 10)
+  #set($height = $xAxisCategories.size() * 20)
+#end
+#if($aggregateFunctions.size() > 1)
+  #set($height = $height * ($aggregateFunctions.size() * 0.8))
+#end
+#if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
+<script language="JavaScript">
+var $chart_id = new Highcharts.Chart({
+         chart: {
+            renderTo: "$chart_id",
+            defaultSeriesType: 'bar',
+			height: $height,
+			margin: [10, 50, 60, 120]
+         },
+		 credits: {
+		 	enabled: false
+		 },
+         title: {
+            style: {
+				margin: '0px',
+				height: '0px',
+				display: 'none'
+			}
+         },
+         xAxis: {
+            categories: $xAxisCategories
+         },
+         yAxis: {
+            title: {
+               enabled: false
+            }
+         },
+		 legend: {
+		 	style: {
+				position: 'absolute',
+				zIndex: 10,
+				bottom: '10px',
+				left: '120px',
+				padding: '5px',
+				textTransform: 'lowercase'
+			}
+		 },
+         series: $series
+      });
+</script>
+#end ## end javascript
+#end
