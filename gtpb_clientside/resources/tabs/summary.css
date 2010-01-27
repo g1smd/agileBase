@@ -84,8 +84,11 @@
   }
   
   .two_cols {
-    /* TODO: check these */
   	-moz-column-count: 2;
   	-webkit-column-count: 2;
+  }
+  
+  .default_chart {
+    background-color: #f4f4f4;
   }
   

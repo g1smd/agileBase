@@ -59,9 +59,13 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
 #if($showManageUi)
 ## Separator
-<table id="reportData"><tr class="separator"><td class="capitalised printoutfieldnamecolumn">
+<table id="reportData"><tr class="separator">
+	<td class="leading">&nbsp;</td>
+	<td class="capitalised printoutfieldnamecolumn">
 	<span class="fieldname">Create a new summary chart</span>
-</td></tr></table>
+	</td>
+	<td class="trailing">&nbsp;</td>
+</tr></table>
 <div class="chart_controls">
 <form name=addgrouping method=post action="/portalBase/AppController.servlet">
 #if($groupings.size() > 0)
