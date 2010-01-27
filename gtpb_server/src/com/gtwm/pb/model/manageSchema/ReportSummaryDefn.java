@@ -342,7 +342,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	}
 
 	/**
-	 * equals is based on report, functions and groupings
+	 * equals is based on id
 	 */
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -351,17 +351,11 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 		if ((obj == null) || (obj.getClass() != this.getClass())) {
 			return false;
 		}
-		ReportSummaryDefn otherSummary = (ReportSummaryDefn) obj;
-		if (!this.getReport().equals(otherSummary.getReport())) {
+		if (this.getId() == ((ReportSummaryDefn) obj).getId()) {
+			return true;
+		} else {
 			return false;
 		}
-		if (!this.getGroupings().equals(otherSummary.getGroupings())) {
-			return false;
-		}
-		if (!this.getAggregateFunctions().equals(otherSummary.getAggregateFunctions())) {
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -369,11 +363,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	 */
 	public int hashCode() {
 		if (this.hashCode == 0) {
-			int result = 17;
-			result = 37 * result + this.getReport().hashCode();
-			result = 37 * result + this.getGroupings().hashCode();
-			result = 37 * result + this.getAggregateFunctions().hashCode();
-			this.hashCode = result;
+			this.hashCode = (new Long(this.getId())).hashCode();
 		}
 		return this.hashCode;
 	}
