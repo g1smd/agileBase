@@ -1,26 +1,26 @@
 <!--  
 ##  Copyright 2009 GT webMarque Ltd
 ## 
-##  This file is part of GT portalBase.
+##  This file is part of agileBase.
 ##
-##  GT portalBase is free software: you can redistribute it and/or modify
+##  agileBase is free software: you can redistribute it and/or modify
 ##  it under the terms of the GNU General Public License as published by
 ##  the Free Software Foundation, either version 3 of the License, or
 ##  (at your option) any later version.
-##  GT portalBase is distributed in the hope that it will be useful,
+##  agileBase is distributed in the hope that it will be useful,
 ##  but WITHOUT ANY WARRANTY; without even the implied warranty of
 ##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ##  GNU General Public License for more details.
 ##
 ##  You should have received a copy of the GNU General Public License
-##  along with GT portalBase.  If not, see <http://www.gnu.org/licenses/>.
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 -->
 <!--#if expr="$QUERY_STRING = 'return=boot_mobile&set_custom_boolean=1&booleankey=mobile_device&custombooleanvalue=true'" --> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN>
 <html>
 	<head>
-		<title>GT portalBase</title>
+		<title>agileBase</title>
 		<link rel="icon" href="/portalBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
 	    <meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable=yes" />
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
@@ -31,7 +31,7 @@
     <body class="mobile">
 		<div id="header" class="wrapper">
 			<div class="content">
-				<a id="home" href="#" alt="GT portalBase"><img src="/portalBase/website/images/logo-agilebase.png"></a>
+				<a id="home" href="#" alt="agileBase"><img src="/portalBase/website/images/logo-agilebase.png"></a>
 				<div style="position:relative; top:110px">
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
 					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/portalBase/j_security_check" name="loginform" id="loginform">
@@ -63,7 +63,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN>
 <html>
 	<head>
-		<title>GT portalBase</title>
+		<title>agileBase</title>
 		<link rel="icon" href="/portalBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 		<script type="text/javascript" src="/portalBase/website/scripts/jquery.js"></script>
@@ -121,7 +121,7 @@
 		}
 
 		$(document).ready(function(){
-			// frame buster needed as we may be in one of the portalBase application panes after a login timeout
+			// frame buster needed as we may be in one of the agileBase application panes after a login timeout
 			if ((top.frames.length!=0) || (document.location.href.indexOf("logout") > -1)) {
 				top.location="http://gtportalbase.com/start";
 			}
@@ -174,7 +174,7 @@
 		<div id="tl_wrapper">
 			<div id="header" class="wrapper">
 					<div class="content">
-						<a id="home" href="#" alt="GT portalBase"><img src="/portalBase/website/images/logo-agilebase.png"></a>
+						<a id="home" href="#" alt="agileBase"><img src="/portalBase/website/images/logo-agilebase.png"></a>
 						<table cellspacing="0" cellpadding="0" border="0">
 							<tr class="row1">
 								<td class="col1"><a href="#TB_inline&inlineId=popupPricingContent" class="thickbox">pricing</a></td>
@@ -348,7 +348,7 @@
 							  </div>
 							<div>
 								<h1>Documentation &amp; Source</h1>
-								<p><a href="http://github.com/okohll/GT-portalBase/tree/"><img border="0" src="/portalBase/website/content/github.png" style="float:left;"></a>The source code for GT portalBase is <a href="http://github.com/okohll/GT-portalBase/tree/">available</a> on GitHub as open source.								
+								<p><a href="http://github.com/okohll/GT-portalBase/tree/"><img border="0" src="/portalBase/website/content/github.png" style="float:left;"></a>The source code for agileBase is <a href="http://github.com/okohll/GT-portalBase/tree/">available</a> on GitHub as open source.								
 								</p>
 								<p style="clear:both">See 
 								  <ul>
@@ -367,7 +367,7 @@
 							<p>Traditionally this role has involved defining requirements and recording these in a formal specification document. 
 							However there is a growing recognition of the problems inherent in this approach and a more agile approach 
 							involving prototyping is often seen as an viable alternative.</p>
-							<p>GT portalbase requires no programming skills and thus allows analysts to convert schemas into fully working 
+							<p>agileBase requires no programming skills and thus allows analysts to convert schemas into fully working 
 							web based prototypes in hours. The prototype is immediately available via the web for client review and feedback 
 							from various stakeholders can be incorporated into the product often in real time.</p>
 							<h1>GTpB as a long term solution</h1>

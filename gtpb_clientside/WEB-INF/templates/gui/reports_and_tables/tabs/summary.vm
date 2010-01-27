@@ -40,11 +40,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #end
 ## Saved charts
 #set($savedSummaries = $report.getSavedReportSummaries())
-<div id="saved_charts" #if($savedCharts.size() > 1) class="two_cols" #end>
-#foreach($reportSummary in $savedSummaries)
+<div id="saved_charts" #if($savedSummaries.size() > 1) class="two_cols" #end>
+#foreach($savedReportSummary in $savedSummaries)
+  #set($reportSummary = $savedReportSummary)
   #set($reportSummaryData = $view.getReportSummaryData($reportSummary))
   #set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
-  #parse('gui/reports_and_tabls/tabs/summary_chart.vm')
+  #parse('gui/reports_and_tables/tabs/summary_chart.vm')
 #end
 </div>
 ## Reset to the default report summary - the chart being edited
