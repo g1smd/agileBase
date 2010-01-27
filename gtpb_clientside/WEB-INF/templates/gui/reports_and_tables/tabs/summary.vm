@@ -50,7 +50,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #end
 </div>
 ## Reset to the default report summary - the chart being edited
+#set($reportSummary = "")
 #set($reportSummary = $report.getReportSummary())
+Default report summary = $reportSummary<br>
 #set($reportSummaryData = $view.getReportSummaryData($reportSummary))
 #set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
 #set($groupings = $reportSummary.getGroupings())
