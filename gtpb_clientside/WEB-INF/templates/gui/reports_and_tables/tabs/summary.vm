@@ -159,7 +159,7 @@ function fShowAddAgg() {
 </div> ## End chart_controls div
 #end
 ## Display the chart
-#parse('gui/reports_and_tabls/tabs/summary_chart.vm')
+#parse('gui/reports_and_tables/tabs/summary_chart.vm')
 #if($mobile_device)<p>
 	#parse("gui/mobile/pane2_footer.vm")
 #end
