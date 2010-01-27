@@ -40,7 +40,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #end
 ## Saved charts
 #set($savedSummaries = $report.getSavedReportSummaries())
-<div id="saved_charts" #if($savedSummaries.size() > 1) class="two_cols" #end>
+<div id="saved_charts" #if($savedSummaries.size() > 2) class="two_cols" #end>
 #foreach($savedReportSummary in $savedSummaries)
   #if(!$savedReportSummary.equals($reportSummary))
     Saved report summary $savedReportSummary<br>
