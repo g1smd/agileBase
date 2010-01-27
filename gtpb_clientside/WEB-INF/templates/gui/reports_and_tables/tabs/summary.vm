@@ -62,6 +62,10 @@ Default report summary = $reportSummary<br>
 #if($showManageUi)
 <div class="chart_controls">
 <form name=addgrouping method=post action="/portalBase/AppController.servlet">
+## Separator
+<div class="separator">
+	<span class="fieldname">Create a new summary chart</span>
+</div>
 #if($groupings.size() > 0)
   1. Choose groupings: 
   #foreach($grouping in $groupings)
