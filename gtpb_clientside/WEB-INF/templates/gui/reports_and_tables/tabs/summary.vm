@@ -43,7 +43,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 <div id="saved_charts" #if($savedSummaries.size() > 2) class="two_cols" #end>
 #foreach($savedReportSummary in $savedSummaries)
   #if(!$savedReportSummary.equals($reportSummary))
-    Saved report summary $savedReportSummary<br>
     #set($reportSummary = $savedReportSummary)
     #set($reportSummaryData = $view.getReportSummaryData($reportSummary))
     #set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
@@ -54,18 +53,17 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 ## Reset to the default report summary - the chart being edited
 #set($reportSummary = "")
 #set($reportSummary = $report.getReportSummary())
-Default report summary = $reportSummary<br>
 #set($reportSummaryData = $view.getReportSummaryData($reportSummary))
 #set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
 #if($showManageUi)
-<div class="chart_controls">
-<form name=addgrouping method=post action="/portalBase/AppController.servlet">
 ## Separator
 <div class="separator">
 	<span class="fieldname">Create a new summary chart</span>
 </div>
+<div class="chart_controls">
+<form name=addgrouping method=post action="/portalBase/AppController.servlet">
 #if($groupings.size() > 0)
   1. Choose groupings: 
   #foreach($grouping in $groupings)
