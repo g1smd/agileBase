@@ -80,6 +80,7 @@
   #else
 	#set($margin = false)
   #end
+  #set($title = "")
   #set($title = $reportSummary.getTitle())
   <script language="JavaScript">
     var $chart_id = new Highcharts.Chart({
