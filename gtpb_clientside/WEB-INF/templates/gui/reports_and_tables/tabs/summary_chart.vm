@@ -75,24 +75,36 @@
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
 #end
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
-<script language="JavaScript">
-var $chart_id = new Highcharts.Chart({
+  #if($reportSummary.equals($report.getReportSummary()))
+	#set($margin = "[10, 50, 60, 120]")
+  #else
+	#set($margin = false)
+  #end
+  #set($title = $reportSummary.getTitle())
+  <script language="JavaScript">
+    var $chart_id = new Highcharts.Chart({
          chart: {
             renderTo: "$chart_id",
             defaultSeriesType: 'bar',
-			height: $height,
-			margin: [10, 50, 60, 120]
+			height: $height
+			#if($margin)
+			  ,margin: [10, 50, 60, 120]
+			#end
          },
 		 credits: {
 		 	enabled: false
 		 },
-         title: {
+		 #if($title != "")
+		   title: { text: "$title" },
+		 #else
+           title: {
             style: {
 				margin: '0px',
 				height: '0px',
 				display: 'none'
 			}
-         },
+           },
+		 #end
          xAxis: {
             categories: $xAxisCategories
          },
@@ -113,6 +125,6 @@ var $chart_id = new Highcharts.Chart({
 		 },
          series: $series
       });
-</script>
+  </script>
 #end ## end javascript
 #end
