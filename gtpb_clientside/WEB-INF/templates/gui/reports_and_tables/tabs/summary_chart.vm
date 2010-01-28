@@ -76,9 +76,10 @@
 #end
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
   #if($reportSummary.equals($report.getReportSummary()))
-	#set($margin = "[10, 50, 60, 120]")
+	#set($margin = "[10, 50, 40, 120]") ## top, right, bottom, left
   #else
-	#set($margin = false)
+	#set($margin = "[50, 50, 40, 120]")
+	#set($height = $height + 40)
   #end
   #set($title = "")
   #set($title = $reportSummary.getTitle())
@@ -89,7 +90,7 @@
             defaultSeriesType: 'bar',
 			height: $height
 			#if($margin)
-			  ,margin: [10, 50, 60, 120]
+			  ,margin: $margin
 			#end
          },
 		 credits: {
