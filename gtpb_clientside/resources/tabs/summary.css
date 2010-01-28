@@ -64,9 +64,10 @@
   }
   
   .chart_remover {
-    position:absolute;
-    right:1em;
-    top:1em;
+    position: absolute;
+    display: none;
+    right: 1em;
+    top: 1em;
   }
 
   .two_cols {
@@ -75,13 +76,13 @@
   }
   
   .summary_chart {
-    width:100%;
-    position:relative; /* to allow the chart_remover to be placed inside */
+    width: 100%;
+    position: relative; /* to allow the chart_remover to be placed inside */
   }
   
   .default_chart {
     background-color: #f4f4f4;
-    width:100%;
+    width: 100%;
   }
   
   
