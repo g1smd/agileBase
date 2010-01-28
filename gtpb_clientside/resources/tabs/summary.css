@@ -78,6 +78,7 @@
   .summary_chart {
     width: 100%;
     position: relative; /* to allow the chart_remover to be placed inside */
+    z-index: 100; /* on top of the chart */
   }
   
   .default_chart {
