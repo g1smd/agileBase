@@ -210,7 +210,7 @@ function fEALoaded() {
 
 /* Charts in pane 3 need some behaviours added */
 function fSetupCharts() {
-  $('.summary_chart').append("<div class='chart_remover'><img src='resources/icons/remove.png' /></div>");
+  $('.summary_chart').append("<div class='chart_remover'><img src='resources/icons/cross-greyscale.png' /></div>");
   $('.summary_chart').hover(function(){
 	  //
   });

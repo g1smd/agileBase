@@ -65,8 +65,8 @@
   
   .chart_remover {
     position:absolute;
-    right:0px;
-    top:0px;
+    right:1em;
+    top:1em;
   }
 
   .two_cols {
