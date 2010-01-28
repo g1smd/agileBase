@@ -27,7 +27,7 @@
 #set($chartTitle = "$reportSummary.getTitle()")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
 #set($xAxisCategories = [])
-#set($maxXAxisChars = 2)
+#set($maxXAxisChars = 3)
 #foreach($summaryRow in $reportSummaryRows)
   #set($xAxisCategory = "")
   #foreach($grouping in $groupings)
