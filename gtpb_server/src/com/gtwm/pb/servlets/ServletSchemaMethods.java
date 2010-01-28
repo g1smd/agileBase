@@ -41,6 +41,7 @@ import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportFilterInfo;
 import com.gtwm.pb.model.interfaces.ReportSortInfo;
+import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
@@ -2271,7 +2272,7 @@ public class ServletSchemaMethods {
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
-			databaseDefn.saveReportSummary(request, report, summaryTitle);
+			databaseDefn.saveSummaryReport(request, report, summaryTitle);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
@@ -2281,6 +2282,44 @@ public class ServletSchemaMethods {
 		} catch (PortalBaseException pex) {
 			rollbackConnections(null);
 			throw new CantDoThatException("summary saving failed", pex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+
+	public synchronized static void removeSummaryReport(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
+			MissingParametersException, ObjectNotFoundException, CantDoThatException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, ServletUtilMethods.USE_SESSION);
+		String summaryIdString = request.getParameter("summaryid");
+		if (summaryIdString == null) {
+			throw new MissingParametersException(
+					"'summaryid' parameter is required to save a report summary");
+		}
+		long summaryId = Long.valueOf(summaryIdString);
+		try {
+			HibernateUtil.startHibernateTransaction();
+			ReportSummaryInfo summaryToRemove = null;
+			SUMMARY_LOOP: for (ReportSummaryInfo reportSummary : report.getSavedReportSummaries()) {
+				if(reportSummary.getId() == summaryId) {
+					summaryToRemove = reportSummary;
+					break SUMMARY_LOOP;
+				}
+			}
+			if (summaryToRemove == null) {
+				throw new ObjectNotFoundException("A report summary with the ID " + summaryIdString + " was not found in report " + report);
+			}
+			databaseDefn.removeSummaryReport(request, summaryToRemove);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			// Could have some code to roll back memory state here
+			// but will only add it if it becomes necessary
+			throw new CantDoThatException("summary removal failed", hex);
+		} catch (PortalBaseException pex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("summary removal failed", pex);
 		} finally {
 			HibernateUtil.closeSession();
 		}

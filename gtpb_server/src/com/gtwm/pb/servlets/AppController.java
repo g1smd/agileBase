@@ -433,6 +433,9 @@ public class AppController extends VelocityViewServlet {
 				case SAVE_REPORT_SUMMARY:
 					ServletSchemaMethods.saveSummaryReport(sessionData, request, databaseDefn);
 					break;
+				case REMOVE_REPORT_SUMMARY:
+					ServletSchemaMethods.removeSummaryReport(sessionData, request, databaseDefn);
+					break;
 				case SAVE_NEW_RECORD:
 					ServletDataMethods.saveRecord(sessionData, request, true, databaseDefn,
 							multipartItems);

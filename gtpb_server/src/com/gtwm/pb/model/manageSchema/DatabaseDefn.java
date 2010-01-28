@@ -2139,7 +2139,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void saveReportSummary(HttpServletRequest request, BaseReportInfo report,
+	public synchronized void saveSummaryReport(HttpServletRequest request, BaseReportInfo report,
 			String summaryTitle) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2177,6 +2177,27 @@ public class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
+	public synchronized void removeSummaryReport(HttpServletRequest request, ReportSummaryInfo reportSummary) throws DisallowedException, CantDoThatException, ObjectNotFoundException {
+		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, reportSummary.getReport().getParentTable()))) {
+			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, reportSummary.getReport().getParentTable());
+		}
+		BaseReportInfo report = reportSummary.getReport();
+		if(reportSummary.equals(report.getReportSummary())) {
+			throw new CantDoThatException("The default report summary can't be removed");
+		}
+		HibernateUtil.activateObject(report);
+		report.removeSavedReportSummary(reportSummary);
+		HibernateUtil.currentSession().delete(reportSummary);
+		this.dataManagement.logLastSchemaChangeTime(request);
+		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
+		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		usageLogger.logReportSchemaChange(user, report,
+				AppAction.REMOVE_REPORT_SUMMARY, "title: " + reportSummary.getTitle());
+		UsageLogger.startLoggingThread(usageLogger);
+	}
+
+	
 	public synchronized TableInfo getTableByName(HttpServletRequest request, String tableName)
 			throws ObjectNotFoundException {
 		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)

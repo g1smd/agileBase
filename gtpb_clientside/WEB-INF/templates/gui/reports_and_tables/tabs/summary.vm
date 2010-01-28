@@ -81,7 +81,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   </a></span>&nbsp;
   #end
 #else
-  No groupings 
+  Choose groupings:
 #end
 <script language="JavaScript">
 function fShowAddGroup() {
@@ -136,7 +136,7 @@ function fShowAddAgg() {
     </a></span>&nbsp;
   #end
 #else
-  No functions 
+  Choose functions: 
 #end
 <a href="#" onclick="fShowAddAgg();" id="addAggLink">add...</a>
 <div id="addAgg" style="display:none"><br>
