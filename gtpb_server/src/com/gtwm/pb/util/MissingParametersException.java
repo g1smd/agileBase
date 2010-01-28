@@ -20,7 +20,7 @@ package com.gtwm.pb.util;
 /**
  * Thrown when some parameters were expected in a HTTP request but weren't there
  */
-public class MissingParametersException extends PortalBaseException {
+public class MissingParametersException extends AgileBaseException {
 
 	public MissingParametersException(String message) {
         super(message);

@@ -22,7 +22,7 @@ package com.gtwm.pb.util;
  * should never actually logically be thrown, catch and re-throw it as a this exception as it must be due to
  * programmer error
  */
-public class CodingErrorException extends PortalBaseException {
+public class CodingErrorException extends AgileBaseException {
 
 	public CodingErrorException(String message) {
         super(message + ". This exception should never logically occur and must be due to programmer error");

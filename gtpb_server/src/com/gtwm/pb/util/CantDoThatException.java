@@ -20,7 +20,7 @@ package com.gtwm.pb.util;
 /**
  * An exception of last resort. Use this if no other exceptions fit. Use it instead of a plain 'Exception'
  */
-public class CantDoThatException extends PortalBaseException {
+public class CantDoThatException extends AgileBaseException {
 
 	public CantDoThatException(String message) {
         super(message);

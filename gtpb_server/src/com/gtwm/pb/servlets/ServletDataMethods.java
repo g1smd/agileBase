@@ -63,7 +63,7 @@ import com.gtwm.pb.util.DataDependencyException;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
-import com.gtwm.pb.util.PortalBaseException;
+import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.FieldContentType;
 import com.gtwm.pb.model.manageData.SessionData;
@@ -739,7 +739,7 @@ public class ServletDataMethods {
 	}
 
 	public static void setSessionModule(SessionDataInfo sessionData, HttpServletRequest request,
-			String internalModuleName, DatabaseInfo databaseDefn) throws PortalBaseException {
+			String internalModuleName, DatabaseInfo databaseDefn) throws AgileBaseException {
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 		//Findbugs found this unused variable
 		//Set<ModuleInfo> modules = company.getModules();

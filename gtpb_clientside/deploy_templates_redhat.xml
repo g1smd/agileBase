@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="deploy" name="portalBase">
+<project basedir="." default="deploy" name="agileBase">
 	<!-- server directories -->
 	<property name="tomcat.dir" location="/usr/local/tomcat/apache-tomcat-6.0.13" />
-	<property name="webapp" value="portalBase" />
+	<property name="webapp" value="agileBase" />
 
 	<target name="deploy">
 		<copy todir="${tomcat.dir}/webapps/${webapp}/WEB-INF">

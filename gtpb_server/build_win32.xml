@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="deploy" name="portalBase">
+<project basedir="." default="deploy" name="agileBase">
 	<!-- java components -->
 	<property name="compiler" value="C:\Program Files\Java\jdk1.6.0_02\bin\javac" />
 	<property name="jvm" value="java" />
@@ -10,7 +10,7 @@
 	<property name="doc.dir" location="doc" />
 	<!-- server directories -->
 	<property name="tomcat.dir" location="C:\Program Files\Apache Software Foundation\apache-tomcat-6.0.14" />
-	<property name="webapp" value="portalBase" />
+	<property name="webapp" value="agileBase" />
 
 	<target name="init">
 		<mkdir dir="${build.dir}" />

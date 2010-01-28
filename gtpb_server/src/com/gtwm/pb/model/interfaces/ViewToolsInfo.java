@@ -161,12 +161,12 @@ public interface ViewToolsInfo {
 	 * 
 	 * @param string
 	 *            e.g.
-	 *            http://appserver.gtportalbase.com/portalBase/AppController
+	 *            http://appserver.agilebase.co.uk/portalBase/AppController
 	 *            .servlet
 	 *            ?return=gui/display_application&set_table=a3b09a609b4c70624
 	 *            &set_report=ac64d0f1598cf78eb
 	 * @return e.g.
-	 *         http%3A//appserver.gtportalbase.com/portalBase/AppController.
+	 *         http%3A//appserver.agilebase.co.uk/portalBase/AppController.
 	 *         servlet%3Freturn%3Dgui/display_application%26set_table%3D
 	 *         a3b09a609b4c70624%26set_report%3Dac64d0f1598cf78eb
 	 */
@@ -312,7 +312,7 @@ public interface ViewToolsInfo {
 
 	/**
 	 * Return the url of the currently running server including the host and
-	 * directory examples: http://appserver.gtportalbase.com/portalBase/
+	 * directory examples: http://appserver.agilebase.co.uk/portalBase/
 	 * http://localhost:8080/portalBase/
 	 */
 	public String getAppUrl();

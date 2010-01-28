@@ -18,13 +18,13 @@
 package com.gtwm.pb.model.manageData;
 
 import com.gtwm.pb.model.interfaces.fields.BaseField;
-import com.gtwm.pb.util.PortalBaseException;
+import com.gtwm.pb.util.AgileBaseException;
 
 /**
  * An exception caused by invalid user input when trying to input a field value, e.g. if a letter is input for
  * a number field
  */
-public class InputRecordException extends PortalBaseException {
+public class InputRecordException extends AgileBaseException {
 
     public InputRecordException(String message, BaseField fieldCausingException) {
         super(message);

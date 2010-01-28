@@ -18,13 +18,13 @@
 package com.gtwm.pb.auth;
 
 import com.gtwm.pb.model.interfaces.TableInfo;
-import com.gtwm.pb.util.PortalBaseException;
+import com.gtwm.pb.util.AgileBaseException;
 
 /**
  * Should be raised when user tries to do something they haven't got privileges for. 
  * This should never happen in normal circumstances because the UI shouldn't allow it
  */
-public class DisallowedException extends PortalBaseException {
+public class DisallowedException extends AgileBaseException {
 
     public DisallowedException(PrivilegeType privilegeType) {
         super("User is not allowed to " + privilegeType.toString());

@@ -22,7 +22,7 @@ as the root cause or do whatever looks best for the situation
 
 *) Don't use setters unless absolutely necessary - rather use constructors to populate objects with data
 
-*) For questions, http://www.javapractices.com/ or oliver@gtportalbase.com
+*) For questions, http://www.javapractices.com/ or oliver@agilebase.co.uk
 
 *) Unit testing: THERE ARE CURRENTLY ONLY A FEW UNIT TESTS, this is a drawback. Additions welcome
 

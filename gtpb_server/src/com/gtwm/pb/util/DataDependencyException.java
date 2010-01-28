@@ -17,7 +17,7 @@
  */
 package com.gtwm.pb.util;
 
-public class DataDependencyException extends PortalBaseException {
+public class DataDependencyException extends AgileBaseException {
 
 	public DataDependencyException(String message) {
         super(message);

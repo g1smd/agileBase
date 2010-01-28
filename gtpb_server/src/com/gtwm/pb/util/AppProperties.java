@@ -21,7 +21,7 @@ package com.gtwm.pb.util;
  * Application constants such as title and version
  */
 public class AppProperties {
-	public static final String applicationName = "GT portalBase";
+	public static final String applicationName = "agileBase";
 
 	public static final String applicationVersion = "2.4.3";
 
@@ -33,7 +33,7 @@ public class AppProperties {
 
 	/**
 	 * The number of seconds that is considered a long time to process a
-	 * request. portalBase will log any server-side or template processing that
+	 * request. agileBase will log any server-side or template processing that
 	 * exceeds this time.
 	 */
 	public static final float longProcessingTime = 3f;

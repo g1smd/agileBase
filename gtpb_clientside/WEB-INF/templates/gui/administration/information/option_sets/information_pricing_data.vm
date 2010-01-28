@@ -23,7 +23,7 @@ $viewTools.startTimer("gui/administration/information/option_sets/information_pr
 #set($appUser = $view.getLoggedInUser())
 ## Hard code the list of usernames not allowed to view pricing data
 #set($disallowedUsernames = [])
-General information about the $appUser.getCompany() portalBase service<p>
+General information about the $appUser.getCompany() agileBase service<p>
 
 #if(!$disallowedUsernames.contains($appUser.getUserName()))
 <h2>Cost Calculation</h2>

@@ -21,7 +21,7 @@ package com.gtwm.pb.util;
  * Thrown when the application can't find an object requested, e.g because the internal identifier doesn't map
  * to any object or it isn't in a session when expected to be
  */
-public class ObjectNotFoundException extends PortalBaseException {
+public class ObjectNotFoundException extends AgileBaseException {
 
 	public ObjectNotFoundException(String message) {
         super(message);

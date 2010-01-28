@@ -49,7 +49,7 @@ import com.gtwm.pb.model.manageData.ViewMethods;
 import com.gtwm.pb.model.manageData.ViewTools;
 import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageSchema.DatabaseDefn;
-import com.gtwm.pb.util.PortalBaseException;
+import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.util.Enumerations.SessionAction;
@@ -200,7 +200,7 @@ public class AppController extends VelocityViewServlet {
 	public static void carryOutSessionActions(HttpServletRequest request,
 			SessionDataInfo sessionData, DatabaseInfo databaseDefn, Context context,
 			HttpSession session, List<FileItem> multipartItems) throws SQLException,
-			PortalBaseException {
+			AgileBaseException {
 		// Set any new values for the session variables before carrying out main
 		// app actions
 		EnumSet<SessionAction> sessionActions = EnumSet.allOf(SessionAction.class);
@@ -300,7 +300,7 @@ public class AppController extends VelocityViewServlet {
 
 	public static void carryOutAppActions(HttpServletRequest request, SessionDataInfo sessionData,
 			DatabaseInfo databaseDefn, List<FileItem> multipartItems, StringBuffer appActionName)
-			throws PortalBaseException, SQLException, FileUploadException, IOException {
+			throws AgileBaseException, SQLException, FileUploadException, IOException {
 		// perform any actions
 		EnumSet<AppAction> appActions = EnumSet.allOf(AppAction.class);
 		for (AppAction appAction : appActions) {
@@ -557,7 +557,7 @@ public class AppController extends VelocityViewServlet {
 				// throw new
 				// ServletException("SQL error creating session data object",
 				// sqlex);
-			} catch (PortalBaseException pbex) {
+			} catch (AgileBaseException pbex) {
 				logException(pbex, request, "Error creating session data object: " + pbex);
 				sessionData = new SessionData();
 				// throw new
@@ -588,7 +588,7 @@ public class AppController extends VelocityViewServlet {
 		try {
 			carryOutSessionActions(request, sessionData, this.databaseDefn, context, session,
 					multipartItems);
-		} catch (PortalBaseException pbex) {
+		} catch (AgileBaseException pbex) {
 			logException(pbex, request, "Error setting session data");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
@@ -836,7 +836,7 @@ public class AppController extends VelocityViewServlet {
 		} catch (ParseErrorException pee) {
 			logger.error("Syntax error in the template: " + pee);
 			throw new ServletException("Syntax error in the template", pee);
-		} catch (PortalBaseException pbex) {
+		} catch (AgileBaseException pbex) {
 			logger.error("PortalBase exception instantiating view: " + pbex);
 		} catch (SQLException sqlex) {
 			logger.error("Database error instantiating view: " + sqlex);

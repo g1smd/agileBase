@@ -21,7 +21,7 @@ import java.util.LinkedHashSet;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 
-public class TableDependencyException extends PortalBaseException {
+public class TableDependencyException extends AgileBaseException {
 
 	public TableDependencyException(String message, LinkedHashSet<TableInfo> dependentTables, LinkedHashSet<BaseReportInfo> dependentReports) {
         super(message);

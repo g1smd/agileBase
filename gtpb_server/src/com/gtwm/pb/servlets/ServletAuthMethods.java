@@ -42,7 +42,7 @@ import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
-import com.gtwm.pb.util.PortalBaseException;
+import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.RandomString;
 
 /**
@@ -121,7 +121,7 @@ public class ServletAuthMethods {
 			// remove user
 			authManager.removeUser(request, newUser);
 			throw new CantDoThatException("User addition failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// remove user
 			authManager.removeUser(request, newUser);
@@ -167,7 +167,7 @@ public class ServletAuthMethods {
 				logger.error("Unexpected error rolling back removeUser: " + appUser);
 			}
 			throw new CantDoThatException("User removal failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// return user to memory
 			try {
@@ -221,7 +221,7 @@ public class ServletAuthMethods {
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
 					oldPassword);
 			throw new CantDoThatException("User update failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
@@ -268,7 +268,7 @@ public class ServletAuthMethods {
 			// rollback memory
 			authManager.removeRole(request, role);
 			throw new CantDoThatException("Role addition failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.removeRole(request, role);
@@ -299,7 +299,7 @@ public class ServletAuthMethods {
 			// rollback memory
 			authManager.updateRole(request, role, oldRoleName);
 			throw new CantDoThatException("Role update failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateRole(request, role, oldRoleName);
@@ -332,7 +332,7 @@ public class ServletAuthMethods {
 			// rollback memory
 			authManager.addRole(request, role);
 			throw new CantDoThatException("Role removal failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.addRole(request, role);
@@ -576,7 +576,7 @@ public class ServletAuthMethods {
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			throw new CantDoThatException("Privilege setting failed", hex);
-		} catch (PortalBaseException pbex) {
+		} catch (AgileBaseException pbex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			throw new CantDoThatException("Privilege setting failed", pbex);
 		} finally {
@@ -659,7 +659,7 @@ public class ServletAuthMethods {
 					}
 				}
 			}
-		} catch (PortalBaseException pbex) {
+		} catch (AgileBaseException pbex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			throw new CantDoThatException("No privileges cleared: " + pbex.getMessage(), pbex);
 		} catch (HibernateException hex) {
@@ -692,7 +692,7 @@ public class ServletAuthMethods {
 			// rollback memory:
 			role.removeUser(user);
 			throw new CantDoThatException("Assigning user to role failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory:
 			role.removeUser(user);
@@ -723,7 +723,7 @@ public class ServletAuthMethods {
 			// rollback memory:
 			role.assignUser(user);
 			throw new CantDoThatException("Removing user from role failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory:
 			role.assignUser(user);

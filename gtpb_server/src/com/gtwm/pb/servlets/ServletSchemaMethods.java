@@ -70,7 +70,7 @@ import com.gtwm.pb.util.HttpRequestUtil;
 import com.gtwm.pb.util.InconsistentStateException;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
-import com.gtwm.pb.util.PortalBaseException;
+import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.TableDependencyException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.FilterType;
@@ -144,7 +144,7 @@ public class ServletSchemaMethods {
 			// rollback memory
 
 			throw new CantDoThatException("Company removal failed", hex);
-		} catch (PortalBaseException pbex) {
+		} catch (AgileBaseException pbex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 
@@ -219,7 +219,7 @@ public class ServletSchemaMethods {
 	}
 
 	public synchronized static void addModule(HttpServletRequest request,
-			SessionDataInfo sessionData, AuthManagerInfo authManager) throws PortalBaseException {
+			SessionDataInfo sessionData, AuthManagerInfo authManager) throws AgileBaseException {
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
 		// Make sure module name is unique
 		String baseModuleName = "New Module";
@@ -259,7 +259,7 @@ public class ServletSchemaMethods {
 	}
 
 	public synchronized static void removeModule(HttpServletRequest request,
-			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws PortalBaseException {
+			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws AgileBaseException {
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 		String internalModuleName = request.getParameter("internalmodulename");
 		if (internalModuleName == null) {
@@ -301,7 +301,7 @@ public class ServletSchemaMethods {
 	}
 
 	public synchronized static void updateModule(HttpServletRequest request,
-			SessionDataInfo sessionData, AuthManagerInfo authManager) throws PortalBaseException {
+			SessionDataInfo sessionData, AuthManagerInfo authManager) throws AgileBaseException {
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
 		String internalModuleName = request.getParameter("internalmodulename");
 		String moduleName = request.getParameter("modulename");
@@ -428,7 +428,7 @@ public class ServletSchemaMethods {
 			company.removeTable(newTable);
 			databaseDefn.getAuthManager().removePrivilegesOnTable(request, newTable);
 			throw new CantDoThatException("table addition failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 			company.removeTable(newTable);
@@ -520,7 +520,7 @@ public class ServletSchemaMethods {
 			table.setTableDescription(oldTableDesc);
 			table.setRecordsLockable(oldLockable);
 			throw new CantDoThatException("Updating table failed", sqlex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// restore report properties
 			table.setTableName(oldTableName);
@@ -570,7 +570,7 @@ public class ServletSchemaMethods {
 			}
 			rollbackConnections(conn);
 			throw new CantDoThatException("table removal failed", hex);
-		} catch (PortalBaseException pbex) {
+		} catch (AgileBaseException pbex) {
 			CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 			Set<TableInfo> tables = company.getTables();
 			if (!tables.contains(tableToRemove)) {
@@ -656,7 +656,7 @@ public class ServletSchemaMethods {
 				}
 			}
 			throw new CantDoThatException("report addition failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// remove report from memory
 			if (newReport != null) {
@@ -723,7 +723,7 @@ public class ServletSchemaMethods {
 			report.setReportDescription(oldReportDesc);
 			report.setModule(oldModule);
 			throw new CantDoThatException("Updating report failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			// restore report properties
 			report.setReportName(oldReportName);
@@ -771,7 +771,7 @@ public class ServletSchemaMethods {
 				table.addReport(report, false);
 			}
 			throw new CantDoThatException("report removal failed: " + hex.getMessage(), hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// return report to memory
 			if (!table.getReports().contains(report)) {
@@ -857,7 +857,7 @@ public class ServletSchemaMethods {
 					}
 				}
 				throw new CantDoThatException("field addition failed", hex);
-			} catch (PortalBaseException pex) {
+			} catch (AgileBaseException pex) {
 				rollbackConnections(conn);
 				// remove field from memory (table fields and default report
 				// fields)
@@ -960,7 +960,7 @@ public class ServletSchemaMethods {
 			}
 			// remove field from memory (table fields and default report fields)
 			throw new CantDoThatException("field addition failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			if (newField != null) {
 				table.removeField(newField);
@@ -1031,7 +1031,7 @@ public class ServletSchemaMethods {
 			}
 			rollbackConnections(conn);
 			throw new CantDoThatException("Field removal failed: " + hex.getMessage(), hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			// add field back into table & default report
 			if (!tableToRemoveFrom.getFields().contains(field))
 				field.getTableContainingField().addField(field);
@@ -1096,7 +1096,7 @@ public class ServletSchemaMethods {
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique);
 			throw new CantDoThatException("Updating field failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
@@ -1176,7 +1176,7 @@ public class ServletSchemaMethods {
 			field.setFieldName(oldFieldName);
 			field.setFieldDescription(oldFieldDescription);
 			throw new CantDoThatException("Updating field failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			// restore field
 			field.setFieldName(oldFieldName);
@@ -1224,7 +1224,7 @@ public class ServletSchemaMethods {
 				table.getDefaultReport().setFieldIndex(oldFieldIndex, reportField);
 			}
 			throw new CantDoThatException("Setting field index failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			// restore old field index
 			table.setFieldIndex(oldFieldIndex, field);
@@ -1332,7 +1332,7 @@ public class ServletSchemaMethods {
 				report.removeField(addedReportField);
 			}
 			throw new CantDoThatException("report field addition failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// remove reportfield from memory
 			if (addedReportField != null) {
@@ -1379,7 +1379,7 @@ public class ServletSchemaMethods {
 			// return reportfield to memory
 			try {
 				report.addField(reportField);
-			} catch (PortalBaseException pex) {
+			} catch (AgileBaseException pex) {
 				logger.warn("Error returning report field to memory");
 				pex.printStackTrace();
 			}
@@ -1389,17 +1389,17 @@ public class ServletSchemaMethods {
 			// return reportfield to memory
 			try {
 				report.addField(reportField);
-			} catch (PortalBaseException pex) {
+			} catch (AgileBaseException pex) {
 				logger.warn("Error returning report field to memory");
 				pex.printStackTrace();
 			}
 			throw new CantDoThatException("report field removal failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// return reportfield to memory
 			try {
 				report.addField(reportField);
-			} catch (PortalBaseException secondPex) {
+			} catch (AgileBaseException secondPex) {
 				logger.warn("Error returning report field to memory");
 				secondPex.printStackTrace();
 			}
@@ -1456,7 +1456,7 @@ public class ServletSchemaMethods {
 			// restore old field index
 			report.setFieldIndex(oldFieldIndex, field);
 			throw new CantDoThatException("Report field re-indexing failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// restore old field index
 			report.setFieldIndex(oldFieldIndex, field);
@@ -1550,7 +1550,7 @@ public class ServletSchemaMethods {
 								.getSortDirection());
 			}
 			throw new CantDoThatException("report field sorting failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// rollback changes to in memory objects
 			report.removeSort(field);
@@ -1618,7 +1618,7 @@ public class ServletSchemaMethods {
 				report.removeField(newCalculationField);
 			}
 			throw new CantDoThatException("Calculation addition failed. " + hex.getMessage(), hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// remove calculation from memory
 			if (newCalculationField != null) {
@@ -1682,7 +1682,7 @@ public class ServletSchemaMethods {
 			databaseDefn.returnCalculationInReportToMemory(request, conn, report, calculationField,
 					oldCalculationName, oldCalculationDefn, oldDbFieldType);
 			throw new CantDoThatException("Calculation addition failed. " + hex.getMessage(), hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// undo changes to calculation in memory
 			databaseDefn.returnCalculationInReportToMemory(request, conn, report, calculationField,
@@ -1790,7 +1790,7 @@ public class ServletSchemaMethods {
 				report.removeFilter(filter);
 			}
 			throw new CantDoThatException("filter addition failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// remove report filter from memory
 			if (filter != null) {
@@ -1840,7 +1840,7 @@ public class ServletSchemaMethods {
 			// return reportfilter to memory
 			report.addFilter(reportFilter);
 			throw new CantDoThatException("Filter removal failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// return reportfilter to memory
 			report.addFilter(reportFilter);
@@ -2008,7 +2008,7 @@ public class ServletSchemaMethods {
 			// remove join from memory
 			report.removeJoin(join);
 			throw new CantDoThatException("Join addition failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// remove join from memory
 			report.removeJoin(join);
@@ -2058,7 +2058,7 @@ public class ServletSchemaMethods {
 			// return report join to memory
 			report.addJoin(join);
 			throw new CantDoThatException("Join removal failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
 			// return report join to memory
 			report.addJoin(join);
@@ -2101,7 +2101,7 @@ public class ServletSchemaMethods {
 			groupingReportField.getParentReport().getReportSummary().removeGrouping(
 					groupingReportField);
 			throw new CantDoThatException("summary grouping addition failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			groupingReportField.getParentReport().getReportSummary().removeGrouping(
 					groupingReportField);
@@ -2140,7 +2140,7 @@ public class ServletSchemaMethods {
 			groupingReportField.getParentReport().getReportSummary().addGrouping(
 					groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			groupingReportField.getParentReport().getReportSummary().addGrouping(
 					groupingReportField, null);
@@ -2195,7 +2195,7 @@ public class ServletSchemaMethods {
 				logger.error("Unable to rollback function addition - maybe it didn't get added");
 			}
 			throw new CantDoThatException("summary function addition failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			try {
 				functionReportField.getParentReport().getReportSummary().removeFunction(
@@ -2242,7 +2242,7 @@ public class ServletSchemaMethods {
 			rollbackConnections(null);
 			functionReportField.getParentReport().getReportSummary().addFunction(aggregateToRemove);
 			throw new CantDoThatException("summary function removal failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			functionReportField.getParentReport().getReportSummary().addFunction(aggregateToRemove);
 			throw new CantDoThatException("summary function removal failed", pex);
@@ -2279,7 +2279,7 @@ public class ServletSchemaMethods {
 			// Could have some code to roll back memory state here
 			// but will only add it if it becomes necessary
 			throw new CantDoThatException("summary saving failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			throw new CantDoThatException("summary saving failed", pex);
 		} finally {
@@ -2317,7 +2317,7 @@ public class ServletSchemaMethods {
 			// Could have some code to roll back memory state here
 			// but will only add it if it becomes necessary
 			throw new CantDoThatException("summary removal failed", hex);
-		} catch (PortalBaseException pex) {
+		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			throw new CantDoThatException("summary removal failed", pex);
 		} finally {

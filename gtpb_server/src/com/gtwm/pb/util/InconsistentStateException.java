@@ -24,7 +24,7 @@ package com.gtwm.pb.util;
  * performs the necessary SQL. If the SQL fails, it tries to remove the field object from the record object
  * but if this fails as well, then the app is in an inconsistent state.
  */
-public class InconsistentStateException extends PortalBaseException {
+public class InconsistentStateException extends AgileBaseException {
 
 	public InconsistentStateException(String message) {
         super(message);

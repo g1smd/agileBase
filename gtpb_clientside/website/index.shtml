@@ -36,7 +36,7 @@
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
 					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/portalBase/j_security_check" name="loginform" id="loginform">
 			<!--#else --> 
-					<form method="POST" action="https://appserver.gtportalbase.com/portalBase/j_security_check" name="loginform" id="loginform">
+					<form method="POST" action="https://appserver.agilebase.co.uk/portalBase/j_security_check" name="loginform" id="loginform">
 			<!--#endif -->
 			<table border="0" class="mobileLogin">
 			<tr>
@@ -70,13 +70,13 @@
 		<script type="text/javascript" src="/portalBase/website/scripts/thickbox.js"></script>
 
 <!--#if expr="$SERVER_PORT = '443'" --> 
-	<!-- https://appserver.gtportalbase.com -->
+	<!-- https://appserver.agilebase.co.uk -->
 		<script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg"></script>
 <!--#elif expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
 	<!-- http://gtwmbackup.dh.bytemark.co.uk -->
 		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBQf1koDrgwv2nVopgtXyNJJGf3wPhSGxzvELTvIoGYjhEXJzrBbXQIbKw"></script>
 <!--#else -->
-	<!-- http://appserver.gtportalbase.com -->
+	<!-- http://appserver.agilebase.co.uk -->
 		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBTkxqGBZcNO6KTJ8OH7el13ZyLEzxT0-wdY7BkQmrNPx8dhLS-syRRsRQ"></script>
 <!--#endif -->
 
@@ -123,7 +123,7 @@
 		$(document).ready(function(){
 			// frame buster needed as we may be in one of the agileBase application panes after a login timeout
 			if ((top.frames.length!=0) || (document.location.href.indexOf("logout") > -1)) {
-				top.location="http://gtportalbase.com/start";
+				top.location="http://agilebase.co.uk/start";
 			}
 			// focus the 'username' box for logging in
 			$("#j_username").focus();
@@ -137,7 +137,7 @@
 			// test for iPhone
 			if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
 				if(document.location.href.indexOf("mobile") == -1) {
-					$('#login').html('<big>iPhone users log in at<br><a href="http://www.gtportalbase.com/mobile">www.gtportalbase.com/mobile</a></big>');
+					$('#login').html('<big>iPhone users log in at<br><a href="http://www.agilebase.co.uk/mobile">www.agilebase.co.uk/mobile</a></big>');
 				}
 			}
 			
@@ -196,19 +196,19 @@
 						Please contact us for custom demos
 					</div>
 					<div id="popupHelpContent" class="popup">
-						Our support centre is<p><a href="http://www.gtportalbase.com/help">www.gtportalbase.com/help</a><p>
+						Our support centre is<p><a href="http://www.agilebase.co.uk/help">www.agilebase.co.uk/help</a><p>
 						In brief, support for portalBase is organised into three types
 						<ul>
-						<li><a href="http://www.gtportalbase.com/help">Support Forum (free)</a></li>
+						<li><a href="http://www.agilebase.co.uk/help">Support Forum (free)</a></li>
 						<li>Business specific support (charged)<br>
-						For private support issues regarding confidential client data, e.g. data restore requests, please email support@gtportalbase.com
+						For private support issues regarding confidential client data, e.g. data restore requests, please email support@agilebase.co.uk
 						</li>
 						<li>Open source support (hybrid)<br>For details, see the support centre</li>
 						</ul>
 						<p>User and administrator documentation is also freely available online at the support centre
 					</div>
 					<div id="popupContactContent" class="popup">
-						Email <a href="mailto:oliver@gtportalbase.com">oliver@gtportalbase.com</a><br>
+						Email <a href="mailto:oliver@agilebase.co.uk">oliver@agilebase.co.uk</a><br>
 						Phone +44(0)845 4561810<br>
 						Skype okohll<br>
 						<a href="http://www.gtwm.co.uk">More contacts</a> at GT webMarque
@@ -226,7 +226,7 @@
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
 					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/portalBase/j_security_check" name="loginform" id="loginform">
 			<!--#else --> 
-					<form method="POST" action="https://appserver.gtportalbase.com/portalBase/j_security_check" name="loginform" id="loginform">
+					<form method="POST" action="https://appserver.agilebase.co.uk/portalBase/j_security_check" name="loginform" id="loginform">
 			<!--#endif -->
 								<div class="input">username<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/>
 								</div>  

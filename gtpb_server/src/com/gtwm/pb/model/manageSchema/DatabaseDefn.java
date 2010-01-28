@@ -111,7 +111,7 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.Naming;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.TableDependencyException;
-import com.gtwm.pb.util.PortalBaseException;
+import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.Helpers;
@@ -200,7 +200,7 @@ public class DatabaseDefn implements DatabaseInfo {
 				} catch (HibernateException hex) {
 					logger.error("Hibernate error adding locking field: " + hex);
 					rollbackConnections(conn);
-				} catch (PortalBaseException pbex) {
+				} catch (AgileBaseException pbex) {
 					logger.error("PB error adding locking field: " + pbex);
 					rollbackConnections(conn);
 				} finally {

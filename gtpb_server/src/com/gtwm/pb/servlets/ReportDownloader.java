@@ -55,7 +55,7 @@ import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.CantDoThatException;
-import com.gtwm.pb.util.PortalBaseException;
+import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
 public class ReportDownloader extends HttpServlet {
@@ -107,7 +107,7 @@ public class ReportDownloader extends HttpServlet {
 			sos.flush();
 		} catch (IOException ioex) {
 			throw new ServletException("IO exception generating spreadsheet: " + ioex);
-		} catch (PortalBaseException pbex) {
+		} catch (AgileBaseException pbex) {
 			throw new ServletException("portalBase exception generating spreadsheet: " + pbex);
 		} catch (SQLException sqlex) {
 			throw new ServletException("Database exception generating spreadsheet: " + sqlex);
@@ -125,7 +125,7 @@ public class ReportDownloader extends HttpServlet {
 	 * @return
 	 */
 	private ByteArrayOutputStream getSessionReportAsExcel(CompanyInfo company,
-			SessionDataInfo sessionData) throws PortalBaseException, IOException, SQLException {
+			SessionDataInfo sessionData) throws AgileBaseException, IOException, SQLException {
 		BaseReportInfo report = sessionData.getReport();
 		if (report == null) {
 			throw new ObjectNotFoundException("No report found in the session");
@@ -140,7 +140,7 @@ public class ReportDownloader extends HttpServlet {
 		HSSFCell cell = row.createCell(1);
 		cell.setCellValue(new HSSFRichTextString("Exported from the " + company
 				+ " portalBase report '" + report.getModule() + " - " + report
-				+ "'. Live data at www.gtportalbase.com/start"));
+				+ "'. Live data at www.agilebase.co.uk/start"));
 		rowNum = rowNum + 2;
 		// header
 		HSSFCellStyle boldCellStyle = workbook.createCellStyle();
