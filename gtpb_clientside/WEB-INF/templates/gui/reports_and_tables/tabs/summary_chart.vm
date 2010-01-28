@@ -124,6 +124,12 @@
 				textTransform: 'lowercase'
 			}
 		 },
+		 tooltip: {
+		   formatter: function() {
+						return '<b>'+ this.series.name.replace(/\=.*$/,'') +'</b><br/>'+
+							this.x +': '+ this.y;
+		   }
+		 },
          series: $series
       });
   </script>
