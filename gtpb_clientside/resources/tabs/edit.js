@@ -192,8 +192,8 @@ function fShowReportUsage() {
 function fEnableCalcSyntaxHighlight() {
   if($("#calculationdefn").length > 0) {
     editAreaLoader.init({
-	  id : "calculationdefn"		// textarea id
-	  ,syntax: "sql"			// syntax to be uses for highgliting
+	  id: "calculationdefn"		// textarea id
+	  ,syntax: "sql"			    // syntax to be uses for highlighting
 	  ,start_highlight: true		// to display with highlight mode on start-up
 	  ,allow_toggle: false
 	  ,browsers: "all"
@@ -208,10 +208,17 @@ function fEALoaded() {
   $('#frame_calculationdefn').contents().find('.area_toolbar').hide();
 }
 
+/* Charts in pane 3 need some behaviours added */
+function fSetupCharts() {
+  $('.summary_chart').append('Hello I am in the summary chart div');
+  $('.summary_chart').hover(function(){
+	  //
+  });
+}
+
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
 
 pane3Scripts.functionList.push(fUnlockButton);
 pane3Scripts.functionList.push(fComboComponents);
 pane3Scripts.functionList.push(fRelationPickers);
-//pane3Scripts.functionList.push(fEnableCalcSyntaxHighlight);

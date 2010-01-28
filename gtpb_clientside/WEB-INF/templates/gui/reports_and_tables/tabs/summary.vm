@@ -69,7 +69,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 <div class="chart_controls">
 <form name=addgrouping method=post action="/portalBase/AppController.servlet">
 #if($groupings.size() > 0)
-  1. Choose groupings: 
+  Choose groupings: 
   #foreach($grouping in $groupings)
   <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_grouping_from_summary_report=true&internalfieldname=$grouping.getGroupingReportField().getInternalFieldName()">
     $grouping
@@ -129,7 +129,7 @@ function fShowAddAgg() {
 <br>
 <form name=addaggregate method=post action="/portalBase/AppController.servlet">
 #if($aggregateFunctions.size() >0)
-  2. Choose functions: 
+  Choose functions: 
   #foreach($aggregateFunction in $aggregateFunctions)
     <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_function_from_summary_report=true&internalaggregatename=$aggregateFunction.getInternalAggregateName()">
       $aggregateFunction
@@ -161,7 +161,7 @@ function fShowAddAgg() {
 </div>
 </form><br>
 <form name="savechart">
-	3. Choose title: 
+	Choose title: 
 	<input type="text" name="summarytitle" />
 	<input type="hidden" name="return" value="$return_template" />
 	<input type="hidden" name="save_report_summary" value="true" />
