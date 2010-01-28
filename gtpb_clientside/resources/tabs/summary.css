@@ -63,13 +63,6 @@
     background-image: url('remove-dark.png');
   }
   
-  .chart_remover {
-    position: absolute;
-    display: none;
-    right: 1em;
-    top: 1em;
-  }
-
   .two_cols {
   	-moz-column-count: 2;
   	-webkit-column-count: 2;
@@ -78,7 +71,6 @@
   .summary_chart {
     width: 100%;
     position: relative; /* to allow the chart_remover to be placed inside */
-    z-index: 100; /* on top of the chart */
   }
   
   .default_chart {
@@ -86,4 +78,11 @@
     width: 100%;
   }
   
+  .chart_remover {
+    position: absolute;
+    display: none;
+    right: 1em;
+    top: 1em;
+    z-index: 100; /* on top of the chart */
+  }
   
