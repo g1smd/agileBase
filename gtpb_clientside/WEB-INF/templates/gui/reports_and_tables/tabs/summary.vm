@@ -24,7 +24,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   #set($report = $sessionData.getReport())
 #end
 #set($reportSummary = $report.getReportSummary())
-#set($defaultReportSummary = $reportSummary)
+#set($defaultReportSummary = $report.getReportSummary())
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
 #set($numCols = 1 + $groupings.size() + $aggregateFunctions.size())
@@ -43,6 +43,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($savedSummaries = $report.getSavedReportSummaries())
 <div id="saved_charts" #if($savedSummaries.size() > 2) class="two_cols" #end>
 #foreach($savedReportSummary in $savedSummaries)
+  Checking $savedReportSummary ($savedReportSummary.getId()) against $defaultReportSummary ($defaultReportSummary.getId())<br>
   #if(!$savedReportSummary.equals($defaultReportSummary))
     #set($reportSummary = $savedReportSummary)
     #set($reportSummaryData = $view.getReportSummaryData($reportSummary))
