@@ -27,6 +27,7 @@
 #set($chartTitle = "$reportSummary.getTitle()")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
 #set($xAxisCategories = [])
+#set($maxXAxisChars = 2)
 #foreach($summaryRow in $reportSummaryRows)
   #set($xAxisCategory = "")
   #foreach($grouping in $groupings)
@@ -35,6 +36,9 @@
 	#else
 	  #set($xAxisCategory = "$xAxisCategory | $summaryRow.getGroupingValue($grouping)")
 	#end
+  #end
+  #if($maxXAxisChars < $xAxisCategory.length())
+	#set($maxXAxisChars = $xAxisCategory.length())
   #end
   #set($success = $xAxisCategories.add("'$viewTools.escape($xAxisCategory)'"))
 #end
@@ -67,6 +71,8 @@
   #end
 #end
 #set($success = $series.add($seriesString))
+## Set chart sizing
+#set($xAxisMargin = $maxXAxisChars * 7)
 #set($height=200)
 #if($xAxisCategories.size() > 10)
   #set($height = $xAxisCategories.size() * 20)
@@ -76,9 +82,9 @@
 #end
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
   #if($reportSummary.equals($report.getReportSummary()))
-	#set($margin = "[10, 50, 40, 120]") ## top, right, bottom, left
+	#set($margin = "[10, 50, 60, $xAxisMargin]") ## top, right, bottom, left
   #else
-	#set($margin = "[50, 50, 40, 120]")
+	#set($margin = "[50, 50, 60, $xAxisMargin]")
 	#set($height = $height + 40)
   #end
   #set($title = "")
