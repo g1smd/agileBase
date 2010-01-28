@@ -22,7 +22,7 @@
 #set($chart_id = "chart_$reportSummary.getId()")
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
-<div id="$chart_id" style="width:100%;" #if($reportSummary.equals($report.getReportSummary())) class="default_chart" #else class="summary_chart" #end></div>
+<div id="$chart_id" #if($reportSummary.equals($report.getReportSummary())) class="default_chart" #else class="summary_chart" #end></div>
 #if($reportSummaryRows.size() > 0)
 #set($chartTitle = "$reportSummary.getTitle()")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")

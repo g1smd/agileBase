@@ -63,12 +63,25 @@
     background-image: url('remove-dark.png');
   }
   
+  .chart_remover {
+    position:absolute;
+    right:0px;
+    top:0px;
+  }
+
   .two_cols {
   	-moz-column-count: 2;
   	-webkit-column-count: 2;
   }
   
+  .summary_chart {
+    width:100%;
+    position:relative; /* to allow the chart_remover to be placed inside */
+  }
+  
   .default_chart {
     background-color: #f4f4f4;
+    width:100%;
   }
+  
   
