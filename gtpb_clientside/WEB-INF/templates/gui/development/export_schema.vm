@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-<portalbaseschema>
+<agilebaseschema>
 <tables>
 #foreach($table in $view.getLoggedInUser().getCompany().getTables())
 	#if(! $table.isAuditTable())
@@ -102,4 +102,4 @@
 </users>
 <roles>
 </roles>
-</portalbaseschema>
+</agilebaseschema>

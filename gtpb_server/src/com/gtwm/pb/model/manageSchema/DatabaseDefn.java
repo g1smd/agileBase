@@ -123,7 +123,7 @@ import org.hibernate.Session;
 public class DatabaseDefn implements DatabaseInfo {
 
 	/**
-	 * There should be one DatabaseInfo object per portalBase application
+	 * There should be one DatabaseInfo object per agileBase application
 	 * instance. This constructor generates it. It bootstraps the application.
 	 * All schema objects are loaded into memory from the pervasive store.
 	 * 
@@ -928,10 +928,9 @@ public class DatabaseDefn implements DatabaseInfo {
 			boolean unique, boolean hidden) throws CodingErrorException, CantDoThatException,
 			ObjectNotFoundException {
 		BaseField field = null;
-		// No fields in portalBase are mandatory
+		// No fields in agileBase are mandatory
 		boolean notNull = false;
-		// The 'not applicable' property is also not used in portalBase
-		// currently
+		// The 'not applicable' property is also not used currently
 		boolean notApplicable = false;
 		String notApplicableDescription = null;
 		String notApplicableValue = null;
@@ -1415,7 +1414,7 @@ public class DatabaseDefn implements DatabaseInfo {
 				PrivilegeType.VIEW_TABLE_DATA, relatedTable))) {
 			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, relatedTable);
 		}
-		// No fields are mandatory in portalBase
+		// No fields are mandatory in agileBase
 		boolean notNull = false;
 		String listValueFieldInternalName = request.getParameter(PossibleListOptions.LISTVALUEFIELD
 				.getFormInputName());
@@ -2363,7 +2362,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public String toString() {
-		return "DatabaseDefn: Core portalBase methods";
+		return "DatabaseDefn: Core agileBase methods";
 	}
 
 	/**

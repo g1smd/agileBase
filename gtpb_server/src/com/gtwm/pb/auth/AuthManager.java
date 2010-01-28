@@ -128,7 +128,7 @@ public class AuthManager implements AuthManagerInfo {
 			if (this.authenticator == null) {
 				// There must be one and only one Authenticator object
 				// persisted. If there isn't one,
-				// we're doing the first boot of portalBase, create one and set
+				// we're doing the first boot of agileBase, create one and set
 				// up the master user
 				try {
 					this.authenticator = new Authenticator();

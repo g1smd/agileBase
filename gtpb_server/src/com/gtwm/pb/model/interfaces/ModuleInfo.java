@@ -32,7 +32,7 @@ public interface ModuleInfo {
 
 	/**
 	 * Return the path and filename of the icon for this module, relative to the
-	 * portalBase root
+	 * agileBase root
 	 */
 	public String getIconPath();
 

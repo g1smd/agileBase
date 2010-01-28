@@ -75,7 +75,7 @@ public class AppProperties {
 	public static final int lookupCacheTime = 1000 * 10;
 
 	/**
-	 * An hour of the day when portalBase is expected to have low activity and
+	 * An hour of the day when agileBase is expected to have low activity and
 	 * background tasks can be started in
 	 */
 	public static final int lowActivityHour = 3;

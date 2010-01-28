@@ -5,7 +5,7 @@
  * Licensed under the MIT License: http://www.opensource.org/licenses/mit-license.php
 */
       
-var tb_pathToImage = "/portalBase/website/images/tb-loadingAnimation.gif";
+var tb_pathToImage = "/agileBase/website/images/tb-loadingAnimation.gif";
 /*!!!!!!!!!!!!!!!!! edit below this line at your own risk !!!!!!!!!!!!!!!!!!!!!!!*/
 //on page load call tb_init
 $(document).ready(function(){   

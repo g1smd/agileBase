@@ -1,9 +1,9 @@
---These are potentially useful for the portalbaseschema database
+--These are potentially useful for the agilebaseschema database
 --which is a Hibernate database. Hibernate doesn't create its own indexes
 --In tests so far, adding these indexes hasn't resulted in a performance benefit
 --so they are only kept for potential use in certain setups
 
--- It is not necessary to run this script to use portalBase
+-- It is not necessary to run this script to use agileBase
 
 create index abstractfield_fkb71bb5d8c9795fed on abstractfield(tablecontainingfield_internaltablename);
 create index abstractreportfield_fk8fbdf28451ebcbcb on abstractreportfield(reportfieldisfromdirect_internalreportname);

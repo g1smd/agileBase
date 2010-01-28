@@ -21,22 +21,22 @@
 <html>
 	<head>
 		<title>agileBase</title>
-		<link rel="icon" href="/portalBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
+		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
 	    <meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable=yes" />
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 	    <style>
-	    	@import url("/portalBase/website/styles/styles.css");
+	    	@import url("/agileBase/website/styles/styles.css");
 		</style>
     </head>
     <body class="mobile">
 		<div id="header" class="wrapper">
 			<div class="content">
-				<a id="home" href="#" alt="agileBase"><img src="/portalBase/website/images/logo-agilebase.png"></a>
+				<a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
 				<div style="position:relative; top:110px">
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
-					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/portalBase/j_security_check" name="loginform" id="loginform">
+					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 			<!--#else --> 
-					<form method="POST" action="https://appserver.agilebase.co.uk/portalBase/j_security_check" name="loginform" id="loginform">
+					<form method="POST" action="https://appserver.agilebase.co.uk/agileBase/j_security_check" name="loginform" id="loginform">
 			<!--#endif -->
 			<table border="0" class="mobileLogin">
 			<tr>
@@ -64,10 +64,10 @@
 <html>
 	<head>
 		<title>agileBase</title>
-		<link rel="icon" href="/portalBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
+		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
-		<script type="text/javascript" src="/portalBase/website/scripts/jquery.js"></script>
-		<script type="text/javascript" src="/portalBase/website/scripts/thickbox.js"></script>
+		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
+		<script type="text/javascript" src="/agileBase/website/scripts/thickbox.js"></script>
 
 <!--#if expr="$SERVER_PORT = '443'" --> 
 	<!-- https://appserver.agilebase.co.uk -->
@@ -94,11 +94,11 @@
 	<script type="text/javascript"> 
 
 		function  loadFeedControl() {
-			var feed  = "http://gtportalbase.wordpress.com/?feed=rss2";
+			var feed  = "http://blog.agilebase.co.uk/?feed=rss2";
 				var options = {
 				numResults : 6,
 						displayTime : 15000,
-						title : "<a href='http://gtportalbase.wordpress.com'>announcements</a>",
+						title : "<a href='http://blog.agilebase.co.uk'>announcements</a>",
 						linkTarget : google.feeds.LINK_TARGET_SELF
 				};
 			var fg = new GFdynamicFeedControl(feed, "announce", options);
@@ -161,11 +161,11 @@
 	</script>
 	<style>
 		/* Google RSS stylesheet */
-		@import url("/portalBase/website/styles/gfdynamicfeedcontrol.css");
-		@import url("/portalBase/website/styles/thickbox.css");
-		@import url("/portalBase/website/styles/thickbox_override.css");
-		@import url("/portalBase/website/styles/styles.css");
-		@import url("/portalBase/website/styles/fonts.css");
+		@import url("/agileBase/website/styles/gfdynamicfeedcontrol.css");
+		@import url("/agileBase/website/styles/thickbox.css");
+		@import url("/agileBase/website/styles/thickbox_override.css");
+		@import url("/agileBase/website/styles/styles.css");
+		@import url("/agileBase/website/styles/fonts.css");
 	</style>
 	</head>
 	
@@ -174,7 +174,7 @@
 		<div id="tl_wrapper">
 			<div id="header" class="wrapper">
 					<div class="content">
-						<a id="home" href="#" alt="agileBase"><img src="/portalBase/website/images/logo-agilebase.png"></a>
+						<a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
 						<table cellspacing="0" cellpadding="0" border="0">
 							<tr class="row1">
 								<td class="col1"><a href="#TB_inline&inlineId=popupPricingContent" class="thickbox">pricing</a></td>
@@ -197,7 +197,7 @@
 					</div>
 					<div id="popupHelpContent" class="popup">
 						Our support centre is<p><a href="http://www.agilebase.co.uk/help">www.agilebase.co.uk/help</a><p>
-						In brief, support for portalBase is organised into three types
+						In brief, support for agileBase is organised into three types
 						<ul>
 						<li><a href="http://www.agilebase.co.uk/help">Support Forum (free)</a></li>
 						<li>Business specific support (charged)<br>
@@ -224,9 +224,9 @@
 						</div>
 				<div id="login">
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
-					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/portalBase/j_security_check" name="loginform" id="loginform">
+					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 			<!--#else --> 
-					<form method="POST" action="https://appserver.agilebase.co.uk/portalBase/j_security_check" name="loginform" id="loginform">
+					<form method="POST" action="https://appserver.agilebase.co.uk/agileBase/j_security_check" name="loginform" id="loginform">
 			<!--#endif -->
 								<div class="input">username<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/>
 								</div>  
@@ -253,11 +253,11 @@
 						<div id="main" class="detail">
 							<div class="divider">
 								<h1>How do I use it?</h1>
-								<p>Use portalBase to create database web applications. It's most
+								<p>Use agileBase to create database web applications. It's most
 								suited to analysts who understand in depth both technology and the business needs.</p>
 								<p>Our vision was to make a product that allows business analysts
 								to create lean, agile, Just-In-Time (JIT) back offices.</p>
-								Typically, rapidly changing environments are a growth medium for portalBase, 
+								Typically, rapidly changing environments are a growth medium for agileBase, 
 								where scalability goes hand in hand with the need for a rapid build / alter cycle.</p>
 							</div>
 							<div>
@@ -267,7 +267,7 @@
 							      <tr>
 									<td style="width:50%">
 									  <h2>* Agile platform *</h2>
-									  Such as portalBase which has proven popular when used either as a wrapper around 
+									  Such as agileBase which has proven popular when used either as a wrapper around 
 									  existing / legacy systems or starting as a prototyping and learning platform</li>
 									</td>
 									<td style="width:50%">
@@ -297,7 +297,7 @@
 							<div class="divider">
 								<h1>On the foundations</h1>
 								<p>Building blocks provide the capacity for massive scalability of end applications if necessary 
-								but the portalBase aplication itself also has some nice technical features that anyone who's worked 
+								but the agileBase aplication itself also has some nice technical features that anyone who's worked 
 								on large scale databases will appreciate, for example...</p>
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tr>
@@ -317,7 +317,7 @@
 										<td style="width:50%">
 											<h2>Deleting</h2>
 											Similarly, if you try to delete a table or view field that something else depends on, 
-											portalBase will tell you exactly where the dependencies are so you can solve them first.
+											agileBase will tell you exactly where the dependencies are so you can solve them first.
 										</td>
 										<td style="width:50%">
 											<h2>More</h2>
@@ -330,7 +330,7 @@
 							</div>
 							<div class="divider">
 								<h1>Technology</h1>
-								portalBase is a web-based, usually hosted application. 
+								agileBase is a web-based, usually hosted application. 
 								The <a href="http://en.wikipedia.org/wiki/AJAX">AJAX</a> user interface works on Firefox (recommended), Internet Explorer 7+, Google Chrome and Safari browsers.<p>
 								The server side software and data is usually run as a hosted service by us. 
 								However, if you wish to run your own version, it is platform agnostic, running on Linux or Windows.<p>
@@ -340,24 +340,24 @@
 								We host at <a href="http://www.ntt.com/">NTT Communications</a>' London datacentre. Backups are made hourly and transferred offsite (to Manchester) daily.</p>
 								<table border="0" width="100%" style="margin-top:20px">
 									<tr>
-										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://www.postgresql.org/"><img border="0" src="/portalBase/website/content/postgresql.gif"></a></td>
-										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://www.hibernate.org/"><img border="0" src="/portalBase/website/content/hibernate_logo.gif"></a></td>
-										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://velocity.apache.org/"><img border="0" src="/portalBase/website/content/velocity_logo.gif"></a></td>
+										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://www.postgresql.org/"><img border="0" src="/agileBase/website/content/postgresql.gif"></a></td>
+										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://www.hibernate.org/"><img border="0" src="/agileBase/website/content/hibernate_logo.gif"></a></td>
+										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://velocity.apache.org/"><img border="0" src="/agileBase/website/content/velocity_logo.gif"></a></td>
 									 </tr>
 								</table>
 							  </div>
 							<div>
 								<h1>Documentation &amp; Source</h1>
-								<p><a href="http://github.com/okohll/GT-portalBase/tree/"><img border="0" src="/portalBase/website/content/github.png" style="float:left;"></a>The source code for agileBase is <a href="http://github.com/okohll/GT-portalBase/tree/">available</a> on GitHub as open source.								
+								<p><a href="http://github.com/okohll/GT-portalBase/tree/"><img border="0" src="/agileBase/website/content/github.png" style="float:left;"></a>The source code for agileBase is <a href="http://github.com/okohll/GT-portalBase/tree/">available</a> on GitHub as open source.								
 								</p>
 								<p style="clear:both">See 
 								  <ul>
 								    <li><a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#End_user_documentation">User documentation</a></li> 
 									<li><a href="http://www.gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase#Administrator_documentation">Administrator Documentation</a></li> 
-									<li><a href="/portalBase/website/content/gtpb_overview.pdf">Brochure</a></li>
+									<li><a href="/agileBase/website/content/gtpb_overview.pdf">Brochure</a></li>
 								  </ul>
 								</p>
-							  <p>portalBase is a <a href="http://www.gtwm.co.uk">GT webMarque</a> product, <a href="http://www.gtwm.co.uk">contact us</a> for more help and advice</p>
+							  <p>agileBase is a <a href="http://www.gtwm.co.uk">GT webMarque</a> product, <a href="http://www.gtwm.co.uk">contact us</a> for more help and advice</p>
 							</div>
 						</div>  <!-- end of technical -->
 						<div id="analyst" class="detail">

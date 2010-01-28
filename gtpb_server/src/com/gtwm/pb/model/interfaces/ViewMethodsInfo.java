@@ -70,9 +70,9 @@ public interface ViewMethodsInfo {
 
 	/**
 	 * Returns true if a wiki is running on this computer and integrated into
-	 * portalBase via the servlet container's server.xml
+	 * agileBase via the servlet container's server.xml
 	 * 
-	 * Returns false if no wiki functionality will be integrated into portalBase
+	 * Returns false if no wiki functionality will be integrated into agileBase
 	 */
 	public boolean isWikiIntegrated() throws ObjectNotFoundException, DisallowedException;
 
@@ -274,7 +274,7 @@ public interface ViewMethodsInfo {
 	 * @see java.lang.NumberFormatException
 	 * @see com.gtwm.pb.util.MissingParametersException
 	 * @see com.gtwm.pb.auth.DisallowedException
-	 * @see com.gtwm.pb.util.PortalBaseException General PortalBaseException
+	 * @see com.gtwm.pb.util.AgileBaseException General AgileBaseException
 	 *      which is a superclass of e.g. ObjectNotFoundException and
 	 *      DisallowedException
 	 * @see java.sql.SQLException
@@ -666,14 +666,14 @@ public interface ViewMethodsInfo {
 	/**
 	 * 
 	 * @param sourceText
-	 * @return sourceText after portalBase object names (enclosed within curly
+	 * @return sourceText after agileBase object names (enclosed within curly
 	 *         braces) have been replaced by internal object identifiers
 	 */
 	public String toInternalNames(String sourceText) throws ObjectNotFoundException;
 
 	/**
 	 * @param sourceText
-	 * @return sourceText after portalBase internal object identifiers have been
+	 * @return sourceText after agileBase internal object identifiers have been
 	 *         replaced by their display names
 	 */
 	public String toExternalNames(String sourceText) throws ObjectNotFoundException;

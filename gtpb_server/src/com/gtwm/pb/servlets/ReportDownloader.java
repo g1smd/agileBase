@@ -108,7 +108,7 @@ public class ReportDownloader extends HttpServlet {
 		} catch (IOException ioex) {
 			throw new ServletException("IO exception generating spreadsheet: " + ioex);
 		} catch (AgileBaseException pbex) {
-			throw new ServletException("portalBase exception generating spreadsheet: " + pbex);
+			throw new ServletException("Problem generating spreadsheet: " + pbex);
 		} catch (SQLException sqlex) {
 			throw new ServletException("Database exception generating spreadsheet: " + sqlex);
 		} finally {
@@ -134,12 +134,12 @@ public class ReportDownloader extends HttpServlet {
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		// the pane 2 report
 		HSSFSheet reportSheet = workbook.createSheet(report.getReportName());
-		// exported from portalBase message
+		// exported from agileBase message
 		int rowNum = 0;
 		HSSFRow row = reportSheet.createRow(rowNum);
 		HSSFCell cell = row.createCell(1);
 		cell.setCellValue(new HSSFRichTextString("Exported from the " + company
-				+ " portalBase report '" + report.getModule() + " - " + report
+				+ " agileBase report '" + report.getModule() + " - " + report
 				+ "'. Live data at www.agilebase.co.uk/start"));
 		rowNum = rowNum + 2;
 		// header

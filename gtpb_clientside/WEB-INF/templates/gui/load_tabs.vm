@@ -30,10 +30,10 @@
 	#set($company = $view.getLoggedInUser().getCompany())
 	#set($tabAddresses = $company.getTabAddresses())
       <script language="JavaScript" type="text/javascript">
-	       ## Make sure portalBase is the focussed tab
+	       ## Make sure agileBase is the focussed tab
 		   ## by opening it last
 		   ## Unless opening tabs doesn't work (e.g. due to popup blocker)
-		   ## In which case open portalBase with document.location
+		   ## In which case open agileBase with document.location
 	       #foreach($tabAddress in $tabAddresses)
 		     var tab$velocityCount = window.open('$tabAddress','tab$velocityCount','');
 	       #end

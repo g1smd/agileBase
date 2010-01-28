@@ -22,7 +22,7 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
     <title>
-      PortalBase Development Tools
+      agileBase Development Tools
     </title>
     <link rel="stylesheet" type="text/css" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css"/>
   </head>
@@ -32,7 +32,7 @@
 		  <div id="column-content">
 	  <div id="content">
 				  
-    <h1 class="firstHeading">portalBase development tools</h1>
+    <h1 class="firstHeading">agileBase development tools</h1>
     <div id="bodyContent">
     
     <h2>Schema development</h2>

@@ -70,7 +70,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 	<td class="trailing">&nbsp;</td>
 </tr></table>
 <div class="chart_controls">
-<form name=addgrouping method=post action="/portalBase/AppController.servlet">
+<form name=addgrouping method=post action="AppController.servlet">
 #if($groupings.size() > 0)
   Choose groupings: 
   #foreach($grouping in $groupings)
@@ -130,7 +130,7 @@ function fShowAddAgg() {
 </div>
 </form>
 <br>
-<form name=addaggregate method=post action="/portalBase/AppController.servlet">
+<form name=addaggregate method=post action="AppController.servlet">
 #if($aggregateFunctions.size() >0)
   Choose functions: 
   #foreach($aggregateFunction in $aggregateFunctions)

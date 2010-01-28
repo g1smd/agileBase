@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## This template used when including report data in a wiki page
-<h2><a target="portalBase" href="${viewTools.getAppUrl()}?return=gui/display_application&set_table=$sessionTable.getInternalTableName()&set_report=$sessionReport.getInternalReportName()">$sessionReport</a></h2>
+<h2><a target="agileBase" href="${viewTools.getAppUrl()}?return=gui/display_application&set_table=$sessionTable.getInternalTableName()&set_report=$sessionReport.getInternalReportName()">$sessionReport</a></h2>
 	      <table id="reportData" cellspacing="0">
           <tr>
             <td class="leading">&nbsp;</td>

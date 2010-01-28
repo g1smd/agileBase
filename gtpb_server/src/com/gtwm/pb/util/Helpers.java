@@ -267,7 +267,7 @@ public class Helpers {
 			}
 		}
 		// Try to disallow references to internal table, report and field names
-		// used by portalBase.
+		// used by agileBase.
 		// This is to stop people being able to access tables etc. they don't
 		// have privileges on, if they somehow find the internal names for them.
 		// Ideally to remove these, we'd pass them all in and check against each

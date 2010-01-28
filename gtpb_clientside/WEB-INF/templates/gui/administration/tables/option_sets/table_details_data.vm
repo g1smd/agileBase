@@ -37,7 +37,7 @@
 	<input type=button value="Delete Table" #if($view.loggedInUserAllowedTo('ADMINISTRATE')) onclick="top.location='AppController.servlet?return=gui/display_application&remove_table=true&internaltablename=$table.getInternalTableName()'" #else disabled=true #end>
     </td>
 	<td class="table_details" style="background-color:#f4f4f4">
-<form method="POST" action="/portalBase/AppController.servlet" target="pane_1">
+<form method="POST" action="AppController.servlet" target="pane_1">
 	<input type="hidden" name="return" value="gui/pane1">
 	<input type="hidden" name="add_report" value="true">
 	<input type="hidden" name="set_custom_string" value="true">

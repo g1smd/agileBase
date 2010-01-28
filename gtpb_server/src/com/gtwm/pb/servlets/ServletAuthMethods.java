@@ -47,9 +47,9 @@ import com.gtwm.pb.util.RandomString;
 
 /**
  * Methods to do with setting up and using authentication (adding users,
- * checking privileges etc.) to be used by the main portalBase servlet
+ * checking privileges etc.) to be used by the main agileBase servlet
  * AppController, or any other custom servlet written for a particular
- * application based on portalBase. The JavaDoc here describes the HTTP requests
+ * application based on agileBase. The JavaDoc here describes the HTTP requests
  * that must be sent to use the methods.
  * 
  * Part of a set of three interfaces, ServletSchemaMethods to manage setting up

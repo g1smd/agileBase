@@ -34,7 +34,7 @@ import com.gtwm.pb.util.CantDoThatException;
 public interface UsageStatsInfo {
 
 	/**
-	 * Return the hosted cost of portalBase, based on the number of tables
+	 * Return the hosted cost of agileBase, based on the number of tables
 	 * present
 	 */
 	public int getMonthlyTableCost() throws ObjectNotFoundException, DisallowedException;

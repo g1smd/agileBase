@@ -148,7 +148,7 @@ ${dollar}arrReplace = array(1 => $quotes&$quotes, 2 => $quotes=$quotes, 3 => $qu
 
 ${dollar}username = "admindemo";<br/>
 ${dollar}password = "a87fa08048aed4f0f";<br/>
-${dollar}url_prefix = "http://".${dollar}username.":".${dollar}password."@localhost:8080/portalBase/AppController.servlet?";<br/>
+${dollar}url_prefix = "http://".${dollar}username.":".${dollar}password."@localhost:8080/agileBase/AppController.servlet?";<br/>
 
 #set($random_string_request = "file_get_contents(${dollar}url_prefix.${quotes}return=gui/development/random_string${quotes})")
 

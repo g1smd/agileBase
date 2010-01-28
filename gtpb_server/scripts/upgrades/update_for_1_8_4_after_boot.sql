@@ -1,4 +1,4 @@
--- portalbaseschema
+-- agilebaseschema
 
 UPDATE abstractfield SET fieldnamedirect='Wiki page [Auto]' where fieldnamedirect='Wiki page';
 UPDATE abstractfield SET fieldnamedirect='Creation time [Auto]' where fieldnamedirect='GTPB Date created';
@@ -10,7 +10,7 @@ update tabledefn set recordslockable=false;
 alter table tabledefn drop column deleted;
 alter table tabledefn drop column audittable_internaltablename;
 
--- portalbasedata
+-- agilebasedata
 
 ALTER TABLE dbint_log_report_view DROP COLUMN report_group;
 ALTER TABLE dbint_log_report_schema_change DROP COLUMN report_group;

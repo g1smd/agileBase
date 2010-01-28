@@ -20,7 +20,7 @@ package com.gtwm.pb.model.interfaces;
 import com.gtwm.pb.util.MissingParametersException;
 
 /**
- * Represents an application user - someone who can log in to portalBase. Note
+ * Represents an application user - someone who can log in to agileBase. Note
  * that no privilege checking is done in these methods, privilege checks must be
  * carried out before returning an AppUserInfo object
  */

@@ -1,4 +1,4 @@
-GT portalBase programming information and practices:
+agileBase programming information and practices:
 
 *) Interfaces should be defined for all classes prior to implementing them apart from those in:
 com.gtwm.pb.util most of which contain only static methods
@@ -7,7 +7,7 @@ com.gtwm.pb.servlets which extend HttpServlet or VelocityServlet, or contain sta
 *) Each class that needs to log debug or error information should use it's own logger
 defined with a private variable in this manner:
 private static Logger logger = Logger.getLogger(MyClass.class.getName())
-Output will then be written in {Servlet container root}/logs/ into file portalbase.xxx.log
+Output will then be written in {Servlet container root}/logs/ into file agilebase.xxx.log
 
 *) Exceptions: For exceptions caused by user input, particularly SQLExceptions, catch them as soon as possible
 and generate a user friendly message to pass to the user interface for display in the appropriate way. 

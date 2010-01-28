@@ -74,7 +74,7 @@
 <tr class="$rowClass">
   <td>Select a unique key to identify each record</td>
   <td>
-    <input type="radio" name="record_identifier" id="$primaryKeyInternalName" value="$primaryKeyInternalName" checked /><label for="$primaryKeyInternalName">Use internal portalBase Row IDs.</label> Recommended if you are re-importing updated data from a previous export. The first column in your import spreadsheet must be the portalBase Row ID<br>
+    <input type="radio" name="record_identifier" id="$primaryKeyInternalName" value="$primaryKeyInternalName" checked /><label for="$primaryKeyInternalName">Use internal agileBase Row IDs.</label> Recommended if you are re-importing updated data from a previous export. The first column in your import spreadsheet must be the agileBase Row ID<br>
 	#foreach($field in $sessionTable.getFields())
 	  #if($field.getUnique() && (!$field.equals($primaryKey)))
 	    #set($internalFieldName = $field.getInternalFieldName())
@@ -112,7 +112,7 @@
   #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
   <tr class="$rowClass">
     <td>Best guess relations</td>
-    <td><input type="checkbox" name="best_guess_relations" value="true">It's normally required that import values for relation fields match those the database exactly. This option causes portalBase to look for a close match</td>
+    <td><input type="checkbox" name="best_guess_relations" value="true">It's normally required that import values for relation fields match those the database exactly. This option causes agileBase to look for a close match</td>
   </tr>
 #end
 

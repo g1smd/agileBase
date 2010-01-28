@@ -20,7 +20,7 @@ package com.gtwm.pb.model.interfaces.fields;
 import java.util.Calendar;
 
 /**
- * portalBase keeps a version history of files uploaded into a file field for a
+ * agileBase keeps a version history of files uploaded into a file field for a
  * particular record.
  * 
  * This interface represents one file version, containing the important

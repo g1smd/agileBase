@@ -41,4 +41,4 @@ $cellValue,## no linebreak
 #end
 
 #set($user = $view.getLoggedInUser())
-,Exported from the $user.getCompany() portalBase report '$sessionReport.getModule() - $sessionReport' on $viewTools.getDatestampString() by $user.getForename() $user.getSurname(). Live data at www.agilebase.co.uk/start
+,Exported from the $user.getCompany() agileBase report '$sessionReport.getModule() - $sessionReport' on $viewTools.getDatestampString() by $user.getForename() $user.getSurname(). Live data at www.agilebase.co.uk/start

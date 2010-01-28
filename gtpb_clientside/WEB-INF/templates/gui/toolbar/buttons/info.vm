@@ -21,5 +21,5 @@
 #set($id='button_info')
 #set($params='toggleButton=false disabled=true')
 ###set($classes='disabled')
-#set($tooltip='Show utilization information for the whole of portalBase')
+#set($tooltip='Show utilization information for the whole of agileBase')
 #parse('gui/resources/button.vm')

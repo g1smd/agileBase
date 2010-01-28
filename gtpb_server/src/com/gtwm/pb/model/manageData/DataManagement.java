@@ -864,8 +864,7 @@ public class DataManagement implements DataManagementInfo {
 									break;
 								case TIMESTAMP:
 									// deal with month and year
-									// resolution dates exported by
-									// portalBase
+									// resolution dates exported
 									if (lineValue.matches("^[a-zA-Z]{3}\\s\\d{2,4}$")) {
 										lineValue = "01 " + lineValue;
 									} else if (lineValue.matches("^\\d{2,4}")) {
@@ -1764,7 +1763,7 @@ public class DataManagement implements DataManagementInfo {
 				} else if (contentType.equals(FieldContentType.EMAIL_ADDRESS)) {
 					String originalEmail = dataRow.getDataRowFields().get(field).getKeyValue();
 					if (originalEmail.contains("@")) {
-						emailAddresses.add("email.address@gtportalbase.co.uk");
+						emailAddresses.add("email.address@agilebase.co.uk");
 					} else {
 						emailAddresses.add("");
 					}

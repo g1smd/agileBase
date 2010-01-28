@@ -630,7 +630,7 @@ public class Authenticator implements AuthenticatorInfo {
 	}
 	
 	public String toString() {
-		return "Low level portalBase authentication handling object";
+		return "Low level authentication handling object";
 	}
 
 	private Set<CompanyInfo> companies = new HashSet<CompanyInfo>();

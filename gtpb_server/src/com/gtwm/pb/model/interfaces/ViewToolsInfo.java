@@ -121,7 +121,7 @@ public interface ViewToolsInfo {
 	public Set<FilterTypeDescriptorInfo> getFilterTypeDescriptors();
 
 	/**
-	 * Log a message to the portalBase log file - can be used for debugging
+	 * Log a message to file - can be used for debugging
 	 * purposes. If a string is passed, then that string will be logged, if
 	 * another object is passed then that object's toString() will be logged
 	 * 
@@ -161,12 +161,12 @@ public interface ViewToolsInfo {
 	 * 
 	 * @param string
 	 *            e.g.
-	 *            http://appserver.agilebase.co.uk/portalBase/AppController
+	 *            http://appserver.agilebase.co.uk/agileBase/AppController
 	 *            .servlet
 	 *            ?return=gui/display_application&set_table=a3b09a609b4c70624
 	 *            &set_report=ac64d0f1598cf78eb
 	 * @return e.g.
-	 *         http%3A//appserver.agilebase.co.uk/portalBase/AppController.
+	 *         http%3A//appserver.agilebase.co.uk/agileBase/AppController.
 	 *         servlet%3Freturn%3Dgui/display_application%26set_table%3D
 	 *         a3b09a609b4c70624%26set_report%3Dac64d0f1598cf78eb
 	 */
@@ -228,7 +228,7 @@ public interface ViewToolsInfo {
 	public float getBrowserVersion();
 
 	/**
-	 * Returns true if the version of portalBase being accessed is running on
+	 * Returns true if the version of agileBase being accessed is running on
 	 * the local machine, false if on a remote server
 	 */
 	public boolean isRunningLocally();
@@ -300,7 +300,7 @@ public interface ViewToolsInfo {
 	 * Return the serverside path of the root of the application
 	 * 
 	 * NB for security you should be aware this is the serverside path, e.g.
-	 * /usr/local/tomcat/webapps/portalBase/
+	 * /usr/local/tomcat/webapps/agileBase/
 	 */
 	public String getWebAppRoot();
 
@@ -312,8 +312,8 @@ public interface ViewToolsInfo {
 
 	/**
 	 * Return the url of the currently running server including the host and
-	 * directory examples: http://appserver.agilebase.co.uk/portalBase/
-	 * http://localhost:8080/portalBase/
+	 * directory examples: http://appserver.agilebase.co.uk/agileBase/
+	 * http://localhost:8080/agileBase/
 	 */
 	public String getAppUrl();
 
@@ -366,7 +366,7 @@ public interface ViewToolsInfo {
 	 * Return a list of files in the specified folder.
 	 * 
 	 * @param folder
-	 *            Folder name relative to portalBase root, e.g.
+	 *            Folder name relative to agileBase root, e.g.
 	 *            "resources/icons/applications/tango"
 	 */
 	public List<File> listFiles(String folder);

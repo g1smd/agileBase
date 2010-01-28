@@ -26,7 +26,7 @@
     			 padding:0;
     			 height:100% }	
 </style>
-<title>portalBase error report</title>
+<title>agileBase error report</title>
   	<script src="resources/jquery.js" language="Javascript"> </script>
 	<script src="resources/pane2.js" language="Javascript"> </script>
 </head>

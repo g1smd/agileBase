@@ -80,8 +80,8 @@ import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOpti
 
 /**
  * Methods to do with the schema (editing companies, tables, fields etc.) to be
- * used by the main portalBase servlet AppController, or any other custom
- * servlet written for a particular application based on portalBase. The JavaDoc
+ * used by the main agileBase servlet AppController, or any other custom
+ * servlet written for a particular application based on agileBase. The JavaDoc
  * here describes the HTTP requests that must be sent to use the methods.
  * 
  * Part of a set of three classes, ServletSchemaMethods to manage setting up the
@@ -94,7 +94,7 @@ import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOpti
 public class ServletSchemaMethods {
 
 	/**
-	 * Add a new company to portalBase which will be able to have its own
+	 * Add a new company which will be able to have its own
 	 * private set of tables
 	 * 
 	 * Http usage example:

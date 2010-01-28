@@ -26,7 +26,7 @@ import com.gtwm.pb.model.manageUsage.UsageLogger.LogType;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
 /**
- * portalBase uses companies to separate data, i.e. each company can only see
+ * agileBase uses companies to separate data, i.e. each company can only see
  * their own data, users etc.
  * 
  * Users and roles will belong to companies. By extension, tables will also
@@ -50,7 +50,7 @@ public interface CompanyInfo {
 	public SortedSet<TableInfo> getTables();
 
 	/**
-	 * URLs for tabs that are loaded when portalBase starts
+	 * URLs for tabs that are loaded when agileBase starts
 	 */
 	public Set<String> getTabAddresses();
 

@@ -228,7 +228,7 @@ public interface SessionDataInfo {
 	 * requests that they see 1000 rows, they'll see 1000 rows for all reports
 	 * they view.
 	 * 
-	 * portalBase will interpret a value of less than 1 as no limit
+	 * agileBase will interpret a value of less than 1 as no limit
 	 * 
 	 * @param rowLimit
 	 *            The maximum no. rows of a report that should be displayed

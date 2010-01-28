@@ -27,7 +27,7 @@
     			 padding:0;
     			 height:100% }
 </style>
-<title>portalBase data import</title>
+<title>agileBase data import</title>
 #parse("gui/display_error.vm")
 </head>
 <body>

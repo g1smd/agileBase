@@ -332,7 +332,7 @@ public class Enumerations {
 	}
 	
 	/**
-	 * Possible types of user who can log in to portalBase
+	 * Possible types of user who can log in to agileBase
 	 */
 	public enum UserType {
 		OPERATIONAL, MANAGERIAL, EXECUTIVE;

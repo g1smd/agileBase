@@ -69,7 +69,7 @@ public interface DashboardInfo {
 	public Map<ReportSummaryInfo, ReportSummaryDataInfo> getUserReportSummaries(AppUserInfo user);
 	
 	/**
-	 * Get report summary charts that portalBase automatically selects
+	 * Get report summary charts that agileBase automatically selects
 	 */
 	public SortedSet<DashboardReportSummaryInfo> getSuggestedReportSummaries();
 	

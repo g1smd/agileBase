@@ -16,8 +16,8 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## define global variables
-#set($portalbaseSchemaSQL = '')
-#set($portalbaseDataSQL = '')
+#set($agilebaseSchemaSQL = '')
+#set($agilebaseDataSQL = '')
 
 ## define macros:
 
@@ -33,37 +33,37 @@
   
   #macro(generateSqlForWikiPageField $table)
     #set($internalFieldName = $viewTools.getRandomString())
-    #set($portalbaseSchemaSQL = "$portalbaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName varchar(10000); -- wiki page for $table.getTableName()")
-    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','Related wiki page',false,true,1,'Wiki page',false,false,'$table.getInternalTableName()');")
-    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO textfielddefn (internalfieldname,maxchars,defaultdirect,notapplicable,notapplicabledescriptiondirect,notapplicablevaluedirect,useslookup) VALUES ('$internalFieldName',10000,null,false,'Not applicable','NOT APPLICABLE',false);")
+    #set($agilebaseSchemaSQL = "$agilebaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName varchar(10000); -- wiki page for $table.getTableName()")
+    #set($agilebaseDataSQL = "${agilebaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','Related wiki page',false,true,1,'Wiki page',false,false,'$table.getInternalTableName()');")
+    #set($agilebaseDataSQL = "${agilebaseDataSQL}<br/>INSERT INTO textfielddefn (internalfieldname,maxchars,defaultdirect,notapplicable,notapplicabledescriptiondirect,notapplicablevaluedirect,useslookup) VALUES ('$internalFieldName',10000,null,false,'Not applicable','NOT APPLICABLE',false);")
   #end
 
   #macro(generateSqlForDateCreatedField $table)
     #set($internalFieldName = $viewTools.getRandomString())
-    #set($portalbaseSchemaSQL = "$portalbaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName timestamp; -- date created for $table.getTableName()")
-    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','Date & time of record creation',false,true,2,'GTPB Date created',false,true,'$table.getInternalTableName()');")
-    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO datefielddefn (internalfieldname,databaseformatstring,dateresolutiondirect,defaulttonowdirect,javaformatstring) VALUES ('$internalFieldName','DD Mon YYYY HH24:MI:SS',13,true,'%1$td %1$tb %1$tY %1$tH:%1$tM:%1$tS');")
+    #set($agilebaseSchemaSQL = "$agilebaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName timestamp; -- date created for $table.getTableName()")
+    #set($agilebaseDataSQL = "${agilebaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','Date & time of record creation',false,true,2,'GTPB Date created',false,true,'$table.getInternalTableName()');")
+    #set($agilebaseDataSQL = "${agilebaseDataSQL}<br/>INSERT INTO datefielddefn (internalfieldname,databaseformatstring,dateresolutiondirect,defaulttonowdirect,javaformatstring) VALUES ('$internalFieldName','DD Mon YYYY HH24:MI:SS',13,true,'%1$td %1$tb %1$tY %1$tH:%1$tM:%1$tS');")
   #end
   
   #macro(generateSqlForCreatedByField $table)
     #set($internalFieldName = $viewTools.getRandomString())
-    #set($portalbaseSchemaSQL = "$portalbaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName varchar(10000); -- created by for $table.getTableName()")
-    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','User who created the record',false,true,3,'GTPB Created by',false,false,'$table.getInternalTableName()');")
-    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO textfielddefn (internalfieldname,maxchars,defaultdirect,notapplicable,notapplicabledescriptiondirect,notapplicablevaluedirect,useslookup) VALUES ('$internalFieldName',10000,null,false,'Not applicable','NOT APPLICABLE',false);")
+    #set($agilebaseSchemaSQL = "$agilebaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName varchar(10000); -- created by for $table.getTableName()")
+    #set($agilebaseDataSQL = "${agilebaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','User who created the record',false,true,3,'GTPB Created by',false,false,'$table.getInternalTableName()');")
+    #set($agilebaseDataSQL = "${agilebaseDataSQL}<br/>INSERT INTO textfielddefn (internalfieldname,maxchars,defaultdirect,notapplicable,notapplicabledescriptiondirect,notapplicablevaluedirect,useslookup) VALUES ('$internalFieldName',10000,null,false,'Not applicable','NOT APPLICABLE',false);")
   #end
   
   #macro(generateSqlForLastModifiedField $table)
     #set($internalFieldName = $viewTools.getRandomString())
-    #set($portalbaseSchemaSQL = "$portalbaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName timestamp; -- last modified for $table.getTableName()")
-    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','Date & time of last change to record',false,true,4,'GTPB Last modified',false,true,'$table.getInternalTableName()');")
-    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO datefielddefn (internalfieldname,databaseformatstring,dateresolutiondirect,defaulttonowdirect,javaformatstring) VALUES ('$internalFieldName','DD Mon YYYY HH24:MI:SS',13,true,'%1$td %1$tb %1$tY %1$tH:%1$tM:%1$tS');")
+    #set($agilebaseSchemaSQL = "$agilebaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName timestamp; -- last modified for $table.getTableName()")
+    #set($agilebaseDataSQL = "${agilebaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','Date & time of last change to record',false,true,4,'GTPB Last modified',false,true,'$table.getInternalTableName()');")
+    #set($agilebaseDataSQL = "${agilebaseDataSQL}<br/>INSERT INTO datefielddefn (internalfieldname,databaseformatstring,dateresolutiondirect,defaulttonowdirect,javaformatstring) VALUES ('$internalFieldName','DD Mon YYYY HH24:MI:SS',13,true,'%1$td %1$tb %1$tY %1$tH:%1$tM:%1$tS');")
   #end
   
   #macro(generateSqlForModififedByField $table)
     #set($internalFieldName = $viewTools.getRandomString())
-    #set($portalbaseSchemaSQL = "$portalbaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName varchar(10000); -- modified by for $table.getTableName()")
-    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','User who made the last change',false,true,5,'GTPB Modified by',false,false,'$table.getInternalTableName()');")
-    #set($portalbaseDataSQL = "${portalbaseDataSQL}<br/>INSERT INTO textfielddefn (internalfieldname,maxchars,defaultdirect,notapplicable,notapplicabledescriptiondirect,notapplicablevaluedirect,useslookup) VALUES ('$internalFieldName',10000,null,false,'Not applicable','NOT APPLICABLE',false);")
+    #set($agilebaseSchemaSQL = "$agilebaseSchemaSQL<br/>ALTER TABLE $table.getInternalTableName() ADD COLUMN $internalFieldName varchar(10000); -- modified by for $table.getTableName()")
+    #set($agilebaseDataSQL = "${agilebaseDataSQL}<br/>INSERT INTO abstractfield (internalfieldname,fielddescription,fieldunique,hidden,fieldindex,fieldnamedirect,notnulldirect,defaultdefined,tablecontainingfield_internaltablename) VALUES ('$internalFieldName','User who made the last change',false,true,5,'GTPB Modified by',false,false,'$table.getInternalTableName()');")
+    #set($agilebaseDataSQL = "${agilebaseDataSQL}<br/>INSERT INTO textfielddefn (internalfieldname,maxchars,defaultdirect,notapplicable,notapplicabledescriptiondirect,notapplicablevaluedirect,useslookup) VALUES ('$internalFieldName',10000,null,false,'Not applicable','NOT APPLICABLE',false);")
   #end
 
 ## main:
@@ -85,8 +85,8 @@
 #end ## foreach companyTable
 
 ## output the generated SQL:
--- portalbasedata SQL for missing hidden fields<br/><br/>
-$portalbaseDataSQL
+-- agilebasedata SQL for missing hidden fields<br/><br/>
+$agilebaseDataSQL
 
--- portalbaseschema SQL for missing hidden fields<br/><br/>
-$portalbaseSchemaSQL
+-- agilebaseschema SQL for missing hidden fields<br/><br/>
+$agilebaseSchemaSQL

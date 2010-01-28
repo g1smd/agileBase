@@ -1,5 +1,5 @@
 BEGIN;
---used by portalBase when generating treemap output for report view statistics
+--used by agileBase when generating treemap output for report view statistics
 
 create or replace view dbint_recent_report_counts as
 SELECT company, report, count(*) as recent_count

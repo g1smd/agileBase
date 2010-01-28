@@ -22,15 +22,15 @@ import com.gtwm.pb.util.CantDoThatException;
 import java.sql.SQLException;
 
 /**
- * Contains methods to aid integration of portalBase with a wiki, for a particular company
+ * Contains methods to aid integration of agileBase with a wiki, for a particular company
  */
 public interface WikiManagementInfo {
 
 	/**
 	 * Returns true if a wiki is running on this computer and integrated into
-	 * portalBase via the servlet container's server.xml
+	 * agileBase via the servlet container's server.xml
 	 * 
-	 * Returns false if no wiki functionality will be integrated into portalBase
+	 * Returns false if no wiki functionality will be integrated into agileBase
 	 */
 	public boolean isWikiIntegrated();
 	

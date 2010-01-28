@@ -112,7 +112,7 @@ public class AppController extends VelocityViewServlet {
 			// DatabaseDefn object
 			initialContext = new InitialContext();
 			relationalDataSource = (DataSource) initialContext
-					.lookup("java:comp/env/jdbc/portalBaseData");
+					.lookup("java:comp/env/jdbc/agileBaseData");
 			if (relationalDataSource == null) {
 				logger.error("Can't get relational data source");
 				throw new ServletException("Can't get data source");
@@ -151,7 +151,7 @@ public class AppController extends VelocityViewServlet {
 		// Release memory - still not sure if this is actually necessary
 		this.databaseDefn = null;
 		this.relationalDataSource = null;
-		logger.info("portalBase shut down");
+		logger.info("agileBase shut down");
 	}
 
 	public static List<FileItem> getMultipartItems(HttpServletRequest request)
@@ -837,7 +837,7 @@ public class AppController extends VelocityViewServlet {
 			logger.error("Syntax error in the template: " + pee);
 			throw new ServletException("Syntax error in the template", pee);
 		} catch (AgileBaseException pbex) {
-			logger.error("PortalBase exception instantiating view: " + pbex);
+			logger.error("Exception instantiating view: " + pbex);
 		} catch (SQLException sqlex) {
 			logger.error("Database error instantiating view: " + sqlex);
 		} catch (Exception ex) {

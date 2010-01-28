@@ -73,9 +73,9 @@ import org.grlea.log.SimpleLogger;
 
 /**
  * Methods to do with managing data (creating & deleting records, managing the
- * session etc.) to be used by the main portalBase servlet AppController, or any
+ * session etc.) to be used by the main agileBase servlet AppController, or any
  * other custom servlet written for a particular application based on
- * portalBase. The JavaDoc here describes the HTTP requests that must be sent to
+ * agileBase. The JavaDoc here describes the HTTP requests that must be sent to
  * use the methods.
  * 
  * Part of a set of three interfaces, ServletSchemaMethods to manage setting up

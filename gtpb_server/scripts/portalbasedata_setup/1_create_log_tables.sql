@@ -1,5 +1,5 @@
 BEGIN;
--- portalBase will log to these tables
+-- agileBase will log to these tables
 -- and make the info available in various forms to managers and administrators
 -- e.g. the management info treemap
 

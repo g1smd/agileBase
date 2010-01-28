@@ -1,4 +1,4 @@
-This project is the user interface layer for GT portalBase.
+This project is the user interface layer for agileBase.
 
 It consists of Velocity templates, Javascript and CSS.
 

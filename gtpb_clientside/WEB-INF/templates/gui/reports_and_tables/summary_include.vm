@@ -17,7 +17,7 @@
 ##
 #set($table = $sessionData.getTable())
 #set($report = $sessionData.getReport())
-<h2>Summary for <a target="portalBase" href="${viewTools.getAppUrl()}?return=gui/display_application&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()">$report</a>
+<h2>Summary for <a target="agileBase" href="${viewTools.getAppUrl()}?return=gui/display_application&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()">$report</a>
 </h2>
 
 #set($printout = true)

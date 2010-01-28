@@ -1,8 +1,8 @@
-GT portalBase technical documentation
+agileBase technical documentation
 
 - General introduction -
 
-GT portalBase is a high level database application development framework. Non-programmers can prototype working web based applications that create, edit and report on structured data in a matter of minutes. There's a rich set of features, including fine grained user and role privileges, colourised reports for 'unusual data' highlighting and integration with mapping services. Usability is high on the agenda with the friendly and responsive AJAX user interface.
+agileBase is a high level database application development framework. Non-programmers can prototype working web based applications that create, edit and report on structured data in a matter of minutes. There's a rich set of features, including fine grained user and role privileges, colourised reports for 'unusual data' highlighting and integration with mapping services. Usability is high on the agenda with the friendly and responsive AJAX user interface.
 
 With the standard 'database front-end' interface, developers can create a web based application by quickly adding tables, fields, calculations, reports, joins, filters..., in fact, any functionality that an SQL database can handle. Basic functions have a really simple user interface, to create more complex schemas some database knowledge is useful. A lot of work has been done on making database creation as obvious and intuitive as possible though.
 
@@ -20,11 +20,11 @@ The view uses the Velocity templating language, a high level simple to use langu
 
 Behind all this, data is stored in a scaleable SQL database, postgresql [url]. Objects are programmed in Java.
 
-GT portalBase comes with a full set of pre-built templates which provide a rich interface for creating and using database applications. However, some applications require domain specific additions to cope with the needs of specific business areas. This can be catered for by writing custom templates to call the standard Controller API. There's also the option of including a business rules engine for complex logic.
+agileBase comes with a full set of pre-built templates which provide a rich interface for creating and using database applications. However, some applications require domain specific additions to cope with the needs of specific business areas. This can be catered for by writing custom templates to call the standard Controller API. There's also the option of including a business rules engine for complex logic.
 
 - Out of the box functionality -
 
-Without template customisation, GT portalBase can be used for reasonably complex data handling needs. We'll step through an example of building a simple application here to show the process.
+Without template customisation, agileBase can be used for reasonably complex data handling needs. We'll step through an example of building a simple application here to show the process.
 
 Lets quickly build a simple CRM application to handle organisations, contacts and opportunities.
 
@@ -36,15 +36,15 @@ That's the table created. Start filling it with data to see how the data entry w
 
 An entry form will be shown on screen. Notice how typing data in updates the record list shown above as you type. There's no need to press a 'Save' button.
 
-Once you've added a few records, select one previously entered. You should see that the postcode is automatically recognised and a 'map' link appears which loads a Google map centred on the area. Similarly, the website field has a link next to it that loads the website in a separate window. portalBase automatically recognises data types by the content format, not the fact that they're called 'postcode' and 'website'.
+Once you've added a few records, select one previously entered. You should see that the postcode is automatically recognised and a 'map' link appears which loads a Google map centred on the area. Similarly, the website field has a link next to it that loads the website in a separate window. agileBase automatically recognises data types by the content format, not the fact that they're called 'postcode' and 'website'.
 
-It's a similar process to add the contacts table. The additional thing we've got to bear in mind is that each contact belongs to a company. How do we tell portalBase this?
+It's a similar process to add the contacts table. The additional thing we've got to bear in mind is that each contact belongs to a company. How do we tell agileBase this?
 
 Create the contacts table using the 'create a new table' link as before and click the Fields tab at the bottom of the screen. For field name, type 'Company' but this time, under Field Type, select Relation. For the relation options, select Organisations as the table to use, Organisations -> Company name as the value to display and finish by pressing Create Field. This means that each contact will belong to a company and when asked which company, a list of company names will be shown from which you can choose. First add some more fields, then we can see in a minute. Add fields 'forename', 'surname', 'telephone number' and 'email address.
 
 Now to the data entry: before trying to enter data, click on the Organisations table and select an organisation. Then click on Contacts and use the New button. You'll see that the new contact is automatically assigned to the last organisation selected. Of course you can change this if you want. Add a few contacts to different organisations.
 
-Once again, if you click a contact, you'll see portalBase recognise a content type: this time, an email link is displayed next to valid email addresses. Clicking the link brings up a mail composition window to that address.
+Once again, if you click a contact, you'll see agileBase recognise a content type: this time, an email link is displayed next to valid email addresses. Clicking the link brings up a mail composition window to that address.
 
 Now's also a good time to see the filtering: Clicking the filter button at the top of the screen will show a row of input boxes at the top of the data. If you start typing in one of these, data is filtered down as you type. Try filtering contacts by company name for example, to show all contacts for a particular company. Filtering remains lightning fast even for large data sets.
 
@@ -54,7 +54,7 @@ You may like to add fields State to describe the opportunity as Hot, Warm or Col
 
 As soon as you've entered a few values, State will automatically pick up the Hot, Warm and Cold (or however you describe your opportunity states) and present them in a dropdown so you don't have to type them. This also helps data values to be input in a consistent way.
 
-For the value numbers, portalBase will colour large numbers green and small red - the larger the brighter green and the smaller the brighter red. This allows at-a-glance viewing of important data and easy recognition of values which are way off normal.
+For the value numbers, agileBase will colour large numbers green and small red - the larger the brighter green and the smaller the brighter red. This allows at-a-glance viewing of important data and easy recognition of values which are way off normal.
 
 That's the basic database setup covered. Two major features we haven't covered are user privileges and reporting. Try to create some users and assign privileges yourself - the process is reasonably simple. To get started, click Administration on the left and Users under that. The New button now creates a new user instead of adding a record. Reporting we'll leave until later.
 
@@ -63,11 +63,11 @@ That's the basic database setup covered. Two major features we haven't covered a
 
 Some applications may require specific requirements outside the scope of a general application, for example data exports may need to be done in a certain format to interoperate with other systems. There's a documented API which lets templates be designed in a completely flexible manner.
 
-The general process of a portalBase request is:
+The general process of a agileBase request is:
 
 1) A HTTP request is sent to the server which consists of
 1a) an optional command to carry out some action(s), e.g. to add a calculation to a report of insert a record into the database
-1b) an optional command to 'remember' a certain bit of information, i.e. session handling. Arbitrary text and numbers can be stored as well as some portalBase objects such as tables and reports
+1b) an optional command to 'remember' a certain bit of information, i.e. session handling. Arbitrary text and numbers can be stored as well as some agileBase objects such as tables and reports
 1c) the mandatory name of a template to return. This template can of course contain logic that in turn load different return templates based on the state of the application
 
 2) Any actions and session handling requested in 1) are carried out on the server, in the order required by the application
@@ -80,7 +80,7 @@ In general, commands in 1a) fall into three types: those to alter the schema, th
 
 Templates have full access to the entire range of objects and data used by the server, from certain entry points, subject to the privileges of the logged in user of course.
 
-The templating language itself is described on the Velocity website [url]. GT portalBase makes one 'root' object available to the template, $viewMethods, which contains methods for accessing all application data. Session data can be accessed from the object returned by $viewMethods.getSessionData().
+The templating language itself is described on the Velocity website [url]. agileBase makes one 'root' object available to the template, $viewMethods, which contains methods for accessing all application data. Session data can be accessed from the object returned by $viewMethods.getSessionData().
 
 In addition to this, the $viewTools object is available containing a few utility methods such as logging and browser version checking.
 
