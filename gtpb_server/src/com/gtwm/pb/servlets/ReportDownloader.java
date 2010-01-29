@@ -179,14 +179,14 @@ public class ReportDownloader extends HttpServlet {
 						|| field.getDbType().equals(DatabaseFieldType.SERIAL)) {
 					cellType = HSSFCell.CELL_TYPE_NUMERIC;
 				}
-				row.createCell(columnNum, cellType).setCellValue(
-						new HSSFRichTextString(fieldValue));
+				row.createCell(columnNum, cellType)
+						.setCellValue(new HSSFRichTextString(fieldValue));
 				columnNum++;
 			}
 			rowNum++;
 		}
 		// one worksheet for each of the report summaries
-		for(ReportSummaryInfo savedReportSummary : report.getSavedReportSummaries()) {
+		for (ReportSummaryInfo savedReportSummary : report.getSavedReportSummaries()) {
 			addSummaryWorksheet(company, sessionData, savedReportSummary, workbook);
 		}
 		// the default summary
@@ -206,13 +206,25 @@ public class ReportDownloader extends HttpServlet {
 	 * Add a worksheet to the report for the specified summary report
 	 */
 	private void addSummaryWorksheet(CompanyInfo company, SessionDataInfo sessionData,
-			ReportSummaryInfo reportSummary, HSSFWorkbook workbook) throws SQLException, CantDoThatException {
+			ReportSummaryInfo reportSummary, HSSFWorkbook workbook) throws SQLException,
+			CantDoThatException {
 		int rowNum;
 		HSSFRow row;
 		HSSFCell cell;
 		int columnNum;
 		String fieldValue;
-		HSSFSheet summarySheet = workbook.createSheet("Summary");
+		HSSFSheet summarySheet;
+		try {
+			String summaryTitle = reportSummary.getTitle();
+			if (summaryTitle.equals("")) {
+				summaryTitle = "Summary";
+			}
+			summarySheet = workbook.createSheet(reportSummary.getTitle());
+		} catch (IllegalArgumentException iaex) {
+			// sheet name must be unique
+			summarySheet = workbook.createSheet(reportSummary.getTitle() + " "
+					+ reportSummary.getId());
+		}
 		// header
 		rowNum = 0;
 		row = summarySheet.createRow(rowNum);
@@ -254,8 +266,7 @@ public class ReportDownloader extends HttpServlet {
 			columnNum = 0;
 			for (ReportSummaryGroupingInfo grouping : groupings) {
 				fieldValue = summaryDataRow.getGroupingValue(grouping);
-				row.createCell(columnNum).setCellValue(
-						new HSSFRichTextString(fieldValue));
+				row.createCell(columnNum).setCellValue(new HSSFRichTextString(fieldValue));
 				columnNum++;
 			}
 			for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
