@@ -214,15 +214,15 @@ public class ReportDownloader extends HttpServlet {
 		int columnNum;
 		String fieldValue;
 		HSSFSheet summarySheet;
+		String summaryTitle = reportSummary.getTitle();
+		if (summaryTitle.equals("")) {
+			summaryTitle = "Summary";
+		}
 		try {
-			String summaryTitle = reportSummary.getTitle();
-			if (summaryTitle.equals("")) {
-				summaryTitle = "Summary";
-			}
-			summarySheet = workbook.createSheet(reportSummary.getTitle());
+			summarySheet = workbook.createSheet(summaryTitle);
 		} catch (IllegalArgumentException iaex) {
 			// sheet name must be unique
-			summarySheet = workbook.createSheet(reportSummary.getTitle() + " "
+			summarySheet = workbook.createSheet(summaryTitle + " "
 					+ reportSummary.getId());
 		}
 		// header
