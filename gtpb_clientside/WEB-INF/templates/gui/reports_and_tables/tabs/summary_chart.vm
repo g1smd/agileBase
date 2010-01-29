@@ -72,7 +72,7 @@
 #end
 #set($success = $series.add($seriesString))
 ## Set chart sizing
-#set($xAxisMargin = $maxXAxisChars * 7)
+#set($xAxisMargin = 20 + ($maxXAxisChars * 7) - $maxXAxisChars)
 #set($height=200)
 #if($xAxisCategories.size() > 10)
   #set($height = $xAxisCategories.size() * 20)
