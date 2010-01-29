@@ -10,7 +10,7 @@
 	<property name="doc.dir" location="doc" />
 	<!-- server directories -->
 	<property name="tomcat.dir" location="/usr/local/tomcat/apache-tomcat" />
-	<property name="webapp" value="agilelBase" />
+	<property name="webapp" value="agileBase" />
 
 	<target name="init">
 		<mkdir dir="${build.dir}" />
