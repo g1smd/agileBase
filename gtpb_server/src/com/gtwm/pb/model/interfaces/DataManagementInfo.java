@@ -78,7 +78,8 @@ public interface DataManagementInfo {
 			throws SQLException;
 
 	/**
-	 * Return true if the record with the given primary key is visible in the report
+	 * Return true if the record with the given primary key is visible in the
+	 * report
 	 */
 	public boolean isRowIdInReport(BaseReportInfo reportDefn, int rowId) throws SQLException;
 
@@ -96,14 +97,16 @@ public interface DataManagementInfo {
 	 *             If a record with the provided rowid is not found in the table
 	 */
 	public Map<RelationField, List<DataRow>> getChildDataTableRows(DatabaseInfo databaseDefn,
-			TableInfo tableDefn, int rowid, HttpServletRequest request) throws SQLException, ObjectNotFoundException,
-			CodingErrorException;
+			TableInfo tableDefn, int rowid, HttpServletRequest request) throws SQLException,
+			ObjectNotFoundException, CodingErrorException;
 
 	/**
 	 * @param reportDefn
 	 *            Report to show summary for
 	 * @param company
 	 *            Used to inform per-company caching
+	 * @return The report summary data, or null if the summary isn't valid, e.g.
+	 *         doesn't contain an aggregate function
 	 */
 	public ReportSummaryDataInfo getReportSummaryData(CompanyInfo company,
 			ReportSummaryInfo reportSummaryDefn, Map<BaseField, String> reportFilterValues)
@@ -189,8 +192,8 @@ public interface DataManagementInfo {
 	 * on.
 	 * 
 	 * NB This can be quite slow for a large number of rows. To speed things up,
-	 * pass in filters which reduce the number of rows or use lockAllTableRecords
-	 * instead if appropriate which is a lot faster
+	 * pass in filters which reduce the number of rows or use
+	 * lockAllTableRecords instead if appropriate which is a lot faster
 	 */
 	public void lockReportRecords(HttpServletRequest request, SessionDataInfo sessionData)
 			throws ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException;

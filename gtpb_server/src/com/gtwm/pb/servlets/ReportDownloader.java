@@ -208,6 +208,11 @@ public class ReportDownloader extends HttpServlet {
 	private void addSummaryWorksheet(CompanyInfo company, SessionDataInfo sessionData,
 			ReportSummaryInfo reportSummary, HSSFWorkbook workbook) throws SQLException,
 			CantDoThatException {
+		ReportSummaryDataInfo reportSummaryData = this.databaseDefn.getDataManagement()
+				.getReportSummaryData(company, reportSummary, sessionData.getReportFilterValues());
+		if (reportSummaryData == null) {
+			return;
+		}
 		int rowNum;
 		HSSFRow row;
 		HSSFCell cell;
@@ -256,9 +261,6 @@ public class ReportDownloader extends HttpServlet {
 			cell.setCellStyle(boldCellStyle);
 			columnNum++;
 		}
-		// summary data
-		ReportSummaryDataInfo reportSummaryData = this.databaseDefn.getDataManagement()
-				.getReportSummaryData(company, reportSummary, sessionData.getReportFilterValues());
 		List<ReportSummaryDataRowInfo> reportSummaryDataRows = reportSummaryData
 				.getReportSummaryDataRows();
 		rowNum++;

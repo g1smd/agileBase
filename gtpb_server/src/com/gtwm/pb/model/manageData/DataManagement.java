@@ -1465,7 +1465,7 @@ public class DataManagement implements DataManagementInfo {
 		reportSummaryRows = new LinkedList<ReportSummaryDataRowInfo>();
 		ReportSummaryDataInfo reportSummaryData = null;
 		Connection conn = null;
-		boolean needSummary = (groupings.size() > 0) || (aggregateFunctions.size() > 0);
+		boolean needSummary = (aggregateFunctions.size() > 0);
 		if (needSummary) {
 			try {
 				conn = this.dataSource.getConnection();
