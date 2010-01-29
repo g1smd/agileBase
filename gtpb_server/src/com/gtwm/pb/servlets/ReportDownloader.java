@@ -215,15 +215,16 @@ public class ReportDownloader extends HttpServlet {
 		String fieldValue;
 		HSSFSheet summarySheet;
 		String summaryTitle = reportSummary.getTitle();
-		if (summaryTitle.equals("")) {
+		if (summaryTitle == null) {
+			summaryTitle = "Summary";
+		} else if (summaryTitle.equals("")) {
 			summaryTitle = "Summary";
 		}
 		try {
 			summarySheet = workbook.createSheet(summaryTitle);
 		} catch (IllegalArgumentException iaex) {
 			// sheet name must be unique
-			summarySheet = workbook.createSheet(summaryTitle + " "
-					+ reportSummary.getId());
+			summarySheet = workbook.createSheet(summaryTitle + " " + reportSummary.getId());
 		}
 		// header
 		rowNum = 0;
