@@ -80,9 +80,9 @@ import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOpti
 
 /**
  * Methods to do with the schema (editing companies, tables, fields etc.) to be
- * used by the main agileBase servlet AppController, or any other custom
- * servlet written for a particular application based on agileBase. The JavaDoc
- * here describes the HTTP requests that must be sent to use the methods.
+ * used by the main agileBase servlet AppController, or any other custom servlet
+ * written for a particular application based on agileBase. The JavaDoc here
+ * describes the HTTP requests that must be sent to use the methods.
  * 
  * Part of a set of three classes, ServletSchemaMethods to manage setting up the
  * database schema, ServletDataMethods to manage data editing and
@@ -94,8 +94,8 @@ import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOpti
 public class ServletSchemaMethods {
 
 	/**
-	 * Add a new company which will be able to have its own
-	 * private set of tables
+	 * Add a new company which will be able to have its own private set of
+	 * tables
 	 * 
 	 * Http usage example:
 	 * 
@@ -428,12 +428,12 @@ public class ServletSchemaMethods {
 			company.removeTable(newTable);
 			databaseDefn.getAuthManager().removePrivilegesOnTable(request, newTable);
 			throw new CantDoThatException("table addition failed", hex);
-		} catch (AgileBaseException pex) {
+		} catch (AgileBaseException abex) {
 			rollbackConnections(conn);
 			CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 			company.removeTable(newTable);
 			databaseDefn.getAuthManager().removePrivilegesOnTable(request, newTable);
-			throw new CantDoThatException("table addition failed", pex);
+			throw new CantDoThatException("table addition failed", abex);
 		} finally {
 			conn.close();
 			HibernateUtil.closeSession();
@@ -2295,20 +2295,21 @@ public class ServletSchemaMethods {
 		String summaryIdString = request.getParameter("summaryid");
 		if (summaryIdString == null) {
 			throw new MissingParametersException(
-					"'summaryid' parameter is required to save a report summary");
+					"'summaryid' parameter is required to remove a report summary");
 		}
 		long summaryId = Long.valueOf(summaryIdString);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			ReportSummaryInfo summaryToRemove = null;
 			SUMMARY_LOOP: for (ReportSummaryInfo reportSummary : report.getSavedReportSummaries()) {
-				if(reportSummary.getId() == summaryId) {
+				if (reportSummary.getId() == summaryId) {
 					summaryToRemove = reportSummary;
 					break SUMMARY_LOOP;
 				}
 			}
 			if (summaryToRemove == null) {
-				throw new ObjectNotFoundException("A report summary with the ID " + summaryIdString + " was not found in report " + report);
+				throw new ObjectNotFoundException("A report summary with the ID " + summaryIdString
+						+ " was not found in report " + report);
 			}
 			databaseDefn.removeSummaryReport(request, summaryToRemove);
 			HibernateUtil.currentSession().getTransaction().commit();

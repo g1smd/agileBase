@@ -56,7 +56,7 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.HibernateUtil;
 
 @Entity
-public class ReportSummaryDefn implements ReportSummaryInfo {
+public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSummaryInfo> {
 
 	protected ReportSummaryDefn() {
 	}
@@ -64,7 +64,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	public ReportSummaryDefn(BaseReportInfo report) {
 		this.setReport(report);
 	}
-	
+
 	public ReportSummaryDefn(BaseReportInfo report, String title) {
 		this.setReport(report);
 		this.setTitle(title);
@@ -79,11 +79,11 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	private void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public String getTitle() {
 		return this.title;
 	}
-	
+
 	private void setTitle(String title) {
 		this.title = title;
 	}
@@ -99,7 +99,8 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	}
 
 	public synchronized ReportSummaryGroupingInfo removeGrouping(ReportFieldInfo reportFieldToRemove) {
-		for (Iterator<ReportSummaryGroupingInfo> iterator = this.getGroupingsDirect().iterator(); iterator.hasNext();) {
+		for (Iterator<ReportSummaryGroupingInfo> iterator = this.getGroupingsDirect().iterator(); iterator
+				.hasNext();) {
 			ReportSummaryGroupingInfo grouping = iterator.next();
 			if (grouping.getGroupingReportField().equals(reportFieldToRemove)) {
 				iterator.remove();
@@ -318,8 +319,9 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 		return false;
 	}
 
-	@ManyToOne(targetEntity=BaseReportDefn.class)
-	//@OneToOne(mappedBy = "reportSummary", targetEntity = BaseReportDefn.class)
+	@ManyToOne(targetEntity = BaseReportDefn.class)
+	// @OneToOne(mappedBy = "reportSummary", targetEntity =
+	// BaseReportDefn.class)
 	public BaseReportInfo getReport() {
 		return this.report;
 	}
@@ -337,7 +339,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	}
 
 	public String toString() {
-		return "" + this.getReport()+ " summary schema - functions: "
+		return "" + this.getReport() + " summary schema - functions: "
 				+ this.getAggregateFunctions() + ", groupings: " + this.getGroupings();
 	}
 
@@ -359,6 +361,25 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 	}
 
 	/**
+	 * Compare by report then ID
+	 */
+	public int compareTo(ReportSummaryInfo otherSummary) {
+		int reportCompare = this.getReport().compareTo(otherSummary.getReport());
+		if (reportCompare != 0) {
+			return reportCompare;
+		}
+		long thisId = this.getId();
+		long otherId = otherSummary.getId();
+		if (thisId > otherId) {
+			return 1;
+		} else if (thisId < otherId) {
+			return -1;
+		} else {
+			return 0;
+		}
+	}
+
+	/**
 	 * hashCode consistent with equals
 	 */
 	public int hashCode() {
@@ -367,15 +388,15 @@ public class ReportSummaryDefn implements ReportSummaryInfo {
 		}
 		return this.hashCode;
 	}
-	
+
 	private volatile int hashCode = 0;
-	
+
 	private Set<ReportSummaryGroupingInfo> groupings = new HashSet<ReportSummaryGroupingInfo>();
 
 	private Set<ReportSummaryAggregateInfo> aggregateFunctions = new LinkedHashSet<ReportSummaryAggregateInfo>();
 
 	private BaseReportInfo report;
-	
+
 	private String title = "";
 
 	private long id;

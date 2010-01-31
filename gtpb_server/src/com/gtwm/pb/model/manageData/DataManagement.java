@@ -651,15 +651,12 @@ public class DataManagement implements DataManagementInfo {
 			}
 		}
 		if (newRecord) {
-			usageLogger.logDataChange(user, table, AppAction.SAVE_NEW_RECORD, newRowId,
-					"New data = " + dataToLog);
+			usageLogger.logDataChange(user, table, AppAction.SAVE_NEW_RECORD, newRowId, dataToLog.toString());
 		} else if (globalEdit) {
 			// TODO: need better logging of global edits
-			usageLogger.logDataChange(user, table, AppAction.GLOBAL_EDIT, rowId, "New data = "
-					+ dataToLog);
+			usageLogger.logDataChange(user, table, AppAction.GLOBAL_EDIT, rowId, dataToLog.toString());
 		} else {
-			usageLogger.logDataChange(user, table, AppAction.UPDATE_RECORD, rowId, "New data = "
-					+ dataToLog);
+			usageLogger.logDataChange(user, table, AppAction.UPDATE_RECORD, rowId, dataToLog.toString());
 		}
 		UsageLogger.startLoggingThread(usageLogger);
 	}

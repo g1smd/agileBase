@@ -52,9 +52,23 @@ FROM dbint_log_report_view rv_outer INNER JOIN dbint_log_report_view rv_inner
 ORDER BY rv_outer.log_entry_id
 );
 
+-- Do the same sort of thing for the data_change log
+
+DELETE FROM dbint_log_data_change WHERE log_entry_id IN (
+SELECT dc_inner.log_entry_id
+FROM dbint_log_data_change dc_outer INNER JOIN dbint_log_data_change dc_inner
+  ON dc_inner.log_entry_id + 1 = dc_outer.log_entry_id
+  AND dc_inner.app_user = dc_outer.app_user
+  AND dc_inner.app_table = dc_outer.app_table
+  AND dc_inner.app_action = 'update record'
+  AND dc_outer.app_action = 'update record'
+  AND dc_inner.saved_data != '{}' AND dc_outer.saved_data != '{}'
+  AND position(regexp_replace(dc_inner.saved_data,'\}$','') in dc_outer.saved_data) = 1
+ORDER BY dc_outer.log_entry_id
+);
+
 -- materialize statistics report
 
 DELETE FROM dbint_report_view_stats_materialized;
 INSERT INTO dbint_report_view_stats_materialized(company, report, average_count, percentage_increase)
   SELECT company, report, average_count, percentage_increase FROM dbint_report_view_stats;
-

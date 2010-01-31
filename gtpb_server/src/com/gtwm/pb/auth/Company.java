@@ -223,6 +223,40 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		this.dashboard = dashboard;
 	}
 
+	public void addSummaryIdForDashboard(long id) {
+		this.getSummaryIdsForDashboardDirect().add(id);
+	}
+	
+	public void addSummaryIdNotForDashboard(long id) {
+		this.getSummaryIdsNotForDashboardDirect().add(id);
+	}
+
+	@Transient
+	public SortedSet<Long> getSummaryIdsForDashboard() {
+		return Collections.unmodifiableSortedSet(this.getSummaryIdsForDashboardDirect());
+	}
+	
+	private SortedSet<Long> getSummaryIdsForDashboardDirect() {
+		return this.getSummaryIdsForDashboardDirect();
+	}
+
+	public SortedSet<Long> getSummaryIdsNotForDashboard() {
+		return Collections.unmodifiableSortedSet(this.getSummaryIdsNotForDashboardDirect());
+	}
+	
+	@Transient
+	private SortedSet<Long> getSummaryIdsNotForDashboardDirect() {
+		return this.getSummaryIdsNotForDashboardDirect();
+	}
+
+	public void removeSummaryIdForDashboard(long id) {
+		this.getSummaryIdsForDashboardDirect().remove(id);
+	}
+
+	public void removeSummaryIdNotForDashboard(long id) {
+		this.getSummaryIdsNotForDashboardDirect().remove(id);
+	}
+
 	public int compareTo(CompanyInfo otherCompany) {
 		if (this == otherCompany) {
 			return 0;
@@ -251,6 +285,10 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return this.getCompanyName();
 	}
 
+	private Set<Long> summaryIdsForDashboard = new HashSet<Long>();
+	
+	private Set<Long> summaryIdsNotForDashboard = new HashSet<Long>();
+	
 	private Set<AppUserInfo> usersCollection = new HashSet<AppUserInfo>();
 
 	private Set<AppRoleInfo> roles = new HashSet<AppRoleInfo>();
@@ -274,4 +312,5 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	private Map<String, List<Integer>> cachedSparkLines = new HashMap<String, List<Integer>>();
 
 	private DashboardInfo dashboard = null;
+
 }
