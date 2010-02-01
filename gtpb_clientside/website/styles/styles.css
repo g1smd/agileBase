@@ -442,8 +442,16 @@ body.mobile {
 	text-align: center;
 }
 
+.just_enough .just_tooltip {
+	background: white url('../images/just-enough.png') no-repeat scroll 0 0;
+}
+
 .just_for_us {
 	text-align: right;
+}
+
+.just_for_us .just_tooltip {
+	background: white url('../images/just-for-us.png') no-repeat scroll 0 0;
 }
 
 .just_tooltip {
@@ -456,11 +464,10 @@ body.mobile {
 	width: 260px;
 	color: black;
 	font-family: tahoma, arial, sans-serif!important;
-	font-weight: bold;
 	text-align: left;
 	margin: 0;
 	padding: 5px 5px 5px 55px;
-	top: -1.5em;
+	top: -1.45em;
 	z-index: 100;
 	-moz-border-radius: 3px;
 	-webkit-border-radiue: 3px;
