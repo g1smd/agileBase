@@ -449,7 +449,7 @@ body.mobile {
 	opacity: 0.9;
 	left: -35%;
 	height: 55px;
-	width: 300px;
+	width: 260px;
 	color: black;
 	font-family: tahoma, arial, sans-serif;
 	text-align: left;
@@ -457,8 +457,8 @@ body.mobile {
 	padding: 10px;
 	top: -1.5em;
 	z-index: 100;
-	-mox-border-radius: 2px;
-	-webkit-border-radiue: 2px;
+	-mox-border-radius: 3px;
+	-webkit-border-radiue: 3px;
 }
 
 #footer {
