@@ -151,6 +151,9 @@
 					$(this).parent().find(".just_tooltip").fadeIn('normal');
 				});
 			});
+			$(".just_tooltip").mouseout(function() {
+				$(this).fadeOut();
+			});
 		}); 
 
 		function showSection(sectionName) {

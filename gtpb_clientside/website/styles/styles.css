@@ -441,6 +441,12 @@ body.mobile {
 .just_tooltip {
 	position: absolute;
 	display: none;
+	background: white;
+	opacity: 0.9;
+	left: -35%;
+	height: 55px;
+	top: -1.5em;
+	z-index: 100;
 }
 
 #footer {
