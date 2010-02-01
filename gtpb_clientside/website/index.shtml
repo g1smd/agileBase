@@ -36,7 +36,7 @@
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
 					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 			<!--#else --> 
-					<form method="POST" action="https://appserver.agilebase.co.uk/agileBase/j_security_check" name="loginform" id="loginform">
+					<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
 			<!--#endif -->
 			<table border="0" class="mobileLogin">
 			<tr>
@@ -231,7 +231,7 @@
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
 					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 			<!--#else --> 
-					<form method="POST" action="https://appserver.agilebase.co.uk/agileBase/j_security_check" name="loginform" id="loginform">
+					<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
 			<!--#endif -->
 								<div class="input">username<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/>
 								</div>  
