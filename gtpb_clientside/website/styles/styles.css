@@ -449,8 +449,11 @@ body.mobile {
 	opacity: 0.9;
 	left: -35%;
 	height: 55px;
-	width: 250px;
+	width: 300px;
 	color: black;
+	font-weight: bold;
+	text-align: left;
+	vertical-align: middle;
 	top: -1.5em;
 	z-index: 100;
 }
