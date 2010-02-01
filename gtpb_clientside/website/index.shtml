@@ -74,7 +74,7 @@
 		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBQf1koDrgwv2nVopgtXyNJJGf3wPhSGxzvELTvIoGYjhEXJzrBbXQIbKw"></script>
 <!--#else -->
 	<!-- http://appserver.agilebase.co.uk -->
-		<script type="text/javascript" src="ABQIAAAAAmhDcBizb6sHKLYdSFLnLBTkxqGBZcNO6KTJ8OH7el13ZyLEzxT0-wdY7BkQmrNPx8dhLS-syRRsRQ"></script>
+		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBTkxqGBZcNO6KTJ8OH7el13ZyLEzxT0-wdY7BkQmrNPx8dhLS-syRRsRQ"></script>
 <!--#endif -->
 
 	<script type="text/javascript">
