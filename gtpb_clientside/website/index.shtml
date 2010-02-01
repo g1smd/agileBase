@@ -261,9 +261,11 @@
 								<h1>Why do I use it?</h1>
 								agileBase lets you build back office software that is
 								<div id="just_in">
-								<span class="just_in_time"><img src="images/pix-lightblue.png"></img>just in time</span>
-								<span class="just_enough"><img src="images/pix-darkblue.png"></img>just enough</span>
-								<span class="just_for_us"><img src="images/pix-orange.png"></img>just for us</span>
+								<table border="0" width="100%"><tr>
+								<td class="just_in_time"><img src="images/pix-lightblue.png"></img>just in time</td>
+								<td class="just_enough"><img src="images/pix-darkblue.png"></img>just enough</td>
+								<td class="just_for_us"><img src="images/pix-orange.png"></img>just for us</td>
+								</tr></table>
 								</div>
 								<p>As a cutting edge lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 
 								at a pace to match a company's evolving learning, knowledge and understanding.</p>

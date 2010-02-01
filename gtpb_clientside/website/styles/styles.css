@@ -424,6 +424,18 @@ body.mobile {
 	border-color: white;
 }
 
+.just_in_time {
+	text-align: left;
+}
+
+.just_enough {
+	text-align: center;
+}
+
+.just_for_us {
+	text-align: right;
+}
+
 #footer {
 	margin-top:70px;
 	border-top:1px solid white;
