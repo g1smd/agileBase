@@ -68,13 +68,13 @@
 
 <!--#if expr="$SERVER_PORT = '443'" --> 
 	<!-- https://appserver.agilebase.co.uk -->
-		<script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBTyD2xy-M5qYkboiOMz-vg8XD0GKxShfmzsDX4T1YzJSslKlNzT32z2PA"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg"></script>
 <!--#elif expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
 	<!-- http://gtwmbackup.dh.bytemark.co.uk -->
 		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBQf1koDrgwv2nVopgtXyNJJGf3wPhSGxzvELTvIoGYjhEXJzrBbXQIbKw"></script>
 <!--#else -->
 	<!-- http://appserver.agilebase.co.uk -->
-		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBRxAnm0_scGKZ8a5LFigkL92MLBPxRb_2NJmc5g2y3fYLr5HPYaDqnBYQ"></script>
+		<script type="text/javascript" src="ABQIAAAAAmhDcBizb6sHKLYdSFLnLBTkxqGBZcNO6KTJ8OH7el13ZyLEzxT0-wdY7BkQmrNPx8dhLS-syRRsRQ"></script>
 <!--#endif -->
 
 	<script type="text/javascript">
