@@ -451,11 +451,14 @@ body.mobile {
 	height: 55px;
 	width: 300px;
 	color: black;
-	font-weight: bold;
+	font-family: tahoma, arial, sans-serif;
 	text-align: left;
-	vertical-align: middle;
+	margin: 0;
+	padding: 10px;
 	top: -1.5em;
 	z-index: 100;
+	-mox-border-radius: 2px;
+	-webkit-border-radiue: 2px;
 }
 
 #footer {
