@@ -137,7 +137,6 @@
 					$('#login').html('<big>iPhone users log in at<br><a href="http://www.agilebase.co.uk/mobile">www.agilebase.co.uk/mobile</a></big>');
 				}
 			}
-			
 			// if enter is pressed in username field with no password, don't submit details
 			$("#loginform").submit(function() {
 				if($('#j_password').val() == '') {
@@ -145,6 +144,12 @@
 				} else {
 					return true;
 				} 
+			});
+			// just in time etc. tooltips
+			$("#just_in a").each(function(i) {
+				$(this).mouseover(function() {
+					($this).parent().find(".just_tooltip").fadeIn('normal');
+				});
 			});
 		}); 
 
@@ -259,12 +264,21 @@
 							</div>
 							<div>
 								<h1>Why do I use it?</h1>
-								agileBase lets you build back office software that is
+								agileBase helps build back office software that is
 								<div id="just_in">
 								<table border="0" width="100%"><tr>
-								<td class="just_in_time"><img src="/agileBase/website/images/pix-lightblue.png"></img> just in time</td>
-								<td class="just_enough"><img src="/agileBase/website/images/pix-darkblue.png"></img> just enough</td>
-								<td class="just_for_us"><img src="/agileBase/website/images/pix-orange.png"></img> just for us</td>
+								<td class="just_in_time">
+								  <img src="/agileBase/website/images/pix-lightblue.png"></img> <a href="#">just in time</a>
+								  <div class="just_tooltip">develop for this week not next year and for $, not $$$$$$</div>
+								</td>
+								<td class="just_enough">
+								  <img src="/agileBase/website/images/pix-darkblue.png"></img> <a href="#">just enough</a>
+								  <div class="just_tooltip">avoid swamping by bloatware and complex user interfaces</div>
+								</td>
+								<td class="just_for_us">
+								  <img src="/agileBase/website/images/pix-orange.png"></img> <a href="#">just for us</a>
+								  <div class="just_tooltip">customisable to business needs and processes</div>
+								</td>
 								</tr></table>
 								</div>
 								<p>As a cutting edge lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 

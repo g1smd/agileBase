@@ -438,6 +438,11 @@ body.mobile {
 	text-align: right;
 }
 
+.just_tooltip {
+	position: absolute;
+	display: none;
+}
+
 #footer {
 	margin-top:70px;
 	border-top:1px solid white;
