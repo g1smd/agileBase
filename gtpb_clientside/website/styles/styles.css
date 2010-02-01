@@ -449,6 +449,8 @@ body.mobile {
 	opacity: 0.9;
 	left: -35%;
 	height: 55px;
+	width: 250px;
+	color: black;
 	top: -1.5em;
 	z-index: 100;
 }
