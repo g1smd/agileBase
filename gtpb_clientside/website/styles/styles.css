@@ -417,6 +417,13 @@ body.mobile {
 	border-top:1px dashed #bbbbbb;
 }
 
+#just_in img {
+	width: 1em;
+	height: 1em;
+	border: 1px;
+	border-color: white;
+}
+
 #footer {
 	margin-top:70px;
 	border-top:1px solid white;

@@ -40,15 +40,12 @@
 			<!--#endif -->
 			<table border="0" class="mobileLogin">
 			<tr>
-			  <td>username</td>
-			  <td><input style="right:0px" type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></td>
+			  <td>username<br /><input style="right:0px" type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></td>
 			</tr>
 			<tr>
-			  <td>password</td>
-			  <td><input style="right:0px" type="password" name="j_password" id="j_password" /></td>
+			  <td>password<br /><input style="right:0px" type="password" name="j_password" id="j_password" /></td>
 			</tr>
 			<tr>
-			<td>&nbsp;</td>
 			<td><input type="submit" value="login" style="top:200px"></td>
 			</tr>
 			
@@ -262,33 +259,12 @@
 							</div>
 							<div>
 								<h1>Why do I use it?</h1>
-								<p>There are many choices when deciding on software to suit your IT strategy, boiling down to
-								<table border="0" cellpadding="0" cellspacing="0">
-							      <tr>
-									<td style="width:50%">
-									  <h2>* Agile platform *</h2>
-									  Such as agileBase which has proven popular when used either as a wrapper around 
-									  existing / legacy systems or starting as a prototyping and learning platform</li>
-									</td>
-									<td style="width:50%">
-									  <h2>Best of suites</h2>
-									  e.g. ERP systems are really popular for core and stable areas of the business. 
-									  However, no system can possibly cover all organisational needs.  (If it did it would probably sink the company that tried to adopt it!)</li>               
-									</td>
-								  </tr>
-									<tr>
-									  <td style="width:50%">
-										<h2>Best of breed</h2>
-										An approach that involves purchasing the best system for each specific function. 
-										However, huge replication of data across systems makes continuous improvement and 
-										a 'single view' of the data hard to achieve</td>
-									  <td style="width:50%">
-										<h2>Bespoke</h2>
-										Relatively unpopular: costs an arm and a leg, slow to create</li>
-									  </td>
-									</tr>
-								  </table>								
-								</p>
+								agileBase lets you build back office software that is
+								<div id="just_in">
+								<span class="just_in_time"><img src="images/pix-lightblue.png"></img>just in time</span>
+								<span class="just_enough"><img src="images/pix-darkblue.png"></img>just enough</span>
+								<span class="just_for_us"><img src="images/pix-orange.png"></img>just for us</span>
+								</div>
 								<p>As a cutting edge lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 
 								at a pace to match a company's evolving learning, knowledge and understanding.</p>
 							</div>
