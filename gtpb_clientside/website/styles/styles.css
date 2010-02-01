@@ -426,19 +426,20 @@ body.mobile {
 	vertical-align: center;
 }
 
+#just_in td span {
+	position: relative;
+}
+
 .just_in_time {
 	text-align: left;
-	position: relative;
 }
 
 .just_enough {
 	text-align: center;
-	position: relative;
 }
 
 .just_for_us {
 	text-align: right;
-	position: relative;
 }
 
 .just_tooltip {

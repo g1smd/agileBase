@@ -270,18 +270,18 @@
 								agileBase helps build back office software that is
 								<div id="just_in">
 								<table border="0" width="100%"><tr>
-								<td class="just_in_time">
+								<td class="just_in_time"><span>
 								  <img src="/agileBase/website/images/pix-lightblue.png"></img> <a href="#">just in time </a>
 								  <div class="just_tooltip">develop for this week not next year and for $, not $$$$$$</div>
-								</td>
-								<td class="just_enough">
+								</span></td>
+								<td class="just_enough"><span>
 								  <img src="/agileBase/website/images/pix-darkblue.png"></img> <a href="#">just enough </a>
 								  <div class="just_tooltip">avoid swamping by bloatware and complex user interfaces</div>
-								</td>
-								<td class="just_for_us">
+								</span></td>
+								<td class="just_for_us"><span>
 								  <img src="/agileBase/website/images/pix-orange.png"></img> <a href="#">just for us </a>
 								  <div class="just_tooltip">customisable to business needs and processes</div>
-								</td>
+								<span></td>
 								</tr></table>
 								</div>
 								<p>As a cutting edge lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 
