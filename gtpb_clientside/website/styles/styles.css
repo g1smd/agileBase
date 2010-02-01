@@ -435,7 +435,7 @@ body.mobile {
 }
 
 .just_in_time .just_tooltip {
-	background: url('/agileBase/images/just-in-time.png') no-repeat scroll 0 0;
+	background: white url('../images/just-in-time.png') no-repeat scroll 0 0;
 }
 
 .just_enough {
