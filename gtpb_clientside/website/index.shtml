@@ -148,7 +148,7 @@
 			// just in time etc. tooltips
 			$("#just_in a").each(function(i) {
 				$(this).mouseover(function() {
-					($this).parent().find(".just_tooltip").fadeIn('normal');
+					$(this).parent().find(".just_tooltip").fadeIn('normal');
 				});
 			});
 		}); 
