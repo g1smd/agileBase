@@ -68,13 +68,13 @@
 
 <!--#if expr="$SERVER_PORT = '443'" --> 
 	<!-- https://appserver.agilebase.co.uk -->
-		<script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBTyD2xy-M5qYkboiOMz-vg8XD0GKxShfmzsDX4T1YzJSslKlNzT32z2PA"></script>
 <!--#elif expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
 	<!-- http://gtwmbackup.dh.bytemark.co.uk -->
 		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBQf1koDrgwv2nVopgtXyNJJGf3wPhSGxzvELTvIoGYjhEXJzrBbXQIbKw"></script>
 <!--#else -->
 	<!-- http://appserver.agilebase.co.uk -->
-		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBTkxqGBZcNO6KTJ8OH7el13ZyLEzxT0-wdY7BkQmrNPx8dhLS-syRRsRQ"></script>
+		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBRxAnm0_scGKZ8a5LFigkL92MLBPxRb_2NJmc5g2y3fYLr5HPYaDqnBYQ"></script>
 <!--#endif -->
 
 	<script type="text/javascript">
@@ -276,7 +276,7 @@
 								</span></td>
 								<td class="just_enough"><span>
 								  <img src="/agileBase/website/images/pix-darkblue.png"></img> <a href="#">just enough </a>
-								  <div class="just_tooltip">avoid swamping by bloatware and complex user interfaces</div>
+								  <div class="just_tooltip">avoid being swamped by bloatware and complex user interfaces</div>
 								</span></td>
 								<td class="just_for_us"><span>
 								  <img src="/agileBase/website/images/pix-orange.png"></img> <a href="#">just for us </a>
@@ -365,9 +365,9 @@
 							<p>agileBase requires no programming skills and thus allows analysts to convert schemas into fully working 
 							web based prototypes in hours. The prototype is immediately available via the web for client review and feedback 
 							from various stakeholders can be incorporated into the product often in real time.</p>
-							<h1>GTpB as a long term solution</h1>
-							<p>For many organisations these "prototypes" may even suffice, as the PostgreSQL database underlying GTpB is highly scalable & robust.</p>
-							<p>For small organisations or applications GTpB therefore provides a cost effective, rapid, easy to use and robust web app. development tool.</p>
+							<h1>agileBase as a long term solution</h1>
+							<p>For many organisations these "prototypes" may even suffice, as the PostgreSQL database underlying agileBase is highly scalable & robust.</p>
+							<p>For small organisations or applications agileBase therefore provides a cost effective, rapid, easy to use and robust web app. development tool.</p>
 							<h1>Customisations</h1>
 							<p>If custom features are necessary, wizards for complex processes or custom printouts for example, an plugin engine and <a href="http://gtwebmarque.com/wikis/gtwm/index.php/Javadoc">API</a> is available to build these with. 
 							Any developer has to be comfortable with using the <a href="http://velocity.apache.org">Apache Velocity</a> templating language. 
