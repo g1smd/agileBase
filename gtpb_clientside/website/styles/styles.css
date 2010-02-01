@@ -452,10 +452,10 @@ body.mobile {
 	background: white;
 	opacity: 0.9;
 	left: -45%;
-	height: 55px;
+	height: 40px;
 	width: 260px;
 	color: black;
-	font-family: tahoma, arial, sans-serif;
+	font-family: tahoma, arial, sans-serif!important;
 	font-weight: bold;
 	text-align: left;
 	margin: 0;
