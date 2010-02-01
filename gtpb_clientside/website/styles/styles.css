@@ -434,6 +434,10 @@ body.mobile {
 	text-align: left;
 }
 
+.just_in_time .just_tooltip {
+	background: url('/agileBase/images/just-in-time.png') no-repeat scroll 0 0;
+}
+
 .just_enough {
 	text-align: center;
 }
@@ -452,6 +456,7 @@ body.mobile {
 	width: 260px;
 	color: black;
 	font-family: tahoma, arial, sans-serif;
+	font-weight: bold;
 	text-align: left;
 	margin: 0;
 	padding: 10px;
