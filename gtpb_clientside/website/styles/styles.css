@@ -447,7 +447,7 @@ body.mobile {
 	display: none;
 	background: white;
 	opacity: 0.9;
-	left: -35%;
+	left: -45%;
 	height: 55px;
 	width: 260px;
 	color: black;
@@ -457,7 +457,7 @@ body.mobile {
 	padding: 10px;
 	top: -1.5em;
 	z-index: 100;
-	-mox-border-radius: 3px;
+	-moz-border-radius: 3px;
 	-webkit-border-radiue: 3px;
 }
 
