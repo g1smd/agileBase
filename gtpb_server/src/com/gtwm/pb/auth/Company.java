@@ -236,15 +236,19 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return Collections.unmodifiableSortedSet(this.getSummaryIdsForDashboardDirect());
 	}
 	
+	@Transient
+	//TODO: hibernate annotation
 	private SortedSet<Long> getSummaryIdsForDashboardDirect() {
 		return this.getSummaryIdsForDashboardDirect();
 	}
 
+	@Transient
 	public SortedSet<Long> getSummaryIdsNotForDashboard() {
 		return Collections.unmodifiableSortedSet(this.getSummaryIdsNotForDashboardDirect());
 	}
 	
 	@Transient
+	//TODO: hibernate annotation
 	private SortedSet<Long> getSummaryIdsNotForDashboardDirect() {
 		return this.getSummaryIdsNotForDashboardDirect();
 	}
