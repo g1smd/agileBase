@@ -422,6 +422,10 @@ body.mobile {
 	height: 1em;
 }
 
+#just_in td {
+	vertical-align: center;
+}
+
 .just_in_time {
 	text-align: left;
 }
