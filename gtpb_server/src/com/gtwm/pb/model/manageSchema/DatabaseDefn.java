@@ -1334,7 +1334,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	 */
 	private void addFieldDbAction(Connection conn, String internalTableName,
 			String internalFieldName, String fieldName, String dbType, boolean isUnique)
-			throws SQLException {
+			throws SQLException, CantDoThatException {
 		// Add the field
 		String SQLCode = "ALTER TABLE " + internalTableName;
 		SQLCode += " ADD COLUMN " + internalFieldName + " " + dbType;
@@ -2149,7 +2149,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		Set<ReportSummaryAggregateInfo> aggregates = templateSummary.getAggregateFunctions();
 		Set<ReportSummaryGroupingInfo> groupings = templateSummary.getGroupings();
 		if (aggregates.size() == 0) {
-			throw new CantDoThatException("To save a report summary, it must contain one or more functions");
+			throw new CantDoThatException(
+					"To save a report summary, it must contain one or more functions");
 		}
 		HibernateUtil.activateObject(templateSummary);
 		ReportSummaryInfo savedSummary = new ReportSummaryDefn(report, summaryTitle);
@@ -2171,18 +2172,21 @@ public class DatabaseDefn implements DatabaseInfo {
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report,
-				AppAction.SAVE_REPORT_SUMMARY, "title: " + summaryTitle);
+		usageLogger.logReportSchemaChange(user, report, AppAction.SAVE_REPORT_SUMMARY, "title: "
+				+ summaryTitle);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void removeSummaryReport(HttpServletRequest request, ReportSummaryInfo reportSummary) throws DisallowedException, CantDoThatException, ObjectNotFoundException {
+	public synchronized void removeSummaryReport(HttpServletRequest request,
+			ReportSummaryInfo reportSummary) throws DisallowedException, CantDoThatException,
+			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, reportSummary.getReport().getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, reportSummary.getReport().getParentTable());
+			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, reportSummary.getReport()
+					.getParentTable());
 		}
 		BaseReportInfo report = reportSummary.getReport();
-		if(reportSummary.equals(report.getReportSummary())) {
+		if (reportSummary.equals(report.getReportSummary())) {
 			throw new CantDoThatException("The default report summary can't be removed");
 		}
 		HibernateUtil.activateObject(report);
@@ -2191,12 +2195,11 @@ public class DatabaseDefn implements DatabaseInfo {
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report,
-				AppAction.REMOVE_REPORT_SUMMARY, "title: " + reportSummary.getTitle());
+		usageLogger.logReportSchemaChange(user, report, AppAction.REMOVE_REPORT_SUMMARY, "title: "
+				+ reportSummary.getTitle());
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	
 	public synchronized TableInfo getTableByName(HttpServletRequest request, String tableName)
 			throws ObjectNotFoundException {
 		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
@@ -2436,14 +2439,24 @@ public class DatabaseDefn implements DatabaseInfo {
 	 * using an index
 	 */
 	private void addUniqueDbAction(Connection conn, String internalTableName,
-			String internalFieldName) throws SQLException {
+			String internalFieldName) throws SQLException, CantDoThatException {
 		// Use the same naming convention that postgresql uses
 		String indexName = internalTableName + "_" + internalFieldName + "_key";
 		String SQLCode = "CREATE UNIQUE INDEX " + indexName + " ON " + internalTableName + "("
 				+ internalFieldName + ")";
-		PreparedStatement statement = conn.prepareStatement(SQLCode);
-		statement.execute();
-		statement.close();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(SQLCode);
+			statement.execute();
+		} catch (SQLException sqlex) {
+			if (sqlex.getMessage().contains("Table contains duplicated values")) {
+				throw new CantDoThatException("Unique property can't be set as the table contains duplicated values");
+			} else {
+				throw sqlex;
+			}
+		} finally {
+			statement.close();
+		}
 	}
 
 	private void removeUniqueDbAction(Connection conn, String internalTableName,
@@ -2485,7 +2498,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	 * Given all the properties of a text field (content size, whether it uses a
 	 * lookup, if it's unique etc.), set indexes appropriately
 	 */
-	private void addRemoveRelevantTextIndexes(Connection conn, TextField field) throws SQLException {
+	private void addRemoveRelevantTextIndexes(Connection conn, TextField field) throws SQLException, CantDoThatException {
 		String internalTableName = field.getTableContainingField().getInternalTableName();
 		String internalFieldName = field.getInternalFieldName();
 		this.removeIndexDbAction(conn, internalTableName, internalFieldName, true);
@@ -2509,7 +2522,7 @@ public class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * runs addUniqueDbAction, providing a database connection
 	 */
-	private void addUniqueWrapper(String internalTableName, String internalFieldName) {
+	private void addUniqueWrapper(String internalTableName, String internalFieldName) throws CantDoThatException {
 		try {
 			Connection conn = this.relationalDataSource.getConnection();
 			try {
