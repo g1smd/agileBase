@@ -40,6 +40,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
+
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.util.RandomString;
@@ -194,13 +197,14 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	public synchronized void removeTabAddress(String tabAddress) {
 		this.getTabAddressesCollection().remove(tabAddress);
 	}
-	
-	public synchronized void setCachedSparkline(LogType logType, int options, List<Integer> sparklineData) {
+
+	public synchronized void setCachedSparkline(LogType logType, int options,
+			List<Integer> sparklineData) {
 		String key = logType.name() + options;
 		this.cachedSparkLines.put(key, sparklineData);
 		this.sparkLineCacheTime = System.currentTimeMillis();
 	}
-	
+
 	public synchronized List<Integer> getCachedSparkline(LogType logType, int options) {
 		long cacheAge = System.currentTimeMillis() - this.sparkLineCacheTime;
 		// Cache sparklines for two days
@@ -227,7 +231,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	public void addSummaryIdForDashboard(long id) {
 		this.getSummaryIdsForDashboardDirect().add(id);
 	}
-	
+
 	public void addSummaryIdNotForDashboard(long id) {
 		this.getSummaryIdsNotForDashboardDirect().add(id);
 	}
@@ -236,8 +240,9 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	public SortedSet<Long> getSummaryIdsForDashboard() {
 		return Collections.unmodifiableSortedSet(this.getSummaryIdsForDashboardDirect());
 	}
-	
+
 	@CollectionOfElements(fetch = FetchType.EAGER)
+	@Sort(type = SortType.NATURAL)
 	private SortedSet<Long> getSummaryIdsForDashboardDirect() {
 		return this.getSummaryIdsForDashboardDirect();
 	}
@@ -246,8 +251,9 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	public SortedSet<Long> getSummaryIdsNotForDashboard() {
 		return Collections.unmodifiableSortedSet(this.getSummaryIdsNotForDashboardDirect());
 	}
-	
+
 	@CollectionOfElements(fetch = FetchType.EAGER)
+	@Sort(type = SortType.NATURAL)
 	private SortedSet<Long> getSummaryIdsNotForDashboardDirect() {
 		return this.getSummaryIdsNotForDashboardDirect();
 	}
@@ -289,9 +295,9 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	}
 
 	private Set<Long> summaryIdsForDashboard = new HashSet<Long>();
-	
+
 	private Set<Long> summaryIdsNotForDashboard = new HashSet<Long>();
-	
+
 	private Set<AppUserInfo> usersCollection = new HashSet<AppUserInfo>();
 
 	private Set<AppRoleInfo> roles = new HashSet<AppRoleInfo>();
