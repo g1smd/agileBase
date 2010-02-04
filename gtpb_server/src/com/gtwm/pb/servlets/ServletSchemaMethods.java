@@ -1101,18 +1101,13 @@ public class ServletSchemaMethods {
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique);
-			throw new CantDoThatException("Updating field failed", pex);
+			throw new CantDoThatException("Updating field failed: " + pex.getMessage(), pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique);
-			if (sqlex.getMessage().contains("could not create unique index")) {
-				throw new CantDoThatException(
-						"Unable to make field unique because the data contains duplicate values");
-			} else {
-				throw new CantDoThatException("Updating field failed", sqlex);
-			}
+			throw new CantDoThatException("Updating field failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
