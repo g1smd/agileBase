@@ -33,7 +33,7 @@ import com.gtwm.pb.util.ObjectNotFoundException;
  * should compare on object name(s) case insensitively because this is how they
  * will often be displayed to the user. Internal names such as returned by
  * getInternalTableName are used by the database and sometimes code as
- * identifiers but are not the primary object identifiers.
+ * identifiers but are not the business object identifiers.
  */
 public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 

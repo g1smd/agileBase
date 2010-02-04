@@ -671,8 +671,6 @@ public class ReportFilterDefn implements ReportFilterInfo {
 
 	private Set<String> filterValues = new HashSet<String>();
 
-//	private BaseReportInfo filterSubSelect;
-
 	private String internalName = null;
 
 	/**

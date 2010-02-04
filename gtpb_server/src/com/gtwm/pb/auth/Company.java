@@ -35,6 +35,7 @@ import java.util.LinkedHashSet;
 import java.util.Collections;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -236,8 +237,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return Collections.unmodifiableSortedSet(this.getSummaryIdsForDashboardDirect());
 	}
 	
-	@Transient
-	//TODO: hibernate annotation
+	@CollectionOfElements(fetch = FetchType.EAGER)
 	private SortedSet<Long> getSummaryIdsForDashboardDirect() {
 		return this.getSummaryIdsForDashboardDirect();
 	}
@@ -247,8 +247,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return Collections.unmodifiableSortedSet(this.getSummaryIdsNotForDashboardDirect());
 	}
 	
-	@Transient
-	//TODO: hibernate annotation
+	@CollectionOfElements(fetch = FetchType.EAGER)
 	private SortedSet<Long> getSummaryIdsNotForDashboardDirect() {
 		return this.getSummaryIdsNotForDashboardDirect();
 	}
