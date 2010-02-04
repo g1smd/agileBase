@@ -2450,7 +2450,7 @@ public class DatabaseDefn implements DatabaseInfo {
 			statement.execute();
 		} catch (SQLException sqlex) {
 			if (sqlex.getMessage().contains("Table contains duplicated values")) {
-				throw new CantDoThatException("Unique property can't be set as the table contains duplicated values");
+				throw new CantDoThatException("The table contains duplicate values");
 			} else {
 				throw sqlex;
 			}
