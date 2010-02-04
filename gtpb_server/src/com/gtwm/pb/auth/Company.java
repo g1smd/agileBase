@@ -246,6 +246,11 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	private SortedSet<Long> getSummaryIdsForDashboardDirect() {
 		return this.summaryIdsForDashboard;
 	}
+	
+	/* Only used by Hibernate */
+	private void setSummaryIdsForDashboardDirect(SortedSet<Long> sids) {
+		this.summaryIdsForDashboard = sids;
+	}
 
 	@Transient
 	public SortedSet<Long> getSummaryIdsNotForDashboard() {
@@ -256,6 +261,11 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	@Sort(type = SortType.NATURAL)
 	private SortedSet<Long> getSummaryIdsNotForDashboardDirect() {
 		return this.summaryIdsNotForDashboard;
+	}
+
+	/* Only used by Hibernate */
+	private void setSummaryIdsNotForDashboardDirect(SortedSet<Long> sids) {
+		this.summaryIdsNotForDashboard = sids;
 	}
 
 	public void removeSummaryIdForDashboard(long id) {
