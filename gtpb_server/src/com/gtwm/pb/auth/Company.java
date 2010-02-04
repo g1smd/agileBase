@@ -244,7 +244,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	@CollectionOfElements(fetch = FetchType.EAGER)
 	@Sort(type = SortType.NATURAL)
 	private SortedSet<Long> getSummaryIdsForDashboardDirect() {
-		return this.getSummaryIdsForDashboardDirect();
+		return this.summaryIdsForDashboard;
 	}
 
 	@Transient
@@ -255,7 +255,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	@CollectionOfElements(fetch = FetchType.EAGER)
 	@Sort(type = SortType.NATURAL)
 	private SortedSet<Long> getSummaryIdsNotForDashboardDirect() {
-		return this.getSummaryIdsNotForDashboardDirect();
+		return this.summaryIdsNotForDashboard;
 	}
 
 	public void removeSummaryIdForDashboard(long id) {
@@ -294,9 +294,9 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return this.getCompanyName();
 	}
 
-	private Set<Long> summaryIdsForDashboard = new HashSet<Long>();
+	private SortedSet<Long> summaryIdsForDashboard = new TreeSet<Long>();
 
-	private Set<Long> summaryIdsNotForDashboard = new HashSet<Long>();
+	private SortedSet<Long> summaryIdsNotForDashboard = new TreeSet<Long>();
 
 	private Set<AppUserInfo> usersCollection = new HashSet<AppUserInfo>();
 
