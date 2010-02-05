@@ -45,7 +45,7 @@
 #set($series = [])
 #set($seriesString = "")
 #foreach($aggregateFunction in $aggregateFunctions)
-  #set($seriesName = $aggregateFunction.toString().toLowerCase())
+  #set($seriesName = $viewTools.escape("$aggregateFunction").toLowerCase())
   #if(!$dashboard)
     ## Add grand total to series
 	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
