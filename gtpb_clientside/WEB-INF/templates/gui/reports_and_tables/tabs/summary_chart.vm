@@ -102,7 +102,7 @@
             renderTo: "$chart_id",
             defaultSeriesType: 'bar',
 			#if($dashboard)
-			  width: 250,
+			  width: 400,
 			#end
 			height: $height
 			#if($margin)

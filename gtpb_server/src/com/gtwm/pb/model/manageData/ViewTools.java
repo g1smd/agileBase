@@ -1062,7 +1062,7 @@ public class ViewTools implements ViewToolsInfo {
 	}
 
 	public Set<String> getNewStringSet() {
-		return new HashSet<String>();
+		return new LinkedHashSet<String>();
 	}
 
 	public void reverseList(List list) {
