@@ -22,7 +22,7 @@
 #set($chart_id = "chart_$reportSummary.getId()")
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
-<div id="$chart_id" #if($reportSummary.equals($report.getReportSummary())) class="default_chart" #else class="summary_chart" #end></div>
+<div id="$chart_id" #if($reportSummary.equals($report.getReportSummary()) && !$dashboard) class="default_chart" #else class="summary_chart" #end></div>
 #if($reportSummaryRows.size() > 0)
 #set($chartTitle = "$reportSummary.getTitle()")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
@@ -81,14 +81,18 @@
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
 #end
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
-  #if($reportSummary.equals($report.getReportSummary()))
+  #if($reportSummary.equals($report.getReportSummary()) && !$dashboard)
 	#set($margin = "[10, 50, 60, $xAxisMargin]") ## top, right, bottom, left
   #else
 	#set($margin = "[50, 50, 60, $xAxisMargin]")
 	#set($height = $height + 40)
   #end
   #set($title = "")
-  #set($title = $reportSummary.getTitle())
+  #if($dashboard)
+	#set($title = "$report - $reportSummary.getTitle()")
+  #else
+    #set($title = $reportSummary.getTitle())
+  #end
   <script language="JavaScript">
     var $chart_id = new Highcharts.Chart({
          chart: {
