@@ -89,7 +89,10 @@
   #end
   #set($title = "")
   #if($dashboard)
-	#set($title = "$report - $reportSummary.getTitle()")
+	#set($title = "$report")
+	#if($reportSummary.getTitle())
+	  #set($title = "$title - $reportSummary.getTitle()")
+	#end
   #else
     #set($title = $reportSummary.getTitle())
   #end
