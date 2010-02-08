@@ -22,7 +22,15 @@
 #set($chart_id = "chart_$reportSummary.getId()")
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
-<div id="$chart_id" #if($reportSummary.equals($report.getReportSummary()) && (!$dashboard)) class="default_chart" #else class="summary_chart" #end></div>
+#if($reportSummary.equals($report.getReportSummary()) && (!$dashboard))
+  #set($chart_classes="default_chart")
+#else
+  #set($chart_classes="summary_chart")
+  #if($suggested)
+	#set($chart_classes = "$chart_classes suggested")
+  #end
+#end
+<div id="$chart_id" class="$chart_classes"></div>
 #if($reportSummaryRows.size() > 0)
 #set($chartTitle = "$reportSummary.getTitle()")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
