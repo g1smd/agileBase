@@ -69,7 +69,7 @@
   }
   
   .summary_chart {
-    width: 100%;
+    /* width: 100%; */
     position: relative; /* to allow the chart_remover to be placed inside */
   }
   
