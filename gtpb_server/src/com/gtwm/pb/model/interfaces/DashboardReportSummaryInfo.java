@@ -5,8 +5,6 @@ package com.gtwm.pb.model.interfaces;
  * @see ReportSummaryDataInfo
  */
 public interface DashboardReportSummaryInfo {
-
-	public ReportSummaryDataInfo getReportSummaryData();
 	
 	public ReportSummaryInfo getReportSummary();
 	

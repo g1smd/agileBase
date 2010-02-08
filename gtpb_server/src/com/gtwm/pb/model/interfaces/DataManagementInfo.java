@@ -105,12 +105,14 @@ public interface DataManagementInfo {
 	 *            Report to show summary for
 	 * @param company
 	 *            Used to inform per-company caching
+	 * @param alwaysUseCache
+	 *            If true, always use the cached data if any's available
 	 * @return The report summary data, or null if the summary isn't valid, e.g.
 	 *         doesn't contain an aggregate function
 	 */
 	public ReportSummaryDataInfo getReportSummaryData(CompanyInfo company,
-			ReportSummaryInfo reportSummaryDefn, Map<BaseField, String> reportFilterValues)
-			throws SQLException, CantDoThatException;
+			ReportSummaryInfo reportSummaryDefn, Map<BaseField, String> reportFilterValues,
+			boolean alwaysUseCache) throws SQLException, CantDoThatException;
 
 	/**
 	 * Get a single row as a map of field name => value, for editing or viewing

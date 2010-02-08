@@ -50,6 +50,7 @@ import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
+import com.gtwm.pb.model.interfaces.ReportQuickFilterInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.DataManagementInfo;
@@ -585,7 +586,7 @@ public class DataManagement implements DataManagementInfo {
 			// Find out which field caused the error by looking for internal
 			// field names in the error message
 			String errorMessage = sqlex.getMessage();
-			
+
 			for (BaseField possibleCauseField : dataToSave.keySet()) {
 				if (errorMessage.contains(possibleCauseField.getInternalFieldName())) {
 					if (errorMessage.contains("check constraint")) {
@@ -596,11 +597,17 @@ public class DataManagement implements DataManagementInfo {
 					} else if (errorMessage.contains("unique constraint")) {
 						errorMessage = "Value " + dataToSave.get(possibleCauseField)
 								+ " is already in the database and cannot be entered again";
-					} else if (errorMessage.contains("foreign key constraint") && possibleCauseField instanceof RelationField) {
-						errorMessage = "Please select a valid " + ((RelationField) possibleCauseField).getRelatedTable() + " record first";
+					} else if (errorMessage.contains("foreign key constraint")
+							&& possibleCauseField instanceof RelationField) {
+						errorMessage = "Please select a valid "
+								+ ((RelationField) possibleCauseField).getRelatedTable()
+								+ " record first";
 					} else {
-						errorMessage = "Value " + dataToSave.get(possibleCauseField)
-								+ " not allowed (" + Helpers.replaceInternalNames(errorMessage, table.getDefaultReport()) + ")";
+						errorMessage = "Value "
+								+ dataToSave.get(possibleCauseField)
+								+ " not allowed ("
+								+ Helpers.replaceInternalNames(errorMessage, table
+										.getDefaultReport()) + ")";
 					}
 					throw new InputRecordException(errorMessage, possibleCauseField);
 				}
@@ -651,12 +658,15 @@ public class DataManagement implements DataManagementInfo {
 			}
 		}
 		if (newRecord) {
-			usageLogger.logDataChange(user, table, AppAction.SAVE_NEW_RECORD, newRowId, dataToLog.toString());
+			usageLogger.logDataChange(user, table, AppAction.SAVE_NEW_RECORD, newRowId, dataToLog
+					.toString());
 		} else if (globalEdit) {
 			// TODO: need better logging of global edits
-			usageLogger.logDataChange(user, table, AppAction.GLOBAL_EDIT, rowId, dataToLog.toString());
+			usageLogger.logDataChange(user, table, AppAction.GLOBAL_EDIT, rowId, dataToLog
+					.toString());
 		} else {
-			usageLogger.logDataChange(user, table, AppAction.UPDATE_RECORD, rowId, dataToLog.toString());
+			usageLogger.logDataChange(user, table, AppAction.UPDATE_RECORD, rowId, dataToLog
+					.toString());
 		}
 		UsageLogger.startLoggingThread(usageLogger);
 	}
@@ -893,7 +903,8 @@ public class DataManagement implements DataManagementInfo {
 										String internalValueString = valueKeyMap.get(lineValue);
 										if (internalValueString == null) {
 											if (!requireExactRelationMatches) {
-												// A very basic fuzzy matching algorithm
+												// A very basic fuzzy matching
+												// algorithm
 												String potentialDisplayValue = null;
 												String lineValueLowerCase = lineValue.toLowerCase();
 												FUZZYMATCH: for (Map.Entry<String, String> entry : valueKeyMap
@@ -1063,7 +1074,8 @@ public class DataManagement implements DataManagementInfo {
 	 * next number above the highest value in the database. This ensures that
 	 * record inserts will work
 	 */
-	private static void resetSequence(SequenceField sequenceField, Connection conn) throws SQLException {
+	private static void resetSequence(SequenceField sequenceField, Connection conn)
+			throws SQLException {
 		TableInfo table = sequenceField.getTableContainingField();
 		// Find the max value
 		String SQLCode = "SELECT MAX(" + sequenceField.getInternalFieldName() + ") FROM "
@@ -1121,7 +1133,8 @@ public class DataManagement implements DataManagementInfo {
 					throw new CantDoThatException("An empty file was submitted, no upload done");
 				}
 				if (fileValue.toString().contains("/")) {
-					throw new CantDoThatException("Filename contains a slash character which is not allowed, no uploda done");
+					throw new CantDoThatException(
+							"Filename contains a slash character which is not allowed, no uploda done");
 				}
 				String filePath = uploadFolderName + "/" + fileValue.toString();
 				File selectedFile = new File(filePath);
@@ -1240,8 +1253,8 @@ public class DataManagement implements DataManagementInfo {
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			tablesWithDependentRecords = getTablesWithDependentRecords(conn, request,
-					sessionData, databaseDefn, table, rowId, tablesWithDependentRecords);
+			tablesWithDependentRecords = getTablesWithDependentRecords(conn, request, sessionData,
+					databaseDefn, table, rowId, tablesWithDependentRecords);
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -1416,8 +1429,8 @@ public class DataManagement implements DataManagementInfo {
 	}
 
 	public Map<RelationField, List<DataRow>> getChildDataTableRows(DatabaseInfo databaseDefn,
-			TableInfo tableDefn, int rowid, HttpServletRequest request) throws SQLException, ObjectNotFoundException,
-			CodingErrorException {
+			TableInfo tableDefn, int rowid, HttpServletRequest request) throws SQLException,
+			ObjectNotFoundException, CodingErrorException {
 		Connection conn = null;
 		Map<RelationField, List<DataRow>> childDataTableRows = null;
 		try {
@@ -1438,8 +1451,9 @@ public class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	private static Map<String, String> getKeyToDisplayMapping(Connection conn, String internalSourceName,
-			String internalKeyFieldName, String internalDisplayFieldName) throws SQLException {
+	private static Map<String, String> getKeyToDisplayMapping(Connection conn,
+			String internalSourceName, String internalKeyFieldName, String internalDisplayFieldName)
+			throws SQLException {
 		// Buffer the set of display values for this field:
 		String SQLCode = "SELECT " + internalKeyFieldName + ", " + internalDisplayFieldName;
 		SQLCode += " FROM " + internalSourceName;
@@ -1453,198 +1467,226 @@ public class DataManagement implements DataManagementInfo {
 		return displayLookup;
 	}
 
-	public synchronized ReportSummaryDataInfo getReportSummaryData(CompanyInfo company,
-			ReportSummaryInfo reportSummary, Map<BaseField, String> reportFilterValues) throws SQLException,
-			CantDoThatException {
+	public ReportSummaryDataInfo getReportSummaryData(CompanyInfo company,
+			ReportSummaryInfo reportSummary, Map<BaseField, String> reportFilterValues, boolean alwaysUseCache)
+			throws SQLException, CantDoThatException {
+		boolean needSummary = (reportSummary.getAggregateFunctions().size() > 0);
+		if (!needSummary) {
+			return null;
+		}
+		ReportSummaryDataInfo reportSummaryData = this.getCachedReportSummaryData(reportSummary);
+		if (reportSummaryData == null) {
+			reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues,
+					reportSummaryData);
+			this.addCachedReportSummaryData(reportSummary, reportSummaryData);
+		} else {
+			// Work out whether any filters are active that could affect the returned data
+			ReportDataInfo reportData = new ReportData(null, reportSummary.getReport(), false, false);
+			Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
+					reportFilterValues, false);
+			// If asked to always use the cache if possible, use it unless there are filters active
+			if (alwaysUseCache && whereClauseMap.size() == 0) {
+				return reportSummaryData;
+			}
+			long lastDataChangeTime = this.getLastDataChangeTime(company);
+			long lastSchemaChangeTime = this.getLastSchemaChangeTime(company);
+			long cacheCreationTime = reportSummaryData.getCacheCreationTime();
+			if ((cacheCreationTime <= lastDataChangeTime) || (cacheCreationTime <= lastSchemaChangeTime)) {
+				reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues,
+						reportSummaryData);
+				this.addCachedReportSummaryData(reportSummary, reportSummaryData);
+			}
+		}
+		return reportSummaryData;
+	}
+
+	/**
+	 * Fetch direct from the database
+	 */
+	private ReportSummaryDataInfo fetchReportSummaryData(ReportSummaryInfo reportSummary,
+			Map<BaseField, String> reportFilterValues, ReportSummaryDataInfo reportSummaryData)
+			throws CantDoThatException, SQLException {
 		Set<ReportSummaryAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
 		Set<ReportSummaryGroupingInfo> groupings = reportSummary.getGroupings();
 		List<ReportSummaryDataRowInfo> reportSummaryRows;
 		reportSummaryRows = new LinkedList<ReportSummaryDataRowInfo>();
-		ReportSummaryDataInfo reportSummaryData = null;
 		Connection conn = null;
-		boolean needSummary = (aggregateFunctions.size() > 0);
-		if (needSummary) {
-			try {
-				conn = this.dataSource.getConnection();
-				conn.setAutoCommit(false);
-				// First, cache the set of display values for relation fields
-				Map<ReportFieldInfo, Map<String, String>> displayLookups = new HashMap<ReportFieldInfo, Map<String, String>>();
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			// First, cache the set of display values for relation fields
+			Map<ReportFieldInfo, Map<String, String>> displayLookups = new HashMap<ReportFieldInfo, Map<String, String>>();
+			for (ReportSummaryGroupingInfo grouping : groupings) {
+				ReportFieldInfo groupingReportField = grouping.getGroupingReportField();
+				BaseField baseField = groupingReportField.getBaseField();
+				if (baseField instanceof RelationField) {
+					String relatedKey = ((RelationField) baseField).getRelatedField()
+							.getInternalFieldName();
+					String relatedDisplay = ((RelationField) baseField).getDisplayField()
+							.getInternalFieldName();
+					String relatedSource = ((RelationField) baseField).getRelatedTable()
+							.getInternalTableName();
+					Map<String, String> displayLookup = getKeyToDisplayMapping(conn, relatedSource,
+							relatedKey, relatedDisplay);
+					displayLookups.put(groupingReportField, displayLookup);
+				}
+			}
+			// Create some maps to store min. and max. values of each
+			// aggregate column
+			// These numbers can be used e.g. to scale values when charting
+			// summary data
+			Map<ReportSummaryAggregateInfo, Number> maxAggValues = new HashMap<ReportSummaryAggregateInfo, Number>();
+			Map<ReportSummaryAggregateInfo, Number> minAggValues = new HashMap<ReportSummaryAggregateInfo, Number>();
+			Map<ReportSummaryAggregateInfo, Number> grandTotals = new HashMap<ReportSummaryAggregateInfo, Number>();
+			// Also a map for working with in the loop
+			Map<ReportFieldInfo, Date> previousDateValues = new HashMap<ReportFieldInfo, Date>();
+			Calendar calendar = Calendar.getInstance();
+			// Get database data
+			PreparedStatement statement = reportSummary.getReportSummarySqlPreparedStatement(conn,
+					reportFilterValues, false);
+			long startTime = System.currentTimeMillis();
+			ResultSet summaryResults = statement.executeQuery();
+			while (summaryResults.next()) {
+				ReportSummaryDataRowInfo resultRow = new ReportSummaryDataRow();
+				int resultColumn = 0;
 				for (ReportSummaryGroupingInfo grouping : groupings) {
 					ReportFieldInfo groupingReportField = grouping.getGroupingReportField();
+					SummaryGroupingModifier groupingModifier = grouping.getGroupingModifier();
 					BaseField baseField = groupingReportField.getBaseField();
+					resultColumn++;
+					String value = "";
+					DatabaseFieldType dbType = baseField.getDbType();
 					if (baseField instanceof RelationField) {
-						String relatedKey = ((RelationField) baseField).getRelatedField()
-								.getInternalFieldName();
-						String relatedDisplay = ((RelationField) baseField).getDisplayField()
-								.getInternalFieldName();
-						String relatedSource = ((RelationField) baseField).getRelatedTable()
-								.getInternalTableName();
-						Map<String, String> displayLookup = getKeyToDisplayMapping(conn,
-								relatedSource, relatedKey, relatedDisplay);
-						displayLookups.put(groupingReportField, displayLookup);
-					}
-				}
-				// Create some maps to store min. and max. values of each
-				// aggregate column
-				// These numbers can be used e.g. to scale values when charting
-				// summary data
-				Map<ReportSummaryAggregateInfo, Number> maxAggValues = new HashMap<ReportSummaryAggregateInfo, Number>();
-				Map<ReportSummaryAggregateInfo, Number> minAggValues = new HashMap<ReportSummaryAggregateInfo, Number>();
-				Map<ReportSummaryAggregateInfo, Number> grandTotals = new HashMap<ReportSummaryAggregateInfo, Number>();
-				// Also a map for working with in the loop
-				Map<ReportFieldInfo, Date> previousDateValues = new HashMap<ReportFieldInfo, Date>();
-				Calendar calendar = Calendar.getInstance();
-				// Get database data
-				PreparedStatement statement = reportSummary.getReportSummarySqlPreparedStatement(
-						conn, reportFilterValues, false);
-				long startTime = System.currentTimeMillis();
-				ResultSet summaryResults = statement.executeQuery();
-				while (summaryResults.next()) {
-					ReportSummaryDataRowInfo resultRow = new ReportSummaryDataRow();
-					int resultColumn = 0;
-					for (ReportSummaryGroupingInfo grouping : groupings) {
-						ReportFieldInfo groupingReportField = grouping.getGroupingReportField();
-						SummaryGroupingModifier groupingModifier = grouping.getGroupingModifier();
-						BaseField baseField = groupingReportField.getBaseField();
-						resultColumn++;
-						String value = "";
-						DatabaseFieldType dbType = baseField.getDbType();
-						if (baseField instanceof RelationField) {
+						value = summaryResults.getString(resultColumn);
+						Map<String, String> displayLookup = displayLookups.get(groupingReportField);
+						value = displayLookup.get(value);
+					} else if (dbType.equals(DatabaseFieldType.TIMESTAMP)) {
+						if (groupingModifier != null) {
 							value = summaryResults.getString(resultColumn);
-							Map<String, String> displayLookup = displayLookups
-									.get(groupingReportField);
-							value = displayLookup.get(value);
-						} else if (dbType.equals(DatabaseFieldType.TIMESTAMP)) {
-							if (groupingModifier != null) {
-								value = summaryResults.getString(resultColumn);
-							} else {
-								Date dbValue = summaryResults.getTimestamp(resultColumn);
-								if (dbValue != null) {
-									if (groupingReportField instanceof ReportCalcFieldInfo) {
-										// See DateFieldDefn constructor for
-										// format
-										// explanation
-										value = ((ReportCalcFieldInfo) groupingReportField)
-												.formatDate(dbValue);
-									} else {
-										DateField dateField = (DateField) baseField;
-										value = (dateField.formatDate(dbValue));
-										if (Integer.valueOf(dateField.getDateResolution()).equals(
-												Calendar.DAY_OF_MONTH)) {
-											Date previousDbValue = previousDateValues
-													.get(groupingReportField);
-											if (previousDbValue != null) {
-												calendar.setTime(previousDbValue);
-												int previousDayOfYear = calendar
-														.get(Calendar.DAY_OF_YEAR);
-												calendar.setTime(dbValue);
-												int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
-												int difference = Math.abs(dayOfYear
-														- previousDayOfYear);
-												if (difference > 1) {
-													value += " (" + (difference - 1) + " day gap)";
-												}
+						} else {
+							Date dbValue = summaryResults.getTimestamp(resultColumn);
+							if (dbValue != null) {
+								if (groupingReportField instanceof ReportCalcFieldInfo) {
+									// See DateFieldDefn constructor for
+									// format
+									// explanation
+									value = ((ReportCalcFieldInfo) groupingReportField)
+											.formatDate(dbValue);
+								} else {
+									DateField dateField = (DateField) baseField;
+									value = (dateField.formatDate(dbValue));
+									if (Integer.valueOf(dateField.getDateResolution()).equals(
+											Calendar.DAY_OF_MONTH)) {
+										Date previousDbValue = previousDateValues
+												.get(groupingReportField);
+										if (previousDbValue != null) {
+											calendar.setTime(previousDbValue);
+											int previousDayOfYear = calendar
+													.get(Calendar.DAY_OF_YEAR);
+											calendar.setTime(dbValue);
+											int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+											int difference = Math
+													.abs(dayOfYear - previousDayOfYear);
+											if (difference > 1) {
+												value += " (" + (difference - 1) + " day gap)";
 											}
-											previousDateValues.put(groupingReportField, dbValue);
 										}
+										previousDateValues.put(groupingReportField, dbValue);
 									}
 								}
 							}
-						} else if (dbType.equals(DatabaseFieldType.FLOAT)) {
-							double floatValue = summaryResults.getDouble(resultColumn);
-							if (baseField instanceof DecimalField) {
-								value = ((DecimalField) baseField).formatFloat(floatValue);
-							} else if (groupingReportField instanceof ReportCalcFieldInfo) {
-								value = ((ReportCalcFieldInfo) groupingReportField)
-										.formatFloat(floatValue);
-							} else {
-								value = summaryResults.getString(resultColumn);
-							}
-						} else if (dbType.equals(DatabaseFieldType.BOOLEAN)) {
-							if (summaryResults.getBoolean(resultColumn)) {
-								value = "true";
-							} else {
-								value = "false";
-							}
+						}
+					} else if (dbType.equals(DatabaseFieldType.FLOAT)) {
+						double floatValue = summaryResults.getDouble(resultColumn);
+						if (baseField instanceof DecimalField) {
+							value = ((DecimalField) baseField).formatFloat(floatValue);
+						} else if (groupingReportField instanceof ReportCalcFieldInfo) {
+							value = ((ReportCalcFieldInfo) groupingReportField)
+									.formatFloat(floatValue);
 						} else {
 							value = summaryResults.getString(resultColumn);
 						}
-						resultRow.addGroupingValue(grouping, value);
-					}
-					for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
-						resultColumn++;
-						DatabaseFieldType dbType = aggregateFunction.getReportField()
-								.getBaseField().getDbType();
-						Double value = null;
-						// deal with aggregate results which are timestamps
-						// rather than doubles
-						if ((!aggregateFunction.getAggregateFunction().equals(
-								AggregateFunction.COUNT))
-								&& (dbType.equals(DatabaseFieldType.TIMESTAMP))) {
-							java.sql.Timestamp timestampValue = summaryResults
-									.getTimestamp(resultColumn);
-							if (timestampValue != null) {
-								Long longValue = timestampValue.getTime();
-								value = longValue.doubleValue();
-							}
+					} else if (dbType.equals(DatabaseFieldType.BOOLEAN)) {
+						if (summaryResults.getBoolean(resultColumn)) {
+							value = "true";
 						} else {
-							value = summaryResults.getDouble(resultColumn);
+							value = "false";
 						}
-						if (value != null) {
-							int precision = 1;
-							ReportFieldInfo aggReportField = aggregateFunction.getReportField();
-							if (aggReportField instanceof ReportCalcFieldInfo) {
-								DatabaseFieldType dbFieldType = ((ReportCalcFieldInfo) aggReportField)
-										.getDbType();
-								if (dbFieldType.equals(DatabaseFieldType.FLOAT)) {
-									precision = ((ReportCalcFieldInfo) aggReportField)
-											.getDecimalPrecision();
-								}
-							} else if (aggReportField.getBaseField() instanceof DecimalField) {
-								precision = ((DecimalField) aggReportField.getBaseField())
-										.getPrecision();
+					} else {
+						value = summaryResults.getString(resultColumn);
+					}
+					resultRow.addGroupingValue(grouping, value);
+				}
+				for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
+					resultColumn++;
+					DatabaseFieldType dbType = aggregateFunction.getReportField().getBaseField()
+							.getDbType();
+					Double value = null;
+					// deal with aggregate results which are timestamps
+					// rather than doubles
+					if ((!aggregateFunction.getAggregateFunction().equals(AggregateFunction.COUNT))
+							&& (dbType.equals(DatabaseFieldType.TIMESTAMP))) {
+						java.sql.Timestamp timestampValue = summaryResults
+								.getTimestamp(resultColumn);
+						if (timestampValue != null) {
+							Long longValue = timestampValue.getTime();
+							value = longValue.doubleValue();
+						}
+					} else {
+						value = summaryResults.getDouble(resultColumn);
+					}
+					if (value != null) {
+						int precision = 1;
+						ReportFieldInfo aggReportField = aggregateFunction.getReportField();
+						if (aggReportField instanceof ReportCalcFieldInfo) {
+							DatabaseFieldType dbFieldType = ((ReportCalcFieldInfo) aggReportField)
+									.getDbType();
+							if (dbFieldType.equals(DatabaseFieldType.FLOAT)) {
+								precision = ((ReportCalcFieldInfo) aggReportField)
+										.getDecimalPrecision();
 							}
-							Number currentGrandTotal = grandTotals.get(aggregateFunction);
-							if (currentGrandTotal == null) {
-								currentGrandTotal = new Double(0);
-							}
-							double currentGrandTotalDbl = currentGrandTotal.doubleValue() + value;
-							grandTotals
-									.put(aggregateFunction, Double.valueOf(currentGrandTotalDbl));
-							value = MathUtils.round(value, precision);
-							resultRow.addAggregateValue(aggregateFunction, value);
-							Number currentMin = minAggValues.get(aggregateFunction);
-							Number currentMax = maxAggValues.get(aggregateFunction);
-							if (currentMin == null) {
-								minAggValues.put(aggregateFunction, value);
-							} else if (value.doubleValue() < currentMin.doubleValue()) {
-								minAggValues.put(aggregateFunction, value);
-							}
-							if (currentMax == null) {
-								maxAggValues.put(aggregateFunction, value);
-							} else if (value.doubleValue() > currentMax.doubleValue()) {
-								maxAggValues.put(aggregateFunction, value);
-							}
+						} else if (aggReportField.getBaseField() instanceof DecimalField) {
+							precision = ((DecimalField) aggReportField.getBaseField())
+									.getPrecision();
+						}
+						Number currentGrandTotal = grandTotals.get(aggregateFunction);
+						if (currentGrandTotal == null) {
+							currentGrandTotal = new Double(0);
+						}
+						double currentGrandTotalDbl = currentGrandTotal.doubleValue() + value;
+						grandTotals.put(aggregateFunction, Double.valueOf(currentGrandTotalDbl));
+						value = MathUtils.round(value, precision);
+						resultRow.addAggregateValue(aggregateFunction, value);
+						Number currentMin = minAggValues.get(aggregateFunction);
+						Number currentMax = maxAggValues.get(aggregateFunction);
+						if (currentMin == null) {
+							minAggValues.put(aggregateFunction, value);
+						} else if (value.doubleValue() < currentMin.doubleValue()) {
+							minAggValues.put(aggregateFunction, value);
+						}
+						if (currentMax == null) {
+							maxAggValues.put(aggregateFunction, value);
+						} else if (value.doubleValue() > currentMax.doubleValue()) {
+							maxAggValues.put(aggregateFunction, value);
 						}
 					}
-					reportSummaryRows.add(resultRow);
 				}
-				summaryResults.close();
-				statement.close();
-				float durationSecs = (System.currentTimeMillis() - startTime) / ((float) 1000);
-				if (durationSecs > AppProperties.longSqlTime) {
-					logger.warn("Long SELECT SQL execution time of " + durationSecs
-							+ " seconds for summary '" + reportSummary + "', statement = "
-							+ statement);
-				}
-				reportSummaryData = new ReportSummaryData(reportSummaryRows, minAggValues,
-						maxAggValues, grandTotals);
-			} catch (SQLException sqlex) {
-				throw new SQLException("Error getting report summary data: " + sqlex);
-			} finally {
-				if (conn != null) {
-					conn.close();
-				}
+				reportSummaryRows.add(resultRow);
+			}
+			summaryResults.close();
+			statement.close();
+			float durationSecs = (System.currentTimeMillis() - startTime) / ((float) 1000);
+			if (durationSecs > AppProperties.longSqlTime) {
+				logger.warn("Long SELECT SQL execution time of " + durationSecs
+						+ " seconds for summary '" + reportSummary + "', statement = " + statement);
+			}
+			reportSummaryData = new ReportSummaryData(reportSummaryRows, minAggValues,
+					maxAggValues, grandTotals);
+		} catch (SQLException sqlex) {
+			throw new SQLException("Error getting report summary data: " + sqlex);
+		} finally {
+			if (conn != null) {
+				conn.close();
 			}
 		}
 		return reportSummaryData;
@@ -1852,11 +1894,22 @@ public class DataManagement implements DataManagementInfo {
 		this.lastSchemaChangeTimes.put(company, System.currentTimeMillis());
 	}
 
+	private synchronized ReportSummaryDataInfo getCachedReportSummaryData(ReportSummaryInfo summary) {
+		return this.cachedReportSummaryDatas.get(summary);
+	}
+
+	private synchronized void addCachedReportSummaryData(ReportSummaryInfo summary,
+			ReportSummaryDataInfo summaryData) {
+		this.cachedReportSummaryDatas.put(summary, summaryData);
+	}
+
 	/**
 	 * Stores a cache of some info about report data: the mean and std. dev. of
 	 * each numeric field in the report
 	 */
 	private Map<BaseReportInfo, ReportDataInfo> cachedReportDatas = new HashMap<BaseReportInfo, ReportDataInfo>();
+
+	private Map<ReportSummaryInfo, ReportSummaryDataInfo> cachedReportSummaryDatas = new HashMap<ReportSummaryInfo, ReportSummaryDataInfo>();
 
 	private DataSource dataSource;
 

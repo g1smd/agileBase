@@ -2051,12 +2051,12 @@ public class DatabaseDefn implements DatabaseInfo {
 		ReportSummaryInfo reportSummary = report.getReportSummary();
 		HibernateUtil.activateObject(reportSummary);
 		reportSummary.addGrouping(groupingReportField, groupingModifer);
+		this.dataManagement.logLastSchemaChangeTime(request);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
 		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report.getReportSummary(), blankFilterValues);
-		this.dataManagement.logLastSchemaChangeTime(request);
+				company, report.getReportSummary(), blankFilterValues, false);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		usageLogger.logReportSchemaChange(user, report, AppAction.ADD_GROUPING_TO_SUMMARY_REPORT,
@@ -2076,12 +2076,12 @@ public class DatabaseDefn implements DatabaseInfo {
 		HibernateUtil.activateObject(reportSummary);
 		ReportSummaryGroupingInfo removedGrouping = reportSummary
 				.removeGrouping(groupingReportField);
+		this.dataManagement.logLastSchemaChangeTime(request);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
 		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report.getReportSummary(), blankFilterValues);
-		this.dataManagement.logLastSchemaChangeTime(request);
+				company, report.getReportSummary(), blankFilterValues, false);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		usageLogger.logReportSchemaChange(user, report,
@@ -2110,7 +2110,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
 		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report.getReportSummary(), blankFilterValues);
+				company, report.getReportSummary(), blankFilterValues, false);
 	}
 
 	public synchronized void removeFunctionFromSummaryReport(HttpServletRequest request,
@@ -2124,13 +2124,13 @@ public class DatabaseDefn implements DatabaseInfo {
 		HibernateUtil.activateObject(reportSummary);
 		ReportSummaryAggregateInfo removedFunction = reportSummary
 				.removeFunction(internalAggregateName);
+		this.dataManagement.logLastSchemaChangeTime(request);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
 		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report.getReportSummary(), blankFilterValues);
+				company, report.getReportSummary(), blankFilterValues, false);
 		HibernateUtil.currentSession().delete(removedFunction);
-		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		usageLogger.logReportSchemaChange(user, report,

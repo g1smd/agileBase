@@ -209,7 +209,7 @@ public class ReportDownloader extends HttpServlet {
 			ReportSummaryInfo reportSummary, HSSFWorkbook workbook) throws SQLException,
 			CantDoThatException {
 		ReportSummaryDataInfo reportSummaryData = this.databaseDefn.getDataManagement()
-				.getReportSummaryData(company, reportSummary, sessionData.getReportFilterValues());
+				.getReportSummaryData(company, reportSummary, sessionData.getReportFilterValues(), false);
 		if (reportSummaryData == null) {
 			return;
 		}

@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.model.manageData;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.grlea.log.SimpleLogger;
@@ -78,6 +79,10 @@ public class ReportSummaryData implements ReportSummaryDataInfo {
     	return grandTotal.doubleValue();
     }
     
+	public long getCacheCreationTime() {
+		return this.cacheCreationTime;
+	}
+    
    public String toString() {
         return this.reportSummaryDataRows.toString();
     }
@@ -89,6 +94,11 @@ public class ReportSummaryData implements ReportSummaryDataInfo {
     private Map<ReportSummaryAggregateInfo, Number> maxAggValues = null;
 
     private Map<ReportSummaryAggregateInfo, Number> grandTotals = null;
+    
+	/**
+	 * Set cache creation time to the creation time of the object
+	 */
+	private final long cacheCreationTime = (new Date()).getTime();
 
     private static final SimpleLogger logger = new SimpleLogger(ReportSummaryData.class);
 }

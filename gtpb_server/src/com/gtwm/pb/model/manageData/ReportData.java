@@ -80,7 +80,8 @@ public class ReportData implements ReportDataInfo {
 	 * @param generateFieldStats
 	 *            Whether to find the std. dev and mean for colourable fields.
 	 *            Use false if this object isn't going to be used for field
-	 *            colouring, to save potentially slow SQL queries
+	 *            colouring, to save potentially slow SQL queries. If
+	 *            generateFieldStats is false, conn can be null
 	 * @param useSample
 	 *            If generating field stats, whether to use a sample or the
 	 *            whole population of rows to gather them from. A sample is a
@@ -878,7 +879,8 @@ public class ReportData implements ReportDataInfo {
 							}
 							if (fieldSchema instanceof TextField) {
 								TextField fieldSchemaText = (TextField) fieldSchema;
-								// Set displayValue to 'not applicable' string if
+								// Set displayValue to 'not applicable' string
+								// if
 								// necessary
 								if (fieldSchemaText.allowNotApplicable()) {
 									if (fieldSchemaText.getNotApplicableValue().equals(keyValue)) {
@@ -896,7 +898,7 @@ public class ReportData implements ReportDataInfo {
 						}
 					}
 				}
-				if(displayValue == null) {
+				if (displayValue == null) {
 					displayValue = keyValue;
 				}
 				if (numberOfStdDevsFromMean != 0d) {
@@ -905,7 +907,8 @@ public class ReportData implements ReportDataInfo {
 							numberOfStdDevsFromMean);
 				} else if (colourRepresentation != null) {
 					// colour explicitly set (e.g. a boolean field)
-					reportDataRowField = new DataRowField(keyValue, displayValue, colourRepresentation);
+					reportDataRowField = new DataRowField(keyValue, displayValue,
+							colourRepresentation);
 				} else {
 					// no colour
 					reportDataRowField = new DataRowField(keyValue, displayValue);

@@ -39,4 +39,6 @@ public interface ReportSummaryDataInfo {
 	 * For sum and count aggregates, grand totals are stored
 	 */
 	public double getGrandTotal(ReportSummaryAggregateInfo aggregate) throws ObjectNotFoundException;
+	
+	public long getCacheCreationTime();
 }

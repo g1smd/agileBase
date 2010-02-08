@@ -274,8 +274,8 @@ public interface ViewMethodsInfo {
 	 * @see java.lang.NumberFormatException
 	 * @see com.gtwm.pb.util.MissingParametersException
 	 * @see com.gtwm.pb.auth.DisallowedException
-	 * @see com.gtwm.pb.util.AgileBaseException General AgileBaseException
-	 *      which is a superclass of e.g. ObjectNotFoundException and
+	 * @see com.gtwm.pb.util.AgileBaseException General AgileBaseException which
+	 *      is a superclass of e.g. ObjectNotFoundException and
 	 *      DisallowedException
 	 * @see java.sql.SQLException
 	 */
@@ -415,8 +415,9 @@ public interface ViewMethodsInfo {
 			DisallowedException, ObjectNotFoundException;
 
 	/**
-	 * @return Report summary data for the default summary in the session report - can be used to
-	 *         display a chart/table of report summary data, i.e aggregate data
+	 * @return Report summary data for the default summary in the session report
+	 *         - can be used to display a chart/table of report summary data,
+	 *         i.e aggregate data
 	 * @throws DisallowedException
 	 *             If the user doesn't have VIEW_TABLE_DATA privileges on all
 	 *             tables from which report data is taken
@@ -424,9 +425,21 @@ public interface ViewMethodsInfo {
 	public ReportSummaryDataInfo getReportSummaryData() throws DisallowedException, SQLException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
+	/**
+	 * Return report summary data for a specific report
+	 */
 	public ReportSummaryDataInfo getReportSummaryData(ReportSummaryInfo reportSummary)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException;
+
+	/**
+	 * Return report summary data for a specific report, forcing the use of
+	 * cached data if available, even if the company schema or data has been
+	 * changed since the summary was saved to cache
+	 */
+	public ReportSummaryDataInfo getCachedReportSummaryData(ReportSummaryInfo reportSummary)
+			throws DisallowedException, ObjectNotFoundException, CodingErrorException,
+			CantDoThatException, SQLException;
 
 	/**
 	 * Return a tag cloud for the data in the current session report. The words
@@ -466,7 +479,8 @@ public interface ViewMethodsInfo {
 	/**
 	 * Return all viewable reports from all viewable tables, in one list
 	 */
-	public SortedSet<BaseReportInfo> getAllViewableReports() throws CodingErrorException, ObjectNotFoundException;
+	public SortedSet<BaseReportInfo> getAllViewableReports() throws CodingErrorException,
+			ObjectNotFoundException;
 
 	/**
 	 * @param tableID
@@ -498,7 +512,8 @@ public interface ViewMethodsInfo {
 	 * @see com.gtwm.pb.auth#PrivilegeType See PrivilegeType for a list of valid
 	 *      privilege types
 	 */
-	public SortedSet<TableInfo> getTablesAllowedTo(String privilegeString) throws ObjectNotFoundException;
+	public SortedSet<TableInfo> getTablesAllowedTo(String privilegeString)
+			throws ObjectNotFoundException;
 
 	/**
 	 * Return a user object for the currently logged in user, allowing access to
@@ -529,7 +544,8 @@ public interface ViewMethodsInfo {
 	 * 
 	 * @see http://www.graphviz.org/
 	 */
-	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException, ObjectNotFoundException;
+	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException,
+			ObjectNotFoundException;
 
 	/**
 	 * @return Whether an exception (error) occurred when processing the request

@@ -109,7 +109,8 @@ public class ViewMethods implements ViewMethodsInfo {
 		this.databaseDefn = databaseDefn;
 	}
 
-	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException, ObjectNotFoundException {
+	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException,
+			ObjectNotFoundException {
 		Set<String> graphCodeLines = new LinkedHashSet<String>();
 		SortedSet<BaseReportInfo> reportsInModule = this.getReportsInModule(module);
 		for (BaseReportInfo report : reportsInModule) {
@@ -271,13 +272,16 @@ public class ViewMethods implements ViewMethodsInfo {
 		return this.databaseDefn.getAuthManager().getCompanies(this.request);
 	}
 
-	public SortedSet<TableInfo> getTablesAllowedTo(String privilegeString) throws ObjectNotFoundException {
+	public SortedSet<TableInfo> getTablesAllowedTo(String privilegeString)
+			throws ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeString.toUpperCase());
 		return this.getTablesAllowedTo(privilegeType);
 	}
 
-	private SortedSet<TableInfo> getTablesAllowedTo(PrivilegeType privilegeType) throws ObjectNotFoundException {
-		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(this.request);
+	private SortedSet<TableInfo> getTablesAllowedTo(PrivilegeType privilegeType)
+			throws ObjectNotFoundException {
+		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
+				this.request);
 		SortedSet<TableInfo> companyTables = company.getTables();
 		// Strip down to the set of tables the user has privileges on
 		SortedSet<TableInfo> tablesAllowedTo = new TreeSet<TableInfo>();
@@ -302,7 +306,8 @@ public class ViewMethods implements ViewMethodsInfo {
 		return viewableReports;
 	}
 
-	public SortedSet<BaseReportInfo> getAllViewableReports() throws CodingErrorException, ObjectNotFoundException {
+	public SortedSet<BaseReportInfo> getAllViewableReports() throws CodingErrorException,
+			ObjectNotFoundException {
 		SortedSet<BaseReportInfo> reports = new TreeSet<BaseReportInfo>();
 		SortedSet<TableInfo> tables = this.getTablesAllowedTo(PrivilegeType.VIEW_TABLE_DATA);
 		for (TableInfo table : tables) {
@@ -312,8 +317,7 @@ public class ViewMethods implements ViewMethodsInfo {
 		return reports;
 	}
 
-	public TableInfo getTable(String tableID) throws ObjectNotFoundException,
-			DisallowedException {
+	public TableInfo getTable(String tableID) throws ObjectNotFoundException, DisallowedException {
 		TableInfo table = null;
 		try {
 			table = this.databaseDefn.getTableByInternalName(this.request, tableID);
@@ -518,7 +522,8 @@ public class ViewMethods implements ViewMethodsInfo {
 	public Map<RelationField, List<DataRow>> getChildDataTableRows(TableInfo table, int rowid)
 			throws DisallowedException, SQLException, ObjectNotFoundException, CodingErrorException {
 		Map<RelationField, List<DataRow>> childDataTableRows = this.databaseDefn
-				.getDataManagement().getChildDataTableRows(this.databaseDefn, table, rowid, this.request);
+				.getDataManagement().getChildDataTableRows(this.databaseDefn, table, rowid,
+						this.request);
 		// remove any recordsets belonging to tables the user is not authorised
 		// to view:
 		for (RelationField relationField : childDataTableRows.keySet()) {
@@ -541,6 +546,18 @@ public class ViewMethods implements ViewMethodsInfo {
 	public ReportSummaryDataInfo getReportSummaryData(ReportSummaryInfo reportSummary)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException {
+		return this.getReportSummaryData(reportSummary, false);
+	}
+
+	public ReportSummaryDataInfo getCachedReportSummaryData(ReportSummaryInfo reportSummary)
+			throws DisallowedException, ObjectNotFoundException, CodingErrorException,
+			CantDoThatException, SQLException {
+		return this.getReportSummaryData(reportSummary, true);
+	}
+
+	private ReportSummaryDataInfo getReportSummaryData(ReportSummaryInfo reportSummary,
+			boolean useCache) throws DisallowedException, SQLException, ObjectNotFoundException,
+			CodingErrorException, CantDoThatException {
 		// Check privileges for all tables from which data in the report is
 		// displayed from, throw
 		// DisallowedException if privileges not sufficient
@@ -549,7 +566,7 @@ public class ViewMethods implements ViewMethodsInfo {
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues();
 		reportSummaryData = this.databaseDefn.getDataManagement().getReportSummaryData(company,
-				reportSummary, reportFilterValues);
+				reportSummary, reportFilterValues, useCache);
 		return reportSummaryData;
 	}
 
@@ -615,9 +632,9 @@ public class ViewMethods implements ViewMethodsInfo {
 		if (textFields.size() == 0) {
 			return new TreeSet<TagInfo>();
 		}
-		String conglomoratedText = this.databaseDefn.getDataManagement().getReportDataText(report, textFields, 1000000);
-		TagCloud cloud = new TagCloud(conglomoratedText, minWeight, maxWeight, maxTags,
-				stopWords);
+		String conglomoratedText = this.databaseDefn.getDataManagement().getReportDataText(report,
+				textFields, 1000000);
+		TagCloud cloud = new TagCloud(conglomoratedText, minWeight, maxWeight, maxTags, stopWords);
 		return cloud.getTags();
 	}
 

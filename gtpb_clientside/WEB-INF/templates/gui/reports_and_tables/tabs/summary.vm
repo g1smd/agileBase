@@ -31,7 +31,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($loggedInUserAllowedToEdit = $view.loggedInUserAllowedTo("EDIT_TABLE_DATA", $report.getParentTable()))
 #set($showManageUi = false)
 ##$printout set in gui/reports_and_tables/report_data_print.vm
-#if((!$dashboard) && (!$printout) && (!$mobile_device) && ($loggedInUserAllowedToEdit))
+#if((!$printout) && (!$mobile_device) && ($loggedInUserAllowedToEdit))
   #set($showManageUi = true)
 #end
 #if($mobile_device)
