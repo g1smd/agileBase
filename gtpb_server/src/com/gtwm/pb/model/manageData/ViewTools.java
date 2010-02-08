@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.LinkedList;
@@ -16,6 +15,7 @@ import java.util.Set;
 import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -1062,7 +1062,7 @@ public class ViewTools implements ViewToolsInfo {
 	}
 
 	public Set<String> getNewStringSet() {
-		return new LinkedHashSet<String>();
+		return new TreeSet<String>();
 	}
 
 	public void reverseList(List list) {
