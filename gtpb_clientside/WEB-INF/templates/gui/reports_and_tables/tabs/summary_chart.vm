@@ -159,8 +159,9 @@
 		 #if($dashboard)
 		   plotOptions: {
 		     column: {
-			   groupPadding: .1,
-			   pointPadding: 0
+			   groupPadding: 0.1,
+			   pointPadding: 0.0,
+			   animation: false
 			 }
 		   },
 		 #end
