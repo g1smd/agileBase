@@ -158,10 +158,10 @@
 		 },
 		 #if($dashboard)
 		   plotOptions: {
-		     column: {
+		     bar: {
+			   animation: false,
 			   groupPadding: 0.1,
-			   pointPadding: 0.0,
-			   animation: false
+			   pointPadding: 0.01
 			 }
 		   },
 		 #end
