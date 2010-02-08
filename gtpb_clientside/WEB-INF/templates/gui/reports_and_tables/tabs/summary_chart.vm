@@ -161,7 +161,7 @@
 		     bar: {
 			   animation: false,
 			   groupPadding: 0.1,
-			   pointPadding: 0.01
+			   pointPadding: 0
 			 }
 		   },
 		 #end
