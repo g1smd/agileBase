@@ -147,11 +147,23 @@
 			}
 		 },
 		 tooltip: {
+		   #if($dashboard)
+		     enabled: false
+		   #else
 		   formatter: function() {
 						return '<b>'+ this.series.name.replace(/\=.*$/,'') +'</b><br/>'+
 							this.x +': '+ this.y;
 		   }
+		   #end
 		 },
+		 #if($dashboard)
+		   plotOptions: {
+		     column: {
+			   groupPadding: .1,
+			   pointPadding: 0
+			 }
+		   },
+		 #end
          series: $series
       });
   </script>
