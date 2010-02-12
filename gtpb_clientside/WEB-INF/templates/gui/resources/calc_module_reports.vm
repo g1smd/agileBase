@@ -1,0 +1,56 @@
+##
+##  Copyright 2010 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+
+## obtain a mapping of module to reports (Map<Module, BaseReport[]>)
+## don't add groups/reports where the report is the default report
+## or a calculation/criteria report
+## Returns the variable $moduleReports
+#set($moduleReports=$viewTools.getNewSortedModuleObjectMap())
+#set($reports=$view.getAllViewableReports())
+#set($sessionContext=$sessionData.getContext().toString())
+#foreach($report in $reports)
+  #set($displayReport = true)
+  #if($report.getParentTable().getDefaultReport().equals($report))
+    ## don't group/display default reports
+    #set($displayReport = false)
+  #end
+  #set($reportName = $report.getReportName())
+  #if( (($reportName.contains("dbvcalc")) || ($reportName.contains("dbvcrit"))) && ($sessionContext != "SYSADMIN"))
+    ## don't display calculation/criteria reports
+    #set($displayReport = false)  
+  #end
+  ## add report to mapping if it should be displayed
+  #if($displayReport)
+    #if(!$report.getModule())
+	  #if($company.getModules().size() > 0)
+        #set($module=$company.getModules().last())
+	  #end
+	#else
+	  #set($module=$report.getModule())
+	#end
+	#if($module)
+      #if($moduleReports.containsKey($module))
+        #set($reportsArray=$moduleReports.get($module))
+      #else
+        #set($reportsArray=[])
+      #end
+      #set($success=$reportsArray.add($report))
+      #set($success=$moduleReports.put($module, $reportsArray))
+	#end
+  #end
+#end
