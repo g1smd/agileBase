@@ -146,7 +146,11 @@
             categories: $xAxisCategories
 			#if($dashboard)
 			  ,labels: {
-			     style: { font-face: 'Arial, sans-serif', font-size: '8pt' }
+                style: {
+                	color: '#666',
+                	font: '10px bold "Lucida Grande", "Lucida Sans Unicode",'+
+                		' Verdana, Arial, Helvetica, sans-serif'
+                }
 			  }
 			#end
          },
@@ -156,8 +160,12 @@
             }
 			#if($dashboard)
 			  ,labels: {
-			     style: { font-face: 'Arial, sans-serif', font-size: '8pt' }
-			   }
+                style: {
+                	color: '#666',
+                	font: '10px bold "Lucida Grande", "Lucida Sans Unicode",'+
+                		' Verdana, Arial, Helvetica, sans-serif'
+                }
+			  }
 			#end
          },
 		 legend: {
