@@ -1700,7 +1700,7 @@ public class DataManagement implements DataManagementInfo {
 			reportSummaryData = new ReportSummaryData(reportSummaryRows, minAggValues,
 					maxAggValues, grandTotals);
 		} catch (SQLException sqlex) {
-			throw new SQLException("Error getting report summary data: " + sqlex);
+			throw new SQLException("Error getting report summary data " + reportSummary + ": " + sqlex);
 		} finally {
 			if (conn != null) {
 				conn.close();

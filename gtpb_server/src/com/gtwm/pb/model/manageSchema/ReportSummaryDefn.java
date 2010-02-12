@@ -339,8 +339,9 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	}
 
 	public String toString() {
-		return "" + this.getReport() + " summary schema - functions: "
+		String toString = this.getReport().toString() + " - " + this.getTitle() + " summary schema - functions: "
 				+ this.getAggregateFunctions() + ", groupings: " + this.getGroupings();
+		return toString;
 	}
 
 	/**
