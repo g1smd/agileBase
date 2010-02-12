@@ -87,6 +87,7 @@
 #end
 #if($dashboard)
   #set($height = $height * 0.9)
+  #set($width = $xAxisMargin + 200)
 #end
 #if($aggregateFunctions.size() > 1)
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
@@ -117,8 +118,8 @@
          chart: {
             renderTo: "$chart_id",
             defaultSeriesType: 'bar',
-			#if($dashboard)
-			  width: 400,
+			#if($width)
+			  width: $width,
 			#end
 			height: $height
 			#if($margin)
