@@ -126,7 +126,7 @@
 			  ,margin: $margin
 			#end
 			#if($dashboard)
-			  ,borderWidth: 1
+			  ,shadow: true
 			#end
          },
 		 credits: {
