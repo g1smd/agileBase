@@ -1,5 +1,5 @@
 /*
- *  Copyright 2009 GT webMarque Ltd
+ *  Copyright 2010 GT webMarque Ltd
  * 
  *  This file is part of agileBase.
  *
@@ -43,6 +43,8 @@ import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.apache.commons.math.util.MathUtils;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -1362,7 +1364,7 @@ public class DataManagement implements DataManagementInfo {
 						this.reportDataCacheMisses += 1;
 					}
 				}
-				if ((this.reportDataCacheHits + this.reportDataCacheMisses) > 1000) {
+				if ((this.reportDataCacheHits + this.reportDataCacheMisses) > 10000) {
 					logger.info("Report data cache hits = " + this.reportDataCacheHits
 							+ ", misses = " + this.reportDataCacheMisses);
 					this.reportDataCacheHits = 0;
@@ -1468,8 +1470,8 @@ public class DataManagement implements DataManagementInfo {
 	}
 
 	public ReportSummaryDataInfo getReportSummaryData(CompanyInfo company,
-			ReportSummaryInfo reportSummary, Map<BaseField, String> reportFilterValues, boolean alwaysUseCache)
-			throws SQLException, CantDoThatException {
+			ReportSummaryInfo reportSummary, Map<BaseField, String> reportFilterValues,
+			boolean alwaysUseCache) throws SQLException, CantDoThatException {
 		boolean needSummary = (reportSummary.getAggregateFunctions().size() > 0);
 		if (!needSummary) {
 			return null;
@@ -1479,23 +1481,38 @@ public class DataManagement implements DataManagementInfo {
 			reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues,
 					reportSummaryData);
 			this.addCachedReportSummaryData(reportSummary, reportSummaryData);
+			this.summaryDataCacheMisses.incrementAndGet();
 		} else {
-			// Work out whether any filters are active that could affect the returned data
-			ReportDataInfo reportData = new ReportData(null, reportSummary.getReport(), false, false);
+			// Work out whether any filters are active that could affect the
+			// returned data
+			ReportDataInfo reportData = new ReportData(null, reportSummary.getReport(), false,
+					false);
 			Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
 					reportFilterValues, false);
-			// If asked to always use the cache if possible, use it unless there are filters active
+			// If asked to always use the cache if possible, use it unless there
+			// are filters active
 			if (alwaysUseCache && whereClauseMap.size() == 0) {
+				this.summaryDataCacheHits.incrementAndGet();
 				return reportSummaryData;
 			}
 			long lastDataChangeTime = this.getLastDataChangeTime(company);
 			long lastSchemaChangeTime = this.getLastSchemaChangeTime(company);
 			long cacheCreationTime = reportSummaryData.getCacheCreationTime();
-			if ((cacheCreationTime <= lastDataChangeTime) || (cacheCreationTime <= lastSchemaChangeTime)) {
+			if ((cacheCreationTime <= lastDataChangeTime)
+					|| (cacheCreationTime <= lastSchemaChangeTime)) {
 				reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues,
 						reportSummaryData);
 				this.addCachedReportSummaryData(reportSummary, reportSummaryData);
+				this.summaryDataCacheMisses.incrementAndGet();
+			} else {
+				this.summaryDataCacheHits.incrementAndGet();
 			}
+		}
+		if ((this.summaryDataCacheHits.get() + this.summaryDataCacheMisses.get()) > 1000) {
+			logger.info("Summary data cache hits = " + this.summaryDataCacheHits + ", misses = "
+					+ this.summaryDataCacheMisses);
+			this.summaryDataCacheHits.set(0);
+			this.summaryDataCacheMisses.set(0);
 		}
 		return reportSummaryData;
 	}
@@ -1928,6 +1945,10 @@ public class DataManagement implements DataManagementInfo {
 	private int reportDataCacheHits = 0;
 
 	private int reportDataCacheMisses = 0;
+
+	private AtomicInteger summaryDataCacheHits = new AtomicInteger();
+
+	private AtomicInteger summaryDataCacheMisses = new AtomicInteger();
 
 	private static final SimpleLogger logger = new SimpleLogger(DataManagement.class);
 

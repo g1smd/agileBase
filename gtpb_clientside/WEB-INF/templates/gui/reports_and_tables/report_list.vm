@@ -1,5 +1,5 @@
 ##
-##  Copyright 2009 GT webMarque Ltd
+##  Copyright 2010 GT webMarque Ltd
 ## 
 ##  This file is part of agileBase.
 ##
@@ -30,7 +30,6 @@
 #set($sessionReport = $sessionData.getReport())
 #set($sessionReportModule = $sessionReport.getModule())
 #set($sessionTable = $sessionData.getTable())
-#set($sessionContext=$sessionData.getContext().toString())
 
 ## include custom per-company actions
 #set($company = $view.getLoggedInUser().getCompany())
@@ -40,59 +39,22 @@
   #parse($customisationsTemplateLocation)
 #end
 
-## obtain a mapping of module to reports (Map<Module, BaseReport[]>)
-## don't add groups/reports where the report is the default report
-## or a calculation/criteria report
-#set($reportModules=$viewTools.getNewSortedModuleObjectMap())
-#set($reports=$view.getAllViewableReports())
-#foreach($report in $reports)
-  #set($displayReport = true)
-  #if($report.getParentTable().getDefaultReport().equals($report))
-    ## don't group/display default reports
-    #set($displayReport = false)
-  #end
-  #set($reportName = $report.getReportName())
-  #if( (($reportName.contains("dbvcalc")) || ($reportName.contains("dbvcrit"))) && ($sessionContext != "SYSADMIN"))
-    ## don't display calculation/criteria reports
-    #set($displayReport = false)  
-  #end
-  ## add report to mapping if it should be displayed
-  #if($displayReport)
-    #if(!$report.getModule())
-	  #if($company.getModules().size() > 0)
-        #set($module=$company.getModules().last())
-	  #end
-	#else
-	  #set($module=$report.getModule())
-	#end
-	#if($module)
-      #if($reportModules.containsKey($module))
-        #set($reportsArray=$reportModules.get($module))
-      #else
-        #set($reportsArray=[])
-      #end
-      #set($success=$reportsArray.add($report))
-      #set($success=$reportModules.put($module, $reportsArray))
-	#end
-  #end
-#end
-
+## Create a collection $moduleReports: each module maps to an array of reports
+#parse("gui/resources/calc_module_reports.vm")
 ## only show the grouped reports section if it isn't empty!
-#if($reportModules.size() > 0)
-## search box
-#if($reports.size() > 5000)
+#if($moduleReports.size() > 0)
+  ## search box
+  #if($reports.size() > 5000)
   <div id="reportsearch">
     <img src="resources/icons/applications/tango/actions/system-search.png" style="float:left"/>&nbsp;
 	<input type="text" size="15" name="reportsearch" id="reportsearchbox"/>
   </div>
-#end ## search box
-	
+  #end ## search box
   #set($previousSection = "")
-  
   ## Get colours array
   #parse('gui/resources/module_color_colors.vm')
   
-  #foreach($module in $reportModules.keySet())
+  #foreach($module in $moduleReports.keySet())
 	#set($section = $module.getSection())
 	#if($section == "")
 		#set($section = $previousSection)
@@ -127,7 +89,7 @@
 		</ul>
 	  #end ## end if there are module actions
 	  <ul parent="$internalModuleName">
-	  #foreach($report in $reportModules.get($module)) 
+	  #foreach($report in $moduleReports.get($module)) 
 		#set($table=$report.getParentTable())
 		<li id="$table.getInternalTableName()$report.getInternalReportName()">
 		  <div class="module-tree-item-wrap">
