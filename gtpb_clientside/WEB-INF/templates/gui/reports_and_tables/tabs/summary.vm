@@ -54,8 +54,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 ## Reset to the default report summary - the chart being edited
 #set($reportSummary = "")
 #set($reportSummary = $report.getReportSummary())
-#set($reportSummaryData = $view.getReportSummaryData($reportSummary))
-#set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
 #if($showManageUi)
@@ -171,6 +169,8 @@ function fShowAddAgg() {
 </div> ## End chart_controls div
 #end
 ## Display the chart
+#set($reportSummaryData = $view.getReportSummaryData($reportSummary))
+#set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
 #parse('gui/reports_and_tables/tabs/summary_chart.vm')
 #if($mobile_device)<p>
 	#parse("gui/mobile/pane2_footer.vm")
