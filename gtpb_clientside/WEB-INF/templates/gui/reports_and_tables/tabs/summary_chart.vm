@@ -144,29 +144,11 @@
 		 #end
          xAxis: {
             categories: $xAxisCategories
-			#if($dashboard)
-			  ,labels: {
-                style: {
-                	color: '#666',
-                	font: '10px bold "Lucida Grande", "Lucida Sans Unicode",'+
-                		' Verdana, Arial, Helvetica, sans-serif'
-                }
-			  }
-			#end
          },
          yAxis: {
             title: {
                enabled: false
             }
-			#if($dashboard)
-			  ,labels: {
-                style: {
-                	color: '#666',
-                	font: '10px bold "Lucida Grande", "Lucida Sans Unicode",'+
-                		' Verdana, Arial, Helvetica, sans-serif'
-                }
-			  }
-			#end
          },
 		 legend: {
 		 	style: {
