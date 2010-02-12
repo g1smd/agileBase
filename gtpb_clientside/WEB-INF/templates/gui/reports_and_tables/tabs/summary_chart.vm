@@ -87,7 +87,7 @@
 #end
 #if($dashboard)
   #set($height = $height * 0.9)
-  #set($width = $xAxisMargin + 200)
+  #set($width = $xAxisMargin + 175)
 #end
 #if($aggregateFunctions.size() > 1)
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
