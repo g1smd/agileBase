@@ -146,8 +146,7 @@
             categories: $xAxisCategories
 			#if($dashboard)
 			  ,labels: {
-			    color: '#666666',
-			    style: { font-face: 'Arial, sans-serif', font-size: '8pt' }
+			     style: { font-face: 'Arial, sans-serif', font-size: '8pt' }
 			  }
 			#end
          },
@@ -157,9 +156,8 @@
             }
 			#if($dashboard)
 			  ,labels: {
-			    color: '#666666',
-			    style: { font-face: 'Arial, sans-serif', font-size: '8pt' }
-			  }
+			     style: { font-face: 'Arial, sans-serif', font-size: '8pt' }
+			   }
 			#end
          },
 		 legend: {
