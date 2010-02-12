@@ -177,7 +177,7 @@
 			   animation: false,
 			   groupPadding: 0.1,
 			   pointPadding: 0,
-			   borderWidth: 0,
+			   borderWidth: 1,
 			   shadow: false
 			 }
 		   },
