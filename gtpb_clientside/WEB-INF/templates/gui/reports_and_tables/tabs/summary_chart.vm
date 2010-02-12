@@ -85,12 +85,18 @@
 #if($xAxisCategories.size() > 10)
   #set($height = $xAxisCategories.size() * 20)
 #end
+#if($dashboard)
+  #set($height = $height * 0.9)
+#end
 #if($aggregateFunctions.size() > 1)
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
 #end
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
   #if($reportSummary.equals($report.getReportSummary()) && !$dashboard)
 	#set($margin = "[10, 50, 60, $xAxisMargin]") ## top, right, bottom, left
+  #elseif($dashboard)
+	#set($margin = "[50, 10, 60, $xAxisMargin]")
+	#set($height = $height + 40)
   #else
 	#set($margin = "[50, 50, 60, $xAxisMargin]")
 	#set($height = $height + 40)
@@ -138,11 +144,23 @@
 		 #end
          xAxis: {
             categories: $xAxisCategories
+			#if($dashboard)
+			  ,labels: {
+			    color: #666666,
+			    style: { font: '9px, Arial, sans-serif' }
+			  }
+			#end
          },
          yAxis: {
             title: {
                enabled: false
             }
+			#if($dashboard)
+			  ,labels: {
+			    color: #666666,
+			    style: { font: '9px, Arial, sans-serif' }
+			  }
+			#end
          },
 		 legend: {
 		 	style: {
