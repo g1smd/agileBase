@@ -51,7 +51,6 @@
 	#end
   #end
 #end
-timeDisplay for $reportSummary is $timeDisplay<br>
 #if($reportSummaryRows.size() > 0)
 #set($chartTitle = "$reportSummary.getTitle()")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
