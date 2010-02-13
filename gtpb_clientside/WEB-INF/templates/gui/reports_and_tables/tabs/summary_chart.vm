@@ -252,7 +252,7 @@
 			 }
 			 #if($dateAxis)
 			   ,area: {
-			     marker: { enabled: false } }
+			     marker: { enabled: false }
 			   }
 			 #end
 		   },
