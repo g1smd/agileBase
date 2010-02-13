@@ -147,7 +147,7 @@
 #if($dashboard)
   #set($height = $height * 0.9)
   #if($dateAxis)
-    #set($width = 250)
+    #set($width = 300)
   #else
     #set($width = $xAxisMargin + 175)
   #end
