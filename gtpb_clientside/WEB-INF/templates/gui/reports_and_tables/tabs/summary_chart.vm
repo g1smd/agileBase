@@ -32,49 +32,52 @@
 #end
 <div id="$chart_id" class="$chart_classes"></div>
 ## Work out if we can display data as a time series
-#set($timeDisplay = true)
+#set($dateAxis = true)
 #foreach($grouping in $groupings)
   #set($fieldCategory = $grouping.getGroupingReportField().getBaseField().getFieldCategory())
   #if($fieldCategory == "DATE")
     #set($groupingModifier = $grouping.getGroupingModifier())
 	#if(($groupingModifier != "DATE_YEAR") && ($groupingModifier != "DATE_MONTH"))
-      #set($timeDisplay = false)
+      #set($dateAxis = false)
 	  #break
 	#end
   #else
-	#set($timeDisplay = false)
+	#set($dateAxis = false)
 	#break
   #end
   #if(($groupings.size() == 1) && ($fieldCategory == "DATE"))
 	#if($groupingModifier != "DATE_YEAR")
-	  #set($timeDisplay = false)
+	  #set($dateAxis = false)
 	#end
   #end
 #end
 #if($reportSummaryRows.size() > 0)
 #set($chartTitle = "$reportSummary.getTitle()")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
-#set($xAxisCategories = [])
-#set($maxXAxisChars = 5)
-#foreach($summaryRow in $reportSummaryRows)
-  #set($xAxisCategory = "")
-  #foreach($grouping in $groupings)
-	#if($grouping.equals($groupings.first()))
-	  #set($xAxisCategory = $summaryRow.getGroupingValue($grouping))
-	#else
-	  #if($grouping.getGroupingModifier() == "DATE_QUARTER")
-		#set($xAxisCategoryAddition = "Q$summaryRow.getGroupingValue($grouping)")
+#if(!$dateAxis)
+  ## If not a date x-axis, we need to create category labels
+  #set($xAxisCategories = [])
+  #set($maxXAxisChars = 5)
+  #foreach($summaryRow in $reportSummaryRows)
+    #set($xAxisCategory = "")
+    #foreach($grouping in $groupings) 
+	  #if($grouping.equals($groupings.first()))
+	    #set($xAxisCategory = $summaryRow.getGroupingValue($grouping))
 	  #else
-		#set($xAxisCategoryAddition = "$summaryRow.getGroupingValue($grouping)")
+	    #if($grouping.getGroupingModifier() == "DATE_QUARTER")
+		  #set($xAxisCategoryAddition = "Q$summaryRow.getGroupingValue($grouping)")
+	    #else
+		  #set($xAxisCategoryAddition = "$summaryRow.getGroupingValue($grouping)")
+	    #end
+	    #set($xAxisCategory = "$xAxisCategory | $xAxisCategoryAddition")
 	  #end
-	  #set($xAxisCategory = "$xAxisCategory | $xAxisCategoryAddition")
-	#end
-  #end
-  #if($maxXAxisChars < $xAxisCategory.length())
-	#set($maxXAxisChars = $xAxisCategory.length())
-  #end
-  #set($success = $xAxisCategories.add("'$viewTools.escape($xAxisCategory)'"))
-#end
+    #end
+    #if($maxXAxisChars < $xAxisCategory.length())
+	  #set($maxXAxisChars = $xAxisCategory.length())
+    #end
+    #set($success = $xAxisCategories.add("'$viewTools.escape($xAxisCategory)'"))
+  #end ## end each summary row
+#end ## end if not date axis
 #set($series = [])
 #set($seriesString = "")
 #foreach($aggregateFunction in $aggregateFunctions)
@@ -95,8 +98,29 @@
   #end
   #set($seriesString = "$seriesString { name:'$seriesName', data: ")
   #set($seriesData = [])
-  #foreach($summaryRow in $reportSummaryRows)
-	#set($success = $seriesData.add($summaryRow.getAggregateValue($aggregateFunction)))
+  #if($dateAxis)
+    #foreach($summaryRow in $reportSummaryRows)
+	  #set($day = 1)
+	  #set($month = 1)
+	  #set($year = 0)
+	  #set($point = [])
+	  #foreach($grouping in $groupings)
+		#set($groupingModifier = $grouping.getGroupingModifier())
+		#if($groupingModifier == "DATE_YEAR")
+		  #set($year = $summaryRow.getGroupingValue($grouping))
+		#elseif($groupingModifier == "DATE_MONTH")
+		  #set($month = $summaryRow.getGroupingValue($grouping))
+		#else
+		  $viewTools.log("Error: unrecognised grouping modifier $groupingModifier for a date axis in summary $summaryReport")
+		#end
+	  #end
+	  #set($success = $point.add("Date.UTC($year,$month,$day), $summaryRow.getAggregateValue($aggregateFunction)"))
+	  #set($success = $seriesData.add($point))
+    #end
+  #else
+    #foreach($summaryRow in $reportSummaryRows)
+	  #set($success = $seriesData.add($summaryRow.getAggregateValue($aggregateFunction)))
+    #end
   #end
   #set($seriesString = "$seriesString $seriesData }")
   #if(($velocityCount + 1) == $aggregateFunctions.size())
@@ -105,14 +129,24 @@
 #end
 #set($success = $series.add($seriesString))
 ## Set chart sizing
-#set($xAxisMargin = 20 + ($maxXAxisChars * 7) - $maxXAxisChars)
-#set($height=200)
-#if($xAxisCategories.size() > 10)
-  #set($height = $xAxisCategories.size() * 20)
+#if($dateAxis)
+  #set($xAxisMargin = 70)
+  #set($height = 200)
+  #set($width = 200)
+#else
+  #set($xAxisMargin = 20 + ($maxXAxisChars * 7) - $maxXAxisChars)
+  #set($height = 200)
+  #if($xAxisCategories.size() > 10)
+    #set($height = $xAxisCategories.size() * 20)
+  #end
 #end
 #if($dashboard)
   #set($height = $height * 0.9)
-  #set($width = $xAxisMargin + 175)
+  #if($dateAxis)
+    #set($width = 250)
+  #else
+    #set($width = $xAxisMargin + 175)
+  #end
 #end
 #if($aggregateFunctions.size() > 1)
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
@@ -142,14 +176,16 @@
     var $chart_id = new Highcharts.Chart({
          chart: {
             renderTo: "$chart_id",
-            defaultSeriesType: 'bar',
-			#if($width)
+			#if($dateAxis)
+              defaultSeriesType: 'area',
+			#else
+              defaultSeriesType: 'bar',
+			#end
+			#if($dashboard)
 			  width: $width,
 			#end
-			height: $height
-			#if($margin)
-			  ,margin: $margin
-			#end
+			height: $height,
+			margin: $margin
          },
 		 credits: {
 		 	enabled: false
@@ -161,15 +197,19 @@
 		   #end
 		 #else
            title: {
-            style: {
-				margin: '0px',
-				height: '0px',
-				display: 'none'
-			}
+             style: {
+			   margin: '0px',
+			   height: '0px',
+			   display: 'none'
+			 }
            },
 		 #end
          xAxis: {
-            categories: $xAxisCategories
+		   #if($dateAxis)
+             type: 'datetime'
+		   #else
+             categories: $xAxisCategories
+		   #end
          },
          yAxis: {
             title: {
