@@ -63,7 +63,12 @@ timeDisplay for $reportSummary is $timeDisplay<br>
 	#if($grouping.equals($groupings.first()))
 	  #set($xAxisCategory = $summaryRow.getGroupingValue($grouping))
 	#else
-	  #set($xAxisCategory = "$xAxisCategory | $summaryRow.getGroupingValue($grouping)")
+	  #if($grouping.getGroupingModifier() == "DATE_QUARTER")
+		#set($xAxisCategoryAddition = "Q$summaryRow.getGroupingValue($grouping)")
+	  #else
+		#set($xAxisCategoryAddition = "$summaryRow.getGroupingValue($grouping)")
+	  #end
+	  #set($xAxisCategory = "$xAxisCategory | $xAxisCategoryAddition")
 	#end
   #end
   #if($maxXAxisChars < $xAxisCategory.length())
