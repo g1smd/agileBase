@@ -114,8 +114,12 @@
 		  $viewTools.log("Error: unrecognised grouping modifier $groupingModifier for a date axis in summary $summaryReport")
 		#end
 	  #end
-	  #set($success = $point.add("Date.UTC($year,$month,$day), $summaryRow.getAggregateValue($aggregateFunction)"))
-	  #set($success = $seriesData.add($point))
+	  ## Don't add null grouping
+	  ## NB on some graphs, the null grouping can have the largest value
+	  #if(($year!= "") && ($month!= ""))
+	    #set($success = $point.add("Date.UTC($year,$month,$day), $summaryRow.getAggregateValue($aggregateFunction)"))
+	    #set($success = $seriesData.add($point))
+	  #end
     #end
   #else
     #foreach($summaryRow in $reportSummaryRows)
