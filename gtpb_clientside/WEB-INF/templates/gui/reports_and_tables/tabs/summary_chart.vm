@@ -211,7 +211,8 @@
 		 #end
          xAxis: {
 		   #if($dateAxis)
-             type: 'datetime'
+             type: 'datetime',
+			 maxZoom: 60 * 24 * 3600000, // two months
 		   #else
              categories: $xAxisCategories
 		   #end
