@@ -31,6 +31,27 @@
   #end
 #end
 <div id="$chart_id" class="$chart_classes"></div>
+## Work out if we can display data as a time series
+#set($timeDisplay = true)
+#foreach($grouping in $groupings)
+  #set($fieldCategory = $grouping.getGroupingReportField().getBaseField().getFieldCategory())
+  #if($fieldCategory == "DATE")
+    #set($groupingModifier = $grouping.getGroupingModifier())
+	#if(($groupingModifier != "DATE_YEAR") && ($groupingModifier != "DATE_MONTH"))
+      #set($timeDisplay = false)
+	  #break
+	#end
+  #else
+	#set($timeDisplay = false)
+	#break
+  #end
+  #if(($groupings.size() == 1) && ($fieldCategory == "DATE"))
+	#if($groupingModifier != "DATE_YEAR")
+	  #set($timeDisplay = false)
+	#end
+  #end
+#end
+timeDisplay is $timeDisplay
 #if($reportSummaryRows.size() > 0)
 #set($chartTitle = "$reportSummary.getTitle()")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
