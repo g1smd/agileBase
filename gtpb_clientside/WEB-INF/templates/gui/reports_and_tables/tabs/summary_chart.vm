@@ -51,6 +51,11 @@
 	#end
   #end
 #end
+## Work out if we can display data as a pie chart
+#set($pieChart = false)
+#if((!$dateAxis)) && ($reportSummaryRows.size() < 5) && ($groupings.size() == 1))
+  #set($pieChart = true)
+#end
 #if($reportSummaryRows.size() > 0)
 #set($chartTitle = "$reportSummary.getTitle()")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
@@ -183,6 +188,8 @@
 			#if($dateAxis)
               defaultSeriesType: 'area',
 			  zoomType: 'x',
+			#elseif($pieChart)
+			  defaultSeriesType: 'pie',
 			#else
               defaultSeriesType: 'bar',
 			#end
