@@ -250,7 +250,7 @@
 		 legend: {
 		 	style: {
 		      position: 'absolute',
-			  textTransform: 'lowercase'
+			  textTransform: 'lowercase',
 		      #if($pieChart)
 			    layout: 'vertical',
 				top: '40px',
