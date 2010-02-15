@@ -59,8 +59,8 @@
 #if($reportSummaryRows.size() > 0)
 #set($chartTitle = "$reportSummary.getTitle()")
 #set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
-#if(!$dateAxis)
-  ## If not a date x-axis, we need to create category labels
+#if((!$dateAxis) && (!$pieChart))
+  ## we need to create category labels
   #set($xAxisCategories = [])
   #set($maxXAxisChars = 5)
   #foreach($summaryRow in $reportSummaryRows)
@@ -232,6 +232,7 @@
 		   #if($dateAxis)
              type: 'datetime',
 			 maxZoom: 60 * 24 * 3600000, // two months
+		   #elseif($pieChart)
 		   #else
              categories: $xAxisCategories
 		   #end
@@ -261,7 +262,7 @@
 		   }
 		   #end
 		 },
-		 #if($dashboard)
+		 #if($dashboard && (!$pieChart))
 		   plotOptions: {
 		     bar: {
 			   animation: false,
