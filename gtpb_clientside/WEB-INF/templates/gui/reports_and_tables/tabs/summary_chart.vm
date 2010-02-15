@@ -132,7 +132,7 @@
 	  #set($point = [])
 	  #foreach($grouping in $groupings)
 		#set($wedgeName = $summaryRow.getGroupingValue($grouping))
-		#set($success = $point.add($viewTools.escape($wedgeName)))
+		#set($success = $point.add("$viewTools.escape($wedgeName)"))
 	  #end
 	  #set($success = $point.add($summaryRow.getAggregateValue($aggregateFunction)))
 	  #set($success = $seriesData.add($point))
