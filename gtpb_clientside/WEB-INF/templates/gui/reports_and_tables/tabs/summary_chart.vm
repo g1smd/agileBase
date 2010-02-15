@@ -35,13 +35,7 @@
 #set($dateAxis = true)
 #foreach($grouping in $groupings)
   #set($fieldCategory = $grouping.getGroupingReportField().getBaseField().getFieldCategory())
-  #if($fieldCategory == "DATE")
-    #set($groupingModifier = $grouping.getGroupingModifier())
-	#if(($groupingModifier != "DATE_YEAR") && ($groupingModifier != "DATE_MONTH"))
-      #set($dateAxis = false)
-	  #break
-	#end
-  #else
+  #if($fieldCategory != "DATE")
 	#set($dateAxis = false)
 	#break
   #end
@@ -69,11 +63,7 @@
 	  #if($grouping.equals($groupings.first()))
 	    #set($xAxisCategory = $summaryRow.getGroupingValue($grouping))
 	  #else
-	    #if($grouping.getGroupingModifier() == "DATE_QUARTER")
-		  #set($xAxisCategoryAddition = "Q$summaryRow.getGroupingValue($grouping)")
-	    #else
-		  #set($xAxisCategoryAddition = "$summaryRow.getGroupingValue($grouping)")
-	    #end
+		#set($xAxisCategoryAddition = "$summaryRow.getGroupingValue($grouping)")
 	    #set($xAxisCategory = "$xAxisCategory | $xAxisCategoryAddition")
 	  #end
     #end
@@ -115,6 +105,9 @@
 		  #set($year = $summaryRow.getGroupingValue($grouping))
 		#elseif($groupingModifier == "DATE_MONTH")
 		  #set($month = $summaryRow.getGroupingValue($grouping))
+		#elseif($groupingModifier == "DATE_QUARTER")
+		  #set($quarter = $summaryRow.getGroupingValue($grouping))
+		  #set($month = (($quarter - 1) * 3) + 1) ## Approximate quartering of a year	
 		#else
 		  $viewTools.log("Error: unrecognised grouping modifier $groupingModifier for a date axis in summary $summaryReport")
 		#end
