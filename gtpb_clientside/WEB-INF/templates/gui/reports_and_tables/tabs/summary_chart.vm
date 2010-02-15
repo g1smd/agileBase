@@ -103,7 +103,7 @@
   #end
   #set($seriesString = "$seriesString { name:'$seriesName', data: ")
   #set($seriesData = [])
-  #if($dateAxis)
+  #if($dateAxis) ## Time series chart
     #foreach($summaryRow in $reportSummaryRows)
 	  #set($day = 1)
 	  #set($month = 1)
@@ -122,11 +122,21 @@
 	  ## Don't add null grouping
 	  ## NB on some graphs, the null grouping can have the largest value
 	  #if(($year!= "") && ($month!= ""))
-	    #set($success = $point.add("Date.UTC($year,$month,$day), $summaryRow.getAggregateValue($aggregateFunction)"))
+	    #set($success = $point.add("Date.UTC($year,$month,$day)"))
+		#set($success = $point.add($summaryRow.getAggregateValue($aggregateFunction)))
 	    #set($success = $seriesData.add($point))
 	  #end
     #end
-  #else
+  #elseif($pieChart)
+    #foreach($summaryRow in $reportSummaryRows)
+	  #set($point = [])
+	  #foreach($grouping in $groupings)
+		#set($wedgeName = $summaryRow.getGroupingValue($grouping))
+		#set($success = $point.add($viewTools.escape($wedgeName)))
+	  #end
+	  #set($success = $seriesData.add($summaryRow.getAggregateValue($aggregateFunction)))
+    #end
+  #else ## Column / bar chart
     #foreach($summaryRow in $reportSummaryRows)
 	  #set($success = $seriesData.add($summaryRow.getAggregateValue($aggregateFunction)))
     #end
@@ -138,35 +148,35 @@
 #end
 #set($success = $series.add($seriesString))
 ## Set chart sizing
+#set($height = 200)
 #if($dateAxis)
   #set($xAxisMargin = 70)
-  #set($height = 200)
-  #set($width = 200)
 #else
   #set($xAxisMargin = 20 + ($maxXAxisChars * 7) - $maxXAxisChars)
-  #set($height = 200)
   #if($xAxisCategories.size() > 10)
     #set($height = $xAxisCategories.size() * 20)
-  #end
-#end
-#if($dashboard)
-  #set($height = $height * 0.9)
-  #if($dateAxis)
-    #set($width = 300)
-  #else
-    #set($width = $xAxisMargin + 175)
   #end
 #end
 #if($aggregateFunctions.size() > 1)
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
 #end
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
-  #if($reportSummary.equals($report.getReportSummary()) && !$dashboard)
+  #if($reportSummary.equals($report.getReportSummary()) && !$dashboard) ## if default chart in pane 3
 	#set($margin = "[10, 50, 60, $xAxisMargin]") ## top, right, bottom, left
   #elseif($dashboard)
+    #if($dateAxis)
+      #set($width = 300)
+    #elseif($pieChart)
+      #set($xAxisMargin = 10)
+      #set($height = 200)
+      #set($width = 200)
+    #else
+      #set($width = $xAxisMargin + 175)
+    #end
 	#set($margin = "[50, 10, 60, $xAxisMargin]")
+    #set($height = $height * 0.9)
 	#set($height = $height + 40)
-  #else
+  #else ## named chart in pane 3
 	#set($margin = "[50, 50, 60, $xAxisMargin]")
 	#set($height = $height + 40)
   #end
