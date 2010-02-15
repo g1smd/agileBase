@@ -249,20 +249,20 @@
 		 #end
 		 legend: {
 		 	style: {
+		      position: 'absolute',
+			  textTransform: 'lowercase'
 		      #if($pieChart)
 			    layout: 'vertical',
 				top: '40px',
 				right: '0px',
 				left: 'auto',
-				bottom: 'auto',
+				bottom: 'auto'
 			  #else
-				position: 'absolute',
 				zIndex: 10,
 				bottom: '10px',
 				left: '120px',
-				padding: '5px',
+				padding: '5px'
 			  #end
-			  textTransform: 'lowercase'
 			}
 		 },
 		 tooltip: {
