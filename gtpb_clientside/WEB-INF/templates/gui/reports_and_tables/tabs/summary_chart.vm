@@ -176,6 +176,8 @@
       #set($xAxisMargin = 10)
       #set($height = 150)
       #set($width = 300)
+	  #set($pieMidX = $height / 2)
+	  #set($pieMidY = $pieMidX)
     #else
       #set($width = $xAxisMargin + 175)
     #end
@@ -275,7 +277,7 @@
 		   }
 		   #end
 		 },
-		 #if($dashboard && (!$pieChart))
+		 #if($dashboard)
 		   plotOptions: {
 		     bar: {
 			   animation: false,
@@ -288,6 +290,10 @@
 			   ,area: {
 			     marker: { enabled: false },
 				 lineWidth: 0
+			   }
+			 #elseif($pieChart)
+			   ,pie: {
+			     center: ['${pieMidX}px','${pieMidY}px']
 			   }
 			 #end
 		   },
