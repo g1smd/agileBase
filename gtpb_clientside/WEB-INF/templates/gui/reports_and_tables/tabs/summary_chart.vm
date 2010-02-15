@@ -130,13 +130,17 @@
   #elseif($pieChart)
     #foreach($summaryRow in $reportSummaryRows)
 	  #set($point = [])
+	  #set($wedgeName = "")
 	  #foreach($grouping in $groupings)
-		#set($wedgeName = $summaryRow.getGroupingValue($grouping))
-		#set($success = $point.add("'$viewTools.escape($wedgeName)'"))
+		#if($velocityCount == 1)
+		  #set($wedgeName = "$summaryRow.getGroupingValue($grouping)")
+		#else
+		  #set($wedgeName = "$wedgeName | $summaryRow.getGroupingValue($grouping)")
+		#end
 	  #end
+		#set($success = $point.add("'$viewTools.escape($wedgeName)'"))
 	  #set($success = $point.add($summaryRow.getAggregateValue($aggregateFunction)))
 	  #set($success = $seriesData.add($point))
-
     #end
   #else ## Column / bar chart
     #foreach($summaryRow in $reportSummaryRows)
