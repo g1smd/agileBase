@@ -250,7 +250,7 @@
 		 legend: {
 		 	style: {
 		      #if($pieChart)
-			    layout: vertical,
+			    layout: 'vertical',
 			  #else
 				position: 'absolute',
 				zIndex: 10,
