@@ -228,20 +228,21 @@
 			 }
            },
 		 #end
-         xAxis: {
-		   #if($dateAxis)
-             type: 'datetime',
-			 maxZoom: 60 * 24 * 3600000, // two months
-		   #elseif($pieChart)
-		   #else
-             categories: $xAxisCategories
-		   #end
-         },
-         yAxis: {
-            title: {
-               enabled: false
-            }
-         },
+		 #if(!$pieChart)
+           xAxis: {
+		     #if($dateAxis)
+               type: 'datetime',
+			   maxZoom: 60 * 24 * 3600000, // two months
+		     #else
+               categories: $xAxisCategories
+		     #end
+           },
+           yAxis: {
+              title: {
+                 enabled: false
+              }
+           },
+		 #end
 		 legend: {
 		 	style: {
 				position: 'absolute',
