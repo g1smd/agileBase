@@ -170,7 +170,7 @@
       #set($width = 300)
     #elseif($pieChart)
       #set($xAxisMargin = 10)
-      #set($height = 200)
+      #set($height = 300)
       #set($width = 300)
     #else
       #set($width = $xAxisMargin + 175)
