@@ -46,15 +46,12 @@
 	#end
   #end
 #end
-For $reportSummary.getTitle(), $groupings gives dateAxis = $dateAxis<br>
 ## Work out if we can display data as a pie chart
 #set($pieChart = false)
 #if((!$dateAxis) && ($reportSummaryRows.size() < 5))
   #set($pieChart = true)
 #end
 #if($reportSummaryRows.size() > 0)
-#set($chartTitle = "$reportSummary.getTitle()")
-#set($yAxisTitle = "$viewTools.joinWith($aggregateFunctions,', ')")
 #if((!$dateAxis) && (!$pieChart))
   ## we need to create category labels
   #set($xAxisCategories = [])
