@@ -144,7 +144,7 @@
     #end
   #end
   #set($seriesString = "$seriesString $seriesData }")
-  #if(($velocityCount < $aggregateFunctions.size())
+  #if($velocityCount < $aggregateFunctions.size())
 	#set($seriesString = "$seriesString, ")
   #end
 #end
