@@ -53,7 +53,7 @@
 #end
 ## Work out if we can display data as a pie chart
 #set($pieChart = false)
-#if((!$dateAxis) && ($reportSummaryRows.size() < 5) && ($groupings.size() == 1))
+#if((!$dateAxis) && ($reportSummaryRows.size() < 5))
   #set($pieChart = true)
 #end
 #if($reportSummaryRows.size() > 0)
