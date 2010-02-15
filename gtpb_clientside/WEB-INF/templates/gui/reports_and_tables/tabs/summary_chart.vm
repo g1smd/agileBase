@@ -249,12 +249,16 @@
 		 #end
 		 legend: {
 		 	style: {
+		      #if($pieChart)
+			    layout: vertical,
+			  #else
 				position: 'absolute',
 				zIndex: 10,
 				bottom: '10px',
 				left: '120px',
 				padding: '5px',
-				textTransform: 'lowercase'
+			  #end
+			  textTransform: 'lowercase'
 			}
 		 },
 		 tooltip: {
