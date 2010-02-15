@@ -180,6 +180,7 @@
       #set($xAxisMargin = 10)
 	  #set($legendWidth = ($maxLegendChars * 7) - $maxLegendChars)
       #set($width = 100 + $legendWidth)
+	  #set($height = 150)
 	  #set($pieMidX = $height / 2)
 	  #set($pieMidY = $pieMidX)
     #else
@@ -218,9 +219,7 @@
 			#if($dashboard)
 			  width: $width,
 			#end
-			#if(!$pieChart)
-			  height: $height,
-			#end
+			height: $height,
 			margin: $margin
          },
 		 credits: {
