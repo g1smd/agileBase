@@ -174,7 +174,7 @@
       #set($width = 300)
     #elseif($pieChart)
       #set($xAxisMargin = 10)
-      #set($height = 300)
+      #set($height = 150)
       #set($width = 300)
     #else
       #set($width = $xAxisMargin + 175)
@@ -251,6 +251,10 @@
 		 	style: {
 		      #if($pieChart)
 			    layout: 'vertical',
+				top: 40px,
+				right: 0px,
+				left: auto,
+				bottom: auto,
 			  #else
 				position: 'absolute',
 				zIndex: 10,
