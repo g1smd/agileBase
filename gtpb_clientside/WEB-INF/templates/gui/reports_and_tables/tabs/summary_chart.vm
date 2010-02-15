@@ -293,7 +293,7 @@
 			   }
 			 #elseif($pieChart)
 			   ,pie: {
-			     center: ['50%', '50%']
+			     center: ['175', '175']
 			   }
 			 #end
 		   },
