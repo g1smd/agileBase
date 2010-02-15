@@ -194,6 +194,7 @@
     #set($title = $reportSummary.getTitle())
   #end
   <script language="JavaScript">
+    alert("chart $title ($subtitle)");
     var $chart_id = new Highcharts.Chart({
          chart: {
             renderTo: "$chart_id",
