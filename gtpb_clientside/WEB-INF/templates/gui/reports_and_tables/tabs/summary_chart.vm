@@ -251,10 +251,10 @@
 		 	style: {
 		      #if($pieChart)
 			    layout: 'vertical',
-				top: 40px,
-				right: 0px,
-				left: auto,
-				bottom: auto,
+				top: '40px',
+				right: '0px',
+				left: 'auto',
+				bottom: 'auto',
 			  #else
 				position: 'absolute',
 				zIndex: 10,
