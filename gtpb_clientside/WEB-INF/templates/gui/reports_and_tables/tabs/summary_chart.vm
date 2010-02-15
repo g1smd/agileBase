@@ -40,6 +40,7 @@
 	#break
   #end
   #if(($groupings.size() == 1) && ($fieldCategory == "DATE"))
+	#set($groupingModifier = $grouping.getGroupingModifier())
 	#if($groupingModifier != "DATE_YEAR")
 	  #set($dateAxis = false)
 	#end
