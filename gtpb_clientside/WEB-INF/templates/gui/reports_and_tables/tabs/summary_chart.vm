@@ -128,6 +128,7 @@
 	  #end
     #end
   #elseif($pieChart)
+	#set($maxLegendChars = 5)
     #foreach($summaryRow in $reportSummaryRows)
 	  #set($point = [])
 	  #set($wedgeName = "")
@@ -138,7 +139,10 @@
 		  #set($wedgeName = "$wedgeName | $summaryRow.getGroupingValue($grouping)")
 		#end
 	  #end
-		#set($success = $point.add("'$viewTools.escape($wedgeName)'"))
+	  #if($wedgeName.length() > $maxLegendChars)
+	    #set($maxLegendChars = $wedgeName.length())
+      #end
+	  #set($success = $point.add("'$viewTools.escape($wedgeName)'"))
 	  #set($success = $point.add($summaryRow.getAggregateValue($aggregateFunction)))
 	  #set($success = $seriesData.add($point))
     #end
@@ -174,8 +178,8 @@
       #set($width = 300)
     #elseif($pieChart)
       #set($xAxisMargin = 10)
-      #set($height = 150)
-      #set($width = 300)
+	  #set($legendWidth = ($maxLegendChars * 7) - $maxLegendChars)
+      #set($width = 100 + $legendWidth)
 	  #set($pieMidX = $height / 2)
 	  #set($pieMidY = $pieMidX)
     #else
@@ -214,7 +218,9 @@
 			#if($dashboard)
 			  width: $width,
 			#end
-			height: $height,
+			#if(!$pieChart)
+			  height: $height,
+			#end
 			margin: $margin
          },
 		 credits: {
@@ -256,9 +262,7 @@
 		      #if($pieChart)
 			    layout: 'vertical',
 				top: '40px',
-				right: '0px',
-				left: 'auto',
-				bottom: 'auto'
+				left: '100px'
 			  #else
 				zIndex: 10,
 				bottom: '10px',
@@ -293,7 +297,7 @@
 			   }
 			 #elseif($pieChart)
 			   ,pie: {
-			     center: ['10', '10']
+			     center: ['50', '50']
 			   }
 			 #end
 		   },
