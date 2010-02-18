@@ -17,8 +17,8 @@
  */
 package com.gtwm.pb.auth;
 
+import com.gtwm.pb.dashboard.interfaces.DashboardInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
-import com.gtwm.pb.model.interfaces.DashboardInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.Module;

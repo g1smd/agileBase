@@ -141,11 +141,16 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 	 *         description and the field(s) it acts on, e.g. "Maximum(Age)"
 	 */
 	public String toString() {
+		ReportFieldInfo reportField = this.getReportField();
 		if (this.getAggregateFunction().equals(AggregateFunction.WTDAVG)) {
-			return "Weighted " + this.getSecondaryReportField() + " / " + this.getReportField()
+			return "Weighted " + this.getSecondaryReportField() + " / " + reportField
 					+ " %";
+		} else if (reportField.getBaseField().equals(reportField.getBaseField().getTableContainingField().getPrimaryKey())) {
+			return this.yAxisLabel();
+		} else if (this.isCountFunction()) {
+			return this.yAxisLabel() + "(" + reportField + ")";
 		} else {
-			return this.yAxisLabel() + "(" + this.getReportField() + ")";
+			return this.yAxisLabel() + " " + reportField;
 		}
 	}
 

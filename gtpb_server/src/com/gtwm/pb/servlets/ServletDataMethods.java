@@ -258,7 +258,7 @@ public class ServletDataMethods {
 	 * 
 	 * Http request usage example:
 	 * 
-	 * &set_custom_integer=true&stringkey=chosennumber&customstringvalue=5 - set
+	 * &set_custom_integer=true&integerkey=chosennumber&customintegervalue=5 - set
 	 * a 'chosennumber' value to 5
 	 * 
 	 * @see SessionDataInfo#getCustomInteger(String) See

@@ -20,6 +20,8 @@ package com.gtwm.pb.model.interfaces;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
+
+import com.gtwm.pb.dashboard.interfaces.DashboardInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.manageUsage.UsageLogger.LogType;
