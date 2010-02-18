@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
-
 import org.json.JSONException;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
@@ -85,4 +84,15 @@ public interface DashboardInfo {
 	 */
 	public String getTreeMapJSON() throws ObjectNotFoundException, DisallowedException,
 			SQLException, JSONException, CodingErrorException;
+	
+	/**
+	 * Return a grid object that can be used to lay out charts in the dashboard
+	 * @param containerWidth
+	 *            The pixel width of the space available for this grid
+	 * @param widthUnit
+	 *            The pixel width of individual blocks to go into the grid
+	 * @param heightUnit
+	 *            The pixel height of individual blocks to go into the grid
+	 */
+	public DashboardGridInfo getLayoutGrid(int containerWidth, int widthUnit, int heightUnit);
 }
