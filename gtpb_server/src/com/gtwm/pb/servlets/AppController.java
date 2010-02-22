@@ -205,8 +205,7 @@ public class AppController extends VelocityViewServlet {
 		// app actions
 		EnumSet<SessionAction> sessionActions = EnumSet.allOf(SessionAction.class);
 		for (SessionAction sessionAction : sessionActions) {
-			String sessionActionParam = request.getParameter(sessionAction.toString().toLowerCase(
-					Locale.UK));
+			String sessionActionParam = request.getParameter(sessionAction.toString().toLowerCase());
 			if (sessionActionParam != null) {
 				switch (sessionAction) {
 				case PRESET_ROW_ID:
