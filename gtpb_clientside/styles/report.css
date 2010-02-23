@@ -179,6 +179,11 @@ table#reportData tr.excludedRecord td {
 	padding-left: 14px;
 }
 
+/* Don't show delete checkbox in excluded records */
+.excludedRecord input {
+	display: none;
+}
+
 .warningmessage {
 		-webkit-border-radius: 1em;
 		-moz-border-radius: 1em;
