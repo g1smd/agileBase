@@ -192,7 +192,7 @@
             renderTo: "$chart_id",
 			#if($dateAxis)
               defaultSeriesType: 'area',
-			  zoomType: 'x',
+			  zoomType: 'xy',
 			#elseif($pieChart)
 			  defaultSeriesType: 'pie',
 			#else
