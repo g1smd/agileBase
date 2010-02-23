@@ -19,6 +19,7 @@
 ## - $report
 ## - $reportSummary
 ## - $reportSummaryRows
+#set($mathTool = $viewTools.getMathTool())
 #set($chart_id = "chart_$reportSummary.getId()")
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
@@ -101,7 +102,7 @@
 		  #set($month = $summaryRow.getGroupingValue($grouping))
 		#elseif($groupingModifier == "DATE_QUARTER")
 		  #set($quarter = $summaryRow.getGroupingValue($grouping))
-		  #set($month = (($quarter - 1) * 3) + 1) ## Approximate quartering of a year
+		  #set($month = (($mathTool.toInteger($quarter) - 1) * 3) + 1) ## Approximate quartering of a year
 		  $viewTools.log("$quarter -> $month")
 		#else
 		  $viewTools.log("Error: unrecognised grouping modifier $groupingModifier for date axis $grouping in summary $summaryReport")
