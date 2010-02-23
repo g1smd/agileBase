@@ -103,7 +103,6 @@
 		#elseif($groupingModifier == "DATE_QUARTER")
 		  #set($quarter = $summaryRow.getGroupingValue($grouping))
 		  #set($month = (($mathTool.toInteger($quarter) - 1) * 3) + 1) ## Approximate quartering of a year
-		  $viewTools.log("$quarter -> $month")
 		#else
 		  $viewTools.log("Error: unrecognised grouping modifier $groupingModifier for date axis $grouping in summary $summaryReport")
 		#end
@@ -160,24 +159,16 @@
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
 #end
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
-  #if($reportSummary.equals($report.getReportSummary()) && !$dashboard) ## if default chart in pane 3
+  #if($pieChart)
+    #set($xAxisMargin = 10)
+	#set($legendWidth = ($maxLegendChars * 7) - $maxLegendChars)
+    #set($width = 100 + $legendWidth)
+	#set($height = 150)
+	#set($pieMidX = $height / 2)
+	#set($pieMidY = $pieMidX)
+  #end
+  #if($reportSummary.equals($report.getReportSummary())) ## if default chart in pane 3
 	#set($margin = "[10, 50, 60, $xAxisMargin]") ## top, right, bottom, left
-  #elseif($dashboard)
-    #if($dateAxis)
-      #set($width = 300)
-    #elseif($pieChart)
-      #set($xAxisMargin = 10)
-	  #set($legendWidth = ($maxLegendChars * 7) - $maxLegendChars)
-      #set($width = 100 + $legendWidth)
-	  #set($height = 150)
-	  #set($pieMidX = $height / 2)
-	  #set($pieMidY = $pieMidX)
-    #else
-      #set($width = $xAxisMargin + 175)
-    #end
-	#set($margin = "[50, 10, 60, $xAxisMargin]")
-    #set($height = $height * 0.9)
-	#set($height = $height + 40)
   #else ## named chart in pane 3
 	#set($margin = "[50, 50, 60, $xAxisMargin]")
 	#set($height = $height + 40)
