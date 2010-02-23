@@ -22,13 +22,10 @@
 #set($chart_id = "chart_$reportSummary.getId()")
 #set($groupings = $reportSummary.getGroupings())
 #set($aggregateFunctions = $reportSummary.getAggregateFunctions())
-#if($reportSummary.equals($report.getReportSummary()) && (!$dashboard))
+#if($reportSummary.equals($report.getReportSummary()))
   #set($chart_classes="default_chart")
 #else
   #set($chart_classes="summary_chart")
-  #if($suggested)
-	#set($chart_classes = "$chart_classes suggested")
-  #end
 #end
 <div id="$chart_id" class="$chart_classes"></div>
 ## Work out if we can display data as a time series
@@ -76,19 +73,17 @@
 #set($seriesString = "")
 #foreach($aggregateFunction in $aggregateFunctions)
   #set($seriesName = $viewTools.escape("$aggregateFunction").toLowerCase())
-  #if(!$dashboard)
-    ## Add grand total to series
-	#if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
-	  #set($grandTotal = "$mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction))")
-	  #if($grandTotal.endsWith(".00"))
-		#set($endPos = $grandTotal.length() - 3)
-		#set($grandTotal = $grandTotal.substring(0, $endPos))
-	  #elseif($grandTotal.endsWith(".0"))
-		#set($endPos = $grandTotal.length() - 2)
-		#set($grandTotal = $grandTotal.substring(0, $endPos))
-	  #end
-	  #set($seriesName = "$seriesName = $grandTotal")
+  ## Add grand total to series
+  #if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
+	#set($grandTotal = "$mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction))")
+	#if($grandTotal.endsWith(".00"))
+	  #set($endPos = $grandTotal.length() - 3)
+	  #set($grandTotal = $grandTotal.substring(0, $endPos))
+	#elseif($grandTotal.endsWith(".0"))
+	  #set($endPos = $grandTotal.length() - 2)
+	  #set($grandTotal = $grandTotal.substring(0, $endPos))
 	#end
+	#set($seriesName = "$seriesName = $grandTotal")
   #end
   #set($seriesString = "$seriesString { name:'$seriesName', data: ")
   #set($seriesData = [])
@@ -106,9 +101,10 @@
 		  #set($month = $summaryRow.getGroupingValue($grouping))
 		#elseif($groupingModifier == "DATE_QUARTER")
 		  #set($quarter = $summaryRow.getGroupingValue($grouping))
-		  #set($month = (($quarter - 1) * 3) + 1) ## Approximate quartering of a year	
+		  #set($month = (($quarter - 1) * 3) + 1) ## Approximate quartering of a year
+		  $viewTools.log("$quarter -> $month")
 		#else
-		  $viewTools.log("Error: unrecognised grouping modifier $groupingModifier for a date axis in summary $summaryReport")
+		  $viewTools.log("Error: unrecognised grouping modifier $groupingModifier for date axis $grouping in summary $summaryReport")
 		#end
 	  #end
 	  ## Don't add null grouping

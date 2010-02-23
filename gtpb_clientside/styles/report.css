@@ -180,9 +180,7 @@ table#reportData tr.excludedRecord td {
 }
 
 /* Don't show delete checkbox in excluded records */
-.excludedRecord input {
-	display: none;
-}
+.excludedRecord input { display: none; }
 
 .warningmessage {
 		-webkit-border-radius: 1em;
