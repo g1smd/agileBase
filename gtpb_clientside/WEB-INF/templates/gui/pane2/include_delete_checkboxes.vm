@@ -26,7 +26,7 @@
   #foreach($row in $data)
    #set($lastUniqueId = $thisUniqueId)
    #set($thisUniqueId = $row.get(2))
-   #if(($thisUniqueId != $lastUniqueId) && ($thisUniqueID != $excludedSelection))
+   #if(($thisUniqueId != $lastUniqueId) && ($excludedID != $thisUniqueID))
     #set($success=$row.get(0).add('<input type="checkbox" onclick="fLocateDeleteMarkers(this)">'))
    #else
     #set($success=$row.get(0).add('&nbsp;'))

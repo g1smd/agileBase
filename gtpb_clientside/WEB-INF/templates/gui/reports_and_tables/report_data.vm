@@ -86,6 +86,10 @@
 		      #set($selectionFound = true)##
 		    #end##
 	  #end##
+	  #set($excludedID = -1)
+	  #if(!$selectionFound)
+		#set($excludedID = $selection)
+	  #end
 	  #if($printout)##
 	    #parse('gui/printouts/pane2_printout.vm')##
 	  #else##
