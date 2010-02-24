@@ -73,8 +73,11 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
     var iCellIndex=oCheckbox.parentNode.cellIndex;
   	  var oRows=document.getElementById('reportBody').rows;
 	    for (var i=0;i<oRows.length;i++){ 
-	      try { 
-	        oRows[i].cells[iCellIndex].getElementsByTagName('INPUT')[0].checked=oCheckbox.checked;
+	      try {
+	    	var theCheckbox = oRows[i].cells[iCellIndex].getElementsByTagName('INPUT')[0];
+	    	if (jQuery(theCheckbox).is(":visible")) {
+	          theCheckbox.checked=oCheckbox.checked;
+	    	}
 	      }
 	      catch(e) {  
 	        // don't do anything
