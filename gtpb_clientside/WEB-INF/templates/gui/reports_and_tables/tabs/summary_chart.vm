@@ -264,28 +264,17 @@
 		   }
 		   #end
 		 },
-		 #if($dashboard)
-		   plotOptions: {
-		     bar: {
-			   animation: false,
-			   groupPadding: 0.1,
-			   pointPadding: 0,
-			   borderWidth: 1,
-			   shadow: false
-			 }
+		 plotOptions: {
 			 #if($dateAxis)
-			   ,area: {
+			   area: {
 			     animation: false,
-			     marker: { enabled: false },
-				 lineWidth: 0
 			   }
-			 #elseif($pieChart)
-			   ,pie: {
-			     center: ['50', '30']
+			 #else
+		       bar: {
+			     animation: false,
 			   }
 			 #end
-		   },
-		 #end
+		 },
          series: $series
       });
   </script>
