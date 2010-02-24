@@ -1476,32 +1476,28 @@ public class DataManagement implements DataManagementInfo {
 		if (!needSummary) {
 			return null;
 		}
+		// Work out whether any user filters are active that could affect the
+		// returned data. If there are, always look up direct from db
+		ReportDataInfo reportData = new ReportData(null, reportSummary.getReport(), false, false);
+		Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
+				reportFilterValues, false);
+		if (whereClauseMap.size() > 0) {
+			return this.fetchReportSummaryData(reportSummary, reportFilterValues);
+		}
 		ReportSummaryDataInfo reportSummaryData = this.getCachedReportSummaryData(reportSummary);
 		if (reportSummaryData == null) {
-			reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues,
-					reportSummaryData);
+			reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues);
 			this.addCachedReportSummaryData(reportSummary, reportSummaryData);
 			this.summaryDataCacheMisses.incrementAndGet();
+		} else if (alwaysUseCache) {
+			this.summaryDataCacheHits.incrementAndGet();
 		} else {
-			// Work out whether any filters are active that could affect the
-			// returned data
-			ReportDataInfo reportData = new ReportData(null, reportSummary.getReport(), false,
-					false);
-			Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
-					reportFilterValues, false);
-			// If asked to always use the cache if possible, use it unless there
-			// are filters active
-			if (alwaysUseCache && whereClauseMap.size() == 0) {
-				this.summaryDataCacheHits.incrementAndGet();
-				return reportSummaryData;
-			}
 			long lastDataChangeTime = this.getLastDataChangeTime(company);
 			long lastSchemaChangeTime = this.getLastSchemaChangeTime(company);
 			long cacheCreationTime = reportSummaryData.getCacheCreationTime();
 			if ((cacheCreationTime <= lastDataChangeTime)
 					|| (cacheCreationTime <= lastSchemaChangeTime)) {
-				reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues,
-						reportSummaryData);
+				reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues);
 				this.addCachedReportSummaryData(reportSummary, reportSummaryData);
 				this.summaryDataCacheMisses.incrementAndGet();
 			} else {
@@ -1521,8 +1517,7 @@ public class DataManagement implements DataManagementInfo {
 	 * Fetch direct from the database
 	 */
 	private ReportSummaryDataInfo fetchReportSummaryData(ReportSummaryInfo reportSummary,
-			Map<BaseField, String> reportFilterValues, ReportSummaryDataInfo reportSummaryData)
-			throws CantDoThatException, SQLException {
+			Map<BaseField, String> reportFilterValues) throws CantDoThatException, SQLException {
 		Set<ReportSummaryAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
 		Set<ReportSummaryGroupingInfo> groupings = reportSummary.getGroupings();
 		List<ReportSummaryDataRowInfo> reportSummaryRows;
@@ -1697,16 +1692,15 @@ public class DataManagement implements DataManagementInfo {
 				logger.warn("Long SELECT SQL execution time of " + durationSecs
 						+ " seconds for summary '" + reportSummary + "', statement = " + statement);
 			}
-			reportSummaryData = new ReportSummaryData(reportSummaryRows, minAggValues,
-					maxAggValues, grandTotals);
+			return new ReportSummaryData(reportSummaryRows, minAggValues, maxAggValues, grandTotals);
 		} catch (SQLException sqlex) {
-			throw new SQLException("Error getting report summary data " + reportSummary + ": " + sqlex);
+			throw new SQLException("Error getting report summary data " + reportSummary + ": "
+					+ sqlex);
 		} finally {
 			if (conn != null) {
 				conn.close();
 			}
 		}
-		return reportSummaryData;
 	}
 
 	public Map<BaseField, BaseValue> getTableDataRow(TableInfo table, int rowId)

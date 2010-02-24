@@ -273,6 +273,7 @@
 			 }
 			 #if($dateAxis)
 			   ,area: {
+			     animation: false,
 			     marker: { enabled: false },
 				 lineWidth: 0
 			   }
