@@ -86,9 +86,9 @@
 		      #set($selectionFound = true)##
 		    #end##
 	  #end##
-	  #set($excludedID = -1)
+	  #set($excludedId = -1)
 	  #if(!$selectionFound)
-		#set($excludedID = $selection)
+		#set($excludedId = $selection)
 	  #end
 	  #if($printout)##
 	    #parse('gui/printouts/pane2_printout.vm')##
