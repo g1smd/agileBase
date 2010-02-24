@@ -1065,8 +1065,13 @@ public class DataManagement implements DataManagementInfo {
 		}
 		this.logLastDataChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
-		usageLogger.logDataChange(loggedInUser, table, AppAction.CSV_IMPORT, -1, ""
-				+ numImportedRecords + " records imported");
+		String logMessage = "" + numImportedRecords;
+		if (updateExistingRecords) {
+			logMessage += " records imported";
+		} else {
+			logMessage += " new records imported";
+		}
+		usageLogger.logDataChange(loggedInUser, table, AppAction.CSV_IMPORT, -1, logMessage);
 		UsageLogger.startLoggingThread(usageLogger);
 		return numImportedRecords;
 	}

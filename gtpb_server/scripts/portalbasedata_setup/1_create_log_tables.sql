@@ -19,7 +19,8 @@ app_user varchar(1000),
 app_table varchar(1000),
 app_action varchar(255),
 row_id integer,
-saved_data varchar(100000)
+saved_data varchar(100000),
+log_entry_id serial
 );
 
 CREATE INDEX data_change_app_table ON dbint_log_data_change(app_table);
