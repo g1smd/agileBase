@@ -253,12 +253,14 @@
 			}
 		 },
 		 tooltip: {
-		   #if($dashboard)
-		     enabled: false
+		   #if($dateAxis)
+		   formatter: function() {
+				return '<b>'+ this.series.name.replace(/\=.*$/,'') +'</b>: ' + this.y;
+		   }
 		   #else
 		   formatter: function() {
-						return '<b>'+ this.series.name.replace(/\=.*$/,'') +'</b><br/>'+
-							this.x +': '+ this.y;
+				return '<b>'+ this.series.name.replace(/\=.*$/,'') +'</b><br/>'+
+					this.x +': '+ this.y;
 		   }
 		   #end
 		 },
