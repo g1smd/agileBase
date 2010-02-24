@@ -26,10 +26,10 @@
   #foreach($row in $data)
    #set($lastUniqueId = $thisUniqueId)
    #set($thisUniqueId = $row.get(2))
-   #if(($thisUniqueId != $lastUniqueId) && ($excludedId != $thisUniqueId))
-    #set($success=$row.get(0).add('Valid <input type="checkbox" onclick="fLocateDeleteMarkers(this)">'))
+   #if($thisUniqueId != $lastUniqueId)
+    #set($success=$row.get(0).add('<input type="checkbox" onclick="fLocateDeleteMarkers(this)">'))
    #else
-    #set($success=$row.get(0).add('Excluded &nbsp;'))
+    #set($success=$row.get(0).add('&nbsp;'))
    #end
   #end ##end each row
 #end

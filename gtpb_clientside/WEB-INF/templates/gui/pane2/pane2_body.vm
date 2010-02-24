@@ -69,7 +69,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	  #end
 	  <td>
 		#if($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionData.getTable()))
-		  <input type="checkbox" onclick="fLocateDeleteMarkers(this)">
+		  <input type="checkbox" onclick="&nbsp;">
 		#end
 	  </td>		
 	  <td class="trailing">&nbsp;</td>
