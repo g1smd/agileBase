@@ -526,6 +526,9 @@ public class ServletDataMethods {
 			String partGotTo = "year";
 			try {
 				Integer years = getIntegerParameterValue(request, internalFieldName + "_years");
+				if ((years >0) && (years < 99)) {
+					years += 2000;
+				}
 				partGotTo = "month";
 				Integer months = getIntegerParameterValue(request, internalFieldName + "_months");
 				partGotTo = "day";
