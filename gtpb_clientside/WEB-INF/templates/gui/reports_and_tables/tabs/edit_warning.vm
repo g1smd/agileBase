@@ -1,5 +1,5 @@
 #set($sessionReport = $sessionData.getReport())
-		#if(!$view.isRowIdInReport())
+		## #if(!$view.isRowIdInReport())
 		<tr>
 		  <td class="leading">&nbsp;</td>
 		  <td colspan="2">
@@ -17,4 +17,4 @@
 		  </td>
 		  <td class="trailing">&nbsp;</td>
 		</tr>
-		#end
+		## #end
