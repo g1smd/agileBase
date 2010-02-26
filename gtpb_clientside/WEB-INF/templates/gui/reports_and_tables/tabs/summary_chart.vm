@@ -163,8 +163,7 @@
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
   #if($pieChart)
     #set($xAxisMargin = 10)
-	#set($legendWidth = ($maxLegendChars * 7) - $maxLegendChars)
-    #set($width = 100 + $legendWidth)
+	#set($legendWidth = ($maxLegendChars * 7))
 	#set($height = 150)
 	#set($pieMidX = $height / 2)
 	#set($pieMidY = $pieMidX)
@@ -243,7 +242,7 @@
 		      #if($pieChart)
 			    layout: 'vertical',
 				top: '40px',
-				left: '100px'
+				left: '60%'
 			  #else
 				zIndex: 10,
 				bottom: '10px',

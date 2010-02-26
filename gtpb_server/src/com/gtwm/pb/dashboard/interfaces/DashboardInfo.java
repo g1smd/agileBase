@@ -1,16 +1,7 @@
 package com.gtwm.pb.dashboard.interfaces;
 
-import java.sql.SQLException;
-import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
-import org.json.JSONException;
-import com.gtwm.pb.auth.DisallowedException;
-import com.gtwm.pb.model.interfaces.AppUserInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
-import com.gtwm.pb.util.CodingErrorException;
-import com.gtwm.pb.util.ObjectNotFoundException;
 
 /**
  * Represents the dashboard for a company
@@ -28,6 +19,11 @@ public interface DashboardInfo {
 	 * Get report summary charts that agileBase automatically selects
 	 */
 	public SortedSet<DashboardReportSummaryInfo> getSuggestedReportSummaries();
+	
+	/**
+	 * Return a set of headlines highlighting particular data from agileBase or the logs
+	 */
+	public Set<String> getHeadlineNotices();
 	
 	/**
 	 * Return a grid object that can be used to lay out charts in the dashboard

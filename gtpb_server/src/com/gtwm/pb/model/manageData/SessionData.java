@@ -55,376 +55,390 @@ public class SessionData implements SessionDataInfo {
 	public SessionData() {
 		logger.warn("Empty SessionData object created");
 	}
-	
-    /**
-     * Construct a new session data object.
-     * 
-     * Initialisation: sets the session report to the first one that the logged in user can see
-     * 
-     * @param request
-     *            Has temporary use in the constructor for privilege checks, not stored for the life of
-     *            SessionData
-     * @param databaseDefn
-     *            Has temporary use in the constructor for privilege checks, not stored for the life of
-     *            SessionData
-     */
-    public SessionData(DatabaseInfo databaseDefn, DataSource relationalDataSource, HttpServletRequest request) throws SQLException, DisallowedException, ObjectNotFoundException, CodingErrorException {
-        // Sessions are created when someone logs in
-    	AppUserInfo user = databaseDefn.getAuthManager().getUserByUserName(request, request.getRemoteUser());
-        UsageLogger usageLogger = new UsageLogger(relationalDataSource);
-        usageLogger.logLogin(user, request.getRemoteAddr());
-        UsageLogger.startLoggingThread(usageLogger);
-        this.relationalDataSource = relationalDataSource;
-        // Set the session report to the first that the logged in user can view
-        AuthenticatorInfo authenticator = databaseDefn.getAuthManager().getAuthenticator();
-        CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
-        for (ModuleInfo module : company.getModules()) {
-        	for (TableInfo table : company.getTables()) {
-        		for (BaseReportInfo report : table.getReports()) {
-        			ModuleInfo reportModule = report.getModule();
-        			if (module.equals(reportModule)) {
-        				if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
-        					this.setReport(report);
-        					return;
-        				}
-        			}
-        		}
-        	}
-        }
-    	logger.warn("No viewable report found to show for user " + user + " in company " + company);
-    }
 
-    public synchronized void setTable(TableInfo table) throws SQLException {
+	/**
+	 * Construct a new session data object.
+	 * 
+	 * Initialisation: sets the session report to the first one that the logged
+	 * in user can see
+	 * 
+	 * @param request
+	 *            Has temporary use in the constructor for privilege checks, not
+	 *            stored for the life of SessionData
+	 * @param databaseDefn
+	 *            Has temporary use in the constructor for privilege checks, not
+	 *            stored for the life of SessionData
+	 */
+	public SessionData(DatabaseInfo databaseDefn, DataSource relationalDataSource,
+			HttpServletRequest request) throws SQLException, DisallowedException,
+			ObjectNotFoundException, CodingErrorException {
+		// Sessions are created when someone logs in
+		AppUserInfo user = databaseDefn.getAuthManager().getUserByUserName(request,
+				request.getRemoteUser());
+		UsageLogger usageLogger = new UsageLogger(relationalDataSource);
+		usageLogger.logLogin(user, request.getRemoteAddr());
+		UsageLogger.startLoggingThread(usageLogger);
+		this.relationalDataSource = relationalDataSource;
+		// Set the session report to the first that the logged in user can view
+		AuthenticatorInfo authenticator = databaseDefn.getAuthManager().getAuthenticator();
+		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
+		for (ModuleInfo module : company.getModules()) {
+			for (TableInfo table : company.getTables()) {
+				for (BaseReportInfo report : table.getReports()) {
+					ModuleInfo reportModule = report.getModule();
+					if (module.equals(reportModule)) {
+						if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
+							this.setReport(report);
+							return;
+						}
+					}
+				}
+			}
+		}
+		logger.warn("No viewable report found to show for user " + user + " in company " + company);
+	}
+
+	public synchronized void setTable(TableInfo table) throws SQLException {
 		// clear the cached record data:
-		this.setFieldInputValues(new HashMap<BaseField,BaseValue>());
-        this.table = table;
-        if (table == null) {
-            return;
-        }
-        // Also set the current report to the default report (if no current report exists yet)
-        if (this.currentTableReports.get(table) == null) {
-            this.currentTableReports.put(table, table.getDefaultReport());
-        }
-        // If no row ID exists, set the record to that identified by the first line of the current report
-        this.autoSetRowId();
-    }
+		this.setFieldInputValues(new HashMap<BaseField, BaseValue>());
+		this.table = table;
+		if (table == null) {
+			return;
+		}
+		// Also set the current report to the default report (if no current
+		// report exists yet)
+		if (this.currentTableReports.get(table) == null) {
+			this.currentTableReports.put(table, table.getDefaultReport());
+		}
+		// If no row ID exists, set the record to that identified by the first
+		// line of the current report
+		this.autoSetRowId();
+	}
 
-    public synchronized void setReport(BaseReportInfo report) throws SQLException {
+	public synchronized void setReport(BaseReportInfo report) throws SQLException {
 		// clear the cached record data:
-		this.setFieldInputValues(new HashMap<BaseField,BaseValue>());
-        if (!(report.equals(this.currentTableReports.get(this.table)))) {
-            this.table = report.getParentTable();
-            this.currentTableReports.put(report.getParentTable(), report);
-            // If no row ID exists, set the record to that identified by the first line of the current report
-            this.autoSetRowId();
-        }
-    }
+		this.setFieldInputValues(new HashMap<BaseField, BaseValue>());
+		if (!(report.equals(this.currentTableReports.get(this.table)))) {
+			this.table = report.getParentTable();
+			this.currentTableReports.put(report.getParentTable(), report);
+			// If no row ID exists, set the record to that identified by the
+			// first line of the current report
+			this.autoSetRowId();
+		}
+	}
 
-    /**
-     * If there is no row ID for the current table, set one based on the first record from the current report
-     * 
-     * @throws SQLException
-     */
-    private void autoSetRowId() throws SQLException {
-        if (this.currentTableRowIds.get(this.table) == null) {
-            String SQLCode = "SELECT " + this.table.getPrimaryKey().getInternalFieldName() + " FROM " + getReport().getInternalReportName() + " LIMIT 1";
-            Connection conn = null;
-            try {
-                conn = this.relationalDataSource.getConnection();
-                conn.setAutoCommit(false);
-                PreparedStatement statement = conn.prepareStatement(SQLCode);
-                ResultSet resultSet = statement.executeQuery();
-                // If resultSet.next() is false, there is no data in the report
-                if (resultSet.next()) {
-                    int rowId = resultSet.getInt(1);
-                    this.setRowId(rowId);
-                }
-                resultSet.close();
-                statement.close();
-            } catch (SQLException sqlex) {
-            	logger.warn("SQL error auto setting row ID. The session report may have an error. " + sqlex);
-            } finally {
-                if (conn != null) {
-                    conn.close();
-                }
-            }
-        }
-    }
+	/**
+	 * If there is no row ID for the current table, set one based on the first
+	 * record from the current report
+	 * 
+	 * @throws SQLException
+	 */
+	private void autoSetRowId() throws SQLException {
+		if (this.currentTableRowIds.get(this.table) == null) {
+			String SQLCode = "SELECT " + this.table.getPrimaryKey().getInternalFieldName()
+					+ " FROM " + getReport().getInternalReportName() + " LIMIT 1";
+			Connection conn = null;
+			try {
+				conn = this.relationalDataSource.getConnection();
+				conn.setAutoCommit(false);
+				PreparedStatement statement = conn.prepareStatement(SQLCode);
+				ResultSet resultSet = statement.executeQuery();
+				// If resultSet.next() is false, there is no data in the report
+				if (resultSet.next()) {
+					int rowId = resultSet.getInt(1);
+					this.setRowId(rowId);
+				}
+				resultSet.close();
+				statement.close();
+			} catch (SQLException sqlex) {
+				logger.warn("SQL error auto setting row ID. The session report may have an error. "
+						+ sqlex);
+			} finally {
+				if (conn != null) {
+					conn.close();
+				}
+			}
+		}
+	}
 
-    public void setRowId(int rowId) {
-        this.setRowId(this.table, rowId);
-    }
-    
-    public synchronized void setRowId(TableInfo table, int rowId) {
-    	if (rowId != this.getRowId(table)) {
-    		// a different record is being selected clear the cached record data:
-    		this.setFieldInputValues(new HashMap<BaseField,BaseValue>());
-    	}
-        if (rowId == -1) {
-            this.currentTableRowIds.remove(table);
-        } else {
-            this.currentTableRowIds.put(table, rowId);
-        }
-    }
+	public void setRowId(int rowId) {
+		this.setRowId(this.table, rowId);
+	}
 
-    public synchronized TableInfo getTable() {
-        return this.table;
-    }
+	public synchronized void setRowId(TableInfo table, int rowId) {
+		if (rowId != this.getRowId(table)) {
+			// A different record is being selected.
+			// Clear the cached record data
+			this.setFieldInputValues(new HashMap<BaseField, BaseValue>());
+		}
+		if (rowId == -1) {
+			this.currentTableRowIds.remove(table);
+		} else {
+			this.currentTableRowIds.put(table, rowId);
+		}
+	}
 
-    public synchronized BaseReportInfo getReport() {
-        return this.currentTableReports.get(this.table);
-    }
+	public synchronized TableInfo getTable() {
+		return this.table;
+	}
 
-    public synchronized int getRowId() {
-    	return getRowId(this.table);
-    }
-    
-    public synchronized int getRowId(TableInfo table) {    	
-        Integer rowId = this.currentTableRowIds.get(table);
-        if (rowId == null) {
-            return -1;
-        } else {
-            return rowId;
-        }
-    }
+	public synchronized BaseReportInfo getReport() {
+		return this.currentTableReports.get(this.table);
+	}
 
-    public int getReportRowLimit() {
-        return this.reportRowLimit;
-    }
+	public synchronized int getRowId() {
+		return getRowId(this.table);
+	}
 
-    public boolean hasTable() {
-        if (this.getTable() == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+	public synchronized int getRowId(TableInfo table) {
+		Integer rowId = this.currentTableRowIds.get(table);
+		if (rowId == null) {
+			return -1;
+		} else {
+			return rowId;
+		}
+	}
 
-    public void setReportRowLimit(int reportRowLimit) {
-        this.reportRowLimit = reportRowLimit;
-    }
+	public int getReportRowLimit() {
+		return this.reportRowLimit;
+	}
 
-    public void setUser(AppUserInfo appUser) {
-        this.appUser = appUser;
-    }
+	public boolean hasTable() {
+		if (this.getTable() == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
-    public void setRole(AppRoleInfo role) {
-        this.role = role;
-    }
-    
-    public void setContext(SessionContext sessionContext) {
-    	this.sessionContext = sessionContext;
-    }
+	public void setReportRowLimit(int reportRowLimit) {
+		this.reportRowLimit = reportRowLimit;
+	}
 
-    public synchronized void setReportFilterValue(BaseField field, String fieldValue) {
-        if (fieldValue != null) {
-            if (!(fieldValue.equals(""))) {
-                this.reportFilterValues.put(field, fieldValue);
-                return;
-            }
-        }
-        // if fieldValue empty, clear the field filter
-        this.clearReportFilterValue(field);
-    }
-    
-    public synchronized void setCustomReportFilterValue(String filterSet, BaseField field, String fieldValue) {
-    	Map<BaseField, String> customFilterValues = this.customReportFilterValues.get(filterSet);
-    	if (customFilterValues == null) {
-    		customFilterValues = new HashMap<BaseField, String>();
-    	}
-    	if (fieldValue != null) {
-    		if (!(fieldValue.equals(""))) {
-    			customFilterValues.put(field, fieldValue);
-    			this.customReportFilterValues.put(filterSet, customFilterValues);
-    			return;
-    		}
-    	}
-    	this.clearCustomReportFilterValue(filterSet, field);
-    }
-    
-    public synchronized void setReportSort(BaseField reportField, Boolean sortAscending) {
-    	this.reportSorts.put(reportField, sortAscending);
-    }
-    
-    public synchronized void clearAllReportFilterValues() {
-        this.reportFilterValues.clear();
-    }
-    
-    public synchronized void clearAllReportSorts() {
-        this.reportSorts.clear();
-    }
-    
-    public synchronized void clearReportFilterValue(BaseField field) {
-        this.reportFilterValues.remove(field);
-    }
-    
-    private synchronized void clearCustomReportFilterValue(String filterSet, BaseField field) {
-    	Map<BaseField, String> customFilterValues = this.customReportFilterValues.get(filterSet);
-    	if (customFilterValues != null) {
-    		customFilterValues.remove(field);
-    		this.customReportFilterValues.put(filterSet, customFilterValues);
-    	}
-    }
-    
-    public synchronized void clearReportSort(BaseField field) {
-        this.reportSorts.remove(field);
-    }
-    
-    public synchronized Map<BaseField, String> getReportFilterValues() {
-        return Collections.unmodifiableMap(new HashMap<BaseField, String>(this.reportFilterValues));
-    }
-    
-    public synchronized Map<BaseField, String> getCustomReportFilterValues(String filterSet) {
-    	Map<BaseField, String> customFilterValues = this.customReportFilterValues.get(filterSet);
-    	if (customFilterValues == null) {
-    		return Collections.unmodifiableMap(new HashMap<BaseField, String>());
-    	} else {
-    		return Collections.unmodifiableMap(new HashMap<BaseField, String>(customFilterValues));
-    	}
-    }
+	public void setUser(AppUserInfo appUser) {
+		this.appUser = appUser;
+	}
 
-    public synchronized Map<BaseField, Boolean> getReportSorts() {
-        return Collections.unmodifiableMap(new HashMap<BaseField, Boolean>(this.reportSorts));
-    }
-    
-    public synchronized void setFieldInputValues(Map<BaseField, BaseValue> inputValues) {
-        this.inputValues = inputValues;
-    }
+	public void setRole(AppRoleInfo role) {
+		this.role = role;
+	}
 
-    public synchronized Map<BaseField, BaseValue> getFieldInputValues() {
-        return Collections.unmodifiableMap(new LinkedHashMap<BaseField, BaseValue>(this.inputValues));
-    }
+	public void setContext(SessionContext sessionContext) {
+		this.sessionContext = sessionContext;
+	}
 
-    public AppUserInfo getUser() {
-        return this.appUser;
-    }
+	public synchronized void setReportFilterValue(BaseField field, String fieldValue) {
+		if (fieldValue != null) {
+			if (!(fieldValue.equals(""))) {
+				this.reportFilterValues.put(field, fieldValue);
+				return;
+			}
+		}
+		// if fieldValue empty, clear the field filter
+		this.clearReportFilterValue(field);
+	}
 
-    public ModuleInfo getModule() {
-    	return this.module;
-    }
-    
-    public void setModule(ModuleInfo module) {
-    	this.module = module;
-    }
-    
-    public AppRoleInfo getRole() {
-        return this.role;
-    }
-    
-    public SessionContext getContext() {
-    	return this.sessionContext;
-    }
+	public synchronized void setCustomReportFilterValue(String filterSet, BaseField field,
+			String fieldValue) {
+		Map<BaseField, String> customFilterValues = this.customReportFilterValues.get(filterSet);
+		if (customFilterValues == null) {
+			customFilterValues = new HashMap<BaseField, String>();
+		}
+		if (fieldValue != null) {
+			if (!(fieldValue.equals(""))) {
+				customFilterValues.put(field, fieldValue);
+				this.customReportFilterValues.put(filterSet, customFilterValues);
+				return;
+			}
+		}
+		this.clearCustomReportFilterValue(filterSet, field);
+	}
 
-    public TableDependencyException getTableDependencyException() {
-        return this.tdex;
-    }
+	public synchronized void setReportSort(BaseField reportField, Boolean sortAscending) {
+		this.reportSorts.put(reportField, sortAscending);
+	}
 
-    public void setTableDependencyException(TableDependencyException tdex) {
-        this.tdex = tdex;
-    }
+	public synchronized void clearAllReportFilterValues() {
+		this.reportFilterValues.clear();
+	}
 
-    public synchronized void clearCustomVariable(String key) {
-        this.customStrings.remove(key);
-        this.customIntegers.remove(key);
-        this.customBooleans.remove(key);
-        this.customTables.remove(key);
-        this.customReports.remove(key);
-        this.customFields.remove(key);
-    }
+	public synchronized void clearAllReportSorts() {
+		this.reportSorts.clear();
+	}
 
-    public synchronized String getCustomVariable(String key) {
-        return this.getCustomString(key);
-    }
+	public synchronized void clearReportFilterValue(BaseField field) {
+		this.reportFilterValues.remove(field);
+	}
 
-    public synchronized String getCustomString(String key) {
-        return this.customStrings.get(key);
-    }
-    
-    public synchronized Integer getCustomInteger(String key) {
-        return this.customIntegers.get(key);
-    }
+	private synchronized void clearCustomReportFilterValue(String filterSet, BaseField field) {
+		Map<BaseField, String> customFilterValues = this.customReportFilterValues.get(filterSet);
+		if (customFilterValues != null) {
+			customFilterValues.remove(field);
+			this.customReportFilterValues.put(filterSet, customFilterValues);
+		}
+	}
 
-    public synchronized Boolean getCustomBoolean(String key) {
-        return this.customBooleans.get(key);
-    }
+	public synchronized void clearReportSort(BaseField field) {
+		this.reportSorts.remove(field);
+	}
 
-    public synchronized TableInfo getCustomTable(String key) {
-        return this.customTables.get(key);
-    }
+	public synchronized Map<BaseField, String> getReportFilterValues() {
+		return Collections.unmodifiableMap(new HashMap<BaseField, String>(this.reportFilterValues));
+	}
 
-    public synchronized BaseReportInfo getCustomReport(String key) {
-        return this.customReports.get(key);
-    }
+	public synchronized Map<BaseField, String> getCustomReportFilterValues(String filterSet) {
+		Map<BaseField, String> customFilterValues = this.customReportFilterValues.get(filterSet);
+		if (customFilterValues == null) {
+			return Collections.unmodifiableMap(new HashMap<BaseField, String>());
+		} else {
+			return Collections.unmodifiableMap(new HashMap<BaseField, String>(customFilterValues));
+		}
+	}
 
-    public synchronized BaseField getCustomField(String key) {
-        return this.customFields.get(key);
-    }
-    
-    public void setCustomVariable(String key, String value) {
-        this.setCustomString(key, value);
-    }
-    
-    public synchronized void setCustomString(String key, String value) {
-        this.customStrings.put(key, value);
-    }
-    
-    public synchronized void setCustomInteger(String key, Integer value) {
-        this.customIntegers.put(key, value);
-    }
+	public synchronized Map<BaseField, Boolean> getReportSorts() {
+		return Collections.unmodifiableMap(new HashMap<BaseField, Boolean>(this.reportSorts));
+	}
 
-    public synchronized void setCustomBoolean(String key, Boolean value) {
-        this.customBooleans.put(key, value);
-    }
+	public synchronized void setFieldInputValues(Map<BaseField, BaseValue> inputValues) {
+		this.inputValues = inputValues;
+	}
 
-    public synchronized void setCustomTable(String key, TableInfo value) {
-        this.customTables.put(key, value);
-    }
-    
-    public synchronized void setCustomReport(String key, BaseReportInfo value) {
-        this.customReports.put(key, value);
-    }
-    
-    public synchronized void setCustomField(String key, BaseField value) {
-        this.customFields.put(key, value);
-    }
-    
+	public synchronized Map<BaseField, BaseValue> getFieldInputValues() {
+		return Collections
+				.unmodifiableMap(new LinkedHashMap<BaseField, BaseValue>(this.inputValues));
+	}
+
+	public AppUserInfo getUser() {
+		return this.appUser;
+	}
+
+	public ModuleInfo getModule() {
+		return this.module;
+	}
+
+	public void setModule(ModuleInfo module) {
+		this.module = module;
+	}
+
+	public AppRoleInfo getRole() {
+		return this.role;
+	}
+
+	public SessionContext getContext() {
+		return this.sessionContext;
+	}
+
+	public TableDependencyException getTableDependencyException() {
+		return this.tdex;
+	}
+
+	public void setTableDependencyException(TableDependencyException tdex) {
+		this.tdex = tdex;
+	}
+
+	public synchronized void clearCustomVariable(String key) {
+		this.customStrings.remove(key);
+		this.customIntegers.remove(key);
+		this.customBooleans.remove(key);
+		this.customTables.remove(key);
+		this.customReports.remove(key);
+		this.customFields.remove(key);
+	}
+
+	public synchronized String getCustomVariable(String key) {
+		return this.getCustomString(key);
+	}
+
+	public synchronized String getCustomString(String key) {
+		return this.customStrings.get(key);
+	}
+
+	public synchronized Integer getCustomInteger(String key) {
+		return this.customIntegers.get(key);
+	}
+
+	public synchronized Boolean getCustomBoolean(String key) {
+		return this.customBooleans.get(key);
+	}
+
+	public synchronized TableInfo getCustomTable(String key) {
+		return this.customTables.get(key);
+	}
+
+	public synchronized BaseReportInfo getCustomReport(String key) {
+		return this.customReports.get(key);
+	}
+
+	public synchronized BaseField getCustomField(String key) {
+		return this.customFields.get(key);
+	}
+
+	public void setCustomVariable(String key, String value) {
+		this.setCustomString(key, value);
+	}
+
+	public synchronized void setCustomString(String key, String value) {
+		this.customStrings.put(key, value);
+	}
+
+	public synchronized void setCustomInteger(String key, Integer value) {
+		this.customIntegers.put(key, value);
+	}
+
+	public synchronized void setCustomBoolean(String key, Boolean value) {
+		this.customBooleans.put(key, value);
+	}
+
+	public synchronized void setCustomTable(String key, TableInfo value) {
+		this.customTables.put(key, value);
+	}
+
+	public synchronized void setCustomReport(String key, BaseReportInfo value) {
+		this.customReports.put(key, value);
+	}
+
+	public synchronized void setCustomField(String key, BaseField value) {
+		this.customFields.put(key, value);
+	}
+
 	/**
 	 * If the current record (identified by session table and row id) is locked,
 	 * override the lock. For security, must check that the logged in user has
 	 * MANAGE privileges on the session table before calling this
 	 */
-    public void setRecordLockOverride() {
-    	this.lockOverrideTable = this.getTable();
-    	this.lockOverrideRowId = this.getRowId();
-    }
-    
-    /**
-     * Remove any lock override
-     */
-    protected void unsetRecordLockOverride()
-    {
-    	this.lockOverrideTable = null;
-    	this.lockOverrideRowId = -1;
-    }
-    
+	public void setRecordLockOverride() {
+		this.lockOverrideTable = this.getTable();
+		this.lockOverrideRowId = this.getRowId();
+	}
+
 	/**
-	 * Should not be used directly by UI templates, rather use ViewMethods.isRecordLocked() 
+	 * Remove any lock override
 	 */
-    protected int getRecordLockOverrideRowId() {
-    	return this.lockOverrideRowId;
-    }
-    
+	protected void unsetRecordLockOverride() {
+		this.lockOverrideTable = null;
+		this.lockOverrideRowId = -1;
+	}
+
 	/**
-	 * Should not be used directly by UI templates, rather use ViewMethods.isRecordLocked() 
+	 * Should not be used directly by UI templates, rather use
+	 * ViewMethods.isRecordLocked()
 	 */
-    protected TableInfo getRecordLockOverrideTable() {
-    	return this.lockOverrideTable;
-    }
-    
+	protected int getRecordLockOverrideRowId() {
+		return this.lockOverrideRowId;
+	}
+
+	/**
+	 * Should not be used directly by UI templates, rather use
+	 * ViewMethods.isRecordLocked()
+	 */
+	protected TableInfo getRecordLockOverrideTable() {
+		return this.lockOverrideTable;
+	}
+
 	public AppAction getLastAppAction() {
 		return this.lastAppAction;
 	}
-	
+
 	public void setLastAppAction(AppAction appAction) {
 		this.lastAppAction = appAction;
 	}
@@ -432,94 +446,94 @@ public class SessionData implements SessionDataInfo {
 	public int getLastAppActionRowId() {
 		return this.lastAppActionRowId;
 	}
-	
+
 	public void setLastAppActionRowId(int lastAppActionRowId) {
 		this.lastAppActionRowId = lastAppActionRowId;
 	}
-	
-    public String toString() {
-    	String sessionData = "";
-    	sessionData += "getUser() = " + this.getUser() + "\n";
-    	sessionData += "getRole() = " + this.getRole() + "\n";
-    	sessionData += "getTable() = " + this.getTable() + "\n";
-    	sessionData += "getReport() = " + this.getReport() + "\n";
-    	sessionData += "getRowId() = " + this.getRowId() + "\n";
-    	sessionData += "getReportRowLimit() = " + this.getReportRowLimit() + "\n";
-    	sessionData += "getReportFilterValues() = " + this.getReportFilterValues() + "\n";
-    	sessionData += "customTables = " + this.customTables + "\n";
-    	sessionData += "customReports = " + this.customReports + "\n";
-    	sessionData += "customFields = " + this.customFields + "\n";
-    	sessionData += "customStrings = " + this.customStrings + "\n";
-    	sessionData += "customIntegers = " + this.customIntegers + "\n";
-    	return sessionData;
-    }
 
-    private TableInfo table = null;
+	public String toString() {
+		String sessionData = "";
+		sessionData += "getUser() = " + this.getUser() + "\n";
+		sessionData += "getRole() = " + this.getRole() + "\n";
+		sessionData += "getTable() = " + this.getTable() + "\n";
+		sessionData += "getReport() = " + this.getReport() + "\n";
+		sessionData += "getRowId() = " + this.getRowId() + "\n";
+		sessionData += "getReportRowLimit() = " + this.getReportRowLimit() + "\n";
+		sessionData += "getReportFilterValues() = " + this.getReportFilterValues() + "\n";
+		sessionData += "customTables = " + this.customTables + "\n";
+		sessionData += "customReports = " + this.customReports + "\n";
+		sessionData += "customFields = " + this.customFields + "\n";
+		sessionData += "customStrings = " + this.customStrings + "\n";
+		sessionData += "customIntegers = " + this.customIntegers + "\n";
+		return sessionData;
+	}
 
-    /**
-     * Stores the last accessed report for each table so that when a table is selected, the last used report
-     * can be shown
-     */
-    private Map<TableInfo, BaseReportInfo> currentTableReports = new HashMap<TableInfo, BaseReportInfo>();
+	private TableInfo table = null;
 
-    /**
-     * Stores the last accessed record identifier for each table
-     */
-    private Map<TableInfo, Integer> currentTableRowIds = new HashMap<TableInfo, Integer>();
+	/**
+	 * Stores the last accessed report for each table so that when a table is
+	 * selected, the last used report can be shown
+	 */
+	private Map<TableInfo, BaseReportInfo> currentTableReports = new HashMap<TableInfo, BaseReportInfo>();
 
-    /**
-     * Standard report filters
-     */
-    private Map<BaseField, String> reportFilterValues = new HashMap<BaseField, String>();
-    
-    /**
-     * Custom report filters, the first string specifying a filter set
-     */
-    private Map<String, Map<BaseField, String>> customReportFilterValues = new HashMap<String, Map<BaseField, String>>();
-    
-    private Map<BaseField,Boolean> reportSorts = new HashMap<BaseField, Boolean>();
+	/**
+	 * Stores the last accessed record identifier for each table
+	 */
+	private Map<TableInfo, Integer> currentTableRowIds = new HashMap<TableInfo, Integer>();
 
-    private Map<BaseField, BaseValue> inputValues = new HashMap<BaseField, BaseValue>();
+	/**
+	 * Standard report filters
+	 */
+	private Map<BaseField, String> reportFilterValues = new HashMap<BaseField, String>();
 
-    /**
-     * How many records will be shown in the UI when viewing a report
-     */
-    private int reportRowLimit = 100;
+	/**
+	 * Custom report filters, the first string specifying a filter set
+	 */
+	private Map<String, Map<BaseField, String>> customReportFilterValues = new HashMap<String, Map<BaseField, String>>();
 
-    private AppUserInfo appUser = null;
+	private Map<BaseField, Boolean> reportSorts = new HashMap<BaseField, Boolean>();
 
-    private AppRoleInfo role = null;
-    
-    private ModuleInfo module = null;
-    
-    /**
-     * Which (if any) record has it's lock overridden
-     */
-    private int lockOverrideRowId = -1;
-    
-    private int lastAppActionRowId = -1;
-    
-    private AppAction lastAppAction = null;
-    
-    private TableInfo lockOverrideTable = null;
-    
-    private SessionContext sessionContext = SessionContext.BUSINESS;
+	private Map<BaseField, BaseValue> inputValues = new HashMap<BaseField, BaseValue>();
 
-    private Map<String, String> customStrings = new HashMap<String, String>();
-    
-    private Map<String, Integer> customIntegers = new HashMap<String, Integer>();
+	/**
+	 * How many records will be shown in the UI when viewing a report
+	 */
+	private int reportRowLimit = 100;
 
-    private Map<String, Boolean> customBooleans = new HashMap<String, Boolean>();
+	private AppUserInfo appUser = null;
 
-    private Map<String, TableInfo> customTables = new HashMap<String, TableInfo>();
-    
-    private Map<String, BaseReportInfo> customReports = new HashMap<String, BaseReportInfo>();
-    
-    private Map<String, BaseField> customFields = new HashMap<String, BaseField>();
+	private AppRoleInfo role = null;
 
-    private TableDependencyException tdex = null;
+	private ModuleInfo module = null;
 
-    private DataSource relationalDataSource = null;
-    
+	/**
+	 * Which (if any) record has it's lock overridden
+	 */
+	private int lockOverrideRowId = -1;
+
+	private int lastAppActionRowId = -1;
+
+	private AppAction lastAppAction = null;
+
+	private TableInfo lockOverrideTable = null;
+
+	private SessionContext sessionContext = SessionContext.BUSINESS;
+
+	private Map<String, String> customStrings = new HashMap<String, String>();
+
+	private Map<String, Integer> customIntegers = new HashMap<String, Integer>();
+
+	private Map<String, Boolean> customBooleans = new HashMap<String, Boolean>();
+
+	private Map<String, TableInfo> customTables = new HashMap<String, TableInfo>();
+
+	private Map<String, BaseReportInfo> customReports = new HashMap<String, BaseReportInfo>();
+
+	private Map<String, BaseField> customFields = new HashMap<String, BaseField>();
+
+	private TableDependencyException tdex = null;
+
+	private DataSource relationalDataSource = null;
+
 	private static final SimpleLogger logger = new SimpleLogger(SessionData.class);
 }

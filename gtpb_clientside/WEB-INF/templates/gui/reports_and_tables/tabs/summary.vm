@@ -168,7 +168,7 @@ function fShowAddAgg() {
 </form>
 </div> ## End chart_controls div
 #end
-## Display the chart
+## Display the default chart
 #set($reportSummaryData = $view.getReportSummaryData($reportSummary))
 #set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
 #parse('gui/reports_and_tables/tabs/summary_chart.vm')
