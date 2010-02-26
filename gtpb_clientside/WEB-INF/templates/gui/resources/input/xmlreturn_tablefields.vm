@@ -16,6 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <request>
+  $viewTools.log("xmlreturn_tablefields.vm")
   #set($internalTableName = $sessionData.getCustomVariable("parenttable"))
   #set($table = $view.getTable($internalTableName))
   #foreach($field in $table.getFields())
