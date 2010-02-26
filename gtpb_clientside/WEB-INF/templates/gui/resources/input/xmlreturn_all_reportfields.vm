@@ -29,7 +29,6 @@
 ##    #end
   #end
   ## if we're really trying to see fields in a table, also return any hidden fields
-  $viewTools.log("xmlreturn_all_reportfields.vm: $report.getParentTable().getDefaultReport() = $report?")
   #if($report.getParentTable().getDefaultReport().equals($report))
     #foreach($field in $report.getParentTable().getFields())
       #if($field.getHidden())
