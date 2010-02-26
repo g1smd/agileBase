@@ -218,7 +218,7 @@
 	#if(($pane2_id) && (!$mobile_device))
   	  <script language=Javascript>
 	  	  var rowFound = parent.pane_2.fSetRowSelection('$pane2_id');
-	  	  if (!rowFound && ($currentTab < 3)) {
+	  	  if ((!rowFound) && ($currentTab < 3)) {
 	  		  jQuery.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
 	  	  }
   	  </script>
