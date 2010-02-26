@@ -256,6 +256,10 @@
 		   formatter: function() {
 				return '<b>'+ this.series.name.replace(/\=.*$/,'') +'</b>: ' + this.y;
 		   }
+		   #elseif($pieChart)
+		   formatter: function() {
+				return this.series.name.replace(/\=.*$/,'') + ' = ' + this.y;
+		   }
 		   #else
 		   formatter: function() {
 				return '<b>'+ this.series.name.replace(/\=.*$/,'') +'</b><br/>'+
