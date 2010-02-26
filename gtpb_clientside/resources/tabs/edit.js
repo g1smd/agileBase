@@ -158,6 +158,7 @@ function appendWarningAction() {
 /* Called if the current record isn't visible in pane 2, to add a warning to that effect in the edit tab */
 function appendWarning(warningRowHtml) {
   warningRowHtmlSaved = warningRowHtml;
+  alert(wanringRowHtml);
   setTimeout('appendWarningAction()', 1000);
 }
 
