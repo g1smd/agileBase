@@ -28,4 +28,16 @@
       </option>
 ##    #end
   #end
+  ## if we're really trying to see fields in a table, also return any hidden fields
+  $viewTools.log("xmlreturn_all_reportfields.vm: $report.getParentTable().getDefaultReport() = $report?")
+  #if($report.getParentTable().getDefaultReport().equals($report))
+    #foreach($field in $report.getParentTable().getFields())
+      #if($field.getHidden())
+        <option>
+          <display_value>$field.getFieldName()</display_value>
+          <internal_value>$field.getInternalFieldName()</internal_value>
+        </option>
+      #end
+    #end
+  #end
 </request>
