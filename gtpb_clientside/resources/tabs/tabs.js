@@ -87,7 +87,7 @@ var TabInterfaceObjectPub = new Object();
             	loadSpinner.hide();
             	if (parent.pane_2 && currentRowId != -1) {
             		var rowFound = parent.pane_2.fSetRowSelection(currentRowId);
-            		if (!rowFound) {
+            		if ((!rowFound) && (tabNumber < 2)) {
             			$.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
             		}
             	}
@@ -112,8 +112,7 @@ var TabInterfaceObjectPub = new Object();
                 	loadSpinner.hide();
                 	if (parent.pane_2 && currentRowId != -1) {
                 		var rowFound = parent.pane_2.fSetRowSelection(currentRowId);
-
-                		if (!rowFound) {
+                		if ((!rowFound) && (tabNumber < 2)) {
                 			$.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
                 		}
                 	}
