@@ -44,6 +44,26 @@
 	#end
   #end
 #end
+#if($dateAxis)
+  ## Work out date format for tooltip
+  #set($numDateFields = 1)
+  #foreach($grouping in $groupings)
+	#set($groupingModifier = $grouping.getGroupingModifier())
+	#if($groupingModifier == "DATE_QUARTER")
+	  #if($numDateFields < 2) #set($numDateFields = 2) #end
+	#elseif($groupingModifier == "DATE_MONTH")
+	  #if($numDateFields < 2) #set($numDateFields = 2) #end
+	#elseif($groupingModifier == "DATE_DAY")
+	  #if($numDateFields < 3) #set($numDateFields = 3) #end
+	#end
+  #end
+  #set($dateFormat = "%Y")
+  #if($numDateFields == 2)
+	#set($dateFormat = "%B %Y")
+  #elseif($numDateFields == 3)
+	#set($dateFormat = "%a, %e %b %Y")
+  #end
+#end
 ## Work out if we can display data as a pie chart
 #set($pieChart = false)
 #if((!$dateAxis) && ($reportSummaryRows.size() < 5) && ($aggregateFunctions.size() == 1))
@@ -100,7 +120,7 @@
 		  #set($year = $summaryRow.getGroupingValue($grouping))
 		#elseif($groupingModifier == "DATE_QUARTER")
 		  #set($quarter = $summaryRow.getGroupingValue($grouping))
-		  #set($month = (($mathTool.toInteger($quarter) - 1) * 3) + 1) ## Approximate quartering of a year
+		  #set($month = ($mathTool.toInteger($quarter) - 1) * 3) ## Approximate quartering of a year
 		#elseif($groupingModifier == "DATE_MONTH")
 		  #set($month = $mathTool.toInteger($summaryRow.getGroupingValue($grouping)) - 1)
 		#elseif($groupingModifier == "DATE_DAY")
@@ -254,7 +274,8 @@
 		 tooltip: {
 		   #if($dateAxis)
 		   formatter: function() {
-				return '<b>'+ this.series.name.replace(/\=.*$/,'') +'</b>: ' + this.y;
+				return '<b>'+ this.series.name.replace(/\=.*$/,'') +'</b><br/>'+ 
+					Highcharts.dateFormat('$dateFormat', this.x) + ': ' + this.y;
 		   }
 		   #elseif($pieChart)
 		   formatter: function() {
