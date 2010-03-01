@@ -65,7 +65,7 @@
   
   .two_cols {
   	-moz-column-count: 2;
-  	-webkit-column-count: 2;
+  	/* -webkit-column-count: 2; There seems to be a webkit bug that causes a mis-render */
   }
   
   .summary_chart {
