@@ -1851,10 +1851,9 @@ public class DataManagement implements DataManagementInfo {
 					dataToSave.put(field, emailValue);
 				} else if (contentType.equals(FieldContentType.CODE)) {
 					int dataRowIndex = randomGenerator.nextInt(dataRows.size());
-					DataRowInfo randomDataRow = dataRows.get(dataRowIndex);
-					String randomKey = randomDataRow.getDataRowFields().get(field).getKeyValue();
-					if (randomKey != null) {
-						int length = randomKey.length();
+					String currentKey = dataRow.getDataRowFields().get(field).getKeyValue();
+					if (currentKey != null) {
+						int length = currentKey.length();
 						StringBuilder code = new StringBuilder("");
 						for (int i = 0; i < length; i++) {
 							if (i < 3 || (i % 10 == 0)) {
