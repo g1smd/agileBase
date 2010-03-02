@@ -1765,9 +1765,8 @@ public class DataManagement implements DataManagementInfo {
 			List<FileItem> multipartItems) throws SQLException, CodingErrorException,
 			CantDoThatException, InputRecordException, ObjectNotFoundException, DisallowedException {
 		Random randomGenerator = new Random();
-		String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
-				"L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y",
-				"Z" };
+		String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+				"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 		// Get data we're going to anonymise
 		List<DataRowInfo> dataRows = this.getReportDataRows(null, table.getDefaultReport(),
 				new HashMap<BaseField, String>(), false, new HashMap<BaseField, Boolean>(), -1);
@@ -1857,13 +1856,15 @@ public class DataManagement implements DataManagementInfo {
 					if (randomKey != null) {
 						int length = randomKey.length();
 						StringBuilder code = new StringBuilder("");
-						for (int i=0; i < length; i++) {
+						for (int i = 0; i < length; i++) {
 							if (i < 3 || (i % 10 == 0)) {
 								code.append(alphabet[randomGenerator.nextInt(26)]);
 							} else {
 								code.append(randomGenerator.nextInt(10));
 							}
 						}
+						TextValue codeValue = new TextValueDefn(code.toString());
+						dataToSave.put(field, codeValue);
 					}
 				} else {
 					int dataRowIndex = randomGenerator.nextInt(dataRows.size());
