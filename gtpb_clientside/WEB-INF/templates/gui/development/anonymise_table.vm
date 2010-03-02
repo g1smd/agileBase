@@ -38,6 +38,7 @@ Please select appropriate content types for each field, or leave data for that f
 <option value="PHONE_NUMBER">Phone number</option>
 <option value="EMAIL_ADDRESS">Email address</option>
 <option value="NI_NUMBER">NI number</option>
+<option value="CODE">Alpha-numeric code</option>
 <option value="OTHER">Other</option>
 </select>
 </td>
