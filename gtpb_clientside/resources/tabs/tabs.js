@@ -98,6 +98,9 @@ var TabInterfaceObjectPub = new Object();
         
         
         TabObjectPub.showTab = function(evt) {
+        	// First, if there is an active relation picker, close it
+        	$("#relationPicker").remove();
+        	
             var len = tabList.length;
             for (var i=0; i<len; i++) {
                 if (tabList[i] != TabObjectPub) {
