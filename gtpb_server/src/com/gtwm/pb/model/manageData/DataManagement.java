@@ -1509,7 +1509,7 @@ public class DataManagement implements DataManagementInfo {
 				this.summaryDataCacheHits.incrementAndGet();
 			}
 		}
-		if ((this.summaryDataCacheHits.get() + this.summaryDataCacheMisses.get()) > 1000) {
+		if ((this.summaryDataCacheHits.get() + this.summaryDataCacheMisses.get()) > 100) {
 			logger.info("Summary data cache hits = " + this.summaryDataCacheHits + ", misses = "
 					+ this.summaryDataCacheMisses);
 			this.summaryDataCacheHits.set(0);

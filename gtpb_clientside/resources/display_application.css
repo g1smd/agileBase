@@ -29,6 +29,7 @@ body {
 }
 
 .localhost #toolbarDiv {
+	background: red;
 	background-image : url("resources/toolbar/localhost.png");
 }
 
