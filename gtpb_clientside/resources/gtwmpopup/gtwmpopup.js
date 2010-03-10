@@ -114,22 +114,9 @@ function fPopup(sLocation, iWidth, iHeight, sCaption, vCallback, sWhen) {
 	  
 	  function fClose(bSuccess) {
 	  	function fDestroy() {
-		  	//oPopup.parentNode.removeChild(oPopup);
 	  		$(oPopup).remove();
 		  }
 	  	
-	  	// show any object elements hidden because they show through :(
-		  /* replace with jQuery
-		  for(var i=0;i<document.getElementsByTagName('OBJECT').length;i++) {
-		  	var oObject=document.getElementsByTagName('object')[i];
-		  	if(oObject.getAttribute('hiddenByPopup')==true) {
-		  	  oObject.removeAttribute('hiddenByPopup');
-		  	  oObject.setAttribute('className','obj_visible');		  	  
-		  	  oObject.setAttribute('class','obj_visible');
-		  	}
-		  }
-		  */
-		  
 		  $('[hiddenByPopup]').each(function(){
 		  	this.removeAttribute('hiddenByPopup');
 		  	$(this).removeClass('obj_hidden')
@@ -149,25 +136,6 @@ function fPopup(sLocation, iWidth, iHeight, sCaption, vCallback, sWhen) {
 		  fClose(true);
 	  }
 	  		
-	  /*
-	  	replace this with a jQuery error call
-	  	
-	  	if(bResult!=true) {
-	  	alert('unable to load content\nplease try again');
-	  	oBody.removeChild(oBlocker);
-		  for(var i=0;i<document.getElementsByTagName('OBJECT').length;i++) {
-		  	var oObject=document.getElementsByTagName('object')[i];
-		  	if(oObject.getAttribute('hiddenByPopup')==true) {
-		  	  oObject.removeAttribute('hiddenByPopup');
-		  	  oObject.setAttribute('className','obj_visible');		  	  
-		  	  oObject.setAttribute('class','obj_visible');
-		  	}
-		  }	  	
-	  	return;
-	  }		
-	  
-	  */
-	  		
 		var oPopup=document.createElement('div');
 		oPopup.setAttribute('id','popup');
 		oPopup.cancel=fCancel;
@@ -182,9 +150,6 @@ function fPopup(sLocation, iWidth, iHeight, sCaption, vCallback, sWhen) {
 		
 		var oContent=document.createElement('div');
 		oContent.setAttribute('id','content');
-		
-		/*if(vResponseText.innerHTML) $(oContent).append(vResponseText);
-		else $(oContent).html(vResponseText);*/
 		
 		$(oContent).html(vResponseText);
 		
@@ -211,7 +176,6 @@ function fPopup(sLocation, iWidth, iHeight, sCaption, vCallback, sWhen) {
 	}
 	
 	function fDestroyBlocker() {
-		//oBlocker.parentNode.removeChild(oBlocker);
 		$(oBlocker).remove();
 	}
 
@@ -223,15 +187,6 @@ function fPopup(sLocation, iWidth, iHeight, sCaption, vCallback, sWhen) {
   var oBody=document.getElementsByTagName('body')[0];
   oBody.appendChild(oBlocker);
   
-  // hide any object elements because they show through :(
-  /*replaced with jQuery
-  for(var i=0;i<document.getElementsByTagName('OBJECT').length;i++) {
-    document.getElementsByTagName('object')[i].setAttribute('hiddenByPopup',true);
-  	document.getElementsByTagName('object')[i].setAttribute('className','obj_hidden');		  	  
-	  document.getElementsByTagName('object')[i].setAttribute('class','obj_hidden');
-	}
-	*/
-	
   $('object').each(function(){
   	this.setAttribute('hiddenByPopup',true);
   	$(this).addClass('obj_hidden');
@@ -242,7 +197,6 @@ function fPopup(sLocation, iWidth, iHeight, sCaption, vCallback, sWhen) {
   	oBlocker.destroy();  	
   }
   
-  //var oReq=new fHTTPRequest(sLocation,new Array(),fShowPopup);  
   if($('#'+sLocation.split('#',2)[1]).length>0) fShowPopup($('#'+sLocation.split('#',2)[1]).html()); // the href contains an ID which is found in the document
   else var oReq=$.ajax({url: sLocation, cache: false, success: fShowPopup, dataType: 'html', timeout:5000, error:fLoadError}); // see if the location is a url which we can load over ajax
 }

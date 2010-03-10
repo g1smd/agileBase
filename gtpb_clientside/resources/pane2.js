@@ -52,7 +52,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 					try {
 						parent.pane_3.pane3TabInterface.refresh(rowId);
 					} catch(err) {
-						alert("Fast refresh failed, falling back to slow - don't worry about this");
+						//alert("Fast refresh failed, falling back to slow - don't worry about this");
 						parent.pane_3.document.location = url;
 					}
 				} else {
