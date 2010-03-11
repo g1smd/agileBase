@@ -190,21 +190,13 @@
   #end
   #if($reportSummary.equals($report.getReportSummary())) ## if default chart in pane 3
 	#set($margin = "[10, 50, 60, $xAxisMargin]") ## top, right, bottom, left
+	#set($title = "")
   #else ## named chart in pane 3
 	#set($margin = "[50, 50, 60, $xAxisMargin]")
 	#set($height = $height + 40)
-  #end
-  #set($title = "")
-  #set($subtitle = "")
-  #if($dashboard)
-	#set($title = "$report")
-	#if($reportSummary.getTitle())
-	  #set($title = "$reportSummary.getTitle()")
-	  #set($subtitle = "$report")
-	#end
-  #else
     #set($title = $reportSummary.getTitle())
   #end
+  #set($subtitle = "")
   <script language="JavaScript">
     var $chart_id = new Highcharts.Chart({
          chart: {

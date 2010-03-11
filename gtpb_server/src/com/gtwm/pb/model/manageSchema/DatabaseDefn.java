@@ -2229,27 +2229,6 @@ public class DatabaseDefn implements DatabaseInfo {
 		report.removeSavedReportSummary(reportSummary);
 		// Move the saved summary definition back to the default summary
 		((BaseReportDefn) report).setReportSummary(reportSummary);
-
-		/*
-		ReportSummaryInfo defaultSummary = report.getReportSummary();
-		HibernateUtil.activateObject(defaultSummary);
-		for (ReportSummaryAggregateInfo aggregate : defaultSummary.getAggregateFunctions()) {
-			defaultSummary.removeFunction(aggregate.getInternalAggregateName());
-		}
-		for (ReportSummaryGroupingInfo grouping : defaultSummary.getGroupings()) {
-			defaultSummary.removeGrouping(grouping.getGroupingReportField());
-		}
-		// Then move groupings and functions from saved summary to default summary
-		for (ReportSummaryAggregateInfo aggregate : reportSummary.getAggregateFunctions()) {
-			defaultSummary.addFunction(aggregate);
-		}
-		for (ReportSummaryGroupingInfo grouping : reportSummary.getGroupings()) {
-			defaultSummary.addGrouping(grouping.getGroupingReportField(), grouping.getGroupingModifier());
-		}
-		// Finally set the default chart title
-		defaultSummary.setTitle(reportSummary.getTitle());
-		HibernateUtil.currentSession().delete(reportSummary);
-		*/
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
