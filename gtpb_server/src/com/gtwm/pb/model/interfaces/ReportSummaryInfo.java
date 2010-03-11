@@ -81,6 +81,8 @@ public interface ReportSummaryInfo {
 	 */
 	public String getTitle();
 	
+	public void setTitle(String title);
+	
 	/**
 	 * Return a unique ID for the summary
 	 */

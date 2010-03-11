@@ -84,7 +84,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		return this.title;
 	}
 
-	private void setTitle(String title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
