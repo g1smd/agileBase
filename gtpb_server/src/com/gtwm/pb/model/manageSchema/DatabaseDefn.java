@@ -2203,6 +2203,8 @@ public class DatabaseDefn implements DatabaseInfo {
 					.getGroupingReportField());
 		}
 		report.saveReportSummary(savedSummary);
+		// Reset template summary title
+		templateSummary.setTitle("");
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
