@@ -227,9 +227,15 @@
 		 	enabled: false
 		 },
 		 #if($title != "")
-		   title: { text: "$title" },
+		   title: {
+		     text: "$title",
+			 style: { textTransform: 'capitalize' }
+		   },
 		   #if($subtitle != "")
-		     subtitle: { text: "$subtitle" },
+		     subtitle: {
+			   text: "$subtitle",
+			   style: { textTransform: 'lowercase' }
+			 },
 		   #end
 		 #else
            title: {
