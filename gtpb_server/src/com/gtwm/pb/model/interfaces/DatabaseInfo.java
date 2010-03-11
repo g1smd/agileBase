@@ -431,10 +431,12 @@ public interface DatabaseInfo {
 	 * then be reset - all groupings and calculations removed.
 	 */
 	public void saveSummaryReport(HttpServletRequest request, BaseReportInfo report,
-			String summaryTitle) throws DisallowedException, CantDoThatException, ObjectNotFoundException;
+			String summaryTitle) throws DisallowedException, CantDoThatException,
+			ObjectNotFoundException;
 
-	public void removeSummaryReport(HttpServletRequest request, ReportSummaryInfo reportSummary) throws DisallowedException, CantDoThatException, ObjectNotFoundException;
-	
+	public void removeSummaryReport(HttpServletRequest request, ReportSummaryInfo reportSummary)
+			throws DisallowedException, CantDoThatException, ObjectNotFoundException;
+
 	/**
 	 * Returns the TableInfo object that has the required internal name
 	 * identifier
@@ -496,6 +498,12 @@ public interface DatabaseInfo {
 	public ReportFieldInfo findReportFieldByInternalName(HttpServletRequest request,
 			String internalFieldName) throws ObjectNotFoundException, DisallowedException,
 			CodingErrorException;
+
+	/**
+	 * Creates a new module and adds it to the company of the logged in user
+	 */
+	public ModuleInfo addModule(HttpServletRequest request) throws ObjectNotFoundException,
+			DisallowedException;
 
 	/**
 	 * Return a reference to the object that manages and caches database data.

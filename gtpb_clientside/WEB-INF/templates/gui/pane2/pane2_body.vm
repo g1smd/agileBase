@@ -120,7 +120,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           #set($cellContentLength=$cell.length() / 2)
 		  #set($style="")
 		  #set($class="")
-		  #if($color && $color !="") #set($style="background-color:$colour; ") #set($class="colored") #end
+		  #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
 		  #if($rightAlign) #set($style = "$style text-align:right; ") #end
           <td #if($cellContentLength<=10)nowrap="true"#end #if($style != "")style="$style"#end #if($class != "")class="$class"#end>
             <div style="min-width:${cellContentLength}">

@@ -475,8 +475,7 @@ public class AppController extends VelocityViewServlet {
 							multipartItems);
 					break;
 				case ADD_MODULE:
-					ServletSchemaMethods.addModule(request, sessionData, databaseDefn
-							.getAuthManager());
+					ServletSchemaMethods.addModule(request, sessionData, databaseDefn);
 					break;
 				case REMOVE_MODULE:
 					ServletSchemaMethods.removeModule(request, sessionData, databaseDefn);

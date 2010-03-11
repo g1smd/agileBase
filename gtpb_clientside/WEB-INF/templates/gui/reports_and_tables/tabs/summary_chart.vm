@@ -47,6 +47,7 @@
 #if($dateAxis)
   ## Work out date format for tooltip
   #set($numDateFields = 1)
+  #set($dateFormat = "%Y")
   #foreach($grouping in $groupings)
 	#set($groupingModifier = $grouping.getGroupingModifier())
 	#if($groupingModifier == "DATE_QUARTER")
@@ -57,7 +58,6 @@
 	  #if($numDateFields < 3) #set($numDateFields = 3) #end
 	#end
   #end
-  #set($dateFormat = "%Y")
   #if($numDateFields == 2)
 	#set($dateFormat = "%B %Y")
   #elseif($numDateFields == 3)

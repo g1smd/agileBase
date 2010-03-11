@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Savepoint;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Collections;
 import java.util.List;
@@ -1743,6 +1744,39 @@ public class DatabaseDefn implements DatabaseInfo {
 		usageLogger.logReportSchemaChange(user, report, AppAction.ADD_FILTER_TO_REPORT, "filter: "
 				+ filter);
 		UsageLogger.startLoggingThread(usageLogger);
+	}
+	
+	public synchronized ModuleInfo addModule(HttpServletRequest request) throws ObjectNotFoundException, DisallowedException {
+		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
+		// Make sure module name is unique
+		String baseModuleName = "New Module";
+		String moduleName = baseModuleName;
+		SortedSet<ModuleInfo> modules = company.getModules();
+		Set<String> existingModuleNames = new HashSet<String>();
+		int indexNumber = 0;
+		for (ModuleInfo existingModule : modules) {
+			existingModuleNames.add(existingModule.getModuleName());
+		}
+		if (modules.size() > 0) {
+			ModuleInfo lastModule = modules.last();
+			indexNumber = lastModule.getIndexNumber() + 10;
+		} else {
+			indexNumber = 10;
+		}
+		int moduleCount = 0;
+		while (existingModuleNames.contains(moduleName)) {
+			moduleCount++;
+			moduleName = baseModuleName + " " + String.valueOf(moduleCount);
+		}
+		ModuleInfo newModule = new Module(moduleName, "", indexNumber);
+		HibernateUtil.currentSession().save(newModule);
+		HibernateUtil.activateObject(company);
+		company.addModule(newModule);
+		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
+		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		usageLogger.logReportSchemaChange(user, null, AppAction.ADD_MODULE, newModule.getModuleName());
+		UsageLogger.startLoggingThread(usageLogger);
+		return newModule;
 	}
 
 	public Map<TableInfo, Set<BaseReportInfo>> getViewableDataStores(HttpServletRequest request)

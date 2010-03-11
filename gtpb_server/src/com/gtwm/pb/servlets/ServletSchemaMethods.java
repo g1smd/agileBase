@@ -52,8 +52,8 @@ import com.gtwm.pb.model.interfaces.fields.DecimalField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.IntegerField;
+import com.gtwm.pb.model.manageSchema.DatabaseDefn;
 import com.gtwm.pb.model.manageSchema.JoinClause;
-import com.gtwm.pb.model.manageSchema.Module;
 import com.gtwm.pb.model.manageSchema.JoinType;
 import com.gtwm.pb.model.manageSchema.ReportCalcFieldDefn;
 import com.gtwm.pb.model.manageSchema.ReportFilterDefn;
@@ -219,45 +219,25 @@ public class ServletSchemaMethods {
 	}
 
 	public synchronized static void addModule(HttpServletRequest request,
-			SessionDataInfo sessionData, AuthManagerInfo authManager) throws AgileBaseException {
+			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws AgileBaseException, SQLException {
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
-		// Make sure module name is unique
-		String baseModuleName = "New Module";
-		String moduleName = baseModuleName;
-		SortedSet<ModuleInfo> modules = company.getModules();
-		Set<String> existingModuleNames = new HashSet<String>();
-		int indexNumber = 0;
-		for (ModuleInfo existingModule : modules) {
-			existingModuleNames.add(existingModule.getModuleName());
-		}
-		if (modules.size() > 0) {
-			ModuleInfo lastModule = modules.last();
-			indexNumber = lastModule.getIndexNumber() + 10;
-		} else {
-			indexNumber = 10;
-		}
-		int moduleCount = 0;
-		while (existingModuleNames.contains(moduleName)) {
-			moduleCount++;
-			moduleName = baseModuleName + " " + String.valueOf(moduleCount);
-		}
-		ModuleInfo newModule = new Module(moduleName, "", indexNumber);
+		ModuleInfo newModule = null;
 		try {
 			HibernateUtil.startHibernateTransaction();
-			HibernateUtil.currentSession().save(newModule);
-			HibernateUtil.activateObject(company);
-			company.addModule(newModule);
+			newModule = databaseDefn.addModule(request);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			HibernateUtil.currentSession().getTransaction().rollback();
 			company.removeModule(newModule);
-			throw new CantDoThatException("module addition failed", hex);
+			throw new CantDoThatException("Module addition failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 		sessionData.setModule(newModule);
 	}
 
+	//TODO: move body to DatabaseDefn, like addModule
 	public synchronized static void removeModule(HttpServletRequest request,
 			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws AgileBaseException {
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
@@ -300,6 +280,7 @@ public class ServletSchemaMethods {
 		sessionData.setModule(null);
 	}
 
+	//TODO: move body to DatabaseDefn, like addModule
 	public synchronized static void updateModule(HttpServletRequest request,
 			SessionDataInfo sessionData, AuthManagerInfo authManager) throws AgileBaseException {
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
