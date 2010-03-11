@@ -161,7 +161,7 @@ function fShowAddAgg() {
 </form><br>
 <form name="savechart">
 	Choose title: 
-	#set($title = $reportSummary.getTitle())
+	#set($title = $defaultReportSummary.getTitle())
 	<input type="text" name="summarytitle" #if($title != "") value="$title" #end />
 	<input type="hidden" name="return" value="$return_template" />
 	<input type="hidden" name="save_report_summary" value="true" />
