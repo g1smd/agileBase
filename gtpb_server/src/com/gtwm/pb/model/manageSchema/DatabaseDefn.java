@@ -2225,6 +2225,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		if (reportSummary.equals(report.getReportSummary())) {
 			throw new CantDoThatException("The default report summary can't be removed");
 		}
+		HibernateUtil.activateObject(report);
+		report.removeSavedReportSummary(reportSummary);
 		// Move the saved summary definition back to the default summary
 		// First clear the default summary
 		ReportSummaryInfo defaultSummary = report.getReportSummary();
@@ -2244,8 +2246,6 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		// Finally set the default chart title
 		defaultSummary.setTitle(reportSummary.getTitle());
-		HibernateUtil.activateObject(report);
-		report.removeSavedReportSummary(reportSummary);
 		HibernateUtil.currentSession().delete(reportSummary);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
