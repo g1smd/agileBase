@@ -216,7 +216,7 @@ body.mobile {
 #intro #bubble h1 {
 	font-size:17pt;
 	font-variant:bold;
-	word-spacing: 1px;
+	word-spacing: -5px;
 	font-family: "Pigiarniq", tahoma, arial, sans-serif;
 	text-align:left;
 }
