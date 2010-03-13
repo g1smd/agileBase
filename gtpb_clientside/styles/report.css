@@ -5,6 +5,10 @@ table#reportData {
   border:0; 
 }												
 
+table#reportData thead {
+  position:fixed;
+}
+
 table#reportData th { 
   background-color:#f1f2ed; 
   font-size:10pt; 
@@ -19,8 +23,6 @@ table#reportData th {
 /*  padding-right:20px; -- moved into sortedColumn styles */
   background-repeat:no-repeat;
   background-position:right center;
-  position:fixed;
-  top: 0;
 }
 
 table#reportData th[onclick]:hover {
