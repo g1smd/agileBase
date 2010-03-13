@@ -5,6 +5,10 @@ table#reportData {
   border:0; 
 }												
 
+table#reportData thead {
+  position:fixed;
+}
+
 table#reportData th { 
   background-color:#f1f2ed; 
   font-size:10pt; 
@@ -60,22 +64,18 @@ table#reportData thead tr#fieldFilters[on=null] {
 
 table#reportData thead tr#fieldFilters,
 table#reportData thead tr.wikiTitle { 
-  background-color:#e2e1d9;
+  background-color:#e2e1d9 
 }
 table#reportData thead tr#fieldFilters input { 
-  width:100%;
+  width:100% 
 }
 					  
 table#reportData thead td { 
-  border-bottom:1px solid#cecece ;
+  border-bottom:1px solid#cecece 
 }					  
 
-table#reportData tbody {
-  overflow:scroll;
-}
-
 table#reportData tbody td { 
-  vertical-align:top ;
+  vertical-align:top 
 }
 					  
 table#reportData .selectable tr.rowa:hover td,
