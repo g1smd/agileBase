@@ -201,6 +201,7 @@ body.mobile {
 	left:0;
 	font-size:12pt;
 	font-family: "Pigiarniq", tahoma, arial, sans-serif;
+	word-spacing: -1px;
 	color:#333333;
 }
 
