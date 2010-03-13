@@ -2228,7 +2228,9 @@ public class DatabaseDefn implements DatabaseInfo {
 		HibernateUtil.activateObject(report);
 		report.removeSavedReportSummary(reportSummary);
 		// Move the saved summary definition back to the default summary
+		ReportSummaryInfo oldDefaultReportSummary = report.getReportSummary();
 		((BaseReportDefn) report).setReportSummary(reportSummary);
+		HibernateUtil.currentSession().delete(oldDefaultReportSummary);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
