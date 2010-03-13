@@ -401,7 +401,7 @@ body.mobile {
 	display:block;
 }
 
-#main * {
+#main *, #technical *, #analyst * {
 	font-family: "Pigiarniq", tahoma, arial, sans-serif;
 }
 
