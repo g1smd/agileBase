@@ -4,11 +4,11 @@ table#reportData {
   border-collapse:collapse;
   border:0; 
 }												
-
+/*
 table#reportData thead {
   position:fixed;
 }
-
+*/
 table#reportData th { 
   background-color:#f1f2ed; 
   font-size:10pt; 
