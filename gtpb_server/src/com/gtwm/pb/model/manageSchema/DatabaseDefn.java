@@ -2230,6 +2230,7 @@ public class DatabaseDefn implements DatabaseInfo {
 		// Move the saved summary definition back to the default summary
 		ReportSummaryInfo oldDefaultReportSummary = report.getReportSummary();
 		((BaseReportDefn) report).setReportSummary(reportSummary);
+		report.removeSavedReportSummary(oldDefaultReportSummary);
 		HibernateUtil.currentSession().delete(oldDefaultReportSummary);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
