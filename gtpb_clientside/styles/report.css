@@ -67,6 +67,7 @@ table#reportData thead tr#fieldFilters[on=null] {
 */
 
 #fieldFilters {
+  position: absolute;
   top: 30px;
 }
 
