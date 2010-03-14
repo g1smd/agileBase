@@ -49,6 +49,7 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 	function fUpdateOtherPanes() {
 		if (jQuery("#fieldFilters").is(":visible")) {
 		  jQuery("#reportData").css("margin-top","55px");
+		  alert("55");
 		} else {
 		  jQuery("#reportData").css("margin-top","30px");
 		}
