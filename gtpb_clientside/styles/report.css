@@ -25,6 +25,10 @@ table#reportData th {
   background-position:right center;
 }
 
+table#reportData thead:first-child {
+  border-left: 0px;
+}
+
 table#reportData th[onclick]:hover {
   border-bottom-color:#FFD588!important;
   background-color:#F8F8F6!important;
@@ -32,7 +36,7 @@ table#reportData th[onclick]:hover {
 
 table#reportData th#sortedColumn{
   background-color: #E4EAF2;
-  padding-right:25px;
+  /* padding-right:25px; */
 }
 
 table#reportData th#sortedColumn[sortDirn=true] {
