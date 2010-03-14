@@ -16,7 +16,7 @@
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
 function fLoadReport(sResponseText, oElement, fCallback) {
-    
+    alert('loading report');
 	if (!$.browser.msie) {
 		// Everything but IE can use innerHTML for this
 		oElement.innerHTML = sResponseText;
