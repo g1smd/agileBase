@@ -28,7 +28,8 @@ table#reportData th {
   position:absolute;
 }
 
-#wrapper table#reportData tbody:first-child {
+#wrapper table#reportData tbody {
+  position: absolute;
   top: 30px;
 }
 
