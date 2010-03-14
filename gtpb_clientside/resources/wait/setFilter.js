@@ -16,7 +16,6 @@
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
 function fLoadReport(sResponseText, oElement, fCallback) {
-    alert('loading report');
 	if (!$.browser.msie) {
 		// Everything but IE can use innerHTML for this
 		oElement.innerHTML = sResponseText;
@@ -52,6 +51,7 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 		  alert("55");
 		} else {
 		  jQuery("#reportData").css("margin-top","30px");
+		  alert("30");
 		}
 		var numRows = $('#numrows').html();
 		var pane1Id = $('#pane1id').text();
