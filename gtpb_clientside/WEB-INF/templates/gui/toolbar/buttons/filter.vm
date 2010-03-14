@@ -23,6 +23,7 @@ function fFilters(){
 			// addition by Oliver - scroll to top
 			var wrapperDiv = document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('wrapper');
 			wrapperDiv.scrollTop = 0;
+			jQuery("table#reportData").css("margin-top", "60px");
 			// original - don't do anything
 			return;
 		}
@@ -47,7 +48,8 @@ function fFilters(){
 			fClearFilterBoxes();
 
 			/* see setFilter.js */
-			fLoadReport(sResponseText, oReportBody, null)
+			fLoadReport(sResponseText, oReportBody, null);
+			jQuery("table#reportData").css("margin-top", "30px");
 		}
 
 		var oReportDoc=document.getElementById('oViewPane').contentWindow.pane_2.document;
