@@ -339,6 +339,7 @@
 	  
 	  $("#pane_2").scroll(function() {
 	    var left = $("tbody#reportBody").offset().left;
+	    alert("scroll " + left);
 	    $("thead").css("left",left);
 	  });
 	  
