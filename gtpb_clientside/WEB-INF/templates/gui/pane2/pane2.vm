@@ -318,8 +318,8 @@
 		var i = 0;
 		for(jqRowCell in jqFirstRowCells) {
 		  i++;
-		  var width = jqRowCell.width();
-		  jqHeaderCells[i].width(width);
+		  var width = jqRowCell[0].width();
+		  jqHeaderCells[i][0].width(width);
 		}
 	}
 	
