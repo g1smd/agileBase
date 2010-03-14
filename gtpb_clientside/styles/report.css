@@ -8,7 +8,6 @@ table#reportData {
 
 #wrapper table#reportData thead {
   position:fixed;
-  top: -20px;
 }
 
 table#reportData th {
