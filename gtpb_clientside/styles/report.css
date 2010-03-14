@@ -66,10 +66,13 @@ table#reportData thead tr#fieldFilters[on=null] {
 }
 */
 
+table#reportData thead tr#fieldFilters td {
+  top: 30px;
+}
+
 table#reportData thead tr#fieldFilters,
 table#reportData thead tr.wikiTitle { 
   background-color:#e2e1d9;
-  top:30px;
 }
 table#reportData thead tr#fieldFilters input { 
   width:100% 
