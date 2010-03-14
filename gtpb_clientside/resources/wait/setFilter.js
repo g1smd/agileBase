@@ -49,7 +49,7 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 		if (jQuery("#fieldFilters").is(":visible")) {
 		  jQuery("#reportData").addClass("lowered");
 		} else {
-		  jQuery("#reportData").removeClass("lowered");
+		  jQuery("#reportData").addClass("raised");
 		}
 		var numRows = $('#numrows').html();
 		var pane1Id = $('#pane1id').text();
