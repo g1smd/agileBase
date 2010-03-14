@@ -49,7 +49,7 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 		if (jQuery("#fieldFilters").is(":visible")) {
 		  jQuery("#reportData").css("margin-top","55px");
 		} else {
-		  jQuery("#reportData").css("margin-top","");
+		  jQuery("#reportData").css("margin-top","0px");
 		}
 		var numRows = $('#numrows').html();
 		var pane1Id = $('#pane1id').text();
