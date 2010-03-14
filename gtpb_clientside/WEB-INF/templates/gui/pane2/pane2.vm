@@ -316,9 +316,9 @@
 		var jqHeaderCells = $("#reportData thead tr:first").children();
 		var i = 0;
 		jqFirstRowCells.each(function() {
-		  i++;
 		  var width = $(this).width();
 		  jqHeaderCells.filter(":eq(" + i + ")").children("div").width(width);
+		  i++;
 		});
 	}
 	
