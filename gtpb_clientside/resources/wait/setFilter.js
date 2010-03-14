@@ -50,7 +50,7 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 		  jQuery("#reportData").css("margin-top","55px");
 		  alert("55");
 		} else {
-		  jQuery("#reportData").css("margin-top","30px");
+		  jQuery("#reportData").css("margin-top","30px!important");
 		  alert("30");
 		}
 		var numRows = $('#numrows').html();
