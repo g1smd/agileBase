@@ -7,10 +7,10 @@ table#reportData {
 
 #wrapper table#reportData thead {
   position:fixed;
-  left: 100px;
 }
 
-table#reportData th { 
+table#reportData th {
+  position:absolute;
   background-color:#f1f2ed; 
   font-size:10pt; 
   color:black;
