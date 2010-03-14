@@ -20,6 +20,7 @@ function fFilters(){
 
 	function fShowFilters(oButton){  
 		function fWhatever(sResponseText,sResponseXML){
+			alert('whatever');
 			// addition by Oliver - scroll to top
 			var wrapperDiv = document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('wrapper');
 			wrapperDiv.scrollTop = 0;
@@ -51,7 +52,6 @@ function fFilters(){
 		}
 
 		var oReportDoc=document.getElementById('oViewPane').contentWindow.pane_2.document;
-		alert('filter');
 		if ($(oButton).hasClass('selected')) {
 		  //oReportDoc.getElementById('fieldFilters').setAttribute('on','true'); // set the expando property to turn the row on - now replaced by jQuery show/hide
 			$(oReportDoc).find("#fieldFilters").show();
