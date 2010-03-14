@@ -16,7 +16,6 @@
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
 function fLoadReport(sResponseText, oElement, fCallback) {
-	jQuery("#reportData").removeClass("lowered");
 	if (!$.browser.msie) {
 		// Everything but IE can use innerHTML for this
 		oElement.innerHTML = sResponseText;
@@ -47,11 +46,6 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 
 	// Update the row count in pane 1 and the summary view (if applicable) in pane 3
 	function fUpdateOtherPanes() {
-		if (jQuery("#fieldFilters").is(":visible")) {
-		  jQuery("#reportData").addClass("lowered");
-		} else {
-		  alert('raising');
-		}
 		var numRows = $('#numrows').html();
 		var pane1Id = $('#pane1id').text();
 		if ((numRows != null) && (self != top)) {
