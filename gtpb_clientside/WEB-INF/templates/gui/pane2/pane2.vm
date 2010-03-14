@@ -200,14 +200,9 @@
     	    }	
     	 
     	    function fReqComplete(sResponseText,sResponseXML) {
-    	      	function fReformatTable() {
+    	      function fReformatTable() {
 				  $('#reportBody tr:even').not('.trailing').not('.seemorerows').removeClass().addClass('rowa');
 				  $('#reportBody tr:odd').not('.trailing').not('.seemorerows').removeClass().addClass('rowb'); 
-// non-jQuery way			
-//    	      	  	var oRows=document.getElementById('reportBody').rows;
-//    	  		      for (var i=0;i<oRows.length;i++)
-//    					          if((oRows[i].getAttribute('class')=='rowa')||(oRows[i].getAttribute('class')=='rowb'))
-//            oRows[i].setAttribute('class',(i%2==0?'rowa':'rowb'));
     	      }
     	      
     	      function fRetryDeletions() {
@@ -316,12 +311,25 @@
 	  }
     </SCRIPT>
 	<script type="text/javascript">
+	function alignTableHeaderCells() {
+		var jqFirstRowCells = $("#reportBody tr:first").children();
+		var jqHeaderCells = $("#reportData thead tr:first").children();
+		var i = 0;
+		foreach(jqRowCell in jqFirstRowCells) {
+		  i++;
+		  var width = jqRowCell.width();
+		  jqHeaderCells[i].width(width);
+		}
+	}
+	
 	$(document).ready(function() {
 	  $("#filterhelp").cluetip({
 	    showTitle: false,
 		ajaxCache: true,
 		waitImage: false
 	  });
+	  
+	  setInterval("alignTableHeaderCells()", 1000);
 	});
 	</script>
 	<script src="resources/pane2.js" language="Javascript"> </script>
