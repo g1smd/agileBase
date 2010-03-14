@@ -338,7 +338,7 @@
 	  setInterval("alignTableHeaderCells()", 2000);
 	  
 	  $(window).scroll(function() {
-	  }
+	  });
 	  
 	});
 	</script>
