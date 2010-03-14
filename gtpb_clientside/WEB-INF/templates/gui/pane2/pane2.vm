@@ -316,11 +316,11 @@
 		var jqFirstRowCells = $("#reportBody tr:first").children();
 		var jqHeaderCells = $("#reportData thead tr:first").children();
 		var i = 0;
-		for(jqRowCell in jqFirstRowCells) {
+		jqFirstRowCells.each(function() {
 		  i++;
-		  var width = jqRowCell[0].width();
-		  jqHeaderCells[i][0].width(width);
-		}
+		  var width = $(this).width();
+		  jqHeaderCells.filter(":eq(" + i + ")").width(width);
+		)};
 	}
 	
 	$(document).ready(function() {
