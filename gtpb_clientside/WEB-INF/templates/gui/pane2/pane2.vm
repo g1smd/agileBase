@@ -312,6 +312,7 @@
     </SCRIPT>
 	<script type="text/javascript">
 	function alignTableHeaderCells() {
+		alert("aligning header");
 		var jqFirstRowCells = $("#reportBody tr:first").children();
 		var jqHeaderCells = $("#reportData thead tr:first").children();
 		var i = 0;
