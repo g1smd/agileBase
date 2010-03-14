@@ -16,6 +16,7 @@
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
 function fLoadReport(sResponseText, oElement, fCallback) {
+	jQuery("#reportData").removeClass("lowered");
 	if (!$.browser.msie) {
 		// Everything but IE can use innerHTML for this
 		oElement.innerHTML = sResponseText;
@@ -49,7 +50,7 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 		if (jQuery("#fieldFilters").is(":visible")) {
 		  jQuery("#reportData").addClass("lowered");
 		} else {
-		  jQuery("#reportData").addClass("raised");
+		  alert('raising');
 		}
 		var numRows = $('#numrows').html();
 		var pane1Id = $('#pane1id').text();
