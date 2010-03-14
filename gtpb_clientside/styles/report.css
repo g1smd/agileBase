@@ -9,6 +9,7 @@ table#reportData {
 
 #wrapper table#reportData thead {
   position:fixed;
+  top: -30px;
 }
 
 table#reportData th {
