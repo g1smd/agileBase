@@ -5,19 +5,6 @@ table#reportData {
   border:0;
 }												
 
-#wrapper table#reportData {
-  margin-top: 30px;
-}
-
-#wrapper table#reportData.lowered {
-  margin-top: 55px;
-}
-
-#wrapper table#reportData thead {
-  position:fixed;
-  top: 0px;
-}
-
 #wrapper table#reportData td {
   padding: 2px 6px;
 }
@@ -39,10 +26,6 @@ table#reportData th {
   cursor:default; 
   background-repeat:no-repeat;
   background-position:right center;
-}
-
-#wrapper table#reportData th {
-  position:absolute;
 }
 
 table#reportData th[onclick]:hover {

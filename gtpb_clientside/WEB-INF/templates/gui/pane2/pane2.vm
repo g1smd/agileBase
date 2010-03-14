@@ -15,6 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+#set($browser = $viewTools.getBrowser())
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
   <head>
@@ -49,8 +50,26 @@
 	      input[type=text][changed=true] { 
 	        text-decoration:underline 
 	      }
+	#if($browser != "Internet Explorer")
+	<!-- for fixed (frozen) table header -->
+		#wrapper table#reportData {
+		margin-top: 30px;
+		}
+
+		#wrapper table#reportData.lowered {
+		margin-top: 55px;
+		}
+
+		#wrapper table#reportData thead {
+		position:fixed;
+		top: 0px;
+		}
+
+		#wrapper table#reportData th {
+		position:absolute;
+		}
+	#end
 	</style>
-	    
   	<script src="resources/jquery.js" language="Javascript"> </script>
 	#if($mobile_device)
 	  <meta name = "viewport" content = "initial-scale = 0.8">
@@ -336,7 +355,7 @@
 		ajaxCache: true,
 		waitImage: false
 	  });
-	  
+	  #if($browser != "Internet Explorer")
 	  alignTableHeaderCells();
 	  setInterval("alignTableHeaderCells()", 2000);
 	  
@@ -344,7 +363,7 @@
 	    var left = document.body.scrollLeft || window.pageXOffset;
 	    $("thead").css("left", -1 * left);
 	  });
-	  
+	  #end
 	});
 	</script>
 	<script src="resources/pane2.js" language="Javascript"> </script>
