@@ -20,7 +20,7 @@ function fFilters(){
 
 	function fShowFilters(oButton){  
 		function fWhatever(sResponseText,sResponseXML){
-			jQuery("#reportData").css("margin-top","60px");
+			jQuery("#pane_2").find("#reportData").css("margin-top","60px");
 			// addition by Oliver - scroll to top
 			var wrapperDiv = document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('wrapper');
 			wrapperDiv.scrollTop = 0;
