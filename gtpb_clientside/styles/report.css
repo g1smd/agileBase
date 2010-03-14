@@ -10,7 +10,6 @@ table#reportData {
 }
 
 table#reportData th { 
-  position: fixed;
   background-color:#f1f2ed; 
   font-size:10pt; 
   color:black;

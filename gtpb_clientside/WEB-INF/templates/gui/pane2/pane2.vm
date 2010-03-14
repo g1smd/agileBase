@@ -322,7 +322,6 @@
 		  if (jqHeaderElement.children("div").size() > 0) {
 		    jqHeaderElement.children("div").width(width);
 		  }
-		  jqHeaderElement.css("left: 200px");
 		  i++;
 		});
 	}
