@@ -23,8 +23,6 @@ function fFilters(){
 			// addition by Oliver - scroll to top
 			var wrapperDiv = document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('wrapper');
 			wrapperDiv.scrollTop = 0;
-			jQuery("table#reportData").css("margin-top", "60px");
-			alert('60');
 			// original - don't do anything
 			return;
 		}
@@ -50,11 +48,10 @@ function fFilters(){
 
 			/* see setFilter.js */
 			fLoadReport(sResponseText, oReportBody, null);
-			jQuery("table#reportData").css("margin-top", "30px");
-			alert('30');
 		}
 
 		var oReportDoc=document.getElementById('oViewPane').contentWindow.pane_2.document;
+		alert('filter');
 		if ($(oButton).hasClass('selected')) {
 		  //oReportDoc.getElementById('fieldFilters').setAttribute('on','true'); // set the expando property to turn the row on - now replaced by jQuery show/hide
 			$(oReportDoc).find("#fieldFilters").show();
