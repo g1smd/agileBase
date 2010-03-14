@@ -318,11 +318,11 @@
 		jqFirstRowCells.each(function() {
 		  var width = $(this).width();
 		  var left = $(this).offset().left;
-		  var jqHeaderElement = jqHeaderCells.filter(":eq(" + i + ")").children("div");
-		  if (jqHeaderElement.size() > 0) {
-		    jqHeaderElement.width(width);
-			jqHeaderElement.parent().css("left: " + left + "px");
+		  var jqHeaderElement = jqHeaderCells.filter(":eq(" + i + ")");
+		  if (jqHeaderElement.children("div").size() > 0) {
+		    jqHeaderElement.children("div").width(width);
 		  }
+		  jqHeaderElement.css("left: 200px");
 		  i++;
 		});
 	}
