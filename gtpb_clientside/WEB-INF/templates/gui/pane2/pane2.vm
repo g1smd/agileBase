@@ -317,9 +317,11 @@
 		var i = 0;
 		jqFirstRowCells.each(function() {
 		  var width = $(this).width();
+		  var left = $(this).offset().left;
 		  var jqHeaderElement = jqHeaderCells.filter(":eq(" + i + ")").children("div");
 		  if (jqHeaderElement.size() > 0) {
 		    jqHeaderElement.width(width);
+			jqHeaderElement.css("left: " + left);
 		  }
 		  i++;
 		});
@@ -332,6 +334,7 @@
 		waitImage: false
 	  });
 	  
+	  alignTableHeaderCells();
 	  setInterval("alignTableHeaderCells()", 2000);
 	});
 	</script>
