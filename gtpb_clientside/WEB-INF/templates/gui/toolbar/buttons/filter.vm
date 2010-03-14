@@ -77,11 +77,13 @@ function fFilters(){
 	function fUnFilter() {  
 		var oFilter=document.getElementById('filter');
 		if (oFilter.getAttribute('selected')=='true') oFilter.click();
+		jQuery("table#reportData").css("margin-top", "30px");
 	}
 
 	function fFilter(){  
 		var oFilter=document.getElementById('filter');
 		if (oFilter.getAttribute('selected')!='true') oFilter.click();
+		jQuery("table#reportData").css("margin-top", "60px");
 	}
 
 	this.fShowFilters=fShowFilters;
