@@ -338,7 +338,7 @@
 	  setInterval("alignTableHeaderCells()", 2000);
 	  
 	  $(window).scroll(function() {
-	    var left = $("tbody#reportBody").offset().left;
+	    var left = $("#wrapper").offset().left;
 	    alert("scroll " + left);
 	    $("thead").css("left",left);
 	  });
