@@ -317,7 +317,7 @@
 		var i = 0;
 		jqFirstRowCells.each(function() {
 		  var width = $(this).width();
-		  var left = $(this).offset().left;
+		  var left = $(this).offset().left - 1;
 		  var jqHeaderElement = jqHeaderCells.filter(":eq(" + i + ")");
 		  if (jqHeaderElement.children("div").size() > 0) {
 		    jqHeaderElement.children("div").width(width);
