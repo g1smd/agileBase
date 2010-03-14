@@ -14,8 +14,12 @@ table#reportData {
   top: 0px;
 }
 
-#wrapper table#reportData td, #wrapper table#reportData th {
+#wrapper table#reportData td {
   padding: 2px 6px;
+}
+
+#wrapper table#reportData th {
+  padding: 6px;
 }
 
 table#reportData th {
