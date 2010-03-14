@@ -4,6 +4,7 @@ table#reportData {
   border-collapse:collapse;
   border:0;
   top: 30px;
+  position: absolute;
 }												
 
 #wrapper table#reportData thead {
