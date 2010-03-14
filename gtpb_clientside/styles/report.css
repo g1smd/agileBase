@@ -58,11 +58,6 @@ table#reportData th.waiting {
   background-image:url('../resources/reports/spinner.gif')!important;
 }
 	
-#fieldFilters {
-  position: absolute;
-  top: 30px;
-}
-
 table#reportData thead tr#fieldFilters,
 table#reportData thead tr.wikiTitle { 
   background-color:#e2e1d9;

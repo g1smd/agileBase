@@ -68,6 +68,11 @@
 		#wrapper table#reportData th {
 		position:absolute;
 		}
+		
+		#wrapper table#reportData #fieldFilters {
+		position: absolute;
+		top: 30px;
+		}
 	#end
 	</style>
   	<script src="resources/jquery.js" language="Javascript"> </script>
