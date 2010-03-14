@@ -13,10 +13,6 @@ table#reportData {
   margin-top: 55px;
 }
 
-#wrapper table#reportData.raised {
-  color: red;
-}
-
 #wrapper table#reportData thead {
   position:fixed;
   top: 0px;
