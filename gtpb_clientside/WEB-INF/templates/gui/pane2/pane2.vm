@@ -314,13 +314,16 @@
 	function alignTableHeaderCells() {
 		var jqFirstRowCells = $("tbody#reportBody tr:first").children("td");
 		var jqHeaderCells = $("#reportData thead tr:first").children("th");
+		var jqFilterCells = $("#fieldFilters").children("td");
 		var i = 0;
 		jqFirstRowCells.each(function() {
 		  var width = $(this).width();
 		  var left = $(this).offset().left - 1;   // 1px border
 		  var jqHeaderElement = jqHeaderCells.filter(":eq(" + i + ")");
+		  var jqFilterElement = jqFilterCells.filter(":eq(" + i + ")");
 		  if (jqHeaderElement.children("div").size() > 0) {
 		    jqHeaderElement.children("div").width(width);
+			jqFilterElement.width(width);
 		  }
 		  jqHeaderElement.css("left",left);
 		  i++;
