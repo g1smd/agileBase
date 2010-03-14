@@ -312,12 +312,15 @@
     </SCRIPT>
 	<script type="text/javascript">
 	function alignTableHeaderCells() {
-		var jqFirstRowCells = $("#reportBody tr:first").children();
-		var jqHeaderCells = $("#reportData thead tr:first").children();
+		var jqFirstRowCells = $("#reportBody tr:first").children("td");
+		var jqHeaderCells = $("#reportData thead tr:first").children("th");
 		var i = 0;
 		jqFirstRowCells.each(function() {
 		  var width = $(this).width();
-		  jqHeaderCells.filter(":eq(" + i + ")").children("div").width(width);
+		  var jqHeaderElement = jqHeaderCells.filter(":eq(" + i + ")").children("div");
+		  if (jqHeaderElement.size() > 0) {
+		    jqHeaderElement.size.width(width);
+		  }
 		  i++;
 		});
 	}
