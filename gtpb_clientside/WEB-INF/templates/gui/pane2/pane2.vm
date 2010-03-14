@@ -318,7 +318,7 @@
 		jqFirstRowCells.each(function() {
 		  i++;
 		  var width = $(this).width();
-		  jqHeaderCells.filter(":eq(" + i + ")").width(width);
+		  jqHeaderCells.filter(":eq(" + i + ")").children("div").width(width);
 		});
 	}
 	
@@ -329,7 +329,7 @@
 		waitImage: false
 	  });
 	  
-	  setInterval("alignTableHeaderCells()", 1000);
+	  setInterval("alignTableHeaderCells()", 2000);
 	});
 	</script>
 	<script src="resources/pane2.js" language="Javascript"> </script>
