@@ -10,7 +10,6 @@ table#reportData {
 }
 
 table#reportData th {
-  position:absolute;
   background-color:#f1f2ed; 
   font-size:10pt; 
   color:black;
@@ -25,8 +24,8 @@ table#reportData th {
   background-position:right center;
 }
 
-table#reportData thead:first-child {
-  border-left: 0px;
+#wrapper table#reportData th {
+  position:absolute;
 }
 
 table#reportData th[onclick]:hover {
@@ -59,13 +58,6 @@ table#reportData th.waiting {
   background-image:url('../resources/reports/spinner.gif')!important;
 }
 	
-/*	on=true/false replaced by jQuery show/hide			  
-table#reportData thead tr#fieldFilters[on=false],
-table#reportData thead tr#fieldFilters[on=null] { 
-  display:none 
-}
-*/
-
 #fieldFilters {
   position: absolute;
   top: 30px;
