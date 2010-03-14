@@ -5,7 +5,7 @@ table#reportData {
   border:0; 
 }												
 
-table#reportData thead {
+#wrapper table#reportData thead {
   position:fixed;
 }
 
