@@ -47,9 +47,9 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 	// Update the row count in pane 1 and the summary view (if applicable) in pane 3
 	function fUpdateOtherPanes() {
 		if (jQuery("#fieldFilters").is(":visible")) {
-		  jQuery("#reportData").css("margin-top","55px");
+		  jQuery("#reportData").addClass("lowered");
 		} else {
-		  jQuery("#reportData").css("margin-top","0px");
+		  jQuery("#reportData").removeClass("lowered");
 		}
 		var numRows = $('#numrows').html();
 		var pane1Id = $('#pane1id').text();
