@@ -339,8 +339,7 @@
 	  
 	  $(window).scroll(function() {
 	    var left = document.body.scrollLeft || window.pageXOffset;
-	    alert("scroll " + left);
-	    $("thead").css("left",left);
+	    $("thead").css("left", -1 * left);
 	  });
 	  
 	});
