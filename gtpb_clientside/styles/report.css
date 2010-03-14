@@ -3,12 +3,19 @@ table#reportData {
   height:100%;
   border-collapse:collapse;
   border:0;
-  margin-top: 30px;
 }												
+
+#wrapper table#reportData {
+  margin-top: 30px;
+}
 
 #wrapper table#reportData thead {
   position:fixed;
   top: 0px;
+}
+
+#wrapper table#reportData td {
+  padding: 2px 6px;
 }
 
 table#reportData th {
