@@ -319,7 +319,7 @@
 		  var width = $(this).width();
 		  var jqHeaderElement = jqHeaderCells.filter(":eq(" + i + ")").children("div");
 		  if (jqHeaderElement.size() > 0) {
-		    jqHeaderElement.size.width(width);
+		    jqHeaderElement.width(width);
 		  }
 		  i++;
 		});
