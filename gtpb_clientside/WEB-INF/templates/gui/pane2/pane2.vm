@@ -323,8 +323,8 @@
 		  var jqFilterElement = jqFilterCells.filter(":eq(" + i + ")");
 		  if (jqHeaderElement.children("div").size() > 0) {
 		    jqHeaderElement.children("div").width(width);
-			jqFilterElement.children("div").width(width);
 		  }
+		  jqFilterElement.children("div").width(width);
 		  jqHeaderElement.css("left",left);
 		  i++;
 		});
