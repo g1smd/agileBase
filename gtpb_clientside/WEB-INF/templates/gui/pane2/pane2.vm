@@ -320,7 +320,7 @@
 		  i++;
 		  var width = $(this).width();
 		  jqHeaderCells.filter(":eq(" + i + ")").width(width);
-		)};
+		});
 	}
 	
 	$(document).ready(function() {
