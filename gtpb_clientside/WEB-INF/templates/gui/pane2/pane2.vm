@@ -338,7 +338,7 @@
 	  setInterval("alignTableHeaderCells()", 2000);
 	  
 	  $(window).scroll(function() {
-	    var left = $("td:first").offset().left;
+	    var left = document.body.scrollLeft || window.pageXOffset;
 	    alert("scroll " + left);
 	    $("thead").css("left",left);
 	  });
