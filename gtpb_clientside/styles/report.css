@@ -28,6 +28,10 @@ table#reportData th {
   position:absolute;
 }
 
+#wrapper table#reportData tbody {
+  top: 30px;
+}
+
 table#reportData th[onclick]:hover {
   border-bottom-color:#FFD588!important;
   background-color:#F8F8F6!important;
