@@ -371,7 +371,7 @@
 	  #if($mobile_device)
 		#parse("gui/mobile/pane2_header.vm")
 	  #end
-	  <table id=reportData cellspacing="0">
+	  <table id=reportData cellspacing="0" #if($filtersShouldBeShown == 'true') class='lowered' #end>
         <thead>
           <tr>
             <th class=leading>&nbsp;</th>
@@ -416,7 +416,7 @@
 		            <td class=trailing><div>&nbsp;</div></td>      
           </tr>
         </thead>
-        <tbody name=reportBody id=reportBody class="selectable #if($filtersShouldBeShown == 'true') lowered #end">
+        <tbody name=reportBody id=reportBody class="selectable">
           #parse("gui/pane2/pane2_body.vm")
 			     </tbody>
       </table>
