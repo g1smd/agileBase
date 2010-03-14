@@ -56,8 +56,8 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 		if ((numRows != null) && (self != top)) {
 			parent.pane_1.fSetCurrentOption(pane1Id, numRows);
 		}
-		if (document.getElementById('pane3tab') != "undefined") {
-		var pane3tab = document.getElementById('pane3tab').innerHTML;
+		if (document.getElementById('pane3tab')) {
+		  var pane3tab = document.getElementById('pane3tab').innerHTML;
 		  if (pane3tab == '3') {
 			parent.pane_2
 					.loadIntoPane3(
