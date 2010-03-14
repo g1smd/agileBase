@@ -51,7 +51,7 @@
 	        text-decoration:underline 
 	      }
 	#if($browser != "Internet Explorer")
-	<!-- for fixed (frozen) table header -->
+	/* for fixed (frozen) table header */
 		div#wrapper table#reportData {
 		margin-top: 30px;
 		}
