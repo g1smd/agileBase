@@ -321,7 +321,7 @@
 		  var jqHeaderElement = jqHeaderCells.filter(":eq(" + i + ")").children("div");
 		  if (jqHeaderElement.size() > 0) {
 		    jqHeaderElement.width(width);
-			jqHeaderElement.parent().css("left: " + left);
+			jqHeaderElement.parent().css("left: " + left + "px");
 		  }
 		  i++;
 		});
