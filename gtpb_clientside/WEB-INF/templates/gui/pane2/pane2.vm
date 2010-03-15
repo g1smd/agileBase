@@ -73,6 +73,10 @@
 		position: absolute;
 		top: 30px;
 		}
+		
+		div#wrapper table#reportData #fieldFilters td {
+		position: absolute;
+		}
 	#end
 	</style>
   	<script src="resources/jquery.js" language="Javascript"> </script>
