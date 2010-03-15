@@ -76,7 +76,7 @@
 		
 		div#wrapper table#reportData #fieldFilters td {
 		position: absolute;
-		top: 30px;
+		background-color: #E2E1D9;
 		}
 	#end
 	</style>
