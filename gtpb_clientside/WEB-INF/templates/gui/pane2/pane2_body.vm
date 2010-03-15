@@ -72,7 +72,18 @@ $viewTools.startTimer("gui/pane2/pane2_body")
     </tr>
   #end
 #end  ## end additional row if selected record not in dataset on screen
-
+## An single empty row if no data
+#if($data.size() == 0)
+  <tr class="rowa">
+	<td class="leading">&nbsp;</td>
+      #foreach($field in $reportBaseFields)
+	    #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
+		  <td>&nbsp;</td>
+		#end
+	  #end
+	<td class="trailing">&nbsp;</td>
+  </tr>
+#end
 #foreach($row in $data)
   ## row[0] contains the data to display in each field
   ## row[1] contains the click event parameters for the row

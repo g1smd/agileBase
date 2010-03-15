@@ -442,7 +442,7 @@
         </thead>
         <tbody name=reportBody id=reportBody class="selectable">
           #parse("gui/pane2/pane2_body.vm")
-			     </tbody>
+		</tbody>
       </table>
 	#if($mobile_device)<p>
 		#parse("gui/mobile/pane2_footer.vm")
