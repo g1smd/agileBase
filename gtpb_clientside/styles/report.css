@@ -197,3 +197,7 @@ table#reportData tr.excludedRecord td {
 		background: rgb(254,242,149);
 		margin: 10px;
 }
+
+#filterhelp {
+	color: gray;
+}
