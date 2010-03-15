@@ -57,7 +57,7 @@
 		}
 
 		div#wrapper table#reportData.lowered {
-		margin-top: 55px;
+		margin-top: 57px;
 		}
 
 		div#wrapper table#reportData thead {
