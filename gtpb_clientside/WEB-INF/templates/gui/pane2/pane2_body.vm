@@ -51,8 +51,10 @@ $viewTools.startTimer("gui/pane2/pane2_body")
     <tr title="The record currently being edited is not in the report data on this page"
       name="$selection" class="rowa excludedRecord" onclick="$click" forcehighlight="true">
       <td class="leading">&nbsp;</td>
+	  #set($numDisplayFields = 0)
       #foreach($field in $reportBaseFields)
 	    #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
+		  #set($numDisplayFields = $numDisplayFields + 1)
 		  <td nowrap="true">
 		    #if($tableDataRow.get($field))
               $tableDataRow.get($field)
@@ -121,7 +123,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           #set($cellNumber = $velocityCount - 1)
           #set($colour = $rowColours.get($cellNumber))
 		  #set($rightAlign = false)
-		  #if($cellNumber < $fields.size())
+		  #if($cellNumber < $numDisplayFields)
 		    #set($field = $fields.get($cellNumber).get(1))
 			#set($fieldCategory = $field.getFieldCategory().toString())
 			#if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
@@ -181,7 +183,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 #set($totalRowsIsEstimate = $sessionReport.isRowCountEstimate())
 #if(($numRows == $sessionData.getReportRowLimit()) && ($totalRows > $numRows))
 <tr class="seemorerows">
-	#set($numCols = $firstRowCells.size() + 2)
+  #set($numCols = $firstRowCells.size() + 2)
   <td colspan="$numCols">
     $numRows records out of #if($totalRowsIsEstimate)approximately#end $totalRows are displayed.<br>
 	view 
