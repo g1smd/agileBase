@@ -10,7 +10,7 @@ table#reportData {
 }
 
 #wrapper table#reportData th {
-  padding: 3px;
+  padding: 6px; /* 3 */
   font-family: "Arial Narrow", Arial, sans-serif;
 }
 
