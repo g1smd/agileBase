@@ -74,11 +74,11 @@
 		top: 30px;
 		}
 		
-		div#wrapper table#reportData #fieldFilters td {
-		position: absolute;
-		background-color: #E2E1D9;
-		height: 27px;
-		}
+		##div#wrapper table#reportData #fieldFilters td {
+		##position: absolute;
+		##height: 27px;
+		##background-color: #E2E1D9;
+		##}
 	#end
 	</style>
   	<script src="resources/jquery.js" language="Javascript"> </script>
@@ -354,7 +354,7 @@
 		  if (jqHeaderElement.children("div").size() > 0) {
 		    jqHeaderElement.children("div").width(width + 6);  // 3px difference in th/td padding either side
 		  }
-		  jqFilterElement.children("div").width(width+1);
+		  jqFilterElement.children("div").width(width);
 		  jqHeaderElement.css("left",left);
 		  jqFilterElement.css("left",left+1);
 		  i++;
