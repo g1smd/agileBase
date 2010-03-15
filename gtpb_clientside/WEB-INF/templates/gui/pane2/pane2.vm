@@ -354,9 +354,9 @@
 		  if (jqHeaderElement.children("div").size() > 0) {
 		    jqHeaderElement.children("div").width(width + 6);  // 3px difference in th/td padding either side
 		  }
-		  jqFilterElement.children("div").width(width);
+		  jqFilterElement.children("div").width(width+1);
 		  jqHeaderElement.css("left",left);
-		  jqFilterElement.css("left",left);
+		  jqFilterElement.css("left",left+1);
 		  i++;
 		});
 	}
