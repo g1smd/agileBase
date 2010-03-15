@@ -21,7 +21,7 @@
 ## Don't show delete boxes for mobile devices either though, deleting will be via pane 3
 #if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionData.getTable()))
 #if(!$mobile_device)
-  #set($success=$fields.add(['','<div><input type="checkbox" onclick="fLocateDeleteMarkers(this); fSelectAll(this)"></div>']))
+  #set($success=$fields.add(['','<div style="text-align: right;"><input type="checkbox" onclick="fLocateDeleteMarkers(this); fSelectAll(this)"></div>']))
   #set($thisUniqueId = -1)
   #foreach($row in $data)
    #set($lastUniqueId = $thisUniqueId)
@@ -36,9 +36,9 @@
 #end
 
 #if($data_part_only)
-	  #parse('gui/pane2/pane2_body.vm')
+  #parse('gui/pane2/pane2_body.vm')
 #elseif($table_part_only)
-   #parse('gui/pane2/pane2_table.vm')
+  #parse('gui/pane2/pane2_table.vm')
 #else
-	  #parse('gui/pane2/pane2.vm')
+  #parse('gui/pane2/pane2.vm')
 #end
