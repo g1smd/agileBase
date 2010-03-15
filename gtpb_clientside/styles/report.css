@@ -71,10 +71,6 @@ table#reportData thead td {
   border-bottom:1px solid#cecece 
 }					  
 
-table#reportData tbody td { 
-  vertical-align:top 
-}
-					  
 table#reportData .selectable tr.rowa:hover td,
 table#reportData .selectable tr.rowb:hover td { 
   background-color:#dae2ff;
@@ -86,11 +82,13 @@ table#reportData tbody tr.rowb:hover td.colored {
 }   
 					  
 table#reportData td { 
-  border-right: 1px solid #cecece;
+  vertical-align:top;
+  border-right:1px solid #cecece;
   padding:3px 7px 3px 7px;
   font-size:10pt;
   cursor:default;
   height:20px;
+  min-width:1em;
   color:black!important
 }
 					  
