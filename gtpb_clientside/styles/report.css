@@ -65,11 +65,6 @@ table#reportData thead tr#fieldFilters,
 table#reportData thead tr.wikiTitle { 
   background-color:#e2e1d9;
 }
-
-div#wrapper table#reportData #fieldFilters td {
-  padding: 2px 3px;
-}
-
 table#reportData thead tr#fieldFilters input { 
   width:100% 
 }
