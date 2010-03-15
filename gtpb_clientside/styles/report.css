@@ -94,6 +94,15 @@ table#reportData td {
   color:black!important
 }
 
+/* narrow spacer cols */
+table#reportData td:first-child {
+  min-width: 0;
+}
+
+table#reportData td:last-child {
+  min-width: 0;
+}
+
 table#reportData tr#currentRow td { 
   background-color:#ffd588;
   /*background-image: url(selected_row_fine_angled.png);*/
@@ -103,7 +112,6 @@ table#reportData tr#currentRow td {
 table#reportData tr#currentRow td.leading,
 table#reportData tr#currentRow td.trailing {
   background-color:#FFBA3B;
-  min-width: 0;
 }	  
 
 table#reportData tr#currentRow td.colored {
