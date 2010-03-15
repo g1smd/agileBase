@@ -350,6 +350,7 @@
 		  }
 		  jqFilterElement.children("div").width(width);
 		  jqHeaderElement.css("left",left);
+		  jqFilterElement.css("left",left);
 		  i++;
 		});
 	}
