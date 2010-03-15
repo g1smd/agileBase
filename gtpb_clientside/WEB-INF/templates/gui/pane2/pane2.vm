@@ -398,7 +398,7 @@
 	  <table id=reportData cellspacing="0" #if($filtersShouldBeShown == 'true') class='lowered' #end>
         <thead>
           <tr>
-            <th class=leading>&nbsp;</th>
+            <th class=leading><div>&nbsp;</div></th>
             #foreach($field in $fields)
               #set($internalFieldName = $field.get(0))
               #set($fieldObject = $field.get(1))
@@ -423,7 +423,7 @@
                 				#end
               		</th>
             #end
-            <th class=trailing>&nbsp;</th>
+            <th class=trailing><div>&nbsp;</div></th>
           </tr>
           ## filtersShouldBeShown should either print the string 'true' or 'false'
           <tr name="fieldFilters" id="fieldFilters" #if($filtersShouldBeShown == 'false') style="display:none" #end>
