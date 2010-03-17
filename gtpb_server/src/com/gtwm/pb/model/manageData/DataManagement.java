@@ -1071,6 +1071,9 @@ public class DataManagement implements DataManagementInfo {
 		} else {
 			logMessage += " new records imported";
 		}
+		if (csvContent != null) {
+			logMessage += " from file";
+		}
 		usageLogger.logDataChange(loggedInUser, table, AppAction.CSV_IMPORT, -1, logMessage);
 		UsageLogger.startLoggingThread(usageLogger);
 		return numImportedRecords;

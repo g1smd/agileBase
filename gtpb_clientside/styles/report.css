@@ -205,4 +205,5 @@ table#reportData tr.excludedRecord td {
 
 #filterhelp {
 	color: gray;
+	text-shadow: 0 1px 0 white;
 }
