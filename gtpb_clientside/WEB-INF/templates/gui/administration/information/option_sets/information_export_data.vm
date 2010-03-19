@@ -96,5 +96,4 @@ Table building points to agileBase use in new areas or projects. Removals sugges
 </tr></table>
 </div>
 
-
 $viewTools.stopTimer("gui/administration/information/option_sets/information_export_data.vm")
