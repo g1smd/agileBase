@@ -103,6 +103,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
     }
     // find the parent cell, if one has not been cached, find it
     var oCell=oCheckbox.parentCell?oCheckbox.parentCell:fParentCell();
+    alert(oCell.tagName);
     // if there is a cell
     if (oCell) iDeleteCellIndex=oCell.cellIndex;
   }
