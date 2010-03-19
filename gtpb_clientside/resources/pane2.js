@@ -70,7 +70,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 /* Add in a checkbox to the header row and each record row to allow the record to be deleted */
 
   function fSelectAll(oCheckbox){ 
-    var iCellIndex=oCheckbox.parentNode.cellIndex;
+    var iCellIndex=oCheckbox.parentNode.parentNode.cellIndex; // checkbox <- div <- th
     alert('cell index ' + iCellIndex);
   	  var oRows=document.getElementById('reportBody').rows;
 	    for (var i=0;i<oRows.length;i++){ 
