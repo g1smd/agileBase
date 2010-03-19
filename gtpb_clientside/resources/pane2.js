@@ -71,7 +71,6 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 
   function fSelectAll(oCheckbox){ 
     var iCellIndex=oCheckbox.parentNode.parentNode.cellIndex; // checkbox <- div <- th
-    alert('cell index ' + iCellIndex);
   	  var oRows=document.getElementById('reportBody').rows;
 	    for (var i=0;i<oRows.length;i++){ 
 	      try {
@@ -86,6 +85,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	    }
   }
  
+  /* TODO: is this fn obsolete? The results don't seem to be used anywhere */
   function fLocateDeleteMarkers(oCheckbox){
     // lets the delete object know what column the delete checkboxes are in 
     // cell could be a TD or a TH 
@@ -105,5 +105,4 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
     var oCell=oCheckbox.parentCell?oCheckbox.parentCell:fParentCell();
     // if there is a cell
     if (oCell) iDeleteCellIndex=oCell.cellIndex;
-    alert(iDeleteCellIndex);
   }
