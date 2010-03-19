@@ -96,7 +96,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
       if ((oObject.parentNode)&&(oObject.parentNode.tagName=='TR')) {
         // cache the cell found
         oCheckbox.parentCell=oObject;
-        alert 'checkbox col found';
+        alert('checkbox col found');
         return oObject;
       }
       return null;
