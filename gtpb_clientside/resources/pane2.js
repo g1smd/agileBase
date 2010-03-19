@@ -71,6 +71,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 
   function fSelectAll(oCheckbox){ 
     var iCellIndex=oCheckbox.parentNode.cellIndex;
+    alert('cell index ' + iCellIndex);
   	  var oRows=document.getElementById('reportBody').rows;
 	    for (var i=0;i<oRows.length;i++){ 
 	      try {
@@ -96,7 +97,6 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
       if ((oObject.parentNode)&&(oObject.parentNode.tagName=='TR')) {
         // cache the cell found
         oCheckbox.parentCell=oObject;
-        alert('checkbox col found');
         return oObject;
       }
       return null;
