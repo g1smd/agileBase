@@ -95,7 +95,8 @@
   </head>
   <body oncontextmenu="return false" isDraft="true"> ## err on the side of caution and mark as a draft by default.  This will be changed when the doc loads if it's not a draft
     <h1 class="draftMarker">DRAFT ONLY</h1>
-    <h2>$module - $report</h2>
+    <h2 style="float:left">$module - $report</h2>
+	<div style="float:right"><img src="/agileBase/website/images/logo-agilebase.png" /></div>
     <table id=reportData cellspacing="0">
       <thead>
         <tr>

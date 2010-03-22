@@ -18,6 +18,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 ## Deal with any plugin
 #set($app_params = 'return=gui/display_application')
+##TODO: remove, obsolete
 #if($view.usesToolbarPlugin())
   #set($app_params = "return=gui/display_application&include_toolbar_plugin=$view.getToolbarPluginName()")
 #end

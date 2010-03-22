@@ -91,7 +91,7 @@ Data includes table creations, field creations, table deletions and field deleti
 <a href="?return=gui/administration/information/export/table_schema_change&returntype=download&returnfilename=table_schema_changes.csv">Download all changes</a>
 </td>
 <td><h2>Strategic</h2>
-Table building points to agileBase use in new areas or projects. Removals suggest haltings and cost reductions.
+Table building points to agileBase use in new areas or projects. Removals suggest halts and cost reductions.
 </td>
 </tr></table>
 </div>
