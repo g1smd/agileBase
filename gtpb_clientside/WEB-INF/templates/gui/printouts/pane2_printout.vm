@@ -96,10 +96,10 @@
   <body oncontextmenu="return false" isDraft="true"> ## err on the side of caution and mark as a draft by default.  This will be changed when the doc loads if it's not a draft
     <h1 class="draftMarker">DRAFT ONLY</h1>
     <h2 style="float:left">$module - $report</h2>
-	<div style="float:right">
+	<div style="float:right;">
+		<img style="float:right" src="/agileBase/website/images/logo-agilebase.png" />
 		Snapshot at $viewTools.getDatestampString()<br>
 		Log in for live data
-		<img style="float:right" src="/agileBase/website/images/logo-agilebase.png" />
 	</div>
 	<br clear="all">
     <table id=reportData cellspacing="0">
