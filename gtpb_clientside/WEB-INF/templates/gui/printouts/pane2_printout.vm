@@ -100,7 +100,8 @@
 		<img src="/agileBase/website/images/logo-agilebase.png" />
 		<div style="float:right">
 		Snapshot at $viewTools.getDatestampString()<br>
-		Log in for live data
+		For live data, login to<br>
+		www.agilebase.co.uk
 		</div>
 	</div>
 	<br clear="all">
