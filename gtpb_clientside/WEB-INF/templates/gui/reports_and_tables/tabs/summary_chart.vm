@@ -242,7 +242,15 @@
            xAxis: {
 		     #if($dateAxis)
                type: 'datetime',
-			   maxZoom: 60 * 24 * 3600000, // two months
+			   maxZoom: 60 * 24 * 3600000 // two months
+			   #if($dateFormat.equals("%Y"))
+			     ,dateTimeLabelFormats: {
+                	day: '%Y',
+                	week: '%Y',
+                	month: '%Y',
+                	year: '%Y'
+                 }
+			   #end
 		     #else
                categories: $xAxisCategories
 		     #end
