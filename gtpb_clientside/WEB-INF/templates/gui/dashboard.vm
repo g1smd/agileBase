@@ -173,11 +173,12 @@ function growLeaves() {
 </script>
 
 <div id="dashboard">
+<!--
 <div id="key">
 	<img src="resources/dashboard/large.png"> large = widely used report <img src="resources/dashboard/small.png"> small = less use<p>
 	<img src="resources/dashboard/increasing.png"> red = increasing use <img src="resources/dashboard/decreasing.png"> blue = cooling (decreasing)<p>
 </div>
-
+-->
 <div id="infovis" /> 
 </div>
 #else ##not valid JSON
