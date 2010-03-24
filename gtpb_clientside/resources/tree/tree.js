@@ -55,6 +55,16 @@ $(document).ready(function(){
 		}
 	});
 	
+	// Initial expand?
+	var numReports = $('.module-tree-item-wrap').size();
+	if (numReports < 15) {
+	  $('.modulecollapsed').each(function() {
+		  $(this).children('ul').slideDown('fast');
+		  $(this).removeClass('modulecollapsed');
+		  $(this).addClass('moduleexpanded');
+	  });
+	}
+	
 	$('.expandable').click(function(event){
 		// Prevent the children triggering open/close
 		if (event.target == this) {
