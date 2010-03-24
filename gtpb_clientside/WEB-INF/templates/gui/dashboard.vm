@@ -43,7 +43,7 @@ function displayTreemap() {
 	jqInfovis.css("width",ivWidth);
 	ivHeight = jQuery("#dashboard").css("height");
 	ivHeight = ivHeight.substring(0,ivHeight.length - 2);
-	ivHeightInt = parseInt(ivHeight) -15;
+	ivHeightInt = parseInt(ivHeight) -30;
 	ivHeight = ivHeightInt + "px";
 	jqInfovis.css("height",ivHeight);
 
