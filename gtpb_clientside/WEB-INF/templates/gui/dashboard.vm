@@ -38,12 +38,12 @@ function displayTreemap() {
 	jqInfovis = jQuery("#infovis");
 	ivWidth = jQuery("#dashboard").css("width");
 	ivWidth = ivWidth.substring(0,ivWidth.length - 2);
-	ivWidthInt = parseInt(ivWidth) -15;
+	ivWidthInt = parseInt(ivWidth); // -15;
 	ivWidth = ivWidthInt + "px";
 	jqInfovis.css("width",ivWidth);
 	ivHeight = jQuery("#dashboard").css("height");
 	ivHeight = ivHeight.substring(0,ivHeight.length - 2);
-	ivHeightInt = parseInt(ivHeight) -30;
+	ivHeightInt = parseInt(ivHeight); // -30;
 	ivHeight = ivHeightInt + "px";
 	jqInfovis.css("height",ivHeight);
 
