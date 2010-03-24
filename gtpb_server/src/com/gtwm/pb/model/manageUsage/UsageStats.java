@@ -211,7 +211,7 @@ public class UsageStats implements UsageStatsInfo {
 		BaseReportInfo report = null;
 		js.object();
 		js.key("id").value("root");
-		js.key("name").value("stats map - complete overview of " + company + " reports");
+		js.key("name").value("Treemap breakdown of report views");
 		js.key("data").object().key("$area").value(totalArea).endObject();
 		js.key("children").array();
 		// loop through sections
