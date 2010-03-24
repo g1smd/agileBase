@@ -70,7 +70,7 @@
 	  #else
         #set($manageableTables = $view.getTablesAllowedTo("MANAGE_TABLE"))
 	    #if(($manageableTables.size() > 0) || $view.loggedInUserAllowedTo('ADMINISTRATE'))
-	    <li><h1><span>Setup</span></h1>
+	    <li id="setup"><h1><span>Setup</span></h1>
   		  <ul>
 		  #parse('gui/reports_and_tables/table_list.vm')
           #if($view.loggedInUserAllowedTo('ADMINISTRATE'))

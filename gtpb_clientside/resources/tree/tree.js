@@ -59,9 +59,11 @@ $(document).ready(function(){
 	var numReports = $('.module-tree-item-wrap').size();
 	if (numReports < 15) {
 	  $('.modulecollapsed').each(function() {
-		  $(this).children('ul').slideDown('fast');
-		  $(this).removeClass('modulecollapsed');
-		  $(this).addClass('moduleexpanded');
+		  if ($(this).parents('li.setup').size() == 0) {
+			  $(this).children('ul').slideDown('fast');
+			  $(this).removeClass('modulecollapsed');
+			  $(this).addClass('moduleexpanded');
+		  }
 	  });
 	}
 	
