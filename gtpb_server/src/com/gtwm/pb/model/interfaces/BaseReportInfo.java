@@ -93,6 +93,11 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	public ReportSummaryInfo getReportSummary();
 
 	/**
+	 * Return a specific summary identified by ID
+	 */
+	public ReportSummaryInfo getSavedReportSummary(long summaryId) throws ObjectNotFoundException;
+	
+	/**
 	 * Return any additional report summaries that have been named and saved
 	 */
 	public Set<ReportSummaryInfo> getSavedReportSummaries();

@@ -81,6 +81,8 @@ public interface SessionDataInfo {
 
 	public Integer getCustomInteger(String key);
 
+	public Long getCustomLong(String key); 
+	
 	public Boolean getCustomBoolean(String key);
 
 	public TableInfo getCustomTable(String key);
@@ -157,6 +159,8 @@ public interface SessionDataInfo {
 	public void setCustomString(String key, String value);
 
 	public void setCustomInteger(String key, Integer value);
+
+	public void setCustomLong(String key, Long value);
 
 	public void setCustomBoolean(String key, Boolean value);
 

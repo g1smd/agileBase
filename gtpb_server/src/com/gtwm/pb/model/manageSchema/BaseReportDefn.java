@@ -22,6 +22,8 @@ import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.util.Naming;
+import com.gtwm.pb.util.ObjectNotFoundException;
+
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Locale;
@@ -114,6 +116,15 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		this.reportSummary = reportSummary;
 	}
 
+	public ReportSummaryInfo getSavedReportSummary(long summaryId) throws ObjectNotFoundException {
+		for (ReportSummaryInfo reportSummary : this.getSavedReportSummariesDirect()) {
+			if (reportSummary.getId() == summaryId) {
+				return reportSummary;
+			}
+		}
+		throw new ObjectNotFoundException("Report summary with ID " + summaryId + " not found in report " + this);
+	}
+	
 	@Transient
 	public Set<ReportSummaryInfo> getSavedReportSummaries() {
 		return Collections.unmodifiableSet(new LinkedHashSet<ReportSummaryInfo>(this

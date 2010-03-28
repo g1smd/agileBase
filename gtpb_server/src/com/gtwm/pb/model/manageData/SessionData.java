@@ -357,6 +357,10 @@ public class SessionData implements SessionDataInfo {
 		return this.customIntegers.get(key);
 	}
 
+	public synchronized Long getCustomLong(String key) {
+		return this.customLongs.get(key);
+	}
+
 	public synchronized Boolean getCustomBoolean(String key) {
 		return this.customBooleans.get(key);
 	}
@@ -383,6 +387,10 @@ public class SessionData implements SessionDataInfo {
 
 	public synchronized void setCustomInteger(String key, Integer value) {
 		this.customIntegers.put(key, value);
+	}
+
+	public synchronized void setCustomLong(String key, Long value) {
+		this.customLongs.put(key, value);
 	}
 
 	public synchronized void setCustomBoolean(String key, Boolean value) {
@@ -522,6 +530,8 @@ public class SessionData implements SessionDataInfo {
 	private Map<String, String> customStrings = new HashMap<String, String>();
 
 	private Map<String, Integer> customIntegers = new HashMap<String, Integer>();
+
+	private Map<String, Long> customLongs = new HashMap<String, Long>();
 
 	private Map<String, Boolean> customBooleans = new HashMap<String, Boolean>();
 

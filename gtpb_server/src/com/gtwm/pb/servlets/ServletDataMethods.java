@@ -275,6 +275,29 @@ public class ServletDataMethods {
 		sessionData.setCustomInteger(key, Integer.valueOf(valueString));
 	}
 
+	/**
+	 * Set a custom integer variable in the session, identified by a supplied
+	 * key
+	 * 
+	 * Http request usage example:
+	 * 
+	 * &set_custom_long=true&longkey=chosennumber&customlongvalue=5 - set
+	 * a 'chosennumber' value to 5
+	 * 
+	 * @see SessionDataInfo#getCustomLong(String) See
+	 *      SessionDataInfo.getCustomLong(stringkey) to retrieve the value
+	 */
+	public static void setSessionCustomLong(SessionDataInfo sessionData,
+			HttpServletRequest request) throws MissingParametersException {
+		String key = request.getParameter("longkey");
+		String valueString = request.getParameter("customlongvalue");
+		if (key == null || valueString == null) {
+			throw new MissingParametersException(
+					"longkey and customlongvalue must be supplied to set a custom session long");
+		}
+		sessionData.setCustomLong(key, Long.valueOf(valueString));
+	}
+
 	public static void setSessionCustomBoolean(SessionDataInfo sessionData,
 			HttpServletRequest request) throws MissingParametersException {
 		String key = request.getParameter("booleankey");

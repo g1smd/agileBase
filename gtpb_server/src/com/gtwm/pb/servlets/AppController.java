@@ -265,6 +265,9 @@ public class AppController extends VelocityViewServlet {
 				case SET_CUSTOM_INTEGER:
 					ServletDataMethods.setSessionCustomInteger(sessionData, request);
 					break;
+				case SET_CUSTOM_LONG:
+					ServletDataMethods.setSessionCustomLong(sessionData, request);
+					break;
 				case SET_CUSTOM_BOOLEAN:
 					ServletDataMethods.setSessionCustomBoolean(sessionData, request);
 					break;
