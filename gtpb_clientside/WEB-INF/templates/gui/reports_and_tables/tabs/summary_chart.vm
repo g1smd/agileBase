@@ -198,6 +198,7 @@
   #end
   #set($subtitle = "")
   <script language="JavaScript">
+    alert('creating chart');
     var $chart_id = new Highcharts.Chart({
          chart: {
             renderTo: "$chart_id",
