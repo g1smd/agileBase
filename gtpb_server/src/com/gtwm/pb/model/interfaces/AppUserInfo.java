@@ -18,6 +18,7 @@
 package com.gtwm.pb.model.interfaces;
 
 import com.gtwm.pb.util.MissingParametersException;
+import com.gtwm.pb.util.Enumerations.UserType;
 
 /**
  * Represents an application user - someone who can log in to agileBase. Note
@@ -33,6 +34,8 @@ public interface AppUserInfo {
 	public static final String SURNAME = "surname";
 
 	public static final String FORENAME = "forename";
+	
+	public static final String USERTYPE = "usertype";
 
 	public CompanyInfo getCompany();
 
@@ -60,4 +63,8 @@ public interface AppUserInfo {
 	 * @return Plain text password
 	 */
 	public String getPassword();
+	
+	public void setUserType(UserType userType);
+	
+	public UserType getUserType();
 }

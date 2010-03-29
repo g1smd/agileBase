@@ -44,6 +44,7 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.RandomString;
+import com.gtwm.pb.util.Enumerations.UserType;
 
 /**
  * Methods to do with setting up and using authentication (adding users,
@@ -196,36 +197,39 @@ public class ServletAuthMethods {
 			throw new ObjectNotFoundException(
 					"'internalusername' was not provided and there is no user in the session");
 		}
-		String userName = request.getParameter(AppUserInfo.USERNAME.toLowerCase(Locale.UK));
-		String surname = request.getParameter(AppUserInfo.SURNAME.toLowerCase(Locale.UK));
-		String forename = request.getParameter(AppUserInfo.FORENAME.toLowerCase(Locale.UK));
-		String password = request.getParameter(AppUserInfo.PASSWORD.toLowerCase(Locale.UK));
+		String userName = request.getParameter(AppUserInfo.USERNAME.toLowerCase());
+		String surname = request.getParameter(AppUserInfo.SURNAME.toLowerCase());
+		String forename = request.getParameter(AppUserInfo.FORENAME.toLowerCase());
+		String password = request.getParameter(AppUserInfo.PASSWORD.toLowerCase());
 		if (password != null) {
 			if (password.equals("false")) {
 				throw new CantDoThatException("User update failed: error setting password");
 			}
 		}
+		String userTypeString = request.getParameter(AppUserInfo.USERTYPE.toLowerCase());
+		UserType userType = UserType.valueOf(userTypeString.toUpperCase());
 		// cache the old values for rollback
 		String oldUserName = appUser.getUserName();
 		String oldSurname = appUser.getSurname();
 		String oldForename = appUser.getForename();
 		String oldPassword = appUser.getPassword();
+		UserType oldUserType = appUser.getUserType();
 		// begin updating model and persisting changes
 		HibernateUtil.startHibernateTransaction();
 		try {
-			authManager.updateUser(request, appUser, userName, surname, forename, password);
+			authManager.updateUser(request, appUser, userName, surname, forename, password, userType);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					oldPassword);
+					oldPassword, oldUserType);
 			throw new CantDoThatException("User update failed", hex);
 		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					oldPassword);
+					oldPassword, oldUserType);
 			throw new CantDoThatException(pex.getMessage(), pex);
 		} finally {
 			HibernateUtil.closeSession();

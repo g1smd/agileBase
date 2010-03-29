@@ -185,8 +185,8 @@
     #set($xAxisMargin = 10)
 	#set($legendWidth = ($maxLegendChars * 7))
 	#set($height = 150)
-	#set($pieMidX = $height / 2)
-	#set($pieMidY = $pieMidX)
+	##set($pieMidX = $height / 2)
+	##set($pieMidY = $pieMidX)
   #end
   #if($reportSummary.equals($report.getReportSummary())) ## if default chart in pane 3
 	#set($margin = "[10, 50, 60, $xAxisMargin]") ## top, right, bottom, left
@@ -208,9 +208,6 @@
 			  defaultSeriesType: 'pie',
 			#else
               defaultSeriesType: 'bar',
-			#end
-			#if($dashboard)
-			  width: $width,
 			#end
 			height: $height,
 			margin: $margin

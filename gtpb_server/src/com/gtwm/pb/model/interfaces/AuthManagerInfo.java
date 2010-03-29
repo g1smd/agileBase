@@ -27,6 +27,7 @@ import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.Enumerations.UserType;
 
 /**
  * Manage the application's authenticator object - add users, roles etc. and
@@ -109,7 +110,7 @@ public interface AuthManagerInfo {
 	 *             If userName or password is whitespace or zero-length string
 	 */
 	public void updateUser(HttpServletRequest request, AppUserInfo appUser, String userName,
-			String surname, String forename, String password) throws DisallowedException,
+			String surname, String forename, String password, UserType userType) throws DisallowedException,
 			MissingParametersException, CantDoThatException;
 
 	/**

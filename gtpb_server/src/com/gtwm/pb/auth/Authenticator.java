@@ -35,6 +35,8 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.Enumerations.UserType;
+
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.HashSet;
@@ -114,7 +116,7 @@ public class Authenticator implements AuthenticatorInfo {
 	}
 
 	protected synchronized void updateUser(AppUserInfo appUser, String userName, String surname,
-			String forename, String password) throws MissingParametersException {
+			String forename, String password, UserType userType) throws MissingParametersException {
 		// need to remove and add user to all sorted collections it's in because
 		// we may be changing a property (userName) that compareTo depends on
 		this.getUsersDirect().remove(appUser);
@@ -123,6 +125,7 @@ public class Authenticator implements AuthenticatorInfo {
 		appUser.setPassword(password);
 		appUser.setSurname(surname);
 		appUser.setForename(forename);
+		appUser.setUserType(userType);
 		((Company) appUser.getCompany()).getUsersCollection().add(appUser);
 		this.getUsersDirect().add(appUser);
 	}

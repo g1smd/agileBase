@@ -43,6 +43,8 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.RandomString;
+import com.gtwm.pb.util.Enumerations.UserType;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import org.grlea.log.SimpleLogger;
@@ -328,7 +330,7 @@ public class AuthManager implements AuthManagerInfo {
 	}
 
 	public synchronized void updateUser(HttpServletRequest request, AppUserInfo appUser,
-			String userName, String surname, String forename, String password)
+			String userName, String surname, String forename, String password, UserType userType)
 			throws DisallowedException, MissingParametersException, CantDoThatException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
@@ -361,14 +363,15 @@ public class AuthManager implements AuthManagerInfo {
 				throw new MissingParametersException("Password cannot be empty");
 			}
 		}
-		if (surname == null)
-			surname = appUser.getSurname();
-		if (forename == null)
-			forename = appUser.getForename();
+		if (surname == null) {
+			surname = appUser.getSurname(); }
+		if (forename == null) {
+			forename = appUser.getForename(); }
+		
 		// Update user in memory:
 		HibernateUtil.activateObject(appUser);
 		((Authenticator) this.authenticator).updateUser(appUser, userName, surname, forename,
-				password);
+				password, userType);
 	}
 
 	public synchronized void removeUser(HttpServletRequest request, AppUserInfo appUser)

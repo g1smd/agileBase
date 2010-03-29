@@ -335,7 +335,17 @@ public class Enumerations {
 	 * Possible types of user who can log in to agileBase
 	 */
 	public enum UserType {
-		OPERATIONAL, MANAGERIAL, EXECUTIVE;
+		EXTERNAL("a user outside the company"), OPERATIONAL("standard user"), MANAGERIAL("standard user"), EXECUTIVE("has a global overview");
+		
+		public String getDescription() {
+			return this.description;
+		}
+		
+		private String description = "";
+		
+		UserType(String description) {
+			this.description = description;
+		}
 	}
 	
 }

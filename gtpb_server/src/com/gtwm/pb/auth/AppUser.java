@@ -21,7 +21,11 @@ import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
+import com.gtwm.pb.util.Enumerations.UserType;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -57,6 +61,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
             this.setForename(forename);
         }
         this.setPassword(password);
+        // Give them a default user type
+        this.setUserType(UserType.OPERATIONAL);
     }
 
     @ManyToOne(targetEntity=Company.class)
@@ -121,6 +127,15 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
     	this.password = password;
     }
 
+    @Enumerated(EnumType.STRING)
+	public UserType getUserType() {
+		return this.userType;
+	}
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
+    
     public String toString() {
         return this.getUserName();
     }
@@ -160,8 +175,11 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
     private String surname = "";
 
     private String forename = "";
+    
+    private UserType userType = null;
 
     private String password;
 
     private CompanyInfo company = null;
+
 }
