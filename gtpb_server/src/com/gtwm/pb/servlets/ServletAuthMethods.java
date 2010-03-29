@@ -207,7 +207,10 @@ public class ServletAuthMethods {
 			}
 		}
 		String userTypeString = request.getParameter(AppUserInfo.USERTYPE.toLowerCase());
-		UserType userType = UserType.valueOf(userTypeString.toUpperCase());
+		UserType userType = null;
+		if (userTypeString != null) {
+			userType = UserType.valueOf(userTypeString.toUpperCase());
+		}
 		// cache the old values for rollback
 		String oldUserName = appUser.getUserName();
 		String oldSurname = appUser.getSurname();
@@ -217,7 +220,8 @@ public class ServletAuthMethods {
 		// begin updating model and persisting changes
 		HibernateUtil.startHibernateTransaction();
 		try {
-			authManager.updateUser(request, appUser, userName, surname, forename, password, userType);
+			authManager.updateUser(request, appUser, userName, surname, forename, password,
+					userType);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();

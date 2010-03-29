@@ -367,7 +367,9 @@ public class AuthManager implements AuthManagerInfo {
 			surname = appUser.getSurname(); }
 		if (forename == null) {
 			forename = appUser.getForename(); }
-		
+		if (userType == null) {
+			userType = appUser.getUserType();
+		}
 		// Update user in memory:
 		HibernateUtil.activateObject(appUser);
 		((Authenticator) this.authenticator).updateUser(appUser, userName, surname, forename,
