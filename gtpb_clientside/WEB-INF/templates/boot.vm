@@ -16,4 +16,16 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## boot splash screen removed, just load tabs
-#parse("gui/load_tabs.vm")
+#set($appUser = $view.getLoggedInUser())
+#set($userType = $appUser.getUserType())
+#set($company = $appUser.getCompany())
+## Companies who have access to the dashboard
+#if($company == "GTWM")
+  #if($userType == "EXECUTIVE")
+	#parse("gui/customisations/common/dashboard/dashboard.vm")
+  #else
+    #parse("gui/load_tabs.vm")
+  #end
+#else
+  #parse("gui/load_tabs.vm")
+#end
