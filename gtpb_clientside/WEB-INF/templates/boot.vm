@@ -20,7 +20,7 @@
 #set($userType = $appUser.getUserType())
 #set($company = $appUser.getCompany())
 ## Companies who have access to the dashboard
-#if($company == "GTWM")
+#if($company == "GTWM" || $company == "Castell Howell")
   #if($userType == "EXECUTIVE")
 	#parse("gui/customisations/common/dashboard/dashboard.vm")
   #else
