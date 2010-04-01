@@ -18,7 +18,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
   <head>
-    #set($company_name=$view.getLoggedInUser().getCompany().getCompanyName())
+	#set($appUser = $view.getLoggedInUser())
+    #set($company_name=$appUser.getCompany().getCompanyName())
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
 	<link href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" type="text/css" rel="stylesheet" />
@@ -90,6 +91,10 @@
         	function fInfo() {
               var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/dashboard','info_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')	
         	}
+			
+			function fDashboard() {
+			  document.location = 'AppController.servlet?return=gui/customisations/common/dashboard/dashboard';
+			}
         
             function fSpawnWindow(sURL,sName,sParams) {
         	  function fDestroyWin() {
@@ -164,9 +169,12 @@
 			        <div class=buttonGroup> ## external applications, built in and customised
 			          ## #parse('gui/toolbar/buttons/calendar.vm')
 			          ## #parse('gui/toolbar/buttons/wiki.vm')
-					  #if($view.loggedInUserAllowedTo("ADMINISTRATE"))
+					  #parse('gui/resources/dashboard_enabled.vm')
+					  ## Still allow admins who haven't got a full dashboard to see the info treemap
+					  #if($view.loggedInUserAllowedTo("ADMINISTRATE") && (!$dashboard_enabled))
 						#parse('gui/toolbar/buttons/info.vm')
 					  #end
+					  #parse('gui/toolbar/buttons/dashboard.vm')
 			          #set($sessionContext = $sessionData.getContext().toString())
 			          #if($sessionContext == "SYSADMIN")
 			            #parse('gui/toolbar/buttons/dev_tools.vm')

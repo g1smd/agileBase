@@ -160,6 +160,14 @@
 		#if(!$isNotTable)
           top.document.getElementById('filter').removeAttribute('disabled');
 		#end
+		## Enable the dashboard if relevant
+		#parse('gui/resources/dashboard_enabled.vm')
+		#if($dashboard_enabled)
+		  #set($userType = $view.getLoggedInUser().getUserType())
+		  #if($userType == "EXECUTIVE" || $userType == "MANAGERIAL")
+		    top.document.getElementById('button_dashboard').removeAttribute('disabled');
+		  #end
+		#end
 	  #end
     
       // clear all the selected rows

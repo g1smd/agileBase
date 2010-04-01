@@ -15,15 +15,11 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-
-#parse("gui/resources/dashboard_enabled.vm")
-#if($dashboard_enabled)
-  #if($view.getLoggedInUser().getUserType() == "EXECUTIVE")
-	## Executives get the dashboard by default
-	#parse("gui/customisations/common/dashboard/dashboard.vm")
-  #else
-    #parse("gui/load_tabs.vm")
-  #end
-#else
-  #parse("gui/load_tabs.vm")
-#end
+#set($button_img='resources/toolbar/dashboard.png')
+#set($click="fDashboard()")
+#set($caption='Dashaboard')
+#set($id='button_dashboard')
+#set($params='toggleButton=false disabled=true')
+###set($classes='disabled')
+#set($tooltip='Show executive dashboard')
+#parse('gui/resources/button.vm')

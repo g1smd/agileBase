@@ -16,14 +16,10 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-#parse("gui/resources/dashboard_enabled.vm")
-#if($dashboard_enabled)
-  #if($view.getLoggedInUser().getUserType() == "EXECUTIVE")
-	## Executives get the dashboard by default
-	#parse("gui/customisations/common/dashboard/dashboard.vm")
-  #else
-    #parse("gui/load_tabs.vm")
-  #end
+## Determine whether the closed source dashboard component is enabled
+#set($company = $view.getLoggedInUser().getCompany())
+#if($company == "GTWM" || $company == "Castell Howell")
+  #set($dashboard_enabled = true)
 #else
-  #parse("gui/load_tabs.vm")
+  #set($dashboard_enabled = false)
 #end
