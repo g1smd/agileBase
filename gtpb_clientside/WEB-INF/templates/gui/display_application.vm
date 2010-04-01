@@ -170,8 +170,9 @@
 			          ## #parse('gui/toolbar/buttons/calendar.vm')
 			          ## #parse('gui/toolbar/buttons/wiki.vm')
 					  #parse('gui/resources/dashboard_enabled.vm')
+					  #set($userType = $appUser.getUserType())
 					  ## Still allow admins who haven't got a full dashboard to see the info treemap
-					  #if($view.loggedInUserAllowedTo("ADMINISTRATE") && (!$dashboard_enabled))
+					  #if($view.loggedInUserAllowedTo("ADMINISTRATE") && (!$dashboard_enabled || $userType == "OPERATIONAL" || $userType == "EXTERNAL"))
 						#parse('gui/toolbar/buttons/info.vm')
 					  #end
 					  #parse('gui/toolbar/buttons/dashboard.vm')
