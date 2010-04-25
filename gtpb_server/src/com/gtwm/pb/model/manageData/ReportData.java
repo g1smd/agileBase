@@ -170,7 +170,7 @@ public class ReportData implements ReportDataInfo {
 			this.millisecsTakenToGenerateStats = System.currentTimeMillis() - startTime;
 			float durationSecs = this.millisecsTakenToGenerateStats / ((float) 1000);
 			if (durationSecs > (AppProperties.longSqlTime * 2)) {
-				logger.warn("Long SELECT SQL execution time of " + durationSecs + " seconds for "
+				logger.debug("Long SELECT SQL execution time of " + durationSecs + " seconds for "
 						+ this.report + " statistics, statement = " + SQLCode);
 			}
 		}
@@ -709,7 +709,7 @@ public class ReportData implements ReportDataInfo {
 		ResultSet results = statement.executeQuery();
 		float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
 		if (durationSecs > AppProperties.longSqlTime) {
-			logger.warn("Long SELECT SQL execution time of " + durationSecs
+			logger.debug("Long SELECT SQL execution time of " + durationSecs
 					+ " seconds for report " + this.report + ". Filters = " + filterValues
 					+ ", sorts = " + reportSorts + ", exact filters = " + exactFilters
 					+ ", statement = " + statement);

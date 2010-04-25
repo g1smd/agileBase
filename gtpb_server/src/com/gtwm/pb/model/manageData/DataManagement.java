@@ -1697,7 +1697,7 @@ public class DataManagement implements DataManagementInfo {
 			statement.close();
 			float durationSecs = (System.currentTimeMillis() - startTime) / ((float) 1000);
 			if (durationSecs > AppProperties.longSqlTime) {
-				logger.warn("Long SELECT SQL execution time of " + durationSecs
+				logger.debug("Long SELECT SQL execution time of " + durationSecs
 						+ " seconds for summary '" + reportSummary + "', statement = " + statement);
 			}
 			return new ReportSummaryData(reportSummaryRows, minAggValues, maxAggValues, grandTotals);
