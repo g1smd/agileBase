@@ -98,6 +98,7 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
         try {
             fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCONTENTSIZE, String.valueOf(this.getContentSize()));
             fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
+            fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super.getNotNull());
         } catch (ObjectNotFoundException onfex) {
             throw new CantDoThatException("Internal error setting up " + this.getClass() + " field descriptor", onfex);
         }

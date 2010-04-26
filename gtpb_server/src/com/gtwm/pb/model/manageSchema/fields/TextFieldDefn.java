@@ -148,6 +148,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCONTENTSIZE, String
 					.valueOf(this.getContentSize()));
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super.getNotNull());
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.USELOOKUP, this
 					.usesLookup());
 			if (this.hasDefault()) {

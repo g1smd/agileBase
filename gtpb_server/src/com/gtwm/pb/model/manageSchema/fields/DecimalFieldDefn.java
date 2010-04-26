@@ -152,6 +152,8 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
         FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.NUMBER);
         try {
             fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super
+					.getNotNull());
             fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.NUMBERPRECISION, String.valueOf(this.getPrecision()));
             if (this.hasDefault()) {
                 fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE, String.valueOf(this.getDefault().toString()));

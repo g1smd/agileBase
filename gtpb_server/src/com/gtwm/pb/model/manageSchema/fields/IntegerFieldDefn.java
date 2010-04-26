@@ -53,148 +53,158 @@ import javax.sql.DataSource;
 @Entity
 public class IntegerFieldDefn extends AbstractField implements IntegerField {
 
-    protected IntegerFieldDefn() {
-    }
+	protected IntegerFieldDefn() {
+	}
 
-    public IntegerFieldDefn(DataSource dataSource, TableInfo tableContainingField, String internalFieldName, String fieldName, String fieldDesc, boolean unique, Integer defaultValue,
-            boolean notNull, boolean notApplicable, String notApplicableDescription, int notApplicableValue, boolean usesLookup) throws CantDoThatException {
-        this.setDataSource(dataSource);
-    	super.setTableContainingField(tableContainingField);
-        if (internalFieldName == null) {
-            super.setInternalFieldName((new RandomString()).toString());
-        } else {
-            super.setInternalFieldName(internalFieldName);
-        }
-        super.setFieldName(fieldName);
-        super.setFieldDescription(fieldDesc);
-        super.setUnique(unique);
-        this.setDefault(defaultValue);
-        super.setNotNull(notNull);
-        this.setNotApplicable(notApplicable);
-        if (notApplicable) {
-            this.setNotApplicableDescriptionDirect(notApplicableDescription);
-            this.setNotApplicableValueDirect(notApplicableValue);
-        }
-        this.setUsesLookup(usesLookup);
-    }
+	public IntegerFieldDefn(DataSource dataSource, TableInfo tableContainingField,
+			String internalFieldName, String fieldName, String fieldDesc, boolean unique,
+			Integer defaultValue, boolean notNull, boolean notApplicable,
+			String notApplicableDescription, int notApplicableValue, boolean usesLookup)
+			throws CantDoThatException {
+		this.setDataSource(dataSource);
+		super.setTableContainingField(tableContainingField);
+		if (internalFieldName == null) {
+			super.setInternalFieldName((new RandomString()).toString());
+		} else {
+			super.setInternalFieldName(internalFieldName);
+		}
+		super.setFieldName(fieldName);
+		super.setFieldDescription(fieldDesc);
+		super.setUnique(unique);
+		this.setDefault(defaultValue);
+		super.setNotNull(notNull);
+		this.setNotApplicable(notApplicable);
+		if (notApplicable) {
+			this.setNotApplicableDescriptionDirect(notApplicableDescription);
+			this.setNotApplicableValueDirect(notApplicableValue);
+		}
+		this.setUsesLookup(usesLookup);
+	}
 
-    public String formatIntegerValue(IntegerValue integerValue) {
-        return formatInteger(integerValue.getValueInteger());
-    }
+	public String formatIntegerValue(IntegerValue integerValue) {
+		return formatInteger(integerValue.getValueInteger());
+	}
 
-    public synchronized String formatInteger(int integerValue) {
-        String integerFormat = Helpers.generateJavaDecimalFormat(0);
-        return String.format(integerFormat, integerValue);
-    }
+	public synchronized String formatInteger(int integerValue) {
+		String integerFormat = Helpers.generateJavaDecimalFormat(0);
+		return String.format(integerFormat, integerValue);
+	}
 
-    public boolean allowNotApplicable() {
-        return this.getNotApplicable();
-    }
-    
-    private Boolean getNotApplicable() {
-        return this.notApplicable;
-    }
+	public boolean allowNotApplicable() {
+		return this.getNotApplicable();
+	}
 
-    private void setNotApplicable(Boolean notApplicable) {
-        this.notApplicable = notApplicable;
-    }
+	private Boolean getNotApplicable() {
+		return this.notApplicable;
+	}
 
-    @Transient
-    public String getNotApplicableDescription() throws CantDoThatException {
-        if (!this.getNotApplicable()) {
-            throw new CantDoThatException("The not applicable property is not active for field " + this.getFieldName());
-        }
-        return this.getNotApplicableDescriptionDirect();
-    }
-    
-    private void setNotApplicableDescriptionDirect(String notApplicableDescription) {
-        this.notApplicableDescription = notApplicableDescription;
-    }
-    
-    private String getNotApplicableDescriptionDirect() {
-        return this.notApplicableDescription;
-    }
+	private void setNotApplicable(Boolean notApplicable) {
+		this.notApplicable = notApplicable;
+	}
 
-    @Transient
-    public int getNotApplicableValue() throws CantDoThatException {
-        if (!this.getNotApplicable()) {
-            throw new CantDoThatException("The not applicable property is not active for field " + this.getFieldName());
-        }
-        return this.getNotApplicableValueDirect();
-    }
-    
-    private Integer getNotApplicableValueDirect() {
-        return this.notApplicableValue;
-    }
-    
-    private void setNotApplicableValueDirect(Integer notApplicableValue) {
-        this.notApplicableValue = notApplicableValue;
-    }
+	@Transient
+	public String getNotApplicableDescription() throws CantDoThatException {
+		if (!this.getNotApplicable()) {
+			throw new CantDoThatException("The not applicable property is not active for field "
+					+ this.getFieldName());
+		}
+		return this.getNotApplicableDescriptionDirect();
+	}
 
-    @Transient
-    public DatabaseFieldType getDbType() {
-        return DatabaseFieldType.INTEGER;
-    }
+	private void setNotApplicableDescriptionDirect(String notApplicableDescription) {
+		this.notApplicableDescription = notApplicableDescription;
+	}
 
-    @Transient
-    public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-        FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.NUMBER);
-        try {
-            fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
-            fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.NUMBERPRECISION, "0");
-            if (this.hasDefault()) {
-                fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE, String.valueOf(this.getDefault().toString()));
-            }
-        } catch (ObjectNotFoundException onfex) {
-            throw new CantDoThatException("Internal error setting up " + this.getClass() + " field descriptor", onfex);
-        }
-        return fieldDescriptor;
-    }
+	private String getNotApplicableDescriptionDirect() {
+		return this.notApplicableDescription;
+	}
 
-    @Transient
-    public FieldCategory getFieldCategory() {
-        return FieldCategory.NUMBER;
-    }
+	@Transient
+	public int getNotApplicableValue() throws CantDoThatException {
+		if (!this.getNotApplicable()) {
+			throw new CantDoThatException("The not applicable property is not active for field "
+					+ this.getFieldName());
+		}
+		return this.getNotApplicableValueDirect();
+	}
 
-    public synchronized void setDefault(Integer defaultValue) throws CantDoThatException {
-        super.setDefaultDefined((defaultValue != null));
-        this.setDefaultDirect(defaultValue);
-    }
-    
-    @Transient
-    public synchronized Integer getDefault() {
-        return this.getDefaultDirect();
-    }
+	private Integer getNotApplicableValueDirect() {
+		return this.notApplicableValue;
+	}
 
-    public synchronized void clearDefault() {
-        super.setDefaultDefined(false);
-        this.setDefaultDirect(null);
-    }
-    
-    private void setDefaultDirect(Integer defaultValue) {
-        this.defaultValue = defaultValue;
-    }
-    
-    private Integer getDefaultDirect() {
-        return this.defaultValue;
-    }
-    
-    private Boolean getUsesLookup() {
-    	return this.usesLookup;
-    }
+	private void setNotApplicableValueDirect(Integer notApplicableValue) {
+		this.notApplicableValue = notApplicableValue;
+	}
 
-    private void setUsesLookup(Boolean usesLookup) {
-    	this.usesLookup = usesLookup;
-    }
-    
-    @Transient
-    public boolean usesLookup() {
-    	return this.getUsesLookup();
-    }
+	@Transient
+	public DatabaseFieldType getDbType() {
+		return DatabaseFieldType.INTEGER;
+	}
 
-    @Transient
+	@Transient
+	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
+		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.NUMBER);
+		try {
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super
+					.getNotNull());
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.NUMBERPRECISION, "0");
+			if (this.hasDefault()) {
+				fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE, String
+						.valueOf(this.getDefault().toString()));
+			}
+		} catch (ObjectNotFoundException onfex) {
+			throw new CantDoThatException("Internal error setting up " + this.getClass()
+					+ " field descriptor", onfex);
+		}
+		return fieldDescriptor;
+	}
+
+	@Transient
+	public FieldCategory getFieldCategory() {
+		return FieldCategory.NUMBER;
+	}
+
+	public synchronized void setDefault(Integer defaultValue) throws CantDoThatException {
+		super.setDefaultDefined((defaultValue != null));
+		this.setDefaultDirect(defaultValue);
+	}
+
+	@Transient
+	public synchronized Integer getDefault() {
+		return this.getDefaultDirect();
+	}
+
+	public synchronized void clearDefault() {
+		super.setDefaultDefined(false);
+		this.setDefaultDirect(null);
+	}
+
+	private void setDefaultDirect(Integer defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+
+	private Integer getDefaultDirect() {
+		return this.defaultValue;
+	}
+
+	private Boolean getUsesLookup() {
+		return this.usesLookup;
+	}
+
+	private void setUsesLookup(Boolean usesLookup) {
+		this.usesLookup = usesLookup;
+	}
+
+	@Transient
+	public boolean usesLookup() {
+		return this.getUsesLookup();
+	}
+
+	@Transient
 	public SortedSet<Integer> getItems() throws SQLException, CantDoThatException {
-		String SQLCode = "SELECT DISTINCT " + this.getInternalFieldName() + " FROM " + this.getTableContainingField().getInternalTableName();
+		String SQLCode = "SELECT DISTINCT " + this.getInternalFieldName() + " FROM "
+				+ this.getTableContainingField().getInternalTableName();
 		Connection conn = null;
 		SortedSet<Integer> items = new TreeSet<Integer>();
 		try {
@@ -215,16 +225,19 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 		return items;
 	}
 
-	public SortedSet<Integer> getItems(BaseReportInfo report, Map<BaseField, String> filterValues) throws SQLException, CantDoThatException {
+	public SortedSet<Integer> getItems(BaseReportInfo report, Map<BaseField, String> filterValues)
+			throws SQLException, CantDoThatException {
 		Connection conn = null;
 		SortedSet<Integer> items = new TreeSet<Integer>();
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			ReportDataInfo reportData = new ReportData(conn, report, false, false);
-			// Generates a SELECT DISTINCT on this field including filterValues in the WHERE clause
-			Map<BaseField,Boolean> emptySorts = new HashMap<BaseField,Boolean>();
-			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn, filterValues, false, emptySorts, -1, this);
+			// Generates a SELECT DISTINCT on this field including filterValues
+			// in the WHERE clause
+			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
+			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
+					filterValues, false, emptySorts, -1, this);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				items.add(results.getInt(1));
@@ -240,25 +253,27 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 		return items;
 	}
 
-    /**
-     * Don't use in code. Only to be used from the DatabaseDefn constructor, hence not in interface
-     */
-    public void setDataSource(DataSource dataSource) throws CantDoThatException {
-        if (dataSource == null) {
-            throw new CantDoThatException("Can't set the data source to null, that's not very useful");
-        }
-        this.dataSource = dataSource;
-    }
+	/**
+	 * Don't use in code. Only to be used from the DatabaseDefn constructor,
+	 * hence not in interface
+	 */
+	public void setDataSource(DataSource dataSource) throws CantDoThatException {
+		if (dataSource == null) {
+			throw new CantDoThatException(
+					"Can't set the data source to null, that's not very useful");
+		}
+		this.dataSource = dataSource;
+	}
 
-    private Integer defaultValue = null;
+	private Integer defaultValue = null;
 
-    private Boolean notApplicable = false;
+	private Boolean notApplicable = false;
 
-    private String notApplicableDescription = "Not applicable";
+	private String notApplicableDescription = "Not applicable";
 
-    private Integer notApplicableValue = -1;
-    
-    private Boolean usesLookup = false;
-    
-    private transient DataSource dataSource = null;
+	private Integer notApplicableValue = -1;
+
+	private Boolean usesLookup = false;
+
+	private transient DataSource dataSource = null;
 }

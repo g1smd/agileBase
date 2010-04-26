@@ -100,6 +100,7 @@ public class DateFieldDefn extends AbstractField implements DateField {
         FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.DATE);
         try {
             fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.DATERESOLUTION, String.valueOf(this.getDateResolutionDirect()));
+            fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super.getNotNull());
             fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.DEFAULTTONOW, getDefaultToNow());
         } catch (ObjectNotFoundException onfex) {
             throw new CantDoThatException("Internal error setting up " + this.getClass() + " field descriptor", onfex);

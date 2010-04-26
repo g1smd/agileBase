@@ -96,6 +96,7 @@ public class CalculationFieldDefn implements CalculationField {
 				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.DATERESOLUTION,
 						String.valueOf(this.getReportCalcField().getDateResolution()));
 				fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.DEFAULTTONOW, false);
+				fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, false);
 			} catch (ObjectNotFoundException onfex) {
 				throw new CodingErrorException("Error setting date options: ", onfex);
 			}
@@ -120,7 +121,8 @@ public class CalculationFieldDefn implements CalculationField {
 
 	public Integer getFieldIndex() {
 		// not relevant as calculations are never stored in tables
-		//logger.warn("Call to irrelevant calculation method getFieldIndex from calculation " + this);
+		// logger.warn("Call to irrelevant calculation method getFieldIndex from calculation "
+		// + this);
 		return null;
 	}
 
@@ -130,7 +132,8 @@ public class CalculationFieldDefn implements CalculationField {
 
 	public Boolean getHidden() {
 		// not relevant as calculations can't be hidden
-		//logger.warn("Call to irrelevant calculation method getHidden from calculation " + this);
+		// logger.warn("Call to irrelevant calculation method getHidden from calculation "
+		// + this);
 		return false;
 	}
 
@@ -145,7 +148,8 @@ public class CalculationFieldDefn implements CalculationField {
 
 	public TableInfo getTableContainingField() {
 		// This is used from templates in an ok way so log warning suppressed
-		//logger.warn("Call to irrelevant calculation method getTableContainingField from calculation " + this);
+		// logger.warn("Call to irrelevant calculation method getTableContainingField from calculation "
+		// + this);
 		// return best guess at a table anyway but this really has no meaning
 		return this.getReportCalcField().getParentReport().getParentTable();
 	}
@@ -161,7 +165,8 @@ public class CalculationFieldDefn implements CalculationField {
 	}
 
 	public void setFieldDescription(String fieldDesc) {
-		logger.warn("Call to irrelevant calculation method setFieldDescription from calculation " + this);
+		logger.warn("Call to irrelevant calculation method setFieldDescription from calculation "
+				+ this);
 	}
 
 	public void setFieldIndex(Integer fieldIndex) {
@@ -177,7 +182,9 @@ public class CalculationFieldDefn implements CalculationField {
 	}
 
 	public void setTableContainingField(TableInfo tableContainingField) {
-		logger.warn("Call to irrelevant calculation method setTableContainingField from calculation " + this);
+		logger
+				.warn("Call to irrelevant calculation method setTableContainingField from calculation "
+						+ this);
 	}
 
 	public void setUnique(Boolean fieldUnique) throws CantDoThatException {
@@ -188,19 +195,19 @@ public class CalculationFieldDefn implements CalculationField {
 		return this.reportCalcField;
 	}
 
-    /**
-     * equals is based on internal field name
-     */
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if ((obj == null) || (obj.getClass() != this.getClass())) {
-            return false;
-        }
-        BaseField otherField = (BaseField) obj;
-        return (this.getInternalFieldName()).equals(otherField.getInternalFieldName());
-    }
+	/**
+	 * equals is based on internal field name
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if ((obj == null) || (obj.getClass() != this.getClass())) {
+			return false;
+		}
+		BaseField otherField = (BaseField) obj;
+		return (this.getInternalFieldName()).equals(otherField.getInternalFieldName());
+	}
 
 	public int hashCode() {
 		return this.getInternalFieldName().hashCode();
@@ -216,7 +223,8 @@ public class CalculationFieldDefn implements CalculationField {
 		if (this == anotherFieldDefn) {
 			return 0;
 		}
-		ReportCalcFieldInfo otherReportCalcField = ((CalculationField) anotherFieldDefn).getReportCalcField();
+		ReportCalcFieldInfo otherReportCalcField = ((CalculationField) anotherFieldDefn)
+				.getReportCalcField();
 		ReportCalcFieldInfo thisReportCalcField = this.getReportCalcField();
 		String otherFieldName = otherReportCalcField.getBaseFieldName();
 		String otherReportName = otherReportCalcField.getParentReport().getReportName();
@@ -226,7 +234,7 @@ public class CalculationFieldDefn implements CalculationField {
 				.compareTo(otherReportName.toLowerCase(Locale.UK)
 						+ otherFieldName.toLowerCase(Locale.UK) + otherInternalFieldName);
 	}
-	
+
 	public String toString() {
 		return this.getFieldName();
 	}
