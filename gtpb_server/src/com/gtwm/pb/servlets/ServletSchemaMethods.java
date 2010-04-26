@@ -800,6 +800,8 @@ public class ServletSchemaMethods {
 					.getFormInputName());
 			boolean hidden = HttpRequestUtil.getBooleanValue(request, PossibleBooleanOptions.HIDDEN
 					.getFormInputName());
+			boolean notNull = HttpRequestUtil.getBooleanValue(request, PossibleBooleanOptions.MANDATORY
+					.getFormInputName());
 			// begin updating model and persisting changes
 			BaseField newField = null;
 			Connection conn = null;
@@ -809,7 +811,7 @@ public class ServletSchemaMethods {
 				conn.setAutoCommit(false);
 				// create the new field
 				newField = databaseDefn.addField(request, conn, table, fieldType,
-						internalFieldName, fieldName, fieldDesc, unique, hidden);
+						internalFieldName, fieldName, fieldDesc, unique, hidden, notNull);
 				conn.commit();
 				HibernateUtil.currentSession().getTransaction().commit();
 			} catch (SQLException sqlex) {
@@ -1052,6 +1054,7 @@ public class ServletSchemaMethods {
 		Double decimalFieldDefault = null;
 		Integer integerFieldDefault = null;
 		Boolean unique = field.getUnique();
+		Boolean notNull = field.getNotNull();
 		if (field instanceof TextField) {
 			textFieldUsesLookup = ((TextField) field).usesLookup();
 			textFieldContentSize = ((TextField) field).getContentSize();
@@ -1075,19 +1078,19 @@ public class ServletSchemaMethods {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull);
 			throw new CantDoThatException("Updating field failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull);
 			throw new CantDoThatException("Updating field failed: " + pex.getMessage(), pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull);
 			throw new CantDoThatException("Updating field failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
@@ -1101,9 +1104,10 @@ public class ServletSchemaMethods {
 	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup,
 			Integer textFieldContentSize, Boolean dateFieldDefaultToNow,
 			Integer dateFieldResolution, Integer decimalFieldPrecision, String textFieldDefault,
-			Double decimalFieldDefault, Integer integerFieldDefault, Boolean unique)
+			Double decimalFieldDefault, Integer integerFieldDefault, Boolean unique, Boolean notNull)
 			throws CantDoThatException {
 		field.setUnique(unique);
+		field.setNotNull(notNull);
 		if (field instanceof TextField) {
 			((TextField) field).setUsesLookup(textFieldUsesLookup);
 			((TextField) field).setContentSize(textFieldContentSize);

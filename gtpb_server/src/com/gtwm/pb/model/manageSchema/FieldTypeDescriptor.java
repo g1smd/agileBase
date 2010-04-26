@@ -44,18 +44,21 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 		case TEXT:
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.UNIQUE));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.USELOOKUP));
+			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.TEXTCONTENTSIZE));
 			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.DEFAULTVALUE));
 			break;
 		case NUMBER:
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.UNIQUE));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.USELOOKUP));
+			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.NUMBERPRECISION));
 			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.DEFAULTVALUE));
 			break;
 		case DATE:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.DATERESOLUTION));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.DEFAULTTONOW));
+			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
 			break;
 		case DURATION:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.DURATIONRESOLUTION));
@@ -67,6 +70,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 		case RELATION:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTTABLE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTVALUEFIELD));
+			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
 			break;
 		case CHECKBOX:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.CHECKBOXDEFAULT));

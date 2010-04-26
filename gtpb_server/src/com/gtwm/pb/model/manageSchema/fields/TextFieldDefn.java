@@ -162,9 +162,6 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	}
 
 	public synchronized void setDefault(String defaultValue) throws CantDoThatException {
-		if (this.getNotNull() && (defaultValue == null)) {
-			throw new CantDoThatException("A field that cannot be null must have a default value");
-		}
 		super.setDefaultDefined((defaultValue != null));
 		this.setDefaultDirect(defaultValue);
 	}

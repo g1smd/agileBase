@@ -80,9 +80,6 @@ public class CheckboxFieldDefn extends AbstractField implements CheckboxField {
 	}
 
 	public synchronized void setDefault(Boolean defaultValue) throws CantDoThatException {
-		if ((this.getNotNull() == true) && (defaultValue == null)) {
-			throw new CantDoThatException("A field that cannot be null must have a default value");
-		}
 		super.setDefaultDefined((defaultValue != null));
 		this.setDefaultDirect(defaultValue);
 	}

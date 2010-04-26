@@ -92,9 +92,6 @@ public class DurationFieldDefn extends AbstractField implements DurationField {
     }
 
     public synchronized void setDefault(DurationValue defaultValue) throws CantDoThatException {
-        if ((this.getNotNull() == true) && (defaultValue == null)) {
-            throw new CantDoThatException("A field that cannot be null must have a default value");
-        }
         super.setDefaultDefined((defaultValue != null));
         this.defaultValue = defaultValue;
     }

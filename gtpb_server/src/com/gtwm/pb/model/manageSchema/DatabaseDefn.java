@@ -926,7 +926,7 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	private BaseField generateFieldObject(HttpServletRequest request, TableInfo table,
 			String fieldType, String internalFieldName, String fieldName, String fieldDesc,
-			boolean unique, boolean hidden) throws CodingErrorException, CantDoThatException,
+			boolean unique) throws CodingErrorException, CantDoThatException,
 			ObjectNotFoundException {
 		BaseField field = null;
 		// No fields in agileBase are mandatory
@@ -1024,17 +1024,18 @@ public class DatabaseDefn implements DatabaseInfo {
 	 */
 	public BaseField addField(HttpServletRequest request, Connection conn, TableInfo table,
 			String fieldType, String internalFieldName, String fieldName, String fieldDesc,
-			boolean unique, boolean hidden) throws SQLException, ObjectNotFoundException,
-			DisallowedException, CantDoThatException, CodingErrorException {
+			boolean unique, boolean hidden, boolean notNull) throws SQLException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException, CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
 		BaseField field = null;
 		field = this.generateFieldObject(request, table, fieldType, internalFieldName, fieldName,
-				fieldDesc, unique, hidden);
+				fieldDesc, unique);
 		this.addField(conn, table, field, request);
 		field.setHidden(hidden);
+		field.setNotNull(notNull);
 		// schema change time not recorded in memory because it doesn't affect
 		// summary reports
 		// this.dataManagement.logLastSchemaChangeTime(request);
@@ -1073,6 +1074,11 @@ public class DatabaseDefn implements DatabaseInfo {
 								+ PossibleBooleanOptions.UNIQUE.getFormInputName())) {
 							Boolean unique = Helpers.valueRepresentsBooleanTrue(formInputValue);
 							textField.setUnique(unique);
+						} else if (formInputName.equals("updateoption"
+								+ field.getInternalFieldName()
+								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							textField.setNotNull(notNull);
 						}
 					} // end of BooleanFieldDescriptorOptionInfo
 					else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
@@ -1122,6 +1128,11 @@ public class DatabaseDefn implements DatabaseInfo {
 							Boolean defaultToNow = Helpers
 									.valueRepresentsBooleanTrue(formInputValue);
 							dateField.setDefaultToNow(defaultToNow);
+						} else if (formInputName.equals("updateoption"
+								+ field.getInternalFieldName()
+								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							dateField.setNotNull(notNull);
 						}
 					} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
 						if (formInputName.equals("updateoption" + field.getInternalFieldName()
@@ -1141,7 +1152,13 @@ public class DatabaseDefn implements DatabaseInfo {
 						+ fieldOption.getFormInputName();
 				String formInputValue = request.getParameter(formInputName);
 				if (formInputValue != null) {
-					if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
+						if (formInputName.equals("updateoption" + field.getInternalFieldName()
+								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							decimalField.setNotNull(notNull);
+						}
+					} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
 						if (formInputName.equals("updateoption" + field.getInternalFieldName()
 								+ PossibleListOptions.NUMBERPRECISION.getFormInputName())) {
 							int precision = Integer.valueOf(formInputValue);
@@ -1171,6 +1188,11 @@ public class DatabaseDefn implements DatabaseInfo {
 				if (formInputValue != null) {
 					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
 						if (formInputName.equals("updateoption" + field.getInternalFieldName()
+								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							integerField.setNotNull(notNull);
+						} else if (formInputName.equals("updateoption"
+								+ field.getInternalFieldName()
 								+ PossibleBooleanOptions.UNIQUE.getFormInputName())) {
 							Boolean unique = Helpers.valueRepresentsBooleanTrue(formInputValue);
 							integerField.setUnique(unique);
@@ -1279,7 +1301,6 @@ public class DatabaseDefn implements DatabaseInfo {
 			setUnique = false;
 			setNotNull = false;
 		}
-
 		// Add length of field to text field type
 		if (fieldToAdd.getDbType().equals(DatabaseFieldType.VARCHAR)) {
 			BaseField temp = fieldToAdd;
@@ -1306,9 +1327,6 @@ public class DatabaseDefn implements DatabaseInfo {
 					.getFieldName(), dbType, setUnique);
 			if (fieldToAdd.hasDefault()) {
 				this.setFieldDefaultDbAction(conn, fieldToAdd);
-			}
-			if (setNotNull) {
-				this.setFieldNotNullDbAction(conn, internalTableName, internalFieldName);
 			}
 			// Add index only if not unique (will already have index) and for
 			// field types where indexing makes sense.
@@ -1386,15 +1404,6 @@ public class DatabaseDefn implements DatabaseInfo {
 			statement.execute();
 			statement.close();
 		}
-	}
-
-	private void setFieldNotNullDbAction(Connection conn, String internalTableName,
-			String internalFieldName) throws SQLException {
-		String SQLCode = "ALTER TABLE " + internalTableName;
-		SQLCode += " ALTER COLUMN " + internalFieldName + " SET NOT NULL";
-		PreparedStatement statement = conn.prepareStatement(SQLCode);
-		statement.execute();
-		statement.close();
 	}
 
 	/*
@@ -1745,8 +1754,9 @@ public class DatabaseDefn implements DatabaseInfo {
 				+ filter);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
-	
-	public synchronized ModuleInfo addModule(HttpServletRequest request) throws ObjectNotFoundException, DisallowedException {
+
+	public synchronized ModuleInfo addModule(HttpServletRequest request)
+			throws ObjectNotFoundException, DisallowedException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		// Make sure module name is unique
 		String baseModuleName = "New Module";
@@ -1774,7 +1784,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		company.addModule(newModule);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, null, AppAction.ADD_MODULE, newModule.getModuleName());
+		usageLogger.logReportSchemaChange(user, null, AppAction.ADD_MODULE, newModule
+				.getModuleName());
 		UsageLogger.startLoggingThread(usageLogger);
 		return newModule;
 	}
@@ -2538,7 +2549,8 @@ public class DatabaseDefn implements DatabaseInfo {
 	 * Given all the properties of a text field (content size, whether it uses a
 	 * lookup, if it's unique etc.), set indexes appropriately
 	 */
-	private void addRemoveRelevantTextIndexes(Connection conn, TextField field) throws SQLException, CantDoThatException {
+	private void addRemoveRelevantTextIndexes(Connection conn, TextField field)
+			throws SQLException, CantDoThatException {
 		String internalTableName = field.getTableContainingField().getInternalTableName();
 		String internalFieldName = field.getInternalFieldName();
 		this.removeIndexDbAction(conn, internalTableName, internalFieldName, true);
@@ -2562,7 +2574,8 @@ public class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * runs addUniqueDbAction, providing a database connection
 	 */
-	private void addUniqueWrapper(String internalTableName, String internalFieldName) throws CantDoThatException {
+	private void addUniqueWrapper(String internalTableName, String internalFieldName)
+			throws CantDoThatException {
 		try {
 			Connection conn = this.relationalDataSource.getConnection();
 			try {

@@ -91,9 +91,6 @@ public abstract class AbstractField implements BaseField {
 
 	@Transient
 	public void setNotNull(boolean fieldNotNull) throws CantDoThatException {
-		if ((fieldNotNull) && (!this.hasDefault())) {
-			throw new CantDoThatException("A field that cannot be null must have a default value");
-		}
 		this.setNotNullDirect(fieldNotNull);
 	}
 

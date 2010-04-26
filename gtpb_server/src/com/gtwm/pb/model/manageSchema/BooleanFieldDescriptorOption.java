@@ -51,7 +51,8 @@ public class BooleanFieldDescriptorOption implements BooleanFieldDescriptorOptio
         DEFAULTTONOW("Default to current time", false), 
         ALLOWNOTAPPLICABLE("Allow not applicable", true), 
         USELOOKUP("Use lookup for input", false), 
-        HIDDEN("Hidden field",true);
+        HIDDEN("Hidden field",true),
+        MANDATORY("Mandatory", true);
 
         PossibleBooleanOptions(String optionDescription, boolean advancedOption) {
             this.optionDescription = optionDescription;

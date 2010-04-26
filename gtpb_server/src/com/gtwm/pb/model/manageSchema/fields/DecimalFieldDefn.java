@@ -163,9 +163,6 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
     }
 
     public synchronized void setDefault(Double defaultValue) throws CantDoThatException {
-        if (super.getNotNull() && (defaultValue == null)) {
-            throw new CantDoThatException("A field that cannot be null must have a default value");
-        }
         super.setDefaultDefined((defaultValue != null));
         this.setDefaultDirect(defaultValue);
     }
