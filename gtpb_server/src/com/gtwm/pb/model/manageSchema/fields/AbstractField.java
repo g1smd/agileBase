@@ -91,6 +91,7 @@ public abstract class AbstractField implements BaseField {
 
 	@Transient
 	public void setNotNull(boolean fieldNotNull) throws CantDoThatException {
+		logger.debug("Setting " + this + " not null to " + fieldNotNull);
 		this.setNotNullDirect(fieldNotNull);
 	}
 
