@@ -53,7 +53,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 		      #set($viewOnly=false) ## $viewOnly used by resources/input/input.vm
 		      #set($fields = $sessionTable.getFields())
 			  #if(($lastAppAction != "CLONE_RECORD" && $lastAppAction != "SAVE_NEW_RECORD") || ($lastAppActionRowId != $sessionRowId))
-			    ## Check if any mandatory fields remain unfilled
+			    Debug: lastAppAction $lastAppAction, lastAppActionRowId $lastAppActionRowId against session $sessionRowId<br>
+				## Check if any mandatory fields remain unfilled
 				#set($unfilledMandatories = false)
 				#foreach($field in $fields)
 					#if($field.getNotNull() && $tableDataRow.get($field) == "")
