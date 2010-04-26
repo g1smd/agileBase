@@ -55,6 +55,8 @@
 	      <textarea tabindex="$tabIndex" cols="$numCols" rows="$numRows" name="$field.getInternalFieldName()" #if($updateAsType) gtpb_update_record gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" onkeyup="fResizeTextArea(this); top.oBuffer.writeBuffer(this);" maxKeyCount="15" #else onkeyup="fResizeTextArea(this);" #end onclick="fResizeTextArea(this);" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device && $updateAsType) top.oBuffer.writeBuffer(this); #end">$fieldValue</textarea>##
 		  #if ($fieldValueObject.isURL())##      
 		    <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">website</a>##
+		  #elseif($field.getNotNull() && $fieldValue == "")
+			<span class="mandated">* Mandatory field - please enter a value</span>
 	      #end##
 		#end##
 	  #else ## start of normal (not big text) field
@@ -78,6 +80,8 @@
 		        <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue" target="_blank">map</a>##
 			  #elseif ($mobile_device && $fieldValueObject.isPhoneNumber())##
 				<a href="tel:$fieldValue">phone</a>##
+		      #elseif($field.getNotNull() && $fieldValue == "")
+			    <span class="mandated">* Mandatory field - please enter a value</span>
 		      #end##
     #end##
 		##

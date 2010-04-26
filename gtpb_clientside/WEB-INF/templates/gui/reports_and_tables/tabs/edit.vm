@@ -32,7 +32,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 	</div>
 #else
   ## show the interface to edit the record
-  #if(($sessionData.getLastAppAction() == "CLONE_RECORD") && ($sessionData.getLastAppActionRowId() == $sessionRowId))
+  #set($lastAppAction = $sessionData.getLastAppAction())
+  #set($lastAppActionRowId = $sessionData.getLastAppActionRowId())
+  #if(($lastAppAction == "CLONE_RECORD") && ($lastAppActionRowId == $sessionRowId))
     #set($cloned_record = true)
   #end
 	  <table cellspacing="0" cellpadding="0" border="0" id="reportData" #if($cloned_record) style="background:url('styles/cloned.png') no-repeat top right !important;" #end>
@@ -50,11 +52,28 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 		    #else
 		      #set($viewOnly=false) ## $viewOnly used by resources/input/input.vm
 		      #set($fields = $sessionTable.getFields())
+			  #if(($lastAppAction != "CLONE_RECORD" && $lastAppAction != "SAVE_NEW_RECORD") || ($lastAppActionRowId != $sessionRowId))
+			    ## Check if any mandatory fields remain unfilled
+				#set($unfilledMandatories = false)
+				#foreach($field in $fields)
+					#if($field.getNotNull() && $tableDataRow.get($field) == "")
+						#set($unfilledMandatories = true)
+					#end
+				#end
+			  #end
+			  #if($unfilledMandatories)
+			      #foreach($field in $fields)
+					#if($field.getNotNull() && $tableDataRow.get($field) == "")
+						#parse("gui/reports_and_tables/tabs/table_data_row.vm")
+					#end
+			      #end ## end loop through fields
+			  #else
 			      #foreach($field in $fields)
 				        #if($field.getHidden() == false)
-          #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+							#parse("gui/reports_and_tables/tabs/table_data_row.vm")
 				        #end
 			      #end ## end loop through fields
+			  #end ## end if no unfilled mandatories
 			      #if($view.isWikiIntegrated() && (!$mobile_device))
 			        #parse("gui/reports_and_tables/tabs/wiki.vm")  
 			      					  <tr class="trailing">

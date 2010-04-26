@@ -227,6 +227,12 @@
     
   </style>
   
+  #if(!$globalEdit)
+	Debug: tableDataRow.get(field) is $tableDataRow.get($field)<br>
+		#if($field.getNotNull() && $tableDataRow.get($field).isNull())
+			<span class="mandatory">* Mandatory field - please enter a value</span>
+		#end
+  #end
 ##elseif($globalEdit)##
 ##  <br><i><span class="greytext">global editing of relation field not yet supported</span></i>##
 #else ##read-only

@@ -310,6 +310,13 @@
 	    fCreateDateObject();
 	  
 	  </script>
+	  
+	  #if($userCanEdit && !$globalEdit)
+		#if($field.getNotNull() && $tableDataRow.get($field).isNull())
+			<span class="mandatory">* Mandatory field - please enter a value</span>
+		#end
+	  #end
+
 #else ##user can't edit
 $field.formatCalendar($fieldValue)##
 #end##

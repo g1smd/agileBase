@@ -26,14 +26,17 @@
   #if($globalEdit)##
     #set($fieldValue = "")##
   #else##
-  			  #set($fieldValue=$tableDataRow.get($field).toString())##
+  	#set($fieldValue=$tableDataRow.get($field).toString())##
   #end##
   	#if($userCanEdit)##
   	  #if($globalEdit || (!$updateAsType))##
   	    		<input tabindex="$tabIndex" type="text" name="$field.getInternalFieldName()" value="$fieldValue" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
   	  #else##
   	    		<input tabindex="$tabIndex" type="text" gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
-  	  #end##
+				#if($field.getNotNull() && $fieldValue == "")
+					<span class="mandated">* Mandatory field - please enter a value</span>
+				#end
+	  #end##
     		#if($field.allowNotApplicable())##
 		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
 		    #end##
@@ -49,6 +52,9 @@ $fieldValue##
   	    		<input tabindex="$tabIndex" type="text" name="$field.getInternalFieldName()" value="" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
   	  #else##
   	    		<input tabindex="$tabIndex" type="text" gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+				#if($field.getNotNull() && $tableDataRow.get($field) == "")
+					<span class="mandated">* Mandatory field - please enter a value</span>
+				#end
   	  #end##
     		#if($field.allowNotApplicable())##
 		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##

@@ -66,7 +66,7 @@
     
     </select>
 
-#end ## end if more than 1 item in the combo
+#end ## end if any items in the combo
 
 <input type="text" name="$field.getInternalFieldName()"
 	#if($globalEdit || !$updateAsType)
@@ -83,4 +83,12 @@
 		onblur="top.oBuffer.writeBuffer(this)"
 	#end
 >
+
+#if($userCanEdit && !$globalEdit && $updateAsType)
+	#if($field.getNotNull() && $fieldValue == "")
+		<span class="mandatory">* Mandatory field - please enter a value</span>
+	#end
+#end
+
+
 
