@@ -66,6 +66,8 @@ div#recordUnlock button div h1, div#recordUnlock div#staticMessage h1 {
 }
 
 div#recordUnlock button div small, div#recordUnlock div#staticMessage small
-	{
+{
 	font-size: 8pt;
 }
+
+.mandated {color: red}
