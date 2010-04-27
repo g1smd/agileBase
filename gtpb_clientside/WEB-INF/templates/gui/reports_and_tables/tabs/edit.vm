@@ -62,6 +62,16 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 				#end
 			  #end
 			  #if($unfilledMandatories)
+				  #set($rowCount = $rowCount + 1)
+				  <tr #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
+					<td class=leading>&nbsp;</td>
+					<td colspan="2">
+					The following fields are mandated and must be completed before continuing.<br>
+					This record will be highlighted in the dashboard as an exception until values are filled in.<br>
+					If the information necessary isn't available yet, other records can continue to be edited.
+					</td>
+					<td class="trailing">&nbsp;</td>
+				  </tr>
 			      #foreach($field in $fields)
 					#if($field.getNotNull() && $tableDataRow.get($field) == "")
 						#parse("gui/reports_and_tables/tabs/table_data_row.vm")
