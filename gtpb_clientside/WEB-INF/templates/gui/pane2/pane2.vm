@@ -349,6 +349,7 @@
 	  }
     </SCRIPT>
 	<script type="text/javascript">
+	#if($browser != "Internet Explorer" && !$mobile_device)
 	function alignTableHeaderCells() {
 		var jqFirstRowCells = $("tbody#reportBody tr:first").children("td");
 		var jqHeaderCells = $("#reportData thead tr:first").children("th");
@@ -368,6 +369,7 @@
 		  i++;
 		});
 	}
+	#end
 	
 	$(document).ready(function() {
 	  $("#filterhelp").cluetip({
