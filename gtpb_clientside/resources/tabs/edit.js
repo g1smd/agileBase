@@ -225,6 +225,13 @@ function fSetupCharts() {
   });
 }
 
+/* Action to be run when mandated fields are completed in the edit pane - load the rest of the fields for editing */
+function fCompleteMandated() {
+  $('#mandated_complete').click(function() {
+	  currentTab.showTab();
+  });
+}
+
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
 
@@ -232,3 +239,4 @@ pane3Scripts.functionList.push(fUnlockButton);
 pane3Scripts.functionList.push(fComboComponents);
 pane3Scripts.functionList.push(fRelationPickers);
 pane3Scripts.functionList.push(fSetupCharts);
+pane3Scripts.functionList.push(fCompleteMandated);

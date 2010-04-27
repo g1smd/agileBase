@@ -50,7 +50,7 @@
 	      input[type=text][changed=true] { 
 	        text-decoration:underline 
 	      }
-	#if($browser != "Internet Explorer")
+	#if($browser != "Internet Explorer" && !$mobile_device)
 	/* for fixed (frozen) table header */
 		div#wrapper table#reportData {
 		margin-top: 30px;
@@ -375,7 +375,7 @@
 		ajaxCache: true,
 		waitImage: false
 	  });
-	  #if($browser != "Internet Explorer")
+	  #if($browser != "Internet Explorer" && !$mobile_device)
 	  alignTableHeaderCells();
 	  setInterval("alignTableHeaderCells()", 2000);
 	  
