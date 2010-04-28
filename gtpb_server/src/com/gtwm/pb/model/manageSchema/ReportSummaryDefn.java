@@ -239,6 +239,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		}
 		PreparedStatement statement = conn.prepareStatement(sqlForSummary);
 		if (validSummary) {
+			logger.debug("Summary: " + sqlForSummary);
 			reportData.fillInFilterValues(filtersUsed, statement);
 		}
 		return statement;
