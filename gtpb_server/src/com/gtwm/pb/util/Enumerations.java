@@ -200,7 +200,7 @@ public class Enumerations {
 	 */
 	public enum AggregateFunction {
 		COUNT("count"), SUM("sum"), MIN("minimum"), MAX("maximum"), AVG("average"), WTDAVG(
-				"weighted avg.");
+				"weighted avg."), CUMULATIVE_COUNT("cumulative count"), CUMULATIVE_SUM("cumulative sum");
 
 		private String label;
 

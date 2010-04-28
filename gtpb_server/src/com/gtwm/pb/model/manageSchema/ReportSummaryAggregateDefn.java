@@ -77,24 +77,27 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 	public String getSQLPartForAggregate() throws CantDoThatException {
 		ReportFieldInfo reportField = this.getReportField();
 		String aggregateArgument = reportField.getInternalFieldName();
-		if (this.getAggregateFunction().equals(AggregateFunction.COUNT)) {
+		AggregateFunction aggregateFunction = this.getAggregateFunction();
+		if (aggregateFunction.equals(AggregateFunction.COUNT)) {
 			BaseField field = reportField.getBaseField();
 			if (!field.equals(field.getTableContainingField().getPrimaryKey())) {
 				aggregateArgument = "DISTINCT " + aggregateArgument;
 			}
 		}
-		// weighted average is a special case that requires it's own definition
-		// due to using two fields
-		if (this.getAggregateFunction().equals(AggregateFunction.WTDAVG)) {
+		// more complex fns with particular definitions
+		if (aggregateFunction.equals(AggregateFunction.WTDAVG)) {
 			if (this.getSecondaryReportField() == null) {
 				throw new CantDoThatException("Must have two fields to create a weighted average");
 			}
 			String secondaryAggregateArgument = this.getSecondaryReportField()
 					.getInternalFieldName();
 			return ("(sum(" + secondaryAggregateArgument + ") / sum(" + aggregateArgument + ")) * 100");
+		} else if (aggregateFunction.equals(AggregateFunction.CUMULATIVE_COUNT)) {
+			return "sum(count(" + aggregateArgument + ")) OVER (ROWS UNBOUNDED PRECEDING)";
+		} else if (aggregateFunction.equals(AggregateFunction.CUMULATIVE_SUM)) {
+			return "sum(" + aggregateArgument + ") OVER (ROWS UNBOUNDED PRECEDING)";
 		} else {
-			String aggregateFunction = this.getAggregateFunction().toString().toLowerCase();
-			return aggregateFunction + "(" + aggregateArgument + ")";
+			return aggregateFunction.toString().toLowerCase() + "(" + aggregateArgument + ")";
 		}
 	}
 
@@ -143,9 +146,9 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 	public String toString() {
 		ReportFieldInfo reportField = this.getReportField();
 		if (this.getAggregateFunction().equals(AggregateFunction.WTDAVG)) {
-			return "Weighted " + this.getSecondaryReportField() + " / " + reportField
-					+ " %";
-		} else if (reportField.getBaseField().equals(reportField.getBaseField().getTableContainingField().getPrimaryKey())) {
+			return "Weighted " + this.getSecondaryReportField() + " / " + reportField + " %";
+		} else if (reportField.getBaseField().equals(
+				reportField.getBaseField().getTableContainingField().getPrimaryKey())) {
 			return this.yAxisLabel();
 		} else if (this.isCountFunction()) {
 			return this.yAxisLabel() + "(" + reportField + ")";
