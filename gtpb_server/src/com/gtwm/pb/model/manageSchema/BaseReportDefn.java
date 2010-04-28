@@ -182,6 +182,11 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 			if (moduleCompare != 0) {
 				return moduleCompare;
 			}
+		} else if (this.module != null && otherModule == null) {
+			return 1;
+		} else if (this.module == null && otherModule != null) {
+			// Reports with no module go at the end
+			return -1;
 		}
 		TableInfo otherTable = anotherReportDefn.getParentTable();
 		int tableCompare = this.getParentTable().compareTo(otherTable);

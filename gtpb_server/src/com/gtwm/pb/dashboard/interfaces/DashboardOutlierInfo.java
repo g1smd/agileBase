@@ -28,4 +28,17 @@ public interface DashboardOutlierInfo {
 	 * Return the date the row was last edited
 	 */
 	public DateValue getModificationDate();
+	
+	public OutlierType getOutlierType();
+	
+	/**
+	 * An outlier can be a case of either 
+	 * 
+	 * - a field is marked as mandatory but no value is entered
+	 * 
+	 * - a field value is significantly outside the norm, based on std. dev.
+	 */
+	public enum OutlierType {
+		MANDATED_VIOLATION, DISTRIBUTION_OUTLIER
+	}
 }
