@@ -313,7 +313,7 @@
 	  
 	  #if($userCanEdit && !$globalEdit)
 		#if($field.getNotNull() && $tableDataRow.get($field).isNull())
-			<span class="mandatory">* Mandatory field - please enter a value</span>
+			<span class="mandated">* Mandatory field - please enter a value</span>
 		#end
 	  #end
 
