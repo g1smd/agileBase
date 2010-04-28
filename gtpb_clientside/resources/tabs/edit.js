@@ -228,6 +228,8 @@ function fSetupCharts() {
 /* Action to be run when mandated fields are completed in the edit pane - load the rest of the fields for editing */
 function fCompleteMandated() {
   $('#mandated_complete').click(function() {
+	  alert('completing');
+	  currentTab.invalidate();
 	  currentTab.showTab();
   });
 }
