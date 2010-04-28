@@ -28,7 +28,7 @@
 		id="$field.getInternalFieldName()_dropdown_edit"
 	#end
 	tabindex="$tabIndex">
-    #if((!$field.getNotNull) || ($fieldValue != ""))
+    #if((!$field.getNotNull()) || ($fieldValue != ""))
 		## Don't show 'please pick one' if field is mandated and filled in
     	<option value="">-- please pick one --</option>
     #end
