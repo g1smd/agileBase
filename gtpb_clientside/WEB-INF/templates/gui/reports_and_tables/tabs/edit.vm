@@ -81,7 +81,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 				  <tr #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
 					<td class=leading>&nbsp;</td>
 					<td>&nbsp;</td>
-					<td><input type="button" value="Complete" alt="Complete the rest of the record" onclick="window.refresh()"></td>
+					<td><input type="button" value="Complete" alt="Complete the rest of the record" onclick="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';"></td>
 					<td class="trailing">&nbsp;</td>
 				  </tr>
 			  #else
