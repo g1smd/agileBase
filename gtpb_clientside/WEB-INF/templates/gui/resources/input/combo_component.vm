@@ -28,9 +28,10 @@
 		id="$field.getInternalFieldName()_dropdown_edit"
 	#end
 	tabindex="$tabIndex">
-    
+    #if((!$field.getNotNull) || ($fieldValue != ""))
+		## Don't show 'please pick one' if field is mandated and filled in
     	<option value="">-- please pick one --</option>
-    
+    #end
     #set($filtered_items = $field.getItems($sessionData.getReport(), $sessionData.getReportFilterValues()))
     #if($all_items.size() == $filtered_items.size())
     	## there are no items filtered
