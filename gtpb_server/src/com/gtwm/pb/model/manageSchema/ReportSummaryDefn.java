@@ -196,6 +196,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		if (this.getAggregateFunctionsDirect().size() > 0) {
 			aggregateFunctionsCsv = aggregateFunctionsCsv.substring(0, aggregateFunctionsCsv
 					.length() - 2);
+			aggregateFunctionsCsv = aggregateFunctionsCsv.replace("agilebase_custom_variable_groupings", groupByFieldsCsv);
 		}
 		// Compose complete SQL
 		ReportDataInfo reportData = new ReportData(conn, this.report, false, false);
@@ -239,7 +240,6 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		}
 		PreparedStatement statement = conn.prepareStatement(sqlForSummary);
 		if (validSummary) {
-			logger.debug("Summary: " + sqlForSummary);
 			reportData.fillInFilterValues(filtersUsed, statement);
 		}
 		return statement;

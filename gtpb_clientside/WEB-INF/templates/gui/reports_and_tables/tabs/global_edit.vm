@@ -17,14 +17,6 @@
 ##
 $viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
 ## edit the data in the session table
-    <!-- script to generate tooltip text describing global edit -->
-    <SCRIPT language=Javascript>
-      function fGetTooltipText() {
-        var tooltipText= 'Click \'Update Globally\' to apply a value to all records displayed in pane 2.<br/>';
-        tooltipText = tooltipText + 'You can filter records in Pane 2 to reduce the number of records affected or show \'more\' to increase the number of records affected.';
-        return tooltipText;
-      }
-    </SCRIPT>
 #set($tabCaption='global edit')
 #set($rowCount = 0)
 #set($sessionTable=$sessionData.getTable())
@@ -40,7 +32,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
 		    <thead>
 			      <tr>
 			##        <th class="leading">&nbsp;</th>			
-			        <th class="leading"><img src="resources/icons/help.png" onmouseover="return escape(fGetTooltipText())"></th>
+			        <th class="leading"><!--<img src="resources/icons/help.png" title="Globally edit a value in *all* filtered records in pane 2">-->&nbsp;</th>
 			        <th>field</th>
 			        <th>value</th>
 			        <th class="trailing">&nbsp;</th>

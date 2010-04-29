@@ -93,9 +93,11 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 					.getInternalFieldName();
 			return ("(sum(" + secondaryAggregateArgument + ") / sum(" + aggregateArgument + ")) * 100");
 		} else if (aggregateFunction.equals(AggregateFunction.CUMULATIVE_COUNT)) {
-			return "sum(count(" + aggregateArgument + ")) OVER (ROWS UNBOUNDED PRECEDING)";
+			// The query needs to contain the groupings too, which aren't available to this object.
+			// Put in a placeholder to be replaced by the calling function
+			return "sum(count(" + aggregateArgument + ")) OVER (ORDER BY agilebase_custom_variable_groupings)";
 		} else if (aggregateFunction.equals(AggregateFunction.CUMULATIVE_SUM)) {
-			return "sum(" + aggregateArgument + ") OVER (ROWS UNBOUNDED PRECEDING)";
+			return "sum(" + aggregateArgument + ") OVER (ORDER BY agilebase_custom_variable_groupings)";
 		} else {
 			return aggregateFunction.toString().toLowerCase() + "(" + aggregateArgument + ")";
 		}
