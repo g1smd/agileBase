@@ -835,6 +835,8 @@ public class UsageStats implements UsageStatsInfo {
 			}
 			results.close();
 			statement.close();
+			// Remove the last entry, it will be only part of a week
+			timelineCounts.remove(timelineCounts.size() - 1);
 		} finally {
 			if (conn != null) {
 				conn.close();
