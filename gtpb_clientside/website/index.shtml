@@ -222,10 +222,10 @@
 			<div id="intro" class="wrapper">      
 					<div class="content">
 						<div id="bubble">
-							<h1>industrial strength platform for business applications</h1>
-							use to rapidly prototype and develop data entry and 
+							<h1>the platform for lean business applications</h1>
+							use agileBase to rapidly prototype and develop data entry and 
 							reporting applications that work over the 
-							internet or a local network 
+							internet/intranet
 						</div>
 				<div id="login">
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
@@ -258,12 +258,10 @@
 						<div id="main" class="detail">
 							<div class="divider">
 								<h1>How do I use it?</h1>
-								<p>Use agileBase to create database web applications. It's most
-								suited to analysts who understand in depth both technology and the business needs.</p>
+								<p>agileBase is perfect for organisations in rapidly changing environments, 
+								where scalability goes hand in hand with the need for a rapid build / alter cycle.</p>
 								<p>Our vision was to make a product that allows business analysts
 								to create lean, agile, Just-In-Time (JIT) back offices.</p>
-								Typically, rapidly changing environments are a growth medium for agileBase, 
-								where scalability goes hand in hand with the need for a rapid build / alter cycle.</p>
 							</div>
 							<div>
 								<h1>Why do I use it?</h1>
