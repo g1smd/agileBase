@@ -493,12 +493,10 @@ public class ReportData implements ReportDataInfo {
 		if (sortArguments.length() > 0) {
 			// remove trailing comma and spaces
 			String sortArgs = sortArguments.substring(0, sortArguments.length() - 2);
-			SQLCode.append(" ORDER BY ");
-			SQLCode.append(sortArgs);
+			SQLCode.append(" ORDER BY ").append(sortArgs);
 		}
 		if (rowLimit > 0) {
-			SQLCode.append(" LIMIT ");
-			SQLCode.append(rowLimit);
+			SQLCode.append(" LIMIT ").append(rowLimit);
 		}
 		PreparedStatement statement = conn.prepareStatement(SQLCode.toString());
 		this.fillInFilterValues(filtersUsed, statement);
@@ -880,8 +878,7 @@ public class ReportData implements ReportDataInfo {
 							if (fieldSchema instanceof TextField) {
 								TextField fieldSchemaText = (TextField) fieldSchema;
 								// Set displayValue to 'not applicable' string
-								// if
-								// necessary
+								// if necessary
 								if (fieldSchemaText.allowNotApplicable()) {
 									if (fieldSchemaText.getNotApplicableValue().equals(keyValue)) {
 										displayValue = fieldSchemaText
@@ -961,7 +958,7 @@ public class ReportData implements ReportDataInfo {
 		// loading).
 		//
 		// Also, if a report has a lot of rows, can cache it for longer again
-		// because the data is less likely to change
+		// because the overall stats are less likely to change significantly
 		long cacheForMillis = this.millisecsTakenToGenerateStats * 600;
 		int rowNumFactor = this.report.getRowCount() / 1000;
 		if (rowNumFactor > 1) {
