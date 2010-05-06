@@ -1762,7 +1762,11 @@ public class ServletSchemaMethods {
 			if (filter != null) {
 				report.removeFilter(filter);
 			}
-			throw new CantDoThatException("filter addition failed", sqlex);
+			String message = "Filter addition failed";
+			if (sqlex.getMessage().contains("window functions not allowed in WHERE")) {
+				message += ". That calculation can't be used in a filter. Try creating the calculation in a separate view and joining to it instead.";
+			}
+			throw new CantDoThatException(message, sqlex);
 		} catch (HibernateException hex) {
 			rollbackConnections(conn);
 			// remove report filter from memory
