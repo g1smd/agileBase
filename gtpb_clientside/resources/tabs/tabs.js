@@ -364,6 +364,20 @@ function appendWarning(warningRowHtml) {
 
 var warningRowHtmlSaved = '';
 
+/* Attach an AJAX upload event to file inputs */
+function initUploadify() {
+  jQuery('input:file').uploadify({
+	  'uploader': 'resources/uploadify/uploadify.swf',
+	  'script': 'AppController.servlet',
+	  'scriptData': {
+	    'return': 'blank',
+	    'update_record': true,
+	    'auto': true
+  	  },
+	  'cancelImg': 'resources/uploadify/cancel.png'
+  });
+}
+
 /* 
  * Management tabs functions 
  */
