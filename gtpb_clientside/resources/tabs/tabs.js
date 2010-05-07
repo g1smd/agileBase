@@ -432,7 +432,6 @@ function fEALoaded() {
 
 /* Charts in pane 3 need some behaviours added */
 function fSetupCharts() {
-  alert('fSetupCharts');
   $('.summary_chart').each(function(i) {
 	  var summaryDivName = $(this).attr('id');
 	  var summaryId = summaryDivName.replace('chart_','');
