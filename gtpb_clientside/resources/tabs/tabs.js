@@ -372,7 +372,8 @@ function fUploadify() {
 	  'scriptData': {
 	    'return': 'blank',
 	    'update_record': true,
-	    'auto': true
+	    'auto': true,
+	    'queueID': 'uploadifyQueue'
   	  },
 	  'cancelImg': 'resources/uploadify/cancel.png'
   });
@@ -455,5 +456,3 @@ pane3Scripts.functionList.push(fComboComponents);
 pane3Scripts.functionList.push(fRelationPickers);
 pane3Scripts.functionList.push(fSetupCharts);
 pane3Scripts.functionList.push(fUploadify);
-
-

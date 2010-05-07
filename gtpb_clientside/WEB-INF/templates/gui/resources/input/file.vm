@@ -62,6 +62,7 @@
       <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
       <input type="hidden" name="update_record" value="true" />
       <input tabindex="$tabIndex" type="file" name="$field.getInternalFieldName()" onchange="this.form.submit();" />
+	  <div id="uploadifyQueue"></div>
     </form>
   #end
   #if(!$fieldValueObject.isNull())
