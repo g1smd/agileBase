@@ -371,18 +371,18 @@ function fUploadify() {
 	  'script': 'AppController.servlet',
 	  'scriptData': {
 	    'return': 'blank',
-	    'update_record': true,
-	    'auto': true,
-	    'folder': '/nofolder',
-	    'queueID': 'uploadifyQueue',
-	    'onSelect':   function( evt, queueID, fileObj ) {
-          alert( fileObj.name );
-        },
-        'onError':   function( evt, queueID, fileObj, errObj ) {
-            alert( errObj.info );
-        }
-  	  },
+	    'update_record': true
+      },
 	  'cancelImg': 'resources/uploadify/cancel.png'
+	  'auto': true,
+	  'folder': '/nofolder',
+	  'queueID': 'uploadifyQueue',
+	  'onSelect':   function( evt, queueID, fileObj ) {
+        alert( fileObj.name );
+      },
+      'onError':   function( evt, queueID, fileObj, errObj ) {
+          alert( errObj.info );
+      }
   });
 }
 
