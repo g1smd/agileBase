@@ -140,9 +140,8 @@
       </SCRIPT>
 	  #end
     #end
-    <SCRIPT language=Javascript src="resources/wait/request.js"></SCRIPT>
+    <SCRIPT language=Javascript src="resources/wait/request_setFilter.js"></SCRIPT>
     <SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
-    <SCRIPT language=Javascript src="resources/wait/setFilter.js"></SCRIPT>
     <SCRIPT language=Javascript>
       #set($numRows = $data.size())
       #set($reportRowLimit = $sessionData.getReportRowLimit())

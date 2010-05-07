@@ -74,14 +74,8 @@
 
   
   </STYLE>
-  <SCRIPT language="Javascript" src="resources/wait/request.js"></SCRIPT>
   <SCRIPT language=javascript>
     parent.pane_2.fSetRowSelection('$sessionData.getRole()');
-    
-	// Deletion candidate
-    function fCallback(sResponseText,sResponseXML)
-	{
-    }
     
     function fInit()
     {  // show the first tab

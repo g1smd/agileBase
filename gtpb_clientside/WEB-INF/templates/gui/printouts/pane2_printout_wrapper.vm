@@ -79,7 +79,7 @@
 	    
 	<title>$module - $report</title>      
  	<script src="resources/jquery.js" language="Javascript"></script>
-    <script language="JavaScript" src="resources/wait/request.js"></script>
+    <script language="JavaScript" src="resources/wait/request_setFilter.js"></script>
     <script language="JavaScript" src="resources/modalFramework/modalFramework.js"></script>   
   </head>
   <body oncontextmenu="return false">

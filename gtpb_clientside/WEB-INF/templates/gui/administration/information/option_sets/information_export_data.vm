@@ -34,7 +34,7 @@
 		width:50%;
 	}
 	
-	/* override report_administration.css */
+	/* override report admin tab CSS in manage_tabs.css */
 	.options_wrapper div.options_set td:first-child:first-line {
 		font-weight: normal;
 	}

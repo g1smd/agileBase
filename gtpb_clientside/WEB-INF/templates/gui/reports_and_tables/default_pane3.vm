@@ -23,18 +23,15 @@ $viewTools.startTimer("gui/reports_and_tables/default_pane3")
 #set($success=$tabs.add({'tabName':'view', 'tabSource':'gui/reports_and_tables/tabs/view'}))
 #if($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionData.getTable()))
 	#set($success=$tabs.add({'tabName':'edit', 'tabSource':'gui/reports_and_tables/tabs/edit'}))
-	#set($success=$styles.add('resources/tabs/edit.css'))	
 #end
-
-#if($view.loggedInUserAllowedTo('MANAGE_TABLE',$sessionData.getTable()))
+#set($success=$tabs.add({'tabName':'summary', 'tabSource':'gui/reports_and_tables/tabs/summary'}))
+#if($view.loggedInUserAllowedTo('MANAGE_TABLE',$sessionData.getTable()) && (!$mobile_device))
 	  ## the current user can manage the table so show them admin options as well
 	  ## as the data and summary in tabs
 	  #set($success=$tabs.add({'tabName':'global edit', 'tabSource':'gui/reports_and_tables/tabs/global_edit'}))
-	  #set($success=$styles.add('resources/tabs/global_edit.css'))
-	  #set($success=$tabs.add({'tabName':'fields', 'tabSource':'gui/reports_and_tables/tabs/table_fields'}))
-	  #set($success=$styles.add('resources/tabs/table_fields.css'))
-	  #set($success=$tabs.add({'tabName':'manage', 'tabSource':'gui/reports_and_tables/tabs/table_administration'}))
-	  #set($success=$styles.add('resources/tabs/table_administration.css'))
+	  #set($success=$tabs.add({'tabName':'report fields', 'tabSource':'gui/reports_and_tables/tabs/report_fields'}))
+	  #set($success=$tabs.add({'tabName':'manage', 'tabSource':'gui/reports_and_tables/tabs/report_administration'}))
+	  #set($success=$styles.add('resources/tabs/manage_tabs.css'))
 #end
 
 #set($pane2_id=$sessionData.getRowId())

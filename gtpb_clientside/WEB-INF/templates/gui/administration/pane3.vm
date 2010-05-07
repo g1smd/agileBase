@@ -115,8 +115,8 @@
   </STYLE>
   <script src="resources/jquery.js" language="Javascript"> </script>
   <script src="resources/jquery.sparkline.js" language="Javascript"> </script>
-  <SCRIPT language=Javascript src="resources/wait/request.js"></SCRIPT> 
-  <SCRIPT language=Javascript src="resources/wait/editData.js"></SCRIPT>  
+  <SCRIPT language=Javascript src="resources/wait/request_setFilter.js"></SCRIPT> 
+  <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>  
   <SCRIPT language="JavaScript">
     jQuery(document).ready(function(){
       #if($pane2_id)

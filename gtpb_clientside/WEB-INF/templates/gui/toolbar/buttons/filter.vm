@@ -46,7 +46,7 @@ function fFilters(){
 
 			fClearFilterBoxes();
 
-			/* see setFilter.js */
+			/* see request_setFilter.js */
 			fLoadReport(sResponseText, oReportBody, null);
 		}
 

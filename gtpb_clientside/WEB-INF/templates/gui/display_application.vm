@@ -39,13 +39,11 @@
    	  <script src="resources/jquery.js" language="Javascript"></script>
 	  ## <script type="text/javascript" src="resources/fauxconsole.js"></script>	
       <script language=JavaScript src="resources/logger.js"></script>
-      <script language=JavaScript src="resources/wait/request.js"></script>
+      <script language=JavaScript src="resources/wait/request_setFilter.js"></script>
       <script language=JavaScript src="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.js"></script>      
       <script language=JavaScript src="resources/modalFramework/modalFramework.js"></script>
-      <script language=JavaScript src="resources/wait/editData.js"></script>
       <script language=Javascript src="resources/wait/jquery.ajaxmanager.js"></script>
-      <script language=JavaScript src="resources/wait/setFilter.js"></script>
-      <script language=JavaScript src="resources/wait/editBuffer.js"></script>
+      <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
       <script language="JavaScript" type="text/javascript">
 	        function fSummaryPaneReady() {				 
 	          // return the status of the summary pane by examining its readystate

@@ -29,7 +29,6 @@
 	  <meta name = "viewport" content = "width = device-width">
 	  <link href="styles/report.css" type="text/css" rel="stylesheet" />
 	  <link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
-	  <link href="resources/tabs/summary.css" type="text/css" rel="stylesheet" />
 	  <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
   	  <script src="resources/jquery.js" language="Javascript"> </script>
     </head>

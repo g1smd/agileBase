@@ -57,21 +57,18 @@
 	#else
 		<script type="text/javascript" src="resources/jquery.bgiframe.js"></script>
 		<script type="text/javascript" src="resources/jquery.autocomplete.js"></script>
-		<script language=JavaScript src="resources/wait/editData.js"></script>
-		<script language=JavaScript src="resources/wait/editBuffer.js"></script>
+		<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
 		<!--[if IE]>
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/tabs-ie.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/edit-ie.css" />
 		<![endif]-->
-		<script language=Javascript src="resources/wait/request.js"></script> 
-		<SCRIPT language=Javascript src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
-		<script language=Javascript src="resources/wait/setFilter.js"></script>
+		<script type="text/javascript" src="resources/wait/request_setFilter.js"></script> 
+		<SCRIPT type="text/javascript" src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
         #if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
       	  <script type="text/javascript" src="resources/jquery.tablednd.js"></script>
 		  <script type="text/javascript" src="resources/edit_area/edit_area_full.js"></script>
         #end
         <script type="text/javascript" src="resources/tabs/tabs.js"></script>
-		<script type="text/javascript" src="resources/tabs/edit.js"></script>
 		<script language=Javascript> 
   	  // When submitting the newfield form to create a table field
   	  // disable all input elements not in the addNewField row of the reportData table
@@ -248,8 +245,6 @@
 		<div class="tab-content">
 		</div>	
 	#end
-	
-	
-    	</div>
+    </div>
   </body>
 </html>
