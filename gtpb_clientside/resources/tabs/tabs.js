@@ -377,6 +377,9 @@ function fUploadify() {
 	    'queueID': 'uploadifyQueue',
 	    'onSelect':   function( evt, queueID, fileObj ) {
           alert( fileObj.name );
+        },
+        'onError':   function( evt, queueID, fileObj, errObj ) {
+            alert( errObj.info );
         }
   	  },
 	  'cancelImg': 'resources/uploadify/cancel.png'
