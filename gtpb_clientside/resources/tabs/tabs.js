@@ -365,7 +365,7 @@ function appendWarning(warningRowHtml) {
 var warningRowHtmlSaved = '';
 
 /* Attach an AJAX upload event to file inputs */
-function initUploadify() {
+function fUploadify() {
   jQuery('input:file').uploadify({
 	  'uploader': 'resources/uploadify/uploadify.swf',
 	  'script': 'AppController.servlet',
@@ -454,5 +454,6 @@ pane3Scripts.functionList.push(fUnlockButton);
 pane3Scripts.functionList.push(fComboComponents);
 pane3Scripts.functionList.push(fRelationPickers);
 pane3Scripts.functionList.push(fSetupCharts);
+pane3Scripts.functionList.push(fUploadify);
 
 
