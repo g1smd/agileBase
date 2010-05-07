@@ -61,7 +61,7 @@
     <form method="post" enctype="multipart/form-data" action="AppController.servlet">
       <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
       <input type="hidden" name="update_record" value="true" />
-      <input tabindex="$tabIndex" type="file" name="$field.getInternalFieldName()" onchange="this.form.submit();" />
+      <input id="file_$field.getInternalFieldName()" tabindex="$tabIndex" type="file" name="$field.getInternalFieldName()" onchange="this.form.submit();" />
 	  <div id="uploadifyQueue"></div>
     </form>
   #end
