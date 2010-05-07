@@ -373,7 +373,7 @@ function fUploadify() {
 	    'return': 'blank',
 	    'update_record': true
       },
-	  'cancelImg': 'resources/uploadify/cancel.png'
+	  'cancelImg': 'resources/uploadify/cancel.png',
 	  'auto': true,
 	  'folder': '/nofolder',
 	  'queueID': 'uploadifyQueue',
