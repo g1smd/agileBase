@@ -373,7 +373,11 @@ function fUploadify() {
 	    'return': 'blank',
 	    'update_record': true,
 	    'auto': true,
-	    'queueID': 'uploadifyQueue'
+	    'folder': '/nofolder',
+	    'queueID': 'uploadifyQueue',
+	    'onSelect':   function( evt, queueID, fileObj ) {
+          alert( fileObj.name );
+        }
   	  },
 	  'cancelImg': 'resources/uploadify/cancel.png'
   });
