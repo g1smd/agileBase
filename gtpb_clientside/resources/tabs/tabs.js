@@ -364,8 +364,28 @@ function appendWarning(warningRowHtml) {
 
 var warningRowHtmlSaved = '';
 
-
+// TODO: update when browser support becomes more standard and improves
+// as per https://developer.mozilla.org/En/Using%5FXMLHttpRequest#In%5FFirefox%5F3.5%5Fand%5Flater
 function uploadFile(fileInputElement) {
+  // https://developer.mozilla.org/en/DOM/File
+  var fileObject = fileInputElement.files[0];
+  if (fileObject) {
+	var fileSize = fileObject.size; // the new way
+	if (!fileSize) {
+	  fileSize = fileObject.fileSize; // the deprecated way
+	}	
+    if (fileSize) {
+      var jqFileInput = jQuery(fileInputElement);
+      var jqUploadInfo = jqFileInput.next();
+      var fileSizeInfo = parseInt(fileSize / 1000000)
+      if (fileSizeInfo = 0) {
+        fileSizeInfo = 'Uploading &frac12; MB...';
+      } else {
+        fileSizeInfo = "Uploading " + fileSizeInfo + " MB...";
+      }
+      jqUploadInfo.html(fileSizeInfo);
+    }
+  }
   fileInputElement.form.submit();
 }
 
