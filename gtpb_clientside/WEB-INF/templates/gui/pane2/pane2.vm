@@ -109,7 +109,9 @@
    	     top.document.getElementById('button_export').removeAttribute('disabled');
    	     top.document.getElementById('button_print').removeAttribute('disabled');
    	     top.document.getElementById('button_links').removeAttribute('disabled');
-   	     top.document.getElementById('button_info').removeAttribute('disabled');
+   	     if (top.document.getElementById('button_info') {
+		   top.document.getElementById('button_info').removeAttribute('disabled');
+		 }
         </SCRIPT>
 	    #end
     #else
@@ -131,7 +133,9 @@
 	    	    top.document.getElementById('button_export').removeAttribute('disabled');
    	     		top.document.getElementById('button_print').removeAttribute('disabled');
    	     		top.document.getElementById('button_links').removeAttribute('disabled');
-   	     		top.document.getElementById('button_info').removeAttribute('disabled');
+				if (top.document.getElementById('button_info') {
+   	     		  top.document.getElementById('button_info').removeAttribute('disabled');
+				}
         	#else
         		top.document.getElementById('button_export').setAttribute('disabled');
         		top.document.getElementById('button_print').setAttribute('disabled');
