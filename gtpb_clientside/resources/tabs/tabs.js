@@ -364,6 +364,11 @@ function appendWarning(warningRowHtml) {
 
 var warningRowHtmlSaved = '';
 
+
+function uploadFile(fileInputElement) {
+  fileInputElement.form.submit();
+}
+
 /* 
  * Management tabs functions 
  */

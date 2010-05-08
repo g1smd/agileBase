@@ -58,10 +58,11 @@
   #end ## if !$fieldValueObject.isNull()
   #if($userCanEdit && (!$mobile_device))
     ##For file uploads, do a normal post not an XMLHttpRequest for now. Look at getting the AJAX stuff working later
+	##when Firefox supports upload progress info (coming in v 3.7)
     <form method="post" enctype="multipart/form-data" action="AppController.servlet">
       <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
       <input type="hidden" name="update_record" value="true" />
-      <input id="file_$field.getInternalFieldName()" tabindex="$tabIndex" type="file" name="$field.getInternalFieldName()" onchange="this.form.submit();" />
+      <input tabindex="$tabIndex" type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" />
 	  <div id="uploadifyQueue"></div>
     </form>
   #end
