@@ -378,7 +378,7 @@ function uploadFile(fileInputElement) {
       var jqFileInput = jQuery(fileInputElement);
       var jqUploadInfo = jqFileInput.next();
       var fileSizeInfo = parseInt(fileSize / 1000000)
-      if (fileSizeInfo = 0) {
+      if (fileSizeInfo == 0) {
         fileSizeInfo = 'Uploading &frac12; MB...';
       } else {
         fileSizeInfo = "Uploading " + fileSizeInfo + " MB...";
