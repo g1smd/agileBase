@@ -888,6 +888,10 @@ public class ViewMethods implements ViewMethodsInfo {
 		}
 		return sourceText;
 	}
+	
+	public int getUploadSpeed() {
+		return this.databaseDefn.getDataManagement().getUploadSpeed();
+	}
 
 	private String toolbarPluginName = null;
 

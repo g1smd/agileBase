@@ -305,4 +305,11 @@ public interface DataManagementInfo {
 	public void logLastDataChangeTime(HttpServletRequest request) throws ObjectNotFoundException;
 
 	public void logLastSchemaChangeTime(HttpServletRequest request) throws ObjectNotFoundException;
+
+	/**
+	 * Return the average upload speed of files since agileBase started up, with newer uploads given a larger weighting
+	 * 
+	 * @return Bytes per second
+	 */
+	public int getUploadSpeed();
 }

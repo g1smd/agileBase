@@ -693,4 +693,12 @@ public interface ViewMethodsInfo {
 	 *         replaced by their display names
 	 */
 	public String toExternalNames(String sourceText) throws ObjectNotFoundException;
+
+	/**
+	 * Return the average upload speed of files since agileBase started up, with
+	 * newer uploads given a larger weighting
+	 * 
+	 * @return Bytes per second
+	 */
+	public int getUploadSpeed();
 }

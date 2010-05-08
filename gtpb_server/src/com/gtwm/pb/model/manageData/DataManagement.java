@@ -1139,12 +1139,13 @@ public class DataManagement implements DataManagementInfo {
 		for (FileItem item : multipartItems) {
 			// if item is a file
 			if (!item.isFormField()) {
-				if (item.getSize() == 0) {
+				long fileSize = item.getSize();
+				if (fileSize == 0) {
 					throw new CantDoThatException("An empty file was submitted, no upload done");
 				}
 				if (fileValue.toString().contains("/")) {
 					throw new CantDoThatException(
-							"Filename contains a slash character which is not allowed, no uploda done");
+							"Filename contains a slash character which is not allowed, no upload done");
 				}
 				String filePath = uploadFolderName + "/" + fileValue.toString();
 				File selectedFile = new File(filePath);
@@ -1191,8 +1192,25 @@ public class DataManagement implements DataManagementInfo {
 				} catch (Exception ex) {
 					throw new FileUploadException("Error writing file: " + ex.getMessage());
 				}
+				// Record upload speed
+				long requestStartTime = request.getSession().getLastAccessedTime();
+				float secondsToUpload = (System.currentTimeMillis() - requestStartTime)
+						/ ((float) 1000);
+				if (secondsToUpload > 10) {
+					// Only time reasonably long uploads otherwise we'll amplify errors
+					float uploadSpeed = ((float) fileSize) / secondsToUpload;
+					this.updateUploadSpeed(uploadSpeed);
+				}
 			}
 		}
+	}
+
+	public synchronized int getUploadSpeed() {
+		return (int) this.uploadSpeed;
+	}
+	
+	private synchronized void updateUploadSpeed(float uploadSpeed) {
+		this.uploadSpeed = (this.uploadSpeed + uploadSpeed) / 2;
 	}
 
 	/**
@@ -1962,6 +1980,8 @@ public class DataManagement implements DataManagementInfo {
 	private int reportDataCacheHits = 0;
 
 	private int reportDataCacheMisses = 0;
+
+	private float uploadSpeed = 100000; // Default to 100KB per second
 
 	private AtomicInteger summaryDataCacheHits = new AtomicInteger();
 

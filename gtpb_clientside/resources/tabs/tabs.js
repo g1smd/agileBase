@@ -379,9 +379,21 @@ function uploadFile(fileInputElement) {
       var jqUploadInfo = jqFileInput.next();
       var fileSizeInfo = parseInt(fileSize / 1000000)
       if (fileSizeInfo == 0) {
-        fileSizeInfo = 'Uploading &frac12; MB...';
+        fileSizeInfo = 'Uploading &frac12; MB';
       } else {
-        fileSizeInfo = "Uploading " + fileSizeInfo + " MB...";
+        fileSizeInfo = "Uploading " + fileSizeInfo + " MB";
+      }
+      // upload speed is in bytes per sec.
+      var uploadSpeed = parseInt(jqUploadInfo.attr("upload_speed"));
+      var expectedMinutes = parseInt(fileSize / (uploadSpeed * 60));
+      if (expectedMinutes == 0) {
+        fileSizeInfo = fileSizeInfo + ". Please wait a few seconds...";
+      } else if (expectedMinutes > 6) {
+    	// Round the expected time
+        expectedMinutes = Math.round(expectedMinutes / 10) * 10;
+        fileSizeInfo = fileSizeInfo + ". This is likely to take about " + expectedMinutes + " minutes";
+      } else if (expectedMinutes > 3) {
+        fileSizeInfo = fileSizeInfo + ". This will take five minutes or so";
       }
       jqUploadInfo.html(fileSizeInfo);
     }
