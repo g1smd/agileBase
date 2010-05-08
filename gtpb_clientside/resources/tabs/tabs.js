@@ -394,6 +394,8 @@ function uploadFile(fileInputElement) {
         fileSizeInfo = fileSizeInfo + ". This is likely to take about " + expectedMinutes + " minutes";
       } else if (expectedMinutes > 3) {
         fileSizeInfo = fileSizeInfo + ". This will take five minutes or so";
+      } else {
+        fileSizeInfo = fileSizeInfo + ". This should take about " + expectedMinutes + " minutes";
       }
       jqUploadInfo.html(fileSizeInfo);
     }
