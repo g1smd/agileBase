@@ -381,7 +381,7 @@ function uploadFile(fileInputElement) {
       if (fileSizeInfo == 0) {
         fileSizeInfo = '<img src="resources/upload_ajax-loader.gif" /> Uploading &frac12; MB';
       } else {
-        fileSizeInfo = "<img src="resources/upload_ajax-loader.gif" /> Uploading " + fileSizeInfo + " MB";
+        fileSizeInfo = '<img src="resources/upload_ajax-loader.gif" /> Uploading ' + fileSizeInfo + " MB";
       }
       // upload speed is in bytes per sec.
       var uploadSpeed = parseInt(jqUploadInfo.attr("upload_speed"));
