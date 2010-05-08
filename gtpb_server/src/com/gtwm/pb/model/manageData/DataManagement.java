@@ -1981,7 +1981,7 @@ public class DataManagement implements DataManagementInfo {
 
 	private int reportDataCacheMisses = 0;
 
-	private float uploadSpeed = 100000; // Default to 100KB per second
+	private float uploadSpeed = 50000; // Default to 50KB per second
 
 	private AtomicInteger summaryDataCacheHits = new AtomicInteger();
 
