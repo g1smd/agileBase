@@ -364,28 +364,6 @@ function appendWarning(warningRowHtml) {
 
 var warningRowHtmlSaved = '';
 
-/* Attach an AJAX upload event to file inputs */
-function fUploadify() {
-  jQuery('input:file').uploadify({
-	  'uploader': 'resources/uploadify/uploadify.swf',
-	  'script': 'AppController.servlet',
-	  'scriptData': {
-	    'return': 'blank',
-	    'update_record': true
-      },
-	  'cancelImg': 'resources/uploadify/cancel.png',
-	  'auto': true,
-	  'folder': '/nofolder',
-	  'queueID': 'uploadifyQueue',
-	  'onSelect':   function( evt, queueID, fileObj ) {
-        alert( fileObj.name );
-      },
-      'onError':   function( evt, queueID, fileObj, errObj ) {
-          alert( errObj.info );
-      }
-  });
-}
-
 /* 
  * Management tabs functions 
  */
@@ -462,4 +440,3 @@ pane3Scripts.functionList.push(fUnlockButton);
 pane3Scripts.functionList.push(fComboComponents);
 pane3Scripts.functionList.push(fRelationPickers);
 pane3Scripts.functionList.push(fSetupCharts);
-pane3Scripts.functionList.push(fUploadify);
