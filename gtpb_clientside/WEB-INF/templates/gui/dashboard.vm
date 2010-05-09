@@ -32,7 +32,7 @@ jQuery(window).bind("resize", function(e) {
 	// Our customisation to make it look more as we want it
 	growLeaves();
 });
-	
+
 function displayTreemap() {
 	// fit treemap to window
 	jqInfovis = jQuery("#infovis");
