@@ -148,6 +148,9 @@ function growLeaves() {
 	jQuery(".leaf").each(function(i) {
 	  var jqLeaf = jQuery(this);
 	  var width = jqLeaf.css("width");
+	  if(!width) {
+	    return;
+	  }
 	  width = width.substring(0,width.length - 2)
 	  widthInt = parseInt(width) + 2;
 	  width = widthInt + "px";
