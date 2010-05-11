@@ -238,8 +238,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	var templateName = url.replace(/^.*return=/, '');
 	templateName = templateName.replace(/\&.*$/, '');
 	replacedTemplateUrl = url.replace('return=' + templateName, 'return=blank');
-	$
-			.post(replacedTemplateUrl, null, function(data) {
+	$.post(replacedTemplateUrl, null, function(data) {
 				// Refresh frame 3
 					if (typeof (parent.pane_3) != "undefined") {
 						// If user is loading a new report, it may have

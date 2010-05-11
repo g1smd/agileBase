@@ -17,6 +17,7 @@
 ##
 $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 ## edit the fields in a table
+#if($sessionData.getTable().getDefaultReport().equals($sessionData.getReport()))
 
 #set($tabCaption='fields')
 <STYLE>
@@ -276,4 +277,9 @@ function updateFieldnameDiv(fieldnameInput) {
 
 </script>
 ##<script language=javascript src="resources/wait/interdependent_fields.js"></script>
+
+
+#else  ## If editing a report rather than a table
+  #parse("gui/reports_and_tables/tabs/report_fields.vm")
+#end
 $viewTools.stopTimer("gui/reports_and_tables/tabs/table_fields")
