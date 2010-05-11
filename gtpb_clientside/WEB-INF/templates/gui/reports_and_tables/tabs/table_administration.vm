@@ -22,6 +22,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_administration")
   #parse("gui/administration/tables/options.vm")
 #else
   ## administer the report
-  #parse("gui/reports_and_tables/tabs.report_administration.vm")
+  #parse("gui/reports_and_tables/tabs/report_administration.vm")
 #end
 $viewTools.stopTimer("gui/reports_and_tables/tabs/table_administration")
