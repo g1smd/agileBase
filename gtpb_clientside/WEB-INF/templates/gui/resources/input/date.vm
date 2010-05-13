@@ -276,7 +276,7 @@
 	          
 	          // if months=0 this condition will never be reached
 	          //if(i+1==$months) oMonth.selectedIndex=i;
-	          if(i+1==$months) oMonth.selectedIndex=i;
+	          if(i==$months) oMonth.selectedIndex=i;
 	        }
 	        oMonth.setAttribute('wrapperAttribute','gtpb_$field.getInternalFieldName()_months');
 			        oMonth.setAttribute('tabindex','$tabIndex');
