@@ -333,9 +333,10 @@
 								We host at <a href="http://www.ntt.com/">NTT Communications</a>' London datacentre. Backups are made hourly and transferred offsite (to Manchester) daily.</p>
 								<table border="0" width="100%" style="margin-top:20px">
 									<tr>
-										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://www.postgresql.org/"><img border="0" src="/agileBase/website/content/postgresql.gif"></a></td>
-										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://www.hibernate.org/"><img border="0" src="/agileBase/website/content/hibernate_logo.gif"></a></td>
-										<td style="text-align:center; vertical-align:middle; width:33%"><a href="http://velocity.apache.org/"><img border="0" src="/agileBase/website/content/velocity_logo.gif"></a></td>
+										<td style="text-align:center; vertical-align:middle; width:25%"><a href="http://www.postgresql.org/"><img border="0" src="/agileBase/website/content/postgresql.gif"></a></td>
+										<td style="text-align:center; vertical-align:middle; width:25%"><a href="http://www.hibernate.org/"><img border="0" src="/agileBase/website/content/hibernate_logo.gif"></a></td>
+										<td style="text-align:center; vertical-align:middle; width:25%"><a href="http://velocity.apache.org/"><img border="0" src="/agileBase/website/content/velocity_logo.gif"></a></td>
+										<td style="text-align:center; vertical-align:middle; width:25%"><a href="http://tomcat.apache.org/"><img border="0" src="/agileBase/website/content/tomcat.png"></a></td>
 									 </tr>
 								</table>
 							  </div>
