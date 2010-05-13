@@ -246,7 +246,7 @@
 	          
 	          // i will never be 0 here so don't need to worry about this if this is new day
 	          //if(i==$days) oDay.selectedIndex=i-1;
-	          oDay.selectedIndex=i;
+	          if(i==$days) oDay.selectedIndex=i;
 	        }
 	        oDay.setAttribute('wrapperAttribute','gtpb_$field.getInternalFieldName()_days');
 			oDay.setAttribute('tabindex','$tabIndex');
