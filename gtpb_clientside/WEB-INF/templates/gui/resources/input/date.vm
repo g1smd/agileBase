@@ -272,11 +272,11 @@
 	             offset i */	        
 	          //if($months==0) oMonth.options[i+1]=new Option(aMonths[i],i+1);
 	          //else oMonth.options[i]=new Option(aMonths[i],i+1);	 
-	          oMonth.options[i]=new Option(aMonths[i],i);	 
+	          oMonth.options[i]=new Option(aMonths[i-1],i);	 
 	          
 	          // if months=0 this condition will never be reached
 	          //if(i+1==$months) oMonth.selectedIndex=i;
-	          if(i==$months) oMonth.selectedIndex=i;
+	          if(i+1==$months) oMonth.selectedIndex=i;
 	        }
 	        oMonth.setAttribute('wrapperAttribute','gtpb_$field.getInternalFieldName()_months');
 			        oMonth.setAttribute('tabindex','$tabIndex');
