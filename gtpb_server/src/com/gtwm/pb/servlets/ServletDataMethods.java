@@ -74,9 +74,9 @@ import org.grlea.log.SimpleLogger;
 /**
  * Methods to do with managing data (creating & deleting records, managing the
  * session etc.) to be used by the main agileBase servlet AppController, or any
- * other custom servlet written for a particular application based on
- * agileBase. The JavaDoc here describes the HTTP requests that must be sent to
- * use the methods.
+ * other custom servlet written for a particular application based on agileBase.
+ * The JavaDoc here describes the HTTP requests that must be sent to use the
+ * methods.
  * 
  * Part of a set of three interfaces, ServletSchemaMethods to manage setting up
  * the database schema, ServletDataMethods to manage data editing and
@@ -258,8 +258,8 @@ public class ServletDataMethods {
 	 * 
 	 * Http request usage example:
 	 * 
-	 * &set_custom_integer=true&integerkey=chosennumber&customintegervalue=5 - set
-	 * a 'chosennumber' value to 5
+	 * &set_custom_integer=true&integerkey=chosennumber&customintegervalue=5 -
+	 * set a 'chosennumber' value to 5
 	 * 
 	 * @see SessionDataInfo#getCustomInteger(String) See
 	 *      SessionDataInfo.getCustomInteger(stringkey) to retrieve the value
@@ -281,14 +281,14 @@ public class ServletDataMethods {
 	 * 
 	 * Http request usage example:
 	 * 
-	 * &set_custom_long=true&longkey=chosennumber&customlongvalue=5 - set
-	 * a 'chosennumber' value to 5
+	 * &set_custom_long=true&longkey=chosennumber&customlongvalue=5 - set a
+	 * 'chosennumber' value to 5
 	 * 
 	 * @see SessionDataInfo#getCustomLong(String) See
 	 *      SessionDataInfo.getCustomLong(stringkey) to retrieve the value
 	 */
-	public static void setSessionCustomLong(SessionDataInfo sessionData,
-			HttpServletRequest request) throws MissingParametersException {
+	public static void setSessionCustomLong(SessionDataInfo sessionData, HttpServletRequest request)
+			throws MissingParametersException {
 		String key = request.getParameter("longkey");
 		String valueString = request.getParameter("customlongvalue");
 		if (key == null || valueString == null) {
@@ -549,7 +549,7 @@ public class ServletDataMethods {
 			String partGotTo = "year";
 			try {
 				Integer years = getIntegerParameterValue(request, internalFieldName + "_years");
-				if ((years >0) && (years < 99)) {
+				if ((years > 0) && (years < 99)) {
 					years += 2000;
 				}
 				partGotTo = "month";
@@ -579,7 +579,7 @@ public class ServletDataMethods {
 					// reformat to ensure number can be recognised by Java
 					// .4 -> 0.4
 					// 4. -> 4.0
-					// .  -> 0.0
+					// . -> 0.0
 					if (fieldValueString.startsWith(".")) {
 						fieldValueString = "0" + fieldValueString;
 					}
@@ -600,18 +600,24 @@ public class ServletDataMethods {
 			dateFieldValue.setDateResolution(((DateField) field).getDateResolution());
 			// obtain values passed within the request, (if any)
 			String partGotTo = "year";
+			Integer years = null;
+			Integer months = null;
+			Integer days = null;
+			Integer hours = null;
+			Integer minutes = null;
+			Integer seconds = null;
 			try {
-				Integer years = getIntegerParameterValue(request, internalFieldName + "_years");
+				years = getIntegerParameterValue(request, internalFieldName + "_years");
 				partGotTo = "month";
-				Integer months = getIntegerParameterValue(request, internalFieldName + "_months");
+				months = getIntegerParameterValue(request, internalFieldName + "_months");
 				partGotTo = "day";
-				Integer days = getIntegerParameterValue(request, internalFieldName + "_days");
+				days = getIntegerParameterValue(request, internalFieldName + "_days");
 				partGotTo = "hour";
-				Integer hours = getIntegerParameterValue(request, internalFieldName + "_hours");
+				hours = getIntegerParameterValue(request, internalFieldName + "_hours");
 				partGotTo = "minute";
-				Integer minutes = getIntegerParameterValue(request, internalFieldName + "_minutes");
+				minutes = getIntegerParameterValue(request, internalFieldName + "_minutes");
 				partGotTo = "second";
-				Integer seconds = getIntegerParameterValue(request, internalFieldName + "_seconds");
+				seconds = getIntegerParameterValue(request, internalFieldName + "_seconds");
 				if (years != null) {
 					dateFieldValue.set(Calendar.YEAR, years);
 				}
@@ -634,9 +640,41 @@ public class ServletDataMethods {
 				throw new InputRecordException("The " + partGotTo
 						+ " is invalid because it needs to be a whole number", field);
 			}
-			// if date value is null, leave fieldValue as null as well or the
-			// dateField in the database will be set to null
-			if (dateFieldValue.getValueDate() != null) {
+			// If date value is null, leave fieldValue as a null object as well
+			// or the dateField in the database will be set to null
+			if (dateFieldValue.getValueDate() == null) {
+				// However if all fields have specifically been set as null by
+				// the user then do set the fieldValue to the dateFieldValue
+				// object representing null
+				switch (((DateField) field).getDateResolution()) {
+				case Calendar.YEAR:
+					if (years == null) {
+						fieldValue = dateFieldValue;
+					}
+					break;
+				case Calendar.MONTH:
+					if (years == null && months == null) {
+						fieldValue = dateFieldValue;
+					}
+					break;
+				case Calendar.DAY_OF_MONTH:
+					if (years == null && months == null && days == null) {
+						fieldValue = dateFieldValue;
+					}
+					break;
+				case Calendar.HOUR_OF_DAY:
+					if (years == null && months == null && days == null && hours == null) {
+						fieldValue = dateFieldValue;
+					}
+					break;
+				case Calendar.MINUTE:
+					if (years == null && months == null && days == null && hours == null
+							&& minutes == null) {
+						fieldValue = dateFieldValue;
+					}
+					break;
+				}
+			} else {
 				fieldValue = dateFieldValue;
 			}
 		} else if (databaseFieldType.equals(DatabaseFieldType.VARCHAR)) {
@@ -767,8 +805,8 @@ public class ServletDataMethods {
 	public static void setSessionModule(SessionDataInfo sessionData, HttpServletRequest request,
 			String internalModuleName, DatabaseInfo databaseDefn) throws AgileBaseException {
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
-		//Findbugs found this unused variable
-		//Set<ModuleInfo> modules = company.getModules();
+		// Findbugs found this unused variable
+		// Set<ModuleInfo> modules = company.getModules();
 		ModuleInfo module = company.getModuleByInternalName(internalModuleName);
 		sessionData.setModule(module);
 	}
@@ -794,8 +832,7 @@ public class ServletDataMethods {
 		// get the actual field object from the field name
 		BaseField filterField;
 		try {
-			filterField = sessionData.getReport().getReportField(internalFieldName)
-					.getBaseField();
+			filterField = sessionData.getReport().getReportField(internalFieldName).getBaseField();
 		} catch (ObjectNotFoundException onfex) {
 			// If not in session report, fall back to looking in entire
 			// database.
@@ -840,8 +877,7 @@ public class ServletDataMethods {
 		// get the actual field object from the field name
 		BaseField sortField;
 		if (!internalFieldName.equals("")) {
-			sortField = sessionData.getReport().getReportField(internalFieldName)
-					.getBaseField();
+			sortField = sessionData.getReport().getReportField(internalFieldName).getBaseField();
 		} else {
 			sortField = sessionData.getReport().getReportField(fieldName).getBaseField();
 		}
@@ -872,8 +908,7 @@ public class ServletDataMethods {
 		// get the actual field object from the field name
 		BaseField sortField;
 		if (!internalFieldName.equals("")) {
-			sortField = sessionData.getReport().getReportField(internalFieldName)
-					.getBaseField();
+			sortField = sessionData.getReport().getReportField(internalFieldName).getBaseField();
 		} else {
 			sortField = sessionData.getReport().getReportField(fieldName).getBaseField();
 		}
@@ -1133,26 +1168,33 @@ public class ServletDataMethods {
 				"best_guess_relations", multipartItems);
 		boolean requireExactRelationValues = !(Helpers
 				.valueRepresentsBooleanTrue(bestGuessRelationsString));
-		String importTypeString = AppController.getParameter(request, "import_type", multipartItems);
+		String importTypeString = AppController
+				.getParameter(request, "import_type", multipartItems);
 		boolean updateExistingRecords = false;
 		BaseField recordIdentifierField = table.getPrimaryKey();
-		if(importTypeString != null) {
-			if(importTypeString.toLowerCase().equals("update")) {
+		if (importTypeString != null) {
+			if (importTypeString.toLowerCase().equals("update")) {
 				updateExistingRecords = true;
-				String recordIdentifierFieldInternalName = AppController.getParameter(request, "record_identifier", multipartItems);
+				String recordIdentifierFieldInternalName = AppController.getParameter(request,
+						"record_identifier", multipartItems);
 				if (recordIdentifierFieldInternalName != null) {
-					if(!recordIdentifierFieldInternalName.equals("")) {
+					if (!recordIdentifierFieldInternalName.equals("")) {
 						recordIdentifierField = table.getField(recordIdentifierFieldInternalName);
-						if(!recordIdentifierField.equals(table.getPrimaryKey()) && !recordIdentifierField.getUnique()) {
-							throw new CantDoThatException("The record identifier field " + recordIdentifierField + " must be unique - you can turn on the unique option in the field properties");
+						if (!recordIdentifierField.equals(table.getPrimaryKey())
+								&& !recordIdentifierField.getUnique()) {
+							throw new CantDoThatException(
+									"The record identifier field "
+											+ recordIdentifierField
+											+ " must be unique - you can turn on the unique option in the field properties");
 						}
 					}
 				}
 			}
 		}
 		int affectedRecords = databaseDefn.getDataManagement().importCSV(request, table,
-				updateExistingRecords, recordIdentifierField, generateRowIds, separator, quoteChar, numHeaderLines, useRelationDisplayValues,
-				importSequenceValues, requireExactRelationValues, multipartItems, csvContent);
+				updateExistingRecords, recordIdentifierField, generateRowIds, separator, quoteChar,
+				numHeaderLines, useRelationDisplayValues, importSequenceValues,
+				requireExactRelationValues, multipartItems, csvContent);
 		logDataChanges(request, databaseDefn, "imported " + affectedRecords + " records into "
 				+ table.getTableName() + " (" + table.getInternalTableName() + ")");
 	}

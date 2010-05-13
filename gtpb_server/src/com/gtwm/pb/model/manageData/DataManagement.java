@@ -404,7 +404,7 @@ public class DataManagement implements DataManagementInfo {
 			// Note: this does actually happen quite a lot, from two particular
 			// users.
 			// Haven't tracked down the cause but it doesn't seem to be creating
-			// a problem
+			// a problem.
 			// logger.warn("Call to saveRecord with no data to save. User = "
 			// + request.getRemoteUser() + ", table = " + table + ", rowIds = "
 			// + rowIds);
