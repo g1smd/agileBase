@@ -232,18 +232,21 @@
       #if($dateResolution >= $CONST_DAY_OF_MONTH)
 	        // ********  THE DAY DROPPER  *************
 	        var oDay=document.createElement('SELECT');
-	        if($days==0) oDay.options[0]=new Option('day');
+	        //if($days==0) oDay.options[0]=new Option('day');
+	        oDay.options[0]=new Option('day');
 	        for (var i=1; i<=31; i++) {
 	          // can't use options.length in this loop because it doesn't work on the iPhone :(
 	          /* the loop is counting from 1 to 31.  If this a new day then we've already added an element
 	             to this selection so we need to add options 1 to 31 just using i.  If the day is already 
 	             set (either by default or because we're editing, we need to add options 0 to 30 so we need 
 	             to offset i by -1 */
-	          if($days==0) oDay.options[i]=new Option(i,i);
-	          else oDay.options[i-1]=new Option(i,i);
+	          //if($days==0) oDay.options[i]=new Option(i,i);
+	          //else oDay.options[i-1]=new Option(i,i);
+	          oDay.options[i]=new Option(i,i);
 	          
 	          // i will never be 0 here so don't need to worry about this if this is new day
-	          if(i==$days) oDay.selectedIndex=i-1;
+	          //if(i==$days) oDay.selectedIndex=i-1;
+	          oDay.selectedIndex=i;
 	        }
 	        oDay.setAttribute('wrapperAttribute','gtpb_$field.getInternalFieldName()_days');
 			oDay.setAttribute('tabindex','$tabIndex');
@@ -258,18 +261,22 @@
 	        // ********* THE MONTH DROPPER  ****************
 	        var aMonths=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
 	        var oMonth=document.createElement('SELECT');
-	        if($months==0) oMonth.options[0]=new Option('month');
-	        for (var i=0; i<aMonths.length; i++) {
+	        //if($months==0) oMonth.options[0]=new Option('month');
+	        oMonth.options[0]=new Option('month');
+	        //for (var i=0; i<aMonths.length; i++) {
+	        for (var i=1; i<=aMonths.length; i++) {
           // can't use options.length in this loop because it doesn't work on the iPhone :(
 	          /* the loop is counting from 0 to 11 effectively.  If this a new month then we've already added an 
 	             element to this selection so we need to add options 1 to 12 using i+1.  If the month is already 
 	             set (either by default or because we're editing, we need to add options 0 to 11 so we don't need 
 	             offset i */	        
-	          if($months==0) oMonth.options[i+1]=new Option(aMonths[i],i+1);
-	          else oMonth.options[i]=new Option(aMonths[i],i+1);	 
+	          //if($months==0) oMonth.options[i+1]=new Option(aMonths[i],i+1);
+	          //else oMonth.options[i]=new Option(aMonths[i],i+1);	 
+	          oMonth.options[i]=new Option(aMonths[i],i);	 
 	          
 	          // if months=0 this condition will never be reached
-	          if(i+1==$months) oMonth.selectedIndex=i;
+	          //if(i+1==$months) oMonth.selectedIndex=i;
+	          if(i==$months) oMonth.selectedIndex=i;
 	        }
 	        oMonth.setAttribute('wrapperAttribute','gtpb_$field.getInternalFieldName()_months');
 			        oMonth.setAttribute('tabindex','$tabIndex');
