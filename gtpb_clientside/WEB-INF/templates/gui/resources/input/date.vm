@@ -261,7 +261,7 @@
 	        // ********* THE MONTH DROPPER  ****************
 	        var aMonths=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
 	        var oMonth=document.createElement('SELECT');
-	        //if($months==0) oMonth.options[0]=new Option('month','');
+	        //if($months==0) oMonth.options[0]=new Option('month',0);
 	        oMonth.options[0]=new Option('month');
 	        //for (var i=0; i<aMonths.length; i++) {
 	        for (var i=1; i<=aMonths.length; i++) {
