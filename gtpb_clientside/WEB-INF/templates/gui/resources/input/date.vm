@@ -233,7 +233,7 @@
 	        // ********  THE DAY DROPPER  *************
 	        var oDay=document.createElement('SELECT');
 	        //if($days==0) oDay.options[0]=new Option('day');
-	        oDay.options[0]=new Option('day');
+	        oDay.options[0]=new Option('day','');
 	        for (var i=1; i<=31; i++) {
 	          // can't use options.length in this loop because it doesn't work on the iPhone :(
 	          /* the loop is counting from 1 to 31.  If this a new day then we've already added an element
@@ -261,7 +261,7 @@
 	        // ********* THE MONTH DROPPER  ****************
 	        var aMonths=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
 	        var oMonth=document.createElement('SELECT');
-	        //if($months==0) oMonth.options[0]=new Option('month');
+	        //if($months==0) oMonth.options[0]=new Option('month','');
 	        oMonth.options[0]=new Option('month');
 	        //for (var i=0; i<aMonths.length; i++) {
 	        for (var i=1; i<=aMonths.length; i++) {
