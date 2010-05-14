@@ -646,33 +646,38 @@ public class ServletDataMethods {
 				// However if all fields have specifically been set as null by
 				// the user then do set the fieldValue to the dateFieldValue
 				// object representing null
-				switch (((DateField) field).getDateResolution()) {
-				case Calendar.YEAR:
-					if (years == null) {
-						fieldValue = dateFieldValue;
+				Set<String> httpParameters = request.getParameterMap().keySet();
+				// Every date will include at least a year, use this to check if
+				// the date value been specifically sent by the user
+				if (httpParameters.contains(internalFieldName + "_years")) {
+					switch (((DateField) field).getDateResolution()) {
+					case Calendar.YEAR:
+						if (years == null) {
+							fieldValue = dateFieldValue;
+						}
+						break;
+					case Calendar.MONTH:
+						if (years == null && months == null) {
+							fieldValue = dateFieldValue;
+						}
+						break;
+					case Calendar.DAY_OF_MONTH:
+						if (years == null && months == null && days == null) {
+							fieldValue = dateFieldValue;
+						}
+						break;
+					case Calendar.HOUR_OF_DAY:
+						if (years == null && months == null && days == null && hours == null) {
+							fieldValue = dateFieldValue;
+						}
+						break;
+					case Calendar.MINUTE:
+						if (years == null && months == null && days == null && hours == null
+								&& minutes == null) {
+							fieldValue = dateFieldValue;
+						}
+						break;
 					}
-					break;
-				case Calendar.MONTH:
-					if (years == null && months == null) {
-						fieldValue = dateFieldValue;
-					}
-					break;
-				case Calendar.DAY_OF_MONTH:
-					if (years == null && months == null && days == null) {
-						fieldValue = dateFieldValue;
-					}
-					break;
-				case Calendar.HOUR_OF_DAY:
-					if (years == null && months == null && days == null && hours == null) {
-						fieldValue = dateFieldValue;
-					}
-					break;
-				case Calendar.MINUTE:
-					if (years == null && months == null && days == null && hours == null
-							&& minutes == null) {
-						fieldValue = dateFieldValue;
-					}
-					break;
 				}
 			} else {
 				fieldValue = dateFieldValue;
