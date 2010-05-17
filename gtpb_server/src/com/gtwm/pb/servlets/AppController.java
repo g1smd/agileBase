@@ -880,9 +880,6 @@ public class AppController extends VelocityViewServlet {
 				logger.error("General templating error: " + exex);
 				throw new ServletException("General templating error whilst reporting error", exex);
 			}
-			// Old error handling method
-			// throw new ServletException("Error interpreting template " +
-			// template.getName(), ex);
 		}
 		float secondsToHandleMerge = (System.currentTimeMillis() - mergeTemplateStartTime)
 				/ ((float) 1000);

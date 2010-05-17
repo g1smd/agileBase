@@ -596,60 +596,62 @@ public class ServletDataMethods {
 				}
 			}
 		} else if (databaseFieldType.equals(DatabaseFieldType.TIMESTAMP)) {
-			DateValue dateFieldValue = new DateValueDefn(null, null, null, null, null, null);
-			dateFieldValue.setDateResolution(((DateField) field).getDateResolution());
-			// obtain values passed within the request, (if any)
-			String partGotTo = "year";
-			Integer years = null;
-			Integer months = null;
-			Integer days = null;
-			Integer hours = null;
-			Integer minutes = null;
-			Integer seconds = null;
-			try {
-				years = getIntegerParameterValue(request, internalFieldName + "_years");
-				partGotTo = "month";
-				months = getIntegerParameterValue(request, internalFieldName + "_months");
-				partGotTo = "day";
-				days = getIntegerParameterValue(request, internalFieldName + "_days");
-				partGotTo = "hour";
-				hours = getIntegerParameterValue(request, internalFieldName + "_hours");
-				partGotTo = "minute";
-				minutes = getIntegerParameterValue(request, internalFieldName + "_minutes");
-				partGotTo = "second";
-				seconds = getIntegerParameterValue(request, internalFieldName + "_seconds");
-				if (years != null) {
-					dateFieldValue.set(Calendar.YEAR, years);
+			Set<String> httpParameters = request.getParameterMap().keySet();
+			// Every date will include at least a year, use this to check if
+			// the date value been specifically sent by the user
+			if (httpParameters.contains(internalFieldName + "_years")) {
+				DateValue dateFieldValue = new DateValueDefn(null, null, null, null, null, null);
+				dateFieldValue.setDateResolution(((DateField) field).getDateResolution());
+				// obtain values passed within the request, (if any)
+				String partGotTo = "year";
+				Integer years = null;
+				Integer months = null;
+				Integer days = null;
+				Integer hours = null;
+				Integer minutes = null;
+				Integer seconds = null;
+				try {
+					years = getIntegerParameterValue(request, internalFieldName + "_years");
+					partGotTo = "month";
+					months = getIntegerParameterValue(request, internalFieldName + "_months");
+					partGotTo = "day";
+					days = getIntegerParameterValue(request, internalFieldName + "_days");
+					partGotTo = "hour";
+					hours = getIntegerParameterValue(request, internalFieldName + "_hours");
+					partGotTo = "minute";
+					minutes = getIntegerParameterValue(request, internalFieldName + "_minutes");
+					partGotTo = "second";
+					seconds = getIntegerParameterValue(request, internalFieldName + "_seconds");
+					if (years != null) {
+						dateFieldValue.set(Calendar.YEAR, years);
+					}
+					if (months != null) {
+						dateFieldValue.set(Calendar.MONTH, months);
+					}
+					if (days != null) {
+						dateFieldValue.set(Calendar.DAY_OF_MONTH, days);
+					}
+					if (hours != null) {
+						dateFieldValue.set(Calendar.HOUR_OF_DAY, hours);
+					}
+					if (minutes != null) {
+						dateFieldValue.set(Calendar.MINUTE, minutes);
+					}
+					if (seconds != null) {
+						dateFieldValue.set(Calendar.SECOND, seconds);
+					}
+				} catch (NumberFormatException nfex) {
+					throw new InputRecordException("The " + partGotTo
+							+ " is invalid because it needs to be a whole number", field);
 				}
-				if (months != null) {
-					dateFieldValue.set(Calendar.MONTH, months);
-				}
-				if (days != null) {
-					dateFieldValue.set(Calendar.DAY_OF_MONTH, days);
-				}
-				if (hours != null) {
-					dateFieldValue.set(Calendar.HOUR_OF_DAY, hours);
-				}
-				if (minutes != null) {
-					dateFieldValue.set(Calendar.MINUTE, minutes);
-				}
-				if (seconds != null) {
-					dateFieldValue.set(Calendar.SECOND, seconds);
-				}
-			} catch (NumberFormatException nfex) {
-				throw new InputRecordException("The " + partGotTo
-						+ " is invalid because it needs to be a whole number", field);
-			}
-			// If date value is null, leave fieldValue as a null object as well
-			// or the dateField in the database will be set to null
-			if (dateFieldValue.getValueDate() == null) {
-				// However if all fields have specifically been set as null by
-				// the user then do set the fieldValue to the dateFieldValue
-				// object representing null
-				Set<String> httpParameters = request.getParameterMap().keySet();
-				// Every date will include at least a year, use this to check if
-				// the date value been specifically sent by the user
-				if (httpParameters.contains(internalFieldName + "_years")) {
+				// If date value is null, leave fieldValue as a null object as
+				// well
+				// or the dateField in the database will be set to null
+				if (dateFieldValue.getValueDate() == null) {
+					// However if all fields have specifically been set as null
+					// by
+					// the user then do set the fieldValue to the dateFieldValue
+					// object representing null
 					switch (((DateField) field).getDateResolution()) {
 					case Calendar.YEAR:
 						if (years == null) {
@@ -678,9 +680,9 @@ public class ServletDataMethods {
 						}
 						break;
 					}
+				} else {
+					fieldValue = dateFieldValue;
 				}
-			} else {
-				fieldValue = dateFieldValue;
 			}
 		} else if (databaseFieldType.equals(DatabaseFieldType.VARCHAR)) {
 			if (fieldValueString != null) {

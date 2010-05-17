@@ -84,10 +84,16 @@ public class FileValueDefn implements FileValue {
 
 	public String getIconName() {
 		Set<String> knownFilenames = new HashSet<String>();
+		// See icons in resources/icons/filetypes
 		knownFilenames.add("csv");
 		knownFilenames.add("doc");
+		knownFilenames.add("docx");
+		knownFilenames.add("htm");
 		knownFilenames.add("pdf");
+		knownFilenames.add("psd");
+		knownFilenames.add("txt");
 		knownFilenames.add("xls");
+		knownFilenames.add("zip");
 		String filename = this.getFilename();
 		if (filename.contains(".")) {
 			String extension = filename.replaceAll(".*\\.", "").toLowerCase();
