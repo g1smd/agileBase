@@ -74,9 +74,9 @@ public class UsageStats implements UsageStatsInfo {
 	 */
 	private void setCostDetails() throws ObjectNotFoundException, DisallowedException {
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
-		if (authManager.getAuthenticator().loggedInUserAllowedTo(request,
+		if (authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.ADMINISTRATE)) {
-			CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
+			CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
 			Set<TableInfo> companyTables = company.getTables();
 			int numTables = companyTables.size();
 			this.numTables = numTables;
@@ -271,7 +271,7 @@ public class UsageStats implements UsageStatsInfo {
 			ObjectNotFoundException, SQLException {
 		SortedSet<ModuleUsageStatsInfo> moduleStats = new TreeSet<ModuleUsageStatsInfo>();
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
+		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
 		Set<TableInfo> companyTables = company.getTables();
 		Map<ModuleInfo, ModuleUsageStatsInfo> moduleStatsMap = new HashMap<ModuleInfo, ModuleUsageStatsInfo>();
 		String SQLCode = "SELECT app_user, report, count(*) FROM dbint_log_";
@@ -293,7 +293,7 @@ public class UsageStats implements UsageStatsInfo {
 				int reportViews = results.getInt(3);
 				AppUserInfo appUser = null;
 				try {
-					appUser = authManager.getUserByUserName(request, userName);
+					appUser = authManager.getUserByUserName(this.request, userName);
 				} catch (ObjectNotFoundException onex) {
 					continue RESULTLOOP;
 				}
@@ -355,11 +355,11 @@ public class UsageStats implements UsageStatsInfo {
 	public SortedSet<TableInfo> getUnusedTables() throws DisallowedException, SQLException,
 			ObjectNotFoundException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
-		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
+		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
 		Set<TableInfo> companyTables = company.getTables();
 		SortedSet<TableInfo> unusedTables = new TreeSet<TableInfo>();
 		Set<TableInfo> usedTables = new HashSet<TableInfo>();
@@ -405,9 +405,9 @@ public class UsageStats implements UsageStatsInfo {
 	public ReportViewStatsInfo getReportViewStats(BaseReportInfo report)
 			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
+		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()) || authManager
-				.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
+				.getAuthenticator().loggedInUserAllowedTo(this.request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		SortedSet<UserReportViewStatsInfo> userInfos = new TreeSet<UserReportViewStatsInfo>();
@@ -470,9 +470,9 @@ public class UsageStats implements UsageStatsInfo {
 	public List<List<String>> getTableViewStats(TableInfo table) throws DisallowedException,
 			SQLException, CodingErrorException, CantDoThatException, ObjectNotFoundException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
+		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.MANAGE_TABLE, table) || authManager.getAuthenticator()
-				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
+				.loggedInUserAllowedTo(this.request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
 		List<List<String>> reportInfos = new LinkedList<List<String>>();
@@ -551,9 +551,9 @@ public class UsageStats implements UsageStatsInfo {
 	public List<List<String>> getRawTableStats(LogType logType, TableInfo table, int rowLimit)
 			throws DisallowedException, SQLException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
+		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.MANAGE_TABLE, table) || authManager.getAuthenticator()
-				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
+				.loggedInUserAllowedTo(this.request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
 		if (!(logType.equals(LogType.DATA_CHANGE) || logType.equals(LogType.TABLE_SCHEMA_CHANGE))) {
@@ -626,7 +626,7 @@ public class UsageStats implements UsageStatsInfo {
 	private List<List<String>> getRawStats(LogType logType) throws DisallowedException,
 			SQLException, ObjectNotFoundException, CantDoThatException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
@@ -719,7 +719,7 @@ public class UsageStats implements UsageStatsInfo {
 					String internalTableName = results.getString(3);
 					String tableName = "";
 					try {
-						TableInfo table = this.databaseDefn.getTableByInternalName(request,
+						TableInfo table = this.databaseDefn.getTableByInternalName(this.request,
 								internalTableName);
 						tableName = table.getTableName();
 					} catch (ObjectNotFoundException onex) {
@@ -760,7 +760,7 @@ public class UsageStats implements UsageStatsInfo {
 					internalTableName = results.getString(3);
 					tableName = "";
 					try {
-						TableInfo table = this.databaseDefn.getTableByInternalName(request,
+						TableInfo table = this.databaseDefn.getTableByInternalName(this.request,
 								internalTableName);
 						tableName = table.getTableName();
 					} catch (ObjectNotFoundException onex) {
@@ -796,7 +796,7 @@ public class UsageStats implements UsageStatsInfo {
 	private List<Integer> getTimelineCounts(LogType logType, int options)
 			throws DisallowedException, SQLException, ObjectNotFoundException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
