@@ -52,7 +52,6 @@ import com.gtwm.pb.model.interfaces.fields.DecimalField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.IntegerField;
-import com.gtwm.pb.model.manageSchema.DatabaseDefn;
 import com.gtwm.pb.model.manageSchema.JoinClause;
 import com.gtwm.pb.model.manageSchema.JoinType;
 import com.gtwm.pb.model.manageSchema.ReportCalcFieldDefn;
@@ -219,7 +218,8 @@ public class ServletSchemaMethods {
 	}
 
 	public synchronized static void addModule(HttpServletRequest request,
-			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws AgileBaseException, SQLException {
+			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws AgileBaseException,
+			SQLException {
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
 		ModuleInfo newModule = null;
@@ -237,7 +237,7 @@ public class ServletSchemaMethods {
 		sessionData.setModule(newModule);
 	}
 
-	//TODO: move body to DatabaseDefn, like addModule
+	// TODO: move body to DatabaseDefn, like addModule
 	public synchronized static void removeModule(HttpServletRequest request,
 			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws AgileBaseException {
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
@@ -280,7 +280,7 @@ public class ServletSchemaMethods {
 		sessionData.setModule(null);
 	}
 
-	//TODO: move body to DatabaseDefn, like addModule
+	// TODO: move body to DatabaseDefn, like addModule
 	public synchronized static void updateModule(HttpServletRequest request,
 			SessionDataInfo sessionData, AuthManagerInfo authManager) throws AgileBaseException {
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
@@ -800,8 +800,8 @@ public class ServletSchemaMethods {
 					.getFormInputName());
 			boolean hidden = HttpRequestUtil.getBooleanValue(request, PossibleBooleanOptions.HIDDEN
 					.getFormInputName());
-			boolean notNull = HttpRequestUtil.getBooleanValue(request, PossibleBooleanOptions.MANDATORY
-					.getFormInputName());
+			boolean notNull = HttpRequestUtil.getBooleanValue(request,
+					PossibleBooleanOptions.MANDATORY.getFormInputName());
 			// begin updating model and persisting changes
 			BaseField newField = null;
 			Connection conn = null;
@@ -2110,8 +2110,19 @@ public class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' parameter is required to remove a grouping field from a report summary");
 		}
-		ReportFieldInfo groupingReportField = report.getReportSummary().getGroupingReportField(
-				internalFieldName);
+		ReportSummaryInfo summary = report.getReportSummary();
+		if (summary.getGroupings().size() == 1) {
+			for (ReportSummaryAggregateInfo aggregateFunction : summary.getAggregateFunctions()) {
+				if (aggregateFunction.getAggregateFunction().equals(
+						AggregateFunction.CUMULATIVE_COUNT)
+						|| aggregateFunction.getAggregateFunction().equals(
+								AggregateFunction.CUMULATIVE_SUM)) {
+					// Can't leave a cumulative aggregate with no groupings, it will break the SQL
+					throw new CantDoThatException("Please remove the cumulative function first");
+				}
+			}
+		}
+		ReportFieldInfo groupingReportField = summary.getGroupingReportField(internalFieldName);
 		HibernateUtil.startHibernateTransaction();
 		try {
 			databaseDefn.removeGroupingFromSummaryReport(request, groupingReportField);
@@ -2121,8 +2132,7 @@ public class ServletSchemaMethods {
 			// TODO: making the second arg. null will remove any previous
 			// grouping modifier, but we can perhaps sort this out at a later
 			// date
-			groupingReportField.getParentReport().getReportSummary().addGrouping(
-					groupingReportField, null);
+			summary.addGrouping(groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
