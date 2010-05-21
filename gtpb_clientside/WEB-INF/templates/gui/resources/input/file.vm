@@ -67,8 +67,9 @@
   #end
   #if(!$fieldValueObject.isNull())
     #if($fieldValueObject.isImage())
+	  #if($userCanEdit)<br />#end
       <a href="$downloadUrl" target="_blank">
-      <img border="0" src="$downloadUrl" style="max-width:50%" />
+      <img border="0" src="$downloadUrl" style="max-width:50%; float:left" />
       </a>
     #end
   #end
