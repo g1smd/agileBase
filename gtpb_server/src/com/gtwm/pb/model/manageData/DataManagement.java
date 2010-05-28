@@ -43,6 +43,7 @@ import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.math.util.MathUtils;
@@ -1197,7 +1198,8 @@ public class DataManagement implements DataManagementInfo {
 				float secondsToUpload = (System.currentTimeMillis() - requestStartTime)
 						/ ((float) 1000);
 				if (secondsToUpload > 10) {
-					// Only time reasonably long uploads otherwise we'll amplify errors
+					// Only time reasonably long uploads otherwise we'll amplify
+					// errors
 					float uploadSpeed = ((float) fileSize) / secondsToUpload;
 					this.updateUploadSpeed(uploadSpeed);
 				}
@@ -1208,7 +1210,7 @@ public class DataManagement implements DataManagementInfo {
 	public synchronized int getUploadSpeed() {
 		return (int) this.uploadSpeed;
 	}
-	
+
 	private synchronized void updateUploadSpeed(float uploadSpeed) {
 		this.uploadSpeed = (this.uploadSpeed + uploadSpeed) / 2;
 	}
@@ -1357,46 +1359,11 @@ public class DataManagement implements DataManagementInfo {
 			Map<BaseField, Boolean> sessionSorts, int rowLimit) throws SQLException,
 			CodingErrorException, CantDoThatException {
 		Connection conn = null;
-		ReportDataInfo reportData = null;
 		List<DataRowInfo> reportDataRows = null;
-		boolean useCaching = (company != null);
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			synchronized (this.cachedReportDatas) {
-				if (this.cachedReportDatas.containsKey(reportDefn)) {
-					reportData = this.cachedReportDatas.get(reportDefn);
-					if (useCaching) {
-						Long companyDataLastChangedTime = this.getLastDataChangeTime(company);
-						boolean dataChangedAfterCached = (companyDataLastChangedTime > reportData
-								.getCacheCreationTime());
-						boolean exceededCacheTime = reportData.exceededCacheTime();
-						if (dataChangedAfterCached && exceededCacheTime) {
-							boolean useSample = false;
-							if (reportDefn.getRowCount() > 1000) {
-								useSample = true;
-							}
-							reportData = new ReportData(conn, reportDefn, useCaching, useSample);
-							this.cachedReportDatas.put(reportDefn, reportData);
-							this.reportDataCacheMisses += 1;
-						} else {
-							this.reportDataCacheHits += 1;
-						}
-					}
-				} else {
-					reportData = new ReportData(conn, reportDefn, useCaching, false);
-					if (useCaching) {
-						this.cachedReportDatas.put(reportDefn, reportData);
-						this.reportDataCacheMisses += 1;
-					}
-				}
-				if ((this.reportDataCacheHits + this.reportDataCacheMisses) > 10000) {
-					logger.info("Report data cache hits = " + this.reportDataCacheHits
-							+ ", misses = " + this.reportDataCacheMisses);
-					this.reportDataCacheHits = 0;
-					this.reportDataCacheMisses = 0;
-				}
-			}
+			ReportDataInfo reportData = this.getReportData(company, reportDefn, conn);
 			reportDataRows = reportData.getReportDataRows(conn, filterValues, exactFilters,
 					sessionSorts, rowLimit);
 		} finally {
@@ -1405,6 +1372,57 @@ public class DataManagement implements DataManagementInfo {
 			}
 		}
 		return reportDataRows;
+	}
+
+	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report) throws SQLException {
+		Connection conn = null;
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			return this.getReportData(company, report, conn);
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+	
+	private ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo reportDefn,
+			Connection conn) throws SQLException {
+		ReportDataInfo reportData;
+		boolean useCaching = (company != null);
+		if (this.cachedReportDatas.containsKey(reportDefn)) {
+			reportData = this.cachedReportDatas.get(reportDefn);
+			if (useCaching) {
+				Long companyDataLastChangedTime = this.getLastDataChangeTime(company);
+				boolean dataChangedAfterCached = (companyDataLastChangedTime > reportData
+						.getCacheCreationTime());
+				if (dataChangedAfterCached && reportData.exceededCacheTime()) {
+					boolean useSample = false;
+					if (reportDefn.getRowCount() > 1000) {
+						useSample = true;
+					}
+					reportData = new ReportData(conn, reportDefn, useCaching, useSample);
+					this.cachedReportDatas.put(reportDefn, reportData);
+					this.reportDataCacheMisses += 1;
+				} else {
+					this.reportDataCacheHits += 1;
+				}
+			}
+		} else {
+			reportData = new ReportData(conn, reportDefn, useCaching, false);
+			if (useCaching) {
+				this.cachedReportDatas.put(reportDefn, reportData);
+				this.reportDataCacheMisses += 1;
+			}
+		}
+		if ((this.reportDataCacheHits + this.reportDataCacheMisses) > 10000) {
+			logger.info("Report data cache hits = " + this.reportDataCacheHits + ", misses = "
+					+ this.reportDataCacheMisses);
+			this.reportDataCacheHits = 0;
+			this.reportDataCacheMisses = 0;
+		}
+		return reportData;
 	}
 
 	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> textFields,
@@ -1959,7 +1977,7 @@ public class DataManagement implements DataManagementInfo {
 	 * Stores a cache of some info about report data: the mean and std. dev. of
 	 * each numeric field in the report
 	 */
-	private Map<BaseReportInfo, ReportDataInfo> cachedReportDatas = new HashMap<BaseReportInfo, ReportDataInfo>();
+	private Map<BaseReportInfo, ReportDataInfo> cachedReportDatas = new ConcurrentHashMap<BaseReportInfo, ReportDataInfo>();
 
 	private Map<ReportSummaryInfo, ReportSummaryDataInfo> cachedReportSummaryDatas = new HashMap<ReportSummaryInfo, ReportSummaryDataInfo>();
 

@@ -21,5 +21,11 @@
     <response>exception</response>
   #else
     <response>ok</response>
+	## See if we need to include a warning
+	#set($fieldInputValues = $sessionData.getFieldInputValues())
+	#set($field = $fieldInputValues.keySet().toArray()[0])
+	#if($field.getFieldCategory() == "NUMBER")
+	  #set($reportData = $view.getReportData())
+	#end	
   #end
 </request>

@@ -975,6 +975,10 @@ public class ReportData implements ReportDataInfo {
 	public long getCacheCreationTime() {
 		return this.cacheCreationTime;
 	}
+	
+	public Map<ReportFieldInfo, ReportDataFieldStatsInfo> getFieldStats() {
+		return this.cachedFieldStats;
+	}
 
 	/**
 	 * Definition of the report which we are using to return data

@@ -1534,9 +1534,8 @@ public class DatabaseDefn implements DatabaseInfo {
 					}
 				}
 				ReportSummaryInfo reportSummary = testReport.getReportSummary();
-				for (ReportFieldInfo summaryGroupingReportField : reportSummary
-						.getGroupingReportFields()) {
-					BaseField groupingBaseField = summaryGroupingReportField.getBaseField();
+				for (ReportSummaryGroupingInfo grouping : reportSummary.getGroupings()) {
+					BaseField groupingBaseField = grouping.getGroupingReportField().getBaseField();
 					if (groupingBaseField.equals(field)) {
 						reportsUsedIn.add(testReport);
 					}
@@ -1989,8 +1988,8 @@ public class DatabaseDefn implements DatabaseInfo {
 				}
 			}
 		}
-		for (ReportFieldInfo groupingReportField : reportSummary.getGroupingReportFields()) {
-			if (groupingReportField.equals(reportField)) {
+		for (ReportSummaryGroupingInfo grouping : reportSummary.getGroupings()) {
+			if (grouping.getGroupingReportField().equals(reportField)) {
 				throw new CantDoThatException("Please remove the report summary grouping on "
 						+ reportField + " before removing the report field");
 			}

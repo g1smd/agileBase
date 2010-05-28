@@ -366,6 +366,15 @@ public interface ViewMethodsInfo {
 			ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
 	/**
+	 * Return a report data object that contains metadata about the report data.
+	 * Note, to get actual report rows which is the more usual case, use
+	 * getReportDataRows instead
+	 * 
+	 * @see getReportDataRows
+	 **/
+	public ReportDataInfo getReportData() throws SQLException, DisallowedException, CodingErrorException, ObjectNotFoundException;
+
+	/**
 	 * Use this method to get rows for a specified report, using the session row
 	 * limit - at the time of writing, this defaults to 100 - and session filter
 	 * values

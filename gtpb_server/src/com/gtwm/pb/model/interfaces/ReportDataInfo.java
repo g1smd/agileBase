@@ -40,7 +40,7 @@ public interface ReportDataInfo {
 	 * @param rowLimit
 	 *            The maximum number of rows to return, -1 means no limit
 	 * @return Report data as ArrayList of ReportDataRow
-	 * @see http
+	 * @see http 
 	 *      ://java.sun.com/j2ee/sdk_1.3/techdocs/api/javax/servlet/ServletRequest
 	 *      .html#getParameterMap() HTTPServletRequest.getParameterMap generates
 	 *      the filterValues map
@@ -51,10 +51,11 @@ public interface ReportDataInfo {
 			CodingErrorException, CantDoThatException;
 
 	/**
-	 * Return true if the record identified by the given number is present in the report
+	 * Return true if the record identified by the given number is present in
+	 * the report
 	 */
 	public boolean isRowIdInReport(Connection conn, int rowId) throws SQLException;
-	
+
 	/**
 	 * Generate an SQL PreparedStatement object for getting the report VIEW
 	 * definition. Usually code would call getReportDataRows instead, this
@@ -107,4 +108,10 @@ public interface ReportDataInfo {
 	 * cached)
 	 */
 	public long getCacheCreationTime();
+
+	/**
+	 * Return the mean and standard deviation of every field in the report, for
+	 * the data in it
+	 */
+	public Map<ReportFieldInfo, ReportDataFieldStatsInfo> getFieldStats();
 }

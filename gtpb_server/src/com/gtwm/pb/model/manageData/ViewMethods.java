@@ -39,6 +39,7 @@ import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
+import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
@@ -455,6 +456,14 @@ public class ViewMethods implements ViewMethodsInfo {
 		return this.getReportDataRows(report, rowLimit, reportFilterValues, false);
 	}
 
+	public ReportDataInfo getReportData() throws SQLException, DisallowedException, CodingErrorException, ObjectNotFoundException {
+		BaseReportInfo report = this.sessionData.getReport();
+		this.checkReportViewPrivileges(report);
+		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
+				this.request);
+		return this.databaseDefn.getDataManagement().getReportData(company, report);
+	}
+	
 	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit,
 			Map<BaseField, String> reportFilterValues, boolean exactFilters)
 			throws DisallowedException, SQLException, ObjectNotFoundException,

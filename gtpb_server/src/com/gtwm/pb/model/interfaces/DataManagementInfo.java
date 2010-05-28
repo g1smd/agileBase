@@ -78,6 +78,19 @@ public interface DataManagementInfo {
 			throws SQLException;
 
 	/**
+	 * Return a report data object that contains metadata about the report data.
+	 * Note, to get actual report rows which is the more usual case, use
+	 * getReportDataRows instead
+	 * 
+	 * @see getReportDataRows
+	 * 
+	 * @param company
+	 *            Needed for internal caching mechanism. Can be null, but if so,
+	 *            no caching will be done
+	 */
+	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report) throws SQLException;
+
+	/**
 	 * Return true if the record with the given primary key is visible in the
 	 * report
 	 */
@@ -307,7 +320,8 @@ public interface DataManagementInfo {
 	public void logLastSchemaChangeTime(HttpServletRequest request) throws ObjectNotFoundException;
 
 	/**
-	 * Return the average upload speed of files since agileBase started up, with newer uploads given a larger weighting
+	 * Return the average upload speed of files since agileBase started up, with
+	 * newer uploads given a larger weighting
 	 * 
 	 * @return Bytes per second
 	 */
