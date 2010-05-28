@@ -2487,7 +2487,7 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	/**
 	 * Generates and executes SQL to create a unique constraint on a field,
-	 * using an index
+	 * using an index. If this fails due to duplicates, report the duplicates
 	 */
 	private void addUniqueDbAction(Connection conn, String internalTableName,
 			String internalFieldName) throws SQLException, CantDoThatException {
@@ -2501,7 +2501,31 @@ public class DatabaseDefn implements DatabaseInfo {
 			statement.execute();
 		} catch (SQLException sqlex) {
 			if (sqlex.getMessage().contains("Table contains duplicated values")) {
-				throw new CantDoThatException("The table contains duplicate values");
+				// Find the actual duplicates
+				String errorMessage = "There are duplicate values: ";
+				Connection dupConn = this.relationalDataSource.getConnection();
+				dupConn.setAutoCommit(false);
+				try {
+					SQLCode = "SELECT " + internalFieldName + ", count(*) FROM " + internalTableName;
+					SQLCode += " HAVING count(*) > 1 ORDER BY " + internalFieldName;
+					PreparedStatement dupStatement = dupConn.prepareStatement(SQLCode);
+					ResultSet results = dupStatement.executeQuery();
+					RESULTSLOOP: while (results.next()) {
+						if (errorMessage.length() > 100) {
+							errorMessage += "...";
+							break RESULTSLOOP;
+						} else {
+							errorMessage += results.getString(1) + ", ";
+						}
+					}
+					results.close();
+					dupStatement.close();
+				} finally {
+					if (dupConn != null) {
+						dupConn.close();
+					}
+				}
+				throw new CantDoThatException(errorMessage, sqlex);
 			} else {
 				throw sqlex;
 			}
