@@ -2507,6 +2507,7 @@ public class DatabaseDefn implements DatabaseInfo {
 				dupConn.setAutoCommit(false);
 				try {
 					SQLCode = "SELECT " + internalFieldName + ", count(*) FROM " + internalTableName;
+					SQLCode += " GROUP BY " + internalFieldName;
 					SQLCode += " HAVING count(*) > 1 ORDER BY " + internalFieldName;
 					PreparedStatement dupStatement = dupConn.prepareStatement(SQLCode);
 					ResultSet results = dupStatement.executeQuery();
@@ -2520,6 +2521,9 @@ public class DatabaseDefn implements DatabaseInfo {
 					}
 					results.close();
 					dupStatement.close();
+				} catch(SQLException dsqlex) {
+					logger.error("Error finding duplicate values while setting unique property: " + dsqlex);
+					throw new CantDoThatException("There are duplicate values", dsqlex);
 				} finally {
 					if (dupConn != null) {
 						dupConn.close();
