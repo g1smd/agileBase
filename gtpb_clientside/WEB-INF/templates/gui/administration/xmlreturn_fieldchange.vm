@@ -23,7 +23,8 @@
     <response>ok</response>
 	## See if we need to include a warning by checking value against report stats
 	#set($fieldInputValues = $sessionData.getFieldInputValues())
-	#set($field = $fieldInputValues.keySet().toArray()[0])
+	#set($fieldsArray = $fieldInputValues.keySet().toArray())
+	#set($field = $fieldsArray[0])
 	#set($value = $fieldInputValues.get($field))
 	#if($field.getFieldCategory() == "NUMBER")
 	  #set($reportData = $view.getReportData())
