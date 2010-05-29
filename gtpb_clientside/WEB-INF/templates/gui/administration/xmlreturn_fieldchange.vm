@@ -25,7 +25,7 @@
 	#set($fieldInputValues = $sessionData.getFieldInputValues())
 	$viewTools.log("Field input values are $fieldInputValues")
 	#set($fieldsArray = $fieldInputValues.keySet().toArray())
-	#set($field = $fieldsArray.get(0))
+	#set($field = "")
 	#set($value = $fieldInputValues.get($field))
 	#if($field.getFieldCategory() == "NUMBER")
 	  #set($reportData = $view.getReportData())
