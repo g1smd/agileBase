@@ -532,6 +532,11 @@ function fChange(oObj)  {
 
     if(vCurrentValue!=vValue) return; // the current value has changed since this request was sent
     fClearError(false);
+    var warningElement = sResponseXML.getElementsByTagName('response')[0];
+    if (typeof warningElement != "undefined") {
+      var sWarning = warningElement.firstChild.nodeValue;
+      alert(sWarning);
+    }
     fUpdatePane1();
     fUpdatePane2();
     fUpdatePane3();

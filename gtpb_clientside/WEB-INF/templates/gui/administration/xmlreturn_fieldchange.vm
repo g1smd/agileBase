@@ -21,11 +21,27 @@
     <response>exception</response>
   #else
     <response>ok</response>
-	## See if we need to include a warning
+	## See if we need to include a warning by checking value against report stats
 	#set($fieldInputValues = $sessionData.getFieldInputValues())
 	#set($field = $fieldInputValues.keySet().toArray()[0])
+	#set($value = $fieldInputValues.get($field))
 	#if($field.getFieldCategory() == "NUMBER")
 	  #set($reportData = $view.getReportData())
+	  #set($fieldStats = $reportData.getFieldStats())
+	  #foreach($reportField in $fieldStats.keySet())
+		#if($reportField.getBaseField().equals($field))
+		  #set($reportDataFieldStats = $fieldStats.get($reportField))
+		  #set($stdDev = $reportDataFieldStats.getStdDev())
+		  #set($mean = $reportDataFieldStats.getMean())
+		  #if($stdDev != 0)
+			#set($numStdDevsFromMean = ($value - $mean) / $stdDev)
+		  #end
+		  #if(($numStdDevsFromMean > 10) || ($numStdDevsFromMean < -10))
+			<warning>$values is an unusual value</warning>
+		  #end
+		  #break ## TODO: check this breaks out of the foreach as we want
+		#end
+	  #end
 	#end	
   #end
 </request>
