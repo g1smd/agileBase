@@ -982,10 +982,10 @@ public class ServletDataMethods {
 		}
 
 		// Gather data to save, store it in the session
-		if (newRecord) {
+		//if (newRecord) {
 			// clear the cached record data:
 			sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
-		}
+		//}
 		try {
 			setSessionFieldInputValues(sessionData, request, newRecord, databaseDefn, table,
 					multipartItems);
@@ -998,7 +998,7 @@ public class ServletDataMethods {
 			// clear the cached record data... this might need to be handled
 			// elsewhere
 			// or within a try-catch block to ensure cached data is dropped
-			sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
+			//sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
 		}
 	}
 
