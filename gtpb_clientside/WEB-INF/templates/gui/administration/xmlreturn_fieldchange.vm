@@ -23,6 +23,7 @@
     <response>ok</response>
 	## See if we need to include a warning by checking value against report stats
 	#set($fieldInputValues = $sessionData.getFieldInputValues())
+	$viewTools.log("Field input values are $fieldInputValues")
 	#set($fieldsArray = $fieldInputValues.keySet().toArray())
 	#set($field = $fieldsArray.get(0))
 	#set($value = $fieldInputValues.get($field))
