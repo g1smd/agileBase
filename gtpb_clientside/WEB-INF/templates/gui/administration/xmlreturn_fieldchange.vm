@@ -24,7 +24,7 @@
 	## See if we need to include a warning by checking value against report stats
 	#set($fieldInputValues = $sessionData.getFieldInputValues())
 	#set($fieldsArray = $fieldInputValues.keySet().toArray())
-	#set($field = $fieldsArray[0])
+	#set($field = $fieldsArray.get(0))
 	#set($value = $fieldInputValues.get($field))
 	#if($field.getFieldCategory() == "NUMBER")
 	  #set($reportData = $view.getReportData())
