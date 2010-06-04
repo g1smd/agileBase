@@ -31,6 +31,7 @@
 		  #set($value = $fieldInputValues.get($field))
 		  #if(!$value.isNull()) ## dates may have a 'null value'
 		    #set($field = $singleField)
+			<field>$field = $value</field>
 		  #end
 		#end
 	  #end
