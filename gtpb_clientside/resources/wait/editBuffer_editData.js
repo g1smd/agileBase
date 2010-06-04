@@ -523,8 +523,10 @@ function fChange(oObj)  {
     }
     
     function fClearWarning() {
+      var jqDoc = jQuery(top.document.getElementById('oViewPane').contentWindow.pane_3.document);
       var warningId = $(oObj).attr("name") + "_warning";
-      $("#" + warningId).hide("slow");
+      var jqWarnings = $(jDoc).find('.warningmessage');
+      alert(jqWarnings.size());
     }
     
     function fSetWarning(sMessage) {
@@ -533,7 +535,7 @@ function fChange(oObj)  {
       if(typeof jQuery != 'function'){
     	  alert('no jquery');
       }
-      alert(jQuery(".capitalised").size());
+      //alert(jQuery(".capitalised").size());
     }
      
     top.oBuffer.clearFromSendQueue(oObj);
