@@ -24,12 +24,16 @@
 	## See if we need to include a warning by checking value against report stats
 	#set($fieldInputValues = $sessionData.getFieldInputValues())
 	#set($fields = $fieldInputValues.keySet())
+	## Find the field being edited (the pKey and hidden metadata may also be saved)
 	#foreach($singleField in $fields)
-	  #set($field = $singleField) ## the set will only have one field, this is the simplest way to get it
+	  #if(!$singleField.equals($singleField.getTableContainingField().getPrimaryKey()))
+	    #if(!$singleField.getHidden())
+		  #set($field = $singleField)
+		#end
+	  #end
 	#end
 	#set($value = $fieldInputValues.get($field))
 	#if($field.getFieldCategory() == "NUMBER")
-	  <numberfield></numberfield>
 	  #set($reportData = $view.getReportData())
 	  #set($fieldStats = $reportData.getFieldStats())
       <fieldstats>$fieldStats</fieldstats>
