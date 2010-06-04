@@ -530,6 +530,9 @@ function fChange(oObj)  {
     function fSetWarning(sMessage) {
       var warningId = $(oObj).attr("name") + "_warning";
       $("#" + warningId).text(sMessage).show("slow");
+      if(typeof jQuery != 'function'){
+    	  alert('no jquery');
+      }
       alert(jQuery(".capitalised").size());
     }
      
