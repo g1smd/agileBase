@@ -48,7 +48,7 @@
 		  #set($mean = $reportDataFieldStats.getMean())
 		  #if($stdDev != 0)
 			#set($numStdDevsFromMean = ($value - $mean) / $stdDev)
-            <stddevs>$numStdDevsFromMean</stddevs>
+            <stddevs>($value - $mean) / $stdDev = $numStdDevsFromMean</stddevs>
 		  #end
 		  #if(($numStdDevsFromMean > 10) || ($numStdDevsFromMean < -10))
 			<warning>$values is an unusual value</warning>
