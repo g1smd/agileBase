@@ -39,14 +39,16 @@
 	#if($field.getFieldCategory() == "NUMBER")
 	  #set($reportData = $view.getReportData())
 	  #set($fieldStats = $reportData.getFieldStats())
-      <fieldstats>$fieldStats</fieldstats>
 	  #foreach($reportField in $fieldStats.keySet())
+		<testfield>$reportField</testfield>
 		#if($reportField.getBaseField().equals($field))
+          <foundfield>$field</foundfield>
 		  #set($reportDataFieldStats = $fieldStats.get($reportField))
 		  #set($stdDev = $reportDataFieldStats.getStdDev())
 		  #set($mean = $reportDataFieldStats.getMean())
 		  #if($stdDev != 0)
 			#set($numStdDevsFromMean = ($value - $mean) / $stdDev)
+            <stddevs>$numStdDevsFromMean</stddevs>
 		  #end
 		  #if(($numStdDevsFromMean > 10) || ($numStdDevsFromMean < -10))
 			<warning>$values is an unusual value</warning>
