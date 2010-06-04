@@ -23,13 +23,16 @@
     <response>ok</response>
 	## See if we need to include a warning by checking value against report stats
 	#set($fieldInputValues = $sessionData.getFieldInputValues())
-	$viewTools.log("Field input values are $fieldInputValues")
-	#set($fieldsArray = $fieldInputValues.keySet().toArray())
-	#set($field = "")
+	#set($fields = $fieldInputValues.keySet())
+	#foreach($singleField in $fields)
+	  #set($field = $singleField) ## the set will only have one field, this is the simplest way to get it
+	#end
 	#set($value = $fieldInputValues.get($field))
 	#if($field.getFieldCategory() == "NUMBER")
+	  <numberfield></numberfield>
 	  #set($reportData = $view.getReportData())
 	  #set($fieldStats = $reportData.getFieldStats())
+      <fieldstats>$fieldStats</fieldstats>
 	  #foreach($reportField in $fieldStats.keySet())
 		#if($reportField.getBaseField().equals($field))
 		  #set($reportDataFieldStats = $fieldStats.get($reportField))
