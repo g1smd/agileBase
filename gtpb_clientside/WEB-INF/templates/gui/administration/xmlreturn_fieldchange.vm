@@ -40,20 +40,16 @@
 	  #set($reportData = $view.getReportData())
 	  #set($fieldStats = $reportData.getFieldStats())
 	  #foreach($reportField in $fieldStats.keySet())
-		<testfield>$reportField</testfield>
 		#if($reportField.getBaseField().equals($field))
-          <foundfield>$field</foundfield>
 		  #set($reportDataFieldStats = $fieldStats.get($reportField))
 		  #set($stdDev = $reportDataFieldStats.getStdDev())
 		  #set($mean = $reportDataFieldStats.getMean())
 		  #if($stdDev != 0)
 			#set($mathTool = $viewTools.getMathTool())
-			#set($difference = $mathTool.sub($value,$mean))
-            <difference>$value - $mean = $difference</difference>
-			#set($numStdDevsFromMean = $mathTool.div($difference, $stdDev))
-            <stddevs>($value - $mean) / $stdDev = $numStdDevsFromMean</stddevs>
-		    #if(($numStdDevsFromMean > 10) || ($numStdDevsFromMean < -10))
-			  <warning>$values is an unusual value</warning>
+			#set($difference = $mathTool.sub($value,$mean)) ## value - mean
+			#set($numStdDevsFromMean = $mathTool.div($difference, $stdDev)) ## difference / stdDev
+		    #if($mathTool.abs($numStdDevsFromMean) > 20)
+			  <warning>Note: $value is an unusual value</warning>
 		    #end
 		  #end
 		  #break ## TODO: check this breaks out of the foreach as we want

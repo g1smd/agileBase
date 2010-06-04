@@ -521,6 +521,15 @@ function fChange(oObj)  {
       oObj.removeAttribute('error');
       oObj.removeAttribute('title');
     }
+    
+    function fClearWarning() {
+      $(".warningmessage").hide("slow");
+      $(".warningmessage").remove();
+    }
+    
+    function fSetWarning(sMessage) {
+      $(oObj).after("<div class='warningmessage' >" + sMessage + "</div>").show("slow");
+    }
      
     top.oBuffer.clearFromSendQueue(oObj);
     var vCurrentValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):oObj.value));    
@@ -532,10 +541,11 @@ function fChange(oObj)  {
 
     if(vCurrentValue!=vValue) return; // the current value has changed since this request was sent
     fClearError(false);
+    fClearWarning();
     var warningElement = sResponseXML.getElementsByTagName('warning')[0];
     if (typeof warningElement != "undefined") {
       var sWarning = warningElement.firstChild.nodeValue;
-      alert(sWarning);
+      fSetWarning(sWarning);
     }
     fUpdatePane1();
     fUpdatePane2();
