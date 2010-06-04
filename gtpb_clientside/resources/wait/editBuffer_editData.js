@@ -528,7 +528,7 @@ function fChange(oObj)  {
     }
     
     function fSetWarning(sMessage) {
-      $(oObj).after("<div class='warningmessage' >" + sMessage + "</div>").show("slow");
+      $(oObj).after("<div class='warningmessage' style='display:none'>" + sMessage + "</div>").show("slow");
     }
      
     top.oBuffer.clearFromSendQueue(oObj);
