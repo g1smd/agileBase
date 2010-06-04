@@ -530,6 +530,7 @@ function fChange(oObj)  {
     function fSetWarning(sMessage) {
       var warningId = $(oObj).attr("name") + "_warning";
       $("#" + warningId).text(sMessage).show("slow");
+      alert($("#" + warningId).text());
     }
      
     top.oBuffer.clearFromSendQueue(oObj);
