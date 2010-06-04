@@ -523,13 +523,13 @@ function fChange(oObj)  {
     }
     
     function fClearWarning() {
-      alert('clearing warnings');
-      $(".warningmessage").hide("slow").remove();
+      var warningId = $(oObj).attr("name") + "_warning";
+      $("#" + warningId).hide("slow");
     }
     
     function fSetWarning(sMessage) {
-      $(oObj).after("<div class='warningmessage' style='display:none'>" + sMessage + "</div>");
-      $(".warningmessage").show("slow");
+      var warningId = $(oObj).attr("name") + "_warning";
+      $("#" + warningId).text(sMessage).show("slow");
     }
      
     top.oBuffer.clearFromSendQueue(oObj);
