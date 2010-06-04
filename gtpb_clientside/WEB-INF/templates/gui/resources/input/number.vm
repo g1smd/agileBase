@@ -36,7 +36,7 @@
 				#if($field.getNotNull() && $fieldValue == "")
 					<span class="mandated">* Mandatory field - please enter a value</span>
 				#end
-				<div id="$field.getInternalFieldName()_warning" class="warningmessage" style="display:none"></div>
+				<div id="$field.getInternalFieldName()_warning" class="warningmessage"></div>
 	  #end##
     		#if($field.allowNotApplicable())##
 		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
@@ -56,7 +56,7 @@ $fieldValue##
 				#if($field.getNotNull() && $tableDataRow.get($field) == "")
 					<span class="mandated">* Mandatory field - please enter a value</span>
 				#end
-				<div id="$field.getInternalFieldName()_warning" class="warningmessage" style="display:none"></div>
+				<div id="$field.getInternalFieldName()_warning" class="warningmessage"></div>
   	  #end##
     		#if($field.allowNotApplicable())##
 		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
