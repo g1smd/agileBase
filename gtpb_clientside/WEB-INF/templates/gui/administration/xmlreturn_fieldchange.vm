@@ -28,11 +28,13 @@
 	#foreach($singleField in $fields)
 	  #if(!$singleField.equals($singleField.getTableContainingField().getPrimaryKey()))
 	    #if(!$singleField.getHidden())
-		  #set($field = $singleField)
+		  #set($value = $fieldInputValues.get($field))
+		  #if(!$value.isNull()) ## dates may have a 'null value'
+		    #set($field = $singleField)
+		  #end
 		#end
 	  #end
 	#end
-	#set($value = $fieldInputValues.get($field))
 	#if($field.getFieldCategory() == "NUMBER")
 	  #set($reportData = $view.getReportData())
 	  #set($fieldStats = $reportData.getFieldStats())
