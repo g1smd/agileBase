@@ -47,11 +47,14 @@
 		  #set($stdDev = $reportDataFieldStats.getStdDev())
 		  #set($mean = $reportDataFieldStats.getMean())
 		  #if($stdDev != 0)
-			#set($numStdDevsFromMean = ($value - $mean) / $stdDev)
+			#set($mathTool = $viewTools.getMathTool())
+			#set($difference = $mathTool.sub($value,$mean))
+            <difference>$value - $mean = $difference</difference>
+			#set($numStdDevsFromMean = $mathTool.div($difference, $stdDev))
             <stddevs>($value - $mean) / $stdDev = $numStdDevsFromMean</stddevs>
-		  #end
-		  #if(($numStdDevsFromMean > 10) || ($numStdDevsFromMean < -10))
-			<warning>$values is an unusual value</warning>
+		    #if(($numStdDevsFromMean > 10) || ($numStdDevsFromMean < -10))
+			  <warning>$values is an unusual value</warning>
+		    #end
 		  #end
 		  #break ## TODO: check this breaks out of the foreach as we want
 		#end
