@@ -525,7 +525,7 @@ function fChange(oObj)  {
     function fClearWarning() {
       var jqDoc = jQuery(top.document.getElementById('oViewPane').contentWindow.pane_3.document);
       var warningId = $(oObj).attr("name") + "_warning";
-      var jqWarnings = $(jDoc).find('.warningmessage');
+      var jqWarnings = $(jqDoc).find('.warningmessage');
       alert(jqWarnings.size());
     }
     
