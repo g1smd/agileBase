@@ -40,4 +40,5 @@ table.data small { font-size:8pt; color:#cccccc }
 		text-align: center;
 		background: rgb(254,242,149);
 		margin: 10px;
+		padding: 10px;
 }
