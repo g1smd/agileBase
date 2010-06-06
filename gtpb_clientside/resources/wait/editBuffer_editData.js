@@ -524,18 +524,14 @@ function fChange(oObj)  {
     
     function fClearWarning() {
       var jqDoc = jQuery(top.document.getElementById('oViewPane').contentWindow.pane_3.document);
-      var warningId = $(oObj).attr("name") + "_warning";
       var jqWarnings = $(jqDoc).find('.warningmessage');
-      alert(jqWarnings.size());
+      jqWarnings.hide("slow");
     }
     
     function fSetWarning(sMessage) {
+      var jqDoc = jQuery(top.document.getElementById('oViewPane').contentWindow.pane_3.document);
       var warningId = $(oObj).attr("name") + "_warning";
-      $("#" + warningId).text(sMessage).show("slow");
-      if(typeof jQuery != 'function'){
-    	  alert('no jquery');
-      }
-      //alert(jQuery(".capitalised").size());
+      jqDoc.find("#" + warningId).text(sMessage).show("slow");
     }
      
     top.oBuffer.clearFromSendQueue(oObj);
