@@ -480,21 +480,6 @@ function fChange(oObj)  {
     	if (typeof(pane1_report_name) == "string") {
     		$(top.oViewPane.pane_1.document).find("[name="+pane1_report_name+"]").find("a").eq(0).text(fDisplayValue());
     	}
-    	
-    	// the input field should have been matched with a caption in pane1
-      // check that the input was matched to a caption
-
-      //if (!oObj.pane1_field) return;
-      //update the caption's value
-
-      //oObj.pane1_field.updateTitle(fDisplayValue());
-      /*
-      for(var i=0; i<oObj.pane1_field.childNodes.length; i++) {
-        if(oObj.pane1_field.childNodes[i].nodeName=='#text') {
-          oObj.pane1_field.replaceChild(document.createTextNode(fDisplayValue()),oObj.pane1_field.childNodes[i]);
-          break;
-        }
-      }*/ 
     }
      
     function fSetError(sMessage) {	
@@ -523,9 +508,9 @@ function fChange(oObj)  {
     }
     
     function fClearWarning() {
-      var jqDoc = jQuery(top.document.getElementById('oViewPane').contentWindow.pane_3.document);
-      var jqWarnings = $(jqDoc).find('.warningmessage');
-      jqWarnings.hide("slow");
+        var jqDoc = jQuery(top.document.getElementById('oViewPane').contentWindow.pane_3.document);
+        var warningId = $(oObj).attr("name") + "_warning";
+        jqDoc.find("#" + warningId).hide("slow");
     }
     
     function fSetWarning(sMessage) {
