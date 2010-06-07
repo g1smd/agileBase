@@ -91,6 +91,8 @@ public class FileValueDefn implements FileValue {
 		knownFilenames.add("htm");
 		knownFilenames.add("pdf");
 		knownFilenames.add("psd");
+		knownFilenames.add("tif");
+		knownFilenames.add("tiff");
 		knownFilenames.add("txt");
 		knownFilenames.add("xls");
 		knownFilenames.add("zip");
