@@ -464,6 +464,13 @@ public class ViewMethods implements ViewMethodsInfo {
 		return this.databaseDefn.getDataManagement().getReportData(company, report);
 	}
 	
+	public ReportDataInfo getReportData(BaseReportInfo report) throws SQLException, DisallowedException, CodingErrorException, ObjectNotFoundException {
+		this.checkReportViewPrivileges(report);
+		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
+				this.request);
+		return this.databaseDefn.getDataManagement().getReportData(company, report);
+	}
+	
 	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit,
 			Map<BaseField, String> reportFilterValues, boolean exactFilters)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
