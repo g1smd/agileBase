@@ -73,8 +73,9 @@ public class Enumerations {
 	}
 
 	/**
-	 * Postgresql 7.4 specific reserved names TODO: upgrade to latest postgres
-	 * version
+	 * Postgresql 7.4 specific reserved names
+	 * 
+	 * TODO: upgrade to latest postgres version
 	 * 
 	 * @see http
 	 *      ://www.postgresql.org/docs/7.4/interactive/sql-keywords-appendix.
@@ -135,7 +136,7 @@ public class Enumerations {
 				true), NEWER_THAN_IN_MONTHS(true), NEWER_THAN_IN_YEARS(true), OLDER_THAN_IN_DAYS(
 				true), OLDER_THAN_IN_WEEKS(true), OLDER_THAN_IN_MONTHS(true), OLDER_THAN_IN_YEARS(
 				true), IS_NULL(false), IS_NOT_NULL(false), IS_ONE_OF(false); // ,
-																				// IS_IN_SUBSELECT(false),
+		// IS_IN_SUBSELECT(false),
 		// IS_NOT_IN_SUBSELECT(false);
 
 		private boolean isDateComparison = false;
@@ -200,7 +201,8 @@ public class Enumerations {
 	 */
 	public enum AggregateFunction {
 		COUNT("count"), SUM("sum"), MIN("minimum"), MAX("maximum"), AVG("average"), WTDAVG(
-				"weighted avg."), CUMULATIVE_COUNT("cumulative count"), CUMULATIVE_SUM("cumulative sum");
+				"weighted avg."), CUMULATIVE_COUNT("cumulative count"), CUMULATIVE_SUM(
+				"cumulative sum");
 
 		private String label;
 
@@ -242,7 +244,7 @@ public class Enumerations {
 	 * is in each field
 	 */
 	public enum FieldContentType {
-		FULL_NAME, PHONE_NUMBER, EMAIL_ADDRESS, NI_NUMBER, CODE,OTHER
+		FULL_NAME, PHONE_NUMBER, EMAIL_ADDRESS, NI_NUMBER, CODE, OTHER
 	}
 
 	public enum HiddenFields {
@@ -309,19 +311,21 @@ public class Enumerations {
 			this.userAgentString = userAgentString;
 		}
 	}
-	
+
 	/**
-	 * In a report summary you can group by any field in the report, but the addition of field modifiers allows you to do things like group by year, quarter or month of a date field
+	 * In a report summary you can group by any field in the report, but the
+	 * addition of field modifiers allows you to do things like group by year,
+	 * quarter or month of a date field
 	 */
 	public enum SummaryGroupingModifier {
 		DATE_YEAR("year"), DATE_QUARTER("quarter"), DATE_MONTH("month"), DATE_DAY("day");
-		
+
 		public String getDescription() {
 			return this.description;
 		}
-		
+
 		private String description = "";
-		
+
 		SummaryGroupingModifier(String description) {
 			this.description = description;
 		}
@@ -330,22 +334,23 @@ public class Enumerations {
 	public enum Period {
 		DAY, WEEK, MONTH, YEAR;
 	}
-	
+
 	/**
 	 * Possible types of user who can log in to agileBase
 	 */
 	public enum UserType {
-		EXTERNAL("a user outside the company"), OPERATIONAL("standard user"), MANAGERIAL("standard user"), EXECUTIVE("has a global overview");
-		
+		EXTERNAL("a user outside the company"), OPERATIONAL("standard user"), MANAGERIAL(
+				"standard user"), EXECUTIVE("has a global overview");
+
 		public String getDescription() {
 			return this.description;
 		}
-		
+
 		private String description = "";
-		
+
 		UserType(String description) {
 			this.description = description;
 		}
 	}
-	
+
 }

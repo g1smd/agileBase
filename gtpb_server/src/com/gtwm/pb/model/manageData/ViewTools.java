@@ -42,7 +42,6 @@ import com.gtwm.pb.model.manageData.fields.FileValueDefn;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.RandomString;
-
 import org.apache.velocity.tools.generic.MathTool;
 import org.grlea.log.SimpleLogger;
 import com.ibm.icu.text.RuleBasedNumberFormat;
@@ -110,7 +109,7 @@ public class ViewTools implements ViewToolsInfo {
 	}
 
 	public String getAreaForPhoneNumber(String phoneNumber) {
-		if (this.areaCodes.size() == 0) {
+		if (this.areaCodes.isEmpty()) {
 			// initialise array, values from wikipedia
 			this.areaCodes.put("020", "London");
 			this.areaCodes.put("0121", "Birmingham");

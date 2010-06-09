@@ -22,7 +22,6 @@ import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.UserType;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

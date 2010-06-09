@@ -83,26 +83,14 @@ public class FileValueDefn implements FileValue {
 	}
 
 	public String getIconName() {
-		Set<String> knownFilenames = new HashSet<String>();
-		// See icons in resources/icons/filetypes
-		knownFilenames.add("csv");
-		knownFilenames.add("doc");
-		knownFilenames.add("docx");
-		knownFilenames.add("htm");
-		knownFilenames.add("pdf");
-		knownFilenames.add("psd");
-		knownFilenames.add("tif");
-		knownFilenames.add("tiff");
-		knownFilenames.add("txt");
-		knownFilenames.add("xls");
-		knownFilenames.add("zip");
 		String filename = this.getFilename();
 		if (filename.contains(".")) {
-			String extension = filename.replaceAll(".*\\.", "").toLowerCase();
-			if (knownFilenames.contains(extension)) {
-				return extension;
-			} else {
-				logger.warn("No icon for filetype " + extension);
+			String extensionStr = filename.replaceAll(".*\\.", "").toUpperCase();
+			try {
+				Extension extension = Extension.valueOf(extensionStr);
+				return extensionStr.toLowerCase();
+			} catch(IllegalArgumentException iaex) {
+				logger.warn("No icon for filetype " + extensionStr);
 				return "unknown";
 			}
 		}
@@ -126,6 +114,10 @@ public class FileValueDefn implements FileValue {
 		}
 	}
 
+	private enum Extension {
+		CSV, DOC, DOCX, HTM, PDF, PPT, PSD, TIF, TIFF, TXT, XLS, ZIP;
+	}
+	
 	private String filename = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(FileValueDefn.class);

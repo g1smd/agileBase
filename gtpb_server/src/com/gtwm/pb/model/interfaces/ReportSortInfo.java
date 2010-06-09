@@ -17,8 +17,6 @@
  */
 package com.gtwm.pb.model.interfaces;
 
-import com.gtwm.pb.model.interfaces.ReportFieldInfo;
-
 /**
  * Represents a pair of objects, one a report field and one a Boolean,
  * representing the sort direction for that field

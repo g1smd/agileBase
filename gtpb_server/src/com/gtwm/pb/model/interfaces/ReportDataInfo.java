@@ -17,7 +17,6 @@
  */
 package com.gtwm.pb.model.interfaces;
 
-import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.CantDoThatException;

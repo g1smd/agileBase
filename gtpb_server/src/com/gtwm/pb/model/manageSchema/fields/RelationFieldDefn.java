@@ -174,7 +174,6 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		return this.displayField;
 	}
 
-	@Transient
 	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException {
 		return this.getItemsWork(reverseKeyValue, null, -1);
 	}
@@ -184,7 +183,6 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		return this.getItemsWork(reverseKeyValue, filterString, maxResults);
 	}
 
-	@Transient
 	private SortedMap<String, String> getItemsWork(boolean reverseKeyValue, String filterString,
 			int maxResults) throws SQLException {
 		SortedMap<String, String> items = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
@@ -289,7 +287,6 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		return tierThreeRowId;
 	}
 
-	@Transient
 	public String getDisplayValue(String keyValue) throws SQLException, CodingErrorException {
 		if (keyValue == null) {
 			return "";
