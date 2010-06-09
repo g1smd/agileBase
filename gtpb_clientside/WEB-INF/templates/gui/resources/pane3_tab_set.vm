@@ -64,8 +64,6 @@
 		<![endif]-->
 		<script type="text/javascript" src="resources/wait/request_setFilter.js"></script> 
 		<SCRIPT type="text/javascript" src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
-        <script type="text/javascript" src="resources/uploadify/swfobject.js"></script>
-        <script type="text/javascript" src="resources/uploadify/jquery.uploadify.js"></script>
 		#if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
       	  <script type="text/javascript" src="resources/jquery.tablednd.js"></script>
 		  <script type="text/javascript" src="resources/edit_area/edit_area_full.js"></script>
