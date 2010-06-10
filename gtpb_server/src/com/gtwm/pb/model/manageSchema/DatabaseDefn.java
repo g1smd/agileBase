@@ -1035,7 +1035,10 @@ public class DatabaseDefn implements DatabaseInfo {
 				fieldDesc, unique);
 		this.addField(conn, table, field, request);
 		field.setHidden(hidden);
-		field.setNotNull(notNull);
+		if (!(field instanceof SequenceField)) {
+			// Sequences are generated and can't be null, setNotNull throws an exception
+			field.setNotNull(notNull);
+		}
 		// schema change time not recorded in memory because it doesn't affect
 		// summary reports
 		// this.dataManagement.logLastSchemaChangeTime(request);
@@ -2505,7 +2508,8 @@ public class DatabaseDefn implements DatabaseInfo {
 				Connection dupConn = this.relationalDataSource.getConnection();
 				dupConn.setAutoCommit(false);
 				try {
-					SQLCode = "SELECT " + internalFieldName + ", count(*) FROM " + internalTableName;
+					SQLCode = "SELECT " + internalFieldName + ", count(*) FROM "
+							+ internalTableName;
 					SQLCode += " GROUP BY " + internalFieldName;
 					SQLCode += " HAVING count(*) > 1 ORDER BY " + internalFieldName;
 					PreparedStatement dupStatement = dupConn.prepareStatement(SQLCode);
@@ -2520,8 +2524,9 @@ public class DatabaseDefn implements DatabaseInfo {
 					}
 					results.close();
 					dupStatement.close();
-				} catch(SQLException dsqlex) {
-					logger.error("Error finding duplicate values while setting unique property: " + dsqlex);
+				} catch (SQLException dsqlex) {
+					logger.error("Error finding duplicate values while setting unique property: "
+							+ dsqlex);
 					throw new CantDoThatException("There are duplicate values", dsqlex);
 				} finally {
 					if (dupConn != null) {
