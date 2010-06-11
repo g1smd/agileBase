@@ -567,6 +567,7 @@ function fChange(oObj)  {
   // Get value differently depending on whether the element is a div or form element
   if (oObj.tagName == 'div') {
 	var vValue = jQuery(oObj).text();
+	alert(vValue);
   } else {
     var vValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):$(oObj).val()));
   }
