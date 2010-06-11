@@ -567,7 +567,7 @@ function fChange(oObj)  {
      the server returns.  The state we store depends on the type of form object */
   // Get value differently depending on whether the element is a div or form element
   alert("This is a " + oObj.tagName);
-  if (oObj.tagName == 'div') {
+  if (oObj.tagName == 'DIV') {
 	var vValue = jQuery(oObj).text();
 	alert(vValue);
   } else {
