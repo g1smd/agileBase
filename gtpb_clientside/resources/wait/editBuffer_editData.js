@@ -549,6 +549,7 @@ function fChange(oObj)  {
     // always pass these in the post request
     aPostVars['return']='gui/administration/xmlreturn_fieldchange';
     aPostVars['returntype']='xml'; 
+    alert("Going to send up " + vValue);
     aPostVars[oObj.getAttribute('name')]=vValue;
    
     /* look at all the attributes that the DOM object has and pass all the 
