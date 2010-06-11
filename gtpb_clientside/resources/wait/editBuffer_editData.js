@@ -558,7 +558,6 @@ function fChange(oObj)  {
     fUpdatePane1();
     fUpdatePane2();
     fUpdatePane3();
-    alert('about to enable');
     fEnableDisable('enable',oObj);
   }
    
