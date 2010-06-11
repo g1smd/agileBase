@@ -281,10 +281,14 @@ function fInit() {
 
     // function to match the fields displayed in pane2 with the input fields in pane3
     // oCells is a collection of the cells in the heading row of the table
-    var oCells = top.document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('reportData').tHead.rows[0].cells;
+  	var oViewPane = top.document.getElementById('oViewPane');
+	if (oViewPane == null) {
+	  return;
+	}
+    var oCells = oViewPane.contentWindow.pane_2.document.getElementById('reportData').tHead.rows[0].cells;
     // the index of the current row
-    if(top.document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('currentRow'))
-      var iRowIndex = top.document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('currentRow').rowIndex;
+    if(oViewPane.contentWindow.pane_2.document.getElementById('currentRow'))
+      var iRowIndex = oViewPane.contentWindow.pane_2.document.getElementById('currentRow').rowIndex;
     else var iRowIndex=-1;
       
     /* for each of the cells, look at its field name and see whether
@@ -296,7 +300,7 @@ function fInit() {
       	aMatchingElements[j].pane2_field = oCells[i];
       	// attach the actual cell to the input field
       	if (iRowIndex>-1)
-      	  aMatchingElements[j].pane2_cell = top.document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('reportData').rows[iRowIndex].cells[i];
+      	  aMatchingElements[j].pane2_cell = oViewPane.contentWindow.pane_2.document.getElementById('reportData').rows[iRowIndex].cells[i];
       	}
     } 
   }
@@ -458,7 +462,11 @@ function fChange(oObj)  {
    	    // if editing globally, update the whole column of the current record
    	    if (!oObj.pane2_field) return;
         var iIndex=oObj.pane2_field.cellIndex;
-        var oRows=top.document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('reportBody').rows;
+    	var oViewPane = top.document.getElementById('oViewPane');
+    	if (oViewPane == null) {
+    	  return;
+    	}
+        var oRows=oViewPane.contentWindow.pane_2.document.getElementById('reportBody').rows;
         for (var i=0;i<oRows.length;i++) {
           if(oRows[i].getAttribute('class')!='trailing') oRows[i].cells[iIndex].innerHTML=fDisplayValue();
    	    }
@@ -508,13 +516,21 @@ function fChange(oObj)  {
     }
     
     function fClearWarning() {
-        var jqDoc = jQuery(top.document.getElementById('oViewPane').contentWindow.pane_3.document);
+    	var oViewPane = top.document.getElementById('oViewPane');
+    	if (oViewPane == null) {
+    	  return;
+    	}
+        var jqDoc = jQuery(oViewPane.contentWindow.pane_3.document);
         var warningId = $(oObj).attr("name") + "_warning";
         jqDoc.find("#" + warningId).hide("slow");
     }
     
     function fSetWarning(sMessage) {
-      var jqDoc = jQuery(top.document.getElementById('oViewPane').contentWindow.pane_3.document);
+      var oViewPane = top.document.getElementById('oViewPane');
+      if (oViewPane == null) {
+    	return;
+      }
+      var jqDoc = jQuery(oViewPane.contentWindow.pane_3.document);
       var warningId = $(oObj).attr("name") + "_warning";
       jqDoc.find("#" + warningId).text(sMessage).show("slow");
     }
