@@ -548,8 +548,7 @@ function fChange(oObj)  {
    
     // always pass these in the post request
     aPostVars['return']='gui/administration/xmlreturn_fieldchange';
-    aPostVars['returntype']='xml'; 
-    alert("Going to send up " + vValue);
+    aPostVars['returntype']='xml';
     aPostVars[oObj.getAttribute('name')]=vValue;
    
     /* look at all the attributes that the DOM object has and pass all the 
@@ -566,10 +565,8 @@ function fChange(oObj)  {
   /* snapshot the state of the object now so that we can check if it's the same when
      the server returns.  The state we store depends on the type of form object */
   // Get value differently depending on whether the element is a div or form element
-  alert("This is a " + oObj.tagName);
   if (oObj.tagName == 'DIV') {
 	var vValue = jQuery(oObj).text();
-	alert(vValue);
   } else {
     var vValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):$(oObj).val()));
   }
