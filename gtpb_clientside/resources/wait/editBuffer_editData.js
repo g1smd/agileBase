@@ -564,7 +564,12 @@ function fChange(oObj)  {
    
   /* snapshot the state of the object now so that we can check if it's the same when
      the server returns.  The state we store depends on the type of form object */
-  var vValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):$(oObj).val()));
+  // Get value differently depending on whether the element is a div or form element
+  if (oObj.tagName == 'div') {
+	var vValue = jQuery(oObj).text();
+  } else {
+    var vValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):$(oObj).val()));
+  }
   /* mark the input as busy.  What should be set depends on the type of form object.
      NOTE: changed attribute is an expando with a style set to show it's applied */
   // a key value pair array of data to pass in the Post request
