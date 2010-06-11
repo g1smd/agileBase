@@ -397,8 +397,6 @@ function fEnableDisable(sAction, oFormObject) {
 
   var cObjects=oFormObject.objectCollection?oFormObject.objectCollection:fSetObjectCollection();
   //var xx=cObjects.length;
-  alert('cObjects.length is ' + cObjects.length);
-  alert('action is ' + sAction);
   for(var i=0;i<cObjects.length;i++) {  
 	// see whether we've passed in the hidden field from a picker
 	var oObjToChange=((cObjects[i].getAttribute('type')=='hidden') && cObjects[i].label)?cObjects[i].label:cObjects[i];
@@ -540,6 +538,7 @@ function fChange(oObj)  {
     fUpdatePane1();
     fUpdatePane2();
     fUpdatePane3();
+    alert('about to enable');
     fEnableDisable('enable',oObj);
   }
    
