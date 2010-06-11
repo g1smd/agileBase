@@ -520,7 +520,11 @@ function fChange(oObj)  {
     }
      
     top.oBuffer.clearFromSendQueue(oObj);
-    var vCurrentValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):oObj.value));    
+    if (oObj.tagName == 'DIV') {
+      var vCurrentValue = jQuery(oObj).text();
+    } else {
+      var vCurrentValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):oObj.value));
+    }
     sResponse=sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
     if(sResponse!='ok') { // the action was not successfully processed by the server
       fSetError(sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue);
