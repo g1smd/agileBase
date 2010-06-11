@@ -384,7 +384,7 @@ function fEnableDisable(sAction, oFormObject) {
     var oDocument=fFormObjDocument();
     //if(oFormObject.getAttribute('type')!='radio') var cObjects= new Array(oFormObject);
     //else
-      var cObjects=oDocument.getElementsByName(oFormObject.getAttribute('name'));
+    var cObjects=oDocument.getElementsByName(oFormObject.getAttribute('name'));
     oFormObject.objectCollection=cObjects;
     return cObjects;
   }	
@@ -396,7 +396,9 @@ function fEnableDisable(sAction, oFormObject) {
   // enable or disable the current object or object group
 
   var cObjects=oFormObject.objectCollection?oFormObject.objectCollection:fSetObjectCollection();
-  var xx=cObjects.length;
+  //var xx=cObjects.length;
+  alert('cObjects.length is ' + cObjects.length);
+  alert('action is ' + sAction);
   for(var i=0;i<cObjects.length;i++) {  
 	// see whether we've passed in the hidden field from a picker
 	var oObjToChange=((cObjects[i].getAttribute('type')=='hidden') && cObjects[i].label)?cObjects[i].label:cObjects[i];
@@ -413,7 +415,7 @@ function fChange(oObj)  {
 	 The object stores the form object that it's working on, marks it as being updated, 
 	 fires the request, collects the response and handles it. 
 			
-	 The object contains compatibility for text, checkbox and radio input.
+	 The object contains compatibility for text, checkbox, radio inputs and contentEditable divs.
 			
 	 Any expando property of the form object prefixed with 'gtpb_' will be sent
 	 as a key value pair in the post parameters of the request.  In addition the name
