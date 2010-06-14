@@ -1795,7 +1795,7 @@ public class DataManagement implements DataManagementInfo {
 			SQLCode += " WHERE " + filterArgs;
 		}
 		// end subquery
-		SQLCode += " ) WHERE ";
+		SQLCode += " ) as rowids_q WHERE ";
 		if (forwardSearch) {
 			SQLCode += primaryKey.getInternalFieldName() + " > " + currentRowId;
 		} else {
