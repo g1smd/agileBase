@@ -1810,8 +1810,11 @@ public class DataManagement implements DataManagementInfo {
 			ResultSet results = statement.executeQuery();
 			if (results.next()) {
 				nextRowId = results.getInt(1);
+				if (results.wasNull()) {
+					nextRowId = currentRowId;
+					// TODO: cycle round if no result found rather than stopping
+				}
 			}
-			// TODO: cycle round if no result found
 			results.close();
 			statement.close();
 		} finally {
