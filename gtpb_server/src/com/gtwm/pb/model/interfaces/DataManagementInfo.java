@@ -88,7 +88,8 @@ public interface DataManagementInfo {
 	 *            Needed for internal caching mechanism. Can be null, but if so,
 	 *            no caching will be done
 	 */
-	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report) throws SQLException;
+	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report)
+			throws SQLException;
 
 	/**
 	 * Return true if the record with the given primary key is visible in the
@@ -326,4 +327,12 @@ public interface DataManagementInfo {
 	 * @return Bytes per second
 	 */
 	public int getUploadSpeed();
+
+	/**
+	 * Get the next or previous row ID in the given report with filters active
+	 * 
+	 * @param forwardSearch
+	 *            Whether to get the next or previous ID
+	 */
+	public int getNextRowId(SessionDataInfo sessionData, BaseReportInfo report, boolean forwardSearch) throws SQLException, CantDoThatException;
 }

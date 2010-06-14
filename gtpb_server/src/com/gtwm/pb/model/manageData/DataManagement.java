@@ -1768,6 +1768,60 @@ public class DataManagement implements DataManagementInfo {
 		}
 	}
 
+	public int getNextRowId(SessionDataInfo sessionData, BaseReportInfo report, boolean forwardSearch) throws SQLException, CantDoThatException {
+		Map<BaseField, String> reportFilterValues = sessionData.getReportFilterValues();
+		ReportDataInfo reportData = new ReportData(null, report, false, false);
+		Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
+				reportFilterValues, false);
+		String filterArgs = null;
+		List<ReportQuickFilterInfo> filtersUsed = null;
+		for (Map.Entry<String, List<ReportQuickFilterInfo>> whereClause : whereClauseMap.entrySet()) {
+			filterArgs = whereClause.getKey();
+			filtersUsed = whereClause.getValue();
+		}
+		int currentRowId = sessionData.getRowId(report.getParentTable());
+		int nextRowId = currentRowId;
+		BaseField primaryKey = report.getParentTable().getPrimaryKey();
+		String SQLCode = "SELECT ";
+		if (forwardSearch) {
+			SQLCode += "min(" + primaryKey.getInternalFieldName() + ") FROM (";
+		} else {
+			SQLCode += "max(" + primaryKey.getInternalFieldName() + ") FROM (";
+		}
+		// subquery
+		SQLCode += "SELECT " + primaryKey.getInternalFieldName();
+		SQLCode += " FROM " + report.getInternalReportName();
+		if (filterArgs.length() > 0) {
+			SQLCode += " WHERE " + filterArgs;
+		}
+		// end subquery
+		SQLCode += " ) WHERE ";
+		if (forwardSearch) {
+			SQLCode += primaryKey.getInternalFieldName() + " > " + currentRowId;
+		} else {
+			SQLCode += primaryKey.getInternalFieldName() + " < " + currentRowId;	
+		}
+		Connection conn = null;
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			reportData.fillInFilterValues(filtersUsed, statement);
+			ResultSet results = statement.executeQuery();
+			if (results.next()) {
+				nextRowId = results.getInt(1);
+			}
+			// TODO: cycle round if no result found
+			results.close();
+			statement.close();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return nextRowId;
+	}
+	
 	public Set<Integer> getRelatedRowIds(BaseReportInfo masterReport, int masterRowId,
 			TableInfo relatedTable) throws CantDoThatException, SQLException {
 		if (!masterReport.getReportBaseFields().contains(relatedTable.getPrimaryKey())) {

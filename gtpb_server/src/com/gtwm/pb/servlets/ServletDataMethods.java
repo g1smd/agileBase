@@ -97,11 +97,17 @@ public class ServletDataMethods {
 	 * 
 	 * 1) &set_row_id=50 - set the row id for the current session table
 	 * 
-	 * 2) &set_row_id=50&rowidinternaltablename=a2a5e30cb86a5513f - set the row
+	 * 2) &set_row_id=next - set the row id to that of the next record in the
+	 * current filtered session report
+	 * 
+	 * 3) &set_row_id=previous - set the row id to that of the previous record
+	 * in the current filtered session report
+	 * 
+	 * 4) &set_row_id=50&rowidinternaltablename=a2a5e30cb86a5513f - set the row
 	 * id for a table identified by internal table name (constant throughout
 	 * life of table)
 	 * 
-	 * 3) &set_row_id=50&rowidtablename=Contacts - set the row id for a table
+	 * 5) &set_row_id=50&rowidtablename=Contacts - set the row id for a table
 	 * identified by name (name may change)
 	 * 
 	 * @throws ObjectNotFoundException
@@ -110,11 +116,19 @@ public class ServletDataMethods {
 	 */
 	public static void setSessionRowId(SessionDataInfo sessionData, HttpServletRequest request,
 			String rowIdString, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
-			DisallowedException {
+			DisallowedException, CantDoThatException, SQLException {
 		String internalTableName = request.getParameter("rowidinternaltablename");
 		String tableName = request.getParameter("rowidtablename");
 		if (internalTableName == null && tableName == null) {
-			sessionData.setRowId(Integer.valueOf(rowIdString));
+			int rowId = -1;
+			if (rowIdString.toLowerCase().equals("next")) {
+				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData, sessionData.getReport(), true);
+			} else if (rowIdString.toLowerCase().equals("previous")) {
+				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData, sessionData.getReport(), false);
+			} else {
+				rowId = Integer.valueOf(rowIdString);
+			}
+			sessionData.setRowId(rowId);
 		} else {
 			TableInfo table;
 			if (internalTableName != null) {
@@ -122,7 +136,23 @@ public class ServletDataMethods {
 			} else {
 				table = databaseDefn.getTableByName(request, tableName);
 			}
-			sessionData.setRowId(table, Integer.valueOf(rowIdString));
+			BaseReportInfo report = null;
+			String internalReportName = request.getParameter("rowidinternalreportname");
+			String reportName = request.getParameter("rowidreportname");
+			if (internalReportName != null) {
+				report = table.getReport(internalReportName);
+			} else if (reportName != null) {
+				report = table.getReport(reportName);
+			}
+			int rowId = -1;
+			if (rowIdString.toLowerCase().equals("next")) {
+				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData, report, true);
+			} else if (rowIdString.toLowerCase().equals("previous")) {
+				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData, report, false);
+			} else {
+				rowId = Integer.valueOf(rowIdString);
+			}
+			sessionData.setRowId(table, rowId);
 		}
 	}
 
