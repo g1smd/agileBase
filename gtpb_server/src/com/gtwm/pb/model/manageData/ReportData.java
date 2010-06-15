@@ -594,6 +594,11 @@ public class ReportData implements ReportDataInfo {
 			if (filterValue == null) {
 				throw new CantDoThatException("Filter value for " + filterField + " is null");
 			}
+			// Ignore a filter that is only made up of spaces.
+			// These have caused users problems in the past as they are invisible so they don't know there's a filter
+			if (filterValue.equals(filterValue.trim())) {
+				continue;
+			}
 			filterValue = filterValue.toLowerCase();
 			DatabaseFieldType filterFieldDbType = filterField.getDbType();
 			// Don't bother filtering if the user's started typing a
@@ -622,7 +627,7 @@ public class ReportData implements ReportDataInfo {
 					for (String andFilterPartValue : andFilterParts) {
 						// Generate sub-part filter string for field:
 						filterStringForField += "("
-								+ this.generateFilterStringForField(filterField,
+								+ generateFilterStringForField(filterField,
 										andFilterPartValue, filtersUsed, exactFilters) + ")";
 						filterStringForField += QuickFilterType.AND.getSqlRepresentation();
 					}
@@ -635,7 +640,7 @@ public class ReportData implements ReportDataInfo {
 				} else {
 					// Generate sub-part filter string for field:
 					filterStringForField += "("
-							+ this.generateFilterStringForField(filterField, orFilterPartValue,
+							+ generateFilterStringForField(filterField, orFilterPartValue,
 									filtersUsed, exactFilters) + ")";
 				}
 				filterStringForField += QuickFilterType.OR.getSqlRepresentation();
