@@ -285,7 +285,9 @@ public class ReportDownloader extends HttpServlet {
 			// sheet name must be unique
 			summarySheet = workbook.createSheet(summaryTitle + " " + reportSummary.getId());
 		}
-		summaryTitle = summaryTitle.replaceAll("\\/", "-");
+		// Replace any invalid characters : \ / ? * [ or ]
+		// http://support.microsoft.com/kb/215205
+		summaryTitle = summaryTitle.replaceAll("[\\/\\:\\\\\\?\\*\\[\\]]", "-");
 		// header
 		rowNum = 0;
 		row = summarySheet.createRow(rowNum);
