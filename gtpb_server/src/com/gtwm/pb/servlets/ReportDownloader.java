@@ -283,15 +283,15 @@ public class ReportDownloader extends HttpServlet {
 		} else if (summaryTitle.equals("")) {
 			summaryTitle = "Summary";
 		}
+		// Replace any invalid characters : \ / ? * [ or ]
+		// http://support.microsoft.com/kb/215205
+		summaryTitle = summaryTitle.replaceAll("[\\/\\:\\\\\\?\\*\\[\\]]", "-");
 		try {
 			summarySheet = workbook.createSheet(summaryTitle);
 		} catch (IllegalArgumentException iaex) {
 			// sheet name must be unique
 			summarySheet = workbook.createSheet(summaryTitle + " " + reportSummary.getId());
 		}
-		// Replace any invalid characters : \ / ? * [ or ]
-		// http://support.microsoft.com/kb/215205
-		summaryTitle = summaryTitle.replaceAll("[\\/\\:\\\\\\?\\*\\[\\]]", "-");
 		// header
 		rowNum = 0;
 		row = summarySheet.createRow(rowNum);
