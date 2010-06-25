@@ -141,7 +141,11 @@ public class ReportDownloader extends HttpServlet {
 		// create Excel spreadsheet
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		// the pane 2 report
-		HSSFSheet reportSheet = workbook.createSheet(report.getReportName());
+		String reportName = report.getReportName();
+		// Replace any invalid characters : \ / ? * [ or ]
+		// http://support.microsoft.com/kb/215205
+		reportName = reportName.replaceAll("[\\/\\:\\\\\\?\\*\\[\\]]", "-");
+		HSSFSheet reportSheet = workbook.createSheet(reportName);
 		int rowNum = 0;
 		HSSFRow row;
 		HSSFCell cell;
