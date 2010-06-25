@@ -34,9 +34,14 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+
+import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
@@ -57,6 +62,7 @@ import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.ObjectNotFoundException;
+import com.ibm.icu.util.Calendar;
 
 public class ReportDownloader extends HttpServlet {
 
@@ -88,7 +94,9 @@ public class ReportDownloader extends HttpServlet {
 		try {
 			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 					request);
-			spreadsheetOutputStream = this.getSessionReportAsExcel(company, sessionData);
+			AppUserInfo user = this.databaseDefn.getAuthManager().getUserByUserName(request,
+					request.getRemoteUser());
+			spreadsheetOutputStream = this.getSessionReportAsExcel(company, user, sessionData);
 			response.setHeader("Cache-Control", "no-cache");
 			response.setContentType("application/vnd.ms-excel");
 			String filename = "";
@@ -124,7 +132,7 @@ public class ReportDownloader extends HttpServlet {
 	 * @param sessionData
 	 * @return
 	 */
-	private ByteArrayOutputStream getSessionReportAsExcel(CompanyInfo company,
+	private ByteArrayOutputStream getSessionReportAsExcel(CompanyInfo company, AppUserInfo user,
 			SessionDataInfo sessionData) throws AgileBaseException, IOException, SQLException {
 		BaseReportInfo report = sessionData.getReport();
 		if (report == null) {
@@ -134,14 +142,9 @@ public class ReportDownloader extends HttpServlet {
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		// the pane 2 report
 		HSSFSheet reportSheet = workbook.createSheet(report.getReportName());
-		// exported from agileBase message
 		int rowNum = 0;
-		HSSFRow row = reportSheet.createRow(rowNum);
-		HSSFCell cell = row.createCell(1);
-		cell.setCellValue(new HSSFRichTextString("Exported from the " + company
-				+ " agileBase report '" + report.getModule() + " - " + report
-				+ "'. Live data at www.agilebase.co.uk/start"));
-		rowNum = rowNum + 2;
+		HSSFRow row;
+		HSSFCell cell;
 		// header
 		HSSFCellStyle boldCellStyle = workbook.createCellStyle();
 		HSSFFont font = workbook.createFont();
@@ -185,6 +188,8 @@ public class ReportDownloader extends HttpServlet {
 			}
 			rowNum++;
 		}
+		// Export info worksheet
+		addReportMetaDataWorksheet(company, user, sessionData, report, workbook);
 		// one worksheet for each of the report summaries
 		for (ReportSummaryInfo savedReportSummary : report.getSavedReportSummaries()) {
 			addSummaryWorksheet(company, sessionData, savedReportSummary, workbook);
@@ -203,13 +208,62 @@ public class ReportDownloader extends HttpServlet {
 	}
 
 	/**
-	 * Add a worksheet to the report for the specified summary report
+	 * Add a sheet with export information to the workbook
+	 */
+	private void addReportMetaDataWorksheet(CompanyInfo company, AppUserInfo user, SessionDataInfo sessionData,
+			BaseReportInfo report, HSSFWorkbook workbook) {
+		String title = "Export information";
+		HSSFSheet infoSheet;
+		try {
+			infoSheet = workbook.createSheet(title);
+		} catch (IllegalArgumentException iaex) {
+			// Just in case there happens to be a report called 'Export
+			// information'.
+			// The sheet name must be unique
+			infoSheet = workbook.createSheet(title + " " + report.getInternalReportName());
+		}
+		HSSFRow row = infoSheet.createRow(0);
+		HSSFCell cell = row.createCell(1);
+		cell.setCellValue(new HSSFRichTextString("Export from www.agilebase.co.uk"));
+		row = infoSheet.createRow(2);
+		cell = row.createCell(0);
+		cell.setCellValue(new HSSFRichTextString("Company"));
+		cell = row.createCell(1);
+		cell.setCellValue(new HSSFRichTextString(company.getCompanyName()));
+		row = infoSheet.createRow(3);
+		cell = row.createCell(0);
+		cell.setCellValue(new HSSFRichTextString("Module"));
+		cell = row.createCell(1);
+		cell.setCellValue(new HSSFRichTextString(report.getModule().getModuleName()));
+		row = infoSheet.createRow(4);
+		cell = row.createCell(0);
+		cell.setCellValue(new HSSFRichTextString("Report"));
+		cell = row.createCell(1);
+		cell.setCellValue(new HSSFRichTextString(report.getReportName()));
+		row = infoSheet.createRow(5);
+		cell = row.createCell(0);
+		cell.setCellValue(new HSSFRichTextString("Exported by"));
+		cell = row.createCell(1);
+		cell.setCellValue(new HSSFRichTextString(user.getForename() + " " + user.getSurname()));
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = new Date();
+		String now = dateFormat.format(date);
+		row = infoSheet.createRow(6);
+		cell = row.createCell(0);
+		cell.setCellValue(new HSSFRichTextString("Export time"));
+		cell = row.createCell(1);
+		cell.setCellValue(new HSSFRichTextString(now));
+	}
+
+	/**
+	 * Add a worksheet to the report for the specified workbook
 	 */
 	private void addSummaryWorksheet(CompanyInfo company, SessionDataInfo sessionData,
 			ReportSummaryInfo reportSummary, HSSFWorkbook workbook) throws SQLException,
 			CantDoThatException {
 		ReportSummaryDataInfo reportSummaryData = this.databaseDefn.getDataManagement()
-				.getReportSummaryData(company, reportSummary, sessionData.getReportFilterValues(), false);
+				.getReportSummaryData(company, reportSummary, sessionData.getReportFilterValues(),
+						false);
 		if (reportSummaryData == null) {
 			return;
 		}
