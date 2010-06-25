@@ -192,14 +192,14 @@ public class ReportDownloader extends HttpServlet {
 		addReportMetaDataWorksheet(company, user, sessionData, report, workbook);
 		// one worksheet for each of the report summaries
 		for (ReportSummaryInfo savedReportSummary : report.getSavedReportSummaries()) {
-			addSummaryWorksheet(company, sessionData, savedReportSummary, workbook);
+			this.addSummaryWorksheet(company, sessionData, savedReportSummary, workbook);
 		}
 		// the default summary
 		ReportSummaryInfo reportSummary = report.getReportSummary();
 		Set<ReportSummaryAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
 		Set<ReportSummaryGroupingInfo> groupings = reportSummary.getGroupings();
 		if ((groupings.size() > 0) || (aggregateFunctions.size() > 0)) {
-			addSummaryWorksheet(company, sessionData, reportSummary, workbook);
+			this.addSummaryWorksheet(company, sessionData, reportSummary, workbook);
 		}
 		// write to output
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -210,7 +210,7 @@ public class ReportDownloader extends HttpServlet {
 	/**
 	 * Add a sheet with export information to the workbook
 	 */
-	private void addReportMetaDataWorksheet(CompanyInfo company, AppUserInfo user, SessionDataInfo sessionData,
+	private static void addReportMetaDataWorksheet(CompanyInfo company, AppUserInfo user, SessionDataInfo sessionData,
 			BaseReportInfo report, HSSFWorkbook workbook) {
 		String title = "Export information";
 		HSSFSheet infoSheet;
@@ -285,6 +285,7 @@ public class ReportDownloader extends HttpServlet {
 			// sheet name must be unique
 			summarySheet = workbook.createSheet(summaryTitle + " " + reportSummary.getId());
 		}
+		summaryTitle = summaryTitle.replaceAll("\\/", "-");
 		// header
 		rowNum = 0;
 		row = summarySheet.createRow(rowNum);
