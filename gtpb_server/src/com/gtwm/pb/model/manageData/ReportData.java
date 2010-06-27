@@ -601,12 +601,10 @@ public class ReportData implements ReportDataInfo {
 				char character = filterValue.charAt(i);
 				if (character != " ".charAt(0)) {
 					filterIsOnlySpaces = false;
-					logger.debug("Found non space character");
 					break SPACESCHECK;
 				}
 			}
 			if (filterIsOnlySpaces) {
-				logger.debug("Filter is only spaces");
 				continue FILTERSLOOP;
 			}
 			filterValue = filterValue.toLowerCase();
