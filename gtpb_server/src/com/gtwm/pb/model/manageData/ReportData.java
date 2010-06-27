@@ -596,7 +596,7 @@ public class ReportData implements ReportDataInfo {
 			}
 			// Ignore a filter that is only made up of spaces.
 			// These have caused users problems in the past as they are invisible so they don't know there's a filter
-			if (filterValue.equals(filterValue.trim())) {
+			if (!filterValue.matches("\\S")) {
 				continue;
 			}
 			filterValue = filterValue.toLowerCase();
