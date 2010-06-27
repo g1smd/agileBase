@@ -596,8 +596,17 @@ public class ReportData implements ReportDataInfo {
 			}
 			// Ignore a filter that is only made up of spaces.
 			// These have caused users problems in the past as they are invisible so they don't know there's a filter
-			if (!filterValue.matches("\\S")) {
-				logger.debug("filter is only spaces");
+			boolean filterIsOnlySpaces = true;
+			SPACESCHECK: for(int i=0; i < filterValue.length(); i++) {
+				char character = filterValue.charAt(i);
+				if (character != " ".charAt(0)) {
+					filterIsOnlySpaces = false;
+					logger.debug("Found non space character");
+					break SPACESCHECK;
+				}
+			}
+			if (filterIsOnlySpaces) {
+				logger.debug("Filter is only spaces");
 				continue FILTERSLOOP;
 			}
 			filterValue = filterValue.toLowerCase();
