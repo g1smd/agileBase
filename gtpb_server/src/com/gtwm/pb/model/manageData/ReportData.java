@@ -583,12 +583,12 @@ public class ReportData implements ReportDataInfo {
 		StringBuilder filterArguments = new StringBuilder();
 		Set<BaseField> reportBaseFields = this.report.getReportBaseFields();
 		List<ReportQuickFilterInfo> filtersUsed = new LinkedList<ReportQuickFilterInfo>();
-		for (Map.Entry<BaseField, String> filterValueEntry : filterValues.entrySet()) {
+		FILTERSLOOP: for (Map.Entry<BaseField, String> filterValueEntry : filterValues.entrySet()) {
 			// Generate the filter for a field
 			BaseField filterField = filterValueEntry.getKey();
 			// Only apply filter if the field is actually in the report
 			if (!reportBaseFields.contains(filterField)) {
-				continue;
+				continue FILTERSLOOP;
 			}
 			String filterValue = filterValueEntry.getValue();
 			if (filterValue == null) {
@@ -597,7 +597,8 @@ public class ReportData implements ReportDataInfo {
 			// Ignore a filter that is only made up of spaces.
 			// These have caused users problems in the past as they are invisible so they don't know there's a filter
 			if (!filterValue.matches("\\S")) {
-				continue;
+				logger.debug("filter is only spaces");
+				continue FILTERSLOOP;
 			}
 			filterValue = filterValue.toLowerCase();
 			DatabaseFieldType filterFieldDbType = filterField.getDbType();
@@ -606,7 +607,7 @@ public class ReportData implements ReportDataInfo {
 			if ((filterValue.equals(QuickFilterType.NOT_LIKE.getUserRepresentation()))
 					|| (filterValue.equals(QuickFilterType.GREATER_THAN.getUserRepresentation()))
 					|| (filterValue.equals(QuickFilterType.LESS_THAN.getUserRepresentation()))) {
-				continue;
+				continue FILTERSLOOP;
 			}
 			// remove commas when filtering a number field
 			if (filterFieldDbType.equals(DatabaseFieldType.INTEGER)
