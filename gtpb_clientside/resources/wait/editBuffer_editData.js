@@ -536,8 +536,9 @@ function fChange(oObj)  {
     }
      
     top.oBuffer.clearFromSendQueue(oObj);
-    if (oObj.tagName == 'DIV') {
-      var vCurrentValue = jQuery(oObj).text();
+    var jqObj = jQuery(oObj);
+    if (oObj.tagName == 'DIV' && (!jqObj.hasClass("date"))) {
+      var vCurrentValue = jqObj.text();
     } else {
       var vCurrentValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):oObj.value));
     }
@@ -585,8 +586,9 @@ function fChange(oObj)  {
   /* snapshot the state of the object now so that we can check if it's the same when
      the server returns.  The state we store depends on the type of form object */
   // Get value differently depending on whether the element is a div or form element
-  if (oObj.tagName == 'DIV') {
-	var vValue = jQuery(oObj).text();
+  var jqObj = jQuery(oObj);
+  if (oObj.tagName == 'DIV' && (!jqObj.hasClass("date"))) {
+	var vValue = jqObj.text();
   } else {
     var vValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):$(oObj).val()));
   }
