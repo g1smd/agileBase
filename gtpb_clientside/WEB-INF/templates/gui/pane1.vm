@@ -73,9 +73,7 @@
 	    <li id="setup"><h1><span>Setup</span></h1>
   		  <ul>
 		  #parse('gui/reports_and_tables/table_list.vm')
-          #if($view.loggedInUserAllowedTo('ADMINISTRATE'))
-			#parse('gui/administration/administration.vm')
-	 	  #end
+		  #parse('gui/administration/administration.vm')
 		  </ul>
 	    </li>
 	    #end

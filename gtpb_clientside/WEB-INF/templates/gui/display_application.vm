@@ -77,6 +77,10 @@
         	function fExport() {  
         	  document.getElementById('oViewPane').contentWindow.pane_2.fExport();
         	}
+			
+			function fSetPassword() {
+			  document.getElementById('oViewPane').contentWindow.pane_2.fSetPassword();
+			}
         	
         	function fLinks() {  
         	  document.getElementById('oViewPane').contentWindow.pane_2.fLinks();
@@ -140,7 +144,6 @@
         	}
         	  	
         window.spawnWindow=fSpawnWindow;
-        		
       </script>  
     </head>
 	<body #if($viewTools.isRunningLocally()) class="localhost" #end>	

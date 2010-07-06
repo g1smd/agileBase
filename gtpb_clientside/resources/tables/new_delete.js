@@ -35,6 +35,10 @@ function fImport() {
 	top.fShowModalDialog('gui/import/1_update_or_insert','import data','fImportOK()','ok cancel next','width=800px; height=600px');
 }
 
+function fSetPassword {
+	top.fShowModalDialog('gui/set_password/1_set_password','set password','fSetPasswordOK()','ok','width=800px; height=600px;');
+}
+
 function fHelp() {
 	top.fShowModalDialog('gui/help/1_help_centre','help centre','fHelpOK()','ok','width=800px; height=600px;');
 }

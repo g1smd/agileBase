@@ -540,6 +540,7 @@ function fChange(oObj)  {
     if (oObj.tagName == 'DIV' && (!jqObj.hasClass("date"))) {
       var vCurrentValue = jqObj.text();
     } else {
+      // TODO: should this line be exactly the same as the similar one earlier?
       var vCurrentValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):oObj.value));
     }
     sResponse=sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
@@ -590,7 +591,7 @@ function fChange(oObj)  {
   if (oObj.tagName == 'DIV' && (!jqObj.hasClass("date"))) {
 	var vValue = jqObj.text();
   } else {
-    var vValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):$(oObj).val()));
+    var vValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):jqObj.val()));
   }
   /* mark the input as busy.  What should be set depends on the type of form object.
      NOTE: changed attribute is an expando with a style set to show it's applied */
