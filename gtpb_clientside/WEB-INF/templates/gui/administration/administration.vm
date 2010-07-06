@@ -50,7 +50,7 @@
 	#else
     <li id="administrationsetpassword">
 	  <div class="tree-item-wrap">		
-          <a class=title href="javascript:fSetPassword();" title="Reset your login password">
+          <a class=title href="javascript:top.fSetPassword();" title="Reset your login password">
             set password
           </a>  
 	  </div>
