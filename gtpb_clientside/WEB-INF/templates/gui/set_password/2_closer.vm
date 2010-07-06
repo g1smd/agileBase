@@ -19,10 +19,16 @@
 #set($companyName = $viewTools.cleanString($company.getCompanyName()))
 
 #if(!$top_level_xml_element_set)<request>#end
-  <caption>Password set</caption>
-  <okTemplate>gui/set_password/2_closer</okTemplate>  
+  <caption>Add Organisation - please correct your data</caption>
+  <okTemplate>gui/customisations/$companyName/actions/add_address_data/add_organisation/4_closer</okTemplate>  
   #parse('gui/customisations/wizard_result.vm') 
   <htmlContent><![CDATA[
+     #parse('gui/customisations/new_table_data.vm')
+     ## set the session table back to organisations so that new data will be shown when P1 is refreshed
+     ## this will only happen if no exception occurs
+     <form>
+      <input type="hidden" name="postset_table" value="a2e9a7e9e257153de" />
+    </form>               
     ]]>
   </htmlContent>
 #if(!$top_level_xml_element_set)</request>#end
