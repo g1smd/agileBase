@@ -36,7 +36,7 @@ function fImport() {
 }
 
 function fSetPassword() {
-	top.fShowModalDialog('gui/set_password/1_set_password','set password','fSetPasswordOK()','ok','width=800px; height=600px;');
+	top.fShowModalDialog('gui/set_password/1_set_password','set password','fSetPasswordOK()','ok cancel','width=800px; height=600px;');
 }
 
 function fHelp() {
