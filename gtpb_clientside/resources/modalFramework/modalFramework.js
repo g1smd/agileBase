@@ -301,7 +301,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	                case 'text':sValue=oElement.value; break;  // might need to change this to '' rather than null if we want the wizard to allow editing
   	                case 'checkbox':sValue=oElement.checked?'true':null; break;
   	                case 'radio':sValue=oElement.checked?oElement.value:null; break;
-  	                case: 'password':sValue=oElement.value; break;
+  	                case 'password':sValue=oElement.value; break;
   	              } break;
   	              
   	              case 'SELECT': sValue=oElement.options[oElement.selectedIndex].value; break;
