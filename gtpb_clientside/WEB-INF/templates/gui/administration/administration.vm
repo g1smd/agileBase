@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <li branch="true" class="modulecollapsed silver">
-	<h2><span>Administration</span></h2>
+  <h2><span>Administration</span></h2>
   <ul>
     #if($view.loggedInUserAllowedTo('ADMINISTRATE'))
 	<li id="administrationmodules">
