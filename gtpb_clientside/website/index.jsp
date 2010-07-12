@@ -16,4 +16,11 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 -->
-Hello world. The time is now <%= new java.util.Date() %>
+<%
+String query = request.getQueryString();
+if (query.contains("boot_mobile") {
+%>
+  <%@ include file="hello.jsp" %>
+<% } else %>
+	Normal version
+<% } %>
