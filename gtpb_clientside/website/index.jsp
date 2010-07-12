@@ -25,9 +25,7 @@ if (queryString.contains("boot_mobile")) {
 
 <%
 String googleKey = "";
-String requestURI = request.getRequestURI();
-boolean ssl = false;
-boolean live = false;
+
 %>
 
 googleKey is <%= googleKey =%>
