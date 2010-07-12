@@ -24,7 +24,7 @@ if (queryString.contains("boot_mobile")) {
 <% } else { 
 
 String googleKey = "";
-String requestURL = request.getRequestURL();
+String requestURL = request.getRequestURL().toString();
 boolean ssl = false;
 boolean live = false;
 if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
