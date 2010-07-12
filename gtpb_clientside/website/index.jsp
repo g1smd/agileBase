@@ -16,4 +16,9 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 -->
+<%
+String queryString = request.getQueryString();
+%>
+<%= queryString %>
+
 <%@ include file="mobile.jsp" %>
