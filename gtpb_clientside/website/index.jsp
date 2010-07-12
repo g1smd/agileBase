@@ -23,9 +23,6 @@ if (queryString.contains("boot_mobile")) {
   <%@ include file="mobile.jsp" %>
 <% } else { %>
 
-
-
-googleKey is <%= googleKey =%>
-
+Login page
 
 <% } %> <%-- End of non-mobile login page --%>
