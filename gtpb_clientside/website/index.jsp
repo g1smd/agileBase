@@ -23,10 +23,7 @@ if (queryString.contains("boot_mobile")) {
   <%@ include file="mobile.jsp" %>
 <% } else { %>
 
-<%
-String googleKey = "";
 
-%>
 
 googleKey is <%= googleKey =%>
 
