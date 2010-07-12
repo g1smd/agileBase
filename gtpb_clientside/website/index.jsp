@@ -40,18 +40,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN>
-<html>
-	<head>
-		<title>agileBase</title>
-		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
-	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
-		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
-		<script type="text/javascript" src="/agileBase/website/scripts/thickbox.js"></script>
-		<script type="text/javascript" src="<%= googleKey =%>"</script>
-		<script type="text/javascript">
-			google.load("feeds", "1");
-		</script>
         <% if(ssl) { %>
 	Hello
 			<script src="https://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
