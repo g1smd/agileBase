@@ -21,6 +21,6 @@ String query = request.getQueryString();
 if (query.contains("boot_mobile") {
 %>
   <%@ include file="hello.jsp" %>
-<% } else %>
+<% } else { %>
 	Normal version
 <% } %>
