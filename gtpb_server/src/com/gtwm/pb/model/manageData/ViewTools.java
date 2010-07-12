@@ -1121,6 +1121,12 @@ public class ViewTools implements ViewToolsInfo {
 	public String lineBreaksToParas(String stringToConvert) {
 		return stringToConvert.replaceAll("\n", "<p>");
 	}
+	
+	public String unencodeHtml(String string) {
+		String unencoded = string.replace("&lt;", "<");
+		unencoded = unencoded.replace("&gt;", ">lt;" );
+		return unencoded;
+	}
 
 	public boolean templateExists(String templateFilename) {
 		String absoluteFilename = this.request.getSession().getServletContext().getRealPath(
