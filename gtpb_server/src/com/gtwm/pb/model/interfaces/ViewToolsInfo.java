@@ -355,6 +355,13 @@ public interface ViewToolsInfo {
 	public String lineBreaksToParas(String stringToConvert);
 
 	/**
+	 * Replace &lt; and &gt; with < and > to allow HTML tags to work.
+	 * 
+	 * AgileBase replaces < and > with the two equivalents when saving data
+	 */
+	public String unencodeHtml(String string);
+	
+	/**
 	 * Tells you whether the given template exists
 	 * 
 	 * @param templateFilename
