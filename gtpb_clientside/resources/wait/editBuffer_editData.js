@@ -538,7 +538,7 @@ function fChange(oObj)  {
     top.oBuffer.clearFromSendQueue(oObj);
     var jqObj = jQuery(oObj);
     if (oObj.tagName == 'DIV' && (!jqObj.hasClass("date"))) {
-      var vCurrentValue = jqObj.text();
+      var vCurrentValue = jqObj.html();
     } else {
       // TODO: should this line be exactly the same as the similar one earlier?
       var vCurrentValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):oObj.value));
@@ -589,7 +589,7 @@ function fChange(oObj)  {
   // Get value differently depending on whether the element is a div or form element
   var jqObj = jQuery(oObj);
   if (oObj.tagName == 'DIV' && (!jqObj.hasClass("date"))) {
-	var vValue = jqObj.text();
+	var vValue = jqObj.html();
   } else {
     var vValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):jqObj.val()));
   }
