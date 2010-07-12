@@ -1124,7 +1124,8 @@ public class ViewTools implements ViewToolsInfo {
 	
 	public String unencodeHtml(String string) {
 		String unencoded = string.replace("&lt;", "<");
-		unencoded = unencoded.replace("&gt;", ">lt;" );
+		unencoded = unencoded.replace("&gt;", ">" );
+		logger.debug(string + " -> " + unencoded); 
 		return unencoded;
 	}
 
