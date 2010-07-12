@@ -40,6 +40,6 @@ if (requestURI.startsWith("http://appserver.gtportalbase.com")) {
 
 %>
 
-Google key is <%= googleKey %>
+Google key is <%= requestURI %>
 
 <% } %> <%-- End of non-mobile login page --%>
