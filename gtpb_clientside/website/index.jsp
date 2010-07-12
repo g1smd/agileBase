@@ -24,22 +24,22 @@ if (queryString.contains("boot_mobile")) {
 <% } else { 
 
 String googleKey = "";
-String requestURI = request.getRequestURI();
+String requestURL = request.getRequestURL();
 boolean ssl = false;
 boolean live = false;
-if (requestURI.startsWith("http://appserver.gtportalbase.com")) {
+if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
   googleKey = "http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBTkxqGBZcNO6KTJ8OH7el13ZyLEzxT0-wdY7BkQmrNPx8dhLS-syRRsRQ";  
   live = true;
-} else if (requestURI.startsWith("https://appserver.gtportalbase.com")) {
+} else if (requestURL.startsWith("https://appserver.gtportalbase.com")) {
   googleKey = "https://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg";
   ssl = true;
   live = true;
-} else if (requestURI.startsWith("http://gtwmbackup.dh.bytemark.co.uk")) {
+} else if (requestURL.startsWith("http://gtwmbackup.dh.bytemark.co.uk")) {
   googleKey = "http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBQf1koDrgwv2nVopgtXyNJJGf3wPhSGxzvELTvIoGYjhEXJzrBbXQIbKw";
 }
 
 %>
 
-Google key is <%= requestURI %>
+Google key is <%= requestURL %>
 
 <% } %> <%-- End of non-mobile login page --%>
