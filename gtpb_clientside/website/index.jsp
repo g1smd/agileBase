@@ -21,7 +21,10 @@ String queryString = request.getQueryString();
 if (queryString.contains("boot_mobile")) {
 %>
   <%@ include file="mobile.jsp" %>
-<% } else { %>
+<% } else { 
+
+String googleKey = "test";
+%>
 
 Google key is <%= googleKey %>
 
