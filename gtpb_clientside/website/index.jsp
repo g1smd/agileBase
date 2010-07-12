@@ -18,7 +18,7 @@
 -->
 <%
 String queryString = request.getQueryString();
-if (queryString.contains("boot_mobile") {
+if (queryString.contains("boot_mobile")) {
 %>
   <%@ include file="mobile.jsp" %>
 <% } else { %>
