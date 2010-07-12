@@ -16,11 +16,4 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 -->
-<%
-String query = request.getQueryString();
-if (query.contains("boot_mobile") {
-%>
-  <%@ include file="mobile.jsp" %>
-<% } else { %>
-	Normal version
-<% } %>
+<%@ include file="mobile.jsp" %>
