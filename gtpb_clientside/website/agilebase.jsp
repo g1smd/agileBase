@@ -1,3 +1,4 @@
+<%
 String googleKey = "";
 String requestURL = request.getRequestURL().toString();
 boolean ssl = false;
@@ -12,7 +13,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 } else if (requestURL.startsWith("http://gtwmbackup.dh.bytemark.co.uk")) {
   googleKey = "http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBQf1koDrgwv2nVopgtXyNJJGf3wPhSGxzvELTvIoGYjhEXJzrBbXQIbKw";
 }
-
 %>
 
 <html>
