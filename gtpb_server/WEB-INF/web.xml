@@ -62,6 +62,7 @@
       <url-pattern>/ReportDownloader.servlet</url-pattern>
     </servlet-mapping>
     
+<!--  SSIs replaced by JSP
     <servlet>
         <servlet-name>ssi</servlet-name>
         <description>
@@ -93,6 +94,7 @@
         <servlet-name>ssi</servlet-name>
         <url-pattern>*.shtml</url-pattern>
     </servlet-mapping>    
+-->
 
     <session-config>
       <!-- 360 = 6 hours - set the session timeout to a long time so the app won't break if the user leaves it on screen for a few hours without doing anything -->
