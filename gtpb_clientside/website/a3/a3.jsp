@@ -5,16 +5,16 @@
   <title>
     A3 reports collaboration
   </title>
-  <script type="text/javascript" src="/agilebase/website/scripts/jquery.js"></script>
+  <script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
   <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
   <script type="text/javascript" src="resources/wait/request_setFilter.js"></script>
-  <script src="/agilebase/website/scripts/jquery-ui/jquery-ui.js" language="Javascript"></script>
-  <script src="/agilebase/website/a3/a3.js" language="Javascript"></script>
-  <link type="text/css" href="/agilebase/website/a3/a3.css" rel="stylesheet">
-  <link type="text/css" href="/agilebase/website/scripts/jquery-ui/jquery-ui.css" rel="stylesheet">
+  <script src="/agileBase/website/scripts/jquery-ui/jquery-ui.js" language="Javascript"></script>
+  <script src="/agileBase/website/a3/a3.js" language="Javascript"></script>
+  <link type="text/css" href="/agileBase/website/a3/a3.css" rel="stylesheet">
+  <link type="text/css" href="/agileBase/website/scripts/jquery-ui/jquery-ui.css" rel="stylesheet">
 </head>
 <body>
-<img src="/agilebase/website/a3/paper.jpg" style="max-width:100%; z-index: 0">
+<img src="/agileBase/website/a3/paper.jpg" style="max-width:100%; z-index: 0">
 #if($viewTools.getBrowser() == "Internet Explorer")
   During this early release of A3 reports, please use a web browser such as Firefox, Chrome or Safari.<p>
   Internet Explorer support is not yet ready I'm afraid.
