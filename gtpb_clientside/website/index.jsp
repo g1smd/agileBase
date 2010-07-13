@@ -23,5 +23,5 @@ if (queryString.contains("boot_mobile")) {
 %>
   <%@ include file="mobile.jsp" %>
 <% } else { %>
-	Login
+  <%@ include file="a3/a3.jsp" %>
 <% } %> <%-- End of non-mobile login page --%>
