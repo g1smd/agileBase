@@ -1126,7 +1126,6 @@ public class ViewTools implements ViewToolsInfo {
 		String unencoded = string.replace("&amp;", "&");
 		unencoded = unencoded.replace("&lt;", "<");
 		unencoded = unencoded.replace("&gt;", ">" );
-		logger.debug(string + " -> " + unencoded); 
 		return unencoded;
 	}
 
