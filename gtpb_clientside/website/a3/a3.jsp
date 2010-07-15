@@ -42,14 +42,14 @@ boolean live = false;
 </div>
 
 <div class="actions_area right" style="opacity:0.4">
-	<!--
 <h1>Signup</h1>
 <h1>&pound;5/mo.</h1>
 <h2>Free trial</h2>
-30 day free trial
+30 days
 <hr />
+<input type="text" name="email" />
+<br /><br />
 <input type="submit" value="Start" />
--->
 </div>
 
 <div id="delete_dialog" title="Confirm deletion">
