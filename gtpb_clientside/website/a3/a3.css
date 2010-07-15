@@ -78,6 +78,10 @@ html, body {
 	color: #ff8040; /* agileBase orange */
 }
 
+.actions_area input {
+	width: 100%;
+}
+
 .actions_area.left {
 	left: 0px;
 	border-left-width: 0px;

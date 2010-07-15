@@ -1,5 +1,5 @@
 <%
-// String requestURL = request.getRequestURL().toString();
+String requestURL = request.getRequestURL().toString();
 boolean live = false;
 // if (requestUrl.contains("appserver.")) {
 //  live = true;
@@ -35,7 +35,7 @@ boolean live = false;
 <% } else { %>
     <form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 <% } %>
-<input type="text" name="j_username" /><br />
+<input type="text" name="j_username" /><br /><br />
 <input type="password" name="j_password" />
 </form>
 </div>
