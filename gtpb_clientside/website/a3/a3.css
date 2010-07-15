@@ -79,7 +79,7 @@ html, body {
 }
 
 .actions_area input {
-	width: 100%;
+	width: 100px;
 }
 
 .actions_area.left {
