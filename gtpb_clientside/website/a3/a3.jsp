@@ -52,7 +52,7 @@ for 30 days
 <br /><br />
 <input type="text" name="password" />
 <br /><br />
-<input type="submit" value="Start" />
+<input type="submit" value="Go" />
 </div>
 
 <div id="delete_dialog" title="Confirm deletion">
