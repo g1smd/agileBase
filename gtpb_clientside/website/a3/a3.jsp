@@ -19,14 +19,14 @@
 ## Will be loaded over AJAX
 </div>
 
-<div class="actions_area left" opacity="0.4">
+<div class="actions_area left">
 	<img src="/agileBase/website/a3/a3_reports_logo.png" />
 	<hr />
 <h1>Login</h1>
 Test
 </div>
 
-<div class="actions_area right" opacity="0.4">
+<div class="actions_area right">
   <button type="button" id="delete" title="delete this report"></button><p>
   <hr />
   <button type="button" id="manage" title="manage all of your reports, users etc. in agileBase"></button>
