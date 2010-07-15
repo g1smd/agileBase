@@ -50,8 +50,6 @@ for 30 days
 <hr />
 <input type="text" name="email" />
 <br /><br />
-<input type="text" name="username" />
-<br /><br />
 <input type="text" name="password" />
 <br /><br />
 <input type="submit" value="Start" />
