@@ -42,7 +42,7 @@ boolean live = false;
 </div>
 
 <div class="actions_area right" style="opacity:0.4">
-<h1>Sign<br />up</h1>
+<h1>Signup</h1>
 <h1>&pound;5/m</h1>
 <h2>Free trial</h2>
 for 30 days
