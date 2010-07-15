@@ -43,6 +43,7 @@
 	  next_report('previous');
 	});
 	
+	/*
 	jQuery(".actions_area").mouseenter(function() {
 	  jQuery(this).stop(true,false).animate({
 	    opacity: 0.8
@@ -52,7 +53,7 @@
 	    opacity: 0.4
 	  }, 2000);
 	});
-
+*/
 	jQuery("#search").keyup(function() {
 	  alert('coming soon...');
 	});
