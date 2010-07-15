@@ -1,3 +1,10 @@
+<%
+String requestURL = request.getRequestURL().toString();
+boolean live = false;
+if (requestUrl.contains("appserver.")) {
+  live = true;
+}
+%>
 <html>
 <head>
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -23,7 +30,14 @@
 	<img src="/agileBase/website/a3/a3_reports_logo.png" />
 	<hr />
 <h1>Login</h1>
-Test
+<% if(live) { %>
+	<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
+<% } else { %>
+    <form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
+<% } %>
+<input type="text" name="j_username" /><br />
+<input type="password" name="j_password" />
+</form>
 </div>
 
 <div class="actions_area right">
