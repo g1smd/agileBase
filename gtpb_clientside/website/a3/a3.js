@@ -44,6 +44,7 @@
 	});
 	
 	jQuery(".actions_area").mouseenter(function() {
+	  alert('mouseenter');
 	  jQuery(this).stop(true,false).animate({
 	    opacity: 0.8
 	  }, 500);
