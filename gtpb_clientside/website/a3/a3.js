@@ -43,32 +43,16 @@
 	  next_report('previous');
 	});
 	
-	jQuery(".actions_area.left").mouseenter(function() {
-	  jQuery(this).stop(true,false).animate({
-	    opacity: 0.8
-	  }, 500);
-	  jQuery(".actions_area.right").animate({
-	    opacity: 0.4
-	  }, 500);
-	}).mouseleave(function() {
-	  jQuery(this).stop(true,false).animate({
-	    opacity: 0.4
-	  }, 2000);
-	  jQuery(".actions_area.right").stop(true,false).animate({
-	    opacity: 0
-	  }, 2000);
-	});
-	
-	jQuery(".actions_area.right").mouseenter(function() {
+	jQuery(".actions_area").mouseenter(function() {
 	  jQuery(this).stop(true,false).animate({
 	    opacity: 0.8
 	  }, 500);
 	}).mouseleave(function() {
 	  jQuery(this).stop(true,false).animate({
-	    opacity: 0
+	    opacity: 0.4
 	  }, 2000);
 	});
-	
+
 	jQuery("#search").keyup(function() {
 	  alert('coming soon...');
 	});
