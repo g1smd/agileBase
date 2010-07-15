@@ -70,6 +70,12 @@ html, body {
 	/* padding: 10px; */
 	padding: 2px;
 	opacity: 0.4;
+	color: white;
+	font-style: Tahoma, Arial, sans-serif;
+}
+
+.actions_area h1 {
+	color: #ff8040; /* agileBase orange */
 }
 
 .actions_area.left {
