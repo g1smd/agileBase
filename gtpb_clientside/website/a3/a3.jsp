@@ -1,9 +1,9 @@
 <%
-String requestURL = request.getRequestURL().toString();
+// String requestURL = request.getRequestURL().toString();
 boolean live = false;
-if (requestUrl.contains("appserver.")) {
-  live = true;
-}
+// if (requestUrl.contains("appserver.")) {
+//  live = true;
+// }
 %>
 <html>
 <head>
