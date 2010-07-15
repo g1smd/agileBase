@@ -26,7 +26,7 @@ boolean live = false;
 ## Will be loaded over AJAX
 </div>
 
-<div class="actions_area left" style="opacity:0.4">
+<div class="actions_area left" style="opacity:0.8">
 	<img src="/agileBase/website/a3/a3_reports_logo.png" />
 	<hr />
 <h1>Login</h1>
@@ -41,7 +41,7 @@ boolean live = false;
 </form>
 </div>
 
-<div class="actions_area right" style="opacity:0.4">
+<div class="actions_area right" style="opacity:0.8">
 <h1>Signup</h1>
 <h1>&pound;5/m</h1>
 <hr />
