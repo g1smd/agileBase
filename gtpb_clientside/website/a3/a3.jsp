@@ -43,8 +43,9 @@ boolean live = false;
 
 <div class="actions_area right">
 <h1>Signup</h1>
-<h1>&pound;/$/&euro;5</h1>
-<h2>Free 30 day trial</h2>
+<h1>$10/mo.</h1>
+<h2>Free trial</h2>
+<h3>30 days</h3>
 <hr />
 </div>
 
