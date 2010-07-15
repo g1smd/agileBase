@@ -21,12 +21,9 @@
 
 <div class="actions_area left" opacity="0.4">
 	<img src="/agileBase/website/a3/a3_reports_logo.png" />
+	<hr />
 <h1>Login</h1>
-<!--
-  <hr />
-  <button type="button" id="delete" title="delete this report"></button><p>
-  <button type="button" id="manage" title="manage all of your reports, users etc. in agileBase"></button>
--->
+Test
 </div>
 
 <div class="actions_area right" opacity="0.4">
