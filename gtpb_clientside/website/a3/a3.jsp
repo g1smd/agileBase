@@ -37,14 +37,15 @@ boolean live = false;
 <% } %>
 <input type="text" name="j_username" /><br /><br />
 <input type="password" name="j_password" /><br /><br />
-<input type="submit" value="Go" >Go</input>
+<input type="submit" value="Go" />
 </form>
 </div>
 
 <div class="actions_area right">
-  <button type="button" id="delete" title="delete this report"></button><p>
-  <hr />
-  <button type="button" id="manage" title="manage all of your reports, users etc. in agileBase"></button>
+<h1>Signup</h1>
+<h1>&pound;/$/&euro;5</h1>
+<h2>Free 30 day trial</h2>
+<hr />
 </div>
 
 <div id="delete_dialog" title="Confirm deletion">

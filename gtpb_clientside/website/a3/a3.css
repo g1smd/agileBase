@@ -95,7 +95,6 @@ html, body {
 }
 
 .actions_area.right {
-	opacity: 0;
 	right: 0px;
 	border-right-width: 0px;
 	-moz-border-radius-topleft: 20px;
