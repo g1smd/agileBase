@@ -44,10 +44,15 @@ boolean live = false;
 <div class="actions_area right" style="opacity:0.4">
 <h1>Signup</h1>
 <h1>&pound;5/m</h1>
+<hr />
 <h2>Free trial</h2>
 for 30 days
 <hr />
 <input type="text" name="email" />
+<br /><br />
+<input type="text" name="username" />
+<br /><br />
+<input type="text" name="password" />
 <br /><br />
 <input type="submit" value="Start" />
 </div>
