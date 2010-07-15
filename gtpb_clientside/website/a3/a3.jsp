@@ -20,7 +20,7 @@
 </div>
 
 <div class="actions_area left" opacity="0.4">
-	<img src="/agileBase/website/a3/a3_report_logo.png" />
+	<img src="/agileBase/website/a3/a3_reports_logo.png" />
 <h1>Login</h1>
 <!--
   <hr />
