@@ -36,7 +36,8 @@ boolean live = false;
     <form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 <% } %>
 <input type="text" name="j_username" /><br /><br />
-<input type="password" name="j_password" />
+<input type="password" name="j_password" /><br /><br />
+<input type="submit" value="Go" >Go</input>
 </form>
 </div>
 
