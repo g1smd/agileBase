@@ -99,6 +99,7 @@
 /* Helper functions, outside of document.ready */
 
 function windowResize() {
+	// Size the report
     var windowWidth = jQuery(window).width();
     var jqA3Report = jQuery("#a3_report");
     jqA3Report.width(windowWidth - 280);
@@ -106,6 +107,12 @@ function windowResize() {
     var rightWidth = parseInt((windowWidth * .115) - 10);
     jqA3Report.css('margin-left',leftWidth + 'px');
     jqA3Report.css('margin-right',rightWidth + 'px');
+    // Position the navigation stickies
+    var backgroundHeight = jQuery("#paper").height();
+    var stickyBase = backgroundHeight / 17.617;
+    var stickyTop = stickyBase - 55;
+    jquery("#stickies").css("top", stickyTop);
+    // Position the fields vertically
     fieldDisplayResize();
     initialiseFontSize();
 }
