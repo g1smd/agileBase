@@ -32,6 +32,7 @@ html, body {
 	height: 55px;
 	position: absolute;
 	top: 0px;
+	padding: 20px;
 }
 
 .field_display {
