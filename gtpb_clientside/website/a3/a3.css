@@ -44,6 +44,7 @@ html, body {
 	-moz-transform:rotate(0.5deg);
 	-webkit-transform:rotate(0.5deg);
 	transform:rotate(0.5deg);
+	top: -1px;
 }
 
 .field_display {
