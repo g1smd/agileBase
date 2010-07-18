@@ -24,8 +24,8 @@ boolean live = false;
 <img id="paper" src="/agileBase/website/a3/paper.jpg">
 <div id="stickies">
   <div id="why_a3">Why use A3 reports?</div>
-  <div id="scenario" style="left: 250px">Scenario</div>
-  <div id="tryout" style="left: 500px">Try one!</div>
+  <div id="scenario" style="left: 250px">A scenario</div>
+  <div id="tryout" style="left: 500px">Try it out!</div>
 </div>
 <div id="a3_report">
 ## Will be loaded over AJAX
