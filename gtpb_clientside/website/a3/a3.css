@@ -40,6 +40,10 @@ html, body {
 	padding: 20px;
 }
 
+#stickies div:first-child {
+	rotate(1deg);
+}
+
 .field_display {
 	margin-right: 30px;
 	margin-bottom: 10px;
