@@ -41,9 +41,9 @@ html, body {
 }
 
 #stickies div:first-child {
-	-moz-transform:rotate(100deg);
-	-webkit-transform:rotate(100deg);
-	transform:rotate(100deg);
+	-moz-transform:rotate(1deg);
+	-webkit-transform:rotate(1deg);
+	transform:rotate(1deg);
 }
 
 .field_display {
