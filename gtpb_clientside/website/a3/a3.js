@@ -111,7 +111,7 @@ function windowResize() {
     var backgroundHeight = jQuery("#paper").height();
     var stickyBase = backgroundHeight / 17.617;
     var stickyTop = stickyBase - 55;
-    jquery("#stickies").css("top", stickyTop);
+    jQuery("#stickies").css("top", stickyTop);
     // Position the fields vertically
     fieldDisplayResize();
     initialiseFontSize();
