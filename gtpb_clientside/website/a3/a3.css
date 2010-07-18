@@ -33,11 +33,12 @@ html, body {
 
 #stickies div {
 	background: url('sticky.png');
-	width: 192px;
+	width: 172px;
 	height: 15px;
 	position: absolute;
 	top: 0px;
 	padding: 20px;
+	padding-left: 40px;
 	font-family: "Jellyka's Handwriting, Back to 2008";
 	color: #486f98;
 	font-size: 50px;
