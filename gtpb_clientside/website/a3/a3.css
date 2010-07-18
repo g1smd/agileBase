@@ -38,6 +38,8 @@ html, body {
 	position: absolute;
 	top: 0px;
 	padding: 20px;
+	font-family: "Jellyka's Handwriting, Back to 2008";
+	color: #486f98;
 }
 
 #stickies div:first-child {
