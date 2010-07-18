@@ -28,11 +28,11 @@ html, body {
 
 #stickies div {
 	background: url('sticky.png');
-	width: 232px;
-	height: 55px;
+	width: 192px;
+	height: 15px;
 	position: absolute;
 	top: 0px;
-	margin: 20px;
+	padding: 20px;
 }
 
 .field_display {
