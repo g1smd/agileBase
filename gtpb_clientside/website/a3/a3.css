@@ -30,7 +30,7 @@ html, body {
 	background: url('sticky.png');
 	width: 232px;
 	height: 55px;
-	position: relative;
+	position: absolute;
 	top: 0px;
 }
 
