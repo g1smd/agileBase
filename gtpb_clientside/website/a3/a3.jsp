@@ -21,7 +21,7 @@ boolean live = false;
   <link type="text/css" href="/agileBase/website/scripts/jquery-ui/jquery-ui.css" rel="stylesheet">
 </head>
 <body>
-<img src="/agileBase/website/a3/paper.jpg" style="max-width:100%; z-index: 0">
+<img id="paper" src="/agileBase/website/a3/paper.jpg">
 <div id="stickies">
   <div id="why_a3">Why A3 reports?</div>
   <div id="scenario" style="left: 250px">Scenario</div>

@@ -8,6 +8,11 @@ html, body {
 	margin: 0;
 }
 
+#paper {
+	max-width:100%;
+	z-index: 0
+}
+
 #a3_report {
 	width: 100%;
 	height: 100%;
