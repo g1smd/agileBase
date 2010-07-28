@@ -28,6 +28,7 @@ if (requestURL.contains("appserver.")) {
   <div id="tryout" style="left: 500px">Try it out now!</div>
 </div>
 <div id="a3_report">
+  <%@ include file="why_a3.jsp" %>
 </div>
 
 <div class="actions_area left" style="opacity:0.8">
