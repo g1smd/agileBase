@@ -85,7 +85,7 @@ html, body {
     cursor: text;
 }
 
-.title_display .editable {
+.title_display.editable {
 	font-size: 40pt;
 }
 
