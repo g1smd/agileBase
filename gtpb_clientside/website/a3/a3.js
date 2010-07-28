@@ -97,7 +97,11 @@
     /* Login page functions */
 	
 	jQuery("#why_a3").click(function() {
-	  jQuery("#a3_report").load("/agileBase/website/a3/why_a3.htm");
+	  jQuery("#a3_report").load("/agileBase/website/a3/why_a3.htm", function() {
+		  jQuery("#a3_report").fadeIn("normal");
+		  windowResize();
+		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
+	  });
 	});
 
   });  
