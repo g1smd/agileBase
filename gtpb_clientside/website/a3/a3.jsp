@@ -19,13 +19,6 @@ if (requestURL.contains("appserver.")) {
   <script src="/agileBase/website/a3/a3.js" language="Javascript"></script>
   <link type="text/css" href="/agileBase/website/a3/a3.css" rel="stylesheet">
   <link type="text/css" href="/agileBase/website/scripts/jquery-ui/jquery-ui.css" rel="stylesheet">
-  <script language="JavaScript">
-    jQuery(document).ready(function() {
-	  jQuery("#a3_report").fadeIn("normal");
-	  windowResize();
-	  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
-	}
-  </script>
 </head>
 <body>
 <img id="paper" src="/agileBase/website/a3/paper.jpg">
