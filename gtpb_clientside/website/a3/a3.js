@@ -97,17 +97,30 @@
     /* Login page functions */
 	
 	jQuery("#why_a3").click(function() {
-	  jQuery("#a3_report").load("/agileBase/website/a3/why_a3.htm", function() {
-		  jQuery("#a3_report").fadeIn("normal");
-		  windowResize();
-		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
-	  });
+		  loadLoginA3("why_a3");
+	});
+
+	jQuery("#scenario").click(function() {
+		  loadLoginA3("scenario");
+	});
+
+	jQuery("#tryout").click(function() {
+		  loadLoginA3("tryout");
 	});
 
   });  
   
 /* Helper functions, outside of document.ready */
 
+function loadLoginA3(reportName) {
+	  jQuery("#a3_report").hide();
+	  jQuery("#a3_report").load("/agileBase/website/a3/" + reportName + ".htm", function() {
+		  jQuery("#a3_report").fadeIn("normal");
+		  windowResize();
+		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
+	  });
+}
+  
 function windowResize() {
 	// Size the report
     var windowWidth = jQuery(window).width();

@@ -1,9 +1,9 @@
 <%
 String requestURL = request.getRequestURL().toString();
 boolean live = false;
-// if (requestUrl.contains("appserver.")) {
-//  live = true;
-// }
+if (requestURL.contains("appserver.")) {
+  live = true;
+}
 %>
 <html>
 <head>
@@ -19,6 +19,13 @@ boolean live = false;
   <script src="/agileBase/website/a3/a3.js" language="Javascript"></script>
   <link type="text/css" href="/agileBase/website/a3/a3.css" rel="stylesheet">
   <link type="text/css" href="/agileBase/website/scripts/jquery-ui/jquery-ui.css" rel="stylesheet">
+  <script language="JavaScript">
+    jQuery(document).ready(function() {
+	  jQuery("#a3_report").fadeIn("normal");
+	  windowResize();
+	  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
+	}
+  </script>
 </head>
 <body>
 <img id="paper" src="/agileBase/website/a3/paper.jpg">
@@ -28,7 +35,7 @@ boolean live = false;
   <div id="tryout" style="left: 500px">Try it out now!</div>
 </div>
 <div id="a3_report">
-## Will be loaded over AJAX
+  <%@ include file="why_a3.htm" %>
 </div>
 
 <div class="actions_area left" style="opacity:0.8">
