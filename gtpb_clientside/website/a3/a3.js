@@ -21,7 +21,9 @@
 	});
 	
 	jQuery(".editable").live('keyup', function() {
-	  oBuffer.writeBuffer(this);
+	  if(oBuffer) {
+	    oBuffer.writeBuffer(this);
+	  }
 	  fontResize(gtpb_currentFontSize, 0);
 	});
 	
