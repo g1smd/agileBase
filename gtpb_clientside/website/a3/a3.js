@@ -94,8 +94,14 @@
       }
     });
 	
-  });
+    /* Login page functions */
+	
+	jQuery("#why_a3").click(function() {
+	  jQuery("#a3_report").load("why_a3.htm");
+	}
 
+  });  
+  
 /* Helper functions, outside of document.ready */
 
 function windowResize() {
