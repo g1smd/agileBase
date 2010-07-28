@@ -1,7 +1,8 @@
   jQuery(document).ready(function() {
 	windowResize();
 	
-	jQuery("#a3_report").load("AppController.servlet",
+	if (jQuery("#loginform").size() == 0) {
+	  jQuery("#a3_report").load("AppController.servlet",
 	    {
 		  'return':'gui/customisations/common/a3/a3_report_content',
 		  'set_table':'uesheit0hczldghgn', // a3 reports
@@ -12,7 +13,8 @@
 		  windowResize();
 		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
 		}
-	);	
+	  );
+	}
 
 	jQuery(window).resize(function() {
 	  windowResize();
