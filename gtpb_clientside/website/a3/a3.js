@@ -98,7 +98,7 @@
 	
 	jQuery("#why_a3").click(function() {
 	  jQuery("#a3_report").load("why_a3.htm");
-	}
+	});
 
   });  
   
