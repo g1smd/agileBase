@@ -14,6 +14,8 @@
 		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
 		}
 	  );
+	} else {
+	  loadLoginA3("why_a3");
 	}
 
 	jQuery(window).resize(function() {
