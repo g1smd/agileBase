@@ -21,7 +21,7 @@
 	});
 	
 	jQuery(".editable").live('keyup', function() {
-	  if(oBuffer) {
+	  if (jQuery("#loginform").size() == 0) {
 	    oBuffer.writeBuffer(this);
 	  }
 	  fontResize(gtpb_currentFontSize, 0);
