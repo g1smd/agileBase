@@ -74,6 +74,7 @@ html, body {
 
 .editable {
 	font-family: "Jellyka's Handwriting, Back to 2008";
+	color: #486F98;
 	line-height: 50%;
 	/* The [changed] colour effect will take some time */
     -webkit-transition: color 2s ease-in-out;
