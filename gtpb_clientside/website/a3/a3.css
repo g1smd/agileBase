@@ -113,7 +113,7 @@ html, body {
 }
 
 .actions_area h1 {
-	color: #ff8040; /* agileBase orange */
+	color: white; /* #ff8040; agileBase orange */
 }
 
 .actions_area input {
