@@ -113,6 +113,14 @@
 	jQuery("#tryout").click(function() {
 		  loadLoginA3("tryout");
 	});
+	
+	jQuery("#email_input").focus(function() {
+	  jQuery("#email_input").val("");
+	});
+	
+	jQuery('#signup_form').ajaxForm(function() { 
+        alert("Thank you, you should receive a welcome email and a username/password will be sent shortly"); 
+    });
 
   });  
   
@@ -124,6 +132,9 @@ function loadLoginA3(reportName) {
 		  jQuery("#a3_report").fadeIn("normal");
 		  windowResize();
 		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
+		  if(reportName == "tryout") {
+			  jQuery("#why_are_we").focus();
+		  }
 	  });
 }
   
