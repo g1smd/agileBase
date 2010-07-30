@@ -16,6 +16,7 @@ if (requestURL.contains("appserver.")) {
   <!-- <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
   <script type="text/javascript" src="resources/wait/request_setFilter.js"></script> -->
   <script src="/agileBase/website/scripts/jquery-ui/jquery-ui.js" language="Javascript"></script>
+  <script src="/agileBase/website/scripts/jquery.form.js" language="Javascript"></script>
   <script src="/agileBase/website/a3/a3.js" language="Javascript"></script>
   <link type="text/css" href="/agileBase/website/a3/a3.css" rel="stylesheet">
   <link type="text/css" href="/agileBase/website/scripts/jquery-ui/jquery-ui.css" rel="stylesheet">
@@ -52,8 +53,8 @@ if (requestURL.contains("appserver.")) {
 <h2>Free trial</h2>
 for 30 days
 <hr />
-<form method="POST" action="http://a3reports.co.uk/templateMail.php">
-<input type="text" name="email" value="your email address" title="your email address"/>
+<form method="POST" action="http://a3reports.co.uk/templateMail.php" id="signup_form">
+<input type="text" id="email_input" name="email" value="your email address" title="your email address"/>
 <input type="hidden" name="template_folder" value="/non_gtwp/a3_reports/templates" />
 <input type="hidden" name="templ_success" value="ok.txt" />
 <input type="hidden" name="templ_fail" value="not_ok.txt" />
