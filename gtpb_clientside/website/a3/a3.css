@@ -86,6 +86,11 @@ html, body {
     cursor: text;
 }
 
+.editable a {
+  color: black;
+  text-decoration: none;
+}
+
 .title_display.editable {
 	font-size: 40pt;
 }
