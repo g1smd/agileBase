@@ -53,12 +53,12 @@ if (requestURL.contains("appserver.")) {
 <h2>Free trial</h2>
 for 30 days
 <hr />
-<form method="POST" action="http://a3reports.co.uk/templateMail.php" id="signup_form">
-<input type="text" id="email_input" name="email" value="your email address" title="your email address"/>
-<input type="hidden" name="template_folder" value="/non_gtwp/a3_reports/templates" />
+<form method="POST" action="http://a3reports.co.uk/templateMail.php" id="signup_form" name="signup_form">
+<input type="hidden" name="template_folder" value="non_gtwp/a3_reports/templates" />
 <input type="hidden" name="templ_success" value="ok.txt" />
 <input type="hidden" name="templ_fail" value="not_ok.txt" />
 <input type="hidden" name="templ_email" value="email_signup.txt" />
+<input type="text" id="email_input" name="email" value="your email address" title="your email address" />
 <br /><br />
 <input type="submit" value="Go" />
 </form>
