@@ -39,8 +39,8 @@ if (requestURL.contains("appserver.")) {
 <% } else { %>
     <form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 <% } %>
-<input type="text" name="j_username" /><br /><br />
-<input type="password" name="j_password" /><br /><br />
+<input type="text" name="j_username" title="username"/><br /><br />
+<input type="password" name="j_password" title="password"/><br /><br />
 <input type="submit" value="Go" />
 </form>
 </div>
@@ -52,11 +52,15 @@ if (requestURL.contains("appserver.")) {
 <h2>Free trial</h2>
 for 30 days
 <hr />
-<input type="text" name="email" />
-<br /><br />
-<input type="text" name="password" />
+<form method="POST" action="http://a3reports.co.uk/templateMail.php">
+<input type="text" name="email" value="your email address" title="your email address"/>
+<input type="hidden" name="template_folder" value="/non_gtwp/a3_reports/templates" />
+<input type="hidden" name="templ_success" value="ok.txt" />
+<input type="hidden" name="templ_fail" value="not_ok.txt" />
+<input type="hidden" name="templ_email" value="email_signup.txt" />
 <br /><br />
 <input type="submit" value="Go" />
+</form>
 </div>
 
 <div id="delete_dialog" title="Confirm deletion">
