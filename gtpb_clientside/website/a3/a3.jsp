@@ -16,7 +16,6 @@ if (requestURL.contains("appserver.")) {
   <!-- <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
   <script type="text/javascript" src="resources/wait/request_setFilter.js"></script> -->
   <script src="/agileBase/website/scripts/jquery-ui/jquery-ui.js" language="Javascript"></script>
-  <script src="/agileBase/website/scripts/jquery.form.js" language="Javascript"></script>
   <script src="/agileBase/website/a3/a3.js" language="Javascript"></script>
   <link type="text/css" href="/agileBase/website/a3/a3.css" rel="stylesheet">
   <link type="text/css" href="/agileBase/website/scripts/jquery-ui/jquery-ui.css" rel="stylesheet">

@@ -118,8 +118,13 @@
 	  jQuery("#email_input").val("");
 	});
 	
-	jQuery('#signup_form').ajaxForm(function() { 
-        alert("Thank you, you should receive a welcome email and a username/password will be sent shortly"); 
+	jQuery('#signup_form').submit(function() { 
+        if (jQuery("#email_input").val().indexOf("@") == -1) {
+        	alert("Please enter an email address");
+        	return false;
+        } else {
+        	return true;
+        }
     });
 
   });  
