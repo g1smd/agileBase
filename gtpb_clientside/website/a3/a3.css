@@ -95,7 +95,7 @@ html, body {
 	font-size: 40pt;
 }
 
-.editable:hover {
+[contenteditable=true]:hover {
 	outline: 1px dotted gray; /* similar to border but doesn't displace content */
 }
 
