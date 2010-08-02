@@ -18,6 +18,9 @@ if (requestURL.contains("appserver.")) {
   <script src="/agileBase/website/scripts/jquery-ui/jquery-ui.js" language="Javascript"></script>
   <script src="/agileBase/website/a3/a3.js" language="Javascript"></script>
   <link type="text/css" href="/agileBase/website/a3/a3.css" rel="stylesheet">
+<!--[if IE]>
+  <link rel="stylesheet" type="text/css" href="/agileBase/website/a3/a3_ie.css" />
+<![endif]-->
   <link type="text/css" href="/agileBase/website/scripts/jquery-ui/jquery-ui.css" rel="stylesheet">
 </head>
 <body>
