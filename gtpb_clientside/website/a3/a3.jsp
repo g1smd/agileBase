@@ -27,7 +27,7 @@ if (requestURL.contains("appserver.")) {
 <img id="paper" src="/agileBase/website/a3/paper.jpg">
 <div id="stickies">
   <div id="why_a3">Why use A3 reports?</div>
-  <div id="scenario" style="left: 250px">why use online?</div>
+  <div id="scenario" style="left: 250px">And why use online?</div>
   <div id="tryout" style="left: 500px">Try it out now!</div>
 </div>
 <div id="a3_report">
