@@ -21,6 +21,7 @@ if (requestURL.contains("appserver.")) {
 <!--[if IE]>
   <link rel="stylesheet" type="text/css" href="/agileBase/website/a3/a3_ie.css" />
 <![endif]-->
+  <link rel="stylesheet" href="/agileBase/website/a3/print.css" type="text/css" media="print" />
   <link type="text/css" href="/agileBase/website/scripts/jquery-ui/jquery-ui.css" rel="stylesheet">
 </head>
 <body>
