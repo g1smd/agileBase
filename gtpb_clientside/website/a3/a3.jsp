@@ -34,7 +34,7 @@ if (requestURL.contains("appserver.")) {
 <div id="a3_report">
 </div>
 
-<div class="actions_area left" style="opacity:0.8">
+<div class="actions_area left">
 	<img src="/agileBase/website/a3/a3_reports_logo.png" />
 	<hr />
 <h1>Login</h1>
@@ -49,7 +49,7 @@ if (requestURL.contains("appserver.")) {
 </form>
 </div>
 
-<div class="actions_area right" style="opacity:0.8">
+<div class="actions_area right">
 <h1>Signup</h1>
 <h1>&pound;5/m</h1>
 <hr />
