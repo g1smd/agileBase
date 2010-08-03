@@ -1,7 +1,7 @@
 @font-face {
 	font-family: "Jellyka - Estrya's Handwriting";
 	src: url("Jellyka_Estrya_Handwriting.eot"); /* IE */
-	src: local ("Jellyka - Estrya's Handwriting") local("Jellyka's Handwriting, Back to 2008") url("Jellyka_Estrya_Handwriting.ttf") format("truetype"); /* Non-IE */
+	src: url("Jellyka_Estrya_Handwriting.ttf") format("truetype"); /* Non-IE */
 }
 
 html, body {
