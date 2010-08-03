@@ -6,9 +6,9 @@
   font-family: Times New Roman, times, serif;
   color: black;
   line-height: 100%;
-  font-size: 12pt;
+  font-size: 12pt!important;
 }
 
-.title_display {
-  font-size: 12pt;
+.actions_area {
+  display: none;
 }
