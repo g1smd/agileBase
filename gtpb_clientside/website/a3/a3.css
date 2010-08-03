@@ -40,7 +40,7 @@ html, body {
 	top: 0px;
 	padding: 20px;
 	padding-left: 40px;
-	font-family: "Jellyka's Handwriting, Back to 2008";
+	font-family: "Jellyka - Estrya's Handwriting";
 	color: #486f98;
 	font-size: 50px;
 	line-height: 45%;
@@ -74,7 +74,7 @@ html, body {
 }
 
 .editable {
-	font-family: "Jellyka's Handwriting, Back to 2008";
+	font-family: "Jellyka - Estrya's Handwriting";
 	color: #486F98;
 	line-height: 50%;
 	/* The [changed] colour effect will take some time */
