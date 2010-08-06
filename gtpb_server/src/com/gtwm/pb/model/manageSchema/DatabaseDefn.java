@@ -367,6 +367,10 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		// Cache the table in the company object
 		this.authManager.getCompanyForLoggedInUser(request).addTable(newTable);
+		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
+		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		usageLogger.logTableSchemaChange(user, newTable, AppAction.ADD_TABLE, "");
+		UsageLogger.startLoggingThread(usageLogger);
 		return newTable;
 		// this.dataManagement.logLastSchemaChangeTime(request);
 	}
