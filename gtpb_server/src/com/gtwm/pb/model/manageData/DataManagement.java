@@ -367,6 +367,7 @@ public class DataManagement implements DataManagementInfo {
 					String userName = request.getRemoteUser();
 					AppUserInfo currentUser = this.authManager.getUserByUserName(request, userName);
 					String fullname = currentUser.getForename() + " " + currentUser.getSurname();
+					fullname += " (" + currentUser.getUserName() + ")";
 					fieldValue = new TextValueDefn(fullname);
 				}
 				if (field.getFieldName().equals(HiddenFields.LOCKED.getFieldName())) {
