@@ -1,3 +1,10 @@
+<%
+String requestURL = request.getRequestURL().toString();
+boolean live = false;
+if (requestURL.contains("appserver.")) {
+  live = true;
+}
+%>
 <html>
 	<head>
 		<title>agileBase</title>
@@ -24,11 +31,11 @@
 			<div class="content">
 				<a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
 				<div style="position:relative; top:110px">
-			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
-					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
-			<!--#else --> 
-					<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
-			<!--#endif -->
+			<% if(live) { %>
+				<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
+			<% } else { %>
+				<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
+			<% } %>
 			<table border="0" class="mobileLogin">
 			<tr>
 			  <td>username<br /><input style="right:0px" type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></td>
