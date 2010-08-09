@@ -6,7 +6,7 @@
 	    {
 		  'return':'gui/customisations/common/a3/a3_report_content',
 		  'set_table':'true', // a3 reports
-		  'settablename': 'a3 reports',
+		  'settablename': 'a3_reports',
 		  'set_report':'dbvcalc_a3_reports' // dbvcalc_a3_reports
 		  //'set_report_filter_value': 'true',
 		},
