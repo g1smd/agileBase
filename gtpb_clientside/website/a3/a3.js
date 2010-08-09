@@ -65,7 +65,8 @@
 	});
 	
 	jQuery("#print").click(function() {
-	  alert('coming soon...');
+	  alert("Print format in development...");
+	  window.print();
 	});
 	
 	jQuery("#share").click(function() {
