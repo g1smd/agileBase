@@ -6,7 +6,7 @@
 	    {
 		  'return':'gui/customisations/common/a3/a3_report_content',
 		  'set_table':'uesheit0hczldghgn', // a3 reports
-		  'set_report':'dbvcalc_a3_reports' // dbvcalc_a3_reports
+		  'set_report':'vajid1tj0irhfhoft' // dbvcalc_a3_reports
 		  //'set_report_filter_value': 'true',
 		},
 	    function() {
