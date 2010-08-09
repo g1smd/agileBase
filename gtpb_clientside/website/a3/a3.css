@@ -92,10 +92,12 @@ html, body {
   text-decoration: none;
 }
 
+/* Public website */
 .title_display.editable {
 	font-size: 40pt;
 }
 
+/* When logged in */
 .title_display .editable {
 	font-size: 40pt;
 }
@@ -105,7 +107,7 @@ html, body {
 }
 
 .editable[changed] {
-	color:#486f98;
+	color: black;
 }
 
 .actions_area {
@@ -245,6 +247,10 @@ input {
 
 #search {
   width: 9em;
+}
+
+#username {
+  display: none;
 }
 
 .centered {
