@@ -2,14 +2,22 @@
 	windowResize();
 	
 	if (jQuery("#loginform").size() == 0) {
-	  jQuery("#a3_report").load("AppController.servlet",
-	    {
-		  'return':'gui/customisations/common/a3/a3_report_content',
-		  'set_table':'uesheit0hczldghgn', // a3 reports
-		  'set_report':'vajid1tj0irhfhoft' // dbvcalc_a3_reports
-		  //'set_report_filter_value': 'true',
-		},
-	    function() {
+	  var options = {
+		'return':'gui/customisations/common/a3/a3_report_content',
+		'set_table':'a3_reports',
+		'set_report':'dbvcalc_a3_reports'
+	  };
+	  if(jQuery("#company").text() == "A3 Reports Demo") {
+	    options = {
+  		  'return':'gui/customisations/common/a3/a3_report_content',
+		  'set_table':'a3_reports',
+		  'set_report':'dbvcalc_a3_reports',
+		  'set_report_filter_value': 'true',
+		  'internalfieldname': 'Created by [Auto]',
+		  'fieldvalue': '*(' + jQuery("#username").text() + ')'
+		};
+	  }
+	  jQuery("#a3_report").load("AppController.servlet", options, function() {
 		  jQuery("#a3_report").fadeIn("normal");
 		  windowResize();
 		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
