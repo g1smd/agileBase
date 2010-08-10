@@ -2259,12 +2259,13 @@ public class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	private TableInfo getTableByName(HttpServletRequest request, String tableName)
+	private synchronized TableInfo getTableByName(HttpServletRequest request, String tableName)
 			throws ObjectNotFoundException, DisallowedException {
-		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
-				.getTables();
+		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
+		Set<TableInfo> companyTables = company.getTables();
 		for (TableInfo table : companyTables) {
 			if (table.getTableName().equals(tableName)) {
+				this.tableCache.put(company.getInternalCompanyName() + tableName, table);
 				if (!this.userAllowedToAccessTable(request, table)) {
 					throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
 				}
@@ -2303,8 +2304,20 @@ public class DatabaseDefn implements DatabaseInfo {
 			}
 			return cachedTable;
 		}
-		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
-				.getTables();
+		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
+		/*
+		 * Treat internal table name as a public table name. Amalgamation of
+		 * company ID + table name *should* be unique
+		 */
+		cachedTable = this.tableCache.get(company.getInternalCompanyName() + internalTableName);
+		if (cachedTable != null) {
+			if (!this.userAllowedToAccessTable(request, cachedTable)) {
+				throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, cachedTable);
+			}
+			return cachedTable;
+		}
+		Set<TableInfo> companyTables = company.getTables();
+		// Not in cache, look through one by one
 		TableInfo comparisonTable = new TableDefn(internalTableName, "", "");
 		for (TableInfo companyTable : companyTables) {
 			if (companyTable.equals(comparisonTable)) {
