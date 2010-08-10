@@ -73,7 +73,7 @@ public class ServletUtilMethods {
 			// throws ObjectNotFoundException if table doesn't exist
 			// throws DisallowedException is the user doesn't have permission to
 			// view the table
-			table = databaseDefn.getTableByInternalName(request, internalTableName);
+			table = databaseDefn.getTable(request, internalTableName);
 		}
 		return table;
 	}

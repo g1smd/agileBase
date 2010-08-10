@@ -719,7 +719,7 @@ public class UsageStats implements UsageStatsInfo {
 					String internalTableName = results.getString(3);
 					String tableName = "";
 					try {
-						TableInfo table = this.databaseDefn.getTableByInternalName(this.request,
+						TableInfo table = this.databaseDefn.getTable(this.request,
 								internalTableName);
 						tableName = table.getTableName();
 					} catch (ObjectNotFoundException onex) {
@@ -760,7 +760,7 @@ public class UsageStats implements UsageStatsInfo {
 					internalTableName = results.getString(3);
 					tableName = "";
 					try {
-						TableInfo table = this.databaseDefn.getTableByInternalName(this.request,
+						TableInfo table = this.databaseDefn.getTable(this.request,
 								internalTableName);
 						tableName = table.getTableName();
 					} catch (ObjectNotFoundException onex) {

@@ -890,7 +890,7 @@ public class ServletSchemaMethods {
 					+ PossibleListOptions.LISTTABLE.getFormInputName()
 					+ "' parameter required in the request to add a relation");
 		}
-		TableInfo relatedTable = databaseDefn.getTableByInternalName(request, listTable);
+		TableInfo relatedTable = databaseDefn.getTable(request, listTable);
 		BaseField relatedField = relatedTable.getPrimaryKey();
 		// Check there isn't already a relation to this table
 		for (BaseField field : table.getFields()) {
@@ -1251,7 +1251,7 @@ public class ServletSchemaMethods {
 				.getParameter("internaltablename");
 		if (internalTableName != "") {
 			// obtain table
-			sourceTable = databaseDefn.getTableByInternalName(request, internalTableName);
+			sourceTable = databaseDefn.getTable(request, internalTableName);
 		} else {
 			// obtain report
 			String internalReportName = request.getParameter("internalreportname") == null ? ""
@@ -1708,7 +1708,7 @@ public class ServletSchemaMethods {
 			fieldTable = databaseDefn.findTableContainingReport(request, internalReportName);
 			reportContainingFilterField = fieldTable.getReport(internalReportName);
 		} else {
-			fieldTable = databaseDefn.getTableByInternalName(request, internalTableName);
+			fieldTable = databaseDefn.getTable(request, internalTableName);
 			reportContainingFilterField = fieldTable.getDefaultReport();
 		}
 		BaseField field;
@@ -1880,7 +1880,7 @@ public class ServletSchemaMethods {
 			BaseReportInfo leftReport = leftTable.getReport(leftInternalReportName);
 			leftReportField = leftReport.getReportField(leftInternalFieldName);
 		} else if (!leftInternalTableName.equals("")) {
-			TableInfo leftTable = databaseDefn.getTableByInternalName(request,
+			TableInfo leftTable = databaseDefn.getTable(request,
 					leftInternalTableName);
 			leftTableField = leftTable.getField(leftInternalFieldName);
 		} else {
@@ -1895,7 +1895,7 @@ public class ServletSchemaMethods {
 			BaseReportInfo rightReport = rightTable.getReport(rightInternalReportName);
 			rightReportField = rightReport.getReportField(rightInternalFieldName);
 		} else if (!rightInternalTableName.equals("")) {
-			TableInfo rightTable = databaseDefn.getTableByInternalName(request,
+			TableInfo rightTable = databaseDefn.getTable(request,
 					rightInternalTableName);
 			rightTableField = rightTable.getField(rightInternalFieldName);
 		} else {

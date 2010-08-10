@@ -107,7 +107,7 @@ public class ServletDataMethods {
 	 * id for a table identified by internal table name (constant throughout
 	 * life of table)
 	 * 
-	 * 5) &set_row_id=50&rowidtablename=Contacts - set the row id for a table
+	 * 5) &set_row_id=50&rowidinternaltablename=Contacts - set the row id for a table
 	 * identified by name (name may change)
 	 * 
 	 * @throws ObjectNotFoundException
@@ -118,8 +118,7 @@ public class ServletDataMethods {
 			String rowIdString, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
 			DisallowedException, CantDoThatException, SQLException {
 		String internalTableName = request.getParameter("rowidinternaltablename");
-		String tableName = request.getParameter("rowidtablename");
-		if (internalTableName == null && tableName == null) {
+		if (internalTableName == null) {
 			int rowId = -1;
 			if (rowIdString.toLowerCase().equals("next")) {
 				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData, sessionData.getReport(), true);
@@ -130,19 +129,11 @@ public class ServletDataMethods {
 			}
 			sessionData.setRowId(rowId);
 		} else {
-			TableInfo table;
-			if (internalTableName != null) {
-				table = databaseDefn.getTableByInternalName(request, internalTableName);
-			} else {
-				table = databaseDefn.getTableByName(request, tableName);
-			}
-			BaseReportInfo report = null;
+			TableInfo table = databaseDefn.getTable(request, internalTableName);
+			BaseReportInfo report = table.getDefaultReport();
 			String internalReportName = request.getParameter("rowidinternalreportname");
-			String reportName = request.getParameter("rowidreportname");
 			if (internalReportName != null) {
 				report = table.getReport(internalReportName);
-			} else if (reportName != null) {
-				report = table.getReport(reportName);
 			}
 			int rowId = -1;
 			if (rowIdString.toLowerCase().equals("next")) {
@@ -225,31 +216,19 @@ public class ServletDataMethods {
 	 * 
 	 * 1) &set_table=a2a5e30cb86a5513f - set the table by internal name
 	 * 
-	 * 2) &set_table=true&settablename=Contacts - set the table by name (name
+	 * 2) &set_table=Contacts - set the table by name (name
 	 * may change)
 	 * 
-	 * 3) &postset_table=a2a5e30cb86a5513f - set the table <b>after<.b> doing
+	 * 3) &postset_table=a2a5e30cb86a5513f - set the table <b>after</b> doing
 	 * all other session and application actions. This can be useful if running
 	 * through a wizard for example, when you want to perform actions on the
 	 * current table and then set the table to a different one ready for the
 	 * next wizard page
-	 * 
-	 * 4) &postset_table&postsettablename=Contacts - postset the table by name
 	 */
 	public static void setSessionTable(SessionDataInfo sessionData, HttpServletRequest request,
 			String tableInternalName, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
 			SQLException, DisallowedException {
-		TableInfo table;
-		// specifying table name optional
-		String tableName = request.getParameter("settablename");
-		if (tableName == null) {
-			tableName = request.getParameter("postsettablename");
-		}
-		if (tableName != null) {
-			table = databaseDefn.getTableByName(request, tableName);
-		} else {
-			table = databaseDefn.getTableByInternalName(request, tableInternalName);
-		}
+		TableInfo table = databaseDefn.getTable(request, tableInternalName);
 		sessionData.setTable(table);
 	}
 
@@ -356,9 +335,9 @@ public class ServletDataMethods {
 		}
 		TableInfo table;
 		if (internalTableName != null) {
-			table = databaseDefn.getTableByInternalName(request, internalTableName);
+			table = databaseDefn.getTable(request, internalTableName);
 		} else {
-			table = databaseDefn.getTableByName(request, tableName);
+			table = databaseDefn.getTable(request, tableName);
 		}
 		sessionData.setCustomTable(key, table);
 	}
@@ -390,9 +369,9 @@ public class ServletDataMethods {
 			parentTable = databaseDefn.findTableContainingReport(request, internalReportName);
 		} else {
 			if (internalTableName != null) {
-				parentTable = databaseDefn.getTableByInternalName(request, internalTableName);
+				parentTable = databaseDefn.getTable(request, internalTableName);
 			} else {
-				parentTable = databaseDefn.getTableByName(request, tableName);
+				parentTable = databaseDefn.getTable(request, tableName);
 			}
 		}
 		if (internalReportName != null) {
@@ -424,9 +403,9 @@ public class ServletDataMethods {
 			parentTable = databaseDefn.findTableContainingField(request, internalFieldName);
 		} else {
 			if (internalTableName != null) {
-				parentTable = databaseDefn.getTableByInternalName(request, internalTableName);
+				parentTable = databaseDefn.getTable(request, internalTableName);
 			} else {
-				parentTable = databaseDefn.getTableByName(request, tableName);
+				parentTable = databaseDefn.getTable(request, tableName);
 			}
 		}
 		if (internalFieldName != null) {
@@ -986,7 +965,7 @@ public class ServletDataMethods {
 		if (internalTableName == null) {
 			table = sessionData.getTable();
 		} else {
-			table = databaseDefn.getTableByInternalName(request, internalTableName);
+			table = databaseDefn.getTable(request, internalTableName);
 		}
 		if (table == null) {
 			throw new ObjectNotFoundException(
@@ -1046,7 +1025,7 @@ public class ServletDataMethods {
 		if (internalTableName == null) {
 			table = sessionData.getTable();
 		} else {
-			table = databaseDefn.getTableByInternalName(request, internalTableName);
+			table = databaseDefn.getTable(request, internalTableName);
 		}
 		if (table == null) {
 			throw new ObjectNotFoundException(
@@ -1075,7 +1054,7 @@ public class ServletDataMethods {
 		if (internalTableName == null) {
 			table = sessionData.getTable();
 		} else {
-			table = databaseDefn.getTableByInternalName(request, internalTableName);
+			table = databaseDefn.getTable(request, internalTableName);
 		}
 		if (table == null) {
 			throw new ObjectNotFoundException(

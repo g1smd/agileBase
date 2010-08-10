@@ -378,7 +378,7 @@ public class ServletAuthMethods {
 			HibernateUtil.startHibernateTransaction();
 			if (internalTableName != null) {
 				// Add a table specific privilege
-				TableInfo table = databaseDefn.getTableByInternalName(request, internalTableName);
+				TableInfo table = databaseDefn.getTable(request, internalTableName);
 				if (internalRoleName != null) {
 					AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
 					authManager.addRolePrivilege(request, role, privilegeType, table);
@@ -439,7 +439,7 @@ public class ServletAuthMethods {
 			HibernateUtil.startHibernateTransaction();
 			if (internalTableName != null) {
 				// Remove a table specific privilege
-				TableInfo table = databaseDefn.getTableByInternalName(request, internalTableName);
+				TableInfo table = databaseDefn.getTable(request, internalTableName);
 				if (internalRoleName != null) {
 					AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
 					authManager.removeRolePrivilege(request, role, privilegeType, table);
@@ -499,7 +499,7 @@ public class ServletAuthMethods {
 		}
 		PrivilegeType maxPrivilegeType = PrivilegeType
 				.valueOf(privilegeTypeParameter.toUpperCase());
-		TableInfo table = databaseDefn.getTableByInternalName(request, internalTableName);
+		TableInfo table = databaseDefn.getTable(request, internalTableName);
 		// Check it's a table privilege
 		if (maxPrivilegeType.isObjectSpecificPrivilege()) {
 			if (!(maxPrivilegeType.getObjectClass().equals(TableInfo.class))) {
@@ -603,7 +603,7 @@ public class ServletAuthMethods {
 			throw new MissingParametersException(
 					"The 'internaltablename' parameter and either 'internalusername' or 'internalrolename' are required to remove all table privileges from a user/role");
 		}
-		TableInfo table = databaseDefn.getTableByInternalName(request, internalTableName);
+		TableInfo table = databaseDefn.getTable(request, internalTableName);
 		Set<UserObjectPrivilegeInfo> userPrivilegesOnTable = authManager.getUserPrivilegesOnTable(
 				request, table);
 		Set<RoleObjectPrivilegeInfo> rolePrivilegesOnTable = authManager.getRolePrivilegesOnTable(
