@@ -189,17 +189,18 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 			return -1;
 		}
 		TableInfo otherTable = anotherReportDefn.getParentTable();
-		int tableCompare = this.getParentTable().compareTo(otherTable);
-		if (tableCompare != 0) {
+		int compare = this.getParentTable().compareTo(otherTable);
+		if (compare != 0) {
 			// If tables are different, sort based on table so don't need to
 			// compare report properties at all
-			return tableCompare;
+			return compare;
 		}
 		String otherReportName = anotherReportDefn.getReportName();
-		// Also include internalReportName as that is what equals() is based on
-		String otherInternalReportName = anotherReportDefn.getInternalReportName();
-		return (this.getReportName().toLowerCase(Locale.UK) + this.getInternalReportName())
-				.compareTo(otherReportName.toLowerCase(Locale.UK) + otherInternalReportName);
+		compare = this.getReportName().toLowerCase().compareTo(otherReportName.toLowerCase());
+		if (compare != 0) {
+			return compare;
+		}
+		return this.getInternalReportName().compareTo(anotherReportDefn.getInternalReportName());
 	}
 
 	/**

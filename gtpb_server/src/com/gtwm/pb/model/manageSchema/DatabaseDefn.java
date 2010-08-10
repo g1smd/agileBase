@@ -2259,6 +2259,9 @@ public class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
+	/**
+	 * Called uniquely by getTable
+	 */
 	private synchronized TableInfo getTableByName(HttpServletRequest request, String tableName)
 			throws ObjectNotFoundException, DisallowedException {
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);

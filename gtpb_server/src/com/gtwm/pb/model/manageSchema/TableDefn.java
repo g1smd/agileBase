@@ -321,14 +321,12 @@ public class TableDefn implements TableInfo {
 		if (this == otherTable) {
 			return 0;
 		}
-		// Allow .contains() to work in the same way as .equals()
-		if (this.equals(otherTable)) {
-			return 0;
+		// For performance, compare first on item most likely to differ
+		int comparison = this.getTableName().toLowerCase().compareTo(otherTable.getTableName().toLowerCase());
+		if (comparison != 0) {
+			return comparison;
 		}
-		String otherTableName = otherTable.getTableName();
-		String lhs = this.getTableName().toLowerCase(Locale.UK);
-		String rhs = otherTableName.toLowerCase(Locale.UK);
-		return lhs.compareTo(rhs);
+		return this.getInternalTableName().compareTo(otherTable.getInternalTableName());
 	}
 
 	/**

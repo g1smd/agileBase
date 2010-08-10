@@ -30,104 +30,112 @@ import com.gtwm.pb.model.manageSchema.fields.AbstractField;
 @Entity
 public class ReportFieldDefn extends AbstractReportField implements ReportFieldInfo {
 
-    protected ReportFieldDefn() {
-    }
+	protected ReportFieldDefn() {
+	}
 
-    /**
-     * Construct a report field that came from a table
-     */
-    public ReportFieldDefn(BaseReportInfo parentReport, BaseField baseField) {
-        this.setParentReport(parentReport);
-        this.setBaseField(baseField);
-    }
+	/**
+	 * Construct a report field that came from a table
+	 */
+	public ReportFieldDefn(BaseReportInfo parentReport, BaseField baseField) {
+		this.setParentReport(parentReport);
+		this.setBaseField(baseField);
+	}
 
-    /**
-     * Construct a report field that came from a different report
-     */
-    public ReportFieldDefn(BaseReportInfo parentReport, BaseReportInfo reportFieldIsFrom, BaseField baseField) {
-        this(parentReport, baseField);
-        this.setReportFieldIsFromDirect(reportFieldIsFrom);
-    }
+	/**
+	 * Construct a report field that came from a different report
+	 */
+	public ReportFieldDefn(BaseReportInfo parentReport, BaseReportInfo reportFieldIsFrom,
+			BaseField baseField) {
+		this(parentReport, baseField);
+		this.setReportFieldIsFromDirect(reportFieldIsFrom);
+	}
 
-    @ManyToOne(targetEntity = AbstractField.class)
-    // Uni-directional many to one: a BaseField may be used in more than one report
-    public BaseField getBaseField() {
-        return this.baseField;
-    }
-        
-    @Transient
-    public String getFieldName() {
-    	return this.getBaseField().getFieldName();
-    }
+	@ManyToOne(targetEntity = AbstractField.class)
+	// Uni-directional many to one: a BaseField may be used in more than one
+	// report
+	public BaseField getBaseField() {
+		return this.baseField;
+	}
 
-    @Transient
-    public String getFieldDescription() {
-    	return this.getBaseField().getFieldDescription();
-    }
+	@Transient
+	public String getFieldName() {
+		return this.getBaseField().getFieldName();
+	}
 
-    @Transient
-    public String getInternalFieldName() {
-    	return this.getBaseField().getInternalFieldName();
-    }
+	@Transient
+	public String getFieldDescription() {
+		return this.getBaseField().getFieldDescription();
+	}
 
-    private void setBaseField(BaseField baseField) {
-        this.baseField = baseField;
-    }
+	@Transient
+	public String getInternalFieldName() {
+		return this.getBaseField().getInternalFieldName();
+	}
 
-    /**
-     * A report field is defined as equal to another if the BaseField objects and parent report objects are
-     * the same
-     */
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if ((obj == null) || (obj.getClass() != this.getClass())) {
-            return false;
-        }
-        ReportFieldInfo otherReportField = (ReportFieldInfo) obj;
-        if (otherReportField.getBaseField().equals(this.getBaseField()) && otherReportField.getParentReport().equals(this.getParentReport())) {
-            return true;
-        }
-        return false;
-    }
+	private void setBaseField(BaseField baseField) {
+		this.baseField = baseField;
+	}
 
-    /**
-     * hashCode() consistent with equals() above
-     */
-    public int hashCode() {
-        return this.getBaseField().hashCode() + this.getParentReport().hashCode();
-    }
-    
-    /**
-     * Provide a natural sort order by parent report then field index then BaseField name + internal name
-     */
-    public int compareTo(ReportFieldInfo otherField) {
-    	if (this == otherField) {
-    		return 0;
-    	}
-        BaseReportInfo otherReport = otherField.getParentReport();
-        int reportCompare = this.getParentReport().compareTo(otherReport);
-        if (reportCompare != 0) {
-        	return reportCompare;
-        }
-        Integer otherFieldIndex = otherField.getFieldIndex();
-        int indexCompare = this.getFieldIndex().compareTo(otherFieldIndex);
-        if (indexCompare != 0) {
-        	return indexCompare;
-        }
-        String otherFieldName = otherField.getBaseField().getFieldName();
-        String otherInternalName = otherField.getBaseField().getInternalFieldName();
-        String thisFieldName = this.getBaseField().getFieldName();
-        String thisInternalName = this.getBaseField().getInternalFieldName();
-        return (thisFieldName + thisInternalName).compareToIgnoreCase(otherFieldName + otherInternalName);
-    }
-    
-    public String toString() {
-        return this.getBaseField().toString();
-    }
+	/**
+	 * A report field is defined as equal to another if the BaseField objects
+	 * and parent report objects are the same
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if ((obj == null) || (obj.getClass() != this.getClass())) {
+			return false;
+		}
+		ReportFieldInfo otherReportField = (ReportFieldInfo) obj;
+		if (otherReportField.getBaseField().equals(this.getBaseField())
+				&& otherReportField.getParentReport().equals(this.getParentReport())) {
+			return true;
+		}
+		return false;
+	}
 
-    private BaseField baseField = null;
-    
+	/**
+	 * hashCode() consistent with equals() above
+	 */
+	public int hashCode() {
+		return this.getBaseField().hashCode() + this.getParentReport().hashCode();
+	}
+
+	/**
+	 * Provide a natural sort order by parent report then field index then
+	 * BaseField name + internal name
+	 */
+	public int compareTo(ReportFieldInfo otherField) {
+		if (this == otherField) {
+			return 0;
+		}
+		BaseReportInfo otherReport = otherField.getParentReport();
+		int compare = this.getParentReport().compareTo(otherReport);
+		if (compare != 0) {
+			return compare;
+		}
+		Integer otherFieldIndex = otherField.getFieldIndex();
+		compare = this.getFieldIndex().compareTo(otherFieldIndex);
+		if (compare != 0) {
+			return compare;
+		}
+		String otherFieldName = otherField.getBaseField().getFieldName();
+		String thisFieldName = this.getBaseField().getFieldName();
+		compare = thisFieldName.compareToIgnoreCase(otherFieldName);
+		if (compare != 0) {
+			return compare;
+		}
+		String thisInternalName = this.getBaseField().getInternalFieldName();
+		String otherInternalName = otherField.getBaseField().getInternalFieldName();
+		return (thisInternalName).compareTo(otherInternalName);
+	}
+
+	public String toString() {
+		return this.getBaseField().toString();
+	}
+
+	private BaseField baseField = null;
+
 	private static final SimpleLogger logger = new SimpleLogger(ReportFieldDefn.class);
 }
