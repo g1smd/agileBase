@@ -2307,6 +2307,7 @@ public class DatabaseDefn implements DatabaseInfo {
 				.getTables();
 		TableInfo comparisonTable = new TableDefn(internalTableName, "", "");
 		if (companyTables.contains(comparisonTable)) {
+			logger.debug("Company tables contains " + internalTableName);
 			for (TableInfo companyTable : companyTables) {
 				if (companyTable.equals(comparisonTable)) {
 					this.tableCache.put(internalTableName, companyTable);
@@ -2319,6 +2320,8 @@ public class DatabaseDefn implements DatabaseInfo {
 					return companyTable;
 				}
 			}
+		} else {
+			logger.debug("Company tables doesn't contain " + internalTableName);
 		}
 		// Not found by internal name, try by name
 		return this.getTableByName(request, internalTableName);
