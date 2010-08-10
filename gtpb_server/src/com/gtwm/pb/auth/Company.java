@@ -280,10 +280,11 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		if (this == otherCompany) {
 			return 0;
 		}
-		String compareString = this.getCompanyName().toLowerCase() + this.getInternalCompanyName();
-		String otherCompareString = otherCompany.getCompanyName().toLowerCase()
-				+ otherCompany.getInternalCompanyName();
-		return compareString.compareTo(otherCompareString);
+		int comparison = this.getCompanyName().toLowerCase().compareTo(otherCompany.getCompanyName().toLowerCase());
+		if (comparison != 0) {
+			return comparison;
+		}
+		return this.getInternalCompanyName().compareTo(otherCompany.getInternalCompanyName());
 	}
 
 	public boolean equals(Object obj) {

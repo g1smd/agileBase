@@ -32,101 +32,101 @@ import javax.persistence.ManyToOne;
 public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 
 	private AppUser() {
-    }
+	}
 
-    public AppUser(CompanyInfo company, String internalUserName, String userName, String surname, String forename, String password)
-    		throws MissingParametersException {
-        if (userName == null || password == null) {
-            throw new MissingParametersException("User name or password not specified");
-        }
-        if (userName.equals("") || password.equals("")) {
-            throw new MissingParametersException("User name or password blank");
-        }
-        this.setCompany(company);
-        if (internalUserName == null) {
-            this.setInternalUserName((new RandomString()).toString());
-        } else {
-            this.setInternalUserName(internalUserName);
-        }
-        this.setUserName(userName);
-        if (surname == null) {
-            this.setSurname("");
-        } else {
-            this.setSurname(surname);
-        }
-        if (forename == null) {
-            this.setForename("");
-        } else {
-            this.setForename(forename);
-        }
-        this.setPassword(password);
-        // Give them a default user type
-        this.setUserType(UserType.OPERATIONAL);
-    }
+	public AppUser(CompanyInfo company, String internalUserName, String userName, String surname,
+			String forename, String password) throws MissingParametersException {
+		if (userName == null || password == null) {
+			throw new MissingParametersException("User name or password not specified");
+		}
+		if (userName.equals("") || password.equals("")) {
+			throw new MissingParametersException("User name or password blank");
+		}
+		this.setCompany(company);
+		if (internalUserName == null) {
+			this.setInternalUserName((new RandomString()).toString());
+		} else {
+			this.setInternalUserName(internalUserName);
+		}
+		this.setUserName(userName);
+		if (surname == null) {
+			this.setSurname("");
+		} else {
+			this.setSurname(surname);
+		}
+		if (forename == null) {
+			this.setForename("");
+		} else {
+			this.setForename(forename);
+		}
+		this.setPassword(password);
+		// Give them a default user type
+		this.setUserType(UserType.OPERATIONAL);
+	}
 
-    @ManyToOne(targetEntity=Company.class)
-    public CompanyInfo getCompany() {
-        return this.company;
-    }
+	@ManyToOne(targetEntity = Company.class)
+	public CompanyInfo getCompany() {
+		return this.company;
+	}
 
-    @Id
-    public String getInternalUserName() {
-        return this.internalUserName;
-    }
+	@Id
+	public String getInternalUserName() {
+		return this.internalUserName;
+	}
 
-    private void setInternalUserName(String internalUserName) {
-        this.internalUserName = internalUserName;
-    }
+	private void setInternalUserName(String internalUserName) {
+		this.internalUserName = internalUserName;
+	}
 
-    private void setCompany(CompanyInfo company) {
-        this.company = company;
-    }
+	private void setCompany(CompanyInfo company) {
+		this.company = company;
+	}
 
-    public String getUserName() {
-        return this.userName;
-    }
+	public String getUserName() {
+		return this.userName;
+	}
 
-    public void setUserName(String userName) throws MissingParametersException {
-        if (userName == null) {
-            throw new MissingParametersException("User name not specified");
-        }
-        if (userName.equals("")) {
-            throw new MissingParametersException("User name blank");
-        }
-        this.userName = userName;
-    }
-    
-    public String getSurname() {
-        return this.surname;
-    }
+	public void setUserName(String userName) throws MissingParametersException {
+		if (userName == null) {
+			throw new MissingParametersException("User name not specified");
+		}
+		if (userName.equals("")) {
+			throw new MissingParametersException("User name blank");
+		}
+		this.userName = userName;
+	}
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
+	public String getSurname() {
+		return this.surname;
+	}
 
-    public String getForename() {
-        return this.forename;
-    }
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
 
-    public void setForename(String forename) {
-        this.forename = forename;
-    }
+	public String getForename() {
+		return this.forename;
+	}
 
-    public String getPassword() {
-        return this.password;
-    }
+	public void setForename(String forename) {
+		this.forename = forename;
+	}
 
-    public void setPassword(String password) throws MissingParametersException {
-        if (password == null) {
-            throw new MissingParametersException("Password not specified");
-        }
-        if (password.equals("")) {
-            throw new MissingParametersException("Password blank");
-        }
-    	this.password = password;
-    }
+	public String getPassword() {
+		return this.password;
+	}
 
-    @Enumerated(EnumType.STRING)
+	public void setPassword(String password) throws MissingParametersException {
+		if (password == null) {
+			throw new MissingParametersException("Password not specified");
+		}
+		if (password.equals("")) {
+			throw new MissingParametersException("Password blank");
+		}
+		this.password = password;
+	}
+
+	@Enumerated(EnumType.STRING)
 	public UserType getUserType() {
 		return this.userType;
 	}
@@ -134,51 +134,53 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
-    
-    public String toString() {
-        return this.getUserName();
-    }
 
-    public int compareTo(AppUserInfo anotherAppUser) {
-    	if (this == anotherAppUser) {
-    		return 0;
-    	}
-        String comparator = this.getUserName() + this.getInternalUserName();
-        String otherComparator = anotherAppUser.getUserName() + anotherAppUser.getInternalUserName();
-        return comparator.compareTo(otherComparator);
-    }
+	public String toString() {
+		return this.getUserName();
+	}
 
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if ((obj == null) || (obj.getClass() != this.getClass())) {
-            return false;
-        }
-        return this.getInternalUserName().equals(((AppUserInfo) obj).getInternalUserName());
-    }
+	public int compareTo(AppUserInfo anotherAppUser) {
+		if (this == anotherAppUser) {
+			return 0;
+		}
+		int comparison = this.getUserName().compareTo(anotherAppUser.getUserName());
+		if (comparison != 0) {
+			return comparison;
+		}
+		return this.getInternalUserName().compareTo(anotherAppUser.getInternalUserName());
+	}
 
-    public int hashCode() {
-    	if (this.hashCode == 0) {
-    		this.hashCode = this.getInternalUserName().hashCode();
-    	}
-        return this.hashCode;
-    }
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if ((obj == null) || (obj.getClass() != this.getClass())) {
+			return false;
+		}
+		return this.getInternalUserName().equals(((AppUserInfo) obj).getInternalUserName());
+	}
 
-    private volatile int hashCode = 0;
-    
-    private String internalUserName;
+	public int hashCode() {
+		if (this.hashCode == 0) {
+			this.hashCode = this.getInternalUserName().hashCode();
+		}
+		return this.hashCode;
+	}
 
-    private String userName;
+	private volatile int hashCode = 0;
 
-    private String surname = "";
+	private String internalUserName;
 
-    private String forename = "";
-    
-    private UserType userType = null;
+	private String userName;
 
-    private String password;
+	private String surname = "";
 
-    private CompanyInfo company = null;
+	private String forename = "";
+
+	private UserType userType = null;
+
+	private String password;
+
+	private CompanyInfo company = null;
 
 }

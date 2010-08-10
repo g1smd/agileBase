@@ -36,105 +36,111 @@ import java.util.TreeSet;
 @Entity
 public class AppRole implements AppRoleInfo, Comparable<AppRoleInfo> {
 
-    protected AppRole() {
-    }
+	protected AppRole() {
+	}
 
-    public AppRole(CompanyInfo company, String internalRoleName, String roleName) {
-        this.setCompany(company);
-        if (internalRoleName == null) {
-        	this.setInternalRoleName((new RandomString()).toString());
-        } else {
-        	this.setInternalRoleName(internalRoleName);
-        }
-        this.setRoleName(roleName);
-    }
-    
-    @ManyToOne(targetEntity=Company.class)
-    public CompanyInfo getCompany() {
-        return this.company;
-    }
-    
-    private void setCompany(CompanyInfo company) {
-        this.company = company;
-    }
+	public AppRole(CompanyInfo company, String internalRoleName, String roleName) {
+		this.setCompany(company);
+		if (internalRoleName == null) {
+			this.setInternalRoleName((new RandomString()).toString());
+		} else {
+			this.setInternalRoleName(internalRoleName);
+		}
+		this.setRoleName(roleName);
+	}
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
+	@ManyToOne(targetEntity = Company.class)
+	public CompanyInfo getCompany() {
+		return this.company;
+	}
 
-    public String getRoleName() {
-        return this.roleName;
-    }
+	private void setCompany(CompanyInfo company) {
+		this.company = company;
+	}
 
-    public void assignUser(AppUserInfo user) {
-    	this.getUsersDirect().add(user);
-    }
-    
-    public void removeUser(AppUserInfo user) {
-    	this.getUsersDirect().remove(user);
-    }
-    
-    @Transient
-    public SortedSet<AppUserInfo> getUsers() {
-        return Collections.unmodifiableSortedSet(new TreeSet<AppUserInfo>(this.getUsersDirect()));
-    }
-    
-    //cascadeType isn't ALL because we don't want users to be deleted when a parent role is deleted
-    @ManyToMany(targetEntity=AppUser.class, cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}) // Uni-directional OneToMany
-    private Set<AppUserInfo> getUsersDirect() {
-    	return this.users;
-    }
-    
-    private void setUsersDirect(Set<AppUserInfo> users) {
-    	this.users = users;
-    }
-    
-    @Id
-    public String getInternalRoleName() {
-        return this.internalRoleName;
-    }
-    
-    private void setInternalRoleName(String internalRoleName) {
-        this.internalRoleName = internalRoleName;
-    }
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
 
-    public String toString() {
-        return this.getRoleName();
-    }
+	public String getRoleName() {
+		return this.roleName;
+	}
 
-    public int compareTo(AppRoleInfo anotherAppRole) {
-    	if (this == anotherAppRole) {
-    		return 0;
-    	}
-        String comparator = this.getRoleName() + this.getInternalRoleName();
-        String otherComparator = anotherAppRole.getRoleName() + anotherAppRole.getInternalRoleName();
-        return comparator.compareTo(otherComparator);
-    }
+	public void assignUser(AppUserInfo user) {
+		this.getUsersDirect().add(user);
+	}
 
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if ((obj == null) || (obj.getClass() != this.getClass())) {
-            return false;
-        }
-        return getInternalRoleName().equals(((AppRoleInfo) obj).getInternalRoleName());
-    }
+	public void removeUser(AppUserInfo user) {
+		this.getUsersDirect().remove(user);
+	}
 
-    public int hashCode() {
-    	if (this.hashCode == 0) {
-    		this.hashCode = this.getInternalRoleName().hashCode();
-    	}
-        return this.hashCode;
-    }
+	@Transient
+	public SortedSet<AppUserInfo> getUsers() {
+		return Collections.unmodifiableSortedSet(new TreeSet<AppUserInfo>(this.getUsersDirect()));
+	}
 
-    private volatile int hashCode = 0;
-    
-    private CompanyInfo company = null;
+	// cascadeType isn't ALL because we don't want users to be deleted when a
+	// parent role is deleted
+	@ManyToMany(targetEntity = AppUser.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH })
+	// Uni-directional OneToMany
+	private Set<AppUserInfo> getUsersDirect() {
+		return this.users;
+	}
 
-    private String internalRoleName = "";
+	private void setUsersDirect(Set<AppUserInfo> users) {
+		this.users = users;
+	}
 
-    private String roleName = "";
-    
-    private Set<AppUserInfo> users = new HashSet<AppUserInfo>();
+	@Id
+	public String getInternalRoleName() {
+		return this.internalRoleName;
+	}
+
+	private void setInternalRoleName(String internalRoleName) {
+		this.internalRoleName = internalRoleName;
+	}
+
+	public String toString() {
+		return this.getRoleName();
+	}
+
+	public int compareTo(AppRoleInfo anotherAppRole) {
+		if (this == anotherAppRole) {
+			return 0;
+		}
+		// For performance, compare first on item most likely to differ
+		int comparison = this.getRoleName().compareTo(anotherAppRole.getRoleName());
+		if (comparison != 0) {
+			return comparison;
+		}
+		return this.getInternalRoleName().compareTo(anotherAppRole.getInternalRoleName());
+	}
+
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if ((obj == null) || (obj.getClass() != this.getClass())) {
+			return false;
+		}
+		return getInternalRoleName().equals(((AppRoleInfo) obj).getInternalRoleName());
+	}
+
+	public int hashCode() {
+		if (this.hashCode == 0) {
+			this.hashCode = this.getInternalRoleName().hashCode();
+		}
+		return this.hashCode;
+	}
+
+	private volatile int hashCode = 0;
+
+	private CompanyInfo company = null;
+
+	private String internalRoleName = "";
+
+	private String roleName = "";
+
+	private Set<AppUserInfo> users = new HashSet<AppUserInfo>();
 }

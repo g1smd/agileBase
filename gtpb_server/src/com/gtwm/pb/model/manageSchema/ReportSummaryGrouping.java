@@ -35,91 +35,93 @@ import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 @Entity
 public class ReportSummaryGrouping implements ReportSummaryGroupingInfo {
 
-    protected ReportSummaryGrouping() {
-    }
-    
-    public ReportSummaryGrouping(ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifier) {
-        this.setGroupingReportField(groupingReportField);
-        this.setCreationTimeDirect(new Date());
-        this.setGroupingModifier(groupingModifier);
-    }
-    
-    @Id
-    @GeneratedValue
-    /**
-     * Hibernate needs an ID for a persistent class - this isn't actually used by the app otherwise
-     */
-    protected long getId() {
-        return this.id;
-    }
-    
-    private void setId(long id) {
-        this.id = id;
-    }
-    
-    @ManyToOne(targetEntity=AbstractReportField.class)
-    public ReportFieldInfo getGroupingReportField() {
-        return this.groupingField;
-    }
-    
-    private void setGroupingReportField(ReportFieldInfo groupingField) {
-        this.groupingField = groupingField;
-    }
+	protected ReportSummaryGrouping() {
+	}
 
-    private void setGroupingModifier(SummaryGroupingModifier groupingModifier) {
-    	this.groupingModifier = groupingModifier;
-    }
-    
-    @Enumerated(EnumType.STRING)
-    public SummaryGroupingModifier getGroupingModifier() {
-    	return this.groupingModifier;
-    }
-    
+	public ReportSummaryGrouping(ReportFieldInfo groupingReportField,
+			SummaryGroupingModifier groupingModifier) {
+		this.setGroupingReportField(groupingReportField);
+		this.setCreationTimeDirect(new Date());
+		this.setGroupingModifier(groupingModifier);
+	}
+
+	@Id
+	@GeneratedValue
+	/**
+	 * Hibernate needs an ID for a persistent class - this isn't actually used by the app otherwise
+	 */
+	protected long getId() {
+		return this.id;
+	}
+
+	private void setId(long id) {
+		this.id = id;
+	}
+
+	@ManyToOne(targetEntity = AbstractReportField.class)
+	public ReportFieldInfo getGroupingReportField() {
+		return this.groupingField;
+	}
+
+	private void setGroupingReportField(ReportFieldInfo groupingField) {
+		this.groupingField = groupingField;
+	}
+
+	private void setGroupingModifier(SummaryGroupingModifier groupingModifier) {
+		this.groupingModifier = groupingModifier;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public SummaryGroupingModifier getGroupingModifier() {
+		return this.groupingModifier;
+	}
+
 	@Transient
-    public Date getCreationTime() {
-    	return new Date(this.getCreationTimeDirect().getTime());
-    }
-    
-    @Temporal(value=TemporalType.TIMESTAMP)
-    private Date getCreationTimeDirect() {
-        return this.creationTime;
-    }
-    
-    private void setCreationTimeDirect(Date creationTime) {
-        this.creationTime = creationTime;
-    }
+	public Date getCreationTime() {
+		return new Date(this.getCreationTimeDirect().getTime());
+	}
 
-    public int compareTo(ReportSummaryGroupingInfo otherGrouping) {
-        int creationTimeCompare = this.getCreationTime().compareTo(otherGrouping.getCreationTime());
-        if (creationTimeCompare != 0) {
-        	return creationTimeCompare;
-        }
-        return Long.valueOf(this.getId()).compareTo(Long.valueOf(((ReportSummaryGrouping) otherGrouping).getId())); 
-    }
-    
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if ((obj == null) || (obj.getClass() != this.getClass())) {
-            return false;
-        }
-        return (this.getId() == ((ReportSummaryGrouping) obj).getId());
-    }
-    
-    public int hashCode() {
-    	return Long.valueOf(this.getId()).hashCode();
-    }
-    
-    public String toString() {
-    	return this.getGroupingReportField().toString();
-    }
-    
-    private ReportFieldInfo groupingField = null;
-    
-    private SummaryGroupingModifier groupingModifier = null;
-    
-    private Date creationTime = null;
-    
-    private long id;
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date getCreationTimeDirect() {
+		return this.creationTime;
+	}
+
+	private void setCreationTimeDirect(Date creationTime) {
+		this.creationTime = creationTime;
+	}
+
+	public int compareTo(ReportSummaryGroupingInfo otherGrouping) {
+		int creationTimeCompare = this.getCreationTime().compareTo(otherGrouping.getCreationTime());
+		if (creationTimeCompare != 0) {
+			return creationTimeCompare;
+		}
+		return Long.valueOf(this.getId()).compareTo(
+				Long.valueOf(((ReportSummaryGrouping) otherGrouping).getId()));
+	}
+
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if ((obj == null) || (obj.getClass() != this.getClass())) {
+			return false;
+		}
+		return (this.getId() == ((ReportSummaryGrouping) obj).getId());
+	}
+
+	public int hashCode() {
+		return Long.valueOf(this.getId()).hashCode();
+	}
+
+	public String toString() {
+		return this.getGroupingReportField().toString();
+	}
+
+	private ReportFieldInfo groupingField = null;
+
+	private SummaryGroupingModifier groupingModifier = null;
+
+	private Date creationTime = null;
+
+	private long id;
 }
