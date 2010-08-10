@@ -2294,8 +2294,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		return false;
 	}
 
-	public synchronized TableInfo getTable(HttpServletRequest request,
-			String internalTableName) throws ObjectNotFoundException, DisallowedException {
+	public synchronized TableInfo getTable(HttpServletRequest request, String internalTableName)
+			throws ObjectNotFoundException, DisallowedException {
 		TableInfo cachedTable = this.tableCache.get(internalTableName);
 		if (cachedTable != null) {
 			if (!this.userAllowedToAccessTable(request, cachedTable)) {
@@ -2306,22 +2306,17 @@ public class DatabaseDefn implements DatabaseInfo {
 		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
 				.getTables();
 		TableInfo comparisonTable = new TableDefn(internalTableName, "", "");
-		if (companyTables.contains(comparisonTable)) {
-			logger.debug("Company tables contains " + internalTableName);
-			for (TableInfo companyTable : companyTables) {
-				if (companyTable.equals(comparisonTable)) {
-					this.tableCache.put(internalTableName, companyTable);
-					// to retrieve a table, user either has to have view
-					// privileges on that table,
-					// or be an administrator of the company the table is in
-					if (!this.userAllowedToAccessTable(request, companyTable)) {
-						throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, companyTable);
-					}
-					return companyTable;
+		for (TableInfo companyTable : companyTables) {
+			if (companyTable.equals(comparisonTable)) {
+				this.tableCache.put(internalTableName, companyTable);
+				// to retrieve a table, user either has to have view
+				// privileges on that table,
+				// or be an administrator of the company the table is in
+				if (!this.userAllowedToAccessTable(request, companyTable)) {
+					throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, companyTable);
 				}
+				return companyTable;
 			}
-		} else {
-			logger.debug("Company tables doesn't contain " + internalTableName);
 		}
 		// Not found by internal name, try by name
 		return this.getTableByName(request, internalTableName);
