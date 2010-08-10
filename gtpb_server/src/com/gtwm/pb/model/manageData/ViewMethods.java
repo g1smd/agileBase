@@ -319,13 +319,7 @@ public class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public TableInfo getTable(String tableID) throws ObjectNotFoundException, DisallowedException {
-		TableInfo table = null;
-		try {
-			table = this.databaseDefn.getTableByInternalName(this.request, tableID);
-		} catch (ObjectNotFoundException onex) {
-			table = this.databaseDefn.getTableByName(this.request, tableID);
-		}
-		return table;
+		return this.databaseDefn.getTable(this.request, tableID);
 	}
 
 	public TableInfo findTableContainingReport(String reportInternalName)

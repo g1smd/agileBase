@@ -451,17 +451,8 @@ public interface DatabaseInfo {
 	 *             on that table, or be an administrator of the company the
 	 *             table is in
 	 */
-	public TableInfo getTableByInternalName(HttpServletRequest request, String internalTableName)
+	public TableInfo getTable(HttpServletRequest request, String internalTableName)
 			throws ObjectNotFoundException, DisallowedException;
-
-	/**
-	 * @throws DisallowedException
-	 *             To retrieve a table, user either has to have view privileges
-	 *             on that table, or be an administrator of the company the
-	 *             table is in
-	 */
-	public TableInfo getTableByName(HttpServletRequest request, String tableName)
-			throws ObjectNotFoundException;
 
 	/**
 	 * @param reportInternalName

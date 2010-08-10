@@ -248,10 +248,10 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	private void addDateCreatedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException {
-		DateField dateCreatedField = new DateFieldDefn(table, null, HiddenFields.DATE_CREATED
-				.getFieldName(), HiddenFields.DATE_CREATED.getFieldDescription(),
-				DateFieldDefn.UNIQUE_FALSE, DateFieldDefn.NOT_NULL_FALSE,
-				DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND);
+		DateField dateCreatedField = new DateFieldDefn(table, null,
+				HiddenFields.DATE_CREATED.getFieldName(),
+				HiddenFields.DATE_CREATED.getFieldDescription(), DateFieldDefn.UNIQUE_FALSE,
+				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND);
 		dateCreatedField.setHidden(DateFieldDefn.HIDDEN_TRUE);
 		HibernateUtil.currentSession().save(dateCreatedField);
 		table.addField(dateCreatedField);
@@ -262,8 +262,8 @@ public class DatabaseDefn implements DatabaseInfo {
 	private void addCreatedByFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException {
 		TextField createdByField = new TextFieldDefn(this.relationalDataSource, table, null,
-				HiddenFields.CREATED_BY.getFieldName(), HiddenFields.CREATED_BY
-						.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
+				HiddenFields.CREATED_BY.getFieldName(),
+				HiddenFields.CREATED_BY.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
 				TextFieldDefn.NOT_NULL_FALSE, null, TextFieldDefn.NOT_APPLICABLE_FALSE, null, null,
 				TextFieldDefn.HIDDEN_TRUE, true);
 		HibernateUtil.currentSession().save(createdByField);
@@ -274,10 +274,10 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	private void addLastModifiedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException {
-		DateField lastModifiedField = new DateFieldDefn(table, null, HiddenFields.LAST_MODIFIED
-				.getFieldName(), HiddenFields.LAST_MODIFIED.getFieldDescription(),
-				DateFieldDefn.UNIQUE_FALSE, DateFieldDefn.NOT_NULL_FALSE,
-				DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND);
+		DateField lastModifiedField = new DateFieldDefn(table, null,
+				HiddenFields.LAST_MODIFIED.getFieldName(),
+				HiddenFields.LAST_MODIFIED.getFieldDescription(), DateFieldDefn.UNIQUE_FALSE,
+				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND);
 		lastModifiedField.setHidden(DateFieldDefn.HIDDEN_TRUE);
 		HibernateUtil.currentSession().save(lastModifiedField);
 		table.addField(lastModifiedField);
@@ -288,8 +288,8 @@ public class DatabaseDefn implements DatabaseInfo {
 	private void addModifiedByFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException {
 		TextField modifiedByField = new TextFieldDefn(this.relationalDataSource, table, null,
-				HiddenFields.MODIFIED_BY.getFieldName(), HiddenFields.MODIFIED_BY
-						.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
+				HiddenFields.MODIFIED_BY.getFieldName(),
+				HiddenFields.MODIFIED_BY.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
 				TextFieldDefn.NOT_NULL_FALSE, null, TextFieldDefn.NOT_APPLICABLE_FALSE, null, null,
 				TextFieldDefn.HIDDEN_TRUE, true);
 		HibernateUtil.currentSession().save(modifiedByField);
@@ -300,8 +300,9 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	private void addRecordLockedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException {
-		CheckboxField recordLockedField = new CheckboxFieldDefn(table, null, HiddenFields.LOCKED
-				.getFieldName(), HiddenFields.LOCKED.getFieldDescription(), false, true);
+		CheckboxField recordLockedField = new CheckboxFieldDefn(table, null,
+				HiddenFields.LOCKED.getFieldName(), HiddenFields.LOCKED.getFieldDescription(),
+				false, true);
 		HibernateUtil.currentSession().save(recordLockedField);
 		table.addField(recordLockedField);
 		this.addFieldToRelationalDb(conn, table, recordLockedField);
@@ -381,8 +382,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		HibernateUtil.activateObject(this.authManager.getAuthenticator());
 		// ...give the user who created the table all privileges on it
 		try {
-			AppUserInfo loggedInUser = this.authManager.getUserByUserName(request, request
-					.getRemoteUser());
+			AppUserInfo loggedInUser = this.authManager.getUserByUserName(request,
+					request.getRemoteUser());
 			this.authManager.addUserPrivilege(request, loggedInUser, PrivilegeType.MANAGE_TABLE,
 					newTable);
 			this.authManager.addUserPrivilege(request, loggedInUser, PrivilegeType.EDIT_TABLE_DATA,
@@ -604,8 +605,8 @@ public class DatabaseDefn implements DatabaseInfo {
 			if (report.getReportFields().size() > 1) {
 				// the second field in the list should have a sort - first is
 				// the primary key
-				List<ReportFieldInfo> reportFieldList = new ArrayList<ReportFieldInfo>(report
-						.getReportFields());
+				List<ReportFieldInfo> reportFieldList = new ArrayList<ReportFieldInfo>(
+						report.getReportFields());
 				report.addSort(reportFieldList.get(1), true);
 			}
 		}
@@ -868,8 +869,8 @@ public class DatabaseDefn implements DatabaseInfo {
 			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, reportToRemove.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, reportToRemove
-					.getParentTable());
+			throw new DisallowedException(PrivilegeType.MANAGE_TABLE,
+					reportToRemove.getParentTable());
 		}
 		TableInfo parentTable = reportToRemove.getParentTable();
 		HibernateUtil.activateObject(parentTable);
@@ -966,8 +967,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		case NUMBER:
 			int precision = HttpRequestUtil.getIntegerValue(request,
 					PossibleListOptions.NUMBERPRECISION.getFormInputName(), 0);
-			usesLookup = HttpRequestUtil.getBooleanValue(request, PossibleBooleanOptions.USELOOKUP
-					.getFormInputName());
+			usesLookup = HttpRequestUtil.getBooleanValue(request,
+					PossibleBooleanOptions.USELOOKUP.getFormInputName());
 			if (precision > 0) {
 				Double defaultNumber = HttpRequestUtil.getDoubleValueStrict(request,
 						PossibleTextOptions.DEFAULTVALUE.getFormInputName(), null,
@@ -1040,7 +1041,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		this.addField(conn, table, field, request);
 		field.setHidden(hidden);
 		if (!(field instanceof SequenceField)) {
-			// Sequences are generated and can't be null, setNotNull throws an exception
+			// Sequences are generated and can't be null, setNotNull throws an
+			// exception
 			field.setNotNull(notNull);
 		}
 		// schema change time not recorded in memory because it doesn't affect
@@ -1206,14 +1208,14 @@ public class DatabaseDefn implements DatabaseInfo {
 							if (unique) {
 								// remove old index (if there is one) before
 								// adding the unique index
-								this.removeIndexWrapper(table.getInternalTableName(), integerField
-										.getInternalFieldName(), false);
-								this.addUniqueWrapper(table.getInternalTableName(), integerField
-										.getInternalFieldName());
+								this.removeIndexWrapper(table.getInternalTableName(),
+										integerField.getInternalFieldName(), false);
+								this.addUniqueWrapper(table.getInternalTableName(),
+										integerField.getInternalFieldName());
 							} else {
 								// remove the unique index
-								this.removeUniqueWrapper(table.getInternalTableName(), integerField
-										.getInternalFieldName());
+								this.removeUniqueWrapper(table.getInternalTableName(),
+										integerField.getInternalFieldName());
 							}
 						}
 					} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
@@ -1330,8 +1332,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		try {
 			// Create field in DB
-			this.addFieldDbAction(conn, internalTableName, internalFieldName, fieldToAdd
-					.getFieldName(), dbType, setUnique);
+			this.addFieldDbAction(conn, internalTableName, internalFieldName,
+					fieldToAdd.getFieldName(), dbType, setUnique);
 			if (fieldToAdd.hasDefault()) {
 				this.setFieldDefaultDbAction(conn, fieldToAdd);
 			}
@@ -1790,8 +1792,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		company.addModule(newModule);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, null, AppAction.ADD_MODULE, newModule
-				.getModuleName());
+		usageLogger.logReportSchemaChange(user, null, AppAction.ADD_MODULE,
+				newModule.getModuleName());
 		UsageLogger.startLoggingThread(usageLogger);
 		return newModule;
 	}
@@ -1820,8 +1822,8 @@ public class DatabaseDefn implements DatabaseInfo {
 						viewableReports.add(report);
 					}
 				}
-				availableDataStores.put(testTable, Collections
-						.unmodifiableSortedSet(viewableReports));
+				availableDataStores.put(testTable,
+						Collections.unmodifiableSortedSet(viewableReports));
 			}
 		}
 		return Collections.unmodifiableMap(availableDataStores);
@@ -2214,8 +2216,8 @@ public class DatabaseDefn implements DatabaseInfo {
 		}
 		// Move groupings from template summary to new summary
 		for (ReportSummaryGroupingInfo grouping : groupings) {
-			savedSummary.addGrouping(grouping.getGroupingReportField(), grouping
-					.getGroupingModifier());
+			savedSummary.addGrouping(grouping.getGroupingReportField(),
+					grouping.getGroupingModifier());
 			ReportSummaryGroupingInfo removedGrouping = templateSummary.removeGrouping(grouping
 					.getGroupingReportField());
 		}
@@ -2257,20 +2259,20 @@ public class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized TableInfo getTableByName(HttpServletRequest request, String tableName)
-			throws ObjectNotFoundException {
+	private TableInfo getTableByName(HttpServletRequest request, String tableName)
+			throws ObjectNotFoundException, DisallowedException {
 		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
 				.getTables();
 		for (TableInfo table : companyTables) {
 			if (table.getTableName().equals(tableName)) {
-				if (this.userAllowedToAccessTable(request, table)) {
-					return table;
+				if (!this.userAllowedToAccessTable(request, table)) {
+					throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
 				}
+				return table;
 			}
 		}
 		// if we've got to here the table hasn't been found
-		throw new ObjectNotFoundException("The table '" + tableName
-				+ "' doesn't exist or you do not have privileges to access it");
+		throw new ObjectNotFoundException("The table '" + tableName + "' doesn't exist");
 	}
 
 	/**
@@ -2292,29 +2294,34 @@ public class DatabaseDefn implements DatabaseInfo {
 		return false;
 	}
 
-	public synchronized TableInfo getTableByInternalName(HttpServletRequest request,
+	public synchronized TableInfo getTable(HttpServletRequest request,
 			String internalTableName) throws ObjectNotFoundException, DisallowedException {
 		TableInfo cachedTable = this.tableCache.get(internalTableName);
 		if (cachedTable != null) {
+			if (!this.userAllowedToAccessTable(request, cachedTable)) {
+				throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, cachedTable);
+			}
 			return cachedTable;
 		}
 		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
 				.getTables();
-		for (TableInfo table : companyTables) {
-			if (table.getInternalTableName().equals(internalTableName)) {
-				// to retrieve a table, user either has to have view privileges
-				// on that table,
-				// or be an administrator of the company the table is in
-				if (!this.userAllowedToAccessTable(request, table)) {
-					throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
+		TableInfo comparisonTable = new TableDefn(internalTableName, "", "");
+		if (companyTables.contains(comparisonTable)) {
+			for (TableInfo companyTable : companyTables) {
+				if (companyTable.equals(comparisonTable)) {
+					this.tableCache.put(internalTableName, companyTable);
+					// to retrieve a table, user either has to have view
+					// privileges on that table,
+					// or be an administrator of the company the table is in
+					if (!this.userAllowedToAccessTable(request, companyTable)) {
+						throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, companyTable);
+					}
+					return companyTable;
 				}
-				this.tableCache.put(internalTableName, table);
-				return table;
 			}
 		}
-		// if we've got to here the table hasn't been found
-		throw new ObjectNotFoundException("The table with id '" + internalTableName
-				+ "' doesn't exist");
+		// Not found by internal name, try by name
+		return this.getTableByName(request, internalTableName);
 	}
 
 	public synchronized TableInfo findTableContainingReport(HttpServletRequest request,
@@ -2388,8 +2395,8 @@ public class DatabaseDefn implements DatabaseInfo {
 							// can do
 							logger.error("Found report field " + reportField + "in report "
 									+ report + " but user not allowed to view that report");
-							throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, report
-									.getParentTable());
+							throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA,
+									report.getParentTable());
 						}
 					}
 				}
