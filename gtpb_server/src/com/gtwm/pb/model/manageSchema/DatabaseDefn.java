@@ -2271,9 +2271,10 @@ public class DatabaseDefn implements DatabaseInfo {
 				this.tableCache.put(company.getInternalCompanyName() + tableName, table);
 				if (!this.userAllowedToAccessTable(request, table)) {
 					throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
+				} else {
+					logger.debug("Found table " + table);
+					return table;
 				}
-				logger.debug("Found table " + table);
-				return table;
 			}
 		}
 		// if we've got to here the table hasn't been found

@@ -212,12 +212,12 @@ public class AppController extends VelocityViewServlet {
 					ServletDataMethods.setSessionRowId(sessionData, request, sessionActionParam,
 							databaseDefn);
 					break;
-				case SET_REPORT:
-					ServletDataMethods.setSessionReport(request, sessionData, sessionActionParam,
-							databaseDefn);
-					break;
 				case SET_TABLE:
 					ServletDataMethods.setSessionTable(sessionData, request, sessionActionParam,
+							databaseDefn);
+					break;
+				case SET_REPORT:
+					ServletDataMethods.setSessionReport(request, sessionData, sessionActionParam,
 							databaseDefn);
 					break;
 				case SET_ROW_ID:
@@ -509,12 +509,12 @@ public class AppController extends VelocityViewServlet {
 					Locale.UK));
 			if (sessionActionParam != null) {
 				switch (sessionAction) {
-				case POSTSET_REPORT:
-					ServletDataMethods.setSessionReport(request, sessionData, sessionActionParam,
-							databaseDefn);
-					break;
 				case POSTSET_TABLE:
 					ServletDataMethods.setSessionTable(sessionData, request, sessionActionParam,
+							databaseDefn);
+					break;
+				case POSTSET_REPORT:
+					ServletDataMethods.setSessionReport(request, sessionData, sessionActionParam,
 							databaseDefn);
 					break;
 				case POSTSET_CUSTOM_TABLE:
