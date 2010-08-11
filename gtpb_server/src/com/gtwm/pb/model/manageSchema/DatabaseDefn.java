@@ -2272,7 +2272,6 @@ public class DatabaseDefn implements DatabaseInfo {
 				if (!this.userAllowedToAccessTable(request, table)) {
 					throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
 				} else {
-					logger.debug("Found table " + table);
 					return table;
 				}
 			}
@@ -2302,7 +2301,6 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	public synchronized TableInfo getTable(HttpServletRequest request, String internalTableName)
 			throws ObjectNotFoundException, DisallowedException {
-		logger.debug("Looking for table " + internalTableName);
 		TableInfo cachedTable = this.tableCache.get(internalTableName);
 		if (cachedTable != null) {
 			if (!this.userAllowedToAccessTable(request, cachedTable)) {
