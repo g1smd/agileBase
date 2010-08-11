@@ -253,6 +253,10 @@ input {
   display: none;
 }
 
+#company {
+  display: none;
+}
+
 .centered {
   margin-left: auto;
   margin-right: auto;
