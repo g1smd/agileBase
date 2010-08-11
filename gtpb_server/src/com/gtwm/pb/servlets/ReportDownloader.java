@@ -45,6 +45,7 @@ import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
+import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryDataRowInfo;
@@ -214,8 +215,8 @@ public class ReportDownloader extends HttpServlet {
 	/**
 	 * Add a sheet with export information to the workbook
 	 */
-	private static void addReportMetaDataWorksheet(CompanyInfo company, AppUserInfo user, SessionDataInfo sessionData,
-			BaseReportInfo report, HSSFWorkbook workbook) {
+	private static void addReportMetaDataWorksheet(CompanyInfo company, AppUserInfo user,
+			SessionDataInfo sessionData, BaseReportInfo report, HSSFWorkbook workbook) {
 		String title = "Export information";
 		HSSFSheet infoSheet;
 		try {
@@ -238,7 +239,12 @@ public class ReportDownloader extends HttpServlet {
 		cell = row.createCell(0);
 		cell.setCellValue(new HSSFRichTextString("Module"));
 		cell = row.createCell(1);
-		cell.setCellValue(new HSSFRichTextString(report.getModule().getModuleName()));
+		ModuleInfo module = report.getModule();
+		if (module != null) {
+			cell.setCellValue(new HSSFRichTextString(report.getModule().getModuleName()));
+		} else {
+			cell.setCellValue(new HSSFRichTextString(""));
+		}
 		row = infoSheet.createRow(4);
 		cell = row.createCell(0);
 		cell.setCellValue(new HSSFRichTextString("Report"));
