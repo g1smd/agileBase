@@ -2272,6 +2272,7 @@ public class DatabaseDefn implements DatabaseInfo {
 				if (!this.userAllowedToAccessTable(request, table)) {
 					throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
 				}
+				logger.debug("Found table " + table);
 				return table;
 			}
 		}
@@ -2300,12 +2301,14 @@ public class DatabaseDefn implements DatabaseInfo {
 
 	public synchronized TableInfo getTable(HttpServletRequest request, String internalTableName)
 			throws ObjectNotFoundException, DisallowedException {
+		logger.debug("Looking for table " + internalTableName);
 		TableInfo cachedTable = this.tableCache.get(internalTableName);
 		if (cachedTable != null) {
 			if (!this.userAllowedToAccessTable(request, cachedTable)) {
 				throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, cachedTable);
+			} else {
+				return cachedTable;
 			}
-			return cachedTable;
 		}
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		/*
@@ -2316,8 +2319,9 @@ public class DatabaseDefn implements DatabaseInfo {
 		if (cachedTable != null) {
 			if (!this.userAllowedToAccessTable(request, cachedTable)) {
 				throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, cachedTable);
+			} else {
+				return cachedTable;
 			}
-			return cachedTable;
 		}
 		Set<TableInfo> companyTables = company.getTables();
 		// Not in cache, look through one by one
@@ -2330,8 +2334,9 @@ public class DatabaseDefn implements DatabaseInfo {
 				// or be an administrator of the company the table is in
 				if (!this.userAllowedToAccessTable(request, companyTable)) {
 					throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, companyTable);
+				} else {
+					return companyTable;
 				}
-				return companyTable;
 			}
 		}
 		// Not found by internal name, try by name
