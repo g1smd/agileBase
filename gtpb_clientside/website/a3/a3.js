@@ -119,17 +119,14 @@
     /* Login page functions */
 	
 	jQuery("#stickies div").click(function() {
-		  loadLoginA3("why_a3");
-	});
-
-	jQuery("#scenario").click(function() {
-		  loadLoginA3("scenario");
-	});
-
-	jQuery("#tryout").click(function() {
-		  loadLoginA3("tryout");
+		jQuery(this).find("a").click();
 	});
 	
+	jQuery("#stickies a").click(function() {
+		loadLoginA3(jQuery(this).attr("href"));
+		return false;
+	});
+
 	jQuery("#email_input").focus(function() {
 	  jQuery("#email_input").val("");
 	});
