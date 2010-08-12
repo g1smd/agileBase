@@ -24,7 +24,8 @@
 		}
 	  );
 	} else {
-	  //loadLoginA3("why_a3");
+	  windowResize();
+	  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
 	}
 
 	jQuery(window).resize(function() {
