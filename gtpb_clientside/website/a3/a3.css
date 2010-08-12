@@ -49,6 +49,11 @@ html, body {
 
 #stickies a {
 	text-decoration: none;
+	color: #486f98;
+}
+
+.selected_link:before {
+	content: '* ';
 }
 
 #stickies div:first-child {
