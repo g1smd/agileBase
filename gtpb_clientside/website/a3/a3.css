@@ -58,6 +58,14 @@ html, body {
 	background: url('sticky2.png');
 }
 
+#left_column {
+	width: 50%;
+}
+
+#right_column {
+	width: 50%;
+}
+
 .field_display {
 	margin-right: 30px;
 	margin-bottom: 10px;
