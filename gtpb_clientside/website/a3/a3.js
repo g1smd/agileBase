@@ -146,9 +146,9 @@
   
 /* Helper functions, outside of document.ready */
 
-function loadLoginA3(reportName) {
+function loadLoginA3(url) {
 	  jQuery("#a3_report").hide();
-	  jQuery("#a3_report").load("/agileBase/website/a3/" + reportName + ".htm", function() {
+	  jQuery("#a3_report").load(url, function() {
 		  jQuery("#a3_report").fadeIn("normal");
 		  windowResize();
 		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
