@@ -123,6 +123,8 @@
 	});
 	
 	jQuery("#stickies a").click(function() {
+		jQuery("#stickies a").removeClass("selected_link");
+		jQuery(this).addClass("selected_link");
 		loadLoginA3(jQuery(this).attr("href"));
 		return false;
 	});
