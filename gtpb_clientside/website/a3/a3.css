@@ -58,11 +58,11 @@ html, body {
 	background: url('sticky2.png');
 }
 
-#left_column {
+#leftcolumn {
 	width: 50%;
 }
 
-#right_column {
+#rightcolumn {
 	width: 50%;
 }
 
