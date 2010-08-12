@@ -40,9 +40,9 @@ if (requestURL.contains("appserver.")) {
 <body>
 <img id="paper" src="/agileBase/website/a3/paper.jpg">
 <div id="stickies">
-  <div id="why_a3"><a href="/agileBase/website/a3/why_a3.htm" class="selected_link">Why use A3 reports?</a></div>
-  <div id="scenario" style="left: 250px"><a href="/agileBase/website/a3/scenario.htm">And why use online?</a></div>
-  <div id="tryout" style="left: 500px"><a href="/agileBase/website/a3/tryout.htm">Try it out now!</a></div>
+  <div id="why_a3"><a href="why_a3.htm" class="selected_link">Why use A3 reports?</a></div>
+  <div id="scenario" style="left: 250px"><a href="scenario.htm">And why use online?</a></div>
+  <div id="tryout" style="left: 500px"><a href="tryout.htm">Try it out now!</a></div>
 </div>
 <div id="a3_report">
 <%@ include file="why_a3.htm" %>
