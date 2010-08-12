@@ -22,7 +22,7 @@ html, body {
 	left: 0px;
 	top: 0px;
 	margin-top: 60px;
-	display: none;
+	/* display: none; */
 }
 
 #stickies {
