@@ -47,6 +47,10 @@ html, body {
 	cursor: pointer;
 }
 
+#stickies a {
+	text-decoration: none;
+}
+
 #stickies div:first-child {
 	-moz-transform:rotate(0.5deg);
 	-webkit-transform:rotate(0.5deg);
