@@ -24,7 +24,7 @@
 		}
 	  );
 	} else {
-	  loadLoginA3("why_a3");
+	  //loadLoginA3("why_a3");
 	}
 
 	jQuery(window).resize(function() {
@@ -71,7 +71,7 @@
 	});
 */
 	jQuery("#search").keyup(function() {
-	  alert('coming soon...');
+	  alert('Upgrade to search all reports...');
 	});
 	
 	jQuery("#print").click(function() {
@@ -80,11 +80,15 @@
 	});
 	
 	jQuery("#share").click(function() {
-	  alert('coming soon...');
+	  alert('Upgrade to share reports...');
 	});
 	
 	jQuery("#manage").click(function() {
-	  document.location = "AppController.servlet?return=gui/display_application&set_report=a3 reports";
+	  if(jQuery("#company").text() == "A3 Reports Demo") {
+	    alert("Upgrade to manage all A3 reports");
+	  } else {
+	    document.location = "AppController.servlet?return=gui/display_application&set_report=a3 reports";
+	  }
 	});
 	
 	jQuery("#delete").click(function() {
