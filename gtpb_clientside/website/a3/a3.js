@@ -152,7 +152,7 @@ function loadLoginA3(url) {
 		  jQuery("#a3_report").fadeIn("normal");
 		  windowResize();
 		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
-		  if(reportName == "tryout") {
+		  if(url.indexOf("tryout.htm") > -1) {
 			  jQuery("#why_are_we").focus();
 		  }
 	  });
