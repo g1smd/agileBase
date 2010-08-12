@@ -44,7 +44,8 @@
 	    {'return':'gui/customisations/common/a3/a3_report_content', 'save_new_record':'true'},
 	    function() {
 		  jQuery("#a3_report").fadeIn("normal");
-		  fieldDisplayResize();
+		  fieldDisplayResize("leftcolumn");
+		  fieldDisplayResize("rightcolumn");
 		  gtpb_currentFontSize = gtpb_maxFontSize;
 		  fontResize(gtpb_currentFontSize, 0);
 	    });
@@ -168,7 +169,8 @@ function windowResize() {
     var stickyTop = stickyBase - 55;
     jQuery("#stickies").css("top", stickyTop);
     // Position the fields vertically
-    fieldDisplayResize();
+	fieldDisplayResize("leftcolumn");
+	fieldDisplayResize("rightcolumn");
     initialiseFontSize();
 }
 
@@ -184,9 +186,9 @@ function initialiseFontSize() {
     }
 }
 
-function fieldDisplayResize() {
+function fieldDisplayResize(columnid) {
   var windowHeight = jQuery(window).height();
-  var jqBottomFieldDisplay = jQuery(".field_display:last");
+  var jqBottomFieldDisplay = jQuery("#" + columnid + " .field_display:last");
   if (jqBottomFieldDisplay.size() == 1) {
 	var bottomPos = jqBottomFieldDisplay.offset().top + jqBottomFieldDisplay.height();
 	if (bottomPos < (windowHeight - (windowHeight / 10))) {
@@ -197,7 +199,7 @@ function fieldDisplayResize() {
 	    fieldDisplayHeight = parseInt(fieldDisplayHeight) + 1;
 	  }
 	  jQuery(".field_display").css("min-height", fieldDisplayHeight + "px");
-	  fieldDisplayResize();
+	  fieldDisplayResize(columnid);
 	}
   }
 }
@@ -240,7 +242,8 @@ function next_report(sAction) {
 	    {'return':'gui/customisations/common/a3/a3_report_content', 'set_row_id':sAction},
 	    function() {
 		  jQuery("#a3_report").fadeIn("normal");
-		  fieldDisplayResize();
+		  fieldDisplayResize("leftcolumn");
+		  fieldDisplayResize("rightcolumn");
 		  initialiseFontSize();
 		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
 	    }
