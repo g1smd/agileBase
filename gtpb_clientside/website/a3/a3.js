@@ -24,7 +24,7 @@
 		}
 	  );
 	} else {
-	  //loadLoginA3("why_a3");
+	  loadLoginA3("why_a3");
 	}
 
 	jQuery(window).resize(function() {
