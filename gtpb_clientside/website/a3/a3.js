@@ -118,7 +118,7 @@
 	
     /* Login page functions */
 	
-	jQuery("#why_a3").click(function() {
+	jQuery("#stickies div").click(function() {
 		  loadLoginA3("why_a3");
 	});
 

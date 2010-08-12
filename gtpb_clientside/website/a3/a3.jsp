@@ -10,7 +10,7 @@ if (requestURL.contains("appserver.")) {
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <link rel="icon" href="/agilebase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
   <title>
-    A3 reports collaboration
+    A3 reports in Lean service organisations
   </title>
   <script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
   <!-- <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
@@ -23,13 +23,26 @@ if (requestURL.contains("appserver.")) {
 <![endif]-->
   <link rel="stylesheet" href="/agileBase/website/a3/print.css" type="text/css" media="print" />
   <link type="text/css" href="/agileBase/website/scripts/jquery-ui/jquery-ui.css" rel="stylesheet">
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-59206-21']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </head>
 <body>
 <img id="paper" src="/agileBase/website/a3/paper.jpg">
 <div id="stickies">
-  <div id="why_a3">Why use A3 reports?</div>
-  <div id="scenario" style="left: 250px">And why use online?</div>
-  <div id="tryout" style="left: 500px">Try it out now!</div>
+  <div id="why_a3"><a href="/agileBase/website/a3/why_a3.htm">Why use A3 reports?</a></div>
+  <div id="scenario" style="left: 250px"><a href="/agileBase/website/a3/scenario.htm">And why use online?</a></div>
+  <div id="tryout" style="left: 500px"><a href="/agileBase/website/a3/tryout.htm">Try it out now!</a></div>
 </div>
 <div id="a3_report">
 <%@ include file="why_a3.htm" %>
