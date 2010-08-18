@@ -115,6 +115,11 @@
     <td><input type="checkbox" name="best_guess_relations" value="true">It's normally required that import values for relation fields match those the database exactly. This option causes agileBase to look for a close match</td>
   </tr>
 #end
+#if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
+<tr class="$rowClass">
+  <td>Trim</td>
+  <td><input type="checkbox" name="trim" value="true"Trim any leading and trailing spaces from import values in the spreadsheet</td>
+</tr>
 
 </table>
 <p>

@@ -1187,6 +1187,8 @@ public class ServletDataMethods {
 		String importTypeString = AppController
 				.getParameter(request, "import_type", multipartItems);
 		boolean updateExistingRecords = false;
+		String trimString = AppController.getParameter(request, "trim", multipartItems);
+		boolean trim = Helpers.valueRepresentsBooleanTrue(trimString);
 		BaseField recordIdentifierField = table.getPrimaryKey();
 		if (importTypeString != null) {
 			if (importTypeString.toLowerCase().equals("update")) {
@@ -1210,7 +1212,7 @@ public class ServletDataMethods {
 		int affectedRecords = databaseDefn.getDataManagement().importCSV(request, table,
 				updateExistingRecords, recordIdentifierField, generateRowIds, separator, quoteChar,
 				numHeaderLines, useRelationDisplayValues, importSequenceValues,
-				requireExactRelationValues, multipartItems, csvContent);
+				requireExactRelationValues, trim, multipartItems, csvContent);
 		logDataChanges(request, databaseDefn, "imported " + affectedRecords + " records into "
 				+ table.getTableName() + " (" + table.getInternalTableName() + ")");
 	}
