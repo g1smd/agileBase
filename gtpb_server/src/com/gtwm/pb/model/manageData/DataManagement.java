@@ -678,7 +678,7 @@ public class DataManagement implements DataManagementInfo {
 	public int importCSV(HttpServletRequest request, TableInfo table,
 			boolean updateExistingRecords, BaseField recordIdentifierField, boolean generateRowIds,
 			char separator, char quotechar, int numHeaderLines, boolean useRelationDisplayValues,
-			boolean importSequenceValues, boolean requireExactRelationMatches,
+			boolean importSequenceValues, boolean requireExactRelationMatches, boolean trim,
 			List<FileItem> multipartItems, String csvContent) throws SQLException,
 			InputRecordException, IOException, CantDoThatException, ObjectNotFoundException,
 			DisallowedException, CodingErrorException {
@@ -838,6 +838,7 @@ public class DataManagement implements DataManagementInfo {
 							statement.setTimestamp(fieldNum, importTime);
 						} else if (fieldName.equals(HiddenFields.CREATED_BY.getFieldName())
 								|| fieldName.equals(HiddenFields.MODIFIED_BY.getFieldName())) {
+							//TODO: add (username) to match what happens on normal record creation
 							statement.setString(fieldNum, fullname);
 						}
 					} else if (fieldNum > lineValues.size()) {
@@ -850,6 +851,9 @@ public class DataManagement implements DataManagementInfo {
 					} else {
 						String lineValue = lineValues.get(fieldNum - 1);
 						if (lineValue != null) {
+							if(trim) {
+								lineValue = lineValue.trim();
+							}
 							if (lineValue.equals("")) {
 								// booleans have a not null constraint
 								if (field.getDbType().equals(Types.BOOLEAN)) {
