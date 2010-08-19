@@ -266,6 +266,11 @@ public interface DataManagementInfo {
 	 * @param trim
 	 *            Trim leading and trailing whitespace from each value as it's
 	 *            imported
+	 * @param merge
+	 *            For updating (rather than inserting). If true, merge the
+	 *            spreadsheet and database data, i.e. where a spreadsheet field
+	 *            is empty, leave the existing value in the database. If false,
+	 *            overwrite all database data from the spreadsheet
 	 * @throws CantDoThatException
 	 *             if the form wasn't posted as multi-part/form data
 	 * @throws InputRecordException
@@ -276,7 +281,7 @@ public interface DataManagementInfo {
 			boolean updateExistingRecords, BaseField recordIdentifierField, boolean generateRowIds,
 			char separator, char quotechar, int numHeaderLines, boolean useRelationDisplayValues,
 			boolean importSequenceValues, boolean requireExactRelationMatches, boolean trim,
-			List<FileItem> multipartItems, String csvContent) throws SQLException,
+			boolean merge, List<FileItem> multipartItems, String csvContent) throws SQLException,
 			InputRecordException, IOException, CantDoThatException, ObjectNotFoundException,
 			DisallowedException, CodingErrorException;
 
