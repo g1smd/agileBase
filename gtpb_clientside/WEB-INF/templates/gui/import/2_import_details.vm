@@ -83,7 +83,12 @@
     #end
   </td>
 </tr>
-#end
+#if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
+<tr class="$rowClass">
+  <td>Merge data</td>
+  <td><input type="checkbox" name="merge" value="true" checked> Merge the spreadsheet and database by overwriting the database only when a spreadsheet value is non-empty</td>
+</tr>
+#end ##end if update
 #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
 <tr class="$rowClass">
   <td>Import file contains relation display values</td>
@@ -118,7 +123,7 @@
 #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
 <tr class="$rowClass">
   <td>Trim</td>
-  <td><input type="checkbox" name="trim" value="true"Trim any leading and trailing spaces from import values in the spreadsheet</td>
+  <td><input type="checkbox" name="trim" value="true" checked>Trim any leading and trailing spaces from import values in the spreadsheet</td>
 </tr>
 
 </table>
