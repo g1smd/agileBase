@@ -17,3 +17,7 @@
 .actions_area {
   display: none;
 }
+
+.field_title {
+  font-weight: bold;
+}
