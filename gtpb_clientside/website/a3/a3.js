@@ -76,7 +76,6 @@
 	});
 	
 	jQuery("#print").click(function() {
-	  alert("Print format in development...");
 	  window.print();
 	});
 	
