@@ -2,6 +2,11 @@
   display: none;
 }
 
+#a3_report {
+  width: 100%!important;
+  margin: 0!important;
+}
+
 .editable {
   font-family: Times New Roman, times, serif;
   color: black;
