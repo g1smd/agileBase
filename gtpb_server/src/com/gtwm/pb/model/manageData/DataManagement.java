@@ -752,7 +752,7 @@ public class DataManagement implements DataManagementInfo {
 				fieldNum += 1;
 				if (merge) {
 					//Update database only if there's a non-null value from the spreadsheet
-					updateSQLCode += field.getInternalFieldName() + " = COALESCE(?," + field.getInternalFieldName() + ")";
+					updateSQLCode += field.getInternalFieldName() + " = COALESCE(?," + field.getInternalFieldName() + "), ";
 				} else {
 					updateSQLCode += field.getInternalFieldName() + " = ?, ";
 				}
