@@ -4,13 +4,13 @@
 	if (jQuery("#loginform").size() == 0) {
 	  var options = {
 		'return':'gui/customisations/common/a3/a3_report_content',
-		'set_table':'a3_reports',
+		'set_table': jQuery("#internaltablename").text(),
 		'set_report':'dbvcalc_a3_reports'
 	  };
 	  if(jQuery("#company").text() == "A3 Reports Demo") {
 	    options = {
   		  'return':'gui/customisations/common/a3/a3_report_content',
-		  'set_table':'a3_reports',
+		  'set_table':jQuery("#internaltablename").text(),
 		  'set_report':'dbvcalc_a3_reports',
 		  'set_report_filter_value': 'true',
 		  'internalfieldname': 'Created by [Auto]',
