@@ -266,14 +266,9 @@ input {
   width: 9em;
 }
 
-#username {
+#variables {
   display: none;
 }
-
-#company {
-  display: none;
-}
-
 .centered {
   margin-left: auto;
   margin-right: auto;
