@@ -751,8 +751,10 @@ public class DataManagement implements DataManagementInfo {
 			for (BaseField field : fields) {
 				fieldNum += 1;
 				if (merge) {
-					//Update database only if there's a non-null value from the spreadsheet
-					updateSQLCode += field.getInternalFieldName() + " = COALESCE(?," + field.getInternalFieldName() + "), ";
+					// Update database only if there's a non-null value from the
+					// spreadsheet
+					updateSQLCode += field.getInternalFieldName() + " = COALESCE(?,"
+							+ field.getInternalFieldName() + "), ";
 				} else {
 					updateSQLCode += field.getInternalFieldName() + " = ?, ";
 				}
@@ -768,17 +770,16 @@ public class DataManagement implements DataManagementInfo {
 			}
 			updateSQLCode = updateSQLCode.substring(0, updateSQLCode.length() - 2);
 			updateSQLCode += " WHERE " + recordIdentifierField.getInternalFieldName() + "=?";
-		} else {
-			insertSQLCode = "INSERT INTO " + table.getInternalTableName() + "(";
-			String placeholders = "";
-			for (BaseField field : fields) {
-				insertSQLCode += field.getInternalFieldName() + ", ";
-				placeholders += "?, ";
-			}
-			placeholders = placeholders.substring(0, placeholders.length() - 2);
-			insertSQLCode = insertSQLCode.substring(0, insertSQLCode.length() - 2) + ") VALUES ("
-					+ placeholders + ")";
 		}
+		insertSQLCode = "INSERT INTO " + table.getInternalTableName() + "(";
+		String placeholders = "";
+		for (BaseField field : fields) {
+			insertSQLCode += field.getInternalFieldName() + ", ";
+			placeholders += "?, ";
+		}
+		placeholders = placeholders.substring(0, placeholders.length() - 2);
+		insertSQLCode = insertSQLCode.substring(0, insertSQLCode.length() - 2) + ") VALUES ("
+				+ placeholders + ")";
 		// Find content to import
 		Reader inputStreamReader = null;
 		if (csvContent != null) {
@@ -805,17 +806,22 @@ public class DataManagement implements DataManagementInfo {
 		// do db inserts
 		Connection conn = null;
 		PreparedStatement statement = null;
+		// backupInsertStatement is for when an update returns 0 rows affected,
+		// i.e. there's no matching row. In this case, do an insert
+		PreparedStatement backupInsertStatement = null;
 		// These two variables used in exception handling
 		int importLine = 0;
 		BaseField fieldImported = null;
 		Timestamp importTime = new Timestamp(System.currentTimeMillis());
 		AppUserInfo loggedInUser = authManager.getUserByUserName(request, request.getRemoteUser());
-		String fullname = loggedInUser.getForename() + " " + loggedInUser.getSurname();
+		String fullname = loggedInUser.getForename() + " " + loggedInUser.getSurname() + " ("
+				+ loggedInUser.getUserName() + ")";
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			if (updateExistingRecords) {
 				statement = conn.prepareStatement(updateSQLCode);
+				backupInsertStatement = conn.prepareStatement(insertSQLCode);
 			} else {
 				statement = conn.prepareStatement(insertSQLCode);
 			}
@@ -838,21 +844,34 @@ public class DataManagement implements DataManagementInfo {
 						String fieldName = field.getFieldName();
 						if (fieldName.equals(HiddenFields.LOCKED.getFieldName())) {
 							statement.setBoolean(fieldNum, false);
+							if (updateExistingRecords) {
+								backupInsertStatement.setBoolean(fieldNum, false);
+							}
 						} else if (fieldName.equals(HiddenFields.DATE_CREATED.getFieldName())
 								|| fieldName.equals(HiddenFields.LAST_MODIFIED.getFieldName())) {
 							statement.setTimestamp(fieldNum, importTime);
+							if (updateExistingRecords) {
+								backupInsertStatement.setTimestamp(fieldNum, importTime);
+							}
 						} else if (fieldName.equals(HiddenFields.CREATED_BY.getFieldName())
 								|| fieldName.equals(HiddenFields.MODIFIED_BY.getFieldName())) {
-							// TODO: add (username) to match what happens on
-							// normal record creation
 							statement.setString(fieldNum, fullname);
+							if (updateExistingRecords) {
+								backupInsertStatement.setString(fieldNum, fullname);
+							}
 						}
 					} else if (fieldNum > lineValues.size()) {
 						// booleans have a not null constraint
 						if (field.getDbType().equals(Types.BOOLEAN)) {
 							statement.setBoolean(fieldNum, false);
+							if (updateExistingRecords) {
+								backupInsertStatement.setBoolean(fieldNum, false);
+							}
 						} else {
 							statement.setNull(fieldNum, Types.NULL);
+							if (updateExistingRecords) {
+								backupInsertStatement.setNull(fieldNum, Types.NULL);
+							}
 						}
 					} else {
 						String lineValue = lineValues.get(fieldNum - 1);
@@ -864,8 +883,14 @@ public class DataManagement implements DataManagementInfo {
 								// booleans have a not null constraint
 								if (field.getDbType().equals(Types.BOOLEAN)) {
 									statement.setBoolean(fieldNum, false);
+									if (updateExistingRecords) {
+										backupInsertStatement.setBoolean(fieldNum, false);
+									}
 								} else {
 									statement.setNull(fieldNum, Types.NULL);
+									if (updateExistingRecords) {
+										backupInsertStatement.setNull(fieldNum, Types.NULL);
+									}
 								}
 							} else {
 								if ((field instanceof FileField) && (generateRowIds)) {
@@ -878,9 +903,11 @@ public class DataManagement implements DataManagementInfo {
 								switch (field.getDbType()) {
 								case VARCHAR:
 									statement.setString(fieldNum, lineValue);
-									if (updateExistingRecords
-											&& field.equals(recordIdentifierField)) {
-										recordIdentifierString = lineValue;
+									if (updateExistingRecords) {
+										backupInsertStatement.setString(fieldNum, lineValue);
+										if (field.equals(recordIdentifierField)) {
+											recordIdentifierString = lineValue;
+										}
 									}
 									break;
 								case TIMESTAMP:
@@ -896,6 +923,10 @@ public class DataManagement implements DataManagementInfo {
 												CalendarParser.DD_MM_YY);
 										statement.setTimestamp(fieldNum,
 												new Timestamp(calValue.getTimeInMillis()));
+										if (updateExistingRecords) {
+											backupInsertStatement.setTimestamp(fieldNum,
+													new Timestamp(calValue.getTimeInMillis()));
+										}
 									} catch (CalendarParserException cpex) {
 										throw new InputRecordException("Error importing line "
 												+ importLine + ", field " + field + ": "
@@ -906,6 +937,10 @@ public class DataManagement implements DataManagementInfo {
 									lineValue = lineValue.trim()
 											.replaceAll("[^\\d\\.\\+\\-eE]", "");
 									statement.setDouble(fieldNum, Double.valueOf(lineValue));
+									if (updateExistingRecords) {
+										backupInsertStatement.setDouble(fieldNum,
+												Double.valueOf(lineValue));
+									}
 									break;
 								case INTEGER:
 									if ((field instanceof RelationField)
@@ -944,18 +979,22 @@ public class DataManagement implements DataManagementInfo {
 										}
 										int keyValue = Integer.valueOf(internalValueString);
 										statement.setInt(fieldNum, keyValue);
-										if (updateExistingRecords
-												&& field.equals(recordIdentifierField)) {
-											recordIdentifierInteger = keyValue;
+										if (updateExistingRecords) {
+											backupInsertStatement.setInt(fieldNum, keyValue);
+											if (field.equals(recordIdentifierField)) {
+												recordIdentifierInteger = keyValue;
+											}
 										}
 									} else {
 										lineValue = lineValue.trim().replaceAll(
 												"[^\\d\\.\\+\\-eE]", "");
 										int keyValue = Integer.valueOf(lineValue);
 										statement.setInt(fieldNum, keyValue);
-										if (updateExistingRecords
-												&& field.equals(recordIdentifierField)) {
-											recordIdentifierInteger = keyValue;
+										if (updateExistingRecords) {
+											backupInsertStatement.setInt(fieldNum, keyValue);
+											if (field.equals(recordIdentifierField)) {
+												recordIdentifierInteger = keyValue;
+											}
 										}
 									}
 									break;
@@ -964,15 +1003,21 @@ public class DataManagement implements DataManagementInfo {
 											.replaceAll("[^\\d\\.\\+\\-eE]", "");
 									int keyValue = Integer.valueOf(lineValue);
 									statement.setInt(fieldNum, keyValue);
-									if (updateExistingRecords
-											&& field.equals(recordIdentifierField)) {
-										recordIdentifierInteger = keyValue;
+									if (updateExistingRecords) {
+										backupInsertStatement.setInt(fieldNum, keyValue);
+										if (field.equals(recordIdentifierField)) {
+											recordIdentifierInteger = keyValue;
+										}
 									}
 									break;
 								case BOOLEAN:
 									boolean filterValueIsTrue = Helpers
 											.valueRepresentsBooleanTrue(lineValue);
 									statement.setBoolean(fieldNum, filterValueIsTrue);
+									if (updateExistingRecords) {
+										backupInsertStatement.setBoolean(fieldNum,
+												filterValueIsTrue);
+									}
 									break;
 								}
 							}
@@ -980,8 +1025,14 @@ public class DataManagement implements DataManagementInfo {
 							// booleans have a not null constraint
 							if (field.getDbType().equals(Types.BOOLEAN)) {
 								statement.setBoolean(fieldNum, false);
+								if (updateExistingRecords) {
+									backupInsertStatement.setBoolean(fieldNum, false);
+								}
 							} else {
 								statement.setNull(fieldNum, Types.NULL);
+								if (updateExistingRecords) {
+									backupInsertStatement.setNull(fieldNum, Types.NULL);
+								}
 							}
 						}
 					}
@@ -1013,16 +1064,18 @@ public class DataManagement implements DataManagementInfo {
 					}
 					int rowsAffected = statement.executeUpdate();
 					if (rowsAffected == 0) {
-						throw new InputRecordException("Error importing line " + importLine
-								+ ". The record identifier " + errorSnippet
-								+ " can't be found in the database", recordIdentifierField);
+						// If can't find a match to update, insert a record
+						// instead
+						logger.debug("Doing an insert for row " + numImportedRecords + ", "
+								+ recordIdentifierString);
+						backupInsertStatement.executeUpdate();
 					} else if (rowsAffected > 1) {
 						throw new InputRecordException(
 								"Error importing line "
 										+ importLine
 										+ ". The record identifier field "
 										+ errorSnippet
-										+ " should match one record in the database but it actually matches "
+										+ " should match only 1 record in the database but it actually matches "
 										+ rowsAffected, recordIdentifierField);
 					}
 					// reset to null for the next line
@@ -1034,6 +1087,9 @@ public class DataManagement implements DataManagementInfo {
 				numImportedRecords += 1;
 			}
 			statement.close();
+			if (backupInsertStatement != null) {
+				backupInsertStatement.close();
+			}
 			// reset the primary key ID sequence so new records can be added
 			resetSequence((SequenceField) primaryKey, conn);
 			// and any other sequence fields
