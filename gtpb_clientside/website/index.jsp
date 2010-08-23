@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
 <!--  
 ##  Copyright 2010 GT webMarque Ltd
 ## 
@@ -16,7 +17,6 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
 <%
 String queryString = request.getQueryString();
 if (queryString.contains("boot_mobile")) {

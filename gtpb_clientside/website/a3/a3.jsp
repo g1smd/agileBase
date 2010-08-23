@@ -7,7 +7,6 @@ if (requestURL.contains("appserver.")) {
 %>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <link rel="icon" href="/agilebase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
   <title>
     A3 reports in Lean service organisations
