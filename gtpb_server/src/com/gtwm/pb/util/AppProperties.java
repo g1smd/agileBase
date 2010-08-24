@@ -23,7 +23,7 @@ package com.gtwm.pb.util;
 public class AppProperties {
 	public static final String applicationName = "agileBase";
 
-	public static final String applicationVersion = "2.6.14";
+	public static final String applicationVersion = "2.6.15";
 
 	/**
 	 * Location of the Velocity template used to report template processing
