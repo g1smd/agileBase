@@ -731,6 +731,7 @@ public class DataManagement implements DataManagementInfo {
 		// Prepare SQL
 		String insertSQLCode = null;
 		String updateSQLCode = null;
+		String logCreationSQLCode = null;
 		// If updating, we'll need a record ID value. Depending on what the
 		// identifier field is, this could be one of a couple of different types
 		String recordIdentifierString = null;
@@ -770,6 +771,7 @@ public class DataManagement implements DataManagementInfo {
 			}
 			updateSQLCode = updateSQLCode.substring(0, updateSQLCode.length() - 2);
 			updateSQLCode += " WHERE " + recordIdentifierField.getInternalFieldName() + "=?";
+			logCreationSQLCode = "UPDATE " + table.getInternalTableName() + " SET " + table.getField(HiddenFields.DATE_CREATED.getFieldName()) + "=?, " + table.getField(HiddenFields.CREATED_BY.getFieldName()) + "=? WHERE " + primaryKey.getInternalFieldName() + "=?";
 		}
 		insertSQLCode = "INSERT INTO " + table.getInternalTableName() + "(";
 		String placeholders = "";
@@ -809,6 +811,7 @@ public class DataManagement implements DataManagementInfo {
 		// backupInsertStatement is for when an update returns 0 rows affected,
 		// i.e. there's no matching row. In this case, do an insert
 		PreparedStatement backupInsertStatement = null;
+		PreparedStatement logCreationStatement = null;
 		// These two variables used in exception handling
 		int importLine = 0;
 		BaseField fieldImported = null;
@@ -822,6 +825,7 @@ public class DataManagement implements DataManagementInfo {
 			if (updateExistingRecords) {
 				statement = conn.prepareStatement(updateSQLCode);
 				backupInsertStatement = conn.prepareStatement(insertSQLCode);
+				logCreationStatement = conn.prepareStatement(logCreationSQLCode);
 			} else {
 				statement = conn.prepareStatement(insertSQLCode);
 			}
@@ -1039,7 +1043,7 @@ public class DataManagement implements DataManagementInfo {
 				}
 				if (updateExistingRecords) {
 					// for potential error messages
-					String errorSnippet = null;
+					String recordIdentifierDescription = null;
 					if (identifierFieldDbType.equals(DatabaseFieldType.INTEGER)
 							|| identifierFieldDbType.equals(DatabaseFieldType.SERIAL)) {
 						if (recordIdentifierInteger == null) {
@@ -1047,7 +1051,7 @@ public class DataManagement implements DataManagementInfo {
 									"Can't find a record identifier value at line " + importLine,
 									recordIdentifierField);
 						}
-						errorSnippet = recordIdentifierField.getFieldName() + " = "
+						recordIdentifierDescription = recordIdentifierField.getFieldName() + " = "
 								+ recordIdentifierInteger;
 						// Set the 'WHERE recordIdentifier = ?' clause
 						statement.setInt(fields.size() + 1, recordIdentifierInteger);
@@ -1057,7 +1061,7 @@ public class DataManagement implements DataManagementInfo {
 									"Can't find a record identifier value at line " + importLine,
 									recordIdentifierField);
 						}
-						errorSnippet = recordIdentifierField.getFieldName() + " = '"
+						recordIdentifierDescription = recordIdentifierField.getFieldName() + " = '"
 								+ recordIdentifierString + "'";
 						// Set the 'WHERE recordIdentifier = ?' clause
 						statement.setString(fields.size() + 1, recordIdentifierString);
@@ -1066,15 +1070,28 @@ public class DataManagement implements DataManagementInfo {
 					if (rowsAffected == 0) {
 						// If can't find a match to update, insert a record
 						// instead
-						logger.debug("Doing an insert for row " + numImportedRecords + ", "
-								+ recordIdentifierString);
 						backupInsertStatement.executeUpdate();
+						// Log creation time and creator
+						ResultSet generatedKeyResults = backupInsertStatement.getGeneratedKeys();
+						if (generatedKeyResults.next()) {
+							int insertedPkeyValue = generatedKeyResults.getInt(primaryKey.getInternalFieldName());
+							logCreationStatement.setTimestamp(1, importTime);
+							logCreationStatement.setString(2, fullname);
+							logCreationStatement.setInt(3, insertedPkeyValue);
+							int creationLogRowsAffected = logCreationStatement.executeUpdate();
+							if (creationLogRowsAffected == 0) {
+								logger.error("Unable to find the record just inserted, using query " + logCreationStatement);
+							}
+						} else {
+							logger.error("Creation time and creator couldn't be logged when inserting record " + backupInsertStatement + " during an update import");
+						}
+						generatedKeyResults.close();
 					} else if (rowsAffected > 1) {
 						throw new InputRecordException(
 								"Error importing line "
 										+ importLine
 										+ ". The record identifier field "
-										+ errorSnippet
+										+ recordIdentifierDescription
 										+ " should match only 1 record in the database but it actually matches "
 										+ rowsAffected, recordIdentifierField);
 					}
@@ -1089,6 +1106,9 @@ public class DataManagement implements DataManagementInfo {
 			statement.close();
 			if (backupInsertStatement != null) {
 				backupInsertStatement.close();
+			}
+			if (logCreationStatement != null) {
+				logCreationStatement.close();
 			}
 			// reset the primary key ID sequence so new records can be added
 			resetSequence((SequenceField) primaryKey, conn);
