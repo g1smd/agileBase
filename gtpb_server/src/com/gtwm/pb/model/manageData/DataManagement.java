@@ -1076,7 +1076,6 @@ public class DataManagement implements DataManagementInfo {
 						// instead
 						ResultSet generatedKeyResults = backupInsertStatement.executeQuery();
 						// Log creation time and creator
-						// NB: getGeneratedKeys requires at least version 8.4 of the Postgresql JDBC driver
 						if (generatedKeyResults.next()) {
 							int insertedPkeyValue = generatedKeyResults.getInt(1);
 							logCreationStatement.setTimestamp(1, importTime);
@@ -1137,6 +1136,7 @@ public class DataManagement implements DataManagementInfo {
 			String databaseErrorMessage = Helpers.replaceInternalNames(sqlex.getMessage(),
 					table.getDefaultReport());
 			logger.warn("Import failed, statement is " + statement);
+			logger.warn("Backup insert statement is " + backupInsertStatement);
 			String errorMessage = "Error importing CSV line " + importLine;
 			if (!fieldImported.getHidden()) {
 				errorMessage += ", field '" + fieldImported + "'";
