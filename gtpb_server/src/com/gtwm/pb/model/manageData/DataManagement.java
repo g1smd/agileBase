@@ -771,7 +771,10 @@ public class DataManagement implements DataManagementInfo {
 			}
 			updateSQLCode = updateSQLCode.substring(0, updateSQLCode.length() - 2);
 			updateSQLCode += " WHERE " + recordIdentifierField.getInternalFieldName() + "=?";
-			logCreationSQLCode = "UPDATE " + table.getInternalTableName() + " SET " + table.getField(HiddenFields.DATE_CREATED.getFieldName()) + "=?, " + table.getField(HiddenFields.CREATED_BY.getFieldName()) + "=? WHERE " + primaryKey.getInternalFieldName() + "=?";
+			logCreationSQLCode = "UPDATE " + table.getInternalTableName() + " SET "
+					+ table.getField(HiddenFields.DATE_CREATED.getFieldName()) + "=?, "
+					+ table.getField(HiddenFields.CREATED_BY.getFieldName()) + "=? WHERE "
+					+ primaryKey.getInternalFieldName() + "=?";
 		}
 		insertSQLCode = "INSERT INTO " + table.getInternalTableName() + "(";
 		String placeholders = "";
@@ -1074,16 +1077,19 @@ public class DataManagement implements DataManagementInfo {
 						// Log creation time and creator
 						ResultSet generatedKeyResults = backupInsertStatement.getGeneratedKeys();
 						if (generatedKeyResults.next()) {
-							int insertedPkeyValue = generatedKeyResults.getInt(primaryKey.getInternalFieldName());
+							int insertedPkeyValue = generatedKeyResults.getInt(primaryKey
+									.getInternalFieldName());
 							logCreationStatement.setTimestamp(1, importTime);
 							logCreationStatement.setString(2, fullname);
 							logCreationStatement.setInt(3, insertedPkeyValue);
 							int creationLogRowsAffected = logCreationStatement.executeUpdate();
 							if (creationLogRowsAffected == 0) {
-								logger.error("Unable to find the record just inserted, using query " + logCreationStatement);
+								logger.error("Unable to find the record just inserted, using query "
+										+ logCreationStatement);
 							}
 						} else {
-							logger.error("Creation time and creator couldn't be logged when inserting record " + backupInsertStatement + " during an update import");
+							logger.error("Creation time and creator couldn't be logged when inserting record "
+									+ backupInsertStatement + " during an update import");
 						}
 						generatedKeyResults.close();
 					} else if (rowsAffected > 1) {
