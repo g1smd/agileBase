@@ -827,7 +827,8 @@ public class DataManagement implements DataManagementInfo {
 			conn.setAutoCommit(false);
 			if (updateExistingRecords) {
 				statement = conn.prepareStatement(updateSQLCode);
-				backupInsertStatement = conn.prepareStatement(insertSQLCode);
+				// Return the ID of an inserted row so we can use it to log creation metadata
+				backupInsertStatement = conn.prepareStatement(insertSQLCode + " RETURNING " + primaryKey.getInternalFieldName());
 				logCreationStatement = conn.prepareStatement(logCreationSQLCode);
 			} else {
 				statement = conn.prepareStatement(insertSQLCode);
@@ -1073,12 +1074,11 @@ public class DataManagement implements DataManagementInfo {
 					if (rowsAffected == 0) {
 						// If can't find a match to update, insert a record
 						// instead
-						backupInsertStatement.executeUpdate();
+						ResultSet generatedKeyResults = backupInsertStatement.executeQuery();
 						// Log creation time and creator
-						ResultSet generatedKeyResults = backupInsertStatement.getGeneratedKeys();
+						// NB: getGeneratedKeys requires at least version 8.4 of the Postgresql JDBC driver
 						if (generatedKeyResults.next()) {
-							int insertedPkeyValue = generatedKeyResults.getInt(primaryKey
-									.getInternalFieldName());
+							int insertedPkeyValue = generatedKeyResults.getInt(1);
 							logCreationStatement.setTimestamp(1, importTime);
 							logCreationStatement.setString(2, fullname);
 							logCreationStatement.setInt(3, insertedPkeyValue);
