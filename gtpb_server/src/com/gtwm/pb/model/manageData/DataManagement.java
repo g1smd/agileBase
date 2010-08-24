@@ -827,8 +827,7 @@ public class DataManagement implements DataManagementInfo {
 			conn.setAutoCommit(false);
 			if (updateExistingRecords) {
 				statement = conn.prepareStatement(updateSQLCode);
-				// Return the ID of an inserted row so we can use it to log creation metadata
-				backupInsertStatement = conn.prepareStatement(insertSQLCode + " RETURNING " + primaryKey.getInternalFieldName());
+				backupInsertStatement = conn.prepareStatement(insertSQLCode);
 				logCreationStatement = conn.prepareStatement(logCreationSQLCode);
 			} else {
 				statement = conn.prepareStatement(insertSQLCode);
@@ -1074,23 +1073,32 @@ public class DataManagement implements DataManagementInfo {
 					if (rowsAffected == 0) {
 						// If can't find a match to update, insert a record
 						// instead
-						ResultSet generatedKeyResults = backupInsertStatement.executeQuery();
-						// Log creation time and creator
-						if (generatedKeyResults.next()) {
-							int insertedPkeyValue = generatedKeyResults.getInt(1);
+						backupInsertStatement.executeQuery();
+						// NB Postgres specific code to find Row ID of newly inserted record, not cross-db compatible
+						String newRowIdSQLCode = "SELECT currval('" + table.getInternalTableName() + "_"
+								+ primaryKey.getInternalFieldName() + "_seq')";
+						PreparedStatement newRowIdStatement = conn.prepareStatement(newRowIdSQLCode);
+						ResultSet newRowIdResults = newRowIdStatement.executeQuery();
+						if (newRowIdResults.next()) {
+							int newRowId = newRowIdResults.getInt(1);
+							// Add creation metadata to the new row
 							logCreationStatement.setTimestamp(1, importTime);
 							logCreationStatement.setString(2, fullname);
-							logCreationStatement.setInt(3, insertedPkeyValue);
+							logCreationStatement.setInt(3, newRowId);
 							int creationLogRowsAffected = logCreationStatement.executeUpdate();
 							if (creationLogRowsAffected == 0) {
-								logger.error("Unable to find the record just inserted, using query "
+								throw new SQLException("Unable to update creation metadata of newly inserted record, using query "
 										+ logCreationStatement);
 							}
 						} else {
-							logger.error("Creation time and creator couldn't be logged when inserting record "
-									+ backupInsertStatement + " during an update import");
+							newRowIdResults.close();
+							newRowIdStatement.close();
+							throw new SQLException(
+									"Row ID not found for the newly inserted record. '"
+											+ newRowIdStatement + "' didn't work");
 						}
-						generatedKeyResults.close();
+						newRowIdResults.close();
+						newRowIdStatement.close();
 					} else if (rowsAffected > 1) {
 						throw new InputRecordException(
 								"Error importing line "
