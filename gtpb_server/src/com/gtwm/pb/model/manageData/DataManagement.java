@@ -1073,7 +1073,7 @@ public class DataManagement implements DataManagementInfo {
 					if (rowsAffected == 0) {
 						// If can't find a match to update, insert a record
 						// instead
-						backupInsertStatement.executeQuery();
+						backupInsertStatement.executeUpdate();
 						// NB Postgres specific code to find Row ID of newly inserted record, not cross-db compatible
 						String newRowIdSQLCode = "SELECT currval('" + table.getInternalTableName() + "_"
 								+ primaryKey.getInternalFieldName() + "_seq')";
