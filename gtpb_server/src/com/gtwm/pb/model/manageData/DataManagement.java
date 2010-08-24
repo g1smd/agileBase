@@ -772,8 +772,8 @@ public class DataManagement implements DataManagementInfo {
 			updateSQLCode = updateSQLCode.substring(0, updateSQLCode.length() - 2);
 			updateSQLCode += " WHERE " + recordIdentifierField.getInternalFieldName() + "=?";
 			logCreationSQLCode = "UPDATE " + table.getInternalTableName() + " SET "
-					+ table.getField(HiddenFields.DATE_CREATED.getFieldName()) + "=?, "
-					+ table.getField(HiddenFields.CREATED_BY.getFieldName()) + "=? WHERE "
+					+ table.getField(HiddenFields.DATE_CREATED.getFieldName()).getInternalFieldName() + "=?, "
+					+ table.getField(HiddenFields.CREATED_BY.getFieldName()).getInternalFieldName() + "=? WHERE "
 					+ primaryKey.getInternalFieldName() + "=?";
 		}
 		insertSQLCode = "INSERT INTO " + table.getInternalTableName() + "(";
@@ -1149,7 +1149,7 @@ public class DataManagement implements DataManagementInfo {
 			if (!fieldImported.getHidden()) {
 				errorMessage += ", field '" + fieldImported + "'";
 			}
-			errorMessage += "': " + databaseErrorMessage;
+			errorMessage += ": " + databaseErrorMessage;
 			throw new InputRecordException(errorMessage, fieldImported);
 		} catch (NumberFormatException nfex) {
 			String causeMessage = nfex.getMessage();
@@ -1158,7 +1158,7 @@ public class DataManagement implements DataManagementInfo {
 			if (!fieldImported.getHidden()) {
 				errorMessage += ", field '" + fieldImported + "'";
 			}
-			errorMessage += "': " + causeMessage;
+			errorMessage += ": " + causeMessage;
 			throw new InputRecordException(errorMessage, fieldImported);
 		} finally {
 			if (conn != null) {
