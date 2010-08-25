@@ -8,7 +8,8 @@
 }
 
 .editable {
-  font-size: 72pt!important;
+  font-size: 64pt!important;
+  line-height: 40%!important;
 }
 
 .actions_area {
