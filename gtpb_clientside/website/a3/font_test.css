@@ -1,11 +1,5 @@
-@font-face {
-	font-family: "Jellyka - Estrya's Handwriting";
-	src: url("Jellyka_Estrya_Handwriting.eot"); /* IE */
-	src: url("Jellyka_Estrya_Handwriting.ttf") format("truetype"); /* Non-IE */
-}
-
 .editable {
-	font-family: "Jellyka - Estrya's Handwriting";
+	font-family: "jellyka_eh";
 	line-height: 50%;
 	font-size: 72pt;
 }
