@@ -44,6 +44,9 @@
 	#end
   #end
 #end
+#if($reportSummaryRows.size() == 1)
+  #set($dateAxis = false)
+#end	
 #if($dateAxis)
   ## Work out date format for tooltip
   #set($numDateFields = 1)
@@ -66,7 +69,7 @@
 #end
 ## Work out if we can display data as a pie chart
 #set($pieChart = false)
-#if((!$dateAxis) && ($reportSummaryRows.size() < 5) && ($aggregateFunctions.size() == 1))
+#if((!$dateAxis) && ($reportSummaryRows.size() > 1) && ($reportSummaryRows.size() < 5) && ($aggregateFunctions.size() == 1))
   #set($pieChart = true)
 #end
 #if($reportSummaryRows.size() > 0)
