@@ -552,9 +552,10 @@ function fChange(oObj)  {
     if(vCurrentValue!=vValue) return; // the current value has changed since this request was sent
     fClearError(false);
     fClearWarning();
-    var warningElement = sResponseXML.getElementsByTagName('warning')[0];
-    if (typeof warningElement != "undefined") {
-    	alert(warningElement.length);
+    var warningElements = sResponseXML.getElementsByTagName('warning');
+    if (warningElements.length > 0) {
+      var warningElement = warningElements[0];
+      alert('warning');
       var sWarning = warningElement.firstChild.nodeValue;
       fSetWarning(sWarning);
     }
