@@ -554,7 +554,7 @@ function fChange(oObj)  {
     fClearWarning();
     var warningElement = sResponseXML.getElementsByTagName('warning')[0];
     if (typeof warningElement != "undefined") {
-    	alert(sResponseXML);
+    	alert(sResponseXML.xml);
       var sWarning = warningElement.firstChild.nodeValue;
       fSetWarning(sWarning);
     }
