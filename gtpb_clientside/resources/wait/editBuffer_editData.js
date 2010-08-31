@@ -555,7 +555,6 @@ function fChange(oObj)  {
     var warningElements = sResponseXML.getElementsByTagName('warning');
     if (warningElements.length > 0) {
       var warningElement = warningElements[0];
-      alert('warning');
       var sWarning = warningElement.firstChild.nodeValue;
       fSetWarning(sWarning);
     }
