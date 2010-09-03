@@ -15,6 +15,9 @@ public interface DashboardOutlierInfo {
 	 */
 	public BaseReportInfo getReport();
 	
+	/**
+	 * Identifer of the row containing the outlying value
+	 */
 	public int getRowID();
 	
 	public BaseField getField();
@@ -30,6 +33,11 @@ public interface DashboardOutlierInfo {
 	public DateValue getModificationDate();
 	
 	public OutlierType getOutlierType();
+	
+	/**
+	 * If this outlier represents multiple outliers from the same table & field, return the number, otherwise return 1
+	 */
+	public int getOutlierCount();
 	
 	/**
 	 * An outlier can be a case of either 

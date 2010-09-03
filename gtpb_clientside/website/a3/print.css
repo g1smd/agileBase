@@ -26,5 +26,5 @@
 }
 
 [contenteditable=true]:hover {
-	outline: none!important; /* similar to border but doesn't displace content */
+	outline: none!important; /* don't include the dotted hover-line: looks ugly on printout and no reason for it */
 }
