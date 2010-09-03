@@ -18,4 +18,10 @@
 
 .field_title {
   font-weight: bold;
+  border: 1px solid gray;
+  border-bottom: none;
+}
+
+.field_display {
+  border: 1px solid gray;
 }

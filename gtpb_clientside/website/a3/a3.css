@@ -78,9 +78,10 @@ html, body {
 }
 
 .field_display {
-	margin-right: 30px;
+	margin-right: 20px;
 	margin-bottom: 10px;
 	font-size: 60px;
+	padding-left: 0.1em;
 }
 
 .title_name {
@@ -90,6 +91,7 @@ html, body {
 .title_display {
 	border-bottom: 2px dashed gray;
 	min-width: 50px;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 .editable {
