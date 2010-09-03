@@ -32,6 +32,10 @@ public class DashboardOutlier implements DashboardOutlierInfo {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	public int getOutlierCount() {
+		return 0;
+	}
 
 	public OutlierType getOutlierType() {
 		// TODO Auto-generated method stub
