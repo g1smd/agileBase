@@ -1980,27 +1980,30 @@ public class DatabaseDefn implements DatabaseInfo {
 	private synchronized void removeFieldFromReportChecks(ReportFieldInfo reportField,
 			HttpServletRequest request) throws CantDoThatException, CodingErrorException,
 			ObjectNotFoundException {
-		// check the field isn't used in its parent report's own summary
-		ReportSummaryInfo reportSummary = reportField.getParentReport().getReportSummary();
-		Set<ReportSummaryAggregateInfo> aggFns = reportSummary.getAggregateFunctions();
-		for (ReportSummaryAggregateInfo aggFn : aggFns) {
-			ReportFieldInfo aggReportField = aggFn.getReportField();
-			if (aggReportField.equals(reportField)) {
-				throw new CantDoThatException("Please remove the report summary calculation "
-						+ aggFn + " before removing the report field");
-			}
-			ReportFieldInfo secondaryAggReportField = aggFn.getSecondaryReportField();
-			if (secondaryAggReportField != null) {
-				if (secondaryAggReportField.equals(reportField)) {
+		// check the field isn't used in one of the report's own summaries
+		for (ReportSummaryInfo reportSummary : reportField.getParentReport()
+				.getSavedReportSummaries()) {
+			Set<ReportSummaryAggregateInfo> aggFns = reportSummary.getAggregateFunctions();
+			for (ReportSummaryAggregateInfo aggFn : aggFns) {
+				ReportFieldInfo aggReportField = aggFn.getReportField();
+				if (aggReportField.equals(reportField)) {
 					throw new CantDoThatException("Please remove the report summary calculation "
 							+ aggFn + " before removing the report field");
 				}
+				ReportFieldInfo secondaryAggReportField = aggFn.getSecondaryReportField();
+				if (secondaryAggReportField != null) {
+					if (secondaryAggReportField.equals(reportField)) {
+						throw new CantDoThatException(
+								"Please remove the report summary calculation " + aggFn
+										+ " before removing the report field");
+					}
+				}
 			}
-		}
-		for (ReportSummaryGroupingInfo grouping : reportSummary.getGroupings()) {
-			if (grouping.getGroupingReportField().equals(reportField)) {
-				throw new CantDoThatException("Please remove the report summary grouping on "
-						+ reportField + " before removing the report field");
+			for (ReportSummaryGroupingInfo grouping : reportSummary.getGroupings()) {
+				if (grouping.getGroupingReportField().equals(reportField)) {
+					throw new CantDoThatException("Please remove the report summary grouping on "
+							+ reportField + " before removing the report field");
+				}
 			}
 		}
 		// check the field isn't referenced from any other reports
