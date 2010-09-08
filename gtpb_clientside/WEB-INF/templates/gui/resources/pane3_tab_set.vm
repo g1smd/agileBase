@@ -45,10 +45,6 @@
 
 	<script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jquery.oembed.js"></script>
-	#if($viewTools.getBrowser().getBrowserName() == "Internet Explorer")
-	  ## Necessary for highcharts in IE
-      <script type="text/javascript" src="resources/excanvas.js"></script>
-	#end
     <script type="text/javascript" src="resources/highcharts.js"></script>
 	#parse('gui/display_error.vm')
  	#if($mobile_device)
