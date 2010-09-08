@@ -85,6 +85,7 @@
  	<script src="resources/jquery.js" language="Javascript"></script>
     <script language="JavaScript" src="resources/wait/request_setFilter.js"></script>
     <script language="JavaScript" src="resources/modalFramework/modalFramework.js"></script>   
+    <script type="text/javascript" src="resources/highcharts.js"></script>
     <script language="JavaScript">
 	function loadDetail() {
 		$('#detail').text('loading...');
@@ -134,11 +135,15 @@
           #parse("gui/pane2/pane2_body.vm")
 		</tbody>
       </table>
-      #set($reportSummary = $report.getReportSummary())
-      ## if a summary has been created
-      #if(($reportSummary.getGroupingReportFields().size() > 0) || ($reportSummary.getAggregateFunctions().size() > 0))
-        <h2>Summary</h2>
-        #parse('gui/reports_and_tables/tabs/summary.vm')
+	  #set($summariesExist = false)
+	  #foreach($reportSummary in $report.getSavedReportSummaries())
+          ## if a summary has been created
+          #if(($reportSummary.getGroupingReportFields().size() > 0) || ($reportSummary.getAggregateFunctions().size() > 0))
+            #set($summariesExist = true)
+    	  #end
+	  #end
+	  #if($summariesExist)
+		#parse("gui/reports_and_tables/tabs/summary.vm")
 	  #end
 	  <div id="detail">
 		<a name="detail" href="#detail" onClick="loadDetail();">Show full detail of every record...</a>
