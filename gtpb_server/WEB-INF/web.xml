@@ -45,6 +45,7 @@
 	
     <servlet-mapping>
       <servlet-name>AppController</servlet-name>
+      <url-pattern>/AppController</url-pattern>
       <url-pattern>/AppController.servlet</url-pattern>
     </servlet-mapping>
 
@@ -59,6 +60,7 @@
 	
     <servlet-mapping>
       <servlet-name>ReportDownloader</servlet-name>
+      <url-pattern>/ReportDownloader</url-pattern>
       <url-pattern>/ReportDownloader.servlet</url-pattern>
     </servlet-mapping>
     
@@ -105,7 +107,7 @@
     <security-constraint>
       <web-resource-collection>
         <web-resource-name>agileBase Application</web-resource-name>
-        <url-pattern>*.servlet</url-pattern>
+        <url-pattern>*</url-pattern>
       </web-resource-collection>
       <auth-constraint>
         <role-name>gtpbeveryone</role-name>
