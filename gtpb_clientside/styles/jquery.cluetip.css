@@ -1,3 +1,12 @@
+/* Oliver */
+
+#cluetip {
+	opacity: 0.8;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+}
+
 /* global */
 #cluetip-close img {
   border: 0;
@@ -53,7 +62,7 @@
   font-size: 0.95em;
 }  
 .cluetip-default #cluetip-inner {
-  padding: 10px;
+  padding: 0.1em; /* 10px */
   font-size: 9pt;
 }
 .cluetip-default div#cluetip-close { 
