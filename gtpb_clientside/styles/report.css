@@ -224,5 +224,5 @@ table#reportData tr.excludedRecord td {
 }
 
 table.filterhelp {
-	font-size: 8pt;
+	font-size: 8pt!important;
 }
