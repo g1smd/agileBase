@@ -208,3 +208,7 @@ table#reportData tr.excludedRecord td {
 	color: gray;
 	text-shadow: 0 1px 0 white;
 }
+
+.ab_tooltip {
+	position: absolute;
+}
