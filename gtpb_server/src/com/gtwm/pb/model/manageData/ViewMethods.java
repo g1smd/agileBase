@@ -607,11 +607,11 @@ public class ViewMethods implements ViewMethodsInfo {
 				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
 						report.getReportField(report.getParentTable().getPrimaryKey().getInternalFieldName())));
+			} else if (!field.getTableContainingField().equals(report.getParentTable())) {
+				reportSummary.addGrouping(reportField, null);
+				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
+						report.getReportField(report.getParentTable().getPrimaryKey().getInternalFieldName())));
 			}
-		} else if (fieldCategory.equals(FieldCategory.RELATION)) {
-			reportSummary.addGrouping(reportField, null);
-			reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
-					report.getReportField(report.getParentTable().getPrimaryKey().getInternalFieldName())));			
 		}
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
