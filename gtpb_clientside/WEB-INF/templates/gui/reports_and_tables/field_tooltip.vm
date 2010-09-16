@@ -19,11 +19,12 @@ $reportField
   #set($sparklineData = [])
   #foreach($reportSummaryDataRow in $reportSummaryDataRows)
     ## There will only be one agg - the count
+    #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
 	#foreach($aggregate in $aggregateValues.keySet())
 	  #set($temp = $sparklineData.add($aggregateValues.get($aggregate)))
     #end
   #end
-  <span class="sparkline">$viewTools.joinWith($sparklineData,",")</span>
+  <span class="sparkline">$sparklineData</span>
   ## Textual data
   #foreach($reportSummaryDataRow in $reportSummaryDataRows)
     #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
