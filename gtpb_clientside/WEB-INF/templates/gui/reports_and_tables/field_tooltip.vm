@@ -15,6 +15,16 @@ $reportField
   #end
 #elseif($reportSummaryDataRows.size() > 0)
   <p>
+  ##Sparkline
+  #set($sparklineData = [])
+  #foreach($reportSummaryDataRow in $reportSummaryDataRows)
+    ## There will only be one agg - the count
+	#foreach($aggregate in $aggregateValues.keySet())
+	  #set($temp = $sparklineData.add($aggregateValues.get($aggregate)))
+    #end
+  #end
+  <span class="sparkline">$viewTools.joinWith($sparklineData,",")</span>
+  ## Textual data
   #foreach($reportSummaryDataRow in $reportSummaryDataRows)
     #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
 	#set($groupingValues = $reportSummaryDataRow.getGroupingValues())
