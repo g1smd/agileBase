@@ -602,12 +602,16 @@ public class ViewMethods implements ViewMethodsInfo {
 					reportField));
 			reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.AVG,
 					reportField));
-		} else if (field instanceof TextField) {
+		} else if (fieldCategory.equals(FieldCategory.TEXT)) {
 			if (((TextField) field).usesLookup()) {
 				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
 						report.getReportField(report.getParentTable().getPrimaryKey().getInternalFieldName())));
 			}
+		} else if (fieldCategory.equals(FieldCategory.RELATION)) {
+			reportSummary.addGrouping(reportField, null);
+			reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
+					report.getReportField(report.getParentTable().getPrimaryKey().getInternalFieldName())));			
 		}
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
