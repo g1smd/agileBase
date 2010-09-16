@@ -606,7 +606,7 @@ public class ViewMethods implements ViewMethodsInfo {
 			if (((TextField) field).usesLookup()) {
 				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
-						reportField));
+						report.getReportField(report.getParentTable().getPrimaryKey().getInternalFieldName())));
 			}
 		}
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
