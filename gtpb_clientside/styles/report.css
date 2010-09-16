@@ -186,7 +186,7 @@ table#reportData tr.excludedRecord td {
 	float: left;
 }
 
-.capitalised { text-transform: capitalize }
+.capitalised { text-transform: capitalize; }
 
 .seemorerows {
 	background: #f4f4f4;
@@ -211,4 +211,5 @@ table#reportData tr.excludedRecord td {
 
 .ab_tooltip {
 	position: absolute;
+	z-index: 99;
 }
