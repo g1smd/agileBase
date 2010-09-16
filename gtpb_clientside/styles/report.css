@@ -219,7 +219,8 @@ table#reportData tr.excludedRecord td {
 	-moz-box-shadow: 3px 3px 8px #000;	
 	-webkit-box-shadow: 3px 3px 8px #000;
 	box-shadow: 3px 3px 4px #000;
-	/* width: 300px!important; */
+	width: auto!important;
+	max-width: 400px;
 	font-weight: normal;
 	font-size: 9pt;
 	padding: 0.2em;
