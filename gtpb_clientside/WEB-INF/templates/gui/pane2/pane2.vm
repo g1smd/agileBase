@@ -22,9 +22,6 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<link href="styles/report.css" type="text/css" rel="stylesheet" />
 	<link href="resources/module-colours.css" type="text/css" rel="stylesheet" />
-	#if(!$mobile_device)
-	<link href="styles/jquery.cluetip.css" type="text/css" rel="stylesheet" />
-	#end
     <style>
 	      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
 	
@@ -86,9 +83,7 @@
 	  <meta name = "viewport" content = "initial-scale = 0.8">
       <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
 	#else
- 	  <script src="resources/jquery.dimensions.js" type="text/javascript"></script> <!-- for cluetip -->
-	  ##<script src="resources/jquery.hoverIntent.js" type="text/javascript"></script> <!-- for cluetip, optional -->
-	  <script src="resources/jquery.cluetip.js" type="text/javascript"></script> 
+	  <script src="resources/jquery.hoverIntent.js" type="text/javascript"></script>
 	#end
 	#set($sessionReport = $sessionData.getReport())
 	#set($sessionTable = $sessionData.getTable())
@@ -220,11 +215,7 @@
 	#end
 	
 	$(document).ready(function() {
-	  $("#filterhelp").cluetip({
-	    showTitle: false,
-		ajaxCache: true,
-		waitImage: false
-	  });
+	  $("#filterhelp").hoverIntent(showTooltip, hideTooltip);
 	  #if($browser != "Internet Explorer" && !$mobile_device)
 	  alignTableHeaderCells();
 	  setInterval("alignTableHeaderCells()", 2000);
@@ -292,7 +283,7 @@
           </tr>
           ## filtersShouldBeShown should either print the string 'true' or 'false'
           <tr name="fieldFilters" id="fieldFilters" #if($filtersShouldBeShown == 'false') style="display:none" #end>
-            <td class="leading"><div id="filterhelp" rel="resources/reports/filtering_help.htm">?</div></td>
+            <td class="leading"><div id="filterhelp">?<div class="ab_tooltip" rel="resources/reports/filtering_help.htm"></div></div></td>
 		            #foreach($field in $fields)
               #set($internalFieldName = $field.get(0))
               #set($fieldObject = $field.get(1))
