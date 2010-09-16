@@ -231,7 +231,8 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 				sqlForSummary += " WHERE " + filterArgs;
 			}
 			sqlForSummary += " GROUP BY " + groupByFieldsCsv;
-			sqlForSummary += " ORDER BY " + groupByFieldsCsv;
+			//Note: DESC will only work for one field, if there are multiple fields, we should really add DESC to each
+			sqlForSummary += " ORDER BY " + aggregateFunctionsCsv + " DESC";
 		} else if (this.getAggregateFunctionsDirect().size() > 0) {
 			sqlForSummary = "SELECT " + aggregateFunctionsCsv + " FROM "
 					+ this.getReport().getInternalReportName();

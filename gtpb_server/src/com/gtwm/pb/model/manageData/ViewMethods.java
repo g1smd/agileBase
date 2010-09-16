@@ -595,10 +595,19 @@ public class ViewMethods implements ViewMethodsInfo {
 		this.checkReportViewPrivileges(report);
 		ReportSummaryInfo reportSummary = new ReportSummaryDefn(report, reportField.getFieldName(),
 				false);
-		if (reportField.getBaseField().getFieldCategory().equals(FieldCategory.NUMBER)) {
-			ReportSummaryAggregateInfo sumFn = new ReportSummaryAggregateDefn(
-					AggregateFunction.SUM, reportField);
-			reportSummary.addFunction(sumFn);
+		BaseField field = reportField.getBaseField();
+		FieldCategory fieldCategory = field.getFieldCategory();
+		if (fieldCategory.equals(FieldCategory.NUMBER)) {
+			reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.SUM,
+					reportField));
+			reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.AVG,
+					reportField));
+		} else if (field instanceof TextField) {
+			if (((TextField) field).usesLookup()) {
+				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
+						reportField));
+				reportSummary.addGrouping(reportField, null);
+			}
 		}
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
