@@ -222,3 +222,7 @@ table#reportData tr.excludedRecord td {
 	width: 200px!important;
 	font-size: 8pt;
 }
+
+.ab_tooltip td {
+	font-size: 8pt;
+}
