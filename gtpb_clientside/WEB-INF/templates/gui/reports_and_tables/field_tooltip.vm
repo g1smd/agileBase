@@ -1,4 +1,4 @@
-#set($internalReportFieldName = $sessionData.getCustomString("internal_report_field_name"))
+#set($internalReportFieldName = $sessionData.getCustomString("tooltip_internalfieldname"))
 #set($reportField = $sessionData.getReport().getReportField($internalReportFieldName))
 #set($reportSummaryData = $view.getFieldSummaryData($reportField))
 $reportSummaryData.toString()

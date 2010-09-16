@@ -265,7 +265,7 @@
 				#if($fieldObject)
 	              #if($internalFieldName && $internalFieldName!="")
 	                <div class="ab_field_title">$fieldObject</div>
-					<div class="ab_tooltip" rel="?return=gui/reports_and_tables/field_tooltip&internal_report_field_name=$internalFieldName"></div>
+					<div class="ab_tooltip" rel="?return=gui/reports_and_tables/field_tooltip&set_custom_string=true&key=tooltip_internalfieldname&value=$internalFieldName"></div>
 	              #end
 			    #else
 	              &nbsp;
