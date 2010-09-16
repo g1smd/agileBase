@@ -326,3 +326,15 @@ function fLocateDeleteMarkers(oCheckbox) {
 	if (oCell)
 		iDeleteCellIndex = oCell.cellIndex;
 }
+
+function showTooltip() {
+	var tooltip = $(this).find(".ab_tooltip");
+	var href = tooltip.attr("rel");
+	tooltip.load(href);
+	tooltip.fadeIn("fast");
+}
+
+function hideTooltip() {
+	var tooltip = $(this).find(".ab_tooltip");
+	tooltip.fadeOut("normal");
+}

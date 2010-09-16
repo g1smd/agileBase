@@ -59,7 +59,7 @@
   font-size: 0.95em;
 }  
 .cluetip-default #cluetip-inner {
-  padding: 0.1em; /* 10px */
+  padding: 0.2em; /* 10px */
   font-size: 9pt;
 }
 .cluetip-default div#cluetip-close { 
