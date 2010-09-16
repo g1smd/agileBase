@@ -331,7 +331,7 @@ function showTooltip() {
 	var tooltip = $(this).next(".ab_tooltip");
 	var href = tooltip.attr("rel");
 	tooltip.load(href);
-	tooltip.fadeIn("fast");
+	tooltip.fadeTo("fast",0.95);
 }
 
 function hideTooltip() {
