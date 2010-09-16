@@ -24,7 +24,7 @@ $reportField
 	  #set($temp = $sparklineData.add($aggregateValues.get($aggregate)))
     #end
   #end
-  <span class="sparkline">$viewTools.joinWith($sparklineData,",")</span>
+  <span class="sparkline">$viewTools.joinWith($sparklineData,",")</span><br>
   ## Textual data
   #foreach($reportSummaryDataRow in $reportSummaryDataRows)
     #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
