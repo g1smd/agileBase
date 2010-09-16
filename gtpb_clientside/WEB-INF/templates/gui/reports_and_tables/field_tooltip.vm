@@ -20,7 +20,7 @@ $reportField
 	#set($groupingValues = $reportSummaryDataRow.getGroupingValues())
     ## There will only be one agg - the count
 	#foreach($aggregate in $aggregateValues.keySet())
-	  $aggregateValues.get($aggregate) 
+	  $aggregateValues.get($aggregate) = 
     #end
 	## There will only be one grouping - the field
 	#foreach($grouping in $groupingValues.keySet())
