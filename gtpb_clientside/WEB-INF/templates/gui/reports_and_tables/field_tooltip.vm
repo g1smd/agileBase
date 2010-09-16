@@ -7,7 +7,6 @@ $reportField
 	- $reportField.getFieldDescription()
 #end
 #set($groupingValues = $reportSummaryDataRows.get(0).getGroupingValues())
-groupingValues are $groupingValues
 #if($groupingValues.size() == 0)
   <p>
   #set($aggregateValues = $reportSummaryDataRows.get(0).getAggregateValues())
