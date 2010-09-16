@@ -6,11 +6,11 @@ $reportField
 #if($reportField.getFieldDescription())
 	- $reportField.getFieldDescription()
 #end
-#set($groupingValues = $reportSummaryDataRows.getGroupingValues())
+#set($groupingValues = $reportSummaryDataRows.get(0).getGroupingValues())
 groupingValues are $groupingValues
 #if($groupingValues.size() == 0)
   <p>
-  #set($aggregateValues = $reportSummaryDataRows.getAggregateValues())
+  #set($aggregateValues = $reportSummaryDataRows.get(0).getAggregateValues())
   #foreach($aggregate in $aggregateValues.keySet())
 	$aggregate = $aggregateValues.get($aggregate)
   #end
