@@ -205,7 +205,7 @@
 		  var jqHeaderElement = jqHeaderCells.filter(":eq(" + i + ")");
 		  var jqFilterElement = jqFilterCells.filter(":eq(" + i + ")");
 		  if (jqHeaderElement.children("div").size() > 0) {
-		    jqHeaderElement.children("div").width(width + 6);  // 3px difference in th/td padding either side
+		    jqHeaderElement.children("div:eq(0)").width(width + 6);  // 3px difference in th/td padding either side
 		  }
 		  jqFilterElement.children("div").width(width + 6);
 		  jqHeaderElement.css("left",left);
