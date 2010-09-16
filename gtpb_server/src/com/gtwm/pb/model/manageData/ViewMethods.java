@@ -604,9 +604,9 @@ public class ViewMethods implements ViewMethodsInfo {
 					reportField));
 		} else if (field instanceof TextField) {
 			if (((TextField) field).usesLookup()) {
+				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
 						reportField));
-				reportSummary.addGrouping(reportField, null);
 			}
 		}
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();

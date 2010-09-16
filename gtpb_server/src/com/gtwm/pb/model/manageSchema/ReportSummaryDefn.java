@@ -105,8 +105,8 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 			// summary
 			// so Hibernate can't save automatically
 			HibernateUtil.currentSession().save(grouping);
-			this.getGroupingsDirect().add(grouping);
 		}
+		this.getGroupingsDirect().add(grouping);
 	}
 
 	public synchronized ReportSummaryGroupingInfo removeGrouping(ReportFieldInfo reportFieldToRemove) {
