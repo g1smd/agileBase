@@ -13,8 +13,19 @@ $reportField
   #foreach($aggregate in $aggregateValues.keySet())
 	$aggregate.getAggregateFunction().getLabel() = $aggregateValues.get($aggregate)<br>
   #end
-#else
-<table>
-$reportSummaryData.toString()
-</table>
+#elseif($reportSummaryDataRows.size() > 0)
+  <p>
+  #foreach($reportSummaryDataRow in $reportSummaryDataRows)
+    #set($aggregateValues = $reportSummaryDataRows.get(0).getAggregateValues())
+	#set($groupingValues = $reportSummaryDataRow.getGroupingValues())
+    ## There will only be one agg - the count
+	#foreach($aggregate in $aggregateValues.keySet())
+	  $aggregateValues.get($aggregate) 
+    #end
+	## There will only be one grouping - the field
+	#foreach($grouping in $groupingValues.keySet())
+	  $groupingValues.get($grouping)
+	#end
+	<br>
+  #end
 #end
