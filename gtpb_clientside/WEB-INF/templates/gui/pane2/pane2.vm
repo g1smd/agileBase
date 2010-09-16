@@ -216,7 +216,7 @@
 	
 	$(document).ready(function() {
 	  $("#filterhelp").hoverIntent(showTooltip, hideTooltip);
-	  $(".field_title").hoverIntent(showTooltip, hideTooltip);
+	  $(".ab_field_title").hoverIntent(showTooltip, hideTooltip);
 	  #if($browser != "Internet Explorer" && !$mobile_device)
 	  alignTableHeaderCells();
 	  setInterval("alignTableHeaderCells()", 2000);
