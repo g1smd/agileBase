@@ -12,7 +12,7 @@ groupingValues are $groupingValues
   <p>
   #set($aggregateValues = $reportSummaryDataRows.get(0).getAggregateValues())
   #foreach($aggregate in $aggregateValues.keySet())
-	$aggregate = $aggregateValues.get($aggregate)
+	$aggregate.getAggregateFunction() = $aggregateValues.get($aggregate)<br>
   #end
 #else
 <table>
