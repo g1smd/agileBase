@@ -14,5 +14,7 @@ $reportField
 	$aggregate = $aggregateValues.get($aggregate)
   #end
 #else
+<table>
 $reportSummaryData.toString()
+</table>
 #end
