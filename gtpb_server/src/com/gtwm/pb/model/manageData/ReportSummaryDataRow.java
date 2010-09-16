@@ -27,52 +27,61 @@ import java.util.LinkedHashMap;
 
 public class ReportSummaryDataRow implements ReportSummaryDataRowInfo {
 
-    public ReportSummaryDataRow() {
-    }
+	public ReportSummaryDataRow() {
+	}
 
-    public synchronized void addGroupingValue(ReportSummaryGroupingInfo grouping, String value) {
-        this.groupingValues.put(grouping, value);
-    }
+	public synchronized void addGroupingValue(ReportSummaryGroupingInfo grouping, String value) {
+		this.groupingValues.put(grouping, value);
+	}
 
-    public synchronized void addAggregateValue(ReportSummaryAggregateInfo aggregateFunction, Number value) {
-        this.aggregateValues.put(aggregateFunction, value);
-    }
+	public synchronized void addAggregateValue(ReportSummaryAggregateInfo aggregateFunction,
+			Number value) {
+		this.aggregateValues.put(aggregateFunction, value);
+	}
 
-    public synchronized String getGroupingValue(ReportSummaryGroupingInfo grouping) {
-        String groupingValue = this.groupingValues.get(grouping);
-        if (groupingValue == null) {
-        	return "";
-        } else {
-        	return groupingValue;
-        }
-    }
+	public synchronized String getGroupingValue(ReportSummaryGroupingInfo grouping) {
+		String groupingValue = this.groupingValues.get(grouping);
+		if (groupingValue == null) {
+			return "";
+		} else {
+			return groupingValue;
+		}
+	}
 
-    public String getGroupingValue(ReportFieldInfo groupingField) {
-    	for (ReportSummaryGroupingInfo grouping : this.groupingValues.keySet()) {
-    		if (groupingField.equals(grouping.getGroupingReportField())) {
-    			return this.getGroupingValue(grouping);
-    		}
-    	}
-    	return "";
-    }
-    
-    public synchronized Number getAggregateValue(ReportSummaryAggregateInfo aggregateFunction) {
-        return this.aggregateValues.get(aggregateFunction);
-    }
-    
-    public String toString() {
-        String returnValue = "<tr>";
-        for (String groupingValue : this.groupingValues.values()) {
-            returnValue += "<td>" + groupingValue + "</td>";
-        }
-        for (Number aggregateValue : this.aggregateValues.values()) {
-            returnValue += "<td>" + aggregateValue.toString() + "</td>";
-        }
-        returnValue += "</tr>";
-        return returnValue;
-    }
+	public String getGroupingValue(ReportFieldInfo groupingField) {
+		for (ReportSummaryGroupingInfo grouping : this.groupingValues.keySet()) {
+			if (groupingField.equals(grouping.getGroupingReportField())) {
+				return this.getGroupingValue(grouping);
+			}
+		}
+		return "";
+	}
 
-    private Map<ReportSummaryGroupingInfo, String> groupingValues = new LinkedHashMap<ReportSummaryGroupingInfo, String>();
+	public synchronized Number getAggregateValue(ReportSummaryAggregateInfo aggregateFunction) {
+		return this.aggregateValues.get(aggregateFunction);
+	}
+	
+	public synchronized Map<ReportSummaryAggregateInfo, Number> getAggregateValues() {
+		return this.aggregateValues;
+	}
+	
+	public synchronized Map<ReportSummaryGroupingInfo, String> getGroupingValues() {
+		return this.groupingValues;
+	}
 
-    private Map<ReportSummaryAggregateInfo, Number> aggregateValues = new LinkedHashMap<ReportSummaryAggregateInfo, Number>();
+	public String toString() {
+		String returnValue = "<tr>";
+		for (String groupingValue : this.groupingValues.values()) {
+			returnValue += "<td>" + groupingValue + "</td>";
+		}
+		for (Number aggregateValue : this.aggregateValues.values()) {
+			returnValue += "<td>" + aggregateValue.toString() + "</td>";
+		}
+		returnValue += "</tr>";
+		return returnValue;
+	}
+
+	private Map<ReportSummaryGroupingInfo, String> groupingValues = new LinkedHashMap<ReportSummaryGroupingInfo, String>();
+
+	private Map<ReportSummaryAggregateInfo, Number> aggregateValues = new LinkedHashMap<ReportSummaryAggregateInfo, Number>();
 }
