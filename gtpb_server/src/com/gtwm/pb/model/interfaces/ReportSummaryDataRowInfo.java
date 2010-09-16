@@ -17,6 +17,8 @@
  */
 package com.gtwm.pb.model.interfaces;
 
+import java.util.Map;
+
 /**
  * Stores a single row of data in the report summary table. A report summary row is made up of two parts -
  * grouping field values and aggregate function values
@@ -35,4 +37,8 @@ public interface ReportSummaryDataRowInfo {
     public String getGroupingValue(ReportFieldInfo groupingField);
 
     public Number getAggregateValue(ReportSummaryAggregateInfo aggregateFunction);
+    
+    public Map<ReportSummaryAggregateInfo, Number> getAggregateValues();
+    
+    public Map<ReportSummaryGroupingInfo, String> getGroupingValues();
 }

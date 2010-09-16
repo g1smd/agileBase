@@ -56,11 +56,7 @@ public class ReportSummaryData implements ReportSummaryDataInfo {
     	if (minNum == null || maxNum == null) {
     		return 0;
     	}
-    	//double minValue = minNum.doubleValue();
     	double minValue = 0;
-    	//if (minValue > 0) {
-    	//	minValue = 0;
-    	//}
     	double maxValue = maxNum.doubleValue();
     	double valueDouble = value.doubleValue();
     	double range = maxValue - minValue;
