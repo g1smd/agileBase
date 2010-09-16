@@ -216,8 +216,8 @@ table#reportData tr.excludedRecord td {
 	top: 20;
 	left: 0;
 	background-color: #fffdc4;
-	-moz-box-shadow: 3px 3px 4px #000;	
-	-webkit-box-shadow: 3px 3px 4px #000;
+	-moz-box-shadow: 3px 3px 8px #000;	
+	-webkit-box-shadow: 3px 3px 8px #000;
 	box-shadow: 3px 3px 4px #000;
 	width: 300px!important;
 	font-weight: normal!important;
