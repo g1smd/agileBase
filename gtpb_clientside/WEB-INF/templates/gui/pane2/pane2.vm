@@ -216,6 +216,7 @@
 	
 	$(document).ready(function() {
 	  $("#filterhelp").hoverIntent(showTooltip, hideTooltip);
+	  $(".field_title").hoverIntent(showTooltip, hideTooltip);
 	  #if($browser != "Internet Explorer" && !$mobile_device)
 	  alignTableHeaderCells();
 	  setInterval("alignTableHeaderCells()", 2000);
@@ -259,25 +260,17 @@
               #set($internalFieldName = $field.get(0))
               #set($fieldObject = $field.get(1))
               ## row0 contains the internal field name
-    		          ## row1 contains the display field
-              		<th #if(($fieldObject.getClass().getSimpleName() == "TextFieldDefn") || ($fieldObject.getClass().getSimpleName() == "BigTextFieldDefn")) maxTextLength="$fieldObject.getContentSize()" #end #if($field.get(0) && $internalFieldName!="")internalName="$internalFieldName" onclick="fSetSort(this)"#end>
-                				#if($fieldObject)
-    				              #if($internalFieldName && $internalFieldName!="")
-									#if($fieldObject.getFieldDescription() != "")
-										#set($fieldTitle = "$fieldObject - $fieldObject.getFieldDescription()")
-									#else
-										#set($fieldTitle = "$fieldObject")
-									#end
-    				                <div title="$fieldTitle">
-    				              #end
-    				              $fieldObject
-    				              #if($internalFieldName && $internalFieldName!="")
-    				                </div>
-    				              #end
-              				  #else
-    				              &nbsp;
-                				#end
-              		</th>
+	          ## row1 contains the display field
+      		  <th #if(($fieldObject.getClass().getSimpleName() == "TextFieldDefn") || ($fieldObject.getClass().getSimpleName() == "BigTextFieldDefn")) maxTextLength="$fieldObject.getContentSize()" #end #if($field.get(0) && $internalFieldName!="")internalName="$internalFieldName" onclick="fSetSort(this)"#end>
+				#if($fieldObject)
+	              #if($internalFieldName && $internalFieldName!="")
+	                <div class="ab_field_title">$fieldObject</div>
+					<div class="ab_tooltip" rel="?return=gui/reports_and_tables/field_tooltip&internal_report_field_name=$internalFieldName"></div>
+	              #end
+			    #else
+	              &nbsp;
+				#end
+      		  </th>
             #end
             <th class=trailing><div>&nbsp;</div></th>
           </tr>

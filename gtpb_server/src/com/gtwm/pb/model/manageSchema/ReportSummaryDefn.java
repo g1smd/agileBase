@@ -61,13 +61,21 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	protected ReportSummaryDefn() {
 	}
 
-	public ReportSummaryDefn(BaseReportInfo report) {
+	/**
+	 * @param report
+	 *            The report the summary is based on
+	 * @param persist
+	 *            Whether to persist the summary to permanent storage
+	 */
+	public ReportSummaryDefn(BaseReportInfo report, boolean persist) {
 		this.setReport(report);
+		this.persist = persist;
 	}
 
-	public ReportSummaryDefn(BaseReportInfo report, String title) {
+	public ReportSummaryDefn(BaseReportInfo report, String title, boolean persist) {
 		this.setReport(report);
 		this.setTitle(title);
+		this.persist = persist;
 	}
 
 	@Id
@@ -92,10 +100,13 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 			SummaryGroupingModifier groupingModifier) {
 		ReportSummaryGroupingInfo grouping = new ReportSummaryGrouping(groupByReportField,
 				groupingModifier);
-		// Need a save here because no link from grouping back to report summary
-		// so Hibernate can't save automatically
-		HibernateUtil.currentSession().save(grouping);
-		this.getGroupingsDirect().add(grouping);
+		if (this.persist) {
+			// Need a save here because no link from grouping back to report
+			// summary
+			// so Hibernate can't save automatically
+			HibernateUtil.currentSession().save(grouping);
+			this.getGroupingsDirect().add(grouping);
+		}
 	}
 
 	public synchronized ReportSummaryGroupingInfo removeGrouping(ReportFieldInfo reportFieldToRemove) {
@@ -104,7 +115,9 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 			ReportSummaryGroupingInfo grouping = iterator.next();
 			if (grouping.getGroupingReportField().equals(reportFieldToRemove)) {
 				iterator.remove();
-				HibernateUtil.currentSession().delete(grouping);
+				if (this.persist) {
+					HibernateUtil.currentSession().delete(grouping);
+				}
 				return grouping;
 			}
 		}
@@ -194,9 +207,10 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 			groupByFieldsCsv = groupByFieldsCsv.substring(0, groupByFieldsCsv.length() - 2);
 		}
 		if (this.getAggregateFunctionsDirect().size() > 0) {
-			aggregateFunctionsCsv = aggregateFunctionsCsv.substring(0, aggregateFunctionsCsv
-					.length() - 2);
-			aggregateFunctionsCsv = aggregateFunctionsCsv.replace("agilebase_custom_variable_groupings", groupByFieldsCsv);
+			aggregateFunctionsCsv = aggregateFunctionsCsv.substring(0,
+					aggregateFunctionsCsv.length() - 2);
+			aggregateFunctionsCsv = aggregateFunctionsCsv.replace(
+					"agilebase_custom_variable_groupings", groupByFieldsCsv);
 		}
 		// Compose complete SQL
 		ReportDataInfo reportData = new ReportData(conn, this.report, false, false);
@@ -340,7 +354,8 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	}
 
 	public String toString() {
-		String toString = this.getReport().toString() + " - " + this.getTitle() + "(" + this.getId() + ")"+ " summary schema - functions: "
+		String toString = this.getReport().toString() + " - " + this.getTitle() + "("
+				+ this.getId() + ")" + " summary schema - functions: "
 				+ this.getAggregateFunctions() + ", groupings: " + this.getGroupings();
 		return toString;
 	}
@@ -400,6 +415,8 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	private BaseReportInfo report;
 
 	private String title = "";
+
+	private boolean persist = true;
 
 	private long id;
 

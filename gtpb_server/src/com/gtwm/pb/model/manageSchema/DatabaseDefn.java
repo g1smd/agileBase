@@ -2209,7 +2209,7 @@ public class DatabaseDefn implements DatabaseInfo {
 					"To save a report summary, it must contain one or more functions");
 		}
 		HibernateUtil.activateObject(templateSummary);
-		ReportSummaryInfo savedSummary = new ReportSummaryDefn(report, summaryTitle);
+		ReportSummaryInfo savedSummary = new ReportSummaryDefn(report, summaryTitle, true);
 		HibernateUtil.currentSession().save(savedSummary);
 		// Move aggregates from template summary to new summary
 		for (ReportSummaryAggregateInfo aggregate : aggregates) {

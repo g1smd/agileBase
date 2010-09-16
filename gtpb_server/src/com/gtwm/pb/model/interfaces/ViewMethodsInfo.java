@@ -366,13 +366,14 @@ public interface ViewMethodsInfo {
 			ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
 	/**
-	 * Return a report data object that contains metadata about the session report data.
-	 * Note, to get actual report rows which is the more usual case, use
-	 * getReportDataRows instead
+	 * Return a report data object that contains metadata about the session
+	 * report data. Note, to get actual report rows which is the more usual
+	 * case, use getReportDataRows instead
 	 * 
 	 * @see getReportDataRows
 	 **/
-	public ReportDataInfo getReportData() throws SQLException, DisallowedException, CodingErrorException, ObjectNotFoundException;
+	public ReportDataInfo getReportData() throws SQLException, DisallowedException,
+			CodingErrorException, ObjectNotFoundException;
 
 	/**
 	 * Return a report data object that contains metadata about the report data.
@@ -381,7 +382,8 @@ public interface ViewMethodsInfo {
 	 * 
 	 * @see getReportDataRows
 	 **/
-	public ReportDataInfo getReportData(BaseReportInfo report) throws SQLException, DisallowedException, CodingErrorException, ObjectNotFoundException;
+	public ReportDataInfo getReportData(BaseReportInfo report) throws SQLException,
+			DisallowedException, CodingErrorException, ObjectNotFoundException;
 
 	/**
 	 * Use this method to get rows for a specified report, using the session row
@@ -449,6 +451,13 @@ public interface ViewMethodsInfo {
 	public ReportSummaryDataInfo getReportSummaryData(ReportSummaryInfo reportSummary)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException;
+
+	/**
+	 * Generate a temporary report summary (not persisted) for an individual
+	 * field and return the data
+	 */
+	public ReportSummaryDataInfo getFieldSummaryData(ReportFieldInfo reportField)
+			throws DisallowedException, SQLException, CodingErrorException, ObjectNotFoundException, CantDoThatException;
 
 	/**
 	 * Return report summary data for a specific report, forcing the use of
