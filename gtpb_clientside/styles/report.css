@@ -215,14 +215,10 @@ table#reportData tr.excludedRecord td {
 	display: none;
 	top: 20;
 	left: 0;
-	background-color: white;
+	background-color: #fffdc4;
 	-moz-box-shadow: 3px 3px 4px #000;	
 	-webkit-box-shadow: 3px 3px 4px #000;
 	box-shadow: 3px 3px 4px #000;
 	width: 300px!important;
 	font-size: 8pt;
-}
-
-table.filterhelp {
-	font-size: 8pt!important;
 }
