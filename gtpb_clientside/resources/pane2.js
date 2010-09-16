@@ -328,13 +328,13 @@ function fLocateDeleteMarkers(oCheckbox) {
 }
 
 function showTooltip() {
-	var tooltip = $(this).find(".ab_tooltip");
+	var tooltip = $(this).next(".ab_tooltip");
 	var href = tooltip.attr("rel");
 	tooltip.load(href);
 	tooltip.fadeIn("fast");
 }
 
 function hideTooltip() {
-	var tooltip = $(this).find(".ab_tooltip");
+	var tooltip = $(this).next(".ab_tooltip");
 	tooltip.fadeOut("normal");
 }

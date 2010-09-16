@@ -283,7 +283,7 @@
           </tr>
           ## filtersShouldBeShown should either print the string 'true' or 'false'
           <tr name="fieldFilters" id="fieldFilters" #if($filtersShouldBeShown == 'false') style="display:none" #end>
-            <td class="leading"><div id="filterhelp">?<div class="ab_tooltip" rel="resources/reports/filtering_help.htm"></div></div></td>
+            <td class="leading"><div id="filterhelp">?</div><div class="ab_tooltip" rel="resources/reports/filtering_help.htm"></div></td>
 		            #foreach($field in $fields)
               #set($internalFieldName = $field.get(0))
               #set($fieldObject = $field.get(1))
