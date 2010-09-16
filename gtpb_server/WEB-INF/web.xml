@@ -45,7 +45,6 @@
 	
     <servlet-mapping>
       <servlet-name>AppController</servlet-name>
-      <url-pattern>/AppController</url-pattern>
       <url-pattern>/AppController.servlet</url-pattern>
     </servlet-mapping>
 
@@ -60,7 +59,6 @@
 	
     <servlet-mapping>
       <servlet-name>ReportDownloader</servlet-name>
-      <url-pattern>/ReportDownloader</url-pattern>
       <url-pattern>/ReportDownloader.servlet</url-pattern>
     </servlet-mapping>
     
