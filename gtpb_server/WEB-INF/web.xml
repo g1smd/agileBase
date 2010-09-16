@@ -105,7 +105,7 @@
     <security-constraint>
       <web-resource-collection>
         <web-resource-name>agileBase Application</web-resource-name>
-        <url-pattern>*</url-pattern>
+        <url-pattern>*.servlet</url-pattern>
       </web-resource-collection>
       <auth-constraint>
         <role-name>gtpbeveryone</role-name>
