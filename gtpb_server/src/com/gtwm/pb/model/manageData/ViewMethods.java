@@ -41,6 +41,7 @@ import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
+import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
@@ -63,10 +64,14 @@ import com.gtwm.pb.model.interfaces.WikiRecordDataRowInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.manageSchema.JoinType;
 import com.gtwm.pb.model.manageSchema.JoinClause;
+import com.gtwm.pb.model.manageSchema.ReportSummaryAggregateDefn;
+import com.gtwm.pb.model.manageSchema.ReportSummaryDefn;
+import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageUsage.UsageStats;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.model.manageData.ModuleAction;
 import com.gtwm.pb.util.AppProperties;
+import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -410,8 +415,8 @@ public class ViewMethods implements ViewMethodsInfo {
 			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException {
 		BaseReportInfo sessionReport = this.sessionData.getReport();
 		if (!this.getAuthenticator().loggedInUserAllowedToViewReport(this.request, sessionReport)) {
-			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, sessionReport
-					.getParentTable());
+			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA,
+					sessionReport.getParentTable());
 		}
 		return this.databaseDefn.getDataManagement().getRelatedRowIds(sessionReport, masterRowId,
 				relatedTable);
@@ -421,8 +426,8 @@ public class ViewMethods implements ViewMethodsInfo {
 			TableInfo relatedTable) throws DisallowedException, CantDoThatException, SQLException,
 			CodingErrorException {
 		if (!this.getAuthenticator().loggedInUserAllowedToViewReport(this.request, masterReport)) {
-			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, masterReport
-					.getParentTable());
+			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA,
+					masterReport.getParentTable());
 		}
 		return this.databaseDefn.getDataManagement().getRelatedRowIds(masterReport, masterRowId,
 				relatedTable);
@@ -450,21 +455,23 @@ public class ViewMethods implements ViewMethodsInfo {
 		return this.getReportDataRows(report, rowLimit, reportFilterValues, false);
 	}
 
-	public ReportDataInfo getReportData() throws SQLException, DisallowedException, CodingErrorException, ObjectNotFoundException {
+	public ReportDataInfo getReportData() throws SQLException, DisallowedException,
+			CodingErrorException, ObjectNotFoundException {
 		BaseReportInfo report = this.sessionData.getReport();
 		this.checkReportViewPrivileges(report);
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
 		return this.databaseDefn.getDataManagement().getReportData(company, report);
 	}
-	
-	public ReportDataInfo getReportData(BaseReportInfo report) throws SQLException, DisallowedException, CodingErrorException, ObjectNotFoundException {
+
+	public ReportDataInfo getReportData(BaseReportInfo report) throws SQLException,
+			DisallowedException, CodingErrorException, ObjectNotFoundException {
 		this.checkReportViewPrivileges(report);
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
 		return this.databaseDefn.getDataManagement().getReportData(company, report);
 	}
-	
+
 	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit,
 			Map<BaseField, String> reportFilterValues, boolean exactFilters)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
@@ -573,11 +580,31 @@ public class ViewMethods implements ViewMethodsInfo {
 		// DisallowedException if privileges not sufficient
 		this.checkReportViewPrivileges(reportSummary.getReport());
 		ReportSummaryDataInfo reportSummaryData;
-		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(this.request);
+		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
+				this.request);
 		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues();
 		reportSummaryData = this.databaseDefn.getDataManagement().getReportSummaryData(company,
 				reportSummary, reportFilterValues, useCache);
 		return reportSummaryData;
+	}
+
+	public ReportSummaryDataInfo getFieldSummaryData(ReportFieldInfo reportField)
+			throws DisallowedException, SQLException, CodingErrorException,
+			ObjectNotFoundException, CantDoThatException {
+		BaseReportInfo report = reportField.getParentReport();
+		this.checkReportViewPrivileges(report);
+		ReportSummaryInfo reportSummary = new ReportSummaryDefn(report, reportField.getFieldName(),
+				false);
+		if (reportField.getBaseField().getFieldCategory().equals(FieldCategory.NUMBER)) {
+			ReportSummaryAggregateInfo sumFn = new ReportSummaryAggregateDefn(
+					AggregateFunction.SUM, reportField);
+			reportSummary.addFunction(sumFn);
+		}
+		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
+		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
+				this.request);
+		return this.databaseDefn.getDataManagement().getReportSummaryData(company, reportSummary,
+				filters, false);
 	}
 
 	public SortedSet<TagInfo> getReportTagCloud(int minWeight, int maxWeight, int maxTags)
@@ -655,7 +682,8 @@ public class ViewMethods implements ViewMethodsInfo {
 				table))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
-		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(this.request);
+		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
+				this.request);
 		SortedSet<TableInfo> companyTables = company.getTables();
 		SortedMap<TableInfo, SortedSet<BaseField>> relationCandidates = new TreeMap<TableInfo, SortedSet<BaseField>>();
 		// check each table for candidate fields
@@ -746,8 +774,8 @@ public class ViewMethods implements ViewMethodsInfo {
 	public boolean userHasPrivilege(AppUserInfo user, String privilegeTypeToCheck, TableInfo table)
 			throws DisallowedException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
-		boolean hasPrivilege = getAuthManager().specifiedUserHasPrivilege(this.request, privilegeType,
-				user, table);
+		boolean hasPrivilege = getAuthManager().specifiedUserHasPrivilege(this.request,
+				privilegeType, user, table);
 		return hasPrivilege;
 	}
 
@@ -798,8 +826,8 @@ public class ViewMethods implements ViewMethodsInfo {
 					TableInfo rightTable = relationField.getRelatedTable();
 					if (viewableTables.contains(rightTable)) {
 						if (!dontJoinToTables.contains(rightTable)) {
-							JoinClauseInfo candidateJoin = new JoinClause(field, relationField
-									.getRelatedField(), JoinType.LEFT_OUTER);
+							JoinClauseInfo candidateJoin = new JoinClause(field,
+									relationField.getRelatedField(), JoinType.LEFT_OUTER);
 							candidateJoins.add(candidateJoin);
 						}
 					}
@@ -888,17 +916,17 @@ public class ViewMethods implements ViewMethodsInfo {
 		for (TableInfo table : this.getTablesAllowedTo(PrivilegeType.VIEW_TABLE_DATA)) {
 			sourceText = sourceText.replaceAll(table.getInternalTableName(), table.getTableName());
 			for (BaseReportInfo report : table.getReports()) {
-				sourceText = sourceText.replaceAll(report.getInternalReportName(), report
-						.getReportName());
+				sourceText = sourceText.replaceAll(report.getInternalReportName(),
+						report.getReportName());
 				for (BaseField field : report.getReportBaseFields()) {
-					sourceText = sourceText.replaceAll(field.getInternalFieldName(), field
-							.getFieldName());
+					sourceText = sourceText.replaceAll(field.getInternalFieldName(),
+							field.getFieldName());
 				}
 			}
 		}
 		return sourceText;
 	}
-	
+
 	public int getUploadSpeed() {
 		return this.databaseDefn.getDataManagement().getUploadSpeed();
 	}

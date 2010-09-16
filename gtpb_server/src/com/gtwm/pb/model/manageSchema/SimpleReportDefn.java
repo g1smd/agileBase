@@ -74,7 +74,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		super.setReportName(reportName);
 		super.setReportDescription(reportDesc);
 		super.setParentTable(parentTable);
-		super.setReportSummary(new ReportSummaryDefn(this));
+		super.setReportSummary(new ReportSummaryDefn(this, true));
 		if (module != null) {
 			super.setModule(module);
 		}
