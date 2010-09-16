@@ -16,7 +16,7 @@ $reportField
 #elseif($reportSummaryDataRows.size() > 0)
   <p>
   #foreach($reportSummaryDataRow in $reportSummaryDataRows)
-    #set($aggregateValues = $reportSummaryDataRows.get(0).getAggregateValues())
+    #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
 	#set($groupingValues = $reportSummaryDataRow.getGroupingValues())
     ## There will only be one agg - the count
 	#foreach($aggregate in $aggregateValues.keySet())
@@ -24,7 +24,11 @@ $reportField
     #end
 	## There will only be one grouping - the field
 	#foreach($grouping in $groupingValues.keySet())
-	  $groupingValues.get($grouping)
+	  #if($groupingValues.get($grouping))
+		$groupingValues.get($grouping)
+	  #else
+		(empty)
+	  #end
 	#end
 	<br>
   #end
