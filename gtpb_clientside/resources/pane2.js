@@ -330,9 +330,11 @@ function fLocateDeleteMarkers(oCheckbox) {
 function showTooltip() {
 	var tooltip = $(this).next(".ab_tooltip");
 	var href = tooltip.attr("rel");
-	tooltip.load(href);
-	tooltip.fadeIn("fast");
-	tooltip.fadeTo("fast",0.95);
+	tooltip.load(href, function() {
+		tooltip.fadeIn("fast");
+		tooltip.fadeTo("fast",0.95);
+		tooltip.find(".sparkline").sparkline('html', { type:'bar' });
+	});
 }
 
 function hideTooltip() {
