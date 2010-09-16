@@ -213,7 +213,7 @@ table#reportData tr.excludedRecord td {
 	position: absolute;
 	z-index: 99;
 	display: none;
-	top: 0;
+	top: 20;
 	left: 0;
 	background-color: white;
 	-moz-box-shadow: 3px 3px 4px #000;	
