@@ -316,7 +316,7 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
   
   .two_cols {
   	-moz-column-count: 2;
-  	/* -webkit-column-count: 2; There seems to be a webkit bug that causes a mis-render */
+  	-webkit-column-count: 2; /* There seems to be a webkit bug that causes a mis-render */
   }
   
   .summary_chart {
@@ -332,7 +332,7 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
   .chart_remover {
     position: absolute;
     display: none;
-    right: 1em;
+    left: 1em;
     top: 1em;
     z-index: 100; /* on top of the chart */
   }
