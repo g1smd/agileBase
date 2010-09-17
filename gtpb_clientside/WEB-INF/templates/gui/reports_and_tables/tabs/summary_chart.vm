@@ -321,7 +321,6 @@
 			   }
 			 #end
 		 },
-		 exporting: { enabled: true },
          series: $series
       });
   </script>
