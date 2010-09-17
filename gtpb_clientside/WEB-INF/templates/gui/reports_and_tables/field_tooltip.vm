@@ -3,7 +3,7 @@
 #set($reportSummaryData = $view.getFieldSummaryData($reportField))
 #set($reportSummaryDataRows = $reportSummaryData.getReportSummaryDataRows())
 $reportField
-#if($reportField.getFieldDescription())
+#if($reportField.getFieldDescription() && $reportField.getFieldDescription() != "")
 	- $reportField.getFieldDescription()
 #end
 #set($groupingValues = $reportSummaryDataRows.get(0).getGroupingValues())
