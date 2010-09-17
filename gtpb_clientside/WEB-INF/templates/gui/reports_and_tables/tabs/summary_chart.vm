@@ -321,6 +321,16 @@
 			   }
 			 #end
 		 },
+		 exporting: {
+            buttons: {
+                exportButton: {
+                    enabled: true
+                },
+                printButton: {
+                    enabled: false
+                }
+    		}		 
+		 },
          series: $series
       });
   </script>
