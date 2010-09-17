@@ -1,48 +1,54 @@
 #set($internalReportFieldName = $sessionData.getCustomString("tooltip_internalfieldname"))
 #set($reportField = $sessionData.getReport().getReportField($internalReportFieldName))
-#set($reportSummaryData = $view.getFieldSummaryData($reportField))
-#set($reportSummaryDataRows = $reportSummaryData.getReportSummaryDataRows())
 $reportField
 #if($reportField.getFieldDescription() && $reportField.getFieldDescription() != "")
 	- $reportField.getFieldDescription()
 #end
-#set($groupingValues = $reportSummaryDataRows.get(0).getGroupingValues())
-#if($groupingValues.size() == 0)
-  <br>
-  #set($aggregateValues = $reportSummaryDataRows.get(0).getAggregateValues())
-  #foreach($aggregate in $aggregateValues.keySet())
-	$aggregate.getAggregateFunction().getLabel() = $aggregateValues.get($aggregate)<br>
-  #end
-#elseif($reportSummaryDataRows.size() > 0)
-  <br>
-  ##Sparkline
-  #set($sparklineData = [])
-  #foreach($reportSummaryDataRow in $reportSummaryDataRows)
-    ## There will only be one agg - the count
-    #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
-	#foreach($aggregate in $aggregateValues.keySet())
-	  #set($temp = $sparklineData.add($aggregateValues.get($aggregate)))
+#set($displayDetails = true)
+#if($reportField.getClass().getSimpleName.equals("ReportCalcFieldDefn"))
+  #set($displayDetails = false)
+#end
+#if($displayDetails)
+    #set($reportSummaryData = $view.getFieldSummaryData($reportField))
+    #set($reportSummaryDataRows = $reportSummaryData.getReportSummaryDataRows())
+    #set($groupingValues = $reportSummaryDataRows.get(0).getGroupingValues())
+    #if($groupingValues.size() == 0)
+      <br>
+      #set($aggregateValues = $reportSummaryDataRows.get(0).getAggregateValues())
+      #foreach($aggregate in $aggregateValues.keySet())
+    	$aggregate.getAggregateFunction().getLabel() = $aggregateValues.get($aggregate)<br>
+      #end
+    #elseif($reportSummaryDataRows.size() > 0)
+      <br>
+      ##Sparkline
+      #set($sparklineData = [])
+      #foreach($reportSummaryDataRow in $reportSummaryDataRows)
+        ## There will only be one agg - the count
+        #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
+    	#foreach($aggregate in $aggregateValues.keySet())
+    	  #set($temp = $sparklineData.add($aggregateValues.get($aggregate)))
+        #end
+      #end
+      <span class="sparkline">$viewTools.joinWith($sparklineData,",")</span><br>
+      ## Textual data
+      <div class="tooltip_content">
+      #foreach($reportSummaryDataRow in $reportSummaryDataRows)
+        #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
+    	#set($groupingValues = $reportSummaryDataRow.getGroupingValues())
+        ## There will only be one agg - the count
+    	#foreach($aggregate in $aggregateValues.keySet())
+    	  $aggregateValues.get($aggregate).intValue() x 
+        #end
+    	## There will only be one grouping - the field
+    	#foreach($grouping in $groupingValues.keySet())
+    	  #if($groupingValues.get($grouping))
+    		$groupingValues.get($grouping)
+    	  #else
+    		(empty)
+    	  #end
+    	#end
+    	<br>
+      #end
+      </div>
     #end
-  #end
-  <span class="sparkline">$viewTools.joinWith($sparklineData,",")</span><br>
-  ## Textual data
-  <div class="tooltip_content">
-  #foreach($reportSummaryDataRow in $reportSummaryDataRows)
-    #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
-	#set($groupingValues = $reportSummaryDataRow.getGroupingValues())
-    ## There will only be one agg - the count
-	#foreach($aggregate in $aggregateValues.keySet())
-	  $aggregateValues.get($aggregate).intValue() x 
-    #end
-	## There will only be one grouping - the field
-	#foreach($grouping in $groupingValues.keySet())
-	  #if($groupingValues.get($grouping))
-		$groupingValues.get($grouping)
-	  #else
-		(empty)
-	  #end
-	#end
-	<br>
-  #end
-  </div>
 #end
