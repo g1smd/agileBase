@@ -333,7 +333,8 @@
                 }
     		},
 			url: 'http://www.agilebase.co.uk/static_features/highcharts_export',
-			filename: '$export_filename'
+			filename: '$export_filename',
+			type: 'image/png'
 		 },
          series: $series
       });
