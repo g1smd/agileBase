@@ -5,7 +5,7 @@ $reportField
 	- $reportField.getFieldDescription()
 #end
 #set($displayDetails = true)
-#if($reportField.getClass().getSimpleName.equals("ReportCalcFieldDefn"))
+#if(($reportField.getBaseField().getFieldCategory() != "NUMBER") && ($reportField.getClass().getSimpleName().equals("ReportCalcFieldDefn")))
   #set($displayDetails = false)
 #end
 #if($displayDetails)
