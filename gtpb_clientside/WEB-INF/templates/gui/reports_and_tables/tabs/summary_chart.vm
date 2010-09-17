@@ -326,15 +326,15 @@
 		 exporting: {
             buttons: {
                 exportButton: {
-                    enabled: true
+                    enabled: true,
+			url: 'http://www.agilebase.co.uk/static_features/highcharts_export',
+			filename: '$export_filename',
+			type: 'image/png'
                 },
                 printButton: {
                     enabled: false
                 }
-    		},
-			url: 'http://www.agilebase.co.uk/static_features/highcharts_export',
-			filename: '$export_filename',
-			type: 'image/png'
+    		}
 		 },
          series: $series
       });
