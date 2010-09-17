@@ -8,13 +8,13 @@ $reportField
 #end
 #set($groupingValues = $reportSummaryDataRows.get(0).getGroupingValues())
 #if($groupingValues.size() == 0)
-  <p>
+  <br>
   #set($aggregateValues = $reportSummaryDataRows.get(0).getAggregateValues())
   #foreach($aggregate in $aggregateValues.keySet())
 	$aggregate.getAggregateFunction().getLabel() = $aggregateValues.get($aggregate)<br>
   #end
 #elseif($reportSummaryDataRows.size() > 0)
-  <p>
+  <br>
   ##Sparkline
   #set($sparklineData = [])
   #foreach($reportSummaryDataRow in $reportSummaryDataRows)
