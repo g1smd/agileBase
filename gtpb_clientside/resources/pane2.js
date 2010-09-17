@@ -331,6 +331,10 @@ function showTooltip() {
 	var tooltip = $(this).next(".ab_tooltip");
 	var href = tooltip.attr("rel");
 	tooltip.load(href, function() {
+		var numItems = tooltip.find(".tooltip_content").find("br").size();
+		if (numItems > 14) {
+			tooltip.find(".tooltip_content").css("font-size","8pt");
+		}
 		tooltip.fadeIn("fast");
 		tooltip.fadeTo("fast",0.95);
 		tooltip.find(".sparkline").sparkline('html', { type:'bar' });

@@ -224,4 +224,5 @@ table#reportData tr.excludedRecord td {
 	font-weight: normal;
 	font-size: 9pt;
 	padding: 0.2em;
+	text-transform: none;
 }
