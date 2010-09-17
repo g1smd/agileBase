@@ -26,12 +26,13 @@ $reportField
   #end
   <span class="sparkline">$viewTools.joinWith($sparklineData,",")</span><br>
   ## Textual data
+  <div class="tooltip_content">
   #foreach($reportSummaryDataRow in $reportSummaryDataRows)
     #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
 	#set($groupingValues = $reportSummaryDataRow.getGroupingValues())
     ## There will only be one agg - the count
 	#foreach($aggregate in $aggregateValues.keySet())
-	  $aggregateValues.get($aggregate) = 
+	  $aggregateValues.get($aggregate).intValue() x 
     #end
 	## There will only be one grouping - the field
 	#foreach($grouping in $groupingValues.keySet())
@@ -43,4 +44,5 @@ $reportField
 	#end
 	<br>
   #end
+  </div>
 #end
