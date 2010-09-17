@@ -257,7 +257,7 @@
            },
            yAxis: {
               title: {
-                 enabled: false
+                 text: null
               }
            },
 		 #end
@@ -268,7 +268,8 @@
 		      #if($pieChart)
 			    layout: 'vertical',
 				top: '40px',
-				left: '60%'
+				left: '60%',
+				width: '100px'
 			  #else
 				zIndex: 10,
 				bottom: '10px',
@@ -295,7 +296,22 @@
 		   #end
 		 },
 		 plotOptions: {
-			 #if($dateAxis)
+		   #if($pieChart)
+		     pie: {
+			   dataLabels: {
+			     enabled: true,
+				 color: 'white',
+				 y: 0,
+				 formatter: function() {
+				   if (this.y > ($grandTotal / 20)) {
+				     return this.y;
+				   } else {
+				     return '';
+				   }
+				 }
+			   }
+			 }
+		   #elseif($dateAxis)
 			   area: {
 			     animation: false,
 			   }
