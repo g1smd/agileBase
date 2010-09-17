@@ -216,15 +216,18 @@ table#reportData tr.excludedRecord td {
 	top: 20;
 	left: 0;
 	background-color: #fffdc4;
-	-moz-box-shadow: 3px 3px 8px #000;	
-	-webkit-box-shadow: 3px 3px 8px #000;
-	box-shadow: 3px 3px 4px #000;
+	-moz-box-shadow: 3px 3px 8px #888;
+	-webkit-box-shadow: 3px 3px 8px #888;
+	box-shadow: 3px 3px 4px #888;
 	width: auto!important;
 	max-width: 400px;
 	font-weight: normal;
 	font-size: 9pt;
 	padding: 0.2em;
 	text-transform: none;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .ab_tooltip .tooltip_content {
