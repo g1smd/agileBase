@@ -200,6 +200,8 @@
     #set($title = $reportSummary.getTitle())
   #end
   #set($subtitle = "")
+  #set($export_filename = $viewTools.cleanString($title))
+  #set($export_filename = "agilebase_$export_filename")
   <script language="JavaScript">
     var $chart_id = new Highcharts.Chart({
          chart: {
@@ -329,7 +331,9 @@
                 printButton: {
                     enabled: false
                 }
-    		}		 
+    		},
+			url: 'http://www.agilebase.co.uk/static_features/highcharts_export',
+			filename: '$export_filename'
 		 },
          series: $series
       });
