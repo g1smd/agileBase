@@ -327,6 +327,7 @@ function fLocateDeleteMarkers(oCheckbox) {
 		iDeleteCellIndex = oCell.cellIndex;
 }
 
+var abTooltipTimeout;
 function showTooltip() {
 	// First, hide any other tooltips visible
 	$(".ab_tooltip").hide();
@@ -336,11 +337,12 @@ function showTooltip() {
 		tooltip.fadeIn("fast");
 		tooltip.fadeTo("fast",0.95);
 		tooltip.find(".sparkline").sparkline('html', { type:'bar' });
-		setTimeout("hideTooltip()",8000);
+		abTooltipTimeout = setTimeout("hideTooltip()",8000);
 	});
 }
 
 function hideTooltip() {
 	// Actually, hide any visible tooltips
 	$(".ab_tooltip").fadeOut("normal");
+	clearTimeout(abTooltipTimeout);
 }
