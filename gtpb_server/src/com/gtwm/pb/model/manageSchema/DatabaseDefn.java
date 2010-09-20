@@ -121,7 +121,7 @@ import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-public class DatabaseDefn implements DatabaseInfo {
+public final class DatabaseDefn implements DatabaseInfo {
 
 	/**
 	 * There should be one DatabaseInfo object per agileBase application

@@ -46,7 +46,7 @@ import org.apache.velocity.tools.generic.MathTool;
 import org.grlea.log.SimpleLogger;
 import com.ibm.icu.text.RuleBasedNumberFormat;
 
-public class ViewTools implements ViewToolsInfo {
+public final class ViewTools implements ViewToolsInfo {
 
 	private ViewTools() {
 	}

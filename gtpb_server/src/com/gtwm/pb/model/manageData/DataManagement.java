@@ -113,7 +113,7 @@ import org.glowacki.CalendarParser;
 import org.glowacki.CalendarParserException;
 import au.com.bytecode.opencsv.CSVReader;
 
-public class DataManagement implements DataManagementInfo {
+public final class DataManagement implements DataManagementInfo {
 
 	/**
 	 * @param dataSource

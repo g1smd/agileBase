@@ -79,7 +79,7 @@ import org.grlea.log.SimpleLogger;
 /**
  * The controller in the MCV application. This is the 'main' class.
  */
-public class AppController extends VelocityViewServlet {
+public final class AppController extends VelocityViewServlet {
 
 	/**
 	 * init() is called once automatically by the servlet container (e.g.
