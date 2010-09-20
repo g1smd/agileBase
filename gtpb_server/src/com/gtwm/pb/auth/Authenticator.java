@@ -54,7 +54,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.CascadeType;
 
 @Entity
-public class Authenticator implements AuthenticatorInfo {
+public final class Authenticator implements AuthenticatorInfo {
 
 	public Authenticator() {
 	}

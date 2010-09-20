@@ -60,7 +60,7 @@ import java.util.EnumSet;
  * this class to add user, roles and privileges. We are basically separating out
  * persistence code so that the Authenticator doesn't have to know about it
  */
-public class AuthManager implements AuthManagerInfo {
+public final class AuthManager implements AuthManagerInfo {
 
 	/**
 	 * Make the application ready for using authentication by loading the
