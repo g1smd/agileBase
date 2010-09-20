@@ -328,6 +328,8 @@ function fLocateDeleteMarkers(oCheckbox) {
 }
 
 function showTooltip() {
+	// First, hide any other tooltips visible
+	$(".ab_tooltip").hide();
 	var tooltip = $(this).next(".ab_tooltip");
 	var href = tooltip.attr("rel");
 	tooltip.load(href, function() {
@@ -338,6 +340,6 @@ function showTooltip() {
 }
 
 function hideTooltip() {
-	var tooltip = $(this).next(".ab_tooltip");
-	tooltip.fadeOut("normal");
+	// Actually, hide any visible tooltips
+	$(".ab_tooltip").hide();
 }
