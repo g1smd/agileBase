@@ -341,5 +341,5 @@ function showTooltip() {
 
 function hideTooltip() {
 	// Actually, hide any visible tooltips
-	$(".ab_tooltip").hide();
+	$(".ab_tooltip").fadeOut("fast");
 }
