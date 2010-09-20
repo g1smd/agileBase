@@ -219,13 +219,13 @@
 	  $("#filterhelp").hoverIntent(showTooltip, hideTooltip);
 	  $(".ab_field_title").hoverIntent(showTooltip, hideTooltip);
 	  #if($browser != "Internet Explorer" && !$mobile_device)
-	  alignTableHeaderCells();
-	  setInterval("alignTableHeaderCells()", 2000);
+	    alignTableHeaderCells();
+	    setInterval("alignTableHeaderCells()", 2000);
 	  
-	  $(window).scroll(function() {
-	    var left = document.body.scrollLeft || window.pageXOffset;
-	    $("thead").css("left", -1 * left);
-	  });
+	    $(window).scroll(function() {
+	      var left = document.body.scrollLeft || window.pageXOffset;
+	      $("thead").css("left", -1 * left);
+	    });
 	  #end
 	});
 	</script>
