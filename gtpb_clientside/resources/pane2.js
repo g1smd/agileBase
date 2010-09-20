@@ -336,10 +336,11 @@ function showTooltip() {
 		tooltip.fadeIn("fast");
 		tooltip.fadeTo("fast",0.95);
 		tooltip.find(".sparkline").sparkline('html', { type:'bar' });
+		setTimeout("hideTooltip()",8000);
 	});
 }
 
 function hideTooltip() {
 	// Actually, hide any visible tooltips
-	$(".ab_tooltip").fadeOut("fast");
+	$(".ab_tooltip").fadeOut("normal");
 }
