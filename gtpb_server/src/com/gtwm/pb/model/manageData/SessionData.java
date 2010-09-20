@@ -50,7 +50,7 @@ import java.sql.ResultSet;
 // Note: the setter methods in this class don't need to be synchronized because this is session data 
 // - there is one object per user so as long as one user doesn't make simultaneous requests, we're ok
 // On second thoughts, synchronize them anyway just in case
-public class SessionData implements SessionDataInfo {
+public final class SessionData implements SessionDataInfo {
 
 	public SessionData() {
 		logger.warn("Empty SessionData object created");

@@ -60,7 +60,7 @@ import com.gtwm.pb.util.Enumerations.UserType;
  * @see ServletSchemaMethods
  * @see ServletDataMethods
  */
-public class ServletAuthMethods {
+public final class ServletAuthMethods {
 
 	/**
 	 * TODO: Http example usage

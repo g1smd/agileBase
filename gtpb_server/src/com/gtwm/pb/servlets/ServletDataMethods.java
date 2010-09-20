@@ -85,7 +85,7 @@ import org.grlea.log.SimpleLogger;
  * @see ServletSchemaMethods
  * @see ServletAuthMethods
  */
-public class ServletDataMethods {
+public final class ServletDataMethods {
 
 	private ServletDataMethods() {
 	}

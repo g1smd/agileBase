@@ -41,7 +41,6 @@ import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
@@ -82,7 +81,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.grlea.log.SimpleLogger;
 import java.util.TreeSet;
 
-public class ViewMethods implements ViewMethodsInfo {
+public final class ViewMethods implements ViewMethodsInfo {
 
 	/**
 	 * Create and initialise the viewMethods object that'll be used by templates
@@ -102,8 +101,7 @@ public class ViewMethods implements ViewMethodsInfo {
 		// Check user's logged in
 		if (request.isRequestedSessionIdValid()) {
 			// Separate out session data so we don't have to use a long method
-			// call
-			// chain all the time
+			// call chain all the time
 			this.sessionData = (SessionDataInfo) request.getSession().getAttribute(
 					"com.gtwm.pb.servlets.sessionData");
 			if (sessionData == null) {

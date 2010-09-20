@@ -30,7 +30,7 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 /**
  * Methods shared between ServletAuthMethods, ServletSchemaMethods, ServletDataMethods
  */
-public class ServletUtilMethods {
+public final class ServletUtilMethods {
 
 	private ServletUtilMethods() {
 	}

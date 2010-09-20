@@ -90,7 +90,7 @@ import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOpti
  * @see ServletDataMethods
  * @see ServletAuthMethods
  */
-public class ServletSchemaMethods {
+public final class ServletSchemaMethods {
 
 	/**
 	 * Add a new company which will be able to have its own private set of
