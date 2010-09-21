@@ -216,8 +216,13 @@
 	#end
 	
 	$(document).ready(function() {
-	  $("#filterhelp").hoverIntent(showTooltip, hideTooltip);
-	  $(".ab_field_title").hoverIntent(showTooltip, hideTooltip);
+	  var hoverIntentConfig = {    
+         over: showTooltip,
+         out: hideTooltip,
+         interval: 300
+	  };
+	  $("#filterhelp").hoverIntent(hoverIntentConfig);
+	  $(".ab_field_title").hoverIntent(hoverIntentConfig);
 	  #if($browser != "Internet Explorer" && !$mobile_device)
 	    alignTableHeaderCells();
 	    setInterval("alignTableHeaderCells()", 2000);
