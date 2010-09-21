@@ -339,11 +339,11 @@
                     }, {
                         text: 'Download a PDF doc to print',
                         onclick: function() {
-                            this.exportChart(
+                            this.exportChart({
                     			url: 'http://www.agilebase.co.uk/static_features/highcharts_export/index.php',
                     			filename: '$export_filename',
                     			type: 'application/pdf'
-							);
+							});
                         }
                     },
                     null, 
