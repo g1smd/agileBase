@@ -326,16 +326,34 @@
 		 exporting: {
             buttons: {
                 exportButton: {
-                    enabled: true
-                },
+      				menuItems: [{
+                        text: 'Download an image to share',
+                        onclick: function() {
+                            this.exportChart({
+                    			url: 'http://www.agilebase.co.uk/static_features/highcharts_export/index.php',
+                    			filename: '$export_filename',
+                    			type: 'image/png',
+                    			width: 1024
+                            });
+                        }
+                    }, {
+                        text: 'Download a PDF doc to print',
+                        onclick: function() {
+                            this.exportChart(
+                    			url: 'http://www.agilebase.co.uk/static_features/highcharts_export/index.php',
+                    			filename: '$export_filename',
+                    			type: 'application/pdf'
+							);
+                        }
+                    },
+                    null, 
+                    null
+                    ]
+				},
                 printButton: {
                     enabled: false
                 }
     		},
-			url: 'http://www.agilebase.co.uk/static_features/highcharts_export/index.php',
-			filename: '$export_filename',
-			type: 'image/png',
-			width: 1024
 		 },
          series: $series
       });
