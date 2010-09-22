@@ -22,6 +22,8 @@ import com.gtwm.pb.model.interfaces.ReportDataFieldStatsInfo;
 public class ReportDataFieldStats implements ReportDataFieldStatsInfo {
 
 	private ReportDataFieldStats() {
+		this.mean = 0f;
+		this.stdDev = 0f;
 	}
 
 	public ReportDataFieldStats(double mean, double stdDev) {
@@ -41,7 +43,7 @@ public class ReportDataFieldStats implements ReportDataFieldStatsInfo {
 		return "Mean = " + this.mean + ", standard deviation = " + this.stdDev;
 	}
 
-	private double stdDev = 0f;
+	private final double stdDev;
 
-	private double mean = 0f;
+	private final double mean;
 }

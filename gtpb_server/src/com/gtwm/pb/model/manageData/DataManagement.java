@@ -115,6 +115,12 @@ import au.com.bytecode.opencsv.CSVReader;
 
 public final class DataManagement implements DataManagementInfo {
 
+	private DataManagement() {
+		this.webAppRoot = null;
+		this.dataSource = null;
+		this.authManager = null;
+	}
+	
 	/**
 	 * @param dataSource
 	 *            Provides access to the relational database
@@ -2141,11 +2147,11 @@ public final class DataManagement implements DataManagementInfo {
 
 	private Map<ReportSummaryInfo, ReportSummaryDataInfo> cachedReportSummaryDatas = new HashMap<ReportSummaryInfo, ReportSummaryDataInfo>();
 
-	private DataSource dataSource;
+	private final DataSource dataSource;
 
-	private String webAppRoot;
+	private final String webAppRoot;
 
-	private AuthManagerInfo authManager;
+	private final AuthManagerInfo authManager;
 
 	/**
 	 * Keep a record of the last time any schema or data change occurred for

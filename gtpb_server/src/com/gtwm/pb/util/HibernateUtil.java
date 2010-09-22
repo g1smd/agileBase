@@ -56,7 +56,7 @@ import com.gtwm.pb.model.manageSchema.fields.SequenceFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SeparatorFieldDefn;
 
-public class HibernateUtil {
+public final class HibernateUtil {
 
 	private static final SessionFactory sessionFactory;
 

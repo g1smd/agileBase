@@ -23,26 +23,29 @@ import com.gtwm.pb.model.interfaces.BaseReportInfo;
 
 public class TableDependencyException extends AgileBaseException {
 
-	public TableDependencyException(String message, LinkedHashSet<TableInfo> dependentTables, LinkedHashSet<BaseReportInfo> dependentReports) {
-        super(message);
-        this.dependentTables = dependentTables;
-        this.dependentReports = dependentReports; 
-    }
+	public TableDependencyException(String message, LinkedHashSet<TableInfo> dependentTables,
+			LinkedHashSet<BaseReportInfo> dependentReports) {
+		super(message);
+		this.dependentTables = dependentTables;
+		this.dependentReports = dependentReports;
+	}
 
-    public TableDependencyException(String message, Throwable cause, LinkedHashSet<TableInfo> dependentTables, LinkedHashSet<BaseReportInfo> dependentReports) {
-        super(message, cause);
-        this.dependentTables = dependentTables;
-        this.dependentReports = dependentReports;
-    }
-    
-    public LinkedHashSet<TableInfo> getDependentTables() {
-    	return this.dependentTables;
-    }
+	public TableDependencyException(String message, Throwable cause,
+			LinkedHashSet<TableInfo> dependentTables, LinkedHashSet<BaseReportInfo> dependentReports) {
+		super(message, cause);
+		this.dependentTables = dependentTables;
+		this.dependentReports = dependentReports;
+	}
 
-    public LinkedHashSet<BaseReportInfo> getDependentReports() {
-    	return this.dependentReports;
-    }
-    
-    private LinkedHashSet<TableInfo> dependentTables;
-    private LinkedHashSet<BaseReportInfo> dependentReports;
+	public LinkedHashSet<TableInfo> getDependentTables() {
+		return this.dependentTables;
+	}
+
+	public LinkedHashSet<BaseReportInfo> getDependentReports() {
+		return this.dependentReports;
+	}
+
+	private final LinkedHashSet<TableInfo> dependentTables;
+
+	private final LinkedHashSet<BaseReportInfo> dependentReports;
 }

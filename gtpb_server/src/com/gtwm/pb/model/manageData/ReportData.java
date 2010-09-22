@@ -65,6 +65,7 @@ import er.chronic.Options;
 public class ReportData implements ReportDataInfo {
 
 	private ReportData() {
+		this.report = null;
 	}
 
 	/**
@@ -996,7 +997,7 @@ public class ReportData implements ReportDataInfo {
 	/**
 	 * Definition of the report which we are using to return data
 	 */
-	private BaseReportInfo report;
+	private final BaseReportInfo report;
 
 	/**
 	 * Set cache creation time to the creation time of the object
@@ -1007,7 +1008,7 @@ public class ReportData implements ReportDataInfo {
 	 * Constructor records how long it takes to generate mean and std. dev. for
 	 * number fields
 	 */
-	private long millisecsTakenToGenerateStats = 0;
+	private long millisecsTakenToGenerateStats;
 
 	/**
 	 * Avg. / std. dev. calcs used for field colouring

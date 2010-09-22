@@ -22,6 +22,7 @@ import com.gtwm.pb.model.interfaces.fields.DecimalValue;
 public class DecimalValueDefn implements DecimalValue {
 
 	private DecimalValueDefn() {
+		this.decimalValue = null;
 	}
 
 	public DecimalValueDefn(Double decimalValue) {
@@ -48,6 +49,6 @@ public class DecimalValueDefn implements DecimalValue {
 		return (this.decimalValue == null);
 	}
 
-	private Double decimalValue = null;
+	private final Double decimalValue;
 
 }

@@ -21,6 +21,10 @@ import com.gtwm.pb.model.interfaces.fields.CheckboxValue;
 
 public class CheckboxValueDefn implements CheckboxValue {
 
+	private CheckboxValueDefn() {
+		this.checkboxValue = null;
+	}
+	
     public CheckboxValueDefn(Boolean checkboxValue) {
         this.checkboxValue = checkboxValue;
     }
@@ -41,5 +45,5 @@ public class CheckboxValueDefn implements CheckboxValue {
         return (this.checkboxValue == null);
     }
 
-    private Boolean checkboxValue;
+    private final Boolean checkboxValue;
 }

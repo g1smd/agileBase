@@ -7,6 +7,8 @@ import com.gtwm.pb.model.interfaces.fields.FileVersion;
 public class FileVersionDefn implements FileVersion, Comparable<FileVersion> {
 
 	private FileVersionDefn() {
+		this.fileName = null;
+		this.lastModified = null;
 	}
 	
 	public FileVersionDefn(String fileName, Calendar lastModified) {
@@ -40,7 +42,7 @@ public class FileVersionDefn implements FileVersion, Comparable<FileVersion> {
 	}
 	
 	public int hashCode() {
-		return this.getFileName().hashCode();
+		return this.fileName.hashCode();
 	}
 	
 	/**
@@ -61,8 +63,8 @@ public class FileVersionDefn implements FileVersion, Comparable<FileVersion> {
 		return this.fileName;
 	}
 	
-	private String fileName;
+	private final String fileName;
 	
-	private Calendar lastModified;
+	private final Calendar lastModified;
 
 }

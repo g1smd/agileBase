@@ -40,7 +40,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
-
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
@@ -63,9 +62,8 @@ import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.ObjectNotFoundException;
-import com.ibm.icu.util.Calendar;
 
-public class ReportDownloader extends HttpServlet {
+public final class ReportDownloader extends HttpServlet {
 
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();

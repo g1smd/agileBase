@@ -22,6 +22,12 @@ import com.gtwm.pb.model.interfaces.ModuleActionInfo;
 public class ModuleAction implements ModuleActionInfo {
 	
 	private ModuleAction() {
+		this.actionName = null;
+		this.description = null;
+		this.attributes = null;
+		this.actionTemplate = null;
+		this.buttons = null;
+		this.callbackFunction = null;
 	}
 	
 	public ModuleAction(String actionName, String description, String attributes, String actionTemplate, String buttons, String callbackFunction) {
@@ -72,18 +78,18 @@ public class ModuleAction implements ModuleActionInfo {
 	}
 	
 	public int hashCode() {
-		return this.getActionName().hashCode();
+		return this.actionName.hashCode();
 	}
 
-	private String actionName = "";
+	private final String actionName;
 	
-	private String description = "";
+	private final String description;
 	
-	private String attributes = "";
+	private final String attributes;
 	
-	private String callbackFunction = "";
+	private final String callbackFunction;
 	
-	private String buttons = "";
+	private final String buttons;
 	
-	private String actionTemplate = "";
+	private final String actionTemplate;
 }

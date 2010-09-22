@@ -18,9 +18,8 @@
 package com.gtwm.pb.util;
 
 import javax.servlet.http.HttpServletRequest;
-import org.grlea.log.SimpleLogger;
 
-public class HttpRequestUtil {
+public final class HttpRequestUtil {
 
 	public static Boolean getBooleanValue(HttpServletRequest request, String param) {
 		String booleanValueString = request.getParameter(param);

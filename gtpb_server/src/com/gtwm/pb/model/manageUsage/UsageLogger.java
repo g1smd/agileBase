@@ -34,6 +34,7 @@ import com.gtwm.pb.util.Enumerations.AppAction;
 public class UsageLogger implements UsageLoggerInfo, Runnable {
 
 	private UsageLogger() {
+		this.relationalDataSource = null;
 	}
 
 	/**
@@ -221,7 +222,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 
 	private int rowId = -1;
 
-	private DataSource relationalDataSource;
+	private final DataSource relationalDataSource;
 
 	private Timestamp timestamp = new Timestamp(0);
 

@@ -43,7 +43,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
  * Methods that are sometimes useful but aren't provided by the Java language
  * itself
  */
-public class Helpers {
+public final class Helpers {
 
 	private Helpers() {
 	}

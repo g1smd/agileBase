@@ -23,6 +23,12 @@ import com.gtwm.pb.util.Enumerations.QuickFilterType;
 
 public class ReportQuickFilter implements ReportQuickFilterInfo {
 
+	private ReportQuickFilter() {
+		this.filterField = null;
+		this.filterValue = null;
+		this.filterType = null;
+	}
+	
 	public ReportQuickFilter(BaseField filterField, String filterValue, QuickFilterType filterType) {
 		this.filterField = filterField;
 		this.filterValue = filterValue;
@@ -45,10 +51,10 @@ public class ReportQuickFilter implements ReportQuickFilterInfo {
 		return this.getFilterField().toString() + " " + this.getFilterType() + " " + this.getFilterValue();
 	}
 	
-	private BaseField filterField = null;
+	private final BaseField filterField;
 	
-	private String filterValue = null;
+	private final String filterValue;
 	
-	private QuickFilterType filterType = null;
+	private final QuickFilterType filterType;
 
 }

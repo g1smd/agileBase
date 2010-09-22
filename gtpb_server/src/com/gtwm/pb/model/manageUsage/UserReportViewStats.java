@@ -27,11 +27,15 @@ public class UserReportViewStats implements UserReportViewStatsInfo,
 		Comparable<UserReportViewStatsInfo> {
 
 	private UserReportViewStats() {
+		this.appUser = null;
+		this.reportViews = 0;
+		this.lastViewed = null;
 	}
 
 	public UserReportViewStats(AppUserInfo appUser, int reportViews) {
 		this.appUser = appUser;
 		this.reportViews = reportViews;
+		this.lastViewed = null;
 	}
 	
 	public UserReportViewStats(AppUserInfo appUser, int reportViews, Date lastViewed) {
@@ -66,7 +70,7 @@ public class UserReportViewStats implements UserReportViewStatsInfo,
 	}
 
 	public int hashCode() {
-		return this.getUser().hashCode();
+		return this.appUser.hashCode();
 	}
 
 	/**
@@ -85,9 +89,9 @@ public class UserReportViewStats implements UserReportViewStatsInfo,
 		return "" + this.getUser() + " -> " + this.reportViews;
 	}
 
-	private AppUserInfo appUser;
+	private final AppUserInfo appUser;
 
-	private int reportViews = 0;
+	private final int reportViews;
 	
-	private Date lastViewed = null;
+	private final Date lastViewed;
 }

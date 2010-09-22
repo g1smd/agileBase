@@ -24,7 +24,7 @@ import com.gtwm.pb.model.interfaces.fields.RelationField;
  * generate Strings that can be used as column names, table names etc. without
  * causing a database error
  */
-public class Naming {
+public final class Naming {
 	/**
 	 * Prevent object construction outside of this class.
 	 */

@@ -49,6 +49,9 @@ import com.ibm.icu.text.RuleBasedNumberFormat;
 public final class ViewTools implements ViewToolsInfo {
 
 	private ViewTools() {
+		this.webAppRoot = null;
+		this.request = null;
+		this.response = null;
 	}
 
 	public ViewTools(HttpServletRequest request, HttpServletResponse response, String webAppRoot) {
@@ -1157,11 +1160,11 @@ public final class ViewTools implements ViewToolsInfo {
 		throw new CantDoThatException("Test error message");
 	}
 
-	private HttpServletRequest request = null;
+	private final HttpServletRequest request;
 
-	private HttpServletResponse response = null;
+	private final HttpServletResponse response;
 
-	private String webAppRoot = null;
+	private final String webAppRoot;
 
 	private MathTool mathTool = new MathTool();
 

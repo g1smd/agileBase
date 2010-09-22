@@ -33,9 +33,8 @@ public class RandomString {
 	 */
 	public RandomString() {
 		// to be a valid postgres object name, start with a letter
-		this.generatedHexString = RandomStringUtils.randomAlphabetic(1)
-				+ RandomStringUtils.randomAlphanumeric(16);
-		this.generatedHexString = this.generatedHexString.toLowerCase();
+		this.generatedHexString = (RandomStringUtils.randomAlphabetic(1)
+				+ RandomStringUtils.randomAlphanumeric(16)).toLowerCase();
 	}
 
 	/**
@@ -45,7 +44,7 @@ public class RandomString {
 		return this.generatedHexString;
 	}
 
-	private String generatedHexString = null;
+	private final String generatedHexString;
 
 	//private static final SimpleLogger logger = new SimpleLogger(RandomString.class);
 }
