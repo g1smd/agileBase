@@ -35,5 +35,5 @@ public class InputRecordException extends AgileBaseException {
         return this.fieldCausingException;
     }
 
-    private BaseField fieldCausingException = null;
+    private final BaseField fieldCausingException;
 }

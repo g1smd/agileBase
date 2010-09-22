@@ -21,28 +21,29 @@ import com.gtwm.pb.model.interfaces.fields.IntegerValue;
 
 public class IntegerValueDefn implements IntegerValue {
 
-    private IntegerValueDefn() {
-    }
+	private IntegerValueDefn() {
+		this.integerValue = null;
+	}
 
-    public IntegerValueDefn(Integer integerValue) {
-        this.integerValue = integerValue;
-    }
+	public IntegerValueDefn(Integer integerValue) {
+		this.integerValue = integerValue;
+	}
 
-    public int getValueInteger() {
-        return this.integerValue;
-    }
+	public int getValueInteger() {
+		return this.integerValue;
+	}
 
-    public String toString() {
-        if (this.integerValue == null) {
-            return "";
-        } else {
-            return String.valueOf(this.integerValue);
-        }
-    }
-    
-    public boolean isNull() {
-        return (this.integerValue == null);
-    }
+	public String toString() {
+		if (this.integerValue == null) {
+			return "";
+		} else {
+			return String.valueOf(this.integerValue);
+		}
+	}
 
-    private Integer integerValue;
+	public boolean isNull() {
+		return (this.integerValue == null);
+	}
+
+	private final Integer integerValue;
 }

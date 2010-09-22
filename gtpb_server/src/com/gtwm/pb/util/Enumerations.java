@@ -331,7 +331,7 @@ public class Enumerations {
 		}
 	}
 
-	public enum Period {
+	public static enum Period {
 		DAY, WEEK, MONTH, YEAR;
 	}
 

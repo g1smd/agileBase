@@ -32,6 +32,7 @@ import com.gtwm.pb.model.manageSchema.Module;
 public class ModuleUsageStats implements ModuleUsageStatsInfo, Comparable<ModuleUsageStatsInfo> {
 
 	private ModuleUsageStats() {
+		this.module = null;
 	}
 
 	public ModuleUsageStats(ModuleInfo module) {
@@ -122,9 +123,9 @@ public class ModuleUsageStats implements ModuleUsageStatsInfo, Comparable<Module
 		return "" + this.module + " -> " + this.reportStats.toString();
 	}
 
-	private SortedMap<BaseReportInfo, SortedSet<UserReportViewStatsInfo>> reportStats = new TreeMap<BaseReportInfo, SortedSet<UserReportViewStatsInfo>>();
+	private final SortedMap<BaseReportInfo, SortedSet<UserReportViewStatsInfo>> reportStats = new TreeMap<BaseReportInfo, SortedSet<UserReportViewStatsInfo>>();
 
-	private ModuleInfo module = null;
+	private final ModuleInfo module;
 	
 	private int totalReportViews = 0;
 }

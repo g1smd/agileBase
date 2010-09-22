@@ -219,7 +219,7 @@
 	  var hoverIntentConfig = {    
          over: showTooltip,
          out: hideTooltip,
-         interval: 300
+         interval: 400
 	  };
 	  $("#filterhelp").hoverIntent(hoverIntentConfig);
 	  $(".ab_field_title").hoverIntent(hoverIntentConfig);

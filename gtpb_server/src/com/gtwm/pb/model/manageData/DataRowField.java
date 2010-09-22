@@ -24,6 +24,17 @@ public class DataRowField implements DataRowFieldInfo {
 	public static final String NULL_COLOR = "";
 
 	private DataRowField() {
+		this.keyValue = null;
+		this.displayValue = null;
+		this.standardDevHexColor = DataRowField.NULL_COLOR;
+		this.numberOfStdDevsFromMean = 0d;
+	}
+
+	public DataRowField(String keyValue, String displayValue) {
+		this.keyValue = keyValue;
+		this.displayValue = displayValue;
+		this.standardDevHexColor = DataRowField.NULL_COLOR;
+		this.numberOfStdDevsFromMean = 0d;
 	}
 
 	/**
@@ -45,6 +56,7 @@ public class DataRowField implements DataRowFieldInfo {
 		this.keyValue = keyValue;
 		this.displayValue = displayValue;
 		this.standardDevHexColor = standardDevHexColor;
+		this.numberOfStdDevsFromMean = 0d;
 	}
 
 	private static String calcStandardDevHexColour(double numberOfStdDevsFromMean) {
@@ -64,12 +76,6 @@ public class DataRowField implements DataRowFieldInfo {
 			colourRepresentation = "#ff" + colourRepresentation + colourRepresentation;
 		}
 		return colourRepresentation;
-	}
-
-	public DataRowField(String keyValue, String displayValue) {
-		this.keyValue = keyValue;
-		this.displayValue = displayValue;
-		this.standardDevHexColor = DataRowField.NULL_COLOR;
 	}
 
 	public String getKeyValue() {
@@ -100,13 +106,13 @@ public class DataRowField implements DataRowFieldInfo {
 		return this.getDisplayValue();
 	}
 
-	private String keyValue = null;
+	private final String keyValue;
 
-	private String displayValue = null;
+	private final String displayValue;
 
-	private double numberOfStdDevsFromMean = 0d;
+	private final double numberOfStdDevsFromMean;
 
-	private String standardDevHexColor = NULL_COLOR;
+	private final String standardDevHexColor;
 
 	/**
 	 * Increase this number to make field colours brighter, reduce to make more

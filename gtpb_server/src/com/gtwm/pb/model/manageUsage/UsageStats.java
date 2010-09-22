@@ -61,6 +61,8 @@ import org.grlea.log.SimpleLogger;
 public class UsageStats implements UsageStatsInfo {
 
 	private UsageStats() {
+		this.request = null;
+		this.databaseDefn = null;
 	}
 
 	public UsageStats(HttpServletRequest request, DatabaseInfo databaseDefn)
@@ -854,9 +856,9 @@ public class UsageStats implements UsageStatsInfo {
 
 	private int numTables = 0;
 
-	private DatabaseInfo databaseDefn = null;
+	private final DatabaseInfo databaseDefn;
 
-	private HttpServletRequest request = null;
+	private final HttpServletRequest request;
 
 	private static final SimpleLogger logger = new SimpleLogger(UsageStats.class);
 

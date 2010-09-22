@@ -22,6 +22,12 @@ import com.gtwm.pb.model.interfaces.UsageStatsTreeMapNodeInfo;
 
 public class UsageStatsTreeMapNode implements UsageStatsTreeMapNodeInfo {
 
+	private UsageStatsTreeMapNode() {
+		this.report = null;
+		this.area = 0;
+		this.colour = 0;
+	}
+	
 	public UsageStatsTreeMapNode(BaseReportInfo report, int area, int colour) {
 		this.report = report;
 		this.area = area;
@@ -57,9 +63,9 @@ public class UsageStatsTreeMapNode implements UsageStatsTreeMapNodeInfo {
 		return this.getReport().hashCode();
 	}
 	
-	private BaseReportInfo report;
+	private final BaseReportInfo report;
 	
-	private int colour = 0;
+	private final int colour;
 	
-	private int area = 0;
+	private final int area;
 }

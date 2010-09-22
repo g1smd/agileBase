@@ -54,6 +54,7 @@ public final class SessionData implements SessionDataInfo {
 
 	public SessionData() {
 		logger.warn("Empty SessionData object created");
+		this.relationalDataSource = null;
 	}
 
 	/**
@@ -543,7 +544,7 @@ public final class SessionData implements SessionDataInfo {
 
 	private TableDependencyException tdex = null;
 
-	private DataSource relationalDataSource = null;
+	private final DataSource relationalDataSource;
 
 	private static final SimpleLogger logger = new SimpleLogger(SessionData.class);
 }

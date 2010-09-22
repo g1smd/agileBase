@@ -7,6 +7,9 @@ import com.gtwm.pb.model.interfaces.UserReportViewStatsInfo;
 public class ReportViewStats implements ReportViewStatsInfo {
 
 	private ReportViewStats() {
+		this.averageViews = 0;
+		this.percentageIncrease = 0;
+		this.userStats = null;
 	}
 	
 	public ReportViewStats(int averageViews, int percentageIncrease, SortedSet<UserReportViewStatsInfo> userStats) {
@@ -27,9 +30,9 @@ public class ReportViewStats implements ReportViewStatsInfo {
 		return this.userStats;
 	}
 
-	private int averageViews = 0;
+	private final int averageViews;
 	
-	private int percentageIncrease = 0;
+	private final int percentageIncrease;
 	
-	private SortedSet<UserReportViewStatsInfo> userStats = null;
+	private final SortedSet<UserReportViewStatsInfo> userStats;
 }

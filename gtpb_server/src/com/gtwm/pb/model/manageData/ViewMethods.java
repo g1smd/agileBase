@@ -83,6 +83,11 @@ import java.util.TreeSet;
 
 public final class ViewMethods implements ViewMethodsInfo {
 
+	private ViewMethods() {
+		this.request = null;
+		this.databaseDefn = null;
+	}
+	
 	/**
 	 * Create and initialise the viewMethods object that'll be used by templates
 	 * to display the application
@@ -944,11 +949,11 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	private String toolbarPluginName = null;
 
-	private HttpServletRequest request;
+	private final HttpServletRequest request;
 
-	private SessionDataInfo sessionData;
+	private SessionDataInfo sessionData; // Should be final if possible too
 
-	private DatabaseInfo databaseDefn;
+	private final DatabaseInfo databaseDefn;
 
 	private Map<String, List<ModuleActionInfo>> reportGroupActions = new HashMap<String, List<ModuleActionInfo>>();
 

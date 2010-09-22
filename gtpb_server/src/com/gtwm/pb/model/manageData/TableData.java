@@ -50,6 +50,7 @@ import com.gtwm.pb.util.CodingErrorException;
 public class TableData implements TableDataInfo {
 
 	private TableData() {
+		this.table = null;
 	}
 
 	public TableData(TableInfo table) {
@@ -187,7 +188,7 @@ public class TableData implements TableDataInfo {
 				+ " table data at this low level. Please use a higher level method such as one from ViewMethods to do so";
 	}
 
-	private TableInfo table = null;
+	private final TableInfo table;
 
 	private static final SimpleLogger logger = new SimpleLogger(TableData.class);
 }

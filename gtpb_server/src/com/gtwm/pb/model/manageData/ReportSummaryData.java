@@ -28,73 +28,85 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 
 public class ReportSummaryData implements ReportSummaryDataInfo {
 
-    private ReportSummaryData() {    
-    }
+	private ReportSummaryData() {
+		this.reportSummaryDataRows = null;
+		this.minAggValues = null;
+		this.maxAggValues = null;
+		this.grandTotals = null;
+	}
 
-    /**
-     * @param reportSummaryDataRows	The report summary data
-     * @param minAggValues	A map containing the minimum data value for each aggregate function. Useful in charting
-     * @param maxAggValues	Similar to minAggValues
-     */
-    public ReportSummaryData(List<ReportSummaryDataRowInfo> reportSummaryDataRows, Map<ReportSummaryAggregateInfo, Number> minAggValues, Map<ReportSummaryAggregateInfo, Number> maxAggValues, Map<ReportSummaryAggregateInfo, Number> grandTotals) {
-        this.reportSummaryDataRows = reportSummaryDataRows;
-        this.minAggValues = minAggValues;
-        this.maxAggValues = maxAggValues;
-        this.grandTotals = grandTotals;
-    }
+	/**
+	 * @param reportSummaryDataRows
+	 *            The report summary data
+	 * @param minAggValues
+	 *            A map containing the minimum data value for each aggregate
+	 *            function. Useful in charting
+	 * @param maxAggValues
+	 *            Similar to minAggValues
+	 */
+	public ReportSummaryData(List<ReportSummaryDataRowInfo> reportSummaryDataRows,
+			Map<ReportSummaryAggregateInfo, Number> minAggValues,
+			Map<ReportSummaryAggregateInfo, Number> maxAggValues,
+			Map<ReportSummaryAggregateInfo, Number> grandTotals) {
+		this.reportSummaryDataRows = reportSummaryDataRows;
+		this.minAggValues = minAggValues;
+		this.maxAggValues = maxAggValues;
+		this.grandTotals = grandTotals;
+	}
 
-    public List<ReportSummaryDataRowInfo> getReportSummaryDataRows() {
-        return this.reportSummaryDataRows;
-    }
+	public List<ReportSummaryDataRowInfo> getReportSummaryDataRows() {
+		return this.reportSummaryDataRows;
+	}
 
-    public int getValueAsPercentage(ReportSummaryAggregateInfo aggregate, Number value) {
-    	if (value == null) {
-    		return 0;
-    	}
-    	Number minNum = this.minAggValues.get(aggregate);
-    	Number maxNum = this.maxAggValues.get(aggregate);
-    	if (minNum == null || maxNum == null) {
-    		return 0;
-    	}
-    	double minValue = 0;
-    	double maxValue = maxNum.doubleValue();
-    	double valueDouble = value.doubleValue();
-    	double range = maxValue - minValue;
-    	if (range == 0.0d) {
-    		return 0;
-    	}
-    	Double percentage = ((valueDouble - minValue) / range) * 100;
-    	return percentage.intValue();
-    }
-    
-    public double getGrandTotal(ReportSummaryAggregateInfo aggregate) throws ObjectNotFoundException {
-    	Number grandTotal = this.grandTotals.get(aggregate);
-    	if (grandTotal == null) {
-    		throw new ObjectNotFoundException("Grand total not found for aggregate " + aggregate);
-    	}
-    	return grandTotal.doubleValue();
-    }
-    
+	public int getValueAsPercentage(ReportSummaryAggregateInfo aggregate, Number value) {
+		if (value == null) {
+			return 0;
+		}
+		Number minNum = this.minAggValues.get(aggregate);
+		Number maxNum = this.maxAggValues.get(aggregate);
+		if (minNum == null || maxNum == null) {
+			return 0;
+		}
+		double minValue = 0;
+		double maxValue = maxNum.doubleValue();
+		double valueDouble = value.doubleValue();
+		double range = maxValue - minValue;
+		if (range == 0.0d) {
+			return 0;
+		}
+		Double percentage = ((valueDouble - minValue) / range) * 100;
+		return percentage.intValue();
+	}
+
+	public double getGrandTotal(ReportSummaryAggregateInfo aggregate)
+			throws ObjectNotFoundException {
+		Number grandTotal = this.grandTotals.get(aggregate);
+		if (grandTotal == null) {
+			throw new ObjectNotFoundException("Grand total not found for aggregate " + aggregate);
+		}
+		return grandTotal.doubleValue();
+	}
+
 	public long getCacheCreationTime() {
 		return this.cacheCreationTime;
 	}
-    
-   public String toString() {
-        return this.reportSummaryDataRows.toString();
-    }
 
-    private List<ReportSummaryDataRowInfo> reportSummaryDataRows = null;
-    
-    private Map<ReportSummaryAggregateInfo, Number> minAggValues = null;
-    
-    private Map<ReportSummaryAggregateInfo, Number> maxAggValues = null;
+	public String toString() {
+		return this.reportSummaryDataRows.toString();
+	}
 
-    private Map<ReportSummaryAggregateInfo, Number> grandTotals = null;
-    
+	private final List<ReportSummaryDataRowInfo> reportSummaryDataRows;
+
+	private final Map<ReportSummaryAggregateInfo, Number> minAggValues;
+
+	private final Map<ReportSummaryAggregateInfo, Number> maxAggValues;
+
+	private final Map<ReportSummaryAggregateInfo, Number> grandTotals;
+
 	/**
 	 * Set cache creation time to the creation time of the object
 	 */
 	private final long cacheCreationTime = (new Date()).getTime();
 
-    private static final SimpleLogger logger = new SimpleLogger(ReportSummaryData.class);
+	private static final SimpleLogger logger = new SimpleLogger(ReportSummaryData.class);
 }

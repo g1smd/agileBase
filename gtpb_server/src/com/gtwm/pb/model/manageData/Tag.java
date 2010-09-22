@@ -22,6 +22,8 @@ import com.gtwm.pb.model.interfaces.TagInfo;
 public class Tag implements TagInfo, Comparable<TagInfo> {
 
 	private Tag() {
+		this.weight = 0;
+		this.name = null;
 	}
 
 	public Tag(String name, int weight) {
@@ -76,7 +78,7 @@ public class Tag implements TagInfo, Comparable<TagInfo> {
 		return this.getName();
 	}
 
-	private String name = "";
+	private final String name;
 
-	private int weight = 0;
+	private final int weight;
 }

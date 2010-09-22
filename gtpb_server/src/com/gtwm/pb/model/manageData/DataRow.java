@@ -51,7 +51,13 @@ import com.gtwm.pb.util.AppProperties;
 
 public class DataRow implements DataRowInfo {
 
+	/**
+	 * Private no-arg constructor just to stop public use of no-arg constructor
+	 */
 	private DataRow() {
+		this.row = null;
+		this.rowid = -1;
+		this.table = null;
 	}
 
 	public DataRow(TableInfo table, int rowid, Map<BaseField, DataRowFieldInfo> row) {
@@ -265,11 +271,11 @@ public class DataRow implements DataRowInfo {
 		return this.row.toString();
 	}
 
-	private Map<BaseField, DataRowFieldInfo> row;
+	private final Map<BaseField, DataRowFieldInfo> row;
 
-	private int rowid;
+	private final int rowid;
 
-	private TableInfo table;
+	private final TableInfo table;
 
 	private static final SimpleLogger logger = new SimpleLogger(DataRow.class);
 }
