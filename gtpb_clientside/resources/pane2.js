@@ -288,8 +288,10 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
  * to be deleted
  */
 function fSelectAll(oCheckbox) {
-	var iCellIndex = oCheckbox.parentNode.parentNode.cellIndex; // checkbox <-
+	//var iCellIndex = oCheckbox.parentNode.parentNode.cellIndex; // checkbox <-
 																// div <- th
+	var iCellIndex = jQuery(oCheckbox).closest('th').attr('cellIndex');
+	alert('detected cell index ' + iCellIndex);
 	var oRows = document.getElementById('reportBody').rows;
 	for ( var i = 0; i < oRows.length; i++) {
 		try {
@@ -306,7 +308,6 @@ function fSelectAll(oCheckbox) {
 
 //TODO: simplify with jQuery
 function fLocateDeleteMarkers(oCheckbox) {
-	alert("locating delete markers");
 	// lets the delete object know what column the delete checkboxes are in
 	// cell could be a TD or a TH
 	function fParentCell() {
@@ -327,7 +328,6 @@ function fLocateDeleteMarkers(oCheckbox) {
 	// if there is a cell
 	if (oCell) {
 		iDeleteCellIndex = oCell.cellIndex;
-		alert("iDeleteCellIndex " + iDeleteCellIndex);
 	}
 }
 
