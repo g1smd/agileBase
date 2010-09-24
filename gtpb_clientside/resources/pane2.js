@@ -306,6 +306,7 @@ function fSelectAll(oCheckbox) {
 
 //TODO: simplify with jQuery
 function fLocateDeleteMarkers(oCheckbox) {
+	alert("locating delete markers");
 	// lets the delete object know what column the delete checkboxes are in
 	// cell could be a TD or a TH
 	function fParentCell() {
