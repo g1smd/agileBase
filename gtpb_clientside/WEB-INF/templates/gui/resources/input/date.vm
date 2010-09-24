@@ -249,7 +249,7 @@
 	          if(i==$days) oDay.selectedIndex=i;
 	        }
 	        oDay.setAttribute('wrapperAttribute','gtpb_$field.getInternalFieldName()_days');
-			oDay.setAttribute('tabindex','$tabIndex');
+			//oDay.setAttribute('tabindex','$tabIndex');
 			#set($tabIndex = $tabIndex + 1)
 	        oWrapperDiv.appendChild(oDay);
 	        oWrapperDiv.day=oDay;
@@ -279,7 +279,7 @@
 	          if(i==$months) oMonth.selectedIndex=i;
 	        }
 	        oMonth.setAttribute('wrapperAttribute','gtpb_$field.getInternalFieldName()_months');
-			        oMonth.setAttribute('tabindex','$tabIndex');
+			        //oMonth.setAttribute('tabindex','$tabIndex');
 			        #set($tabIndex = $tabIndex + 1)
 	        oWrapperDiv.appendChild(oMonth);
 	        oWrapperDiv.month=oMonth;
@@ -289,7 +289,7 @@
 	      
 	      // ********* TEXT FIELDS ************
 	      var oYear=fCreateTextElement(4,'gtpb_$field.getInternalFieldName()_years');
-		  oYear.setAttribute('tabindex','$tabIndex');
+		  //oYear.setAttribute('tabindex','$tabIndex');
 		  #set($tabIndex = $tabIndex + 1)
 	      oWrapperDiv.year=oYear;
 	      #if($dateResolution >= $CONST_HOUR_OF_DAY)
@@ -302,13 +302,13 @@
 	      #if($dateResolution >= $CONST_MINUTE)
 	        oWrapperDiv.appendChild(document.createTextNode(':'));
 	      		  var oMinute=fCreateTextElement(2,'gtpb_$field.getInternalFieldName()_minutes');
-			oMinute.setAttribute('tabindex','$tabIndex');
+			//oMinute.setAttribute('tabindex','$tabIndex');
 			#set($tabIndex = $tabIndex + 1)
 	      		  oWrapperDiv.minute=oMinute;
 	      		#end
 	      		#if($dateResolution >= $CONST_SECOND)
 	      		  var oSecond=fCreateTextElement(2,'gtpb_$field.getInternalFieldName()_seconds');
-			oSecond.setAttribute('tabindex','$tabIndex');
+			//oSecond.setAttribute('tabindex','$tabIndex');
 			#set($tabIndex = $tabIndex + 1)
 	      		  oWrapperDiv.second=oSecond;
 	      		#end

@@ -99,7 +99,7 @@
 
     var oClicker=document.createElement('A');
     oClicker.setAttribute('href','#');
-	oClicker.setAttribute('tabindex','$tabIndex');
+	//oClicker.setAttribute('tabindex','$tabIndex');
     $(oClicker).click(fPicker);
 	#if($mobile_device)
 	  $(oClicker).click(fSetOverflowHack,false);
