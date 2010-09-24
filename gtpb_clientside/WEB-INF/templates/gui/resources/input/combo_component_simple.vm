@@ -19,7 +19,7 @@
 
 #set($all_items = $field.getItems())
 #if($all_items.size() > 0) ##if any items in the combo
-<select tabindex="$tabIndex" name="$field.getInternalFieldName()">
+<select name="$field.getInternalFieldName()">
 #foreach($item in $all_items)
 	<option value="$item">$item</option>
 #end

@@ -22,9 +22,9 @@
 #end
 #if($userCanEdit)
   #if($globalEdit)
-    	<input tabindex="$tabIndex" type=checkbox name=$field.getInternalFieldName()> ## always unchecked
+    	<input type=checkbox name=$field.getInternalFieldName()> ## always unchecked
   #else
-    	<input tabindex="$tabIndex" type=checkbox name=$field.getInternalFieldName() #if($updateAsType) gtpb_update_record=true onclick="new fChange(this)" #end #if($fieldValue == true) checked #end>
+    	<input type=checkbox name=$field.getInternalFieldName() #if($updateAsType) gtpb_update_record=true onclick="new fChange(this)" #end #if($fieldValue == true) checked #end>
   #end
   
     #if($globalEdit)
