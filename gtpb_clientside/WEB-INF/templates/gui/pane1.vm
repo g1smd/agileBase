@@ -24,7 +24,8 @@
 	#if($mobile_device)
 	<meta name = "viewport" content = "width = device-width">
 	<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
-	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
+	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/>
+	<link href="resources/mobile/mobile.css" type="text/css" rel="stylesheet" />
 	#end
 	<title>$view.getApplicationName() version $view.getApplicationVersion() - $view.getLoggedInUser().getCompany()</title>
 	<link href="resources/tree/tree.css" type="text/css" rel="stylesheet" />
