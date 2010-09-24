@@ -304,6 +304,7 @@ function fSelectAll(oCheckbox) {
 	}
 }
 
+//TODO: simplify with jQuery
 function fLocateDeleteMarkers(oCheckbox) {
 	// lets the delete object know what column the delete checkboxes are in
 	// cell could be a TD or a TH
@@ -323,8 +324,10 @@ function fLocateDeleteMarkers(oCheckbox) {
 	// find the parent cell, if one has not been cached, find it
 	var oCell = oCheckbox.parentCell ? oCheckbox.parentCell : fParentCell();
 	// if there is a cell
-	if (oCell)
+	if (oCell) {
 		iDeleteCellIndex = oCell.cellIndex;
+		alert("iDeleteCellIndex " + iDeleteCellIndex);
+	}
 }
 
 var abTooltipTimeout;
