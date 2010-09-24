@@ -288,10 +288,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
  * to be deleted
  */
 function fSelectAll(oCheckbox) {
-	//var iCellIndex = oCheckbox.parentNode.parentNode.cellIndex; // checkbox <-
-																// div <- th
 	var iCellIndex = jQuery(oCheckbox).closest('th').attr('cellIndex');
-	alert('detected cell index ' + iCellIndex);
 	var oRows = document.getElementById('reportBody').rows;
 	for ( var i = 0; i < oRows.length; i++) {
 		try {
