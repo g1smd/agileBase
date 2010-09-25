@@ -70,7 +70,11 @@ body.mobile {
 	text-align:left;
 	position:relative;
 	overflow:visible;
-}      
+}
+
+.mobile .content {
+	width: auto;
+}
    
 #header {
 	height:135px;
