@@ -98,12 +98,14 @@ body {
 	margin-right: auto;
 	margin-top: 20px;
 	width: 50%;
-	font-size: 15pt;
+	font-size: 16pt;
 }
 
-.mobile #header {
+#mobileLogin input {
+	font-size: 16pt;
 }
-	   
+
+
 #header table td {
 	padding:10px 30px;
 }
