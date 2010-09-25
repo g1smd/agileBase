@@ -2,11 +2,13 @@
 	font-family: tahoma, arial, sans-serif;
 }
 
+/*
 html, 
 body {
 	height:100%;
 	overflow:hidden;
 }	
+*/
    
 body {
 	/*background:#1b3447 url('../images/bg-intro.jpg') repeat-x center 135px;
@@ -18,7 +20,6 @@ body {
 
 body.mobile {
 	margin: 20px;
-	height: auto;
 }
 
 #scroller {
