@@ -27,6 +27,7 @@ if (requestURL.contains("appserver.")) {
 </script>
     </head>
     <body>
+		<div id="mobileLogin"
 			<img src="/agileBase/website/images/logo-agilebase.png">
 			<% if(live) { %>
 				<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
@@ -46,5 +47,6 @@ if (requestURL.contains("appserver.")) {
 			
 			</table>
 			</form>
+		</div>
     </body>
 </html> <!-- end of mobile version -->

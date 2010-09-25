@@ -16,10 +16,6 @@ body {
 	font-size:10pt;
 }
 
-body.mobile {
-	margin: 20px;
-}
-
 #scroller {
 	position:relative;
 	width:100%;
@@ -71,12 +67,6 @@ body.mobile {
 	position:relative;
 	overflow:visible;
 }
-
-.mobile .content {
-	width: 100%;
-	left: 10%;
-	border: 10px solid black;
-}
    
 #header {
 	height:135px;
@@ -103,10 +93,11 @@ body.mobile {
 	border-collapse:collapse;
 }
 
-
-#header table.mobileLogin {
-	right:auto;
-} 
+#mobileLogin {
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+}
 
 .mobile #header {
 }
