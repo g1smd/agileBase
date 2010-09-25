@@ -26,11 +26,8 @@ if (requestURL.contains("appserver.")) {
   })();
 </script>
     </head>
-    <body class="mobile">
-		<div id="header" class="wrapper">
-			<div class="content">
-				<a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
-				<div style="position:relative; top:110px">
+    <body>
+			<img src="/agileBase/website/images/logo-agilebase.png">
 			<% if(live) { %>
 				<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
 			<% } else { %>
@@ -38,19 +35,16 @@ if (requestURL.contains("appserver.")) {
 			<% } %>
 			<table border="0" class="mobileLogin">
 			<tr>
-			  <td>username<br /><input style="right:0px" type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></td>
+			  <td>username<br /><input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></td>
 			</tr>
 			<tr>
-			  <td>password<br /><input style="right:0px" type="password" name="j_password" id="j_password" /></td>
+			  <td>password<br /><input type="password" name="j_password" id="j_password" /></td>
 			</tr>
 			<tr>
-			<td><input type="submit" value="login" style="top:200px"></td>
+			<td><input type="submit" value="login"></td>
 			</tr>
 			
 			</table>
-					</form>
-				</div>
-			</div>
-		</div>  
+			</form>
     </body>
 </html> <!-- end of mobile version -->
