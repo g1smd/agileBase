@@ -34,18 +34,11 @@ if (requestURL.contains("appserver.")) {
 			<% } else { %>
 				<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 			<% } %>
-			<table border="0" class="mobileLogin">
-			<tr>
-			  <td>username<br /><input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></td>
-			</tr>
-			<tr>
-			  <td>password<br /><input type="password" name="j_password" id="j_password" /></td>
-			</tr>
-			<tr>
-			<td><input type="submit" value="login"></td>
-			</tr>
-			
-			</table>
+			username<br />
+			<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/><br>
+			password<br />
+			<input type="password" name="j_password" id="j_password" />
+			<input type="submit" value="login">
 			</form>
 		</div>
     </body>
