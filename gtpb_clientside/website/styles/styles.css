@@ -73,7 +73,7 @@ body.mobile {
 }
 
 .mobile .content {
-	width: none;
+	width: 100%;
 	left: 10%;
 	border: 10px solid black;
 }
