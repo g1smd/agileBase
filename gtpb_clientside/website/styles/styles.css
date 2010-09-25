@@ -97,12 +97,19 @@ body.mobile {
 	border-collapse:collapse;
 }
 
+/*
 #header table.mobileLogin {
 	margin-right:auto;
 	margin-left:auto;
 	width: 50%;
 }
-   
+*/ 
+
+.mobile #header {
+	margin-right:auto;
+	margin-left:auto;
+}
+	   
 #header table td {
 	padding:10px 30px;
 }
