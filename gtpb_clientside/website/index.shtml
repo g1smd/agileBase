@@ -39,11 +39,9 @@
   })();
 </script>
     </head>
-    <body class="mobile">
-		<div id="header" class="wrapper">
-			<div class="content">
-				<a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
-				<div style="position:relative; top:110px">
+    <body>
+			<div class="mobileContent">
+				<img src="/agileBase/website/images/logo-agilebase.png">
 			<!--#if expr="$SERVER_NAME='gtwmbackup.dh.bytemark.co.uk'" --> 
 					<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 			<!--#else --> 
@@ -62,9 +60,7 @@
 			
 			</table>
 					</form>
-				</div>
 			</div>
-		</div>  
     </body>
 </html> <!-- end of mobile version -->
 <!--#else -->
