@@ -6,3 +6,7 @@ body {
   font-size: 20px;
   padding: 8px 10px 17px 5px;
 }
+
+#logout {
+  margin: 20px;
+}
