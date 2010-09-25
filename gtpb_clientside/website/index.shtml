@@ -22,7 +22,7 @@
 	<head>
 		<title>agileBase</title>
 		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
-	    <meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable=yes" />
+	    <meta name="viewport" content="width = device-width" />
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 	    <style>
 	    	@import url("/agileBase/website/styles/styles.css");
