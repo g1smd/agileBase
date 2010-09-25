@@ -73,7 +73,7 @@ body.mobile {
 }
 
 .mobile .content {
-	width: auto;
+	width: none;
 }
    
 #header {
