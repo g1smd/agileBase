@@ -98,7 +98,9 @@ body.mobile {
 }
 
 #header table.mobileLogin {
-	right:auto;
+	margin-right:auto;
+	margin-left:auto;
+	width: 50%;
 }
    
 #header table td {
