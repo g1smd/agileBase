@@ -37,7 +37,7 @@ if (requestURL.contains("appserver.")) {
 			username<br />
 			<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/><br>
 			password<br />
-			<input type="password" name="j_password" id="j_password" />
+			<input type="password" name="j_password" id="j_password" /><br><br>
 			<input type="submit" value="login">
 			</form>
 		</div>
