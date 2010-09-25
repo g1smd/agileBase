@@ -60,7 +60,7 @@
 	  #parse('gui/reports_and_tables/report_list.vm')
       ##TODO: add logout button if mobile device
 	  #if($mobile_device)
-		<li>
+		<li><h1><span>&nbsp;</span></h1>
 			<ul>
 					<div id="logout">
 						<form method="get" action="AppController.servlet">
