@@ -16,6 +16,10 @@ body {
 	font-size:10pt;
 }
 
+body.mobile {
+	margin: 20px;
+}
+
 #scroller {
 	position:relative;
 	width:100%;
@@ -93,13 +97,14 @@ body {
 	border-collapse:collapse;
 }
 
-/*
+
 #header table.mobileLogin {
-	margin-right:auto;
+	right:auto;
+	margin-right: auto;
 	margin-left:auto;
 	width: 50%;
 }
-*/ 
+ 
 
 .mobile #header {
 }
