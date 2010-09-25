@@ -74,6 +74,7 @@ body.mobile {
 
 .mobile .content {
 	width: none;
+	left: 10%;
 }
    
 #header {
