@@ -253,7 +253,7 @@
   #if ($resource_folder=='user' || $resource_folder=='roles')
     #set($filtersShouldBeShown='false')
   #end
-  <body #if($mobile_device) onload="window.scrollTo(0,1)" #else onload="#if($selection||($data.size()==0))loadPane3(); #else eval(document.getElementById('reportBody').rows[0].getAttribute('onclick')); #end" #end>
+  <body #if(!$mobile_device) onload="#if($selection||($data.size()==0))loadPane3(); #else eval(document.getElementById('reportBody').rows[0].getAttribute('onclick')); #end" #end>
     <div id=wrapper>
 	  #if($mobile_device)
 		#parse("gui/mobile/pane2_header.vm")
