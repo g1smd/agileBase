@@ -30,6 +30,7 @@
   white-space : nowrap;
   overflow : hidden;
   text-overflow: ellipsis;
+  padding-top: 4px;
 }
 
 /* workaround 'curious consequence' mentioned on http://www.quirksmode.org/mobile/viewports.html */
@@ -81,6 +82,10 @@ table#reportData {
 
 table#reportData td, table#reportData th {
   font-size: 12pt; /* larger text for mobile */
+}
+
+#mobile_header button {
+  vertical-align: middle;
 }
 
 </style>
