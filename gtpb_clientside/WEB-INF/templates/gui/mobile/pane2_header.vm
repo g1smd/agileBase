@@ -35,8 +35,7 @@
 
 /* workaround 'curious consequence' mentioned on http://www.quirksmode.org/mobile/viewports.html */
 body {
-  background-image: url('resources/mobile/header_middle.png');
-  background-repeat: repeat-x;
+  background: url('resources/mobile/header_middle.png') repeat-x left top, url('resources/mobile/header_middle.png') repeat-x left bottom;
 }
 
 
