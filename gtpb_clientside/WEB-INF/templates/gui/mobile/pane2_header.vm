@@ -20,7 +20,7 @@
   position: relative;
   height: 40px;
   width: 100%;
-  background-image: url('resources/mobile/header_middle.png');
+  /* background-image: url('resources/mobile/header_middle.png'); */
   border-bottom: 1px solid rgb(45, 54, 66);
   font-size: 16pt;
   font-weight: bold;
@@ -31,6 +31,13 @@
   overflow : hidden;
   text-overflow: ellipsis;
 }
+
+/* workaround 'curious consequence' mentioned on http://www.quirksmode.org/mobile/viewports.html */
+body {
+  background-image: url('resources/mobile/header_middle.png');
+  background-repeat: repeat-x;
+}
+
 
 .mobile_back_button {
   /* use absolute positioning and transforms as these will be subject to hardware transitions */
@@ -74,10 +81,6 @@ table#reportData {
 
 table#reportData td, table#reportData th {
   font-size: 12pt; /* larger text for mobile */
-}
-
-body {
-	background-color: black;
 }
 
 </style>
