@@ -29,6 +29,7 @@
   overflow : hidden;
   text-overflow: ellipsis;
   padding: 3px;
+  background-color: #8698b2;
 }
 
 /* workaround 'curious consequence' mentioned on http://www.quirksmode.org/mobile/viewports.html */
