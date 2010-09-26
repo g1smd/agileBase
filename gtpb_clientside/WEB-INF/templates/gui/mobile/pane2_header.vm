@@ -92,5 +92,5 @@ table#reportData td, table#reportData th {
 </style>
 
 <div id="mobile_header">
-<button onclick="document.location='?return=gui/pane1'">&lArr; all modules</button> $sessionReport.getModule() - $sessionReport
+<button onclick="document.location='?return=gui/pane1'">&lArr; all modules &lArr;</button> $sessionReport.getModule() - $sessionReport
 </div>
