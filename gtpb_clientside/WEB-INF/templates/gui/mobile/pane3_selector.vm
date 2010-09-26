@@ -18,21 +18,7 @@
 <div class="tab_content" id="selected_tab">
 <div id="html_content" class="content">
 <style>
-#mobile_header {
-  position: relative;
-  height: 40px;
-  width: 100%;
-  background-image: url('resources/mobile/header_middle.png');
-  border-bottom: 1px solid rgb(45, 54, 66);
-  font-size: 16pt;
-  font-weight: bold;
-  color: white;
-  text-shadow: rgba(0, 0, 0, .6) 0px -1px 0px;
-  /* enfore trimming if the label is too long */
-  white-space : nowrap;
-  overflow : hidden;
-  text-overflow: ellipsis;
-}
+#parse("gui/mobile/styles.vm")
 </style>
 
 <div id="mobile_header">
