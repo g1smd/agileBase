@@ -33,7 +33,7 @@
   text-overflow: ellipsis;
 }
 
-#mobile_header button {
+#mobile_footer button {
   vertical-align: middle;
   font-size: 12pt;
 }
