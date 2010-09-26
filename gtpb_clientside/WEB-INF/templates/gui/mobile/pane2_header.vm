@@ -20,8 +20,6 @@
   position: relative;
   height: 40px;
   width: 100%;
-  /* background-image: url('resources/mobile/header_middle.png'); */
-  border-bottom: 1px solid rgb(45, 54, 66);
   font-size: 16pt;
   font-weight: bold;
   color: white;
