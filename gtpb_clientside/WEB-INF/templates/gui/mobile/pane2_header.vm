@@ -72,12 +72,12 @@ table#reportData {
   height: auto;
 }
 
-table#reportData td {
+table#reportData td, table#reportData th {
   font-size: 12pt; /* larger text for mobile */
 }
 
 </style>
 
 <div id="mobile_header">
-<button style="float:right" onclick="document.location='?return=gui/pane1'">&lt; all modules</button> $sessionReport.getModule() - $sessionReport
+<button onclick="document.location='?return=gui/pane1'">&lt; all modules</button> $sessionReport.getModule() - $sessionReport
 </div>
