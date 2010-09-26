@@ -30,7 +30,6 @@
   overflow : hidden;
   text-overflow: ellipsis;
   padding: 3px;
-  background-color: #8698b2;
 }
 
 #mobile_footer button {
