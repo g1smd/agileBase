@@ -76,6 +76,10 @@ table#reportData td, table#reportData th {
   font-size: 12pt; /* larger text for mobile */
 }
 
+body {
+	background-color: black;
+}
+
 </style>
 
 <div id="mobile_header">
