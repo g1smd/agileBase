@@ -68,6 +68,7 @@ table#reportData thead tr.wikiTitle {
 
 div#wrapper table#reportData #fieldFilters td {
   padding: 2px 3px;
+  border-right: none;
 }
 
 table#reportData thead tr#fieldFilters input { 
@@ -75,7 +76,7 @@ table#reportData thead tr#fieldFilters input {
 }
 					  
 table#reportData thead td { 
-  border-bottom:1px solid#cecece 
+  border-bottom:1px solid#cecece;
 }					  
 
 table#reportData .selectable tr.rowa:hover td,
