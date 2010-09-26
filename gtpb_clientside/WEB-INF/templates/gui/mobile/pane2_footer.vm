@@ -32,6 +32,12 @@
   overflow : hidden;
   text-overflow: ellipsis;
 }
+
+#mobile_header button {
+  vertical-align: middle;
+  font-size: 12pt;
+}
+
 </style>
 
 <div id="mobile_footer">
