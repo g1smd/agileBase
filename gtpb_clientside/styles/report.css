@@ -72,7 +72,8 @@ div#wrapper table#reportData #fieldFilters td {
 }
 
 table#reportData thead tr#fieldFilters input { 
-  width:100% 
+  width:100%;
+  font-size: 12pt;
 }
 					  
 table#reportData thead td { 
