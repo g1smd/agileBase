@@ -34,9 +34,13 @@
 }
 
 /* workaround 'curious consequence' mentioned on http://www.quirksmode.org/mobile/viewports.html */
+/* Note also two backgrounds - top and bottom */
 body {
-  height: auto;
   background: url('resources/mobile/header_middle.png') repeat-x left top, url('resources/mobile/header_middle.png') repeat-x left bottom;
+}
+
+html, body {
+  height: auto; /* to allow bottom background to position correctly */
 }
 
 
