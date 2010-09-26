@@ -29,13 +29,12 @@
   overflow : hidden;
   text-overflow: ellipsis;
   padding: 3px;
-  background-color: #8698b2;
 }
 
 /* workaround 'curious consequence' mentioned on http://www.quirksmode.org/mobile/viewports.html */
 /* Note also two backgrounds - top and bottom */
 body {
-  background: url('resources/mobile/header_middle.png') repeat-x left top, url('resources/mobile/header_middle.png') repeat-x left bottom;
+  background: #8698b2 url('resources/mobile/header_middle.png') repeat-x left top, #8698b2 url('resources/mobile/header_middle.png') repeat-x left bottom;
 }
 
 html, body {
