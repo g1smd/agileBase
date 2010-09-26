@@ -80,7 +80,7 @@
 	</style>
   	<script src="resources/jquery.js" language="Javascript"> </script>
 	#if($mobile_device)
-	  <meta name = "viewport" content = "initial-scale = 0.8">
+	  <!-- <meta name = "viewport" content = "initial-scale = 0.8"> -->
       <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
 	#else
 	  <script src="resources/jquery.hoverIntent.js" type="text/javascript"></script>
