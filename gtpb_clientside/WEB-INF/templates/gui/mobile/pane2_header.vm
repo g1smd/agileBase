@@ -30,7 +30,7 @@
   white-space : nowrap;
   overflow : hidden;
   text-overflow: ellipsis;
-  padding-top: 3px;
+  padding: 3px;
 }
 
 /* workaround 'curious consequence' mentioned on http://www.quirksmode.org/mobile/viewports.html */
