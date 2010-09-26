@@ -68,7 +68,7 @@ body.landscape .mobile_back_button {
   -webkit-border-image : url('images/back_button_touched.png') 0 4 0 13;
 }
 
-table#reportdata td {
+table#reportData td {
   font-size: 12pt; /* larger text for mobile */
 }
 
