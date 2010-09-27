@@ -46,6 +46,7 @@
 	<script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jquery.oembed.js"></script>
     <script type="text/javascript" src="resources/highcharts.js"></script>
+	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
 	#parse('gui/display_error.vm')
  	#if($mobile_device)
 		<meta name = "viewport" content = "width = device-width">
@@ -54,7 +55,6 @@
         <script type="text/javascript" src="resources/highcharts_exporting.js"></script>
 		<script type="text/javascript" src="resources/jquery.bgiframe.js"></script>
 		<script type="text/javascript" src="resources/jquery.autocomplete.js"></script>
-		<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
 		<!--[if IE]>
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/tabs-ie.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/edit-ie.css" />
