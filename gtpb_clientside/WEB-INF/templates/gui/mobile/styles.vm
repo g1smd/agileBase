@@ -65,9 +65,10 @@ table#reportData {
   height: auto;
 }
 
-table#reportData td, table#reportData th {
+table#reportData td, table#reportData th, table#reportData input, table#reportData textarea, table#reportData select, table#reportData checkbox {
   font-size: 12pt; /* larger text for mobile */
 }
+
 
 table#reportData tr.rowb  { 
   background-image: url('rowb_mobile.png');
