@@ -68,6 +68,10 @@ table#reportData td, table#reportData th {
   font-size: 12pt; /* larger text for mobile */
 }
 
+table#reportData tr.rowb  { 
+  background-image: url('rowb_mobile.png');
+}
+
 #mobile_header button {
   vertical-align: middle;
   font-size: 12pt;
