@@ -222,7 +222,7 @@
     <script src="http://maps.google.com/maps?file=api&v=2&key=$google_maps_api_key&sensor=false" type="text/javascript"></script>
 	#end
   </head>
-  <body #if($mobile_device) onload="window.scrollTo(0,1)" #end>
+  <body>
   	<div class="wrapper tab-interface" id="gtpb_wrapper">    	
 	#if($mobile_device)
 		#parse('gui/mobile/pane3_selector.vm')

@@ -21,6 +21,7 @@ body {
 
 html, body {
   height: auto; /* to allow bottom background to position correctly */
+  overflow: visible;
 }
 
 
