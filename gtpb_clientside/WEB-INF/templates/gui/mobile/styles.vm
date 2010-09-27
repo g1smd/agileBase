@@ -70,7 +70,7 @@ table#reportData td, table#reportData th, table#reportData input, table#reportDa
 }
 
 div.relation_field a {
-  font-size: 12pt;
+  font-size: 12pt!important;
 }
 
 
