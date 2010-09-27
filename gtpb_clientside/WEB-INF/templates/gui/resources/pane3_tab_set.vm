@@ -47,6 +47,7 @@
     <script type="text/javascript" src="resources/jquery.oembed.js"></script>
     <script type="text/javascript" src="resources/highcharts.js"></script>
 	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
+	<script type="text/javascript" src="resources/wait/request_setFilter.js"></script> 
 	#parse('gui/display_error.vm')
  	#if($mobile_device)
 		<meta name = "viewport" content = "width = device-width">
@@ -59,7 +60,6 @@
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/tabs-ie.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/edit-ie.css" />
 		<![endif]-->
-		<script type="text/javascript" src="resources/wait/request_setFilter.js"></script> 
 		<SCRIPT type="text/javascript" src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
 		#if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
       	  <script type="text/javascript" src="resources/jquery.tablednd.js"></script>
