@@ -33,7 +33,7 @@
   #set($mobile_pane3_selection = "view")
   #parse("gui/reports_and_tables/tabs/view.vm")
   ## Don't allow editing in mobile version for now, doesn't work 100%
-  ## #parse("gui/mobile/pane3_footer.vm")
+  #parse("gui/mobile/pane3_footer.vm")
 #end
 </div>
 </div> ## close tab_content
