@@ -291,7 +291,7 @@
               #set($fieldObject = $field.get(1))
               <td><div>
                 #if($internalFieldName!='')
-                  <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" onkeyup="new fSetFilter(this)" gtpb_return="gui/reports_and_tables/report_data_only" #if($filtersShouldBeShown && $filters.get($fieldObject)) value="$filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(this)"#end>
+                  <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" onkeyup="new fSetFilter(this)" gtpb_return="gui/reports_and_tables/report_data_only" #if($filters.get($fieldObject)) value="$filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(this)"#end>
                 #end
               </div></td>
 		            #end
