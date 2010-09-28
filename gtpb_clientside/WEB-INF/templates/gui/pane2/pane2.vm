@@ -80,6 +80,7 @@
 	</style>
   	<script src="resources/jquery.js" language="Javascript"> </script>
 	#if($mobile_device)
+	  <meta name="apple-mobile-web-app-capable" content="yes" />
 	  <meta name = "viewport" content = "initial-scale = 1.0"> <!-- stop iPad automatically zooming out of large reports -->
       <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
 	#else
