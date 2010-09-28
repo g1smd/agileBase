@@ -158,8 +158,9 @@ public class ReportData implements ReportDataInfo {
 					int fieldNum = 0;
 					for (ReportFieldInfo reportField : colourableFields) {
 						fieldNum++;
-						ReportDataFieldStatsInfo fieldStats = new ReportDataFieldStats(results
-								.getDouble(fieldNum * 2), results.getDouble((fieldNum * 2) + 1));
+						ReportDataFieldStatsInfo fieldStats = new ReportDataFieldStats(
+								results.getDouble(fieldNum * 2),
+								results.getDouble((fieldNum * 2) + 1));
 						this.cachedFieldStats.put(reportField, fieldStats);
 					}
 				}
@@ -328,7 +329,12 @@ public class ReportData implements ReportDataInfo {
 	private static Span parseTimestamp(String valueToParse) {
 		// Check any patterns that we know won't be interpreted as timestamps
 		// properly
+		// th = start of 'this month/year/week' etc., not yet parseable -
+		// Chronic also confuses it with end of 25th etc.
+		// \d\d = start of a date not yet parseable
+		// * or % = text filtering, not for date parsing
 		if (valueToParse.contains("%") || valueToParse.contains("*")
+				|| valueToParse.trim().equalsIgnoreCase("th")
 				|| valueToParse.matches("^\\d{1,2}\\s*$")) {
 			return null;
 		} else {
@@ -430,14 +436,14 @@ public class ReportData implements ReportDataInfo {
 							.getInternalFieldName();
 					String relatedDisplayFieldString = relationField.getDisplayField()
 							.getInternalFieldName();
-					SQLCode.append("(SELECT ").append(relatedTableString).append(".").append(
-							relatedDisplayFieldString);
+					SQLCode.append("(SELECT ").append(relatedTableString).append(".")
+							.append(relatedDisplayFieldString);
 					SQLCode.append(" FROM ").append(relatedTableString);
-					SQLCode.append(" WHERE ").append(relatedValueFieldString).append(" = ").append(
-							this.report.getInternalReportName()).append(".").append(
-							relationField.getInternalFieldName());
-					SQLCode.append(") AS ").append(relationField.getInternalFieldName()).append(
-							"_display, ");
+					SQLCode.append(" WHERE ").append(relatedValueFieldString).append(" = ")
+							.append(this.report.getInternalReportName()).append(".")
+							.append(relationField.getInternalFieldName());
+					SQLCode.append(") AS ").append(relationField.getInternalFieldName())
+							.append("_display, ");
 				}
 			}
 			// remove trailing comma
@@ -596,9 +602,10 @@ public class ReportData implements ReportDataInfo {
 				throw new CantDoThatException("Filter value for " + filterField + " is null");
 			}
 			// Ignore a filter that is only made up of spaces.
-			// These have caused users problems in the past as they are invisible so they don't know there's a filter
+			// These have caused users problems in the past as they are
+			// invisible so they don't know there's a filter
 			boolean filterIsOnlySpaces = true;
-			SPACESCHECK: for(int i=0; i < filterValue.length(); i++) {
+			SPACESCHECK: for (int i = 0; i < filterValue.length(); i++) {
 				char character = filterValue.charAt(i);
 				if (character != " ".charAt(0)) {
 					filterIsOnlySpaces = false;
@@ -636,15 +643,14 @@ public class ReportData implements ReportDataInfo {
 					for (String andFilterPartValue : andFilterParts) {
 						// Generate sub-part filter string for field:
 						filterStringForField += "("
-								+ generateFilterStringForField(filterField,
-										andFilterPartValue, filtersUsed, exactFilters) + ")";
+								+ generateFilterStringForField(filterField, andFilterPartValue,
+										filtersUsed, exactFilters) + ")";
 						filterStringForField += QuickFilterType.AND.getSqlRepresentation();
 					}
 					// remove trailing AND and spaces
 					int charsToRemove = QuickFilterType.AND.getSqlRepresentation().length();
-					filterStringForField = filterStringForField.substring(0, filterStringForField
-							.length()
-							- charsToRemove);
+					filterStringForField = filterStringForField.substring(0,
+							filterStringForField.length() - charsToRemove);
 					filterStringForField = "(" + filterStringForField + ")";
 				} else {
 					// Generate sub-part filter string for field:
@@ -657,9 +663,8 @@ public class ReportData implements ReportDataInfo {
 			if (filterStringForField.length() > 0) {
 				// remove trailing OR and spaces
 				int charsToRemove = QuickFilterType.OR.getSqlRepresentation().length();
-				filterStringForField = filterStringForField.substring(0, filterStringForField
-						.length()
-						- charsToRemove);
+				filterStringForField = filterStringForField.substring(0,
+						filterStringForField.length() - charsToRemove);
 				filterStringForField = "(" + filterStringForField + ")";
 				filterArguments.append(filterStringForField + " AND ");
 			}
@@ -689,8 +694,8 @@ public class ReportData implements ReportDataInfo {
 		ResultSet results = statement.executeQuery();
 		Map<String, String> displayLookup = new HashMap<String, String>();
 		while (results.next()) {
-			displayLookup.put(results.getString(internalKeyFieldName), results
-					.getString(internalDisplayFieldName));
+			displayLookup.put(results.getString(internalKeyFieldName),
+					results.getString(internalDisplayFieldName));
 		}
 		return displayLookup;
 	}
@@ -989,7 +994,7 @@ public class ReportData implements ReportDataInfo {
 	public long getCacheCreationTime() {
 		return this.cacheCreationTime;
 	}
-	
+
 	public Map<ReportFieldInfo, ReportDataFieldStatsInfo> getFieldStats() {
 		return this.cachedFieldStats;
 	}
