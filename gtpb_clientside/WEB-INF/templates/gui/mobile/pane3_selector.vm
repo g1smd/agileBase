@@ -25,25 +25,7 @@
 <button onclick="document.location='?return=gui/mobile/pane2_selector'">&lArr; $sessionData.getReport()</button> Details
 #set($table = $sessionData.getTable())
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
-<div id="record_actions">
-<form method="post" action="AppController.servlet" name="recordform">
-<input type="hidden" name="return" value="gui/reports_and_tables/pane3">
-<input type="hidden" name="set_custom_string" value="1">
-<input type="hidden" name="stringkey" value="mobile_pane3_selection">
-<input type="hidden" name="customstringvalue" value="$mobile_pane3_selection">
-<input type="hidden" name="gtpbaction" value="true">
-	
-#if($mobile_pane3_selection == "edit")
-<button title="Create a new record" id="button_new" onclick="document.recordform.gtpbaction.name='save_new_record'; submit();" >New</button> 
-<button title="Create a copy of this record" id="button_new" onclick="document.recordform.gtpbaction.name='clone_record'; submit();">Clone</button> 
-<button title="Remove this record" class="_gtpb" id="button_new" onclick="document.recordform.gtpbaction.name='remove_record'; submit();">Delete</button>
-#end
-
-##<button #if($mobile_pane3_selection == "view") disabled #end onclick="document.recordform.customstringvalue.value='view'; submit();">view data</button> 
-##<button #if($mobile_pane3_selection == "edit") disabled #end onclick="document.recordform.customstringvalue.value='edit'; submit();">edit data</button> 
-
-</form>
-</div>
+  #parse("gui/mobile/record_actions.vm")
 #end
 
 </div>
