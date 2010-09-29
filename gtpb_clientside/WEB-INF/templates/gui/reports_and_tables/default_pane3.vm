@@ -24,7 +24,7 @@ $viewTools.startTimer("gui/reports_and_tables/default_pane3")
 #if($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionData.getTable()))
 	#set($success=$tabs.add({'tabName':'edit', 'tabSource':'gui/reports_and_tables/tabs/edit'}))
 #end
-#set($success=$tabs.add({'tabName':'summary', 'tabSource':'gui/reports_and_tables/tabs/summary'}))
+#set($success=$tabs.add({'tabName':'charts', 'tabSource':'gui/reports_and_tables/tabs/summary'}))
 #if($view.loggedInUserAllowedTo('MANAGE_TABLE',$sessionData.getTable()) && (!$mobile_device))
 	  ## the current user can manage the table so show them admin options as well
 	  ## as the data and summary in tabs

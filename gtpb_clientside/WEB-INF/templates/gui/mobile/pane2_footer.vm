@@ -36,6 +36,6 @@
 #if($mobile_pane2_selection == "summary")
   #set($summary_enabled = false)
 #end
-<button #if(!$summary_enabled) disabled #end onclick="document.footerform.customstringvalue.value='summary'; submit();">summary</button> 
+<button #if(!$summary_enabled) disabled #end onclick="document.footerform.customstringvalue.value='summary'; submit();">charts</button> 
 </form>
 </div>

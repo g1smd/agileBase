@@ -25,7 +25,7 @@
   #parse("gui/reports_and_tables/report_data.vm")
 #elseif($mobile_pane2_selection == "summary")
   <html>
-	<head><title>$report summary</title>
+	<head><title>$report charts</title>
 	  <meta name = "viewport" content = "width = device-width">
 	  <link href="styles/report.css" type="text/css" rel="stylesheet" />
 	  <link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
