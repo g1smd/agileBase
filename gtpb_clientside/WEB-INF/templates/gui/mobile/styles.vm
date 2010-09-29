@@ -61,6 +61,10 @@ body.landscape .mobile_back_button {
   -webkit-border-image : url('images/back_button_touched.png') 0 4 0 13;
 }
 
+#record_actions {
+  float:right;
+}
+
 table#reportData {
   height: auto;
 }
