@@ -62,7 +62,9 @@ body.landscape .mobile_back_button {
 }
 
 #record_actions {
-  float:right;
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }
 
 table#reportData {
