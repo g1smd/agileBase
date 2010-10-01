@@ -20,10 +20,10 @@
 </style>
 
 <div id="mobile_header">
-<button onclick="document.location='?return=gui/pane1'">&lArr; all modules</button> $sessionReport.getModule() - $sessionReport
 #set($table = $sessionData.getTable())
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
   #parse("gui/mobile/record_actions.vm")
 #end
+<button onclick="document.location='?return=gui/pane1'">&lArr; all modules</button> $sessionReport.getModule() - $sessionReport
 
 </div>
