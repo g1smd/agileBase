@@ -48,6 +48,7 @@
     <script type="text/javascript" src="resources/highcharts.js"></script>
 	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
 	<script type="text/javascript" src="resources/wait/request_setFilter.js"></script> 
+    <script type="text/javascript" src="resources/tabs/tabs.js"></script>
 	#parse('gui/display_error.vm')
  	#if($mobile_device)
 		<meta name = "viewport" content = "width = device-width">
@@ -65,7 +66,6 @@
       	  <script type="text/javascript" src="resources/jquery.tablednd.js"></script>
 		  <script type="text/javascript" src="resources/edit_area/edit_area_full.js"></script>
         #end
-        <script type="text/javascript" src="resources/tabs/tabs.js"></script>
 		<script language=Javascript> 
   	  // When submitting the newfield form to create a table field
   	  // disable all input elements not in the addNewField row of the reportData table
