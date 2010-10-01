@@ -45,6 +45,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		#else
 		 #set($viewOnly=true) ## $viewOnly used by resources/input/input.vm
 		 #set($address = $viewTools.getAddress($tableDataRow))
+		 #if(!$mobile_device) ## On mobiles, view and edit tabs are merged, no need to show table details again, we only need to see related information
 		 #foreach($field in $sessionTable.getFields())
 		   #set($tableDataValue = $tableDataRow.get($field))
 		   ## don't display hidden or blank fields
@@ -55,6 +56,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
              #end
    	       #end
 	     #end ## end loop through fields
+		 #end
 			    #if($view.isWikiIntegrated())
 				  #set($wikiTitle=$tableDataRow.get($sessionTable.getField('Wiki page [Auto]')))
                   #if(!$wikiTitle.isNull())
