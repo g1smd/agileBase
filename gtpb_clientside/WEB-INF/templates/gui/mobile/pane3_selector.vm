@@ -24,7 +24,7 @@
 <div id="mobile_header">
 #set($table = $sessionData.getTable())
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
-  #parse("gui/mobile/record_actions.vm")
+  #parse("gui/mobile/pane3_record_actions.vm")
 #end
 <button onclick="document.location='?return=gui/mobile/pane2_selector'">&lArr; $sessionData.getReport()</button> Details
 
