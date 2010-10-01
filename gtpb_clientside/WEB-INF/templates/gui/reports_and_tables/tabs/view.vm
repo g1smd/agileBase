@@ -32,12 +32,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 	</div>
 #else
 	<table cellspacing=0 cellpadding=0 border=0 id=reportData>
+		 #if(!$mobile_device) ## On mobiles, view and edit tabs are merged, no need to show table details again, we only need to see related information
 		<thead>
 			<tr><th class=leading>&nbsp;</th>			
 			<th>$sessionTable</th>
 			<th>value</th>			
 			<th class=trailing>&nbsp;</th></tr>			
 		</thead>
+		#end
 		#set($sessionTableDataRow=$view.getTableDataRow($sessionTable, $sessionRowId))
 		#set($tableDataRow = $sessionTableDataRow)
 		#if ($tableDataRow.size() == 0)
@@ -46,16 +48,16 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		 #set($viewOnly=true) ## $viewOnly used by resources/input/input.vm
 		 #set($address = $viewTools.getAddress($tableDataRow))
 		 #if(!$mobile_device) ## On mobiles, view and edit tabs are merged, no need to show table details again, we only need to see related information
-		 #foreach($field in $sessionTable.getFields())
-		   #set($tableDataValue = $tableDataRow.get($field))
-		   ## don't display hidden or blank fields
-		   #if($field.getFieldCategory()=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
-			 ## don't display checkbox values that are false
-		     #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
-               #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-             #end
-   	       #end
-	     #end ## end loop through fields
+    		 #foreach($field in $sessionTable.getFields())
+    		   #set($tableDataValue = $tableDataRow.get($field))
+    		   ## don't display hidden or blank fields
+    		   #if($field.getFieldCategory()=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
+    			 ## don't display checkbox values that are false
+    		     #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
+                   #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+                 #end
+       	       #end
+    	     #end ## end loop through fields
 		 #end
 			    #if($view.isWikiIntegrated())
 				  #set($wikiTitle=$tableDataRow.get($sessionTable.getField('Wiki page [Auto]')))
