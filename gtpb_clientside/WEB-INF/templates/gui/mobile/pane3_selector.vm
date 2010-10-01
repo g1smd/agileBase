@@ -33,12 +33,14 @@
 ## #set($mobile_pane3_selection = $sessionData.getCustomString("mobile_pane3_selection"))
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
   #parse("gui/reports_and_tables/tabs/edit.vm")
+  <div id="related_information_header">
+	<h1>Related information</h1>
+  </div>
   #parse("gui/reports_and_tables/tabs/view.vm")
   #parse("gui/mobile/pane3_footer.vm")
 #else
   #set($mobile_pane3_selection = "view")
   #parse("gui/reports_and_tables/tabs/view.vm")
-  ## Don't allow editing in mobile version for now, doesn't work 100%
   #parse("gui/mobile/pane3_footer.vm")
 #end
 </div>
