@@ -30,9 +30,10 @@
 
 </div>
 ## What content to display in pane 3? View, edit etc.
-#set($mobile_pane3_selection = $sessionData.getCustomString("mobile_pane3_selection"))
-#if($mobile_pane3_selection == "edit")
+## #set($mobile_pane3_selection = $sessionData.getCustomString("mobile_pane3_selection"))
+#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
   #parse("gui/reports_and_tables/tabs/edit.vm")
+  #parse("gui/reports_and_tables/tabs/view.vm")
   #parse("gui/mobile/pane3_footer.vm")
 #else
   #set($mobile_pane3_selection = "view")
