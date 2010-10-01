@@ -33,7 +33,8 @@
 ## #set($mobile_pane3_selection = $sessionData.getCustomString("mobile_pane3_selection"))
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
   #parse("gui/reports_and_tables/tabs/edit.vm")
-  #if($sessionData.getLastAppAction() != "SAVE_NEW_RECORD")
+  #set($lastAppAction = $sessionData.getLastAppAction())
+  #if(($lastAppAction != "SAVE_NEW_RECORD") && ($lastAppAction != "REMOVE_RECORD"))
       <div id="related_information_header">
     	<h1>Related information</h1>
       </div>
