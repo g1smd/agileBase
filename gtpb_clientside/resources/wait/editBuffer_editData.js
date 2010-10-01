@@ -277,10 +277,9 @@ var oBuffer = new fBuffer();
 
 function fInit() {  
 	
+  // function to match the fields displayed in pane2 with the input fields in pane3
+  // oCells is a collection of the cells in the heading row of the table
   function fMatchFields() {  
-
-    // function to match the fields displayed in pane2 with the input fields in pane3
-    // oCells is a collection of the cells in the heading row of the table
   	var oViewPane = top.document.getElementById('oViewPane');
 	if (oViewPane == null) {
 	  return;
@@ -306,6 +305,10 @@ function fInit() {
   }
 	 
   function fMatchTree() {  
+  	var oViewPane = top.document.getElementById('oViewPane');
+	if (oViewPane == null) {
+	  return;
+	}
     var oCaptions=parent.pane_1.document.getElementsByName('caption');
 	 
 	for (var i=0;i<oCaptions.length;i++) { 
