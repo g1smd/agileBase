@@ -23,9 +23,7 @@
 	<title>$sessionData.getTable() data</title>
 	<link href="styles/report.css" type="text/css" rel="stylesheet" />
 	<link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
-	#if(!$mobile_device)
 	<link href="resources/jquery.autocomplete.css" type="text/css" rel="stylesheet" />
-	#end
 	## Import required stylesheets
 	#foreach($style in $styles)
 	  <link href="$style" type="text/css" rel="stylesheet" />
