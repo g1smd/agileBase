@@ -27,8 +27,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #set($sessionRowId=$sessionData.getRowId())
 #if($sessionRowId == -1)
 	<div class="warningmessage">
-		<b>No record selected:</b><p>
-		Pick a record from above to view data or press the 'New' button to create a record
+		#set($lastAppAction = $sessionData.getLastAppAction())
+		#if($lastAppAction == "REMOVE_RECORD") 
+		  <b>Record removed</b><p>
+		  You can return to '$sessionReport' or create a new record
+		#else
+		  <b>No record selected:</b><p>
+		  Pick a record from above to view data or press the 'New' button to create a record
+		#end
 	</div>
 #else
   ## show the interface to edit the record
