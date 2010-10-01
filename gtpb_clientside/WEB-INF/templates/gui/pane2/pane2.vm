@@ -217,21 +217,23 @@
 	#end
 	
 	$(document).ready(function() {
-	  var hoverIntentConfig = {    
-         over: showTooltip,
-         out: hideTooltip,
-         interval: 400
-	  };
-	  $("#filterhelp").hoverIntent(hoverIntentConfig);
-	  $(".ab_field_title").hoverIntent(hoverIntentConfig);
-	  #if($browser != "Internet Explorer" && !$mobile_device)
-	    alignTableHeaderCells();
-	    setInterval("alignTableHeaderCells()", 2000);
-	  
-	    $(window).scroll(function() {
-	      var left = document.body.scrollLeft || window.pageXOffset;
-	      $("thead").css("left", -1 * left);
-	    });
+	  #if(!$mobile_device)
+    	  var hoverIntentConfig = {    
+             over: showTooltip,
+             out: hideTooltip,
+             interval: 400
+    	  };
+    	  $("#filterhelp").hoverIntent(hoverIntentConfig);
+    	  $(".ab_field_title").hoverIntent(hoverIntentConfig);
+    	  #if($browser != "Internet Explorer")
+    	    alignTableHeaderCells();
+    	    setInterval("alignTableHeaderCells()", 2000);
+    	  
+    	    $(window).scroll(function() {
+    	      var left = document.body.scrollLeft || window.pageXOffset;
+    	      $("thead").css("left", -1 * left);
+    	    });
+    	  #end
 	  #end
 	});
 	</script>
