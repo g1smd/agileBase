@@ -132,6 +132,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 	        </div>
 	      </div>
 	    #end
-	  #end
+	#end
+	#if($mobile_device)
+	  #parse("gui/reports_and_tables/tabs/view.vm")
+	#end
 #end ## end of if session row_id is set
 $viewTools.stopTimer("gui/reports_and_tables/tabs/edit")
