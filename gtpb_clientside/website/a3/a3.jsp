@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
 <%
 String requestURL = request.getRequestURL().toString();
 boolean live = false;
@@ -5,23 +6,30 @@ if (requestURL.contains("appserver.")) {
   live = true;
 }
 %>
-<html>
-<head>
-  <link rel="icon" href="/agilebase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-  <title>
-    A3 reports in Lean service organisations
-  </title>
-  <script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
-  <!-- <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
-  <script type="text/javascript" src="resources/wait/request_setFilter.js"></script> -->
-  <script src="/agileBase/website/scripts/jquery-ui/jquery-ui.js" language="Javascript"></script>
-  <script src="/agileBase/website/a3/a3.js" language="Javascript"></script>
-  <link type="text/css" href="/agileBase/website/a3/a3.css" rel="stylesheet">
-<!--[if IE]>
-  <link rel="stylesheet" type="text/css" href="/agileBase/website/a3/a3_ie.css" />
-<![endif]-->
-  <link rel="stylesheet" href="/agileBase/website/a3/print.css" type="text/css" media="print" />
-  <link type="text/css" href="/agileBase/website/scripts/jquery-ui/jquery-ui.css" rel="stylesheet">
+<html> 
+	<head> 
+		<title>A3 reports</title>
+		<style> 
+		  @import url('styles.css');
+		  @import url('styles-thickbox.css');
+		</style>
+		
+		<script type="text/javascript" src="jquery.js"></script>
+		
+        <script language="javascript">
+            $(document).ready(function() {
+                
+                $('.container:first-child').addClass('first');
+                $('.container:last-child').addClass('last');
+                $('.container:nth-child(even)').addClass('alternate');
+
+				$.localScroll({target:'#scroller'});
+				
+                $('.video').each(function() {
+					$(this).flashembed($(this).attr('url')+'&rel=0&showinfo=0&');
+				});
+			});
+		</script>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -35,53 +43,71 @@ if (requestURL.contains("appserver.")) {
   })();
 
 </script>
-</head>
-<body>
-<img id="paper" src="/agileBase/website/a3/paper.jpg">
-<div id="stickies">
-  <div id="why_a3"><a href="/agileBase/website/a3/why_a3.htm" class="selected_link">Why use A3 reports?</a></div>
-  <div id="scenario" style="left: 250px"><a href="/agileBase/website/a3/scenario.htm">And why use online?</a></div>
-  <div id="tryout" style="left: 500px"><a href="/agileBase/website/a3/tryout.htm">Try it out now!</a></div>
-</div>
-<div id="a3_report">
-<%@ include file="why_a3.htm" %>
-</div>
+	</head>
 
-<div class="actions_area left">
-	<img src="/agileBase/website/a3/a3_reports_logo.png" />
-	<hr />
-<h1>Login</h1>
-<% if(live) { %>
-	<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
-<% } else { %>
-    <form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
-<% } %>
-<input type="text" name="j_username" title="username"/><br /><br />
-<input type="password" name="j_password" title="password"/><br /><br />
-<input type="submit" value="Go" />
-</form>
-</div>
+	<body>
+        <div id="scroller">
+            <div id="wrapper">
+				<ul id="menu">
+  		            <img style="position:absolute; left:40px; top:30px" src="images/logo_a3reports.png" />
+				</ul>
+				
+				<div id="content">
+				    <div class="container" style="background-color:#74a9cf">
+				        <div style="float:left; width:100%; margin-left:80px;">
+				        	<div style="float:right; margin-right:160px;" id="signup">
+				        	  <h1>Free trial</h1>
+							  <form method="POST" action="http://a3reports.co.uk/templateMail.php" id="signup_form" name="signup_form">
+							  <input type="hidden" name="template_folder" value="non_gtwp/a3_reports/templates" />
+							  <input type="hidden" name="templ_success" value="ok.txt" />
+							  <input type="hidden" name="templ_fail" value="not_ok.txt" />
+							  <input type="hidden" name="templ_email" value="email_signup.txt" />
+							  <input type="text" id="email_input" name="email" value="your email address" title="your email address" />
+							  <br /><br />
+							  <input type="submit" value="Go"/>
+							  </form>
+				        	</div>
+				        	<h1>Login</h1>
+							<% if(live) { %>
+								<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
+							<% } else { %>
+							    <form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
+							<% } %>
+							<table class="formtable">
+							    <tr><td>username</td><td> <input type="text" name="j_username" title="username"/></td></tr>
+								<tr><td>password</td><td> <input type="password" name="j_password" title="password"/></td></tr>
+							    <tr><td>&nbsp;</td><td> <input type="submit" value="Go" /></td></tr>
+							</table>
+							</form>
 
-<div class="actions_area right">
-<h1>Signup</h1>
-<h1>&pound;5/m</h1>
-<hr />
-<h2>Free trial</h2>
-for 30 days
-<hr />
-<form method="POST" action="http://a3reports.co.uk/templateMail.php" id="signup_form" name="signup_form">
-<input type="hidden" name="template_folder" value="non_gtwp/a3_reports/templates" />
-<input type="hidden" name="templ_success" value="ok.txt" />
-<input type="hidden" name="templ_fail" value="not_ok.txt" />
-<input type="hidden" name="templ_email" value="email_signup.txt" />
-<input type="text" id="email_input" name="email" value="your email address" title="your email address" />
-<br /><br />
-<input type="submit" value="Go" />
-</form>
-</div>
-
-<div id="delete_dialog" title="Confirm deletion">
-Should this report be deleted?
-</div>
-</body>
+				        </div>
+				        <br style="clear:both" />
+				    </div>
+				    
+				    <div class="container" id="contact">
+						<table cellspacing="0" cellpadding="0" border="0">
+							<tr>
+								<td style="padding-right:100px">
+									<h1><span>{</span> email <span>}</span></h1>
+									<a href="mailto:cliff@gtwm.co.uk">cliff@gtwm.co.uk</a>
+								</td>
+								<td style="padding-right:100px">
+									<h1><span>{</span> phone <span>}</span></h1>
+									+44 (0) 845 456 1810
+								</td>
+								<td>
+									<h1><span>{</span> visit <span>}</span></h1>
+									Come see us in Bristol, Swansea or London!
+								</td>
+							</tr>
+						</table>
+						<p style="text-align:right; font-size:8pt; padding-top:40px; color:#999999">
+							site design by David Boultbee &copy;2010
+						</p>
+				    </div>
+				    
+				</div> <!-- end of content -->
+            </div> <!-- end of wrapper -->
+        </div> <!-- end of scroller -->
+	</body>
 </html>
