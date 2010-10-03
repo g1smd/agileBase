@@ -1,5 +1,5 @@
   jQuery(document).ready(function() {
-	windowResize();
+	//windowResize();
 	
 	if (jQuery("#loginform").size() == 0) {
 	  var options = {
