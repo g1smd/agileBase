@@ -30,7 +30,7 @@ if (requestURL.contains("appserver.")) {
 				});
 				
 				$('#email_input').focus(function() {
-					alert('focus');
+					//TODO: this doesn't seem to work, the focus function doesn't fire
 					if ($('#email_input').val() == "your email address") {
 						$('#email_input').val("");
 					}
