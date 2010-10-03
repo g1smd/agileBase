@@ -24,7 +24,6 @@
 		}
 	  );
 	} else {
-	  windowResize();
 	  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
 	}
 
@@ -59,18 +58,7 @@
 	jQuery("#previous_report").click(function() {
 	  next_report('previous');
 	});
-	
-	/*
-	jQuery(".actions_area").mouseenter(function() {
-	  jQuery(this).stop(true,false).animate({
-	    opacity: 0.8
-	  }, 500);
-	}).mouseleave(function() {
-	  jQuery(this).stop(true,false).animate({
-	    opacity: 0.4
-	  }, 2000);
-	});
-*/
+
 	jQuery("#search").keyup(function() {
 	  alert('Upgrade to search all reports...');
 	});
