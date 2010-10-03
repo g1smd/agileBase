@@ -28,6 +28,12 @@ if (requestURL.contains("appserver.")) {
                 $('.video').each(function() {
 					$(this).flashembed($(this).attr('url')+'&rel=0&showinfo=0&');
 				});
+				
+				$('#email_input').focus() {
+					if ($('#email_input').val() == "your email address") {
+						$('#email_input').val("");
+					}
+				}
 			});
 		</script>
 <script type="text/javascript">
