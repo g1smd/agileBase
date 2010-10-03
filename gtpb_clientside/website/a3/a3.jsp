@@ -30,6 +30,7 @@ if (requestURL.contains("appserver.")) {
 				});
 				
 				$('#email_input').focus() {
+					alert('focus');
 					if ($('#email_input').val() == "your email address") {
 						$('#email_input').val("");
 					}
