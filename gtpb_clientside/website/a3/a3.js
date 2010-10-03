@@ -146,7 +146,6 @@ function loadLoginA3(url) {
 }
   
 function windowResize() {
-	return; //debug
 	// Size the report
     var windowWidth = jQuery(window).width();
     var jqA3Report = jQuery("#a3_report");
@@ -161,9 +160,9 @@ function windowResize() {
     var stickyTop = stickyBase - 55;
     jQuery("#stickies").css("top", stickyTop);
     // Position the fields vertically
-	fieldDisplayResize("leftcolumn");
-	fieldDisplayResize("rightcolumn");
-    initialiseFontSize();
+	//fieldDisplayResize("leftcolumn");
+	//fieldDisplayResize("rightcolumn");
+    //initialiseFontSize();
 }
 
 function initialiseFontSize() {
