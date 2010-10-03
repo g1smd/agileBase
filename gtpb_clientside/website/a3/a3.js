@@ -146,6 +146,7 @@ function loadLoginA3(url) {
 }
   
 function windowResize() {
+	return; //debug
 	// Size the report
     var windowWidth = jQuery(window).width();
     var jqA3Report = jQuery("#a3_report");
