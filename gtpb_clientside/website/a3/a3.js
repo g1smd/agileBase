@@ -162,7 +162,7 @@ function windowResize() {
     // Position the fields vertically
 	//fieldDisplayResize("leftcolumn");
 	//fieldDisplayResize("rightcolumn");
-    //initialiseFontSize();
+    initialiseFontSize();
 }
 
 function initialiseFontSize() {
