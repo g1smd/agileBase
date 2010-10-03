@@ -10,8 +10,8 @@ if (requestURL.contains("appserver.")) {
 	<head> 
 		<title>A3 reports</title>
 		<style> 
-		  @import url('styles.css');
-		  @import url('styles-thickbox.css');
+		  @import url('website/a3/styles.css');
+		  @import url('website/a3/styles-thickbox.css');
 		</style>
 		
 		<script type="text/javascript" src="jquery.js"></script>
@@ -55,7 +55,7 @@ if (requestURL.contains("appserver.")) {
         <div id="scroller">
             <div id="wrapper">
 				<ul id="menu">
-  		            <img style="position:absolute; left:40px; top:30px" src="images/logo_a3reports.png" />
+  		            <img style="position:absolute; left:40px; top:30px" src="website/a3/images/logo_a3reports.png" />
 				</ul>
 				
 				<div id="content">
@@ -64,7 +64,7 @@ if (requestURL.contains("appserver.")) {
 				        	<div style="float:right; margin-right:160px;" id="signup">
 				        	  <h1>Free trial</h1>
 							  <form method="POST" action="http://a3reports.co.uk/templateMail.php" id="signup_form" name="signup_form">
-							  <input type="hidden" name="template_folder" value="non_gtwp/a3_reports/templates" />
+							  <input type="hidden" name="template_folder" value="wp/a3reports/templates" />
 							  <input type="hidden" name="templ_success" value="ok.txt" />
 							  <input type="hidden" name="templ_fail" value="not_ok.txt" />
 							  <input type="hidden" name="templ_email" value="email_signup.txt" />
