@@ -160,8 +160,8 @@ function windowResize() {
     var stickyTop = stickyBase - 55;
     jQuery("#stickies").css("top", stickyTop);
     // Position the fields vertically
-	//fieldDisplayResize("leftcolumn");
-	//fieldDisplayResize("rightcolumn");
+	fieldDisplayResize("leftcolumn");
+	fieldDisplayResize("rightcolumn");
     initialiseFontSize();
 }
 
@@ -182,15 +182,17 @@ function fieldDisplayResize(columnid) {
   var jqBottomFieldDisplay = jQuery("#" + columnid + " .field_display:last");
   if (jqBottomFieldDisplay.size() == 1) {
 	var bottomPos = jqBottomFieldDisplay.offset().top + jqBottomFieldDisplay.height();
-	if (bottomPos < (windowHeight - (windowHeight / 10))) {
+	if (bottomPos < (windowHeight - (windowHeight / 10) - 8)) {
 	  var fieldDisplayHeight = jqBottomFieldDisplay.css("min-height");
 	  if (typeof(fieldDisplayHeight) == 'undefined') {
 		fieldDisplayHeight = 20;
 	  } else {
-	    fieldDisplayHeight = parseInt(fieldDisplayHeight) + 1;
+	    fieldDisplayHeight = parseInt(fieldDisplayHeight) + 10;
 	  }
 	  jQuery(".field_display").css("min-height", fieldDisplayHeight + "px");
-	  fieldDisplayResize(columnid);
+	  setTimeout('fieldDisplayResize(' + columnid + ');', 0);
+	} else {
+	  return;
 	}
   }
 }
