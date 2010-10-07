@@ -945,7 +945,7 @@ public final class ViewTools implements ViewToolsInfo {
 				browsersMatched.add(browser);
 			}
 		}
-		// Treat the iphone and ipod as one
+		// Treat the iPhone and iPod as one
 		if (browsersMatched.contains(Browsers.IPHONE) || browsersMatched.contains(Browsers.IPOD)) {
 			return Browsers.APPLE_MOBILE;
 		} else {
