@@ -23,8 +23,8 @@
 ## http://code.google.com/apis/maps/signup.html
 	
 ## https://appserver.agilebase.co.uk
-#set($google_maps_api_key = "ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg")
+##set($google_maps_api_key = "ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg")
 ## http://gtwmbackup.dh.bytemark.co.uk
-##set($google_maps_api_key = "ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSbq2QrGLH6-sTBZsRN5v8hkZ_JVhQGcNdjP-HAyidfOtRG3ZJil2yTyw")
+#set($google_maps_api_key = "ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSbq2QrGLH6-sTBZsRN5v8hkZ_JVhQGcNdjP-HAyidfOtRG3ZJil2yTyw")
 ## http://localhost:8080
 ##set($google_maps_api_key = "ABQIAAAAAmhDcBizb6sHKLYdSFLnLBTwM0brOpm-All5BF6PoaKBxRWWERSSUxiSqbcKUP5HjoUw3OslN6QMbw")
