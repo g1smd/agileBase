@@ -90,7 +90,7 @@ table#reportDataView {
 }
 
 table#reportDataView td {
-  font-size: 12pt;
+  font-size: 11pt;
 }
 
 #mobile_header button {
