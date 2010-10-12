@@ -42,11 +42,11 @@
       </div>
       #parse("gui/reports_and_tables/tabs/view.vm")
   #end
-  #parse("gui/mobile/pane3_footer.vm")
+  ## #parse("gui/mobile/pane3_footer.vm")
 #else
   #set($mobile_pane3_selection = "view")
   #parse("gui/reports_and_tables/tabs/view.vm")
-  #parse("gui/mobile/pane3_footer.vm")
+  ## #parse("gui/mobile/pane3_footer.vm")
 #end
 </div>
 </div> ## close tab_content
