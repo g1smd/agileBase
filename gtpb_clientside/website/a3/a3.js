@@ -154,11 +154,6 @@ function windowResize() {
     var rightWidth = parseInt((windowWidth * .115) - 10);
     jqA3Report.css('margin-left',leftWidth + 'px');
     jqA3Report.css('margin-right',rightWidth + 'px');
-    // Position the navigation stickies
-    var backgroundHeight = jQuery("#paper").height();
-    var stickyBase = backgroundHeight / 19;
-    var stickyTop = stickyBase - 55;
-    jQuery("#stickies").css("top", stickyTop);
     // Position the fields vertically
 	fieldDisplayResize("leftcolumn");
 	fieldDisplayResize("rightcolumn");
