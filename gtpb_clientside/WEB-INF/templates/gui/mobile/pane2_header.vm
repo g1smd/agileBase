@@ -24,6 +24,6 @@
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
   #parse("gui/mobile/pane2_record_actions.vm")
 #end
-<button onclick="document.location='?return=gui/pane1'">&lArr; all modules</button> $sessionReport.getModule() - $sessionReport
+<button onclick="document.location='?return=gui/pane1'">&lArr; home</button> $sessionReport.getModule() - $sessionReport
 
 </div>
