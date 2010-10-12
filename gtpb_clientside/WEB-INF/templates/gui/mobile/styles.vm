@@ -85,6 +85,14 @@ table#reportData tr.rowb  {
   background-image: url('/agileBase/styles/rowb_mobile.png');
 }
 
+table#reportDataView {
+  width: 100%;
+}
+
+table#reportDataView td {
+  font-size: 12pt;
+}
+
 #mobile_header button {
   vertical-align: middle;
   font-size: 12pt;
