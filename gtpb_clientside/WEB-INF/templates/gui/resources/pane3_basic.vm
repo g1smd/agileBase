@@ -28,7 +28,12 @@
   
     <title>Edit $sessionData.getTable() data</title>
     <style type="text/css">
-      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+	      * {
+		    -moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			-ms-box-sizing: border-box;
+			box-sizing: border-box;
+		  }
 			
 			html, body { padding:0; 
 			             margin:0;

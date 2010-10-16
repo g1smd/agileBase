@@ -34,7 +34,6 @@
 	  *[error] { color:red }
 	  a[error] { font-size:8pt }
 	#end
-    * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
 										
 	td.trailing input[type=button] { 
 	  font-size:8pt; 
@@ -43,7 +42,6 @@
 
 	<script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jquery.oembed.js"></script>
-    <script type="text/javascript" src="resources/highcharts.js"></script>
 	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
 	<script type="text/javascript" src="resources/wait/request_setFilter.js"></script> 
     <script type="text/javascript" src="resources/tabs/tabs.js"></script>
@@ -53,6 +51,7 @@
 		<meta name = "viewport" content = "width = device-width">
 		<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
 	#else
+		<script type="text/javascript" src="resources/highcharts.js"></script>
         <script type="text/javascript" src="resources/highcharts_exporting.js"></script>
 		<script type="text/javascript" src="resources/jquery.bgiframe.js"></script>
 		<!--[if IE]>

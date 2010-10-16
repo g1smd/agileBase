@@ -13,7 +13,12 @@
 /* Report fields tab CSS */
 
    
-   * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+   * {
+     -moz-box-sizing: border-box;
+     -webkit-box-sizing: border-box;
+     -ms-box-sizing: border-box;
+     box-sizing: border-box;
+   }
     *[changed] { text-decoration:underline }
     .changed { text-decoration:underline }
 	*[error] { color:red }

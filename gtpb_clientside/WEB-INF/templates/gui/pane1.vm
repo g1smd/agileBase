@@ -30,7 +30,7 @@
 	<link href="resources/tree/tree.css" type="text/css" rel="stylesheet" />
 	<link href="resources/module-colours.css" type="text/css" rel="stylesheet" />
 	#if($mobile_device)
-	  <link href="resources/mobile/mobile.css" type="text/css" rel="stylesheet" />
+	  <link href="resources/mobile/pane1_override.css" type="text/css" rel="stylesheet" />
 	#else
 	  <link href="styles/jquery.cluetip.css" type="text/css" rel="stylesheet" />
 	#end

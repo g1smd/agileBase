@@ -21,7 +21,12 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <style>
-      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
+	      * {
+		    -moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			-ms-box-sizing: border-box;
+			box-sizing: border-box;
+		  }
     </style>
 	
 	<!--[if IE 7]>
