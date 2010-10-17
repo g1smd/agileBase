@@ -21,9 +21,13 @@
     <!-- <meta http-equiv="X-UA-Compatible" content="chrome=1"> -->
 	<!-- <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" > -->
 	<title>$sessionData.getTable() data</title>
-	<link href="styles/report.css" type="text/css" rel="stylesheet" />
-	<link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
-	<link href="resources/jquery.autocomplete.css" type="text/css" rel="stylesheet" />
+	#if($mobile_device)
+		<link href="resources/mobile/pane3_amalgam.css" type="text/css" rel="stylesheet" />
+	#else
+    	<link href="styles/report.css" type="text/css" rel="stylesheet" />
+    	<link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
+    	<link href="resources/jquery.autocomplete.css" type="text/css" rel="stylesheet" />
+	#end	
 	## Import required stylesheets
 	#foreach($style in $styles)
 	  <link href="$style" type="text/css" rel="stylesheet" />
@@ -40,17 +44,18 @@
 	}	
     </style>  
 
-	<script type="text/javascript" src="resources/jquery.js"></script>
-    <script type="text/javascript" src="resources/jquery.oembed.js"></script>
-	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
-	<script type="text/javascript" src="resources/wait/request_setFilter.js"></script> 
-    <script type="text/javascript" src="resources/tabs/tabs.js"></script>
-	<script type="text/javascript" src="resources/jquery.autocomplete.js"></script>
 	#parse('gui/display_error.vm')
+    <script type="text/javascript" src="resources/jquery.js"></script>
  	#if($mobile_device)
 		<meta name = "viewport" content = "width = device-width">
 		<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
+    	<script type="text/javascript" src="resources/mobile/pane3_amalgam.js"></script>
 	#else
+        <script type="text/javascript" src="resources/jquery.oembed.js"></script>
+    	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
+    	<script type="text/javascript" src="resources/wait/request_setFilter.js"></script> 
+        <script type="text/javascript" src="resources/tabs/tabs.js"></script>
+    	<script type="text/javascript" src="resources/jquery.autocomplete.js"></script>
 		<script type="text/javascript" src="resources/highcharts.js"></script>
         <script type="text/javascript" src="resources/highcharts_exporting.js"></script>
 		<script type="text/javascript" src="resources/jquery.bgiframe.js"></script>

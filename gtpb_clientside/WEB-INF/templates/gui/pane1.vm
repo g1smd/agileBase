@@ -27,11 +27,11 @@
 	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/>
 	#end
 	<title>$view.getApplicationName() version $view.getApplicationVersion() - $view.getLoggedInUser().getCompany()</title>
-	<link href="resources/tree/tree.css" type="text/css" rel="stylesheet" />
-	<link href="resources/module-colours.css" type="text/css" rel="stylesheet" />
 	#if($mobile_device)
-	  <link href="resources/mobile/pane1_override.css" type="text/css" rel="stylesheet" />
+	  <link href="resources/mobile/pane1_amalgam.css" type="text/css" rel="stylesheet" />
 	#else
+	  <link href="resources/tree/tree.css" type="text/css" rel="stylesheet" />
+	  <link href="resources/module-colours.css" type="text/css" rel="stylesheet" />
 	  <link href="styles/jquery.cluetip.css" type="text/css" rel="stylesheet" />
 	#end
 	<script type="text/javascript" src="resources/jquery.js"></script>
