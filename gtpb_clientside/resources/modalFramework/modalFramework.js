@@ -116,7 +116,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
       }
     
       function fResultOK(sXML) {
-    	alert(sXML);
+    	alert(sXML.getElementsByTagName('wizardResult')[0].firstChild.nodeValue);
   	    if(sXML.getElementsByTagName('wizardResult')[0]) {
   	      if(sXML.getElementsByTagName('wizardResult')[0].firstChild.nodeValue=='ok') return true;
   	      else {
