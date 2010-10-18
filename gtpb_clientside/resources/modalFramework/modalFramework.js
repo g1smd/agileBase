@@ -116,6 +116,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
       }
     
       function fResultOK(sXML) {
+    	alert(sXML);
   	    if(sXML.getElementsByTagName('wizardResult')[0]) {
   	      if(sXML.getElementsByTagName('wizardResult')[0].firstChild.nodeValue=='ok') return true;
   	      else {
@@ -474,12 +475,12 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	  
   	  // give the div a centraliseVertically method
   	  oDialog.centraliseVertically=fCentraliseVertically;
-  	  // set attributes passed in the contructor
+  	  // set attributes passed in the constructor
   	  if(sAttributes) fCreateAttributes();	
   	  
   	  oDialog.destroy=fDestroy;
   	  
-  	  // load any customisations - from external librarly loaded in display_application
+  	  // load any customisations - from external library loaded in display_application
   	  try {
   	    var oCustomisations=new _md_fCustomisations(oDialog);
   	    oDialog.customisations=oCustomisations; // allow objects on the screen to use the customisations too
@@ -511,6 +512,4 @@ function f_mdp_rowclick(oRow) {
   
   while(document.getElementById('_mfp_current_row')) document.getElementById('_mfp_current_row').removeAttribute('id');
   oRow.setAttribute('id','_mfp_current_row');
-  
-  //alert(sRowId + ' ' + oHidden.value);
 }
