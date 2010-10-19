@@ -77,6 +77,10 @@ table#reportData td.printoutfieldnamecolumn {
   width: 25%;
 }
 
+table#reportData textarea {
+  width: 100%;
+}
+
 div.relation_field a {
   font-size: 12pt!important;
 }
