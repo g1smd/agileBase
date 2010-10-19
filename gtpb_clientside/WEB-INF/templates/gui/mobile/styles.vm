@@ -73,6 +73,10 @@ table#reportData td, table#reportData th, table#reportData input, table#reportDa
   font-size: 12pt; /* larger text for mobile */
 }
 
+table#reportData td.printoutfieldnamecolumn {
+  width: 25%;
+}
+
 div.relation_field a {
   font-size: 12pt!important;
 }
