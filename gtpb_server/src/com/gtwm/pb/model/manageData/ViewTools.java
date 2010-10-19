@@ -1122,6 +1122,9 @@ public final class ViewTools implements ViewToolsInfo {
 	}
 
 	public String lineBreaksToParas(String stringToConvert) {
+		if (stringToConvert == null) {
+			return "";
+		}
 		return stringToConvert.replaceAll("\n", "<p>");
 	}
 	
