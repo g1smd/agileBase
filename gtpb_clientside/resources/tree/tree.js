@@ -57,7 +57,7 @@ $(document).ready(function(){
 	
 	// Initial expand?
 	var numReports = $('.module-tree-item-wrap').size();
-	if (numReports < 15) {
+	if (numReports < 20) {
 	  $('.modulecollapsed').each(function() {
 		  if ($(this).parents('li#setup').size() == 0) {
 			  $(this).children('ul').slideDown('fast');
