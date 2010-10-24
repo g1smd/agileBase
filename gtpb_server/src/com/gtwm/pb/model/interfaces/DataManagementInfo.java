@@ -86,10 +86,15 @@ public interface DataManagementInfo {
 	 * 
 	 * @param company
 	 *            Needed for internal caching mechanism. Can be null, but if so,
-	 *            no caching will be done
+	 *            no caching will be done at all
+	 * @param updateCacheIfObsolete
+	 *            If false, just read the cache, if true update it as well if
+	 *            it's obsolete. When you have a low tolerance of out of date
+	 *            cached statistics, use true but if you just need rough
+	 *            statistics, false can be used
 	 */
-	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report)
-			throws SQLException;
+	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report,
+			boolean updateCacheIfObsolete) throws SQLException;
 
 	/**
 	 * Return true if the record with the given primary key is visible in the

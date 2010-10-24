@@ -1470,7 +1470,7 @@ public final class DataManagement implements DataManagementInfo {
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			ReportDataInfo reportData = this.getReportData(company, reportDefn, conn);
+			ReportDataInfo reportData = this.getReportData(company, reportDefn, conn, true);
 			reportDataRows = reportData.getReportDataRows(conn, filterValues, exactFilters,
 					sessionSorts, rowLimit);
 		} finally {
@@ -1481,13 +1481,13 @@ public final class DataManagement implements DataManagementInfo {
 		return reportDataRows;
 	}
 
-	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report)
+	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report, boolean updateCacheIfObsolete)
 			throws SQLException {
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			return this.getReportData(company, report, conn);
+			return this.getReportData(company, report, conn, updateCacheIfObsolete);
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -1496,12 +1496,12 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	private ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo reportDefn,
-			Connection conn) throws SQLException {
+			Connection conn, boolean updateCacheIfObsolete) throws SQLException {
 		ReportDataInfo reportData;
 		boolean useCaching = (company != null);
 		if (this.cachedReportDatas.containsKey(reportDefn)) {
 			reportData = this.cachedReportDatas.get(reportDefn);
-			if (useCaching) {
+			if (useCaching && updateCacheIfObsolete) {
 				Long companyDataLastChangedTime = this.getLastDataChangeTime(company);
 				boolean dataChangedAfterCached = (companyDataLastChangedTime > reportData
 						.getCacheCreationTime());
