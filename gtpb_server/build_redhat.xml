@@ -47,14 +47,14 @@
 				<pathelement location="${tomcat.dir}/lib/postgresql-8.4-701.jdbc4.jar" />
 				<!--File uploads -->
 				<pathelement location="WEB-INF/lib/commons-fileupload-1.1.jar" />
-				<pathelement location="WEB-INF/lib/commons-io-1.2.jar" />
+				<pathelement location="WEB-INF/lib/commons-io-2.0.jar" />
 				<!-- Hibernate -->
 		        <pathelement location="WEB-INF/lib/hibernate3.jar"/>
 		        <pathelement location="WEB-INF/lib/xml-apis.jar"/>
 		        <pathelement location="WEB-INF/lib/versioncheck.jar"/>
 		        <pathelement location="WEB-INF/lib/syndiag2.jar"/>
 		        <pathelement location="WEB-INF/lib/junit-3.8.1.jar"/>
-		        <pathelement location="WEB-INF/lib/ehcache-1.2.3jar"/>
+		        <pathelement location="WEB-INF/lib/ehcache-1.5.0jar"/>
 		        <pathelement location="WEB-INF/lib/dom4j-1.6.1.jar"/>
 		        <pathelement location="WEB-INF/lib/commons-logging-1.1.jar" />
 		        <pathelement location="WEB-INF/lib/commons-collections-3.2.jar" />
@@ -68,16 +68,15 @@
 		        <pathelement location="WEB-INF/lib/ant-junit-1.6.5.jar"/>
 		        <pathelement location="WEB-INF/lib/ant-antlr-1.6.5.jar"/>
 		        <pathelement location="WEB-INF/lib/ant-1.6.5.jar"/>
-		        <pathelement location="WEB-INF/lib/hibernate-annotations.jar"/>
-		        <pathelement location="WEB-INF/lib/hibernate-commons-annotations.jar"/>
 		        <pathelement location="WEB-INF/lib/ejb3-persistence.jar"/>
-		        <pathelement location="WEB-INF/lib/hibernate-cglib-repack-2.1_3.jar"/>
+		        <pathelement location="WEB-INF/lib/cglib-2.2.jar"/>
 		        <pathelement location="WEB-INF/lib/jta-1.1.jar"/>
 				<!-- CSV import/export -->
 		        <pathelement location="WEB-INF/lib/opencsv-1.5.jar"/>
 				<!-- Google client API -->
 				<pathelement location="WEB-INF/lib/gdata-client-1.0.jar"/>
 				<!-- Aspectwerkz aspect oriented programming -->
+				<!--
 				<pathelement location="WEB-INF/lib/jarjar-0.3.jar"/>
 				<pathelement location="WEB-INF/lib/jrexx-1.1.1.jar"/>
 				<pathelement location="WEB-INF/lib/junitperf.jar"/>
@@ -89,6 +88,7 @@
 				<pathelement location="WEB-INF/lib/qdox-1.4.jar"/>
 				<pathelement location="WEB-INF/lib/concurrent-1.3.2.jar"/>
 				<pathelement location="WEB-INF/lib/trove-1.0.2.jar"/>
+				-->
 				<!-- Jamon profiler, currently unused -->
 				<!-- <pathelement location="${tomcat.dir}/common/lib/jamon-2.2.jar"/> -->
 				<!-- Treemaps -->
