@@ -87,7 +87,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		this.request = null;
 		this.databaseDefn = null;
 	}
-	
+
 	/**
 	 * Create and initialise the viewMethods object that'll be used by templates
 	 * to display the application
@@ -464,7 +464,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		this.checkReportViewPrivileges(report);
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
-		return this.databaseDefn.getDataManagement().getReportData(company, report);
+		return this.databaseDefn.getDataManagement().getReportData(company, report, true);
 	}
 
 	public ReportDataInfo getReportData(BaseReportInfo report) throws SQLException,
@@ -472,7 +472,16 @@ public final class ViewMethods implements ViewMethodsInfo {
 		this.checkReportViewPrivileges(report);
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
-		return this.databaseDefn.getDataManagement().getReportData(company, report);
+		return this.databaseDefn.getDataManagement().getReportData(company, report, true);
+	}
+
+	public ReportDataInfo getReportData(BaseReportInfo report, boolean updateCacheIfObsolete)
+			throws SQLException, DisallowedException, CodingErrorException, ObjectNotFoundException {
+		this.checkReportViewPrivileges(report);
+		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
+				this.request);
+		return this.databaseDefn.getDataManagement().getReportData(company, report,
+				updateCacheIfObsolete);
 	}
 
 	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit,
@@ -609,11 +618,13 @@ public final class ViewMethods implements ViewMethodsInfo {
 			if (((TextField) field).usesLookup()) {
 				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
-						report.getReportField(report.getParentTable().getPrimaryKey().getInternalFieldName())));
+						report.getReportField(report.getParentTable().getPrimaryKey()
+								.getInternalFieldName())));
 			} else if (!field.getTableContainingField().equals(report.getParentTable())) {
 				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
-						report.getReportField(report.getParentTable().getPrimaryKey().getInternalFieldName())));
+						report.getReportField(report.getParentTable().getPrimaryKey()
+								.getInternalFieldName())));
 			}
 		}
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();

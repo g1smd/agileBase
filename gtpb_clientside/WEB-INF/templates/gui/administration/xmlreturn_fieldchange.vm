@@ -36,7 +36,8 @@
 	  #end
 	#end
 	#if($field.getFieldCategory() == "NUMBER")
-	  #set($reportData = $view.getReportData())
+	  ## false = don't update cache
+	  #set($reportData = $view.getReportData($sessionData.getReport(), false))
 	  #set($fieldStats = $reportData.getFieldStats())
 	  #set($fieldFound = false)
 	  #foreach($reportField in $fieldStats.keySet())
@@ -59,7 +60,7 @@
 	  #if(!$fieldFound)
 		## If field not found in current report, fall back to table
 		## TODO: refactor this code, substantially the same as above
-	    #set($reportData = $view.getReportData($field.getTableContainingField().getDefaultReport()))
+	    #set($reportData = $view.getReportData($field.getTableContainingField().getDefaultReport(), false))
 	    #set($fieldStats = $reportData.getFieldStats())
 	    #foreach($reportField in $fieldStats.keySet())
 		  #if($reportField.getBaseField().equals($field))
