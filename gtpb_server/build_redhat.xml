@@ -70,6 +70,7 @@
 		        <pathelement location="WEB-INF/lib/ant-1.6.5.jar"/>
 		        <pathelement location="WEB-INF/lib/jta-1.1.jar"/>
 				<pathelement location="WEB-INF/lib/javassist-3.12.0.GA.jar"/>
+				<pathelement location="WEB-INF/lib/ejb-persistence.jar"/>
 				<!-- CSV import/export -->
 		        <pathelement location="WEB-INF/lib/opencsv-1.5.jar"/>
 				<!-- Google client API -->
