@@ -32,7 +32,6 @@
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/findbugs-ant.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/gdata-client-1.0.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/gtpb-dashboard.jar"/>
-	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/hibernate-annotations.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/hibernate3.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/icu4j-3_6.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/jaas.jar"/>
