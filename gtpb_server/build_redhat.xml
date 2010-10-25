@@ -54,7 +54,7 @@
 		        <pathelement location="WEB-INF/lib/versioncheck.jar"/>
 		        <pathelement location="WEB-INF/lib/syndiag2.jar"/>
 		        <pathelement location="WEB-INF/lib/junit-3.8.1.jar"/>
-		        <pathelement location="WEB-INF/lib/ehcache-1.5.0jar"/>
+		        <pathelement location="WEB-INF/lib/ehcache-1.5.0.jar"/>
 		        <pathelement location="WEB-INF/lib/dom4j-1.6.1.jar"/>
 		        <pathelement location="WEB-INF/lib/commons-logging-1.1.jar" />
 		        <pathelement location="WEB-INF/lib/commons-collections-3.2.jar" />
