@@ -17,7 +17,6 @@
 ##
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
 </head>
 <body>
 #set($company = $view.getLoggedInUser().getCompany())

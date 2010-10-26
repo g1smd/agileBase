@@ -1,6 +1,5 @@
 <html>
 <head>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
 	<link href="resources/display_application.css" type="text/css" rel="stylesheet" />
 	<link href="styles/main.css" type="text/css" rel="stylesheet" />

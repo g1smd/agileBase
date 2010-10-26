@@ -24,7 +24,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
 	<link href="resources/button/button.css" type="text/css" rel="stylesheet" />
     <style>
