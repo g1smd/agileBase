@@ -17,7 +17,6 @@
 ##
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
 <link href="styles/report.css" type="text/css" rel="stylesheet" />
 <style>
 	html, body { font-family: "Arial", sans-serif; 

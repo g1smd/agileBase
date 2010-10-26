@@ -19,7 +19,6 @@
 
 <html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <style>
 	      * {
 		    -moz-box-sizing: border-box;
