@@ -41,14 +41,14 @@
 		#set($temp = $view.getReportData($relatedTableReport))
 		#set($rowCount = $relatedTableReport.getRowCount())
 	#end
-	#if($rowCount < 20)
+	#if($rowCount < 30)
 		#set($useDropdown = true)
 	#end
 #end
 #if($useDropdown)
 	#set($items = $field.getItems(true))
-	Items are $items<br>
 	<select name="$internalFieldName" gtpb_update_record="true" id="${internalFieldName}_dropdown" class="combo-component">
+    <option value="-1">-- please pick one --</option>
 	#foreach($displayValue in $items.keySet()) ## TODO: entrySet
 		#set($internalValue = $items.get($displayValue))
 		#set($washedDisplayValue = $viewTools.escape($displayValue))
