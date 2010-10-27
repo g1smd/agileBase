@@ -46,7 +46,7 @@
 	#end
 #end
 #if($useDropdown)
-	#set($items = $field.getItems())
+	#set($items = $field.getItems(true))
 	Items are $items<br>
 	<select name="$internalFieldName" gtpb_update_record="true" id="${internalFieldName}_dropdown" class="combo-component">
 	#foreach($displayValue in $items.keySet()) ## TODO: entrySet
