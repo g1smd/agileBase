@@ -72,6 +72,10 @@ table#reportData td, table#reportData th, table#reportData input, table#reportDa
   font-size: 12pt; /* larger text for mobile */
 }
 
+table#reportData tr.rowa td, tr.rowb td {
+  height: 34px;
+}
+
 table#reportData td.printoutfieldnamecolumn {
   width: 25%;
 }
