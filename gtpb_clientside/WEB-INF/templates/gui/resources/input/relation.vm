@@ -39,7 +39,7 @@
 	#set($rowCount = $relatedTableReport.getRowCount())
 	#if($rowCount == 0)
 		## If the row count hasn't been cached in the report object yet, find it
-		#set($temp = $view.getReportData(relatedTableReport))
+		#set($temp = $view.getReportData($relatedTableReport))
 		#set($rowCount = $relatedTableReport.getRowCount())
 	#end
 	#if($rowCount < 20)
