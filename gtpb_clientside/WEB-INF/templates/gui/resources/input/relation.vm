@@ -35,6 +35,7 @@
 #set($useDropdown = false)
 #if($mobile_device && (!$globalEdit) && $userCanEdit)
 	#set($relatedTableReport = $relatedTable.getDefaultReport())
+	relatedTableReport is $relatedTableReport<br>
 	#set($rowCount = $relatedTableReport.getRowCount())
 	#if($rowCount == 0)
 		## If the row count hasn't been cached in the report object yet, find it
