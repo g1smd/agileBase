@@ -105,7 +105,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
   #if($thisUniqueId != $lastUniqueId)
     #set($uniqueIdCount = $uniqueIdCount + 1)
   #end  
-  <tr #if($sessionRowId == $thisUniqueId) id="currentRow" #end
+  <tr #if(($sessionRowId == $thisUniqueId) && (!$mobile_device)) id="currentRow" #end
       name="$thisUniqueId" 
       #if($uniqueIdCount%2!=0) class="rowa" #else class="rowb" #end
       #if($row.size()>=6 && $row.get(5))
