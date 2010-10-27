@@ -272,19 +272,25 @@ function fComboComponents() {
 		
 		// Get associated text box
 		var jqTextBox = $("#"+internalFieldName+"_text"+idEndString);
-		jqTextBox.hide();
+		if (jqTextBox.length > 0) {
+			jqTextBox.hide();
+		}
 		
 		// Either show the text box, or populate and update
 		function fDropdownChange(evt) {
-			if (jqSelect.val() == "new-custom-option") {
-				jqTextBox.show();
-				jqTextBox.val("");
-			} else {
-				jqTextBox.val(jqSelect.val())
-				jqTextBox.hide();
-				if (!globalEdit) {
-					new fChange(jqTextBox[0]);
+			if (jqTextBox.length > 0) {
+				if (jqSelect.val() == "new-custom-option") {
+					jqTextBox.show();
+					jqTextBox.val("");
+				} else {
+					jqTextBox.val(jqSelect.val())
+					jqTextBox.hide();
+					if (!globalEdit) {
+						new fChange(jqTextBox[0]);
+					}
 				}
+			} else {
+				new fChange(elem);
 			}
 		}
 		

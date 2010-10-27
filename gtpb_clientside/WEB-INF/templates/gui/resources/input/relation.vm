@@ -17,6 +17,7 @@
 ##
 #set($internalFieldName = $field.getInternalFieldName())
 #set($relatedField=$field.getRelatedField())##
+#set($relatedTable = $relatedField.getTableContainingField())
 ##
 #set($fieldValue=$tableDataRow.get($relatedField).toString())##
 #set($fieldDisplayValue = $field.getDisplayValue($fieldValue))##
@@ -29,7 +30,36 @@
 #else
 	#set($inputId="$internalFieldName")##	
 #end
-<div class="relation_field">##
+## Get an estimate of row count in the related table
+## to see if we can use a dropdown instead of a relation picker
+#set($useDropdown = false)
+#if($mobile_device && (!$globalEdit) && $userCanEdit)
+	#set($relatedTableReport = $relatedTable.getDefaultReport())
+	#set($rowCount = $relatedTableReport.getRowCount())
+	#if($rowCount == 0)
+		## If the row count hasn't been cached in the report object yet, find it
+		#set($temp = $view.getReportData(relatedTableReport))
+		#set($rowCount = $relatedTableReport.getRowCount())
+	#end
+	#if($rowCount < 20)
+		#set($useDropdown = true)
+	#end
+#end
+#if($useDropdown)
+	#set($items = $field.getItems())
+	<select name="$internalFieldName" gtpb_update_record="true" id="${internalFieldName}_dropdown" class="combo-component">
+	#foreach($displayValue in $items.keySet()) ## TODO: entrySet
+		#set($internalValue = $items.get($displayValue))
+		#set($washedDisplayValue = $viewTools.escape($displayValue))
+    	#if($fieldValue == $internalValue)
+    		<option value="$internalValue" selected="true">$washedDisplayValue</option>
+        #else
+    		<option value="$internalValue">$washedDisplayValue</option>
+    	#end
+	#end
+	</select>
+#else
+  <div class="relation_field">##
   <input name="$internalFieldName" ##
   			       type="hidden" ##
   			       gtpb_update_record="true" ##
@@ -41,12 +71,12 @@
 				     ## set the row ID for the related table
 				     ## so that if we choose a relation value for a particular record
 				     ## then click 'New' to add additional records, the same relation value is used
-  			         gtpb_rowidinternaltablename="$relatedField.getTableContainingField().getInternalTableName()"##
+  			         gtpb_rowidinternaltablename="$relatedTable.getInternalTableName()"##
   			         gtpb_set_row_id="$fieldValue"##
 				   #end
 				   id="$inputId">##
-</div>##
-#if($userCanEdit)##
+  </div>##
+  #if($userCanEdit)##
   <script language="JavaScript" src="resources/picker.js"></script>
   <script language="Javascript">
     ## Hack added by Oliver for iPod/iPhone compatibility
@@ -227,13 +257,11 @@
     
   </style>
   
-  #if(!$globalEdit)
-		#if($field.getNotNull() && $tableDataRow.get($field).isNull())
-			<span class="mandated">* Mandatory field - please enter a value</span>
-		#end
+  #if(($field.getNotNull()) && ($tableDataRow.get($field).isNull()) && (!$globalEdit))
+    <span class="mandated">* Mandatory field - please enter a value</span>
   #end
-##elseif($globalEdit)##
-##  <br><i><span class="greytext">global editing of relation field not yet supported</span></i>##
-#else ##read-only
-$fieldDisplayValue##
-#end
+
+  #else ##read-only
+    $fieldDisplayValue##
+  #end ## End read only
+#end ## End not dropdown
