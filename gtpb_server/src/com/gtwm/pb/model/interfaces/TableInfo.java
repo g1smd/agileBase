@@ -88,6 +88,9 @@ public interface TableInfo extends Comparable<TableInfo> {
 
 	public void setDefaultReport(SimpleReportInfo report);
 
+	/**
+	 * Return a simple report containing all fields in the table and no joins, filters or calculations
+	 */
 	public SimpleReportInfo getDefaultReport();
 
 	/**
