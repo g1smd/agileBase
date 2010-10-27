@@ -35,7 +35,6 @@
 #set($useDropdown = false)
 #if($mobile_device && (!$globalEdit) && $userCanEdit)
 	#set($relatedTableReport = $relatedTable.getDefaultReport())
-	Parent table is is $relatedTableReport.getParentTable()<br>
 	#set($rowCount = $relatedTableReport.getRowCount())
 	#if($rowCount == 0)
 		## If the row count hasn't been cached in the report object yet, find it
@@ -48,6 +47,7 @@
 #end
 #if($useDropdown)
 	#set($items = $field.getItems())
+	Items are $items<br>
 	<select name="$internalFieldName" gtpb_update_record="true" id="${internalFieldName}_dropdown" class="combo-component">
 	#foreach($displayValue in $items.keySet()) ## TODO: entrySet
 		#set($internalValue = $items.get($displayValue))
