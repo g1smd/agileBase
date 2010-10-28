@@ -146,8 +146,8 @@ table#reportData tr.rowb  {
   column-count: 3;
   font-size: 8pt;
   color: #666666;
-  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f3f4f6)); /* for webkit browsers */
-  background: -moz-linear-gradient(top,  #fff,  #f3f4f6); /* for firefox 3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(##e6e7ea)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  ##e6e7ea); /* for firefox 3.6+ */
   padding: 1em;
   border: solid 1px #b4b4b4;
   -webkit-border-radius: 10px;
