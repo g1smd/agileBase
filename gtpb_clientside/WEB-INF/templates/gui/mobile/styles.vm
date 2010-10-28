@@ -138,3 +138,7 @@ table#reportDataView td {
   font-size: 12pt;
   line-height: 25px;
 }
+
+.ac_odd {
+  background-color: auto;
+}
