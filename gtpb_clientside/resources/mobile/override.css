@@ -168,3 +168,8 @@ table#reportData tr.rowb  {
 #pane3_related .address {
   -webkit-column-break-inside: avoid;
 }
+
+#pane3_related #map img {
+  width: 100px;
+  height: 100px;
+}

@@ -29,7 +29,7 @@
   #if($partOfAddress)
 	#if($firstLineOfAddress)
 		<div class="address">
-			<table border="0"><tr><td width="100px" style="border-right:0"><div id="map" style="width:100px;height:100px"></div>
+			<table border="0"><tr><td width="100px" style="border-right:0"><div id="map" style="width:100px; height:100px"></div>
 			</td><td style="border-right:0">
     #end
 	#parse('gui/resources/input/input.vm')<br>
