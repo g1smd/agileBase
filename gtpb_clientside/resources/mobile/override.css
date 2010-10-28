@@ -145,3 +145,8 @@ table#reportData tr.rowb  {
   -webkit-column-count: 3;
   column-count: 3;
 }
+
+#pane3_related h1 {
+  font-size: 100%;
+  font-weight: bold;
+}
