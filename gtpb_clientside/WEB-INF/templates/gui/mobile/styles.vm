@@ -132,3 +132,9 @@ table#reportDataView td {
   vertical-align: middle;
   font-size: 12pt;
 }
+
+/* jquery.autocomplete override */
+.ac_results li {
+  font-size: 12pt;
+  line-height: 25px;
+}

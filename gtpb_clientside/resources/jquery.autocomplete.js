@@ -29,7 +29,6 @@ if (/webkit.*mobile/i.test(navigator.userAgent)
 		        var result = this.offsetOld();
 		        result.top -= window.scrollY;
 		        result.left -= window.scrollX;
-
 		        return result;
 		    };
 		})(jQuery);
