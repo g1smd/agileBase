@@ -150,3 +150,7 @@ table#reportData tr.rowb  {
   font-size: 100%;
   font-weight: bold;
 }
+
+#pane3_related .address {
+  -webkit-column-break-inside: avoid;
+}
