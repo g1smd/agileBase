@@ -15,10 +15,6 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-<style>
-#parse("gui/mobile/styles.vm")
-</style>
-
 <div id="mobile_header">
 #set($table = $sessionData.getTable())
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
