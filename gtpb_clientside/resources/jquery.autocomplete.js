@@ -16,7 +16,26 @@
  * some dummy lines
  */
 
-;(function($) {
+;
+
+// Oliver: see http://gist.github.com/434145, http://bugs.jquery.com/ticket/6446
+// Remove when iPad 4.2 comes out or bug 6446 resolved in jQuery
+if (/webkit.*mobile/i.test(navigator.userAgent)
+		&& "getBoundingClientRect" in document.documentElement
+		&& parseFloat(/OS (.*) like/ig.exec(navigator.userAgent)[1].replace('_', '.')) < 4.1) {
+		(function ($) {
+		    $.fn.offsetOld = $.fn.offset;
+		    $.fn.offset = function () {
+		        var result = this.offsetOld();
+		        result.top -= window.scrollY;
+		        result.left -= window.scrollX;
+
+		        return result;
+		    };
+		})(jQuery);
+};
+
+(function($) {
 	
 $.fn.extend({
 	autocomplete: function(urlOrData, options) {

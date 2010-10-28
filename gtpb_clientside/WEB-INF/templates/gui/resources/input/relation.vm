@@ -47,11 +47,9 @@
 #end
 #if($useDropdown)
 	#set($items = $field.getItems(true))
-	Items are $items<br>
-	Current field value = $fieldValue<br>
 	<select name="$internalFieldName" gtpb_update_record="true" id="${internalFieldName}_dropdown" class="combo-component">
     <option value="-1">-- please pick one --</option>
-	#foreach($displayValue in $items.keySet()) ## TODO: entrySet
+	#foreach($displayValue in $items.keySet()) ## TODO: use entrySet
 		#set($internalValue = $items.get($displayValue))
 		#set($washedDisplayValue = $viewTools.escape($displayValue))
     	#if($fieldValue == $internalValue)
