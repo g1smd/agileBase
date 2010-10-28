@@ -34,9 +34,6 @@
   #parse("gui/reports_and_tables/tabs/edit.vm")
   #set($lastAppAction = $sessionData.getLastAppAction())
   #if(($lastAppAction != "SAVE_NEW_RECORD") && ($lastAppAction != "REMOVE_RECORD"))
-      <div id="related_information_header">
-    	<h1>Related information</h1>
-      </div>
       #parse("gui/mobile/pane3_related.vm")
   #end
   ## #parse("gui/mobile/pane3_footer.vm")
