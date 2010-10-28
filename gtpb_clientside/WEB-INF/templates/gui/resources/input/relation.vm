@@ -47,6 +47,11 @@
 #end
 #if($useDropdown)
 	#set($items = $field.getItems(true))
+	## If relation field is relating to a second relation field...
+	#set($relatedItems = $relatedField.getItems(false))
+	Items are $items<p>
+	Related items are $relatedItems<p>
+	
 	<select name="$internalFieldName" gtpb_update_record="true" id="${internalFieldName}_dropdown" class="combo-component">
     <option value="-1">-- please pick one --</option>
 	#foreach($displayValue in $items.keySet()) ## TODO: entrySet
