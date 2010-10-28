@@ -45,11 +45,11 @@
 	#set($fieldCategory = $field.getFieldCategory())
 	#if($fieldCategory !='SEPARATOR') 
 		#if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
-			<span class="fieldname capitalised">$field.getSimplifiedFieldName()</span>
+			<span class="fieldname capitalised">$field.getSimplifiedFieldName()</span>: 
 		#else
-			<span class="fieldname capitalised">$field</span>
+			<span class="fieldname capitalised">$field</span>: 
 		#end
-		#parse('gui/resources/input/input.vm')
+		#parse('gui/resources/input/input.vm')<br>
 	#end
 #end ## if partOfAddress
 #end ## remove to show primary key field
