@@ -138,3 +138,10 @@ table#reportData tr.rowb  {
 .ac_over {
   background-color: #407ad8;
 }
+
+/* Related info in pane 3 */
+#pane3_related {
+  -moz-column-count: 3;
+  -webkit-column-count: 3;
+  column-count: 3;
+}
