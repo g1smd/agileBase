@@ -71,6 +71,10 @@ public interface RelationField extends BaseField {
 	 * 
 	 * Values will be sorted by display value, case insensitively
 	 * 
+	 * Uses getDisplayValue when necessary to get proper display values even
+	 * when the relation field points to a primary key or another relation, so
+	 * this call may be slow if that's the case and there are many items
+	 * 
 	 * @param reverseKeyValue
 	 *            If false, return a map of related field values to display
 	 *            values. If true return the reverse map, i.e. display values
@@ -81,20 +85,14 @@ public interface RelationField extends BaseField {
 	 * @return a map of internal value to display value from the set of distinct
 	 *         internal values in the table
 	 */
-	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException, CodingErrorException;
+	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException,
+			CodingErrorException;
 
 	/**
 	 * Get a list of all internal/display values for this field, using
 	 * filterString to filter by display value.
 	 * 
-	 * Values will be sorted by display value, case insensitively
-	 * 
-	 * @param reverseKeyValue
-	 *            If false, return a map of related field values to display
-	 *            values. If true return the reverse map, i.e. display values
-	 *            are the key, related values the value. If true, the returned
-	 *            map will be sorted by displayValue (the map key) case
-	 *            insensitively)
+	 * @see getItems(boolean)
 	 * 
 	 * @param maxResults
 	 *            Return the first maxResults only, or set to -1 for all results
