@@ -1,0 +1,55 @@
+##
+##  Copyright 2010 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#if (! $field.getTableContainingField().getPrimaryKey().equals($field)) ## remove to show primary key field
+  #if($address)
+	#if($address.size() > 0)
+	  #if($address.firstKey().equals($field)) #set($partOfAddress = true) #end
+      #if($partOfAddress && $address.firstKey().equals($field))
+	    #set($firstLineOfAddress = true)
+	  #else
+	    #set($firstLineOfAddress = false)
+	  #end
+	#end
+  #end
+  #if($partOfAddress)
+	#if($firstLineOfAddress)
+		<div class="address">
+			<table border="0"><tr><td width="100px" style="border-right:0"><div id="map" style="width:100px;height:100px"></div>
+			</td><td style="border-right:0">
+    #end
+	#parse('gui/resources/input/input.vm')<br>
+	#if($address.lastKey().equals($field))
+		<script langauge="JavaScript">
+		  loadMap("$tableDataRow.get($field).toString()");
+		</script>
+		    #set($partOfAddress = false)
+			</td></tr></table>
+		</div> ## end of address
+	#end
+  #else
+	#set($fieldCategory = $field.getFieldCategory())
+	#if($fieldCategory !='SEPARATOR') 
+		#if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+			<span class="fieldname capitalised">$field.getSimplifiedFieldName()</span>
+		#else
+			<span class="fieldname capitalised">$field</span>
+		#end
+		#parse('gui/resources/input/input.vm')
+	#end
+#end ## if partOfAddress
+#end ## remove to show primary key field
