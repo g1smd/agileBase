@@ -40,7 +40,7 @@
       <div id="related_information_header">
     	<h1>Related information</h1>
       </div>
-      #parse("gui/reports_and_tables/tabs/view.vm")
+      #parse("gui/mobile/pane3_related.vm")
   #end
   ## #parse("gui/mobile/pane3_footer.vm")
 #else

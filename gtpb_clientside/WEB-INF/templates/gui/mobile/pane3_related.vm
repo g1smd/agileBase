@@ -1,0 +1,79 @@
+##
+##  Copyright 2010 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+$viewTools.startTimer("gui/mobile/pane3_related")
+#set($rowCount = 0)
+
+## view the data in the session table, plus related data
+#set($sessionTable=$sessionData.getTable())
+#set($sessionReport=$sessionData.getReport())
+#if(!$sessionRowId)
+  #set($sessionRowId=$sessionData.getRowId())
+#end
+#if($sessionRowId > -1)
+	<div id="pane3_related">
+		#set($sessionTableDataRow=$view.getTableDataRow($sessionTable, $sessionRowId))
+		#set($tableDataRow = $sessionTableDataRow)
+		#if ($tableDataRow.size() > 0)
+		 #set($viewOnly=true) ## $viewOnly used by resources/input/input.vm
+		 #set($address = $viewTools.getAddress($tableDataRow))
+		#end 
+		## Show related data
+		#foreach($reportField in $sessionReport.getReportFields())
+		  ## don't show fields we've already shown
+		  #set($field = $reportField.getBaseField())
+		  #set($fieldTable = $field.getTableContainingField())
+		  #if(! ($fieldTable.equals($sessionTable)))
+		    ## if we have a relation to another table, show that table's data
+		    ## (if it has any related data)
+		    #if($field.equals($fieldTable.getPrimaryKey()))
+		     #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $fieldTable))
+		     #set($numRelatedRows = $relatedRowIds.size())
+			 #if ($numRelatedRows > 0)
+			  <h1>$fieldTable</h1>
+	 	      ## attempt to only display related data if it's a managable amount
+		       #if(($numRelatedRows == 1) || (($numRelatedRows * ($fieldTable.getFields().size() - 1)) < 30))
+		        #foreach($relatedRowId in $relatedRowIds)
+		         #set($tableDataRow=$view.getTableDataRow($fieldTable, $relatedRowId))
+		         #if ($tableDataRow.size() != 0)
+					#set($rowCount = 0)
+					#set($address = $viewTools.getAddress($tableDataRow))
+		            #foreach($field in $fieldTable.getFields())
+		          	#set($tableDataValue = $tableDataRow.get($field))
+				         #if(($field.getHidden() == false) && (! ($tableDataValue.toString() == '')))
+				          ## don't display checkbox values that are false
+				          #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
+               ## Don't re-show data from the session table
+               #if(!($field.getClass().getSimpleName().equals("RelationFieldDefn") && $sessionTable.equals($field.getRelatedTable())))
+                #parse("gui/mobile/related_table_data_row.vm")
+               #end
+              #end
+   	         #end
+		          #end ## end foreach field in table
+		         #end ## end if ($tableDataRow.size() != 0)
+		        #end ## end foreach related row id
+		       #else
+				$numRelatedRows related records
+				#if($numRelatedRows > 0)not shown #else &nbsp; #end
+		       #end ## end if number of related rows is a manageable amount
+		      #end
+		    #end
+		  #end
+		#end
+	</div>
+#end
+$viewTools.stopTimer("gui/mobile/pane3_related")
