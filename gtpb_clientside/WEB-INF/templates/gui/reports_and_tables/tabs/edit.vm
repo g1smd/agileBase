@@ -44,7 +44,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
     #set($cloned_record = true)
   #end
 	  <table cellspacing="0" cellpadding="0" border="0" id="reportData" #if($cloned_record) style="background:url('styles/cloned.png') no-repeat top right !important;" #end>
-		    <thead>
+			#if(!$mobile_device)
+			<thead>
 			      <tr>
 			        <th class="leading">&nbsp;</th>			
 			        <th>field</th>
@@ -52,6 +53,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			        <th class="trailing">&nbsp;</th>
 			      </tr>
 		    </thead>
+			#end
 		    #set($tableDataRow=$view.getTableDataRow())
 		    #if ($tableDataRow.size() == 0)
 		      Please select a record to edit, or press the 'New' button in the toolbar to create one
