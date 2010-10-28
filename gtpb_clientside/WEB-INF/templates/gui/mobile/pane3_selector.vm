@@ -17,9 +17,6 @@
 ##
 <div class="tab_content" id="selected_tab">
 <div id="html_content" class="content">
-<style>
-#parse("gui/mobile/styles.vm")
-</style>
 
 <div id="mobile_header">
 #set($table = $sessionData.getTable())
