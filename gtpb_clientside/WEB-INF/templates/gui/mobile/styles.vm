@@ -142,3 +142,7 @@ table#reportDataView td {
 .ac_odd {
   background-color: white;
 }
+
+.ac_over {
+  background-color: #407ad8;
+}
