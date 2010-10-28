@@ -174,17 +174,17 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		return this.displayField;
 	}
 
-	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException {
+	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException, CodingErrorException {
 		return this.getItemsWork(reverseKeyValue, null, -1);
 	}
 
 	public SortedMap<String, String> getItems(boolean reverseKeyValue, String filterString,
-			int maxResults) throws SQLException {
+			int maxResults) throws SQLException, CodingErrorException {
 		return this.getItemsWork(reverseKeyValue, filterString, maxResults);
 	}
 
 	private SortedMap<String, String> getItemsWork(boolean reverseKeyValue, String filterString,
-			int maxResults) throws SQLException {
+			int maxResults) throws SQLException, CodingErrorException {
 		SortedMap<String, String> items = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
 		// Note: DISTINCT isn't usually necessary as the related field is
 		// usually the primary key,
@@ -201,11 +201,14 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			filterString += "%";
 			SQLCode += " AND lower(" + displayFieldInternalName + "::text) LIKE ?";
 		}
-		if (reverseKeyValue && this.getDisplayField().getDbType().equals(DatabaseFieldType.VARCHAR)) {
-			SQLCode += " ORDER BY lower(" + displayFieldInternalName + ")";
-		} else {
-			SQLCode += " ORDER BY 1";
-		}
+		// We don't need to order in SQL, results are put into a sorted set
+		// if (reverseKeyValue &&
+		// this.getDisplayField().getDbType().equals(DatabaseFieldType.VARCHAR))
+		// {
+		// SQLCode += " ORDER BY lower(" + displayFieldInternalName + ")";
+		// } else {
+		// SQLCode += " ORDER BY 1";
+		// }
 		if (maxResults > 0) {
 			SQLCode += " LIMIT " + maxResults;
 		}
@@ -218,9 +221,21 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 				statement.setString(1, filterString);
 			}
 			ResultSet results = statement.executeQuery();
+			// If the relation points to a primary key or another relation, need
+			// to do some extra work to get the display value
+			boolean complexDisplay = false;
+			if ((this.getDisplayField() instanceof RelationField)
+					|| (this.getDisplayField().equals(this.getRelatedTable().getPrimaryKey()))) {
+				complexDisplay = true;
+			}
+			String displayValue = "";
 			while (results.next()) {
 				String keyValue = results.getString(1);
-				String displayValue = results.getString(2);
+				if (complexDisplay) {
+					displayValue = this.getDisplayValue(keyValue);
+				} else {
+					displayValue = results.getString(2);
+				}
 				if (reverseKeyValue) {
 					items.put(displayValue, keyValue);
 				} else {
@@ -322,12 +337,11 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 					}
 					if (field instanceof RelationField) {
 						RelationField relationField = (RelationField) field;
-						int tierThreeRowId = this.getTierThreeRowId(relationField, Integer
-								.valueOf(keyValue));
+						int tierThreeRowId = this.getTierThreeRowId(relationField,
+								Integer.valueOf(keyValue));
 						// recurse
 						relationDisplayValues += relationField.getDisplayValue(String
-								.valueOf(tierThreeRowId))
-								+ ", ";
+								.valueOf(tierThreeRowId)) + ", ";
 					}
 				}
 			}

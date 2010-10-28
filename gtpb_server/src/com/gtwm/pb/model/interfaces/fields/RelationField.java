@@ -81,7 +81,7 @@ public interface RelationField extends BaseField {
 	 * @return a map of internal value to display value from the set of distinct
 	 *         internal values in the table
 	 */
-	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException;
+	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException, CodingErrorException;
 
 	/**
 	 * Get a list of all internal/display values for this field, using
@@ -102,7 +102,7 @@ public interface RelationField extends BaseField {
 	 *            Filters the display value of the relation, case-insensitively
 	 */
 	public SortedMap<String, String> getItems(boolean reverseKeyValue, String filterString,
-			int maxResults) throws SQLException;
+			int maxResults) throws SQLException, CodingErrorException;
 
 	/**
 	 * NOT CURRENTLY IMPLEMENTED
