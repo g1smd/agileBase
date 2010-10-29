@@ -7,6 +7,13 @@ body {
   padding: 8px 10px 17px 5px;
 }
 
+buttom.moduleaction {
+  height: 30px;
+  float: right;
+}
+	
+
+
 #logout {
   margin: 20px;
 }
