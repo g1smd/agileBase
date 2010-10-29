@@ -42,6 +42,7 @@
   <script type="text/javascript" src="resources/jquery.js"></script>
   <script type="text/javascript" src="resources/wait/request_setFilter.js"></script>
   <script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>
+  <script type="text/javascript" src="resources/tabs/tabs.js"></script>
   <script type="text/javascript">
   $(document).ready(function() {
     fShowModalDialog(${SQ}$moduleAction.getActionTemplate()${SQ},${SQ}$moduleAction.getActionName()${SQ},$moduleAction.getCallbackFunction(),${SQ}$moduleAction.getButtons()${SQ},${SQ}$moduleAction.getAttributes()${SQ});
