@@ -19,12 +19,18 @@
 #set($reports = $view.getViewableReports($table))
 
 #set($reportCount = 0)
+## If a custom picker report has been set, to start with
+#set($pickerReport = $sessionData.getCustomReport('picker_report'))
 
 #foreach($report in $reports)
   #set($reportCount = $reportCount + 1)
   #set($reportName = $report.getReportName())
   #if((!$reportName.contains("dbvcalc")) && (!$reportName.contains("dbvcrit")) && (!$report.equals($table.getDefaultReport())))
-    <option value="$report.getInternalReportName()" #if($reportCount == 1)selected#end>$reportName</option>
+	#if($pickerReport.equals($report))
+      <option value="$report.getInternalReportName()" selected>$reportName</option>
+    #else
+	  <option value="$report.getInternalReportName()" #if(($reportCount == 1) && (!$pickerReport))selected#end>$reportName</option>
+    #end
   #end
 #end
 <option value="$table.getDefaultReport().getInternalReportName()" #if($reportCount == 0)selected#end>All fields and records</option>  
