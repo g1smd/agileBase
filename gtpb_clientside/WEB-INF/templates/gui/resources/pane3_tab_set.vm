@@ -48,6 +48,11 @@
 		<meta name = "viewport" content = "width = device-width">
 		<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
     	<script type="text/javascript" src="resources/mobile/pane3_amalgam.js"></script>
+	    <script type="text/javascript">
+	    $(document).ready(function() {
+	      assignButtonModuleActions();
+	    });
+	    </script>
 	#else
         <script type="text/javascript" src="resources/jquery.oembed.js"></script>
     	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
