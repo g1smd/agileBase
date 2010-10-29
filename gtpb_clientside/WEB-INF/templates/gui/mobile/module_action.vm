@@ -54,7 +54,7 @@
 <body>
 
   #if($moduleAction)
-	
+	&nbsp;
   #else
     Error: no action called $actionName was found in the module $module<p>
 	Available actions are $moduleActions
