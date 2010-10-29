@@ -52,7 +52,8 @@
   #if($moduleAction)
 	
   #else
-    Error: no action called $actionName was found in the module $module
+    Error: no action called $actionName was found in the module $module<p>
+	Available actions are $moduleActions
   #end
   
 </body>
