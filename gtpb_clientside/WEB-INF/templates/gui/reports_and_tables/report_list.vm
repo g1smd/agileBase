@@ -84,7 +84,7 @@
 		$module
 		#if($mobile_device && ($moduleActions.size()>0))
 		  #foreach($moduleAction in $moduleActions)
-			<button class="moduleaction" internalmodulename="$internalModuleName" actionname="$moduleAction.getActionName()">$moduleAction</button>
+			<button class="moduleaction" internalmodulename="$internalModuleName" actionname="$moduleAction.getActionName()">&laquo; $moduleAction &raquo;</button>
 		  #end
 		#end
 	  </span></h2>

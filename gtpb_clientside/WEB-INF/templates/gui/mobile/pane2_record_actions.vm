@@ -11,8 +11,19 @@
 	
 <button title="Create a new record" id="button_new" onclick="document.recordform.gtpbaction.name='save_new_record'; document.recordform.submit();" >New record</button> 
 
-##<button #if($mobile_pane3_selection == "view") disabled #end onclick="document.recordform.customstringvalue.value='view'; submit();">view data</button> 
-##<button #if($mobile_pane3_selection == "edit") disabled #end onclick="document.recordform.customstringvalue.value='edit'; submit();">edit data</button> 
+## include custom per-company actions
+#set($company = $view.getLoggedInUser().getCompany())
+#set($companyName = $viewTools.cleanString($company.getCompanyName()))
+#set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
+#if($viewTools.templateExists($customisationsTemplateLocation))
+  #parse($customisationsTemplateLocation)
+  #set($module = $sessionData.getReport().getModule())
+  #set($internalModuleName = $module.getInternalModuleName())
+  #set($moduleActions = $view.getModuleActions($internalModuleName))
+  #foreach($moduleAction in $moduleActions)
+	<button class="moduleaction" internalmodulename="$internalModuleName" actionname="$moduleAction.getActionName()">&laquo; $moduleAction &raquo;</button>
+  #end
+#end
 
 </form>
 
