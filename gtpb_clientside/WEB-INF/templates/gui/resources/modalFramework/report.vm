@@ -60,7 +60,7 @@
         #set ($dbType = $field.getDbType())
         <td>
           #if($field.get(0)!='')
-            <input type="text" name="$field.get(0)" is_filter="true" gtpb_internalfieldname="$field.get(0)" onkeyup="new fSetFilter(this); if(gDialog) {gDialog.customisations.fClearCompanySelector();}" gtpb_return="gui/resources/modalFramework/report_body" value="$!filters.get($field.get(1))">
+            <input type="text" name="$field.get(0)" is_filter="true" gtpb_internalfieldname="$field.get(0)" onkeyup="new fSetFilter(this); if(typeof gDialog != 'undefined') {gDialog.customisations.fClearCompanySelector();}" gtpb_return="gui/resources/modalFramework/report_body" value="$!filters.get($field.get(1))">
           #end
         </td>
 		      #end
