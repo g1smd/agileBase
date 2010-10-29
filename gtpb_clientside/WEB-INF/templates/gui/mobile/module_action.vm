@@ -17,6 +17,7 @@
 ##
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 #set($SQ = "'")
+#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 <html>
 <head>
   #parse('gui/display_error.vm')
