@@ -1,3 +1,9 @@
+div#_md_toolbar {
+  background-color: #f3f4f6;
+}
+	
 div#_md_toolbar button {
   -webkit-appearance:none;
 }
+
+	
