@@ -65,7 +65,7 @@
     </script>
 	#end
 </head>
-    <body>
+<body>
 	<ol id="tree"> <!-- ordered list for sections -->      
 	  #parse('gui/reports_and_tables/report_list.vm')
       ##TODO: add logout button if mobile device
@@ -98,5 +98,5 @@
 		      alert('$viewTools.escape($view.getException().getMessage())');
 		   </script>
 	  #end
-  </body>
+</body>
 </html>
