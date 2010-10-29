@@ -1,5 +1,60 @@
-This is a module action
+##
+##  Copyright 2010 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+#set($SQ = "'")
+<html>
+<head>
+  #parse('gui/display_error.vm')
+  <meta name = "viewport" content = "width = device-width">
+  #set($company = $view.getLoggedInUser().getCompany())
+  #set($companyName = $viewTools.cleanString($company.getCompanyName()))
+  #set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
+  #if($viewTools.templateExists($customisationsTemplateLocation))
+    #parse($customisationsTemplateLocation)
+  #end
 
-#set($module = $sessionData.getModule())
+  #set($module = $sessionData.getModule())
+  #set($actionName = $sessionData.getCustomString("actionname"))## include custom per-company actions
+  #set($moduleActions = $view.getModuleActions($module.getInternalModuleName()))
+  #foreach($testModuleAction in $moduleActions)
+	#if($moduleAction.getActionName() == $actionName)
+	  #set($moduleAction = $testModuleAction)
+	#end
+  #end
+  <title>$view.getApplicationName() - $company - $module - $moduleAction</title>
+  <link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="resources/jquery.js"></script>
+  <script type="text/javascript" src="resources/wait/request_setFilter.js"></script>
+  <script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    fShowModalDialog(${SQ}$moduleAction.getActionTemplate()${SQ},${SQ}$moduleAction.getActionName()${SQ},$moduleAction.getCallbackFunction(),${SQ}$moduleAction.getButtons()${SQ},${SQ}$moduleAction.getAttributes()${SQ});
+  });
+  </script>
+</head>
+<body>
 
-for the module $module
+  #if($moduleAction)
+	
+  #else
+    Error: no action called $actionName was found in the module $module
+  #end
+  
+</body>
+</html>
+
