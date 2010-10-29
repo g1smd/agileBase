@@ -90,17 +90,17 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		     #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $fieldTable))
 		     #set($numRelatedRows = $relatedRowIds.size())
        #if ($numRelatedRows > 0)
-	     	   <thead>
-		        	<tr><th class=leading>&nbsp;</th>			
-		        	<th>$fieldTable</th>
-		        	<th>&nbsp;</th>			
-		        	<th class=trailing>&nbsp;</th></tr>			
-		        </thead>
 	 	      ## attempt to only display related data if it's a managable amount
 		       #if(($numRelatedRows == 1) || (($numRelatedRows * ($fieldTable.getFields().size() - 1)) < 30))
 		        #foreach($relatedRowId in $relatedRowIds)
 		         #set($tableDataRow=$view.getTableDataRow($fieldTable, $relatedRowId))
 		         #if ($tableDataRow.size() != 0)
+    	     	   <thead>
+    		        	<tr><th class=leading>&nbsp;</th>			
+    		        	<th>$fieldTable</th>
+    		        	<th>&nbsp;</th>			
+    		        	<th class=trailing>&nbsp;</th></tr>			
+    		        </thead>
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
 		            #foreach($field in $fieldTable.getFields())
