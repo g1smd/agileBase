@@ -39,6 +39,7 @@
   #end
   <title>$view.getApplicationName() - $company - $module - $moduleAction</title>
   <link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
+  <link href="resources/mobile/wizard_override.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="resources/jquery.js"></script>
   <script type="text/javascript" src="resources/wait/request_setFilter.js"></script>
   <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
