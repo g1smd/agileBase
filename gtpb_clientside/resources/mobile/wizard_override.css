@@ -1,7 +1,3 @@
 div#_md_toolbar button {
-  height: 50px!important;
-}
-
-div#_md_toolbar button span {
-  height: 50px;
+  -webkit-appearance:none;
 }
