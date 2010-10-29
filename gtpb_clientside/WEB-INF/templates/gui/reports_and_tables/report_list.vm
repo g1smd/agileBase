@@ -79,7 +79,14 @@
 	#end	
 	
 	<li id="$internalModuleName" class="modulecollapsed $colourStyleName">
-	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> $module</span></h2>
+	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
+		$module
+		#if($mobile_device && ($moduleActions.size()>0))
+		  #foreach($moduleAction in $moduleActions)
+			<button class="moduleaction" onclick="top.fShowModalDialog(${SQ}$moduleAction.getActionTemplate()${SQ},${SQ}$moduleAction.getActionName()${SQ},$moduleAction.getCallbackFunction(),${SQ}$moduleAction.getButtons()${SQ},${SQ}$moduleAction.getAttributes()${SQ}); return false">$moduleAction</button>
+		  #end
+		#end
+	  </span></h2>
 	  #set($moduleActions = $view.getModuleActions($internalModuleName))
 	  #if(($moduleActions.size()>0) && (!$mobile_device))
 	    <ul parent="$internalModuleName" class="moduleaction">
