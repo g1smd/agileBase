@@ -84,7 +84,7 @@
 		$module
 		#if($mobile_device && ($moduleActions.size()>0))
 		  #foreach($moduleAction in $moduleActions)
-			<button class="moduleaction" onclick="top.fShowModalDialog(${SQ}$moduleAction.getActionTemplate()${SQ},${SQ}$moduleAction.getActionName()${SQ},$moduleAction.getCallbackFunction(),${SQ}$moduleAction.getButtons()${SQ},${SQ}$moduleAction.getAttributes()${SQ}); return false">$moduleAction</button>
+			<button class="moduleaction" internalmodulename="$internalModuleName" actionname="$moduleAction.getActionName()">$moduleAction</button>
 		  #end
 		#end
 	  </span></h2>
