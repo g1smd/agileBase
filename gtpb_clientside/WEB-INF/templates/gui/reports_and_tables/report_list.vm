@@ -79,6 +79,7 @@
 	#end	
 	
 	<li id="$internalModuleName" class="modulecollapsed $colourStyleName">
+	  #set($moduleActions = $view.getModuleActions($internalModuleName))
 	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
 		$module
 		#if($mobile_device && ($moduleActions.size()>0))
@@ -87,7 +88,6 @@
 		  #end
 		#end
 	  </span></h2>
-	  #set($moduleActions = $view.getModuleActions($internalModuleName))
 	  #if(($moduleActions.size()>0) && (!$mobile_device))
 	    <ul parent="$internalModuleName" class="moduleaction">
 		  #foreach($moduleAction in $moduleActions)
