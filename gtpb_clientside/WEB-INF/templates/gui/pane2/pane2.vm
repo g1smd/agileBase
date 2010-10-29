@@ -93,6 +93,11 @@
 	#if($mobile_device)
 	  <meta name = "viewport" content = "initial-scale = 1.0"> <!-- stop iPad automatically zooming out of large reports -->
 	  <script src="resources/mobile/pane2_amalgam.js" type="text/javascript"></script>
+	  <script type="text/javascript">
+	  $(document).ready(function() {
+	    assignButtonModuleActions();
+	  });	  
+	  </script>
 	#else
 	  <script src="resources/jquery.hoverIntent.js" type="text/javascript"></script>
 	  <script src="resources/jquery.sparkline.js" type="text/javascript"></script>
