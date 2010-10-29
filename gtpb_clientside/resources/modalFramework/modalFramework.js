@@ -361,6 +361,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   		     image to the span solves the issue. */
   		  var oCaptionSpan=document.createElement('SPAN');
   		  oCaptionSpan.appendChild(document.createTextNode(sCaption));
+  		  oButton.appendChild(document.createTextNode('&nbsp;'));
   		  oButton.appendChild(oCaptionSpan);
   		  
   		  oButton.toolbar=oToolbar;
