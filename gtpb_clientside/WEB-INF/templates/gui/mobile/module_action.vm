@@ -1,0 +1,5 @@
+This is a module action
+
+#set($module = $sessionData.getModule())
+
+for the module $module
