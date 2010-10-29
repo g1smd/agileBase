@@ -360,7 +360,8 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   		     image is set directly on the button, its whole appearance changes.  Applying the bg
   		     image to the span solves the issue. */
   		  var oCaptionSpan=document.createElement('SPAN');
-  		  oCaptionSpan.appendChild(document.createTextNode(sCaption));
+  		  //oCaptionSpan.appendChild(document.createTextNode(sCaption));
+  		  oButton.appendChild(document.createTextNode(sCaption));
   		  oButton.appendChild(oCaptionSpan);
   		  
   		  oButton.toolbar=oToolbar;
