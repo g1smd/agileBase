@@ -6,4 +6,6 @@ div#_md_toolbar button {
   -webkit-appearance:none;
 }
 
-	
+#_md_content select {
+  font-size: 12pt;
+}
