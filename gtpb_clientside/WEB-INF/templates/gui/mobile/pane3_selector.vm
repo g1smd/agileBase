@@ -25,7 +25,7 @@
   #parse("gui/mobile/pane3_record_actions.vm")
 #end
 <button onclick="document.location='?return=gui/pane1'">&lArr; home</button>
-<button onclick="document.location='?return=gui/mobile/pane2_selector'">&lArr; $report</button> Details
+<button onclick="document.location='?return=gui/mobile/pane2_selector'">&lArr; $report</button>
 </div>
 ## What content to display in pane 3? View, edit etc.
 ## #set($mobile_pane3_selection = $sessionData.getCustomString("mobile_pane3_selection"))
