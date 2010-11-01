@@ -138,7 +138,12 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	  }
   	      
   	  function fDestroy() {
-  	    oBlank.parentNode.removeChild(oBlank);							
+  	    oBlank.parentNode.removeChild(oBlank);	
+  	    // if on a mobile device, return to the home screen
+  	    // - the dialog will have loaded in a separate page
+  	    if(document.location.contains('gui/mobile/module_action')) {
+  	    	document.location = '?return=boot_mobile';
+  	    }
   	  }
   	  
   	  function fStepValidates() {
