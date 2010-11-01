@@ -9,7 +9,7 @@
 <input type="hidden" name="customstringvalue" value="$mobile_pane3_selection">
 <input type="hidden" name="gtpbaction" value="true">
 	
-<button title="Create a new record" id="button_new" onclick="document.recordform.gtpbaction.name='save_new_record'; submit();" >New record</button> 
+<button title="Create a new record" id="button_new" onclick="document.recordform.gtpbaction.name='save_new_record'; submit();" >New</button> 
 <button title="Create a copy of this record" id="button_new" onclick="document.recordform.gtpbaction.name='clone_record'; submit();">Clone</button> 
 <button title="Remove this record" class="_gtpb" id="button_new" onclick="document.recordform.gtpbaction.name='remove_record'; submit();">Delete</button>
 
