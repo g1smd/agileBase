@@ -1064,6 +1064,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
 		}
 		HibernateUtil.activateObject(field);
+		// TODO: switch statement
 		if (field instanceof TextField) {
 			TextField textField = (TextField) field;
 			FieldTypeDescriptorInfo fieldDescriptor = textField.getFieldDescriptor();
@@ -1231,7 +1232,26 @@ public final class DatabaseDefn implements DatabaseInfo {
 					}
 				}
 			}
-		}
+		} // end of IntegerField
+		else if (field instanceof CheckboxField) {
+			CheckboxField checkboxField = (CheckboxField) field;
+			FieldTypeDescriptorInfo fieldDescriptor = checkboxField.getFieldDescriptor();
+			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
+			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
+				String formInputName = "updateoption" + field.getInternalFieldName()
+						+ fieldOption.getFormInputName();
+				String formInputValue = request.getParameter(formInputName);
+				if (formInputValue != null) {
+					 if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+							if (formInputName.equals("updateoption" + field.getInternalFieldName()
+									+ PossibleListOptions.CHECKBOXDEFAULT.getFormInputName())) {
+								Boolean defaultValue = Helpers.valueRepresentsBooleanTrue(formInputValue);
+								checkboxField.setDefault(defaultValue);
+							}
+					 }
+				}
+			}
+		} // end of CheckboxField
 	}
 
 	public void updateField(HttpServletRequest request, BaseField field, String fieldName,
