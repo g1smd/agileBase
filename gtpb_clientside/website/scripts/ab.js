@@ -43,7 +43,7 @@
 			// test for iPhone
 			if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) {
 				if(document.location.href.indexOf("mobile") == -1) {
-					$('#login').html('<big>Mobile users log in at<br><a href="http://www.agilebase.co.uk/mobile">www.agilebase.co.uk/mobile</a></big>');
+					$('#login').html('<big>Mobile or tablet users log in at<br><a href="http://www.agilebase.co.uk/mobile">www.agilebase.co.uk/mobile</a></big>');
 				}
 			}
 			// if enter is pressed in username field with no password, don't submit details
