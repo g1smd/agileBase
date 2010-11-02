@@ -386,7 +386,7 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 			data :sPostString,
 			success :fReqCompleteToRun,
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				alert(textStatus);
+				alert('problem setting filter: ' + textStatus);
 			}
 		});
 	}
