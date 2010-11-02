@@ -22,7 +22,7 @@
     #set($browser_cannot_expand_p1=true)
   #else
     ##iPhone
-    #set($browser_cannot_detect_keyup=true)
+    ##set($browser_cannot_detect_keyup=true) ## Now fixed in newer iOS versions
   #end
 #end
 
