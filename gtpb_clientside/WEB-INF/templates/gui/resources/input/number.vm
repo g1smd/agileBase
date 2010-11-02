@@ -32,7 +32,7 @@
   	  #if($globalEdit || (!$updateAsType))##
   	    		<input type="text" name="$field.getInternalFieldName()" value="$fieldValue" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
   	  #else##
-  	    		<input type="text" gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+  	    		<input type="text" gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
 				#if($field.getNotNull() && $fieldValue == "")
 					<span class="mandated">* Mandatory field - please enter a value</span>
 				#end
@@ -44,7 +44,7 @@
   	#else##
 $fieldValue##
   	#end##
-#else##
+#else##  if not integer
   #if(!$globalEdit)##
   	  #set($fieldValue=$field.formatDecimalValue($tableDataRow.get($field)))##
   	#end##
@@ -52,7 +52,7 @@ $fieldValue##
   	  #if($globalEdit || (!$updateAsType))##
   	    		<input type="text" name="$field.getInternalFieldName()" value="" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
   	  #else##
-  	    		<input type="text" gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+  	    		<input type="text" gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
 				#if($field.getNotNull() && $tableDataRow.get($field) == "")
 					<span class="mandated">* Mandatory field - please enter a value</span>
 				#end
