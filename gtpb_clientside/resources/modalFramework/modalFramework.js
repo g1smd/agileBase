@@ -300,7 +300,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	        function fSetPostVars(oElement) {
   	          function fFormElementValue(oElement) { // extract the correct value for the form element type
   	            var sValue=null;
-  	            // TODO: use jQuery val()
+  	            // TODO: use jQuery val() like with normal agileBase input fields
                 switch(oElements[e].tagName) {
   	              case 'INPUT': switch(oElement.getAttribute('type')) {
   	                case 'hidden':sValue=oElement.value; break; 
@@ -312,7 +312,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	              
   	              case 'SELECT': sValue=oElement.options[oElement.selectedIndex].value; break;
   	              
-  	              case 'TEXTAREA':sValue=$(oElement).val(); alert('string ' + sValue); break;  	              
+  	              case 'TEXTAREA':sValue=$(oElement).val(); break;  	              
   	            }  
   	            return sValue;	        
   	          }
