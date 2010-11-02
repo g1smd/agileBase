@@ -300,6 +300,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	        function fSetPostVars(oElement) {
   	          function fFormElementValue(oElement) { // extract the correct value for the form element type
   	            var sValue=null;
+  	            alert('sending: ' + oElements[e].tagName);
                 switch(oElements[e].tagName) {
   	              case 'INPUT': switch(oElement.getAttribute('type')) {
   	                case 'hidden':sValue=oElement.value; break; 
