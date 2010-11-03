@@ -77,7 +77,7 @@
 		      #elseif ($fieldValueObject.isURL())##      
 		        <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">website</a>##
 		      #elseif ($fieldValueObject.isPostcode())##
-		        <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue" target="_blank">map</a>##
+		        <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue.trim()" target="_blank">map</a>##
 			  #elseif ($mobile_device && $fieldValueObject.isPhoneNumber())##
 				<a href="tel:$fieldValue">phone</a>##
 		      #elseif($field.getNotNull() && $fieldValue == "")
@@ -137,7 +137,7 @@
 	#elseif ($fieldValueObject.isURL())##
   	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>##
 	#elseif ($fieldValueObject.isPostcode())##
-  	  <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue" target="_blank">$fieldValue</a>##
+  	  <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue.trim()" target="_blank">$fieldValue</a>##
     #elseif ($mobile_device && $isPhoneNumber)##
 	  <a href="tel:$fieldValue">$fieldValue</a> <i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>##
     #else##
