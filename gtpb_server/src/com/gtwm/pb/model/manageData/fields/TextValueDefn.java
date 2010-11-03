@@ -112,7 +112,7 @@ public class TextValueDefn implements TextValue {
 		// work for newer postcodes
 		// used instead
 		// http://www.govtalk.gov.uk/gdsc/schemaHtml/bs7666-v2-0-xsd-PostCodeType.htm
-		if (this.textValue.toUpperCase().matches(
+		if (this.textValue.trim().toUpperCase().matches(
 				"^[A-Z]{1,2}[0-9R][0-9A-Z]?\\s[0-9][A-Z-[CIKMOV]]{2}$")) {
 			return true;
 		}
