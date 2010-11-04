@@ -39,5 +39,5 @@
   #set($success=$data.add([$row,$click,$uniqueid,$colours,$expando]))
 #end
 	
-#set($selection_found = false) ## Don't show a 'greyed out' row
+#set($selectionFound = false) ## Don't show a 'greyed out' row
 #parse("gui/pane2/pane2_body.vm")
