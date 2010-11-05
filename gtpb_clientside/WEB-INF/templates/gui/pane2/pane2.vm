@@ -179,6 +179,7 @@
 	  	  #if(!$return)
 		    #set($return="gui/reports_and_tables/pane3")
 		  #end
+		  alert('url is ' + url);
 		  var url = 'AppController.servlet?return=$return';
 		  #set($rowId = $sessionData.getRowId())
 		  #if($rowId)
