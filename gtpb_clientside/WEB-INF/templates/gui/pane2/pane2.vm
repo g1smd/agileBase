@@ -176,6 +176,9 @@
     	#end
     	  
 	  function loadPane3() {
+	  	  #if(!$return)
+		    #set($return="gui/reports_and_tables/pane3")
+		  #end
 		  var url = 'AppController.servlet?return=$return';
 		  #set($rowId = $sessionData.getRowId())
 		  #if($rowId)
