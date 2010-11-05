@@ -162,7 +162,7 @@ function fDeleteObj(sAction, sRowIdentifier) {
 				eval(document.getElementById('reportBody').rows[0]
 						.getAttribute('onclick'));
 			else
-				parent.pane_3.document.location = 'AppController.servlet?return=$return';
+				parent.pane_3.document.location = 'AppController.servlet?return=gui/reports_and_tables/pane3';
 		}
 		fControlCheckboxes(false); // re-enable the checkboxes
 		fReformatTable();
