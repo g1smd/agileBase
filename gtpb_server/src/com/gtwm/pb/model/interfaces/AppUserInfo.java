@@ -17,6 +17,8 @@
  */
 package com.gtwm.pb.model.interfaces;
 
+import java.util.SortedSet;
+
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.Enumerations.UserType;
 
@@ -26,15 +28,15 @@ import com.gtwm.pb.util.Enumerations.UserType;
  * carried out before returning an AppUserInfo object
  */
 public interface AppUserInfo {
-	
-	public static final String USERNAME = "userName";
+
+	public static final String USERNAME = "username";
 
 	public static final String PASSWORD = "password";
 
 	public static final String SURNAME = "surname";
 
 	public static final String FORENAME = "forename";
-	
+
 	public static final String USERTYPE = "usertype";
 
 	public CompanyInfo getCompany();
@@ -63,8 +65,18 @@ public interface AppUserInfo {
 	 * @return Plain text password
 	 */
 	public String getPassword();
-	
+
 	public void setUserType(UserType userType);
-	
+
 	public UserType getUserType();
+
+	/**
+	 * A user can have some reports hidden from them, not for security reasons
+	 * but to reduce clutter
+	 */
+	public SortedSet<BaseReportInfo> getHiddenReports();
+	
+	public void hideReport(BaseReportInfo report);
+	
+	public void unhideReport(BaseReportInfo report);
 }

@@ -304,7 +304,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	public SortedSet<BaseReportInfo> getViewableReports(TableInfo table)
 			throws CodingErrorException {
-		SortedSet<BaseReportInfo> allTableReports = table.getReports();
+		Set<BaseReportInfo> allTableReports = table.getReports();
 		// Strip down to the set of reports the user has privileges to view
 		SortedSet<BaseReportInfo> viewableReports = new TreeSet<BaseReportInfo>();
 		for (BaseReportInfo report : allTableReports) {
@@ -314,18 +314,43 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		return viewableReports;
 	}
+	
+	/**
+	 * Returns all the reports from a table that the specified user is able to view
+	 */
+	private SortedSet<BaseReportInfo> getViewableReports(TableInfo table, AppUserInfo user) throws DisallowedException, CodingErrorException {
+		SortedSet<BaseReportInfo> allTableReports = table.getReports();
+		// Strip down to the set of reports the user has privileges to view
+		SortedSet<BaseReportInfo> viewableReports = new TreeSet<BaseReportInfo>();
+		for (BaseReportInfo report : allTableReports) {
+			if (this.getAuthManager().specifiedUserAllowedToViewReport(this.request, user, report)) {
+				viewableReports.add(report);
+			}
+		}
+		return viewableReports;
+	}
 
 	public SortedSet<BaseReportInfo> getAllViewableReports() throws CodingErrorException,
 			ObjectNotFoundException {
 		SortedSet<BaseReportInfo> reports = new TreeSet<BaseReportInfo>();
-		SortedSet<TableInfo> tables = this.getTablesAllowedTo(PrivilegeType.VIEW_TABLE_DATA);
+		Set<TableInfo> tables = this.getTablesAllowedTo(PrivilegeType.VIEW_TABLE_DATA);
 		for (TableInfo table : tables) {
-			SortedSet<BaseReportInfo> tableReports = this.getViewableReports(table);
+			Set<BaseReportInfo> tableReports = this.getViewableReports(table);
 			reports.addAll(tableReports);
 		}
 		return reports;
 	}
 
+	public SortedSet<BaseReportInfo> adminGetAllViewableReports(AppUserInfo user) throws ObjectNotFoundException, DisallowedException, CodingErrorException {
+		SortedSet<BaseReportInfo> reports = new TreeSet<BaseReportInfo>();
+		Set<TableInfo> tables = this.getAuthManager().getCompanyForLoggedInUser(this.request).getTables();
+		for (TableInfo table : tables) {
+			Set<BaseReportInfo> tableReports = this.getViewableReports(table, user);
+			reports.addAll(tableReports);
+		}
+		return reports;
+	}
+	
 	public TableInfo getTable(String tableID) throws ObjectNotFoundException, DisallowedException {
 		return this.databaseDefn.getTable(this.request, tableID);
 	}

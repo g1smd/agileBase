@@ -20,20 +20,20 @@ package com.gtwm.pb.auth;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import com.gtwm.pb.model.interfaces.TableInfo;
-import com.gtwm.pb.model.interfaces.UserObjectPrivilegeInfo;
+import com.gtwm.pb.model.interfaces.UserTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 
 @Entity
-public class UserObjectPrivilege extends UserGeneralPrivilege implements UserObjectPrivilegeInfo {
+public class UserTablePrivilege extends UserGeneralPrivilege implements UserTablePrivilegeInfo {
 
-	private UserObjectPrivilege() {
+	private UserTablePrivilege() {
 	}
 
 	/**
 	 * Construct a table privilege
 	 */
-	public UserObjectPrivilege(AppUserInfo appUser, PrivilegeType privilegeType, TableInfo table)
+	public UserTablePrivilege(AppUserInfo appUser, PrivilegeType privilegeType, TableInfo table)
 			throws IllegalArgumentException {
 		// Only allow the privilege to be constructed if the privilege type is
 		// compatible with a table
@@ -61,7 +61,7 @@ public class UserObjectPrivilege extends UserGeneralPrivilege implements UserObj
 		if ((obj == null) || (obj.getClass() != this.getClass())) {
 			return false;
 		}
-		UserObjectPrivilege otherPrivilege = (UserObjectPrivilege) obj;
+		UserTablePrivilege otherPrivilege = (UserTablePrivilege) obj;
 		if (!this.getUser().equals(otherPrivilege.getUser())) {
 			return false;
 		}

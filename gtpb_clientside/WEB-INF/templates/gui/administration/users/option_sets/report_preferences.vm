@@ -15,7 +15,9 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#parse('gui/administration/users/buttons/user.vm')<br>
-#parse('gui/administration/users/buttons/group.vm')<br>
-#parse('gui/administration/users/buttons/privileges.vm')<br>
-#parse('gui/administration/users/buttons/reports.vm')
+#set($option_set_id='report_preferences')
+#set($option_set_title='report preferences')
+#set($option_set_subtitle="$sessionUser.getForename() has the following checked reports visible to them. If a report isn't in this list, make sure the user has privileges on all the tables used by the report")
+#set($option_set_data_path='gui/administration/users/option_sets/report_preferences_data.vm')
+
+#parse('gui/administration/option_set.vm')

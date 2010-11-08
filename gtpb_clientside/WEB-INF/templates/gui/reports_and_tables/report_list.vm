@@ -15,6 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+## a list of reports by module for pane1
 #set($SQ = "'")
 
 #if($mobile_device)
@@ -26,7 +27,6 @@
   #set($reportRowLimit=100)
 #end
 
-## a list of reports by module for pane1
 #set($sessionReport = $sessionData.getReport())
 #set($sessionReportModule = $sessionReport.getModule())
 #set($sessionTable = $sessionData.getTable())

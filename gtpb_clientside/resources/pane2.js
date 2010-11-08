@@ -107,7 +107,9 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		function fRetryDeletions() {
 			var sExceptionMessage = sResponseXML
 					.getElementsByTagName('exception')[0].firstChild.nodeValue;
-			if (!confirm('Some rows were not deleted because they are linked to data in other tables.\n\n' + sExceptionMessage + '\n\nWould you like to delete these rows and the related data or CANCEL this operation?'))
+			if (!confirm('Some rows were not deleted because they are linked to data in other tables.\n\n'
+					+ sExceptionMessage
+					+ '\n\nWould you like to delete these rows and the related data or CANCEL this operation?'))
 				return false;
 			bDeleteRelatedData = true;
 			bFailedDeletions = false;
@@ -119,7 +121,7 @@ function fDeleteObj(sAction, sRowIdentifier) {
 
 		sResponse = sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
 		if (sResponse == 'ok') { // the action was successfully processed by
-									// the server
+			// the server
 			if (oCurrentRow == oSessionItem)
 				bRemovedSessionItem = true;
 			var oRowParent = oCurrentRow.parentNode;
@@ -143,26 +145,22 @@ function fDeleteObj(sAction, sRowIdentifier) {
 			if (bRetryDeletions) {
 				if (fRetryDeletions())
 					return true; // deletions can be retried if the user has
-									// permissions on the table containing the
-									// data
+				// permissions on the table containing the
+				// data
 			} else
-				alert('Some rows were not deleted because they are linked to data in other tables that you do not have permission to change.\n\n' + sExceptionMessage);
+				alert('Some rows were not deleted because they are linked to data in other tables that you do not have permission to change.\n\n'
+						+ sExceptionMessage);
 		}
 
 		// clean everything up
 		// if we've removed the session set a new one as the first row
 		if (bRemovedSessionItem) {
-			if (document.getElementById('reportBody').rows.length > 1) // there
-																		// will
-																		// always
-																		// be
-																		// the
-																		// filler
-																		// row
+			if (document.getElementById('reportBody').rows.length > 1) {
 				eval(document.getElementById('reportBody').rows[0]
 						.getAttribute('onclick'));
-			else
+			} else {
 				parent.pane_3.document.location = 'AppController.servlet?return=gui/reports_and_tables/pane3';
+			}
 		}
 		fControlCheckboxes(false); // re-enable the checkboxes
 		fReformatTable();
@@ -238,49 +236,61 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	var templateName = url.replace(/^.*return=/, '');
 	templateName = templateName.replace(/\&.*$/, '');
 	replacedTemplateUrl = url.replace('return=' + templateName, 'return=blank');
-	$.post(replacedTemplateUrl, null, function(data) {
-				// Refresh frame 3
-					if (typeof (parent.pane_3) != "undefined") {
-						// If user is loading a new report, it may have
-						// different privileges to the last one.
-					// If so, reload the whole of pane 3 to refresh the tab
-					// list, otherwise just refresh the current tab
-					if (typeof (parent.pane_3.pane3TabInterface) == "undefined") {
-						// something in pane 3 but not a tabset
-						parent.pane_3.document.location = url;
-					} else if (document.location.href.match('set_module')) { // set_module
-																				// means
-																				// we
-																				// must
-																				// be
-																				// viewing
-																				// a
-																				// report
-						if ((numberOfTabsExpected == null)
-								|| (numberOfTabsExpected == parent.pane_3.pane3TabInterface
-										.getNumberOfTabs())) {
-							// if pane 3 has the right number of tabs, we can
-							// just refresh the one tab
-							try {
-								parent.pane_3.pane3TabInterface.refresh(rowId);
-							} catch (err) {
-								// alert("Fast refresh failed, falling back to
-								// slow - don't worry about this");
+	$
+			.post(
+					replacedTemplateUrl,
+					null,
+					function(data) {
+						// Refresh frame 3
+						if (typeof (parent.pane_3) != "undefined") {
+							// If user is loading a new report, it may have
+							// different privileges to the last one.
+							// If so, reload the whole of pane 3 to refresh the
+							// tab
+							// list, otherwise just refresh the current tab
+							if (typeof (parent.pane_3.pane3TabInterface) == "undefined") {
+								// something in pane 3 but not a tabset
+								parent.pane_3.document.location = url;
+							} else if (document.location.href
+									.match('set_module')) { // set_module
+								// means
+								// we
+								// must
+								// be
+								// viewing
+								// a
+								// report
+								if ((numberOfTabsExpected == null)
+										|| (numberOfTabsExpected == parent.pane_3.pane3TabInterface
+												.getNumberOfTabs())) {
+									// if pane 3 has the right number of tabs,
+									// we can
+									// just refresh the one tab
+									try {
+										parent.pane_3.pane3TabInterface
+												.refresh(rowId);
+									} catch (err) {
+										// alert("Fast refresh failed, falling
+										// back to
+										// slow - don't worry about this");
+										parent.pane_3.document.location = url;
+									}
+								} else {
+									// if it doesn't have the right number of
+									// tabs, we
+									// need to refresh the whole frame to reload
+									// the
+									// tabset
+									parent.pane_3.document.location = url;
+								}
+							} else {
+								// fallback after everything else: simple
+								// refresh of
+								// pane 3
 								parent.pane_3.document.location = url;
 							}
-						} else {
-							// if it doesn't have the right number of tabs, we
-							// need to refresh the whole frame to reload the
-							// tabset
-							parent.pane_3.document.location = url;
 						}
-					} else {
-						// fallback after everything else: simple refresh of
-						// pane 3
-						parent.pane_3.document.location = url;
-					}
-				}
-			});
+					});
 }
 
 /*
@@ -303,7 +313,7 @@ function fSelectAll(oCheckbox) {
 	}
 }
 
-//TODO: simplify with jQuery
+// TODO: simplify with jQuery
 function fLocateDeleteMarkers(oCheckbox) {
 	// lets the delete object know what column the delete checkboxes are in
 	// cell could be a TD or a TH
@@ -336,9 +346,11 @@ function showTooltip() {
 	var href = tooltip.attr("rel");
 	tooltip.load(href, function() {
 		tooltip.fadeIn("fast");
-		tooltip.fadeTo("fast",0.95);
-		tooltip.find(".sparkline").sparkline('html', { type:'bar' });
-		abTooltipTimeout = setTimeout("hideTooltip()",8000);
+		tooltip.fadeTo("fast", 0.95);
+		tooltip.find(".sparkline").sparkline('html', {
+			type : 'bar'
+		});
+		abTooltipTimeout = setTimeout("hideTooltip()", 8000);
 	});
 }
 

@@ -19,15 +19,15 @@ package com.gtwm.pb.auth;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import com.gtwm.pb.model.interfaces.RoleObjectPrivilegeInfo;
+import com.gtwm.pb.model.interfaces.RoleTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 
 @Entity
-public class RoleObjectPrivilege extends RoleGeneralPrivilege implements RoleObjectPrivilegeInfo {
+public class RoleTablePrivilege extends RoleGeneralPrivilege implements RoleTablePrivilegeInfo {
 
-    protected RoleObjectPrivilege() {    
+    protected RoleTablePrivilege() {    
     }
 
     /**
@@ -39,7 +39,7 @@ public class RoleObjectPrivilege extends RoleGeneralPrivilege implements RoleObj
      *            The privilege type to assign, which must be appropriate for a table
      * @param table
      */
-    public RoleObjectPrivilege(AppRoleInfo role, PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException {
+    public RoleTablePrivilege(AppRoleInfo role, PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException {
         // Only allow the privilege to be constructed if the privilege type is compatible with a table
         // For example you couldn't have an 'access report' privilege acting on a table, only a report
         if (privilegeType.getObjectClass().equals(TableInfo.class)) {
@@ -67,7 +67,7 @@ public class RoleObjectPrivilege extends RoleGeneralPrivilege implements RoleObj
         if (super.equals(obj) == false) {
             return false;
         }
-        return this.getTable().equals(((RoleObjectPrivilege) obj).getTable());
+        return this.getTable().equals(((RoleTablePrivilege) obj).getTable());
     }
     
     public int hashCode() {

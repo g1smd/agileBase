@@ -23,10 +23,10 @@ import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.RoleGeneralPrivilegeInfo;
-import com.gtwm.pb.model.interfaces.RoleObjectPrivilegeInfo;
+import com.gtwm.pb.model.interfaces.RoleTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.UserGeneralPrivilegeInfo;
-import com.gtwm.pb.model.interfaces.UserObjectPrivilegeInfo;
+import com.gtwm.pb.model.interfaces.UserTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.AuthCacheObjectInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
@@ -145,8 +145,8 @@ public final class Authenticator implements AuthenticatorInfo {
 			// remove user privileges
 			Set<UserGeneralPrivilegeInfo> userPrivileges = this.getUserPrivileges();
 			for (UserGeneralPrivilegeInfo userPrivilege : userPrivileges) {
-				if (userPrivilege instanceof UserObjectPrivilege) {
-					this.removeUserPrivilege(appUser, userPrivilege.getPrivilegeType(), ((UserObjectPrivilege) userPrivilege).getTable());
+				if (userPrivilege instanceof UserTablePrivilege) {
+					this.removeUserPrivilege(appUser, userPrivilege.getPrivilegeType(), ((UserTablePrivilege) userPrivilege).getTable());
 				} else {
 					this.removeUserPrivilege(appUser, userPrivilege.getPrivilegeType());
 				}
@@ -174,8 +174,8 @@ public final class Authenticator implements AuthenticatorInfo {
 		// remove role privileges
 		Set<RoleGeneralPrivilegeInfo> rolePrivileges = this.getRolePrivileges();
 		for (RoleGeneralPrivilegeInfo rolePrivilege : rolePrivileges) {
-			if (rolePrivilege instanceof RoleObjectPrivilege) {
-				this.removeRolePrivilege(role, rolePrivilege.getPrivilegeType(), ((RoleObjectPrivilege) rolePrivilege).getTable());
+			if (rolePrivilege instanceof RoleTablePrivilege) {
+				this.removeRolePrivilege(role, rolePrivilege.getPrivilegeType(), ((RoleTablePrivilege) rolePrivilege).getTable());
 			} else {
 				this.removeRolePrivilege(role, rolePrivilege.getPrivilegeType());
 			}
@@ -224,7 +224,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	 */
 	protected synchronized void addRolePrivilege(AppRoleInfo role, PrivilegeType privilegeType,
 			TableInfo table) throws IllegalArgumentException {
-		RoleObjectPrivilegeInfo rolePrivilege = new RoleObjectPrivilege(role, privilegeType, table);
+		RoleTablePrivilegeInfo rolePrivilege = new RoleTablePrivilege(role, privilegeType, table);
 		this.getRolePrivilegesDirect().add(rolePrivilege);
 		this.destroyCache();
 	}
@@ -238,9 +238,9 @@ public final class Authenticator implements AuthenticatorInfo {
 	 *             if the privilege requested isn't compatible with a table
 	 *             object
 	 */
-	protected synchronized RoleObjectPrivilegeInfo removeRolePrivilege(AppRoleInfo role,
+	protected synchronized RoleTablePrivilegeInfo removeRolePrivilege(AppRoleInfo role,
 			PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException {
-		RoleObjectPrivilegeInfo rolePrivilege = new RoleObjectPrivilege(role, privilegeType, table);
+		RoleTablePrivilegeInfo rolePrivilege = new RoleTablePrivilege(role, privilegeType, table);
 		this.getRolePrivilegesDirect().remove(rolePrivilege);
 		this.destroyCache();
 		return rolePrivilege;
@@ -282,7 +282,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	 */
 	protected synchronized void addUserPrivilege(AppUserInfo appUser, PrivilegeType privilegeType,
 			TableInfo table) throws IllegalArgumentException {
-		UserObjectPrivilegeInfo userPrivilege = new UserObjectPrivilege(appUser, privilegeType,
+		UserTablePrivilegeInfo userPrivilege = new UserTablePrivilege(appUser, privilegeType,
 				table);
 		this.getUserPrivilegesDirect().add(userPrivilege);
 		this.destroyCache();
@@ -309,9 +309,9 @@ public final class Authenticator implements AuthenticatorInfo {
 	 *             if the privilege requested isn't compatible with a table
 	 *             object
 	 */
-	protected synchronized UserObjectPrivilegeInfo removeUserPrivilege(AppUserInfo appUser,
+	protected synchronized UserTablePrivilegeInfo removeUserPrivilege(AppUserInfo appUser,
 			PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException {
-		UserObjectPrivilegeInfo userPrivilege = new UserObjectPrivilege(appUser, privilegeType,
+		UserTablePrivilegeInfo userPrivilege = new UserTablePrivilege(appUser, privilegeType,
 				table);
 		this.getUserPrivilegesDirect().remove(userPrivilege);
 		this.destroyCache();
@@ -366,7 +366,7 @@ public final class Authenticator implements AuthenticatorInfo {
 		return false;
 	}
 
-	public synchronized boolean loggedInUserAllowedTo(HttpServletRequest request,
+	public boolean loggedInUserAllowedTo(HttpServletRequest request,
 			PrivilegeType privilegeType, TableInfo table) {
 		// Check if the user has individual privileges
 		AppUserInfo appUser = null;
@@ -379,12 +379,11 @@ public final class Authenticator implements AuthenticatorInfo {
 			// If there's no user then they can't see anything
 			return false;
 		}
-		// We now know the cache works quite well, don't bother testing it
-		//if (this.cacheHits > 100000) {
-		//	logger.info("Authentication cache hits = " + this.cacheHits + ", misses = " + this.cacheMisses);
-		//	this.cacheHits = 0;
-		//	this.cacheMisses = 0;
-		//}
+		return userAllowedTo(privilegeType, table, appUser);
+	}
+
+	protected synchronized boolean userAllowedTo(PrivilegeType privilegeType, TableInfo table,
+			AppUserInfo appUser) {
 		// Check cache
 		Set<AuthCacheObjectInfo> cachedResults = this.authCache.get(appUser);
 		if (cachedResults == null) {
@@ -401,9 +400,9 @@ public final class Authenticator implements AuthenticatorInfo {
 		// not in cache
 		//this.cacheMisses++;
 		for (UserGeneralPrivilegeInfo privilege : this.getUserPrivilegesDirect()) {
-			if (privilege instanceof UserObjectPrivilegeInfo) {
+			if (privilege instanceof UserTablePrivilegeInfo) {
 				// Use object privilege form
-				UserObjectPrivilegeInfo objectPrivilege = (UserObjectPrivilegeInfo) privilege;
+				UserTablePrivilegeInfo objectPrivilege = (UserTablePrivilegeInfo) privilege;
 				// User must have the privilege type in question for the table
 				// in question
 				if ((objectPrivilege.getPrivilegeType().equals(privilegeType))
@@ -420,9 +419,9 @@ public final class Authenticator implements AuthenticatorInfo {
 		for (AppRoleInfo role : this.getRolesDirect()) {
 			if (role.getUsers().contains(appUser)) {
 				for (RoleGeneralPrivilegeInfo privilege : this.getRolePrivilegesDirect()) {
-					if (privilege instanceof RoleObjectPrivilegeInfo) {
+					if (privilege instanceof RoleTablePrivilegeInfo) {
 						// Use object privilege form
-						RoleObjectPrivilegeInfo objectPrivilege = (RoleObjectPrivilegeInfo) privilege;
+						RoleTablePrivilegeInfo objectPrivilege = (RoleTablePrivilegeInfo) privilege;
 						// Role must have the privilege type in question for the
 						// table in question
 						if ((objectPrivilege.getPrivilegeType().equals(privilegeType))
@@ -446,24 +445,34 @@ public final class Authenticator implements AuthenticatorInfo {
 
 	public boolean loggedInUserAllowedToViewReport(HttpServletRequest request, BaseReportInfo report)
 			throws CodingErrorException {
-		return this.loggedInUserAllowedToViewReport(request, report, new HashSet<BaseReportInfo>());
+		AppUserInfo appUser = null;
+		try {
+			appUser = this.getUserByUserName(request.getRemoteUser());
+		} catch (ObjectNotFoundException onfe) {
+			logger
+					.error("Authentication check can't complete: AppUserInfo object not found for logged in user '"
+							+ request.getRemoteUser() + "'");
+			// If there's no user then they can't see anything
+			return false;
+		}
+		return this.specifiedUserAllowedToViewReport(appUser, report, new HashSet<BaseReportInfo>());
 	}
 
 	/**
-	 * Recursive method called by isReportViewable(report)
+	 * Recursive method
 	 */
-	private boolean loggedInUserAllowedToViewReport(HttpServletRequest request,
+	protected boolean specifiedUserAllowedToViewReport(AppUserInfo user,
 			BaseReportInfo report, Set<BaseReportInfo> checkedReports) throws CodingErrorException {
 		// first check parent table of the report
-		if (!this.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, report
-				.getParentTable())) {
+		if (!this.userAllowedTo(PrivilegeType.VIEW_TABLE_DATA, report
+				.getParentTable(), user)) {
 			return false;
 		}
 		// check any joined tables
 		SimpleReportInfo simpleReport = (SimpleReportInfo) report;
 		Set<TableInfo> joinedTables = simpleReport.getJoinedTables();
 		for (TableInfo joinedTable : joinedTables) {
-			if (!this.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, joinedTable)) {
+			if (!this.userAllowedTo(PrivilegeType.VIEW_TABLE_DATA, joinedTable, user)) {
 				return false;
 			}
 		}
@@ -472,7 +481,7 @@ public final class Authenticator implements AuthenticatorInfo {
 		Set<BaseReportInfo> joinedReports = simpleReport.getJoinedReports();
 		for (BaseReportInfo joinedReport : joinedReports) {
 			if (!checkedReports.contains(joinedReport)) {
-				if (!this.loggedInUserAllowedToViewReport(request, joinedReport, checkedReports)) {
+				if (!this.specifiedUserAllowedToViewReport(user, joinedReport, checkedReports)) {
 					return false;
 				} else {
 					checkedReports.add(joinedReport);

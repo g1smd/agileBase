@@ -35,8 +35,8 @@ import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
-import com.gtwm.pb.model.interfaces.UserObjectPrivilegeInfo;
-import com.gtwm.pb.model.interfaces.RoleObjectPrivilegeInfo;
+import com.gtwm.pb.model.interfaces.UserTablePrivilegeInfo;
+import com.gtwm.pb.model.interfaces.RoleTablePrivilegeInfo;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.HibernateUtil;
@@ -604,9 +604,9 @@ public final class ServletAuthMethods {
 					"The 'internaltablename' parameter and either 'internalusername' or 'internalrolename' are required to remove all table privileges from a user/role");
 		}
 		TableInfo table = databaseDefn.getTable(request, internalTableName);
-		Set<UserObjectPrivilegeInfo> userPrivilegesOnTable = authManager.getUserPrivilegesOnTable(
+		Set<UserTablePrivilegeInfo> userPrivilegesOnTable = authManager.getUserPrivilegesOnTable(
 				request, table);
-		Set<RoleObjectPrivilegeInfo> rolePrivilegesOnTable = authManager.getRolePrivilegesOnTable(
+		Set<RoleTablePrivilegeInfo> rolePrivilegesOnTable = authManager.getRolePrivilegesOnTable(
 				request, table);
 		int userPrivilegesSize = userPrivilegesOnTable.size();
 		int rolePrivilegesSize = rolePrivilegesOnTable.size();
@@ -623,7 +623,7 @@ public final class ServletAuthMethods {
 							// privileges on the table
 							if (rolePrivilegesSize == 0) {
 								boolean otherUserPrivsFound = false;
-								PRIVLOOP: for (UserObjectPrivilegeInfo userPrivilegeOnTable : userPrivilegesOnTable) {
+								PRIVLOOP: for (UserTablePrivilegeInfo userPrivilegeOnTable : userPrivilegesOnTable) {
 									if (!userPrivilegeOnTable.getUser().equals(user)) {
 										otherUserPrivsFound = true;
 										break PRIVLOOP;
@@ -650,7 +650,7 @@ public final class ServletAuthMethods {
 							// privileges on the table
 							if (userPrivilegesSize == 0) {
 								boolean otherRolePrivsFound = false;
-								PRIVLOOP: for (RoleObjectPrivilegeInfo rolePrivilegeOnTable : rolePrivilegesOnTable) {
+								PRIVLOOP: for (RoleTablePrivilegeInfo rolePrivilegeOnTable : rolePrivilegesOnTable) {
 									if (!rolePrivilegeOnTable.getRole().equals(role)) {
 										otherRolePrivsFound = true;
 										break PRIVLOOP;

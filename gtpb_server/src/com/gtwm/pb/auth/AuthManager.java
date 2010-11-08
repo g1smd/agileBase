@@ -26,12 +26,12 @@ import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
-import com.gtwm.pb.model.interfaces.RoleObjectPrivilegeInfo;
+import com.gtwm.pb.model.interfaces.RoleTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.UserGeneralPrivilegeInfo;
 import com.gtwm.pb.model.interfaces.RoleGeneralPrivilegeInfo;
-import com.gtwm.pb.model.interfaces.UserObjectPrivilegeInfo;
+import com.gtwm.pb.model.interfaces.UserTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.manageSchema.fields.DecimalFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
@@ -102,8 +102,8 @@ public final class AuthManager implements AuthManagerInfo {
 				}
 				// Cache tables into companies.
 				for (UserGeneralPrivilegeInfo privilege : auth.getUserPrivileges()) {
-					if (privilege instanceof UserObjectPrivilege) {
-						UserObjectPrivilege priv = (UserObjectPrivilege) privilege;
+					if (privilege instanceof UserTablePrivilege) {
+						UserTablePrivilege priv = (UserTablePrivilege) privilege;
 						CompanyInfo company = priv.getUser().getCompany();
 						TableInfo table = priv.getTable();
 						if (!company.getTables().contains(table)) {
@@ -113,8 +113,8 @@ public final class AuthManager implements AuthManagerInfo {
 					}
 				}
 				for (RoleGeneralPrivilegeInfo privilege : auth.getRolePrivileges()) {
-					if (privilege instanceof RoleObjectPrivilege) {
-						RoleObjectPrivilege priv = (RoleObjectPrivilege) privilege;
+					if (privilege instanceof RoleTablePrivilege) {
+						RoleTablePrivilege priv = (RoleTablePrivilege) privilege;
 						CompanyInfo company = priv.getRole().getCompany();
 						TableInfo table = priv.getTable();
 						if (!company.getTables().contains(table)) {
@@ -524,7 +524,7 @@ public final class AuthManager implements AuthManagerInfo {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
 		HibernateUtil.activateObject(this.authenticator);
-		RoleObjectPrivilegeInfo removedPrivilege = ((Authenticator) this.authenticator)
+		RoleTablePrivilegeInfo removedPrivilege = ((Authenticator) this.authenticator)
 				.removeRolePrivilege(role, privilegeType, table);
 		HibernateUtil.currentSession().delete(removedPrivilege);
 	}
@@ -574,22 +574,22 @@ public final class AuthManager implements AuthManagerInfo {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
 		HibernateUtil.activateObject(this.authenticator);
-		UserObjectPrivilegeInfo removedPrivilege = ((Authenticator) this.authenticator)
+		UserTablePrivilegeInfo removedPrivilege = ((Authenticator) this.authenticator)
 				.removeUserPrivilege(appUser, privilegeType, table);
 		HibernateUtil.currentSession().delete(removedPrivilege);
 	}
 
-	public Set<RoleObjectPrivilegeInfo> getRolePrivilegesOnTable(HttpServletRequest request,
+	public Set<RoleTablePrivilegeInfo> getRolePrivilegesOnTable(HttpServletRequest request,
 			TableInfo table) throws DisallowedException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE, table);
 		}
-		Set<RoleObjectPrivilegeInfo> rolePrivilegesOnTable = new HashSet<RoleObjectPrivilegeInfo>();
+		Set<RoleTablePrivilegeInfo> rolePrivilegesOnTable = new HashSet<RoleTablePrivilegeInfo>();
 		Set<RoleGeneralPrivilegeInfo> rolePrivileges = ((Authenticator) this.authenticator)
 				.getRolePrivileges();
 		for (RoleGeneralPrivilegeInfo rolePrivilege : rolePrivileges) {
-			if (rolePrivilege instanceof RoleObjectPrivilege) {
-				RoleObjectPrivilege roleObjectPrivilege = (RoleObjectPrivilege) rolePrivilege;
+			if (rolePrivilege instanceof RoleTablePrivilege) {
+				RoleTablePrivilege roleObjectPrivilege = (RoleTablePrivilege) rolePrivilege;
 				if (roleObjectPrivilege.getTable().equals(table)) {
 					rolePrivilegesOnTable.add(roleObjectPrivilege);
 				}
@@ -598,17 +598,17 @@ public final class AuthManager implements AuthManagerInfo {
 		return rolePrivilegesOnTable;
 	}
 
-	public Set<UserObjectPrivilegeInfo> getUserPrivilegesOnTable(HttpServletRequest request,
+	public Set<UserTablePrivilegeInfo> getUserPrivilegesOnTable(HttpServletRequest request,
 			TableInfo table) throws DisallowedException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE, table);
 		}
-		Set<UserObjectPrivilegeInfo> userPrivilegesOnTable = new HashSet<UserObjectPrivilegeInfo>();
+		Set<UserTablePrivilegeInfo> userPrivilegesOnTable = new HashSet<UserTablePrivilegeInfo>();
 		Set<UserGeneralPrivilegeInfo> userPrivileges = ((Authenticator) this.authenticator)
 				.getUserPrivileges();
 		for (UserGeneralPrivilegeInfo userPrivilege : userPrivileges) {
-			if (userPrivilege instanceof UserObjectPrivilege) {
-				UserObjectPrivilege userObjectPrivilege = (UserObjectPrivilege) userPrivilege;
+			if (userPrivilege instanceof UserTablePrivilege) {
+				UserTablePrivilege userObjectPrivilege = (UserTablePrivilege) userPrivilege;
 				if (userObjectPrivilege.getTable().equals(table)) {
 					userPrivilegesOnTable.add(userObjectPrivilege);
 				}
@@ -626,8 +626,8 @@ public final class AuthManager implements AuthManagerInfo {
 		Set<UserGeneralPrivilegeInfo> allUserPrivileges = ((Authenticator) this.authenticator)
 				.getUserPrivileges();
 		for (UserGeneralPrivilegeInfo userPrivilege : allUserPrivileges) {
-			if (userPrivilege instanceof UserObjectPrivilegeInfo) {
-				if (((UserObjectPrivilegeInfo) userPrivilege).getTable().equals(table)) {
+			if (userPrivilege instanceof UserTablePrivilegeInfo) {
+				if (((UserTablePrivilegeInfo) userPrivilege).getTable().equals(table)) {
 					AppUserInfo user = userPrivilege.getUser();
 					PrivilegeType privilegeType = userPrivilege.getPrivilegeType();
 					((Authenticator) this.authenticator).removeUserPrivilege(user, privilegeType,
@@ -640,8 +640,8 @@ public final class AuthManager implements AuthManagerInfo {
 		Set<RoleGeneralPrivilegeInfo> allRolePrivileges = ((Authenticator) this.authenticator)
 				.getRolePrivileges();
 		for (RoleGeneralPrivilegeInfo rolePrivilege : allRolePrivileges) {
-			if (rolePrivilege instanceof RoleObjectPrivilegeInfo) {
-				if (((RoleObjectPrivilegeInfo) rolePrivilege).getTable().equals(table)) {
+			if (rolePrivilege instanceof RoleTablePrivilegeInfo) {
+				if (((RoleTablePrivilegeInfo) rolePrivilege).getTable().equals(table)) {
 					AppRoleInfo role = rolePrivilege.getRole();
 					PrivilegeType privilegeType = rolePrivilege.getPrivilegeType();
 					((Authenticator) this.authenticator).removeRolePrivilege(role, privilegeType,
@@ -767,7 +767,7 @@ public final class AuthManager implements AuthManagerInfo {
 			// We aren't interested in object specific privileges here, that's
 			// the other
 			// specifiedUserHasPrivilege method
-			if (!(privilege instanceof UserObjectPrivilegeInfo)) {
+			if (!(privilege instanceof UserTablePrivilegeInfo)) {
 				if (privilege.getPrivilegeType().equals(privilegeType)) {
 					return true;
 				}
@@ -787,9 +787,9 @@ public final class AuthManager implements AuthManagerInfo {
 			// We're only interested in table-specific privileges here, general
 			// privileges are handled by the
 			// other sessionUserHasPrivileges method
-			if (privilege instanceof UserObjectPrivilegeInfo) {
+			if (privilege instanceof UserTablePrivilegeInfo) {
 				if (privilege.getPrivilegeType().equals(privilegeType)
-						&& ((UserObjectPrivilegeInfo) privilege).getTable().getInternalTableName()
+						&& ((UserTablePrivilegeInfo) privilege).getTable().getInternalTableName()
 								.equals(table.getInternalTableName())) {
 					return true;
 				}
@@ -806,9 +806,9 @@ public final class AuthManager implements AuthManagerInfo {
 		}
 		Set<RoleGeneralPrivilegeInfo> rolePrivileges = getPrivilegesForRole(request, role);
 		for (RoleGeneralPrivilegeInfo privilege : rolePrivileges) {
-			if (privilege instanceof RoleObjectPrivilegeInfo) {
+			if (privilege instanceof RoleTablePrivilegeInfo) {
 				if (privilege.getPrivilegeType().equals(privilegeType)
-						&& ((RoleObjectPrivilegeInfo) privilege).getTable().getInternalTableName()
+						&& ((RoleTablePrivilegeInfo) privilege).getTable().getInternalTableName()
 								.equals(table.getInternalTableName())) {
 					return true;
 				}
@@ -824,13 +824,20 @@ public final class AuthManager implements AuthManagerInfo {
 		}
 		Set<RoleGeneralPrivilegeInfo> rolePrivileges = getPrivilegesForRole(request, role);
 		for (RoleGeneralPrivilegeInfo privilege : rolePrivileges) {
-			if (!(privilege instanceof RoleObjectPrivilegeInfo)) {
+			if (!(privilege instanceof RoleTablePrivilegeInfo)) {
 				if (privilege.getPrivilegeType().equals(privilegeType)) {
 					return true;
 				}
 			}
 		}
 		return false;
+	}
+	
+	public boolean specifiedUserAllowedToViewReport(HttpServletRequest request, AppUserInfo user, BaseReportInfo report) throws DisallowedException, CodingErrorException {
+		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
+			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+		}
+		return ((Authenticator) this.authenticator).specifiedUserAllowedToViewReport(user, report, new HashSet<BaseReportInfo>());
 	}
 
 	private AuthenticatorInfo authenticator = null;

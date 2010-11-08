@@ -31,6 +31,7 @@ import org.hibernate.HibernateException;
 import com.gtwm.pb.auth.Company;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
+import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
@@ -140,12 +141,12 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();
-			// rollback memory
+			// TODO? rollback memory
 
 			throw new CantDoThatException("Company removal failed", hex);
 		} catch (AgileBaseException pbex) {
 			HibernateUtil.rollbackHibernateTransaction();
-			// rollback memory
+			// TODO? rollback memory
 
 			throw new CantDoThatException("Company removal failed", pbex);
 		} finally {
@@ -2319,7 +2320,47 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-
+	
+	public synchronized static void hideReportFromUser(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, ServletUtilMethods.USE_SESSION);
+		String internalUserName = request.getParameter("internalusername");
+		if (internalUserName == null) {
+			throw new MissingParametersException("'internalusername' is necessary to specify the user when hiding a report from them");
+		}
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request, internalUserName);
+		try {
+			HibernateUtil.startHibernateTransaction();
+			appUser.hideReport(report);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("report hiding failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
+	public synchronized static void unhideReportFromUser(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, ServletUtilMethods.USE_SESSION);
+		String internalUserName = request.getParameter("internalusername");
+		if (internalUserName == null) {
+			throw new MissingParametersException("'internalusername' is necessary to specify the user when hiding a report from them");
+		}
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request, internalUserName);
+		try {
+			HibernateUtil.startHibernateTransaction();
+			appUser.unhideReport(report);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("report un-hiding failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
 	private static final SimpleLogger logger = new SimpleLogger(ServletSchemaMethods.class);
 
 }

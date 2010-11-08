@@ -15,6 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+
+## Used when global editing to show how many rows will be affected
 <reportData>
   #set($sessionReport=$sessionData.getReport())
   <name>$sessionReport.getReportName()</name>
