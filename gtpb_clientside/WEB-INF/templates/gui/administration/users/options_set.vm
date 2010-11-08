@@ -21,4 +21,4 @@
 #parse('gui/administration/users/option_sets/user_details.vm')
 #parse('gui/administration/users/option_sets/group_membership.vm')
 #parse('gui/administration/users/option_sets/table_privileges.vm')
-
+#parse('gui/administration/users/option_sets/report_preferences.vm')

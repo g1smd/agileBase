@@ -205,7 +205,8 @@ public final class AppController extends VelocityViewServlet {
 		// app actions
 		EnumSet<SessionAction> sessionActions = EnumSet.allOf(SessionAction.class);
 		for (SessionAction sessionAction : sessionActions) {
-			String sessionActionParam = request.getParameter(sessionAction.toString().toLowerCase());
+			String sessionActionParam = request
+					.getParameter(sessionAction.toString().toLowerCase());
 			if (sessionActionParam != null) {
 				switch (sessionAction) {
 				case PRESET_ROW_ID:
@@ -312,27 +313,47 @@ public final class AppController extends VelocityViewServlet {
 			if (getParameter(request, appAction.toString().toLowerCase(Locale.UK), multipartItems) != null) {
 				sessionData.setLastAppAction(appAction);
 				switch (appAction) {
+				// Most commonly used actions at the start
+				case UPDATE_RECORD:
+					ServletDataMethods.saveRecord(sessionData, request, false, databaseDefn,
+							multipartItems);
+					break;
+				case SAVE_NEW_RECORD:
+					ServletDataMethods.saveRecord(sessionData, request, true, databaseDefn,
+							multipartItems);
+					break;
+				case CLONE_RECORD:
+					ServletDataMethods.cloneRecord(sessionData, request, databaseDefn,
+							multipartItems);
+					break;
+				case REMOVE_RECORD:
+					ServletDataMethods.removeRecord(sessionData, request, databaseDefn);
+					break;
+				case GLOBAL_EDIT:
+					ServletDataMethods.globalEdit(sessionData, request, databaseDefn,
+							multipartItems);
+					break;
 				case ADD_USER:
 					ServletAuthMethods.addUser(sessionData, request, databaseDefn.getAuthManager());
 					break;
 				case REMOVE_USER:
-					ServletAuthMethods.removeUser(sessionData, request, databaseDefn
-							.getAuthManager());
+					ServletAuthMethods.removeUser(sessionData, request,
+							databaseDefn.getAuthManager());
 					break;
 				case UPDATE_USER:
-					ServletAuthMethods.updateUser(sessionData, request, databaseDefn
-							.getAuthManager());
+					ServletAuthMethods.updateUser(sessionData, request,
+							databaseDefn.getAuthManager());
 					break;
 				case ADD_ROLE:
 					ServletAuthMethods.addRole(sessionData, request, databaseDefn.getAuthManager());
 					break;
 				case UPDATE_ROLE:
-					ServletAuthMethods.updateRole(sessionData, request, databaseDefn
-							.getAuthManager());
+					ServletAuthMethods.updateRole(sessionData, request,
+							databaseDefn.getAuthManager());
 					break;
 				case REMOVE_ROLE:
-					ServletAuthMethods.removeRole(sessionData, request, databaseDefn
-							.getAuthManager());
+					ServletAuthMethods.removeRole(sessionData, request,
+							databaseDefn.getAuthManager());
 					break;
 				case ASSIGN_USER_TO_ROLE:
 					ServletAuthMethods.assignUserToRole(request, databaseDefn.getAuthManager());
@@ -439,26 +460,8 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.removeSummaryReport(sessionData, request, databaseDefn);
 					break;
 				case SET_DASHBOARD_SUMMARY_STATE:
-					ServletDashboardMethods.setDashboardSummaryState(sessionData, request, databaseDefn);
-					break;
-				case SAVE_NEW_RECORD:
-					ServletDataMethods.saveRecord(sessionData, request, true, databaseDefn,
-							multipartItems);
-					break;
-				case CLONE_RECORD:
-					ServletDataMethods.cloneRecord(sessionData, request, databaseDefn,
-							multipartItems);
-					break;
-				case UPDATE_RECORD:
-					ServletDataMethods.saveRecord(sessionData, request, false, databaseDefn,
-							multipartItems);
-					break;
-				case REMOVE_RECORD:
-					ServletDataMethods.removeRecord(sessionData, request, databaseDefn);
-					break;
-				case GLOBAL_EDIT:
-					ServletDataMethods.globalEdit(sessionData, request, databaseDefn,
-							multipartItems);
+					ServletDashboardMethods.setDashboardSummaryState(sessionData, request,
+							databaseDefn);
 					break;
 				case CSV_IMPORT:
 					ServletDataMethods.importRecords(sessionData, request, databaseDefn,
@@ -484,8 +487,8 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.removeModule(request, sessionData, databaseDefn);
 					break;
 				case UPDATE_MODULE:
-					ServletSchemaMethods.updateModule(request, sessionData, databaseDefn
-							.getAuthManager());
+					ServletSchemaMethods.updateModule(request, sessionData,
+							databaseDefn.getAuthManager());
 					break;
 				case ADD_TAB_ADDRESS:
 					ServletSchemaMethods.addTabAddress(request, databaseDefn.getAuthManager(),
@@ -494,6 +497,12 @@ public final class AppController extends VelocityViewServlet {
 				case REMOVE_TAB_ADDRESS:
 					ServletSchemaMethods.removeTabAddress(request, databaseDefn.getAuthManager(),
 							databaseDefn);
+					break;
+				case HIDE_REPORT:
+					ServletSchemaMethods.hideReportFromUser(sessionData, request, databaseDefn);
+					break;
+				case UNHIDE_REPORT:
+					ServletSchemaMethods.unhideReportFromUser(sessionData, request, databaseDefn);
 					break;
 				}
 			}
@@ -722,8 +731,7 @@ public final class AppController extends VelocityViewServlet {
 		float secondsToHandleRequest = (System.currentTimeMillis() - handleRequestStartTime)
 				/ ((float) 1000);
 		if (secondsToHandleRequest > AppProperties.longProcessingTime) {
-			String warnMessage = 
-			"Long server request processing time of "
+			String warnMessage = "Long server request processing time of "
 					+ String.valueOf(secondsToHandleRequest) + " seconds for URL "
 					+ getRequestQuery(request) + "\r\n";
 			warnMessage += "Logged in user: " + request.getRemoteUser();
@@ -824,8 +832,7 @@ public final class AppController extends VelocityViewServlet {
 		}
 		// template ('return' parameter) *must* be specified
 		if (templateName == null) {
-			logger
-					.error("No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
+			logger.error("No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
 			throw new ServletException(
 					"No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
 		}

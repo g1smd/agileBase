@@ -20,8 +20,11 @@
 ## don't add groups/reports where the report is the default report
 ## or a calculation/criteria report
 ## Returns the variable $moduleReports
+## The list of reports $reports can optionally be provided, otherwise all reports viewable by the logged in user will be used
 #set($moduleReports=$viewTools.getNewSortedModuleObjectMap())
-#set($reports=$view.getAllViewableReports())
+#if(!$reports)
+  #set($reports=$view.getAllViewableReports())
+#end
 #set($sessionContext=$sessionData.getContext().toString())
 #foreach($report in $reports)
   #set($displayReport = true)

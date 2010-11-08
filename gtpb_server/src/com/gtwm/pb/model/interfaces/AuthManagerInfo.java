@@ -38,7 +38,7 @@ import com.gtwm.pb.util.Enumerations.UserType;
  * carrying out requested actions
  */
 public interface AuthManagerInfo {
-	
+
 	/**
 	 * @return The application's authenticator object, used to check privileges
 	 *         of the logged in user
@@ -48,13 +48,15 @@ public interface AuthManagerInfo {
 	/**
 	 * Return all user privileges on a particular table
 	 */
-	public Set<UserObjectPrivilegeInfo> getUserPrivilegesOnTable(HttpServletRequest request, TableInfo table) throws DisallowedException;
-	
+	public Set<UserTablePrivilegeInfo> getUserPrivilegesOnTable(HttpServletRequest request,
+			TableInfo table) throws DisallowedException;
+
 	/**
 	 * Return all user privileges on a particular table
 	 */
-	public Set<RoleObjectPrivilegeInfo> getRolePrivilegesOnTable(HttpServletRequest request, TableInfo table) throws DisallowedException;
-		
+	public Set<RoleTablePrivilegeInfo> getRolePrivilegesOnTable(HttpServletRequest request,
+			TableInfo table) throws DisallowedException;
+
 	/**
 	 * Add a new company
 	 * 
@@ -110,8 +112,8 @@ public interface AuthManagerInfo {
 	 *             If userName or password is whitespace or zero-length string
 	 */
 	public void updateUser(HttpServletRequest request, AppUserInfo appUser, String userName,
-			String surname, String forename, String password, UserType userType) throws DisallowedException,
-			MissingParametersException, CantDoThatException;
+			String surname, String forename, String password, UserType userType)
+			throws DisallowedException, MissingParametersException, CantDoThatException;
 
 	/**
 	 * @param appUser
@@ -342,4 +344,15 @@ public interface AuthManagerInfo {
 	public boolean specifiedRoleHasPrivilege(HttpServletRequest request,
 			PrivilegeType privilegeType, AppRoleInfo role, TableInfo table)
 			throws DisallowedException;
+
+	/**
+	 * Checks whether the specified user is able to view a report by having all
+	 * the relevant privileges or roles with privileges
+	 * 
+	 * @throws DisallowedException
+	 *             if the logged in user isn't an administrator
+	 */
+	public boolean specifiedUserAllowedToViewReport(HttpServletRequest request,
+			AppUserInfo user, BaseReportInfo report)
+			throws DisallowedException, CodingErrorException;
 }

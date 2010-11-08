@@ -17,7 +17,12 @@
  */
 package com.gtwm.pb.auth;
 
+import java.util.Collections;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import com.gtwm.pb.model.interfaces.AppUserInfo;
+import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
@@ -135,6 +140,23 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.userType = userType;
 	}
 
+	public SortedSet<BaseReportInfo> getHiddenReports() {
+		return Collections.unmodifiableSortedSet(new TreeSet<BaseReportInfo>(this
+				.getHiddenReportsDirect()));
+	}
+
+	public synchronized void hideReport(BaseReportInfo report) {
+		this.getHiddenReportsDirect().add(report);
+	}
+	
+	public synchronized void unhideReport(BaseReportInfo report) {
+		this.getHiddenReportsDirect().remove(report);
+	}
+	
+	private synchronized SortedSet<BaseReportInfo> getHiddenReportsDirect() {
+		return this.hiddenReports;
+	}
+
 	public String toString() {
 		return this.getUserName();
 	}
@@ -183,4 +205,5 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 
 	private CompanyInfo company = null;
 
+	private SortedSet<BaseReportInfo> hiddenReports = new TreeSet<BaseReportInfo>();
 }

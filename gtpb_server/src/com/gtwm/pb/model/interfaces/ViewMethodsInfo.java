@@ -457,7 +457,8 @@ public interface ViewMethodsInfo {
 	 * field and return the data
 	 */
 	public ReportSummaryDataInfo getFieldSummaryData(ReportFieldInfo reportField)
-			throws DisallowedException, SQLException, CodingErrorException, ObjectNotFoundException, CantDoThatException;
+			throws DisallowedException, SQLException, CodingErrorException,
+			ObjectNotFoundException, CantDoThatException;
 
 	/**
 	 * Return report summary data for a specific report, forcing the use of
@@ -497,17 +498,24 @@ public interface ViewMethodsInfo {
 			CantDoThatException, SQLException;
 
 	/**
-	 * @return All reports in the table provided, that the user has privileges
-	 *         to view
+	 * Return all reports in the table provided, that the logged in user has
+	 * privileges to view
 	 */
 	public SortedSet<BaseReportInfo> getViewableReports(TableInfo table)
 			throws CodingErrorException;
 
 	/**
-	 * Return all viewable reports from all viewable tables, in one list
+	 * Return all viewable reports for the logged in user from all tables, in
+	 * one list
 	 */
 	public SortedSet<BaseReportInfo> getAllViewableReports() throws CodingErrorException,
 			ObjectNotFoundException;
+
+	/**
+	 * Return all viewable reports for the specified user
+	 */
+	public SortedSet<BaseReportInfo> adminGetAllViewableReports(AppUserInfo user)
+			throws ObjectNotFoundException, DisallowedException, CodingErrorException;
 
 	/**
 	 * @param tableID
@@ -516,7 +524,6 @@ public interface ViewMethodsInfo {
 	 *            internal fixed name is preferred, however it may be easier to
 	 *            use the public name when rapid prototyping
 	 * @return Table identified
-	 * @throws ObjectNotFoundException
 	 */
 	public TableInfo getTable(String tableID) throws ObjectNotFoundException, DisallowedException;
 

@@ -22,10 +22,10 @@
 ##test to see whether a record has previously been selected and is stored in the session
 #set($selection=$sessionData.getUser())
 
-#set($fields=[['username','username'],['forename','forename'],['surname','surname']])
+#set($fields=[['username','username'],['forename','forename'],['surname','surname'],['type','type']])
 #set($data=[])
 #foreach($user in $view.adminGetUsers())
- #set($row=[$user.getUserName(),$user.getForename(),$user.getSurname()])
+ #set($row=[$user.getUserName(),$user.getForename(),$user.getSurname(),$user.getUserType().toLowerCase()])
  #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_user=$user.getInternalUserName()'")
  #set($uniqueid=$user.getInternalUserName())
  #set($success=$data.add([$row,$click,$uniqueid,'',false]))

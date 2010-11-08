@@ -18,16 +18,10 @@
 package com.gtwm.pb.model.interfaces;
 
 /**
- * Represents an privilege that ties together a user role with a particular object an privilege, e.g
- * 'Directors may access the accounts table'
+ * Represents a user specific privilege of a particular type on a particular table
+ * @see com.gtwm.pb.model.interfaces.RoleObjectPrivilegeInfo
  */
-public interface RoleObjectPrivilegeInfo extends RoleGeneralPrivilegeInfo {
-
-    /**
-     * 
-     * @return TableInfo object to which permission refers
-     *         
-     *         NOTE: we could look at this again in future
-     */
+public interface UserTablePrivilegeInfo extends UserGeneralPrivilegeInfo {
+    
     public TableInfo getTable();
 }

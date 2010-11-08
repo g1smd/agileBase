@@ -15,7 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#parse('gui/administration/users/buttons/user.vm')<br>
-#parse('gui/administration/users/buttons/group.vm')<br>
-#parse('gui/administration/users/buttons/privileges.vm')<br>
-#parse('gui/administration/users/buttons/reports.vm')
+#set($button_img='resources/user/reports.png')
+#set($click="fShowOption('options_wrapper_$options_wrapper_no','report_preferences')")
+#set($caption='Reports')
+#set($id='button_report_preferences')
+#parse('gui/resources/button.vm')

@@ -1,0 +1,43 @@
+##
+##  Copyright 2010 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+
+## Generate a list of reports that the user has privileges to view
+#set($reports = $view.adminGetAllViewableReports($sessionUser))
+## Create a collection $moduleReports: each module maps to an array of reports
+#parse("gui/resources/calc_module_reports.vm")
+#set($hiddenReports = $sessionUser.getHiddenReports())
+#foreach($module in $moduleReports.keySet())
+  <h2>$module</h2>
+  <table cellspacing=0 border=0 cellpadding=0>
+  #foreach($report in $moduleReports.get($report))
+    <tr>
+    <td>$report</td>
+    <td>
+      <input type=checkbox 
+       name="$report.getInternalReportName()" 
+       fn_checked="unhide_report" 
+       fn_unchecked="hide_report" 
+       #if(!$hiddenReports.contains($report))checked#end
+       gtpb_internalreportname="$report.getInternalReportName()"
+       gtpb_internalreportname="$sessionUser.getInternalUserName()"
+       onclick="fSetPBfn(this);new fChange(this)">
+    </td>
+    </tr>
+  #end
+  </table>
+#end ##end modules loop
