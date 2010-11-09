@@ -25,6 +25,7 @@ import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
+import com.gtwm.pb.model.manageSchema.SimpleReportDefn;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.UserType;
@@ -161,7 +162,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.getHiddenReportsDirect().remove(report);
 	}
 
-	@ManyToMany(targetEntity = BaseReportDefn.class, cascade = { CascadeType.MERGE,
+	@ManyToMany(targetEntity = SimpleReportDefn.class, cascade = { CascadeType.MERGE,
 			CascadeType.PERSIST, CascadeType.REFRESH })
 	@Sort(type = SortType.NATURAL)
 	private synchronized SortedSet<BaseReportInfo> getHiddenReportsDirect() {
