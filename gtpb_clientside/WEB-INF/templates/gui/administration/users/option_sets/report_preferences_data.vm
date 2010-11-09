@@ -27,7 +27,7 @@ $viewTools.log("moduleReports are $moduleReports")
 #foreach($module in $moduleReports.keySet())
   <h2>$module</h2>
   <table cellspacing=0 border=0 cellpadding=0>
-  #foreach($report in $moduleReports.get($report))
+  #foreach($report in $moduleReports.get($module))
     <tr>
     <td>$report</td>
     <td>
