@@ -174,7 +174,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	/**
 	 * For Hibernate use only
 	 */
-	private synchronized void setHiddenReportsDirect(SortedSet<BaseReportInfo> hiddenReports) {
+	private synchronized void setHiddenReportsDirect(Set<BaseReportInfo> hiddenReports) {
 		this.hiddenReports = hiddenReports;
 	}
 
