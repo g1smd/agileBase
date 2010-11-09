@@ -32,7 +32,8 @@
 #set($sessionTable = $sessionData.getTable())
 
 ## include custom per-company actions
-#set($company = $view.getLoggedInUser().getCompany())
+#set($user = $view.getLoggedInUser())
+#set($company = $user.getCompany())
 #set($companyName = $viewTools.cleanString($company.getCompanyName()))
 #set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
 #if($viewTools.templateExists($customisationsTemplateLocation))
@@ -53,62 +54,66 @@
   #set($previousSection = "")
   ## Get colours array
   #parse('gui/resources/module_color_colors.vm')
-  
+  #set($hiddenReports = $user.getHiddenReports())
   #foreach($module in $moduleReports.keySet())
-	#set($section = $module.getSection())
-	#if($section == "")
-		#set($section = $previousSection)
-	#end
-	## If first module doesn't have a section name, set it to the company name
-	#if(($velocityCount == 1) && ($section == ""))
-		#set($section = "$company")
-	#end
-	#if($section != $previousSection)
-      #if($velocityCount > 1) </li></ul> #end
-	  <li><h1><span>$section</span></h1>
-	  <ul>
-    #end
-	#set($previousSection = $section)
-	#set($internalModuleName = $module.getInternalModuleName())
-	
-	#set($colourStyleName = '')
-	#foreach($colour in $colours)
-    	#if($colour.get('colourName') == $module.getColour())
-    		#set($colourStyleName = $colour.get('styleName'))
-		#end
-	#end	
-	
-	<li id="$internalModuleName" class="modulecollapsed $colourStyleName">
-	  #set($moduleActions = $view.getModuleActions($internalModuleName))
-	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
-		$module
-		#if($mobile_device && ($moduleActions.size()>0))
-		  #foreach($moduleAction in $moduleActions)
-			<button class="moduleaction" internalmodulename="$internalModuleName" actionname="$moduleAction.getActionName()">&laquo; $moduleAction &raquo;</button>
-		  #end
-		#end
-	  </span></h2>
-	  #if(($moduleActions.size()>0) && (!$mobile_device))
-	    <ul parent="$internalModuleName" class="moduleaction">
-		  #foreach($moduleAction in $moduleActions)
-			<li title="$moduleAction.getDescription()"><div class="module-tree-item-wrap"><a href="#" onclick="top.fShowModalDialog(${SQ}$moduleAction.getActionTemplate()${SQ},${SQ}$moduleAction.getActionName()${SQ},$moduleAction.getCallbackFunction(),${SQ}$moduleAction.getButtons()${SQ},${SQ}$moduleAction.getAttributes()${SQ}); return false">$moduleAction</a></div></li>
-		  #end
-		</ul>
-	  #end ## end if there are module actions
-	  <ul parent="$internalModuleName">
-	  #foreach($report in $moduleReports.get($module)) 
-		#set($table=$report.getParentTable())
-		<li id="$table.getInternalTableName()$report.getInternalReportName()">
-		  <div class="module-tree-item-wrap">
-			<a href="AppController.servlet?return=$pane2_template&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()&set_report_row_limit=$reportRowLimit&clear_all_report_sorts=true&set_module=$module.getInternalModuleName()&cachebust=$viewTools.getRandomString()" #if(!$mobile_device)target="pane_2" class="report_tooltip" rel="AppController.servlet?return=gui/reports_and_tables/report_tooltip&set_custom_report=true&reportkey=tooltip_report&custominternalreportname=$report.getInternalReportName()"#end >
-				$report
-			</a>
-			<span class="recordcount">()</span>
-		  </div>
-		</li>
-	  #end ## end of loop through reports in a module
-	  </ul>
-	</li>
-  #end ## end loop through modules
+	#set($visibleModuleReports = $moduleReports.get($module))
+	#set($temp = $visibleModuleReports.removeAll($hiddenReports))
+	#if($visibleModuleReports.size() > 0)
+    	#set($section = $module.getSection())
+    	#if($section == "")
+    		#set($section = $previousSection)
+    	#end
+    	## If first module doesn't have a section name, set it to the company name
+    	#if(($velocityCount == 1) && ($section == ""))
+    		#set($section = "$company")
+    	#end
+    	#if($section != $previousSection)
+          #if($velocityCount > 1) </li></ul> #end
+    	  <li><h1><span>$section</span></h1>
+    	  <ul>
+        #end
+    	#set($previousSection = $section)
+    	#set($internalModuleName = $module.getInternalModuleName())
+    	
+    	#set($colourStyleName = '')
+    	#foreach($colour in $colours)
+        	#if($colour.get('colourName') == $module.getColour())
+        		#set($colourStyleName = $colour.get('styleName'))
+    		#end
+    	#end	
+    	
+    	<li id="$internalModuleName" class="modulecollapsed $colourStyleName">
+    	  #set($moduleActions = $view.getModuleActions($internalModuleName))
+    	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
+    		$module
+    		#if($mobile_device && ($moduleActions.size()>0))
+    		  #foreach($moduleAction in $moduleActions)
+    			<button class="moduleaction" internalmodulename="$internalModuleName" actionname="$moduleAction.getActionName()">&laquo; $moduleAction &raquo;</button>
+    		  #end
+    		#end
+    	  </span></h2>
+    	  #if(($moduleActions.size()>0) && (!$mobile_device))
+    	    <ul parent="$internalModuleName" class="moduleaction">
+    		  #foreach($moduleAction in $moduleActions)
+    			<li title="$moduleAction.getDescription()"><div class="module-tree-item-wrap"><a href="#" onclick="top.fShowModalDialog(${SQ}$moduleAction.getActionTemplate()${SQ},${SQ}$moduleAction.getActionName()${SQ},$moduleAction.getCallbackFunction(),${SQ}$moduleAction.getButtons()${SQ},${SQ}$moduleAction.getAttributes()${SQ}); return false">$moduleAction</a></div></li>
+    		  #end
+    		</ul>
+    	  #end ## end if there are module actions
+    	  <ul parent="$internalModuleName">
+    	  #foreach($report in $visibleModuleReports) 
+    		#set($table=$report.getParentTable())
+    		<li id="$table.getInternalTableName()$report.getInternalReportName()">
+    		  <div class="module-tree-item-wrap">
+    			<a href="AppController.servlet?return=$pane2_template&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()&set_report_row_limit=$reportRowLimit&clear_all_report_sorts=true&set_module=$module.getInternalModuleName()&cachebust=$viewTools.getRandomString()" #if(!$mobile_device)target="pane_2" class="report_tooltip" rel="AppController.servlet?return=gui/reports_and_tables/report_tooltip&set_custom_report=true&reportkey=tooltip_report&custominternalreportname=$report.getInternalReportName()"#end >
+    				$report
+    			</a>
+    			<span class="recordcount">()</span>
+    		  </div>
+    		</li>
+    	  #end ## end of loop through reports in a module
+    	  </ul>
+    	</li>
+      #end
+	#end ## end loop through modules
   </li></ul>
 #end
