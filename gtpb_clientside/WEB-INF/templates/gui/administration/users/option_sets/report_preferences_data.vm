@@ -19,8 +19,10 @@
 ## Generate a list of reports that the user has privileges to view
 $viewTools.log("sessionUser is $sessionUser")
 #set($reports = $view.adminGetAllViewableReports($sessionUser))
+$viewTools.log("viewable reports are $reports")
 ## Create a collection $moduleReports: each module maps to an array of reports
 #parse("gui/resources/calc_module_reports.vm")
+$viewTools.log("moduleReports are $moduleReports")
 #set($hiddenReports = $sessionUser.getHiddenReports())
 #foreach($module in $moduleReports.keySet())
   <h2>$module</h2>
