@@ -38,6 +38,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
+
 @Entity
 public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 
@@ -153,17 +156,18 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	public synchronized void hideReport(BaseReportInfo report) {
 		this.getHiddenReportsDirect().add(report);
 	}
-	
+
 	public synchronized void unhideReport(BaseReportInfo report) {
 		this.getHiddenReportsDirect().remove(report);
 	}
-	
-	@OneToMany(targetEntity = BaseReportDefn.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
-		CascadeType.REFRESH })
+
+	@ManyToMany(targetEntity = BaseReportDefn.class, cascade = { CascadeType.MERGE,
+			CascadeType.PERSIST, CascadeType.REFRESH })
+	@Sort(type = SortType.NATURAL)
 	private synchronized SortedSet<BaseReportInfo> getHiddenReportsDirect() {
 		return this.hiddenReports;
 	}
-	
+
 	/**
 	 * For Hibernate use only
 	 */
