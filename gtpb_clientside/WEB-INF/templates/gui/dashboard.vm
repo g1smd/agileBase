@@ -57,13 +57,16 @@ function displayTreemap() {
 		if (internalReportName.substring(0,2) == "r_") {
 			// close treemap and load that report
 			internalReportName = internalReportName.substring(2);
-			var url = "AppController.servlet?return=gui/reports_and_tables/report_data";
-			url = url + "&set_report=" + internalReportName;
-			url = url + "&set_report_row_limit=100";
 			if (opener) {
+			  var url = "AppController.servlet?return=gui/display_application";
+			  url = url + "&set_report=" + internalReportName;
+			  url = url + "&set_report_row_limit=100";
 			  opener.oViewPane.pane_2.location = url;
 			  window.close();
 			} else {
+			  var url = "AppController.servlet?return=gui/reports_and_tables/report_data";
+			  url = url + "&set_report=" + internalReportName;
+			  url = url + "&set_report_row_limit=100";
 			  document.location = url;
 			}
 		} else if (internalReportName.substring(0,9) == "nopriv_r_") {
