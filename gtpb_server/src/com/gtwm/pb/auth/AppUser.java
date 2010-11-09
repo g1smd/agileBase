@@ -36,6 +36,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
@@ -157,7 +158,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.getHiddenReportsDirect().remove(report);
 	}
 	
-	@ManyToMany(targetEntity = BaseReportDefn.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+	@OneToMany(targetEntity = BaseReportDefn.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
 		CascadeType.REFRESH })
 	private synchronized SortedSet<BaseReportInfo> getHiddenReportsDirect() {
 		return this.hiddenReports;
