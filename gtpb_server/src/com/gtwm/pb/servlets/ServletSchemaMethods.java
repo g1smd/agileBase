@@ -2326,7 +2326,7 @@ public final class ServletSchemaMethods {
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		String internalUserName = request.getParameter("internalusername");
 		if (internalUserName == null) {
-			throw new MissingParametersException("'internalusername' is necessary to specify the user when hiding a report from them");
+			throw new MissingParametersException("internalusername is necessary to specify the user when hiding a report from them");
 		}
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request, internalUserName);
 		try {
@@ -2346,7 +2346,7 @@ public final class ServletSchemaMethods {
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		String internalUserName = request.getParameter("internalusername");
 		if (internalUserName == null) {
-			throw new MissingParametersException("'internalusername' is necessary to specify the user when hiding a report from them");
+			throw new MissingParametersException("internalusername is necessary to specify the user when hiding a report from them");
 		}
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request, internalUserName);
 		try {
