@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import org.grlea.log.SimpleLogger;
@@ -83,14 +84,17 @@ public final class SessionData implements SessionDataInfo {
 		// Set the session report to the first that the logged in user can view
 		AuthenticatorInfo authenticator = databaseDefn.getAuthManager().getAuthenticator();
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
+		Set<BaseReportInfo> hiddenReports = user.getHiddenReports();
 		for (ModuleInfo module : company.getModules()) {
 			for (TableInfo table : company.getTables()) {
 				for (BaseReportInfo report : table.getReports()) {
 					ModuleInfo reportModule = report.getModule();
 					if (module.equals(reportModule)) {
 						if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
-							this.setReport(report);
-							return;
+							if (!hiddenReports.contains(report)) {
+								this.setReport(report);
+								return;
+							}
 						}
 					}
 				}
