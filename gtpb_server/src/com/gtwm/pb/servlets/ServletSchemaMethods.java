@@ -2352,6 +2352,7 @@ public final class ServletSchemaMethods {
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request, internalUserName);
 		try {
 			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(appUser);
 			appUser.unhideReport(report);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
