@@ -2341,7 +2341,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
+
 	public synchronized static void unhideReportFromUser(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
@@ -2362,7 +2362,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
+
 	private static final SimpleLogger logger = new SimpleLogger(ServletSchemaMethods.class);
 
 }

@@ -88,10 +88,10 @@ public final class SessionData implements SessionDataInfo {
 		for (ModuleInfo module : company.getModules()) {
 			for (TableInfo table : company.getTables()) {
 				for (BaseReportInfo report : table.getReports()) {
-					ModuleInfo reportModule = report.getModule();
-					if (module.equals(reportModule)) {
-						if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
-							if (!hiddenReports.contains(report)) {
+					if (!(hiddenReports.contains(report))) {
+						ModuleInfo reportModule = report.getModule();
+						if (module.equals(reportModule)) {
+							if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
 								this.setReport(report);
 								return;
 							}
