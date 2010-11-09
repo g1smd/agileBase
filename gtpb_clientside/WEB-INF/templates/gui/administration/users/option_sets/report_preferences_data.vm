@@ -37,7 +37,7 @@ $viewTools.log("moduleReports are $moduleReports")
        fn_unchecked="hide_report" 
        #if(!$hiddenReports.contains($report))checked#end
        gtpb_internalreportname="$report.getInternalReportName()"
-       gtpb_internalreportname="$sessionUser.getInternalUserName()"
+       gtpb_internalusername="$sessionUser.getInternalUserName()"
        onclick="fSetPBfn(this);new fChange(this)">
     </td>
     </tr>
