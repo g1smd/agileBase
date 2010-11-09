@@ -162,7 +162,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.getHiddenReportsDirect().remove(report);
 	}
 
-	@ManyToMany(targetEntity = SimpleReportDefn.class, cascade = { CascadeType.MERGE,
+	@OneToMany(targetEntity = SimpleReportDefn.class, cascade = { CascadeType.MERGE,
 			CascadeType.PERSIST, CascadeType.REFRESH })
 	@Sort(type = SortType.NATURAL)
 	private synchronized SortedSet<BaseReportInfo> getHiddenReportsDirect() {
