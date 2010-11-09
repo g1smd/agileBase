@@ -93,6 +93,7 @@ public final class SessionData implements SessionDataInfo {
 						if (module.equals(reportModule)) {
 							if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
 								this.setReport(report);
+								logger.debug("Set default report to " + report + " in module " + module + " from table " + table);
 								return;
 							}
 						}
