@@ -58,13 +58,13 @@ function displayTreemap() {
 			// close treemap and load that report
 			internalReportName = internalReportName.substring(2);
 			if (opener) {
-			  var url = "AppController.servlet?return=gui/display_application";
+			  var url = "AppController.servlet?return=gui/reports_and_tables/report_data";
 			  url = url + "&set_report=" + internalReportName;
 			  url = url + "&set_report_row_limit=100";
 			  opener.oViewPane.pane_2.location = url;
 			  window.close();
 			} else {
-			  var url = "AppController.servlet?return=gui/reports_and_tables/report_data";
+			  var url = "AppController.servlet?return=gui/display_application";
 			  url = url + "&set_report=" + internalReportName;
 			  url = url + "&set_report_row_limit=100";
 			  document.location = url;
