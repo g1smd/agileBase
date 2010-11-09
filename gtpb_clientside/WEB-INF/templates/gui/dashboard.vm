@@ -60,11 +60,11 @@ function displayTreemap() {
 			var url = "AppController.servlet?return=gui/reports_and_tables/report_data";
 			url = url + "&set_report=" + internalReportName;
 			url = url + "&set_report_row_limit=100";
-			if (typeof opener.oViewPane == "undefined") {
-			  document.location = url;
-			} else {
+			if (opener) {
 			  opener.oViewPane.pane_2.location = url;
 			  window.close();
+			} else {
+			  document.location = url;
 			}
 		} else if (internalReportName.substring(0,9) == "nopriv_r_") {
 			alert("You don't currently have privileges to view this data");
