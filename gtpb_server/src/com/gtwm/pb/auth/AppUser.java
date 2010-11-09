@@ -24,13 +24,17 @@ import java.util.TreeSet;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
+import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.UserType;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -153,8 +157,17 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.getHiddenReportsDirect().remove(report);
 	}
 	
+	@ManyToMany(targetEntity = BaseReportDefn.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+		CascadeType.REFRESH })
 	private synchronized SortedSet<BaseReportInfo> getHiddenReportsDirect() {
 		return this.hiddenReports;
+	}
+	
+	/**
+	 * For Hibernate use only
+	 */
+	private synchronized void setHiddenReportsDirect(SortedSet<BaseReportInfo> hiddenReports) {
+		this.hiddenReports = hiddenReports;
 	}
 
 	public String toString() {
