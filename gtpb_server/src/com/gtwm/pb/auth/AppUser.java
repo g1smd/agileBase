@@ -18,6 +18,8 @@
 package com.gtwm.pb.auth;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -38,6 +40,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
@@ -149,7 +152,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.userType = userType;
 	}
 
-	public SortedSet<BaseReportInfo> getHiddenReports() {
+	@Transient
+	public Set<BaseReportInfo> getHiddenReports() {
 		return Collections.unmodifiableSortedSet(new TreeSet<BaseReportInfo>(this
 				.getHiddenReportsDirect()));
 	}
@@ -162,9 +166,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.getHiddenReportsDirect().remove(report);
 	}
 
-	@ManyToMany(targetEntity = BaseReportDefn.class)
-	@Sort(type = SortType.NATURAL)
-	private synchronized SortedSet<BaseReportInfo> getHiddenReportsDirect() {
+	@ManyToMany(targetEntity = BaseReportDefn.class, cascade={})
+	private synchronized Set<BaseReportInfo> getHiddenReportsDirect() {
 		return this.hiddenReports;
 	}
 
@@ -223,5 +226,5 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 
 	private CompanyInfo company = null;
 
-	private SortedSet<BaseReportInfo> hiddenReports = new TreeSet<BaseReportInfo>();
+	private Set<BaseReportInfo> hiddenReports = new HashSet<BaseReportInfo>();
 }

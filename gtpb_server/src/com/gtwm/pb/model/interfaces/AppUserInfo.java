@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.model.interfaces;
 
+import java.util.Set;
 import java.util.SortedSet;
 
 import com.gtwm.pb.util.MissingParametersException;
@@ -74,7 +75,7 @@ public interface AppUserInfo {
 	 * A user can have some reports hidden from them, not for security reasons
 	 * but to reduce clutter
 	 */
-	public SortedSet<BaseReportInfo> getHiddenReports();
+	public Set<BaseReportInfo> getHiddenReports();
 	
 	public void hideReport(BaseReportInfo report);
 	
