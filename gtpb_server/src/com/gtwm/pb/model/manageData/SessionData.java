@@ -88,12 +88,13 @@ public final class SessionData implements SessionDataInfo {
 		for (ModuleInfo module : company.getModules()) {
 			for (TableInfo table : company.getTables()) {
 				for (BaseReportInfo report : table.getReports()) {
-					if (!(hiddenReports.contains(report))) {
+					if (!(hiddenReports.contains(report)
+							|| report.getReportName().startsWith("dbvcrit") || report
+							.getReportName().startsWith("dbvcalc"))) {
 						ModuleInfo reportModule = report.getModule();
 						if (module.equals(reportModule)) {
 							if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
 								this.setReport(report);
-								logger.debug("Set default report to " + report + " in module " + module + " from table " + table);
 								return;
 							}
 						}
