@@ -96,7 +96,9 @@ public final class AuthManager implements AuthManagerInfo {
 					logger.info("" + company + " modules: " + company.getModules());
 					logger.info("" + company + " tabs: " + company.getTabAddresses());
 				}
-				logger.info("Users: " + auth.getUsers());
+				for(AppUserInfo user : auth.getUsers()) {
+					logger.info("User " + user + " hidden reports: " + user.getHiddenReports());
+				}
 				for (AppRoleInfo role : auth.getRoles()) {
 					logger.info("Role " + role + " users: " + role.getUsers());
 				}
