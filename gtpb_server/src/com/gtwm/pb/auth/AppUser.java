@@ -169,7 +169,6 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.hiddenReports = hiddenReports;
 	}
 
-	@ManyToMany(targetEntity=BaseReportDefn.class, cascade={})
 	public BaseReportInfo getDefaultReport() {
 		return this.defaultReport;
 	}
