@@ -2363,6 +2363,33 @@ public final class ServletSchemaMethods {
 		}
 	}
 
+	public synchronized static void setUserDefaultReport(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+		String internalUserName = request.getParameter("internalusername");
+		if (internalUserName == null) {
+			throw new MissingParametersException("internalusername is necessary to specify the user when setting a default report for them");
+		}
+		// An empty internalreportname parameter will produce a null report
+		BaseReportInfo report = null;
+		String internalReportName = request.getParameter("internalreportname");
+		if(internalReportName == null) {
+			throw new MissingParametersException("internalreportname is necessary when setting a default report for a user");
+		}
+		if (!internalReportName.equals("")) {
+			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, ServletUtilMethods.DO_NOT_USE_SESSION);
+		}
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request, internalUserName);
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(appUser);
+			appUser.setDefaultReport(report);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("setting default report failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}		
+	}
+	
 	private static final SimpleLogger logger = new SimpleLogger(ServletSchemaMethods.class);
-
 }
