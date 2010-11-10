@@ -38,6 +38,10 @@
 	  fontResize(gtpb_currentFontSize, 0);
 	});
 	
+	jQuery(".editable").live('click', function() {
+	  jQuery(this).focus();
+	});
+	
 	jQuery("#new_report").click(function() {
 	  jQuery("#a3_report").fadeOut("normal");
 	  jQuery("#a3_report").load("AppController.servlet",
