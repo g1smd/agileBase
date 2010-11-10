@@ -34,6 +34,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -169,6 +170,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.hiddenReports = hiddenReports;
 	}
 
+	@OneToOne(targetEntity = BaseReportDefn.class, cascade={})
 	public BaseReportInfo getDefaultReport() {
 		return this.defaultReport;
 	}
