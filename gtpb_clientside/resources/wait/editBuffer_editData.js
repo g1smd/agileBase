@@ -284,6 +284,9 @@ function fInit() {
 	if (oViewPane == null) {
 	  return;
 	}
+	if (!oViewPane.contentWindow.pane_2) {
+	  return;
+	}
     var oCells = oViewPane.contentWindow.pane_2.document.getElementById('reportData').tHead.rows[0].cells;
     // the index of the current row
     if(oViewPane.contentWindow.pane_2.document.getElementById('currentRow'))
