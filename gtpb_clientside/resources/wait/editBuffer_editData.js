@@ -312,6 +312,9 @@ function fInit() {
 	if (oViewPane == null) {
 	  return;
 	}
+	if (!parent.pane_1) {
+	  return;
+	}
     var oCaptions=parent.pane_1.document.getElementsByName('caption');
 	 
 	for (var i=0;i<oCaptions.length;i++) { 
