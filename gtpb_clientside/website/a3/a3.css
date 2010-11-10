@@ -87,6 +87,7 @@ html, body {
 	margin-bottom: 10px;
 	font-size: 60px;
 	min-height: 1em!important;
+	width: 100%;
 }
 
 .title_name {
