@@ -18,8 +18,6 @@
 package com.gtwm.pb.model.interfaces;
 
 import java.util.Set;
-import java.util.SortedSet;
-
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.Enumerations.UserType;
 
@@ -80,4 +78,11 @@ public interface AppUserInfo {
 	public void hideReport(BaseReportInfo report);
 	
 	public void unhideReport(BaseReportInfo report);
+	
+	/**
+	 * Get the initial report this user should see when logging in
+	 */
+	public BaseReportInfo getDefaultReport();
+	
+	public void setDefaultReport(BaseReportInfo report);
 }

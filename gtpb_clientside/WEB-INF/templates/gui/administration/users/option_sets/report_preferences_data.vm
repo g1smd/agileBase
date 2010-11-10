@@ -17,12 +17,23 @@
 ##
 
 ## Generate a list of reports that the user has privileges to view
-$viewTools.log("sessionUser is $sessionUser")
 #set($reports = $view.adminGetAllViewableReports($sessionUser))
-$viewTools.log("viewable reports are $reports")
 ## Create a collection $moduleReports: each module maps to an array of reports
 #parse("gui/resources/calc_module_reports.vm")
-$viewTools.log("moduleReports are $moduleReports")
+
+## Select the user's default report
+#set($defaultReport = $sessionUser.getDefaultReport())
+First report to display when user logs in: 
+<select name="internalreportname" gtpb_set_user_default_report=true gtpb_internalusername="$sessionUser.getInternalUserName()" onchange="new fChange(this);">
+<option value="">-- use the first report in the list --</option>
+#foreach($module in $moduleReports.keySet())
+  <optgroup>$module</optgroup>
+  #foreach($report in $moduleReports.get($module))
+    <option value="$report.getInternalReportName()">$report</option>
+  #end
+#end
+</select>
+
 #set($hiddenReports = $sessionUser.getHiddenReports())
 #foreach($module in $moduleReports.keySet())
   <h2>$module</h2>

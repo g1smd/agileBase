@@ -20,30 +20,21 @@ package com.gtwm.pb.auth;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
-
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
-import com.gtwm.pb.model.manageSchema.SimpleReportDefn;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.UserType;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Sort;
-import org.hibernate.annotations.SortType;
 
 @Entity
 public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
@@ -178,6 +169,15 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.hiddenReports = hiddenReports;
 	}
 
+	@ManyToMany(targetEntity=BaseReportDefn.class, cascade={})
+	public BaseReportInfo getDefaultReport() {
+		return this.defaultReport;
+	}
+	
+	public void setDefaultReport(BaseReportInfo report) {
+		this.defaultReport = report;
+	}
+	
 	public String toString() {
 		return this.getUserName();
 	}
@@ -227,4 +227,6 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private CompanyInfo company = null;
 
 	private Set<BaseReportInfo> hiddenReports = new HashSet<BaseReportInfo>();
+	
+	private BaseReportInfo defaultReport = null;
 }

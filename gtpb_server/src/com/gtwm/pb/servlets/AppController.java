@@ -504,6 +504,9 @@ public final class AppController extends VelocityViewServlet {
 				case UNHIDE_REPORT:
 					ServletSchemaMethods.unhideReportFromUser(sessionData, request, databaseDefn);
 					break;
+				case SET_USER_DEFAULT_REPORT:
+					ServletSchemaMethods.setUserDefaultReport(sessionData, request, databaseDefn);
+					break;
 				}
 			}
 		}
