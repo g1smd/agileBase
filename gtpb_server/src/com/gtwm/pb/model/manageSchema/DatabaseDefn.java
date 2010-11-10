@@ -866,18 +866,28 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 */
 	private synchronized void removeReportWithoutChecks(SessionDataInfo sessionData,
 			HttpServletRequest request, BaseReportInfo reportToRemove, Connection conn)
-			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException {
+			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, reportToRemove.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE,
 					reportToRemove.getParentTable());
 		}
+		// Remove the report from any 'hidden report' lists belonging to users
+		// and from being the default report of any user
+		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
+	    for(AppUserInfo user : company.getUsers()) {
+			HibernateUtil.activateObject(user);
+	    		user.unhideReport(reportToRemove);
+	    		if(reportToRemove.equals(user.getDefaultReport())) {
+	    			user.setDefaultReport(null);
+	    		}
+	    }
 		TableInfo parentTable = reportToRemove.getParentTable();
 		HibernateUtil.activateObject(parentTable);
 		String internalReportName = reportToRemove.getInternalReportName();
 		try {
 			// Drop database view
-			// debug: IF EXISTS added temporarily(?) to help when dropping
+			// Note: IF EXISTS added temporarily(?) to help when dropping
 			// problem tables
 			PreparedStatement statement = conn.prepareStatement("DROP VIEW IF EXISTS "
 					+ internalReportName);
