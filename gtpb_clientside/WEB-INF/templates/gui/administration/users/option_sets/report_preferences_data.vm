@@ -25,11 +25,11 @@
 #set($defaultReport = $sessionUser.getDefaultReport())
 First report to display when user logs in: 
 <select name="internalreportname" gtpb_set_user_default_report=true gtpb_internalusername="$sessionUser.getInternalUserName()" onchange="new fChange(this);">
-<option value="">-- use the first report in the list --</option>
+<option value="" #if(!$defaultReport) selected #end>-- use the first report in the list --</option>
 #foreach($module in $moduleReports.keySet())
   <optgroup>$module</optgroup>
   #foreach($report in $moduleReports.get($module))
-    <option value="$report.getInternalReportName()">$report</option>
+    <option value="$report.getInternalReportName()" #if($report.equals($defaultReport)) selected #end>$report</option>
   #end
 #end
 </select>
