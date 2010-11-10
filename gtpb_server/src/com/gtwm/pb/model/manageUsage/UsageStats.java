@@ -144,8 +144,8 @@ public class UsageStats implements UsageStatsInfo {
 				if (report == null) {
 					continue RESULTLOOP;
 				}
-				if (report.getReportName().startsWith("dbvcalc")
-						|| report.getReportName().startsWith("dbvcrit")) {
+				if (report.getReportName().contains("dbvcalc_")
+						|| report.getReportName().contains("dbvcrit_")) {
 					continue RESULTLOOP;
 				}
 				ModuleInfo module = report.getModule();
@@ -316,8 +316,8 @@ public class UsageStats implements UsageStatsInfo {
 				if (report == null) {
 					continue RESULTLOOP;
 				}
-				if (report.getReportName().startsWith("dbvcalc")
-						|| report.getReportName().startsWith("dbvcrit")) {
+				if (report.getReportName().contains("dbvcalc_")
+						|| report.getReportName().contains("dbvcrit_")) {
 					continue RESULTLOOP;
 				}
 				ModuleInfo module = report.getModule();
