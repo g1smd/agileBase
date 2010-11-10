@@ -47,8 +47,6 @@
 		  fieldDisplayResize("leftcolumn");
 		  fieldDisplayResize("rightcolumn");
 		  gtpb_currentFontSize = gtpb_maxFontSize;
-		  alert('filling empty');
-		  jQuery(".field_display:empty").html("  ");
 		  fontResize(gtpb_currentFontSize, 0);
 	    });
 	});
@@ -210,8 +208,6 @@ function next_report(sAction) {
 		  fieldDisplayResize("leftcolumn");
 		  fieldDisplayResize("rightcolumn");
 		  initialiseFontSize();
-		  alert('filling empty');
-		  jQuery(".field_display:empty").html("  ");
 		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
 	    }
 	 );
