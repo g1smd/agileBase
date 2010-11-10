@@ -85,7 +85,6 @@ public final class SessionData implements SessionDataInfo {
 		BaseReportInfo defaultReport = user.getDefaultReport();
 		if (defaultReport != null) {
 			if (authenticator.loggedInUserAllowedToViewReport(request, defaultReport)) {
-				logger.debug("Setting report to the user's default report: " + defaultReport);
 				this.setReport(defaultReport);
 				return;
 			}
