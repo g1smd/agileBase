@@ -38,10 +38,6 @@
 	  fontResize(gtpb_currentFontSize, 0);
 	});
 	
-	jQuery(".editable").live('click', function() {
-	  jQuery(this).contents().focus();
-	});
-	
 	jQuery("#new_report").click(function() {
 	  jQuery("#a3_report").fadeOut("normal");
 	  jQuery("#a3_report").load("AppController.servlet",
@@ -51,6 +47,7 @@
 		  fieldDisplayResize("leftcolumn");
 		  fieldDisplayResize("rightcolumn");
 		  gtpb_currentFontSize = gtpb_maxFontSize;
+		  jQuery(".field_display:empty").html("  ");
 		  fontResize(gtpb_currentFontSize, 0);
 	    });
 	});
@@ -106,19 +103,6 @@
         }
       }
     });
-	
-    /* Login page functions */
-	
-	jQuery("#stickies div").click(function() {
-		jQuery(this).find("a").click();
-	});
-	
-	jQuery("#stickies a").click(function() {
-		jQuery("#stickies a").removeClass("selected_link");
-		jQuery(this).addClass("selected_link");
-		loadLoginA3(jQuery(this).attr("href"));
-		return false;
-	});
 
 	jQuery("#email_input").focus(function() {
 	  jQuery("#email_input").val("");
@@ -136,18 +120,6 @@
   });  
   
 /* Helper functions, outside of document.ready */
-
-function loadLoginA3(url) {
-	  jQuery("#a3_report").hide();
-	  jQuery("#a3_report").load(url, function() {
-		  jQuery("#a3_report").fadeIn("normal");
-		  windowResize();
-		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
-		  if(url.indexOf("tryout.htm") > -1) {
-			  jQuery("#why_are_we").focus();
-		  }
-	  });
-}
   
 function windowResize() {
 	// Size the report
@@ -237,6 +209,7 @@ function next_report(sAction) {
 		  fieldDisplayResize("leftcolumn");
 		  fieldDisplayResize("rightcolumn");
 		  initialiseFontSize();
+		  jQuery(".field_display:empty").html("  ");
 		  setTimeout("fontResize(" + gtpb_currentFontSize + ", 0);", 2000);
 	    }
 	 );
