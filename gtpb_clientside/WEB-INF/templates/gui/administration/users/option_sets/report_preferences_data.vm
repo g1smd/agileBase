@@ -27,10 +27,11 @@
 <select name="internalreportname" gtpb_set_user_default_report=true gtpb_internalusername="$sessionUser.getInternalUserName()" onchange="new fChange(this);">
 <option value="" #if(!$defaultReport) selected #end>-- use the first report in the list --</option>
 #foreach($module in $moduleReports.keySet())
-  <optgroup>Module is $module - $module.getInternalModuleName()</optgroup>
+  <optgroup label="$module">
   #foreach($report in $moduleReports.get($module))
     <option value="$report.getInternalReportName()" #if($report.equals($defaultReport)) selected #end>$report</option>
   #end
+  </optgroup>
 #end
 </select>
 
