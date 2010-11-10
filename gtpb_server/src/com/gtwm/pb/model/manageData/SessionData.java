@@ -81,8 +81,16 @@ public final class SessionData implements SessionDataInfo {
 		usageLogger.logLogin(user, request.getRemoteAddr());
 		UsageLogger.startLoggingThread(usageLogger);
 		this.relationalDataSource = relationalDataSource;
-		// Set the session report to the first that the logged in user can view
 		AuthenticatorInfo authenticator = databaseDefn.getAuthManager().getAuthenticator();
+		BaseReportInfo defaultReport = user.getDefaultReport();
+		if (defaultReport != null) {
+			if (authenticator.loggedInUserAllowedToViewReport(request, defaultReport)) {
+				this.setReport(defaultReport);
+				return;
+			}
+		}
+		// There's no (visible) default report set, just set the
+		// session report to the first that the logged in user can view
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 		Set<BaseReportInfo> hiddenReports = user.getHiddenReports();
 		for (ModuleInfo module : company.getModules()) {
