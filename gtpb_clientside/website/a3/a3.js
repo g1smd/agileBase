@@ -39,7 +39,7 @@
 	});
 	
 	jQuery(".editable").live('click', function() {
-	  jQuery(this).focus();
+	  jQuery(this).contents().focus();
 	});
 	
 	jQuery("#new_report").click(function() {
