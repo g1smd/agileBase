@@ -15,4 +15,13 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#parse("gui/pane1.vm")
+
+## Show either pane 1 or pane 2 on initial login
+#set($user = $view.getLoggedInUser())
+#set($userType = $user.getUserType())
+#set($defaultReport = $user.getDefaultReport())
+#if($defaultReport && $userType != "EXECUTIVE" && $userType != "MANAGERIAL")
+  #parse("gui/mobile/pane2_selector.vm")
+#else
+  #parse("gui/pane1.vm")
+#end
