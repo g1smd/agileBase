@@ -121,18 +121,18 @@
         </script>
       #else
       <script language=Javascript>
-        	 function fNew(){
+        	 function fNew() {
         		  // do nothing
-        		}
+        	 }
    		
-   		     function fClone(){
+   		     function fClone() {
    		       // do nothing
    		     }
 
-   		        top.document.getElementById('button_new').setAttribute('disabled');
-   	            top.document.getElementById('button_clone').setAttribute('disabled');
-   		        top.document.getElementById('button_delete').setAttribute('disabled');
-        		top.document.getElementById('button_import').setAttribute('disabled');
+   		        top.document.getElementById('button_new').setAttribute('disabled','true');
+   	            top.document.getElementById('button_clone').setAttribute('disabled','true');
+   		        top.document.getElementById('button_delete').setAttribute('disabled','true');
+        		top.document.getElementById('button_import').setAttribute('disabled','true');
         	#if($view.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
 	    	    top.document.getElementById('button_export').removeAttribute('disabled');
    	     		top.document.getElementById('button_print').removeAttribute('disabled');
@@ -141,9 +141,9 @@
    	     		  top.document.getElementById('button_info').removeAttribute('disabled');
 				}
         	#else
-        		top.document.getElementById('button_export').setAttribute('disabled');
-        		top.document.getElementById('button_print').setAttribute('disabled');
-   	            top.document.getElementById('button_links').setAttribute('disabled');
+        		top.document.getElementById('button_export').setAttribute('disabled','true');
+        		top.document.getElementById('button_print').setAttribute('disabled','true');
+   	            top.document.getElementById('button_links').setAttribute('disabled','true');
    	        #end
       </script>
 	  #end
