@@ -363,7 +363,14 @@ function fResizeTextArea(oObj) {
 function fIsBooleanType(oObj) { 
   /* if the input field is a non-boolean type return false
      otherwise return true */
-  with (oObj) {  
+  with (oObj) {
+	  if (tagName == "INPUT") {
+		  if (getAttribute('type').toLowerCase() == 'checkbox') {
+			  return true;
+		  }
+	  }
+	  return false;
+	  /*
     switch (tagName) { 
       case 'TEXTAREA': return false;
       case 'SELECT': return false;
@@ -377,6 +384,7 @@ function fIsBooleanType(oObj) {
       }
       return true;
     }
+    */
   }
 }
 
