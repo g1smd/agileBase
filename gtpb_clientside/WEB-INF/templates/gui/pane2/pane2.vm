@@ -118,7 +118,6 @@
    	     if (top.document.getElementById('button_info')) {
 		   top.document.getElementById('button_info').removeAttribute('disabled');
 		 }
-		 alert('not table or user has edit privileges');
         </script>
       #else
       <script language=Javascript>
@@ -134,9 +133,7 @@
    	            top.document.getElementById('button_clone').setAttribute('disabled');
    		        top.document.getElementById('button_delete').setAttribute('disabled');
         		top.document.getElementById('button_import').setAttribute('disabled');
-				alert('checking view privileges');
         	#if($view.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
-				alert('user is allowed to view');
 	    	    top.document.getElementById('button_export').removeAttribute('disabled');
    	     		top.document.getElementById('button_print').removeAttribute('disabled');
    	     		top.document.getElementById('button_links').removeAttribute('disabled');
