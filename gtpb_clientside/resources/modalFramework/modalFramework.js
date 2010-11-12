@@ -303,11 +303,10 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	            // TODO: use jQuery val() like with normal agileBase input fields
                 switch(oElements[e].tagName) {
   	              case 'INPUT': switch(oElement.getAttribute('type')) {
-  	                case 'hidden':sValue=oElement.value; break; 
   	                case 'text':sValue=oElement.value; break;  // might need to change this to '' rather than null if we want the wizard to allow editing
   	                case 'checkbox':sValue=oElement.checked?'true':null; break;
   	                case 'radio':sValue=oElement.checked?oElement.value:null; break;
-  	                case 'password':sValue=oElement.value; break;
+  	                default: sValue=oElement.value;
   	              } break;
   	              
   	              case 'SELECT': sValue=oElement.options[oElement.selectedIndex].value; break;

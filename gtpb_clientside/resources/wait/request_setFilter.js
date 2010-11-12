@@ -256,6 +256,13 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 		 * return true
 		 */
 		with (oObj) {
+			  if (tagName == "INPUT") {
+				  if (getAttribute('type').toLowerCase() == 'checkbox') {
+					  return true;
+				  }
+			  }
+			  return false;
+			  /*
 			if (tagName == 'TEXTAREA')
 				return false;
 			if (tagName == 'INPUT') {
@@ -267,6 +274,7 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 				}
 			}
 			return true;
+			*/
 		}
 	}
 
