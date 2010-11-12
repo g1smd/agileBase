@@ -23,7 +23,7 @@ td.trailing input[type=button] {
   font-size:8pt; 
 }
 
-input:invalid {
+:invalid {
   color: red;
 }
 
