@@ -118,6 +118,7 @@
    	     if (top.document.getElementById('button_info')) {
 		   top.document.getElementById('button_info').removeAttribute('disabled');
 		 }
+		 alert('not table or user has edit privileges');
         </script>
       #else
       <script language=Javascript>
