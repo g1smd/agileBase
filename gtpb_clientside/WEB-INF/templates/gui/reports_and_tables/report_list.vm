@@ -92,7 +92,7 @@
     		  #end
     		#end
     	  </span></h2>
-    	  #if(($moduleActions.size()>0) && (!$mobile_device))
+    	  #if(($moduleActions.size()>0) && (!$mobile_device) && ($user.getUserType() != "EXTERNAL"))
     	    <ul parent="$internalModuleName" class="moduleaction">
     		  #foreach($moduleAction in $moduleActions)
     			<li title="$moduleAction.getDescription()"><div class="module-tree-item-wrap"><a href="#" onclick="top.fShowModalDialog(${SQ}$moduleAction.getActionTemplate()${SQ},${SQ}$moduleAction.getActionName()${SQ},$moduleAction.getCallbackFunction(),${SQ}$moduleAction.getButtons()${SQ},${SQ}$moduleAction.getAttributes()${SQ}); return false">$moduleAction</a></div></li>
