@@ -61,9 +61,9 @@
 		}
 	  });
 	  parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';
-	  //if(jQuery("a.report_tooltip").size() < 2) {
+	  if(jQuery("a.report_tooltip").size() < 2) {
 	    top.jQuery("button.toggleButton:first").click();
-	  //}
+	  }
 	});
     </script>
 	#end
