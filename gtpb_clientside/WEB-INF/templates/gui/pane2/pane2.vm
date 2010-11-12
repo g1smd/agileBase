@@ -133,6 +133,7 @@
    	            top.document.getElementById('button_clone').setAttribute('disabled');
    		        top.document.getElementById('button_delete').setAttribute('disabled');
         		top.document.getElementById('button_import').setAttribute('disabled');
+				alert('checking view privileges');
         	#if($view.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
 				alert('user is allowed to view');
 	    	    top.document.getElementById('button_export').removeAttribute('disabled');
