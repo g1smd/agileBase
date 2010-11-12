@@ -52,7 +52,7 @@
 	    #if($globalEdit)##
 	      <textarea gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" cols="$numCols" rows="$numRows" name="$field.getInternalFieldName()" onkeyup="fResizeTextArea(this);" onclick="fResizeTextArea(this);" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">$fieldValue</textarea>##
 	    #else##
-	      <textarea cols="$numCols" rows="$numRows" name="$field.getInternalFieldName()" #if($updateAsType) gtpb_update_record gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" onkeyup="fResizeTextArea(this); top.oBuffer.writeBuffer(this);" onpaste="fResizeTextArea(this); top.oBuffer.writeBuffer(this);" maxKeyCount="15" #else onkeyup="fResizeTextArea(this);" #end onclick="fResizeTextArea(this);" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device && $updateAsType) top.oBuffer.writeBuffer(this); #end">$fieldValue</textarea>##
+	      <textarea #if($field.getNotNull()) required #end cols="$numCols" rows="$numRows" name="$field.getInternalFieldName()" #if($updateAsType) gtpb_update_record gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" onkeyup="fResizeTextArea(this); top.oBuffer.writeBuffer(this);" onpaste="fResizeTextArea(this); top.oBuffer.writeBuffer(this);" maxKeyCount="15" #else onkeyup="fResizeTextArea(this);" #end onclick="fResizeTextArea(this);" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device && $updateAsType) top.oBuffer.writeBuffer(this); #end">$fieldValue</textarea>##
 		  #if ($fieldValueObject.isURL())##      
 		    <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">website</a>##
 		  #elseif($field.getNotNull() && $fieldValue == "")
@@ -66,7 +66,7 @@
 	      #if($globalEdit)##
         	<input type="text" gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" name="$field.getInternalFieldName()" value="$fieldValue" gtpbBasicTextField="true" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
 	      #else##
-	        <input type="text" name="$field.getInternalFieldName()" value="$fieldValue" #if(($field.getContentSize() > 35) || ($fieldValue.length() > 35)) style="width:296px" #end
+	        <input type="text" #if($field.getNotNull()) required #end name="$field.getInternalFieldName()" value="$fieldValue" #if(($field.getContentSize() > 35) || ($fieldValue.length() > 35)) style="width:296px" #end
 				#if($updateAsType) maxKeyCount="6" gtpb_update_record gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" gtpbBasicTextField="true"#end onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device && $updateAsType) top.oBuffer.writeBuffer(this); #end">##
 	      #end##
 		    #end##
