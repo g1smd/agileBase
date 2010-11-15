@@ -300,13 +300,13 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	        function fSetPostVars(oElement) {
   	          function fFormElementValue(oElement) { // extract the correct value for the form element type
   	            var sValue=null;
-  	            // TODO: use jQuery val() like with normal agileBase input fields
+                var type=oElement.getAttribute('type');
+                if(!type) {
+              	  type='text';
+                }
                 switch(oElements[e].tagName) {
-                  var type=oElement.getAttribute('type');
-                  if(!type) {
-                	  type='text';
-                  }
   	              case 'INPUT': switch(type) {
+    	            // TODO: use jQuery val() like with normal agileBase input fields
   	                case 'text':sValue=oElement.value; break;  // might need to change this to '' rather than null if we want the wizard to allow editing
   	                case 'checkbox':sValue=oElement.checked?'true':null; break;
   	                case 'radio':sValue=oElement.checked?oElement.value:null; break;
