@@ -257,7 +257,11 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 		 */
 		with (oObj) {
 			  if (tagName == "INPUT") {
-				  if (getAttribute('type').toLowerCase() == 'checkbox') {
+				  var type=getAttribute(type);
+				  if(!type) {
+					  type='text';
+				  }
+				  if (type.toLowerCase() == 'checkbox') {
 					  return true;
 				  }
 			  }

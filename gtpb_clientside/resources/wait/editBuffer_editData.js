@@ -365,7 +365,11 @@ function fIsBooleanType(oObj) {
      otherwise return true */
   with (oObj) {
 	  if (tagName == "INPUT") {
-		  if (getAttribute('type').toLowerCase() == 'checkbox') {
+		  var type=getAttribute('type');
+		  if(!type) {
+			  type='text';
+		  }
+		  if (type.toLowerCase() == 'checkbox') {
 			  return true;
 		  }
 	  }
