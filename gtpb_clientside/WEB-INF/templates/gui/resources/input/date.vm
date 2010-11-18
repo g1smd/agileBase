@@ -28,7 +28,7 @@
   ## otherwise the function is printed to screen
   #set($days="0")##
   #set($months="0")##
-  #if(!$globalEdit)##
+  #if($globalEdit)##
     #set($years="")##
   #else
     #set($years=$viewTools.getCalendar().get($CONST_YEAR))##
