@@ -22,8 +22,11 @@
 	## Executives get the dashboard by default
 	#parse("gui/customisations/common/dashboard/dashboard.vm")
   #else
-    #parse("gui/load_tabs.vm")
+	## Note: reference to load_tabs.vm replaced
+	## so tabs don't load any more but also toolbar plugins don't load
+	## If we want to start using toolbar plugins again, we'll have to introduce them elsewhere
+    #parse("gui/display_application.vm")
   #end
 #else
-  #parse("gui/load_tabs.vm")
+  #parse("gui/display_application.vm")
 #end

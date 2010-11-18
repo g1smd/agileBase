@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
-## Deal with any plugin
+## Deal with any toolbar plugin
 #set($app_params = 'return=gui/display_application')
 ##TODO: remove, obsolete
 #if($view.usesToolbarPlugin())
