@@ -207,6 +207,11 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		String displayFieldInternalName = this.getDisplayField().getInternalFieldName();
 		String SQLCode = "SELECT " + this.getRelatedField().getInternalFieldName() + ", "
 				+ displayFieldInternalName;
+		boolean useSecondaryField = false;
+		if (this.getSecondaryDisplayField() != null) {
+			useSecondaryField = true;
+			SQLCode += ", " + this.getSecondaryDisplayField().getInternalFieldName();
+		}
 		SQLCode += " FROM " + this.getRelatedTable().getInternalTableName();
 		// Discard any items with nothing in the display field
 		SQLCode += " WHERE " + displayFieldInternalName + " IS NOT NULL";
@@ -216,13 +221,6 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			SQLCode += " AND lower(" + displayFieldInternalName + "::text) LIKE ?";
 		}
 		// We don't need to order in SQL, results are put into a sorted set
-		// if (reverseKeyValue &&
-		// this.getDisplayField().getDbType().equals(DatabaseFieldType.VARCHAR))
-		// {
-		// SQLCode += " ORDER BY lower(" + displayFieldInternalName + ")";
-		// } else {
-		// SQLCode += " ORDER BY 1";
-		// }
 		if (maxResults > 0) {
 			SQLCode += " LIMIT " + maxResults;
 		}
@@ -249,6 +247,14 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 					displayValue = this.getDisplayValue(keyValue);
 				} else {
 					displayValue = results.getString(2);
+					if (useSecondaryField) {
+						String secondaryDisplayValue = results.getString(3);
+						if (secondaryDisplayValue != null) {
+							if (!secondaryDisplayValue.equals("")) {
+								displayValue += " <" + secondaryDisplayValue + ">";
+							}
+						}
+					}
 				}
 				if (reverseKeyValue) {
 					items.put(displayValue, keyValue);
@@ -445,15 +451,16 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTSECONDARYFIELD,
 						field.getInternalFieldName(), field.getFieldName());
 			}
-			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTSECONDARYFIELD,
-					"", "-- optional choice --");
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTSECONDARYFIELD, "",
+					"-- optional choice --");
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTVALUEFIELD, this
 					.getDisplayField().getInternalFieldName());
 			if (this.getSecondaryDisplayField() != null) {
 				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTSECONDARYFIELD,
 						this.getSecondaryDisplayField().getInternalFieldName());
 			}
-			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, this.getNotNull());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY,
+					this.getNotNull());
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
