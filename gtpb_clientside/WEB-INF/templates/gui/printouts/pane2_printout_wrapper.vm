@@ -103,7 +103,7 @@
 		  var printoutType = jQuery(this).val();
 		  var jqIframe = jQuery("iframe#wrapper");
 		  if(printoutType == 'individual_record') {
-		    jqIframe.attr('src','?return=gui/reports_and_tables/tabs/view');
+		    jqIframe.attr('src','?return=gui/printouts/record');
 		  } else {
 		    jqIframe.attr('src','?return=gui/printouts/records');
 		  }
