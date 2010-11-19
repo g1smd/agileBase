@@ -107,7 +107,7 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 		DATERESOLUTION("Accuracy", false), NUMBERPRECISION("Precision (decimal places)", false), DURATIONRESOLUTION(
 				"Accuracy", false), DURATIONSCALE("Max. duration", false), LISTTABLE(
 				"Table to use", false), LISTREPORT("Report to use", false), LISTKEYFIELD(
-				"Value to store", false), LISTVALUEFIELD("Value to display", false), LISTSECONDARYFIELD("Secondary display field", true), CHECKBOXDEFAULT(
+				"Value to store", false), LISTVALUEFIELD("Value to display", false), LISTSECONDARYFIELD("Secondary value", true), CHECKBOXDEFAULT(
 				"Default value", true), TEXTCONTENTSIZE("Size", false);
 
 		PossibleListOptions(String optionDescription, boolean advancedOption) {
