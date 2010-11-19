@@ -105,29 +105,29 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
     	      <td class="small">
 				<div id="viewoptions_$internalFieldName">
 		         #foreach($option in $options)
-			                #if ($option.getClass().getSimpleName().equals("BooleanFieldDescriptorOption"))
-			                ## Just show boolean options that are set (true)
-			  	                #if ($option.getOptionState())
-			  	                  '$option.getOptionDescription()' is set<br>
-			  	                #end
-			                #end
-			                #if ($option.getClass().getSimpleName().equals("ListFieldDescriptorOption"))
-						      #if((($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision")) || ($option.getFormInputName() == "fieldpropertylisttable") || ($option.getFormInputName() == "fieldpropertylistvaluefield"))
-			                  #elseif($option.getFormInputName() == "fieldpropertylistsecondaryfield"))
-								#if($option.getSelectedItemDisplayValue())
-								  #set($secondaryField = $sessionTable.getField($option.getSelectedItemDisplayValue()))
-							      $option.getOptionDescription() : $secondaryField<br>
-								#end
-							  #else
-								$option.getOptionDescription() : $option.getSelectedItemDisplayValue()<br>
-			                  #end
-							#end
-			                #if ($option.getClass().getSimpleName().equals("TextFieldDescriptorOption"))
-		                  ## Just show text options that are set (not null)
-			                  #if ($option.isValueNull() == false)
-			                    $option.getOptionDescription() : "$option.getValue()"<br>
-			  	                #end
-			                #end	
+	                #if ($option.getClass().getSimpleName().equals("BooleanFieldDescriptorOption"))
+	                ## Just show boolean options that are set (true)
+  	                #if ($option.getOptionState())
+  	                  '$option.getOptionDescription()' is set<br>
+  	                #end
+	                #end
+	                #if ($option.getClass().getSimpleName().equals("ListFieldDescriptorOption"))
+				      #if((($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision")) || ($option.getFormInputName() == "fieldpropertylistvaluefield"))
+	                  #elseif($option.getFormInputName() == "fieldpropertylistsecondaryfield")
+						#if($option.getSelectedItemDisplayValue())
+						  #set($secondaryField = $sessionTable.getField($option.getSelectedItemDisplayValue()))
+					      $option.getOptionDescription() : $secondaryField<br>
+						#end
+					  #else
+						$option.getOptionDescription() : $option.getSelectedItemDisplayValue()<br>
+	                  #end
+					#end
+	                #if ($option.getClass().getSimpleName().equals("TextFieldDescriptorOption"))
+                      ## Just show text options that are set (not null)
+	                  #if($option.isValueNull() == false)
+	                    $option.getOptionDescription() : "$option.getValue()"<br>
+	  	              #end
+	                #end	
 				 #end
 				 #if($options.size() > 0)
 				  <a href="#" onclick="$('#editoptions_$internalFieldName').slideDown('normal'); $('#viewoptions_$internalFieldName').hide('fast');" >more/change</a>	

@@ -438,8 +438,12 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		// return this.getRelatedField().getFieldDescriptor();
 		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.RELATION);
 		try {
-			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTTABLE, this
-					.getDisplayField().getTableContainingField().getInternalTableName());
+			for (BaseField field : this.getRelatedTable().getFields()) {
+				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTVALUEFIELD,
+						field.getInternalFieldName(), field.getFieldName());
+				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTVALUEFIELD,
+						field.getInternalFieldName(), field.getFieldName());
+			}
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTVALUEFIELD, this
 					.getDisplayField().getInternalFieldName());
 			if (this.getSecondaryDisplayField() != null) {
