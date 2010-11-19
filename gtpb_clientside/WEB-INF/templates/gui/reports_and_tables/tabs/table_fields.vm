@@ -114,8 +114,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 			                #if ($option.getClass().getSimpleName().equals("ListFieldDescriptorOption"))
 						      #if((($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision")) || ($option.getFormInputName() == "fieldpropertylisttable") || ($option.getFormInputName() == "fieldpropertylistvaluefield"))
 			                  #elseif($option.getFormInputName() == "fieldpropertylistsecondaryfield"))
+							    $option.getOptionDescription() : $sessionTable.getField($option.getSelectedItemDisplayValue())<br>
 							  #else
-								$option.getOptionDescription() : $sessionTable.getField($option.getSelectedItemDisplayValue())<br>
+								$option.getOptionDescription() : $option.getSelectedItemDisplayValue()<br>
 			                  #end
 							#end
 			                #if ($option.getClass().getSimpleName().equals("TextFieldDescriptorOption"))
