@@ -101,7 +101,12 @@
         
 		function fSelectPrintoutType() {
 		  var printoutType = jQuery(this).val();
-		  alert(printoutType);
+		  var jqIframe = jQuery("iframe#wrapper");
+		  if(printoutType == 'individual_record') {
+		    jqIframe.attr('src','?return=gui/reports_and_tables/tabs/view');
+		  } else {
+		    jqIframe.attr('src','?return=gui/printouts/records');
+		  }
 		}
 		
         function fPrint() {
