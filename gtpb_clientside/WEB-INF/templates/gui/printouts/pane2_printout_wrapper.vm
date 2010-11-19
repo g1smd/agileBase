@@ -100,7 +100,8 @@
         }
         
 		function fSelectPrintoutType() {
-		  alert('selected');
+		  var printoutType = jQuery(this).val();
+		  alert(printoutType);
 		}
 		
         function fPrint() {
@@ -144,6 +145,7 @@
           var oButton=document.createElement('button');
 		  $(oButton).addClass('gtpb');
           oButton.setAttribute('title',sCaption);
+		  $(oButton).css('float','right');
           $(oButton).click(fClick);
           $(oButton).mouseout(function() {$(oButton).blur});
           
@@ -156,21 +158,22 @@
         }
 		
 		function fCreatePrintoutSelector(sCaption,fClick) {
-          oToolbar.appendChild(document.createTextNode(sCaption));
+          oToolbar.appendChild(document.createTextNode(sCaption + ' '));
 		  var oRadio = document.createElement('input');
 		  oRadio.setAttribute('type','radio');
 		  oRadio.setAttribute('name','printout_selector');
 		  oRadio.setAttribute('value','report_rows');
+		  oRadio.setAttribute('checked','true');
           $(oRadio).click(fClick);
 		  oToolbar.appendChild(oRadio);
-		  oToolbar.appendChild(document.createTextNode('report rows'));
+		  oToolbar.appendChild(document.createTextNode(' report rows '));
 		  oRadio = document.createElement('input');
 		  oRadio.setAttribute('type','radio');
 		  oRadio.setAttribute('name','printout_selector');
 		  oRadio.setAttribute('value','individual_record');
           $(oRadio).click(fClick);
 		  oToolbar.appendChild(oRadio);
-		  oToolbar.appendChild(document.createTextNode('individual record'));
+		  oToolbar.appendChild(document.createTextNode(' individual record '));
 		}
         
         var oToolbar=document.createElement('div');
