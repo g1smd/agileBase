@@ -36,7 +36,8 @@
 					            	 font-family:sans-serif,Arial;
       	       font-size:10pt; }
  
-      			td.trailing input[type=button] { font-size:8pt }			
+      			td.trailing input[type=button] { font-size:8pt }	
+				td { margin: 0.5em; }
     </style>
     <script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jquery.oembed.js"></script>
