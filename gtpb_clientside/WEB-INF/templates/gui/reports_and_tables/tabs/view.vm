@@ -39,6 +39,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 			<th>value</th>			
 			<th class=trailing>&nbsp;</th></tr>			
 		</thead>
+		#else
+		<thead>
+		</thead>
 		#end
 		#set($sessionTableDataRow=$view.getTableDataRow($sessionTable, $sessionRowId))
 		#set($tableDataRow = $sessionTableDataRow)
