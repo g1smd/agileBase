@@ -143,13 +143,13 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 			        #if($option.getClass().getSimpleName()=="ListFieldDescriptorOption")
 						#if(($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision"))
 						#else
-			                  <select class="small" name="$formName" onchange="new fChange(this);"
-			                    gtpb_internalfieldname="$internalFieldName"
+			      <select class="small" name="$formName" onchange="new fChange(this);"
+			        gtpb_internalfieldname="$internalFieldName"
                     gtpb_update_field_option="true">
                     #foreach($optionKey in $option.getOptionsList().keySet())
                       <option value="$optionKey" #if($optionKey.equals($option.getSelectedItemKey())) selected #end >
-        			                $option.getOptionsList().get($optionKey)
-					                      </option>
+        			     $option.getOptionsList().get($optionKey)
+					  </option>
       		        #end 
                   </select>
                   $option.getOptionDescription()
