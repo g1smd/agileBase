@@ -208,7 +208,9 @@ var TabInterfaceObjectPub = new Object();
 // Initialise
 $(document).ready(function(){
 	pane3TabInterface = new TabInterfaceObject($('.tab-interface')[0]);
-	pane3Scripts.functionList.push(fInit);
+	if(fInit) {
+	  pane3Scripts.functionList.push(fInit);
+	}
 	pane3Scripts.update();
 })
 
