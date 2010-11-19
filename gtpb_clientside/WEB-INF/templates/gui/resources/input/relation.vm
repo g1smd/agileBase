@@ -105,6 +105,7 @@
     	if(!bIsGlobalEdit || (bIsGlobalEdit && !bIsAutoUpdate)) new fChange(this);
     };
     
+	//TODO: Test this in the latest version
 	if(jQuery.browser.msie) { // autocomplete doesn't work in IE so just show plain text for the time being
 		var oLabel=document.createElement('span');
 		oLabel.update=function(sValue) {
