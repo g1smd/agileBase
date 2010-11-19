@@ -36,6 +36,7 @@ import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
+import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
@@ -441,15 +442,18 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			for (BaseField field : this.getRelatedTable().getFields()) {
 				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTVALUEFIELD,
 						field.getInternalFieldName(), field.getFieldName());
-				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTVALUEFIELD,
+				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTSECONDARYFIELD,
 						field.getInternalFieldName(), field.getFieldName());
 			}
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTSECONDARYFIELD,
+					"", "-- optional choice --");
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTVALUEFIELD, this
 					.getDisplayField().getInternalFieldName());
 			if (this.getSecondaryDisplayField() != null) {
 				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTSECONDARYFIELD,
 						this.getSecondaryDisplayField().getInternalFieldName());
 			}
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, this.getNotNull());
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
