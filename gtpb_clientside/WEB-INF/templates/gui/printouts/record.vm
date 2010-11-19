@@ -38,8 +38,12 @@
  
       			td.trailing input[type=button] { font-size:8pt }			
     </style>
+    <script type="text/javascript" src="resources/jquery.js"></script>
+    <script type="text/javascript" src="resources/jquery.oembed.js"></script>
+    <script type="text/javascript" src="resources/tabs/view.js"></script>
   </head>
   <body>
+	#set($printout=true)
     #parse('gui/reports_and_tables/tabs/view.vm')
   </body>
 </html>
