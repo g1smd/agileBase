@@ -866,7 +866,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 */
 	private synchronized void removeReportWithoutChecks(SessionDataInfo sessionData,
 			HttpServletRequest request, BaseReportInfo reportToRemove, Connection conn)
-			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException, ObjectNotFoundException {
+			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException,
+			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, reportToRemove.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE,
@@ -875,14 +876,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// Remove the report from any 'hidden report' lists belonging to users
 		// and from being the default report of any user
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
-	    for(AppUserInfo user : company.getUsers()) {
+		for (AppUserInfo user : company.getUsers()) {
 			HibernateUtil.activateObject(user);
-	    		user.unhideReport(reportToRemove);
-	    		if(reportToRemove.equals(user.getDefaultReport())) {
-	    			logger.warn("Default report " + reportToRemove.getModule() + " - " + reportToRemove + " removed for user " + user);
-	    			user.setDefaultReport(null);
-	    		}
-	    }
+			user.unhideReport(reportToRemove);
+			if (reportToRemove.equals(user.getDefaultReport())) {
+				logger.warn("Default report " + reportToRemove.getModule() + " - " + reportToRemove
+						+ " removed for user " + user);
+				user.setDefaultReport(null);
+			}
+		}
 		TableInfo parentTable = reportToRemove.getParentTable();
 		HibernateUtil.activateObject(parentTable);
 		String internalReportName = reportToRemove.getInternalReportName();
@@ -1068,7 +1070,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void updateFieldOption(HttpServletRequest request, BaseField field)
-			throws DisallowedException, CantDoThatException, CodingErrorException, SQLException {
+			throws DisallowedException, CantDoThatException, CodingErrorException, SQLException,
+			ObjectNotFoundException {
 		TableInfo table = field.getTableContainingField();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
@@ -1253,13 +1256,14 @@ public final class DatabaseDefn implements DatabaseInfo {
 						+ fieldOption.getFormInputName();
 				String formInputValue = request.getParameter(formInputName);
 				if (formInputValue != null) {
-					 if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
-							if (formInputName.equals("updateoption" + field.getInternalFieldName()
-									+ PossibleListOptions.CHECKBOXDEFAULT.getFormInputName())) {
-								Boolean defaultValue = Helpers.valueRepresentsBooleanTrue(formInputValue);
-								checkboxField.setDefault(defaultValue);
-							}
-					 }
+					if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+						if (formInputName.equals("updateoption" + field.getInternalFieldName()
+								+ PossibleListOptions.CHECKBOXDEFAULT.getFormInputName())) {
+							Boolean defaultValue = Helpers
+									.valueRepresentsBooleanTrue(formInputValue);
+							checkboxField.setDefault(defaultValue);
+						}
+					}
 				}
 			}
 		} // end of CheckboxField
@@ -1272,13 +1276,28 @@ public final class DatabaseDefn implements DatabaseInfo {
 						+ fieldOption.getFormInputName();
 				String formInputValue = request.getParameter(formInputName);
 				if (formInputValue != null) {
-					 if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
-							if (formInputName.equals("updateoption" + field.getInternalFieldName()
-									+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
-								Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
-								relationField.setNotNull(notNull);
+					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
+						if (formInputName.equals("updateoption" + field.getInternalFieldName()
+								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							relationField.setNotNull(notNull);
+						}
+					} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+						if (formInputName.equals("updateoption" + field.getInternalFieldName()
+								+ PossibleListOptions.LISTVALUEFIELD.getFormInputName())) {
+							BaseField displayField = relationField.getRelatedTable().getField(
+									formInputValue);
+							relationField.setDisplayField(displayField);
+						} else if (formInputName.equals("updateoption"
+								+ field.getInternalFieldName()
+								+ PossibleListOptions.LISTSECONDARYFIELD.getFormInputName())) {
+							BaseField secondaryDisplayField = null;
+							if (!formInputValue.equals("")) {
+								secondaryDisplayField = relationField.getRelatedTable().getField(formInputValue);
 							}
-					 }
+							relationField.setDisplayField(secondaryDisplayField);
+						}
+					}
 				}
 			}
 		} // end of RelationField

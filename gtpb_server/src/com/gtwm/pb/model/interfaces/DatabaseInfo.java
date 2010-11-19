@@ -223,7 +223,7 @@ public interface DatabaseInfo {
 	 * for content, date precision etc.
 	 */
 	public void updateFieldOption(HttpServletRequest request, BaseField field)
-			throws DisallowedException, CantDoThatException, CodingErrorException, SQLException;
+			throws DisallowedException, CantDoThatException, CodingErrorException, SQLException, ObjectNotFoundException;
 
 	public void setFieldIndex(TableInfo table, BaseField field, int newindex)
 			throws ObjectNotFoundException, CantDoThatException;
