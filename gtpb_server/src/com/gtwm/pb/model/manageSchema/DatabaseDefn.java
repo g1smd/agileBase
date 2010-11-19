@@ -1263,6 +1263,25 @@ public final class DatabaseDefn implements DatabaseInfo {
 				}
 			}
 		} // end of CheckboxField
+		else if (field instanceof RelationField) {
+			RelationField relationField = (RelationField) field;
+			FieldTypeDescriptorInfo fieldDescriptor = relationField.getFieldDescriptor();
+			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
+			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
+				String formInputName = "updateoption" + field.getInternalFieldName()
+						+ fieldOption.getFormInputName();
+				String formInputValue = request.getParameter(formInputName);
+				if (formInputValue != null) {
+					 if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
+							if (formInputName.equals("updateoption" + field.getInternalFieldName()
+									+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+								Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+								relationField.setNotNull(notNull);
+							}
+					 }
+				}
+			}
+		} // end of RelationField
 	}
 
 	public void updateField(HttpServletRequest request, BaseField field, String fieldName,
