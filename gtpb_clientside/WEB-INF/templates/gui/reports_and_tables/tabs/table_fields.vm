@@ -105,7 +105,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
     	      <td class="small">
 				<div id="viewoptions_$internalFieldName">
 		         #foreach($option in $options)
-					An option 
 			                #if ($option.getClass().getSimpleName().equals("BooleanFieldDescriptorOption"))
 			                ## Just show boolean options that are set (true)
 			  	                #if ($option.getOptionState())
@@ -114,8 +113,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 			                #end
 			                #if ($option.getClass().getSimpleName().equals("ListFieldDescriptorOption"))
 						      #if((($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision")) || ($option.getFormInputName() == "fieldpropertylisttable") || ($option.getFormInputName() == "fieldpropertylistvaluefield"))
-			                  #else
-								$option.getOptionDescription() : $option.getSelectedItemDisplayValue()<br>
+			                  #elseif($option.getFormInputName() == "fieldpropertylistsecondaryfield"))
+							  #else
+								$option.getOptionDescription() : $sessionTable.getField($option.getSelectedItemDisplayValue())<br>
 			                  #end
 							#end
 			                #if ($option.getClass().getSimpleName().equals("TextFieldDescriptorOption"))

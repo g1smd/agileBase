@@ -38,10 +38,12 @@ import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.model.manageSchema.DatabaseDefn;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.ForeignKeyConstraint;
@@ -178,13 +180,14 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	public void setSecondaryDisplayField(BaseField secondaryDisplayField) {
 		this.secondaryDisplayField = secondaryDisplayField;
 	}
-	
+
 	@ManyToOne(targetEntity = AbstractField.class)
 	public BaseField getSecondaryDisplayField() {
 		return this.secondaryDisplayField;
 	}
 
-	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException, CodingErrorException {
+	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException,
+			CodingErrorException {
 		return this.getItemsWork(reverseKeyValue, null, -1);
 	}
 
@@ -432,8 +435,22 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException,
 			CodingErrorException {
-		//return this.getRelatedField().getFieldDescriptor();
-		return new FieldTypeDescriptor(FieldCategory.RELATION);
+		// return this.getRelatedField().getFieldDescriptor();
+		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.RELATION);
+		try {
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTTABLE, this
+					.getDisplayField().getTableContainingField().getInternalTableName());
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTVALUEFIELD, this
+					.getDisplayField().getInternalFieldName());
+			if (this.getSecondaryDisplayField() != null) {
+				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTSECONDARYFIELD,
+						this.getSecondaryDisplayField().getInternalFieldName());
+			}
+		} catch (ObjectNotFoundException onfex) {
+			throw new CantDoThatException("Internal error setting up " + this.getClass()
+					+ " field descriptor", onfex);
+		}
+		return fieldDescriptor;
 	}
 
 	/*
@@ -534,7 +551,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	private BaseField relatedField; // the field on which the relation is based
 
 	private BaseField displayField; // the field who's value should be displayed
-	
+
 	private BaseField secondaryDisplayField;
 
 	private ForeignKeyConstraint onUpdateAction = ForeignKeyConstraint.CASCADE;

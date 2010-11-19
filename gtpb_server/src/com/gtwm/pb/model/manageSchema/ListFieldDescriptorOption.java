@@ -39,7 +39,7 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 			this.optionsList.put(String.valueOf(Calendar.DAY_OF_MONTH), "day");
 			this.optionsList.put(String.valueOf(Calendar.MONTH), "month");
 			this.optionsList.put(String.valueOf(Calendar.YEAR), "year");
-			this.selectedItemKey = String.valueOf(Calendar.MINUTE);
+			this.selectedItemKey = String.valueOf(Calendar.DAY_OF_MONTH);
 			break;
 		case NUMBERPRECISION:
 			for (int i = 0; i < 10; i++) {
