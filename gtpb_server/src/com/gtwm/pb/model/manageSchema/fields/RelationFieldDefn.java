@@ -36,6 +36,7 @@ import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
+import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.model.manageSchema.DatabaseDefn;
@@ -172,6 +173,15 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	@ManyToOne(targetEntity = AbstractField.class)
 	public BaseField getDisplayField() {
 		return this.displayField;
+	}
+
+	public void setSecondaryDisplayField(BaseField secondaryDisplayField) {
+		this.secondaryDisplayField = secondaryDisplayField;
+	}
+	
+	@ManyToOne(targetEntity = AbstractField.class)
+	public BaseField getSecondaryDisplayField() {
+		return this.secondaryDisplayField;
 	}
 
 	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException, CodingErrorException {
@@ -422,7 +432,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException,
 			CodingErrorException {
-		return this.getRelatedField().getFieldDescriptor();
+		//return this.getRelatedField().getFieldDescriptor();
+		return new FieldTypeDescriptor(FieldCategory.RELATION);
 	}
 
 	/*
@@ -523,6 +534,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	private BaseField relatedField; // the field on which the relation is based
 
 	private BaseField displayField; // the field who's value should be displayed
+	
+	private BaseField secondaryDisplayField;
 
 	private ForeignKeyConstraint onUpdateAction = ForeignKeyConstraint.CASCADE;
 

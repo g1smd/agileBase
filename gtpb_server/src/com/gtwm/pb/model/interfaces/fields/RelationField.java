@@ -44,6 +44,16 @@ public interface RelationField extends BaseField {
 	public BaseField getDisplayField();
 
 	/**
+	 * Sometimes one display field isn't enough to form a unique business key.
+	 * If that's the case, a secondary display field from the same table can be
+	 * used to provide additional context. For example if the relation is to a
+	 * set of pub names, a postcode may be used as an additional identifier
+	 */
+	public BaseField getSecondaryDisplayField();
+
+	public void setSecondaryDisplayField(BaseField displayField);
+
+	/**
 	 * Return a field name without table prepended and all the "a7) " gubbins
 	 * 
 	 * @return
