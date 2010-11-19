@@ -99,6 +99,10 @@
           window.close();
         }
         
+		function fSelectPrintoutType() {
+		  alert('selected');
+		}
+		
         function fPrint() {
           function fDoPrint(sResponseText,sResponseXML) {
             try {
@@ -140,10 +144,6 @@
           var oButton=document.createElement('button');
 		  $(oButton).addClass('gtpb');
           oButton.setAttribute('title',sCaption);
-          /*
-          oButton.addEventListener('click',fClick,true);
-          oButton.addEventListener('mouseout',oButton.blur,true);
-          */
           $(oButton).click(fClick);
           $(oButton).mouseout(function() {$(oButton).blur});
           
@@ -154,13 +154,32 @@
           oButton.appendChild(document.createTextNode(sCaption));
           oToolbar.appendChild(oButton);          
         }
+		
+		function fCreatePrintoutSelector(sCaption,fClick) {
+          oButton.appendChild(document.createTextNode(sCaption));
+		  var oRadio = document.createElement('input');
+		  oRadio.setAttribute('type','radio');
+		  oRadio.setAttribute('name','printout_selector');
+		  oRadio.setAttribute('value','report_rows');
+          $(oRadio).click(fClick);
+		  oToolbar.appendChild(oRadio);
+		  oToolbar.appendChild(document.createTextNode('report rows');
+		  oRadio = document.createElement('input');
+		  oRadio.setAttribute('type','radio');
+		  oRadio.setAttribute('name','printout_selector');
+		  oRadio.setAttribute('value','individual_record');
+          $(oRadio).click(fClick);
+		  oToolbar.appendChild(oRadio);
+		  oToolbar.appendChild(document.createTextNode('individual record');
+		}
         
         var oToolbar=document.createElement('div');
         oToolbar.setAttribute('id','toolbarDiv');
         
         fCreateButton('Print','resources/toolbar/print_only.png','Print this report',fPrint);
         fCreateButton('Close','resources/toolbar/delete_only.png','Close the print preview',fClose);
-        
+        fCreatePrintoutSelector('Print out:',fSelectPrintoutType);
+		
         document.body.appendChild(oToolbar);
         return oToolbar;
       }
