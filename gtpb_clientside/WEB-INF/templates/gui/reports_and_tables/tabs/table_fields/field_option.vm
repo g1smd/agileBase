@@ -59,32 +59,32 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/field_option ($f
     #elseif ($FormInputName.endsWith("report"))
       #foreach($table in $viewableTables)
         <optgroup label="$table.getTableName()">
-          #foreach($report in $view.getViewableReports($table))
-            <option value="$report.getInternalReportName()">$report.getReportName()</option>
-          				#end
-        			</optgroup>
+        #foreach($report in $view.getViewableReports($table))
+          <option value="$report.getInternalReportName()">$report.getReportName()</option>
+        #end
+        </optgroup>
       #end
     #elseif ($formInputName.endsWith("field"))
       #foreach($table in $viewableTables)
         <optgroup label="$table.getTableName()">
-        			  #foreach($field in $table.getFields())
-            <option value="$field.getInternalFieldName()">$field.getFieldName()</option>
-          #end
-        				</optgroup>
+        #foreach($field in $table.getFields())
+          <option value="$field.getInternalFieldName()">$field.getFieldName()</option>
+        #end
+        </optgroup>
         #foreach($report in $view.getViewableReports($table))
-						          <optgroup label="$report.getReportName()">
-						            #foreach($field in $report.getReportFields())
-              <option value="$field.getInternalFieldName()">$field.getFieldName()</option>
-						            #end
+		  <optgroup label="$report.getReportName()">
+		  #foreach($field in $report.getReportFields())
+            <option value="$field.getInternalFieldName()">$field.getFieldName()</option>
+		  #end
           </optgroup>
         #end
       #end
     #else
       #foreach($fieldOptionOption in $fieldOption.getOptionsList().keySet())
         <option value="$fieldOptionOption">
-        			  $fieldOption.getOptionsList().get($fieldOptionOption)
-					        </option>
-      				#end ##foreach option in list type        
+          $fieldOption.getOptionsList().get($fieldOptionOption)
+		</option>
+      #end ##foreach option in list type        
     #end
   </select>
   $fieldOption.getOptionDescription()
