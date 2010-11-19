@@ -1295,7 +1295,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 							if (!formInputValue.equals("")) {
 								secondaryDisplayField = relationField.getRelatedTable().getField(formInputValue);
 							}
-							relationField.setDisplayField(secondaryDisplayField);
+							relationField.setSecondaryDisplayField(secondaryDisplayField);
 						}
 					}
 				}
