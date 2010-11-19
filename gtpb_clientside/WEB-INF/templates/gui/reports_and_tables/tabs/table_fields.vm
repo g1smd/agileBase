@@ -115,8 +115,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 						      #if((($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision")) || ($option.getFormInputName() == "fieldpropertylisttable") || ($option.getFormInputName() == "fieldpropertylistvaluefield"))
 			                  #elseif($option.getFormInputName() == "fieldpropertylistsecondaryfield"))
 								#set($secondaryField = $sessionTable.getField($option.getSelectedItemDisplayValue()))
-								#if(!$secondaryField) #set($secondaryField = "") #end
-							    $option.getOptionDescription() : $secondaryField<br>
+								#if($secondaryField)
+							      $option.getOptionDescription() : $secondaryField<br>
+								#end
 							  #else
 								$option.getOptionDescription() : $option.getSelectedItemDisplayValue()<br>
 			                  #end
