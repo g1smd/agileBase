@@ -163,14 +163,14 @@
 		  oRadio.setAttribute('value','report_rows');
           $(oRadio).click(fClick);
 		  oToolbar.appendChild(oRadio);
-		  oToolbar.appendChild(document.createTextNode('report rows');
+		  oToolbar.appendChild(document.createTextNode('report rows'));
 		  oRadio = document.createElement('input');
 		  oRadio.setAttribute('type','radio');
 		  oRadio.setAttribute('name','printout_selector');
 		  oRadio.setAttribute('value','individual_record');
           $(oRadio).click(fClick);
 		  oToolbar.appendChild(oRadio);
-		  oToolbar.appendChild(document.createTextNode('individual record');
+		  oToolbar.appendChild(document.createTextNode('individual record'));
 		}
         
         var oToolbar=document.createElement('div');
