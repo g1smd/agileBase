@@ -24,7 +24,7 @@
 #end
 #set($items = $relationField.getItems(true,$q,50))
 #foreach($item in $items.entrySet())
-  $item.getKey()|$item.getValue()
+  $item.getKey()|$item.getValue()|test
 #end
 #if($items.size() >= 49)
   [showing top 50 results]|-1
