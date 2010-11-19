@@ -86,7 +86,7 @@
     <script language="JavaScript" src="resources/wait/request_setFilter.js"></script>
     <script language="JavaScript" src="resources/modalFramework/modalFramework.js"></script>   
   </head>
-  <body oncontextmenu="return false">
+  <body> ## oncontextmenu="return false" disables right click
     <script src="resources/jquery.js" language="Javascript"> </script>
     <script languange="Javascript">
       function fMarkAsDraft(bMark) {
@@ -156,7 +156,7 @@
         }
 		
 		function fCreatePrintoutSelector(sCaption,fClick) {
-          oToolbar.appendChild(document.createTextNode('&nbsp;' + sCaption));
+          oToolbar.appendChild(document.createTextNode(sCaption));
 		  var oRadio = document.createElement('input');
 		  oRadio.setAttribute('type','radio');
 		  oRadio.setAttribute('name','printout_selector');
