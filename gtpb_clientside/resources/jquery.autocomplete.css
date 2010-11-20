@@ -62,3 +62,7 @@
 .ac_results .secondary {
 	color: gray;
 }
+
+.ac_results .ac_over .secondary {
+	color: #cccccc;
+}
