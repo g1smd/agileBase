@@ -132,7 +132,7 @@
     	$(oLabel).addClass('autocomplete');
 	}
 	
-	#set($wholeDisplayValue = $fieldDisplayValue)
+	#set($wholeDisplayValue = $viewTools.escape($fieldDisplayValue))
 	#if($useSecondaryDisplayValue == true)
 	  #set($wholeDisplayValue = "$fieldDisplayValue {${secondaryDisplayValue}}")
     #end
