@@ -21,6 +21,7 @@
 ##
 #set($fieldValue=$tableDataRow.get($relatedField).toString())##
 #set($fieldDisplayValue = $field.getDisplayValue($fieldValue))##
+#set($useSecondaryDisplayValue = false)
 #if($field.getSecondaryDisplayField())
   #set($secondaryDisplayValue = $field.getSecondaryDisplayValue($fieldValue))
   #if($secondaryDisplayValue && $secondaryDisplayValue != "")
