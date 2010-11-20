@@ -251,7 +251,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 						String secondaryDisplayValue = results.getString(3);
 						if (secondaryDisplayValue != null) {
 							if (!secondaryDisplayValue.equals("")) {
-								displayValue += " <" + secondaryDisplayValue + ">";
+								displayValue += " {" + secondaryDisplayValue + "}";
 							}
 						}
 					}
