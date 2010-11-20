@@ -219,11 +219,12 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			}
 		}
 		if (requireJoin) {
-			SQLCode = "SELECT " + relatedTableInternalName + "." + displayFieldInternalName + ", ";
+			SQLCode = "SELECT " + relatedTableInternalName + "." + relatedFieldInternalName;
+			SQLCode += ", " + relatedTableInternalName + "." + displayFieldInternalName;
 			RelationField secondaryDisplayField = ((RelationField) this.getSecondaryDisplayField());
 			TableInfo tier3Table = secondaryDisplayField.getRelatedTable();
 			String tier3TableInternalName = tier3Table.getInternalTableName();
-			SQLCode += tier3TableInternalName + "."
+			SQLCode += ", " + tier3TableInternalName + "."
 					+ secondaryDisplayField.getDisplayField().getInternalFieldName();
 			SQLCode += " FROM " + relatedTableInternalName + " LEFT OUTER JOIN "
 					+ tier3TableInternalName;
