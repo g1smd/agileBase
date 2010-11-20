@@ -205,20 +205,46 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		// however it would theoretically be possible to create a relation to a
 		// non-unique field
 		String displayFieldInternalName = this.getDisplayField().getInternalFieldName();
-		String SQLCode = "SELECT " + this.getRelatedField().getInternalFieldName() + ", "
-				+ displayFieldInternalName;
+		String relatedTableInternalName = this.getRelatedTable().getInternalTableName();
+		String relatedFieldInternalName = this.getRelatedField().getInternalFieldName();
+		String secondaryFieldInternalName = null;
+		boolean requireJoin = false;
+		String SQLCode = "";
 		boolean useSecondaryField = false;
 		if (this.getSecondaryDisplayField() != null) {
+			secondaryFieldInternalName = this.getSecondaryDisplayField().getInternalFieldName();
 			useSecondaryField = true;
-			SQLCode += ", " + this.getSecondaryDisplayField().getInternalFieldName();
+			if (this.getSecondaryDisplayField() instanceof RelationField) {
+				requireJoin = true;
+			}
 		}
-		SQLCode += " FROM " + this.getRelatedTable().getInternalTableName();
+		if (requireJoin) {
+			SQLCode = "SELECT " + relatedTableInternalName + "." + displayFieldInternalName + ", ";
+			RelationField secondaryDisplayField = ((RelationField) this.getSecondaryDisplayField());
+			TableInfo tier3Table = secondaryDisplayField.getRelatedTable();
+			String tier3TableInternalName = tier3Table.getInternalTableName();
+			SQLCode += tier3TableInternalName + "."
+					+ secondaryDisplayField.getDisplayField().getInternalFieldName();
+			SQLCode += " FROM " + relatedTableInternalName + " LEFT OUTER JOIN "
+					+ tier3TableInternalName;
+			SQLCode += " ON " + relatedTableInternalName + "." + secondaryFieldInternalName;
+			SQLCode += "  = " + tier3TableInternalName + "."
+					+ secondaryDisplayField.getRelatedField().getInternalFieldName();
+		} else {
+			SQLCode = "SELECT " + relatedFieldInternalName + ", " + displayFieldInternalName;
+			if (useSecondaryField) {
+				SQLCode += ", " + secondaryFieldInternalName;
+			}
+			SQLCode += " FROM " + relatedTableInternalName;
+		}
 		// Discard any items with nothing in the display field
-		SQLCode += " WHERE " + displayFieldInternalName + " IS NOT NULL";
+		SQLCode += " WHERE " + relatedTableInternalName + "." + displayFieldInternalName
+				+ " IS NOT NULL";
 		if (filterString != null) {
 			filterString = filterString.replace("*", "%").toLowerCase();
 			filterString += "%";
-			SQLCode += " AND lower(" + displayFieldInternalName + "::text) LIKE ?";
+			SQLCode += " AND lower(" + relatedTableInternalName + "." + displayFieldInternalName
+					+ "::text) LIKE ?";
 		}
 		// We don't need to order in SQL, results are put into a sorted set
 		if (maxResults > 0) {
