@@ -323,7 +323,7 @@ function fRelationPickers() {
 					  mustMatch: true,
 					  selectFirst: true,
 					  width: 296,
-					  formatMatch: function(rawValue, i, optionsDataLength) {
+					  formatItem: function(rawValue, i, optionsDataLength) {
 					    return rawValue + 'TEST';
 					  }
 				    }
