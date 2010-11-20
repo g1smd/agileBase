@@ -324,7 +324,8 @@ function fRelationPickers() {
 					  selectFirst: true,
 					  width: 296,
 					  formatItem: function(rawValue, i, optionsDataLength) {
-					    return rawValue + 'TEST';
+					    var formattedValue = rawValue.replace("{"," <span class='secondaryValue'>");
+					    formattedValue = formattedValue.replace("}","</span>");
 					  }
 				    }
 		   );
