@@ -133,6 +133,7 @@
 	
 	#set($wholeDisplayValue = $fieldDisplayValue)
 	#if($useSecondaryDisplayValue == true)
+	  alert('using secondary display value');
 	  #set($wholeDisplayValue = "$fieldDisplayValue {${secondaryDisplayValue}}")
     #end
 	oLabel.update('$wholeDisplayValue');
