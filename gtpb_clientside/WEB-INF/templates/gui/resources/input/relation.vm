@@ -21,8 +21,10 @@
 ##
 #set($fieldValue=$tableDataRow.get($relatedField).toString())##
 #set($fieldDisplayValue = $field.getDisplayValue($fieldValue))##
+$viewTools.log("secondary field is $field.getSecondaryDisplayField()")
 #if($field.getSecondaryDisplayField())
   #set($secondaryDisplayValue = $field.getSecondaryDisplayValue())
+  $viewTools.log("secondary value is $secondaryDisplayValue")
   #if($secondaryDisplayValue && $secondaryDisplayValue != "")
 	#set($useSecondaryDisplayValue = true)
   #end
@@ -136,7 +138,6 @@
 	  alert('using secondary display value');
 	  #set($wholeDisplayValue = "$fieldDisplayValue {${secondaryDisplayValue}}")
     #end
-    alert('setting value');
 	oLabel.update('$wholeDisplayValue');
 	oLabel.formEl=oHidden;
     oHidden.label=oHidden.parentNode.insertBefore(oLabel,oHidden.nextSibling);
