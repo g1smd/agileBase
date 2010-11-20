@@ -131,7 +131,11 @@
     	$(oLabel).addClass('autocomplete');
 	}
 	
-	oLabel.update('$viewTools.escape($fieldDisplayValue)');
+	#set($wholeDisplayValue = $fieldDisplayValue)
+	#if($useSecondaryDisplayValue == true)
+	  #set($wholeDisplayValue = "$fieldDisplayValue {${secondaryDisplayValue}}")
+    #end
+	oLabel.update('$wholeDisplayValue');
 	oLabel.formEl=oHidden;
     oHidden.label=oHidden.parentNode.insertBefore(oLabel,oHidden.nextSibling);
 
