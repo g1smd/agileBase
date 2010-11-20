@@ -134,7 +134,7 @@
 	
 	#set($wholeDisplayValue = $viewTools.escape($fieldDisplayValue))
 	#if($useSecondaryDisplayValue == true)
-	  #set($wholeDisplayValue = "$fieldDisplayValue {${secondaryDisplayValue}}")
+	  #set($wholeDisplayValue = "$fieldDisplayValue {" + $viewTools.escape("$secondaryDisplayValue") + "}")
     #end
 	oLabel.update('$wholeDisplayValue');
 	oLabel.formEl=oHidden;
