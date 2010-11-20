@@ -329,8 +329,7 @@ function fRelationPickers() {
 					    return formattedValue;
 					  },
 					  formatResult: function(rawValue, i, optionsDataLength) {
-						return rawValue[0];
-					    var formattedValue = rawValue[0].replace(" {",", ");
+					    var formattedValue = rawValue[0].replace(" {"," - ");
 					    formattedValue = formattedValue.replace("}","");
 					    return formattedValue;
 					  }
