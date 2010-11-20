@@ -323,6 +323,17 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	}
 
 	public String getDisplayValue(String keyValue) throws SQLException, CodingErrorException {
+		BaseField displayField = this.getDisplayField();
+		return getDisplayValue(keyValue, displayField);
+	}
+
+	public String getSecondaryDisplayValue(String keyValue) throws SQLException,
+			CodingErrorException {
+		return getDisplayValue(keyValue, this.getSecondaryDisplayField());
+	}
+
+	private String getDisplayValue(String keyValue, BaseField displayField) throws SQLException,
+			CodingErrorException {
 		if (keyValue == null) {
 			return "";
 		}
@@ -331,7 +342,6 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		}
 		BaseField relatedField = this.getRelatedField();
 		TableInfo relatedTable = this.getRelatedTable();
-		BaseField displayField = this.getDisplayField();
 		// If the display field is itself a relation, return that's display
 		// value
 		if (displayField instanceof RelationField) {
@@ -360,14 +370,19 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 						int tierThreeRowId = this.getTierThreeRowId(relationField,
 								Integer.valueOf(keyValue));
 						// recurse
-						relationDisplayValues += relationField.getDisplayValue(String
-								.valueOf(tierThreeRowId)) + ", ";
+						if (displayField.equals(this.getDisplayField())) {
+							relationDisplayValues += relationField.getDisplayValue(String
+									.valueOf(tierThreeRowId)) + ", ";
+						} else {
+							relationDisplayValues += relationField.getSecondaryDisplayValue(String
+									.valueOf(tierThreeRowId)) + ", ";
+						}
 					}
 				}
 			}
 			relationDisplayValues = relationDisplayValues.replaceAll(",\\s$", "");
 		} else {
-			SQLCode += this.getDisplayField().getInternalFieldName();
+			SQLCode += displayField.getInternalFieldName();
 			foundFields = 1;
 		}
 		String displayValue = "";

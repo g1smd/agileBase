@@ -74,6 +74,9 @@ public interface RelationField extends BaseField {
 	 */
 	public String getDisplayValue(String keyValue) throws SQLException, CodingErrorException;
 
+	public String getSecondaryDisplayValue(String keyValue) throws SQLException,
+	CodingErrorException;
+	
 	/**
 	 * Use this method when you want a list of all possible internal/display
 	 * values for this field, i.e. the set of distinct values in the field it
