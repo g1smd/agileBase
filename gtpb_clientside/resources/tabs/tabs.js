@@ -324,7 +324,7 @@ function fRelationPickers() {
 					  selectFirst: true,
 					  width: 296,
 					  formatMatch: function(rawValue, i, optionsDataLength) {
-					    return 'this is the ' + rawValue;
+					    return rawValue + 'TEST';
 					  }
 				    }
 		   );
@@ -339,6 +339,7 @@ function fRelationPickers() {
   }
     
   $('.autocomplete').each(function(i) {
+	  // TODO: test newer IE, the code may work now
 	  if($.browser.msie) {
 		  //$('<span style="padding-right:10px">'+this.value+'</span>').insertBefore($(this));
 		  //$(this).remove();
