@@ -25,8 +25,8 @@
 #set($items = $relationField.getItems(true,$q,50))
 #foreach($item in $items.entrySet())
   #set($displayValue = $item.getValue()) ##
-  #set($displayValue = $displayValue.replace("<","<span class='secondary'>")) ##
-  #set($displayValue = $displayValue.replace(">","</span>")) ##
+  ##set($displayValue = $displayValue.replace("<","<span class='secondary'>")) ##
+  ##set($displayValue = $displayValue.replace(">","</span>")) ##
   $item.getKey()|$displayValue
 #end
 #if($items.size() >= 49)
