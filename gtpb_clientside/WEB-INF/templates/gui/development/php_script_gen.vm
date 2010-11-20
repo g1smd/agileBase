@@ -50,15 +50,11 @@
   #end
 
   #if($field.getFieldCategory().toString() == "TEXT" || $field.getFieldCategory().toString() == "NUMBER")
-    $viewTools.log("$field.usesLookup()")
     #if($field.usesLookup())
       #set($fieldpropertyuselookup = "1")
-      $viewTools.log("uses lookup set = 1")
     #else
       #set($fieldpropertyuselookup = "")
-      $viewTools.log("uses lookup set = null")
     #end
-    $viewTools.log("$field.getFieldName() use lookup? $fieldpropertyuselookup")
     #if ($field.allowNotApplicable())
       #set($fieldpropertyallownotapplicable = "1")
       #set($fieldpropertynotapplicabledescription = "$field.getNotApplicableDescription()")
@@ -183,7 +179,6 @@ ${dollar}url_prefix = "http://".${dollar}username.":".${dollar}password."@localh
         #outputAttrib($output "fieldpropertyunique" $fieldpropertyunique)
         #outputAttrib($output "fieldpropertynotnull" $fieldpropertynotnull)
         #outputAttrib($output "fieldpropertybigtext" $fieldpropertybigtext)
-        $viewTools.log("$field.getFieldName() uses lookup ? $fieldpropertyuselookup")
         #outputAttrib($output "fieldpropertyuselookup" $fieldpropertyuselookup)
         #outputAttrib($output "fieldpropertydefaulttonow" $fieldpropertydefaulttonow)
         #outputAttrib($output "fieldpropertyallownotapplicable" $fieldpropertyallownotapplicable)
