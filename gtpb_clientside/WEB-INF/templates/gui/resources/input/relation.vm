@@ -21,6 +21,12 @@
 ##
 #set($fieldValue=$tableDataRow.get($relatedField).toString())##
 #set($fieldDisplayValue = $field.getDisplayValue($fieldValue))##
+#if($field.getSecondaryDisplayField())
+  #set($secondaryDisplayValue = $field.getSecondaryDisplayValue())
+  #if($secondaryDisplayValue != "")
+	#set($useSecondaryDisplayValue = true)
+  #end
+#end
 ##
 ## sessionTableName is set in edit.vm
 #if($globalEdit)##
@@ -65,7 +71,7 @@
   			       type="hidden" ##
   			       gtpb_update_record="true" ##
   			       value="$fieldValue" ##
-  			       displayValue="$fieldDisplayValue" ##
+  			       displayValue="${fieldDisplayValue}#if($useSecondaryDisplayValue), ${secondaryDisplayValue}#end" ##
   			       internalFieldName="$internalFieldName" ##
   			       internalTableName="$sessionTable.getInternalTableName()"##
 				   #if(!$globalEdit)
