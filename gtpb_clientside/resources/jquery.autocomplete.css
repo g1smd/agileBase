@@ -58,3 +58,7 @@
 .ac_unsaved {
 	text-decoration: underline;
 }
+
+.ac_results .secondary {
+	color: gray;
+}
