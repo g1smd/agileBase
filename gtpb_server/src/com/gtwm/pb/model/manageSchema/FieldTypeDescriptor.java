@@ -68,6 +68,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			// No options for sequence fields
 			break;
 		case RELATION:
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTTABLE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTVALUEFIELD));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTSECONDARYFIELD));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
