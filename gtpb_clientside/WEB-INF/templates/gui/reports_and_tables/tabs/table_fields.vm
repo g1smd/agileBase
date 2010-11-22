@@ -146,7 +146,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
                   </label>
 			        #end
 			        #if($option.getClass().getSimpleName()=="ListFieldDescriptorOption")
-						#if(($category == "Whole Number") && (($option.getFormInputName() == "fieldpropertynumberprecision") || ($option.getFormInputName() == "fieldpropertylisttable")))
+						#if( (($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision")) || ($option.getFormInputName() == "fieldpropertylisttable"))
 						#else
 			      <select class="small" name="$formName" onchange="new fChange(this);"
 			        gtpb_internalfieldname="$internalFieldName"
