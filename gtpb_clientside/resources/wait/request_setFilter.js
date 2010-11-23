@@ -257,7 +257,7 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 		 */
 		with (oObj) {
 			  if (tagName == "INPUT") {
-				  var type=getAttribute(type);
+				  var type=getAttribute('type');
 				  if(!type) {
 					  type='text';
 				  }
