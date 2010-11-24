@@ -16,8 +16,28 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <script language=Javascript>
-	function fTogglePane1(oButton)
-	{	document.getElementById('oViewPane').contentWindow.document.getElementById('colsWrapper').cols=($(oButton).hasClass('selected')?'250,*':'0,*');
+	
+	function fAnimatePane1(pane1ChangePercent, currentWidth, targetWidth) {
+	    var difference = (targetWidth - currentWidth);
+		var change = difference * (pane1ChangePercent / 100);
+		currentWidth = currentWidth + change;
+	    document.getElementById('oViewPane').contentWindow.document.getElementById('colsWrapper').cols=(Math.round(currentWidth) + ',*');
+		if (Math.abs(currentWidth - targetWidth) > 2) {
+		  pane1ChangePercent = pane1ChangePercent * 2;
+		  setTimeout('fAnimatePane1(' + pane1ChangePercent + ',' + currentWidth + ',' + targetWidth + ');');
+		} else {
+	      document.getElementById('oViewPane').contentWindow.document.getElementById('colsWrapper').cols=(targetWidth + ',*');
+		}
+	}
+	
+	function fTogglePane1(oButton) {
+	  var currentWidth = 0;
+	  var targetWidth = 250;
+	  $(oButton).hasClass('selected') {
+	  	currentWidth = 250;
+		targetWidth = 0;
+	  }
+	  fAnimatePane1(0.1, currentWidth, targetWidth);
 	}
 </script>
 
