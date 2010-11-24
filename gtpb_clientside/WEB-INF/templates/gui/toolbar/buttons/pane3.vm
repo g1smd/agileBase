@@ -71,8 +71,10 @@
 	  
 	  // the match property returns the match if it exists (or array of matches ?) or null if no match
 	  // convert this to a boolean for comparision operations below
-	  var bPane2=(oPane2Butt.getAttribute('selected')=='true');
-	  var bPane3=(oPane3Butt.getAttribute('selected')=='true');
+	  // var bPane2=(oPane2Butt.getAttribute('selected')=='true');
+	  // var bPane3=(oPane3Butt.getAttribute('selected')=='true');
+	  var bPane2=($(oPane2Butt).hasClass('selected'));
+	  var bPane3=($(oPane3Butt).hasClass('selected'));
 		alert('pane 2: ' + bPane2 + ', pane 3: ' + bPane3);
 	  
 	  var targetPercent = 0;
