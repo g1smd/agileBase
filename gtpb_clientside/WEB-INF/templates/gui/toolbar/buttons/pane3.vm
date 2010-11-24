@@ -49,7 +49,7 @@
 		document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows = rowsVal;
 		if (Math.abs(targetPercent - currentPercent) > 1) {
 		  stepPercentage = stepPercentage + 1;
-		  setTimeout('fAnimateFrame()', 100);
+		  setTimeout('fAnimateFrame();', 100);
 		}
 	  }
 	
