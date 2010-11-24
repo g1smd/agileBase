@@ -16,10 +16,27 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <script language="JavaScript" type="text/javascript">
+	  function fAnimateFrame(stepPercentage, currentPercent, targetPercent, targetFrame) {
+	    var difference = (targetPercent - currentPercent);
+		var change = difference * (stepPercentage / 100);
+		currentPercent = currentPercent + change;
+		var rowsVal;
+		if(targetFrame == 2) {
+		  rowsVal = Math.round(currentPercent) + '%,*';
+		} else {
+		  rowsVal = '*,' + Math.round(currentPercent) + '%';
+		}
+		document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows = rowsVal;
+		if (Math.abs(targetPercent - currentPercent) > 1) {
+		  stepPercentage = stepPercentage + 1;
+		  setTimeout('fAnimateFrame(' + stepPercentage + ',' + currentPercentage + ',' + targetPercent + ',' + targetFrame + ');', 100);
+		}
+	  }
+	
 	// ^=XOR
 	// if *only* one button is set then give priority to that, otherwise show both
 	function fFormatRHPanes(oButton) {
-	  
+	
 	  function fInitFrameAnimation() {
 		var currentRows = document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows;
 	    if (bPane2&&bPane3) {
@@ -36,23 +53,6 @@
 		alert('targetFrame: ' + targetFrame + ': ' + currentPercent + ' -> ' + targetPercent);
 	  }
 	  
-	  function fAnimateFrame() {
-	    var difference = (targetPercent - currentPercent);
-		var change = difference * (stepPercentage / 100);
-		currentPercent = currentPercent + change;
-		var rowsVal;
-		if(targetFrame == 2) {
-		  rowsVal = Math.round(currentPercent) + '%,*';
-		} else {
-		  rowsVal = '*,' + Math.round(currentPercent) + '%';
-		}
-		document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows = rowsVal;
-		if (Math.abs(targetPercent - currentPercent) > 1) {
-		  stepPercentage = stepPercentage + 1;
-		  setTimeout('fAnimateFrame()', 100);
-		}
-	  }
-	
 	  function fRowsVal() {
 	     if (bPane2&&bPane3) return '*,*';				 // if both are switched on split equally
 	     if (bPane2^bPane3) return (bPane2?'*,0':'0,*'); // if one or the other show that one
@@ -80,7 +80,7 @@
 	  var currentPercent = 0;
 	  var stepPercentage = 1;
 	  fInitFrameAnimation();
-	  fAnimateFrame(1);
+	  fAnimateFrame(1, currentPercent, targetPercent, targetFrame);
 	  
 	  document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows=fRowsVal();					 						 
 	}		
