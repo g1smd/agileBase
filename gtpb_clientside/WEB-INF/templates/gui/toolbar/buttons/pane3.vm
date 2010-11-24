@@ -46,7 +46,7 @@
 		}
 		document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows = rowsVal;
 		if (Math.abs(targetPercent - currentPercent) > 2) {
-		  stepPercent = stepPercent + 1;
+		  stepPercent = stepPercent * 2;
 		  setTimeout('fAnimateFrame(' + stepPercent + ',' + currentPercent + ',' + targetPercent + ',' + targetFrame + ');', 1);
 		} else {
 		  // stop iterating, set them to the exact end states
