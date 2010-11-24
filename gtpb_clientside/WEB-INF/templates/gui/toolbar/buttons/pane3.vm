@@ -50,7 +50,7 @@
 		    targetFrame = 3;
 	      }
 		}
-		alert('targetFrame: ' + targetFrame + ': ' + currentPercent + ' -> ' + targetPercent);
+		alert('pane 2: ' + bPane2 + ', pane 3: ' + bPane3);
 	  }
 	  
 	  function fRowsVal() {
