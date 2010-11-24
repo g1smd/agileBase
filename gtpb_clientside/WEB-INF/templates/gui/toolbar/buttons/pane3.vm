@@ -16,6 +16,24 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <script language="JavaScript" type="text/javascript">
+
+	// ^=XOR
+	// if *only* one button is set then give priority to that, otherwise show both
+	function fRowsVal() {
+	     var oPane2Butt=top.document.getElementById('pane2butt');
+	     var oPane3Butt=top.document.getElementById('pane3butt');
+	     var bPane2=($(oPane2Butt).hasClass('selected'));
+	     var bPane3=($(oPane3Butt).hasClass('selected'));
+	     if (bPane2&&bPane3) return '*,*';				 // if both are switched on split equally
+	     if (bPane2^bPane3) return (bPane2?'*,0':'0,*'); // if one or the other show that one
+	 	 
+		 // if both are switched off, reset to show both
+		 oPane2Butt.click(); // set the buttons down.  We know that both are off so a click will switch them on
+	     oPane3Butt.click();
+	     return ('*,*');
+	}
+	  
+
 	function fAnimateFrame(stepPercent, currentPercent, targetPercent, targetFrame) {
 	    var difference = (targetPercent - currentPercent);
 		var change = difference * (stepPercent / 100);
@@ -36,8 +54,6 @@
 		}
 	}
 	
-	// ^=XOR
-	// if *only* one button is set then give priority to that, otherwise show both
 	function fFormatRHPanes(oButton) {
 	
 	  function fInitFrameAnimation() {
@@ -53,16 +69,6 @@
 		    targetFrame = 3;
 	      }
 		}
-	  }
-	  
-	  function fRowsVal() {
-	     if (bPane2&&bPane3) return '*,*';				 // if both are switched on split equally
-	     if (bPane2^bPane3) return (bPane2?'*,0':'0,*'); // if one or the other show that one
-	 	 
-		 // if both are switched off, reset to show both
-		 oPane2Butt.click(); // set the buttons down.  We know that both are off so a click will switch them on
-	     oPane3Butt.click();
-	     return ('*,*');
 	  }
 	  
 	  var oButton=oButton;
