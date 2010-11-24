@@ -26,11 +26,10 @@
 		} else {
 		  rowsVal = '*,' + Math.round(currentPercent) + '%';
 		}
-		alert('setting to ' + rowsVal);
 		document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows = rowsVal;
 		if (Math.abs(targetPercent - currentPercent) > 1) {
 		  stepPercent = stepPercent + 1;
-		  //setTimeout('fAnimateFrame(' + stepPercent + ',' + currentPercent + ',' + targetPercent + ',' + targetFrame + ');', 100);
+		  setTimeout('fAnimateFrame(' + stepPercent + ',' + currentPercent + ',' + targetPercent + ',' + targetFrame + ');', 2000);
 		}
 	}
 	
