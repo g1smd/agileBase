@@ -16,9 +16,9 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <script language="JavaScript" type="text/javascript">
-	  function fAnimateFrame(stepPercentage, currentPercent, targetPercent, targetFrame) {
+	  function fAnimateFrame(stepPercent, currentPercent, targetPercent, targetFrame) {
 	    var difference = (targetPercent - currentPercent);
-		var change = difference * (stepPercentage / 100);
+		var change = difference * (stepPercent / 100);
 		currentPercent = currentPercent + change;
 		var rowsVal;
 		if(targetFrame == 2) {
@@ -28,8 +28,8 @@
 		}
 		document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows = rowsVal;
 		if (Math.abs(targetPercent - currentPercent) > 1) {
-		  stepPercentage = stepPercentage + 1;
-		  setTimeout('fAnimateFrame(' + stepPercentage + ',' + currentPercentage + ',' + targetPercent + ',' + targetFrame + ');', 100);
+		  stepPercent = stepPercent + 1;
+		  setTimeout('fAnimateFrame(' + stepPercent + ',' + currentPercent + ',' + targetPercent + ',' + targetFrame + ');', 100);
 		}
 	  }
 	
@@ -78,7 +78,7 @@
 	  var targetPercent = 0;
       var targetFrame = 2;
 	  var currentPercent = 0;
-	  var stepPercentage = 1;
+	  var stepPercent = 1;
 	  fInitFrameAnimation();
 	  fAnimateFrame(1, currentPercent, targetPercent, targetFrame);
 	  
