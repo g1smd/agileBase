@@ -18,9 +18,43 @@
 <script language="JavaScript" type="text/javascript">
 	// ^=XOR
 	// if *only* one button is set then give priority to that, otherwise show both
-	function fFormatRHPanes(oButton)
-	{ function fRowsVal()
-	  {  if (bPane2&&bPane3) return '*,*';				 // if both are switched on split equally
+	function fFormatRHPanes(oButton) {
+	
+	  function fInitFrameAnimation() {
+		var currentRows = document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows;
+	    if (bPane2&&bPane3) {
+		  targetPercent = 50;
+		  if (currentRows.indexOf('*') == '0') {
+		    targetFrame = 3;
+		  }
+		} else {
+		  currentPercent = 50;
+		  if (bPane2) {
+		    targetFrame = 3;
+	      }
+		}
+		alert('targetFrame: ' + targetFrame + ': ' + currentPercent + ' -> ' + targetPercent);
+	  }
+	  
+	  fAnimateFrame(stepPercentage) {
+	    var difference = (targetPercent - currentPercent);
+		var change = difference * (stepPercentage / 100);
+		currentPercent = currentPercent + change;
+		var rowsVal;
+		if(targetFrame == 2) {
+		  rowsVal = Math.round(currentPercent) + '%,*';
+		} else {
+		  rowsVal = '*,' + Math.round(currentPercent) + '%';
+		}
+		document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows = rowsVal;
+		if (Math.abs(targetPercent - currentPercent) > 1) {
+		  stepPercentage = stepPercentage + 1;
+		  setTimeout('fAnimateFrame(' + stepPercentage + ');', 100);
+		}
+	  }
+	
+	  function fRowsVal() {
+	     if (bPane2&&bPane3) return '*,*';				 // if both are switched on split equally
 	     if (bPane2^bPane3) return (bPane2?'*,0':'0,*'); // if one or the other show that one
 	 	 
 		 // if both are switched off, reset to show both
@@ -38,10 +72,14 @@
 	  
 	  // the match property returns the match if it exists (or array of matches ?) or null if no match
 	  // convert this to a boolean for comparision operations below
-	  //var bPane2=(oPane2Butt.getAttribute('selected')=='true');
-	  //var bPane3=(oPane3Butt.getAttribute('selected')=='true');
-	  var bPane2=($(oPane2Butt).hasClass('selected'));
-	  var bPane3=($(oPane3Butt).hasClass('selected'));
+	  var bPane2=(oPane2Butt.getAttribute('selected')=='true');
+	  var bPane3=(oPane3Butt.getAttribute('selected')=='true');
+	  
+	  var targetPercent = 0;
+      var targetFrame = 2;
+	  var currentPercent = 0;
+	  fInitFrameAnimation();
+	  fAnimateFrame(1);
 	  
 	  document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows=fRowsVal();					 						 
 	}		
