@@ -89,7 +89,7 @@
       var targetFrame = 2;
 	  var currentPercent = 0;
 	  fInitFrameAnimation();
-	  fAnimateFrame(1, currentPercent, targetPercent, targetFrame);
+	  fAnimateFrame(0.1, currentPercent, targetPercent, targetFrame);
 	  
 	}		
 </script>
