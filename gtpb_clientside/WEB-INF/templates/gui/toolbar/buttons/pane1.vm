@@ -31,11 +31,11 @@
 	}
 	
 	function fTogglePane1(oButton) {
-	  var currentWidth = 0;
-	  var targetWidth = 250;
+	  var currentWidth = 250;
+	  var targetWidth = 0;
 	  if($(oButton).hasClass('selected')) {
-	  	currentWidth = 250;
-		targetWidth = 0;
+	  	currentWidth = 0;
+		targetWidth = 250;
 	  }
 	  fAnimatePane1(0.1, currentWidth, targetWidth);
 	}
