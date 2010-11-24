@@ -33,7 +33,7 @@
 	function fTogglePane1(oButton) {
 	  var currentWidth = 0;
 	  var targetWidth = 250;
-	  $(oButton).hasClass('selected') {
+	  if($(oButton).hasClass('selected')) {
 	  	currentWidth = 250;
 		targetWidth = 0;
 	  }
