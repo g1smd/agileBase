@@ -79,8 +79,8 @@
       var targetFrame = 2;
 	  var currentPercent = 0;
 	  var stepPercent = 1;
-	  fInitFrameAnimation();
-	  fAnimateFrame(1, currentPercent, targetPercent, targetFrame);
+	  //fInitFrameAnimation();
+	  //fAnimateFrame(1, currentPercent, targetPercent, targetFrame);
 	  
 	  document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows=fRowsVal();					 						 
 	}		
