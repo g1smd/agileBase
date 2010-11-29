@@ -168,7 +168,6 @@
 		  oRadio.setAttribute('type','radio');
 		  oRadio.setAttribute('name','printout_selector');
 		  oRadio.setAttribute('value','report_rows');
-		  oRadio.setAttribute('checked','true');
           $(oRadio).click(fClick);
 		  oToolbar.appendChild(oRadio);
 		  oToolbar.appendChild(document.createTextNode(' report rows '));
@@ -176,6 +175,7 @@
 		  oRadio.setAttribute('type','radio');
 		  oRadio.setAttribute('name','printout_selector');
 		  oRadio.setAttribute('value','individual_record');
+		  oRadio.setAttribute('checked','true');
           $(oRadio).click(fClick);
 		  oToolbar.appendChild(oRadio);
 		  oToolbar.appendChild(document.createTextNode(' individual record '));
@@ -195,7 +195,7 @@
       function fCreateIframe() {
         var oIframe=document.createElement('iframe');
         oIframe.setAttribute('id','wrapper');
-        oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/records');
+        oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/record');
         
         document.body.appendChild(oIframe);
         return oIframe;
