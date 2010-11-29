@@ -167,18 +167,18 @@
 		  var oRadio = document.createElement('input');
 		  oRadio.setAttribute('type','radio');
 		  oRadio.setAttribute('name','printout_selector');
-		  oRadio.setAttribute('value','report_rows');
-          $(oRadio).click(fClick);
-		  oToolbar.appendChild(oRadio);
-		  oToolbar.appendChild(document.createTextNode(' report rows '));
-		  oRadio = document.createElement('input');
-		  oRadio.setAttribute('type','radio');
-		  oRadio.setAttribute('name','printout_selector');
 		  oRadio.setAttribute('value','individual_record');
 		  oRadio.setAttribute('checked','true');
           $(oRadio).click(fClick);
 		  oToolbar.appendChild(oRadio);
 		  oToolbar.appendChild(document.createTextNode(' individual record '));
+		  oRadio = document.createElement('input');
+		  oRadio.setAttribute('type','radio');
+		  oRadio.setAttribute('name','printout_selector');
+		  oRadio.setAttribute('value','report_rows');
+          $(oRadio).click(fClick);
+		  oToolbar.appendChild(oRadio);
+		  oToolbar.appendChild(document.createTextNode(' report rows '));
 		}
         
         var oToolbar=document.createElement('div');
