@@ -118,17 +118,17 @@
             ## row0 contains the internal field name
             ## row1 contains the display field
        		     <th #if($field.get(0) && $field.get(0)!="")internalName=$field.get(0)#end>
-        			      #if($field.get(1))
-  	              #if($field.get(0) && $field.get(0)!="")
-                  <div title="$field.get(1)">
- 			               #end
-  	              $field.get(1)
-  		              #if($field.get(0) && $field.get(0)!="")
-  		                </div>
-  		              #end
-      			        #else
-  		              &nbsp;
-        			      #end
+        		  #if($field.get(1))
+      	              #if($field.get(0) && $field.get(0)!="")
+                        <div title="$field.get(1)">
+     			      #end
+      	              $field.get(1)
+    	              #if($field.get(0) && $field.get(0)!="")
+    	                </div>
+					  #end
+  			      #else
+	                  &nbsp;
+    			  #end
       		      </th>
             #end
             <th class=trailing>&nbsp;</th>
