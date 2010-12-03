@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
-import org.apache.velocity.tools.view.servlet.VelocityViewServlet;
+import org.apache.velocity.tools.view.VelocityViewServlet;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.exception.ParseErrorException;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
@@ -43,7 +43,6 @@ import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.ViewMethodsInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
-import com.gtwm.pb.model.interfaces.WikiManagementInfo;
 import com.gtwm.pb.model.manageData.SessionData;
 import com.gtwm.pb.model.manageData.ViewMethods;
 import com.gtwm.pb.model.manageData.ViewTools;
@@ -58,7 +57,6 @@ import com.gtwm.pb.util.Enumerations.ResponseReturnType;
 import com.gtwm.pb.util.Enumerations.SessionContext;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.AppProperties;
-import com.gtwm.pb.integration.MediaWikiManagement;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -154,8 +152,7 @@ public final class AppController extends VelocityViewServlet {
 		logger.info("agileBase shut down");
 	}
 
-	public static List<FileItem> getMultipartItems(HttpServletRequest request)
-			throws ServletException {
+	public static List<FileItem> getMultipartItems(HttpServletRequest request) {
 		// Cache multipart form data so don't have to reparse it all the time
 		List<FileItem> multipartItems = new LinkedList<FileItem>();
 		if (FileUpload.isMultipartContent(new ServletRequestContext(request))) {
@@ -165,14 +162,14 @@ public final class AppController extends VelocityViewServlet {
 			try {
 				multipartItems = upload.parseRequest(request);
 			} catch (FileUploadException fuex) {
-				throw new ServletException("Error parsing multi-part form data", fuex);
+				logException(fuex, request, "Error parsing multi-part form data");
 			}
 		}
 		return multipartItems;
 	}
 
 	public static ResponseReturnType setReturnType(HttpServletRequest request,
-			HttpServletResponse response, List<FileItem> multipartItems) throws ServletException {
+			HttpServletResponse response, List<FileItem> multipartItems) {
 		// Optionally return text/xml content rather than the default text/html
 		// This can be useful when using AJAX interfaces with XMLHttpRequest in
 		// the browser
@@ -190,7 +187,7 @@ public final class AppController extends VelocityViewServlet {
 			} catch (IllegalArgumentException iaex) {
 				EnumSet<ResponseReturnType> allReturnTypes = EnumSet
 						.allOf(ResponseReturnType.class);
-				throw new ServletException("Unknown returntype specified: " + returnType
+				logException(iaex, request, "Unknown returntype specified: " + returnType
 						+ " - must be one of " + allReturnTypes);
 			}
 		}
@@ -553,7 +550,7 @@ public final class AppController extends VelocityViewServlet {
 	 * 3) Parses and returns the template requested by the UI
 	 */
 	public Template handleRequest(HttpServletRequest request, HttpServletResponse response,
-			Context context) throws ServletException, ObjectNotFoundException {
+			Context context) {
 		// Start timing request
 		long handleRequestStartTime = System.currentTimeMillis();
 		// Cache multipart form data so don't have to reparse it all the time
@@ -581,9 +578,14 @@ public final class AppController extends VelocityViewServlet {
 			}
 			// set up the wiki if the user is the first user logging in from a
 			// particular company
-			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
-					request);
-			WikiManagementInfo wikiManagement = this.databaseDefn.getWikiManagement(company);
+			CompanyInfo company = null;
+			try {
+				company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
+						request);
+			} catch (ObjectNotFoundException onfex) {
+				logException(onfex, request, "Company not found for user " + request.getRemoteUser());
+			}
+/*			WikiManagementInfo wikiManagement = this.databaseDefn.getWikiManagement(company);
 			if (wikiManagement == null) {
 				InitialContext initialContext = null;
 				DataSource wikiDataSource = null;
@@ -598,8 +600,7 @@ public final class AppController extends VelocityViewServlet {
 				wikiManagement = new MediaWikiManagement(company, wikiDataSource);
 				this.databaseDefn.addWikiManagement(company, wikiManagement);
 			}
-		}
-
+*/		}
 		String templateName = getParameter(request, "return", multipartItems);
 		try {
 			carryOutSessionActions(request, sessionData, this.databaseDefn, context, session,
@@ -610,7 +611,7 @@ public final class AppController extends VelocityViewServlet {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, pbex, multipartItems);
 			} else {
-				throw new ServletException("Error setting session data", pbex);
+				//throw new ServletException("Error setting session data", pbex);
 			}
 		} catch (NumberFormatException nfex) {
 			logException(nfex, request, "Non-numeric value specified for numeric parameter");
@@ -618,8 +619,8 @@ public final class AppController extends VelocityViewServlet {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, nfex, multipartItems);
 			} else {
-				throw new ServletException("Non-numeric value specified for numeric parameter in "
-						+ getRequestQuery(request), nfex);
+				//throw new ServletException("Non-numeric value specified for numeric parameter in "
+				//		+ getRequestQuery(request), nfex);
 			}
 		} catch (RuntimeException rtex) {
 			logException(rtex, request, "Runtime error setting session data");
@@ -627,7 +628,7 @@ public final class AppController extends VelocityViewServlet {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, rtex, multipartItems);
 			} else {
-				throw new ServletException("Runtime error setting session data", rtex);
+				//throw new ServletException("Runtime error setting session data", rtex);
 			}
 		} catch (SQLException sqlex) {
 			logException(sqlex, request, "SQL error setting session data");
@@ -680,7 +681,6 @@ public final class AppController extends VelocityViewServlet {
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, ex, multipartItems);
 		}
-
 		// Set any new values for the session variables after carrying out main
 		// app actions
 		EnumSet<SessionAction> sessionActions = EnumSet.allOf(SessionAction.class);
@@ -692,7 +692,7 @@ public final class AppController extends VelocityViewServlet {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, onfex, multipartItems);
 			} else {
-				throw new ServletException("Error setting session data", onfex);
+				//throw new ServletException("Error setting session data", onfex);
 			}
 		} catch (NumberFormatException nfex) {
 			logException(nfex, request, "Non-numeric value specified for numeric parameter");
@@ -700,8 +700,8 @@ public final class AppController extends VelocityViewServlet {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, nfex, multipartItems);
 			} else {
-				throw new ServletException("Non-numeric value specified for numeric parameter in "
-						+ getRequestQuery(request), nfex);
+				//throw new ServletException("Non-numeric value specified for numeric parameter in "
+				//		+ getRequestQuery(request), nfex);
 			}
 		} catch (MissingParametersException mpex) {
 			logException(mpex, request, "Error setting session data");
@@ -709,7 +709,7 @@ public final class AppController extends VelocityViewServlet {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, mpex, multipartItems);
 			} else {
-				throw new ServletException("Error setting session data", mpex);
+				//throw new ServletException("Error setting session data", mpex);
 			}
 		} catch (RuntimeException rtex) {
 			logException(rtex, request, "Runtime error setting session data");
@@ -717,7 +717,7 @@ public final class AppController extends VelocityViewServlet {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, rtex, multipartItems);
 			} else {
-				throw new ServletException("Runtime error setting session data", rtex);
+				//throw new ServletException("Runtime error setting session data", rtex);
 			}
 		} catch (Exception ex) {
 			logException(ex, request, "General error setting session data");
@@ -725,10 +725,9 @@ public final class AppController extends VelocityViewServlet {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, ex, multipartItems);
 			} else {
-				throw new ServletException("General error setting session data", ex);
+				//throw new ServletException("General error setting session data", ex);
 			}
 		}
-
 		// Log long request times - doesn't include template rendering time: see
 		// mergeTemplate for those
 		float secondsToHandleRequest = (System.currentTimeMillis() - handleRequestStartTime)
@@ -812,7 +811,7 @@ public final class AppController extends VelocityViewServlet {
 	private Template getUserInterfaceTemplate(HttpServletRequest request,
 			HttpServletResponse response, String templateName, Context context,
 			HttpSession session, SessionDataInfo sessionData, Exception exceptionCaught,
-			List<FileItem> multipartItems) throws ServletException {
+			List<FileItem> multipartItems) {
 		try {
 			boolean sessionValid = request.isRequestedSessionIdValid();
 			// Check user's logged in otherwise an exception will be thrown
@@ -831,13 +830,13 @@ public final class AppController extends VelocityViewServlet {
 			context.put("viewTools", new ViewTools(request, response, this.webAppRoot));
 		} catch (ObjectNotFoundException onfex) {
 			logException(onfex, request, "Error creating view methods object");
-			throw new ServletException("Error creating view methods object", onfex);
+			//throw new ServletException("Error creating view methods object", onfex);
 		}
 		// template ('return' parameter) *must* be specified
 		if (templateName == null) {
 			logger.error("No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
-			throw new ServletException(
-					"No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
+			//throw new ServletException(
+			//		"No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
 		}
 		templateName = templateName + ".vm";
 		Template template = null;
@@ -846,17 +845,17 @@ public final class AppController extends VelocityViewServlet {
 			template = getTemplate(templateName);
 		} catch (ResourceNotFoundException rnfe) {
 			logger.error("Template not found: " + rnfe);
-			throw new ServletException("Template not found", rnfe);
+			//throw new ServletException("Template not found", rnfe);
 		} catch (ParseErrorException pee) {
 			logger.error("Syntax error in the template: " + pee);
-			throw new ServletException("Syntax error in the template", pee);
-		} catch (AgileBaseException pbex) {
-			logger.error("Exception instantiating view: " + pbex);
-		} catch (SQLException sqlex) {
-			logger.error("Database error instantiating view: " + sqlex);
-		} catch (Exception ex) {
-			logger.error("General templating error in UI template " + templateName + ": " + ex);
-			throw new ServletException("General templating error", ex);
+			//throw new ServletException("Syntax error in the template", pee);
+		//} catch (AgileBaseException pbex) {
+		//	logger.error("Exception instantiating view: " + pbex);
+		//} catch (SQLException sqlex) {
+		//	logger.error("Database error instantiating view: " + sqlex);
+		//} catch (Exception ex) {
+		//	logger.error("General templating error in UI template " + templateName + ": " + ex);
+		//	throw new ServletException("General templating error", ex);
 		}
 		return template;
 	}
@@ -866,7 +865,7 @@ public final class AppController extends VelocityViewServlet {
 	 * redirect on error
 	 */
 	public void mergeTemplate(Template template, Context context, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws IOException {
 		long mergeTemplateStartTime = System.currentTimeMillis();
 		try {
 			super.mergeTemplate(template, context, response);
@@ -881,14 +880,11 @@ public final class AppController extends VelocityViewServlet {
 				Template errorTemplate = getTemplate(AppProperties.errorTemplateLocation);
 				super.mergeTemplate(errorTemplate, context, response);
 			} catch (ResourceNotFoundException rnfe) {
-				logger.error("Error template not found: " + rnfe);
-				throw new ServletException("Template not found", rnfe);
+				logException(rnfe, "Error template not found");
 			} catch (ParseErrorException pee) {
-				logger.error("Syntax error in the errortemplate: " + pee);
-				throw new ServletException("Syntax error in the template", pee);
+				logException(pee, "Syntax error in the template");
 			} catch (Exception exex) {
-				logger.error("General templating error: " + exex);
-				throw new ServletException("General templating error whilst reporting error", exex);
+				logException(exex, "General templating error whilst reporting error");
 			}
 		}
 		float secondsToHandleMerge = (System.currentTimeMillis() - mergeTemplateStartTime)
