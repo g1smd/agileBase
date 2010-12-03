@@ -64,13 +64,13 @@
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/swarmcache-1.0rc2.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/syndiag2.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/trove-1.0.2.jar"/>
-	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/velocity-1.6.2.jar"/>
-	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/velocity-tools-view-1.4.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/versioncheck.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/werken-xpath-0.9.4.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/xerces-2.6.2.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/commons-io-2.0.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/velocity-1.7.jar"/>
+	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/velocity-tools-view-2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
