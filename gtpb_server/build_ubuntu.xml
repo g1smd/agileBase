@@ -33,8 +33,8 @@
 			<classpath>
 				<pathelement path="${build.dir}" />
 				<!--Apache Velocity templating engine - used by servlet when serving web pages -->
-				<pathelement location="WEB-INF/lib/velocity-1.6.2.jar" />
-				<pathelement location="WEB-INF/lib/velocity-tools-view-1.4.jar" />
+				<pathelement location="WEB-INF/lib/velocity-1.7.jar" />
+				<pathelement location="WEB-INF/lib/velocity-tools-view-2.0.jar" />
 				<!--Unit testing framework -->
 				<pathelement location="WEB-INF/lib/junit.jar" />
 				<!--Apache tomcat jar -->
