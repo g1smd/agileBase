@@ -68,7 +68,7 @@ import org.grlea.log.SimpleLogger;
 
 /*
  * A note about templates:
- * Apache Velocity is the templating language, similar to Smarty for PHP
+ * Apache Velocity is the templating language, similar to Smarty for PHP.
  * Velocity templates are located in the folder specified by the
  * file.resource.loader.path
  * key in /velocity.properties
