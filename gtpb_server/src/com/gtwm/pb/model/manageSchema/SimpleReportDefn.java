@@ -1096,6 +1096,14 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private synchronized void setDistinctFieldsDirect(Set<BaseField> distinctFields) {
 		this.distinctFields = distinctFields;
 	}
+	
+	public void setCanBeCalendarSynced(boolean canBeCalendarSynced) {
+		this.canBeCalendarSynced = canBeCalendarSynced;
+	}
+	
+	public boolean getCanBeCalendarSynced() {
+		return this.canBeCalendarSynced;
+	}
 
 	@Transient
 	public synchronized SortedSet<TableInfo> getJoinedTables() throws CodingErrorException {
@@ -1167,6 +1175,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private Set<BaseField> distinctFields = new LinkedHashSet<BaseField>();
 
 	private Set<ReportSortInfo> sorts = new HashSet<ReportSortInfo>();
+	
+	private boolean canBeCalendarSynced = false;
 
 	private static final SimpleLogger logger = new SimpleLogger(SimpleReportDefn.class);
 }

@@ -96,22 +96,32 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	 * Return a specific summary identified by ID
 	 */
 	public ReportSummaryInfo getSavedReportSummary(long summaryId) throws ObjectNotFoundException;
-	
+
 	/**
 	 * Return any additional report summaries that have been named and saved
 	 */
 	public Set<ReportSummaryInfo> getSavedReportSummaries();
-	
+
 	/**
 	 * Add a new saved summary to the report
 	 */
 	public void saveReportSummary(ReportSummaryInfo reportSummary);
-	
+
 	public void removeSavedReportSummary(ReportSummaryInfo reportSummary);
-	
+
 	public int getRowCount();
 
 	public void setRowCount(int rowCountEstimate);
+
+	public void setCanBeCalendarSynced(boolean canBeCalendarSynced);
+
+	/**
+	 * Return true if this report can be synced to a calendar supporting iCal
+	 * format, e.g. Google Calendar. Note there is a security consideration -
+	 * the iCal export won't be password protected - anyone who knows the
+	 * calendar URL will be able to view the calendar
+	 */
+	public boolean getCanBeCalendarSynced();
 
 	/**
 	 * Return whether the row count is definitive or an estimate based on a

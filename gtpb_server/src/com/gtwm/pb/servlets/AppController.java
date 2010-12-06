@@ -57,6 +57,7 @@ import com.gtwm.pb.util.Enumerations.SessionAction;
 import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.ResponseReturnType;
 import com.gtwm.pb.util.Enumerations.SessionContext;
+import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.AppProperties;
 import org.apache.commons.fileupload.FileUpload;
@@ -309,7 +310,8 @@ public final class AppController extends VelocityViewServlet {
 			// Store so exception handling has access to the action carried out
 			appActionName.setLength(0);
 			appActionName.append(appAction.toString());
-			if (getParameter(request, appAction.toString().toLowerCase(Locale.UK), multipartItems) != null) {
+			String appActionValue = getParameter(request, appAction.toString().toLowerCase(Locale.UK), multipartItems);
+			if (appActionValue != null) {
 				sessionData.setLastAppAction(appAction);
 				switch (appAction) {
 				// Most commonly used actions at the start
@@ -505,6 +507,10 @@ public final class AppController extends VelocityViewServlet {
 					break;
 				case SET_USER_DEFAULT_REPORT:
 					ServletSchemaMethods.setUserDefaultReport(sessionData, request, databaseDefn);
+					break;
+				case SET_CALENDAR_SYNCABLE:
+					boolean calendarSyncable = Helpers.valueRepresentsBooleanTrue(appActionValue);
+					ServletSchemaMethods.setCalendarSyncable(sessionData, request, databaseDefn, calendarSyncable);
 					break;
 				}
 			}
