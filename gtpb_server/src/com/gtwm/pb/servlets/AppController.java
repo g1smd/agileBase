@@ -587,23 +587,22 @@ public final class AppController extends VelocityViewServlet {
 				logException(onfex, request,
 						"Company not found for user " + request.getRemoteUser());
 			}
-			/*
-			 * WikiManagementInfo wikiManagement =
-			 * this.databaseDefn.getWikiManagement(company); if (wikiManagement
-			 * == null) { InitialContext initialContext = null; DataSource
-			 * wikiDataSource = null; try { initialContext = new
-			 * InitialContext(); String dataSourceUrl =
-			 * "java:comp/env/jdbc/wiki" +
-			 * company.getCompanyName().toLowerCase().replaceAll("\\W", "");
-			 * wikiDataSource = (DataSource)
-			 * initialContext.lookup(dataSourceUrl); } catch (NamingException
-			 * nex) { wikiDataSource = null; } wikiManagement = new
-			 * MediaWikiManagement(company, wikiDataSource);
-			 * this.databaseDefn.addWikiManagement(company, wikiManagement); }
-			 */
-			// Wiki integration currently inactive - add a null wiki
-			WikiManagementInfo wikiManagement = new MediaWikiManagement(company, null);
-			this.databaseDefn.addWikiManagement(company, wikiManagement);
+
+			WikiManagementInfo wikiManagement = this.databaseDefn.getWikiManagement(company);
+			if (wikiManagement == null) {
+				InitialContext initialContext = null;
+				DataSource wikiDataSource = null;
+				try {
+					initialContext = new InitialContext();
+					String dataSourceUrl = "java:comp/env/jdbc/wiki"
+							+ company.getCompanyName().toLowerCase().replaceAll("\\W", "");
+					wikiDataSource = (DataSource) initialContext.lookup(dataSourceUrl);
+				} catch (NamingException nex) {
+					wikiDataSource = null;
+				}
+				wikiManagement = new MediaWikiManagement(company, wikiDataSource);
+				this.databaseDefn.addWikiManagement(company, wikiManagement);
+			}
 		}
 		String templateName = getParameter(request, "return", multipartItems);
 		try {
