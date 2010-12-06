@@ -17,6 +17,7 @@
 ##
 #parse('gui/administration/reports/buttons/reports.vm')<br>
 #parse('gui/administration/reports/buttons/usage.vm')<br>
+#parse('gui/administration/reports/buttons/sync.vm')
 
 ## Don't show table privileges in report admin, it's confusing
 ##if($view.loggedInUserAllowedTo('ADMINISTRATE'))

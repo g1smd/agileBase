@@ -15,15 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-## session user will be used often
-#set($sessionUser = $sessionData.getUser())
+Allowing calendar synchronisation will allow users to export information in this report to Google Calendar (or other calendars). Once exported, data is no longer password protected so please be aware of any security considerations<p>
+#set($report = $sessionData.getReport())
+#set($calendarSyncable = $report.getCalendarSyncable())
+<input type="checkbox" name="set_calendar_syncable" value="true" onclick="new fChange(this)" #if($calendarSyncable)checked #end> Allow calendar synchronization
 
-#parse('gui/administration/reports/option_sets/report_details.vm')
-#parse('gui/administration/reports/option_sets/report_usage.vm')
-#parse('gui/administration/reports/option_sets/report_sync.vm')
-
-## Privileges are per table not per report so they shouldn't be here
-###if($view.loggedInUserAllowedTo('ADMINISTRATE'))
-## 	    #parse('gui/administration/reports/option_sets/user_privileges.vm')
-##		#parse('gui/administration/reports/option_sets/role_privileges.vm')
-###end

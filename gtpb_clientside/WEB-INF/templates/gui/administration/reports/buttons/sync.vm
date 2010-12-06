@@ -15,15 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-## session user will be used often
-#set($sessionUser = $sessionData.getUser())
-
-#parse('gui/administration/reports/option_sets/report_details.vm')
-#parse('gui/administration/reports/option_sets/report_usage.vm')
-#parse('gui/administration/reports/option_sets/report_sync.vm')
-
-## Privileges are per table not per report so they shouldn't be here
-###if($view.loggedInUserAllowedTo('ADMINISTRATE'))
-## 	    #parse('gui/administration/reports/option_sets/user_privileges.vm')
-##		#parse('gui/administration/reports/option_sets/role_privileges.vm')
-###end
+#set($button_img='resources/usage/sync.png')
+#set($click="fShowOption('options_wrapper_$options_wrapper_no','report_sync')")
+#set($caption='Sync')
+#set($id='button_report_sync')
+#parse('gui/resources/button.vm')
