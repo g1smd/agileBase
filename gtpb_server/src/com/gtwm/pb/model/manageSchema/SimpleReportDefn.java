@@ -1097,12 +1097,12 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		this.distinctFields = distinctFields;
 	}
 	
-	public void setCalendarSyncable(boolean canBeCalendarSynced) {
-		this.canBeCalendarSynced = canBeCalendarSynced;
+	public void setCalendarSyncable(boolean calendarSyncable) {
+		this.calendarSyncable = calendarSyncable;
 	}
 	
 	public boolean getCalendarSyncable() {
-		return this.canBeCalendarSynced;
+		return this.calendarSyncable;
 	}
 
 	@Transient
@@ -1176,7 +1176,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 
 	private Set<ReportSortInfo> sorts = new HashSet<ReportSortInfo>();
 	
-	private boolean canBeCalendarSynced = false;
+	private boolean calendarSyncable = false;
 
 	private static final SimpleLogger logger = new SimpleLogger(SimpleReportDefn.class);
 }
