@@ -2321,6 +2321,7 @@ public final class ServletSchemaMethods {
 		}
 	}
 	
+	//TODO: authentication for this method
 	public synchronized static void hideReportFromUser(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
@@ -2342,6 +2343,7 @@ public final class ServletSchemaMethods {
 		}
 	}
 
+	//TODO: authentication for this method
 	public synchronized static void unhideReportFromUser(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
@@ -2358,6 +2360,25 @@ public final class ServletSchemaMethods {
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
 			throw new CantDoThatException("report un-hiding failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
+	public synchronized static void setCalendarSyncable(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn, boolean calendarSyncable) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, ServletUtilMethods.USE_SESSION);
+		if (!databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, report.getParentTable())) {
+			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA);
+		}
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(report);
+			report.setCanBeCalendarSynced(calendarSyncable);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch(HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("setting calendar syncable failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
