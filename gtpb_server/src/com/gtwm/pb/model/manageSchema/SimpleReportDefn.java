@@ -1097,11 +1097,11 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		this.distinctFields = distinctFields;
 	}
 	
-	public void setCalendarSyncable(boolean calendarSyncable) {
+	public void setCalendarSyncable(Boolean calendarSyncable) {
 		this.calendarSyncable = calendarSyncable;
 	}
 	
-	public boolean getCalendarSyncable() {
+	public Boolean getCalendarSyncable() {
 		return this.calendarSyncable;
 	}
 
