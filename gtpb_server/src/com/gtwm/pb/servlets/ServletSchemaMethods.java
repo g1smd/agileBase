@@ -2374,7 +2374,7 @@ public final class ServletSchemaMethods {
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(report);
-			report.setCanBeCalendarSynced(calendarSyncable);
+			report.setCalendarSyncable(calendarSyncable);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch(HibernateException hex) {
 			rollbackConnections(null);

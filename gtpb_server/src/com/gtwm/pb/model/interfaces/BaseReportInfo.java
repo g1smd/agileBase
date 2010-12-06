@@ -113,7 +113,7 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 
 	public void setRowCount(int rowCountEstimate);
 
-	public void setCanBeCalendarSynced(boolean canBeCalendarSynced);
+	public void setCalendarSyncable(boolean calendarSyncable);
 
 	/**
 	 * Return true if this report can be synced to a calendar supporting iCal
@@ -121,7 +121,7 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	 * the iCal export won't be password protected - anyone who knows the
 	 * calendar URL will be able to view the calendar
 	 */
-	public boolean getCanBeCalendarSynced();
+	public boolean getCalendarSyncable();
 
 	/**
 	 * Return whether the row count is definitive or an estimate based on a
