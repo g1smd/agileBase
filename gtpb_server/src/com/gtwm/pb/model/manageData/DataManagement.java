@@ -1498,7 +1498,7 @@ public final class DataManagement implements DataManagementInfo {
 	private ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo reportDefn,
 			Connection conn, boolean updateCacheIfObsolete) throws SQLException {
 		// If company specified: use the cache to look up report data. If the report data isn't cached, cache it now
-		// Additionaly, if updateCacheIfObsolete specified, update the cache if it gets out of date
+		// Additionally, if updateCacheIfObsolete specified, update the cache if it gets out of date
 		ReportDataInfo reportData;
 		boolean useCaching = (company != null);
 		if (this.cachedReportDatas.containsKey(reportDefn)) {
