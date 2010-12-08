@@ -419,27 +419,27 @@ function uploadFile(fileInputElement) {
 
 /* for date fields */
 function fKeyupEvent(inputElement) {
-	  // update the relevant value in the wrapper
-	  var jqWrapper=$(inputElement.closest("div"));
-	  var sAttribute=$(inputElement).attr('wrapperAttribute');
-	  jqWrapper.attr(sAttribute,$(inputElement).val());
-	  var globalEdit = jqWrapper.attr("global_edit");
-	  fSetValueAtt(jqWrapper[0]);
-	  if(globalEdit != "true") {
-		top.oBuffer.writeBuffer(jqWrapper[0]);
-	  }
-	}
+  // update the relevant value in the wrapper
+  var jqWrapper=$(inputElement.closest("div"));
+  var sAttribute=$(inputElement).attr('wrapperAttribute');
+  jqWrapper.attr(sAttribute,$(inputElement).val());
+  var globalEdit = jqWrapper.attr("global_edit");
+  fSetValueAtt(jqWrapper[0]);
+  if(globalEdit != "true") {
+	top.oBuffer.writeBuffer(jqWrapper[0]);
+  }
+}
 
 function fChangeEvent(inputElement) {
-	  // update the relevant value in the wrapper
-	  var jqWrapper=$(inputElement.closest("div"));
-	  var sAttribute=$(inputElement).attr('wrapperAttribute');
-	  jqWrapper.attr(sAttribute,$(inputElement).val());
-	  var globalEdit = jqWrapper.attr("global_edit");
-	  fSetValueAtt(jqWrapper[0]);
-	  if(globalEdit != "true") {
-		new fChange(jqWrapper[0]);
-	  }
+  // update the relevant value in the wrapper
+  var jqWrapper=$(inputElement.closest("div"));
+  var sAttribute=$(inputElement).attr('wrapperAttribute');
+  jqWrapper.attr(sAttribute,$(inputElement).val());
+  var globalEdit = jqWrapper.attr("global_edit");
+  fSetValueAtt(jqWrapper[0]);
+  if(globalEdit != "true") {
+	new fChange(jqWrapper[0]);
+  }
 }
 
 function fUpdateGlobalDate(oButton) {
@@ -452,7 +452,6 @@ function fUpdateGlobalDate(oButton) {
       }
     }
   }
-  
   var field = jQuery(oButton).closest('div');
   var oField=field;
   var aPostVars=new Array();
@@ -493,7 +492,7 @@ function fSetValueAtt(oWrapperDiv) {
       yearValue = "200" + yearValue;
     } else if (yearValue.length == 2) {
       yearValue = "20" + yearValue;
-    } else 
+    } else {
       yearValue = fLPad(yearValue,4);
     }
     sValue+=yearValue;
