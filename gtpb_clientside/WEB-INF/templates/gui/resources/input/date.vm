@@ -46,7 +46,6 @@
   #set($seconds=$fieldValue.get($CONST_SECOND))##
 #end##
 #set($dateResolution = $field.getDateResolution())##
-Field $field date resolution is $dateResolution
 
 #if($globalEdit) #set($non_xml_update=true) #end
 
@@ -190,7 +189,8 @@ Field $field date resolution is $dateResolution
 	      
 	      // finds the last one 
       var oHidden=document.getElementsByName('$field.getInternalFieldName()')[document.getElementsByName('$field.getInternalFieldName()').length-1];
-	      var oWrapperDiv=document.createElement('DIV');
+	      alert("Found hidden date field " + jQuery(oHidden).attr('name'));
+		  var oWrapperDiv=document.createElement('DIV');
 	      oHidden.parentNode.replaceChild(oWrapperDiv,oHidden);
 	      oWrapperDiv.setAttribute('value','none set');
 	      $(oWrapperDiv).addClass('date');
