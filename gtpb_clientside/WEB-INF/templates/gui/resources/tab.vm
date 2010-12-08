@@ -63,13 +63,13 @@
 <div class="tab_content"
   #if ($sessionData.getCustomVariable($tabset_id)=='true')
     	#set($sTI='_tabindex')
-  	  #if ($sessionData.getCustomVariable("$tabset_id$sTI")=="$velocityCount")
+  	  #if ($sessionData.getCustomVariable("$tabset_id$sTI")=="$foreach.count")
   		    id="selected_tab"
   	  #end
-  #elseif ($velocityCount==1)
+  #elseif ($foreach.count==1)
     id="selected_tab"
   #end 
-  tabindex="$velocityCount">
+  tabindex="$foreach.count">
   <div id="html_content" class="content">
     ##tab html content
     #parse($tabSource)

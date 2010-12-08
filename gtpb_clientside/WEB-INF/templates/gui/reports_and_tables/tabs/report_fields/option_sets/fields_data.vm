@@ -72,7 +72,7 @@
 	      #set($numReportFields = $reportFields.size())
 		      #foreach ($field in $reportFields)
 		        #set($baseField = $field.getBaseField())
-			        <tr #if($velocityCount%2!=0) class="rowa" #else class="rowb" #end id="$field.getBaseField().getInternalFieldName()" currentFieldIndex="$field.getFieldIndex()">
+			        <tr #if($foreach.count%2!=0) class="rowa" #else class="rowb" #end id="$field.getBaseField().getInternalFieldName()" currentFieldIndex="$field.getFieldIndex()">
         			  <td class="leading">&nbsp;</td>
     			      <td>
 					            ##Source = the table or report that the field was taken from

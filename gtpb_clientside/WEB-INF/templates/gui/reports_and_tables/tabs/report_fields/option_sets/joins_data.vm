@@ -68,7 +68,7 @@
 	<tbody>
 	 #set($joins = $report.getJoins())
 		#foreach ($join in $joins)
-			<tr #if($velocityCount%2!=0) class=rowa #else class=rowb #end>
+			<tr #if($foreach.count%2!=0) class=rowa #else class=rowb #end>
     			<td class=leading>&nbsp;</td>
     			<td>
 					##Left = the table or report that the next field was taken from
@@ -105,7 +105,7 @@ $join.getRightReportField().getFieldName()
 					#end
 			</td>
 			<td class=trailing>
-			 #if($velocityCount == $joins.size())
+			 #if($foreach.count == $joins.size())
 				<input type=button value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_join_from_report=true gtpb_internaljoinname="$join.getInternalJoinName()">
 			 #else &nbsp;
 			 #end

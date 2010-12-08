@@ -64,11 +64,11 @@
     		#set($section = $previousSection)
     	#end
     	## If first module doesn't have a section name, set it to the company name
-    	#if(($velocityCount == 1) && ($section == ""))
+    	#if(($foreach.count == 1) && ($section == ""))
     		#set($section = "$company")
     	#end
     	#if($section != $previousSection)
-          #if($velocityCount > 1) </li></ul> #end
+          #if($foreach.count > 1) </li></ul> #end
     	  <li><h1><span>$section</span></h1>
     	  <ul>
         #end

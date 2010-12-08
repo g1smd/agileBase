@@ -146,7 +146,7 @@
 	  #set($point = [])
 	  #set($wedgeName = "")
 	  #foreach($grouping in $groupings)
-		#if($velocityCount == 1)
+		#if($foreach.count == 1)
 		  #set($wedgeName = "$summaryRow.getGroupingValue($grouping)")
 		#else
 		  #set($wedgeName = "$wedgeName | $summaryRow.getGroupingValue($grouping)")
@@ -165,7 +165,7 @@
     #end
   #end
   #set($seriesString = "$seriesString $seriesData }")
-  #if($velocityCount < $aggregateFunctions.size())
+  #if($foreach.count < $aggregateFunctions.size())
 	#set($seriesString = "$seriesString, ")
   #end
 #end

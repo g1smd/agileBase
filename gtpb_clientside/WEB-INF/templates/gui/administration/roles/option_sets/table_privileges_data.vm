@@ -16,11 +16,11 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #macro(radio_role $caption $privilege $pbfn)
-  <label FOR="$table.getInternalTableName()${privilege}setrole$velocityCount">
+  <label FOR="$table.getInternalTableName()${privilege}setrole$foreach.count">
     <input type=radio 
-     id="$table.getInternalTableName()${privilege}setrole$velocityCount"
-     ##name="$table.getInternalTableName()setrole$velocityCount" 
-     name="rolesmacrosetrole$velocityCount"
+     id="$table.getInternalTableName()${privilege}setrole$foreach.count"
+     ##name="$table.getInternalTableName()setrole$foreach.count" 
+     name="rolesmacrosetrole$foreach.count"
 	 value="$privilege"
      gtpb_internalrolename="$role.getInternalRoleName()"
      gtpb_internaltablename="$table.getInternalTableName()"

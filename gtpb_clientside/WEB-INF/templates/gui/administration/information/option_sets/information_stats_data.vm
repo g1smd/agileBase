@@ -78,7 +78,7 @@ Report usage in each module, along with with the users of each report (main user
   <table cellspacing=0 cellpadding=0 border=0 id=reportData><tbody>
   #set($reportViewStats = $moduleUsageStats.getUserReportViewStats())
   #foreach($report in $reportViewStats.keySet())
-	<tr #if($velocityCount%2!=0) class=rowa #else class=rowb #end>
+	<tr #if($foreach.count %2 !=0) class=rowa #else class=rowb #end>
 	  <td class=leading>&nbsp;</td>
 	    <td width="200px">$report</td>
 		<td>
