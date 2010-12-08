@@ -417,6 +417,102 @@ function uploadFile(fileInputElement) {
   fileInputElement.form.submit();
 }
 
+/* for date fields */
+function fKeyupEvent(inputElement) {
+	  // update the relevant value in the wrapper
+	  var jqWrapper=$(inputElement.closest("div"));
+	  var sAttribute=$(inputElement).attr('wrapperAttribute');
+	  jqWrapper.attr(sAttribute,$(inputElement).val());
+	  var globalEdit = jqWrapper.attr("global_edit");
+	  fSetValueAtt(jqWrapper[0]);
+	  if(globalEdit != "true") {
+		top.oBuffer.writeBuffer(jqWrapper[0]);
+	  }
+	}
+
+function fChangeEvent(inputElement) {
+	  // update the relevant value in the wrapper
+	  var jqWrapper=$(inputElement.closest("div"));
+	  var sAttribute=$(inputElement).attr('wrapperAttribute');
+	  jqWrapper.attr(sAttribute,$(inputElement).val());
+	  var globalEdit = jqWrapper.attr("global_edit");
+	  fSetValueAtt(jqWrapper[0]);
+	  if(globalEdit != "true") {
+		new fChange(jqWrapper[0]);
+	  }
+}
+
+function fUpdateGlobalDate(oButton) {
+  function fResponse(sResponseText, sResponseXML) {
+    if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
+      var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
+      var sFieldValue=oField.getAttribute('e_value');
+      if(confirm('Are you sure that you want to change the value to '+sFieldValue+'?\nThis will update '+sRowsToChange+' records')) {
+		new fChange(oField);
+      }
+    }
+  }
+  
+  var field = jQuery(oButton).closest('div');
+  var oField=field;
+  var aPostVars=new Array();
+  aPostVars['returntype']='xml'; 
+  aPostVars['return']='gui/resources/sessionReportInfo';
+  var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);
+}
+
+function fSetValueAtt(oWrapperDiv) {
+  function fLPad(sString, iLength) {
+    if(sString.length>=iLength) return sString;
+	while(sString.length<iLength) sString='0'+sString;
+	return sString;
+  }
+  var jqWrapperDiv = $(oWrapperDiv);
+  // Java Calendar constants
+  var constMonth = 2;
+  var constDayOfMonth = 5;
+  var constHourOfDay = 11;
+  var constMinute = 12;
+  var constSecond = 13;
+  var dateResolution = parseInt(jqWrapperDiv.attr("date_resolution"));
+  var internalFieldName = jqWrapperDiv.attr('name');
+  var aMonths=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+  with (oWrapperDiv) {
+	var sValue='';
+	if(dateResolution >= constDayOfMonth) {
+      if (getAttribute('gtpb_' + internalFieldName + '_days')==0) return;
+      sValue+=fLPad(getAttribute('gtpb_' + internalFieldName + '_days'),2)+' ';
+	}
+	if(dateResolution >= constMonth) {
+      if (getAttribute('gtpb_' + internalFieldName + '_months')==0) return;
+      sValue+=aMonths[getAttribute('gtpb_' + internalFieldName + '_months')-1].substr(0,3)+' ';
+	}
+    if(isNaN(getAttribute('gtpb_' + internalFieldName + '_years'))) return;
+    var yearValue = getAttribute('gtpb_' + internalFieldName + '_years';
+    if(yearValue.length == 1) {
+      yearValue = "200" + yearValue;
+    } else if (yearValue.length == 2) {
+      yearValue = "20" + yearValue;
+    } else 
+      yearValue = fLPad(yearValue,4);
+    }
+    sValue+=yearValue;
+	if(dateResolution >= constHourOfDay) {
+      if(isNaN(getAttribute('gtpb_' + internalFieldName + '_hours'))) return;
+	  sValue+=' '+fLPad(getAttribute('gtpb_' + internalFieldName + '_hours'),2);
+	}
+	if(dateResolution >= constMinute) {
+      if(isNaN(getAttribute('gtpb_' + internalFieldName + '_minutes'))) return;		
+      sValue+=':'+fLPad(getAttribute('gtpb_' + internalFieldName + '_minutes'),2);
+	}
+	if(dateResolution >= constSecond) {
+	  if(isNaN(getAttribute('gtpb_' + internalFieldName + '_seconds'))) return;
+	  sValue+=':'+fLPad(getAttribute('gtpb_' + internalFieldName + '_seconds'),2);
+	}
+	setAttribute('e_value',sValue);
+  } // end with oWrapperDiv
+}
+
 /* 
  * Management tabs functions 
  */
