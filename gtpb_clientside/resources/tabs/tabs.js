@@ -418,7 +418,7 @@ function uploadFile(fileInputElement) {
 }
 
 /* for date fields */
-function fKeyupEvent(inputElement) {
+function fKeyUpEvent(inputElement) {
   // update the relevant value in the wrapper
   var jqWrapper=$(inputElement.closest("div"));
   var sAttribute=$(inputElement).attr('wrapperAttribute');
