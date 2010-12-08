@@ -488,7 +488,7 @@ function fSetValueAtt(oWrapperDiv) {
       sValue+=aMonths[getAttribute('gtpb_' + internalFieldName + '_months')-1].substr(0,3)+' ';
 	}
     if(isNaN(getAttribute('gtpb_' + internalFieldName + '_years'))) return;
-    var yearValue = getAttribute('gtpb_' + internalFieldName + '_years';
+    var yearValue = getAttribute('gtpb_' + internalFieldName + '_years');
     if(yearValue.length == 1) {
       yearValue = "200" + yearValue;
     } else if (yearValue.length == 2) {
