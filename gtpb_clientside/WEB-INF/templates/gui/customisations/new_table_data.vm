@@ -1,5 +1,7 @@
 #set($SQ="'")
-#set($sessionTable=$sessionData.getTable())
+#if(!$sessionTable)
+  #set($sessionTable=$sessionData.getTable())
+#end
 #set($updateAsType = false)
 #set($customAction = true)
 
@@ -28,24 +30,23 @@
 
 <form name="data_form" method="post" action="AppController.servlet" onsubmit="return false">
   <input type="hidden" name="save_new_record" value="true">
-        		#if($view.getWhetherExceptionOccurred())
-        		    #parse('report_error.vm')
-          		#end
-		
+  #if($view.getWhetherExceptionOccurred())
+    #parse('report_error.vm')
+  #end	
   ## copied from gui/reports_and_tables/edit.vm
   <table cellspacing="0" cellpadding="0" border="0" id="reportData">
     <tr class="first">
-    			  <td class="leading">&nbsp;</td>
-			      <td>&nbsp;</td>
-			      <td>&nbsp;</td>
-			      <td class="trailing">&nbsp;</td>
-			    </tr>
-		      #set($fields = $sessionTable.getFields())
-			      #foreach($field in $fields)
-					    ## Skip hidden, file and relation fields in the wizard
-				        #if(($field.getHidden() == false) && ($field.getClass().getSimpleName() != "FileFieldDefn") && ($field.getClass().getSimpleName() != "RelationFieldDefn"))
+      <td class="leading">&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td class="trailing">&nbsp;</td>
+	</tr>
+	#set($fields = $sessionTable.getFields())
+	  #foreach($field in $fields)
+		## Skip hidden, file and relation fields in the wizard
+		#if(($field.getHidden() == false) && ($field.getClass().getSimpleName() != "FileFieldDefn") && ($field.getClass().getSimpleName() != "RelationFieldDefn"))
           #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-						#end
+		#end
 ## If we come across a relation, add it's value to the wizard caption
 #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
   #set($relatedField=$field.getRelatedField())##
@@ -56,18 +57,18 @@
   #end
 #end
 
-			      #end ## end loop through fields
-			      <tr class="last">
-			        <td class="leading">&nbsp;</td>
-			        <td>&nbsp;</td>
-			        <td>&nbsp;</td>
-			        <td class="trailing">&nbsp;</td>
-			      </tr>
+	#end ## end loop through fields
+	<tr class="last">
+	  <td class="leading">&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td class="trailing">&nbsp;</td>
+	</tr>
   </table>				
 </form>
 	
 #else ## user doesn't have edit privileges
   Error:<p>
   <img src="resources/icons/warning.png" style="align:left; vertical-align:middle" /> 
-  You haven't got sufficient privileges to create a new <i>$sessionTable</i> record.
+  You haven't got sufficient privileges to create/edit a <i>$sessionTable</i> record.
 #end

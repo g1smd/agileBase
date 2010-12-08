@@ -46,6 +46,7 @@
   #set($seconds=$fieldValue.get($CONST_SECOND))##
 #end##
 #set($dateResolution = $field.getDateResolution())##
+Field $field date resolution is $dateResolution
 
 #if($globalEdit) #set($non_xml_update=true) #end
 
@@ -72,7 +73,7 @@
     }    
   </style>
   
-  	<input type="hidden" name="$field.getInternalFieldName()" value="$field.formatCalendar($fieldValue)" #if(! $globalEdit) gtpb_update_record #end gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_$field.getInternalFieldName()_days="$days" gtpb_$field.getInternalFieldName()_months="$months" gtpb_$field.getInternalFieldName()_years="$years" gtpb_$field.getInternalFieldName()_hours="$hours" gtpb_$field.getInternalFieldName()_minutes="$minutes" gtpb_$field.getInternalFieldName()_seconds="$seconds">
+  <input type="hidden" name="$field.getInternalFieldName()" value="$field.formatCalendar($fieldValue)" #if(! $globalEdit) gtpb_update_record #end gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_$field.getInternalFieldName()_days="$days" gtpb_$field.getInternalFieldName()_months="$months" gtpb_$field.getInternalFieldName()_years="$years" gtpb_$field.getInternalFieldName()_hours="$hours" gtpb_$field.getInternalFieldName()_minutes="$minutes" gtpb_$field.getInternalFieldName()_seconds="$seconds">
   <script language="Javascript">
 	    
 	    function fCreateDateObject() {	 
