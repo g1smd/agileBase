@@ -98,7 +98,7 @@
   #if($dateResolution >= $CONST_MINUTE) 
     : <input type="text" maxlength="2" size="2" maxKeyCount="2" value="$minutes" wrapperAttribute="gtpb_$field.getInternalFieldName()_minutes" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
   #elseif($dateResolution == $CONST_HOUR_OF_DAY)
-	hours
+	hundred hours
   #end
   #if($dateResolution >= $CONST_SECOND) 
     : <input type="text" maxlength="2" size="2" maxKeyCount="2" value="$seconds" wrapperAttribute="gtpb_$field.getInternalFieldName()_seconds" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
