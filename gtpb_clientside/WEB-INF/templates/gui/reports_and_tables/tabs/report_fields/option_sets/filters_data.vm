@@ -58,7 +58,7 @@
 	<tbody>
 		#foreach ($filter in $report.getFilters())
 			#set($filterType = $filter.getFilterType())
-			<tr #if($velocityCount%2!=0) class=rowa #else class=rowb #end>
+			<tr #if($foreach.count%2!=0) class=rowa #else class=rowb #end>
     			<td class=leading>&nbsp;</td>
     			<td>#if($filter.isFilterFieldFromReport())
     			      report: $filter.getFilterReportField().getParentReport()
@@ -135,7 +135,7 @@
 			
 			<TD height=20 id=filterOptionsSets>
 				#foreach($filterType in $filterTypeDescriptors)
-					<DIV id=filterOptionsSet desc="$filterType.getFilterType().getDescription()"> ##  #if($velocityCount==1)selected="true"#end
+					<DIV id=filterOptionsSet desc="$filterType.getFilterType().getDescription()"> ##  #if($foreach.count==1)selected="true"#end
 						#foreach($filterOption in $filterType.getOptions())
 							#if($filterOption.getClass().getSimpleName()=="BooleanFieldDescriptorOption")
 								<INPUT type=checkbox name="$filterOption.getFormInputName()" value="1" id="$filterOption.getFormInputName()1">

@@ -119,7 +119,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
       #if($row.size() > 3)
         #set($rowColours = $row.get(3))
         #foreach($cell in $thisValues)
-          #set($cellNumber = $velocityCount - 1)
+          #set($cellNumber = $foreach.count - 1)
           #set($colour = $rowColours.get($cellNumber))
 		  #set($rightAlign = false)
 		  #if($cellNumber < $numDisplayFields)
@@ -142,7 +142,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #end
       #else ## no colour information present
         #foreach($cell in $thisValues)
-          #set($cellNumber = $velocityCount - 1)
+          #set($cellNumber = $foreach.count - 1)
           #set($cellContentLength=$cell.length() / 2)
           <td #if($cellContentLength<=10)nowrap="true" #end>
             <div style="min-width:${cellContentLength}">

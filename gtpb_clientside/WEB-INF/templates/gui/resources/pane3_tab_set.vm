@@ -235,7 +235,7 @@
 		## Create tab interface		
 		<ul class="tab-list">
 		#foreach($tab in $tabs)
-    		#if($velocityCount == $currentTab)
+    		#if($foreach.count == $currentTab)
     			<li class="current">
     		#else
     			<li>

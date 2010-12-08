@@ -35,7 +35,7 @@
 		   ## Unless opening tabs doesn't work (e.g. due to popup blocker)
 		   ## In which case open agileBase with document.location
 	       #foreach($tabAddress in $tabAddresses)
-		     var tab$velocityCount = window.open('$tabAddress','tab$velocityCount','');
+		     var tab$foreach.count = window.open('$tabAddress','tab$foreach.count','');
 	       #end
 		   document.location='AppController.servlet?$app_params';
 		   window.focus();

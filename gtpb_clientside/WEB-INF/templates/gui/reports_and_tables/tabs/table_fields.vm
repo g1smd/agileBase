@@ -76,7 +76,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 		  #set($category = $field.getFieldCategory().getDescription())
 	      #if($field.getHidden() == false)
 			#set($class="rowa")
-			#if($velocityCount%2==0)
+			#if($foreach.count%2==0)
 				#set($class="rowb")
 			#end
 			#if($field.equals($sessionTable.getPrimaryKey())) 

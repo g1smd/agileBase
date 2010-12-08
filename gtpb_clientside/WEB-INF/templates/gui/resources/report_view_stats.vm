@@ -10,7 +10,7 @@ Used by $userStats.size() people<br>
 Top users: 
 #foreach($userStat in $userStats)
 	$userStat.getUser()
-	#if($velocityCount > 2)
+	#if($foreach.count > 2)
 		#break
 	#end
 	,
