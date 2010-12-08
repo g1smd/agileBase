@@ -73,6 +73,7 @@
   </style>
   
   <input type="hidden" name="$field.getInternalFieldName()" value="$field.formatCalendar($fieldValue)" #if(! $globalEdit) gtpb_update_record #end gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_$field.getInternalFieldName()_days="$days" gtpb_$field.getInternalFieldName()_months="$months" gtpb_$field.getInternalFieldName()_years="$years" gtpb_$field.getInternalFieldName()_hours="$hours" gtpb_$field.getInternalFieldName()_minutes="$minutes" gtpb_$field.getInternalFieldName()_seconds="$seconds">
+  ## date_js here
   <script language="Javascript">
 	    
 	    function fCreateDateObject() {	 
@@ -81,7 +82,8 @@
 	          for (var i=0;i<oDropdown.options.length;i++)
 	            if(oDropdown.options[i].value==sValue) oDropdown.selectedIndex=i;
 	        }
-	        	with(oWrapperDiv) {
+			
+	        with(oWrapperDiv) {
 	          	#if($dateResolution >= $CONST_DAY_OF_MONTH)
 	            if (getAttribute('gtpb_$field.getInternalFieldName()_days')!=0) fSetDropdownByValue(day,getAttribute('gtpb_$field.getInternalFieldName()_days'));
 	          #end
@@ -94,12 +96,12 @@
 	          #end
 	          #if($dateResolution >= $CONST_MINUTE)
 	            if(!isNaN(getAttribute('gtpb_$field.getInternalFieldName()_minutes'))) minute.value=getAttribute('gtpb_$field.getInternalFieldName()_minutes');
-	        		  #end
-	        		  #if($dateResolution >= $CONST_SECOND)
-	        		    if(!isNaN(getAttribute('gtpb_$field.getInternalFieldName()_seconds'))) second.value=getAttribute('gtpb_$field.getInternalFieldName()_seconds');
-	      		    #end
-	      		  }
-	      }
+	          #end
+	          #if($dateResolution >= $CONST_SECOND)
+	        	if(!isNaN(getAttribute('gtpb_$field.getInternalFieldName()_seconds'))) second.value=getAttribute('gtpb_$field.getInternalFieldName()_seconds');
+	      	  #end
+	      	}
+	      } ## End of fFloodValuesIntoFields
 	      
 	      function fSetValueAtt() {
 	        function fLPad(sString, iLength) {
@@ -189,7 +191,6 @@
 	      
 	      // finds the last one 
       var oHidden=document.getElementsByName('$field.getInternalFieldName()')[document.getElementsByName('$field.getInternalFieldName()').length-1];
-	      alert("Found hidden date field " + jQuery(oHidden).attr('name'));
 		  var oWrapperDiv=document.createElement('DIV');
 	      oHidden.parentNode.replaceChild(oWrapperDiv,oHidden);
 	      oWrapperDiv.setAttribute('value','none set');
