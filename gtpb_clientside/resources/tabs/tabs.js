@@ -424,6 +424,7 @@ function fKeyUpEvent(inputElement) {
   var sAttribute=$(inputElement).attr('wrapperAttribute');
   jqWrapper.attr(sAttribute,$(inputElement).val());
   var globalEdit = jqWrapper.attr("global_edit");
+  alert('globalEdit is ' + globalEdit);
   fSetValueAtt(jqWrapper[0]);
   if(globalEdit != "true") {
 	top.oBuffer.writeBuffer(jqWrapper[0]);
