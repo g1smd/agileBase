@@ -303,7 +303,7 @@
 			   showInLegend: true,
 			   dataLabels: {
 			     enabled: true,
-				 distance: -20,
+				 distance: -15,
 				 color: 'white',
 				 formatter: function() {
 				   if (this.y > ($grandTotal / 20)) {
