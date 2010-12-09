@@ -47,7 +47,9 @@ public interface DateField extends BaseField {
 	public String formatDate(Date dateValue);
 
 	/**
-	 * @see #format(Date) Note: format methods have different methods rather
+	 * @see #format(Date)
+	 * 
+	 * Note: format methods have different methods rather
 	 *      than overloading each other: see Bloch item 26 for why
 	 */
 	public String formatCalendar(Calendar dateValue);
