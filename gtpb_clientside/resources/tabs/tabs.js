@@ -423,8 +423,8 @@ function fKeyUpEvent(inputElement) {
   var jqWrapper=$(inputElement).closest("div");
   var sAttribute=$(inputElement).attr('wrapperAttribute');
   jqWrapper.attr(sAttribute,$(inputElement).val());
-  var globalEdit = jqWrapper.attr("gtpb_global_edit");
   fSetValueAtt(jqWrapper[0]);
+  var globalEdit = jqWrapper.attr("gtpb_global_edit");
   if(typeof globalEdit == "undefined") {
 	top.oBuffer.writeBuffer(jqWrapper[0]);
   }
@@ -435,11 +435,11 @@ function fChangeEvent(inputElement) {
   var jqWrapper=$(inputElement).closest("div");
   var sAttribute=$(inputElement).attr('wrapperAttribute');
   jqWrapper.attr(sAttribute,$(inputElement).val());
-  var globalEdit = jqWrapper.attr("gtpb_global_edit");
   fSetValueAtt(jqWrapper[0]);
+  var globalEdit = jqWrapper.attr("gtpb_global_edit");
   alert("typeof global edit = " + typeof globalEdit);
   if(typeof globalEdit == "undefined") {
-	  top.oBuffer.writeBuffer(jqWrapper[0]);
+	top.oBuffer.writeBuffer(jqWrapper[0]);
   }
 }
 
