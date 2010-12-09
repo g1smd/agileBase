@@ -86,7 +86,7 @@
     <select wrapperAttribute="gtpb_$field.getInternalFieldName()_months" onchange="fChangeEvent(this);" #if($globalEdit) global_edit="true" #end>
       <option value="">month</option>
 	  #foreach($month in ["January","February","March","April","May","June","July","August","September","October","November","December"])
-		<option value="$foreach.count" #if($month == $months) selected #end>$month</option>
+		<option value="$foreach.count" #if($foreach.count == $months) selected #end>$month</option>
 	  #end
     </select>
   #end
