@@ -426,7 +426,7 @@ function fKeyUpEvent(inputElement) {
   var globalEdit = jqWrapper.attr("global_edit");
   alert('globalEdit is ' + globalEdit);
   fSetValueAtt(jqWrapper[0]);
-  if(globalEdit != "true") {
+  if(typeof globalEdit != "undefined") {
 	top.oBuffer.writeBuffer(jqWrapper[0]);
   }
 }
