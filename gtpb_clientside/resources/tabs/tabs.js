@@ -437,6 +437,7 @@ function fChangeEvent(inputElement) {
   jqWrapper.attr(sAttribute,$(inputElement).val());
   var globalEdit = jqWrapper.attr("global_edit");
   fSetValueAtt(jqWrapper[0]);
+  alert("typeof global edit = " + typeof globalEdit);
   if(typeof globalEdit != "undefined") {
 	new fChange(jqWrapper[0]);
   }
