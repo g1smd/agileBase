@@ -444,7 +444,9 @@ function fChangeEvent(inputElement) {
 
 function fUpdateGlobalDate(oButton) {
   function fResponse(sResponseText, sResponseXML) {
+	alert('response');
     if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
+      alert('XML: ' + sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue);
       var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
       var sFieldValue=oField.getAttribute('e_value');
       if(confirm('Are you sure that you want to change the value to '+sFieldValue+'?\nThis will update '+sRowsToChange+' records')) {
