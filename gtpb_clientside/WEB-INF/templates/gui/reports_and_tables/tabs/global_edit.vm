@@ -68,6 +68,4 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
 		    #end 
 	  </table>
 #end ## end of if session row_id is set
-<!-- javascript for multi-line filter tooltips -->
- <script language="JavaScript" type="text/javascript" src="resources/wz_tooltip.js"></script>
 $viewTools.stopTimer("gui/reports_and_tables/tabs/global_edit")
