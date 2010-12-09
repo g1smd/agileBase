@@ -389,7 +389,7 @@ function uploadFile(fileInputElement) {
 	  fileSize = fileObject.fileSize; // the deprecated way
 	}	
     if (fileSize) {
-      var jqFileInput = jQuery(fileInputElement);
+      var jqFileInput = $(fileInputElement);
       var jqUploadInfo = jqFileInput.next();
       var fileSizeInfo = parseInt(fileSize / 1000000)
       if (fileSizeInfo == 0) {
@@ -454,7 +454,7 @@ function fUpdateGlobalDate(oButton) {
       }
     }
   }
-  var field = jQuery(oButton).closest('div')[0];
+  var field = $(oButton).closest('div')[0];
   var oField=field;
   var aPostVars=new Array();
   aPostVars['returntype']='xml'; 
@@ -511,6 +511,8 @@ function fSetValueAtt(oWrapperDiv) {
 	  sValue+=':'+fLPad(getAttribute('gtpb_' + internalFieldName + '_seconds'),2);
 	}
 	setAttribute('e_value',sValue);
+	// If there is a hidden field (e.g. if we're in a wizard), set that
+	$('input#hidden_' + internalFieldName).val(sValue);
   } // end with oWrapperDiv
 }
 
