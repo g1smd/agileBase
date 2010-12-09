@@ -511,8 +511,6 @@ function fSetValueAtt(oWrapperDiv) {
 	  sValue+=':'+fLPad(getAttribute('gtpb_' + internalFieldName + '_seconds'),2);
 	}
 	setAttribute('e_value',sValue);
-	// If there is a hidden field (e.g. if we're in a wizard), set that
-	$('input#hidden_' + internalFieldName).val(sValue);
   } // end with oWrapperDiv
 }
 

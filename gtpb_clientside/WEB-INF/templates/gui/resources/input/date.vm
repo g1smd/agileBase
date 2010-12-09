@@ -73,12 +73,9 @@
   </style>
   
   <div id="date_wrapper_$field.getInternalFieldName()" #if($updateAsType) update_as_type="true" #end date_resolution="$dateResolution" class="date" name="$field.getInternalFieldName()" value="$field.formatCalendar($fieldValue)" #if($globalEdit) gtpb_global_edit="true" #else gtpb_update_record="true" #end gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_$field.getInternalFieldName()_days="$days" gtpb_$field.getInternalFieldName()_months="$months" gtpb_$field.getInternalFieldName()_years="$years" gtpb_$field.getInternalFieldName()_hours="$hours" gtpb_$field.getInternalFieldName()_minutes="$minutes" gtpb_$field.getInternalFieldName()_seconds="$seconds">
-  #if(!$updateAsType)
-	<input type="hidden" id="hidden_$field.getInternalFieldName()" name="$field.getInternalFieldName()" #if($fieldValue) value="$field.formatCalendar($fieldValue)" #end>
-  #end 
   ## date_js was here
   #if($dateResolution >= $CONST_DAY_OF_MONTH)
-	<select wrapperAttribute="gtpb_$field.getInternalFieldName()_days" onchange="fChangeEvent(this);" #if($globalEdit) global_edit="true" #end>
+	<select #if(!$updateAsType) name="$field.getInternalFieldName()_days" #end wrapperAttribute="gtpb_$field.getInternalFieldName()_days" onchange="fChangeEvent(this);" #if($globalEdit) global_edit="true" #end>
 	  <option value="">day</option>
 	  #foreach($i in [1..31])
 		<option value="$i" #if($i == $days) selected #end>$i</option>
@@ -86,25 +83,25 @@
 	</select>
   #end
   #if($dateResolution >= $CONST_MONTH)
-    <select wrapperAttribute="gtpb_$field.getInternalFieldName()_months" onchange="fChangeEvent(this);" #if($globalEdit) global_edit="true" #end>
+    <select #if(!$updateAsType) name="$field.getInternalFieldName()_months" #end wrapperAttribute="gtpb_$field.getInternalFieldName()_months" onchange="fChangeEvent(this);" #if($globalEdit) global_edit="true" #end>
       <option value="">month</option>
 	  #foreach($month in ["January","February","March","April","May","June","July","August","September","October","November","December"])
 		<option value="$foreach.count" #if($foreach.count == $months) selected #end>$month</option>
 	  #end
     </select>
   #end
-  <input type="text" maxlength="4" size="4" maxKeyCount="4" value="$years" wrapperAttribute="gtpb_$field.getInternalFieldName()_years" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
+  <input type="text" #if(!$updateAsType) name="$field.getInternalFieldName()_years" #end maxlength="4" size="4" maxKeyCount="4" value="$years" wrapperAttribute="gtpb_$field.getInternalFieldName()_years" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
   #if($dateResolution >= $CONST_HOUR_OF_DAY)
 	time 
-    <input type="text" maxlength="2" size="2" maxKeyCount="2" value="$hours" wrapperAttribute="gtpb_$field.getInternalFieldName()_hours" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
+    <input type="text" #if(!$updateAsType) name="$field.getInternalFieldName()_hours" #end maxlength="2" size="2" maxKeyCount="2" value="$hours" wrapperAttribute="gtpb_$field.getInternalFieldName()_hours" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
   #end
   #if($dateResolution >= $CONST_MINUTE) 
-    : <input type="text" maxlength="2" size="2" maxKeyCount="2" value="$minutes" wrapperAttribute="gtpb_$field.getInternalFieldName()_minutes" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
+    : <input type="text" #if(!$updateAsType) name="$field.getInternalFieldName()_minutes" #end maxlength="2" size="2" maxKeyCount="2" value="$minutes" wrapperAttribute="gtpb_$field.getInternalFieldName()_minutes" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
   #elseif($dateResolution == $CONST_HOUR_OF_DAY)
 	hundred hours
   #end
   #if($dateResolution >= $CONST_SECOND) 
-    : <input type="text" maxlength="2" size="2" maxKeyCount="2" value="$seconds" wrapperAttribute="gtpb_$field.getInternalFieldName()_seconds" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
+    : <input type="text" #if(!$updateAsType) name="$field.getInternalFieldName()_seconds" #end maxlength="2" size="2" maxKeyCount="2" value="$seconds" wrapperAttribute="gtpb_$field.getInternalFieldName()_seconds" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
   #end  
   #if($globalEdit)
 	<button class="globalEdit" onclick="fUpdateGlobalDate(this)">update globally</button>
