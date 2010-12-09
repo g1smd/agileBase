@@ -439,7 +439,7 @@ function fChangeEvent(inputElement) {
   fSetValueAtt(jqWrapper[0]);
   alert("typeof global edit = " + typeof globalEdit);
   if(typeof globalEdit != "undefined") {
-	new fChange(jqWrapper[0]);
+	  top.oBuffer.writeBuffer(jqWrapper[0]);
   }
 }
 
