@@ -303,7 +303,7 @@
 			   showInLegend: true,
 			   dataLabels: {
 			     enabled: true,
-				 distance: -10,
+				 distance: -20,
 				 color: 'white',
 				 formatter: function() {
 				   if (this.y > ($grandTotal / 20)) {
@@ -314,7 +314,7 @@
 				 }
 			   },
 			   animation: false,
-			   size: '95%'
+			   size: '100%'
 			 }
 		   #elseif($dateAxis)
 			   area: {
