@@ -300,10 +300,11 @@
 		 plotOptions: {
 		   #if($pieChart)
 		     pie: {
+			   showInLegend: true,
 			   dataLabels: {
 			     enabled: true,
+				 distance: -10,
 				 color: 'white',
-				 y: 0,
 				 formatter: function() {
 				   if (this.y > ($grandTotal / 20)) {
 				     return this.y;
@@ -311,7 +312,8 @@
 				     return '';
 				   }
 				 }
-			   }
+			   },
+			   animation: false
 			 }
 		   #elseif($dateAxis)
 			   area: {
