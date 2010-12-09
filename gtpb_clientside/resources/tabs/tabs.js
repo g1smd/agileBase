@@ -454,7 +454,7 @@ function fUpdateGlobalDate(oButton) {
       }
     }
   }
-  var field = jQuery(oButton).closest('div');
+  var field = jQuery(oButton).closest('div')[0];
   var oField=field;
   var aPostVars=new Array();
   aPostVars['returntype']='xml'; 
