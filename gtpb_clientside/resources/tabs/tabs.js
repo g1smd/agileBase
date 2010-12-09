@@ -420,7 +420,7 @@ function uploadFile(fileInputElement) {
 /* for date fields */
 function fKeyUpEvent(inputElement) {
   // update the relevant value in the wrapper
-  var jqWrapper=$(inputElement.closest("div"));
+  var jqWrapper=$(inputElement).closest("div");
   var sAttribute=$(inputElement).attr('wrapperAttribute');
   jqWrapper.attr(sAttribute,$(inputElement).val());
   var globalEdit = jqWrapper.attr("global_edit");
@@ -432,7 +432,7 @@ function fKeyUpEvent(inputElement) {
 
 function fChangeEvent(inputElement) {
   // update the relevant value in the wrapper
-  var jqWrapper=$(inputElement.closest("div"));
+  var jqWrapper=$(inputElement).closest("div");
   var sAttribute=$(inputElement).attr('wrapperAttribute');
   jqWrapper.attr(sAttribute,$(inputElement).val());
   var globalEdit = jqWrapper.attr("global_edit");
