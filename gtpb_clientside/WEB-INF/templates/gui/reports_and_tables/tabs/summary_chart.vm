@@ -313,7 +313,8 @@
 				   }
 				 }
 			   },
-			   animation: false
+			   animation: false,
+			   size: '75%'
 			 }
 		   #elseif($dateAxis)
 			   area: {
