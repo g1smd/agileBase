@@ -314,7 +314,7 @@
 				 }
 			   },
 			   animation: false,
-			   size: '75%'
+			   size: '95%'
 			 }
 		   #elseif($dateAxis)
 			   area: {
