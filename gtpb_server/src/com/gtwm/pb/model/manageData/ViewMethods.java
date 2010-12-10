@@ -226,22 +226,22 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return this.databaseDefn.getDataManagement().isRowIdInReport(report, rowId);
 	}
 
-	public synchronized void addModuleAction(String module, String actionName, String description,
+	public synchronized void addModuleAction(String internaModuleName, String actionName, String description,
 			String attributes, String actionTemplate, String buttons, String callbackFunction) {
 		List<ModuleActionInfo> moduleActions = null;
-		if (this.reportGroupActions.containsKey(module)) {
-			moduleActions = this.reportGroupActions.get(module);
+		if (this.moduleActions.containsKey(internaModuleName)) {
+			moduleActions = this.moduleActions.get(internaModuleName);
 		} else {
 			moduleActions = new LinkedList<ModuleActionInfo>();
 		}
-		ModuleActionInfo groupAction = new ModuleAction(actionName, description, attributes,
+		ModuleActionInfo moduleAction = new ModuleAction(actionName, description, attributes,
 				actionTemplate, buttons, callbackFunction);
-		moduleActions.add(groupAction);
-		this.reportGroupActions.put(module, moduleActions);
+		moduleActions.add(moduleAction);
+		this.moduleActions.put(internaModuleName, moduleActions);
 	}
 
-	public synchronized List<ModuleActionInfo> getModuleActions(String module) {
-		List<ModuleActionInfo> moduleActions = this.reportGroupActions.get(module);
+	public synchronized List<ModuleActionInfo> getModuleActions(String internalModuleName) {
+		List<ModuleActionInfo> moduleActions = this.moduleActions.get(internalModuleName);
 		if (moduleActions == null) {
 			return new LinkedList<ModuleActionInfo>();
 		}
@@ -991,7 +991,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	private final DatabaseInfo databaseDefn;
 
-	private Map<String, List<ModuleActionInfo>> reportGroupActions = new HashMap<String, List<ModuleActionInfo>>();
+	private Map<String, List<ModuleActionInfo>> moduleActions = new HashMap<String, List<ModuleActionInfo>>();
 
 	private boolean whetherExceptionOccurred = false;
 
