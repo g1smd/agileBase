@@ -1,3 +1,4 @@
+
 ##
 ##  Copyright 2010 GT webMarque Ltd
 ## 
@@ -19,6 +20,8 @@
 <html>
   <head>
     <title>Record Summary Printout</title>
+	<link href="styles/report.css" type="text/css" rel="stylesheet" />
+	<link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
     <style type="text/css">
 	      * {
 		    -moz-box-sizing: border-box;
