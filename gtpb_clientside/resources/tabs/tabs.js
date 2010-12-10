@@ -424,7 +424,10 @@ function fKeyUpEvent(inputElement) {
   var sAttribute=$(inputElement).attr('wrapperAttribute');
   jqWrapper.attr(sAttribute,$(inputElement).val());
   fSetValueAtt(jqWrapper[0]);
-  var globalEdit = (jqWrapper.attr("gtpb_global_edit") !== "undefined");
+  var globalEdit = false;
+  if (jqWrapper.attr("gtpb_global_edit")) {
+	globalEdit = true;
+  };
   var updateAsType = (jqWrapper.attr("update_as_type") !== "undefined");
   alert('globalEdit is ' + globalEdit + ', updateAsType is ' + updateAsType);
   if(!globalEdit && updateAsType) {
