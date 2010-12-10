@@ -346,7 +346,7 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
     z-index: 100; /* on top of the chart */
   }
   
-button.moduleaction {
+button.tableaction {
   float: right;
   font-size: 12pt;
   padding: 5px;
