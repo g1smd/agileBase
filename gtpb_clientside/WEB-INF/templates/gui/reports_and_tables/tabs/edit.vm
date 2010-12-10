@@ -118,6 +118,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 	  </table>
 	  ## See if there are any actions for this table
 	  #set($moduleActions = $view.getModuleActions($sessionTable.getInternalTableName()))
+	  <h1>Module actions</h1>
 	  #foreach($moduleAction in $moduleActions)
 	    <button class="moduleaction" internalmodulename="$internalModuleName" actionname="$moduleAction.getActionName()">&laquo; $moduleAction &raquo;</button>
 	  #end
