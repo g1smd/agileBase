@@ -37,6 +37,15 @@
 	  #set($moduleAction = $testModuleAction)
 	#end
   #end
+  #if(!$moduleAction)
+	#set($table = $sessionData.getTable())
+    #set($moduleActions = $view.getModuleActions($table.getInternalTableName()))
+    #foreach($testModuleAction in $moduleActions)
+	  #if($testModuleAction.getActionName() == $actionName)
+	    #set($moduleAction = $testModuleAction)
+	  #end
+    #end
+  #end
   <title>$view.getApplicationName() - $company - $module - $moduleAction</title>
   <link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
   <link href="resources/mobile/wizard_override.css" type="text/css" rel="stylesheet" />
@@ -58,7 +67,7 @@
   #if($moduleAction)
 	&nbsp;
   #else
-    Error: no action called $actionName was found in the module $module<p>
+    Error: no action called $actionName was found in the module $module or table $table<p>
 	Available actions are $moduleActions
   #end
   
