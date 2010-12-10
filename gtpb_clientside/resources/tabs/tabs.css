@@ -346,3 +346,9 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
     z-index: 100; /* on top of the chart */
   }
   
+button.moduleaction {
+  float: right;
+}
+
+  
+  
