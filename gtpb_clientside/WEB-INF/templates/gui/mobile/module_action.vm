@@ -30,7 +30,7 @@
   #end
 
   #set($module = $sessionData.getModule())
-  #set($actionName = $sessionData.getCustomString("actionname"))## include custom per-company actions
+  #set($actionName = $sessionData.getCustomString("actionname")) ## include custom per-company actions
   #set($moduleActions = $view.getModuleActions($module.getInternalModuleName()))
   #foreach($testModuleAction in $moduleActions)
 	#if($testModuleAction.getActionName() == $actionName)
