@@ -426,7 +426,7 @@ function fKeyUpEvent(inputElement) {
   fSetValueAtt(jqWrapper[0]);
   var globalEdit = (jqWrapper.attr("gtpb_global_edit") != "undefined");
   var updateAsType = (jqWrapper.attr("update_as_type") != "undefined");
-  if(!globalEdit && !updateAsType) {
+  if(!globalEdit && updateAsType) {
 	top.oBuffer.writeBuffer(jqWrapper[0]);
   }
 }
@@ -439,7 +439,7 @@ function fChangeEvent(inputElement) {
   fSetValueAtt(jqWrapper[0]);
   var globalEdit = (jqWrapper.attr("gtpb_global_edit") != "undefined");
   var updateAsType = (jqWrapper.attr("update_as_type") != "undefined");
-  if(!globalEdit && !updateAsType) {
+  if(!globalEdit && updateAsType) {
 	new fChange(jqWrapper[0]);
   }
 }
