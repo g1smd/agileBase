@@ -348,6 +348,7 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
   
 button.moduleaction {
   float: right;
+  font-size: 12pt;
 }
 
   
