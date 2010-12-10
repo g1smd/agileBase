@@ -429,7 +429,7 @@ function fKeyUpEvent(inputElement) {
   if (jqWrapper.attr("gtpb_global_edit")) {
 	globalEdit = true;
   };
-  var updateAsType false;
+  var updateAsType = false;
   if (jqWrapper.attr("update_as_type")) {
 	updateAsType = true;
   };
