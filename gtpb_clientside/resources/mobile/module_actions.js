@@ -23,4 +23,9 @@ function assignButtonModuleActions() {
 		document.location = "?return=gui/mobile/module_action&set_module=" + internalModuleName + "&set_custom_string=true&key=actionname&value=" + actionName;
 		return false;
 	});
+	$('button.tableaction').click(function() {
+		var actionName = $(this).attr('actionname');
+		document.location = "?return=gui/mobile/module_action&set_custom_string=true&key=actionname&value=" + actionName;
+		return false;
+	});
 }
