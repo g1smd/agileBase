@@ -117,16 +117,18 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 		    #end 
 	  </table>
 	  ## See if there are any actions for this table
-      #set($user = $view.getLoggedInUser())
-      #set($company = $user.getCompany())
-      #set($companyName = $viewTools.cleanString($company.getCompanyName()))
-      #set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
-      #if($viewTools.templateExists($customisationsTemplateLocation))
-        #parse($customisationsTemplateLocation)
-      #end
-	  #set($moduleActions = $view.getModuleActions($sessionTable.getInternalTableName()))
+	  #if(!$moduleActions)
+          #set($user = $view.getLoggedInUser())
+          #set($company = $user.getCompany())
+          #set($companyName = $viewTools.cleanString($company.getCompanyName()))
+          #set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
+          #if($viewTools.templateExists($customisationsTemplateLocation))
+            #parse($customisationsTemplateLocation)
+          #end
+    	  #set($moduleActions = $view.getModuleActions($sessionTable.getInternalTableName()))
+	  #end
 	  #foreach($moduleAction in $moduleActions)
-	    <div style="text-align:right">$moduleAction.getDescription(): <button class="moduleaction" internalmodulename="$internalModuleName" actionname="$moduleAction.getActionName()">&laquo; $moduleAction &raquo;</button></div>
+	    <button class="moduleaction" internalmodulename="$internalModuleName" actionname="$moduleAction.getActionName()">&laquo; $moduleAction &raquo;</button>
 	  #end
 	  #if($view.isRecordLocked())
 	  		  <div id="recordBlank"></div>
