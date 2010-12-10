@@ -126,9 +126,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
             #parse($customisationsTemplateLocation)
           #end
 	  #end
-      #set($moduleActions = $view.getModuleActions($sessionTable.getInternalTableName()))
-	  #foreach($moduleAction in $moduleActions)
-	    <button class="moduleaction" internalmodulename="$internalModuleName" actionname="$moduleAction.getActionName()">&laquo; $moduleAction &raquo;</button>
+      #set($tableActions = $view.getModuleActions($sessionTable.getInternalTableName()))
+	  #foreach($tableAction in $tableActions)
+	    <button class="tableaction">&laquo; $tableAction &raquo;</button>
 	  #end
 	  #if($view.isRecordLocked())
 	  		  <div id="recordBlank"></div>
