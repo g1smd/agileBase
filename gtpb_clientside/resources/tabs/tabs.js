@@ -537,7 +537,7 @@ function fAssignButtonTableActions() {
 	  var actionTemplate = $(this).attr('actiontemplate');
 	  var actionButtons = $(this).attr('actionbuttons');
 	  var callbackFunction = $(this).attr('callbackfunction');
-	  top.fShowModalDialog(actionTemplate,actionName,callbackfunction,actionButtons,'width=800px; height=600px');
+	  top.fShowModalDialog(actionTemplate,actionName,callbackFunction,actionButtons,'width=800px; height=600px');
 	}
 	return false;
   });
