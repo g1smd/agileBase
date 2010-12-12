@@ -528,6 +528,20 @@ function fSetValueAtt(oWrapperDiv) {
   } // end with oWrapperDiv
 }
 
+function fAssignButtonTableActions() {
+  $('button.tableaction').click(function() {
+	var actionName = $(this).attr('actionname');
+	if (self == top) { // if mobile un-framed version
+	  document.location = "?return=gui/mobile/module_action&set_custom_string=true&key=actionname&value=" + actionName;
+	} else {
+	  var actionTemplate = $(this).attr('actiontemplate');
+	  var actionButtons = $(this).attr('actionbuttons');
+	  var callbackFunction = $(this).attr('callbackfunction');
+	  top.fShowModalDialog(actionTemplate,actionName,callbackfunction,actionButtons,'width=800px; height=600px');
+	}
+	return false;
+  });
+}
 /* 
  * Management tabs functions 
  */
@@ -604,3 +618,4 @@ pane3Scripts.functionList.push(fUnlockButton);
 pane3Scripts.functionList.push(fComboComponents);
 pane3Scripts.functionList.push(fRelationPickers);
 pane3Scripts.functionList.push(fSetupCharts);
+pane3Scripts.functionList.push(fAssignButtonTableActions);
