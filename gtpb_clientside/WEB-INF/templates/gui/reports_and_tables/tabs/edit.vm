@@ -117,7 +117,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 		    #end 
 	  </table>
 	  ## See if there are any actions for this table
-	  #if(!$moduleActions)
+	  ## #if(!$moduleActions)
           #set($user = $view.getLoggedInUser())
           #set($company = $user.getCompany())
           #set($companyName = $viewTools.cleanString($company.getCompanyName()))
@@ -125,7 +125,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
           #if($viewTools.templateExists($customisationsTemplateLocation))
             #parse($customisationsTemplateLocation)
           #end
-	  #end
+	  ## #end
       #set($tableActions = $view.getModuleActions($sessionTable.getInternalTableName()))
 	  #foreach($tableAction in $tableActions)
 	    <button class="tableaction" actiontemplate="$tableAction.getActionTemplate()" actionbuttons="$tableAction.getButtons()" callbackfunction="$tableAction.getCallbackFuncion()" actionname="$tableAction.getActionName()">&laquo; $tableAction &raquo;</button>
