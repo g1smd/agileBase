@@ -142,7 +142,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	    // if on a mobile device, return to the home screen
   	    // - the dialog will have loaded in a separate page
   	    if(document.location.href.indexOf('gui/mobile/module_action') > -1) {
-  	    	document.location = '?return=boot_mobile';
+  	    	//document.location = '?return=boot_mobile';
   	    }
   	  }
   	  
