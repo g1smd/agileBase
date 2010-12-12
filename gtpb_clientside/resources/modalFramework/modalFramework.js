@@ -324,15 +324,9 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
               var type=oElement.getAttribute('type');
   	          if(!sName) return false; // some items in the elements list don't seem to be form objects.  If it doesn't have a name, we're not interested
   	          var sValue=fFormElementValue(oElements.item(e)); 
-  	          if(!sValue) {
-  	        	  if (type == 'hidden' && name == 'preset_row_id') {
-  	        		// special case, don't submit empty preset_row_id, it causes a server error
-  	        		return false;
-  	        	  } else if (type != 'hidden') {
-  	        		// only set visible field values in aPostVars if the element has a value to avoid sending values for unchecked boolean input types
-  	        		return false;
-  	        	  }
-  	          }
+  	          if(!sValue && (type != 'hidden')) return false; // only set visible field values in aPostVars if the element has a value to avoid sending values for unchecked boolean input types
+  	          // special case: blank preset_row_id causes server error
+  	          if (sValue == '' && name == 'preset_row_id') return false;
   	          // begin to set the values...
   	          aPostVars[sName]=sValue;
   	          /* look at all the attributes that the DOM object has and pass all the 
