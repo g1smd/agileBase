@@ -172,3 +172,9 @@ table#reportData tr.rowb  {
   width: 100px;
   height: 100px;
 }
+
+button.tableaction {
+  float: right;
+  font-size: 12pt;
+  padding: 5px;
+}
