@@ -326,7 +326,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	          var sValue=fFormElementValue(oElements.item(e)); 
   	          if(!sValue && (type != 'hidden')) return false; // only set visible field values in aPostVars if the element has a value to avoid sending values for unchecked boolean input types
   	          // special case: blank preset_row_id causes server error
-  	          if (sValue == '' && name == 'preset_row_id') return false;
+  	          if (sValue == '' && sName == 'preset_row_id') return false;
   	          // begin to set the values...
   	          aPostVars[sName]=sValue;
   	          /* look at all the attributes that the DOM object has and pass all the 
