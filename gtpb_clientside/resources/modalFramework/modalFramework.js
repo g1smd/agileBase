@@ -99,6 +99,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
 	      var oHidden=document.createElement('INPUT');
 	      oHidden.setAttribute('type','hidden');
 	      oHidden.setAttribute('name','preset_row_id');
+	      oHidden.setAttribute('value','-1');
 	      oHidden.setAttribute('id','_mfp_hidden_field');
 	      oHidden.setAttribute('validationMessage','Please pick a row');
 	      oPicker.rowid_store=oHidden;
