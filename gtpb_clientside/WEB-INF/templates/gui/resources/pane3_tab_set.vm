@@ -81,6 +81,14 @@
   		  });
   	  }
 		</script>
+		  ## Include any custom module actions JS
+          #set($user = $view.getLoggedInUser())
+          #set($company = $user.getCompany())
+          #set($companyName = $viewTools.cleanString($company.getCompanyName()))
+          #set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
+          #if($viewTools.templateExists($customisationsTemplateLocation))
+            #parse($customisationsTemplateLocation)
+          #end
     <script language="JavaScript" type="text/javascript">
 	## Used by individual tabs
     	  function fDeleteTabularItem(oObj) {
