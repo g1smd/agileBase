@@ -142,6 +142,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	    // if on a mobile device, return to the home screen
   	    // - the dialog will have loaded in a separate page
   	    if(document.location.href.indexOf('gui/mobile/module_action') > -1) {
+  	    	//debug
   	    	//document.location = '?return=boot_mobile';
   	    }
   	  }
@@ -321,9 +322,10 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	          }
   	            	        
   	          var sName=oElement.getAttribute('name'); 
+              var type=oElement.getAttribute('type');
   	          if(!sName) return false; // some items in the elements list don't seem to be form objects.  If it doesn't have a name, we're not interested
   	          var sValue=fFormElementValue(oElements.item(e)); 
-  	          if(!sValue) return false; // only set values in aPostVars if the element has a value to avoid sending values for unchecked boolean input types
+  	          if(!sValue && (type != 'hidden')) return false; // only set visible field values in aPostVars if the element has a value to avoid sending values for unchecked boolean input types
   	          
   	          // begin to set the values...
   	          aPostVars[sName]=sValue;
