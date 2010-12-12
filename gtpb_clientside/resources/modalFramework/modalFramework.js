@@ -99,7 +99,6 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
 	      var oHidden=document.createElement('INPUT');
 	      oHidden.setAttribute('type','hidden');
 	      oHidden.setAttribute('name','preset_row_id');
-	      oHidden.setAttribute('value','-1');
 	      oHidden.setAttribute('id','_mfp_hidden_field');
 	      oHidden.setAttribute('validationMessage','Please pick a row');
 	      oPicker.rowid_store=oHidden;
@@ -325,8 +324,15 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
               var type=oElement.getAttribute('type');
   	          if(!sName) return false; // some items in the elements list don't seem to be form objects.  If it doesn't have a name, we're not interested
   	          var sValue=fFormElementValue(oElements.item(e)); 
-  	          if(!sValue && (type != 'hidden')) return false; // only set visible field values in aPostVars if the element has a value to avoid sending values for unchecked boolean input types
-  	          
+  	          if(!sValue) {
+  	        	  if (type == 'hidden' && name == 'preset_row_id') {
+  	        		// special case, don't submit empty preset_row_id, it causes a server error
+  	        		return false;
+  	        	  } else if (type != 'hidden') {
+  	        		// only set visible field values in aPostVars if the element has a value to avoid sending values for unchecked boolean input types
+  	        		return false;
+  	        	  }
+  	          }
   	          // begin to set the values...
   	          aPostVars[sName]=sValue;
   	          /* look at all the attributes that the DOM object has and pass all the 
