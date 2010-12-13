@@ -19,8 +19,14 @@
 #set($calendarSyncable = $report.getCalendarSyncable())
 #set($calendarValid = $report.getCalendarValid())
 #if($calendarSyncable || $calendarValid)
-Allowing calendar synchronisation will allow users to export information in this report to Google Calendar (or other calendars). Once exported, data is no longer password protected so please be aware of any security considerations<p>
-<input type="checkbox" name="set_calendar_syncable" value="true" onclick="new fChange(this)" #if($calendarSyncable)checked #end> Allow calendar synchronization
+  Allowing calendar synchronisation will allow users to export information in this report to Google Calendar (or other calendars). Once exported, data is no longer password protected so please be aware of any security considerations<p>
+  <input type="checkbox" name="set_calendar_syncable" value="true" onclick="new fChange(this)" #if($calendarSyncable)checked #end> Allow calendar synchronization
+  #if(!$calendarValid)
+	<div class="warningmessage">
+	  <b>No valid dates</b><p>
+	  This report contains no date fields that are accurate to the day, so can't be sync'ed to a calendar
+	</div>
+  #end
 #else
-This calendar can't be synced as it doesn't contain any user-created date fields that are accurate to the day.
+  This calendar can't be synced as it doesn't contain any user-created date fields that are accurate to the day.
 #end
