@@ -1113,7 +1113,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	}
 
 	@Transient
-	public boolean getCalendarValid() throws CodingErrorException {
+	public ReportFieldInfo getCalendarField() throws CodingErrorException {
+		ReportFieldInfo calendarField = null;
 		REPORT_FIELD_LOOP: for (ReportFieldInfo reportField : this.getReportFields()) {
 			if (reportField.getBaseField().getFieldCategory().equals(FieldCategory.DATE)) {
 				if (reportField.getBaseField().getHidden()) {
@@ -1132,11 +1133,11 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 					dateResolution = ((DateField) reportField.getBaseField()).getDateResolution();
 				}
 				if (dateResolution >= Calendar.DAY_OF_MONTH) {
-					return true;
+					calendarField = reportField;;
 				}
 			}
 		}
-		return false;
+		return calendarField;
 	}
 
 	@Transient
