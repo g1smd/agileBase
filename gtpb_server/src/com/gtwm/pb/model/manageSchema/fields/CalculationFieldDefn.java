@@ -57,7 +57,7 @@ public class CalculationFieldDefn implements CalculationField {
 	public void setNotNull(boolean fieldNotNull) {
 	}
 
-	public FieldCategory getFieldCategory() throws ObjectNotFoundException {
+	public FieldCategory getFieldCategory() throws CodingErrorException {
 		switch (this.getDbType()) {
 		case INTEGER:
 		case FLOAT:
@@ -70,7 +70,7 @@ public class CalculationFieldDefn implements CalculationField {
 		case VARCHAR:
 			return FieldCategory.TEXT;
 		default:
-			throw new ObjectNotFoundException("Unrecognised database field type "
+			throw new CodingErrorException("Unrecognised database field type "
 					+ this.getDbType().toString());
 		}
 	}

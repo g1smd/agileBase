@@ -23,6 +23,7 @@ import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.interfaces.fields.SeparatorField;
@@ -30,12 +31,15 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportSortInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
+import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.fields.AbstractField;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.HibernateUtil;
+import com.ibm.icu.util.Calendar;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -107,8 +111,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 			for (JoinClauseInfo jc : this.getJoinsDirect()) {
 				if (jc.isLeftPartTable()) {
 					try {
-						if (jc.getLeftTableField().getTableContainingField().equals(
-								tableFieldParentTable)) {
+						if (jc.getLeftTableField().getTableContainingField()
+								.equals(tableFieldParentTable)) {
 							foundParentTable = true;
 						}
 					} catch (CantDoThatException cdtex) {
@@ -117,8 +121,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 				}
 				if (jc.isRightPartTable()) {
 					try {
-						if (jc.getRightTableField().getTableContainingField().equals(
-								tableFieldParentTable)) {
+						if (jc.getRightTableField().getTableContainingField()
+								.equals(tableFieldParentTable)) {
 							foundParentTable = true;
 						}
 					} catch (CantDoThatException cdtex) {
@@ -203,8 +207,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		if (reportField instanceof ReportCalcFieldInfo) {
 			reportField = new ReportCalcFieldDefn(this, (ReportCalcFieldInfo) reportField);
 		} else {
-			reportField = new ReportFieldDefn(this, reportField.getParentReport(), reportField
-					.getBaseField());
+			reportField = new ReportFieldDefn(this, reportField.getParentReport(),
+					reportField.getBaseField());
 		}
 		for (ReportFieldInfo existingField : this.getReportFields()) {
 			if (existingField.equals(reportField)) {
@@ -406,8 +410,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 				// see if there are any other fields with that parent table
 				for (ReportFieldInfo testReportField : this.getReportFields()) {
 					if (!testReportField.isFieldFromReport()) {
-						if (testReportField.getBaseField().getTableContainingField().equals(
-								parentTable)) {
+						if (testReportField.getBaseField().getTableContainingField()
+								.equals(parentTable)) {
 							needToRemovePkey = false;
 						}
 						if (testReportField.getBaseField().equals(parentTable.getPrimaryKey())) {
@@ -502,12 +506,12 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 					.substring(0, whereArguments.length() - " AND ".length());
 		}
 		if (!(havingArguments.equals(""))) {
-			havingArguments = havingArguments.substring(0, havingArguments.length()
-					- " AND ".length());
+			havingArguments = havingArguments.substring(0,
+					havingArguments.length() - " AND ".length());
 		}
 		if (!(groupByArguments.equals(""))) {
-			groupByArguments = groupByArguments.substring(0, groupByArguments.length()
-					- ", ".length());
+			groupByArguments = groupByArguments.substring(0,
+					groupByArguments.length() - ", ".length());
 		}
 		// Generate the FROM part of the SQL statement
 		String fromArguments = "";
@@ -583,14 +587,14 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 					}
 					if (joinSQLBuffer == null) {
 						// if no FROM join text yet created
-						joinSQLBuffer = new StringBuffer(leftFieldOwner).append(" ").append(
-								jc.getJoinType().toString()).append(" JOIN ").append(
-								rightFieldOwner);
+						joinSQLBuffer = new StringBuffer(leftFieldOwner).append(" ")
+								.append(jc.getJoinType().toString()).append(" JOIN ")
+								.append(rightFieldOwner);
 					} else {
 						// if adding additional joins
 						joinSQLBuffer = new StringBuffer("(").append(joinSQLBuffer).append(") ")
-								.append(jc.getJoinType().toString()).append(" JOIN ").append(
-										rightFieldOwner);
+								.append(jc.getJoinType().toString()).append(" JOIN ")
+								.append(rightFieldOwner);
 					}
 					// Calculations in joins are a special case: if calculation
 					// from current report, have to redo
@@ -616,20 +620,24 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 						}
 					}
 					if (mustRedoLeftCalcSQL) {
-						joinSQLBuffer = joinSQLBuffer.append(" ON ").append("(").append(
-								((ReportCalcFieldInfo) jc.getLeftReportField())
+						joinSQLBuffer = joinSQLBuffer
+								.append(" ON ")
+								.append("(")
+								.append(((ReportCalcFieldInfo) jc.getLeftReportField())
 										.getCalculationSQL(false)).append(")");
 					} else {
-						joinSQLBuffer = joinSQLBuffer.append(" ON ").append(leftFieldOwner).append(
-								".").append(leftField);
+						joinSQLBuffer = joinSQLBuffer.append(" ON ").append(leftFieldOwner)
+								.append(".").append(leftField);
 					}
 					if (mustRedoRightCalcSQL) {
-						joinSQLBuffer = joinSQLBuffer.append(" = ").append("(").append(
-								((ReportCalcFieldInfo) jc.getRightReportField())
+						joinSQLBuffer = joinSQLBuffer
+								.append(" = ")
+								.append("(")
+								.append(((ReportCalcFieldInfo) jc.getRightReportField())
 										.getCalculationSQL(false)).append(")");
 					} else {
-						joinSQLBuffer = joinSQLBuffer.append(" = ").append(rightFieldOwner).append(
-								".").append(rightField);
+						joinSQLBuffer = joinSQLBuffer.append(" = ").append(rightFieldOwner)
+								.append(".").append(rightField);
 					}
 				}
 			}
@@ -843,16 +851,16 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 					} // end of calculation checks
 				} else if (reportField.isFieldFromReport()) {
 					if (lastLeftReference && (!join.isLeftPartTable())) {
-						if (join.getLeftReportField().getParentReport().equals(
-								reportField.getReportFieldIsFrom())) {
+						if (join.getLeftReportField().getParentReport()
+								.equals(reportField.getReportFieldIsFrom())) {
 							throw new CantDoThatException("The "
 									+ reportField.getReportFieldIsFrom()
 									+ " report is still used in this report, field " + reportField);
 						}
 					}
 					if (lastRightReference && (!join.isRightPartTable())) {
-						if (join.getRightReportField().getParentReport().equals(
-								reportField.getReportFieldIsFrom())) {
+						if (join.getRightReportField().getParentReport()
+								.equals(reportField.getReportFieldIsFrom())) {
 							throw new CantDoThatException("The "
 									+ reportField.getReportFieldIsFrom()
 									+ " report is still used in this report, field " + reportField);
@@ -863,16 +871,16 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 							.getTableContainingField();
 					if (!tableContainingField.equals(this.getParentTable())) {
 						if (lastLeftReference && join.isLeftPartTable()) {
-							if (join.getLeftTableField().getTableContainingField().equals(
-									tableContainingField)) {
+							if (join.getLeftTableField().getTableContainingField()
+									.equals(tableContainingField)) {
 								throw new CantDoThatException("The " + tableContainingField
 										+ " table is still used in this report, field "
 										+ reportField);
 							}
 						}
 						if (lastRightReference && join.isRightPartTable()) {
-							if (join.getRightTableField().getTableContainingField().equals(
-									tableContainingField)) {
+							if (join.getRightTableField().getTableContainingField()
+									.equals(tableContainingField)) {
 								throw new CantDoThatException("The " + tableContainingField
 										+ " table is still used in this report, field "
 										+ reportField);
@@ -984,8 +992,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 			// if a relation, sort on the display field, not the key field
 			BaseField displayField = ((RelationField) sortBaseField).getDisplayField();
 			ReportFieldInfo displayReportField = sortBaseField.getTableContainingField()
-					.getDefaultReport().getReportField(
-							displayField.getInternalFieldName());
+					.getDefaultReport().getReportField(displayField.getInternalFieldName());
 			ReportSort sort = new ReportSort(displayReportField, ascendingSort);
 			// HibernateUtil.currentSession().save(sort);
 			this.getSortsDirect().add(sort);
@@ -1011,8 +1018,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 			if (!joinExists) {
 				logger.info("No join found, creating one to primary key "
 						+ relationRightTable.getPrimaryKey());
-				JoinClauseInfo sortJoin = new JoinClause(sortBaseField, relationRightTable
-						.getPrimaryKey(), JoinType.INNER);
+				JoinClauseInfo sortJoin = new JoinClause(sortBaseField,
+						relationRightTable.getPrimaryKey(), JoinType.INNER);
 				this.getJoinsDirect().add(sortJoin);
 			}
 		} else {
@@ -1096,13 +1103,40 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private synchronized void setDistinctFieldsDirect(Set<BaseField> distinctFields) {
 		this.distinctFields = distinctFields;
 	}
-	
+
 	public void setCalendarSyncable(Boolean calendarSyncable) {
 		this.calendarSyncable = calendarSyncable;
 	}
-	
+
 	public Boolean getCalendarSyncable() {
 		return this.calendarSyncable;
+	}
+
+	@Transient
+	public boolean getCalendarValid() throws CodingErrorException {
+		REPORT_FIELD_LOOP: for (ReportFieldInfo reportField : this.getReportFields()) {
+			if (reportField.getBaseField().getFieldCategory().equals(FieldCategory.DATE)) {
+				if (reportField.getBaseField().getHidden()) {
+					continue REPORT_FIELD_LOOP;
+				}
+				int dateResolution = -1;
+				if (reportField instanceof ReportCalcFieldInfo) {
+					try {
+						dateResolution = ((ReportCalcFieldInfo) reportField).getDateResolution();
+					} catch (CantDoThatException cdtex) {
+						throw new CodingErrorException(
+								"Field is a date calculation yet we can't get the date resolution",
+								cdtex);
+					}
+				} else {
+					dateResolution = ((DateField) reportField.getBaseField()).getDateResolution();
+				}
+				if (dateResolution >= Calendar.DAY_OF_MONTH) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Transient
@@ -1175,7 +1209,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private Set<BaseField> distinctFields = new LinkedHashSet<BaseField>();
 
 	private Set<ReportSortInfo> sorts = new HashSet<ReportSortInfo>();
-	
+
 	private boolean calendarSyncable = false;
 
 	private static final SimpleLogger logger = new SimpleLogger(SimpleReportDefn.class);

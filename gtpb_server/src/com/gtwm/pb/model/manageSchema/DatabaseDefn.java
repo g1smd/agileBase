@@ -235,7 +235,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private void addWikiFieldToTable(Connection conn, TableInfo table) throws CantDoThatException,
-			SQLException, ObjectNotFoundException {
+			SQLException, ObjectNotFoundException, CodingErrorException {
 		TextField wikiPageField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.WIKI_PAGE.getFieldName(),
 				HiddenFields.WIKI_PAGE.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
@@ -247,7 +247,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private void addDateCreatedFieldToTable(Connection conn, TableInfo table)
-			throws CantDoThatException, SQLException, ObjectNotFoundException {
+			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		DateField dateCreatedField = new DateFieldDefn(table, null,
 				HiddenFields.DATE_CREATED.getFieldName(),
 				HiddenFields.DATE_CREATED.getFieldDescription(), DateFieldDefn.UNIQUE_FALSE,
@@ -260,7 +260,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private void addCreatedByFieldToTable(Connection conn, TableInfo table)
-			throws CantDoThatException, SQLException, ObjectNotFoundException {
+			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		TextField createdByField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.CREATED_BY.getFieldName(),
 				HiddenFields.CREATED_BY.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
@@ -273,7 +273,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private void addLastModifiedFieldToTable(Connection conn, TableInfo table)
-			throws CantDoThatException, SQLException, ObjectNotFoundException {
+			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		DateField lastModifiedField = new DateFieldDefn(table, null,
 				HiddenFields.LAST_MODIFIED.getFieldName(),
 				HiddenFields.LAST_MODIFIED.getFieldDescription(), DateFieldDefn.UNIQUE_FALSE,
@@ -286,7 +286,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private void addModifiedByFieldToTable(Connection conn, TableInfo table)
-			throws CantDoThatException, SQLException, ObjectNotFoundException {
+			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		TextField modifiedByField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.MODIFIED_BY.getFieldName(),
 				HiddenFields.MODIFIED_BY.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
@@ -299,7 +299,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private void addRecordLockedFieldToTable(Connection conn, TableInfo table)
-			throws CantDoThatException, SQLException, ObjectNotFoundException {
+			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		CheckboxField recordLockedField = new CheckboxFieldDefn(table, null,
 				HiddenFields.LOCKED.getFieldName(), HiddenFields.LOCKED.getFieldDescription(),
 				false, true);
@@ -1364,7 +1364,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * @see #addIndexDbAction(Connection, String, String)
 	 */
 	private void addFieldToRelationalDb(Connection conn, TableInfo tableToAddTo,
-			BaseField fieldToAdd) throws CantDoThatException, SQLException, ObjectNotFoundException {
+			BaseField fieldToAdd) throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		String internalTableName = tableToAddTo.getInternalTableName();
 		String internalFieldName = fieldToAdd.getInternalFieldName();
 		String dbType = fieldToAdd.getDbType().toString().toLowerCase();
@@ -1453,7 +1453,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * value for that field
 	 */
 	private void setFieldDefaultDbAction(Connection conn, BaseField field) throws SQLException,
-			CantDoThatException, ObjectNotFoundException {
+			CantDoThatException, ObjectNotFoundException, CodingErrorException {
 		if (field.hasDefault()) {
 			String internalTableName = field.getTableContainingField().getInternalTableName();
 			String internalFieldName = field.getInternalFieldName();

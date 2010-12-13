@@ -1135,11 +1135,17 @@ public final class ViewTools implements ViewToolsInfo {
 		return unencoded;
 	}
 
-	public boolean templateExists(String templateFilename) {
+	public synchronized boolean templateExists(String templateFilename) {
+		Boolean templateExists = this.templateExistsCache.get(templateFilename);
+		if (templateExists != null) {
+			return templateExists;
+		}
 		String absoluteFilename = this.request.getSession().getServletContext().getRealPath(
 				"/WEB-INF/templates/" + templateFilename);
 		File templateFile = new File(absoluteFilename);
-		return templateFile.exists();
+		templateExists = templateFile.exists();
+		this.templateExistsCache.put(templateFilename, templateExists);
+		return templateExists;
 	}
 
 	public List<File> listFiles(String folderName) {
@@ -1177,6 +1183,8 @@ public final class ViewTools implements ViewToolsInfo {
 	 * A map of telephone area code to city / location
 	 */
 	private Map<String, String> areaCodes = new HashMap<String, String>(602);
+	
+	private Map<String, Boolean> templateExistsCache = new HashMap<String, Boolean>();
 
 	private static final SimpleLogger logger = new SimpleLogger(ViewTools.class);
 

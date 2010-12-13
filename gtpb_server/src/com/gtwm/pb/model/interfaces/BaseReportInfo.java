@@ -116,12 +116,18 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	public void setCalendarSyncable(Boolean calendarSyncable);
 
 	/**
-	 * Return true if this report can be synced to a calendar supporting iCal
-	 * format, e.g. Google Calendar. Note there is a security consideration -
-	 * the iCal export won't be password protected - anyone who knows the
-	 * calendar URL will be able to view the calendar
+	 * Return true if it's been set that this report can be synced to a calendar
+	 * supporting iCal format, e.g. Google Calendar. Note there is a security
+	 * consideration - the iCal export won't be password protected - anyone who
+	 * knows the calendar URL will be able to view the calendar
 	 */
 	public Boolean getCalendarSyncable();
+
+	/**
+	 * Return true if it's possible to generate a calendar from this report,
+	 * i.e. it contains an appropriate date field etc.
+	 */
+	public boolean getCalendarValid() throws CodingErrorException;
 
 	/**
 	 * Return whether the row count is definitive or an estimate based on a

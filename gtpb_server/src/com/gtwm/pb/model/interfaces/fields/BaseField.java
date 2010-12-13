@@ -72,7 +72,7 @@ public interface BaseField extends Comparable<BaseField> {
 	 * @return the 'public-facing' field type as selected by the user when
 	 *         creating the field, e.g. Number or Text
 	 */
-	public FieldCategory getFieldCategory() throws ObjectNotFoundException;
+	public FieldCategory getFieldCategory() throws CodingErrorException;
 
 	/**
 	 * Defines whether the field value in the database can be empty or not
