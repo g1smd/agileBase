@@ -32,7 +32,7 @@
   	  #if($globalEdit || (!$updateAsType))##
   	    		<input type="number" name="$field.getInternalFieldName()" value="$fieldValue" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
   	  #else##
-  	    		<input type="number" #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+  	    		<input #if($fieldValue.contains("e")) type="text" #else type="number" #end #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
 				#if($field.getNotNull() && $fieldValue == "")
 					<span class="mandated">* Mandatory field - please enter a value</span>
 				#end
@@ -46,11 +46,11 @@ $fieldValue##
   	#end##
 #else##  if not integer
   #if(!$globalEdit)##
-  	  #set($fieldValue=$field.formatDecimalValue($tableDataRow.get($field)))##
+  	  #set($fieldValue=$field.formatDecimalValue($tableDataRow.get($field)).replace(",",""))##
   	#end##
   	#if($userCanEdit)##
   	  #if($globalEdit || (!$updateAsType))##
-  	    		<input type="number" name="$field.getInternalFieldName()" value="" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
+  	    		<input #if($fieldValue.contains("e")) type="text" #else type="number" #end name="$field.getInternalFieldName()" value="" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
   	  #else##
   	    		<input type="number" #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
 				#if($field.getNotNull() && $tableDataRow.get($field) == "")

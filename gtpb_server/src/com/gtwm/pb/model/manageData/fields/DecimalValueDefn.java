@@ -17,13 +17,7 @@
  */
 package com.gtwm.pb.model.manageData.fields;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
-import org.grlea.log.SimpleLogger;
-
 import com.gtwm.pb.model.interfaces.fields.DecimalValue;
-import com.gtwm.pb.model.manageData.TableData;
 
 public class DecimalValueDefn implements DecimalValue {
 
@@ -47,18 +41,13 @@ public class DecimalValueDefn implements DecimalValue {
 		if (this.decimalValue == null) {
 			return "";
 		} else {
-			logger.debug("Formatted version of " + decimalValue + " is " + formatter.format(decimalValue));
-			return formatter.format(decimalValue);
+			return String.valueOf(decimalValue);
 		}
 	}
 
 	public boolean isNull() {
 		return (this.decimalValue == null);
 	}
-
-	private static final NumberFormat formatter = new DecimalFormat("#0.####################");
-
-	private static final SimpleLogger logger = new SimpleLogger(DecimalValueDefn.class);
 
 	private final Double decimalValue;
 
