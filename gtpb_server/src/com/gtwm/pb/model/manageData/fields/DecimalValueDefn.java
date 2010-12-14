@@ -17,6 +17,9 @@
  */
 package com.gtwm.pb.model.manageData.fields;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import com.gtwm.pb.model.interfaces.fields.DecimalValue;
 
 public class DecimalValueDefn implements DecimalValue {
@@ -41,7 +44,7 @@ public class DecimalValueDefn implements DecimalValue {
 		if (this.decimalValue == null) {
 			return "";
 		} else {
-			return String.valueOf(decimalValue);
+			return formatter.format(decimalValue);
 		}
 	}
 
@@ -49,6 +52,8 @@ public class DecimalValueDefn implements DecimalValue {
 		return (this.decimalValue == null);
 	}
 
+	private static final NumberFormat formatter = new DecimalFormat("#0.####################");
+	
 	private final Double decimalValue;
 
 }
