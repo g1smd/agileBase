@@ -91,9 +91,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 			<div id="intro" class="wrapper">      
 					<div class="content">
 						<div id="bubble">
-							<h1>the best platform for your lean back office</h1>
-							agileBase supports your continuous improvement efforts. 
-							Business users can Plan, Do, Check and Act on the IT system collaboratively and quickly.
+							<h1>The best IT platform for your Lean back office</h1>
+							agileBase - built from the ground up to support
+							continuous improvement, PDCA, A3 reports and other Lean approaches.
 							
 							<!--
 							use agileBase to rapidly prototype and develop data entry and 
