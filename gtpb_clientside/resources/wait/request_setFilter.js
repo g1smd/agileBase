@@ -301,6 +301,7 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 			return; // the current value has changed since this request was sent
 		fLoadReport(sResponseText, oReportBody,null);
 		fEnableDisable('enable');
+		$(parent.pane_2).scrollTop(0);
 	}
 
 	function fSetPostVars() {
