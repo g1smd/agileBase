@@ -17,7 +17,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 
 <html>
 	<head>
-		<title>agileBase</title>
+		<title>agileBase - a dedicated Lean Back Office platform</title>
 		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
@@ -91,10 +91,14 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 			<div id="intro" class="wrapper">      
 					<div class="content">
 						<div id="bubble">
-							<h1>the best platform for lean business applications</h1>
+							<h1>the best platform for your lean back office</h1>
+							agileBase supports your continuous improvement efforts. 
+							Business users can Plan, Do, Check and Act on the IT system collaboratively and quickly.
+							
+							<!--
 							use agileBase to rapidly prototype and develop data entry and 
 							reporting applications that work over the 
-							internet/intranet
+							internet/intranet -->
 						</div>
 				<div id="login">
 					<% if(live) { %>
