@@ -23,7 +23,7 @@
   <input type="checkbox" name="set_calendar_syncable" value="true" onclick="new fChange(this)" #if($calendarSyncable)checked #end> Allow calendar synchronization
   #if($calendarField)
 	by $calendarField<p>
-	<a href="#" onclick="javascript:fShowModalDialog('gui/calendar_export/calendar_export_wizard','Calendar Export', function() {}, 'ok cancel', 'width=650px; height=500px');"></a>
+	<a href="#" onclick="javascript:fShowModalDialog('gui/calendar_export/calendar_export_wizard','Calendar Export', function() {}, 'ok cancel', 'width=650px; height=500px');">View export information</a>
   #else
 	<div class="warningmessage">
 	  <b>No valid dates</b><p>
