@@ -22,11 +22,11 @@
         <form style="padding:10px;">
           <h1>Please choose a calendar to export to</h1><br><br>
 		  <input type="hidden" name="set_custom_string" value="true">
-		  <input type="hidden" name="key" value="calendar_export_destination">
-		  <input type="radio" name="value" value="google" id="export_google" checked>
+		  <input type="hidden" name="stringkey" value="calendar_export_destination">
+		  <input type="radio" name="customstringvalue" value="google" id="export_google" checked>
 		  <label for="export_google"><img style="vertical-align: middle" src="http://calendar.google.com/googlecalendar/images/calendar_logo_sm_en-GB.gif"> Google Calendar</label>
 		  <br><br><br>
-		  <input type="radio" name="value" value="ipad" id="export_ipad">
+		  <input type="radio" name="customstringvalue" value="ipad" id="export_ipad">
 		  <label for="export_ipad"><img style="vertical-align: middle" src="resources/icons/ipad_calendar_blank.png"> iPad or iPhone</label>
         </form>
     ]]>
