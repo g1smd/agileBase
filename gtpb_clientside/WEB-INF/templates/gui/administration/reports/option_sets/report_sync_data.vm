@@ -22,7 +22,8 @@
   Allowing calendar synchronisation will allow users to export information in this report to Google Calendar (or other calendars). Once exported, data is no longer password protected so please be aware of any security considerations<p>
   <input type="checkbox" name="set_calendar_syncable" value="true" onclick="new fChange(this)" #if($calendarSyncable)checked #end> Allow calendar synchronization
   #if($calendarField)
-	by $calendarField
+	by $calendarField<p>
+	<a href="#" onclick="javascript:fShowModalDialog('gui/calendar_export/calendar_export_wizard','Calendar Export', function() {}, 'ok cancel', 'width=650px; height=500px');"></a>
   #else
 	<div class="warningmessage">
 	  <b>No valid dates</b><p>

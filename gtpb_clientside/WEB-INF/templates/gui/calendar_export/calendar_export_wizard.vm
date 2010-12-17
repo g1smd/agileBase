@@ -1,0 +1,35 @@
+##
+##  Copyright 2010 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<request>
+  #parse('gui/customisations/wizard_result.vm')
+  <okTemplate>gui/calendar_export/calendar_export_ok</okTemplate>  
+  <htmlContent><![CDATA[        
+        <form style="padding:10px;">
+          <h1>Export report data to calendar</h1>
+		  #set($internalCompanyName = $view.getLoggedInUser().getCompany().getInternalCompanyName())
+		  #set($internalTableName = $sessionData.getTable().getInternalTableName())
+		  #set($internalReportName = $sessionData.getReport().getInternalReportName())
+		  #set($calendarUrl = $viewTools.getAppUrl().replace("AppController.servlet","CalendarPublisher.ics"))
+		  #set($calendarUrl = "$calendarUrl?internalcompanyname=$internalCompanyName&internaltablename=$internalTableName&internalReportName=$internalReportName")
+		  <textarea>
+		  $calendarUrl
+		  </textarea>
+        </form>
+    ]]>
+  </htmlContent>  
+</request>
