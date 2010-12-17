@@ -29,7 +29,7 @@ import com.gtwm.pb.util.Enumerations.AppAction;
 public interface UsageLoggerInfo {
 
 	public void logReportView(AppUserInfo user, BaseReportInfo report,
-			Map<BaseField, String> reportFilterValues, int rowLimit);
+			Map<BaseField, String> reportFilterValues, int rowLimit, String extraDetails);
 
 	public void logTableSchemaChange(AppUserInfo user, TableInfo table, AppAction appAction,
 			String details);

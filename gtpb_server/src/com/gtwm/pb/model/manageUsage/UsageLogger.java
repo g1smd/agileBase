@@ -144,7 +144,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	}
 
 	public void logReportView(AppUserInfo user, BaseReportInfo report,
-			Map<BaseField, String> reportFilterValues, int rowLimit) {
+			Map<BaseField, String> reportFilterValues, int rowLimit, String extraDetails) {
 		this.logType = LogType.REPORT_VIEW;
 		this.user = user;
 		this.report = report;
@@ -158,6 +158,9 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 				this.details += ", ";
 			}
 			this.details += "row limit = " + rowLimit;
+		}
+		if (extraDetails != null) {
+			this.details += ", extra details = " + extraDetails;
 		}
 		this.timestamp.setTime(System.currentTimeMillis());
 	}
