@@ -32,7 +32,7 @@
   	  #if($globalEdit || (!$updateAsType))##
   	    		<input type="number" name="$field.getInternalFieldName()" value="$fieldValue" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
   	  #else##
-  	    		<input #if($fieldValue.contains("e")) type="text" #else type="number" #end #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+  	    		<input type="number" #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
 				#if($field.getNotNull() && $fieldValue == "")
 					<span class="mandated">* Mandatory field - please enter a value</span>
 				#end

@@ -79,6 +79,7 @@ import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.manageData.fields.DurationValueDefn;
+import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.DashboardPopulator;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
@@ -1293,7 +1294,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 								+ PossibleListOptions.LISTSECONDARYFIELD.getFormInputName())) {
 							BaseField secondaryDisplayField = null;
 							if (!formInputValue.equals("")) {
-								secondaryDisplayField = relationField.getRelatedTable().getField(formInputValue);
+								secondaryDisplayField = relationField.getRelatedTable().getField(
+										formInputValue);
 							}
 							relationField.setSecondaryDisplayField(secondaryDisplayField);
 						}
@@ -1364,7 +1366,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * @see #addIndexDbAction(Connection, String, String)
 	 */
 	private void addFieldToRelationalDb(Connection conn, TableInfo tableToAddTo,
-			BaseField fieldToAdd) throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
+			BaseField fieldToAdd) throws CantDoThatException, SQLException,
+			ObjectNotFoundException, CodingErrorException {
 		String internalTableName = tableToAddTo.getInternalTableName();
 		String internalFieldName = fieldToAdd.getInternalFieldName();
 		String dbType = fieldToAdd.getDbType().toString().toLowerCase();

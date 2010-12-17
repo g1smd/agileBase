@@ -18,6 +18,8 @@
 package com.gtwm.pb.model.interfaces;
 
 import java.util.Set;
+
+import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.Enumerations.UserType;
 
@@ -42,19 +44,19 @@ public interface AppUserInfo {
 
 	public String getInternalUserName();
 
-	public void setUserName(String userName) throws MissingParametersException;
+	public void setUserName(String userName) throws MissingParametersException, CantDoThatException;
 
 	public String getUserName();
 
-	public void setSurname(String surname);
+	public void setSurname(String surname) throws CantDoThatException;
 
 	public String getSurname();
 
-	public void setForename(String forename);
+	public void setForename(String forename) throws CantDoThatException;
 
 	public String getForename();
 
-	public void setPassword(String password) throws MissingParametersException;
+	public void setPassword(String password) throws MissingParametersException, CantDoThatException;
 
 	/**
 	 * Note: It is up to the UI to decide whether it wants to retrieve
@@ -63,9 +65,9 @@ public interface AppUserInfo {
 	 * 
 	 * @return Plain text password
 	 */
-	public String getPassword();
+	public String getPassword() throws CantDoThatException;
 
-	public void setUserType(UserType userType);
+	public void setUserType(UserType userType) throws CantDoThatException;
 
 	public UserType getUserType();
 
@@ -75,14 +77,14 @@ public interface AppUserInfo {
 	 */
 	public Set<BaseReportInfo> getHiddenReports();
 	
-	public void hideReport(BaseReportInfo report);
+	public void hideReport(BaseReportInfo report) throws CantDoThatException;
 	
-	public void unhideReport(BaseReportInfo report);
+	public void unhideReport(BaseReportInfo report) throws CantDoThatException;
 	
 	/**
 	 * Get the initial report this user should see when logging in
 	 */
-	public BaseReportInfo getDefaultReport();
+	public BaseReportInfo getDefaultReport() throws CantDoThatException;
 	
-	public void setDefaultReport(BaseReportInfo report);
+	public void setDefaultReport(BaseReportInfo report) throws CantDoThatException;
 }
