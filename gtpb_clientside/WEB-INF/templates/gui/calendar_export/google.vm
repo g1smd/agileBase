@@ -20,15 +20,19 @@
   <nextTemplate>gui/calendar_export/export_chooser</nextTemplate>
   <htmlContent><![CDATA[        
         <form style="padding:10px;">
-          <h1>Please choose a calendar to export to</h1>
-		  <input type="hidden" name="set_custom_string" value="true">
-		  <input type="hidden" name="key" value="calendar_export_destination">
-		  <input type="radio" name="value" value="google" id="export_google" checked>
-		  <label for="export_google"><img src="http://calendar.google.com/googlecalendar/images/calendar_logo_sm_en-GB.gif"> Google Calendar</label>
-		  <input type="radio" name="value" value="ipad" id="export_ipad" checked>
-		  <label for="export_ipad"><img src="resources/icons/ipad_calendar_blank.png"> iPad or iPhone</label>
+          <h1>Setup instructions</h1>
+		  Once you've carried out these steps once, you won't need to again. Google Calendar will keep itself up to date automatically.
+		  <ol>
+		    <li>Log in to <a href="http://calendar.google.com" target="calendar">calendar.google.com</a></li>
+			<li>From the bottom left of the screen, choose Add -> Add by URL</li>
+			</li>
+			  Copy and paste this code in:<br>
+		      #parse("gui/calendar_export/calc_calendar_url.vm")
+		      <textarea style="width:100%">$calendarUrl</textarea>
+ 			</li>
+		  </ol>
         </form>
     ]]>
   </htmlContent>  
-  <caption>Export report data to calendar</caption>
+  <caption>Export report data to Google calendar</caption>
 </request>
