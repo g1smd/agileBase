@@ -25,10 +25,8 @@
 		  #set($internalTableName = $sessionData.getTable().getInternalTableName())
 		  #set($internalReportName = $sessionData.getReport().getInternalReportName())
 		  #set($calendarUrl = $viewTools.getAppUrl().replace("AppController.servlet","CalendarPublisher.ics"))
-		  #set($calendarUrl = "$calendarUrl?internalcompanyname=$internalCompanyName&internaltablename=$internalTableName&internalReportName=$internalReportName")
-		  <textarea>
-		  $calendarUrl
-		  </textarea>
+		  #set($calendarUrl = "$calendarUrl?internalcompanyname=$internalCompanyName&internaltablename=$internalTableName&internalreportname=$internalReportName")
+		  <textarea style="width:100%">$calendarUrl</textarea>
         </form>
     ]]>
   </htmlContent>  
