@@ -59,11 +59,13 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.TimeZoneRegistry;
 import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
 import net.fortuna.ical4j.model.ValidationException;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VTimeZone;
+import net.fortuna.ical4j.model.parameter.TzId;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Version;
@@ -89,20 +91,20 @@ public final class CalendarPublisher extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException {
-		String internalCompanyName = request.getParameter("internalcompanyname");
+		String internalCompanyName = request.getParameter("c");
 		if (internalCompanyName == null) {
 			throw new ServletException(new MissingParametersException(
-					"internalcompanyname parameter is necessary to export a calendar"));
+					"c (internal company ID) parameter is necessary to export a calendar"));
 		}
-		String internalTableName = request.getParameter("internaltablename");
+		String internalTableName = request.getParameter("t");
 		if (internalTableName == null) {
 			throw new ServletException(new MissingParametersException(
-					"internaltablename parameter is necessary to export a calendar"));
+					"t (internal table ID) parameter is necessary to export a calendar"));
 		}
-		String internalReportName = request.getParameter("internalreportname");
+		String internalReportName = request.getParameter("r");
 		if (internalReportName == null) {
 			throw new ServletException(new MissingParametersException(
-					"internalreportname parameter is necessary to export a calendar"));
+					"r (internal report ID) parameter is necessary to export a calendar"));
 		}
 		String userName = "calendarviewer";
 		String forename = "Calendar";
@@ -124,6 +126,7 @@ public final class CalendarPublisher extends HttpServlet {
 			}
 			BaseReportInfo report = table.getReport(internalReportName);
 			net.fortuna.ical4j.model.Calendar calendar = this.getCalendar(request, report);
+			response.setContentType("text/calendar");
 			PrintWriter out = response.getWriter();
 			CalendarOutputter calendarOutputter = new CalendarOutputter();
 			calendarOutputter.output(calendar, out);
@@ -219,13 +222,18 @@ public final class CalendarPublisher extends HttpServlet {
 				}
 				eventTitleBuilder
 						.delete(eventTitleBuilder.length() - 2, eventTitleBuilder.length());
-				DataRowFieldInfo eventDateInfo = reportDataRow.getValue(eventDateField.getBaseField());
-				logger.debug("Millisecs for date " + eventDateInfo + " are " + eventDateInfo.getKeyValue());
+				DataRowFieldInfo eventDateInfo = reportDataRow.getValue(eventDateField
+						.getBaseField());
+				logger.debug("Millisecs for date " + eventDateInfo + " are "
+						+ eventDateInfo.getKeyValue());
 				String eventEpochTimeString = eventDateInfo.getKeyValue();
 				long eventEpochTime = Long.valueOf(eventEpochTimeString);
 				net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
 						eventEpochTime);
 				VEvent rowEvent = new VEvent(eventIcalDate, eventTitleBuilder.toString());
+				// add Timezone
+				TzId tzParam = new TzId(tz.getProperties().getProperty(Property.TZID).getValue());
+				rowEvent.getProperties().getProperty(Property.DTSTART).getParameters().add(tzParam);
 				rowEvent.getProperties().add(ug.generateUid());
 				calendar.getComponents().add(rowEvent);
 			}

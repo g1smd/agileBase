@@ -802,7 +802,7 @@ public class ReportData implements ReportDataInfo {
 						} else {
 							if (reportField instanceof ReportCalcFieldInfo) {
 								keyValue = "" + dbValue.getTime();
-								displayValue = ((DateField) fieldSchema).formatDate(dbValue);
+								displayValue = ((ReportCalcFieldInfo) reportField).formatDate(dbValue);
 							} else {
 								keyValue = "" + dbValue.getTime();
 								// See DateFieldDefn constructor for format
@@ -835,7 +835,7 @@ public class ReportData implements ReportDataInfo {
 							} else {
 								if (reportField instanceof ReportCalcFieldInfo) {
 									keyValue = "" + dbValue.getTime();
-									displayValue = ((DateField) fieldSchema).formatDate(dbValue);
+									displayValue = ((ReportCalcFieldInfo) reportField).formatDate(dbValue);
 								} else {
 									keyValue = "" + dbValue.getTime();
 									// See DateFieldDefn constructor for format
