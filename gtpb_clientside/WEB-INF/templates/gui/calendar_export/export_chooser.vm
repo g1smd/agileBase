@@ -16,11 +16,10 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($calendarExportDestination = $sessionData.getCustomString("calendar_export_destination"))
-#if($calendar_export_destination == "google")
+#if($calendarExportDestination == "google")
   #parse("gui/calendar_export/google.vm")
-#elseif($calendar_export_destination == "ipad")
+#elseif($calendarExportDestination == "ipad")
   #parse("gui/calendar_export/ipad.vm")
 #else
   Error: can't find template for calendar export destination calendar_export_destination
 #end
-	
