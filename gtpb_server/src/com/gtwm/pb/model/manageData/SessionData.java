@@ -32,6 +32,7 @@ import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.TableDependencyException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.auth.DisallowedException;
+import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.SessionContext;
 import com.gtwm.pb.util.Enumerations.AppAction;
@@ -73,7 +74,7 @@ public final class SessionData implements SessionDataInfo {
 	 */
 	public SessionData(DatabaseInfo databaseDefn, DataSource relationalDataSource,
 			HttpServletRequest request) throws SQLException, DisallowedException,
-			ObjectNotFoundException, CodingErrorException {
+			ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		// Sessions are created when someone logs in
 		AppUserInfo user = databaseDefn.getAuthManager().getUserByUserName(request,
 				request.getRemoteUser());

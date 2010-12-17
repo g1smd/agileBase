@@ -94,11 +94,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 							<h1>The best IT platform for your Lean back office</h1>
 							agileBase - built from the ground up to support
 							continuous improvement, PDCA, A3 reports and other Lean approaches.
-							
-							<!--
-							use agileBase to rapidly prototype and develop data entry and 
-							reporting applications that work over the 
-							internet/intranet -->
 						</div>
 				<div id="login">
 					<% if(live) { %>
@@ -132,9 +127,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 							<div class="divider">
 								<h1>How do I use it?</h1>
 								<p>agileBase is perfect for organisations in rapidly changing environments, 
-								where scalability goes hand in hand with the need for a rapid build / alter cycle.</p>
+								where scalability goes hand in hand with the need for a rapid Plan/Do/Check/Act cycle.</p>
 								<p>Our vision was to make a product that allows business analysts
-								to create lean, agile, Just-In-Time (JIT) back offices.</p>
+								to create Lean, agile, Just-In-Time (JIT) back offices.</p>
 							</div>
 							<div>
 								<h1>Why do I use it?</h1>
@@ -155,7 +150,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 								<span></td>
 								</tr></table>
 								</div>
-								<p>As a cutting edge lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 
+								<p>As a cutting edge Lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 
 								at a pace to match a company's evolving learning, knowledge and understanding.</p>
 							</div>
 						</div>   <!-- end of main --> 
