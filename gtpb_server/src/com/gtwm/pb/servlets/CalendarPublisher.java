@@ -83,12 +83,6 @@ public final class CalendarPublisher extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException {
-		HttpSession session = request.getSession();
-		SessionDataInfo sessionData = (SessionDataInfo) session
-				.getAttribute("com.gtwm.pb.servlets.sessionData");
-		if (sessionData == null) {
-			throw new ServletException("No session found");
-		}
 		String internalCompanyName = request.getParameter("internalcompanyname");
 		if (internalCompanyName == null) {
 			throw new ServletException(new MissingParametersException(
