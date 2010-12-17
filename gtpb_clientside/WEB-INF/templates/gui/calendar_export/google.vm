@@ -25,7 +25,7 @@
 		  <ol>
 		    <li>Log in to <a href="http://calendar.google.com" target="calendar">calendar.google.com</a></li>
 			<li>From the bottom left of the screen, choose Add -> Add by URL</li>
-			</li>
+			<li>
 			  Copy and paste this code in:<br>
 		      #parse("gui/calendar_export/calc_calendar_url.vm")
 		      <textarea style="width:100%">$calendarUrl</textarea>
