@@ -24,10 +24,10 @@
 		  <input type="hidden" name="set_custom_string" value="true">
 		  <input type="hidden" name="key" value="calendar_export_destination">
 		  <input type="radio" name="value" value="google" id="export_google" checked>
-		  <label for="export_google"><img src="http://calendar.google.com/googlecalendar/images/calendar_logo_sm_en-GB.gif"> Google Calendar</label>
+		  <label for="export_google"><img style="vertical-align: middle" src="http://calendar.google.com/googlecalendar/images/calendar_logo_sm_en-GB.gif"> Google Calendar</label>
 		  <p>
 		  <input type="radio" name="value" value="ipad" id="export_ipad" checked>
-		  <label for="export_ipad"><img src="resources/icons/ipad_calendar_blank.png"> iPad or iPhone</label>
+		  <label for="export_ipad"><img style="vertical-align: middle" src="resources/icons/ipad_calendar_blank.png"> iPad or iPhone</label>
         </form>
     ]]>
   </htmlContent>  
