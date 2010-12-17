@@ -180,9 +180,10 @@ public final class CalendarPublisher extends HttpServlet {
 				// the event date
 				// ignore any blank fields
 				// for numeric and boolean fields, include the field title
-				String eventDateString = reportDataRow.getValue(eventDateField.getBaseField())
+				String eventEpochTimeString = reportDataRow.getValue(eventDateField.getBaseField())
 						.getKeyValue();
-				DateValue eventDateValue = new DateValueDefn(eventDateString);
+				long eventEpochTime = Long.valueOf(eventEpochTimeString);
+				DateValue eventDateValue = new DateValueDefn(eventEpochTime);
 				StringBuilder eventTitleBuilder = new StringBuilder();
 				REPORT_FIELD_LOOP: for (ReportFieldInfo reportField : report.getReportFields()) {
 					BaseField baseField = reportField.getBaseField();
