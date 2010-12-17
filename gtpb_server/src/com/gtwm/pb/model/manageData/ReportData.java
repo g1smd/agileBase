@@ -801,11 +801,13 @@ public class ReportData implements ReportDataInfo {
 							keyValue = "";
 						} else {
 							if (reportField instanceof ReportCalcFieldInfo) {
+								keyValue = "" + dbValue.getTime();
+								displayValue = ((DateField) fieldSchema).formatDate(dbValue);
+							} else {
+								keyValue = "" + dbValue.getTime();
 								// See DateFieldDefn constructor for format
 								// explanation
-								keyValue = ((ReportCalcFieldInfo) reportField).formatDate(dbValue);
-							} else {
-								keyValue = ((DateField) fieldSchema).formatDate(dbValue);
+								displayValue = ((DateField) fieldSchema).formatDate(dbValue);
 							}
 						}
 					} else {
@@ -832,12 +834,13 @@ public class ReportData implements ReportDataInfo {
 								keyValue = "";
 							} else {
 								if (reportField instanceof ReportCalcFieldInfo) {
+									keyValue = "" + dbValue.getTime();
+									displayValue = ((DateField) fieldSchema).formatDate(dbValue);
+								} else {
+									keyValue = "" + dbValue.getTime();
 									// See DateFieldDefn constructor for format
 									// explanation
-									keyValue = ((ReportCalcFieldInfo) reportField)
-											.formatDate(dbValue);
-								} else {
-									keyValue = ((DateField) fieldSchema).formatDate(dbValue);
+									displayValue = ((DateField) fieldSchema).formatDate(dbValue);
 								}
 							}
 						} else if (fieldSchema.getDbType().equals(DatabaseFieldType.FLOAT)) {
