@@ -527,7 +527,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
 		AppUserInfo user = this.databaseDefn.getAuthManager().getUserByUserName(this.request,
 				this.request.getRemoteUser());
-		usageLogger.logReportView(user, report, reportFilterValues, rowLimit);
+		usageLogger.logReportView(user, report, reportFilterValues, rowLimit, null);
 		UsageLogger.startLoggingThread(usageLogger);
 		return reportDataRows;
 	}

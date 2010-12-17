@@ -30,12 +30,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServlet;
 import javax.sql.DataSource;
-
 import org.grlea.log.SimpleLogger;
-
 import com.gtwm.pb.auth.PublicUser;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -45,11 +42,9 @@ import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
-import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
-import com.gtwm.pb.model.interfaces.fields.DateValue;
-import com.gtwm.pb.model.manageData.fields.DateValueDefn;
+import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -125,7 +120,7 @@ public final class CalendarPublisher extends HttpServlet {
 						+ " not found in company " + company);
 			}
 			BaseReportInfo report = table.getReport(internalReportName);
-			net.fortuna.ical4j.model.Calendar calendar = this.getCalendar(request, report);
+			net.fortuna.ical4j.model.Calendar calendar = this.getCalendar(request, publicUser, report);
 			response.setContentType("text/calendar");
 			PrintWriter out = response.getWriter();
 			CalendarOutputter calendarOutputter = new CalendarOutputter();
@@ -145,7 +140,7 @@ public final class CalendarPublisher extends HttpServlet {
 		}
 	}
 
-	private net.fortuna.ical4j.model.Calendar getCalendar(HttpServletRequest request,
+	private net.fortuna.ical4j.model.Calendar getCalendar(HttpServletRequest request, AppUserInfo publicUser,
 			BaseReportInfo report) throws CantDoThatException, CodingErrorException, SQLException,
 			ParseException, SocketException {
 		if (!report.getCalendarSyncable()) {
@@ -224,8 +219,6 @@ public final class CalendarPublisher extends HttpServlet {
 						.delete(eventTitleBuilder.length() - 2, eventTitleBuilder.length());
 				DataRowFieldInfo eventDateInfo = reportDataRow.getValue(eventDateField
 						.getBaseField());
-				logger.debug("Millisecs for date " + eventDateInfo + " are "
-						+ eventDateInfo.getKeyValue());
 				String eventEpochTimeString = eventDateInfo.getKeyValue();
 				long eventEpochTime = Long.valueOf(eventEpochTimeString);
 				net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
@@ -237,6 +230,11 @@ public final class CalendarPublisher extends HttpServlet {
 				rowEvent.getProperties().add(ug.generateUid());
 				calendar.getComponents().add(rowEvent);
 			}
+			// Log the report access
+			String remoteHost = request.getRemoteHost();
+			UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
+			usageLogger.logReportView(publicUser, report, reportFilterValues, rowLimit, remoteHost);
+			UsageLogger.startLoggingThread(usageLogger);
 			return calendar;
 		} finally {
 			if (conn != null) {
