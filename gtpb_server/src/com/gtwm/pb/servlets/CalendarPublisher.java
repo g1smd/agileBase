@@ -33,6 +33,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServlet;
 import javax.sql.DataSource;
+
+import org.grlea.log.SimpleLogger;
+
 import com.gtwm.pb.auth.PublicUser;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -174,10 +177,6 @@ public final class CalendarPublisher extends HttpServlet {
 				// the event date
 				// ignore any blank fields
 				// for numeric and boolean fields, include the field title
-				String eventEpochTimeString = reportDataRow.getValue(eventDateField.getBaseField())
-						.getKeyValue();
-				long eventEpochTime = Long.valueOf(eventEpochTimeString);
-				DateValue eventDateValue = new DateValueDefn(eventEpochTime);
 				StringBuilder eventTitleBuilder = new StringBuilder();
 				REPORT_FIELD_LOOP: for (ReportFieldInfo reportField : report.getReportFields()) {
 					BaseField baseField = reportField.getBaseField();
@@ -214,8 +213,12 @@ public final class CalendarPublisher extends HttpServlet {
 				}
 				eventTitleBuilder
 						.delete(eventTitleBuilder.length() - 2, eventTitleBuilder.length());
+				DataRowFieldInfo eventDateInfo = reportDataRow.getValue(eventDateField.getBaseField());
+				logger.debug("Millisecs for date " + eventDateInfo + " are " + eventDateInfo.getKeyValue());
+				String eventEpochTimeString = eventDateInfo.getKeyValue();
+				long eventEpochTime = Long.valueOf(eventEpochTimeString);
 				net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
-						eventDateValue.getValueDate().getTime());
+						eventEpochTime);
 				VEvent rowEvent = new VEvent(eventIcalDate, eventTitleBuilder.toString());
 				rowEvent.getProperties().add(ug.generateUid());
 				calendar.getComponents().add(rowEvent);
@@ -231,4 +234,6 @@ public final class CalendarPublisher extends HttpServlet {
 	private static final int rowLimit = 10000;
 
 	private DatabaseInfo databaseDefn = null;
+
+	private static final SimpleLogger logger = new SimpleLogger(CalendarPublisher.class);
 }
