@@ -107,6 +107,7 @@ import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.HttpRequestUtil;
 import com.gtwm.pb.util.InconsistentStateException;
 import com.gtwm.pb.util.MissingParametersException;
@@ -2167,6 +2168,49 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
+	public synchronized void setSummaryReportFilter(HttpServletRequest request, BaseReportInfo report, SummaryFilter summaryFilter) throws SQLException, DisallowedException, ObjectNotFoundException, CantDoThatException {
+		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+		}
+		ReportSummaryInfo reportSummary = report.getReportSummary();
+		HibernateUtil.activateObject(reportSummary);
+		reportSummary.setSummaryFilter(summaryFilter);
+		this.dataManagement.logLastSchemaChangeTime(request);
+		// Test change by selecting rows from the database
+		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
+		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
+		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
+				company, report.getReportSummary(), blankFilterValues, false);
+		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
+		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		usageLogger.logReportSchemaChange(user, report, AppAction.SET_SUMMARY_FILTER,
+				"summary filter: " + summaryFilter);
+		UsageLogger.startLoggingThread(usageLogger);
+	}
+	
+	public synchronized void setSummaryReportFilterField(HttpServletRequest request, ReportFieldInfo reportField)  throws SQLException, DisallowedException, ObjectNotFoundException, CantDoThatException {
+		BaseReportInfo report = reportField.getParentReport();
+		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+		}
+		ReportSummaryInfo reportSummary = report.getReportSummary();
+		HibernateUtil.activateObject(reportSummary);
+		reportSummary.setFilterReportField(reportField);
+		this.dataManagement.logLastSchemaChangeTime(request);
+		// Test change by selecting rows from the database
+		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
+		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
+		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
+				company, report.getReportSummary(), blankFilterValues, false);
+		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
+		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		usageLogger.logReportSchemaChange(user, report, AppAction.SET_SUMMARY_FILTER_FIELD,
+				"report field: " + reportField);
+		UsageLogger.startLoggingThread(usageLogger);
+	}
+	
 	public synchronized void addGroupingToSummaryReport(HttpServletRequest request,
 			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException {
@@ -2265,7 +2309,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				AppAction.REMOVE_FUNCTION_FROM_SUMMARY_REPORT, "function: " + removedFunction);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
-
+	
 	public synchronized void saveSummaryReport(HttpServletRequest request, BaseReportInfo report,
 			String summaryTitle) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException {

@@ -33,6 +33,8 @@ import java.util.Iterator;
 import java.util.EnumSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -50,6 +52,7 @@ import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
+import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -345,6 +348,24 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	private void setReport(BaseReportInfo report) {
 		this.report = report;
 	}
+	
+	@Enumerated(EnumType.STRING)
+	public SummaryFilter getSummaryFilter() {
+		return this.summaryFilter;
+	}
+	
+	public void setSummaryFilter(SummaryFilter summaryFilter) {
+		this.summaryFilter = summaryFilter;
+	}
+	
+	@ManyToOne(targetEntity=ReportFieldDefn.class)
+	public ReportFieldInfo getFilterReportField() {
+		return this.filterReportField;
+	}
+	
+	public void setFilterReportField(ReportFieldInfo filterReportField) {
+		this.filterReportField = filterReportField;
+	}
 
 	/**
 	 * Return the list of legitimate aggregate functions
@@ -413,6 +434,10 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 
 	private Set<ReportSummaryAggregateInfo> aggregateFunctions = new LinkedHashSet<ReportSummaryAggregateInfo>();
 
+	private SummaryFilter summaryFilter = null;
+	
+	private ReportFieldInfo filterReportField = null;
+	
 	private BaseReportInfo report;
 
 	private String title = "";

@@ -20,6 +20,7 @@ package com.gtwm.pb.model.interfaces;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 
@@ -120,6 +121,20 @@ public interface ReportSummaryInfo {
 	public ReportSummaryAggregateInfo getAggregateFunctionByInternalName(
 			String internalAggregateName) throws ObjectNotFoundException;
 
+	/**
+	 * Return the filter acting on this summary, or null if there is none
+	 */
+	public SummaryFilter getSummaryFilter();
+	
+	public void setSummaryFilter(SummaryFilter summaryFilter);
+	
+	/**
+	 * Return the field that the summary filter acts on
+	 */
+	public ReportFieldInfo getFilterReportField();
+	
+	public void setFilterReportField(ReportFieldInfo reportField);
+	
 	/**
 	 * @return True if the summary contains any numeric i.e non-COUNT aggregate
 	 *         functions, e.g SUM, AVERAGE etc.
