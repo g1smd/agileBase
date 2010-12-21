@@ -31,6 +31,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
+import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
@@ -209,8 +210,8 @@ public interface DatabaseInfo {
 	 */
 	public BaseField addField(HttpServletRequest request, Connection conn, TableInfo table,
 			String internalFieldName, String fieldType, String fieldName, String fieldDesc,
-			boolean unique, boolean hidden, boolean notNull) throws SQLException, ObjectNotFoundException,
-			DisallowedException, CantDoThatException, CodingErrorException;
+			boolean unique, boolean hidden, boolean notNull) throws SQLException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException, CodingErrorException;
 
 	/**
 	 * Update basic field details - name and description
@@ -223,7 +224,8 @@ public interface DatabaseInfo {
 	 * for content, date precision etc.
 	 */
 	public void updateFieldOption(HttpServletRequest request, BaseField field)
-			throws DisallowedException, CantDoThatException, CodingErrorException, SQLException, ObjectNotFoundException;
+			throws DisallowedException, CantDoThatException, CodingErrorException, SQLException,
+			ObjectNotFoundException;
 
 	public void setFieldIndex(TableInfo table, BaseField field, int newindex)
 			throws ObjectNotFoundException, CantDoThatException;
@@ -424,6 +426,21 @@ public interface DatabaseInfo {
 	public void removeFunctionFromSummaryReport(HttpServletRequest request, BaseReportInfo report,
 			String internalAggregateName) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException, SQLException;
+
+	/**
+	 * Sets a filter criteria on the report filter (which acts on the field set
+	 * with with setSummaryReportFilterField)
+	 */
+	public void setSummaryReportFilter(HttpServletRequest request, BaseReportInfo report,
+			SummaryFilter summaryFilter) throws SQLException, DisallowedException,
+			ObjectNotFoundException, CantDoThatException;
+
+	/**
+	 * @see setSummaryReportFilter(HttpServletRequest, BaseReportInfo,
+	 *      SummaryFilter)
+	 */
+	public void setSummaryReportFilterField(HttpServletRequest request, ReportFieldInfo reportField)
+			throws SQLException, DisallowedException, ObjectNotFoundException, CantDoThatException;
 
 	/**
 	 * Makes a copy of the current summary report and saves it in the collection
