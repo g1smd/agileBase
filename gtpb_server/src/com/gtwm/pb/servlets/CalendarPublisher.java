@@ -126,16 +126,22 @@ public final class CalendarPublisher extends HttpServlet {
 			CalendarOutputter calendarOutputter = new CalendarOutputter();
 			calendarOutputter.output(calendar, out);
 		} catch (AgileBaseException abex) {
+			logger.error("Error preparing calendar for export: " + abex);
 			throw new ServletException("Error preparing calendar: " + abex);
 		} catch (SocketException sex) {
+			logger.error("Error preparing calendar for export: " + sex);
 			throw new ServletException("Error preparing calendar: " + sex);
 		} catch (SQLException sqlex) {
+			logger.error("Error preparing calendar for export: " + sqlex);
 			throw new ServletException("Error preparing calendar: " + sqlex);
 		} catch (ParseException pex) {
+			logger.error("Error preparing calendar for export: " + pex);
 			throw new ServletException("Error preparing calendar: " + pex);
 		} catch (IOException ioex) {
+			logger.error("Error preparing calendar for export: " + ioex);
 			throw new ServletException("Error preparing calendar: " + ioex);
 		} catch (ValidationException vex) {
+			logger.error("Error preparing calendar for export: " + vex);
 			throw new ServletException("Error preparing calendar: " + vex);
 		}
 	}
