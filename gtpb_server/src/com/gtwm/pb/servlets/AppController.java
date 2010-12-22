@@ -454,6 +454,12 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.removeFunctionFromSummaryReport(sessionData, request,
 							databaseDefn);
 					break;
+				case SET_SUMMARY_FILTER:
+					ServletSchemaMethods.setSummaryReportFilter(sessionData, request, databaseDefn);
+					break;
+				case SET_SUMMARY_FILTER_FIELD:
+					ServletSchemaMethods.setSummaryReportFilterField(sessionData, request, databaseDefn);
+					break;
 				case SAVE_REPORT_SUMMARY:
 					ServletSchemaMethods.saveSummaryReport(sessionData, request, databaseDefn);
 					break;

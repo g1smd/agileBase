@@ -64,6 +64,7 @@ import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.HttpRequestUtil;
@@ -2054,6 +2055,64 @@ public final class ServletSchemaMethods {
 		}
 	}
 
+	public synchronized static void setSummaryReportFilter(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException, CantDoThatException, SQLException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, ServletUtilMethods.USE_SESSION);
+		String summaryFilterString = request.getParameter("summaryfilter");
+		if (summaryFilterString == null) {
+			throw new MissingParametersException("summaryfilter parameter is needed to set the summary filter");
+		}
+		SummaryFilter summaryFilter = SummaryFilter.valueOf(summaryFilterString.toUpperCase());
+		try {
+			HibernateUtil.startHibernateTransaction();
+			databaseDefn.setSummaryReportFilter(request, report, summaryFilter);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			databaseDefn.setSummaryReportFilter(request, report, null);
+			throw new CantDoThatException("summary filter addition failed", hex);
+		} catch (AgileBaseException pex) {
+			rollbackConnections(null);
+			databaseDefn.setSummaryReportFilter(request, report, null);
+			throw new CantDoThatException("summary filter addition failed", pex);
+		} catch (SQLException sqlex) {
+			rollbackConnections(null);
+			databaseDefn.setSummaryReportFilter(request, report, null);
+			throw new CantDoThatException("summary filter addition failed", sqlex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
+	public synchronized static void setSummaryReportFilterField(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException, CantDoThatException, SQLException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, ServletUtilMethods.USE_SESSION);
+		String internalReportName = request.getParameter("internalreportname");
+		if (internalReportName == null) {
+			throw new MissingParametersException("internalreportname parameter is needed to set the summary filter");
+		}
+		ReportFieldInfo reportField = report.getReportField(internalReportName);
+		try {
+			HibernateUtil.startHibernateTransaction();
+			databaseDefn.setSummaryReportFilterField(request, reportField);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			databaseDefn.setSummaryReportFilter(request, report, null);
+			throw new CantDoThatException("summary filter field addition failed", hex);
+		} catch (AgileBaseException pex) {
+			rollbackConnections(null);
+			databaseDefn.setSummaryReportFilter(request, report, null);
+			throw new CantDoThatException("summary filter field addition failed", pex);
+		} catch (SQLException sqlex) {
+			rollbackConnections(null);
+			databaseDefn.setSummaryReportFilter(request, report, null);
+			throw new CantDoThatException("summary filter field addition failed", sqlex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
 	public synchronized static void addGroupingToSummaryReport(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			CantDoThatException, MissingParametersException, ObjectNotFoundException {
