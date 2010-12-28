@@ -80,7 +80,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   </a></span>&nbsp;
   #end
 #else
-  Choose groupings:
+  Groupings:
 #end
 <script language="JavaScript">
 function fShowAddGroup() {
@@ -92,12 +92,28 @@ function fShowAddAgg() {
   jQuery("#addAgg").show("normal");
   jQuery("#addAggLink").hide();
 }
+
+function fSubmitGroup() {
+  if (jQuery("input#groupselect").val() != "") {
+    document.addgrouping.submit();
+  }
+}
+
+function fSubmitFunction() {
+  var aggregateFunction = jQuery("input#aggregatefunction").val();
+  var aggregateFunctionField = jQuery("input#aggregatefunctionfield").val();
+  if (aggregateFunction != "" && aggregateFunctionField != "") {
+    document.addaggregate.submit();
+  }
+}
+ 
 </script>
 <a href="#" onclick="fShowAddGroup();" id="addGroupLink">add...</a>
 <div id="addGroup" style="display:none"><br>
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_summary_report" value="1" />
-  						            <select name="internalfieldname">
+  						            <select name="internalfieldname" id="groupselect" onchange="fSubmitGroup();">
+										  <option value="" selected>-- please choose one --</option>
 							              #foreach($reportField in $report.getReportFields())
 												#set($baseField = $reportField.getBaseField())
 												#set($category = $baseField.getFieldCategory())
@@ -122,7 +138,7 @@ function fShowAddAgg() {
 								                #end
 							              #end
 					            	</select>
-									<input type="submit" value="add group">
+									<!-- <input type="submit" value="add group"> -->
 </div>
 </form>
 <br>
@@ -135,18 +151,20 @@ function fShowAddAgg() {
     </a></span>&nbsp;
   #end
 #else
-  Choose functions: 
+  Functions: 
 #end
 <a href="#" onclick="fShowAddAgg();" id="addAggLink">add...</a>
 <div id="addAgg" style="display:none"><br>
 					            	<input type="hidden" name="return" value="$return_template" />
 						            <input type="hidden" name="add_function_to_summary_report" value="1" />
-						            <select name="function" id="aggregatefunction">
+						            <select name="function" id="aggregatefunction" onchange="fSubmitFunction();">
+										<option value="" selected>-- please choose a function --</option>
 						              	#foreach($function in $reportSummary.getPossibleFunctionTypes())
 							              	  <option value="$function.toString()">$function.getLabel()</option>
 							            #end
 						            </select> 
-									<select name="internalfieldname">
+									<select name="internalfieldname" id="aggreggatefunctionfield" onchange="fSubmitFunction()">
+										  <option value="" selected>-- please choose a field --</option>
 							              #foreach($reportField in $report.getReportFields())
 							              	#set($baseField = $reportField.getBaseField())
 							              	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
@@ -156,7 +174,7 @@ function fShowAddAgg() {
 							                #end
 							              #end
 						            </select>
-									<input type="submit" value="add calculation">
+									<-- <input type="submit" value="add calculation"> -->
 </div>
 </form><br>
 <form name="savechart">
