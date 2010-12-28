@@ -355,14 +355,12 @@ public class Enumerations {
 	}
 
 	public enum SummaryFilter {
-		ALL("All", ""), LAST_30_DAYS("Last 30 days", "{fieldvalue} > (now() - '30 days'::interval)"), LAST_MONTH(
-				"Last calendar month",
-				"{fieldvalue} >= (date_trunc('month',now()) - '@1 months'::interval) AND {fieldvalue} < (date_trunc('month',now()) - '@0 months'::interval)"), THIS_YEAR(
+		LAST_30_DAYS("Last 30 days", "{fieldvalue} > (now() - '30 days'::interval)"), THIS_YEAR(
 				"This calendar year",
 				"{fieldvalue} >= (date_trunc('year',now()) - '@0 months'::interval) AND {fieldvalue} < (date_trunc('year',now()) - '@0 months'::interval)"), YEAR_ON_YEAR(
 				"Last month year on year",
-				"date_part('month', {fieldvalue}) = date_part('month', now() - '1 month'::interval)"), THREE_MONTH_AVERAGE(
-				"Three month average",
+				"date_part('month', {fieldvalue}) = date_part('month', now() - '1 month'::interval)"), LAST_90_DAYS(
+				"Last 90 days",
 				"{fieldvalue} >= (now() - '90 days'::interval) AND {fieldvalue} < now()");
 
 		public String getDescription() {

@@ -176,12 +176,14 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		String groupByFieldsCsv = "";
 		String aggregateFunctionsCsv = "";
 		Set<ReportSummaryGroupingInfo> groupings = this.getGroupings();
+		boolean groupingsContainDateField = false;
 		for (ReportSummaryGroupingInfo grouping : groupings) {
 			String internalFieldName = grouping.getGroupingReportField().getInternalFieldName();
 			SummaryGroupingModifier groupingModifier = grouping.getGroupingModifier();
 			if (groupingModifier == null) {
 				groupByFieldsCsv += internalFieldName;
 			} else {
+				groupingsContainDateField = true;
 				switch (groupingModifier) {
 				case DATE_YEAR:
 					groupByFieldsCsv += "date_part('year'," + internalFieldName + ")";
@@ -221,14 +223,22 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 				filterValues, exactFilters);
 		String filterArgs = null;
 		List<ReportQuickFilterInfo> filtersUsed = null;
-		// TODO: there is only one WHERE clause - should be an improvement over a loop
+		// TODO: there is only one WHERE clause - there should be an improvement
+		// over a loop
 		for (Map.Entry<String, List<ReportQuickFilterInfo>> whereClause : whereClauseMap.entrySet()) {
 			filterArgs = whereClause.getKey();
 			filtersUsed = whereClause.getValue();
 		}
 		// Add permanent filters if there are any
-		if (this.getSummaryFilter() != null && this.getFilterReportField() != null) {
-			
+		SummaryFilter summaryFilter = this.getSummaryFilter();
+		ReportFieldInfo filterReportField = this.getFilterReportField();
+		if (summaryFilter != null && filterReportField != null) {
+			String filterSQL = summaryFilter.getSQL();
+			if (filterArgs.length() > 0) {
+				filterArgs += " AND ";
+			}
+			filterArgs += filterSQL.replace("{fieldvalue}",
+					filterReportField.getInternalFieldName());
 		}
 		String sqlForSummary = null;
 		boolean validSummary = true;
@@ -239,8 +249,13 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 				sqlForSummary += " WHERE " + filterArgs;
 			}
 			sqlForSummary += " GROUP BY " + groupByFieldsCsv;
-			//Note: DESC will only work for one field, if there are multiple fields, we should really add DESC to each
-			sqlForSummary += " ORDER BY " + aggregateFunctionsCsv + " DESC";
+			if (groupingsContainDateField) {
+				sqlForSummary += " ORDER BY " + groupByFieldsCsv;
+			} else {
+				// Note: DESC will only work for one field, if there are multiple
+				// fields, we should really add DESC to each
+				sqlForSummary += " ORDER BY " + aggregateFunctionsCsv + " DESC";
+			}
 		} else if (this.getAggregateFunctionsDirect().size() > 0) {
 			sqlForSummary = "SELECT " + aggregateFunctionsCsv + " FROM "
 					+ this.getReport().getInternalReportName();
@@ -353,21 +368,21 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	private void setReport(BaseReportInfo report) {
 		this.report = report;
 	}
-	
+
 	@Enumerated(EnumType.STRING)
 	public SummaryFilter getSummaryFilter() {
 		return this.summaryFilter;
 	}
-	
+
 	public void setSummaryFilter(SummaryFilter summaryFilter) {
 		this.summaryFilter = summaryFilter;
 	}
-	
-	@ManyToOne(targetEntity=ReportFieldDefn.class)
+
+	@ManyToOne(targetEntity = ReportFieldDefn.class)
 	public ReportFieldInfo getFilterReportField() {
 		return this.filterReportField;
 	}
-	
+
 	public void setFilterReportField(ReportFieldInfo filterReportField) {
 		this.filterReportField = filterReportField;
 	}
@@ -440,9 +455,9 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	private Set<ReportSummaryAggregateInfo> aggregateFunctions = new LinkedHashSet<ReportSummaryAggregateInfo>();
 
 	private SummaryFilter summaryFilter = null;
-	
+
 	private ReportFieldInfo filterReportField = null;
-	
+
 	private BaseReportInfo report;
 
 	private String title = "";
