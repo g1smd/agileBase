@@ -221,9 +221,14 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 				filterValues, exactFilters);
 		String filterArgs = null;
 		List<ReportQuickFilterInfo> filtersUsed = null;
+		// TODO: there is only one WHERE clause - should be an improvement over a loop
 		for (Map.Entry<String, List<ReportQuickFilterInfo>> whereClause : whereClauseMap.entrySet()) {
 			filterArgs = whereClause.getKey();
 			filtersUsed = whereClause.getValue();
+		}
+		// Add permanent filters if there are any
+		if (this.getSummaryFilter() != null && this.getFilterReportField() != null) {
+			
 		}
 		String sqlForSummary = null;
 		boolean validSummary = true;
