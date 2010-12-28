@@ -94,7 +94,7 @@ function fShowAddAgg() {
 }
 
 function fSubmitGroup() {
-  if (jQuery("input#groupselect").val() != "") {
+  if (jQuery("input#groupselect").val() != "gtpb_please_choose") {
     document.addgrouping.submit();
   }
 }
@@ -103,7 +103,7 @@ function fSubmitFunction() {
   var aggregateFunction = jQuery("input#aggregatefunction").val();
   var aggregateFunctionField = jQuery("input#aggregatefunctionfield").val();
   alert("aggregateFunctionField is [" + aggregateFunctionField + "]");
-  if (aggregateFunction != "" && aggregateFunctionField != "") {
+  if (aggregateFunction != "gtpb_please_choose" && aggregateFunctionField != "gtpb_please_choose") {
     document.addaggregate.submit();
   }
 }
@@ -114,7 +114,7 @@ function fSubmitFunction() {
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_summary_report" value="1" />
   						            <select name="internalfieldname" id="groupselect" onchange="fSubmitGroup();">
-										  <option value="" selected>-- please choose one --</option>
+										  <option value="gtpb_please_choose" selected>-- please choose one --</option>
 							              #foreach($reportField in $report.getReportFields())
 												#set($baseField = $reportField.getBaseField())
 												#set($category = $baseField.getFieldCategory())
@@ -159,13 +159,13 @@ function fSubmitFunction() {
 					            	<input type="hidden" name="return" value="$return_template" />
 						            <input type="hidden" name="add_function_to_summary_report" value="1" />
 						            <select name="function" id="aggregatefunction" onchange="fSubmitFunction();">
-										<option value="" selected>-- please choose a function --</option>
+										<option value="gtpb_please_choose" selected>-- please choose a function --</option>
 						              	#foreach($function in $reportSummary.getPossibleFunctionTypes())
 							              	  <option value="$function.toString()">$function.getLabel()</option>
 							            #end
 						            </select> 
 									<select name="internalfieldname" id="aggreggatefunctionfield" onchange="fSubmitFunction()">
-										  <option value="" selected>-- please choose a field --</option>
+										  <option value="gtpb_please_choose" selected>-- please choose a field --</option>
 							              #foreach($reportField in $report.getReportFields())
 							              	#set($baseField = $reportField.getBaseField())
 							              	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
