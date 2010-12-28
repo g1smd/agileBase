@@ -102,7 +102,6 @@ function fSubmitGroup() {
 function fSubmitFunction() {
   var aggregateFunction = jQuery("#aggregatefunction").val();
   var aggregateFunctionField = jQuery("#aggregatefunctionfield").val();
-  alert("aggregateFunctionField is [" + aggregateFunctionField + "]");
   if (aggregateFunction != "gtpb_please_choose" && aggregateFunctionField != "gtpb_please_choose") {
     document.addaggregate.submit();
   }
