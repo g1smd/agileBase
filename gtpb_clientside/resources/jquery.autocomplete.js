@@ -251,7 +251,6 @@ $.Autocompleter = function(input, options) {
 		// Oliver
 		valueSelected = true;
 		hideResultsNow();
-		alert('input value set to ' + v);
 		$input.trigger("result", [selected.data, selected.value]);
 		return true;
 	}
