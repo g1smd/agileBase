@@ -102,6 +102,7 @@ function fSubmitGroup() {
 function fSubmitFunction() {
   var aggregateFunction = jQuery("input#aggregatefunction").val();
   var aggregateFunctionField = jQuery("input#aggregatefunctionfield").val();
+  alert("aggregateFunctionField is [" + aggregateFunctionField + "]");
   if (aggregateFunction != "" && aggregateFunctionField != "") {
     document.addaggregate.submit();
   }
@@ -174,7 +175,7 @@ function fSubmitFunction() {
 							                #end
 							              #end
 						            </select>
-									<-- <input type="submit" value="add calculation"> -->
+									<!-- <input type="submit" value="add calculation"> -->
 </div>
 </form><br>
 <form name="savechart">
