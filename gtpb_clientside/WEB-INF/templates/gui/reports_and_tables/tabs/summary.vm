@@ -94,7 +94,7 @@ function fShowAddAgg() {
 }
 
 function fSubmitGroup() {
-  if (jQuery("#groupselect").val() != "") {
+  if (jQuery("#groupselect").val() != "gtpb_please_choose") {
     document.addgrouping.submit();
   }
 }
