@@ -94,14 +94,14 @@ function fShowAddAgg() {
 }
 
 function fSubmitGroup() {
-  if (jQuery("input#groupselect").val() != "gtpb_please_choose") {
+  if (jQuery("#groupselect").val() != "") {
     document.addgrouping.submit();
   }
 }
 
 function fSubmitFunction() {
-  var aggregateFunction = jQuery("input#aggregatefunction").val();
-  var aggregateFunctionField = jQuery("input#aggregatefunctionfield").val();
+  var aggregateFunction = jQuery("#aggregatefunction").val();
+  var aggregateFunctionField = jQuery("#aggregatefunctionfield").val();
   alert("aggregateFunctionField is [" + aggregateFunctionField + "]");
   if (aggregateFunction != "gtpb_please_choose" && aggregateFunctionField != "gtpb_please_choose") {
     document.addaggregate.submit();
@@ -164,7 +164,7 @@ function fSubmitFunction() {
 							              	  <option value="$function.toString()">$function.getLabel()</option>
 							            #end
 						            </select> 
-									<select name="internalfieldname" id="aggreggatefunctionfield" onchange="fSubmitFunction()">
+									<select name="internalfieldname" id="aggregatefunctionfield" onchange="fSubmitFunction()">
 										  <option value="gtpb_please_choose" selected>-- please choose a field --</option>
 							              #foreach($reportField in $report.getReportFields())
 							              	#set($baseField = $reportField.getBaseField())
