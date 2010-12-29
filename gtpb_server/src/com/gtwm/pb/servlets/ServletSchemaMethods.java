@@ -2087,9 +2087,9 @@ public final class ServletSchemaMethods {
 	public synchronized static void setSummaryReportFilterField(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException, CantDoThatException, SQLException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
-		String internalReportName = request.getParameter("internalreportname");
+		String internalReportName = request.getParameter("internalfieldname");
 		if (internalReportName == null) {
-			throw new MissingParametersException("internalreportname parameter is needed to set the summary filter");
+			throw new MissingParametersException("internalfieldname parameter is needed to set the summary filter");
 		}
 		ReportFieldInfo reportField = report.getReportField(internalReportName);
 		try {
