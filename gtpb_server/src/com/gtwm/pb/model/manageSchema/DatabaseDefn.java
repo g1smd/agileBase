@@ -79,7 +79,6 @@ import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.manageData.fields.DurationValueDefn;
-import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.DashboardPopulator;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
