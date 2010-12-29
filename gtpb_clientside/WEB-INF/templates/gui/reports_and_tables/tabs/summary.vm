@@ -185,25 +185,27 @@ function fSubmitFunction() {
 #end
 #if($dateReportFields.size() > 0)
   Date range: 
+#set($currentFilterReportField = $defaultReportSummary.getFilterReportField())
 <form name="setfilterfield" method="post" action="AppController.servlet">
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="set_summary_filter_field" value="1" />
   <select name="internalfieldname" onchange="document.setfilterfield.submit();">
-	<option value="gtpb_please_choose" selected>-- please choose a field --</option>
+	<option value="gtpb_please_choose">-- please choose a field --</option>
 	#foreach($dateReportField in $dateReportFields)
-      <option value="$dateReportField.getInternalFieldName()">$dateReportField</option>
+      <option value="$dateReportField.getInternalFieldName()" #if($dateReportField.equals($currentFilterReportField)) selected #end>$dateReportField</option>
 	#end
   </select>
 </form> 
+#set($currentSummaryFilter = $defaultReportSummary.getSummaryFilter())
 <form name="setfilter" method="post" action="AppController.servlet">
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="set_summary_filter" value="1" />
   <select name="summaryfilter" onchange="document.setfilter.submit();">
-	<option value="gtpb_please_choose" selected>-- please choose a filter --</option>
-    <option value="LAST_30_DAYS">Last 30 days</option>
-    <option value="LAST_90_DAYS">Last 90 days</option>
-    <option value="THIS_YEAR">This year</option>
-    <option value="YEAR_ON_YEAR">Year on year</option>
+	<option value="gtpb_please_choose">-- please choose a filter --</option>
+    <option value="LAST_30_DAYS" #if($currentSummaryFilter == "LAST_30_DAYS") selected #end>Last 30 days</option>
+    <option value="LAST_90_DAYS" #if($currentSummaryFilter == "LAST_90_DAYS") selected #end>Last 90 days</option>
+    <option value="THIS_YEAR" #if($currentSummaryFilter == "THIS_YEAR") selected #end>This year</option>
+    <option value="YEAR_ON_YEAR" #if($currentSummaryFilter == "YEAR_ON_YEAR") selected #end>Year on year</option>
   </select>
 </form><br>
 #end
