@@ -2340,8 +2340,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ReportSummaryGroupingInfo removedGrouping = templateSummary.removeGrouping(grouping
 					.getGroupingReportField());
 		}
+		// And any filter
+		savedSummary.setSummaryFilter(templateSummary.getSummaryFilter());
+		templateSummary.setSummaryFilter(null);
+		savedSummary.setFilterReportField(templateSummary.getFilterReportField());
+		templateSummary.setFilterReportField(null);
+		// Summary title
 		report.saveReportSummary(savedSummary);
-		// Reset template summary title
 		templateSummary.setTitle("");
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
