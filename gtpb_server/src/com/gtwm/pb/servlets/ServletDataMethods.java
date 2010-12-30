@@ -60,6 +60,7 @@ import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.DataDependencyException;
+import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -69,6 +70,7 @@ import com.gtwm.pb.util.Enumerations.FieldContentType;
 import com.gtwm.pb.model.manageData.SessionData;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.WordUtils;
 import org.grlea.log.SimpleLogger;
 
 /**
@@ -107,8 +109,8 @@ public final class ServletDataMethods {
 	 * id for a table identified by internal table name (constant throughout
 	 * life of table)
 	 * 
-	 * 5) &set_row_id=50&rowidinternaltablename=Contacts - set the row id for a table
-	 * identified by name (name may change)
+	 * 5) &set_row_id=50&rowidinternaltablename=Contacts - set the row id for a
+	 * table identified by name (name may change)
 	 * 
 	 * @throws ObjectNotFoundException
 	 *             If a record with the specified row ID isn't found in the
@@ -121,9 +123,11 @@ public final class ServletDataMethods {
 		if (internalTableName == null) {
 			int rowId = -1;
 			if (rowIdString.toLowerCase().equals("next")) {
-				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData, sessionData.getReport(), true);
+				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData,
+						sessionData.getReport(), true);
 			} else if (rowIdString.toLowerCase().equals("previous")) {
-				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData, sessionData.getReport(), false);
+				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData,
+						sessionData.getReport(), false);
 			} else {
 				rowId = Integer.valueOf(rowIdString);
 			}
@@ -216,8 +220,7 @@ public final class ServletDataMethods {
 	 * 
 	 * 1) &set_table=a2a5e30cb86a5513f - set the table by internal name
 	 * 
-	 * 2) &set_table=Contacts - set the table by name (name
-	 * may change)
+	 * 2) &set_table=Contacts - set the table by name (name may change)
 	 * 
 	 * 3) &postset_table=a2a5e30cb86a5513f - set the table <b>after</b> doing
 	 * all other session and application actions. This can be useful if running
@@ -703,6 +706,22 @@ public final class ServletDataMethods {
 					if (fieldValueString.equals("")) {
 						fieldValue = new TextValueDefn(null);
 					} else {
+						TextCase textCase = ((TextField) field).getTextCase();
+						if (textCase != null) {
+							switch (textCase) {
+							case ANY:
+								break;
+							case UPPER:
+								fieldValueString = fieldValueString.toUpperCase();
+								break;
+							case LOWER:
+								fieldValueString = fieldValueString.toLowerCase();
+								break;
+							case TITLE:
+								fieldValueString = WordUtils.capitalizeFully(fieldValueString);
+								break;
+							}
+						}
 						fieldValue = new TextValueDefn(fieldValueString);
 					}
 				}

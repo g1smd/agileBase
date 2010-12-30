@@ -380,5 +380,9 @@ public class Enumerations {
 			this.sql = sql;
 		}
 	}
+	
+	public enum TextCase {
+		ANY, LOWER, UPPER, TITLE
+	}
 
 }
