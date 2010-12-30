@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.Enumerations.TextCase;
 
 /**
  * Represents a plain field storing text
@@ -36,7 +37,7 @@ public interface TextField extends BaseField {
 	public void setContentSize(Integer contentSize) throws CantDoThatException;
 
 	public Integer getContentSize();
-	
+
 	/**
 	 * Return whether the 'not applicable/not required' flag has been set for
 	 * this field. If it is, then the user should be able to select 'not
@@ -61,9 +62,11 @@ public interface TextField extends BaseField {
 	 * previously entered values
 	 */
 	public boolean usesLookup();
-	
+
 	/**
-	 * @throws CantDoThatException	If you try to run this method on a big text field, which can't use lookups
+	 * @throws CantDoThatException
+	 *             If you try to run this method on a big text field, which
+	 *             can't use lookups
 	 */
 	public void setUsesLookup(Boolean usesLookup) throws CantDoThatException;
 
@@ -77,11 +80,26 @@ public interface TextField extends BaseField {
 	 *             BigTextFieldDefn doesn't
 	 */
 	public SortedSet<String> getItems() throws SQLException, CantDoThatException;
+
+	/**
+	 * Similar to getItems() but instead of returning values from the field's
+	 * parent table, returns them from the report passed in, filtered by the
+	 * supplied filter map. An empty map can be used for no filtering.
+	 * 
+	 * @param filterValues
+	 *            A filter map in the same format as that passed to
+	 *            ReportDataInfo.getReportDataRows
+	 * @throws CantDoThatException
+	 *             if this field doesn't occur in the report or the text field
+	 *             type doesn't support lookups
+	 */
+	public SortedSet<String> getItems(BaseReportInfo report, Map<BaseField, String> filterValues)
+			throws SQLException, CantDoThatException;
 	
 	/**
-	 * Similar to getItems() but instead of returning values from the field's parent table, returns them from the report passed in, filtered by the supplied filter map. An empty map can be used for no filtering.
-	 * @param filterValues A filter map in the same format as that passed to ReportDataInfo.getReportDataRows
-	 * @throws CantDoThatException if this field doesn't occur in the report or the text field type doesn't support lookups
+	 * Return the case that text in this field should be forced to
 	 */
-	public SortedSet<String> getItems(BaseReportInfo report, Map<BaseField, String> filterValues) throws SQLException, CantDoThatException;
+	public TextCase getTextCase();
+	
+	public void setTextCase(TextCase textCase);
 }

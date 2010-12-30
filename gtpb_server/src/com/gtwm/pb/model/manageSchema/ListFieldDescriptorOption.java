@@ -23,6 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.Calendar;
 import java.util.Collections;
 import com.gtwm.pb.model.interfaces.ListFieldDescriptorOptionInfo;
+import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
 public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo {
@@ -55,6 +56,11 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 			this.optionsList.put(String.valueOf(TextContentSizes.FEW_WORDS.getNumChars()), TextContentSizes.FEW_WORDS.getSizeDescription());
 			this.optionsList.put(String.valueOf(TextContentSizes.FEW_SENTENCES.getNumChars()), TextContentSizes.FEW_SENTENCES.getSizeDescription());
 			this.optionsList.put(String.valueOf(TextContentSizes.FEW_PARAS.getNumChars()), TextContentSizes.FEW_PARAS.getSizeDescription());
+			break;
+		case TEXTCASE:
+			for(TextCase textCase : TextCase.values()) {
+				this.optionsList.put(textCase.toString(), textCase.toString().toLowerCase());
+			}
 			break;
 		}
 	}
@@ -108,7 +114,7 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 				"Accuracy", false), DURATIONSCALE("Max. duration", false), LISTTABLE(
 				"Table to use", false), LISTREPORT("Report to use", false), LISTKEYFIELD(
 				"Value to store", false), LISTVALUEFIELD("Value to display", false), LISTSECONDARYFIELD("Secondary value", true), CHECKBOXDEFAULT(
-				"Default value", true), TEXTCONTENTSIZE("Size", false);
+				"Default value", true), TEXTCONTENTSIZE("Size", false), TEXTCASE("Text case", true);
 
 		PossibleListOptions(String optionDescription, boolean advancedOption) {
 			this.optionDescription = optionDescription;

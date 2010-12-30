@@ -65,6 +65,7 @@ import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOpti
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
+import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.HttpRequestUtil;
@@ -1057,10 +1058,12 @@ public final class ServletSchemaMethods {
 		Integer integerFieldDefault = null;
 		Boolean unique = field.getUnique();
 		Boolean notNull = field.getNotNull();
+		TextCase textCase = null;
 		if (field instanceof TextField) {
 			textFieldUsesLookup = ((TextField) field).usesLookup();
 			textFieldContentSize = ((TextField) field).getContentSize();
 			textFieldDefault = ((TextField) field).getDefault();
+			textCase = ((TextField) field).getTextCase();
 		} else if (field instanceof DateField) {
 			dateFieldDefaultToNow = ((DateField) field).getDefaultToNow();
 			dateFieldResolution = ((DateField) field).getDateResolution();
@@ -1080,19 +1083,19 @@ public final class ServletSchemaMethods {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed: " + pex.getMessage(), pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
@@ -1106,7 +1109,7 @@ public final class ServletSchemaMethods {
 	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup,
 			Integer textFieldContentSize, Boolean dateFieldDefaultToNow,
 			Integer dateFieldResolution, Integer decimalFieldPrecision, String textFieldDefault,
-			Double decimalFieldDefault, Integer integerFieldDefault, Boolean unique, Boolean notNull)
+			Double decimalFieldDefault, Integer integerFieldDefault, Boolean unique, Boolean notNull, TextCase textCase)
 			throws CantDoThatException {
 		field.setUnique(unique);
 		field.setNotNull(notNull);
@@ -1114,6 +1117,7 @@ public final class ServletSchemaMethods {
 			((TextField) field).setUsesLookup(textFieldUsesLookup);
 			((TextField) field).setContentSize(textFieldContentSize);
 			((TextField) field).setDefault(textFieldDefault);
+			((TextField) field).setTextCase(textCase);
 		} else if (field instanceof DateField) {
 			((DateField) field).setDefaultToNow(dateFieldDefaultToNow);
 			((DateField) field).setDateResolution(dateFieldResolution);

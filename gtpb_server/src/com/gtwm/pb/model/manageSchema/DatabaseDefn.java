@@ -107,6 +107,7 @@ import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
+import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.HttpRequestUtil;
 import com.gtwm.pb.util.InconsistentStateException;
 import com.gtwm.pb.util.MissingParametersException;
@@ -967,8 +968,6 @@ public final class DatabaseDefn implements DatabaseInfo {
 					notNull, defaultToNow, dateResolution);
 			break;
 		case TEXT:
-			int textContentSize = Integer.valueOf(request
-					.getParameter(PossibleListOptions.TEXTCONTENTSIZE.getFormInputName()));
 			String defaultValue = HttpRequestUtil.getStringValue(request,
 					PossibleTextOptions.DEFAULTVALUE.getFormInputName());
 			boolean usesLookup = HttpRequestUtil.getBooleanValue(request,
@@ -976,7 +975,12 @@ public final class DatabaseDefn implements DatabaseInfo {
 			field = new TextFieldDefn(this.relationalDataSource, table, internalFieldName,
 					fieldName, fieldDesc, unique, notNull, defaultValue, notApplicable,
 					notApplicableDescription, notApplicableValue, usesLookup, false);
+			int textContentSize = Integer.valueOf(request
+					.getParameter(PossibleListOptions.TEXTCONTENTSIZE.getFormInputName()));
 			((TextField) field).setContentSize(textContentSize);
+			TextCase textCase = TextCase.valueOf(request.getParameter(
+					PossibleListOptions.TEXTCASE.getFormInputName()).toUpperCase());
+			((TextField) field).setTextCase(textCase);
 			break;
 		case NUMBER:
 			int precision = HttpRequestUtil.getIntegerValue(request,
@@ -1111,6 +1115,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 								+ PossibleListOptions.TEXTCONTENTSIZE.getFormInputName())) {
 							int textContentSize = Integer.valueOf(formInputValue);
 							textField.setContentSize(textContentSize);
+						} else if (formInputName.equals("updateoption"
+								+ field.getInternalFieldName()
+								+ PossibleListOptions.TEXTCASE.getFormInputName())) {
+							TextCase textCase = TextCase.valueOf(formInputValue.toUpperCase());
+							textField.setTextCase(textCase);
 						}
 					} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
 						if (formInputName.equals("updateoption" + field.getInternalFieldName()
@@ -2167,7 +2176,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void setSummaryReportFilter(HttpServletRequest request, BaseReportInfo report, SummaryFilter summaryFilter) throws SQLException, DisallowedException, ObjectNotFoundException, CantDoThatException {
+	public synchronized void setSummaryReportFilter(HttpServletRequest request,
+			BaseReportInfo report, SummaryFilter summaryFilter) throws SQLException,
+			DisallowedException, ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
@@ -2187,8 +2198,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 				"summary filter: " + summaryFilter);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
-	
-	public synchronized void setSummaryReportFilterField(HttpServletRequest request, ReportFieldInfo reportField)  throws SQLException, DisallowedException, ObjectNotFoundException, CantDoThatException {
+
+	public synchronized void setSummaryReportFilterField(HttpServletRequest request,
+			ReportFieldInfo reportField) throws SQLException, DisallowedException,
+			ObjectNotFoundException, CantDoThatException {
 		BaseReportInfo report = reportField.getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
@@ -2209,7 +2222,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				"report field: " + reportField);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
-	
+
 	public synchronized void addGroupingToSummaryReport(HttpServletRequest request,
 			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException {
@@ -2308,7 +2321,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				AppAction.REMOVE_FUNCTION_FROM_SUMMARY_REPORT, "function: " + removedFunction);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
-	
+
 	public synchronized void saveSummaryReport(HttpServletRequest request, BaseReportInfo report,
 			String summaryTitle) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException {

@@ -21,6 +21,8 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.SortedSet;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
@@ -36,6 +38,7 @@ import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
+import com.gtwm.pb.util.Enumerations.TextCase;
 
 /**
  * A multi-line text field that could be represented by a <textarea> form element
@@ -157,6 +160,16 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
 		throw new CantDoThatException("" + this.getClass().getSimpleName() + " can't use getItems()");
 	}
 
+	@Enumerated(EnumType.STRING)
+	public TextCase getTextCase() {
+		return this.textCase;
+	}
+	
+	public void setTextCase(TextCase textCase) {
+		this.textCase = textCase;
+	}
+	
+	private TextCase textCase = TextCase.ANY;
 	private Integer contentSize = TextContentSizes.FEW_SENTENCES.getNumChars();
 
     private String defaultValue = null;

@@ -18,6 +18,8 @@
 package com.gtwm.pb.model.manageSchema.fields;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 import javax.sql.DataSource;
 import org.grlea.log.SimpleLogger;
@@ -40,6 +42,7 @@ import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
@@ -387,6 +390,17 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		}
 	}
 
+	@Enumerated(EnumType.STRING)
+	public TextCase getTextCase() {
+		return this.textCase;
+	}
+	
+	public void setTextCase(TextCase textCase) {
+		this.textCase = textCase;
+	}
+	
+	private TextCase textCase = TextCase.ANY;
+	
 	private String defaultValue = null;
 
 	private Integer contentSize = TextContentSizes.FEW_WORDS.getNumChars();

@@ -47,6 +47,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.TEXTCONTENTSIZE));
 			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.DEFAULTVALUE));
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.TEXTCASE));
 			break;
 		case NUMBER:
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.UNIQUE));
@@ -64,9 +65,6 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.DURATIONRESOLUTION));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.DURATIONSCALE));
 			break;
-		case SEQUENCE:
-			// No options for sequence fields
-			break;
 		case RELATION:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTTABLE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTVALUEFIELD));
@@ -75,6 +73,9 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			break;
 		case CHECKBOX:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.CHECKBOXDEFAULT));
+			break;
+		case SEQUENCE:
+			// No options for sequence fields
 			break;
 		case FILE:
 			break;
