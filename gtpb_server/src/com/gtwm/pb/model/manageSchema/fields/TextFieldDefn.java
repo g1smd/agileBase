@@ -158,6 +158,11 @@ public class TextFieldDefn extends AbstractField implements TextField {
 				fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE, this
 						.getDefault());
 			}
+			TextCase textCase = this.getTextCase();
+			if (textCase == null) {
+				textCase = TextCase.ANY;
+			}
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCASE, textCase.toString());
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
