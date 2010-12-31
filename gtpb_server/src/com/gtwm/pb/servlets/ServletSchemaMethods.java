@@ -799,10 +799,10 @@ public final class ServletSchemaMethods {
 			// Gather field properties applicable to any field
 			// Any field-type specific properties must be got further down the
 			// line
-			boolean unique = HttpRequestUtil.getBooleanValue(request, PossibleBooleanOptions.UNIQUE
-					.getFormInputName());
-			boolean hidden = HttpRequestUtil.getBooleanValue(request, PossibleBooleanOptions.HIDDEN
-					.getFormInputName());
+			boolean unique = HttpRequestUtil.getBooleanValue(request,
+					PossibleBooleanOptions.UNIQUE.getFormInputName());
+			boolean hidden = HttpRequestUtil.getBooleanValue(request,
+					PossibleBooleanOptions.HIDDEN.getFormInputName());
 			boolean notNull = HttpRequestUtil.getBooleanValue(request,
 					PossibleBooleanOptions.MANDATORY.getFormInputName());
 			// begin updating model and persisting changes
@@ -1083,19 +1083,22 @@ public final class ServletSchemaMethods {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull,
+					textCase);
 			throw new CantDoThatException("Updating field failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull,
+					textCase);
 			throw new CantDoThatException("Updating field failed: " + pex.getMessage(), pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull,
+					textCase);
 			throw new CantDoThatException("Updating field failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
@@ -1109,8 +1112,8 @@ public final class ServletSchemaMethods {
 	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup,
 			Integer textFieldContentSize, Boolean dateFieldDefaultToNow,
 			Integer dateFieldResolution, Integer decimalFieldPrecision, String textFieldDefault,
-			Double decimalFieldDefault, Integer integerFieldDefault, Boolean unique, Boolean notNull, TextCase textCase)
-			throws CantDoThatException {
+			Double decimalFieldDefault, Integer integerFieldDefault, Boolean unique,
+			Boolean notNull, TextCase textCase) throws CantDoThatException {
 		field.setUnique(unique);
 		field.setNotNull(notNull);
 		if (field instanceof TextField) {
@@ -1266,8 +1269,8 @@ public final class ServletSchemaMethods {
 				sourceTable = report.getParentTable();
 			} else {
 				sourceTable = databaseDefn.findTableContainingReport(request, internalReportName);
-				if (!sourceTable.getDefaultReport().getInternalReportName().equals(
-						internalReportName)) {
+				if (!sourceTable.getDefaultReport().getInternalReportName()
+						.equals(internalReportName)) {
 					sourceReport = (SimpleReportInfo) sourceTable.getReport(internalReportName);
 				}
 			}
@@ -1490,8 +1493,8 @@ public final class ServletSchemaMethods {
 		for (ReportSortInfo reportSort : report.getSorts()) {
 			if (reportSort.getSortReportField().equals(field)) {
 				sortExists = true;
-				oldReportSort = new ReportSort(reportSort.getSortReportField(), reportSort
-						.getSortDirection());
+				oldReportSort = new ReportSort(reportSort.getSortReportField(),
+						reportSort.getSortDirection());
 				break;
 			}
 		}
@@ -1512,7 +1515,7 @@ public final class ServletSchemaMethods {
 				if (!sorting.equals("unsorted")) {
 					databaseDefn.addSortToReport(request, conn, report, field, ascending);
 				} // else if requesting removal of a sort that doesn't
-				// presently exist, silently ignore the request
+					// presently exist, silently ignore the request
 			}
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
@@ -1521,9 +1524,7 @@ public final class ServletSchemaMethods {
 			// rollback changes to in memory objects
 			report.removeSort(field);
 			if (sortExists) {
-				report
-						.addSort(oldReportSort.getSortReportField(), oldReportSort
-								.getSortDirection());
+				report.addSort(oldReportSort.getSortReportField(), oldReportSort.getSortDirection());
 			}
 			throw new CantDoThatException("report field sorting failed", sqlex);
 		} catch (HibernateException hex) {
@@ -1531,9 +1532,7 @@ public final class ServletSchemaMethods {
 			// rollback changes to in memory objects
 			report.removeSort(field);
 			if (sortExists) {
-				report
-						.addSort(oldReportSort.getSortReportField(), oldReportSort
-								.getSortDirection());
+				report.addSort(oldReportSort.getSortReportField(), oldReportSort.getSortDirection());
 			}
 			throw new CantDoThatException("report field sorting failed", hex);
 		} catch (AgileBaseException pex) {
@@ -1541,9 +1540,7 @@ public final class ServletSchemaMethods {
 			// rollback changes to in memory objects
 			report.removeSort(field);
 			if (sortExists) {
-				report
-						.addSort(oldReportSort.getSortReportField(), oldReportSort
-								.getSortDirection());
+				report.addSort(oldReportSort.getSortReportField(), oldReportSort.getSortDirection());
 			}
 			throw new CantDoThatException("report field sorting failed", pex);
 		} finally {
@@ -1886,8 +1883,7 @@ public final class ServletSchemaMethods {
 			BaseReportInfo leftReport = leftTable.getReport(leftInternalReportName);
 			leftReportField = leftReport.getReportField(leftInternalFieldName);
 		} else if (!leftInternalTableName.equals("")) {
-			TableInfo leftTable = databaseDefn.getTable(request,
-					leftInternalTableName);
+			TableInfo leftTable = databaseDefn.getTable(request, leftInternalTableName);
 			leftTableField = leftTable.getField(leftInternalFieldName);
 		} else {
 			throw new MissingParametersException(
@@ -1901,8 +1897,7 @@ public final class ServletSchemaMethods {
 			BaseReportInfo rightReport = rightTable.getReport(rightInternalReportName);
 			rightReportField = rightReport.getReportField(rightInternalFieldName);
 		} else if (!rightInternalTableName.equals("")) {
-			TableInfo rightTable = databaseDefn.getTable(request,
-					rightInternalTableName);
+			TableInfo rightTable = databaseDefn.getTable(request, rightInternalTableName);
 			rightTableField = rightTable.getField(rightInternalFieldName);
 		} else {
 			throw new MissingParametersException(
@@ -2059,14 +2054,20 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void setSummaryReportFilter(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException, CantDoThatException, SQLException {
+	public synchronized static void setSummaryReportFilter(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
+			MissingParametersException, ObjectNotFoundException, CantDoThatException, SQLException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		String summaryFilterString = request.getParameter("summaryfilter");
 		if (summaryFilterString == null) {
-			throw new MissingParametersException("summaryfilter parameter is needed to set the summary filter");
+			throw new MissingParametersException(
+					"summaryfilter parameter is needed to set the summary filter");
 		}
-		SummaryFilter summaryFilter = SummaryFilter.valueOf(summaryFilterString.toUpperCase());
+		SummaryFilter summaryFilter = null;
+		if (!summaryFilterString.equals("")) {
+			summaryFilter = SummaryFilter.valueOf(summaryFilterString.toUpperCase());
+		}
 		try {
 			HibernateUtil.startHibernateTransaction();
 			databaseDefn.setSummaryReportFilter(request, report, summaryFilter);
@@ -2087,15 +2088,21 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
-	public synchronized static void setSummaryReportFilterField(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException, CantDoThatException, SQLException {
+
+	public synchronized static void setSummaryReportFilterField(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
+			MissingParametersException, ObjectNotFoundException, CantDoThatException, SQLException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		String internalFieldName = request.getParameter("internalfieldname");
 		if (internalFieldName == null) {
-			throw new MissingParametersException("internalfieldname parameter is needed to set the summary filter");
+			throw new MissingParametersException(
+					"internalfieldname parameter is needed to set the summary filter");
 		}
-		ReportFieldInfo reportField = report.getReportField(internalFieldName);
+		ReportFieldInfo reportField = null;
+		if (!internalFieldName.equals("")) {
+			reportField = report.getReportField(internalFieldName);
+		}
 		try {
 			HibernateUtil.startHibernateTransaction();
 			databaseDefn.setSummaryReportFilterField(request, reportField);
@@ -2116,7 +2123,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
+
 	public synchronized static void addGroupingToSummaryReport(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			CantDoThatException, MissingParametersException, ObjectNotFoundException {
@@ -2146,18 +2153,18 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getReportSummary().removeGrouping(
-					groupingReportField);
+			groupingReportField.getParentReport().getReportSummary()
+					.removeGrouping(groupingReportField);
 			throw new CantDoThatException("summary grouping addition failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getReportSummary().removeGrouping(
-					groupingReportField);
+			groupingReportField.getParentReport().getReportSummary()
+					.removeGrouping(groupingReportField);
 			throw new CantDoThatException("summary grouping addition failed", pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getReportSummary().removeGrouping(
-					groupingReportField);
+			groupingReportField.getParentReport().getReportSummary()
+					.removeGrouping(groupingReportField);
 			throw new CantDoThatException("summary grouping addition failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
@@ -2181,7 +2188,8 @@ public final class ServletSchemaMethods {
 						AggregateFunction.CUMULATIVE_COUNT)
 						|| aggregateFunction.getAggregateFunction().equals(
 								AggregateFunction.CUMULATIVE_SUM)) {
-					// Can't leave a cumulative aggregate with no groupings, it will break the SQL
+					// Can't leave a cumulative aggregate with no groupings, it
+					// will break the SQL
 					throw new CantDoThatException("Please remove the cumulative function first");
 				}
 			}
@@ -2200,13 +2208,13 @@ public final class ServletSchemaMethods {
 			throw new CantDoThatException("summary grouping removal failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getReportSummary().addGrouping(
-					groupingReportField, null);
+			groupingReportField.getParentReport().getReportSummary()
+					.addGrouping(groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getReportSummary().addGrouping(
-					groupingReportField, null);
+			groupingReportField.getParentReport().getReportSummary()
+					.addGrouping(groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
@@ -2247,8 +2255,8 @@ public final class ServletSchemaMethods {
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
 			try {
-				functionReportField.getParentReport().getReportSummary().removeFunction(
-						addedAggFn.getInternalAggregateName());
+				functionReportField.getParentReport().getReportSummary()
+						.removeFunction(addedAggFn.getInternalAggregateName());
 			} catch (ObjectNotFoundException onfex) {
 				logger.error("Unable to rollback function addition - maybe it didn't get added");
 			}
@@ -2256,8 +2264,8 @@ public final class ServletSchemaMethods {
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			try {
-				functionReportField.getParentReport().getReportSummary().removeFunction(
-						addedAggFn.getInternalAggregateName());
+				functionReportField.getParentReport().getReportSummary()
+						.removeFunction(addedAggFn.getInternalAggregateName());
 			} catch (ObjectNotFoundException onfex) {
 				logger.error("Unable to rollback function addition - maybe it didn't get added");
 			}
@@ -2265,8 +2273,8 @@ public final class ServletSchemaMethods {
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
 			try {
-				functionReportField.getParentReport().getReportSummary().removeFunction(
-						addedAggFn.getInternalAggregateName());
+				functionReportField.getParentReport().getReportSummary()
+						.removeFunction(addedAggFn.getInternalAggregateName());
 			} catch (ObjectNotFoundException onfex) {
 				logger.error("Unable to rollback function addition - maybe it didn't get added");
 			}
@@ -2383,16 +2391,21 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
-	//TODO: authentication for this method
-	public synchronized static void hideReportFromUser(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+
+	// TODO: authentication for this method
+	public synchronized static void hideReportFromUser(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		String internalUserName = request.getParameter("internalusername");
 		if (internalUserName == null) {
-			throw new MissingParametersException("internalusername is necessary to specify the user when hiding a report from them");
+			throw new MissingParametersException(
+					"internalusername is necessary to specify the user when hiding a report from them");
 		}
-		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request, internalUserName);
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request,
+				internalUserName);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(appUser);
@@ -2406,15 +2419,20 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	//TODO: authentication for this method
-	public synchronized static void unhideReportFromUser(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+	// TODO: authentication for this method
+	public synchronized static void unhideReportFromUser(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		String internalUserName = request.getParameter("internalusername");
 		if (internalUserName == null) {
-			throw new MissingParametersException("internalusername is necessary to specify the user when hiding a report from them");
+			throw new MissingParametersException(
+					"internalusername is necessary to specify the user when hiding a report from them");
 		}
-		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request, internalUserName);
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request,
+				internalUserName);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(appUser);
@@ -2427,11 +2445,18 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
-	public synchronized static void setCalendarSyncable(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn, boolean calendarSyncable) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+
+	public synchronized static void setCalendarSyncable(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn, boolean calendarSyncable)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
-		if (!databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, report.getParentTable())) {
+		if (!databaseDefn
+				.getAuthManager()
+				.getAuthenticator()
+				.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
+						report.getParentTable())) {
 			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA);
 		}
 		try {
@@ -2439,7 +2464,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.activateObject(report);
 			report.setCalendarSyncable(calendarSyncable);
 			HibernateUtil.currentSession().getTransaction().commit();
-		} catch(HibernateException hex) {
+		} catch (HibernateException hex) {
 			rollbackConnections(null);
 			throw new CantDoThatException("setting calendar syncable failed", hex);
 		} finally {
@@ -2447,21 +2472,28 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void setUserDefaultReport(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+	public synchronized static void setUserDefaultReport(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
 		String internalUserName = request.getParameter("internalusername");
 		if (internalUserName == null) {
-			throw new MissingParametersException("internalusername is necessary to specify the user when setting a default report for them");
+			throw new MissingParametersException(
+					"internalusername is necessary to specify the user when setting a default report for them");
 		}
 		// An empty internalreportname parameter will produce a null report
 		BaseReportInfo report = null;
 		String internalReportName = request.getParameter("internalreportname");
-		if(internalReportName == null) {
-			throw new MissingParametersException("internalreportname is necessary when setting a default report for a user");
+		if (internalReportName == null) {
+			throw new MissingParametersException(
+					"internalreportname is necessary when setting a default report for a user");
 		}
 		if (!internalReportName.equals("")) {
-			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, ServletUtilMethods.DO_NOT_USE_SESSION);
+			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn,
+					ServletUtilMethods.DO_NOT_USE_SESSION);
 		}
-		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request, internalUserName);
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request,
+				internalUserName);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(appUser);
@@ -2472,8 +2504,8 @@ public final class ServletSchemaMethods {
 			throw new CantDoThatException("setting default report failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
-		}		
+		}
 	}
-	
+
 	private static final SimpleLogger logger = new SimpleLogger(ServletSchemaMethods.class);
 }
