@@ -2245,10 +2245,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void setSummaryReportFilterField(HttpServletRequest request,
+	public synchronized void setSummaryReportFilterField(HttpServletRequest request, BaseReportInfo report,
 			ReportFieldInfo reportField) throws SQLException, DisallowedException,
 			ObjectNotFoundException, CantDoThatException {
-		BaseReportInfo report = reportField.getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());

@@ -439,7 +439,7 @@ public interface DatabaseInfo {
 	 * @see setSummaryReportFilter(HttpServletRequest, BaseReportInfo,
 	 *      SummaryFilter)
 	 */
-	public void setSummaryReportFilterField(HttpServletRequest request, ReportFieldInfo reportField)
+	public void setSummaryReportFilterField(HttpServletRequest request, BaseReportInfo report, ReportFieldInfo reportField)
 			throws SQLException, DisallowedException, ObjectNotFoundException, CantDoThatException;
 
 	/**
