@@ -2105,7 +2105,7 @@ public final class ServletSchemaMethods {
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
-			databaseDefn.setSummaryReportFilterField(request, reportField);
+			databaseDefn.setSummaryReportFilterField(request, report, reportField);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
