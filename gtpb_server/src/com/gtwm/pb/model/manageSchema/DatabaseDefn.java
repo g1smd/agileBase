@@ -1119,6 +1119,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 								+ field.getInternalFieldName()
 								+ PossibleListOptions.TEXTCASE.getFormInputName())) {
 							TextCase textCase = TextCase.valueOf(formInputValue.toUpperCase());
+							this.setTextCase(field, textCase);
 							textField.setTextCase(textCase);
 						}
 					} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
@@ -1312,6 +1313,46 @@ public final class DatabaseDefn implements DatabaseInfo {
 				}
 			}
 		} // end of RelationField
+	}
+
+	/**
+	 * Sets all values of a field in its table to a particular case
+	 */
+	private void setTextCase(BaseField field, TextCase textCase) throws CantDoThatException,
+			SQLException {
+		if (field instanceof TextField) {
+			throw new CantDoThatException("Can't change the case of a "
+					+ field.getClass().getSimpleName() + " field");
+		}
+		if (textCase.equals(TextCase.ANY)) {
+			return;
+		}
+		String sqlCode = "UPDATE " + field.getTableContainingField().getInternalTableName();
+		sqlCode += " SET " + field.getInternalFieldName();
+		if (textCase.equals(TextCase.LOWER)) {
+			sqlCode += " = lower(" + field.getInternalFieldName() + ")";
+		} else if (textCase.equals(TextCase.UPPER)) {
+			sqlCode += " = upper(" + field.getInternalFieldName() + ")";
+		} else if (textCase.equals(TextCase.TITLE)) {
+			sqlCode += " = initcap(" + field.getInternalFieldName() + ")";
+		} else {
+			throw new CantDoThatException("Unrecogniesed case: " + textCase);
+		}
+		Connection conn = null;
+		try {
+			conn = this.relationalDataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(sqlCode);
+			statement.executeUpdate();
+			statement.close();
+			conn.commit();
+		} catch (SQLException sqlex) {
+			logger.error("Error setting text case: " + sqlex);
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
 	}
 
 	public void updateField(HttpServletRequest request, BaseField field, String fieldName,
