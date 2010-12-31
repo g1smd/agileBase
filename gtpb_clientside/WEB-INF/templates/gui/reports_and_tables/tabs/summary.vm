@@ -94,7 +94,7 @@ function fShowAddAgg() {
 }
 
 function fSubmitGroup() {
-  if (jQuery("#groupselect").val() != "gtpb_please_choose") {
+  if (jQuery("#groupselect").val() != "") {
     document.addgrouping.submit();
   }
 }
@@ -102,7 +102,7 @@ function fSubmitGroup() {
 function fSubmitFunction() {
   var aggregateFunction = jQuery("#aggregatefunction").val();
   var aggregateFunctionField = jQuery("#aggregatefunctionfield").val();
-  if (aggregateFunction != "gtpb_please_choose" && aggregateFunctionField != "gtpb_please_choose") {
+  if (aggregateFunction != "" && aggregateFunctionField != "") {
     document.addaggregate.submit();
   }
 }
@@ -113,7 +113,7 @@ function fSubmitFunction() {
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_summary_report" value="1" />
   						            <select name="internalfieldname" id="groupselect" onchange="fSubmitGroup();">
-										  <option value="gtpb_please_choose" selected>-- please choose one --</option>
+										  <option value="" selected>-- please choose one --</option>
 							              #foreach($reportField in $report.getReportFields())
 												#set($baseField = $reportField.getBaseField())
 												#set($category = $baseField.getFieldCategory())
@@ -158,13 +158,13 @@ function fSubmitFunction() {
 					            	<input type="hidden" name="return" value="$return_template" />
 						            <input type="hidden" name="add_function_to_summary_report" value="1" />
 						            <select name="function" id="aggregatefunction" onchange="fSubmitFunction();">
-										<option value="gtpb_please_choose" selected>-- please choose a function --</option>
+										<option value="" selected>-- please choose a function --</option>
 						              	#foreach($function in $reportSummary.getPossibleFunctionTypes())
 							              	  <option value="$function.toString()">$function.getLabel()</option>
 							            #end
 						            </select> 
 									<select name="internalfieldname" id="aggregatefunctionfield" onchange="fSubmitFunction()">
-										  <option value="gtpb_please_choose" selected>-- please choose a field --</option>
+										  <option value="" selected>-- please choose a field --</option>
 							              #foreach($reportField in $report.getReportFields())
 							              	#set($baseField = $reportField.getBaseField())
 							              	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
@@ -190,7 +190,7 @@ function fSubmitFunction() {
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="set_summary_filter_field" value="1" />
   <select name="internalfieldname" onchange="document.setfilterfield.submit();">
-	<option value="gtpb_please_choose">-- please choose a field --</option>
+	<option value="">-- please choose a field --</option>
 	#foreach($dateReportField in $dateReportFields)
       <option value="$dateReportField.getInternalFieldName()" #if($dateReportField.equals($currentFilterReportField)) selected #end>$dateReportField</option>
 	#end
@@ -201,7 +201,7 @@ function fSubmitFunction() {
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="set_summary_filter" value="1" />
   <select name="summaryfilter" onchange="document.setfilter.submit();">
-	<option value="gtpb_please_choose">-- please choose a filter --</option>
+	<option value="">-- please choose a filter --</option>
     <option value="LAST_30_DAYS" #if($currentSummaryFilter == "LAST_30_DAYS") selected #end>Last 30 days</option>
     <option value="LAST_90_DAYS" #if($currentSummaryFilter == "LAST_90_DAYS") selected #end>Last 90 days</option>
     <option value="THIS_YEAR" #if($currentSummaryFilter == "THIS_YEAR") selected #end>This year</option>

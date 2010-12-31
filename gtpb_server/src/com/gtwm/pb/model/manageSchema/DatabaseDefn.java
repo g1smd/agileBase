@@ -1321,7 +1321,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 */
 	private void setTextCase(BaseField field, TextCase textCase) throws CantDoThatException,
 			SQLException {
-		if (field instanceof TextField) {
+		if (!(field instanceof TextField)) {
 			throw new CantDoThatException("Can't change the case of a "
 					+ field.getClass().getSimpleName() + " field");
 		}
