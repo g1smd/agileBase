@@ -1316,7 +1316,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/**
-	 * Sets all values of a field in its table to a particular case
+	 * Sets all values of a field in its table to a particular case. Don't do
+	 * anything for large text fields
 	 */
 	private void setTextCase(BaseField field, TextCase textCase) throws CantDoThatException,
 			SQLException {
@@ -1325,6 +1326,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 					+ field.getClass().getSimpleName() + " field");
 		}
 		if (textCase.equals(TextCase.ANY)) {
+			return;
+		}
+		if (((TextField) field).getContentSize() >= TextContentSizes.FEW_PARAS.getNumChars()) {
+			// Don't do anything for large text fields
 			return;
 		}
 		String sqlCode = "UPDATE " + field.getTableContainingField().getInternalTableName();
