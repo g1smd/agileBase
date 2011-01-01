@@ -22,9 +22,7 @@
 	#if($mobile_device)
 		<link href="resources/mobile/pane3_amalgam.css" type="text/css" rel="stylesheet" />
 	#else
-    	<link href="styles/report.css" type="text/css" rel="stylesheet" />
-    	<link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
-    	<link href="resources/jquery.autocomplete.css" type="text/css" rel="stylesheet" />
+		<link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
 	#end	
 	## Import required stylesheets
 	#foreach($style in $styles)
@@ -54,19 +52,12 @@
 	    });
 	    </script>
 	#else
-        <script type="text/javascript" src="resources/jquery.oembed.js"></script>
-    	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
-    	<script type="text/javascript" src="resources/wait/request_setFilter.js"></script> 
-        <script type="text/javascript" src="resources/tabs/tabs.js"></script>
-    	<script type="text/javascript" src="resources/jquery.autocomplete.js"></script>
-		<script type="text/javascript" src="resources/highcharts.js"></script>
-        <script type="text/javascript" src="resources/highcharts_exporting.js"></script>
-		<script type="text/javascript" src="resources/jquery.bgiframe.js"></script>
+    	<script type="text/javascript" src="resources/pane3_amalgam.js"></script>
+		<!-- <script type="text/javascript" src="resources/jquery.bgiframe.js"></script> -- is this still necessary in new IE versions? -->
 		<!--[if IE]>
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/tabs-ie.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="resources/tabs/edit-ie.css" />
 		<![endif]-->
-		<SCRIPT type="text/javascript" src="resources/wait/jquery.ajaxmanager.js"></SCRIPT>
 		#if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
       	  <script type="text/javascript" src="resources/jquery.tablednd.js"></script>
 		  <script type="text/javascript" src="resources/edit_area/edit_area_full.js"></script>
@@ -210,7 +201,6 @@
     	  }    
     </script>
     #end ## end if not mobile device
-	<script type="text/javascript" src="resources/tabs/view.js"></script>
 	#set($currentTab = $sessionData.getCustomString('report_tabindex'))
 	#if(!$currentTab)
 		#set($currentTab = "1")
