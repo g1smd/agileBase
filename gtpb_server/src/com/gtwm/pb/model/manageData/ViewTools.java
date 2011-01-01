@@ -116,7 +116,8 @@ public final class ViewTools implements ViewToolsInfo {
 			// initialise array, values from wikipedia
 			this.areaCodes.put("020", "London");
 			this.areaCodes.put("0121", "Birmingham");
-			this.areaCodes.put("023", "Southampton or Portsmouth");
+			this.areaCodes.put("0238", "Southampton");
+			this.areaCodes.put("0239", "Portsmouth");
 			this.areaCodes.put("0113", "Leeds");
 			this.areaCodes.put("0131", "Edinburgh");
 			this.areaCodes.put("024", "Coventry");
@@ -130,7 +131,14 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("028", "Northern Ireland");
 			this.areaCodes.put("0118", "Reading");
 			this.areaCodes.put("029", "Cardiff");
-			this.areaCodes.put("0191", "Tyne and Wear or Durham");
+			this.areaCodes.put("01912", "Tyneside");
+			this.areaCodes.put("01914", "Tyneside");
+			this.areaCodes.put("01916", "Tyneside");
+			this.areaCodes.put("01918", "Tyneside");
+			this.areaCodes.put("01913", "Durham");
+			this.areaCodes.put("01919", "Durham");
+			this.areaCodes.put("01915", "Sunderland");
+			this.areaCodes.put("01917", "Sunderland");
 			this.areaCodes.put("01200", "Clitheroe");
 			this.areaCodes.put("01202", "Bournemouth");
 			this.areaCodes.put("01204", "Bolton");
@@ -187,7 +195,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("01278", "Bridgwater");
 			this.areaCodes.put("01279", "Bishop's Stortford");
 			this.areaCodes.put("01280", "Buckingham");
-			this.areaCodes.put("01282", "Burnley, BU");
+			this.areaCodes.put("01282", "Burnley");
 			this.areaCodes.put("01283", "Burton upon Trent");
 			this.areaCodes.put("01284", "Bury St. Edmunds");
 			this.areaCodes.put("01285", "Cirencester");
@@ -217,8 +225,8 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("01309", "Forres");
 			this.areaCodes.put("01320", "Fort Augustus");
 			this.areaCodes.put("01322", "Dartford");
-			this.areaCodes.put("01323", "Eastbourne, EA");
-			this.areaCodes.put("01324", "Falkirk, FA");
+			this.areaCodes.put("01323", "Eastbourne");
+			this.areaCodes.put("01324", "Falkirk");
 			this.areaCodes.put("01325", "Darlington");
 			this.areaCodes.put("01326", "Falmouth");
 			this.areaCodes.put("01327", "Daventry");
@@ -306,7 +314,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("01438", "Stevenage, Hertfordshire");
 			this.areaCodes.put("01439", "Helmsley");
 			this.areaCodes.put("01440", "Haverhill");
-			this.areaCodes.put("01442", "Hemel Hempstead -HH");
+			this.areaCodes.put("01442", "Hemel Hempstead");
 			this.areaCodes.put("01443", "Pontypridd, Glamorgan");
 			this.areaCodes.put("01444", "Haywards Heath");
 			this.areaCodes.put("01445", "Gairloch");
@@ -383,7 +391,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("01538", "Ipstones, Leek");
 			this.areaCodes.put("01539", "Kendal");
 			this.areaCodes.put("015394", "Hawkshead");
-			this.areaCodes.put("015395", "Grange over Sands");
+			this.areaCodes.put("015395", "Grange-over-Sands");
 			this.areaCodes.put("015396", "Sedbergh");
 			this.areaCodes.put("01540", "Kingussie");
 			this.areaCodes.put("01542", "Keith");
@@ -715,7 +723,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("01984", "Watchet");
 			this.areaCodes.put("01985", "Warminster");
 			this.areaCodes.put("01986", "Bungay, Waveney");
-			this.areaCodes.put("01987", "Ebbsfleet [7]");
+			this.areaCodes.put("01987", "Ebbsfleet");
 			this.areaCodes.put("01988", "Wigtown");
 			this.areaCodes.put("01989", "Ross on Wye, Wye");
 			this.areaCodes.put("01992", "Lea Valley, Waltham X");
@@ -723,17 +731,23 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("01994", "St Clears, West Wales");
 			this.areaCodes.put("01995", "Garstang, Wyre");
 			this.areaCodes.put("01997", "Strathpeffer, Wyvis");
+			this.areaCodes.put("0500", "Freephone");
 			this.areaCodes.put("055", "Voice over IP");
 			this.areaCodes.put("056", "Voice over IP");
 			this.areaCodes.put("070", "Personal number (can be redirected)");
+			this.areaCodes.put("074", "Mobile");
 			this.areaCodes.put("075", "Mobile");
 			this.areaCodes.put("077", "Mobile");
 			this.areaCodes.put("078", "Mobile");
 			this.areaCodes.put("079", "Mobile");
 			this.areaCodes.put("080", "Freephone");
-			this.areaCodes.put("084", "Local rate");
-			this.areaCodes.put("087", "Local rate");
+			this.areaCodes.put("0842", "Non geographic/special");
+			this.areaCodes.put("0843", "Non geographic/special");
+			this.areaCodes.put("0844", "Non geographic/special");
+			this.areaCodes.put("0845", "Non geographic");
+			this.areaCodes.put("087", "Non geographic/special");
 			this.areaCodes.put("09", "Premium rate");
+			this.areaCodes.put("03", "Non geograhic");
 		}
 		phoneNumber = phoneNumber.replaceAll(" ", "");
 		String possibleCode = "";
