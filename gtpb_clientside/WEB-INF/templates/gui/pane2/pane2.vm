@@ -22,8 +22,7 @@
 	#if($mobile_device)
 	  <link href="resources/mobile/pane2_amalgam.css" type="text/css" rel="stylesheet" />
 	#else
-	  <link href="styles/report.css" type="text/css" rel="stylesheet" />
-	  <link href="resources/module-colours.css" type="text/css" rel="stylesheet" />
+	  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
 	#end
     <style>
 	      * {
@@ -99,8 +98,6 @@
 	  });	  
 	  </script>
 	#else
-	  <script src="resources/jquery.hoverIntent.js" type="text/javascript"></script>
-	  <script src="resources/jquery.sparkline.js" type="text/javascript"></script>
 	  #if($isNotTable)
       <script type="text/javascript">
         top.document.getElementById('filter').setAttribute('disabled','true');
@@ -148,8 +145,7 @@
       </script>
 	  #end
     <script language=Javascript src="resources/$resource_folder/new_delete.js"></script>
-    <script language=Javascript src="resources/wait/request_setFilter.js"></script>
-    <script language=Javascript src="resources/wait/jquery.ajaxmanager.js"></script>
+	<script src="resources/pane2_amalgam.js" type="text/javascript"></script>
     <script language=Javascript>
         #set($numRows = $data.size())
         #set($reportRowLimit = $sessionData.getReportRowLimit())
@@ -239,7 +235,6 @@
 	  #end
 	});
 	</script>
-	<script src="resources/pane2.js" language="Javascript"> </script>
     #end ## end if not mobile device
   </head>
 
