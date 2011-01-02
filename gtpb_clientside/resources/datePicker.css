@@ -60,7 +60,7 @@ table.jCalendar td.unselectable.dp-hover {
 /* NOTE - you will probably want to style a.dp-choose-date - see how I did it in demo.css */
 /* Oliver - OK, we will */
 a.dp-choose-date {
-	float: left;
+	/* float: left; */
 	width: 16px;
 	height: 16px;
 	padding: 0;
