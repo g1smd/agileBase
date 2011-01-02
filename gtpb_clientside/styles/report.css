@@ -42,12 +42,12 @@ table#reportData th#sortedColumn{
 }
 
 table#reportData th#sortedColumn[sortDirn=true] {
-  background-image:url('../resources/reports/asc.png');
+  background-image:url('reports/asc.png');
   border-bottom-color:green;
 }
 
 table#reportData th#sortedColumn[sortDirn=false] {
-  background-image:url('../resources/reports/desc.png');
+  background-image:url('reports/desc.png');
   border-bottom-color:red;
 }
 
@@ -58,7 +58,7 @@ table#reportData th div {
 }
 
 table#reportData th.waiting {
-  background-image:url('../resources/reports/spinner.gif')!important;
+  background-image:url('reports/spinner.gif')!important;
 }
 	
 table#reportData thead tr#fieldFilters,
@@ -86,7 +86,7 @@ table#reportData .selectable tr.rowb:hover td {
 
 table#reportData tbody tr.rowa:hover td.colored,
 table#reportData tbody tr.rowb:hover td.colored { 
-  background-image: url('highlighted_row_fine_angled.png'); 
+  background-image: url('../styles/highlighted_row_fine_angled.png'); 
 }   
 					  
 table#reportData td { 
@@ -111,7 +111,7 @@ table#reportData td:last-child {
 
 table#reportData tr#currentRow td { 
   background-color:#ffd588;
-  /*background-image: url(selected_row_fine_angled.png);*/
+  /*background-image: url(styles/selected_row_fine_angled.png);*/
   /*font-family:"Arial Bold";*/
 }				
 
@@ -121,7 +121,7 @@ table#reportData tr#currentRow td.trailing {
 }	  
 
 table#reportData tr#currentRow td.colored {
-  background-image: url('selected_row_fine_angled.png');
+  background-image: url('../styles/selected_row_fine_angled.png');
 }
 					 
 table#reportData tr.rowb td, 
@@ -130,7 +130,7 @@ table#reportData tr.rowa td {
 }					 
 					 
 table#reportData tr.rowb  { 
-  background-image: url('rowb.png');
+  background-image: url('../styles/rowb.png');
 }
 
 table#reportData .trailing { 
@@ -160,7 +160,7 @@ table#reportData tr.excludedRecord td {
 .small { font-size: 8pt!important }
 
 .load-spinner {
-	background: white url('ajax-loader.gif') no-repeat 50% 50%;
+	background: white url('../styles/ajax-loader.gif') no-repeat 50% 50%;
 	position: absolute;
 	width: 100%;
 	height: 100%;
