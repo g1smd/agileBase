@@ -391,7 +391,7 @@ function uploadFile(fileInputElement) {
     if (fileSize) {
       var jqFileInput = $(fileInputElement);
       var jqUploadInfo = jqFileInput.next();
-      var fileSizeInfo = parseInt(fileSize / 1000000)
+      var fileSizeInfo = parseInt(fileSize / 1000000);
       if (fileSizeInfo == 0) {
         fileSizeInfo = '<img src="resources/upload_ajax-loader.gif" /> Uploading &frac12; MB';
       } else {
@@ -528,6 +528,10 @@ function fSetValueAtt(oWrapperDiv) {
   } // end with oWrapperDiv
 }
 
+function fDatePickers() {
+  $('.dp-choose-date').datePicker();
+}
+
 function fAssignButtonTableActions() {
   $('button.tableaction').click(function() {
 	var actionName = $(this).attr('actionname');
@@ -542,10 +546,10 @@ function fAssignButtonTableActions() {
 	return false;
   });
 }
+
 /* 
  * Management tabs functions 
  */
-
 function fShowTableUsage() {
   // If no usage log table exists yet, get from server
   if ($("#table_usage_loader table").size() == 0) {
@@ -617,5 +621,6 @@ function fSetupCharts() {
 pane3Scripts.functionList.push(fUnlockButton);
 pane3Scripts.functionList.push(fComboComponents);
 pane3Scripts.functionList.push(fRelationPickers);
+pane3Scripts.functionList.push(fDatePickers);
 pane3Scripts.functionList.push(fSetupCharts);
 pane3Scripts.functionList.push(fAssignButtonTableActions);
