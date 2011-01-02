@@ -102,7 +102,8 @@
   #end
   #if($dateResolution >= $CONST_SECOND) 
     : <input type="text" #if(!$updateAsType) name="$field.getInternalFieldName()_seconds" #end maxlength="2" size="2" maxKeyCount="2" value="$seconds" wrapperAttribute="gtpb_$field.getInternalFieldName()_seconds" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
-  #end  
+  #end
+  <a class="dp-choose-date" title="Choose date" href="#">Choose date</a>
   #if($globalEdit)
 	<button class="globalEdit" onclick="fUpdateGlobalDate(this)">update globally</button>
   #end
