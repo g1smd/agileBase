@@ -529,9 +529,7 @@ function fSetValueAtt(oWrapperDiv) {
 }
 
 function fDatePickers() {
-  $('.dp-choose-date').datePicker({
-	  createButton: false
-  });
+  $('.dp-choose-date').datePicker();
 }
 
 function fAssignButtonTableActions() {
