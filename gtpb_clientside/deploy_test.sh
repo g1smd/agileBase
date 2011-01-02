@@ -7,7 +7,7 @@ ant -f deploy_templates_ubuntu.xml deploy
 # CSS
 #pane 1
 cat /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/tree/tree.css /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/module-colours.css /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/mobile/pane1_override.css > /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/mobile/pane1_amalgam.css
-cat /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/tree/tree.css /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/module-colours.css /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/styles/jquery.cluetip.css > /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/pane1_amalgam.css
+cat /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/tree/tree.css /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/module-colours.css /usr/local/tomcat/apache-tomcat/webapps/agileBase/styles/jquery.cluetip.css > /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/pane1_amalgam.css
 #pane 2
 cat /usr/local/tomcat/apache-tomcat/webapps/agileBase/styles/report.css /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/module-colours.css /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/mobile/override.css > /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/mobile/pane2_amalgam.css
 cat /usr/local/tomcat/apache-tomcat/webapps/agileBase/styles/report.css /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/module-colours.css > /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/pane2_amalgam.css
