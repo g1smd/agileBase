@@ -120,4 +120,3 @@ $(document).ready(function(){
 	  }
 	});
 });
-/** Test **/
