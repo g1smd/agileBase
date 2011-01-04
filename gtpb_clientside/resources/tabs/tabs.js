@@ -530,7 +530,7 @@ function fSetValueAtt(oWrapperDiv) {
 
 function fDatePickers() {
   $('.dp-choose-date').each(function() {
-	  $(this).datePicker();
+	  $(this).datePicker().dpSetDisplayedMonth(12, 2010);;
 	  var internalFieldName = $(this).attr("id").replace("date_picker_","");
 	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
 	  var month = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val();
