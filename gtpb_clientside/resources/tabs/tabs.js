@@ -544,7 +544,7 @@ function fDatePickers() {
 		  var jqYear = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]');
 		  jqYear.val(year);
 		  jqYear.keyup();
-	  });
+	  }).trigger('change'); // change makes the current date visible as selected
 	  var internalFieldName = jqDateSelector.attr("id").replace("date_picker_","");
 	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
 	  var month = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val();
