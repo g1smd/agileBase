@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.TextCase;
 
 /**
@@ -30,7 +31,7 @@ import com.gtwm.pb.util.Enumerations.TextCase;
 public interface TextField extends BaseField {
 	public void setDefault(String defaultValue) throws CantDoThatException;
 
-	public String getDefault();
+	public String getDefault() throws CodingErrorException;
 
 	public void clearDefault() throws CantDoThatException;
 
@@ -94,7 +95,7 @@ public interface TextField extends BaseField {
 	 *             type doesn't support lookups
 	 */
 	public SortedSet<String> getItems(BaseReportInfo report, Map<BaseField, String> filterValues)
-			throws SQLException, CantDoThatException;
+			throws SQLException, CantDoThatException, CodingErrorException;
 	
 	/**
 	 * Return the case that text in this field should be forced to

@@ -555,7 +555,7 @@ function fDatePickers() {
 		  var jqYear = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]');
 		  jqYear.val(year);
 		  jqYear.keyup();
-	  }); // change makes the current date visible as selected
+	  });
   	  if (month != '') {
   		// Setting current date doesn't seem to work
   		//jqDateSelector.dpSetSelected(currentDate.toString()).change();

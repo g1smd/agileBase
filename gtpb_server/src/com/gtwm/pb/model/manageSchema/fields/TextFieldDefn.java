@@ -22,6 +22,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 import javax.sql.DataSource;
+
+import org.apache.commons.lang.WordUtils;
 import org.grlea.log.SimpleLogger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,6 +44,7 @@ import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
@@ -148,21 +151,23 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
 		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.TEXT);
 		try {
-			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCONTENTSIZE, String
-					.valueOf(this.getContentSize()));
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCONTENTSIZE,
+					String.valueOf(this.getContentSize()));
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
-			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super.getNotNull());
-			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.USELOOKUP, this
-					.usesLookup());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY,
+					super.getNotNull());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.USELOOKUP,
+					this.usesLookup());
 			if (this.hasDefault()) {
-				fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE, this
-						.getDefault());
+				fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE,
+						this.getDefault());
 			}
 			TextCase textCase = this.getTextCase();
 			if (textCase == null) {
 				textCase = TextCase.ANY;
 			}
-			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCASE, textCase.toString());
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCASE,
+					textCase.toString());
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
@@ -176,8 +181,25 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	}
 
 	@Transient
-	public synchronized String getDefault() {
-		return this.getDefaultDirect();
+	public synchronized String getDefault() throws CodingErrorException {
+		String defaultText = this.getDefaultDirect();
+		TextCase textCase = this.getTextCase();
+		if (textCase == null) {
+			return defaultText;
+		} else {
+			switch (textCase) {
+			case ANY:
+				return defaultText;
+			case LOWER:
+				return defaultText.toLowerCase();
+			case UPPER:
+				return defaultText.toUpperCase();
+			case TITLE:
+				return WordUtils.capitalizeFully(defaultText);
+			default:
+				throw new CodingErrorException("Unrecognised text case " + textCase);
+			}
+		}
 	}
 
 	public synchronized void clearDefault() {
@@ -197,7 +219,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		checkOptionsConsistency(maxChars, this.getUsesLookupDirect(), this.getUnique());
 		this.setContentSizeDirect(maxChars);
 	}
-	
+
 	private void setContentSizeDirect(Integer maxChars) {
 		this.contentSize = maxChars;
 	}
@@ -206,7 +228,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	public synchronized Integer getContentSize() {
 		return this.getContentSizeDirect();
 	}
-	
+
 	private Integer getContentSizeDirect() {
 		return this.contentSize;
 	}
@@ -215,11 +237,11 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		checkOptionsConsistency(this.getContentSize(), usesLookup, this.getUnique());
 		this.setUsesLookupDirect(usesLookup);
 	}
-	
+
 	private void setUsesLookupDirect(Boolean usesLookup) {
 		this.usesLookup = usesLookup;
 	}
-	
+
 	private Boolean getUsesLookupDirect() {
 		return this.usesLookup;
 	}
@@ -228,7 +250,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	public boolean usesLookup() {
 		return this.getUsesLookupDirect();
 	}
-	
+
 	public void setUnique(Boolean fieldUnique) throws CantDoThatException {
 		checkOptionsConsistency(this.getContentSize(), this.getUsesLookupDirect(), fieldUnique);
 		super.setUnique(fieldUnique);
@@ -266,8 +288,13 @@ public class TextFieldDefn extends AbstractField implements TextField {
 				return this.allItemsCache;
 			}
 		}
-		String SQLCode = "SELECT DISTINCT " + this.getInternalFieldName() + " FROM "
-				+ this.getTableContainingField().getInternalTableName();
+		TextCase textCase = this.getTextCase();
+		if (textCase == null) {
+			textCase = TextCase.ANY;
+		}
+		String sqlRepresentation = textCase.getSqlRepresentation();
+		String SQLCode = "SELECT DISTINCT " + sqlRepresentation + "(" + this.getInternalFieldName()
+				+ ") FROM " + this.getTableContainingField().getInternalTableName();
 		Connection conn = null;
 		SortedSet<String> items = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 		try {
@@ -296,7 +323,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	}
 
 	public SortedSet<String> getItems(BaseReportInfo report, Map<BaseField, String> filterValues)
-			throws SQLException, CantDoThatException {
+			throws SQLException, CantDoThatException, CodingErrorException {
 		// filterId used for caching items for this particular filter
 		String filterId = report.getInternalReportName();
 		for (Map.Entry<BaseField, String> filterValueEntry : filterValues.entrySet()) {
@@ -326,6 +353,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			return items;
 		}
 		try {
+			TextCase textCase = this.getTextCase();
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			ReportDataInfo reportData = new ReportData(conn, report, false, false);
@@ -338,7 +366,26 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			while (results.next()) {
 				String item = results.getString(1);
 				if (item != null) {
-					items.add(item);
+					if (textCase == null) {
+						items.add(item);
+					} else {
+						switch (textCase) {
+						case ANY:
+							items.add(item);
+							break;
+						case LOWER:
+							items.add(item.toLowerCase());
+							break;
+						case UPPER:
+							items.add(item.toUpperCase());
+							break;
+						case TITLE:
+							items.add(WordUtils.capitalizeFully(item));
+							break;
+						default:
+							throw new CodingErrorException("Unrecognised text case " + textCase);
+						}
+					}
 				}
 			}
 			results.close();
@@ -399,13 +446,13 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	public TextCase getTextCase() {
 		return this.textCase;
 	}
-	
+
 	public void setTextCase(TextCase textCase) {
 		this.textCase = textCase;
 	}
-	
+
 	private TextCase textCase = TextCase.ANY;
-	
+
 	private String defaultValue = null;
 
 	private Integer contentSize = TextContentSizes.FEW_WORDS.getNumChars();

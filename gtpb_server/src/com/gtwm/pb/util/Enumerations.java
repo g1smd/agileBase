@@ -380,9 +380,19 @@ public class Enumerations {
 			this.sql = sql;
 		}
 	}
-	
+
 	public enum TextCase {
-		ANY, LOWER, UPPER, TITLE
+		ANY(""), LOWER("lower"), UPPER("upper"), TITLE("initcap");
+
+		public String getSqlRepresentation() {
+			return this.sqlRepresentation;
+		}
+
+		TextCase(String sqlRepresentation) {
+			this.sqlRepresentation = sqlRepresentation;
+		}
+
+		private String sqlRepresentation = "";
 	}
 
 }
