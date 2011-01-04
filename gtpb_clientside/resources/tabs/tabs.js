@@ -535,9 +535,9 @@ function fDatePickers() {
 	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
 	  var month = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val();
 	  alert('month:' + month + ', year: ' + year);
-  	  if (month != '') {
+  	  //if (month != '') {
   		$(this).dpSetDisplayedMonth(12, 2010);
-  	  }
+  	  //}
   });
 }
 
