@@ -532,7 +532,12 @@ function fDatePickers() {
   $('.dp-choose-date').each(function() {
 	  var jqDateSelector = $(this);
 	  jqDateSelector.datePicker({startDate: '01/01/1901'}).bind('dateSelected',function(e, selectedDate, $td) {
-		  alert('Date selected: ' + selectedDate);
+		  var day = selectedDate.getDay();
+		  var month = selectedDate.getMonth();
+		  var year = selectedDate.getYear();
+		  $('input[wrapperAttribute="gtpb_' + internalFieldName + '_days' + '"]').val(day);
+		  $('input[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val(month+1);
+		  $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val(year);
 	  });
 	  var internalFieldName = jqDateSelector.attr("id").replace("date_picker_","");
 	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
