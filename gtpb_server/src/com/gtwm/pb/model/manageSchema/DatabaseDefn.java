@@ -1333,16 +1333,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 			return;
 		}
 		String sqlCode = "UPDATE " + field.getTableContainingField().getInternalTableName();
-		sqlCode += " SET " + field.getInternalFieldName();
-		if (textCase.equals(TextCase.LOWER)) {
-			sqlCode += " = lower(" + field.getInternalFieldName() + ")";
-		} else if (textCase.equals(TextCase.UPPER)) {
-			sqlCode += " = upper(" + field.getInternalFieldName() + ")";
-		} else if (textCase.equals(TextCase.TITLE)) {
-			sqlCode += " = initcap(" + field.getInternalFieldName() + ")";
-		} else {
-			throw new CantDoThatException("Unrecogniesed case: " + textCase);
-		}
+		sqlCode += " SET " + field.getInternalFieldName() + " = " + textCase.getSqlRepresentation()
+				+ "(" + field.getInternalFieldName() + ")";
 		Connection conn = null;
 		try {
 			conn = this.relationalDataSource.getConnection();
@@ -2245,9 +2237,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void setSummaryReportFilterField(HttpServletRequest request, BaseReportInfo report,
-			ReportFieldInfo reportField) throws SQLException, DisallowedException,
-			ObjectNotFoundException, CantDoThatException {
+	public synchronized void setSummaryReportFilterField(HttpServletRequest request,
+			BaseReportInfo report, ReportFieldInfo reportField) throws SQLException,
+			DisallowedException, ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
