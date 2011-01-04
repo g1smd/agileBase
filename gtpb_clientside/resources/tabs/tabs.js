@@ -531,7 +531,8 @@ function fSetValueAtt(oWrapperDiv) {
 function fDatePickers() {
   $('.dp-choose-date').each(function() {
 	  var jqDateSelector = $(this);
-	  jqDateSelector.datePicker({startDate: '01/01/1901'}).bind('dateSelected',function(e, selectedDate, $td) {
+	  jqDateSelector.datePicker({startDate: '01/01/1901'}).bind('dateSelected',function(e, selectedDate, $td, status) {
+		  alert('status is ' + status);
 		  var day = selectedDate.getDate();
 		  var month = selectedDate.getMonth();
 		  var year = selectedDate.getFullYear();
