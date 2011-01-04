@@ -536,8 +536,8 @@ function fDatePickers() {
 	  var month = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val();
 	  var day = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_days' + '"]').val();
 	  var currentDate = new Date(year, month - 1, day);
-	  var inline = jqDateSelector.attr('inline');
-	  jqDateSelector.datePicker({startDate: '01/01/1901', inline: false}).bind('dateSelected',function(e, selectedDate, $td, status) {
+	  var inlineAttr = jqDateSelector.attr('inline');
+	  jqDateSelector.datePicker({startDate: '01/01/1901', inline: inlineAttr}).bind('dateSelected',function(e, selectedDate, $td, status) {
 		  var day = selectedDate.getDate();
 		  var month = selectedDate.getMonth();
 		  var year = selectedDate.getFullYear();
