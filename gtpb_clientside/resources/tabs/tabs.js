@@ -535,15 +535,15 @@ function fDatePickers() {
 		  var day = selectedDate.getDate();
 		  var month = selectedDate.getMonth();
 		  var year = selectedDate.getFullYear();
-		  var daysSelector = 'input[wrapperattribute="gtpb_' + internalFieldName + '_days' + '"]';
-		  //$(daysSelector).val(day);
+		  var daysSelector = 'select[wrapperAttribute="gtpb_' + internalFieldName + '_days' + '"]';
+		  $(daysSelector).val(day);
 		  alert(daysSelector + ' is now ' +  $(daysSelector).val());
-		  $('input[wrapperattribute="gtpb_' + internalFieldName + '_months' + '"]').val(month+1);
-		  $('input[wrapperattribute="gtpb_' + internalFieldName + '_years' + '"]').val(year);
+		  $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val(month+1);
+		  $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val(year);
 	  });
 	  var internalFieldName = jqDateSelector.attr("id").replace("date_picker_","");
-	  var year = $('input[wrapperattribute="gtpb_' + internalFieldName + '_years' + '"]').val();
-	  var month = $('select[wrapperattribute="gtpb_' + internalFieldName + '_months' + '"]').val();
+	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
+	  var month = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val();
   	  if (month != '') {
   		jqDateSelector.dpSetDisplayedMonth(month - 1, year);
   	  }
