@@ -535,11 +535,11 @@ function fDatePickers() {
 		  var day = selectedDate.getDate();
 		  var month = selectedDate.getMonth();
 		  var year = selectedDate.getFullYear();
-		  var daysSelector = 'select[wrapperAttribute="gtpb_' + internalFieldName + '_days' + '"]';
-		  $(daysSelector).val(day);
-		  alert(daysSelector + ' is now ' +  $(daysSelector).val());
+		  $('select[wrapperAttribute="gtpb_' + internalFieldName + '_days' + '"]').val(day);
 		  $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val(month+1);
-		  $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val(year);
+		  var jqYear = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]');
+		  jqYear.val(year);
+		  jqYear.keyup(); // trigger a send to the server
 	  });
 	  var internalFieldName = jqDateSelector.attr("id").replace("date_picker_","");
 	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
