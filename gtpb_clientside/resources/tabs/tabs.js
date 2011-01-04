@@ -532,10 +532,9 @@ function fDatePickers() {
   $('.dp-choose-date').each(function() {
 	  $(this).datePicker();
 	  var internalFieldName = $(this).attr("id").replace("date_picker_","");
-	  alert('selector: ' + 'input[name="' + internalFieldName + '_years' + '"]');
-	  var year = $('input[name="' + internalFieldName + '_years' + '"]').val();
-	  var month = $('select[name="' + internalFieldName + '_months' + '"]').val();
-	  //alert('month:' + month + ', year: ' + year);
+	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
+	  var month = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val();
+	  alert('month:' + month + ', year: ' + year);
   	  if (month != '') {
   		$(this).dpSetDisplayedMonth(month, year);
   	  }
