@@ -148,7 +148,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	}
 
 	@Transient
-	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
+	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException, CodingErrorException {
 		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.TEXT);
 		try {
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCONTENTSIZE,
