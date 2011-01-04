@@ -107,7 +107,7 @@
 	#if($mobile_device)
       <div class="dp-choose-date" id="date_picker_$field.getInternalFieldName()" inline="true"></div>
     #else
-	  <input type="hidden" id="date_picker_$field.getInternalFieldName()" inline="false">
+	  <input type="hidden" class="dp-choose-date" id="date_picker_$field.getInternalFieldName()" inline="false">
 	#end
   #end
   #if($globalEdit)
