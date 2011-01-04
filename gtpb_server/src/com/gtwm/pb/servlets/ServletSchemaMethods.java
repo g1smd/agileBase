@@ -1037,7 +1037,7 @@ public final class ServletSchemaMethods {
 	public synchronized static void updateFieldOption(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, DisallowedException, ObjectNotFoundException,
-			CantDoThatException {
+			CantDoThatException, CodingErrorException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				ServletUtilMethods.USE_SESSION);
 		String internalFieldName = request.getParameter("internalfieldname");
