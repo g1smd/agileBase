@@ -534,7 +534,7 @@ function fDatePickers() {
 	  var internalFieldName = $(this).attr("id").replace("date_picker_","");
 	  var year = $('input[name="' + internalFieldName + '_years' + '"]').val();
 	  var month = $('select[name="' + internalFieldName + '_months' + '"]').val();
-	  alert('month:' month + ', year: ' + year);
+	  alert('month:' + month + ', year: ' + year);
   	  if (month != '') {
   		$(this).dpSetDisplayedMonth(month, year);
   	  }
