@@ -531,6 +531,11 @@ function fSetValueAtt(oWrapperDiv) {
 function fDatePickers() {
   $('.dp-choose-date').each(function() {
 	  var jqDateSelector = $(this);
+	  var internalFieldName = jqDateSelector.attr("id").replace("date_picker_","");
+	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
+	  var month = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val();
+	  var day = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_days' + '"]').val();
+	  var currentDate = new Date(year, month - 1, day);
 	  jqDateSelector.datePicker({startDate: '01/01/1901'}).bind('dateSelected',function(e, selectedDate, $td, status) {
 		  var day = selectedDate.getDate();
 		  var month = selectedDate.getMonth();
@@ -544,10 +549,7 @@ function fDatePickers() {
 		  var jqYear = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]');
 		  jqYear.val(year);
 		  jqYear.keyup();
-	  }).trigger('change'); // change makes the current date visible as selected
-	  var internalFieldName = jqDateSelector.attr("id").replace("date_picker_","");
-	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
-	  var month = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val();
+	  }).val(currentDate).trigger('change'); // change makes the current date visible as selected
   	  if (month != '') {
   		jqDateSelector.dpSetDisplayedMonth(month - 1, year);
   	  }
