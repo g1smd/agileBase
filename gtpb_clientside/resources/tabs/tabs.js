@@ -550,7 +550,7 @@ function fDatePickers() {
 		  jqYear.keyup();
 	  }); // change makes the current date visible as selected
   	  if (month != '') {
-  		jqDateSelector.dpSetSelected(day + '/' + month + '/' + year);
+  		jqDateSelector.dpSetSelected(month + '/' + day + '/' + year);
   		jqDateSelector.dpSetDisplayedMonth(month - 1, year);
   	  }
   });
