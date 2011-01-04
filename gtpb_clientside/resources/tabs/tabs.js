@@ -537,7 +537,7 @@ function fDatePickers() {
 		  var year = selectedDate.getFullYear();
 		  var daysSelector = 'input[wrapperAttribute="gtpb_' + internalFieldName + '_days' + '"]';
 		  //$(daysSelector).val(day);
-		  alert(daysSelector 'is now ' +  $(daysSelector).val());
+		  alert(daysSelector + ' is now ' +  $(daysSelector).val());
 		  $('input[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val(month+1);
 		  $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val(year);
 	  });
