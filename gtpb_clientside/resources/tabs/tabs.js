@@ -529,7 +529,7 @@ function fSetValueAtt(oWrapperDiv) {
 }
 
 function fDatePickers() {
-  $('.dp-choose-date').each(function({
+  $('.dp-choose-date').each(function() {
 	  $(this).datePicker();
 	  var internalFieldName = $(this).attr("id").replace("date_picker_","");
 	  var year = $('input[name="' + internalFieldName + '_years' + '"]').val();
