@@ -530,14 +530,16 @@ function fSetValueAtt(oWrapperDiv) {
 
 function fDatePickers() {
   $('.dp-choose-date').each(function() {
-	  $(this).datePicker({startDate: '01/01/1901'});
-	  var internalFieldName = $(this).attr("id").replace("date_picker_","");
+	  var jqDateSelector = $(this);
+	  jqDateSelector.datePicker({startDate: '01/01/1901'}).bind('dateSelected',function(e, selectedDate, $td) {
+		  alert('Date selected: ' + selectedDate);
+	  });
+	  var internalFieldName = jqDateSelector.attr("id").replace("date_picker_","");
 	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
 	  var month = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val();
-	  alert('month:' + month + ', year: ' + year);
-  	  //if (month != '') {
-  		$(this).dpSetDisplayedMonth(month - 1, year);
-  	  //}
+  	  if (month != '') {
+  		jqDateSelector.dpSetDisplayedMonth(month - 1, year);
+  	  }
   });
 }
 
