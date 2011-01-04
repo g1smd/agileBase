@@ -104,7 +104,7 @@
     : <input type="text" #if(!$updateAsType) name="$field.getInternalFieldName()_seconds" #end maxlength="2" size="2" maxKeyCount="2" value="$seconds" wrapperAttribute="gtpb_$field.getInternalFieldName()_seconds" onkeyup="fKeyUpEvent(this)" #if($globalEdit) global_edit="true" #end>
   #end
   #if($dateResolution >= $CONST_DAY_OF_MONTH)
-    <input type="text" class="dp-choose-date" id="date_picker_$field.getInternalFieldName()" #if($mobile_device) inline="true" #else inline="false" #end>
+    <div class="dp-choose-date" id="date_picker_$field.getInternalFieldName()" #if($mobile_device) inline="true" #else inline="false" #end></div>
   #end
   #if($globalEdit)
 	<button class="globalEdit" onclick="fUpdateGlobalDate(this)">update globally</button>
