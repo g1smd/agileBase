@@ -535,6 +535,8 @@ function fDatePickers() {
 	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
 	  var month = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val();
 	  var day = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_days' + '"]').val();
+	  var currentDate = new Date(year, month - 1, day);
+	  alert('Currently selected: ' + currentDate);
 	  jqDateSelector.datePicker({startDate: '01/01/1901'}).bind('dateSelected',function(e, selectedDate, $td, status) {
 		  var day = selectedDate.getDate();
 		  var month = selectedDate.getMonth();
@@ -550,8 +552,7 @@ function fDatePickers() {
 		  jqYear.keyup();
 	  }); // change makes the current date visible as selected
   	  if (month != '') {
-  		alert('setting current date to ' + day + '/' + month + '/' + year);
-  		jqDateSelector.dpSetSelected(day + '/' + month + '/' + year);
+  		jqDateSelector.dpSetSelected(currentDate.toString());
   		jqDateSelector.dpSetDisplayedMonth(month - 1, year);
   	  }
   });
