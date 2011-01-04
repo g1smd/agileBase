@@ -537,6 +537,11 @@ function fDatePickers() {
 	  var day = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_days' + '"]').val();
 	  var currentDate = new Date(year, month - 1, day);
 	  var inlineAttr = jqDateSelector.attr('inline');
+	  if (inlineAttr == "true") {
+		  inlineAttr = true;
+	  } else {
+		  inlineAttr = false;
+	  }
 	  jqDateSelector.datePicker({startDate: '01/01/1901', inline: inlineAttr}).bind('dateSelected',function(e, selectedDate, $td, status) {
 		  var day = selectedDate.getDate();
 		  var month = selectedDate.getMonth();
