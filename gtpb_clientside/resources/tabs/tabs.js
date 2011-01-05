@@ -530,9 +530,9 @@ function fSetValueAtt(oWrapperDiv) {
 
 function fDatePickers() {
   $('.dp-choose-date').each(function() {
-	  alert(this.tagName);
 	  if (this.tagName == "A") {
-		  return
+		  // The links to launch the picker also have the dp-choose-date class
+		  return;
 	  }
 	  var jqDateSelector = $(this);
 	  var internalFieldName = jqDateSelector.attr("id").replace("date_picker_","");
