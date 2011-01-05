@@ -293,7 +293,8 @@ public class TextFieldDefn extends AbstractField implements TextField {
 
 	@Transient
 	// synchronized because it uses a cache
-	public synchronized SortedSet<String> getItems() throws SQLException, CantDoThatException, CodingErrorException {
+	public synchronized SortedSet<String> getItems() throws SQLException, CantDoThatException,
+			CodingErrorException {
 		if ((System.currentTimeMillis() - this.allItemsLastCacheTime) < AppProperties.lookupCacheTime) {
 			if (this.allItemsCache.size() > 0) {
 				this.allItemsCacheHits += 1;
@@ -308,28 +309,31 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		}
 		// Add CSV from the default items, if there is one
 		String defaultText = this.getDefaultDirect();
-		if (defaultText.contains(",")) {
-			//TODO: this switch crops up often, candidate for a Helper method
-			switch(textCase) {
-			case ANY:
-				break;
-			case LOWER:
-				defaultText = defaultText.toLowerCase();
-				break;
-			case UPPER:
-				defaultText = defaultText.toUpperCase();
-				break;
-			case TITLE:
-				defaultText = WordUtils.capitalizeFully(defaultText);
-				break;
-			default:
-				throw new CodingErrorException("Unrecognised text case " + textCase);			
+		if (defaultText != null) {
+			if (defaultText.contains(",")) {
+				// TODO: this switch crops up often, candidate for a Helper
+				// method, or a transform method in the enum itself
+				switch (textCase) {
+				case ANY:
+					break;
+				case LOWER:
+					defaultText = defaultText.toLowerCase();
+					break;
+				case UPPER:
+					defaultText = defaultText.toUpperCase();
+					break;
+				case TITLE:
+					defaultText = WordUtils.capitalizeFully(defaultText);
+					break;
+				default:
+					throw new CodingErrorException("Unrecognised text case " + textCase);
+				}
+				List<String> defaultItems = Arrays.asList(defaultText.split(","));
+				if (defaultItems.get(0).equals("")) {
+					defaultItems.remove(0);
+				}
+				items.addAll(defaultItems);
 			}
-			List<String> defaultItems = Arrays.asList(defaultText.split(","));
-			if (defaultItems.get(0).equals("")) {
-				defaultItems.remove(0);
-			}
-			items.addAll(defaultItems);
 		}
 		String sqlRepresentation = textCase.getSqlRepresentation();
 		String SQLCode = "SELECT DISTINCT " + sqlRepresentation + "(" + this.getInternalFieldName()
