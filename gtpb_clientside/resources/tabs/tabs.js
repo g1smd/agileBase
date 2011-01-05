@@ -530,6 +530,7 @@ function fSetValueAtt(oWrapperDiv) {
 
 function fDatePickers() {
   $('.dp-choose-date').each(function() {
+	  alert(this.tagName);
 	  if (this.tagName == "A") {
 		  return
 	  }
