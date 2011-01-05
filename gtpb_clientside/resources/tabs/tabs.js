@@ -530,12 +530,10 @@ function fSetValueAtt(oWrapperDiv) {
 
 function fDatePickers() {
   $('.dp-choose-date').each(function() {
-	  var jqDateSelector = $(this);
-	  if (jqDateSelector.hasClass("dp-applied")) {
-		  alert("has dp-applied");
-		  // The date picker has already been set up
-		  return;
+	  if (this.tagName == "A") {
+		  return
 	  }
+	  var jqDateSelector = $(this);
 	  var internalFieldName = jqDateSelector.attr("id").replace("date_picker_","");
 	  var year = $('input[wrapperAttribute="gtpb_' + internalFieldName + '_years' + '"]').val();
 	  var month = $('select[wrapperAttribute="gtpb_' + internalFieldName + '_months' + '"]').val();
