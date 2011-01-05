@@ -50,7 +50,10 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.AppProperties;
+
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -148,7 +151,8 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	}
 
 	@Transient
-	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException, CodingErrorException {
+	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException,
+			CodingErrorException {
 		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.TEXT);
 		try {
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCONTENTSIZE,
@@ -184,22 +188,31 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	public synchronized String getDefault() throws CodingErrorException {
 		String defaultText = this.getDefaultDirect();
 		TextCase textCase = this.getTextCase();
-		if (textCase == null) {
+		if (textCase == null || defaultText == null) {
 			return defaultText;
 		} else {
 			switch (textCase) {
 			case ANY:
-				return defaultText;
+				break;
 			case LOWER:
-				return defaultText.toLowerCase();
+				defaultText = defaultText.toLowerCase();
+				break;
 			case UPPER:
-				return defaultText.toUpperCase();
+				defaultText = defaultText.toUpperCase();
+				break;
 			case TITLE:
-				return WordUtils.capitalizeFully(defaultText);
+				defaultText = WordUtils.capitalizeFully(defaultText);
+				break;
 			default:
 				throw new CodingErrorException("Unrecognised text case " + textCase);
 			}
 		}
+		// if a lookup with a CSV, return the first value
+		// User can use a leading comma to return an empty value
+		if (this.usesLookup() && defaultText.contains(",")) {
+			return defaultText.split(",")[0];
+		}
+		return defaultText;
 	}
 
 	public synchronized void clearDefault() {
@@ -280,7 +293,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 
 	@Transient
 	// synchronized because it uses a cache
-	public synchronized SortedSet<String> getItems() throws SQLException, CantDoThatException {
+	public synchronized SortedSet<String> getItems() throws SQLException, CantDoThatException, CodingErrorException {
 		if ((System.currentTimeMillis() - this.allItemsLastCacheTime) < AppProperties.lookupCacheTime) {
 			if (this.allItemsCache.size() > 0) {
 				this.allItemsCacheHits += 1;
@@ -288,15 +301,40 @@ public class TextFieldDefn extends AbstractField implements TextField {
 				return this.allItemsCache;
 			}
 		}
+		SortedSet<String> items = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 		TextCase textCase = this.getTextCase();
 		if (textCase == null) {
 			textCase = TextCase.ANY;
+		}
+		// Add CSV from the default items, if there is one
+		String defaultText = this.getDefaultDirect();
+		if (defaultText.contains(",")) {
+			//TODO: this switch crops up often, candidate for a Helper method
+			switch(textCase) {
+			case ANY:
+				break;
+			case LOWER:
+				defaultText = defaultText.toLowerCase();
+				break;
+			case UPPER:
+				defaultText = defaultText.toUpperCase();
+				break;
+			case TITLE:
+				defaultText = WordUtils.capitalizeFully(defaultText);
+				break;
+			default:
+				throw new CodingErrorException("Unrecognised text case " + textCase);			
+			}
+			List<String> defaultItems = Arrays.asList(defaultText.split(","));
+			if (defaultItems.get(0).equals("")) {
+				defaultItems.remove(0);
+			}
+			items.addAll(defaultItems);
 		}
 		String sqlRepresentation = textCase.getSqlRepresentation();
 		String SQLCode = "SELECT DISTINCT " + sqlRepresentation + "(" + this.getInternalFieldName()
 				+ ") FROM " + this.getTableContainingField().getInternalTableName();
 		Connection conn = null;
-		SortedSet<String> items = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
