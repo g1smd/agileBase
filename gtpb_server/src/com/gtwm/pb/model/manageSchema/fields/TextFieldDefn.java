@@ -329,10 +329,12 @@ public class TextFieldDefn extends AbstractField implements TextField {
 					throw new CodingErrorException("Unrecognised text case " + textCase);
 				}
 				List<String> defaultItems = Arrays.asList(defaultText.split(","));
-				if (defaultItems.get(0).equals("")) {
+				if (defaultItems.get(0).trim().equals("")) {
 					defaultItems.remove(0);
 				}
-				items.addAll(defaultItems);
+				for (String defaultItem : defaultItems) {
+					items.add(defaultItem.trim());
+				}
 			}
 		}
 		String sqlRepresentation = textCase.getSqlRepresentation();
@@ -347,7 +349,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			while (results.next()) {
 				String item = results.getString(1);
 				if (item != null) {
-					items.add(item);
+					items.add(item.trim());
 				}
 			}
 			results.close();
