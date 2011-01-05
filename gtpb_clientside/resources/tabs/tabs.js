@@ -532,6 +532,7 @@ function fDatePickers() {
   $('.dp-choose-date').each(function() {
 	  var jqDateSelector = $(this);
 	  if (jqDateSelector.hasClass("dp-applied")) {
+		  alert("has dp-applied");
 		  // The date picker has already been set up
 		  return;
 	  }
