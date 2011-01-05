@@ -76,11 +76,14 @@ public interface TextField extends BaseField {
 	 * field's parent table. Useful for displaying a lookup / combo box of
 	 * values for entry
 	 * 
+	 * TODO: also include any values returned by getDefault() if that returns a
+	 * comma separated list
+	 * 
 	 * @throws CantDoThatException
 	 *             if the text field type doesn't support lookups. Currently,
 	 *             BigTextFieldDefn doesn't
 	 */
-	public SortedSet<String> getItems() throws SQLException, CantDoThatException;
+	public SortedSet<String> getItems() throws SQLException, CantDoThatException, CodingErrorException;
 
 	/**
 	 * Similar to getItems() but instead of returning values from the field's
@@ -96,11 +99,11 @@ public interface TextField extends BaseField {
 	 */
 	public SortedSet<String> getItems(BaseReportInfo report, Map<BaseField, String> filterValues)
 			throws SQLException, CantDoThatException, CodingErrorException;
-	
+
 	/**
 	 * Return the case that text in this field should be forced to
 	 */
 	public TextCase getTextCase();
-	
+
 	public void setTextCase(TextCase textCase);
 }
