@@ -237,7 +237,7 @@ public final class CalendarPublisher extends HttpServlet {
 				calendar.getComponents().add(rowEvent);
 			}
 			// Log the report access
-			String remoteHost = request.getRemoteHost();
+			String remoteHost = request.getRemoteHost() + ", " + request.getHeader("User-Agent");
 			UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
 			usageLogger.logReportView(publicUser, report, reportFilterValues, rowLimit, remoteHost);
 			UsageLogger.startLoggingThread(usageLogger);
