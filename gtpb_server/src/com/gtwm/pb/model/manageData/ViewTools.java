@@ -746,8 +746,11 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("0844", "Non geographic/special");
 			this.areaCodes.put("0845", "Non geographic");
 			this.areaCodes.put("087", "Non geographic/special");
+			this.areaCodes.put("0871", "Premium rate");
+			this.areaCodes.put("0872", "Premium rate");
+			this.areaCodes.put("0873", "Premium rate");
 			this.areaCodes.put("09", "Premium rate");
-			this.areaCodes.put("03", "Non geograhic");
+			this.areaCodes.put("03", "Non geographic");
 		}
 		phoneNumber = phoneNumber.replaceAll(" ", "");
 		String possibleCode = "";
