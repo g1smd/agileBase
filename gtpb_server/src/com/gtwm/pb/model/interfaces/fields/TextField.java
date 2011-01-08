@@ -39,8 +39,11 @@ public interface TextField extends BaseField {
 
 	/**
 	 * If this field is a lookup, return the CSV of default items
+	 * 
+	 * @throws CantDoThatException
+	 *             if the field isn't a lookup
 	 */
-	public String getDefaultCSV();
+	public String getDefaultCSV() throws CantDoThatException;
 
 	public void clearDefault() throws CantDoThatException;
 

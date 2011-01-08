@@ -190,7 +190,10 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	}
 
 	@Transient
-	public synchronized String getDefaultCSV() {
+	public synchronized String getDefaultCSV() throws CantDoThatException {
+		if (!this.usesLookup()) {
+			throw new CantDoThatException("Can't get default CSV - this field isn't a lookup");
+		}
 		String defaultCSV = this.getDefaultDirect();
 		TextCase textCase = this.getTextCase();
 		if (textCase != null) {
