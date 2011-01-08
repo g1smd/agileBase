@@ -31,7 +31,16 @@ import com.gtwm.pb.util.Enumerations.TextCase;
 public interface TextField extends BaseField {
 	public void setDefault(String defaultValue) throws CantDoThatException;
 
-	public String getDefault() throws CodingErrorException;
+	/**
+	 * Return the default item. If this field is a lookup with a CSV for the
+	 * default, return the first item in the list
+	 */
+	public String getDefault();
+
+	/**
+	 * If this field is a lookup, return the CSV of default items
+	 */
+	public String getDefaultCSV();
 
 	public void clearDefault() throws CantDoThatException;
 
@@ -83,7 +92,8 @@ public interface TextField extends BaseField {
 	 *             if the text field type doesn't support lookups. Currently,
 	 *             BigTextFieldDefn doesn't
 	 */
-	public SortedSet<String> getItems() throws SQLException, CantDoThatException, CodingErrorException;
+	public SortedSet<String> getItems() throws SQLException, CantDoThatException,
+			CodingErrorException;
 
 	/**
 	 * Similar to getItems() but instead of returning values from the field's
