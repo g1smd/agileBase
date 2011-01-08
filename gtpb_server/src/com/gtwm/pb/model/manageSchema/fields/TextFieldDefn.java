@@ -329,11 +329,10 @@ public class TextFieldDefn extends AbstractField implements TextField {
 					throw new CodingErrorException("Unrecognised text case " + textCase);
 				}
 				List<String> defaultItems = Arrays.asList(defaultText.split(","));
-				if (defaultItems.get(0).trim().equals("")) {
-					defaultItems.remove(0);
-				}
 				for (String defaultItem : defaultItems) {
-					items.add(defaultItem.trim());
+					if (!defaultItem.trim().equals("")) {
+						items.add(defaultItem.trim());
+					}
 				}
 			}
 		}
