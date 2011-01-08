@@ -114,6 +114,11 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
     }
 
     @Transient
+    public synchronized String getDefaultCSV() {
+    		return this.getDefaultDirect();
+    }
+    
+    @Transient
     public synchronized String getDefault() {
         return this.getDefaultDirect();
     }

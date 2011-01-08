@@ -19,6 +19,8 @@ package com.gtwm.pb.util;
 
 import java.util.Locale;
 
+import org.apache.commons.lang.WordUtils;
+
 /**
  * Enumerations used throughout the application. These are mainly lists of
  * actions that can be carried out, plus one list of reserved words
@@ -386,6 +388,24 @@ public class Enumerations {
 
 		public String getSqlRepresentation() {
 			return this.sqlRepresentation;
+		}
+
+		/**
+		 * Transform the given text into the case that this TextCase represents
+		 */
+		public String transform(String text) {
+			switch (this) {
+			case ANY:
+				return text;
+			case LOWER:
+				return text.toLowerCase();
+			case UPPER:
+				return text.toUpperCase();
+			case TITLE:
+				return WordUtils.capitalizeFully(text);
+			default:
+				return text;
+			}
 		}
 
 		TextCase(String sqlRepresentation) {

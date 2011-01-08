@@ -163,8 +163,13 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.USELOOKUP,
 					this.usesLookup());
 			if (this.hasDefault()) {
-				fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE,
-						this.getDefault());
+				if (this.usesLookup()) {
+					fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE,
+							this.getDefaultCSV());
+				} else {
+					fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE,
+							this.getDefault());
+				}
 			}
 			TextCase textCase = this.getTextCase();
 			if (textCase == null) {
@@ -185,27 +190,23 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	}
 
 	@Transient
-	public synchronized String getDefault() throws CodingErrorException {
+	public synchronized String getDefaultCSV() {
+		String defaultCSV = this.getDefaultDirect();
+		TextCase textCase = this.getTextCase();
+		if (textCase != null) {
+			defaultCSV = textCase.transform(defaultCSV);
+		}
+		return defaultCSV;
+	}
+
+	@Transient
+	public synchronized String getDefault() {
 		String defaultText = this.getDefaultDirect();
 		TextCase textCase = this.getTextCase();
 		if (textCase == null || defaultText == null) {
 			return defaultText;
 		} else {
-			switch (textCase) {
-			case ANY:
-				break;
-			case LOWER:
-				defaultText = defaultText.toLowerCase();
-				break;
-			case UPPER:
-				defaultText = defaultText.toUpperCase();
-				break;
-			case TITLE:
-				defaultText = WordUtils.capitalizeFully(defaultText);
-				break;
-			default:
-				throw new CodingErrorException("Unrecognised text case " + textCase);
-			}
+			defaultText = textCase.transform(defaultText);
 		}
 		// if a lookup with a CSV, return the first value
 		// User can use a leading comma to return an empty value
@@ -509,8 +510,6 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	private Boolean usesLookup = false;
 
 	private SortedSet<String> allItemsCache = new TreeSet<String>();
-
-	private SortedSet<String> fixedLookupItems = new TreeSet<String>();
 
 	private Map<String, SortedSet<String>> filteredItemsCache = new HashMap<String, SortedSet<String>>();
 
