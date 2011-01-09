@@ -91,7 +91,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 			<div id="intro" class="wrapper">      
 					<div class="content">
 						<div id="bubble">
-							<h1>The best IT platform for your Lean back office</h1>
+							<h1>The best IT platform for the SME Lean back office</h1>
 							agileBase - built from the ground up to support
 							continuous improvement, PDCA, A3 reports and other Lean approaches.
 						</div>

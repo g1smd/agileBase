@@ -74,6 +74,7 @@ import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.AggregateRange;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.ExtraAction;
 import com.gtwm.pb.util.Helpers;
@@ -226,8 +227,9 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return this.databaseDefn.getDataManagement().isRowIdInReport(report, rowId);
 	}
 
-	public synchronized void addModuleAction(String internaModuleName, String actionName, String description,
-			String attributes, String actionTemplate, String buttons, String callbackFunction) {
+	public synchronized void addModuleAction(String internaModuleName, String actionName,
+			String description, String attributes, String actionTemplate, String buttons,
+			String callbackFunction) {
 		List<ModuleActionInfo> moduleActions = null;
 		if (this.moduleActions.containsKey(internaModuleName)) {
 			moduleActions = this.moduleActions.get(internaModuleName);
@@ -314,11 +316,13 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		return viewableReports;
 	}
-	
+
 	/**
-	 * Returns all the reports from a table that the specified user is able to view
+	 * Returns all the reports from a table that the specified user is able to
+	 * view
 	 */
-	private SortedSet<BaseReportInfo> getViewableReports(TableInfo table, AppUserInfo user) throws DisallowedException, CodingErrorException {
+	private SortedSet<BaseReportInfo> getViewableReports(TableInfo table, AppUserInfo user)
+			throws DisallowedException, CodingErrorException {
 		SortedSet<BaseReportInfo> allTableReports = table.getReports();
 		// Strip down to the set of reports the user has privileges to view
 		SortedSet<BaseReportInfo> viewableReports = new TreeSet<BaseReportInfo>();
@@ -341,16 +345,18 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return reports;
 	}
 
-	public SortedSet<BaseReportInfo> adminGetAllViewableReports(AppUserInfo user) throws ObjectNotFoundException, DisallowedException, CodingErrorException {
+	public SortedSet<BaseReportInfo> adminGetAllViewableReports(AppUserInfo user)
+			throws ObjectNotFoundException, DisallowedException, CodingErrorException {
 		SortedSet<BaseReportInfo> reports = new TreeSet<BaseReportInfo>();
-		Set<TableInfo> tables = this.getAuthManager().getCompanyForLoggedInUser(this.request).getTables();
+		Set<TableInfo> tables = this.getAuthManager().getCompanyForLoggedInUser(this.request)
+				.getTables();
 		for (TableInfo table : tables) {
 			Set<BaseReportInfo> tableReports = this.getViewableReports(table, user);
 			reports.addAll(tableReports);
 		}
 		return reports;
 	}
-	
+
 	public TableInfo getTable(String tableID) throws ObjectNotFoundException, DisallowedException {
 		return this.databaseDefn.getTable(this.request, tableID);
 	}
@@ -636,20 +642,20 @@ public final class ViewMethods implements ViewMethodsInfo {
 		FieldCategory fieldCategory = field.getFieldCategory();
 		if (fieldCategory.equals(FieldCategory.NUMBER)) {
 			reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.SUM,
-					reportField));
+					reportField, AggregateRange.ALL));
 			reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.AVG,
-					reportField));
+					reportField, AggregateRange.ALL));
 		} else if (fieldCategory.equals(FieldCategory.TEXT)) {
 			if (((TextField) field).usesLookup()) {
 				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
 						report.getReportField(report.getParentTable().getPrimaryKey()
-								.getInternalFieldName())));
+								.getInternalFieldName()), AggregateRange.ALL));
 			} else if (!field.getTableContainingField().equals(report.getParentTable())) {
 				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
 						report.getReportField(report.getParentTable().getPrimaryKey()
-								.getInternalFieldName())));
+								.getInternalFieldName()), AggregateRange.ALL));
 			}
 		}
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
