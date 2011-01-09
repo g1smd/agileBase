@@ -2421,11 +2421,16 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ReportSummaryGroupingInfo removedGrouping = templateSummary.removeGrouping(grouping
 					.getGroupingReportField());
 		}
-		// And any filter
+		// Any date range filter
 		savedSummary.setSummaryFilter(templateSummary.getSummaryFilter());
 		templateSummary.setSummaryFilter(null);
 		savedSummary.setFilterReportField(templateSummary.getFilterReportField());
 		templateSummary.setFilterReportField(null);
+		// Range (row limit)
+		savedSummary.setRangeDirection(templateSummary.getRangeDirection());
+		templateSummary.setRangeDirection(true);
+		savedSummary.setRangePercent(templateSummary.getRangePercent());
+		templateSummary.setRangePercent(100);		
 		// Summary title
 		report.saveReportSummary(savedSummary);
 		templateSummary.setTitle("");
