@@ -315,23 +315,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		String defaultText = this.getDefaultDirect();
 		if (defaultText != null) {
 			if (defaultText.contains(",")) {
-				// TODO: this switch crops up often, candidate for a Helper
-				// method, or a transform method in the enum itself
-				switch (textCase) {
-				case ANY:
-					break;
-				case LOWER:
-					defaultText = defaultText.toLowerCase();
-					break;
-				case UPPER:
-					defaultText = defaultText.toUpperCase();
-					break;
-				case TITLE:
-					defaultText = WordUtils.capitalizeFully(defaultText);
-					break;
-				default:
-					throw new CodingErrorException("Unrecognised text case " + textCase);
-				}
+				defaultText = textCase.transform(defaultText);
 				List<String> defaultItems = Arrays.asList(defaultText.split(","));
 				for (String defaultItem : defaultItems) {
 					if (!defaultItem.trim().equals("")) {
@@ -416,22 +400,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 					if (textCase == null) {
 						items.add(item);
 					} else {
-						switch (textCase) {
-						case ANY:
-							items.add(item);
-							break;
-						case LOWER:
-							items.add(item.toLowerCase());
-							break;
-						case UPPER:
-							items.add(item.toUpperCase());
-							break;
-						case TITLE:
-							items.add(WordUtils.capitalizeFully(item));
-							break;
-						default:
-							throw new CodingErrorException("Unrecognised text case " + textCase);
-						}
+						items.add(textCase.transform(item));
 					}
 				}
 			}

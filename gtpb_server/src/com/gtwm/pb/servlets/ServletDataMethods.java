@@ -708,19 +708,7 @@ public final class ServletDataMethods {
 					} else {
 						TextCase textCase = ((TextField) field).getTextCase();
 						if (textCase != null) {
-							switch (textCase) {
-							case ANY:
-								break;
-							case UPPER:
-								fieldValueString = fieldValueString.toUpperCase();
-								break;
-							case LOWER:
-								fieldValueString = fieldValueString.toLowerCase();
-								break;
-							case TITLE:
-								fieldValueString = WordUtils.capitalizeFully(fieldValueString);
-								break;
-							}
+							fieldValueString = textCase.transform(fieldValueString);
 						}
 						fieldValue = new TextValueDefn(fieldValueString);
 					}
