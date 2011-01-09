@@ -74,7 +74,6 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.TableDependencyException;
-import com.gtwm.pb.util.Enumerations.AggregateRange;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.FilterType;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
@@ -2125,6 +2124,40 @@ public final class ServletSchemaMethods {
 		}
 	}
 
+	public synchronized static void setSummaryRange(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
+			MissingParametersException, ObjectNotFoundException, CantDoThatException, SQLException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, ServletUtilMethods.USE_SESSION);
+		String rangeDirectionString = request.getParameter("rangedirection");
+		String rangePercentString = request.getParameter("rangepercent");
+		if (rangeDirectionString == null || rangePercentString == null) {
+			throw new MissingParametersException(
+					"rangedirection and rangepercent parameters are needed to set the summary filter");
+		}
+		boolean rangeDirection = Helpers.valueRepresentsBooleanTrue(rangeDirectionString);
+		int rangePercent = Integer.valueOf(rangePercentString);
+		try {
+			HibernateUtil.startHibernateTransaction();
+			databaseDefn.setSummaryReportRange(request, report, rangePercent, rangeDirection);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			databaseDefn.setSummaryReportRange(request, report, 100, true);
+			throw new CantDoThatException("summary range addition failed", hex);
+		} catch (AgileBaseException pex) {
+			rollbackConnections(null);
+			databaseDefn.setSummaryReportRange(request, report, 100, true);
+			throw new CantDoThatException("summary range addition failed", pex);
+		} catch (SQLException sqlex) {
+			rollbackConnections(null);
+			databaseDefn.setSummaryReportRange(request, report, 100, true);
+			throw new CantDoThatException("summary range addition failed", sqlex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+
 	public synchronized static void addGroupingToSummaryReport(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			CantDoThatException, MissingParametersException, ObjectNotFoundException {
@@ -2243,13 +2276,12 @@ public final class ServletSchemaMethods {
 			}
 		}
 		AggregateFunction function = AggregateFunction.valueOf(functionName.toUpperCase());
-		AggregateRange aggregateRange = AggregateRange.valueOf(aggregateRangeString.toUpperCase());
 		ReportSummaryAggregateInfo addedAggFn = null;
 		if (secondaryFunctionReportField == null) {
-			addedAggFn = new ReportSummaryAggregateDefn(function, functionReportField, aggregateRange);
+			addedAggFn = new ReportSummaryAggregateDefn(function, functionReportField);
 		} else {
 			addedAggFn = new ReportSummaryAggregateDefn(function, functionReportField,
-					secondaryFunctionReportField, aggregateRange);
+					secondaryFunctionReportField);
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();

@@ -102,8 +102,7 @@ function fSubmitGroup() {
 function fSubmitFunction() {
   var aggregateFunction = jQuery("#aggregatefunction").val();
   var aggregateFunctionField = jQuery("#aggregatefunctionfield").val();
-  var aggregateRange = jQuery("#aggregaterange").val();
-  if (aggregateFunction != "" && aggregateFunctionField != "" && aggregateRange != "") {
+  if (aggregateFunction != "" && aggregateFunctionField != "") {
     document.addaggregate.submit();
   }
 }
@@ -175,12 +174,6 @@ function fSubmitFunction() {
 							                #end
 							              #end
 						            </select>
-									<select name="aggregaterange" id="aggregaterange" onchange="fSubmitFunction();">
-										  <option value="" selected>-- please choose a range --</option>
-						              	#foreach($range in $reportSummary.getPossibleAggregateRanges())
-							              	  <option value="$range.toString()">$range.getDescription()</option>
-							            #end
-									</select>
 									<!-- <input type="submit" value="add calculation"> -->
 </div>
 </form><br>
@@ -216,6 +209,17 @@ function fSubmitFunction() {
   </select>
 </form><br>
 #end
+<form name="setlimit" method="post" action="AppController.servlet">
+  #set($rangeDirection = $defaultReportSummary.getRangeDirection())
+  #set($rangePercent = $defaultReportSummary.getRangePercent())
+  <input type="hidden" name="return" value="$return_template" />
+  <input type="hidden" name="set_summary_range" value="1" />
+  Show 
+  <input type="radio" name="rangedirection" value="true" #if($rangeDirection) checked #end> highest 
+  <input type="radio" name="rangedirection" value="false" #if(!$rangeDirection) checked #end> lowest 
+  <input type="number" name="rangepercent" value="$rangePercent"> % of results
+  <input type="submit" name="submit" value="Set limit">
+</form>
 <form name="savechart">
 	Choose title: 
 	#set($title = $defaultReportSummary.getTitle())
