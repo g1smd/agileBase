@@ -2260,6 +2260,38 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
+	public synchronized void setSummaryReportRange(HttpServletRequest request, BaseReportInfo report,
+			int rangePercent, boolean rangeDirection) throws SQLException, DisallowedException,
+			ObjectNotFoundException, CantDoThatException {
+		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+		}
+		ReportSummaryInfo reportSummary = report.getReportSummary();
+		HibernateUtil.activateObject(reportSummary);
+		reportSummary.setRangePercent(rangePercent);
+		reportSummary.setRangeDirection(rangeDirection);
+		this.dataManagement.logLastSchemaChangeTime(request);
+		// Test change by selecting rows from the database
+		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
+		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
+		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
+				company, report.getReportSummary(), blankFilterValues, false);
+		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
+		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		String logString = "";
+		if (rangePercent < 100) {
+			if (rangeDirection) {
+				logString = "Upper ";
+			} else {
+				logString = "Lower ";
+			}
+		}
+		logString += rangePercent + "%";
+		usageLogger.logReportSchemaChange(user, report, AppAction.SET_SUMMARY_RANGE, logString);
+		UsageLogger.startLoggingThread(usageLogger);
+	}
+	
 	public synchronized void addGroupingToSummaryReport(HttpServletRequest request,
 			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException {

@@ -74,7 +74,6 @@ import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
-import com.gtwm.pb.util.Enumerations.AggregateRange;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.ExtraAction;
 import com.gtwm.pb.util.Helpers;
@@ -642,20 +641,20 @@ public final class ViewMethods implements ViewMethodsInfo {
 		FieldCategory fieldCategory = field.getFieldCategory();
 		if (fieldCategory.equals(FieldCategory.NUMBER)) {
 			reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.SUM,
-					reportField, AggregateRange.ALL));
+					reportField));
 			reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.AVG,
-					reportField, AggregateRange.ALL));
+					reportField));
 		} else if (fieldCategory.equals(FieldCategory.TEXT)) {
 			if (((TextField) field).usesLookup()) {
 				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
 						report.getReportField(report.getParentTable().getPrimaryKey()
-								.getInternalFieldName()), AggregateRange.ALL));
+								.getInternalFieldName())));
 			} else if (!field.getTableContainingField().equals(report.getParentTable())) {
 				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
 						report.getReportField(report.getParentTable().getPrimaryKey()
-								.getInternalFieldName()), AggregateRange.ALL));
+								.getInternalFieldName())));
 			}
 		}
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();

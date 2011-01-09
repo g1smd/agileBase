@@ -52,7 +52,6 @@ import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
-import com.gtwm.pb.util.Enumerations.AggregateRange;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.util.CantDoThatException;
@@ -388,20 +387,28 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		this.filterReportField = filterReportField;
 	}
 
+	public int getRangePercent() {
+		return this.rangePercent;
+	}
+	
+	public void setRangePercent(int rangePercent) {
+		this.rangePercent = rangePercent;
+	}
+
+	public boolean getRangeDirection() {
+		return this.rangeDirection;
+	}
+	
+	public void setRangeDirection(boolean rangeDirection) {
+		this.rangeDirection = rangeDirection;
+	}
+
 	/**
 	 * Return the list of legitimate aggregate functions
 	 */
 	@Transient
 	public static EnumSet<AggregateFunction> getPossibleFunctionTypes() {
 		return EnumSet.allOf(AggregateFunction.class);
-	}
-
-	/**
-	 * Return the list of legitimate aggregate ranges
-	 */
-	@Transient
-	public static EnumSet<AggregateRange> getPossibleAggregateRanges() {
-		return EnumSet.allOf(AggregateRange.class);
 	}
 
 	public String toString() {
@@ -471,8 +478,12 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 
 	private String title = "";
 
+	private int rangePercent = 100;
+	
+	private boolean rangeDirection = UPPER_RANGE;
+	
 	private boolean persist = true;
-
+	
 	private long id;
 
 	private static final SimpleLogger logger = new SimpleLogger(ReportSummaryDefn.class);

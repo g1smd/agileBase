@@ -439,8 +439,16 @@ public interface DatabaseInfo {
 	 * @see setSummaryReportFilter(HttpServletRequest, BaseReportInfo,
 	 *      SummaryFilter)
 	 */
-	public void setSummaryReportFilterField(HttpServletRequest request, BaseReportInfo report, ReportFieldInfo reportField)
-			throws SQLException, DisallowedException, ObjectNotFoundException, CantDoThatException;
+	public void setSummaryReportFilterField(HttpServletRequest request, BaseReportInfo report,
+			ReportFieldInfo reportField) throws SQLException, DisallowedException,
+			ObjectNotFoundException, CantDoThatException;
+
+	/**
+	 * Set the range of rows returned, e.g. the top 25%
+	 */
+	public void setSummaryReportRange(HttpServletRequest request, BaseReportInfo report,
+			int rangePercent, boolean rangeDirection) throws SQLException, DisallowedException,
+			ObjectNotFoundException, CantDoThatException;
 
 	/**
 	 * Makes a copy of the current summary report and saves it in the collection

@@ -44,7 +44,8 @@ public interface ReportSummaryInfo {
 	/**
 	 * Group by a field filled from a report
 	 */
-	public void addGrouping(ReportFieldInfo groupByReportField, SummaryGroupingModifier groupingModifier);
+	public void addGrouping(ReportFieldInfo groupByReportField,
+			SummaryGroupingModifier groupingModifier);
 
 	/**
 	 * Remove field from grouping. If field isn't in grouping, do nothing, don't
@@ -78,17 +79,18 @@ public interface ReportSummaryInfo {
 			throws ObjectNotFoundException;
 
 	/**
-	 * Return the title given to this report summary, e.g. to be used as a chart title
+	 * Return the title given to this report summary, e.g. to be used as a chart
+	 * title
 	 */
 	public String getTitle();
-	
+
 	public void setTitle(String title);
-	
+
 	/**
 	 * Return a unique ID for the summary
 	 */
 	public long getId();
-	
+
 	/**
 	 * Return a prepared statement that is for getting the summary (aggregate)
 	 * data for a report
@@ -106,7 +108,7 @@ public interface ReportSummaryInfo {
 	public List<ReportFieldInfo> getGroupingReportFields();
 
 	public SortedSet<ReportSummaryGroupingInfo> getGroupings();
-	
+
 	/**
 	 * Return a single grouping field
 	 */
@@ -125,16 +127,16 @@ public interface ReportSummaryInfo {
 	 * Return the filter acting on this summary, or null if there is none
 	 */
 	public SummaryFilter getSummaryFilter();
-	
+
 	public void setSummaryFilter(SummaryFilter summaryFilter);
-	
+
 	/**
 	 * Return the field that the summary filter acts on
 	 */
 	public ReportFieldInfo getFilterReportField();
-	
+
 	public void setFilterReportField(ReportFieldInfo reportField);
-	
+
 	/**
 	 * @return True if the summary contains any numeric i.e non-COUNT aggregate
 	 *         functions, e.g SUM, AVERAGE etc.
@@ -144,8 +146,33 @@ public interface ReportSummaryInfo {
 	public boolean containsNumericAggFns();
 
 	/**
+	 * Affects the LIMIT SQL clause, i.e. return a percentage of the total rows
+	 * 
+	 * @see getRangeDirection()
+	 */
+	public int getRangePercent();
+	
+	public void setRangePercent(int rangePercent);
+
+	/**
+	 * True represents the top of the range, false the bottom. so a range
+	 * direction of true and a range percent of 25% would mean return the top
+	 * 25% of rows, i.e. the upper quartile
+	 * 
+	 * @see getRangePercent()
+	 */
+	public boolean getRangeDirection();
+
+	public void setRangeDirection(boolean rangeDirection);
+	
+	public static final boolean UPPER_RANGE = true;
+	
+	public static final boolean LOWER_RANGE = false;
+
+	/**
 	 * @return The report that is being summarized. Each report maps one to one
 	 *         to a summary
 	 */
-	public BaseReportInfo getReport();	
+	public BaseReportInfo getReport();
+	
 }
