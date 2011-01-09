@@ -5,7 +5,7 @@
 @import url("../button/button.css");
 
 html .tab-interface .tab-list a, html .tab-interface .tab-list strong { 
-	min-width: 60px;
+	min-width: 100px;
 }
 
 html .tab-interface .tab-list li {
