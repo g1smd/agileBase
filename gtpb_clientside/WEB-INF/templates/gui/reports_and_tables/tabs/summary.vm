@@ -219,7 +219,7 @@ function fSubmitFunction() {
   <input type="radio" name="rangedirection" value="false" #if(!$rangeDirection) checked #end> lowest 
   <input type="number" name="rangepercent" value="$rangePercent"> % of results
   <input type="submit" name="submit" value="Set limit">
-</form>
+</form><br>
 <form name="savechart">
 	Choose title: 
 	#set($title = $defaultReportSummary.getTitle())
