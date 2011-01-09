@@ -52,6 +52,7 @@ import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
+import com.gtwm.pb.util.Enumerations.AggregateRange;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.util.CantDoThatException;
@@ -393,6 +394,14 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	@Transient
 	public static EnumSet<AggregateFunction> getPossibleFunctionTypes() {
 		return EnumSet.allOf(AggregateFunction.class);
+	}
+
+	/**
+	 * Return the list of legitimate aggregate ranges
+	 */
+	@Transient
+	public static EnumSet<AggregateRange> getPossibleAggregateRanges() {
+		return EnumSet.allOf(AggregateRange.class);
 	}
 
 	public String toString() {
