@@ -31,6 +31,8 @@ import java.util.TreeSet;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.EnumSet;
+
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -403,6 +405,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		this.filterReportField = filterReportField;
 	}
 
+	@Basic
 	public int getRangePercent() {
 		return this.rangePercent;
 	}
@@ -411,6 +414,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		this.rangePercent = rangePercent;
 	}
 
+	@Basic
 	public boolean getRangeDirection() {
 		return this.rangeDirection;
 	}
