@@ -2263,10 +2263,9 @@ public final class ServletSchemaMethods {
 		String internalFieldName = request.getParameter("internalfieldname");
 		String secondaryInternalFieldName = request.getParameter("secondaryinternalfieldname");
 		String functionName = request.getParameter("function");
-		String aggregateRangeString = request.getParameter("aggregaterange");
-		if (internalFieldName == null || functionName == null || aggregateRangeString == null) {
+		if (internalFieldName == null || functionName == null) {
 			throw new MissingParametersException(
-					"'internalfieldname', 'function'  and 'aggregaterange' parameters are required to add an aggregate function to a report summary");
+					"'internalfieldname' and 'function' parameters are required to add an aggregate function to a report summary");
 		}
 		ReportFieldInfo functionReportField = report.getReportField(internalFieldName);
 		ReportFieldInfo secondaryFunctionReportField = null;
