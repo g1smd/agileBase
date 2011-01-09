@@ -20,6 +20,7 @@ package com.gtwm.pb.util;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -102,6 +103,7 @@ public final class HibernateUtil {
 			cfg.addAnnotatedClass(SequenceFieldDefn.class);
 			cfg.addAnnotatedClass(TextFieldDefn.class);
 			cfg.addAnnotatedClass(SeparatorFieldDefn.class);
+			new SchemaUpdate(cfg).execute(true, true);
 			sessionFactory = cfg.buildSessionFactory();
 		} catch (Throwable ex) {
 			logger.error("Initial SessionFactory creation failed: " + ex);
