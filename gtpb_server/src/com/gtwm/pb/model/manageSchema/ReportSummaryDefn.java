@@ -256,7 +256,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 			}
 			sqlForSummary += " GROUP BY " + groupByFieldsCsv;
 			if (groupingsContainDateField) {
-				sqlForSummary += " ORDER BY " + groupByFieldsCsv.replace(",", sortDirection + ",");
+				sqlForSummary += " ORDER BY " + groupByFieldsCsv;
 				sqlForSummary += sortDirection;
 			} else {
 				String oppositeSortDirection = " ASC";
