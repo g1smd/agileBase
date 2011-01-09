@@ -103,7 +103,8 @@ public final class HibernateUtil {
 			cfg.addAnnotatedClass(SequenceFieldDefn.class);
 			cfg.addAnnotatedClass(TextFieldDefn.class);
 			cfg.addAnnotatedClass(SeparatorFieldDefn.class);
-			new SchemaUpdate(cfg).execute(true, true);
+			//TODO: not sure if this is necessary or not, check next time we have a schema update
+			//new SchemaUpdate(cfg).execute(true, true);
 			sessionFactory = cfg.buildSessionFactory();
 		} catch (Throwable ex) {
 			logger.error("Initial SessionFactory creation failed: " + ex);
