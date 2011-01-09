@@ -19,7 +19,7 @@ package com.gtwm.pb.util;
 
 import org.grlea.log.SimpleLogger;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -66,7 +66,7 @@ public final class HibernateUtil {
 		try {
 			// Create the SessionFactory
 			// specifying which classes should be persisted
-			AnnotationConfiguration cfg = new AnnotationConfiguration();
+		    Configuration cfg = new Configuration();
 			cfg.addPackage("com.gtwm.pb.auth");
 			cfg.addAnnotatedClass(Authenticator.class);
 			cfg.addAnnotatedClass(Company.class);
