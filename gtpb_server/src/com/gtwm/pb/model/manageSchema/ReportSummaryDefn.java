@@ -242,6 +242,10 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		}
 		String sqlForSummary = null;
 		boolean validSummary = true;
+		String sortDirection = " DESC";
+		if (this.getRangeDirection()) {
+			sortDirection = " ASC";
+		}
 		if ((groupings.size() > 0) && (this.getAggregateFunctionsDirect().size() > 0)) {
 			sqlForSummary = "SELECT " + groupByFieldsCsv + ", " + aggregateFunctionsCsv;
 			sqlForSummary += " FROM " + this.getReport().getInternalReportName();
@@ -250,11 +254,16 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 			}
 			sqlForSummary += " GROUP BY " + groupByFieldsCsv;
 			if (groupingsContainDateField) {
-				sqlForSummary += " ORDER BY " + groupByFieldsCsv;
+				sqlForSummary += " ORDER BY " + groupByFieldsCsv.replace(",", sortDirection + ",");
+				sqlForSummary += sortDirection;
 			} else {
-				// Note: DESC will only work for one field, if there are multiple
-				// fields, we should really add DESC to each
-				sqlForSummary += " ORDER BY " + aggregateFunctionsCsv + " DESC";
+				String oppositeSortDirection = " ASC";
+				if (this.getRangeDirection()) {
+					oppositeSortDirection = " DESC";
+				}
+				sqlForSummary += " ORDER BY "
+						+ aggregateFunctionsCsv.replace(",", oppositeSortDirection + ",");
+				sqlForSummary += oppositeSortDirection;
 			}
 		} else if (this.getAggregateFunctionsDirect().size() > 0) {
 			sqlForSummary = "SELECT " + aggregateFunctionsCsv + " FROM "
@@ -269,12 +278,19 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 				sqlForSummary += " WHERE " + filterArgs;
 			}
 			sqlForSummary += " GROUP BY " + groupByFieldsCsv;
-			sqlForSummary += " ORDER BY " + groupByFieldsCsv;
+			sqlForSummary += " ORDER BY " + groupByFieldsCsv.replace(",", sortDirection + ",");
+			sqlForSummary += sortDirection;
 		} else {
 			// no grouping fields and no aggregate functions means no report
 			// summary
 			sqlForSummary = "SELECT '' where false";
 			validSummary = false;
+		}
+		int rangePercent = this.getRangePercent();
+		if (rangePercent < 100) {
+			sqlForSummary += " LIMIT (";
+			sqlForSummary += " SELECT (count(*) * (" + rangePercent + " / 100))::integer";
+			sqlForSummary += " FROM " + this.getReport().getInternalReportName() + ")";
 		}
 		PreparedStatement statement = conn.prepareStatement(sqlForSummary);
 		if (validSummary) {
@@ -390,7 +406,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	public int getRangePercent() {
 		return this.rangePercent;
 	}
-	
+
 	public void setRangePercent(int rangePercent) {
 		this.rangePercent = rangePercent;
 	}
@@ -398,7 +414,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	public boolean getRangeDirection() {
 		return this.rangeDirection;
 	}
-	
+
 	public void setRangeDirection(boolean rangeDirection) {
 		this.rangeDirection = rangeDirection;
 	}
@@ -479,11 +495,11 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	private String title = "";
 
 	private int rangePercent = 100;
-	
+
 	private boolean rangeDirection = UPPER_RANGE;
-	
+
 	private boolean persist = true;
-	
+
 	private long id;
 
 	private static final SimpleLogger logger = new SimpleLogger(ReportSummaryDefn.class);
