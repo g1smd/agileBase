@@ -460,6 +460,9 @@ public final class AppController extends VelocityViewServlet {
 				case SET_SUMMARY_FILTER_FIELD:
 					ServletSchemaMethods.setSummaryReportFilterField(sessionData, request, databaseDefn);
 					break;
+				case SET_SUMMARY_RANGE:
+					ServletSchemaMethods.setSummaryRange(sessionData, request, databaseDefn);
+					break;
 				case SAVE_REPORT_SUMMARY:
 					ServletSchemaMethods.saveSummaryReport(sessionData, request, databaseDefn);
 					break;
