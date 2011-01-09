@@ -74,6 +74,7 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.TableDependencyException;
+import com.gtwm.pb.util.Enumerations.AggregateRange;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.FilterType;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
@@ -2229,9 +2230,10 @@ public final class ServletSchemaMethods {
 		String internalFieldName = request.getParameter("internalfieldname");
 		String secondaryInternalFieldName = request.getParameter("secondaryinternalfieldname");
 		String functionName = request.getParameter("function");
-		if (internalFieldName == null || functionName == null) {
+		String aggregateRangeString = request.getParameter("aggregaterange");
+		if (internalFieldName == null || functionName == null || aggregateRangeString == null) {
 			throw new MissingParametersException(
-					"'internalfieldname' and 'function' parameters are required to add an aggregate function to a report summary");
+					"'internalfieldname', 'function'  and 'aggregaterange' parameters are required to add an aggregate function to a report summary");
 		}
 		ReportFieldInfo functionReportField = report.getReportField(internalFieldName);
 		ReportFieldInfo secondaryFunctionReportField = null;
@@ -2241,12 +2243,13 @@ public final class ServletSchemaMethods {
 			}
 		}
 		AggregateFunction function = AggregateFunction.valueOf(functionName.toUpperCase());
+		AggregateRange aggregateRange = AggregateRange.valueOf(aggregateRangeString.toUpperCase());
 		ReportSummaryAggregateInfo addedAggFn = null;
 		if (secondaryFunctionReportField == null) {
-			addedAggFn = new ReportSummaryAggregateDefn(function, functionReportField);
+			addedAggFn = new ReportSummaryAggregateDefn(function, functionReportField, aggregateRange);
 		} else {
 			addedAggFn = new ReportSummaryAggregateDefn(function, functionReportField,
-					secondaryFunctionReportField);
+					secondaryFunctionReportField, aggregateRange);
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();

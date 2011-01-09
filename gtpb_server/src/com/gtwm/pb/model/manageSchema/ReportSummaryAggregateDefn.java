@@ -27,6 +27,7 @@ import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.util.Enumerations.AggregateRange;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.CantDoThatException;
@@ -43,9 +44,10 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 	 *             the AggregateFunction enumeration
 	 * @see com.gtwm.pb.util.Enumerations.AggregateFunction
 	 */
-	public ReportSummaryAggregateDefn(AggregateFunction function, ReportFieldInfo reportField) {
+	public ReportSummaryAggregateDefn(AggregateFunction function, ReportFieldInfo reportField, AggregateRange aggregateRange) {
 		this.setAggregateFunction(function);
 		this.setReportField(reportField);
+		this.setAggregateRange(aggregateRange);
 		this.setInternalAggregateName((new RandomString()).toString());
 	}
 
@@ -53,7 +55,7 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 	 * Create an aggregate that acts on two fields, e.g. a weighted average
 	 */
 	public ReportSummaryAggregateDefn(AggregateFunction function, ReportFieldInfo reportField,
-			ReportFieldInfo secondaryReportField) throws CantDoThatException {
+			ReportFieldInfo secondaryReportField, AggregateRange aggregateRange) throws CantDoThatException {
 		if (secondaryReportField == null) {
 			throw new CantDoThatException(
 					"Secondary report field null. To create an aggregate on a single field, use the single field constructor");
@@ -61,6 +63,7 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 		this.setAggregateFunction(function);
 		this.setReportField(reportField);
 		this.setSecondaryReportField(secondaryReportField);
+		this.setAggregateRange(aggregateRange);
 		this.setInternalAggregateName((new RandomString()).toString());
 	}
 
@@ -136,9 +139,21 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 	public AggregateFunction getAggregateFunction() {
 		return this.function;
 	}
-
+	
 	private void setAggregateFunction(AggregateFunction function) {
 		this.function = function;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public AggregateRange getAggregateRange() {
+		if (this.aggregateRange == null) {
+			return aggregateRange.ALL;
+		}
+		return this.aggregateRange;
+	}
+	
+	private void setAggregateRange(AggregateRange aggregateRange) {
+		this.aggregateRange = aggregateRange;
 	}
 
 	/**
@@ -188,6 +203,8 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 	private ReportFieldInfo secondaryReportField = null;
 
 	private String internalAggregateName = null;
+	
+	private AggregateRange aggregateRange = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(ReportSummaryAggregateDefn.class);
 }

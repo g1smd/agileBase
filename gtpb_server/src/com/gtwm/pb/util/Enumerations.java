@@ -383,6 +383,20 @@ public class Enumerations {
 		}
 	}
 
+	public enum AggregateRange {
+		ALL("all"), TOP_QUARTILE("top quartile (25%)"), BOTTOM_QUARTILE("bottom quartile (25%)");
+		
+		public String getDescription() {
+			return this.description;
+		}
+		
+		AggregateRange(String description) {
+			this.description = description;
+		}
+		
+		private String description;
+	}
+	
 	public enum TextCase {
 		ANY(""), LOWER("lower"), UPPER("upper"), TITLE("initcap");
 

@@ -20,6 +20,7 @@ package com.gtwm.pb.model.interfaces;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.Enumerations.AggregateRange;
 
 /**
  * Simple definition of a single aggregate function used in a report summary,
@@ -54,6 +55,8 @@ public interface ReportSummaryAggregateInfo {
 
 	public AggregateFunction getAggregateFunction();
 
+	public AggregateRange getAggregateRange();
+	
 	/**
 	 * Used when comparing objects for equality
 	 */
