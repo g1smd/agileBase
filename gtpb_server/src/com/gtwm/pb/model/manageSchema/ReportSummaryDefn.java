@@ -290,7 +290,8 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		}
 		int rangePercent = this.getRangePercent();
 		if (rangePercent < 100) {
-			double rangeFraction = rangePercent / 100;
+			double rangeFraction = ((double) rangePercent) / 100;
+			logger.debug("" + rangePercent + " / 100 = " + rangeFraction);
 			sqlForSummary += " LIMIT (";
 			sqlForSummary += " SELECT (count(*) * " + rangeFraction + ")::integer";
 			sqlForSummary += " FROM " + this.getReport().getInternalReportName() + ")";
