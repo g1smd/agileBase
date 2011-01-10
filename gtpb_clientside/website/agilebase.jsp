@@ -67,7 +67,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 						<h1>Training</h1>
 						Alternatively, a popular method is to provide a fixed cost for training existing staff to allow them to develop systems completely on their own. 
 						Following this, users are empowered to develop the system based on their demand, at their own pace.
-						<h1>Hosting, licensing (where appropriate) and support</h1>
+						<h1>Hosting, licensing and support</h1>
 						Hosted pricing is simply &pound;10/month/table.
 						Total cost will obviously depend on the ambitions of business users but SMEs using agileBase in some core areas can expect costs of a few tens of pounds per month.<br>
 						Add unlimited users for free! There's no additional per user cost, even if you set up logins for clients, suppliers or partners.<br>
