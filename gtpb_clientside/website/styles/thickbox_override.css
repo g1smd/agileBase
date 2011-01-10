@@ -1,3 +1,7 @@
 #TB_window {
   border-color:white;
 }
+
+#TB_window h1 {
+	line-height: 2em;
+}
