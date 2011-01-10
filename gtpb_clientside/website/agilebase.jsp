@@ -61,9 +61,17 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 						</table>
 					</div>
 					<div id="popupPricingContent" style="display:none">
-						Hosted pricing is simply &pound;10/month/table.<br>
-						Add unlimited users for free! No additional per user cost.<br>
-						Do contact us for volume/partner discounts
+						<h1>Setup</h1>
+						We typically spend the first day with a client prototyping a system in real time. 
+						By the end of the day, clients have firstly, a useful working basic system and secondly a good idea of how long further development is likely to take (and cost) based on their ambitions. 
+						<h1>Training</h1>
+						Alternatively, a popular method is to provide a fixed cost for training existing staff to allow them to develop systems completely on their own. 
+						Following this, users are empowered to develop the system based on their demand, at their own pace.
+						<h1>Hosting, licensing (where appropriate) and support</h1>
+						Hosted pricing is simply &pound;10/month/table.
+						Total cost will obviously depend on the ambitions of business users but SMEs using agileBase in some core areas can expect costs of a few tens of pounds per month.<br>
+						Add unlimited users for free! There's no additional per user cost, even if you set up logins for clients, suppliers or partners.<br>
+						Partner discounts are 50% and volume discounts are also available.<p>
 					</div>
 					<div id="popupDemoContent" class="popup">
 						Log in with username and password <b>demo</b> for a basic demo.<br>
