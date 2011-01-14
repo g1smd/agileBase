@@ -38,7 +38,7 @@
     	## there are no items filtered
     	#foreach($item in $all_items)
     		#set($washedItem = $viewTools.escape($item))
-    		#if($fieldValue == $item)
+    		#if($fieldValue.equalsIgnoreCase($item))
     			<option value="$washedItem" selected="true">$washedItem</option>
         	#else
     			<option value="$washedItem">$washedItem</option>
@@ -55,7 +55,7 @@
     	<optgroup label="all items">
     	#foreach($item in $all_items)
     		#set($washedItem = $viewTools.escape($item))
-    		#if($fieldValue == $item)
+    		#if($fieldValue.equalsIgnoreCase($item))
     			<option value="$washedItem" selected="true">$washedItem</option>
         	#else
     			<option value="$washedItem">$washedItem</option>
