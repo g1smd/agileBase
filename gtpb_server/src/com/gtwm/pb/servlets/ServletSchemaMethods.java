@@ -792,7 +792,21 @@ public final class ServletSchemaMethods {
 		if (fieldType.equals(FieldCategory.RELATION.getFieldTypeParameter())) {
 			addRelation(request, table, databaseDefn);
 		} else {
-			// for any field other than relation, name has to be specified
+			if (fieldType.equals(FieldCategory.REFERENCED_REPORT_DATA.getFieldTypeParameter())) {
+				if (fieldName.equals("")) {
+					String internalTableName = HttpRequestUtil.getStringValue(request,
+							PossibleListOptions.LISTTABLE.getFormInputName());
+					String internalReportName = HttpRequestUtil.getStringValue(request,
+							PossibleListOptions.LISTREPORT.getFormInputName());
+					TableInfo referencedReportTable = databaseDefn.getTable(request, internalTableName);
+					BaseReportInfo referencedReport = referencedReportTable.getReport(internalReportName);
+					fieldName = referencedReport.getReportName();
+					if (fieldName.startsWith("dbvcalc_")) {
+						fieldName = fieldName.replace("dbvcalc_", "");
+					}
+				}
+			}
+			// for any field other than relation or referenced report data, name has to be specified
 			if (fieldName.equals("")) {
 				throw new MissingParametersException("Field name must be specified");
 			}
