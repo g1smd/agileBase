@@ -466,28 +466,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 				relatedTable);
 	}
 
-	public List<DataRowInfo> getReportDataRows() throws DisallowedException, SQLException,
-			ObjectNotFoundException, CodingErrorException, CantDoThatException {
-		BaseReportInfo report = this.sessionData.getReport();
-		if (report == null) {
-			throw new ObjectNotFoundException("There's no report in the session to view");
-		}
-		return this.getReportDataRows(report);
-	}
-
-	public List<DataRowInfo> getReportDataRows(BaseReportInfo report) throws DisallowedException,
-			SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException {
-		int rowLimit = this.sessionData.getReportRowLimit();
-		return this.getReportDataRows(report, rowLimit);
-	}
-
-	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit)
-			throws DisallowedException, SQLException, ObjectNotFoundException,
-			CodingErrorException, CantDoThatException {
-		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues();
-		return this.getReportDataRows(report, rowLimit, reportFilterValues, false);
-	}
-
 	public ReportDataInfo getReportData() throws SQLException, DisallowedException,
 			CodingErrorException, ObjectNotFoundException {
 		BaseReportInfo report = this.sessionData.getReport();
@@ -512,6 +490,28 @@ public final class ViewMethods implements ViewMethodsInfo {
 				this.request);
 		return this.databaseDefn.getDataManagement().getReportData(company, report,
 				updateCacheIfObsolete);
+	}
+
+	public List<DataRowInfo> getReportDataRows() throws DisallowedException, SQLException,
+			ObjectNotFoundException, CodingErrorException, CantDoThatException {
+		BaseReportInfo report = this.sessionData.getReport();
+		if (report == null) {
+			throw new ObjectNotFoundException("There's no report in the session to view");
+		}
+		return this.getReportDataRows(report);
+	}
+
+	public List<DataRowInfo> getReportDataRows(BaseReportInfo report) throws DisallowedException,
+			SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException {
+		int rowLimit = this.sessionData.getReportRowLimit();
+		return this.getReportDataRows(report, rowLimit);
+	}
+
+	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit)
+			throws DisallowedException, SQLException, ObjectNotFoundException,
+			CodingErrorException, CantDoThatException {
+		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues();
+		return this.getReportDataRows(report, rowLimit, reportFilterValues, false);
 	}
 
 	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit,

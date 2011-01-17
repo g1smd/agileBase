@@ -82,6 +82,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 		case SEPARATOR:
 			break;
 		case REFERENCED_REPORT_DATA:
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTTABLE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTREPORT));
 			break;
 		}

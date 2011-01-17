@@ -98,6 +98,7 @@ import com.gtwm.pb.model.manageSchema.fields.DateFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.DecimalFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.DurationFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
+import com.gtwm.pb.model.manageSchema.fields.ReferencedReportDataFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SequenceFieldDefn;
@@ -948,7 +949,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	private BaseField generateFieldObject(HttpServletRequest request, TableInfo table,
 			String fieldType, String internalFieldName, String fieldName, String fieldDesc,
 			boolean unique) throws CodingErrorException, CantDoThatException,
-			ObjectNotFoundException {
+			ObjectNotFoundException, DisallowedException {
 		BaseField field = null;
 		// No fields in agileBase are mandatory
 		boolean notNull = false;
@@ -1029,6 +1030,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 			break;
 		case SEPARATOR:
 			field = new SeparatorFieldDefn(table, internalFieldName, fieldName, fieldDesc);
+			break;
+		case REFERENCED_REPORT_DATA:
+			String internalTableName = HttpRequestUtil.getStringValue(request,
+					PossibleListOptions.LISTTABLE.getFormInputName());
+			String internalReportName = HttpRequestUtil.getStringValue(request,
+					PossibleListOptions.LISTREPORT.getFormInputName());
+			TableInfo referencedReportTable = this.getTable(request, internalTableName);
+			BaseReportInfo referencedReport = referencedReportTable.getReport(internalReportName);
+			field = new ReferencedReportDataFieldDefn(table, internalFieldName, fieldName, fieldDesc, referencedReport);
 			break;
 		default:
 			throw new CantDoThatException("Adding unrecognised field type '" + fieldType + "'");
