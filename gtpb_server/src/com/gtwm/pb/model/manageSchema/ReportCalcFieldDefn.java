@@ -34,6 +34,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.DecimalField;
+import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
@@ -248,7 +249,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		// {table.field} => internaltablename.internalfieldname
 		for (TableInfo table : availableDataStores.keySet()) {
 			FIELDSLOOP: for (BaseField field : table.getFields()) {
-				if (field instanceof SeparatorField) {
+				if (field instanceof SeparatorField || field instanceof ReferencedReportDataField) {
 					continue FIELDSLOOP;
 				}
 				// table name and field name may have characters in them that
@@ -385,7 +386,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		if (calculationSQL.contains("{")) {
 			for (TableInfo table : ((SimpleReportInfo) this.getParentReport()).getJoinedTables()) {
 				FIELDSLOOP: for (BaseField field : table.getFields()) {
-					if (field instanceof SeparatorField) {
+					if (field instanceof SeparatorField || field instanceof ReferencedReportDataField) {
 						continue FIELDSLOOP;
 					}
 					String fieldName = field.getFieldName().toLowerCase(Locale.UK);

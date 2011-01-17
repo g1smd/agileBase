@@ -39,6 +39,7 @@ import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.DateValue;
@@ -147,7 +148,7 @@ public class DataRow implements DataRowInfo {
 						keyValue = keyValueDateValue.toString();
 						displayValue = keyValue;
 					}
-				} else if (field instanceof SeparatorField) {
+				} else if (field instanceof SeparatorField || field instanceof ReferencedReportDataField) {
 					// no data for separator fields
 				} else {
 					keyValue = results.getString(field.getInternalFieldName());
