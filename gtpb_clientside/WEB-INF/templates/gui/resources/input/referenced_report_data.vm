@@ -1,0 +1,42 @@
+##
+##  Copyright 2010 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($referencedReport = $field.getReferencedReport())
+#set($primaryKey = $field.getTableContainingField().getPrimaryKey())
+#set($reportBaseFields = $referencedReport.getReportBaseFields())
+#if(!$reportBaseFields.contains($primaryKey))
+  Error: ID field for table $field.getTableContainingField() not found in referenced report $referencedReport
+  #stop
+#end
+#set($rowId = $sessionData.getRowId())
+#set($filter = $viewTools.getNewFilterMap())
+#set($success = $filter.put($primaryKey, "$rowId"))
+#set($reportDataRows = $view.getReportDataRows($referencedReport, 20, $filter, true))
+#foreach($reportDataRow in $reportDataRows)
+  #set($rowContainsData = false)
+  #foreach($reportBaseField in $reportBaseFields)
+	#set($fieldCategory = $reportBaseField.getFieldCategory())
+	#if($fieldCategory == "TEXT" || $fieldCategory == "DATE")
+	  #set($displayValue = $reportDataRow.getValue($reportBaseField).getDisplayValue())
+	  #if($displayValue != "")
+		#set($rowContainsData = true)
+		<span class="greytext">$reportBaseField:</span> $displayValue<br>
+	  #end
+	#end
+  #end
+  #if($rowContainsData) <p> #end
+#end
