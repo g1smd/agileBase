@@ -50,7 +50,7 @@ public class BooleanFieldDescriptorOption implements BooleanFieldDescriptorOptio
         UNIQUE("Unique", true),
         DEFAULTTONOW("Default to current time", false), 
         ALLOWNOTAPPLICABLE("Allow not applicable", true), 
-        USELOOKUP("Use lookup for input", false), 
+        USELOOKUP("Use dropdown for input", false), 
         HIDDEN("Hidden field",true),
         MANDATORY("Mandatory", true);
 
