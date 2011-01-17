@@ -82,7 +82,7 @@
     		#end
     	#end	
     	
-    	<li id="$internalModuleName" class="modulecollapsed $colourStyleName">
+    	<li id="$internalModuleName" class="#if(!$mobile_device && $internalModuleName.equals($sessionReportModule.getInternalModuleName())) modulecollapsed #end $colourStyleName">
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
     		$module
