@@ -80,9 +80,12 @@
         	#if($colour.get('colourName') == $module.getColour())
         		#set($colourStyleName = $colour.get('styleName'))
     		#end
-    	#end	
-    	
-    	<li id="$internalModuleName" class="#if(!$mobile_device && !$internalModuleName.equals($sessionReportModule.getInternalModuleName())) modulecollapsed #end $colourStyleName">
+		#end
+		#set($moduleExpanded = false)
+    	#if($mobile_device && $internalModuleName.equals($sessionReportModule.getInternalModuleName()))
+		  #set($moduleExpanded = true)
+		#end
+    	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end $colourStyleName">
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
     		$module
