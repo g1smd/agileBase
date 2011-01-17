@@ -33,11 +33,16 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/table_field_crea
 		    <td height="20"><input type="text" name="fielddesc" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"></td>
 		    <td height="20">
 		      <select name="fieldtype" onchange="fSelectFieldOption(this.selectedIndex)">
+				<optgroup label="Data input fields">
 		        #foreach($fieldType in $viewTools.getFieldTypeDescriptors())
-			          <option value="$fieldType.getFieldCategory().getFieldTypeParameter()">
-			            $fieldType.getFieldCategory().getDescription()
-			          </option>
-			        #end
+				  #if($fieldType.getFieldCategory() == "SEPARATOR")
+                    </optgroup><optgroup label="Other fields">
+				  #end
+			      <option value="$fieldType.getFieldCategory().getFieldTypeParameter()">
+			        $fieldType.getFieldCategory().getDescription()
+			      </option>
+				#end
+				</optgroup>
 		      </select>
 		    </td>
 		    <td height="20" id="fieldOptionsSets">
