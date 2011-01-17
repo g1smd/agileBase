@@ -81,6 +81,9 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			break;
 		case SEPARATOR:
 			break;
+		case REFERENCED_REPORT_DATA:
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTREPORT));
+			break;
 		}
 	}
 
@@ -173,8 +176,8 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 	//TODO: Should be in util.Enumerations with the other enumerations
 	public enum FieldCategory {
 		TEXT("Text", true), NUMBER("Number", true), DATE("Date", true), DURATION("Time duration",
-				true), SEQUENCE("Auto-generated number sequence", true), RELATION("Relation", true), CHECKBOX(
-				"Checkbox", true), FILE("File", true), SEPARATOR("Separator", true);
+				false), SEQUENCE("Auto-generated number sequence", true), RELATION("Relation", true), CHECKBOX(
+				"Checkbox", true), FILE("File", true), SEPARATOR("Separator", true), REFERENCED_REPORT_DATA("Referenced report data", true);
 
 		FieldCategory(String typeDescription, boolean enabled) {
 			this.description = typeDescription;

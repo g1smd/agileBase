@@ -52,6 +52,7 @@ import com.gtwm.pb.model.manageSchema.fields.DateFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.DecimalFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.FileFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
+import com.gtwm.pb.model.manageSchema.fields.ReferencedReportDataFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SequenceFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
@@ -67,7 +68,7 @@ public final class HibernateUtil {
 		try {
 			// Create the SessionFactory
 			// specifying which classes should be persisted
-		    Configuration cfg = new Configuration();
+			Configuration cfg = new Configuration();
 			cfg.addPackage("com.gtwm.pb.auth");
 			cfg.addAnnotatedClass(Authenticator.class);
 			cfg.addAnnotatedClass(Company.class);
@@ -103,8 +104,14 @@ public final class HibernateUtil {
 			cfg.addAnnotatedClass(SequenceFieldDefn.class);
 			cfg.addAnnotatedClass(TextFieldDefn.class);
 			cfg.addAnnotatedClass(SeparatorFieldDefn.class);
-			//TODO: not sure if this is necessary or not, check next time we have a schema update
-			//new SchemaUpdate(cfg).execute(true, true);
+			cfg.addAnnotatedClass(ReferencedReportDataFieldDefn.class);
+			// TODO: not sure if this is necessary or not, check next time we
+			// have a schema update
+			// NB automatic schema updates don't work for adding non null (e.g.
+			// basic types such as integer or boolean) properties, these have to
+			// be added manually. Error messages will show the expected names of
+			// the fields
+			// new SchemaUpdate(cfg).execute(true, true);
 			sessionFactory = cfg.buildSessionFactory();
 		} catch (Throwable ex) {
 			logger.error("Initial SessionFactory creation failed: " + ex);
