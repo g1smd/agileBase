@@ -38,6 +38,5 @@
 	  #end
 	#end
   #end
-  <br>That was $foreach.count of $reportDataRows.size()
   #if($rowContainsData && ($reportDataRows.size() > $foreach.count)) <p> #end
 #end
