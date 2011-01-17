@@ -69,6 +69,7 @@ import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.CheckboxField;
+import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.SequenceField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
@@ -584,7 +585,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			// based on
 			Set<TableInfo> relatedTables = new TreeSet<TableInfo>();
 			for (BaseField field : table.getFields()) {
-				if (!(field instanceof SeparatorField)) {
+				if (!(field instanceof SeparatorField || field instanceof ReferencedReportDataField)) {
 					if (field instanceof RelationField) {
 						// add a join to allow related field to be added to the
 						// report
@@ -1391,7 +1392,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		HibernateUtil.activateObject(tableToAddTo);
 		HibernateUtil.currentSession().save(fieldToAdd);
 		tableToAddTo.addField(fieldToAdd);
-		if (!(fieldToAdd instanceof SeparatorField)) {
+		if (!(fieldToAdd instanceof SeparatorField || fieldToAdd instanceof ReferencedReportDataField)) {
 			SimpleReportInfo defaultReport = tableToAddTo.getDefaultReport();
 			defaultReport.addTableField(fieldToAdd);
 			// Do SQL
@@ -1730,7 +1731,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			}
 		}
 		table.removeField(field);
-		if (!(field instanceof SeparatorField)) {
+		if (!(field instanceof SeparatorField || field instanceof ReferencedReportDataField)) {
 			// Now try to remove the field from the table:
 			PreparedStatement statement = conn
 					.prepareStatement("ALTER TABLE " + table.getInternalTableName()

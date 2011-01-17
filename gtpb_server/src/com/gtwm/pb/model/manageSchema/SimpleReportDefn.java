@@ -24,6 +24,7 @@ import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
+import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.interfaces.fields.SeparatorField;
@@ -900,7 +901,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		Set<BaseField> visibleFields = new HashSet<BaseField>();
 		// allow filtering on any field in the parent table:
 		for (BaseField visibleField : this.getParentTable().getFields()) {
-			if (!(visibleField instanceof SeparatorField)) {
+			if (!(visibleField instanceof SeparatorField || visibleField instanceof ReferencedReportDataField)) {
 				visibleFields.add(visibleField);
 			}
 		}
@@ -928,7 +929,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 			if (join.isRightPartTable()) {
 				for (BaseField visibleField : join.getRightTableField().getTableContainingField()
 						.getFields()) {
-					if (!(visibleField instanceof SeparatorField)) {
+					if (!(visibleField instanceof SeparatorField || visibleField instanceof ReferencedReportDataField)) {
 						visibleFields.add(visibleField);
 					}
 				}

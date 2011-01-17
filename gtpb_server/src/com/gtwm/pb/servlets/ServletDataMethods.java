@@ -53,6 +53,7 @@ import com.gtwm.pb.model.interfaces.fields.DateValue;
 import com.gtwm.pb.model.interfaces.fields.DecimalField;
 import com.gtwm.pb.model.interfaces.fields.DurationField;
 import com.gtwm.pb.model.interfaces.fields.IntegerField;
+import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.FileField;
@@ -451,7 +452,7 @@ public final class ServletDataMethods {
 		Exception caughtException = null;
 		BaseField fieldWithException = null;
 		FIELDSLOOP: for (BaseField field : fields) {
-			if (field instanceof SeparatorField) {
+			if (field instanceof SeparatorField || field instanceof ReferencedReportDataField) {
 				continue FIELDSLOOP;
 			}
 			try {
