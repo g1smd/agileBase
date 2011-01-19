@@ -106,13 +106,14 @@ function fInitialiseDependencies(){
     if(aSelect[iSelect].getAttribute('registered')=='true') continue;
     // find its parents' name.  If none, continue to next select element
 	var sParent=aSelect[iSelect].getAttribute('parent');
+	alert('parent for ' + aSelect[iSelect].name + ' is ' + sParent);
 	if (!sParent) continue;
 	var oForm=aSelect[iSelect].form;
 	
     // only allow dependencies within the same form
 	var oParent=oForm.elements[sParent];  // if there is more than one element with this name a collection will be returned
 	if(!oParent.form){ // if the parent doesn't have an associated form, it's not a form element
-	  if(aSelect[iSelect].getAttribute('uselastordinal')) oParent=oParent[oParent.length-1]; // is option set to use last ordinal element, ues  the last element in the array
+	  if(aSelect[iSelect].getAttribute('uselastordinal')) oParent=oParent[oParent.length-1]; // is option set to use last ordinal element, use  the last element in the array
 	  else continue; // otherwise continue
 	}
 	
