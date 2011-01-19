@@ -779,28 +779,33 @@ public final class ServletDataMethods {
 		}
 		// now deal with mandatory fields not having default values:
 		if (field instanceof RelationField) {
-			// obtain a relevant primary key value from the related table's
-			// default report
-			// where a session rowid has been set for the related table, use
-			// this value
-			BaseField relatedField = ((RelationField) field).getRelatedField();
-			if (!relatedField.getTableContainingField().getPrimaryKey().equals(relatedField)) {
-				throw new CantDoThatException(
-						"Unable to generate default for related field; expecting relation on primary key");
-			}
-			Integer relatedRowId = sessionData.getRowId(relatedField.getTableContainingField());
-			if (relatedRowId != null) {
-				fieldValue = new IntegerValueDefn(Integer.valueOf(relatedRowId));
-			} else {
-				TableInfo table = relatedField.getTableContainingField();
-				Map<BaseField, BaseValue> tableRow = databaseDefn.getDataManagement()
-						.getTableDataRow(table, -1);
-				for (Map.Entry<BaseField, BaseValue> fieldValueEntry : tableRow.entrySet()) {
-					if (fieldValueEntry.getKey().equals(relatedField)) {
-						// (field instanceof IntegerField) -- must be the case
-						// if primary key field
-						fieldValue = fieldValueEntry.getValue();
-						break;
+			RelationField relationField = (RelationField) field;
+			// Only look up a value if the field's not set to default to null
+			if (!relationField.getDefaultToNull()) {
+				// obtain a relevant primary key value from the related table's
+				// default report
+				// where a session rowid has been set for the related table, use
+				// this value
+				BaseField relatedField = relationField.getRelatedField();
+				if (!relatedField.getTableContainingField().getPrimaryKey().equals(relatedField)) {
+					throw new CantDoThatException(
+							"Unable to generate default for related field; expecting relation on primary key");
+				}
+				Integer relatedRowId = sessionData.getRowId(relatedField.getTableContainingField());
+				if (relatedRowId != null) {
+					fieldValue = new IntegerValueDefn(Integer.valueOf(relatedRowId));
+				} else {
+					TableInfo table = relatedField.getTableContainingField();
+					Map<BaseField, BaseValue> tableRow = databaseDefn.getDataManagement()
+							.getTableDataRow(table, -1);
+					for (Map.Entry<BaseField, BaseValue> fieldValueEntry : tableRow.entrySet()) {
+						if (fieldValueEntry.getKey().equals(relatedField)) {
+							// (field instanceof IntegerField) -- must be the
+							// case
+							// if primary key field
+							fieldValue = fieldValueEntry.getValue();
+							break;
+						}
 					}
 				}
 			}
