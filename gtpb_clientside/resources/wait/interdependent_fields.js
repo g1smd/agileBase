@@ -83,10 +83,10 @@ function fDoSelectChange(oParent){
   }
 
   if(!oParent.dependents) {
+	alert('no dependents for ' + oParent.name);
 	return;
   }
   for (var iDependent=0;iDependent<oParent.dependents.length;iDependent++) {
-	alert('about to repopulate list');
     fRepopulateList(oParent,oParent.dependents[iDependent]);
   }
 }
