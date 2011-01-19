@@ -85,7 +85,6 @@ function fDoSelectChange(oParent){
   if(!oParent.dependents) {
 	return;
   }
-  alert('no. dependents: ' + oParent.dependents.length);
   for (var iDependent=0;iDependent<oParent.dependents.length;iDependent++) {
     fRepopulateList(oParent,oParent.dependents[iDependent]);
   }
@@ -106,6 +105,10 @@ function fInitialiseDependencies(){
   var aSelect=document.getElementsByTagName('SELECT');
   // for every select
   for (var iSelect=0;iSelect<aSelect.length;iSelect++){	
+	var selectName = aSelect[iSelect].name;
+	if (selectName.indexof('table') > -1) {
+		alert('looking at select ' + selectName);
+	}  
     // see whether the child has been registered already, continue if it has
     if(aSelect[iSelect].getAttribute('registered')=='true') continue;
     // find its parents' name.  If none, continue to next select element
