@@ -82,9 +82,13 @@ function fDoSelectChange(oParent){
 	var oReq=new fRequest('AppController.servlet', fSetPostVars(), fReqComplete, -1);
   }
 
-  if(!oParent.dependents) return;
-  for (var iDependent=0;iDependent<oParent.dependents.length;iDependent++)
+  if(!oParent.dependents) {
+	return;
+  }
+  for (var iDependent=0;iDependent<oParent.dependents.length;iDependent++) {
+	alert('about to repopulate list');
     fRepopulateList(oParent,oParent.dependents[iDependent]);
+  }
 }
 
 function fInitialiseDependencies(){	
@@ -106,7 +110,6 @@ function fInitialiseDependencies(){
     if(aSelect[iSelect].getAttribute('registered')=='true') continue;
     // find its parents' name.  If none, continue to next select element
 	var sParent=aSelect[iSelect].getAttribute('parent');
-	alert('parent for ' + aSelect[iSelect].name + ' is ' + sParent);
 	if (!sParent) continue;
 	var oForm=aSelect[iSelect].form;
 	
