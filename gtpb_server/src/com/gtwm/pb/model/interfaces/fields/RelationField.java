@@ -75,8 +75,17 @@ public interface RelationField extends BaseField {
 	public String getDisplayValue(String keyValue) throws SQLException, CodingErrorException;
 
 	public String getSecondaryDisplayValue(String keyValue) throws SQLException,
-	CodingErrorException;
+			CodingErrorException;
+
+	/**
+	 * Return true if the field should default to null for new records, or false
+	 * if it should default to the currently selected record from the related
+	 * table
+	 */
+	public boolean getDefaultToNull();
 	
+	public void setDefaultToNull(boolean defaultToNull);
+
 	/**
 	 * Use this method when you want a list of all possible internal/display
 	 * values for this field, i.e. the set of distinct values in the field it

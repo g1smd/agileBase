@@ -70,6 +70,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTVALUEFIELD));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTSECONDARYFIELD));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
+			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.DEFAULTTONULL));
 			break;
 		case CHECKBOX:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.CHECKBOXDEFAULT));
