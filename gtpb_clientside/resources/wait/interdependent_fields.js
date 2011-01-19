@@ -106,7 +106,7 @@ function fInitialiseDependencies(){
   // for every select
   for (var iSelect=0;iSelect<aSelect.length;iSelect++){	
 	var selectName = aSelect[iSelect].name;
-	if (selectName.indexof('table') > -1) {
+	if (selectName.indexOf('table') > -1) {
 		alert('looking at select ' + selectName);
 	}  
     // see whether the child has been registered already, continue if it has
