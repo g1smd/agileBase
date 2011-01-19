@@ -102,6 +102,7 @@ function fInitialiseDependencies(){
   }
 
   var aInitialised=new Array();
+  var lastUsedParentNameIndexes = new Object();
   var aSelect=document.getElementsByTagName('SELECT');
   // for every select
   for (var iSelect=0;iSelect<aSelect.length;iSelect++){	
@@ -113,14 +114,18 @@ function fInitialiseDependencies(){
     if(aSelect[iSelect].getAttribute('registered')=='true') continue;
     // find its parents' name.  If none, continue to next select element
 	var sParent=aSelect[iSelect].getAttribute('parent');
+	var sParentId = aSelect[iSelect].getAttribute('parentid');
 	if (!sParent) continue;
 	var oForm=aSelect[iSelect].form;
 	
     // only allow dependencies within the same form
-	var oParent=oForm.elements[sParent];  // if there is more than one element with this name a collection will be returned
+	
+	//var oParent=oForm.elements[sParent];  // if there is more than one element with this name a collection will be returned
+	var oParent = $(oForm).find("#" + sParentId)[0];
 	if(!oParent.form){ // if the parent doesn't have an associated form, it's not a form element
-	  if(aSelect[iSelect].getAttribute('uselastordinal')) oParent=oParent[oParent.length-1]; // is option set to use last ordinal element, use  the last element in the array
-	  else continue; // otherwise continue
+	  if(aSelect[iSelect].getAttribute('uselastordinal')) {
+		oParent=oParent[oParent.length-1]; // if option set to use last ordinal element, use  the last element in the array	  
+	  } else { continue; } // otherwise continue
 	}
 	
 	if (fRegisterDependent(aSelect[iSelect],oParent)) aSelect[iSelect].setAttribute('registered','true') ;
