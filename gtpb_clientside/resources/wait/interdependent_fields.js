@@ -83,9 +83,9 @@ function fDoSelectChange(oParent){
   }
 
   if(!oParent.dependents) {
-	alert('no dependents for ' + oParent.name);
 	return;
   }
+  alert('no. dependents: ' + oParent.dependents.length);
   for (var iDependent=0;iDependent<oParent.dependents.length;iDependent++) {
     fRepopulateList(oParent,oParent.dependents[iDependent]);
   }
