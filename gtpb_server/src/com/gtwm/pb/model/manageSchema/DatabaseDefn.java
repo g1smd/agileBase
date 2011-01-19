@@ -1303,7 +1303,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
 							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 							relationField.setNotNull(notNull);
-						}
+						} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
+								+ PossibleBooleanOptions.DEFAULTTONULL.getFormInputName())) {
+							Boolean defaultToNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							relationField.setDefaultToNull(defaultToNull);
+						} 
 					} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
 						if (formInputName.equals("updateoption" + field.getInternalFieldName()
 								+ PossibleListOptions.LISTVALUEFIELD.getFormInputName())) {
@@ -1563,13 +1567,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 				PrivilegeType.VIEW_TABLE_DATA, relatedTable))) {
 			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, relatedTable);
 		}
-		// No fields are mandatory in agileBase
-		boolean notNull = false;
 		String listValueFieldInternalName = request.getParameter(PossibleListOptions.LISTVALUEFIELD
 				.getFormInputName());
+		String mandatoryString = request.getParameter(PossibleBooleanOptions.MANDATORY.getFormInputName());
+		boolean notNull = Helpers.valueRepresentsBooleanTrue(mandatoryString);
+		String defaultToNullString = request.getParameter(PossibleBooleanOptions.DEFAULTTONULL.getFormInputName());
+		boolean defaultToNull = Helpers.valueRepresentsBooleanTrue(defaultToNullString);
 		// Create the relation object
 		RelationField relationToAdd = new RelationFieldDefn(this.relationalDataSource,
-				tableToAddTo, internalFieldName, relatedTable, relatedField, notNull);
+				tableToAddTo, internalFieldName, relatedTable, relatedField, notNull, defaultToNull);
 		relationToAdd.setFieldDescription(fieldDesc);
 		relationToAdd.setFieldName(fieldName);
 		if (listValueFieldInternalName == null) {

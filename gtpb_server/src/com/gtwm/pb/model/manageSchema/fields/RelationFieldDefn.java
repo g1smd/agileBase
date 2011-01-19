@@ -60,7 +60,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	 */
 	public RelationFieldDefn(DataSource dataSource, TableInfo tableContainingField,
 			String internalFieldName, TableInfo relatedTable, BaseField relatedField,
-			boolean notNull) throws CantDoThatException {
+			boolean notNull, boolean defaultToNull) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
 			super.setInternalFieldName((new RandomString()).toString());
@@ -71,6 +71,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		this.setRelatedTable(relatedTable);
 		this.setRelatedField(relatedField);
 		this.setDisplayField(relatedField);
+		this.setDefaultToNull(defaultToNull);
 		super.setUnique(false);
 		super.setNotNullDirect(notNull);
 	}
@@ -187,6 +188,14 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		return this.secondaryDisplayField;
 	}
 
+	public boolean getDefaultToNull() {
+		return this.defaultToNull;
+	}
+
+	public void setDefaultToNull(boolean defaultToNull) {
+		this.defaultToNull = defaultToNull;
+	}
+
 	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException,
 			CodingErrorException {
 		return this.getItemsWork(reverseKeyValue, null, -1);
@@ -200,10 +209,6 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	private SortedMap<String, String> getItemsWork(boolean reverseKeyValue, String filterString,
 			int maxResults) throws SQLException, CodingErrorException {
 		SortedMap<String, String> items = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
-		// Note: DISTINCT isn't usually necessary as the related field is
-		// usually the primary key,
-		// however it would theoretically be possible to create a relation to a
-		// non-unique field
 		String displayFieldInternalName = this.getDisplayField().getInternalFieldName();
 		String relatedTableInternalName = this.getRelatedTable().getInternalTableName();
 		String relatedFieldInternalName = this.getRelatedField().getInternalFieldName();
@@ -503,6 +508,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			}
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY,
 					this.getNotNull());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.DEFAULTTONULL,
+					this.getDefaultToNull());
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
@@ -610,6 +617,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	private BaseField displayField; // the field who's value should be displayed
 
 	private BaseField secondaryDisplayField;
+
+	private boolean defaultToNull = false;
 
 	private ForeignKeyConstraint onUpdateAction = ForeignKeyConstraint.CASCADE;
 

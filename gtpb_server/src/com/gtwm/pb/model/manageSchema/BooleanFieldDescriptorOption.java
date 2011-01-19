@@ -48,7 +48,8 @@ public class BooleanFieldDescriptorOption implements BooleanFieldDescriptorOptio
 
     public enum PossibleBooleanOptions {
         UNIQUE("Unique", true),
-        DEFAULTTONOW("Default to current time", false), 
+        DEFAULTTONOW("Use current time for new records", false), 
+        DEFAULTTONULL("Always empty for new records", false),
         ALLOWNOTAPPLICABLE("Allow not applicable", true), 
         USELOOKUP("Use dropdown for input", false), 
         HIDDEN("Hidden field",true),
