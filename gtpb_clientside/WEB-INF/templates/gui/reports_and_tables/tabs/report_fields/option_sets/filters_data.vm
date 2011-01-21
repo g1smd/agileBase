@@ -99,7 +99,7 @@
 		<TR id=addNewFilter>
 			<td class=leading height=20>&nbsp;</td>
 			<TD height=20>
-			  <select name="internalreportname">
+			  <select name="internalreportname" id="internalreportname_reportfilters">
   				#foreach($table in $joinReferencedTables)
   				  #set($tableReports = $table.getReports())
     	<optgroup label="$table.getTableName()">
@@ -118,7 +118,7 @@
 </TD>
 			<TD height=20>
 			  ##The actual field, content filled by separate AJAX request
-			  <select name="internalfieldname" parent="internalreportname">
+			  <select name="internalfieldname" parent="internalreportname" parentid="internalreportname_reportfilters">
 			  </select>
 			</TD>
 			
