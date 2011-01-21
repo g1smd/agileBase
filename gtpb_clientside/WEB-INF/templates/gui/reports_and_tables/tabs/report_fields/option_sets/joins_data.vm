@@ -143,7 +143,7 @@ $join.getRightReportField().getFieldName()
 			<td class=leading height="20">&nbsp;</td>
 			<TD height="20">
 			  ##List of reports
-			  <select name="leftinternalreportname">
+			  <select name="leftinternalreportname" id="leftinternalreportname_reportjoins">
   				#foreach($table in $joinReferencedTables)
   				  #set($tableReports = $table.getReports())
     	<optgroup label="$table.getTableName()">
@@ -162,7 +162,7 @@ $join.getRightReportField().getFieldName()
 			</TD>
 			<TD height=20>
 			  ##The actual field, content filled by separate XML request
-			  <select name="leftinternalfieldname" parent="leftinternalreportname">
+			  <select name="leftinternalfieldname" parent="leftinternalreportname" parentid="leftinternalreportname_reportjoins">
 			  </select>
 			</TD>
 			
@@ -178,7 +178,7 @@ $join.getRightReportField().getFieldName()
 			
 			<TD height=20>
 			  ##List of reports
-			  <select name="rightinternalreportname">
+			  <select name="rightinternalreportname" id="rightinternalreportname_reportjoins">
 			   #set($viewableTables = $view.getTablesAllowedTo("VIEW_TABLE_DATA"))
   				#foreach($table in $viewableTables)
     	<optgroup label="$table.getTableName()">
@@ -195,7 +195,7 @@ $join.getRightReportField().getFieldName()
 			</TD>
 			<TD height=20>
 			  ##The actual field
-			  <select name="rightinternalfieldname" parent="rightinternalreportname">
+			  <select name="rightinternalfieldname" parent="rightinternalreportname" parentid="rightinternalreportname_reportjoins">
 			  </select>
 			</TD>
 			
