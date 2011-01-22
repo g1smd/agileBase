@@ -991,8 +991,9 @@ public final class ServletSchemaMethods {
 		}
 		BaseField field = tableToRemoveFrom.getField(internalFieldName);
 		ReportFieldInfo reportField = null;
-		if (!field.getFieldCategory().equals(FieldCategory.SEPARATOR)) {
-			// Separator fields not included in default report
+		FieldCategory fieldCategory = field.getFieldCategory();
+		if ((!fieldCategory.equals(FieldCategory.SEPARATOR)) && (!fieldCategory.equals(FieldCategory.REFERENCED_REPORT_DATA))) {
+			// Separator and referenced report data fields not included in default report
 			reportField = tableToRemoveFrom.getDefaultReport().getReportField(internalFieldName);
 		}
 		// begin updating model and persisting changes
