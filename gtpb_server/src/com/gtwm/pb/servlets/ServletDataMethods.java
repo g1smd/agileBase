@@ -780,8 +780,10 @@ public final class ServletDataMethods {
 		// now deal with mandatory fields not having default values:
 		if (field instanceof RelationField) {
 			RelationField relationField = (RelationField) field;
+			Boolean overrideDefaultToNull = Helpers.valueRepresentsBooleanTrue(request
+					.getParameter("gtpb_override_relation_default_to_null"));
 			// Only look up a value if the field's not set to default to null
-			if (!relationField.getDefaultToNull()) {
+			if ((!relationField.getDefaultToNull()) || overrideDefaultToNull) {
 				// obtain a relevant primary key value from the related table's
 				// default report
 				// where a session rowid has been set for the related table, use
