@@ -30,6 +30,11 @@ public class InputRecordException extends AgileBaseException {
         super(message);
         this.fieldCausingException = fieldCausingException;
     }
+    
+    public InputRecordException(String message, BaseField fieldCausingException, Throwable cause) {
+        super(message, cause);
+        this.fieldCausingException = fieldCausingException;
+    }
 
     public BaseField getFieldCausingException() {
         return this.fieldCausingException;

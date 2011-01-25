@@ -498,7 +498,8 @@ public final class ServletDataMethods {
 				// If already an input record exception, just rethrow
 				throw (InputRecordException) caughtException;
 			} else {
-				throw new InputRecordException(caughtException.getMessage(), fieldWithException);
+				logger.debug("About to throw " + caughtException);
+				throw new InputRecordException(caughtException.getMessage(), fieldWithException, caughtException);
 			}
 		}
 	}
