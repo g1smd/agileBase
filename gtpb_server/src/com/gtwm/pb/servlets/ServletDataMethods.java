@@ -457,7 +457,6 @@ public final class ServletDataMethods {
 			try {
 				BaseValue fieldValue = getFieldValue(sessionData, request, field, newRecord,
 						databaseDefn, multipartItems);
-				logger.debug("Field " + field + " value got: " + fieldValue);
 				// The following logic is:
 				// If we have a new record, and the field wasn't submitted, or
 				// it was submitted as empty, look up the default value.
@@ -467,19 +466,14 @@ public final class ServletDataMethods {
 				// skip it.
 				if (newRecord) {
 					if (fieldValue == null) {
-						logger.debug("Field value for " + field + " was null, getting default");
 						fieldValue = getDefaultFieldValue(sessionData, request, field, databaseDefn);
-						logger.debug("Default: " + fieldValue);
 					} else if (fieldValue.isNull()) {
-						logger.debug("Field value for " + field + " .isNull, getting default");
 						BaseValue defaultValue = getDefaultFieldValue(sessionData, request, field,
 								databaseDefn);
-						logger.debug("Default: " + defaultValue);
 						if (defaultValue != null) {
 							// TODO: why can't this be fieldValue = defaultValue
 							fieldValue = getDefaultFieldValue(sessionData, request, field,
 									databaseDefn);
-							logger.debug("Field value set to default");
 						}
 					}
 				}
@@ -498,7 +492,6 @@ public final class ServletDataMethods {
 				// If already an input record exception, just rethrow
 				throw (InputRecordException) caughtException;
 			} else {
-				logger.debug("About to throw " + caughtException);
 				throw new InputRecordException(caughtException.getMessage(), fieldWithException, caughtException);
 			}
 		}
