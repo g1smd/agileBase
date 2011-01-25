@@ -560,7 +560,7 @@ public final class ServletDataMethods {
 						fieldValue = new IntegerValueDefn(Integer.valueOf(fieldValueString));
 					} catch (NumberFormatException nfex) {
 						throw new InputRecordException("Value " + fieldValueString
-								+ " not allowed because a whole number needs to be entered", field);
+								+ " not allowed because a whole number needs to be entered", field, nfex);
 					}
 				}
 			}
@@ -588,7 +588,7 @@ public final class ServletDataMethods {
 				}
 			} catch (NumberFormatException nfex) {
 				throw new InputRecordException("The " + partGotTo
-						+ " is invalid because it needs to be a whole number", field);
+						+ " is invalid because it needs to be a whole number", field, nfex);
 			}
 		} else if (databaseFieldType.equals(DatabaseFieldType.FLOAT)) {
 			if (fieldValueString != null) {
@@ -611,7 +611,7 @@ public final class ServletDataMethods {
 								.valueOf(fieldValueString)));
 					} catch (NumberFormatException nfex) {
 						throw new InputRecordException("Value " + fieldValueString
-								+ " not allowed because a number needs to be entered", field);
+								+ " not allowed because a number needs to be entered", field, nfex);
 					}
 				}
 			}
@@ -662,7 +662,7 @@ public final class ServletDataMethods {
 					}
 				} catch (NumberFormatException nfex) {
 					throw new InputRecordException("The " + partGotTo
-							+ " is invalid because it needs to be a whole number", field);
+							+ " is invalid because it needs to be a whole number", field, nfex);
 				}
 				// If date value is null, leave fieldValue as a null object as
 				// well
