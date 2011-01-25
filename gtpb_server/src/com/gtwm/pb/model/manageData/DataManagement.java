@@ -620,12 +620,12 @@ public final class DataManagement implements DataManagementInfo {
 								+ Helpers.replaceInternalNames(errorMessage,
 										table.getDefaultReport()) + ")";
 					}
-					throw new InputRecordException(errorMessage, possibleCauseField);
+					throw new InputRecordException(errorMessage, possibleCauseField, sqlex);
 				}
 			}
 			// Not able to find field
 			errorMessage = Helpers.replaceInternalNames(errorMessage, table.getDefaultReport());
-			throw new InputRecordException(errorMessage, null);
+			throw new InputRecordException(errorMessage, null, sqlex);
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -646,10 +646,10 @@ public final class DataManagement implements DataManagementInfo {
 					}
 				} catch (CantDoThatException cdtex) {
 					throw new InputRecordException("Error uploading file: " + cdtex.getMessage(),
-							field);
+							field, cdtex);
 				} catch (FileUploadException fuex) {
 					throw new InputRecordException("Error uploading file: " + fuex.getMessage(),
-							field);
+							field, fuex);
 				}
 			}
 		}
@@ -944,7 +944,7 @@ public final class DataManagement implements DataManagementInfo {
 									} catch (CalendarParserException cpex) {
 										throw new InputRecordException("Error importing line "
 												+ importLine + ", field " + field + ": "
-												+ cpex.getMessage(), field);
+												+ cpex.getMessage(), field, cpex);
 									}
 									break;
 								case FLOAT:
@@ -1157,7 +1157,7 @@ public final class DataManagement implements DataManagementInfo {
 				errorMessage += ", field '" + fieldImported + "'";
 			}
 			errorMessage += ": " + databaseErrorMessage;
-			throw new InputRecordException(errorMessage, fieldImported);
+			throw new InputRecordException(errorMessage, fieldImported, sqlex);
 		} catch (NumberFormatException nfex) {
 			String causeMessage = nfex.getMessage();
 			causeMessage = causeMessage.replaceAll("For input string", "value");
@@ -1166,7 +1166,7 @@ public final class DataManagement implements DataManagementInfo {
 				errorMessage += ", field '" + fieldImported + "'";
 			}
 			errorMessage += ": " + causeMessage;
-			throw new InputRecordException(errorMessage, fieldImported);
+			throw new InputRecordException(errorMessage, fieldImported, nfex);
 		} finally {
 			if (conn != null) {
 				conn.close();
