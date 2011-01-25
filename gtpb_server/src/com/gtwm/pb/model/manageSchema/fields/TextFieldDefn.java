@@ -214,7 +214,13 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		// if a lookup with a CSV, return the first value
 		// User can use a leading comma to return an empty value
 		if (this.usesLookup() && defaultText.contains(",")) {
-			return defaultText.split(",")[0];
+			List<String> items = Arrays.asList(defaultText.split(","));
+			// The default text may be *only* commas
+			if (items.size() > 0) {
+				return items.get(0);
+			} else {
+				return null;
+			}
 		}
 		return defaultText;
 	}
