@@ -134,13 +134,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 						</div>
 						<div id="main" class="detail">
 							<div class="divider">
-								<h1>How do I use it?</h1>
-								<p>agileBase is perfect for organisations in rapidly changing environments, 
-								where scalability goes hand in hand with the need for a rapid Plan/Do/Check/Act cycle.</p>
-								<p>Our vision was to make a product that allows business analysts
-								to create Lean, agile, Just-In-Time (JIT) back offices.</p>
-							</div>
-							<div>
+								<iframe class="youtube-player" type="text/html" width="500" height="232" src="http://www.youtube.com/embed/HH_RRD7oqvQ" frameborder="0"></iframe>
+							<div class="divider">
 								<h1>Why do I use it?</h1>
 								agileBase helps build back office software that is
 								<div id="just_in">
@@ -161,6 +156,13 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 								</div>
 								<p>As a cutting edge Lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 
 								at a pace to match a company's evolving learning, knowledge and understanding.</p>
+							</div>
+							<div>
+								<h1>How do I use it?</h1>
+								<p>agileBase is perfect for organisations in rapidly changing environments, 
+								where scalability goes hand in hand with the need for a rapid Plan/Do/Check/Act cycle.</p>
+								<p>Our vision was to make a product that allows business analysts
+								to create Lean, agile, Just-In-Time (JIT) back offices.</p>
 							</div>
 						</div>   <!-- end of main --> 
 						<div id="technical" class="detail">
