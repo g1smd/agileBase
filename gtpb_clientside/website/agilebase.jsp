@@ -135,7 +135,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 						<div id="main" class="detail">
 							<div class="divider">
 								<iframe class="youtube-player" type="text/html" width="500" height="232" src="http://www.youtube.com/embed/HH_RRD7oqvQ" frameborder="0"></iframe>
-								Here's a brief introduction to our business philosophy
+								Here's a brief introduction to our business philosophy by MD Clifford Calcutt
 							</div>
 							<div class="divider">
 								<h1>Why do I use it?</h1>
