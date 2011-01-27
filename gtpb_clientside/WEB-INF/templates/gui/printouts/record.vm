@@ -19,8 +19,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
   <head>
-    <title>Record Summary Printout</title>
+    <title>Record Details Printout</title>
 	<link href="styles/report.css" type="text/css" rel="stylesheet" />
+	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
     <style type="text/css">
 	      * {
 		    -moz-box-sizing: border-box;
