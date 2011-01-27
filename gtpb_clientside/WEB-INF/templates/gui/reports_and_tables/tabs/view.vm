@@ -32,7 +32,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 	</div>
 #else
 	<table cellspacing=0 cellpadding=0 border=0 #if($mobile_device) id="reportDataView" #else id="reportData" #end>
-		 #if((!$mobile_device) && (!$printout)) ## On mobiles, view and edit tabs are merged, no need to show table details again, we only need to see related information
+		 #if(!$mobile_device) ## On mobiles, view and edit tabs are merged, no need to show table details again, we only need to see related information
 		<thead>
 			<tr><th class=leading>&nbsp;</th>			
 			<th>$sessionTable</th>
