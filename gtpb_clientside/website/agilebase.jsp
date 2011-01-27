@@ -135,6 +135,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 						<div id="main" class="detail">
 							<div class="divider">
 								<iframe class="youtube-player" type="text/html" width="500" height="232" src="http://www.youtube.com/embed/HH_RRD7oqvQ" frameborder="0"></iframe>
+								Here's a brief introduction to our business philosophy
+							</div>
 							<div class="divider">
 								<h1>Why do I use it?</h1>
 								agileBase helps build back office software that is
@@ -256,7 +258,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				</div>   <!-- end of wrapper -->
 				<div class="wrapper">
 					<div class="content" id="footer">
-						&copy; 2010 GT webMarque Ltd, Furze Bank, 34 Hanover Street, SWANSEA. +44(0)845 456 1810
+						&copy; 2011 GT webMarque Ltd, Furze Bank, 34 Hanover Street, SWANSEA. +44(0)845 456 1810
 					</div>
 				</div>	<!-- end of wrapper -->				
 			</div>  <!-- end of tl_wrapper -->
