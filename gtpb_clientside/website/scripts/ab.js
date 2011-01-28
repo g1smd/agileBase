@@ -28,7 +28,7 @@
 
 		$(document).ready(function(){
 			// frame buster needed as we may be in one of the agileBase application panes after a login timeout
-			if ((top.frames.length!=1) || (document.location.href.indexOf("logout") > -1)) {
+			if (($("#toolbarDiv").length != 0) || (document.location.href.indexOf("logout") > -1)) {
 				top.location="http://agilebase.co.uk/start";
 			}
 			// focus the 'username' box for logging in
