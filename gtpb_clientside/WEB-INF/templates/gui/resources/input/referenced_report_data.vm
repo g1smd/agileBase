@@ -15,6 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+#set($fieldTable = $field.getTable())
 #set($referencedReport = $field.getReferencedReport())
 #set($primaryKey = $field.getTableContainingField().getPrimaryKey())
 #set($reportBaseFields = $referencedReport.getReportBaseFields())
@@ -29,13 +30,15 @@
 #foreach($reportDataRow in $reportDataRows)
   #set($rowContainsData = false)
   #foreach($reportBaseField in $reportBaseFields)
-	#set($fieldCategory = $reportBaseField.getFieldCategory())
-	#if($fieldCategory == "TEXT" || $fieldCategory == "DATE")
-	  #set($displayValue = $reportDataRow.getValue($reportBaseField).getDisplayValue())
-	  #if($displayValue != "")
-		#set($rowContainsData = true)
-		<span class="greytext">$reportBaseField:</span> $displayValue<br>
-	  #end
+	#if(($reportBaseField.getClass().getSimpleName().equals("CalculationFieldDefn")) || (!$reportBaseField.getTableContainingField().equals($fieldTable)))
+    	#set($fieldCategory = $reportBaseField.getFieldCategory())
+    	#if($fieldCategory == "TEXT" || $fieldCategory == "DATE")
+    	  #set($displayValue = $reportDataRow.getValue($reportBaseField).getDisplayValue())
+    	  #if($displayValue != "")
+    		#set($rowContainsData = true)
+    		<span class="greytext">$reportBaseField:</span> $displayValue<br>
+    	  #end
+    	#end
 	#end
   #end
   #if($rowContainsData && ($reportDataRows.size() > $foreach.count)) <p></p> #end
