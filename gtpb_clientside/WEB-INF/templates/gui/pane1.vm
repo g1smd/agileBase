@@ -70,12 +70,12 @@
 		<li><h1><span>&nbsp;</span></h1>
 			<ul>
 					<div id="logout">
-						<form method="get" action="AppController.servlet">
+						<form method="get" action="AppController.servlet" style="float:right">
 							<input type="hidden" name="return" value="gui/display_application">
 							<input type="hidden" name="logout" value="true">
 							<input type="submit" value="logout">
 						</form>
-						<form method="get" action="AppController.servlet" style="float:right">
+						<form method="get" action="AppController.servlet" style="float:left">
 							<input type="hidden" name="return" value="gui/customisations/common/dashboard/dashboard">
 							<input type="submit" value="dashboard">
 						</form>
