@@ -54,7 +54,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
     		 #foreach($field in $sessionTable.getFields())
     		   #set($tableDataValue = $tableDataRow.get($field))
     		   ## don't display hidden or blank fields
-    		   #if($field.getFieldCategory()=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
+    		   #if($field.getFieldCategory()=="REFERENCED_REPORT_DATA" || $field.getFieldCategory()=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
     			 ## don't display checkbox values that are false
     		     #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
                    #parse("gui/reports_and_tables/tabs/table_data_row.vm")
