@@ -28,7 +28,9 @@
 
 		$(document).ready(function(){
 			// frame buster needed as we may be in one of the agileBase application panes after a login timeout
-			if(top != self) top.location.replace(location);
+			if(top != self) {
+				top.location.replace("AppController.servlet?return=gui/display_application");
+			}
 			//if (($("#oViewPane").length != 0) || (document.location.href.indexOf("logout") > -1)) {
 			//	top.location="http://agilebase.co.uk/start";
 			//}
