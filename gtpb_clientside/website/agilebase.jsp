@@ -33,7 +33,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		    <script src="http://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 	    <% } %>
-		<script type="text/javascript" src="/agileBase/website/scripts/ab.js?version=jan2011"></script>
+		<script type="text/javascript" src="/agileBase/website/scripts/ab.js"></script>
 		<style>
 		/* Google RSS stylesheet */
 		@import url("/agileBase/website/styles/gfdynamicfeedcontrol.css");
