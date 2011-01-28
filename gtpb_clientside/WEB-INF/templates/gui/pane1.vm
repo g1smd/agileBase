@@ -66,7 +66,6 @@
 <body>
 	<ol id="tree"> <!-- ordered list for sections -->      
 	  #parse('gui/reports_and_tables/report_list.vm')
-      ##TODO: add logout button if mobile device
 	  #if($mobile_device)
 		<li><h1><span>&nbsp;</span></h1>
 			<ul>
@@ -75,6 +74,10 @@
 							<input type="hidden" name="return" value="gui/display_application">
 							<input type="hidden" name="logout" value="true">
 							<input type="submit" value="logout">
+						</form>
+						<form method="get" action="AppController.servlet" style="float:right">
+							<input type="hidden" name="return" value="gui/customisations/common/dashboard/dashboard">
+							<input type="submit" value="dashboard">
 						</form>
 					</div>
 			</ul>
