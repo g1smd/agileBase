@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($fieldTable = $field.getTable())
+#set($fieldTable = $field.getTableContainingField())
 #set($referencedReport = $field.getReferencedReport())
 #set($primaryKey = $field.getTableContainingField().getPrimaryKey())
 #set($reportBaseFields = $referencedReport.getReportBaseFields())
