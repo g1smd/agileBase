@@ -854,6 +854,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 		if (dependentReports.size() > 0) {
 			throw new CantDoThatException("Reports " + dependentReports + " depend on this one");
 		}
+		Set<TableInfo> tablesReferencingReport = this.getTablesIncludingReferences(reportToRemove, request);
+		if (tablesReferencingReport.size() > 0) {
+			throw new CantDoThatException("Tables " + tablesReferencingReport + " reference data in this report");
+		}
 		parentTable.removeReport(reportToRemove);
 		this.removeReportWithoutChecks(sessionData, request, reportToRemove, conn);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
@@ -1038,7 +1042,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 					PossibleListOptions.LISTREPORT.getFormInputName());
 			TableInfo referencedReportTable = this.getTable(request, internalTableName);
 			BaseReportInfo referencedReport = referencedReportTable.getReport(internalReportName);
-			field = new ReferencedReportDataFieldDefn(table, internalFieldName, fieldName, fieldDesc, referencedReport);
+			field = new ReferencedReportDataFieldDefn(table, internalFieldName, fieldName,
+					fieldDesc, referencedReport);
 			break;
 		default:
 			throw new CantDoThatException("Adding unrecognised field type '" + fieldType + "'");
@@ -1303,11 +1308,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
 							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 							relationField.setNotNull(notNull);
-						} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
+						} else if (formInputName.equals("updateoption"
+								+ field.getInternalFieldName()
 								+ PossibleBooleanOptions.DEFAULTTONULL.getFormInputName())) {
-							Boolean defaultToNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							Boolean defaultToNull = Helpers
+									.valueRepresentsBooleanTrue(formInputValue);
 							relationField.setDefaultToNull(defaultToNull);
-						} 
+						}
 					} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
 						if (formInputName.equals("updateoption" + field.getInternalFieldName()
 								+ PossibleListOptions.LISTVALUEFIELD.getFormInputName())) {
@@ -1569,9 +1576,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		String listValueFieldInternalName = request.getParameter(PossibleListOptions.LISTVALUEFIELD
 				.getFormInputName());
-		String mandatoryString = request.getParameter(PossibleBooleanOptions.MANDATORY.getFormInputName());
+		String mandatoryString = request.getParameter(PossibleBooleanOptions.MANDATORY
+				.getFormInputName());
 		boolean notNull = Helpers.valueRepresentsBooleanTrue(mandatoryString);
-		String defaultToNullString = request.getParameter(PossibleBooleanOptions.DEFAULTTONULL.getFormInputName());
+		String defaultToNullString = request.getParameter(PossibleBooleanOptions.DEFAULTTONULL
+				.getFormInputName());
 		boolean defaultToNull = Helpers.valueRepresentsBooleanTrue(defaultToNullString);
 		// Create the relation object
 		RelationField relationToAdd = new RelationFieldDefn(this.relationalDataSource,
@@ -1984,9 +1993,27 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
+	private SortedSet<TableInfo> getTablesIncludingReferences(BaseReportInfo report, HttpServletRequest request) throws ObjectNotFoundException, CantDoThatException, CodingErrorException {
+		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
+		Set<TableInfo> allTables = company.getTables();
+		SortedSet<TableInfo> tablesIncluding = new TreeSet<TableInfo>();
+		TABLES_LOOP: for (TableInfo table : allTables) {
+			for (BaseField field : table.getFields()) {
+				if (field.getFieldCategory().equals(FieldCategory.REFERENCED_REPORT_DATA)) {
+					BaseReportInfo referencedReport = ((ReferencedReportDataField) field).getReferencedReport();
+					if (referencedReport.equals(report)) {
+						tablesIncluding.add(table);
+						continue TABLES_LOOP;
+					}
+				}
+			}
+		}
+		return tablesIncluding;
+	}
+	
 	/**
-	 * Return a set of all reports that join to this one, i.e. those that would
-	 * have to be modified before dropping the given report
+	 * Return a set of all reports that would have to be modified before
+	 * dropping the given report, i.e. those that join to this one
 	 */
 	private SortedSet<BaseReportInfo> getDependentReports(SimpleReportInfo report,
 			HttpServletRequest request) throws CantDoThatException, ObjectNotFoundException {
@@ -2277,9 +2304,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void setSummaryReportRange(HttpServletRequest request, BaseReportInfo report,
-			int rangePercent, boolean rangeDirection) throws SQLException, DisallowedException,
-			ObjectNotFoundException, CantDoThatException {
+	public synchronized void setSummaryReportRange(HttpServletRequest request,
+			BaseReportInfo report, int rangePercent, boolean rangeDirection) throws SQLException,
+			DisallowedException, ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
@@ -2308,7 +2335,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		usageLogger.logReportSchemaChange(user, report, AppAction.SET_SUMMARY_RANGE, logString);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
-	
+
 	public synchronized void addGroupingToSummaryReport(HttpServletRequest request,
 			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException {
@@ -2447,7 +2474,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		savedSummary.setRangeDirection(templateSummary.getRangeDirection());
 		templateSummary.setRangeDirection(true);
 		savedSummary.setRangePercent(templateSummary.getRangePercent());
-		templateSummary.setRangePercent(100);		
+		templateSummary.setRangePercent(100);
 		// Summary title
 		report.saveReportSummary(savedSummary);
 		templateSummary.setTitle("");
