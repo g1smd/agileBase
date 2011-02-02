@@ -178,7 +178,7 @@ table#reportData tr.excludedRecord td {
 
 .capitalised { text-transform: capitalize; }
 
-td.capitalised { min-width: 25%; }
+table#reportData td.capitalised { min-width: 25%; }
 
 .seemorerows {
 	background: #f4f4f4;
