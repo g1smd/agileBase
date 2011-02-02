@@ -60,8 +60,10 @@
 #else
 <span class="fieldname">$field</span>
 #end
-#if($fieldCategory !='SEPARATOR')<br>#end
-<i><span class="greytext">$field.getFieldDescription()</span></i>
+#if(!$viewOnly)
+  #if($fieldCategory !='SEPARATOR')<br>#end
+  <i><span class="greytext">$field.getFieldDescription()</span></i>
+#end
 </td>
 <td>#if($fieldCategory !='SEPARATOR') #parse('gui/resources/input/input.vm') #end</td>
 <td class=trailing>&nbsp;</td>
