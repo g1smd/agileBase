@@ -15,31 +15,36 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($fieldTable = $field.getTableContainingField())
-#set($referencedReport = $field.getReferencedReport())
-#set($primaryKey = $field.getTableContainingField().getPrimaryKey())
-#set($reportBaseFields = $referencedReport.getReportBaseFields())
-#if(!$reportBaseFields.contains($primaryKey))
-  Error: ID field for table $field.getTableContainingField() not found in referenced report $referencedReport
-  #stop
-#end
-#set($rowId = $sessionData.getRowId())
-#set($filter = $viewTools.getNewFilterMap())
-#set($success = $filter.put($primaryKey, "$rowId"))
-#set($reportDataRows = $view.getReportDataRows($referencedReport, 20, $filter, true))
-#foreach($reportDataRow in $reportDataRows)
-  #set($rowContainsData = false)
-  #foreach($reportBaseField in $reportBaseFields)
-	#if(($reportBaseField.getClass().getSimpleName().equals("CalculationFieldDefn")) || (!$reportBaseField.getTableContainingField().equals($fieldTable)))
-    	#set($fieldCategory = $reportBaseField.getFieldCategory())
-    	#if($fieldCategory == "TEXT" || $fieldCategory == "DATE")
-    	  #set($displayValue = $reportDataRow.getValue($reportBaseField).getDisplayValue())
-    	  #if($displayValue != "")
-    		#set($rowContainsData = true)
-    		<span class="greytext">$reportBaseField:</span> $displayValue<br>
-    	  #end
+#if($referencedData.contains("span")) ## If there's any referenced data predefined
+	$referencedData
+#else
+	#set($referencedData = false)
+    #set($fieldTable = $field.getTableContainingField())
+    #set($referencedReport = $field.getReferencedReport())
+    #set($primaryKey = $field.getTableContainingField().getPrimaryKey())
+    #set($reportBaseFields = $referencedReport.getReportBaseFields())
+    #if(!$reportBaseFields.contains($primaryKey))
+      Error: ID field for table $field.getTableContainingField() not found in referenced report $referencedReport
+      #stop
+    #end
+    #set($rowId = $sessionData.getRowId())
+    #set($filter = $viewTools.getNewFilterMap())
+    #set($success = $filter.put($primaryKey, "$rowId"))
+    #set($reportDataRows = $view.getReportDataRows($referencedReport, 20, $filter, true))
+    #foreach($reportDataRow in $reportDataRows)
+      #set($rowContainsData = false)
+      #foreach($reportBaseField in $reportBaseFields)
+    	#if(($reportBaseField.getClass().getSimpleName().equals("CalculationFieldDefn")) || (!$reportBaseField.getTableContainingField().equals($fieldTable)))
+        	#set($fieldCategory = $reportBaseField.getFieldCategory())
+        	#if($fieldCategory == "TEXT" || $fieldCategory == "DATE")
+        	  #set($displayValue = $reportDataRow.getValue($reportBaseField).getDisplayValue())
+        	  #if($displayValue != "")
+        		#set($rowContainsData = true)
+        		<span class="greytext">$reportBaseField:</span> $displayValue<br>
+        	  #end
+        	#end
     	#end
-	#end
-  #end
-  #if($rowContainsData && ($reportDataRows.size() > $foreach.count)) <p></p> #end
+      #end
+      #if($rowContainsData && ($reportDataRows.size() > $foreach.count)) <p></p> #end
+    #end
 #end

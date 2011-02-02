@@ -50,23 +50,31 @@
 	#end
   #else
 	#set($fieldCategory = $field.getFieldCategory())
-					#set($rowCount = $rowCount + 1)
-					<tr #if($fieldCategory =='SEPARATOR') #set($rowCount=0) class="separator" #elseif($rowCount%2!=0) class="rowb" #else class="rowa" #end>
-						<td class=leading>&nbsp;</td>
-<!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
-<td class="capitalised printoutfieldnamecolumn">
-#if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
-<span class="fieldname">$field.getSimplifiedFieldName()</span>
-#else
-<span class="fieldname">$field</span>
-#end
-#if(!$viewOnly)
-  #if($fieldCategory !='SEPARATOR')<br>#end
-  <i><span class="greytext">$field.getFieldDescription()</span></i>
-#end
-</td>
-<td>#if($fieldCategory !='SEPARATOR') #parse('gui/resources/input/input.vm') #end</td>
-<td class=trailing>&nbsp;</td>
-</tr>
-#end ## if partOfAddress
+	#set($referencedData = "")
+	#if($fieldCategory == "REFERENCED_REPORT_DATA")
+	  ## Capture the output of the parsing into a variable. We want to know whether a value
+	  ## exists or not for this field so we can choose whether to display the row
+	  #set($referencedData = "parse('gui/resources/input/referenced_report_data.vm')")
+	#end
+	#if(($fieldCategory != "REFERENCED_REPORT_DATA") || $referencedData.contains("span"))
+    	#set($rowCount = $rowCount + 1)
+    	<tr #if($fieldCategory =='SEPARATOR') #set($rowCount=0) class="separator" #elseif($rowCount%2!=0) class="rowb" #else class="rowa" #end>
+    		<td class=leading>&nbsp;</td>
+            <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
+            <td class="capitalised printoutfieldnamecolumn">
+            #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+            <span class="fieldname">$field.getSimplifiedFieldName()</span>
+            #else
+            <span class="fieldname">$field</span>
+            #end
+            #if(!$viewOnly)
+              #if($fieldCategory !='SEPARATOR')<br>#end
+              <i><span class="greytext">$field.getFieldDescription()</span></i>
+            #end
+            </td>
+            <td>#if($fieldCategory !='SEPARATOR') #parse('gui/resources/input/input.vm') #end</td>
+            <td class=trailing>&nbsp;</td>
+        </tr>
+	#end
+  #end ## end if not partOfAddress
 #end ## remove to show primary key field
