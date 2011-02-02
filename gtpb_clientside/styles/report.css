@@ -225,3 +225,7 @@ table#reportData td.capitalised { min-width: 30%; }
 .ab_tooltip .tooltip_content {
 	font-size: 8pt;
 }
+
+img.mini_icon {
+	vertical-align: middle;
+}
