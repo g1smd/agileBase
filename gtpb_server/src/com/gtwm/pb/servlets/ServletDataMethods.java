@@ -593,6 +593,9 @@ public final class ServletDataMethods {
 					// .4 -> 0.4
 					// 4. -> 4.0
 					// . -> 0.0
+					// £46.50 -> 46.50 - from the error logs, users commonly input £ signs
+					fieldValueString = fieldValueString.replace("£", "");
+					fieldValueString = fieldValueString.replace("$", "");
 					if (fieldValueString.startsWith(".")) {
 						fieldValueString = "0" + fieldValueString;
 					}
