@@ -55,7 +55,6 @@
 	  ## Capture the output of the parsing into a variable. We want to know whether a value
 	  ## exists or not for this field so we can choose whether to display the row
 	  #set($referencedData = "#parse('gui/resources/input/referenced_report_data.vm')")
-	  <tr><td>Referenced data is $referencedData</td></tr>
 	#end
 	#if(($fieldCategory != "REFERENCED_REPORT_DATA") || $referencedData.contains("span"))
     	#set($rowCount = $rowCount + 1)
