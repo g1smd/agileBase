@@ -45,15 +45,15 @@
 				  #set($displayCategory = $displayValue.toLowerCase())
 				  #set($displayCategory = $displayCategory.replaceAll("[^a-z]",""))
 				  #if($displayCategory.startsWith("phone"))
-					<img src="resources/icons/applications/16x16/Dial.png"> 
+					<img src="resources/icons/applications/16x16/Dial.png" class="mini_icon"> 
 				  #elseif($displayCategory.startsWith("email"))
-					<img src="resources/icons/applications/16x16/E-mail.png"> 
+					<img src="resources/icons/applications/16x16/E-mail.png" class="mini_icon"> 
 				  #elseif($displayCategory.startsWith("inprogress"))
-					<img src="resources/icons/applications/16x16/Hourglass.png"> 
+					<img src="resources/icons/applications/16x16/Hourglass.png" class="mini_icon"> 
 				  #elseif($displayCategory.startsWith("complete") || $displayCategory == "done")
-					<img src="resources/icons/applications/16x16/E-mail.png"> 
+					<img src="resources/icons/applications/16x16/E-mail.png" class="mini_icon"> 
 				  #elseif($displayCategory.startsWith("partner") || $displayCategory.startsWith("team") || $displayCategory.startsWith("client"))
-					<img src="resources/icons/applications/16x16/E-mail.png"> 
+					<img src="resources/icons/applications/16x16/E-mail.png" class="mini_icon"> 
 				  #end
 				#end
         		<span class="greytext">$reportBaseField:</span> $displayValue<br>
