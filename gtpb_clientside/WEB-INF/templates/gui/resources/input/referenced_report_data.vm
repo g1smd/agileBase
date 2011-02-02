@@ -48,6 +48,8 @@
 					<img src="resources/icons/applications/16x16/Dial.png" class="mini_icon"> 
 				  #elseif($displayCategory.startsWith("email"))
 					<img src="resources/icons/applications/16x16/E-mail.png" class="mini_icon"> 
+				  #elseif($displayCategory.startsWith("todo"))
+					<img src="resources/icons/applications/16x16/Problem.png" class="mini_icon"> 
 				  #elseif($displayCategory.startsWith("inprogress"))
 					<img src="resources/icons/applications/16x16/Hourglass.png" class="mini_icon"> 
 				  #elseif($displayCategory.startsWith("complete") || $displayCategory == "done")
