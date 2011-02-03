@@ -41,7 +41,7 @@
         	  #if($displayValue != "")
         		#set($rowContainsData = true)
 				#set($displayCategory = "")
-				#if($displayValue.length() < 15)
+				#if($displayValue.length() < 20)
 				  #set($displayCategory = $displayValue.toLowerCase())
 				  #set($displayCategory = $displayCategory.replaceAll("[^a-z]",""))
 				  #if($displayCategory.startsWith("phone"))
