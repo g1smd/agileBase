@@ -53,9 +53,9 @@
 				  #elseif($displayCategory.startsWith("inprogress"))
 					<img src="resources/icons/applications/16x16/Hourglass.png" class="mini_icon"> 
 				  #elseif($displayCategory.startsWith("complete") || $displayCategory == "done")
-					<img src="resources/icons/applications/16x16/E-mail.png" class="mini_icon"> 
+					<img src="resources/icons/applications/16x16/Apply.png" class="mini_icon"> 
 				  #elseif($displayCategory.startsWith("partner") || $displayCategory.startsWith("team") || $displayCategory.startsWith("client"))
-					<img src="resources/icons/applications/16x16/E-mail.png" class="mini_icon"> 
+					<img src="resources/icons/applications/16x16/Person.png" class="mini_icon"> 
 				  #end
 				#end
         		<span class="greytext">$reportBaseField:</span> $displayValue<br>
