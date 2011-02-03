@@ -78,7 +78,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 						   #else
 							 #set($fieldEncountered = $field)
 						   #end
-						   #if(!$fieldsEncountered.contains($fieldEncountered))
+						   #if(!$fieldsEncountered.containsKey($fieldEncountered))
 						     #parse("gui/reports_and_tables/tabs/table_data_row.vm")
 							 #set($success = $fieldsEncountered.put($fieldEncountered, true))
 						   #end
