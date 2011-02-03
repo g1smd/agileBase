@@ -82,9 +82,11 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 						   #else
 							 #set($fieldEncountered = $field)
 						   #end
-						   #if((!$fieldsEncountered.containsKey($fieldEncountered)) || ($numRelatedRows > 1))
+						   #if(!$fieldsEncountered.containsKey($fieldEncountered))
 						     #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-							 #set($success = $fieldsEncountered.put($fieldEncountered, true))
+							 #if($numRelatedRows == 1)
+							   #set($success = $fieldsEncountered.put($fieldEncountered, true))
+							 #end
 						   #end
 						 #end
                	      #end
