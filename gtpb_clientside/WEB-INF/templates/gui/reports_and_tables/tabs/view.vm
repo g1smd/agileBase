@@ -39,38 +39,38 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		#foreach($reportField in $sessionReport.getReportFields())
 		  ## don't show fields we've already shown
 		  #set($field = $reportField.getBaseField())
-		  #set($fieldTable = $field.getTableContainingField())
+		  #set($reportFieldTable = $field.getTableContainingField())
 		    ## if we have a relation to another table, show that table's data
 		    ## (if it has any related data)
-		    #if($field.equals($fieldTable.getPrimaryKey()))
-			 #if($fieldTable.equals($sessionTable))
+		    #if($field.equals($reportFieldTable.getPrimaryKey()))
+			 #if($reportFieldTable.equals($sessionTable))
 			   #set($relatedRowIds = [])
 			   #if(!$mobile_device) ## View and edit tabs are merged on mobile devices, don't display the session table data here
 			     #set($success = $relatedRowIds.add($sessionRowId))
 			   #end
 			 #else
-		       #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $fieldTable))
+		       #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $reportFieldTable))
 		     #end
 			 #set($numRelatedRows = $relatedRowIds.size())
 			 #set($headingDisplayed = false)
 			 #if ($numRelatedRows > 0)
 	 	      ## attempt to only display related data if it's a managable amount
-		       #if(($numRelatedRows == 1) || (($numRelatedRows * ($fieldTable.getFields().size() - 1)) < 30))
+		       #if(($numRelatedRows == 1) || (($numRelatedRows * ($reportFieldTable.getFields().size() - 1)) < 30))
 		        #foreach($relatedRowId in $relatedRowIds)
-		         #set($tableDataRow=$view.getTableDataRow($fieldTable, $relatedRowId))
+		         #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
 		         #if ($tableDataRow.size() > 0)
 				   #if(($numRelatedRows == 1) || (!$headingDisplayed))
 					 #set($headingDisplayed = true)
     	     	     <thead>
     		        	<tr><th class="leading">&nbsp;</th>			
-    		        	<th>$fieldTable</th>
+    		        	<th>$reportFieldTable</th>
     		        	<th>&nbsp;</th>			
     		        	<th class="trailing">&nbsp;</th></tr>			
     		          </thead>
 					#end
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
-		            #foreach($field in $fieldTable.getFields())
+		            #foreach($field in $reportFieldTable.getFields())
 		          	  #set($tableDataValue = $tableDataRow.get($field))
 					  #set($fieldCategory = $field.getFieldCategory())
             		  ## don't display hidden or blank fields
@@ -92,7 +92,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
                	      #end
 		            #end ## end foreach field in table
 					## Display calculations if there are any in the current report
-					#if($fieldTable.equals($sessionTable))
+					#if($reportFieldTable.equals($sessionTable))
                 		#set($calculationReportFields = [])
                 		#foreach($reportField in $sessionReport.getReportFields())
                 		  #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
