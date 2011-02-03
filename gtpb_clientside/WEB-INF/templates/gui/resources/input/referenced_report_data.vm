@@ -68,7 +68,7 @@
 					<img src="resources/icons/applications/16x16/Star.png" class="mini_icon"> 
 					<img src="resources/icons/applications/16x16/Star.png" class="mini_icon"> 
 					<img src="resources/icons/applications/16x16/Star.png" class="mini_icon"> 
-				  #elseif($displayCategory == "med") || ($displayCategory == "medium"))
+				  #elseif(($displayCategory == "med") || ($displayCategory == "medium"))
 					<img src="resources/icons/applications/16x16/Star.png" class="mini_icon"> 
 					<img src="resources/icons/applications/16x16/Star.png" class="mini_icon"> 
 				  #elseif($displayCategory == "low")
