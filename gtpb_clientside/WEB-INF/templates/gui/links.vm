@@ -24,6 +24,6 @@
 #set($report_url = "${viewTools.getAppUrl()}?return=gui/display_application&set_report=$session_report_id&set_row_id=$session_row_id")##
 #set($report_url_escaped = $viewTools.escapeForURL($report_url))##
 #set($report_name = $session_report.getReportName())##
-#set($body=$viewTools.escapeForURL("This is a link to a record in the $company agileBase report $session_report.getModule() - $report_name:\n\n"))##
+#set($body=$viewTools.escapeForURL("This is a link to a record in the $company agileBase report $session_report.getModule() - $report_name: "))##
 #set($body="$body$report_url_escaped")##
 mailto:?subject=Link%20to%3A%20$viewTools.escapeForURL("$session_report.getModule() - $report_name")&body=$body

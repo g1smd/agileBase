@@ -106,6 +106,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 			#set($success = $calculationReportFields.add($reportField))
 		  #end
 		#end
+		<tr><td>Calc report fields are $calculationReportFields</td></tr>
 		#if($calculationReportFields.size() > 0)
 		  #set($reportFilter = $viewTools.getNewFilterMap())
 		  #set($success = $reportFilter.put($sessionTable.getPrimaryKey(),"$sessionRowId"))
