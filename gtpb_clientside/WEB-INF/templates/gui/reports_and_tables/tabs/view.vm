@@ -20,6 +20,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 
 ## view the data in the session table, plus related data
 #set($tabCaption='view')
+#set($viewOnly=true) ## $viewOnly used by resources/input/input.vm
 #set($sessionTable=$sessionData.getTable())
 #set($sessionReport=$sessionData.getReport())
 #if(!$sessionRowId)
@@ -43,7 +44,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		    #if($field.equals($fieldTable.getPrimaryKey()))
 			 #if($fieldTable.equals($sessionTable))
 			   #set($relatedRowIds = [])
-			   #set($success = $relatedRowIds.add($sessionRowId))
+			   #if(!$mobile_device) ## View and edit tabs are merged on mobile devices, don't display the session table data here
+			     #set($success = $relatedRowIds.add($sessionRowId))
+			   #end
 			 #else
 		       #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $fieldTable))
 		     #end
