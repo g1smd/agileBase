@@ -29,18 +29,29 @@
 			-ms-box-sizing: border-box;
 			box-sizing: border-box;
 		  }
-			      			html, body { padding:0;
-      			             margin:0;
-								 	                  height:100%;
-                  									 width:100%; }
+		  
+		  html, body { padding:0;
+      		margin:0;
+			height:100%;
+            width:100%;
+		  }
 
-      			body { padding-bottom:25px;
-           					 	 position:absolute;
-					            	 font-family:sans-serif,Arial;
-      	       font-size:10pt; }
+      	  body { padding-bottom:25px;
+           	position:absolute;
+			font-family:sans-serif,Arial;
+      	    font-size:10pt;
+		  }
  
-      			td.trailing input[type=button] { font-size:8pt }	
-				td { padding-right: 1em; }
+          table#reportData th {
+            font-size: 11pt!important; /* override modalFramework.css */
+            border-bottom: 1px solid #888888!important;
+            border-top: none!important;
+            border-left: none!important;
+            border-right: none!important;
+          }
+
+	      td.trailing input[type=button] { font-size:8pt }	
+		  td { padding-right: 1em; }
     </style>
     <script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jquery.oembed.js"></script>
