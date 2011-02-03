@@ -32,66 +32,22 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 	</div>
 #else
 	<table cellspacing=0 cellpadding=0 border=0 #if($mobile_device) id="reportDataView" #else id="reportData" #end>
-		 #if(!$mobile_device) ## On mobiles, view and edit tabs are merged, no need to show table details again, we only need to see related information
-		<thead>
-			<tr><th class=leading>&nbsp;</th>			
-			<th>$sessionTable</th>
-			<th>value</th>			
-			<th class=trailing>&nbsp;</th></tr>			
-		</thead>
-		#else
-		<thead> ## Need one thead at the top of the table even if it's empty
-		</thead> ## otherwise the first thead encountered will be displayed at the top
-		#end
-		#set($sessionTableDataRow=$view.getTableDataRow($sessionTable, $sessionRowId))
-		#set($tableDataRow = $sessionTableDataRow)
-		#if ($tableDataRow.size() == 0)
-		 No data found for row id $sessionRowId
-		#else
-		 #set($viewOnly=true) ## $viewOnly used by resources/input/input.vm
-		 #set($address = $viewTools.getAddress($tableDataRow))
-		 #if(!$mobile_device) ## On mobiles, view and edit tabs are merged, no need to show table details again, we only need to see related information
-    		 #foreach($field in $sessionTable.getFields())
-    		   #set($tableDataValue = $tableDataRow.get($field))
-    		   ## don't display hidden or blank fields
-    		   #if($field.getFieldCategory()=="REFERENCED_REPORT_DATA" || $field.getFieldCategory()=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
-    			 ## don't display checkbox values that are false
-    		     #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
-                   #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-                 #end
-       	       #end
-    	     #end ## end loop through fields
-		 #end
-			    #if($view.isWikiIntegrated())
-				  #set($wikiTitle=$tableDataRow.get($sessionTable.getField('Wiki page [Auto]')))
-                  #if(!$wikiTitle.isNull())
-			        #parse("gui/reports_and_tables/tabs/wiki.vm")
-				  #end
-			      					<tr class="trailing">
-			        <td>&nbsp;</td>
-			        <td colspan="2">&nbsp;</td>
-			        <td>&nbsp;</td>
-		      </tr> 
-		    #else
-		    			  <tr class="trailing">
-			        <td>&nbsp;</td>
-			        <td>&nbsp;</td>
-			        <td>&nbsp;</td>
-			        <td>&nbsp;</td>
-		      </tr> 
-					    #end
-		#end 
+	  ## NB: session table data used to be here
 		## Show related data
 		#foreach($reportField in $sessionReport.getReportFields())
 		  ## don't show fields we've already shown
 		  #set($field = $reportField.getBaseField())
 		  #set($fieldTable = $field.getTableContainingField())
-		  #if(! ($fieldTable.equals($sessionTable)))
 		    ## if we have a relation to another table, show that table's data
 		    ## (if it has any related data)
 		    #if($field.equals($fieldTable.getPrimaryKey()))
-		     #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $fieldTable))
-		     #set($numRelatedRows = $relatedRowIds.size())
+			 #if($fieldTable.equals($sessionTable))
+			   #set($relatedRowIds = [])
+			   #set($success = $relatedRowIds.add($sessionRowId))
+			 #else
+		       #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $fieldTable))
+		     #end
+			 #set($numRelatedRows = $relatedRowIds.size())
        #if ($numRelatedRows > 0)
 	 	      ## attempt to only display related data if it's a managable amount
 		       #if(($numRelatedRows == 1) || (($numRelatedRows * ($fieldTable.getFields().size() - 1)) < 30))
@@ -107,17 +63,15 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
 		            #foreach($field in $fieldTable.getFields())
-		          	#set($tableDataValue = $tableDataRow.get($field))
-				         #if(($field.getHidden() == false) && (! ($tableDataValue.toString() == '')))
-				          ## don't display checkbox values that are false
-				          #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
-               ## Don't re-show data from the session table
-               #if(!($field.getClass().getSimpleName().equals("RelationFieldDefn") && $sessionTable.equals($field.getRelatedTable())))
-                #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-               #end
-              #end
-   	         #end
-		          #end ## end foreach field in table
+		          	  #set($tableDataValue = $tableDataRow.get($field))
+            		  ## don't display hidden or blank fields
+            		  #if($field.getFieldCategory()=="REFERENCED_REPORT_DATA" || $field.getFieldCategory()=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
+            			 ## don't display checkbox values that are false
+            		     #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
+                           #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+                         #end
+               	      #end
+		            #end ## end foreach field in table
 		         #end ## end if ($tableDataRow.size() != 0)
 		        #end ## end foreach related row id
 		       #else
@@ -127,11 +81,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
            <td>$numRelatedRows related records</td>
            <td>#if($numRelatedRows > 0)not shown #else &nbsp; #end</td>
            <td class=trailing>&nbsp;</td>
-				  	   </tr>
+		</tr>
 		       #end ## end if number of related rows is a manageable amount
 		      #end
 		    #end
-		  #end
 		#end
 		<tr class=trailing>
 			<td>&nbsp;</td>
