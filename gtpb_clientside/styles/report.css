@@ -188,7 +188,7 @@ td.calculations {
 .separator {
   background:transparent url(line.gif) repeat-x scroll 0pt 28px;
   color:#888888;
-  font-style:italic;
+  /* font-style:italic; */
   font-weight:bold;
   margin-bottom:-3px;
   position:relative;
