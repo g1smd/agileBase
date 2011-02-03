@@ -180,6 +180,10 @@ table#reportData tr.excludedRecord td {
 
 table#reportData td.capitalised { width: 30%; }
 
+td.calculations {
+  border: 1px solid black;
+}
+
 .separator {
   background:transparent url(line.gif) repeat-x scroll 0pt 28px;
   color:#888888;
