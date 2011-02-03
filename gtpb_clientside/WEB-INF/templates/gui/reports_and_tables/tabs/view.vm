@@ -101,7 +101,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		#end
 		## Display calculations if there are any in the current report
 		#set($calculationReportFields = [])
-		#foreach($reportField in $sessionReport)
+		#foreach($reportField in $sessionReport.getReportFields())
 		  #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
 			#set($success = $calculationReportFields.add($reportField))
 		  #end
