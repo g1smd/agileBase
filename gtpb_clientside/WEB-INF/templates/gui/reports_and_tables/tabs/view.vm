@@ -83,6 +83,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 							 #set($fieldEncountered = $field)
 						   #end
 						   #if(!$fieldsEncountered.containsKey($fieldEncountered))
+							 #set($rrd_rowId = $relatedRowId) ## For use by input/referenced_report_data.vm
 						     #parse("gui/reports_and_tables/tabs/table_data_row.vm")
 							 #if($numRelatedRows == 1)
 							   #set($success = $fieldsEncountered.put($fieldEncountered, true))
