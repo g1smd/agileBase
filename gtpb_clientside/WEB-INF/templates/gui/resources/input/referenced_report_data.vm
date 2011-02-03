@@ -20,14 +20,14 @@
 #else
 	#set($referencedData = false)
     #set($fieldTable = $field.getTableContainingField())
+    #set($primaryKey = $fieldTable.getPrimaryKey())
     #set($referencedReport = $field.getReferencedReport())
-    #set($primaryKey = $field.getTableContainingField().getPrimaryKey())
     #set($reportBaseFields = $referencedReport.getReportBaseFields())
     #if(!$reportBaseFields.contains($primaryKey))
       Error: ID field for table $field.getTableContainingField() not found in referenced report $referencedReport
       #stop
     #end
-    #set($rrd_rowId = $sessionData.getRowId())
+    #set($rrd_rowId = $sessionData.getRowId($fieldTable))
     #set($filter = $viewTools.getNewFilterMap())
     #set($success = $filter.put($primaryKey, "$rrd_rowId"))
     #set($rrd_reportDataRows = $view.getReportDataRows($referencedReport, 20, $filter, true))
