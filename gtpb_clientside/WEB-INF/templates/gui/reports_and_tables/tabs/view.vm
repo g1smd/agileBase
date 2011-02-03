@@ -32,6 +32,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		Pick a record from above to view data or press the 'New' button to create a record
 	</div>
 #else
+	#set($fieldsEncountered = {})
 	<table cellspacing=0 cellpadding=0 border=0 #if($mobile_device) id="reportDataView" #else id="reportData" #end>
 	  ## NB: session table data used to be here
 		## Show related data
@@ -67,12 +68,21 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 					#set($address = $viewTools.getAddress($tableDataRow))
 		            #foreach($field in $fieldTable.getFields())
 		          	  #set($tableDataValue = $tableDataRow.get($field))
+					  #set($fieldCategory = $field.getFieldCategory())
             		  ## don't display hidden or blank fields
-            		  #if($field.getFieldCategory()=="REFERENCED_REPORT_DATA" || $field.getFieldCategory()=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
+            		  #if($fieldCategory=="REFERENCED_REPORT_DATA" || $fieldCategory=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
             			 ## don't display checkbox values that are false
             		     #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
-                           #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-                         #end
+                           #if($fieldCategory == "RELATION")
+							 #set($fieldEncountered = $field.getDisplayField())
+						   #else
+							 #set($fieldEncountered = $field)
+						   #end
+						   #if(!$fieldsEncountered.contains($fieldEncountered))
+						     #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+							 #set($success = $fieldsEncountered.put($fieldEncountered, true))
+						   #end
+						 #end
                	      #end
 		            #end ## end foreach field in table
 		         #end ## end if ($tableDataRow.size() != 0)
