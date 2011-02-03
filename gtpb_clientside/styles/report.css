@@ -181,7 +181,7 @@ table#reportData tr.excludedRecord td {
 table#reportData td.capitalised { width: 30%; }
 
 td.calculations {
-  border: 1px solid black;
+  font-weight: bold;
 }
 
 .separator {
