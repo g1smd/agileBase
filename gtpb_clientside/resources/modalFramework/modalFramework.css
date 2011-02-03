@@ -237,29 +237,3 @@ div#_md_blank div#_md_dialog div#_md_content div#_mdp_relationPicker div#_mdp_co
 div#_md_blank div#_md_dialog div#_md_content div#_mdp_relationPicker div#_mdp_content table#reportData tr#_mfp_current_row td { 
   background-color:#ffd588;
 }
-
-/* From tabs.css */
-.separator {
-  background:transparent url(line.gif) repeat-x scroll 0pt 28px;
-  color:#888888;
-  font-style:italic;
-  font-weight:bold;
-  margin-bottom:-3px;
-  position:relative;
-}
-
-.separator td {
-  padding-top:20px!important;
-  border-right:0px!important;
-}
-
-.separator span {
-  background:#FFFFFF none repeat scroll 0% 0%;
-  padding: 0px 5px;
-}
-
-.separator .fieldname {
-  margin-left:-25px;
-  font-size: 12pt;
-}
-
