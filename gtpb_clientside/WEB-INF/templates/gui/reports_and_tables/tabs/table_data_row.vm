@@ -61,7 +61,7 @@
     	<tr #if($fieldCategory =='SEPARATOR') #set($rowCount=0) class="separator" #elseif($rowCount%2!=0) class="rowb" #else class="rowa" #end>
     		<td class=leading>&nbsp;</td>
             <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
-            <td class="capitalised printoutfieldnamecolumn">
+            <td class="capitalised printoutfieldnamecolumn" #if($fieldCategory =='SEPARATOR') colspan="2" #end>
             #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
             <span class="fieldname">$field.getSimplifiedFieldName()</span>
             #else
@@ -72,7 +72,7 @@
               <i><span class="greytext">$field.getFieldDescription()</span></i>
             #end
             </td>
-            <td>#if($fieldCategory !='SEPARATOR') #parse('gui/resources/input/input.vm') #end</td>
+            #if($fieldCategory !='SEPARATOR')<td>#parse('gui/resources/input/input.vm')</td>#end
             <td class=trailing>&nbsp;</td>
         </tr>
 	#end
