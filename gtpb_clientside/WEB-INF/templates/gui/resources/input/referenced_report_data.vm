@@ -27,22 +27,22 @@
       Error: ID field for table $field.getTableContainingField() not found in referenced report $referencedReport
       #stop
     #end
-    #set($rowId = $sessionData.getRowId())
+    #set($rrd_rowId = $sessionData.getRowId())
     #set($filter = $viewTools.getNewFilterMap())
-    #set($success = $filter.put($primaryKey, "$rowId"))
-    #set($reportDataRows = $view.getReportDataRows($referencedReport, 20, $filter, true))
-    #foreach($reportDataRow in $reportDataRows)
+    #set($success = $filter.put($primaryKey, "$rrd_rowId"))
+    #set($rrd_reportDataRows = $view.getReportDataRows($referencedReport, 20, $filter, true))
+    #foreach($rrd_reportDataRow in $rrd_reportDataRows)
       #set($rowContainsData = false)
       #foreach($reportBaseField in $reportBaseFields)
     	#if(($reportBaseField.getClass().getSimpleName().equals("CalculationFieldDefn")) || (!$reportBaseField.getTableContainingField().equals($fieldTable)))
         	#set($fieldCategory = $reportBaseField.getFieldCategory())
         	#if($fieldCategory == "TEXT" || $fieldCategory == "DATE")
-        	  #set($displayValue = $reportDataRow.getValue($reportBaseField).getDisplayValue())
-        	  #if($displayValue != "")
+        	  #set($rrd_displayValue = $rrd_reportDataRow.getValue($reportBaseField).getDisplayValue())
+        	  #if($rrd_displayValue != "")
         		#set($rowContainsData = true)
 				#set($displayCategory = "")
-				#if($displayValue.length() < 20)
-				  #set($displayCategory = $displayValue.toLowerCase())
+				#if($rrd_displayValue.length() < 20)
+				  #set($displayCategory = $rrd_displayValue.toLowerCase())
 				  #set($displayCategory = $displayCategory.replaceAll("[^a-z]",""))
 				  #if($displayCategory.startsWith("phone"))
 					<img src="resources/icons/applications/16x16/Dial.png" class="mini_icon"> 
@@ -58,11 +58,11 @@
 					<img src="resources/icons/applications/16x16/Person.png" class="mini_icon"> 
 				  #end
 				#end
-        		<span class="greytext">$reportBaseField:</span> $displayValue<br>
+        		<span class="greytext">$reportBaseField:</span> $rrd_displayValue<br>
         	  #end
         	#end
     	#end
       #end
-      #if($rowContainsData && ($reportDataRows.size() > $foreach.count)) <p></p> #end
+      #if($rowContainsData && ($rrd_reportDataRows.size() > $foreach.count)) <p></p> #end
     #end
 #end
