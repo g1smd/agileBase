@@ -209,8 +209,9 @@ td.calculations {
   font-size: 12pt;
 }
 
+/* Hide adjacent separators, i.e. ones with no content */
 tr.separator + tr.separator {
-  display: none; /* Adjacent separators */
+  display: none;
 }
 
 .seemorerows {
