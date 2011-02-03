@@ -180,6 +180,30 @@ table#reportData tr.excludedRecord td {
 
 table#reportData td.capitalised { width: 30%; }
 
+.separator {
+  background:transparent url(line.gif) repeat-x scroll 0pt 28px;
+  color:#888888;
+  font-style:italic;
+  font-weight:bold;
+  margin-bottom:-3px;
+  position:relative;
+}
+
+.separator td {
+  padding-top:20px!important;
+  border-right:0px!important;
+}
+
+.separator span {
+  background:#FFFFFF none repeat scroll 0% 0%;
+  padding: 0px 5px;
+}
+
+.separator .fieldname {
+  margin-left:-25px;
+  font-size: 12pt;
+}
+
 .seemorerows {
 	background: #f4f4f4;
 	width: 100%;
