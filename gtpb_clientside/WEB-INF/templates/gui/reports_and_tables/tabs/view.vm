@@ -52,12 +52,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		       #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $fieldTable))
 		     #end
 			 #set($numRelatedRows = $relatedRowIds.size())
-       #if ($numRelatedRows > 0)
+			 #if ($numRelatedRows > 0)
 	 	      ## attempt to only display related data if it's a managable amount
 		       #if(($numRelatedRows == 1) || (($numRelatedRows * ($fieldTable.getFields().size() - 1)) < 30))
 		        #foreach($relatedRowId in $relatedRowIds)
 		         #set($tableDataRow=$view.getTableDataRow($fieldTable, $relatedRowId))
-		         #if ($tableDataRow.size() != 0)
+		         #if ($tableDataRow.size() > 0)
     	     	   <thead>
     		        	<tr><th class="leading">&nbsp;</th>			
     		        	<th>$fieldTable</th>
@@ -78,15 +78,15 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 						   #else
 							 #set($fieldEncountered = $field)
 						   #end
-						   #if(!$fieldsEncountered.containsKey($fieldEncountered))
+						   #if((!$fieldsEncountered.containsKey($fieldEncountered)) || ($numRelatedRows > 1))
 						     #parse("gui/reports_and_tables/tabs/table_data_row.vm")
 							 #set($success = $fieldsEncountered.put($fieldEncountered, true))
 						   #end
 						 #end
                	      #end
 		            #end ## end foreach field in table
+					## Display calculations if there are any in the current report
 					#if($fieldTable.equals($sessionTable))
-						## Display calculations if there are any in the current report
                 		#set($calculationReportFields = [])
                 		#foreach($reportField in $sessionReport.getReportFields())
                 		  #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
