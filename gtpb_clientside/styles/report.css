@@ -18,11 +18,10 @@ table#reportData {
 
 table#reportData th {
   background-color:#f1f2ed; 
-  font-size:11pt; 
+  font-size:10pt; 
   color:black;
   font-weight:bold;
   border:1px solid #cecece;
-  border-bottom: 1px solid #888888;
   padding:7px;
   text-align:left;
   height:30px; 
@@ -30,6 +29,11 @@ table#reportData th {
   cursor:default; 
   background-repeat:no-repeat;
   background-position:right center;
+}
+
+.tab-item table#reportData th {
+  font-size: 11pt;
+  border-bottom: 1px solid #888888;
 }
 
 table#reportData th[onclick]:hover {
