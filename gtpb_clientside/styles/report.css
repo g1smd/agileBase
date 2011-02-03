@@ -34,6 +34,9 @@ table#reportData th {
 .tab-item table#reportData th {
   font-size: 11pt;
   border-bottom: 1px solid #888888;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 
 table#reportData th[onclick]:hover {
