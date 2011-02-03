@@ -37,6 +37,7 @@ import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
+import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
@@ -178,6 +179,10 @@ public class DataRow implements DataRowInfo {
 	
 	public DataRowFieldInfo getValue(BaseField field) {
 		return this.row.get(field);
+	}
+	
+	public DataRowFieldInfo getValue(ReportFieldInfo reportField) {
+		return this.row.get(reportField.getBaseField());
 	}
 	
 	public DataRowFieldInfo getValue(String fieldID) throws ObjectNotFoundException {

@@ -33,7 +33,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 	</div>
 #else
 	#set($fieldsEncountered = {})
-	<table cellspacing=0 cellpadding=0 border=0 #if($mobile_device) id="reportDataView" #else id="reportData" #end>
+	<table cellspacing="0" cellpadding="0" border="0" #if($mobile_device) id="reportDataView" #else id="reportData" #end>
 	  ## NB: session table data used to be here
 		## Show related data
 		#foreach($reportField in $sessionReport.getReportFields())
@@ -59,10 +59,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		         #set($tableDataRow=$view.getTableDataRow($fieldTable, $relatedRowId))
 		         #if ($tableDataRow.size() != 0)
     	     	   <thead>
-    		        	<tr><th class=leading>&nbsp;</th>			
+    		        	<tr><th class="leading">&nbsp;</th>			
     		        	<th>$fieldTable</th>
     		        	<th>&nbsp;</th>			
-    		        	<th class=trailing>&nbsp;</th></tr>			
+    		        	<th class="trailing">&nbsp;</th></tr>			
     		        </thead>
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
@@ -90,20 +90,44 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		       #else
 		   #set($rowCount = $rowCount+1)
            <tr #if($rowCount%2!=0) class=rowa #else class=rowb #end>
-           <td class=leading>&nbsp;</td>
-           <td>$numRelatedRows related records</td>
-           <td>#if($numRelatedRows > 0)not shown #else &nbsp; #end</td>
-           <td class=trailing>&nbsp;</td>
-		</tr>
+             <td class="leading">&nbsp;</td>
+             <td>$numRelatedRows related records</td>
+             <td>#if($numRelatedRows > 0)not shown #else &nbsp; #end</td>
+             <td class="trailing">&nbsp;</td>
+		   </tr>
 		       #end ## end if number of related rows is a manageable amount
 		      #end
 		    #end
 		#end
-		<tr class=trailing>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
+		## Display calculations if there are any in the current report
+		#set($calculationReportFields = [])
+		#foreach($reportField in $sessionReport)
+		  #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
+			#set($success = $calculationReportFields.add($reportField))
+		  #end
+		#end
+		#if($calculationReportFields.size() > 0)
+		  #set($reportFilter = $viewTools.getNewFilterMap())
+		  #set($success = $reportFilter.put($sessionTable.getPrimaryKey(),"$sessionRowId"))
+		  #set($reportDataRows = $view.getReportDataRows($sessionReport, 10, $reportFilter, true))
+		  <tr>
+            <td class="leading">&nbsp;</td>
+			<td colspan="2" id="calculations">
+			  #foreach($reportDataRow in $reportDataRows)
+				#foreach($calcField in $calculationReportFields)
+				  <span class="greytext">$calcField: </span>
+				  $reportDataRow.getValue($calcField.getBaseField())<br>
+				#end
+			  #end
+			</td>
+            <td class="trailing">&nbsp;</td>
+		  </tr>
+		#end
+		<tr class="trailing">
+	      <td>&nbsp;</td>
+		  <td>&nbsp;</td>
+		  <td>&nbsp;</td>
+		  <td>&nbsp;</td>
 		</tr>
 	</table>
 #end

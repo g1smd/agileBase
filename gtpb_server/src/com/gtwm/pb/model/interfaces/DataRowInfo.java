@@ -46,6 +46,8 @@ public interface DataRowInfo {
 	 */
 	public DataRowFieldInfo getValue(BaseField field);
 
+	public DataRowFieldInfo getValue(ReportFieldInfo reportField);
+	
 	/**
 	 * Return the value of a particular field, identified by internal field ID
 	 * or field name
