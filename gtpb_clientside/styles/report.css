@@ -214,7 +214,7 @@ td.calculations {
 
 .separator .fieldname {
   margin-left:-25px;
-  font-size: 11pt;
+  font-size: 10pt;
 }
 
 /* Hide adjacent separators, i.e. ones with no content */
