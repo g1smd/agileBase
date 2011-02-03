@@ -99,8 +99,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
                 		  #set($reportDataRows = $view.getReportDataRows($sessionReport, 10, $reportFilter, true))
                 		  <tr>
                             <td class="leading">&nbsp;</td>
-                			<td class="capitalised printoutfieldnamecolumn greytext">Calculations</td>
-							<td>
+                			<td class="capitalised printoutfieldnamecolumn">Calculations</td>
+							<td class="calculations">
                 			  #foreach($reportDataRow in $reportDataRows)
                 				#foreach($calcField in $calculationReportFields)
                 				  <span class="greytext">$calcField: </span>
