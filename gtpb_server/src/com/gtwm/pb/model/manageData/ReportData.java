@@ -722,7 +722,6 @@ public class ReportData implements ReportDataInfo {
 		}
 		PreparedStatement statement = this.getReportSqlPreparedStatement(conn, filterValues,
 				exactFilters, reportSorts, rowLimit, null);
-		logger.debug("Statement is " + statement);
 		long executionStartTime = System.currentTimeMillis();
 		ResultSet results = statement.executeQuery();
 		float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
