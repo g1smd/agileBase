@@ -40,6 +40,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		  ## don't show fields we've already shown
 		  #set($field = $reportField.getBaseField())
 		  #set($reportFieldTable = $field.getTableContainingField())
+		  $viewTools.log("Report field table is $reportFieldTable")
 		    ## if we have a relation to another table, show that table's data
 		    ## (if it has any related data)
 		    #if($field.equals($reportFieldTable.getPrimaryKey()))
@@ -50,6 +51,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 			   #end
 			 #else
 		       #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $reportFieldTable))
+			   $viewTools.log("Related row IDs: $relatedRowIds")
 		     #end
 			 #set($numRelatedRows = $relatedRowIds.size())
 			 #set($headingDisplayed = false)
@@ -58,6 +60,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		       #if(($numRelatedRows == 1) || (($numRelatedRows * ($reportFieldTable.getFields().size() - 1)) < 30))
 		        #foreach($relatedRowId in $relatedRowIds)
 		         #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
+				 $viewTools.log("Table data row for $reportFieldTable ID $relatedRowId is $tableDataRow")
 		         #if ($tableDataRow.size() > 0)
 				   #if(($numRelatedRows == 1) || (!$headingDisplayed))
 					 #set($headingDisplayed = true)
@@ -84,7 +87,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 						   #end
 						   #if(!$fieldsEncountered.containsKey($fieldEncountered))
 							 #set($rrd_rowId = $relatedRowId) ## For use by input/referenced_report_data.vm
-						     #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+						     $viewTools.log("Parsing data row")
+							 #parse("gui/reports_and_tables/tabs/table_data_row.vm")
 							 #if($numRelatedRows == 1)
 							   #set($success = $fieldsEncountered.put($fieldEncountered, true))
 							 #end
