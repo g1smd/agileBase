@@ -22,6 +22,7 @@
 #end
 
 #set($all_items = $field.getItems())
+Items are $all_items
 #if($all_items.size() > 0) ##if any items in the combo
 	<select class="combo-component" name="$field.getInternalFieldName()_dropdown"
 	#if($globalEdit || !$updateAsType)
