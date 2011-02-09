@@ -33,8 +33,12 @@
 		## Don't show 'please pick one' if field is mandated and filled in
     	<option value="">-- please pick one --</option>
     #end
-    #set($filtered_items = $field.getItems($sessionData.getReport(), $sessionData.getReportFilterValues()))
-    #if($all_items.size() == $filtered_items.size())
+	#if($gtpbPublicTable)
+		#set($filtered_items = $all_items)
+	#else
+		#set($filtered_items = $field.getItems($sessionData.getReport(), $sessionData.getReportFilterValues()))
+    #end
+	#if($all_items.size() == $filtered_items.size())
     	## there are no items filtered
     	#foreach($item in $all_items)
     		#set($washedItem = $viewTools.escape($item))
