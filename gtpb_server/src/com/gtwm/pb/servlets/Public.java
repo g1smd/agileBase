@@ -108,7 +108,6 @@ public class Public extends VelocityViewServlet {
 		ViewToolsInfo viewTools = new ViewTools(request, response, this.webAppRoot);
 		logger.debug("Putting viewTools in context: " + viewTools);
 		context.put("viewTools", viewTools);
-		// template ('return' parameter) *must* be specified
 		if (templateName == null) {
 			logger.error("No template specified.");
 		}
