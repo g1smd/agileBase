@@ -54,7 +54,7 @@ public class Public extends VelocityViewServlet {
 		response.setCharacterEncoding("ISO-8859-1");
 		TableInfo table = null;
 		try {
-			table = getPublicTable(request);
+			table = this.getPublicTable(request);
 		} catch (AgileBaseException abex) {
 			AppController.logException(abex, request, "Error preparing public data");
 		}
@@ -105,15 +105,9 @@ public class Public extends VelocityViewServlet {
 	 */
 	private Template getUserInterfaceTemplate(HttpServletRequest request,
 			HttpServletResponse response, String templateName, Context context) {
-		try {
-			ViewMethodsInfo viewMethods = new ViewMethods(request, this.databaseDefn);
-			context.put("view", viewMethods);
-			ViewToolsInfo viewTools = new ViewTools(request, response, this.webAppRoot);
-			logger.debug("Putting viewTools in context: " + viewTools);
-			context.put("viewTools", viewTools);
-		} catch (ObjectNotFoundException onfex) {
-			AppController.logException(onfex, request, "Error creating view methods object");
-		}
+		ViewToolsInfo viewTools = new ViewTools(request, response, this.webAppRoot);
+		logger.debug("Putting viewTools in context: " + viewTools);
+		context.put("viewTools", viewTools);
 		// template ('return' parameter) *must* be specified
 		if (templateName == null) {
 			logger.error("No template specified.");
