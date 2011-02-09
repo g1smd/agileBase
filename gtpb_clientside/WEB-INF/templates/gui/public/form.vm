@@ -7,8 +7,8 @@
   <table cellspacing="0" cellpadding="0" border="0" id="agilebase_form_table">
 	#set($fields = $table.getFields())
 	  #foreach($field in $fields)
-		## Skip hidden, file and relation fields in the wizard
-		#if(($field.getHidden() == false) && ($field.getClass().getSimpleName() != "FileFieldDefn") && ($field.getClass().getSimpleName() != "RelationFieldDefn"))
+		## Skip certain types of field
+		#if(($field.getHidden() == false) && ($field.getClass().getSimpleName() != "FileFieldDefn") && ($field.getClass().getSimpleName() != "RelationFieldDefn") && ($field.getClass().getSimpleName() != "ReferencedReportDataFieldDefn"))
           #parse("gui/reports_and_tables/tabs/table_data_row.vm")
 		#end
 	#end
