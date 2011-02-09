@@ -17,6 +17,8 @@
 ##
 #if($globalEdit)
   #set($fieldValue = "")
+#else
+  #set($fieldValue = $fieldValue.trim())
 #end
 
 #set($all_items = $field.getItems())
