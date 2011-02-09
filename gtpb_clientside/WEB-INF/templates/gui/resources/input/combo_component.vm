@@ -21,8 +21,6 @@
   #set($fieldValue = $fieldValue.trim())
 #end
 
-ViewTools are $viewTools
-
 #set($all_items = $field.getItems())
 #if($all_items.size() > 0) ##if any items in the combo
 	<select class="combo-component" name="$field.getInternalFieldName()_dropdown"
