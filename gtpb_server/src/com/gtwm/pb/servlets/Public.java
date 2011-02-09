@@ -16,6 +16,7 @@ import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ViewMethodsInfo;
+import com.gtwm.pb.model.interfaces.ViewToolsInfo;
 import com.gtwm.pb.model.manageData.ViewMethods;
 import com.gtwm.pb.model.manageData.ViewTools;
 import com.gtwm.pb.util.AgileBaseException;
@@ -59,7 +60,7 @@ public class Public extends VelocityViewServlet {
 		}
 		String templateName = "gui/public/form";
 		context.put("gtpbPublicTable", table);
-		return getUserInterfaceTemplate(request, response, templateName, context);
+		return this.getUserInterfaceTemplate(request, response, templateName, context);
 	}
 
 	private TableInfo getPublicTable(HttpServletRequest request) throws AgileBaseException {
@@ -107,7 +108,9 @@ public class Public extends VelocityViewServlet {
 		try {
 			ViewMethodsInfo viewMethods = new ViewMethods(request, this.databaseDefn);
 			context.put("view", viewMethods);
-			context.put("viewTools", new ViewTools(request, response, this.webAppRoot));
+			ViewToolsInfo viewTools = new ViewTools(request, response, this.webAppRoot);
+			logger.debug("Putting viewTools in context: " + viewTools);
+			context.put("viewTools", viewTools);
 		} catch (ObjectNotFoundException onfex) {
 			AppController.logException(onfex, request, "Error creating view methods object");
 		}
