@@ -1,0 +1,16 @@
+#set($SQ="'")
+#set($updateAsType = false)
+#set($customAction = true)
+#set($table = $gtpbPublicTable) ## Set in Public servlet
+<form name="agilebase_form" method="post" action="Public.ab">
+  <input type="hidden" name="save_new_record" value="true">
+  <table cellspacing="0" cellpadding="0" border="0" id="agilebase_form_table">
+	#set($fields = $table.getFields())
+	  #foreach($field in $fields)
+		## Skip hidden, file and relation fields in the wizard
+		#if(($field.getHidden() == false) && ($field.getClass().getSimpleName() != "FileFieldDefn") && ($field.getClass().getSimpleName() != "RelationFieldDefn"))
+          #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+		#end
+	#end
+  </table>				
+</form>

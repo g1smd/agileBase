@@ -86,6 +86,25 @@ public final class CalendarPublisher extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException {
+		String getType = request.getParameter("get");
+		if (getType == null) {
+			getType = "cal";
+		}
+		if (getType.equals("cal")) {
+			this.doCalendarGet(request, response);
+		} else {
+			logger.error("Unrecognised get parameter " + getType);
+			throw new ServletException("Unrecognised get parameter " + getType);
+		}
+	}
+
+	private void doFormGet(HttpServletRequest request, HttpServletResponse response)
+	throws ServletException {
+	
+	}
+	
+	private void doCalendarGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException {
 		String internalCompanyName = request.getParameter("c");
 		if (internalCompanyName == null) {
 			throw new ServletException(new MissingParametersException(

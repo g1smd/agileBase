@@ -24,8 +24,8 @@
     #set($referencedReport = $field.getReferencedReport())
     #set($reportBaseFields = $referencedReport.getReportBaseFields())
     #if(!$reportBaseFields.contains($primaryKey))
-      Error: ID field for table $field.getTableContainingField() not found in referenced report $referencedReport
-      #stop
+	  $viewTools.log("Error in report $sessionData.getReport(): ID field for table $field.getTableContainingField() not found in referenced report $referencedReport")
+      <div class="errormessage">Error: ID field for table $field.getTableContainingField() not found in referenced report $referencedReport</div>
 	#end
 	#if(!$rrd_rowId)
 	  #set($rrd_rowId = $sessionData.getRowId())

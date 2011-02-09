@@ -76,6 +76,20 @@
       <url-pattern>/CalendarPublisher.ics</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+      <servlet-name>Public</servlet-name>
+      <description>
+        Serves public data and forms
+      </description>
+      <servlet-class>com.gtwm.pb.servlets.Public</servlet-class>
+      <load-on-startup>0</load-on-startup>
+    </servlet>
+	
+    <servlet-mapping>
+      <servlet-name>Public</servlet-name>
+      <url-pattern>/Public.ab</url-pattern>
+    </servlet-mapping>
+    
 <!--  SSIs replaced by JSP
     <servlet>
         <servlet-name>ssi</servlet-name>
