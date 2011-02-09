@@ -86,6 +86,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	private ViewMethods() {
 		this.request = null;
 		this.databaseDefn = null;
+		this.sessionData = null;
 	}
 
 	/**
@@ -109,9 +110,11 @@ public final class ViewMethods implements ViewMethodsInfo {
 			// call chain all the time
 			this.sessionData = (SessionDataInfo) request.getSession().getAttribute(
 					"com.gtwm.pb.servlets.sessionData");
-			if (sessionData == null) {
+			if (this.sessionData == null) {
 				throw new ObjectNotFoundException("Session data not retrieved");
 			}
+		} else {
+			this.sessionData = null;
 		}
 		this.toolbarPluginName = request.getParameter(ExtraAction.INCLUDE_TOOLBAR_PLUGIN.toString()
 				.toLowerCase(Locale.UK));
@@ -992,7 +995,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	private final HttpServletRequest request;
 
-	private SessionDataInfo sessionData; // Should be final if possible too
+	private final SessionDataInfo sessionData;
 
 	private final DatabaseInfo databaseDefn;
 
