@@ -69,14 +69,13 @@
     	#end
     	</optgroup>
     #end
-    
+    #if(!$gtpbPublicTable)
     	<option value="new-custom-option">-- add new entry --></option>
-    
+    #end
     </select>
-
 #end ## end if any items in the combo
-
-<input type="text" name="$field.getInternalFieldName()"
+#if(!$gtpbPublicTable)
+  <input type="text" name="$field.getInternalFieldName()"
 	#if($globalEdit || !$updateAsType)
 		 id="$field.getInternalFieldName()_text_global-edit"
 	#else
@@ -90,4 +89,5 @@
 	#if($mobile_device && $updateAsType)
 		onblur="top.oBuffer.writeBuffer(this)"
 	#end
->
+  >
+#end
