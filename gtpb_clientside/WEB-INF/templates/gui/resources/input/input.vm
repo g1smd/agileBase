@@ -19,11 +19,13 @@
 
 #if($viewOnly)
   #set($userCanEdit=false)
+#elseif($gtpbPublicTable)
+  #set($userCanEdit=true)
 #elseif($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionData.getTable()))
-	  ## the user is allowed to edit data in the table
-	  #set($userCanEdit=true)
+  ## the user is allowed to edit data in the table
+  #set($userCanEdit=true)
 #else
-	  #set($userCanEdit=false)
+  #set($userCanEdit=false)
 #end
 
 #set($fieldValue="") ##reset fieldValue since last usage
