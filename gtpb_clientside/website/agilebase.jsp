@@ -28,7 +28,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<% } else { %>
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 	    <% } %>
-		<script type="text/javascript" src="/agileBase/website/scripts/flickshow.js">
+		<script type="text/javascript" src="/agileBase/website/scripts/flickrshow.js">
 		<script type="text/javascript">
 			google.load("feeds", "1");
     		function  loadFeedControl() {
