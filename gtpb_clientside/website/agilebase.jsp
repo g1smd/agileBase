@@ -145,8 +145,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				<div class="wrapper">
 					<div class="content"> 
 					  <div id="detail_right">
-							<object width="300" height="320"> <param name="flashvars" value="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Foliverkohll%2Fsets%2F72157626016953570%2Fshow%2F&page_show_back_url=%2Fphotos%2Foliverkohll%2Fsets%2F72157626016953570%2F&set_id=72157626016953570&jump_to="></param> <param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=71649"></param> <param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=71649" allowFullScreen="true" flashvars="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Foliverkohll%2Fsets%2F72157626016953570%2Fshow%2F&page_show_back_url=%2Fphotos%2Foliverkohll%2Fsets%2F72157626016953570%2F&set_id=72157626016953570&jump_to=" width="300" height="320"></embed></object>
-						</div>
+						<div id="screenshots"></div>
+					  </div>
 						<div id="main" class="detail">
 							<div class="divider">
 								<iframe class="youtube-player" type="text/html" width="500" height="232" src="http://www.youtube.com/embed/HH_RRD7oqvQ" frameborder="0"></iframe>
