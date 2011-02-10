@@ -20,11 +20,6 @@
 			//}
 			// focus the 'username' box for logging in
 			$("#j_username").focus();
-			try {
-				// start the RSS headlines from blog
-				google.setOnLoadCallback(loadFeedControl);
-			} catch(err) {
-			}
 			// test for iPhone
 			if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) {
 				if(document.location.href.indexOf("mobile") == -1) {
