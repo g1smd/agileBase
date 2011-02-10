@@ -484,7 +484,7 @@ body {
 }
 
 /* Block quotes */
-#quotes {
+#quotes * {
 	font-family: "Pigiarniq", tahoma, arial, sans-serif;
 	color: #bbbbbb;
 }
