@@ -30,6 +30,11 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 	    <% } %>
 		<script type="text/javascript">
 			google.load("feeds", "1");
+			try {
+				// start the RSS headlines from blog
+				google.setOnLoadCallback(loadFeedControl);
+			} catch(err) {
+			}
 		</script>
 		<script type="text/javascript" src="/agileBase/website/scripts/ab.js"></script>
 		<style>
