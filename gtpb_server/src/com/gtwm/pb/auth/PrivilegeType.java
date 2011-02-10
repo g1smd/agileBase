@@ -31,9 +31,9 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 public enum PrivilegeType {
     // The list of privileges this application recognises, defined in order of increasing privilege - this is
     // important as it allows the app to compare privilege levels
-    VIEW_TABLE_DATA("Lets a user view (not edit) data", TableInfo.class), EDIT_TABLE_DATA("Lets a user edit / delete data", TableInfo.class), MANAGE_TABLE(
-            "Lets a user edit a table - add & remove fields etc.", TableInfo.class), ADMINISTRATE(
-            "Allows users to give themselves any other privilege they like"), MASTER("Allows user to create & manage companies");
+    VIEW_TABLE_DATA("view data", TableInfo.class), EDIT_TABLE_DATA("edit / delete data", TableInfo.class), MANAGE_TABLE(
+            "manage structure - add, remove fields etc.", TableInfo.class), ADMINISTRATE(
+            "give themselves any other privilege they like"), MASTER("create and manage companies");
 
     private Boolean objectSpecificPrivilege;
 

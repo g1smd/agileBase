@@ -83,7 +83,7 @@ public interface DatabaseInfo {
 	 *             of users
 	 */
 	public void updateTable(Connection conn, HttpServletRequest request, TableInfo table,
-			String newTableName, String newTableDesc, Boolean lockable) throws DisallowedException,
+			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic) throws DisallowedException,
 			CantDoThatException, ObjectNotFoundException, SQLException;
 
 	/**

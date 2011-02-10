@@ -156,5 +156,12 @@ public interface TableInfo extends Comparable<TableInfo> {
 	public void setRecordsLockable(Boolean lockable);
 
 	public Boolean getRecordsLockable();
+	
+	public void setTableFormPublic(boolean tableFormPublic);
+	
+	/**
+	 * Return true if new records can be created by non-logged-in users via a public form
+	 */
+	public boolean getTableFormPublic();
 
 }

@@ -1,5 +1,7 @@
 package com.gtwm.pb.servlets;
 
+import java.util.EnumSet;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +22,11 @@ import com.gtwm.pb.model.interfaces.ViewToolsInfo;
 import com.gtwm.pb.model.manageData.ViewMethods;
 import com.gtwm.pb.model.manageData.ViewTools;
 import com.gtwm.pb.util.AgileBaseException;
+import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.Enumerations.PublicAction;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
+import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.ResponseReturnType;
 
 /**
@@ -52,18 +57,30 @@ public class Public extends VelocityViewServlet {
 		ResponseReturnType responseReturnType = ResponseReturnType.HTML;
 		response.setContentType(responseReturnType.getResponseType());
 		response.setCharacterEncoding("ISO-8859-1");
-		TableInfo table = null;
-		try {
-			table = this.getPublicTable(request);
-		} catch (AgileBaseException abex) {
-			AppController.logException(abex, request, "Error preparing public data");
+		EnumSet<PublicAction> publicActions = EnumSet.allOf(PublicAction.class);
+		String templateName = null;
+		for (PublicAction publicAction : publicActions) {
+			String appActionValue = request.getParameter(publicAction.toString().toLowerCase());
+			if (appActionValue != null) {
+				switch(publicAction) {
+				case SHOW_FORM:
+					TableInfo table = null;
+					try {
+						table = this.getPublicTable(request);
+					} catch (AgileBaseException abex) {
+						AppController.logException(abex, request, "Error preparing public form");
+					}
+					context.put("gtpbPublicTable", table);
+					templateName = "gui/public/form";
+					break;
+				}
+			}
 		}
-		String templateName = "gui/public/form";
-		context.put("gtpbPublicTable", table);
 		return this.getUserInterfaceTemplate(request, response, templateName, context);
 	}
 
-	private TableInfo getPublicTable(HttpServletRequest request) throws AgileBaseException {
+	private TableInfo getPublicTable(HttpServletRequest request) throws ObjectNotFoundException,
+			MissingParametersException, CantDoThatException {
 		String internalCompanyName = request.getParameter("c");
 		if (internalCompanyName == null) {
 			throw new MissingParametersException("c (internal company ID) parameter is necessary");
@@ -75,22 +92,20 @@ public class Public extends VelocityViewServlet {
 		String userName = "publicform";
 		String forename = "Public";
 		String surname = "Form";
-		try {
-			AppUserInfo publicUser = new PublicUser(this.databaseDefn.getAuthManager()
-					.getAuthenticator(), internalCompanyName, userName, surname, forename);
-			CompanyInfo company = publicUser.getCompany();
-			TableInfo table = null;
-			TABLE_LOOP: for (TableInfo testTable : company.getTables()) {
-				if (testTable.getInternalTableName().equals(internalTableName)) {
-					return testTable;
+		AppUserInfo publicUser = new PublicUser(this.databaseDefn.getAuthManager()
+				.getAuthenticator(), internalCompanyName, userName, surname, forename);
+		CompanyInfo company = publicUser.getCompany();
+		TableInfo table = null;
+		for (TableInfo testTable : company.getTables()) {
+			if (testTable.getInternalTableName().equals(internalTableName)) {
+				if (!testTable.getTableFormPublic()) {
+					throw new CantDoThatException("The table " + testTable + " has not been set for use as a public form");
 				}
+				return testTable;
 			}
-			throw new ObjectNotFoundException("Table with ID " + internalTableName
-					+ " not found in company " + company);
-		} catch (AgileBaseException abex) {
-			logger.error("Error getting table: " + abex);
-			throw abex;
 		}
+		throw new ObjectNotFoundException("Table with ID " + internalTableName
+				+ " not found in company " + company);
 	}
 
 	/**

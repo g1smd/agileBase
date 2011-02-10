@@ -33,33 +33,35 @@
       <input type="checkbox" name="lockable" gtpb_update_table #if($table.getRecordsLockable()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$table.getInternalTableName()" gtpb_internaltablename="$table.getInternalTableName()">
 	  Records lockable<br>
 	  <span class="greytext" style="font-size:8pt">Allow custom actions (such as 'print invoice') to lock records against future editing</span><p>
+      <input type="checkbox" name="tableformpublic" gtpb_update_table #if($table.getTableFormPublic()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$table.getInternalTableName()" gtpb_internaltablename="$table.getInternalTableName()">
+	  Public data entry<br>
+	  <span class="greytext" style="font-size:8pt">Publish a form which the general public can use to enter data</span><p>
       <!-- table deletion button -->
 	<input type=button value="Delete Table" #if($view.loggedInUserAllowedTo('ADMINISTRATE')) onclick="top.location='AppController.servlet?return=gui/display_application&remove_table=true&internaltablename=$table.getInternalTableName()'" #else disabled=true #end>
     </td>
 	<td class="table_details" style="background-color:#f4f4f4">
-<form method="POST" action="AppController.servlet" target="pane_1">
-	<input type="hidden" name="return" value="gui/pane1">
-	<input type="hidden" name="add_report" value="true">
-	<input type="hidden" name="set_custom_string" value="true">
-	<input type="hidden" name="key" value="report_tabindex">
-	<input type="hidden" name="value" value="6">		
-	<input type="submit" value="Create new report"><br>
-	<input type="checkbox" checked name="populatereport" value="true"> Populate the report with fields from this table (recommended)
-</form>
-<p>
-#if($table.getReports().size() > 1)
-  A list of existing reports based on this table:<p>
-  <ul>
-  #foreach($tableReport in $table.getReports())
-	#if(!$tableReport.equals($table.getDefaultReport()))
-		<li>#if($tableReport.getModule())$tableReport.getModule() - #end $tableReport</li>
-	#end
-  #end
-#else
-  Create a report to allow data entry into this table as well as data analysis and filtering
-#end
-  </ul>
-
+      <form method="POST" action="AppController.servlet" target="pane_1">
+    	<input type="hidden" name="return" value="gui/pane1">
+    	<input type="hidden" name="add_report" value="true">
+    	<input type="hidden" name="set_custom_string" value="true">
+    	<input type="hidden" name="key" value="report_tabindex">
+    	<input type="hidden" name="value" value="6">		
+    	<input type="submit" value="Create new report"><br>
+    	<input type="checkbox" checked name="populatereport" value="true"> Populate the report with fields from this table (recommended)
+      </form>
+      <p>
+      #if($table.getReports().size() > 1)
+        A list of existing reports based on this table:<p>
+        <ul>
+        #foreach($tableReport in $table.getReports())
+      	  #if(!$tableReport.equals($table.getDefaultReport()))
+    		<li>#if($tableReport.getModule())$tableReport.getModule() - #end $tableReport</li>
+    	  #end
+        #end
+        </ul>
+      #else
+        Create a report to allow data entry into this table as well as data analysis and filtering
+      #end
 	</td>
   </tr>
 </table>

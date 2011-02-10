@@ -27,12 +27,12 @@ import com.gtwm.pb.util.AgileBaseException;
 public class DisallowedException extends AgileBaseException {
 
     public DisallowedException(PrivilegeType privilegeType) {
-        super("User is not allowed to " + privilegeType.toString());
+        super("User is not allowed to " + privilegeType.getPrivilegeDescription());
         this.privilegeType = privilegeType;
     }
     
     public DisallowedException(PrivilegeType privilegeType, TableInfo table) {
-        super("User is not allowed to " + privilegeType.toString() + " on data source '" + table.getTableName() + "'");
+        super("User is not allowed to " + privilegeType.getPrivilegeDescription() + " in table '" + table.getTableName() + "'. An administrator can set up privileges so this can be allowed");
         this.privilegeType = privilegeType;
         this.table = table;
     }
