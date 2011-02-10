@@ -27,10 +27,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 			google.load("feeds", "1");
 		</script>
         <% if(ssl) { %>
-			<script src="https://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 			<script src="https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 		<% } else { %>
-		    <script src="http://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 	    <% } %>
 		<script type="text/javascript" src="/agileBase/website/scripts/ab.js"></script>
