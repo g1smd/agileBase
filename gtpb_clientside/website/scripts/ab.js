@@ -36,13 +36,6 @@
 			//}
 			// focus the 'username' box for logging in
 			$("#j_username").focus();
-			try {
-				// start the RSS headlines from blog
-				google.setOnLoadCallback(loadFeedControl);
-				// start the RSS screenshots from flickr
-				google.setOnLoadCallback(LoadSlideShow);
-			} catch(err) {
-			}
 			// test for iPhone
 			if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) {
 				if(document.location.href.indexOf("mobile") == -1) {
@@ -75,3 +68,11 @@
 			$("#" + sectionName).fadeIn("fast");
 		}
 
+		// Google stuff outside of jquery document.ready
+		try {
+			// start the RSS headlines from blog
+			google.setOnLoadCallback(loadFeedControl);
+			// start the RSS screenshots from flickr
+			google.setOnLoadCallback(LoadSlideShow);
+		} catch(err) {
+		}
