@@ -489,11 +489,14 @@ body {
 }
 #quotes * {
 	font-family: "Pigiarniq", tahoma, arial, sans-serif;
+	font-style: italic;
 }
 
 .bqstart {
      float: left;
-     font-size: 700%;
+     font-size: 200pt;
+     margin-top: 65pt;
+     opacity: 0.5;
  }
 
 
