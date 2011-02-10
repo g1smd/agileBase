@@ -22,7 +22,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="/agileBase/website/scripts/thickbox.js"></script>
-		<script type="text/javascript" src="/agileBase/website/scripts/flickrshow.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"</script>
 		<script type="text/javascript">
 			google.load("feeds", "1");
@@ -129,8 +128,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				<div class="wrapper">
 					<div class="content"> 
 					  <div id="detail_right">
-							<div id="screenshots"><!-- populated by JavaScript slideshow --></div>
-						</div>
+<iframe align="center" src="http://www.flickr.com/slideShow/index.gne?set_id=72157626016953570" frameBorder="0" width="330" scrolling="no" height="200"></iframe>						</div>
 						<div id="main" class="detail">
 							<div class="divider">
 								<iframe class="youtube-player" type="text/html" width="500" height="232" src="http://www.youtube.com/embed/HH_RRD7oqvQ" frameborder="0"></iframe>
