@@ -10,22 +10,6 @@
 			var fg = new GFdynamicFeedControl(feed, "announce", options);
 		}
 
-		function LoadSlideShow() {
-			// test known to work: http://feed.photobucket.com/images/sunsets/feed.rss
-			// flickr: http://api.flickr.com/services/feeds/photoset.gne?set=72157615624584156&nsid=36549361@N06&lang=en-us
-				var screenshotfeed  = "http://picasaweb.google.com/data/feed/base/user/oliver.kohll/albumid/5315354509188522353?alt=rss&kind=photo&hl=en_US";
-				var options = {
-						displayTime: 17000,
-						transistionTime: 500,
-						scaleImages: false,
-						maintainAspectRatio: true,
-						linkTarget: google.feeds.LINK_TARGET_BLANK,
-						thumbnailSize : GFslideShow.THUMBNAILS_LARGE,
-						pauseOnHover : false
-				};
-				var ss = new GFslideShow(screenshotfeed, "screenshots", options);
-		}
-
 		$(document).ready(function(){
 			// frame buster needed as we may be in one of the agileBase application panes after a login timeout
 			if(top != self) {
@@ -39,8 +23,6 @@
 			try {
 				// start the RSS headlines from blog
 				google.setOnLoadCallback(loadFeedControl);
-				// start the RSS screenshots from flickr
-				google.setOnLoadCallback(LoadSlideShow);
 			} catch(err) {
 			}
 			// test for iPhone
