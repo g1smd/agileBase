@@ -22,7 +22,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="/agileBase/website/scripts/thickbox.js"></script>
-		<script type="text/javascript" src="<%= googleKey %>"</script>
+		<script type="text/javascript" src="<%= googleKey %>"></script>
         <% if(ssl) { %>
 			<script src="https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 		<% } else { %>
