@@ -24,10 +24,15 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<script type="text/javascript" src="/agileBase/website/scripts/thickbox.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"></script>
         <% if(ssl) { %>
+			<script src="https://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 			<script src="https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 		<% } else { %>
+		    <script src="http://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 	    <% } %>
+		<script type="text/javascript">
+			google.load("feeds", "1");
+		</script>
 		<script type="text/javascript" src="/agileBase/website/scripts/ab.js"></script>
 		<style>
 		/* Google RSS stylesheet */
@@ -119,27 +124,13 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 					<li><a href="javascript:showSection('technical');" id="nav_technical"><span>technical</span></a>
 					<li id="li_analyst"><a href="javascript:showSection('analyst');" id="nav_analyst"><span>analyst</span></a>
 				</ul>
-		<script type="text/javascript">
-    		function loadFeedControl() {
-    			var feed  = "http://blog.agilebase.co.uk/?feed=rss2";
-    				var options = {
-    				numResults : 6,
-    						displayTime : 15000,
-    						title : "<a href='http://blog.agilebase.co.uk'>announcements</a>",
-    						linkTarget : google.feeds.LINK_TARGET_SELF
-    				};
-    			var fg = new GFdynamicFeedControl(feed, "announce", options);
-    		}
-			google.load("feeds", "1");
-			google.setOnLoadCallback(loadFeedControl);
-		</script>
 				<div id="announce"><!-- populated by JavaScript RSS feed --></div>
 				</div>   <!-- end content -->
 			</div> <!-- end wrapper -->
 				<div class="wrapper">
 					<div class="content"> 
 					  <div id="detail_right">
-						<iframe align="center" src="http://www.flickr.com/slideShow/index.gne?set_id=72157626016953570" frameBorder="0" width="330" scrolling="no" height="350"></iframe>
+							<div id="screenshots"><!-- populated by JavaScript slideshow --></div>
 						</div>
 						<div id="main" class="detail">
 							<div class="divider">
