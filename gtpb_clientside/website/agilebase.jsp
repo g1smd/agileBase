@@ -37,20 +37,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		@import url("/agileBase/website/styles/styles.css");
 		@import url("/agileBase/website/styles/fonts.css");
 		</style>
-		<script type="text/javascript">
-    		function loadFeedControl() {
-    			var feed  = "http://blog.agilebase.co.uk/?feed=rss2";
-    				var options = {
-    				numResults : 6,
-    						displayTime : 15000,
-    						title : "<a href='http://blog.agilebase.co.uk'>announcements</a>",
-    						linkTarget : google.feeds.LINK_TARGET_SELF
-    				};
-    			var fg = new GFdynamicFeedControl(feed, "announce", options);
-    		}
-			google.load("feeds", "1");
-			google.setOnLoadCallback(loadFeedControl);
-		</script>
 	</head>
 	<body>
 	<div id="scroller">
@@ -133,6 +119,20 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 					<li><a href="javascript:showSection('technical');" id="nav_technical"><span>technical</span></a>
 					<li id="li_analyst"><a href="javascript:showSection('analyst');" id="nav_analyst"><span>analyst</span></a>
 				</ul>
+		<script type="text/javascript">
+    		function loadFeedControl() {
+    			var feed  = "http://blog.agilebase.co.uk/?feed=rss2";
+    				var options = {
+    				numResults : 6,
+    						displayTime : 15000,
+    						title : "<a href='http://blog.agilebase.co.uk'>announcements</a>",
+    						linkTarget : google.feeds.LINK_TARGET_SELF
+    				};
+    			var fg = new GFdynamicFeedControl(feed, "announce", options);
+    		}
+			google.load("feeds", "1");
+			google.setOnLoadCallback(loadFeedControl);
+		</script>
 				<div id="announce"><!-- populated by JavaScript RSS feed --></div>
 				</div>   <!-- end content -->
 			</div> <!-- end wrapper -->
