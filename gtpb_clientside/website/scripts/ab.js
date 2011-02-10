@@ -75,4 +75,5 @@
 			// start the RSS screenshots from flickr
 			google.setOnLoadCallback(LoadSlideShow);
 		} catch(err) {
+			alert(err);
 		}
