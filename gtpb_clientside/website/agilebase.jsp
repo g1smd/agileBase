@@ -22,6 +22,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="/agileBase/website/scripts/thickbox.js"></script>
+		<script type="text/javascript" src="/agileBase/website/scripts/flickrshow.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"</script>
 		<script type="text/javascript">
 			google.load("feeds", "1");
