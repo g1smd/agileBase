@@ -29,12 +29,18 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 	    <% } %>
 		<script type="text/javascript">
+    		function loadFeedControl() {
+    			var feed  = "http://blog.agilebase.co.uk/?feed=rss2";
+    				var options = {
+    				numResults : 6,
+    						displayTime : 15000,
+    						title : "<a href='http://blog.agilebase.co.uk'>announcements</a>",
+    						linkTarget : google.feeds.LINK_TARGET_SELF
+    				};
+    			var fg = new GFdynamicFeedControl(feed, "announce", options);
+    		}
 			google.load("feeds", "1");
-			try {
-				// start the RSS headlines from blog
-				google.setOnLoadCallback(loadFeedControl);
-			} catch(err) {
-			}
+			google.setOnLoadCallback(loadFeedControl);
 		</script>
 		<script type="text/javascript" src="/agileBase/website/scripts/ab.js"></script>
 		<style>

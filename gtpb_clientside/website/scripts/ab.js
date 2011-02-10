@@ -1,15 +1,4 @@
 
-		function  loadFeedControl() {
-			var feed  = "http://blog.agilebase.co.uk/?feed=rss2";
-				var options = {
-				numResults : 6,
-						displayTime : 15000,
-						title : "<a href='http://blog.agilebase.co.uk'>announcements</a>",
-						linkTarget : google.feeds.LINK_TARGET_SELF
-				};
-			var fg = new GFdynamicFeedControl(feed, "announce", options);
-		}
-
 		$(document).ready(function(){
 			// frame buster needed as we may be in one of the agileBase application panes after a login timeout
 			if(top != self) {
