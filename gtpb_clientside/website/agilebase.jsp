@@ -28,6 +28,15 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<% } else { %>
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 	    <% } %>
+		<script type="text/javascript" src="/agileBase/website/scripts/ab.js"></script>
+		<style>
+		/* Google RSS stylesheet */
+		@import url("/agileBase/website/styles/gfdynamicfeedcontrol.css");
+		@import url("/agileBase/website/styles/thickbox.css");
+		@import url("/agileBase/website/styles/thickbox_override.css");
+		@import url("/agileBase/website/styles/styles.css");
+		@import url("/agileBase/website/styles/fonts.css");
+		</style>
 		<script type="text/javascript">
     		function loadFeedControl() {
     			var feed  = "http://blog.agilebase.co.uk/?feed=rss2";
@@ -42,15 +51,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 			google.load("feeds", "1");
 			google.setOnLoadCallback(loadFeedControl);
 		</script>
-		<script type="text/javascript" src="/agileBase/website/scripts/ab.js"></script>
-		<style>
-		/* Google RSS stylesheet */
-		@import url("/agileBase/website/styles/gfdynamicfeedcontrol.css");
-		@import url("/agileBase/website/styles/thickbox.css");
-		@import url("/agileBase/website/styles/thickbox_override.css");
-		@import url("/agileBase/website/styles/styles.css");
-		@import url("/agileBase/website/styles/fonts.css");
-		</style>
 	</head>
 	<body>
 	<div id="scroller">
