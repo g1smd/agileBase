@@ -484,9 +484,11 @@ body {
 }
 
 /* Block quotes */
+#quotes {
+	color: #bbbbbb;
+}
 #quotes * {
 	font-family: "Pigiarniq", tahoma, arial, sans-serif;
-	color: #bbbbbb;
 }
 
 .bqstart {
