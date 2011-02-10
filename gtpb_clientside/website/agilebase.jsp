@@ -25,10 +25,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<script type="text/javascript" src="<%= googleKey %>"</script>
         <% if(ssl) { %>
 			<script src="https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
-			<script src="https://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 		<% } else { %>
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
-		    <script src="http://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 	    <% } %>
 		<script type="text/javascript">
 			google.load("feeds", "1");
@@ -42,34 +40,12 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
     				};
     			var fg = new GFdynamicFeedControl(feed, "announce", options);
     		}
-    
-    		function loadSlideShow() {
-    			// test known to work: http://feed.photobucket.com/images/sunsets/feed.rss
-    			// flickr: http://api.flickr.com/services/feeds/photoset.gne?set=72157615624584156&nsid=36549361@N06&lang=en-us
-    				var screenshotfeed  = "http://picasaweb.google.com/data/feed/base/user/oliver.kohll/albumid/5315354509188522353?alt=rss&kind=photo&hl=en_US";
-    				var options = {
-    						displayTime: 17000,
-    						transistionTime: 500,
-    						scaleImages: false,
-    						maintainAspectRatio: true,
-    						linkTarget: google.feeds.LINK_TARGET_BLANK,
-    						thumbnailSize : GFslideShow.THUMBNAILS_LARGE,
-    						pauseOnHover : false
-    				};
-    				var ss = new GFslideShow(screenshotfeed, "screenshots", options);
-    		}
-    		
-    		function loadBoth() {
-				loadSlideShow();
-				loadFeedControl();
-			}
 			
     		try {
     			// start the RSS headlines from blog
     			// start the RSS screenshots from flickr
-    			google.setOnLoadCallback(loadBoth);
+    			google.setOnLoadCallback(loadFeedControl);
     		} catch(err) {
-    			alert(err);
     		}
 		</script>
 		<script type="text/javascript" src="/agileBase/website/scripts/ab.js"></script>
@@ -169,7 +145,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				<div class="wrapper">
 					<div class="content"> 
 					  <div id="detail_right">
-							<div id="screenshots"><!-- populated by JavaScript slideshow --></div>
+							<object width="300" height="320"> <param name="flashvars" value="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Foliverkohll%2Fsets%2F72157626016953570%2Fshow%2F&page_show_back_url=%2Fphotos%2Foliverkohll%2Fsets%2F72157626016953570%2F&set_id=72157626016953570&jump_to="></param> <param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=71649"></param> <param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=71649" allowFullScreen="true" flashvars="offsite=true&lang=en-us&page_show_url=%2Fphotos%2Foliverkohll%2Fsets%2F72157626016953570%2Fshow%2F&page_show_back_url=%2Fphotos%2Foliverkohll%2Fsets%2F72157626016953570%2F&set_id=72157626016953570&jump_to=" width="300" height="320"></embed></object>
 						</div>
 						<div id="main" class="detail">
 							<div class="divider">
