@@ -130,6 +130,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				<div class="wrapper">
 					<div class="content"> 
 					  <div id="detail_right">
+							<div id="quotes">
+								<span class="bqstart">&#8220;</span>"Test quote"<span class="bqend">&#8221;</span>
+							</div>
 							<div id="screenshots"><!-- populated by JavaScript slideshow --></div>
 						</div>
 						<div id="main" class="detail">
