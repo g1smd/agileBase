@@ -385,12 +385,20 @@ public class TableDefn implements TableInfo {
 		return this.primaryKeyField;
 	}
 
-	public synchronized void setRecordsLockable(Boolean lockable) {
+	public void setRecordsLockable(Boolean lockable) {
 		this.lockable = lockable;
 	}
 
-	public synchronized Boolean getRecordsLockable() {
+	public Boolean getRecordsLockable() {
 		return this.lockable;
+	}
+	
+	public void setTableFormPublic(boolean tableFormPublic) {
+		this.tableFormPublic = tableFormPublic;
+	}
+	
+	public boolean getTableFormPublic() {
+		return this.tableFormPublic;
 	}
 
 	public String toString() {
@@ -412,6 +420,8 @@ public class TableDefn implements TableInfo {
 	private BaseField primaryKeyField = null;
 
 	private boolean lockable = false;
+	
+	private boolean tableFormPublic = false;
 
 	private static final SimpleLogger logger = new SimpleLogger(TableDefn.class);
 }

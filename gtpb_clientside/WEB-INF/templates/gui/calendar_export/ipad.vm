@@ -15,3 +15,23 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<request>
+  #parse('gui/customisations/wizard_result.vm')
+  <okTemplate>gui/calendar_export/calendar_export_ok</okTemplate>
+  <htmlContent><![CDATA[        
+        <form style="padding:10px;">
+          <h1>Setup instructions</h1>
+		  Once you've carried out these steps once, you won't need to again. The device will keep itself up to date automatically.
+		  <ol>
+		    <li>
+			  Email this link to the iPad/iPhone:<br>
+		      #parse("gui/calendar_export/calc_calendar_url.vm")
+		      <a href="mailto:&subject=Calendar&body=$calendarUrl">$calendarUrl</a>
+ 			</li>
+			<li>Just tap the link in the email on the device to import the calendar</li>
+		  </ol>
+        </form>
+    ]]>
+  </htmlContent>  
+  <caption>Export report data to iPad/iPhone</caption>
+</request>

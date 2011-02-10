@@ -23,9 +23,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="/agileBase/website/scripts/thickbox.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"</script>
-		<script type="text/javascript">
-			google.load("feeds", "1");
-		</script>
         <% if(ssl) { %>
 			<script src="https://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 			<script src="https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
@@ -33,6 +30,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		    <script src="http://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 	    <% } %>
+		<script type="text/javascript">
+			google.load("feeds", "1");
+		</script>
 		<script type="text/javascript" src="/agileBase/website/scripts/ab.js"></script>
 		<style>
 		/* Google RSS stylesheet */
