@@ -24,11 +24,11 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<script type="text/javascript" src="/agileBase/website/scripts/thickbox.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"</script>
         <% if(ssl) { %>
-			<script src="https://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 			<script src="https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
+			<script src="https://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 		<% } else { %>
-		    <script src="http://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
+		    <script src="http://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 	    <% } %>
 		<script type="text/javascript">
 			google.load("feeds", "1");
