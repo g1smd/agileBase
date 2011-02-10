@@ -28,6 +28,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<% } else { %>
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 	    <% } %>
+		<script type="text/javascript" src="/agileBase/website/scripts/flickshow.js">
 		<script type="text/javascript">
 			google.load("feeds", "1");
     		function  loadFeedControl() {
@@ -43,7 +44,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 			
     		try {
     			// start the RSS headlines from blog
-    			// start the RSS screenshots from flickr
     			google.setOnLoadCallback(loadFeedControl);
     		} catch(err) {
     		}
