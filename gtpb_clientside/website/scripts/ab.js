@@ -48,6 +48,14 @@
 			$(".just_tooltip").mouseout(function() {
 				$(this).fadeOut();
 			});
+	        var screenshots = new flickrshow('screenshots', {
+	            'autoplay':true,
+	            'hide_buttons':true,
+	            'interval':5000,
+	            'page':1,
+	            'per_page':20,
+	            'user':'okohll'
+	        });
 		}); 
 
 		function showSection(sectionName) {
