@@ -44,12 +44,12 @@
   <div id="selection">
     ## Create a collection $moduleReports: each module maps to an array of reports
     #parse("gui/resources/calc_module_reports.vm")
-	<h1>Module reports are $moduleReports</h1>
     #if($moduleReports.size() > 0)
     #set($hiddenReports = $user.getHiddenReports())
     #foreach($module in $moduleReports.keySet())
 	  <h1>Module is $module</h1>
 	  #set($visibleModuleReports = $moduleReports.get($module))
+	  <h1>Visible module reports are $visibleModuleReports</h1>
 	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
 	  #if($visibleModuleReports.size() > 0)
     	#set($internalModuleName = $module.getInternalModuleName())
