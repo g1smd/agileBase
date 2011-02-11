@@ -23,7 +23,7 @@
             right:  'today prev,next'
 		}
     });
-	jQuery("#report_selector").mouseOver(function() {
+	jQuery("#report_selector").mouseenter(function() {
 	  jQuery(this).height("100%");
 	});
   });
