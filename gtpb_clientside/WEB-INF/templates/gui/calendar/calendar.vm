@@ -15,14 +15,17 @@
   <script src="resources/fullcalendar/jquery-ui-custom.js" language="Javascript"></script>
   <script src="resources/fullcalendar/fullcalendar.js" language="Javascript"></script>
   <script language="JavaScript">
-  $(document).ready(function() {
-    $('#calendar').fullCalendar({
+  jQuery(document).ready(function() {
+    jQuery('#calendar').fullCalendar({
         header: {
             left:   'title',
             center: 'month,agendaWeek,agendaDay',
             right:  'today prev,next'
 		}
-    })
+    });
+	jQuery("#report_selector").mouseOver(function() {
+	  jQuery(this).height("100%");
+	});
   });
   </script>
   <style>
@@ -46,6 +49,7 @@
     ## Create a collection $moduleReports: each module maps to an array of reports
     #parse("gui/resources/calc_module_reports.vm")
     #if($moduleReports.size() > 0)
+		<ul>
         #set($hiddenReports = $user.getHiddenReports())
         #foreach($module in $moduleReports.keySet())
     	  #set($visibleModuleReports = $moduleReports.get($module))
@@ -67,6 +71,7 @@
         	</li>
           #end
     	#end ## end loop through modules
+		</ul>
 	#end ## end if there are any modules visible
   </div>
 </div>
