@@ -44,6 +44,8 @@
   <div id="selection">
     ## Create a collection $moduleReports: each module maps to an array of reports
     #parse("gui/resources/calc_module_reports.vm")
+	<h1>Module reports are $moduleReports</h1>
+    #if($moduleReports.size() > 0)
     #set($hiddenReports = $user.getHiddenReports())
     #foreach($module in $moduleReports.keySet())
 	  <h1>Module is $module</h1>
@@ -70,6 +72,7 @@
     	</li>
       #end
 	#end ## end loop through modules
+	#end ## end if there are any modules visible
   </div>
 </div>
 <div id="calendar"></div>
