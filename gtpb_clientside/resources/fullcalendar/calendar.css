@@ -5,3 +5,8 @@ body {
 #calendar {
   margin: 1em;
 }
+
+#report_selection {
+  height: 100%;
+  overflow: hidden;
+}

@@ -42,7 +42,7 @@
     	</a>
     </div>
   </div>
-  <div id="selection">
+  <div id="report_selection">
     ## Create a collection $moduleReports: each module maps to an array of reports
     #parse("gui/resources/calc_module_reports.vm")
     #if($moduleReports.size() > 0)
@@ -60,11 +60,7 @@
         	  #foreach($report in $visibleModuleReports) 
         		#set($table=$report.getParentTable())
         		<li id="$table.getInternalTableName()$report.getInternalReportName()">
-        		  <div class="module-tree-item-wrap">
-        			<a href="AppController.servlet?return=$pane2_template&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()&set_report_row_limit=$reportRowLimit&clear_all_report_sorts=true&set_module=$module.getInternalModuleName()&cachebust=$viewTools.getRandomString()" #if(!$mobile_device)target="pane_2" class="report_tooltip" rel="AppController.servlet?return=gui/reports_and_tables/report_tooltip&set_custom_report=true&reportkey=tooltip_report&custominternalreportname=$report.getInternalReportName()"#end >
-        				$report
-        			</a>
-        		  </div>
+        		  <div class="module-tree-item-wrap">$report</div>
         		</li>
         	  #end ## end of loop through reports in a module
         	  </ul>
