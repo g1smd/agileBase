@@ -8,6 +8,7 @@
     $company calendar
   </title>
   <link type="text/css" href="resources/fullcalendar/fullcalendar.css" rel="stylesheet" />
+  <link type="text/css" href="customisations/common/dashboard/dashboard.css" rel="stylesheet" />
   <script src="resources/jquery.js" language="Javascript"></script>
   <script src="resources/fullcalendar/jquery-ui-custom.js" language="Javascript"></script>
   <script src="resources/fullcalendar/fullcalendar.js" language="Javascript"></script>
