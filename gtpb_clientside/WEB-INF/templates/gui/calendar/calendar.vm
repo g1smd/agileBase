@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
+#set($company=$view.getLoggedInUser().getCompany())
+<html>
+<head>
+  <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+  <title>
+    $company calendar
+  </title>
+  <link type="text/css" href="resources/fullcalendar/fullcalendar.css" rel="stylesheet" />
+  <script src="resources/jquery.js" language="Javascript"></script>
+  <script src="resources/fullcalendar/jquery-ui-custom.js" language="Javascript"></script>
+  <script src="resources/fullcalendar/fullcalendar.js" language="Javascript"></script>
+  <script language="JavaScript">
+  $(document).ready(function() {
+    $('#calendar').fullCalendar({
+        // put your options and callbacks here
+    })
+  });
+  </script>
+</head>
+<body>
+<div id="header">
+  <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
+  <div id="links">
+    <div class="button" style="left: 0px;">
+		#if($mobile_device)
+		  <a href="?return=gui/pane1">
+		#else
+          <a href="?return=gui/display_application">
+		#end
+    	  <img src="customisations/common/dashboard/panes.png" /><br>Database
+    	</a>
+    </div>
+  </div>
+</div>
+<div id="calendar"></div>
+</body>
+</html>
