@@ -16,7 +16,11 @@
   <script language="JavaScript">
   $(document).ready(function() {
     $('#calendar').fullCalendar({
-        // put your options and callbacks here
+        header: {
+            left:   'title',
+            center: 'month,agendaWeek,agendaDay',
+            right:  'today prev,next'
+		}
     })
   });
   </script>
