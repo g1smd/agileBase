@@ -46,7 +46,7 @@
     #parse("gui/resources/calc_module_reports.vm")
     #set($hiddenReports = $user.getHiddenReports())
     #foreach($module in $moduleReports.keySet())
-	  Module is $module<br>
+	  <h1>Module is $module</h1>
 	  #set($visibleModuleReports = $moduleReports.get($module))
 	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
 	  #if($visibleModuleReports.size() > 0)
