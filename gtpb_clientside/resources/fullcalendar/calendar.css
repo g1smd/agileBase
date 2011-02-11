@@ -8,6 +8,7 @@ body {
 
 #report_selection {
   height: 100%;
-  float: right;
+  position: absolute;
+  right: 0px;
   overflow: hidden;
 }
