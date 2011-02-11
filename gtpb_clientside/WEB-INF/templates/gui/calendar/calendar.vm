@@ -24,7 +24,7 @@
 		}
     });
 	jQuery("#report_selection").mouseenter(function() {
-	  jQuery(this).height("100%");
+	  jQuery(this).slideDown('slow');
 	});
   });
   </script>
