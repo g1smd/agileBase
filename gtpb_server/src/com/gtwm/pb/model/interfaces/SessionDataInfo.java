@@ -34,19 +34,20 @@ import java.util.Map;
  * to access should be stored here.
  */
 public interface SessionDataInfo {
-	
+
 	/**
 	 * Return the server-changing last action that the user took
 	 */
 	public AppAction getLastAppAction();
-	
+
 	public void setLastAppAction(AppAction appAction);
-	
+
 	/**
-	 * Return the row id that the last action acted on (if it was relevant to an individual record)
+	 * Return the row id that the last action acted on (if it was relevant to an
+	 * individual record)
 	 */
 	public int getLastAppActionRowId();
-	
+
 	public void setLastAppActionRowId(int lastAppActionRowId);
 
 	/**
@@ -81,8 +82,8 @@ public interface SessionDataInfo {
 
 	public Integer getCustomInteger(String key);
 
-	public Long getCustomLong(String key); 
-	
+	public Long getCustomLong(String key);
+
 	public Boolean getCustomBoolean(String key);
 
 	public TableInfo getCustomTable(String key);
@@ -90,7 +91,7 @@ public interface SessionDataInfo {
 	public BaseReportInfo getCustomReport(String key);
 
 	public BaseField getCustomField(String key);
-	
+
 	public Map<BaseField, String> getCustomReportFilterValues(String filterSet);
 
 	/**
@@ -168,6 +169,11 @@ public interface SessionDataInfo {
 
 	public void setCustomReport(String key, BaseReportInfo value);
 
+	/**
+	 * Remove a mapping set by setCustomReport
+	 */
+	public void removeCustomReport(String key);
+
 	public void setCustomField(String key, BaseField value);
 
 	/**
@@ -200,8 +206,8 @@ public interface SessionDataInfo {
 	 * Set a filter on a particular field.
 	 * 
 	 * Use SET_REPORT_FILTER_VALUE in the HTTP request to set a filter,
-	 * supplying internalFieldName=<i>identifier of the field</i>&fieldValue=<i>filter
-	 * string</i>
+	 * supplying internalFieldName=<i>identifier of the
+	 * field</i>&fieldValue=<i>filter string</i>
 	 * 
 	 * @param field
 	 * @param fieldValue
@@ -210,7 +216,7 @@ public interface SessionDataInfo {
 	 * @see #clearReportFilterValue(BaseField)
 	 */
 	public void setReportFilterValue(BaseField field, String fieldValue);
-	
+
 	public void setCustomReportFilterValue(String filterSet, BaseField field, String fieldValue);
 
 	public void setReportSort(BaseField reportField, Boolean sortAscending);
