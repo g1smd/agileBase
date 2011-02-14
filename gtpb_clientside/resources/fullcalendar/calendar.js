@@ -20,7 +20,7 @@ function updateSelectedReports() {
   });
 }
 
-$("#report_selection input").change(function {
+$("#report_selection input").change(function() {
   var internalReportName = $(this).attr("internalreportname");
   var reportName = $(this).text();
   
