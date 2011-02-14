@@ -16,7 +16,7 @@ function updateSelectedReports() {
   $("#selected_reports").children().remove();
   $("#report_selection input:checked").each(function() {
 	var reportName = $(this).text();
-	#("#selected_reports").append("<span class='active_report'>" + reportName + "</span>");
+	$("#selected_reports").append("<span class='active_report'>" + reportName + "</span>");
   });
 }
 
