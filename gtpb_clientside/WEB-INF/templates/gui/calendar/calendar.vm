@@ -14,20 +14,7 @@
   <script src="resources/jquery.js" language="Javascript"></script>
   <script src="resources/fullcalendar/jquery-ui-custom.js" language="Javascript"></script>
   <script src="resources/fullcalendar/fullcalendar.js" language="Javascript"></script>
-  <script language="JavaScript">
-  jQuery(document).ready(function() {
-    jQuery('#calendar').fullCalendar({
-        header: {
-            left:   'title',
-            center: 'month,agendaWeek,agendaDay',
-            right:  'today prev,next'
-		}
-    });
-	jQuery("#report_selection").mouseenter(function() {
-	  jQuery(this).slideDown('slow');
-	});
-  });
-  </script>
+  <script src="resources/fullcalendar/calendar.js" language="Javascript"></script>
   <style>
   </style>
 </head>
@@ -37,43 +24,47 @@
   <div id="links">
     <div class="button" style="left: 0px;">
 		#if($mobile_device)
-		  <a href="?return=gui/pane1">
 		#else
-          <a href="?return=gui/display_application">
+		  #set($databaseReturn = "gui/display_application")			
 		#end
+        <a href="?return=$databaseReturn">
     	  <img src="customisations/common/dashboard/panes.png" /><br>Database
     	</a>
+		<div id="selected_reports">
+		</div>
     </div>
   </div>
-  <div id="report_selection">
-    ## Create a collection $moduleReports: each module maps to an array of reports
-    #parse("gui/resources/calc_module_reports.vm")
-    #if($moduleReports.size() > 0)
-		<ul>
-        #set($hiddenReports = $user.getHiddenReports())
-        #foreach($module in $moduleReports.keySet())
-    	  #set($visibleModuleReports = $moduleReports.get($module))
-    	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
-    	  #if($visibleModuleReports.size() > 0)
-        	#set($internalModuleName = $module.getInternalModuleName())
-        	<li id="$internalModuleName">
-        	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
-        		$module
-        	  </span></h2>
-        	  <ul parent="$internalModuleName">
-        	  #foreach($report in $visibleModuleReports) 
-        		#set($table=$report.getParentTable())
-        		<li id="$table.getInternalTableName()$report.getInternalReportName()">
-        		  <div class="module-tree-item-wrap">$report</div>
-        		</li>
-        	  #end ## end of loop through reports in a module
-        	  </ul>
-        	</li>
-          #end
-    	#end ## end loop through modules
-		</ul>
-	#end ## end if there are any modules visible
-  </div>
+</div>
+<div id="report_selection">
+## Create a collection $moduleReports: each module maps to an array of reports
+#parse("gui/resources/calc_module_reports.vm")
+#if($moduleReports.size() > 0)
+	<ul>
+    #set($hiddenReports = $user.getHiddenReports())
+    #foreach($module in $moduleReports.keySet())
+	  #set($visibleModuleReports = $moduleReports.get($module))
+	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
+	  #if($visibleModuleReports.size() > 0)
+    	#set($internalModuleName = $module.getInternalModuleName())
+    	<li id="$internalModuleName">
+    	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
+    		$module
+    	  </span></h2>
+    	  <ul parent="$internalModuleName">
+    	  #foreach($report in $visibleModuleReports) 
+    		#set($table=$report.getParentTable())
+			#set($internalReportName = $report.getInternalReportName())
+    		<li id="$table.getInternalTableName()$internalReportName">
+			  <input type="checkbox" internalreportname="$internalReportName" #if($sessionData.getCustomReport("calendar_$internalReportName")) checked #end> 
+			  $report
+    		</li>
+    	  #end ## end of loop through reports in a module
+    	  </ul>
+    	</li>
+      #end
+	#end ## end loop through modules
+	</ul>
+#end ## end if there are any modules visible
 </div>
 <div id="calendar"></div>
 </body>

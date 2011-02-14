@@ -345,6 +345,15 @@ public final class ServletDataMethods {
 		sessionData.setCustomTable(key, table);
 	}
 
+	public static void removeSessionCustomReport(SessionDataInfo sessionData, HttpServletRequest request, boolean beforeAppActions) {
+		String postActionPrefix = "";
+		if (!beforeAppActions) {
+			postActionPrefix = "post";
+		}
+		String key = request.getParameter(postActionPrefix + "reportkey");
+		sessionData.removeCustomReport(key);
+	}
+	
 	public static void setSessionCustomReport(SessionDataInfo sessionData,
 			HttpServletRequest request, boolean beforeAppActions, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException {

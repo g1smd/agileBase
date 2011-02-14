@@ -7,8 +7,6 @@ body {
 }
 
 #report_selection {
-  height: 91px;
-  position: absolute;
-  left: 400px;
-  overflow: hidden;
+  width: 100%;
+  border: 1px solid gray;
 }
