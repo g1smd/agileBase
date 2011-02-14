@@ -4,8 +4,10 @@ $(document).ready(function() {
       left:   'title',
       center: 'month,agendaWeek,agendaDay',
       right:  'today prev,next'
-      eventSources: ['AppController.servlet?return=gui/calendar/feed&internaltablename=abc&internalreportname=xyz']
-	}
+	},
+    eventSources: [
+      'AppController.servlet?return=gui/calendar/feed&internaltablename=abc&internalreportname=xyz'
+    ]
   });
   updateSelectedReport();
 });
