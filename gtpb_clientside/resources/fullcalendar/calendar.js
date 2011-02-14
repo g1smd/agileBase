@@ -9,7 +9,7 @@ $(document).ready(function() {
       'AppController.servlet?return=gui/calendar/feed&internaltablename=abc&internalreportname=xyz'
     ]
   });
-  updateSelectedReport();
+  updateSelectedReports();
 });
 
 function updateSelectedReports() {

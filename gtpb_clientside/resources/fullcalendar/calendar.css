@@ -9,4 +9,7 @@ body {
 #report_selection {
   width: 100%;
   border: 1px solid gray;
+  -moz-column-count: 4;
+  -webkit-column-count: 4;
+  column-count: 4;
 }
