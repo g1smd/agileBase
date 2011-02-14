@@ -13,3 +13,8 @@ body {
   -webkit-column-count: 4;
   column-count: 4;
 }
+
+#report_selection h2 {
+  font-size: 11pt;
+  margin: 0px;
+}
