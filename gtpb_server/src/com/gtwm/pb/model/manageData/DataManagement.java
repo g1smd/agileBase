@@ -1499,11 +1499,21 @@ public final class DataManagement implements DataManagementInfo {
 			js.key("id").value(internalReportName + "_" + reportDataRow.getRowId());
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
 			js.key("title").value(eventTitle);
-			js.key("allDay").value(allDayValues);
+			if (!allDayValues) {
+				String eventDateDisplayValue = eventDateValue.getDisplayValue();
+				if (eventDateDisplayValue.trim().endsWith("00:00")) {
+					js.key("allDay").value(true);
+				} else {
+					js.key("allDay").value(false);
+				}
+			} else {
+				js.key("allDay").value(true);
+			}
 			Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
 			js.key("start").value(eventDateEpoch);
 			js.key("end").value(eventDateEpoch + 600); // try 10 mins
-			js.key("className").value("gtpb_event"); // add our own class so we can style events
+			js.key("className").value("gtpb_event"); // add our own class so we
+														// can style events
 			js.endObject();
 		}
 		js.endArray();
