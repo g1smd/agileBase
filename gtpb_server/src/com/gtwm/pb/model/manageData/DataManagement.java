@@ -1474,8 +1474,8 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public String getReportCalendarJSON(CompanyInfo company, BaseReportInfo report,
-			Map<BaseField, String> filterValues) throws CodingErrorException, CantDoThatException,
-			SQLException, JSONException {
+			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
+			throws CodingErrorException, CantDoThatException, SQLException, JSONException {
 		ReportFieldInfo eventDateReportField = report.getCalendarField();
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
@@ -1484,6 +1484,12 @@ public final class DataManagement implements DataManagementInfo {
 		boolean allDayValues = true;
 		if (eventDateField.getDateResolution() > Calendar.DAY_OF_MONTH) {
 			allDayValues = false;
+		}
+		boolean monthView = false;
+		if (startEpoch != null) {
+			if ((endEpoch - startEpoch) > (3600 * 24 * 10)) {
+				monthView = true;
+			}
 		}
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(company, report, filterValues,
 				false, new HashMap<BaseField, Boolean>(), 10000);
@@ -1497,8 +1503,6 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			js.object();
 			js.key("id").value(internalReportName + "_" + reportDataRow.getRowId());
-			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
-			js.key("title").value(eventTitle);
 			boolean allDayEvent = allDayValues;
 			if (!allDayValues) {
 				String eventDateDisplayValue = eventDateValue.getDisplayValue();
@@ -1510,10 +1514,20 @@ public final class DataManagement implements DataManagementInfo {
 			Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
 			js.key("start").value(eventDateEpoch);
 			if (!allDayEvent) {
-				js.key("end").value(eventDateEpoch + 600); // try 10 mins
+				js.key("end").value(eventDateEpoch + 7200); // events last 2hrs
 			}
-			js.key("className").value("gtpb_event"); // add our own class so we
-														// can style events
+			js.key("className").value("gtpb_event");
+			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
+			if (monthView) {
+				String eventDescription = eventTitle;
+				if (eventTitle.length() > 60) {
+					eventTitle = eventTitle.substring(0,60) + "...";
+				}
+				js.key("title").value(eventTitle);
+				js.key("description").value(eventDescription);
+			} else {
+				js.key("title").value(eventTitle);
+			}
 			js.endObject();
 		}
 		js.endArray();
