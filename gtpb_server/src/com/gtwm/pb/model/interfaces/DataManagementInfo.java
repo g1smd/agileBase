@@ -82,10 +82,19 @@ public interface DataManagementInfo {
 	/**
 	 * Return a calendar JSON feed for the data in a report, suitable for use
 	 * with http://arshaw.com/fullcalendar/
+	 * 
+	 * @param filterValues
+	 *            Session filters *plus* a filter on the calendar date field so
+	 *            that only dates requested by fullcalendar are returned
+	 *            (controlled by start and end parameters in the HTTP request)
+	 * @param startEpoch
+	 *            The start unix timestamp as provided by fullcalendar
+	 * @param endEpoch
+	 *            The end unix timestamp as provided by fullcalendar
 	 */
 	public String getReportCalendarJSON(CompanyInfo company, BaseReportInfo report,
-			Map<BaseField, String> filterValues) throws CodingErrorException, CantDoThatException,
-			SQLException, JSONException;
+			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
+			throws CodingErrorException, CantDoThatException, SQLException, JSONException;
 
 	/**
 	 * Return a report data object that contains metadata about the report data.

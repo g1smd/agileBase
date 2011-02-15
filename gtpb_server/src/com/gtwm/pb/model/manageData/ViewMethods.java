@@ -554,17 +554,21 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		BaseField eventDateField = eventDateReportField.getBaseField();
 		// 'start' and 'end' are supplied by FullCalendar
+		Long startEpoch = null;
+		Long endEpoch = null;
 		String startString = this.request.getParameter("start");
 		if (startString != null) {
+			startEpoch = Long.valueOf(startString);
 			String endString = this.request.getParameter("end");
 			if (endString == null) {
 				throw new MissingParametersException("calendar event start parameter provided but not end");
 			}
+			endEpoch = Long.valueOf(endString);
 			String eventDateFilterString = ">" + startString + " AND <" + endString;
 			filterValues.put(eventDateField, eventDateFilterString);
 		}
 		CompanyInfo company = this.getLoggedInUser().getCompany();
-		return this.databaseDefn.getDataManagement().getReportCalendarJSON(company, report, filterValues);
+		return this.databaseDefn.getDataManagement().getReportCalendarJSON(company, report, filterValues, startEpoch, endEpoch);
 	}
 	
 	/**
