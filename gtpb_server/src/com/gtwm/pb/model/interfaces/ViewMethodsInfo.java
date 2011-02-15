@@ -1,5 +1,5 @@
 /*
- *  Copyright 2010 GT webMarque Ltd
+ *  Copyright 2011 GT webMarque Ltd
  * 
  *  This file is part of agileBase.
  *
@@ -424,7 +424,11 @@ public interface ViewMethodsInfo {
 			SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
 	/**
-	 * Get a calendar feed for a report suitable for use with http://arshaw.com/fullcalendar/
+	 * Get a calendar feed for a report suitable for use with
+	 * http://arshaw.com/fullcalendar/
+	 * 
+	 * The parameters 'start' and 'end' that fullcalendar provides in the HTTP
+	 * request are added to the filters taken from the session and applied to the date field
 	 */
 	public String getReportCalendarJSON(BaseReportInfo report) throws CodingErrorException,
 			CantDoThatException, MissingParametersException, DisallowedException,
