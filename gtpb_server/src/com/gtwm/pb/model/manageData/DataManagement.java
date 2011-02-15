@@ -52,6 +52,7 @@ import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
+import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportQuickFilterInfo;
 import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
@@ -112,6 +113,9 @@ import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.grlea.log.SimpleLogger;
 import org.glowacki.CalendarParser;
 import org.glowacki.CalendarParserException;
+import org.json.JSONException;
+import org.json.JSONStringer;
+
 import au.com.bytecode.opencsv.CSVReader;
 
 public final class DataManagement implements DataManagementInfo {
@@ -121,7 +125,7 @@ public final class DataManagement implements DataManagementInfo {
 		this.dataSource = null;
 		this.authManager = null;
 	}
-	
+
 	/**
 	 * @param dataSource
 	 *            Provides access to the relational database
@@ -223,8 +227,8 @@ public final class DataManagement implements DataManagementInfo {
 		SortedSet<BaseField> fields = table.getFields();
 		// Ignore un-clonable fields
 		for (BaseField field : fields) {
-			if (!(field instanceof FileField) && !(field instanceof SeparatorField) && !(field instanceof ReferencedReportDataField)
-					&& !(field.getUnique())) { // &&
+			if (!(field instanceof FileField) && !(field instanceof SeparatorField)
+					&& !(field instanceof ReferencedReportDataField) && !(field.getUnique())) { // &&
 				// !(field.getHidden()))
 				// {
 				if (field instanceof RelationField) {
@@ -725,7 +729,8 @@ public final class DataManagement implements DataManagementInfo {
 						fields.remove(field);
 					}
 				}
-			} else if (field instanceof SeparatorField || field instanceof ReferencedReportDataField) {
+			} else if (field instanceof SeparatorField
+					|| field instanceof ReferencedReportDataField) {
 				fields.remove(field);
 			}
 			// Also, if importing relations by display value, look up
@@ -778,10 +783,13 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			updateSQLCode = updateSQLCode.substring(0, updateSQLCode.length() - 2);
 			updateSQLCode += " WHERE " + recordIdentifierField.getInternalFieldName() + "=?";
-			logCreationSQLCode = "UPDATE " + table.getInternalTableName() + " SET "
-					+ table.getField(HiddenFields.DATE_CREATED.getFieldName()).getInternalFieldName() + "=?, "
-					+ table.getField(HiddenFields.CREATED_BY.getFieldName()).getInternalFieldName() + "=? WHERE "
-					+ primaryKey.getInternalFieldName() + "=?";
+			logCreationSQLCode = "UPDATE "
+					+ table.getInternalTableName()
+					+ " SET "
+					+ table.getField(HiddenFields.DATE_CREATED.getFieldName())
+							.getInternalFieldName() + "=?, "
+					+ table.getField(HiddenFields.CREATED_BY.getFieldName()).getInternalFieldName()
+					+ "=? WHERE " + primaryKey.getInternalFieldName() + "=?";
 		}
 		insertSQLCode = "INSERT INTO " + table.getInternalTableName() + "(";
 		String placeholders = "";
@@ -1081,10 +1089,12 @@ public final class DataManagement implements DataManagementInfo {
 						// If can't find a match to update, insert a record
 						// instead
 						backupInsertStatement.executeUpdate();
-						// NB Postgres specific code to find Row ID of newly inserted record, not cross-db compatible
-						String newRowIdSQLCode = "SELECT currval('" + table.getInternalTableName() + "_"
-								+ primaryKey.getInternalFieldName() + "_seq')";
-						PreparedStatement newRowIdStatement = conn.prepareStatement(newRowIdSQLCode);
+						// NB Postgres specific code to find Row ID of newly
+						// inserted record, not cross-db compatible
+						String newRowIdSQLCode = "SELECT currval('" + table.getInternalTableName()
+								+ "_" + primaryKey.getInternalFieldName() + "_seq')";
+						PreparedStatement newRowIdStatement = conn
+								.prepareStatement(newRowIdSQLCode);
 						ResultSet newRowIdResults = newRowIdStatement.executeQuery();
 						if (newRowIdResults.next()) {
 							int newRowId = newRowIdResults.getInt(1);
@@ -1094,8 +1104,9 @@ public final class DataManagement implements DataManagementInfo {
 							logCreationStatement.setInt(3, newRowId);
 							int creationLogRowsAffected = logCreationStatement.executeUpdate();
 							if (creationLogRowsAffected == 0) {
-								throw new SQLException("Unable to update creation metadata of newly inserted record, using query "
-										+ logCreationStatement);
+								throw new SQLException(
+										"Unable to update creation metadata of newly inserted record, using query "
+												+ logCreationStatement);
 							}
 						} else {
 							newRowIdResults.close();
@@ -1462,6 +1473,86 @@ public final class DataManagement implements DataManagementInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
+	public String getReportCalendarJSON(CompanyInfo company, BaseReportInfo report,
+			Map<BaseField, String> filterValues) throws CodingErrorException, CantDoThatException,
+			SQLException, JSONException {
+		ReportFieldInfo eventDateReportField = report.getCalendarField();
+		if (eventDateReportField == null) {
+			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
+		}
+		DateField eventDateField = ((DateField) eventDateReportField.getBaseField());
+		boolean allDayValues = true;
+		if (eventDateField.getDateResolution() > Calendar.DAY_OF_MONTH) {
+			allDayValues = false;
+		}
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(company, report, filterValues,
+				false, new HashMap<BaseField, Boolean>(), 10000);
+		JSONStringer js = new JSONStringer();
+		js.array();
+		String internalReportName = report.getInternalReportName();
+		ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
+			DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
+			if (((DateValue) (eventDateValue)).isNull()) {
+				continue ROWS_LOOP;
+			}
+			js.object();
+			js.key("id").value(internalReportName + "_" + reportDataRow.getRowId());
+			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
+			js.key("title").value(eventTitle);
+			js.key("allDay").value(allDayValues);
+			js.key("start").value(eventDateValue.getKeyValue());
+			js.endObject();
+		}
+		js.endArray();
+		return js.toString();
+	}
+
+	/**
+	 * TODO: perhaps move this static method to a more appropriate class
+	 */
+	public static String buildCalendarEventTitle(BaseReportInfo report, DataRowInfo reportDataRow) {
+		// ignore any date fields other than the one used for specifying
+		// the event date
+		// ignore any blank fields
+		// for numeric and boolean fields, include the field title
+		StringBuilder eventTitleBuilder = new StringBuilder();
+		REPORT_FIELD_LOOP: for (ReportFieldInfo reportField : report.getReportFields()) {
+			BaseField baseField = reportField.getBaseField();
+			if (baseField.getDbType().equals(DatabaseFieldType.TIMESTAMP)
+					|| baseField.equals(baseField.getTableContainingField().getPrimaryKey())) {
+				continue REPORT_FIELD_LOOP;
+			}
+			DataRowFieldInfo dataRowField = reportDataRow.getValue(baseField);
+			switch (baseField.getDbType()) {
+			case BOOLEAN:
+				boolean reportFieldTrue = Helpers.valueRepresentsBooleanTrue(dataRowField
+						.getKeyValue());
+				if (reportFieldTrue) {
+					eventTitleBuilder.append(reportField.getFieldName());
+				}
+				break;
+			case INTEGER:
+				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
+						.append(dataRowField.getDisplayValue());
+				break;
+			case FLOAT:
+				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
+						.append(dataRowField.getDisplayValue());
+				break;
+			case SERIAL:
+				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
+						.append(dataRowField.getKeyValue());
+				break;
+			default:
+				eventTitleBuilder.append(dataRowField.getDisplayValue());
+			}
+			eventTitleBuilder.append(", ");
+		}
+		eventTitleBuilder.delete(eventTitleBuilder.length() - 2, eventTitleBuilder.length());
+		String eventTitle = eventTitleBuilder.toString();
+		return eventTitle;
+	}
+
 	public List<DataRowInfo> getReportDataRows(CompanyInfo company, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> sessionSorts, int rowLimit) throws SQLException,
@@ -1482,8 +1573,8 @@ public final class DataManagement implements DataManagementInfo {
 		return reportDataRows;
 	}
 
-	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report, boolean updateCacheIfObsolete)
-			throws SQLException {
+	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report,
+			boolean updateCacheIfObsolete) throws SQLException {
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
@@ -1498,8 +1589,10 @@ public final class DataManagement implements DataManagementInfo {
 
 	private ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo reportDefn,
 			Connection conn, boolean updateCacheIfObsolete) throws SQLException {
-		// If company specified: use the cache to look up report data. If the report data isn't cached, cache it now
-		// Additionally, if updateCacheIfObsolete specified, update the cache if it gets out of date
+		// If company specified: use the cache to look up report data. If the
+		// report data isn't cached, cache it now
+		// Additionally, if updateCacheIfObsolete specified, update the cache if
+		// it gets out of date
 		ReportDataInfo reportData;
 		boolean useCaching = (company != null);
 		if (this.cachedReportDatas.containsKey(reportDefn)) {

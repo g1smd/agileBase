@@ -71,6 +71,7 @@ import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.model.manageData.ModuleAction;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
+import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -79,6 +80,8 @@ import com.gtwm.pb.util.Enumerations.ExtraAction;
 import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
 import org.grlea.log.SimpleLogger;
+import org.json.JSONException;
+
 import java.util.TreeSet;
 
 public final class ViewMethods implements ViewMethodsInfo {
@@ -540,6 +543,30 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return reportDataRows;
 	}
 
+	public String getReportCalendarJSON(BaseReportInfo report) throws CodingErrorException,
+			CantDoThatException, MissingParametersException, DisallowedException,
+			ObjectNotFoundException, SQLException, JSONException {
+		Map<BaseField, String> filterValues = this.sessionData.getReportFilterValues();
+		// Add start and end time filters
+		ReportFieldInfo eventDateReportField = report.getCalendarField();
+		if (eventDateReportField == null) {
+			throw new CantDoThatException("The report " + report + " has no applicable date fields");
+		}
+		BaseField eventDateField = eventDateReportField.getBaseField();
+		// 'start' and 'end' are supplied by FullCalendar
+		String startString = this.request.getParameter("start");
+		if (startString != null) {
+			String endString = this.request.getParameter("end");
+			if (endString == null) {
+				throw new MissingParametersException("calendar event start parameter provided but not end");
+			}
+			String eventDateFilterString = ">" + startString + " AND <" + endString;
+			filterValues.put(eventDateField, eventDateFilterString);
+		}
+		CompanyInfo company = this.getLoggedInUser().getCompany();
+		return this.databaseDefn.getDataManagement().getReportCalendarJSON(company, report, filterValues);
+	}
+	
 	/**
 	 * @see WikiManagementInfo#getWikiRecordDataRows(CompanyInfo, String,
 	 *      String)

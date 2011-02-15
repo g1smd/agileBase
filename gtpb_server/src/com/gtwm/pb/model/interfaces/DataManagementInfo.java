@@ -25,6 +25,8 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileItem;
+import org.json.JSONException;
+
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
@@ -76,6 +78,14 @@ public interface DataManagementInfo {
 	 */
 	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> fields, int rowLimit)
 			throws SQLException;
+
+	/**
+	 * Return a calendar JSON feed for the data in a report, suitable for use
+	 * with http://arshaw.com/fullcalendar/
+	 */
+	public String getReportCalendarJSON(CompanyInfo company, BaseReportInfo report,
+			Map<BaseField, String> filterValues) throws CodingErrorException, CantDoThatException,
+			SQLException, JSONException;
 
 	/**
 	 * Return a report data object that contains metadata about the report data.

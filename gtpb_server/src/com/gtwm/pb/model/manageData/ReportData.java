@@ -337,15 +337,20 @@ public class ReportData implements ReportDataInfo {
 				|| valueToParse.trim().equalsIgnoreCase("th")
 				|| valueToParse.matches("^\\d{1,2}\\s*$")) {
 			return null;
+		} else if ((!valueToParse.matches("\\D")) && (valueToParse.length() > 8)
+				&& (valueToParse.length() < 11)) {
+			// Value is a unix 'epoch' timestamp
+			long epochTime = Long.valueOf(valueToParse);
+			// TODO: better calculation of end time, we just add an hour at the
+			// moment
+			Span timespan = new Span(epochTime, epochTime + 3600);
+			return timespan;
 		} else {
 			try {
 				Options chronicOptions = new Options();
 				chronicOptions.setGuess(false);
 				chronicOptions.setContext(Pointer.PointerType.NONE);
 				Span timespan = Chronic.parse(valueToParse, chronicOptions);
-				if (timespan == null) {
-					return null;
-				}
 				return timespan;
 			} catch (IllegalStateException isex) {
 				return null;
@@ -802,7 +807,8 @@ public class ReportData implements ReportDataInfo {
 						} else {
 							if (reportField instanceof ReportCalcFieldInfo) {
 								keyValue = "" + dbValue.getTime();
-								displayValue = ((ReportCalcFieldInfo) reportField).formatDate(dbValue);
+								displayValue = ((ReportCalcFieldInfo) reportField)
+										.formatDate(dbValue);
 							} else {
 								keyValue = "" + dbValue.getTime();
 								// See DateFieldDefn constructor for format
@@ -835,7 +841,8 @@ public class ReportData implements ReportDataInfo {
 							} else {
 								if (reportField instanceof ReportCalcFieldInfo) {
 									keyValue = "" + dbValue.getTime();
-									displayValue = ((ReportCalcFieldInfo) reportField).formatDate(dbValue);
+									displayValue = ((ReportCalcFieldInfo) reportField)
+											.formatDate(dbValue);
 								} else {
 									keyValue = "" + dbValue.getTime();
 									// See DateFieldDefn constructor for format

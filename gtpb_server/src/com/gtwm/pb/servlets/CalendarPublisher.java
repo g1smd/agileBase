@@ -44,6 +44,7 @@ import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.CantDoThatException;
@@ -202,53 +203,14 @@ public final class CalendarPublisher extends HttpServlet {
 			VTimeZone tz = registry.getTimeZone("Europe/London").getVTimeZone();
 			calendar.getComponents().add(tz);
 			for (DataRowInfo reportDataRow : reportDataRows) {
-				// ignore any date fields other than the one used for specifying
-				// the event date
-				// ignore any blank fields
-				// for numeric and boolean fields, include the field title
-				StringBuilder eventTitleBuilder = new StringBuilder();
-				REPORT_FIELD_LOOP: for (ReportFieldInfo reportField : report.getReportFields()) {
-					BaseField baseField = reportField.getBaseField();
-					if (baseField.getDbType().equals(DatabaseFieldType.TIMESTAMP)
-							|| baseField
-									.equals(baseField.getTableContainingField().getPrimaryKey())) {
-						continue REPORT_FIELD_LOOP;
-					}
-					DataRowFieldInfo dataRowField = reportDataRow.getValue(baseField);
-					switch (baseField.getDbType()) {
-					case BOOLEAN:
-						boolean reportFieldTrue = Helpers.valueRepresentsBooleanTrue(dataRowField
-								.getKeyValue());
-						if (reportFieldTrue) {
-							eventTitleBuilder.append(reportField.getFieldName());
-						}
-						break;
-					case INTEGER:
-						eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-								.append(dataRowField.getDisplayValue());
-						break;
-					case FLOAT:
-						eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-								.append(dataRowField.getDisplayValue());
-						break;
-					case SERIAL:
-						eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-								.append(dataRowField.getKeyValue());
-						break;
-					default:
-						eventTitleBuilder.append(dataRowField.getDisplayValue());
-					}
-					eventTitleBuilder.append(", ");
-				}
-				eventTitleBuilder
-						.delete(eventTitleBuilder.length() - 2, eventTitleBuilder.length());
+				String eventTitle = DataManagement.buildCalendarEventTitle(report, reportDataRow);
 				DataRowFieldInfo eventDateInfo = reportDataRow.getValue(eventDateField
 						.getBaseField());
 				String eventEpochTimeString = eventDateInfo.getKeyValue();
 				long eventEpochTime = Long.valueOf(eventEpochTimeString);
 				net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
 						eventEpochTime);
-				VEvent rowEvent = new VEvent(eventIcalDate, eventTitleBuilder.toString());
+				VEvent rowEvent = new VEvent(eventIcalDate, eventTitle);
 				// add Timezone
 				TzId tzParam = new TzId(tz.getProperties().getProperty(Property.TZID).getValue());
 				rowEvent.getProperties().getProperty(Property.DTSTART).getParameters().add(tzParam);
