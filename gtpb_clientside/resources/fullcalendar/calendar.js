@@ -6,7 +6,8 @@ $(document).ready(function() {
       right:  'today prev,next'
 	},
 	events: 'AppController.servlet?return=gui/calendar/feed',
-	height: 650
+	height: 650,
+	contentHeight: 600
   });
   //updateSelectedReports();
 });
