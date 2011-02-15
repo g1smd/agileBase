@@ -1492,7 +1492,7 @@ public final class DataManagement implements DataManagementInfo {
 		String internalReportName = report.getInternalReportName();
 		ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
 			DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
-			if (((DateValue) (eventDateValue)).isNull()) {
+			if (eventDateValue.getKeyValue().equals("")) {
 				continue ROWS_LOOP;
 			}
 			js.object();
