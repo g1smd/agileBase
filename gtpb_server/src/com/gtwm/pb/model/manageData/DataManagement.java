@@ -1502,6 +1502,7 @@ public final class DataManagement implements DataManagementInfo {
 			js.key("allDay").value(allDayValues);
 			Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
 			js.key("start").value(eventDateEpoch);
+			js.key("className").value("gtpb_event"); // add our own class so we can style events
 			js.endObject();
 		}
 		js.endArray();
