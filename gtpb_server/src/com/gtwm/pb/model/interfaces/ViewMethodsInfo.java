@@ -28,12 +28,15 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.manageData.DataRow;
+import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.auth.PrivilegeType;
 import java.io.IOException;
 import java.sql.SQLException;
+
+import org.json.JSONException;
 
 /**
  * Methods that are used by the view component of the MVC application to pass
@@ -419,6 +422,13 @@ public interface ViewMethodsInfo {
 	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit,
 			Map<BaseField, String> filterValues, boolean exactFilters) throws DisallowedException,
 			SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException;
+
+	/**
+	 * Get a calendar feed for a report suitable for use with http://arshaw.com/fullcalendar/
+	 */
+	public String getReportCalendarJSON(BaseReportInfo report) throws CodingErrorException,
+			CantDoThatException, MissingParametersException, DisallowedException,
+			ObjectNotFoundException, SQLException, JSONException;
 
 	/**
 	 * Returns true if the record identified by the session row ID is visible in

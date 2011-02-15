@@ -130,12 +130,12 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				<div class="wrapper">
 					<div class="content"> 
 					  <div id="detail_right">
+							<div id="screenshots"><!-- populated by JavaScript slideshow --></div>
 							<div id="quotes">
 								<span class="bqstart">&#8220;</span>
 								I used to use Oracle at my previous Fortune 100. I'm now an agileBase convert - I adapt it to my needs as soon as I learn a better way of doing something.
 								<span style="float: right">- John Collins</span>
 							</div>
-							<div id="screenshots"><!-- populated by JavaScript slideshow --></div>
 						</div>
 						<div id="main" class="detail">
 							<div class="divider">
