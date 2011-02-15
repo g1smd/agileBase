@@ -1500,7 +1500,8 @@ public final class DataManagement implements DataManagementInfo {
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
 			js.key("title").value(eventTitle);
 			js.key("allDay").value(allDayValues);
-			js.key("start").value(eventDateValue.getKeyValue());
+			Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
+			js.key("start").value(eventDateEpoch);
 			js.endObject();
 		}
 		js.endArray();
