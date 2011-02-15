@@ -5,7 +5,8 @@ $(document).ready(function() {
       center: 'month,agendaWeek,agendaDay',
       right:  'today prev,next'
 	},
-	events: 'AppController.servlet?return=gui/calendar/feed'
+	events: 'AppController.servlet?return=gui/calendar/feed',
+	height: 650
   });
   //updateSelectedReports();
 });
