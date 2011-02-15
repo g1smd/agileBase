@@ -546,7 +546,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	public String getReportCalendarJSON(BaseReportInfo report) throws CodingErrorException,
 			CantDoThatException, MissingParametersException, DisallowedException,
 			ObjectNotFoundException, SQLException, JSONException {
-		Map<BaseField, String> filterValues = this.sessionData.getReportFilterValues();
+		Map<BaseField, String> filterValues = new HashMap<BaseField, String>(this.sessionData.getReportFilterValues());
 		// Add start and end time filters
 		ReportFieldInfo eventDateReportField = report.getCalendarField();
 		if (eventDateReportField == null) {
