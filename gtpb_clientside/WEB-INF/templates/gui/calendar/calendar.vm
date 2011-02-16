@@ -102,7 +102,7 @@
 		  #set($table=$report.getParentTable())
 		  #set($internalReportName = $report.getInternalReportName())
 		  #set($internalTableName = $table.getInternalTableName())
-		  <li id="$internalTableName$internalReportName" style="background-color: hsl($colour_hue, 100%, 50%);">
+		  <li id="$internalTableName$internalReportName" style="background-color: hsl($colour_hue, 70%, 50%);">
 		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($sessionData.getCustomReport("calendar_$internalReportName")) checked #end> 
 		    $report
 		  </li>
