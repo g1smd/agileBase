@@ -65,6 +65,11 @@
     #foreach($module in $moduleReports.keySet())
 	  #set($visibleModuleReports = $moduleReports.get($module))
 	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
+	  #foreach($report in $visibleModuleReports)
+		#if(!$report.getCalendarField())
+		  #set($temp = $visibleModuleReports.remove($report))
+		#end
+	  #end
 	  #if($visibleModuleReports.size() > 0)
     	#set($internalModuleName = $module.getInternalModuleName())
     	<li id="$internalModuleName">
