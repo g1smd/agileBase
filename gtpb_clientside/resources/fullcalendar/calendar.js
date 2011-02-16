@@ -9,11 +9,11 @@ $(document).ready(function() {
 	editable: true,
     eventRender: function(event, jqElement, view) {
 	  if (view.name == 'month') {
-        jqElement.height(10);
+        jqElement.height(15);
+  	    jqElement.qtip({
+          content: event.title
+        });
       }
-	  jqElement.qtip({
-        content: event.description
-      });
     },
     eventClick: function(calEvent, jsEvent, view) {
       var eventId = calEvent.id;
