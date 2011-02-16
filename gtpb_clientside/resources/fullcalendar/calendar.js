@@ -10,8 +10,6 @@ $(document).ready(function() {
     eventRender: function(event, jqElement, view) {
 	  if (view.name == 'month') {
         jqElement.height(10);
-      }else{
-            //...
       }
 	  jqElement.qtip({
         content: event.description
