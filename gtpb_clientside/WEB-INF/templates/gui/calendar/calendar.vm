@@ -105,6 +105,8 @@
 		  #set($colourStyle = "background-color: hsl($colourHue, 70%, $colourLightness%);")
 		  #if($colourLightness < 45)
 			#set($colourStyle = "$colourStyle color:white;")
+		  #else
+			#set($colourStyle = "$colourStyle color:black;")
 		  #end
 		  #set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
 		  #set($table=$report.getParentTable())
@@ -125,6 +127,7 @@
 <style>
 #foreach($colourClass in $colourStyles.keySet())
   .$colourClass { $colourStyles.get($colourClass) }
+  .$colourClass a { $colourStyles.get($colourClass) }
 #end
 </style>
 <div id="calendar"></div>
