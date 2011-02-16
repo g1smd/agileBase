@@ -101,7 +101,7 @@
 	    </span></h2>
 	    <ul parent="$internalModuleName">
 		#set($colourLightness = 80)
-		#set($colourLightnessStep = 55 / $visibleModuleReports.size())
+		#set($colourLightnessStep = 60 / $visibleModuleReports.size())
 		#if($visibleModuleReports.size() > 10)
 		  #set($colourLightnessStep = $colourLightnessStep * 2)
 		#end
@@ -122,7 +122,7 @@
 		    $report
 		  </li>
 		  #set($colourLightness = $colourLightness - $colourLightnessStep)
-		  #if($colourLightness < 0)
+		  #if($colourLightness < 20)
 			#set($colourLightness = 80)
 		  #end
 	    #end ## end of loop through reports in a module
