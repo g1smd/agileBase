@@ -34,8 +34,8 @@ body {
   margin: 0px;
 }
 
-#report_selection h2 span {
-  vertical-align: top;
+#report_selection h2 span img {
+  vertical-align: middle;
 }
 	
 #report_selection_header {
