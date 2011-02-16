@@ -1524,8 +1524,8 @@ public final class DataManagement implements DataManagementInfo {
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
 			if (monthView) {
 				String eventDescription = eventTitle;
-				if (eventTitle.length() > 60) {
-					eventTitle = eventTitle.substring(0,60) + "...";
+				if (eventTitle.length() > 50) {
+					eventTitle = eventTitle.substring(0,50) + "...";
 				}
 				js.key("title").value(eventTitle);
 				js.key("description").value(eventDescription);
