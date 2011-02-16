@@ -1485,12 +1485,6 @@ public final class DataManagement implements DataManagementInfo {
 		if (eventDateField.getDateResolution() > Calendar.DAY_OF_MONTH) {
 			allDayValues = false;
 		}
-		boolean monthView = false;
-		if (startEpoch != null) {
-			if ((endEpoch - startEpoch) > (3600 * 24 * 10)) {
-				monthView = true;
-			}
-		}
 		logger.debug("Filters for calendar are " + filterValues);
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(company, report, filterValues,
 				false, new HashMap<BaseField, Boolean>(), 10000);
@@ -1524,17 +1518,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			js.key("className").value("gtpb_event");
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
-			if (monthView) {
-				String eventDescription = eventTitle;
-				if (eventTitle.length() > 50) {
-					eventTitle = eventTitle.substring(0,50) + "...";
-				}
-				js.key("title").value(eventTitle);
-				js.key("description").value(eventDescription);
-			} else {
-				js.key("title").value(eventTitle);
-				js.key("description").value(eventTitle);
-			}
+			js.key("description").value(eventTitle);
 			js.endObject();
 		}
 		js.endArray();
