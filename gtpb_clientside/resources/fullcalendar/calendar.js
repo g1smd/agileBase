@@ -25,9 +25,11 @@ $(document).ready(function() {
 	  var reportName = jqCheckbox.text();
   	  var internalTableName = jqCheckbox.attr("internaltablename");
 	  var internalReportName = jqCheckbox.attr("internalreportname");
+	  var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
   	  if (jqCheckbox.is(":checked")) {
-	    var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
   	    $("#calendar").fullCalendar('addEventSource', feedUrl);
+  	  } else {
+    	$("#calendar").fullCalendar('removeEventSource', feedUrl);
   	  }
 	});
 
