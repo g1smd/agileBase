@@ -35,3 +35,11 @@ $("#report_selection input").change(function() {
   var internalReportName = $(this).attr("internalreportname");
   var reportName = $(this).text();
 });
+
+$("#show_report_selection").click(function() {
+  $("#report_selection").show("normal");
+});
+
+$("#hide_report_selection").click(function() {
+  $("#report_selection").hide("normal");
+});

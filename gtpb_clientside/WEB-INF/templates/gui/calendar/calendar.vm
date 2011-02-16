@@ -52,11 +52,13 @@
     	  <img src="customisations/common/dashboard/panes.png" /><br>Database
     	</a>
 		<div id="selected_reports">
+		  <a href="#" id="show_report_selection">show more events...</a>
 		</div>
     </div>
   </div>
 </div>
 <div id="report_selection">
+<a id="hide_report_selection" href="#">hide list</a>
 ## Create a collection $moduleReports: each module maps to an array of reports
 #parse("gui/resources/calc_module_reports.vm")
 #if($moduleReports.size() > 0)
