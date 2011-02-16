@@ -30,9 +30,11 @@ a#show_report_selection {
 }
 
 a#hide_report_selection {
-  width: 100%;
-  text-align: right;
-  background-color: gray;
+  float: right;
+}
+
+#report_selection_header {
+  background-color: #cccccc;
 }
 
 .gtpb_event {

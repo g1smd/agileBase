@@ -58,7 +58,10 @@
   </div>
 </div>
 <div id="report_selection">
-    <a id="hide_report_selection" href="#">hide list</a>
+	<div id="report_selection_header">
+	  Show events from:
+      <a id="hide_report_selection" href="#">hide list</a>
+	</div>
     ## Create a collection $moduleReports: each module maps to an array of reports
     #parse("gui/resources/calc_module_reports.vm")
     #if($moduleReports.size() > 0)
