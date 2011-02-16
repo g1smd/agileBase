@@ -20,7 +20,20 @@ $(document).ready(function() {
       fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event','fEditEventOK()','ok cancel','width=800px; height=600px');
     }
   });
-  //updateSelectedReports();
+
+  	$("#report_selection input").change(function() {
+	  var internalReportName = $(this).attr("internalreportname");
+	  var reportName = $(this).text();
+	});
+
+	$("#show_report_selection").click(function() {
+	  $("#report_selection").show("normal");
+	});
+
+	$("#hide_report_selection").click(function() {
+	  $("#report_selection").hide("normal");
+	});
+
 });
 
 function updateSelectedReports() {
@@ -30,16 +43,3 @@ function updateSelectedReports() {
 	$("#selected_reports").append("<span class='active_report'>" + reportName + "</span>");
   });
 }
-
-$("#report_selection input").change(function() {
-  var internalReportName = $(this).attr("internalreportname");
-  var reportName = $(this).text();
-});
-
-$("#show_report_selection").click(function() {
-  $("#report_selection").show("normal");
-});
-
-$("#hide_report_selection").click(function() {
-  $("#report_selection").hide("normal");
-});
