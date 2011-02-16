@@ -20,8 +20,9 @@
   <okTemplate>gui/calendar/edit_event_ok</okTemplate>
   #parse('gui/customisations/wizard_result.vm') 
   #set($app_action_caption = "Edit '$table' event")
+  #set($ab_calendar_display = true)
   <htmlContent><![CDATA[
-    #parse('gui/customisations/new_table_data.vm')
+    #parse('gui/reports_and_tables/tabs/edit.vm')
   ]]>
   </htmlContent>
   <caption>$app_action_caption</caption>
