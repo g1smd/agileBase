@@ -1516,7 +1516,7 @@ public final class DataManagement implements DataManagementInfo {
 			if (!allDayEvent) {
 				js.key("end").value(eventDateEpoch + 7200); // events last 2hrs
 			}
-			js.key("className").value("gtpb_event");
+			js.key("className").value("report_" + internalReportName); // CSS class based on report
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
 			js.key("title").value(eventTitle);
 			js.endObject();
