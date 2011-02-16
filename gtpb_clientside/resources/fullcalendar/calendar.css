@@ -19,6 +19,8 @@ body {
   column-count: 4;
   display: none;
   background-color: #f4f4f4;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 #report_selection h2 {
@@ -29,7 +31,8 @@ body {
 #report_selection_header {
   background-color: #cccccc;
   cursor: pointer;
-  margin: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 .gtpb_event {
