@@ -86,8 +86,9 @@
 	  #end
 	#end
 	## Calculate colours
-	#set($colour_hue_step = 360 / $numReports)
-	#set($colour_hue = 0)
+	#set($colourStyles = {}) ## map will hold style definition for each class, based on internal report name
+	#set($colourHueStep = 360 / $numReports)
+	#set($colourHue = 0)
 	## Display
 	#foreach($module in $moduleReportsProcessed.keySet())
 	  #set($visibleModuleReports = $moduleReportsProcessed.get($module))
@@ -97,18 +98,23 @@
 	  	  $module
 	    </span></h2>
 	    <ul parent="$internalModuleName">
-		#set($colour_lightness = 80)
-		#set($colour_lightness_step = 55 / $visibleModuleReports.size())
+		#set($colourLightness = 80)
+		#set($colourLightnessStep = 55 / $visibleModuleReports.size())
 	    #foreach($report in $visibleModuleReports) 
-		  #set($colour_hue = $colour_hue + $colour_hue_step)
+		  #set($colourHue = $colourHue + $colourHueStep)
+		  #set($colourStyle = "background-color: hsl($colourHue, 70%, $colourLightness%);")
+		  #if($colourLightness < 45)
+			#set($colourStyle = "$colourStyle color:white;")
+		  #end
+		  #set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
 		  #set($table=$report.getParentTable())
 		  #set($internalReportName = $report.getInternalReportName())
 		  #set($internalTableName = $table.getInternalTableName())
-		  <li id="$internalTableName$internalReportName" style="background-color: hsl($colour_hue, 70%, $colour_lightness%);">
+		  <li id="$internalTableName$internalReportName" class="report_$internalReportName">
 		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($sessionData.getCustomReport("calendar_$internalReportName")) checked #end> 
 		    $report
 		  </li>
-		  #set($colour_lightness = $colour_lightness - $colour_lightness_step)
+		  #set($colourLightness = $colourLightness - $colourLightnessStep)
 	    #end ## end of loop through reports in a module
 	    </ul>
 	  </li>
@@ -116,6 +122,11 @@
 	</ul>
 #end ## end if there are any modules visible
 </div>
+<style>
+#foreach($colourClass in $colourStyles.keySet())
+  .$colourClass { $colourStyles.get($colourClass) }
+#end
+</style>
 <div id="calendar"></div>
 </body>
 </html>
