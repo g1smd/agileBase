@@ -78,6 +78,7 @@
 	  #set($visibleModuleReportsCopy = {})
 	  #set($temp = $visibleModuleReportsCopy.addAll($visibleModuleReports))
 	  #foreach($report in $visibleModuleReportsCopy)
+		$report field is $report.getCalendarField()<br>
 		#if(!$report.getCalendarField())
 		  #set($temp = $visibleModuleReports.remove($report))
 		#end
