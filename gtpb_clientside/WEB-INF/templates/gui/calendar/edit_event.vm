@@ -21,7 +21,9 @@
   <caption>Import into $table</caption>
   #parse('gui/customisations/wizard_result.vm') 
   <htmlContent><![CDATA[
+    <form>
     #parse('gui/reports_and_tables/tabs/edit.vm')
+	</form>
   ]]>
   </htmlContent>
 </request>
