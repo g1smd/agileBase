@@ -8,7 +8,7 @@ $(document).ready(function() {
 	events: 'AppController.servlet?return=gui/calendar/feed',
 	editable: true,
     eventRender: function(event, jqElement, view) {
-	  element.qtip({
+	  jqElement.qtip({
         content: event.description
       });
     },
