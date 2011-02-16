@@ -97,15 +97,18 @@
 	  	  $module
 	    </span></h2>
 	    <ul parent="$internalModuleName">
+		#set($colour_lightness = 100)
+		#set($colour_lightness_step = 60 / $visibleModuleReports.size())
 	    #foreach($report in $visibleModuleReports) 
 		  #set($colour_hue = $colour_hue + $colour_hue_step)
 		  #set($table=$report.getParentTable())
 		  #set($internalReportName = $report.getInternalReportName())
 		  #set($internalTableName = $table.getInternalTableName())
-		  <li id="$internalTableName$internalReportName" style="background-color: hsl($colour_hue, 70%, 50%);">
+		  <li id="$internalTableName$internalReportName" style="background-color: hsl($colour_hue, 70%, $colour_lightness%);">
 		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($sessionData.getCustomReport("calendar_$internalReportName")) checked #end> 
 		    $report
 		  </li>
+		  #set($colour_lightness = $colour_lightness - $colour_lightness_step)
 	    #end ## end of loop through reports in a module
 	    </ul>
 	  </li>
