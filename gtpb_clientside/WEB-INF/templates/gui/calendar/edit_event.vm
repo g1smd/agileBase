@@ -18,12 +18,10 @@
 #set($table = $sessionData.getTable())
 <request>
   <okTemplate>gui/calendar/edit_event_ok</okTemplate>
-  <caption>Import into $table</caption>
+  <caption>Edit '$table' event</caption>
   #parse('gui/customisations/wizard_result.vm') 
   <htmlContent><![CDATA[
-    <form>
-    #parse('gui/reports_and_tables/tabs/edit.vm')
-	</form>
+    #parse('gui/customisations/new_table_data.vm')
   ]]>
   </htmlContent>
 </request>
