@@ -58,10 +58,10 @@
   </div>
 </div>
 <div id="report_selection">
-<a id="hide_report_selection" href="#">hide list</a>
-## Create a collection $moduleReports: each module maps to an array of reports
-#parse("gui/resources/calc_module_reports.vm")
-#if($moduleReports.size() > 0)
+    <a id="hide_report_selection" href="#">hide list</a>
+    ## Create a collection $moduleReports: each module maps to an array of reports
+    #parse("gui/resources/calc_module_reports.vm")
+    #if($moduleReports.size() > 0)
 	<ul>
     #set($hiddenReports = $user.getHiddenReports())
     #foreach($module in $moduleReports.keySet())
