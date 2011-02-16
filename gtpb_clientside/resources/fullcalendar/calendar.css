@@ -28,6 +28,7 @@ body {
 #report_selection_header {
   background-color: #cccccc;
   cursor: pointer;
+  margin: 1em;
 }
 
 .gtpb_event {
