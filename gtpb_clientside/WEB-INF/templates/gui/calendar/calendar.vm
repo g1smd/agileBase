@@ -101,7 +101,7 @@
 	    </span></h2>
 	    <ul parent="$internalModuleName">
 		#set($colourLightness = 80)
-		#set($colourLightnessStep = 100 / $visibleModuleReports.size())
+		#set($colourLightnessStep = 90 / $visibleModuleReports.size())
 		#if($visibleModuleReports.size() > 10)
 		  #set($colourLightnessStep = $colourLightnessStep * 2)
 		#end
