@@ -52,9 +52,9 @@
     	  <img src="customisations/common/dashboard/panes.png" /><br>Database
     	</a>
     </div>
-	<div id="selected_reports">
-	  <a href="#" id="show_report_selection">show more events...</a>
-	</div>
+  </div>
+  <div id="selected_reports">
+    <a href="#" id="show_report_selection">show more events...</a>
   </div>
 </div>
 <div id="report_selection">

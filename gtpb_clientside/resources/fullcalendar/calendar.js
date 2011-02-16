@@ -27,11 +27,11 @@ $(document).ready(function() {
 	});
 
 	$("#show_report_selection").click(function() {
-	  $("#report_selection").show("normal");
+	  $("#report_selection").slideDown("normal");
 	});
 
 	$("#hide_report_selection").click(function() {
-	  $("#report_selection").hide("normal");
+	  $("#report_selection").slideUp("normal");
 	});
 
 });

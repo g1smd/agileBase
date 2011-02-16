@@ -6,6 +6,12 @@ body {
   margin: 1em;
 }
 
+#selected_reports {
+  position: absolute;
+  left: 400px;
+  right: 0px;
+}
+
 #report_selection {
   width: 100%;
   -moz-column-count: 4;
