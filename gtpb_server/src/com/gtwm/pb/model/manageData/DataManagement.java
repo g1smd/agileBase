@@ -1527,6 +1527,7 @@ public final class DataManagement implements DataManagementInfo {
 				js.key("description").value(eventDescription);
 			} else {
 				js.key("title").value(eventTitle);
+				js.key("description").value(eventTitle);
 			}
 			js.endObject();
 		}
