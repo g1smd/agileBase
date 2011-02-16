@@ -69,6 +69,7 @@ import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageUsage.UsageStats;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.model.manageData.ModuleAction;
+import com.gtwm.pb.servlets.ServletUtilMethods;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.MissingParametersException;
@@ -543,9 +544,10 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return reportDataRows;
 	}
 
-	public String getReportCalendarJSON(BaseReportInfo report) throws CodingErrorException,
+	public String getReportCalendarJSON() throws CodingErrorException,
 			CantDoThatException, MissingParametersException, DisallowedException,
 			ObjectNotFoundException, SQLException, JSONException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(this.sessionData, this.request, this.databaseDefn, true);
 		Map<BaseField, String> filterValues = new HashMap<BaseField, String>(this.sessionData.getReportFilterValues());
 		// Add start and end time filters
 		ReportFieldInfo eventDateReportField = report.getCalendarField();

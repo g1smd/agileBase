@@ -5,8 +5,7 @@ $(document).ready(function() {
       center: 'month,agendaWeek,agendaDay',
       right:  'today prev,next'
 	},
-	events: 'AppController.servlet?return=gui/calendar/feed',
-	editable: true,
+    editable: true,
     eventRender: function(event, jqElement, view) {
 	  if (view.name == 'month') {
         jqElement.height(15);
@@ -22,8 +21,13 @@ $(document).ready(function() {
   });
 
   	$("#report_selection input").change(function() {
-	  var internalReportName = $(this).attr("internalreportname");
-	  var reportName = $(this).text();
+  	  var jqCheckbox = $(this);
+	  var reportName = jqCheckbox.text();
+  	  var internalTableName = jqCheckbox.attr("internaltablename");
+	  var internalReportName = jqCheckbox.attr("internalreportname");
+  	  if (jqCheckbox.is(":checked")) {
+	    var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
+  	  }
 	});
 
 	$("#report_selection_header").click(function() {

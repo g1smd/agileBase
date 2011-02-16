@@ -428,11 +428,15 @@ public interface ViewMethodsInfo {
 	 * http://arshaw.com/fullcalendar/
 	 * 
 	 * The parameters 'start' and 'end' that fullcalendar provides in the HTTP
-	 * request are added to the filters taken from the session and applied to the date field
+	 * request are added to the filters taken from the session and applied to
+	 * the date field
+	 * 
+	 * Parameters 'internaltablename' and 'internalreportname' specify the
+	 * report. If none are given, the session report is used
 	 */
-	public String getReportCalendarJSON(BaseReportInfo report) throws CodingErrorException,
-			CantDoThatException, MissingParametersException, DisallowedException,
-			ObjectNotFoundException, SQLException, JSONException;
+	public String getReportCalendarJSON() throws CodingErrorException, CantDoThatException,
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
+			JSONException;
 
 	/**
 	 * Returns true if the record identified by the session row ID is visible in

@@ -28,13 +28,14 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
 /**
- * Methods shared between ServletAuthMethods, ServletSchemaMethods, ServletDataMethods
+ * Methods shared between ServletAuthMethods, ServletSchemaMethods,
+ * ServletDataMethods
  */
 public final class ServletUtilMethods {
 
 	private ServletUtilMethods() {
 	}
-	
+
 	public static BaseReportInfo getReportForRequest(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn, boolean defaultToSessionReport)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
@@ -49,7 +50,13 @@ public final class ServletUtilMethods {
 		} else if (internalReportName == null) {
 			throw new MissingParametersException("'internalreportname' parameter needed in request");
 		} else {
-			TableInfo table = databaseDefn.findTableContainingReport(request, internalReportName);
+			String internalTableName = request.getParameter("internaltablename");
+			TableInfo table = null;
+			if (internalTableName != null) {
+				table = databaseDefn.getTable(request, internalTableName);
+			} else {
+				table = databaseDefn.findTableContainingReport(request, internalReportName);
+			}
 			report = table.getReport(internalReportName);
 		}
 		return report;
@@ -77,9 +84,10 @@ public final class ServletUtilMethods {
 		}
 		return table;
 	}
-	
-	public static int getRowIdForRequest(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn, boolean defaultToSessionRowId) throws ObjectNotFoundException, MissingParametersException {
+
+	public static int getRowIdForRequest(SessionDataInfo sessionData, HttpServletRequest request,
+			DatabaseInfo databaseDefn, boolean defaultToSessionRowId)
+			throws ObjectNotFoundException, MissingParametersException {
 		int rowId = -1;
 		String rowIdString = request.getParameter("rowid");
 		if ((rowIdString == null) && defaultToSessionRowId) {
