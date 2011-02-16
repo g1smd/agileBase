@@ -102,6 +102,9 @@
 	    <ul parent="$internalModuleName">
 		#set($colourLightness = 80)
 		#set($colourLightnessStep = 55 / $visibleModuleReports.size())
+		#if($visibleModuleReports.size() > 10)
+		  #set($colourLightnessStep = $colourLightnessStep * 2)
+		#end
 	    #foreach($report in $visibleModuleReports) 
 		  #set($internalReportName = $report.getInternalReportName())
 		  #set($internalTableName = $table.getInternalTableName())
@@ -119,6 +122,9 @@
 		    $report
 		  </li>
 		  #set($colourLightness = $colourLightness - $colourLightnessStep)
+		  #if($colourLightness < 0)
+			#set($colourLightness = 80)
+		  #end
 	    #end ## end of loop through reports in a module
 	    </ul>
 	  </li>
