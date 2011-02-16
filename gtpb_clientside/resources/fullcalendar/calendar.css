@@ -24,6 +24,11 @@ body {
   background-color: #f4f4f4;
 }
 
+#report_selection ul {
+  margin: 0;
+  padding: 0;
+}
+
 #report_selection h2 {
   font-size: 11pt;
   margin: 0px;
