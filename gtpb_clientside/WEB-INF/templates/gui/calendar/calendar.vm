@@ -97,8 +97,8 @@
 	  	  $module
 	    </span></h2>
 	    <ul parent="$internalModuleName">
-		#set($colour_lightness = 70)
-		#set($colour_lightness_step = 60 / $visibleModuleReports.size())
+		#set($colour_lightness = 80)
+		#set($colour_lightness_step = 55 / $visibleModuleReports.size())
 	    #foreach($report in $visibleModuleReports) 
 		  #set($colour_hue = $colour_hue + $colour_hue_step)
 		  #set($table=$report.getParentTable())
