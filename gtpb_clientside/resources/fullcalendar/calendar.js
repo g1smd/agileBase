@@ -6,7 +6,23 @@ $(document).ready(function() {
       right:  'today prev,next'
 	},
 	events: 'AppController.servlet?return=gui/calendar/feed',
-	editable: true
+	editable: true,
+    eventRender: function(event, jqElement, view) {
+		if (view.name == 'month') {
+            //...
+        }else{
+            //...
+        }
+		element.qtip({
+        content: event.description;
+      });
+    },
+    eventClick: function(calEvent, jsEvent, view) {
+      var eventId = calEvent.id;
+      var internalTableName = eventId.replace("_.*$","");
+      var rowId = eventId.replace("^.*_","");
+      fShowModalDialog('gui/calendar/edit_event&set_table=' + internalTableName + '&set_row_id=' + rowId,'edit event','fEditEventOK()','ok cancel','width=800px; height=600px');
+    }
   });
   //updateSelectedReports();
 });
@@ -22,5 +38,4 @@ function updateSelectedReports() {
 $("#report_selection input").change(function() {
   var internalReportName = $(this).attr("internalreportname");
   var reportName = $(this).text();
-  
 });

@@ -1,0 +1,12 @@
+#set($company = $view.getLoggedInUser().getCompany())
+#set($companyName = $viewTools.cleanString($company.getCompanyName()))
+#if(!$top_level_xml_element_set)<request>#end
+  ## The wizard has closed, no need for these
+  ##<caption></caption>
+  ##<okTemplate></okTemplate>  
+  #parse('gui/customisations/wizard_result.vm')
+  <htmlContent><![CDATA[
+		## no htmlContent because it will never be displayed - the wizard has closed
+	]]>
+  </htmlContent>
+#if(!$top_level_xml_element_set)</request>#end
