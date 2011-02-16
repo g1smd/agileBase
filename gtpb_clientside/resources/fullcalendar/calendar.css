@@ -18,6 +18,7 @@ body {
   -webkit-column-count: 4;
   column-count: 4;
   display: none;
+  background-color: #f4f4f4;
 }
 
 #report_selection h2 {
