@@ -31,6 +31,7 @@
   <link type="text/css" href="resources/modalFramework/modalFramework.css" rel="stylesheet" />
   <script src="resources/jquery.js" language="Javascript"></script>
   <script src="resources/jquery.qtip.js" language="Javascript"></script>
+  <script src="resources/wait/request_setFilter.js" language="Javascript"></script>
   <script src="resources/modalFramework/modalFramework.js" language="Javascript"></script>
   <script src="resources/fullcalendar/jquery-ui-custom.js" language="Javascript"></script>
   <script src="resources/fullcalendar/fullcalendar.js" language="Javascript"></script>
