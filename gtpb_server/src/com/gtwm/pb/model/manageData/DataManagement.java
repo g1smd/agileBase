@@ -1496,6 +1496,7 @@ public final class DataManagement implements DataManagementInfo {
 		JSONStringer js = new JSONStringer();
 		js.array();
 		String internalReportName = report.getInternalReportName();
+		String internalTableName = report.getParentTable().getInternalTableName();
 		ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
 			DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
 			if (eventDateValue.getKeyValue().equals("")) {
@@ -1503,6 +1504,8 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			js.object();
 			js.key("id").value(internalReportName + "_" + reportDataRow.getRowId());
+			js.key("internalTableName").value(internalTableName);
+			js.key("rowId").value(reportDataRow.getRowId());
 			boolean allDayEvent = allDayValues;
 			if (!allDayValues) {
 				String eventDateDisplayValue = eventDateValue.getDisplayValue();
