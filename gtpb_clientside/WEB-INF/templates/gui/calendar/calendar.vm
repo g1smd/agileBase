@@ -65,8 +65,12 @@
     #parse("gui/resources/calc_module_reports.vm")
     #if($moduleReports.size() > 0)
 	<ul>
+	## A bit of post-processing or the map - remove unsuitable reports
+	#set($numReports = 0)
+	#set($moduleReportsProcessed = {})
     #set($hiddenReports = $user.getHiddenReports())
-    #foreach($module in $moduleReports.keySet())
+	#set($modules = $moduleReports.keySet())
+    #foreach($module in $modules)
 	  #set($visibleModuleReports = $moduleReports.get($module))
 	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
 	  #set($visibleModuleReportsCopy = {})
@@ -77,24 +81,34 @@
 		#end
 	  #end
 	  #if($visibleModuleReports.size() > 0)
-    	#set($internalModuleName = $module.getInternalModuleName())
-    	<li id="$internalModuleName">
-    	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
-    		$module
-    	  </span></h2>
-    	  <ul parent="$internalModuleName">
-    	  #foreach($report in $visibleModuleReports) 
-    		#set($table=$report.getParentTable())
-			#set($internalReportName = $report.getInternalReportName())
-			#set($internalTableName = $table.getInternalTableName())
-    		<li id="$internalTableName$internalReportName">
-			  <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($sessionData.getCustomReport("calendar_$internalReportName")) checked #end> 
-			  $report
-    		</li>
-    	  #end ## end of loop through reports in a module
-    	  </ul>
-    	</li>
-      #end
+	    #set($temp = $moduleReportsProcessed.put($module, $visibleModuleReports))
+		#set($numReports = $numReports + $visibleModuleReports.size())
+	  #end
+	#end
+	## Calculate colours
+	#set($colour_hue_step = 360 / $numReports)
+	#set($colour_hue = 0)
+	## Display
+	#foreach($module in $moduleReportsProcessed.keySet())
+	  #set($visibleModuleReports = $moduleReportsProcessed.get($module))
+  	  #set($internalModuleName = $module.getInternalModuleName())
+	  <li id="$internalModuleName">
+	    <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
+	  	  $module
+	    </span></h2>
+	    <ul parent="$internalModuleName">
+	    #foreach($report in $visibleModuleReports) 
+		  #set($colour_hue = $colour_hue + $colour_hue_step)
+		  #set($table=$report.getParentTable())
+		  #set($internalReportName = $report.getInternalReportName())
+		  #set($internalTableName = $table.getInternalTableName())
+		  <li id="$internalTableName$internalReportName" style="background-color: hsl($colour_hue, 100%, 50%);">
+		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($sessionData.getCustomReport("calendar_$internalReportName")) checked #end> 
+		    $report
+		  </li>
+	    #end ## end of loop through reports in a module
+	    </ul>
+	  </li>
 	#end ## end loop through modules
 	</ul>
 #end ## end if there are any modules visible
