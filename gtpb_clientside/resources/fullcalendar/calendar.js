@@ -27,6 +27,7 @@ $(document).ready(function() {
 	  var internalReportName = jqCheckbox.attr("internalreportname");
   	  if (jqCheckbox.is(":checked")) {
 	    var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
+  	    $("#calendar").fullCalendar('addEventSource', feedUrl);
   	  }
 	});
 
