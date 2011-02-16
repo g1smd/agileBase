@@ -14,10 +14,7 @@ $(document).ready(function() {
     },
     eventClick: function(calEvent, jsEvent, view) {
       var eventId = calEvent.id;
-      var internalTableName = eventId.substr(0,eventId.indexOf("_") + 1);
-      var rowId = eventId.substr(eventId.indexOf("_") + 1,eventId.length);
-      alert('internalTableName ' + internalTableName + ', row ID ' + rowId);
-      fShowModalDialog('gui/calendar/edit_event&set_table=' + internalTableName + '&set_row_id=' + rowId,'edit event','fEditEventOK()','ok cancel','width=800px; height=600px');
+      fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event','fEditEventOK()','ok cancel','width=800px; height=600px');
     }
   });
   //updateSelectedReports();
