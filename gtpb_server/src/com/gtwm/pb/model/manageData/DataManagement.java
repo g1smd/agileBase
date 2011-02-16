@@ -1518,7 +1518,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			js.key("className").value("gtpb_event");
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
-			js.key("description").value(eventTitle);
+			js.key("title").value(eventTitle);
 			js.endObject();
 		}
 		js.endArray();
