@@ -344,6 +344,7 @@ public class ReportData implements ReportDataInfo {
 			// TODO: better calculation of end time, we just add an hour at the
 			// moment
 			Span timespan = new Span(epochTime, epochTime + 3600);
+			logger.debug("Timestamp " + valueToParse + " parsed as epoch " + epochTime);
 			return timespan;
 		} else {
 			try {
@@ -727,6 +728,7 @@ public class ReportData implements ReportDataInfo {
 		}
 		PreparedStatement statement = this.getReportSqlPreparedStatement(conn, filterValues,
 				exactFilters, reportSorts, rowLimit, null);
+		logger.debug("Statement is " + statement);
 		long executionStartTime = System.currentTimeMillis();
 		ResultSet results = statement.executeQuery();
 		float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
