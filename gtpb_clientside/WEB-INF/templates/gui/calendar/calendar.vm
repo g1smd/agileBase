@@ -86,8 +86,9 @@
     	  #foreach($report in $visibleModuleReports) 
     		#set($table=$report.getParentTable())
 			#set($internalReportName = $report.getInternalReportName())
-    		<li id="$table.getInternalTableName()$internalReportName">
-			  <input type="checkbox" internalreportname="$internalReportName" #if($sessionData.getCustomReport("calendar_$internalReportName")) checked #end> 
+			#set($internalTableName = $table.getInternalTableName())
+    		<li id="$internalTableName$internalReportName">
+			  <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($sessionData.getCustomReport("calendar_$internalReportName")) checked #end> 
 			  $report
     		</li>
     	  #end ## end of loop through reports in a module
