@@ -49,8 +49,6 @@ import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
-import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
-import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import net.fortuna.ical4j.data.CalendarOutputter;

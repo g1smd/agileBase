@@ -71,6 +71,7 @@ import com.gtwm.pb.model.interfaces.TableDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
+import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.interfaces.fields.CheckboxValue;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
@@ -1480,15 +1481,20 @@ public final class DataManagement implements DataManagementInfo {
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
 		}
-		DateField eventDateField = ((DateField) eventDateReportField.getBaseField());
+		int dateResolution = 0;
+		if (eventDateReportField instanceof ReportCalcFieldInfo) {
+			dateResolution = ((ReportCalcFieldInfo) eventDateReportField).getDateResolution();
+		} else {
+			BaseField eventDateBaseField = eventDateReportField.getBaseField();
+			DateField eventDateField = (DateField) eventDateBaseField;
+			dateResolution = eventDateField.getDateResolution();
+		}
 		boolean allDayValues = true;
-		if (eventDateField.getDateResolution() > Calendar.DAY_OF_MONTH) {
+		if (dateResolution > Calendar.DAY_OF_MONTH) {
 			allDayValues = false;
 		}
-		logger.debug("Filters for calendar are " + filterValues);
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(company, report, filterValues,
 				false, new HashMap<BaseField, Boolean>(), 10000);
-		logger.debug("There are " + reportDataRows.size() + " event rows");
 		JSONStringer js = new JSONStringer();
 		js.array();
 		String internalReportName = report.getInternalReportName();
@@ -1505,7 +1511,7 @@ public final class DataManagement implements DataManagementInfo {
 			boolean allDayEvent = allDayValues;
 			if (!allDayValues) {
 				String eventDateDisplayValue = eventDateValue.getDisplayValue();
-				//TODO: trim may not be necessary
+				// TODO: trim may not be necessary
 				if (eventDateDisplayValue.trim().endsWith("00:00")) {
 					allDayEvent = true;
 				}
@@ -1516,7 +1522,7 @@ public final class DataManagement implements DataManagementInfo {
 			if (!allDayEvent) {
 				js.key("end").value(eventDateEpoch + 7200); // events last 2hrs
 			}
-			js.key("className").value("report_" + internalReportName); // CSS class based on report
+			js.key("className").value("report_" + internalReportName);
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
 			js.key("title").value(eventTitle);
 			js.endObject();
