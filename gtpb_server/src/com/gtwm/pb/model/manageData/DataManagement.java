@@ -1505,7 +1505,7 @@ public final class DataManagement implements DataManagementInfo {
 			js.object();
 			js.key("id").value(internalReportName + "_" + reportDataRow.getRowId());
 			js.key("internalTableName").value(internalTableName);
-			js.key("rowId").value(reportDataRow.getRowId());
+			js.key("rowId").value(String.valueOf(reportDataRow.getRowId()));
 			boolean allDayEvent = allDayValues;
 			if (!allDayValues) {
 				String eventDateDisplayValue = eventDateValue.getDisplayValue();

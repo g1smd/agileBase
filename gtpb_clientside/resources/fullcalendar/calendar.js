@@ -8,11 +8,6 @@ $(document).ready(function() {
 	events: 'AppController.servlet?return=gui/calendar/feed',
 	editable: true,
     eventRender: function(event, jqElement, view) {
-	  if (view.name == 'month') {
-        jqElement.height(10);
-      }else{
-            //...
-      }
 	  jqElement.qtip({
         content: event.description
       });
