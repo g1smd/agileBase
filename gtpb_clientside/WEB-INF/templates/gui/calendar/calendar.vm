@@ -107,6 +107,7 @@
 		#end
 	    #foreach($report in $visibleModuleReports) 
 		  #set($internalReportName = $report.getInternalReportName())
+		  #set($table=$report.getParentTable())
 		  #set($internalTableName = $table.getInternalTableName())
 		  #set($colourHue = $colourHue + $colourHueStep)
 		  #set($colourStyle = "background-color: hsl($colourHue, 70%, $colourLightness%);")
@@ -116,7 +117,6 @@
 			#set($colourStyle = "$colourStyle color:black;")
 		  #end
 		  #set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
-		  #set($table=$report.getParentTable())
 		  <li id="$internalTableName$internalReportName" class="report_$internalReportName">
 		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($sessionData.getCustomReport("calendar_$internalReportName")) checked #end> 
 		    $report
