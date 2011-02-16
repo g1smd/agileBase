@@ -92,6 +92,7 @@
 	#set($colourHueStep = 360 / $numReports)
 	#set($colourHue = 0)
 	## Display
+	<h1>moduleReportsProcessed are $moduleReportsProcessed</h1>
 	#foreach($module in $moduleReportsProcessed.keySet())
 	  #set($visibleModuleReports = $moduleReportsProcessed.get($module))
   	  #set($internalModuleName = $module.getInternalModuleName())
