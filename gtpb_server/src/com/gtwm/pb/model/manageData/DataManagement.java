@@ -1509,6 +1509,7 @@ public final class DataManagement implements DataManagementInfo {
 			boolean allDayEvent = allDayValues;
 			if (!allDayValues) {
 				String eventDateDisplayValue = eventDateValue.getDisplayValue();
+				//TODO: trim may not be necessary
 				if (eventDateDisplayValue.trim().endsWith("00:00")) {
 					allDayEvent = true;
 				}
