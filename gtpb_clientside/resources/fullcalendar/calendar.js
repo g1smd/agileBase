@@ -7,7 +7,7 @@ $(document).ready(function() {
 	},
     editable: true,
     eventRender: function(event, jqElement, view) {
-	  if (view.name == 'month') {
+	  if ((view.name == 'month') || ((view.name == 'week') && event.allDay)) {
         jqElement.height(15);
   	    jqElement.qtip({
           content: event.title
