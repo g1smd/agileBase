@@ -18,10 +18,11 @@
 #set($table = $sessionData.getTable())
 <request>
   <okTemplate>gui/calendar/edit_event_ok</okTemplate>
-  <caption>Edit '$table' event</caption>
   #parse('gui/customisations/wizard_result.vm') 
+  #set($app_action_caption = "Edit '$table' event")
   <htmlContent><![CDATA[
     #parse('gui/customisations/new_table_data.vm')
   ]]>
   </htmlContent>
+  <caption>$app_action_caption</caption>
 </request>
