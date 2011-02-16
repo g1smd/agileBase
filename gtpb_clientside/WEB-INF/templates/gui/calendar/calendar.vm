@@ -57,9 +57,11 @@
   <div id="selected_reports">
   </div>
 </div>
+<div id="rest_of_page">
 <div id="report_selection_header">
   Choose calendars
 </div>
+
 <div id="report_selection">
     ## Create a collection $moduleReports: each module maps to an array of reports
     #parse("gui/resources/calc_module_reports.vm")
@@ -131,5 +133,6 @@
 #end
 </style>
 <div id="calendar"></div>
+</div>
 </body>
 </html>

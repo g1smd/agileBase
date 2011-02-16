@@ -2,8 +2,11 @@ body {
   background-color: white;
 }
 
-#calendar {
+#rest_of_page {
   margin: 1em;
+}
+
+#calendar {
 }
 
 #selected_reports {
@@ -19,8 +22,6 @@ body {
   column-count: 4;
   display: none;
   background-color: #f4f4f4;
-  margin-left: 1em;
-  margin-right: 1em;
 }
 
 #report_selection h2 {
@@ -31,8 +32,6 @@ body {
 #report_selection_header {
   background-color: #cccccc;
   cursor: pointer;
-  margin-left: 1em;
-  margin-right: 1em;
 }
 
 .gtpb_event {
