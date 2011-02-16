@@ -65,7 +65,9 @@
     #foreach($module in $moduleReports.keySet())
 	  #set($visibleModuleReports = $moduleReports.get($module))
 	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
-	  #foreach($report in $visibleModuleReports)
+	  #set($visibleModuleReportsCopy = {})
+	  #set($temp = $visibleModuleReportsCopy.addAll($visibleModuleReports))
+	  #foreach($report in $visibleModuleReportsCopy)
 		#if(!$report.getCalendarField())
 		  #set($temp = $visibleModuleReports.remove($report))
 		#end
