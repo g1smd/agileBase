@@ -1491,8 +1491,10 @@ public final class DataManagement implements DataManagementInfo {
 				monthView = true;
 			}
 		}
+		logger.debug("Filters for calendar are " + filterValues);
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(company, report, filterValues,
 				false, new HashMap<BaseField, Boolean>(), 10000);
+		logger.debug("There are " + reportDataRows.size() + " event rows");
 		JSONStringer js = new JSONStringer();
 		js.array();
 		String internalReportName = report.getInternalReportName();
