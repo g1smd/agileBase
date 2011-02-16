@@ -75,7 +75,7 @@
     #foreach($module in $modules)
 	  #set($visibleModuleReports = $moduleReports.get($module))
 	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
-	  #set($visibleModuleReportsCopy = {})
+	  #set($visibleModuleReportsCopy = [])
 	  #set($temp = $visibleModuleReportsCopy.addAll($visibleModuleReports))
 	  visibleModuleReportsCopy is $visibleModuleReportsCopy<br>
 	  #foreach($report in $visibleModuleReportsCopy)
