@@ -84,7 +84,7 @@
 				   #end
 				   id="$inputId">##
   </div>##
-  #if($userCanEdit)##
+  #if($userCanEdit && (!$ab_calendar_display))##
   <script language="JavaScript" src="resources/picker.js"></script>
   <script language="Javascript">
     ## Hack added by Oliver for iPod/iPhone compatibility

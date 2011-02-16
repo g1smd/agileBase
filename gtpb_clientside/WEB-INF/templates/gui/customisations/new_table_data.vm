@@ -47,15 +47,15 @@
 		#if(($field.getHidden() == false) && ($field.getClass().getSimpleName() != "FileFieldDefn") && ($field.getClass().getSimpleName() != "RelationFieldDefn"))
           #parse("gui/reports_and_tables/tabs/table_data_row.vm")
 		#end
-## If we come across a relation, add it's value to the wizard caption
-#if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
-  #set($relatedField=$field.getRelatedField())##
-  #set($fieldValue="$sessionData.getRowId($relatedField.getTableContainingField())")##
-  #set($fieldDisplayValue = $field.getDisplayValue($fieldValue))##
-  #if($fieldDisplayValue != "")
-    #set($app_action_caption = "$app_action_caption for ${SQ}$fieldDisplayValue${SQ}")
-  #end
-#end
+        ## If we come across a relation, add it's value to the wizard caption
+        #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+          #set($relatedField=$field.getRelatedField())##
+          #set($fieldValue="$sessionData.getRowId($relatedField.getTableContainingField())")##
+          #set($fieldDisplayValue = $field.getDisplayValue($fieldValue))##
+          #if($fieldDisplayValue != "")
+            #set($app_action_caption = "$app_action_caption for ${SQ}$fieldDisplayValue${SQ}")
+          #end
+        #end
 
 	#end ## end loop through fields
 	<tr class="last">
