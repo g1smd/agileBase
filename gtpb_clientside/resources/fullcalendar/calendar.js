@@ -13,7 +13,7 @@ $(document).ready(function() {
       });
     },
     eventClick: function(calEvent, jsEvent, view) {
-      var eventId = calEvent.id;
+      var eventId = calEvent.id + "";
       var internalTableName = eventId.replace("\_.*$","");
       var rowId = eventId.replace("^.*\_","");
       fShowModalDialog('gui/calendar/edit_event&set_table=' + internalTableName + '&set_row_id=' + rowId,'edit event','fEditEventOK()','ok cancel','width=800px; height=600px');
