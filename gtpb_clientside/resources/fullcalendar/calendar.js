@@ -14,9 +14,9 @@ $(document).ready(function() {
     },
     eventClick: function(calEvent, jsEvent, view) {
       var eventId = calEvent.id;
-      alert(eventId.indexOf("_"));
-      var internalTableName = eventId.replace("\_.*$","");
-      var rowId = eventId.replace("^.*\_","");
+      var internalTableName = eventId.substr(0,eventId.indexOf("_"));
+      var rowId = eventId.substr(eventId.indexOf("_"),eventId.length);
+      alert('internalTableName ' + internalTableName + ', row ID ' + rowId);
       fShowModalDialog('gui/calendar/edit_event&set_table=' + internalTableName + '&set_row_id=' + rowId,'edit event','fEditEventOK()','ok cancel','width=800px; height=600px');
     }
   });
