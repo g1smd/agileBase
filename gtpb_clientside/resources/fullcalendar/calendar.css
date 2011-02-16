@@ -25,14 +25,6 @@ body {
   margin: 0px;
 }
 
-a#show_report_selection {
-  float: right;
-}
-
-a#hide_report_selection {
-  float: right;
-}
-
 #report_selection_header {
   background-color: #cccccc;
 }

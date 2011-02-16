@@ -26,14 +26,9 @@ $(document).ready(function() {
 	  var reportName = $(this).text();
 	});
 
-	$("#show_report_selection").click(function() {
-	  $("#report_selection").slideDown("normal");
+	$("#report_selection_header").click(function() {
+	  $("#report_selection").toggle('normal');
 	});
-
-	$("#hide_report_selection").click(function() {
-	  $("#report_selection").slideUp("normal");
-	});
-
 });
 
 function updateSelectedReports() {
