@@ -34,6 +34,10 @@ body {
   margin: 0px;
 }
 
+#report_selection h2 span {
+  vertical-align: top;
+}
+	
 #report_selection_header {
   background-color: #cccccc;
   cursor: pointer;
