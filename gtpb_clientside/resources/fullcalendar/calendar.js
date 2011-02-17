@@ -24,11 +24,7 @@ $(document).ready(function() {
   
   // Show initial calendars
   $("#report_selection input:checked").each(function() {
-	var jqCheckbox = $(this);
-    var internalTableName = jqCheckbox.attr("internaltablename");
-    var internalReportName = jqCheckbox.attr("internalreportname");
-    var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
-    $("#calendar").fullCalendar('addEventSource', feedUrl); 
+    addRemoveCalendar(this);
   });
   // Show report selector if no reports are initially selected
   if($("#report_selection input:checked").length == 0) {
@@ -37,13 +33,8 @@ $(document).ready(function() {
 
   // Add/remove calendars on click
   $("#report_selection input").change(function() {
-    var jqCheckbox = $(this);
-    var reportName = jqCheckbox.text();
-    var internalTableName = jqCheckbox.attr("internaltablename");
-    var internalReportName = jqCheckbox.attr("internalreportname");
-    var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
+    addRemoveCalendar(this);
     if (jqCheckbox.is(":checked")) {
-      $("#calendar").fullCalendar('addEventSource', feedUrl); 
 	  var addReportOptions = {
         'return': 'blank',
         'add_operational_dashboard_report': 'true',
@@ -52,7 +43,6 @@ $(document).ready(function() {
 	  }
       $.post("AppController.servlet", addReportOptions);
     } else {
-	  $("#calendar").fullCalendar('removeEventSource', feedUrl);
 	  var removeReportOptions = {
         'return': 'blank',
         'remove_operational_dashboard_report': 'true',
@@ -68,10 +58,20 @@ $(document).ready(function() {
   });
 });
 
-function updateSelectedReports() {
-  $("#selected_reports").children().remove();
-  $("#report_selection input:checked").each(function() {
-	var reportName = $(this).text();
-	$("#selected_reports").append("<span class='active_report'>" + reportName + "</span>");
-  });
+// checkboxElement is the checkbox to select/deselect a calendar
+function addRemoveCalendar(var checkboxElement) {
+  var jqCheckbox = $(checkboxElement);
+  var internalTableName = jqCheckbox.attr("internaltablename");
+  var internalReportName = jqCheckbox.attr("internalreportname");
+  var reportName = jqCheckbox.parent().text();
+  var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
+  if (jqCheckbox.is(":checked")) {
+    $("#calendar").fullCalendar('addEventSource', feedUrl);
+    var legendElement = $("<span class='report_" + internalReportName + "' id='legend_" + internalReportName + "'>" + reportName + "</span>");
+    $("#report_selection_header").append(legendElement);
+  } else {
+	$("#calendar").fullCalendar('removeEventSource', feedUrl);
+	var legendId = "legend_" + internalReportName;
+	$("#" + legendId).remove();
+  }
 }
