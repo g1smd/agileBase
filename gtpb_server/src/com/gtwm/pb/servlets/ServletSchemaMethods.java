@@ -2526,11 +2526,13 @@ public final class ServletSchemaMethods {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request, request.getRemoteUser());
+		logger.debug("Adding report " + report + " to user " + appUser);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(appUser);
 			appUser.addOperationalDashboardReport(report);
 			HibernateUtil.currentSession().getTransaction().commit();
+			logger.debug("Reports are now " + appUser.getOperationalDashboardReports());
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
 			throw new CantDoThatException("adding report " + report + " to operational dashboard of user " + appUser + " failed", hex);
