@@ -30,6 +30,10 @@ $(document).ready(function() {
     var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
     $("#calendar").fullCalendar('addEventSource', feedUrl); 
   });
+  // Show report selector if no reports are initially selected
+  if($("#report_selection input:checked").length == 0) {
+	$("#report_selection").show("normal");
+  }
 
   // Add/remove calendars on click
   $("#report_selection input").change(function() {
