@@ -476,7 +476,8 @@ public final class ServletSchemaMethods {
 		if (tableFormPublicString != null) {
 			tableFormPublic = Helpers.valueRepresentsBooleanTrue(tableFormPublicString);
 		}
-		if (newTableName == null && newTableDesc == null && lockable == null && tableFormPublic == null) {
+		if (newTableName == null && newTableDesc == null && lockable == null
+				&& tableFormPublic == null) {
 			throw new MissingParametersException(
 					"tablename, tabledesc, tableformpublic or lockable parameter must be supplied to update a table with a new name or description");
 		}
@@ -493,7 +494,8 @@ public final class ServletSchemaMethods {
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
 			// update the table:
-			databaseDefn.updateTable(conn, request, table, newTableName, newTableDesc, lockable, tableFormPublic);
+			databaseDefn.updateTable(conn, request, table, newTableName, newTableDesc, lockable,
+					tableFormPublic);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
@@ -807,15 +809,18 @@ public final class ServletSchemaMethods {
 							PossibleListOptions.LISTTABLE.getFormInputName());
 					String internalReportName = HttpRequestUtil.getStringValue(request,
 							PossibleListOptions.LISTREPORT.getFormInputName());
-					TableInfo referencedReportTable = databaseDefn.getTable(request, internalTableName);
-					BaseReportInfo referencedReport = referencedReportTable.getReport(internalReportName);
+					TableInfo referencedReportTable = databaseDefn.getTable(request,
+							internalTableName);
+					BaseReportInfo referencedReport = referencedReportTable
+							.getReport(internalReportName);
 					fieldName = referencedReport.getReportName();
 					if (fieldName.startsWith("dbvcalc_")) {
 						fieldName = fieldName.replace("dbvcalc_", "");
 					}
 				}
 			}
-			// for any field other than relation or referenced report data, name has to be specified
+			// for any field other than relation or referenced report data, name
+			// has to be specified
 			if (fieldName.equals("")) {
 				throw new MissingParametersException("Field name must be specified");
 			}
@@ -1001,8 +1006,10 @@ public final class ServletSchemaMethods {
 		BaseField field = tableToRemoveFrom.getField(internalFieldName);
 		ReportFieldInfo reportField = null;
 		FieldCategory fieldCategory = field.getFieldCategory();
-		if ((!fieldCategory.equals(FieldCategory.SEPARATOR)) && (!fieldCategory.equals(FieldCategory.REFERENCED_REPORT_DATA))) {
-			// Separator and referenced report data fields not included in default report
+		if ((!fieldCategory.equals(FieldCategory.SEPARATOR))
+				&& (!fieldCategory.equals(FieldCategory.REFERENCED_REPORT_DATA))) {
+			// Separator and referenced report data fields not included in
+			// default report
 			reportField = tableToRemoveFrom.getDefaultReport().getReportField(internalFieldName);
 		}
 		// begin updating model and persisting changes
@@ -2450,11 +2457,15 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	// TODO: authentication for this method
 	public synchronized static void hideReportFromUser(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
 			CantDoThatException {
+		// Authentication is here because we don't call any databaseDefn method
+		if (!databaseDefn.getAuthManager().getAuthenticator()
+				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
+			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+		}
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		String internalUserName = request.getParameter("internalusername");
@@ -2477,11 +2488,15 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	// TODO: authentication for this method
 	public synchronized static void unhideReportFromUser(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
 			CantDoThatException {
+		// Authentication is here because we don't call any databaseDefn method
+		if (!databaseDefn.getAuthManager().getAuthenticator()
+				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
+			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+		}
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		String internalUserName = request.getParameter("internalusername");
@@ -2495,6 +2510,46 @@ public final class ServletSchemaMethods {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(appUser);
 			appUser.unhideReport(report);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("report un-hiding failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+
+	public synchronized static void addOperationalDashboardReport(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, ServletUtilMethods.USE_SESSION);
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request, request.getRemoteUser());
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(appUser);
+			appUser.addOperationalDashboardReport(report);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("adding report " + report + " to operational dashboard of user " + appUser + " failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+
+	public synchronized static void removeOperationalDashboardReport(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, ServletUtilMethods.USE_SESSION);
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request, request.getRemoteUser());
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(appUser);
+			appUser.removeOperationalDashboardReport(report);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);

@@ -514,6 +514,12 @@ public final class AppController extends VelocityViewServlet {
 				case UNHIDE_REPORT:
 					ServletSchemaMethods.unhideReportFromUser(sessionData, request, databaseDefn);
 					break;
+				case ADD_OPERATIONAL_DASHBOARD_REPORT:
+					ServletSchemaMethods.addOperationalDashboardReport(sessionData, request, databaseDefn);
+					break;
+				case REMOVE_OPERATIONAL_DASHBOARD_REPORT:
+					ServletSchemaMethods.removeOperationalDashboardReport(sessionData, request, databaseDefn);
+					break;
 				case SET_USER_DEFAULT_REPORT:
 					ServletSchemaMethods.setUserDefaultReport(sessionData, request, databaseDefn);
 					break;
