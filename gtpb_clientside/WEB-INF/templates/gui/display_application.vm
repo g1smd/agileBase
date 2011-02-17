@@ -94,6 +94,10 @@
 			  document.location = 'AppController.servlet?return=gui/customisations/common/dashboard/dashboard';
 			}
         
+			function fCalendar() {
+			  document.location = 'AppController.servlet?return=gui/calendar/calendar';
+			}
+        
             function fSpawnWindow(sURL,sName,sParams) {
         	  function fDestroyWin() {
         	    oNewWin.close();
@@ -164,7 +168,6 @@
 			          #parse('gui/toolbar/buttons/export.vm')
 			        </div>
 			        <div class=buttonGroup> ## external applications, built in and customised
-			          ## #parse('gui/toolbar/buttons/calendar.vm')
 			          ## #parse('gui/toolbar/buttons/wiki.vm')
 					  #parse('gui/resources/dashboard_enabled.vm')
 					  #set($userType = $appUser.getUserType())
@@ -173,6 +176,7 @@
 						#parse('gui/toolbar/buttons/info.vm')
 					  #end
 					  #parse('gui/toolbar/buttons/dashboard.vm')
+			          #parse('gui/toolbar/buttons/calendar.vm')
 			          #set($sessionContext = $sessionData.getContext().toString())
 			          #if($sessionContext == "SYSADMIN")
 			            #parse('gui/toolbar/buttons/dev_tools.vm')
