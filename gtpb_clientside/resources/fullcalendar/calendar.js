@@ -21,23 +21,47 @@ $(document).ready(function() {
     },
     minTime: 6
   });
+  
+  // Show initial calendars
+  $("#report_selection input:checked").each(function() {
+	var jqCheckbox = $(this);
+    var internalTableName = jqCheckbox.attr("internaltablename");
+    var internalReportName = jqCheckbox.attr("internalreportname");
+    var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
+    $("#calendar").fullCalendar('addEventSource', feedUrl); 
+  });
 
-  	$("#report_selection input").change(function() {
-  	  var jqCheckbox = $(this);
-	  var reportName = jqCheckbox.text();
-  	  var internalTableName = jqCheckbox.attr("internaltablename");
-	  var internalReportName = jqCheckbox.attr("internalreportname");
-	  var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
-  	  if (jqCheckbox.is(":checked")) {
-  	    $("#calendar").fullCalendar('addEventSource', feedUrl);
-  	  } else {
-    	$("#calendar").fullCalendar('removeEventSource', feedUrl);
-  	  }
-	});
+  // Add/remove calendars on click
+  $("#report_selection input").change(function() {
+    var jqCheckbox = $(this);
+    var reportName = jqCheckbox.text();
+    var internalTableName = jqCheckbox.attr("internaltablename");
+    var internalReportName = jqCheckbox.attr("internalreportname");
+    var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
+    if (jqCheckbox.is(":checked")) {
+      $("#calendar").fullCalendar('addEventSource', feedUrl); 
+	  var addReportOptions = {
+        'return': 'blank',
+        'add_operational_dashboard_report': 'true',
+        'internaltablename': internalTableName,
+        'internalreportname': internalReportName
+	  }
+      $.post("AppController.servlet", addReportOptions);
+    } else {
+	  $("#calendar").fullCalendar('removeEventSource', feedUrl);
+	  var removeReportOptions = {
+        'return': 'blank',
+        'remove_operational_dashboard_report': 'true',
+        'internaltablename': internalTableName,
+        'internalreportname': internalReportName
+	  }
+      $.post("AppController.servlet", removeReportOptions);
+    }
+  });
 
-	$("#report_selection_header").click(function() {
-	  $("#report_selection").toggle('normal');
-	});
+  $("#report_selection_header").click(function() {
+    $("#report_selection").toggle('normal');
+  });
 });
 
 function updateSelectedReports() {

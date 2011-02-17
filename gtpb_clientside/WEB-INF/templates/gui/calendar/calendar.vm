@@ -92,6 +92,7 @@
 	#set($colourHueStep = 360 / $numReports)
 	#set($colourHue = 0)
 	## Display
+	#set($savedReports = $user.getOperationalDashboardReports())
 	#foreach($module in $moduleReportsProcessed.keySet())
 	  #set($visibleModuleReports = $moduleReportsProcessed.get($module))
   	  #set($internalModuleName = $module.getInternalModuleName())
@@ -118,7 +119,7 @@
 		  #end
 		  #set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
 		  <li id="$internalTableName$internalReportName" class="report_$internalReportName">
-		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($sessionData.getCustomReport("calendar_$internalReportName")) checked #end> 
+		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
 		    $report
 		  </li>
 		  #set($colourLightness = $colourLightness - $colourLightnessStep)
