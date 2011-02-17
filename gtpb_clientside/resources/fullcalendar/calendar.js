@@ -28,15 +28,15 @@ $(document).ready(function() {
         'set_table': event.internalTableName,
         'set_row_id': event.rowId
       }
-      // the original event date
+      // the new event date
       options[event.dateFieldInternalName + '_years'] = eventDate.getFullYear();
       options[event.dateFieldInternalName + '_months'] = eventDate.getMonth() + 1;
       options[event.dateFieldInternalName + '_days'] = eventDate.getDate();
       options[event.dateFieldInternalName + '_hours'] = eventDate.getHours();
       options[event.dateFieldInternalName + '_minutes'] = eventDate.getMinutes();
       // and the change
-      options[event.dateFieldInternalName + '_days_delta'] = dayDelta;
-      options[event.dateFieldInternalName + '_minutes_delta'] = minuteDelta;      
+      //options[event.dateFieldInternalName + '_days_delta'] = dayDelta;
+      //options[event.dateFieldInternalName + '_minutes_delta'] = minuteDelta;      
       //TODO: visually change the event element while saving, add then remove a CSS class
       $.post("AppController.servlet", options);
     },
