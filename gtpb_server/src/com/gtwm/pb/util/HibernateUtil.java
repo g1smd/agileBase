@@ -20,6 +20,8 @@ package com.gtwm.pb.util;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.dialect.Dialect;
+import org.hibernate.engine.SessionFactoryImplementor;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -111,7 +113,7 @@ public final class HibernateUtil {
 			// basic types such as integer or boolean) properties, these have to
 			// be added manually. Error messages will show the expected names of
 			// the fields
-			new SchemaUpdate(cfg).execute(true, true);
+			// new SchemaUpdate(cfg).execute(true, true);
 			sessionFactory = cfg.buildSessionFactory();
 		} catch (Throwable ex) {
 			logger.error("Initial SessionFactory creation failed: " + ex);
