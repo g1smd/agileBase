@@ -39,7 +39,7 @@ $(document).ready(function() {
       options[event.dateFieldInternalName + '_minutes_delta'] = minuteDelta;      
       //TODO: visually change the event element while saving, add then remove a CSS class
       $.post("AppController.servlet", options);
-    }
+    },
     minTime: 6
   });
   
