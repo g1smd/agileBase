@@ -32,6 +32,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -185,6 +186,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 
 	@ManyToMany(targetEntity = BaseReportDefn.class, cascade={})
+	// We need a custom joinTable so Hibernate doesn't confuse this ManyToMany with that for hidden reports, which has the same object types
+	@JoinTable(name="appuser_basereportdefn_opdash")
 	private synchronized Set<BaseReportInfo> getOperationalDashboardReportsDirect() {
 		return this.operationalDashboardReports;
 	}
