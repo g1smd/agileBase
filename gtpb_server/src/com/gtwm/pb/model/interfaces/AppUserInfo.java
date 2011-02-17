@@ -77,6 +77,15 @@ public interface AppUserInfo {
 	 */
 	public Set<BaseReportInfo> getHiddenReports();
 	
+	/**
+	 * Reports that should be visible by default on the user's operational dashboard and calendar
+	 */
+	public Set<BaseReportInfo> getOperationalDashboardReports();
+	
+	public void addOperationalDashboardReport(BaseReportInfo report) throws CantDoThatException;
+	
+	public void removeOperationalDashboardReport(BaseReportInfo report) throws CantDoThatException;
+	
 	public void hideReport(BaseReportInfo report) throws CantDoThatException;
 	
 	public void unhideReport(BaseReportInfo report) throws CantDoThatException;

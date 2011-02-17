@@ -170,6 +170,32 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.hiddenReports = hiddenReports;
 	}
 
+	@Transient
+	public Set<BaseReportInfo> getOperationalDashboardReports() {
+		return Collections.unmodifiableSortedSet(new TreeSet<BaseReportInfo>(this
+				.getOperationalDashboardReportsDirect()));
+	}
+
+	public synchronized void removeOperationalDashboardReport(BaseReportInfo report) {
+		this.getOperationalDashboardReportsDirect().add(report);
+	}
+
+	public synchronized void addOperationalDashboardReport(BaseReportInfo report) {
+		this.getOperationalDashboardReportsDirect().remove(report);
+	}
+
+	@ManyToMany(targetEntity = BaseReportDefn.class, cascade={})
+	private synchronized Set<BaseReportInfo> getOperationalDashboardReportsDirect() {
+		return this.operationalDashboardReports;
+	}
+
+	/**
+	 * For Hibernate use only
+	 */
+	private synchronized void setOperationalDashboardReportsDirect(Set<BaseReportInfo> operationalDashboardReports) {
+		this.operationalDashboardReports = operationalDashboardReports;
+	}
+
 	@OneToOne(targetEntity = BaseReportDefn.class, cascade={})
 	public BaseReportInfo getDefaultReport() {
 		return this.defaultReport;
@@ -228,6 +254,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private CompanyInfo company = null;
 
 	private Set<BaseReportInfo> hiddenReports = new HashSet<BaseReportInfo>();
+	
+	private Set<BaseReportInfo> operationalDashboardReports = new HashSet<BaseReportInfo>();
 	
 	private BaseReportInfo defaultReport = null;
 }

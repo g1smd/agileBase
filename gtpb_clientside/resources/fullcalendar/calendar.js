@@ -16,9 +16,10 @@ $(document).ready(function() {
     },
     eventClick: function(calEvent, jsEvent, view) {
       var eventId = calEvent.id;
+      scroll(0,0); // workaround for popup showing at the top of the screen rather than the current scroll position
       fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event','fEditEventOK()','ok cancel','width=800px; height=600px');
     },
-    minTime: 7
+    minTime: 6
   });
 
   	$("#report_selection input").change(function() {

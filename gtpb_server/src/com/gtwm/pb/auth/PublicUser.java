@@ -120,6 +120,10 @@ public class PublicUser implements AppUserInfo {
 	public Set<BaseReportInfo> getHiddenReports()  {
 		return new HashSet<BaseReportInfo>();
 	}
+	
+	public Set<BaseReportInfo> getOperationalDashboardReports() {
+		return new HashSet<BaseReportInfo>();
+	}
 
 	public void hideReport(BaseReportInfo report) throws CantDoThatException {
 		throw new CantDoThatException("This public user can have no hidden reports");
@@ -127,6 +131,14 @@ public class PublicUser implements AppUserInfo {
 
 	public void unhideReport(BaseReportInfo report) throws CantDoThatException {
 		throw new CantDoThatException("This public user can have no hidden reports");
+	}
+
+	public void removeOperationalDashboardReport(BaseReportInfo report) throws CantDoThatException {
+		throw new CantDoThatException("This public user can have no dashboard reports");
+	}
+
+	public void addOperationalDashboardReport(BaseReportInfo report) throws CantDoThatException {
+		throw new CantDoThatException("This public user can have no dashboard reports");
 	}
 
 	public BaseReportInfo getDefaultReport() throws CantDoThatException {
