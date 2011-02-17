@@ -665,6 +665,15 @@ public final class ServletDataMethods {
 					if (seconds != null) {
 						dateFieldValue.set(Calendar.SECOND, seconds);
 					}
+					// Additionally, allow delta values to be submitted (add more on an as-needed basis)
+					Integer days_delta = getIntegerParameterValue(request, internalFieldName + "_days_delta");
+					if (days_delta != null) {
+						dateFieldValue.add(Calendar.DAY_OF_MONTH, days_delta);
+					}
+					Integer minutes_delta = getIntegerParameterValue(request, internalFieldName + "_minutes_delta");
+					if (minutes_delta != null) {
+						dateFieldValue.add(Calendar.MINUTE, minutes_delta);
+					}
 				} catch (NumberFormatException nfex) {
 					throw new InputRecordException("The " + partGotTo
 							+ " is invalid because it needs to be a whole number", field, nfex);

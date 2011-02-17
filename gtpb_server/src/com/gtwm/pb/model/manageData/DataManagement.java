@@ -1481,6 +1481,7 @@ public final class DataManagement implements DataManagementInfo {
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
 		}
+		String dateFieldInternalName = eventDateReportField.getInternalFieldName();
 		int dateResolution = 0;
 		if (eventDateReportField instanceof ReportCalcFieldInfo) {
 			dateResolution = ((ReportCalcFieldInfo) eventDateReportField).getDateResolution();
@@ -1523,6 +1524,7 @@ public final class DataManagement implements DataManagementInfo {
 				js.key("end").value(eventDateEpoch + 7200); // events last 2hrs
 			}
 			js.key("className").value("report_" + internalReportName);
+			js.key("dateFieldInternalName").value(dateFieldInternalName);
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
 			js.key("title").value(eventTitle);
 			js.endObject();

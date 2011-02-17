@@ -25,6 +25,11 @@ public interface DateValue extends BaseValue {
 
     public void set(int field, Integer value) throws CantDoThatException;
     
+    /**
+     * @see java.util.Calendar#add(int, int)
+     */
+    public void add(int field, int amount);
+    
     public Integer get(int field) throws CantDoThatException;
 	
     public Calendar getValueDate();
