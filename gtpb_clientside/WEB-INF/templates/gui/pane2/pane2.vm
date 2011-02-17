@@ -170,7 +170,8 @@
     	    top.document.getElementById('button_dashboard').removeAttribute('disabled');
     	  #end
     	#end
-    	  
+        top.document.getElementById('button_calendar').removeAttribute('disabled');
+		
 	  function loadPane3() {
 		  var url = 'AppController.servlet?return=$return';
 		  #set($rowId = $sessionData.getRowId())

@@ -19,7 +19,7 @@
 #set($click="fCalendar()")
 #set($caption='Calendar')
 #set($id='button_calendar')
-#set($params='toggleButton=false disabled=false')
+#set($params='toggleButton=false disabled=true')
 ###set($classes='disabled')
 #set($tooltip='Show calendar and operational dashboard')
 #parse('gui/resources/button.vm')
