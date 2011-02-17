@@ -32,8 +32,13 @@ $(document).ready(function() {
       options[event.dateFieldInternalName + '_years'] = eventDate.getFullYear();
       options[event.dateFieldInternalName + '_months'] = eventDate.getMonth() + 1;
       options[event.dateFieldInternalName + '_days'] = eventDate.getDate();
-      options[event.dateFieldInternalName + '_hours'] = eventDate.getHours();
-      options[event.dateFieldInternalName + '_minutes'] = eventDate.getMinutes();
+      if (event.allDay) {
+        options[event.dateFieldInternalName + '_hours'] = 0;
+        options[event.dateFieldInternalName + '_minutes'] = 0;
+      } else {
+        options[event.dateFieldInternalName + '_hours'] = eventDate.getHours();
+        options[event.dateFieldInternalName + '_minutes'] = eventDate.getMinutes();
+      }
       // and the change
       //options[event.dateFieldInternalName + '_days_delta'] = dayDelta;
       //options[event.dateFieldInternalName + '_minutes_delta'] = minuteDelta;      
