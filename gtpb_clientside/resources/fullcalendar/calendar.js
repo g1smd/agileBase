@@ -59,7 +59,7 @@ $(document).ready(function() {
 });
 
 // checkboxElement is the checkbox to select/deselect a calendar
-function addRemoveCalendar(var checkboxElement) {
+function addRemoveCalendar(checkboxElement) {
   var jqCheckbox = $(checkboxElement);
   var internalTableName = jqCheckbox.attr("internaltablename");
   var internalReportName = jqCheckbox.attr("internalreportname");
