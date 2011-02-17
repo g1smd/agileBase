@@ -20,7 +20,6 @@ $(document).ready(function() {
       fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event','fEditEventOK()','ok cancel','width=800px; height=600px');
     },
     eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
-      alert('event drop');
       var eventDate = event.start;
       var options = {
         'return': 'blank',
