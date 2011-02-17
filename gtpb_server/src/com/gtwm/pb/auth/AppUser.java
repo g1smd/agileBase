@@ -178,11 +178,11 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 
 	public synchronized void removeOperationalDashboardReport(BaseReportInfo report) {
-		this.getOperationalDashboardReportsDirect().add(report);
+		this.getOperationalDashboardReportsDirect().remove(report);
 	}
 
 	public synchronized void addOperationalDashboardReport(BaseReportInfo report) {
-		this.getOperationalDashboardReportsDirect().remove(report);
+		this.getOperationalDashboardReportsDirect().add(report);
 	}
 
 	@ManyToMany(targetEntity = BaseReportDefn.class, cascade={})
