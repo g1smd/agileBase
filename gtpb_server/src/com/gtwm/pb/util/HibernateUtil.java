@@ -111,7 +111,7 @@ public final class HibernateUtil {
 			// basic types such as integer or boolean) properties, these have to
 			// be added manually. Error messages will show the expected names of
 			// the fields
-			// new SchemaUpdate(cfg).execute(true, true);
+			new SchemaUpdate(cfg).execute(true, true);
 			sessionFactory = cfg.buildSessionFactory();
 		} catch (Throwable ex) {
 			logger.error("Initial SessionFactory creation failed: " + ex);
