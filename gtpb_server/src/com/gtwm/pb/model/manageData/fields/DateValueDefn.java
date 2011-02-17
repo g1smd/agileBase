@@ -34,7 +34,7 @@ public class DateValueDefn implements DateValue {
 
 	public DateValueDefn(Integer year, Integer month, Integer dayOfMonth, Integer hourOfDay,
 			Integer minute, Integer second) {
-		constructFromDateParts(year, month, dayOfMonth, hourOfDay, minute, second);
+		setDateParts(year, month, dayOfMonth, hourOfDay, minute, second);
 	}
 
 	public DateValueDefn(Date date) {
@@ -61,6 +61,10 @@ public class DateValueDefn implements DateValue {
 	}
 	
 	public DateValueDefn(Calendar calendar) {
+		setDatePartsFromCalendar(calendar);
+	}
+
+	private void setDatePartsFromCalendar(Calendar calendar) {
 		if (calendar == null) {
 			this.year = null;
 			this.month = null;
@@ -78,11 +82,11 @@ public class DateValueDefn implements DateValue {
 			Integer hours = calendar.get(Calendar.HOUR);
 			Integer minutes = calendar.get(Calendar.MINUTE);
 			Integer seconds = calendar.get(Calendar.SECOND);
-			this.constructFromDateParts(years, months, days, hours, minutes, seconds);
+			this.setDateParts(years, months, days, hours, minutes, seconds);
 		}
 	}
 	
-	private void constructFromDateParts(Integer year, Integer month, Integer dayOfMonth, Integer hourOfDay,
+	private void setDateParts(Integer year, Integer month, Integer dayOfMonth, Integer hourOfDay,
 			Integer minute, Integer second) {
 		this.year = year;
 		this.month = month;
@@ -132,6 +136,12 @@ public class DateValueDefn implements DateValue {
 			throw new CantDoThatException(
 					"Unable to retrieve value for unrecognised date field constant: " + field);
 		}
+	}
+	
+	public void add(int field, int amount) {
+		Calendar calendar = this.getValueDate();
+		calendar.add(field, amount);
+		this.setDatePartsFromCalendar(calendar);
 	}
 
 	public Integer get(int field) throws CantDoThatException {
