@@ -34,6 +34,7 @@ $(document).ready(function() {
   // Add/remove calendars on click
   $("#report_selection input").change(function() {
     addRemoveCalendar(this);
+    var jqCheckbox = $(this);
     if (jqCheckbox.is(":checked")) {
 	  var addReportOptions = {
         'return': 'blank',
