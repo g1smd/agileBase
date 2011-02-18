@@ -121,7 +121,7 @@
 		    #if($colourLightness > 50)
 			  #set($colourSaturation = 100)
 			#else
-			  #set($colourSaturation = 50)
+			  #set($colourSaturation = 30)
 			#end
 		  #end
 		  #set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
