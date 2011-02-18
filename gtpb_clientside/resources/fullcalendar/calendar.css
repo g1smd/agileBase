@@ -7,6 +7,7 @@ body {
 }
 
 #calendar {
+  margin-top: 1em;
 }
 
 #selected_reports {
