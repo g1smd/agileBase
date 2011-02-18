@@ -115,7 +115,14 @@
 		  #set($colourHue = $colourHue + $colourHueStep)
 		  #if($colourHue > 360)
 		    #set($colourHue = $colourHue - 360)
-			#set($colourSaturation = 100)
+			#set($secondRound = true)
+		  #end
+		  #if($secondRound)
+		    #if($colourLightness > 50)
+			  #set($colourSaturation = 100)
+			#else
+			  #set($colourSaturation = 50)
+			#end
 		  #end
 		  #set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
 		  #if($colourLightness < 45)
