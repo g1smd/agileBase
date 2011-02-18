@@ -118,11 +118,12 @@
 			#set($secondRound = true)
 		  #end
 		  #if($secondRound)
-		    #if($colourLightness > 50)
-			  #set($colourSaturation = 100)
-			#else
-			  #set($colourSaturation = 30)
-			#end
+			#set($colourSaturation = 100 - $colourLightness)
+		    ###if($colourLightness > 50)
+			##  #set($colourSaturation = 100)
+			###else
+			##  #set($colourSaturation = 30)
+			###end
 		  #end
 		  #set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
 		  #if($colourLightness < 45)
