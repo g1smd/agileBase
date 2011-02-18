@@ -27,7 +27,7 @@
     $company calendar
   </title>
   <link type="text/css" href="resources/fullcalendar/fullcalendar.css" rel="stylesheet" />
-  ##<link type="text/css" href="customisations/common/dashboard/dashboard.css" rel="stylesheet" />
+  <link type="text/css" href="customisations/common/dashboard/dashboard.css" rel="stylesheet" />
   <link type="text/css" href="resources/fullcalendar/calendar.css" rel="stylesheet" />
   ##<link type="text/css" href="resources/modalFramework/modalFramework.css" rel="stylesheet" />
   ##<link type="text/css" href="styles/report.css" rel="stylesheet" />
