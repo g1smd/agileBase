@@ -88,7 +88,11 @@
 	## Calculate colours
 	#set($colourStyles = {}) ## map will hold style definition for each class, based on internal report name
 	#set($colourHueStep = 360 / $numReports)
+	#if($numReports > 19)
+	  #set($colourHueStep = $colourHueStep * 2)
+	#end
 	#set($colourHue = 0)
+	#set($colourSaturation = 70)
 	## Display
 	#set($savedReports = $user.getOperationalDashboardReports())
 	#foreach($module in $moduleReportsProcessed.keySet())
@@ -109,7 +113,10 @@
 		  #set($table=$report.getParentTable())
 		  #set($internalTableName = $table.getInternalTableName())
 		  #set($colourHue = $colourHue + $colourHueStep)
-		  #set($colourStyle = "background-color: hsl($colourHue, 70%, $colourLightness%);")
+		  #if($colourHue > 360)
+		    #set($colourHue = $colourHue - 360)
+		  #end
+		  #set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
 		  #if($colourLightness < 45)
 			#set($colourStyle = "$colourStyle color:white;")
 		  #else
