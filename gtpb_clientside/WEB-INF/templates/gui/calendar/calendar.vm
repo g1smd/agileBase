@@ -118,7 +118,7 @@
 			#set($secondRound = true)
 		  #end
 		  #if($secondRound)
-			#set($colourSaturation = 100 - $colourLightness)
+			#set($colourSaturation = $colourLightness)
 		    ###if($colourLightness > 50)
 			##  #set($colourSaturation = 100)
 			###else
