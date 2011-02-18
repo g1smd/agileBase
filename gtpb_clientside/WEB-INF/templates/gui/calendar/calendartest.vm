@@ -26,7 +26,7 @@
   <title>
     $company calendar
   </title>
-  ##<link type="text/css" href="resources/fullcalendar/fullcalendar.css" rel="stylesheet" />
+  <link type="text/css" href="resources/fullcalendar/fullcalendar.css" rel="stylesheet" />
   ##<link type="text/css" href="customisations/common/dashboard/dashboard.css" rel="stylesheet" />
   <link type="text/css" href="resources/fullcalendar/calendar.css" rel="stylesheet" />
   ##<link type="text/css" href="resources/modalFramework/modalFramework.css" rel="stylesheet" />
@@ -148,12 +148,12 @@
 	</ul>
 #end ## end if there are any modules visible
 </div>
-<style>
+##<style>
 ###foreach($colourClass in $colourStyles.keySet())
 ##  .$colourClass { $colourStyles.get($colourClass) }
 ##  .$colourClass a { $colourStyles.get($colourClass) }
 ###end
-</style>
+##</style>
 <div id="calendar"></div>
 </div>
 </body>
