@@ -60,6 +60,8 @@ $(document).ready(function() {
   $("#report_selection input").change(function() {
     addRemoveCalendar(this);
     var jqCheckbox = $(this);
+    var internalTableName = jqCheckbox.attr("internaltablename");
+    var internalReportName = jqCheckbox.attr("internalreportname");
     if (jqCheckbox.is(":checked")) {
 	  var addReportOptions = {
         'return': 'blank',
