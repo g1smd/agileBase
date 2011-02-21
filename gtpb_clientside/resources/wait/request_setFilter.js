@@ -250,37 +250,23 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 		// oFormObject and sBusyAttr are global to the fChange object
 	}
 
-	function fIsBooleanType(oObj) {
-		/*
-		 * if the input field is a non-boolean type return false otherwise
-		 * return true
-		 */
-		with (oObj) {
-			  if (tagName == "INPUT") {
-				  var type=getAttribute('type');
-				  if(!type) {
-					  type='text';
-				  }
-				  if (type.toLowerCase() == 'checkbox') {
-					  return true;
-				  }
-			  }
-			  return false;
-			  /*
-			if (tagName == 'TEXTAREA')
-				return false;
-			if (tagName == 'INPUT') {
-				switch (getAttribute('type')) {
-				case 'text':
-					return false;
-				default:
-					return true;
-				}
+	// TODO: this fn duplicated in editBuffer_editData.js
+	function fIsBooleanType(oObj) { 
+		  /* if the input field is a non-boolean type return false
+		     otherwise return true */
+		  var jqObj = $(iObj);
+		  if oObj.tagName == "INPUT" {
+			var type = jqObj.attr("type");
+			if (!type) {
+			  type = "text";
 			}
-			return true;
-			*/
-		}
+			if (type.toLowerCase() == 'checkbox') {
+			  return true;
+			}
+		  }
+		  return false;
 	}
+
 
 	function fReqComplete(sResponseText, sResponseXML) {
 		if (!sResponseText)
