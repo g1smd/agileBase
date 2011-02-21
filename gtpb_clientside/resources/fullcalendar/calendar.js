@@ -1,5 +1,4 @@
 $(document).ready(function() {
-  return true;
   $('#calendar').fullCalendar({
     header: {
       left:   'title',
