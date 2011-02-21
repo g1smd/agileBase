@@ -320,7 +320,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	            }  
   	            return sValue;	        
   	          }
-  	          var jqElement = $(oOlement);
+  	          var jqElement = $(oElement);
   	          var sName = jqElement.attr('name');
   	          var type = jqElement.attr('type');
   	          //var sName=oElement.getAttribute('name'); 
