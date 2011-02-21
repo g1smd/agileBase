@@ -363,7 +363,7 @@ function fResizeTextArea(oObj) {
 function fIsBooleanType(oObj) { 
   /* if the input field is a non-boolean type return false
      otherwise return true */
-  var jqObj = $(iObj);
+  var jqObj = $(oObj);
   if (oObj.tagName == "INPUT") {
 	var type = jqObj.attr("type");
 	if (!type) {
