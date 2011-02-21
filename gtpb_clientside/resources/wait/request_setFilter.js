@@ -255,7 +255,7 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 		  /* if the input field is a non-boolean type return false
 		     otherwise return true */
 		  var jqObj = $(iObj);
-		  if oObj.tagName == "INPUT" {
+		  if (oObj.tagName == "INPUT") {
 			var type = jqObj.attr("type");
 			if (!type) {
 			  type = "text";
