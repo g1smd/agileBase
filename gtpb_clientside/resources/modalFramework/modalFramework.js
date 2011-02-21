@@ -300,7 +300,8 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	        function fSetPostVars(oElement) {
   	          function fFormElementValue(oElement) { // extract the correct value for the form element type
   	            var sValue=null;
-                var type=oElement.getAttribute('type');
+  	            var type = $(oElement).attr('type');
+                //var type=oElement.getAttribute('type');
                 if(!type) {
               	  type='text';
                 }
@@ -320,8 +321,9 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	            return sValue;	        
   	          }
   	            	        
-  	          var sName=oElement.getAttribute('name'); 
-              var type=oElement.getAttribute('type');
+  	          var sName = $(oElement).attr('type');
+  	          //var sName=oElement.getAttribute('name'); 
+              //var type=oElement.getAttribute('type');
   	          if(!sName) return false; // some items in the elements list don't seem to be form objects.  If it doesn't have a name, we're not interested
   	          var sValue=fFormElementValue(oElements.item(e)); 
   	          if(!sValue && (type != 'hidden')) return false; // only set visible field values in aPostVars if the element has a value to avoid sending values for unchecked boolean input types
