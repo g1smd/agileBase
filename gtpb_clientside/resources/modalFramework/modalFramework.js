@@ -320,8 +320,9 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	            }  
   	            return sValue;	        
   	          }
-  	            	        
-  	          var sName = $(oElement).attr('type');
+  	          var jqElement = $(oOlement);
+  	          var sName = jqElement.attr('name');
+  	          var type = jqElement.attr('type');
   	          //var sName=oElement.getAttribute('name'); 
               //var type=oElement.getAttribute('type');
   	          if(!sName) return false; // some items in the elements list don't seem to be form objects.  If it doesn't have a name, we're not interested
