@@ -178,3 +178,7 @@ button.tableaction {
   font-size: 12pt;
   padding: 5px;
 }
+
+div.dp-popup {
+  width: 400px;
+}
