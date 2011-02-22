@@ -12,7 +12,7 @@ $(document).ready(function() {
   	    jqElement.qtip({
           content: event.title,
           hide: {
-  	    	event: 'unfocus click mouseleave',
+  	    	event: 'mousedown click mouseleave',
   	    	inactive: 1000
   	      }
         });
