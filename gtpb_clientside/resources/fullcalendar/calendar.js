@@ -13,7 +13,7 @@ $(document).ready(function() {
           content: event.title,
           hide: {
   	    	event: 'unfocus click mouseleave',
-  	    	inactive: 5000
+  	    	inactive: 1000
   	      }
         });
       }
