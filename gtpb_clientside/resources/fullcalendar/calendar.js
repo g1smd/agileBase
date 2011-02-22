@@ -11,7 +11,10 @@ $(document).ready(function() {
         jqElement.height(15);
   	    jqElement.qtip({
           content: event.title,
-          hide: { when: { event: 'click' } }
+          hide: {
+  	    	event: 'unfocus click mouseleave',
+  	    	inactive: 5000
+  	      }
         });
       }
     },
