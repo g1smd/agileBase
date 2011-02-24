@@ -10,6 +10,10 @@ body {
   margin-top: 1em;
 }
 
+select, textarea, input {
+  font-size: 10pt;
+}
+
 #selected_reports {
   position: absolute;
   left: 400px;
