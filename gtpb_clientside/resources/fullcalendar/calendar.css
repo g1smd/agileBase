@@ -55,5 +55,6 @@ body {
 }
 
 .fc-event:hover {
-  height: 200px!important;
+  height: 100%!important;
+  z-index:999!important;
 }
