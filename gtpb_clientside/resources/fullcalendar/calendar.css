@@ -57,4 +57,5 @@ body {
 .fc-event:hover {
   height: auto!important;
   z-index: 999!important;
+  border: 5px solid white;
 }

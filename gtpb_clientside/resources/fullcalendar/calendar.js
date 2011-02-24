@@ -9,15 +9,9 @@ $(document).ready(function() {
     eventRender: function(event, jqElement, view) {
 	  if ((view.name == 'month') || ((view.name == 'agendaWeek') && event.allDay)) {
         jqElement.height(15);
-  	    jqElement.qtip({
-          content: event.title,
-  	      hide: 'unfocus',
-  	      api: {
-  	    	onRender: function() {
-  	    	  this.elements.target.bind('click', this.hide);
-  	    	}
-  	      }
-        });
+  	    //jqElement.qtip({
+        //  content: event.title
+        //});
       }
     },
     eventClick: function(calEvent, jsEvent, view) {
