@@ -54,6 +54,6 @@ body {
   padding: 0.2em;
 }
 
-.gtpb_event {
-
+.fc-event:hover {
+  height: auto;
 }
