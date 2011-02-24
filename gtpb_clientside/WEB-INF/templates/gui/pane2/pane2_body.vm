@@ -134,6 +134,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		  #else
             #set($cellContentLength=$cell.length() / 2)
 		  #end
+		  $viewTools.log("Cell length is $cell.length()")
 		  #set($style="")
 		  #set($class="")
 		  #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
