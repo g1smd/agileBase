@@ -63,8 +63,8 @@ body {
   -moz-border-radius: 1em;
   -webkit-border-radius: 1em;
   border-radius: 1em;
-  -moz-box-shadow: 0 0 10px 10px white;
-  -webkit-box-shadow: 0 0 10px 10px white;
-  box-shadow: 0 0 10px 10px white;
+  -moz-box-shadow: 0 0 5px white;
+  -webkit-box-shadow: 0 0 5px white;
+  box-shadow: 0 0 5px white;
   
 }
