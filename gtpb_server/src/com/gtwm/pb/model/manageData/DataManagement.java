@@ -45,7 +45,6 @@ import java.io.StringReader;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.commons.math.util.MathUtils;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -71,7 +70,6 @@ import com.gtwm.pb.model.interfaces.TableDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
-import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.interfaces.fields.CheckboxValue;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
@@ -104,7 +102,6 @@ import com.gtwm.pb.util.Enumerations.FieldContentType;
 import com.gtwm.pb.util.Enumerations.HiddenFields;
 import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import org.apache.commons.fileupload.FileItem;
@@ -1474,7 +1471,7 @@ public final class DataManagement implements DataManagementInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public String getReportCalendarJSON(CompanyInfo company, BaseReportInfo report,
+	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
 			throws CodingErrorException, CantDoThatException, SQLException, JSONException {
 		ReportFieldInfo eventDateReportField = report.getCalendarField();
@@ -1494,7 +1491,7 @@ public final class DataManagement implements DataManagementInfo {
 		if (dateResolution > Calendar.DAY_OF_MONTH) {
 			allDayValues = false;
 		}
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(company, report, filterValues,
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report, filterValues,
 				false, new HashMap<BaseField, Boolean>(), 10000);
 		JSONStringer js = new JSONStringer();
 		js.array();
@@ -1530,6 +1527,9 @@ public final class DataManagement implements DataManagementInfo {
 			js.endObject();
 		}
 		js.endArray();
+		UsageLogger usageLogger = new UsageLogger(this.dataSource);
+		usageLogger.logReportView(user, report, filterValues, 10000, "getCalendarJSON");
+		UsageLogger.startLoggingThread(usageLogger);
 		return js.toString();
 	}
 
@@ -1634,23 +1634,23 @@ public final class DataManagement implements DataManagementInfo {
 					}
 					reportData = new ReportData(conn, reportDefn, useCaching, useSample);
 					this.cachedReportDatas.put(reportDefn, reportData);
-					this.reportDataCacheMisses += 1;
+					this.reportDataCacheMisses.incrementAndGet();
 				} else {
-					this.reportDataCacheHits += 1;
+					this.reportDataCacheHits.incrementAndGet();
 				}
 			}
 		} else {
 			reportData = new ReportData(conn, reportDefn, useCaching, false);
 			if (useCaching) {
 				this.cachedReportDatas.put(reportDefn, reportData);
-				this.reportDataCacheMisses += 1;
+				this.reportDataCacheMisses.incrementAndGet();
 			}
 		}
-		if ((this.reportDataCacheHits + this.reportDataCacheMisses) > 10000) {
+		if ((this.reportDataCacheHits.get() + this.reportDataCacheMisses.get()) > 10000) {
 			logger.info("Report data cache hits = " + this.reportDataCacheHits + ", misses = "
 					+ this.reportDataCacheMisses);
-			this.reportDataCacheHits = 0;
-			this.reportDataCacheMisses = 0;
+			this.reportDataCacheHits.set(0);
+			this.reportDataCacheMisses.set(0);
 		}
 		return reportData;
 	}
@@ -1758,10 +1758,10 @@ public final class DataManagement implements DataManagementInfo {
 		if (whereClauseMap.size() > 0) {
 			return this.fetchReportSummaryData(reportSummary, reportFilterValues);
 		}
-		ReportSummaryDataInfo reportSummaryData = this.getCachedReportSummaryData(reportSummary);
+		ReportSummaryDataInfo reportSummaryData = this.cachedReportSummaryDatas.get(reportSummary);
 		if (reportSummaryData == null) {
 			reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues);
-			this.addCachedReportSummaryData(reportSummary, reportSummaryData);
+			this.cachedReportSummaryDatas.put(reportSummary, reportSummaryData);
 			this.summaryDataCacheMisses.incrementAndGet();
 		} else if (alwaysUseCache) {
 			this.summaryDataCacheHits.incrementAndGet();
@@ -1772,7 +1772,7 @@ public final class DataManagement implements DataManagementInfo {
 			if ((cacheCreationTime <= lastDataChangeTime)
 					|| (cacheCreationTime <= lastSchemaChangeTime)) {
 				reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues);
-				this.addCachedReportSummaryData(reportSummary, reportSummaryData);
+				this.cachedReportSummaryDatas.put(reportSummary, reportSummaryData);
 				this.summaryDataCacheMisses.incrementAndGet();
 			} else {
 				this.summaryDataCacheHits.incrementAndGet();
@@ -2224,18 +2224,21 @@ public final class DataManagement implements DataManagementInfo {
 		this.setLastSchemaChangeTime(company);
 	}
 
-	private synchronized Long getLastDataChangeTime(CompanyInfo company) {
-		if (this.lastDataChangeTimes.get(company) == null) {
+	private Long getLastDataChangeTime(CompanyInfo company) {
+		Long lastTime = this.lastDataChangeTimes.get(company);
+		if (lastTime == null) {
 			this.setLastDataChangeTime(company);
-		}
-		return this.lastDataChangeTimes.get(company);
+			return this.lastDataChangeTimes.get(company);
+		} return lastTime;
 	}
 
-	private synchronized Long getLastSchemaChangeTime(CompanyInfo company) {
-		if (this.lastSchemaChangeTimes.get(company) == null) {
+	private Long getLastSchemaChangeTime(CompanyInfo company) {
+		Long lastTime = this.lastSchemaChangeTimes.get(company);
+		if (lastTime == null) {
 			this.setLastSchemaChangeTime(company);
+			return this.lastSchemaChangeTimes.get(company);
 		}
-		return this.lastSchemaChangeTimes.get(company);
+		return lastTime;
 	}
 
 	/**
@@ -2244,21 +2247,12 @@ public final class DataManagement implements DataManagementInfo {
 	 * 
 	 * @see #logLastChangeTime(HttpServletRequest)
 	 */
-	private synchronized void setLastDataChangeTime(CompanyInfo company) {
+	private void setLastDataChangeTime(CompanyInfo company) {
 		this.lastDataChangeTimes.put(company, System.currentTimeMillis());
 	}
 
-	private synchronized void setLastSchemaChangeTime(CompanyInfo company) {
+	private void setLastSchemaChangeTime(CompanyInfo company) {
 		this.lastSchemaChangeTimes.put(company, System.currentTimeMillis());
-	}
-
-	private synchronized ReportSummaryDataInfo getCachedReportSummaryData(ReportSummaryInfo summary) {
-		return this.cachedReportSummaryDatas.get(summary);
-	}
-
-	private synchronized void addCachedReportSummaryData(ReportSummaryInfo summary,
-			ReportSummaryDataInfo summaryData) {
-		this.cachedReportSummaryDatas.put(summary, summaryData);
 	}
 
 	/**
@@ -2267,8 +2261,10 @@ public final class DataManagement implements DataManagementInfo {
 	 */
 	private Map<BaseReportInfo, ReportDataInfo> cachedReportDatas = new ConcurrentHashMap<BaseReportInfo, ReportDataInfo>();
 
-	private Map<ReportSummaryInfo, ReportSummaryDataInfo> cachedReportSummaryDatas = new HashMap<ReportSummaryInfo, ReportSummaryDataInfo>();
+	private Map<ReportSummaryInfo, ReportSummaryDataInfo> cachedReportSummaryDatas = new ConcurrentHashMap<ReportSummaryInfo, ReportSummaryDataInfo>();
 
+	private Map<String, String> cachedCalendarJSONs = new ConcurrentHashMap<String, String>();
+	
 	private final DataSource dataSource;
 
 	private final String webAppRoot;
@@ -2279,13 +2275,13 @@ public final class DataManagement implements DataManagementInfo {
 	 * Keep a record of the last time any schema or data change occurred for
 	 * each company, to help inform caching
 	 */
-	private Map<CompanyInfo, Long> lastDataChangeTimes = new HashMap<CompanyInfo, Long>();
+	private Map<CompanyInfo, Long> lastDataChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
 
-	private Map<CompanyInfo, Long> lastSchemaChangeTimes = new HashMap<CompanyInfo, Long>();
+	private Map<CompanyInfo, Long> lastSchemaChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
 
-	private int reportDataCacheHits = 0;
+	private AtomicInteger reportDataCacheHits = new AtomicInteger();
 
-	private int reportDataCacheMisses = 0;
+	private AtomicInteger reportDataCacheMisses = new AtomicInteger();
 
 	private float uploadSpeed = 50000; // Default to 50KB per second
 
