@@ -129,7 +129,11 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 			  #set($rightAlign = true)
 			#end
 		  #end
-          #set($cellContentLength=$cell.length() / 2)
+		  #if($field.getContentSize() > 100)
+            #set($cellContentLength=$cell.length() * 2)
+		  #else
+            #set($cellContentLength=$cell.length() / 2)
+		  #end
 		  #set($style="")
 		  #set($class="")
 		  #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
