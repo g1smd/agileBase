@@ -36,8 +36,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.LinkedHashSet;
 import java.util.Arrays;
+import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.Calendar;
+import java.util.TreeMap;
 import java.io.File;
 import java.io.Reader;
 import java.io.InputStreamReader;
@@ -50,6 +52,7 @@ import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
+import com.gtwm.pb.model.interfaces.CachedJSONInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
@@ -1478,6 +1481,20 @@ public final class DataManagement implements DataManagementInfo {
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
 		}
+		// Try cache first
+		// Make a sortedMap so toString is always consistent for the same
+		// key/value pairs and we can use it as an ID
+		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
+				filterValues);
+		String id = sortedFilterValues.toString();
+		CachedJSONInfo cachedJSON = this.cachedCalendarJSONs.get(id);
+		if (cachedJSON != null) {
+			this.jsonCacheHits.incrementAndGet();
+			// Note: if we choose not to invalidate the cache on every data
+			// change, we could return only JSON that was newer than a certain
+			// time here, say the last data change time plus ten secs
+			return cachedJSON.getJSON();
+		}
 		String dateFieldInternalName = eventDateReportField.getInternalFieldName();
 		int dateResolution = 0;
 		if (eventDateReportField instanceof ReportCalcFieldInfo) {
@@ -1491,8 +1508,8 @@ public final class DataManagement implements DataManagementInfo {
 		if (dateResolution > Calendar.DAY_OF_MONTH) {
 			allDayValues = false;
 		}
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report, filterValues,
-				false, new HashMap<BaseField, Boolean>(), 10000);
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
+				filterValues, false, new HashMap<BaseField, Boolean>(), 10000);
 		JSONStringer js = new JSONStringer();
 		js.array();
 		String internalReportName = report.getInternalReportName();
@@ -1530,7 +1547,16 @@ public final class DataManagement implements DataManagementInfo {
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
 		usageLogger.logReportView(user, report, filterValues, 10000, "getCalendarJSON");
 		UsageLogger.startLoggingThread(usageLogger);
-		return js.toString();
+		String json = js.toString();
+		cachedJSON = new CachedJSON(json);
+		this.cachedCalendarJSONs.put(id, cachedJSON);
+		int cacheMisses = this.jsonCacheMisses.incrementAndGet();
+		if (cacheMisses > 100) {
+			this.logger.info("JSON cache hits: " + this.jsonCacheHits + ", misses " + cacheMisses);
+			this.jsonCacheHits.set(0);
+			this.jsonCacheMisses.set(0);
+		}
+		return json;
 	}
 
 	/**
@@ -2229,7 +2255,8 @@ public final class DataManagement implements DataManagementInfo {
 		if (lastTime == null) {
 			this.setLastDataChangeTime(company);
 			return this.lastDataChangeTimes.get(company);
-		} return lastTime;
+		}
+		return lastTime;
 	}
 
 	private Long getLastSchemaChangeTime(CompanyInfo company) {
@@ -2245,10 +2272,12 @@ public final class DataManagement implements DataManagementInfo {
 	 * Acts similarly to logLastChangeTime but taking a company object directly
 	 * instead of a HTTP request
 	 * 
-	 * @see #logLastChangeTime(HttpServletRequest)
+	 * @see #logLastDataChangeTime(HttpServletRequest)
 	 */
 	private void setLastDataChangeTime(CompanyInfo company) {
 		this.lastDataChangeTimes.put(company, System.currentTimeMillis());
+		// Note: clearing optional
+		this.cachedCalendarJSONs.clear();
 	}
 
 	private void setLastSchemaChangeTime(CompanyInfo company) {
@@ -2263,8 +2292,8 @@ public final class DataManagement implements DataManagementInfo {
 
 	private Map<ReportSummaryInfo, ReportSummaryDataInfo> cachedReportSummaryDatas = new ConcurrentHashMap<ReportSummaryInfo, ReportSummaryDataInfo>();
 
-	private Map<String, String> cachedCalendarJSONs = new ConcurrentHashMap<String, String>();
-	
+	private Map<String, CachedJSONInfo> cachedCalendarJSONs = new ConcurrentHashMap<String, CachedJSONInfo>();
+
 	private final DataSource dataSource;
 
 	private final String webAppRoot;
@@ -2283,11 +2312,15 @@ public final class DataManagement implements DataManagementInfo {
 
 	private AtomicInteger reportDataCacheMisses = new AtomicInteger();
 
-	private float uploadSpeed = 50000; // Default to 50KB per second
-
 	private AtomicInteger summaryDataCacheHits = new AtomicInteger();
 
 	private AtomicInteger summaryDataCacheMisses = new AtomicInteger();
+	
+	private AtomicInteger jsonCacheHits = new AtomicInteger();
+	
+	private AtomicInteger jsonCacheMisses = new AtomicInteger();
+
+	private float uploadSpeed = 50000; // Default to 50KB per second
 
 	private static final SimpleLogger logger = new SimpleLogger(DataManagement.class);
 
