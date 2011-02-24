@@ -72,5 +72,5 @@ body {
   -moz-box-shadow: 0 0 5px white;
   -webkit-box-shadow: 0 0 5px white;
   box-shadow: 0 0 5px white;
-  left: 1em;
+  margin-left: 1em;
 }
