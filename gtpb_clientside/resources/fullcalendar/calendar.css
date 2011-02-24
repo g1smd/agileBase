@@ -58,11 +58,6 @@ body {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
-  -moz-transition-duration: 0.5s;
-  -webkit-transition-duration: 0.5s;
-  transition-duration: 0.5s;
-  height: 15px;
-  -webkit-transition-property: opacity, height;
 }	
 
 .fc-event:hover {
