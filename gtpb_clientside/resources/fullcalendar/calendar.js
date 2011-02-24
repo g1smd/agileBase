@@ -98,7 +98,7 @@ function addRemoveCalendar(checkboxElement) {
   var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
   if (jqCheckbox.is(":checked")) {
     $("#calendar").fullCalendar('addEventSource', feedUrl);
-    var legendElement = $("<span class='legend_report report_" + internalReportName + "' id='legend_" + internalReportName + "' title='" + reportTooltip + "'">" + reportName + "</span>");
+    var legendElement = $("<span class='legend_report report_" + internalReportName + "' id='legend_" + internalReportName + "' title='" + reportTooltip + "'>" + reportName + "</span>");
     $("#report_selection_header").append(legendElement);
   } else {
 	$("#calendar").fullCalendar('removeEventSource', feedUrl);
