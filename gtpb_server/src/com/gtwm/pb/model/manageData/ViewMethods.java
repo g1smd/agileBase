@@ -548,6 +548,9 @@ public final class ViewMethods implements ViewMethodsInfo {
 			CantDoThatException, MissingParametersException, DisallowedException,
 			ObjectNotFoundException, SQLException, JSONException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(this.sessionData, this.request, this.databaseDefn, true);
+		// Check privileges for all tables from which data is displayed from,
+		// throw DisallowedException if privileges not sufficient
+		this.checkReportViewPrivileges(report);
 		Map<BaseField, String> filterValues = new HashMap<BaseField, String>(this.sessionData.getReportFilterValues());
 		// Add start and end time filters
 		ReportFieldInfo eventDateReportField = report.getCalendarField();
@@ -569,8 +572,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 			String eventDateFilterString = ">" + startString + " AND <" + endString;
 			filterValues.put(eventDateField, eventDateFilterString);
 		}
-		CompanyInfo company = this.getLoggedInUser().getCompany();
-		return this.databaseDefn.getDataManagement().getReportCalendarJSON(company, report, filterValues, startEpoch, endEpoch);
+		AppUserInfo user = this.getLoggedInUser();
+		return this.databaseDefn.getDataManagement().getReportCalendarJSON(user, report, filterValues, startEpoch, endEpoch);
 	}
 	
 	/**

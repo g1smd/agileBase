@@ -10,11 +10,7 @@ $(document).ready(function() {
 	  if ((view.name == 'month') || ((view.name == 'agendaWeek') && event.allDay)) {
         jqElement.height(15);
   	    jqElement.qtip({
-          content: event.title,
-          hide: {
-  	    	event: 'mousedown click mouseleave',
-  	    	inactive: 1000
-  	      }
+          content: event.title
         });
       }
     },
@@ -88,6 +84,8 @@ $(document).ready(function() {
   $("#report_selection_header").click(function() {
     $("#report_selection").toggle('normal');
   });
+  
+  
 });
 
 // checkboxElement is the checkbox to select/deselect a calendar

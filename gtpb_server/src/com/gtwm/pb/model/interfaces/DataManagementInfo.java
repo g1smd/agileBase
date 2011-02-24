@@ -92,7 +92,7 @@ public interface DataManagementInfo {
 	 * @param endEpoch
 	 *            The end unix timestamp as provided by fullcalendar
 	 */
-	public String getReportCalendarJSON(CompanyInfo company, BaseReportInfo report,
+	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
 			throws CodingErrorException, CantDoThatException, SQLException, JSONException;
 
