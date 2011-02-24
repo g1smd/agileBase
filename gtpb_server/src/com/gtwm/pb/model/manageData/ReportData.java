@@ -915,9 +915,12 @@ public class ReportData implements ReportDataInfo {
 									}
 								} else {
 									int textFieldSize = fieldSchemaText.getContentSize();
+									if (textFieldSize > 100) {
+										textFieldSize = 100; // max out
+									}
 									if (keyValue.length() > (textFieldSize + 1)) {
 										displayValue = keyValue.substring(0, textFieldSize)
-												+ "&hellip;";
+												+ "...";
 									}
 								}
 							}

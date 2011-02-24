@@ -205,11 +205,11 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	@Transient
 	public synchronized String getDefault() {
 		String defaultText = this.getDefaultDirect();
-		TextCase textCase = this.getTextCase();
 		if (defaultText == null) {
 			return defaultText;
 		}
-		if (textCase != null){
+		TextCase textCase = this.getTextCase();
+		if (textCase != null) {
 			defaultText = textCase.transform(defaultText);
 		}
 		// if a lookup with a CSV, return the first value
