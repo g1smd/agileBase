@@ -54,6 +54,12 @@ body {
   padding: 0.2em;
 }
 
+.fc-event {
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}	
+
 .fc-event:hover {
   height: auto!important;
   z-index: 999!important;
