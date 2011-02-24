@@ -139,7 +139,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		  #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
 		  #if($rightAlign) #set($style = "$style text-align:right; ") #end
           <td #if($cellContentLength<=10)nowrap="true"#end #if($style != "")style="$style"#end #if($class != "")class="$class"#end>
-            <div style="min-width:${cellContentLength}">
+            <div style="min-width:200px">
               #if(!(($thisUniqueId == $lastUniqueId) && ($cell == $lastValues.get($cellNumber))))$cell#else<span class="greytext">$cell</span>#end
             </div>
           </td>
