@@ -151,7 +151,7 @@
 <style>
 #foreach($colourClass in $colourStyles.keySet())
   .$colourClass { $colourStyles.get($colourClass) }
-  .$colourClass a { $colourStyles.get($colourClass) }
+  .$colourClass a { $colourStyles.get($colourClass) border-style: none; }
 #end
 </style>
 <div id="calendar"></div>
