@@ -128,9 +128,9 @@
 		  #end
 		  #set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
 		  #if($colourLightness < 45)
-			#set($colourStyle = "$colourStyle color:white;")
+			#set($colourStyle = "$colourStyle color:white; border-style: none;")
 		  #else
-			#set($colourStyle = "$colourStyle color:black;")
+			#set($colourStyle = "$colourStyle color:black; border-style: none;")
 		  #end
 		  #set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
 		  <li id="$internalTableName$internalReportName" class="report_$internalReportName">
@@ -151,7 +151,7 @@
 <style>
 #foreach($colourClass in $colourStyles.keySet())
   .$colourClass { $colourStyles.get($colourClass) }
-  .$colourClass a { $colourStyles.get($colourClass) border-style: none; }
+  .$colourClass a { $colourStyles.get($colourClass) }
 #end
 </style>
 <div id="calendar"></div>
