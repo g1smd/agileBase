@@ -1486,7 +1486,7 @@ public final class DataManagement implements DataManagementInfo {
 		// key/value pairs and we can use it as an ID
 		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
 				filterValues);
-		String id = sortedFilterValues.toString();
+		String id = report.getInternalReportName() + sortedFilterValues.toString();
 		CachedJSONInfo cachedJSON = this.cachedCalendarJSONs.get(id);
 		if (cachedJSON != null) {
 			this.jsonCacheHits.incrementAndGet();
