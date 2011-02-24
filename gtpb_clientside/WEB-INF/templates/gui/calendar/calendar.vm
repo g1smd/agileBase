@@ -28,12 +28,14 @@
   </title>
   <link type="text/css" href="resources/fullcalendar/fullcalendar.css" rel="stylesheet" />
   <link type="text/css" href="customisations/common/dashboard/dashboard.css" rel="stylesheet" />
+  <link type="text/css" href="resources/tabs/tabs.css" rel="stylesheet" />
   <link type="text/css" href="resources/fullcalendar/calendar.css" rel="stylesheet" />
   <link type="text/css" href="resources/modalFramework/modalFramework.css" rel="stylesheet" />
   <link type="text/css" href="styles/report.css" rel="stylesheet" />
   <script src="resources/jquery.js" language="Javascript"></script>
   ##<script src="resources/jquery.qtip.js" language="Javascript"></script>
   <script src="resources/wait/request_setFilter.js" language="Javascript"></script>
+  <script src="resources/tabs/tabs.js" language="Javascript"></script>
   <script src="resources/modalFramework/modalFramework.js" language="Javascript"></script>
   <script src="resources/fullcalendar/jquery-ui-custom.js" language="Javascript"></script>
   <script src="resources/fullcalendar/fullcalendar.js" language="Javascript"></script>
