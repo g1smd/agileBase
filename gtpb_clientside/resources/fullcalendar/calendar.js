@@ -10,7 +10,13 @@ $(document).ready(function() {
 	  if ((view.name == 'month') || ((view.name == 'agendaWeek') && event.allDay)) {
         jqElement.height(15);
   	    jqElement.qtip({
-          content: event.title
+          content: event.title,
+  	      hide: 'unfocus',
+  	      api: {
+  	    	onRender: function() {
+  	    	  this.elements.target.bind('click', this.hide);
+  	    	}
+  	      }
         });
       }
     },
