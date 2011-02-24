@@ -129,7 +129,6 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 			  #set($rightAlign = true)
 			#end
 		  #end
-		  $viewTools.log("Field $field content size = $field.getContentSize()")
 		  #if($field.getContentSize() > 100)
             #set($cellContentLength=$cell.length() * 2)
 		  #else
