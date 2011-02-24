@@ -59,4 +59,9 @@ body {
   z-index: 999!important;
   border: 5px solid white;
   padding: 5px;
+  opacity: 0.9;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  border-radius: 1em;
+  
 }
