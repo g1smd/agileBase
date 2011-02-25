@@ -378,7 +378,8 @@ public final class DataManagement implements DataManagementInfo {
 				if (field.getFieldName().equals(HiddenFields.CREATED_BY.getFieldName())) {
 					String userName = request.getRemoteUser();
 					if (userName == null) {
-						fieldValue = new TextValueDefn("public (from " + request.getRemoteHost() + ")");
+						fieldValue = new TextValueDefn("public (from " + request.getRemoteHost()
+								+ ")");
 					} else {
 						AppUserInfo currentUser = this.authManager.getUserByUserName(request,
 								userName);
@@ -2251,8 +2252,12 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public void logLastDataChangeTime(HttpServletRequest request) throws ObjectNotFoundException {
-		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
-		this.setLastDataChangeTime(company);
+		// Public user (not logged in) changes don't count
+		// TODO: think of a better way
+		if (request.getRemoteUser() != null) {
+			CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
+			this.setLastDataChangeTime(company);
+		}
 	}
 
 	public void logLastSchemaChangeTime(HttpServletRequest request) throws ObjectNotFoundException {
