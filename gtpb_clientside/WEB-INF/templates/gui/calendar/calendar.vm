@@ -50,7 +50,7 @@
     <div class="button" style="left: 0px;">
 		#set($databaseReturn = "gui/customisations/common/dashboard/dashboard")			
         <a href="?return=$databaseReturn">
-    	  <img src="resources/toolbar/dashboard.png" /><br>Database
+    	  <img src="resources/toolbar/dashboard.png" /><br>Dashboard
     	</a>
     </div>
     <div class="button" style="left: 100px;">
