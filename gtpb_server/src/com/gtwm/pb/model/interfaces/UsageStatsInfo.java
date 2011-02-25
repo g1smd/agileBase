@@ -91,7 +91,7 @@ public interface UsageStatsInfo {
 	 * @deprecated Nothing seems to use this currently
 	 */
 	public List<List<String>> getRawTableStats(LogType logType, TableInfo table, int rowLimit)
-			throws DisallowedException, SQLException, CantDoThatException;
+			throws DisallowedException, SQLException, CantDoThatException, ObjectNotFoundException;
 
 	/**
 	 * Get a list of reports that data from this table is included in along with
@@ -108,7 +108,7 @@ public interface UsageStatsInfo {
 	 * report along with some overview stats about each
 	 */
 	public ReportViewStatsInfo getReportViewStats(BaseReportInfo report)
-			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException;
+			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException, ObjectNotFoundException;
 
 	/**
 	 * Return any tables in the company that have had no report views (from any

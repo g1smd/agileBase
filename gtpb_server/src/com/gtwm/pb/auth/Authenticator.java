@@ -319,7 +319,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	}
 
 	public boolean loggedInUserAllowedTo(HttpServletRequest request,
-			PrivilegeType privilegeType) {
+			PrivilegeType privilegeType) throws ObjectNotFoundException {
 		AppUserInfo appUser = null;
 		try {
 			appUser = getUserByUserName(request.getRemoteUser());
@@ -327,9 +327,7 @@ public final class Authenticator implements AuthenticatorInfo {
 			logger
 					.error("Authentication check can't complete: AppUserInfo object not found for logged in user '"
 							+ request.getRemoteUser() + "'");
-			// Don't rethrow, can't see any cases where this error would
-			// actually occur
-			return false;
+			throw onfe;
 		}
 		// Check whether a role the user is in has the required privilege
 		for (AppRoleInfo role : this.getRolesDirect()) {

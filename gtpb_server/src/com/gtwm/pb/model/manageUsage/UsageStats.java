@@ -405,7 +405,7 @@ public class UsageStats implements UsageStatsInfo {
 	}
 
 	public ReportViewStatsInfo getReportViewStats(BaseReportInfo report)
-			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException {
+			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException, ObjectNotFoundException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()) || authManager
@@ -551,7 +551,7 @@ public class UsageStats implements UsageStatsInfo {
 	}
 
 	public List<List<String>> getRawTableStats(LogType logType, TableInfo table, int rowLimit)
-			throws DisallowedException, SQLException, CantDoThatException {
+			throws DisallowedException, SQLException, CantDoThatException, ObjectNotFoundException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.MANAGE_TABLE, table) || authManager.getAuthenticator()
