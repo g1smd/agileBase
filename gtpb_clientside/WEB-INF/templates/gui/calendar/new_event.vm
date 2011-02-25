@@ -31,7 +31,7 @@
   #end
   <htmlContent ><![CDATA[
     <form style="padding:5px">
-	  <h1>Please select an event type</h1>
+	  <h1>Please select a type of event to add</h1>
 	  #foreach($table in $tables)
 	    <input type="radio" name="set_table" value="$table.getInternalTableName()">$table</input>
 	  #end

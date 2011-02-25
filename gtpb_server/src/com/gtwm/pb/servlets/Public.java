@@ -1,32 +1,45 @@
 package com.gtwm.pb.servlets;
 
+import java.sql.SQLException;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.view.VelocityViewServlet;
 import org.grlea.log.SimpleLogger;
+
+import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PublicUser;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
+import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
-import com.gtwm.pb.model.interfaces.ViewMethodsInfo;
 import com.gtwm.pb.model.interfaces.ViewToolsInfo;
-import com.gtwm.pb.model.manageData.ViewMethods;
+import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.BaseValue;
+import com.gtwm.pb.model.manageData.InputRecordException;
+import com.gtwm.pb.model.manageData.SessionData;
 import com.gtwm.pb.model.manageData.ViewTools;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.PublicAction;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
-import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.ResponseReturnType;
 
 /**
@@ -62,16 +75,36 @@ public class Public extends VelocityViewServlet {
 		for (PublicAction publicAction : publicActions) {
 			String appActionValue = request.getParameter(publicAction.toString().toLowerCase());
 			if (appActionValue != null) {
+				TableInfo table = null;
+				try {
+					table = this.getPublicTable(request);
+				} catch (AgileBaseException abex) {
+					AppController.logException(abex, request, "Error preparing public form");
+				}
 				switch(publicAction) {
 				case SHOW_FORM:
-					TableInfo table = null;
-					try {
-						table = this.getPublicTable(request);
-					} catch (AgileBaseException abex) {
-						AppController.logException(abex, request, "Error preparing public form");
-					}
 					context.put("gtpbPublicTable", table);
 					templateName = "gui/public/form";
+					break;
+				case CREATE_NEW_RECORD:
+					List<FileItem> multipartItems = AppController.getMultipartItems(request);
+					SessionDataInfo sessionData = new SessionData();
+					try {
+						ServletDataMethods.setSessionFieldInputValues(sessionData, request, true, this.databaseDefn, table, multipartItems);
+						Map<BaseField, BaseValue> fieldInputValues = new LinkedHashMap<BaseField, BaseValue>();
+						this.databaseDefn.getDataManagement().saveRecord(request, table,
+								new LinkedHashMap<BaseField, BaseValue>(sessionData.getFieldInputValues()),
+								true, -1, sessionData, multipartItems);
+					} catch (AgileBaseException abex) {
+						AppController.logException(abex, request, "General error performing save from public");
+						return getUserInterfaceTemplate(request, response, templateName, context);
+					} catch (SQLException sqlex) {
+						AppController.logException(sqlex, request, "SQL error performing save from public");
+						return getUserInterfaceTemplate(request, response, templateName, context);
+					} catch (FileUploadException abex) {
+						AppController.logException(abex, request, "General error doing file upload from public");
+						return getUserInterfaceTemplate(request, response, templateName, context);
+					}
 					break;
 				}
 			}

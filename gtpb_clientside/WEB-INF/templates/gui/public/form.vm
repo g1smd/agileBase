@@ -8,7 +8,7 @@
 	#set($fields = $table.getFields())
 	  #foreach($field in $fields)
 		## Skip certain types of field
-		#if(($field.getHidden() == false) && ($field.getClass().getSimpleName() != "FileFieldDefn") && ($field.getClass().getSimpleName() != "RelationFieldDefn") && ($field.getClass().getSimpleName() != "ReferencedReportDataFieldDefn"))
+		#if(($field.getHidden() == false) && ($field.getClass().getSimpleName() != "RelationFieldDefn") && ($field.getClass().getSimpleName() != "ReferencedReportDataFieldDefn"))
           #parse("gui/reports_and_tables/tabs/table_data_row.vm")
 		#end
 	#end
