@@ -2,16 +2,13 @@ package com.gtwm.pb.servlets;
 
 import java.sql.SQLException;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.velocity.Template;
@@ -20,8 +17,6 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.view.VelocityViewServlet;
 import org.grlea.log.SimpleLogger;
-
-import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PublicUser;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
@@ -31,12 +26,10 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ViewToolsInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
-import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageData.SessionData;
 import com.gtwm.pb.model.manageData.ViewTools;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.CantDoThatException;
-import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.PublicAction;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -86,7 +79,7 @@ public class Public extends VelocityViewServlet {
 					context.put("gtpbPublicTable", table);
 					templateName = "gui/public/form";
 					break;
-				case CREATE_NEW_RECORD:
+				case SAVE_NEW_RECORD:
 					templateName = "gui/public/posted";
 					List<FileItem> multipartItems = AppController.getMultipartItems(request);
 					SessionDataInfo sessionData = new SessionData();
