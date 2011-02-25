@@ -65,6 +65,11 @@ select, textarea, input {
   padding-bottom: 0.5em;
   position: absolute;
   width: 72px;
+  color: #486F98;
+}
+
+.bare_button img {
+  padding: 1px;
 }
 
 .fc-event {
