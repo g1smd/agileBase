@@ -20,6 +20,9 @@ package com.gtwm.pb.servlets;
 import javax.servlet.http.HttpServletRequest;
 
 import com.gtwm.pb.auth.DisallowedException;
+import com.gtwm.pb.auth.PublicUser;
+import com.gtwm.pb.model.interfaces.AppUserInfo;
+import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
@@ -83,6 +86,19 @@ public final class ServletUtilMethods {
 			table = databaseDefn.getTable(request, internalTableName);
 		}
 		return table;
+	}
+
+	public static AppUserInfo getPublicUserForRequest(HttpServletRequest request,
+			AuthenticatorInfo authenticator) throws MissingParametersException,
+			ObjectNotFoundException {
+		String internalCompanyName = request.getParameter("c");
+		if (internalCompanyName == null) {
+			throw new MissingParametersException("c needed to identify company");
+		}
+		String userName = "public";
+		String forename = "Host " + request.getRemoteHost();
+		String surname = "Addr " + request.getRemoteAddr();
+		return new PublicUser(authenticator, internalCompanyName, userName, surname, forename);
 	}
 
 	public static int getRowIdForRequest(SessionDataInfo sessionData, HttpServletRequest request,

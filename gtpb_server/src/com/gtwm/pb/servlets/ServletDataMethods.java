@@ -992,7 +992,7 @@ public final class ServletDataMethods {
 	public static void saveRecord(SessionDataInfo sessionData, HttpServletRequest request,
 			boolean newRecord, DatabaseInfo databaseDefn, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, DisallowedException, SQLException,
-			InputRecordException, CodingErrorException, CantDoThatException, FileUploadException {
+			InputRecordException, CodingErrorException, CantDoThatException, FileUploadException, MissingParametersException {
 		String internalTableName = AppController.getParameter(request, "internaltablename",
 				multipartItems);
 		TableInfo table;
@@ -1052,7 +1052,7 @@ public final class ServletDataMethods {
 	public static void cloneRecord(SessionDataInfo sessionData, HttpServletRequest request,
 			DatabaseInfo databaseDefn, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, DisallowedException, SQLException,
-			InputRecordException, CodingErrorException, CantDoThatException {
+			InputRecordException, CodingErrorException, CantDoThatException, MissingParametersException {
 		String internalTableName = AppController.getParameter(request, "internaltablename",
 				multipartItems);
 		TableInfo table;
@@ -1082,7 +1082,7 @@ public final class ServletDataMethods {
 	public static void globalEdit(SessionDataInfo sessionData, HttpServletRequest request,
 			DatabaseInfo databaseDefn, List<FileItem> multipartItems) throws DisallowedException,
 			ObjectNotFoundException, CodingErrorException, SQLException, CantDoThatException,
-			InputRecordException, FileUploadException {
+			InputRecordException, FileUploadException, MissingParametersException {
 		String internalTableName = request.getParameter("internaltablename");
 		TableInfo table;
 		if (internalTableName == null) {
@@ -1295,7 +1295,7 @@ public final class ServletDataMethods {
 	public static void anonymiseTableData(SessionDataInfo sessionData, HttpServletRequest request,
 			DatabaseInfo databaseDefn, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, DisallowedException, SQLException,
-			CodingErrorException, CantDoThatException, InputRecordException {
+			CodingErrorException, CantDoThatException, InputRecordException, MissingParametersException {
 		TableInfo table = sessionData.getTable();
 		if (table == null) {
 			throw new ObjectNotFoundException("There's no table in the session");
