@@ -17,6 +17,8 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.view.VelocityViewServlet;
 import org.grlea.log.SimpleLogger;
+
+import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.PublicUser;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
@@ -63,20 +65,38 @@ public class Public extends VelocityViewServlet {
 		ResponseReturnType responseReturnType = ResponseReturnType.HTML;
 		response.setContentType(responseReturnType.getResponseType());
 		response.setCharacterEncoding("ISO-8859-1");
+		String internalCompanyName = request.getParameter("c");
+		if (internalCompanyName == null) {
+			AppController.logException(new MissingParametersException("c is necessary to identify company"), request, "Error handling public request");
+			return getUserInterfaceTemplate(request, response, "report_error", context);
+		}
 		EnumSet<PublicAction> publicActions = EnumSet.allOf(PublicAction.class);
 		String templateName = null;
 		for (PublicAction publicAction : publicActions) {
 			String publicActionValue = request.getParameter(publicAction.toString().toLowerCase());
 			if (publicActionValue != null) {
 				TableInfo table = null;
+				CompanyInfo company = null;
 				try {
-					table = this.getPublicTable(request);
+					String userName = "publicform";
+					String forename = "Public";
+					String surname = "Form";
+					AppUserInfo publicUser = new PublicUser(this.databaseDefn.getAuthManager()
+							.getAuthenticator(), internalCompanyName, userName, surname, forename);
+					company = publicUser.getCompany();
+					String internalTableName = request.getParameter("t");
+					if (internalTableName == null) {
+						throw new MissingParametersException(
+								"t (internal table ID) parameter is necessary");
+					}
+					table = this.getPublicTable(company, internalTableName);
 				} catch (AgileBaseException abex) {
 					AppController.logException(abex, request, "Error preparing public form");
 				}
-				switch(publicAction) {
+				switch (publicAction) {
 				case SHOW_FORM:
 					context.put("gtpbPublicTable", table);
+					context.put("gtpbCompany", company);
 					templateName = "gui/public/form";
 					break;
 				case SAVE_NEW_RECORD:
@@ -84,19 +104,26 @@ public class Public extends VelocityViewServlet {
 					List<FileItem> multipartItems = AppController.getMultipartItems(request);
 					SessionDataInfo sessionData = new SessionData();
 					try {
-						ServletDataMethods.setSessionFieldInputValues(sessionData, request, true, this.databaseDefn, table, multipartItems);
+						ServletDataMethods.setSessionFieldInputValues(sessionData, request, true,
+								this.databaseDefn, table, multipartItems);
 						Map<BaseField, BaseValue> fieldInputValues = new LinkedHashMap<BaseField, BaseValue>();
-						this.databaseDefn.getDataManagement().saveRecord(request, table,
-								new LinkedHashMap<BaseField, BaseValue>(sessionData.getFieldInputValues()),
-								true, -1, sessionData, multipartItems);
+						this.databaseDefn.getDataManagement().saveRecord(
+								request,
+								table,
+								new LinkedHashMap<BaseField, BaseValue>(sessionData
+										.getFieldInputValues()), true, -1, sessionData,
+								multipartItems);
 					} catch (AgileBaseException abex) {
-						AppController.logException(abex, request, "General error performing save from public");
+						AppController.logException(abex, request,
+								"General error performing save from public");
 						return getUserInterfaceTemplate(request, response, templateName, context);
 					} catch (SQLException sqlex) {
-						AppController.logException(sqlex, request, "SQL error performing save from public");
+						AppController.logException(sqlex, request,
+								"SQL error performing save from public");
 						return getUserInterfaceTemplate(request, response, templateName, context);
 					} catch (FileUploadException abex) {
-						AppController.logException(abex, request, "General error doing file upload from public");
+						AppController.logException(abex, request,
+								"General error doing file upload from public");
 						return getUserInterfaceTemplate(request, response, templateName, context);
 					}
 					break;
@@ -106,27 +133,14 @@ public class Public extends VelocityViewServlet {
 		return this.getUserInterfaceTemplate(request, response, templateName, context);
 	}
 
-	private TableInfo getPublicTable(HttpServletRequest request) throws ObjectNotFoundException,
-			MissingParametersException, CantDoThatException {
-		String internalCompanyName = request.getParameter("c");
-		if (internalCompanyName == null) {
-			throw new MissingParametersException("c (internal company ID) parameter is necessary");
-		}
-		String internalTableName = request.getParameter("t");
-		if (internalTableName == null) {
-			throw new MissingParametersException("t (internal table ID) parameter is necessary");
-		}
-		String userName = "publicform";
-		String forename = "Public";
-		String surname = "Form";
-		AppUserInfo publicUser = new PublicUser(this.databaseDefn.getAuthManager()
-				.getAuthenticator(), internalCompanyName, userName, surname, forename);
-		CompanyInfo company = publicUser.getCompany();
+	private TableInfo getPublicTable(CompanyInfo company, String internalTableName)
+			throws ObjectNotFoundException, MissingParametersException, CantDoThatException {
 		TableInfo table = null;
 		for (TableInfo testTable : company.getTables()) {
 			if (testTable.getInternalTableName().equals(internalTableName)) {
 				if (!testTable.getTableFormPublic()) {
-					throw new CantDoThatException("The table " + testTable + " has not been set for use as a public form");
+					throw new CantDoThatException("The table " + testTable
+							+ " has not been set for use as a public form");
 				}
 				return testTable;
 			}
