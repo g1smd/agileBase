@@ -377,10 +377,16 @@ public final class DataManagement implements DataManagementInfo {
 				}
 				if (field.getFieldName().equals(HiddenFields.CREATED_BY.getFieldName())) {
 					String userName = request.getRemoteUser();
-					AppUserInfo currentUser = this.authManager.getUserByUserName(request, userName);
-					String fullname = currentUser.getForename() + " " + currentUser.getSurname();
-					fullname += " (" + currentUser.getUserName() + ")";
-					fieldValue = new TextValueDefn(fullname);
+					if (userName == null) {
+						fieldValue = new TextValueDefn("public (from " + request.getRemoteHost() + ")");
+					} else {
+						AppUserInfo currentUser = this.authManager.getUserByUserName(request,
+								userName);
+						String fullname = currentUser.getForename() + " "
+								+ currentUser.getSurname();
+						fullname += " (" + currentUser.getUserName() + ")";
+						fieldValue = new TextValueDefn(fullname);
+					}
 				}
 				if (field.getFieldName().equals(HiddenFields.LOCKED.getFieldName())) {
 					fieldValue = new CheckboxValueDefn(false);
@@ -393,9 +399,13 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			if (field.getFieldName().equals(HiddenFields.MODIFIED_BY.getFieldName())) {
 				String userName = request.getRemoteUser();
-				AppUserInfo currentUser = this.authManager.getUserByUserName(request, userName);
-				String fullname = currentUser.getForename() + " " + currentUser.getSurname();
-				fieldValue = new TextValueDefn(fullname);
+				if (userName == null) {
+					fieldValue = new TextValueDefn("public (from " + request.getRemoteHost() + ")");
+				} else {
+					AppUserInfo currentUser = this.authManager.getUserByUserName(request, userName);
+					String fullname = currentUser.getForename() + " " + currentUser.getSurname();
+					fieldValue = new TextValueDefn(fullname);
+				}
 			}
 			if (fieldValue != null) {
 				// by design, the user should never be able to send a request
@@ -2315,9 +2325,9 @@ public final class DataManagement implements DataManagementInfo {
 	private AtomicInteger summaryDataCacheHits = new AtomicInteger();
 
 	private AtomicInteger summaryDataCacheMisses = new AtomicInteger();
-	
+
 	private AtomicInteger jsonCacheHits = new AtomicInteger();
-	
+
 	private AtomicInteger jsonCacheMisses = new AtomicInteger();
 
 	private float uploadSpeed = 50000; // Default to 50KB per second
