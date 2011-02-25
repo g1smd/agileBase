@@ -1,5 +1,6 @@
 body {
   background-color: white;
+  overflow: visible; /* override tabs.css */
 }
 
 #rest_of_page {
