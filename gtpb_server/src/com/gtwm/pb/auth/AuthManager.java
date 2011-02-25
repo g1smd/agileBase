@@ -315,9 +315,6 @@ public final class AuthManager implements AuthManagerInfo {
 
 	public CompanyInfo getCompanyByInternalName(HttpServletRequest request,
 			String internalCompanyName) throws DisallowedException, ObjectNotFoundException {
-		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
-			throw new DisallowedException(PrivilegeType.MASTER);
-		}
 		for (CompanyInfo company : this.getCompanies(request)) {
 			if (company.getInternalCompanyName().equals(internalCompanyName)) {
 				return company;
