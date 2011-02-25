@@ -151,7 +151,8 @@ public final class DataManagement implements DataManagementInfo {
 			LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord, int rowId,
 			SessionDataInfo sessionData, List<FileItem> multipartItems)
 			throws InputRecordException, ObjectNotFoundException, SQLException,
-			CodingErrorException, DisallowedException, CantDoThatException, MissingParametersException {
+			CodingErrorException, DisallowedException, CantDoThatException,
+			MissingParametersException {
 		// editing a single record, pass in one row id
 		Set<Integer> rowIds = new HashSet<Integer>();
 		rowIds.add(rowId);
@@ -161,7 +162,8 @@ public final class DataManagement implements DataManagementInfo {
 	public int globalEdit(HttpServletRequest request, TableInfo table,
 			LinkedHashMap<BaseField, BaseValue> dataToSave, SessionDataInfo sessionData,
 			List<FileItem> multipartItems) throws InputRecordException, ObjectNotFoundException,
-			SQLException, CodingErrorException, CantDoThatException, DisallowedException, MissingParametersException {
+			SQLException, CodingErrorException, CantDoThatException, DisallowedException,
+			MissingParametersException {
 		int affectedFieldCount = dataToSave.size();
 		for (BaseField affectedField : dataToSave.keySet()) {
 			if (affectedField.getFieldName().equals(HiddenFields.LAST_MODIFIED.getFieldName())) {
@@ -218,7 +220,8 @@ public final class DataManagement implements DataManagementInfo {
 	public void cloneRecord(HttpServletRequest request, TableInfo table, int rowId,
 			SessionDataInfo sessionData, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, SQLException, CantDoThatException,
-			CodingErrorException, InputRecordException, DisallowedException, MissingParametersException {
+			CodingErrorException, InputRecordException, DisallowedException,
+			MissingParametersException {
 		// Get values to clone.
 		Map<BaseField, BaseValue> values = this.getTableDataRow(table, rowId);
 		// Store in a linked hash map to maintain order as saveRecord needs
@@ -366,7 +369,8 @@ public final class DataManagement implements DataManagementInfo {
 
 	private void setHiddenFieldValues(HttpServletRequest request, TableInfo table,
 			LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord)
-			throws CantDoThatException, ObjectNotFoundException, DisallowedException {
+			throws CantDoThatException, ObjectNotFoundException, DisallowedException,
+			MissingParametersException {
 		BaseValue fieldValue;
 		for (BaseField field : table.getFields()) {
 			fieldValue = null;
@@ -378,18 +382,7 @@ public final class DataManagement implements DataManagementInfo {
 					((DateValue) fieldValue).setDateResolution(Calendar.SECOND);
 				}
 				if (field.getFieldName().equals(HiddenFields.CREATED_BY.getFieldName())) {
-					String userName = request.getRemoteUser();
-					if (userName == null) {
-						fieldValue = new TextValueDefn("public (from " + request.getRemoteHost()
-								+ ")");
-					} else {
-						AppUserInfo currentUser = this.authManager.getUserByUserName(request,
-								userName);
-						String fullname = currentUser.getForename() + " "
-								+ currentUser.getSurname();
-						fullname += " (" + currentUser.getUserName() + ")";
-						fieldValue = new TextValueDefn(fullname);
-					}
+					fieldValue = this.getCurrentUserValue(request);
 				}
 				if (field.getFieldName().equals(HiddenFields.LOCKED.getFieldName())) {
 					fieldValue = new CheckboxValueDefn(false);
@@ -401,14 +394,7 @@ public final class DataManagement implements DataManagementInfo {
 				((DateValue) fieldValue).setDateResolution(Calendar.SECOND);
 			}
 			if (field.getFieldName().equals(HiddenFields.MODIFIED_BY.getFieldName())) {
-				String userName = request.getRemoteUser();
-				if (userName == null) {
-					fieldValue = new TextValueDefn("public (from " + request.getRemoteHost() + ")");
-				} else {
-					AppUserInfo currentUser = this.authManager.getUserByUserName(request, userName);
-					String fullname = currentUser.getForename() + " " + currentUser.getSurname();
-					fieldValue = new TextValueDefn(fullname);
-				}
+				fieldValue = this.getCurrentUserValue(request);
 			}
 			if (fieldValue != null) {
 				// by design, the user should never be able to send a request
@@ -419,6 +405,23 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
+	private BaseValue getCurrentUserValue(HttpServletRequest request)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
+		BaseValue fieldValue;
+		String userName = request.getRemoteUser();
+		AppUserInfo currentUser = null;
+		if (userName == null) {
+			currentUser = ServletUtilMethods.getPublicUserForRequest(request,
+					this.authManager.getAuthenticator());
+		} else {
+			currentUser = this.authManager.getUserByUserName(request, userName);
+		}
+		String fullname = currentUser.getForename() + " " + currentUser.getSurname();
+		fullname += " (" + currentUser.getUserName() + ")";
+		fieldValue = new TextValueDefn(fullname);
+		return fieldValue;
+	}
+
 	/**
 	 * Used by both the public saveRecord and globalEdit methods
 	 */
@@ -426,7 +429,8 @@ public final class DataManagement implements DataManagementInfo {
 			LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord, Set<Integer> rowIds,
 			SessionDataInfo sessionData, List<FileItem> multipartItems)
 			throws InputRecordException, ObjectNotFoundException, SQLException,
-			CantDoThatException, CodingErrorException, DisallowedException, MissingParametersException {
+			CantDoThatException, CodingErrorException, DisallowedException,
+			MissingParametersException {
 		if ((dataToSave.size() == 0) && (!newRecord)) {
 			// Note: this does actually happen quite a lot, from two particular
 			// users.
@@ -678,7 +682,8 @@ public final class DataManagement implements DataManagementInfo {
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
 		AppUserInfo user = null;
 		if (request.getRemoteUser() == null) {
-			user = ServletUtilMethods.getPublicUserForRequest(request, this.authManager.getAuthenticator());
+			user = ServletUtilMethods.getPublicUserForRequest(request,
+					this.authManager.getAuthenticator());
 		} else {
 			user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		}
@@ -2134,7 +2139,8 @@ public final class DataManagement implements DataManagementInfo {
 	public void anonymiseData(TableInfo table, HttpServletRequest request,
 			SessionDataInfo sessionData, Map<BaseField, FieldContentType> fieldContentTypes,
 			List<FileItem> multipartItems) throws SQLException, CodingErrorException,
-			CantDoThatException, InputRecordException, ObjectNotFoundException, DisallowedException, MissingParametersException {
+			CantDoThatException, InputRecordException, ObjectNotFoundException,
+			DisallowedException, MissingParametersException {
 		Random randomGenerator = new Random();
 		String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
 				"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
