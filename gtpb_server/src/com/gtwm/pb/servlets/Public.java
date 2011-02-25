@@ -65,11 +65,6 @@ public class Public extends VelocityViewServlet {
 		ResponseReturnType responseReturnType = ResponseReturnType.HTML;
 		response.setContentType(responseReturnType.getResponseType());
 		response.setCharacterEncoding("ISO-8859-1");
-		String internalCompanyName = request.getParameter("c");
-		if (internalCompanyName == null) {
-			AppController.logException(new MissingParametersException("c is necessary to identify company"), request, "Error handling public request");
-			return getUserInterfaceTemplate(request, response, "report_error", context);
-		}
 		EnumSet<PublicAction> publicActions = EnumSet.allOf(PublicAction.class);
 		String templateName = null;
 		for (PublicAction publicAction : publicActions) {
@@ -78,11 +73,7 @@ public class Public extends VelocityViewServlet {
 				TableInfo table = null;
 				CompanyInfo company = null;
 				try {
-					String userName = "publicform";
-					String forename = "Public";
-					String surname = "Form";
-					AppUserInfo publicUser = new PublicUser(this.databaseDefn.getAuthManager()
-							.getAuthenticator(), internalCompanyName, userName, surname, forename);
+					AppUserInfo publicUser = ServletUtilMethods.getPublicUserForRequest(request, this.databaseDefn.getAuthManager().getAuthenticator());
 					company = publicUser.getCompany();
 					String internalTableName = request.getParameter("t");
 					if (internalTableName == null) {

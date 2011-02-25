@@ -34,6 +34,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageData.DataRow;
 import com.gtwm.pb.util.DataDependencyException;
+import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -214,12 +215,12 @@ public interface DataManagementInfo {
 			LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord, int rowId,
 			SessionDataInfo sessionData, List<FileItem> multipartItems)
 			throws InputRecordException, ObjectNotFoundException, SQLException,
-			CodingErrorException, DisallowedException, CantDoThatException;
+			CodingErrorException, DisallowedException, CantDoThatException, MissingParametersException;
 
 	public void cloneRecord(HttpServletRequest request, TableInfo table, int rowId,
 			SessionDataInfo sessionData, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, SQLException, CantDoThatException,
-			CodingErrorException, InputRecordException, DisallowedException;
+			CodingErrorException, InputRecordException, DisallowedException, MissingParametersException;
 
 	/**
 	 * Lock all unlocked table records in the current session table
@@ -332,7 +333,7 @@ public interface DataManagementInfo {
 	public int globalEdit(HttpServletRequest request, TableInfo table,
 			LinkedHashMap<BaseField, BaseValue> dataToEdit, SessionDataInfo sessionData,
 			List<FileItem> multipartItems) throws InputRecordException, ObjectNotFoundException,
-			SQLException, CodingErrorException, CantDoThatException, DisallowedException;
+			SQLException, CodingErrorException, CantDoThatException, DisallowedException, MissingParametersException;
 
 	/**
 	 * Randomise data in a table
@@ -340,7 +341,7 @@ public interface DataManagementInfo {
 	public void anonymiseData(TableInfo table, HttpServletRequest request,
 			SessionDataInfo sessionData, Map<BaseField, FieldContentType> fieldContentTypes,
 			List<FileItem> multipartItems) throws SQLException, CodingErrorException,
-			CantDoThatException, InputRecordException, ObjectNotFoundException, DisallowedException;
+			CantDoThatException, InputRecordException, ObjectNotFoundException, DisallowedException, MissingParametersException;
 
 	/**
 	 * Given an HTTP request, find the company owning the logged in user and

@@ -93,9 +93,11 @@ import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageData.fields.IntegerValueDefn;
 import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
+import com.gtwm.pb.servlets.ServletUtilMethods;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.DataDependencyException;
 import com.gtwm.pb.util.Helpers;
+import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -149,7 +151,7 @@ public final class DataManagement implements DataManagementInfo {
 			LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord, int rowId,
 			SessionDataInfo sessionData, List<FileItem> multipartItems)
 			throws InputRecordException, ObjectNotFoundException, SQLException,
-			CodingErrorException, DisallowedException, CantDoThatException {
+			CodingErrorException, DisallowedException, CantDoThatException, MissingParametersException {
 		// editing a single record, pass in one row id
 		Set<Integer> rowIds = new HashSet<Integer>();
 		rowIds.add(rowId);
@@ -159,7 +161,7 @@ public final class DataManagement implements DataManagementInfo {
 	public int globalEdit(HttpServletRequest request, TableInfo table,
 			LinkedHashMap<BaseField, BaseValue> dataToSave, SessionDataInfo sessionData,
 			List<FileItem> multipartItems) throws InputRecordException, ObjectNotFoundException,
-			SQLException, CodingErrorException, CantDoThatException, DisallowedException {
+			SQLException, CodingErrorException, CantDoThatException, DisallowedException, MissingParametersException {
 		int affectedFieldCount = dataToSave.size();
 		for (BaseField affectedField : dataToSave.keySet()) {
 			if (affectedField.getFieldName().equals(HiddenFields.LAST_MODIFIED.getFieldName())) {
@@ -216,7 +218,7 @@ public final class DataManagement implements DataManagementInfo {
 	public void cloneRecord(HttpServletRequest request, TableInfo table, int rowId,
 			SessionDataInfo sessionData, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, SQLException, CantDoThatException,
-			CodingErrorException, InputRecordException, DisallowedException {
+			CodingErrorException, InputRecordException, DisallowedException, MissingParametersException {
 		// Get values to clone.
 		Map<BaseField, BaseValue> values = this.getTableDataRow(table, rowId);
 		// Store in a linked hash map to maintain order as saveRecord needs
@@ -424,7 +426,7 @@ public final class DataManagement implements DataManagementInfo {
 			LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord, Set<Integer> rowIds,
 			SessionDataInfo sessionData, List<FileItem> multipartItems)
 			throws InputRecordException, ObjectNotFoundException, SQLException,
-			CantDoThatException, CodingErrorException, DisallowedException {
+			CantDoThatException, CodingErrorException, DisallowedException, MissingParametersException {
 		if ((dataToSave.size() == 0) && (!newRecord)) {
 			// Note: this does actually happen quite a lot, from two particular
 			// users.
@@ -674,7 +676,12 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		this.logLastDataChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
-		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		AppUserInfo user = null;
+		if (request.getRemoteUser() == null) {
+			user = ServletUtilMethods.getPublicUserForRequest(request, this.authManager.getAuthenticator());
+		} else {
+			user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		}
 		// Log everything apart from hidden (auto set) fields
 		Map<BaseField, BaseValue> dataToLog = new LinkedHashMap<BaseField, BaseValue>();
 		for (Map.Entry<BaseField, BaseValue> entrySet : dataToSave.entrySet()) {
@@ -2127,7 +2134,7 @@ public final class DataManagement implements DataManagementInfo {
 	public void anonymiseData(TableInfo table, HttpServletRequest request,
 			SessionDataInfo sessionData, Map<BaseField, FieldContentType> fieldContentTypes,
 			List<FileItem> multipartItems) throws SQLException, CodingErrorException,
-			CantDoThatException, InputRecordException, ObjectNotFoundException, DisallowedException {
+			CantDoThatException, InputRecordException, ObjectNotFoundException, DisallowedException, MissingParametersException {
 		Random randomGenerator = new Random();
 		String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
 				"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -2253,7 +2260,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	public void logLastDataChangeTime(HttpServletRequest request) throws ObjectNotFoundException {
 		// Public user (not logged in) changes don't count
-		// TODO: think of a better way
+		// TODO: think of something better
 		if (request.getRemoteUser() != null) {
 			CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 			this.setLastDataChangeTime(company);
