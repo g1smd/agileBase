@@ -74,7 +74,6 @@ public class Public extends VelocityViewServlet {
 		String templateName = null;
 		for (PublicAction publicAction : publicActions) {
 			String publicActionValue = request.getParameter(publicAction.toString().toLowerCase());
-			logger.debug("Value for action " + publicAction + " is " + publicActionValue);
 			if (publicActionValue != null) {
 				TableInfo table = null;
 				try {
@@ -88,6 +87,7 @@ public class Public extends VelocityViewServlet {
 					templateName = "gui/public/form";
 					break;
 				case CREATE_NEW_RECORD:
+					templateName = "gui/public/posted";
 					List<FileItem> multipartItems = AppController.getMultipartItems(request);
 					SessionDataInfo sessionData = new SessionData();
 					try {
@@ -155,7 +155,6 @@ public class Public extends VelocityViewServlet {
 	private Template getUserInterfaceTemplate(HttpServletRequest request,
 			HttpServletResponse response, String templateName, Context context) {
 		ViewToolsInfo viewTools = new ViewTools(request, response, this.webAppRoot);
-		logger.debug("Putting viewTools in context: " + viewTools);
 		context.put("viewTools", viewTools);
 		if (templateName == null) {
 			logger.error("No template specified.");
