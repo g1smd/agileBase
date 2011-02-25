@@ -55,7 +55,7 @@ import java.sql.ResultSet;
 public final class SessionData implements SessionDataInfo {
 
 	public SessionData() {
-		logger.warn("Empty SessionData object created");
+		//logger.warn("Empty SessionData object created");
 		this.relationalDataSource = null;
 	}
 

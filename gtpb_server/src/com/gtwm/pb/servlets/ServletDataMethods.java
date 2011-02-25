@@ -464,7 +464,7 @@ public final class ServletDataMethods {
 				continue FIELDSLOOP;
 			}
 			try {
-				BaseValue fieldValue = getFieldValue(sessionData, request, field, newRecord,
+				BaseValue fieldValue = getFieldValue(request, field, newRecord,
 						databaseDefn, multipartItems);
 				// The following logic is:
 				// If we have a new record, and the field wasn't submitted, or
@@ -481,8 +481,9 @@ public final class ServletDataMethods {
 								databaseDefn);
 						if (defaultValue != null) {
 							// TODO: why can't this be fieldValue = defaultValue
-							fieldValue = getDefaultFieldValue(sessionData, request, field,
-									databaseDefn);
+							//fieldValue = getDefaultFieldValue(sessionData, request, field,
+							//		databaseDefn);
+							fieldValue = defaultValue;
 						}
 					}
 				}
@@ -527,7 +528,7 @@ public final class ServletDataMethods {
 	 *      boolean, DatabaseInfo, TableInfo, List) Called by
 	 *      setSessionFieldInputValues
 	 */
-	private static BaseValue getFieldValue(SessionDataInfo sessionData, HttpServletRequest request,
+	private static BaseValue getFieldValue(HttpServletRequest request,
 			BaseField field, boolean newRecord, DatabaseInfo databaseDefn,
 			List<FileItem> multipartItems) throws SQLException, ObjectNotFoundException,
 			CantDoThatException, CodingErrorException, FileUploadException, InputRecordException {
@@ -823,9 +824,6 @@ public final class ServletDataMethods {
 							.getTableDataRow(table, -1);
 					for (Map.Entry<BaseField, BaseValue> fieldValueEntry : tableRow.entrySet()) {
 						if (fieldValueEntry.getKey().equals(relatedField)) {
-							// (field instanceof IntegerField) -- must be the
-							// case
-							// if primary key field
 							fieldValue = fieldValueEntry.getValue();
 							break;
 						}
