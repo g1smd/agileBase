@@ -73,8 +73,9 @@ public class Public extends VelocityViewServlet {
 		EnumSet<PublicAction> publicActions = EnumSet.allOf(PublicAction.class);
 		String templateName = null;
 		for (PublicAction publicAction : publicActions) {
-			String appActionValue = request.getParameter(publicAction.toString().toLowerCase());
-			if (appActionValue != null) {
+			String publicActionValue = request.getParameter(publicAction.toString().toLowerCase());
+			logger.debug("Value for action " + publicAction + " is " + publicActionValue);
+			if (publicActionValue != null) {
 				TableInfo table = null;
 				try {
 					table = this.getPublicTable(request);
