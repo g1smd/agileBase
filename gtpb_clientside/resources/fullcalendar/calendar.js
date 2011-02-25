@@ -86,7 +86,15 @@ $(document).ready(function() {
   });
   
   $("#new_record").click(function() {
-	fShowModalDialog('gui/calendar/new_event','new event','fEditEventOK()','back next ok cancel','width=800px; height=600px');
+	fShowModalDialog(
+	  'gui/calendar/new_event',
+	  'new event',
+	  function(sResponseText,sResponseXML) {
+		alert('here');
+		$("#calendar").fullCalendar('rerenderEvents');
+	  },
+	  ,'back next ok cancel',
+	  'width=800px; height=600px');
   });
 });
 
@@ -107,9 +115,4 @@ function addRemoveCalendar(checkboxElement) {
 	var legendId = "legend_" + internalReportName;
 	$("#" + legendId).remove();
   }
-}
-
-function fEditEventOK() {
-  alert('here');
-  $("#calendar").fullCalendar('rerenderEvents');
 }
