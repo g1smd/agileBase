@@ -12,5 +12,6 @@
           #parse("gui/reports_and_tables/tabs/table_data_row.vm")
 		#end
 	#end
-  </table>				
+  </table>	
+  <input type="submit" value="Submit" />
 </form>
