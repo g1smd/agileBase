@@ -37,10 +37,10 @@
 		  #set($internalTableName = $table.getInternalTableName())
           <tr>
             <td>
-	          <input type="radio" name="set_table" id="radio_$internalTableName" value="$internalTableName">$table</input>
+	          <input type="radio" name="set_table" id="radio_$internalTableName" value="$internalTableName">
 			</td>
 			<td style="padding: 10px">
-			  <label for="radio_$internalTableName">$table</label>
+			  <label for="radio_$internalTableName"><b>$table</b></label>
 			</td>
 		  </tr>
 	    #end
