@@ -17,26 +17,12 @@
 ##
 #set($table = $sessionData.getTable())
 <request>
-  <nextTemplate>gui/calendar/edit_event</nextTemplate>
+  <okTemplate>gui/calendar/edit_event_ok</okTemplate>
   #parse('gui/customisations/wizard_result.vm') 
-  #set($app_action_caption = "New event")
-  #set($tables = [])
-  #set($user = $view.getLoggedInUser())
-  #set($operationalDashboardReports = $user.getOperationalDashboardReports())
-  #foreach($report in $operationalDashboardReports)
-	#set($table = $report.getParentTable())
-	#if(!$tables.contains($table))
-	  #set($temp = $tables.add($table))
-	#end
-  #end
-  <htmlContent ><![CDATA[
-    <form style="padding:5px">
-	  <h1>Please select an event type</h1>
-	  #foreach($table in $tables)
-	    <input type="radio" name="set_table" value="$table.getInternalTableName()">$table</input>
-	  #end
-	  <input type="hidden" name="save_new_record" value="true">
-	</form>
+  #set($app_action_caption = "Edit '$table' event")
+  #set($ab_calendar_display = true)
+  <htmlContent onload="fComboComponents();"><![CDATA[
+    #parse('gui/reports_and_tables/tabs/edit.vm')
   ]]>
   </htmlContent>
   <caption>$app_action_caption</caption>

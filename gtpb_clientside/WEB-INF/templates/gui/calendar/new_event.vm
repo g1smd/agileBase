@@ -1,0 +1,43 @@
+##
+##  Copyright 2011 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($table = $sessionData.getTable())
+<request>
+  <nextTemplate>gui/calendar/edit_event</nextTemplate>
+  #parse('gui/customisations/wizard_result.vm') 
+  #set($app_action_caption = "New event")
+  #set($tables = [])
+  #set($user = $view.getLoggedInUser())
+  #set($operationalDashboardReports = $user.getOperationalDashboardReports())
+  #foreach($report in $operationalDashboardReports)
+	#set($table = $report.getParentTable())
+	#if(!$tables.contains($table))
+	  #set($temp = $tables.add($table))
+	#end
+  #end
+  <htmlContent ><![CDATA[
+    <form style="padding:5px">
+	  <h1>Please select an event type</h1>
+	  #foreach($table in $tables)
+	    <input type="radio" name="set_table" value="$table.getInternalTableName()">$table</input>
+	  #end
+	  <input type="hidden" name="save_new_record" value="true">
+	</form>
+  ]]>
+  </htmlContent>
+  <caption>$app_action_caption</caption>
+</request>
