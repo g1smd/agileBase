@@ -87,6 +87,7 @@ public final class AuthManager implements AuthManagerInfo {
 					"from Authenticator").uniqueResult();
 			if (this.authenticator != null) {
 				Authenticator auth = (Authenticator) this.authenticator;
+				CompanyInfo gtwmCompany = null;
 				for (CompanyInfo company : auth.getCompanies()) {
 					// All the logger.info lines below are basically to force
 					// Hibernate to read the objects into memory by printing out
@@ -95,6 +96,9 @@ public final class AuthManager implements AuthManagerInfo {
 					logger.info("" + company + " users: " + company.getUsers());
 					logger.info("" + company + " modules: " + company.getModules());
 					logger.info("" + company + " tabs: " + company.getTabAddresses());
+					if (company.getInternalCompanyName().equals("aeaa2e59ef1798629")) {
+						gtwmCompany = company;
+					}
 				}
 				for(AppUserInfo user : auth.getUsers()) {
 					logger.info("User " + user + " hidden reports: " + user.getHiddenReports());
@@ -104,10 +108,13 @@ public final class AuthManager implements AuthManagerInfo {
 					logger.info("Role " + role + " users: " + role.getUsers());
 				}
 				// Cache tables into companies.
-				for (UserGeneralPrivilegeInfo privilege : auth.getUserPrivileges()) {
+				PRIVILEGE_LOOP: for (UserGeneralPrivilegeInfo privilege : auth.getUserPrivileges()) {
 					if (privilege instanceof UserTablePrivilege) {
 						UserTablePrivilege priv = (UserTablePrivilege) privilege;
 						CompanyInfo company = priv.getUser().getCompany();
+						if (TEST_MODE && !company.equals(gtwmCompany)) {
+							continue PRIVILEGE_LOOP;
+						}
 						TableInfo table = priv.getTable();
 						if (!company.getTables().contains(table)) {
 							populateTableFromHibernate(table, relationalDataSource);
@@ -115,10 +122,13 @@ public final class AuthManager implements AuthManagerInfo {
 						}
 					}
 				}
-				for (RoleGeneralPrivilegeInfo privilege : auth.getRolePrivileges()) {
+				PRIVILEGE_LOOP: for (RoleGeneralPrivilegeInfo privilege : auth.getRolePrivileges()) {
 					if (privilege instanceof RoleTablePrivilege) {
 						RoleTablePrivilege priv = (RoleTablePrivilege) privilege;
 						CompanyInfo company = priv.getRole().getCompany();
+						if (TEST_MODE && !company.equals(gtwmCompany)) {
+							continue PRIVILEGE_LOOP;
+						}
 						TableInfo table = priv.getTable();
 						if (!company.getTables().contains(table)) {
 							populateTableFromHibernate(table, relationalDataSource);
@@ -846,4 +856,11 @@ public final class AuthManager implements AuthManagerInfo {
 	private AuthenticatorInfo authenticator = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(AuthManager.class);
+	
+	/**
+	 * Setting this to true will speed up agileBase reloading by only loading one company - GTwM
+	 * 
+	 * SET THIS TO false IN PRODUCTION
+	 */
+	private static final boolean TEST_MODE = true;
 }
