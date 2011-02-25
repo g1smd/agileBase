@@ -93,7 +93,7 @@ $(document).ready(function() {
 		alert('here');
 		$("#calendar").fullCalendar('rerenderEvents');
 	  },
-	  ,'back next ok cancel',
+	  'back next ok cancel',
 	  'width=800px; height=600px');
   });
 });
