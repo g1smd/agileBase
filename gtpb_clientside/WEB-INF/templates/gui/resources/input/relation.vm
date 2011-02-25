@@ -67,6 +67,7 @@
 	#end
 	</select>
 #else
+	Display value is ${fieldDisplayValue}<br>
   <div class="relation_field">##
   <input name="$internalFieldName" ##
   			       type="hidden" ##
