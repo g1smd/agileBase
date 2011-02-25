@@ -110,5 +110,6 @@ function addRemoveCalendar(checkboxElement) {
 }
 
 function fEditEventOK() {
+  alert('here');
   $("#calendar").fullCalendar('rerenderEvents');
 }
