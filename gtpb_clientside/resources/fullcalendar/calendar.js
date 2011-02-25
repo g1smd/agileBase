@@ -21,7 +21,7 @@ $(document).ready(function() {
     },
     dayClick: function( date, allDay, jsEvent, view ) {
       fShowModalDialog('gui/calendar/new_event','edit event','fEditEventOK()','back next ok cancel','width=800px; height=600px');
-    }
+    },
     eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
       var eventDate = event.start;
       var options = {
