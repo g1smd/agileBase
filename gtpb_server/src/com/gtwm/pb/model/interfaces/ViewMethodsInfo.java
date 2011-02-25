@@ -155,12 +155,12 @@ public interface ViewMethodsInfo {
 	 */
 	public String getToolbarPluginName();
 
-	public SortedSet<CompanyInfo> getCompanies() throws DisallowedException;
+	public SortedSet<CompanyInfo> getCompanies() throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @see com.gtwm.pb.model.interfaces.AuthManagerInfo#getPrivilegeTypes(HttpServletRequest)
 	 */
-	public EnumSet<PrivilegeType> adminGetPrivilegeTypes() throws DisallowedException;
+	public EnumSet<PrivilegeType> adminGetPrivilegeTypes() throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * Provides information to let the user create a database relation. A list
@@ -195,7 +195,7 @@ public interface ViewMethodsInfo {
 	 * @see com.gtwm.pb.model.interfaces.AuthManagerInfo#getRolesForUser(HttpServletRequest,
 	 *      AppUserInfo)
 	 */
-	public SortedSet<AppRoleInfo> adminGetRolesForUser(AppUserInfo user) throws DisallowedException;
+	public SortedSet<AppRoleInfo> adminGetRolesForUser(AppUserInfo user) throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @see com.gtwm.pb.model.interfaces.AuthManagerInfo#getUsers(HttpServletRequest)
@@ -610,25 +610,25 @@ public interface ViewMethodsInfo {
 	 * @see #userHasPrivilege(String)
 	 */
 	public boolean roleHasPrivilege(String privilegeTypeToCheck) throws IllegalArgumentException,
-			DisallowedException;
+			DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @see #userHasPrivilege(String, TableInfo)
 	 */
 	public boolean roleHasPrivilege(String privilegeTypeToCheck, TableInfo table)
-			throws IllegalArgumentException, DisallowedException;
+			throws IllegalArgumentException, DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @see #userHasPrivilege(AppUserInfo, String)
 	 */
 	public boolean roleHasPrivilege(AppRoleInfo role, String privilegeTypeToCheck)
-			throws IllegalArgumentException, DisallowedException;
+			throws IllegalArgumentException, DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @see #userHasPrivilege(AppUserInfo, String, TableInfo)
 	 */
 	public boolean roleHasPrivilege(AppRoleInfo role, String privilegeTypeToCheck, TableInfo table)
-			throws IllegalArgumentException, DisallowedException;
+			throws IllegalArgumentException, DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * Checks whether the session user has a particular general privilege
@@ -672,13 +672,13 @@ public interface ViewMethodsInfo {
 	 * Checks whether the given user has a particular general privilege
 	 */
 	public boolean userHasPrivilege(AppUserInfo user, String privilegeTypeToCheck)
-			throws DisallowedException;
+			throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * Checks whether the given user has a particular table-specific privilege
 	 */
 	public boolean userHasPrivilege(AppUserInfo user, String privilegeTypeToCheck, TableInfo table)
-			throws DisallowedException;
+			throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * The only setter in this class - we use this method to save an exception
@@ -704,7 +704,7 @@ public interface ViewMethodsInfo {
 	 *             PrivilegeType
 	 */
 	public boolean loggedInUserAllowedTo(String privilegeTypeToCheck)
-			throws IllegalArgumentException;
+			throws IllegalArgumentException, ObjectNotFoundException;
 
 	/**
 	 * Allows the user interface to check whether the current user has a

@@ -285,7 +285,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return this.toolbarPluginName;
 	}
 
-	public SortedSet<CompanyInfo> getCompanies() throws DisallowedException {
+	public SortedSet<CompanyInfo> getCompanies() throws DisallowedException, ObjectNotFoundException {
 		return this.databaseDefn.getAuthManager().getCompanies(this.request);
 	}
 
@@ -328,7 +328,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	 * view
 	 */
 	private SortedSet<BaseReportInfo> getViewableReports(TableInfo table, AppUserInfo user)
-			throws DisallowedException, CodingErrorException {
+			throws DisallowedException, CodingErrorException, ObjectNotFoundException {
 		SortedSet<BaseReportInfo> allTableReports = table.getReports();
 		// Strip down to the set of reports the user has privileges to view
 		SortedSet<BaseReportInfo> viewableReports = new TreeSet<BaseReportInfo>();
@@ -821,16 +821,16 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return getAuthManager().getRoles(this.request);
 	}
 
-	public SortedSet<AppRoleInfo> adminGetRolesForUser(AppUserInfo user) throws DisallowedException {
+	public SortedSet<AppRoleInfo> adminGetRolesForUser(AppUserInfo user) throws DisallowedException, ObjectNotFoundException {
 		return getAuthManager().getRolesForUser(this.request, user);
 	}
 
-	public EnumSet<PrivilegeType> adminGetPrivilegeTypes() throws DisallowedException {
+	public EnumSet<PrivilegeType> adminGetPrivilegeTypes() throws DisallowedException, ObjectNotFoundException {
 		return getAuthManager().getPrivilegeTypes(this.request);
 	}
 
 	public boolean loggedInUserAllowedTo(String privilegeTypeToCheck)
-			throws IllegalArgumentException {
+			throws IllegalArgumentException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
 		return getAuthenticator().loggedInUserAllowedTo(this.request, privilegeType);
 	}
@@ -862,13 +862,13 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public boolean userHasPrivilege(AppUserInfo user, String privilegeTypeToCheck)
-			throws DisallowedException {
+			throws DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
 		return getAuthManager().specifiedUserHasPrivilege(this.request, privilegeType, user);
 	}
 
 	public boolean userHasPrivilege(AppUserInfo user, String privilegeTypeToCheck, TableInfo table)
-			throws DisallowedException {
+			throws DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
 		boolean hasPrivilege = getAuthManager().specifiedUserHasPrivilege(this.request,
 				privilegeType, user, table);
@@ -876,14 +876,14 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public boolean roleHasPrivilege(String privilegeTypeToCheck) throws IllegalArgumentException,
-			DisallowedException {
+			DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
 		AppRoleInfo sessionRole = this.sessionData.getRole();
 		return getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, sessionRole);
 	}
 
 	public boolean roleHasPrivilege(String privilegeTypeToCheck, TableInfo table)
-			throws IllegalArgumentException, DisallowedException {
+			throws IllegalArgumentException, DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
 		AppRoleInfo sessionRole = this.sessionData.getRole();
 		return getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, sessionRole,
@@ -891,13 +891,13 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public boolean roleHasPrivilege(AppRoleInfo role, String privilegeTypeToCheck)
-			throws IllegalArgumentException, DisallowedException {
+			throws IllegalArgumentException, DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
 		return getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, role);
 	}
 
 	public boolean roleHasPrivilege(AppRoleInfo role, String privilegeTypeToCheck, TableInfo table)
-			throws IllegalArgumentException, DisallowedException {
+			throws IllegalArgumentException, DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
 		return getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, role, table);
 	}

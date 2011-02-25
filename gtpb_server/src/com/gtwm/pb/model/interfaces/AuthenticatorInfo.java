@@ -20,6 +20,7 @@ package com.gtwm.pb.model.interfaces;
 import javax.servlet.http.*;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.ObjectNotFoundException;
 
 /**
  * Acts as a store of authentication and access control information. Allows the
@@ -43,7 +44,7 @@ public interface AuthenticatorInfo {
 	 *            What they can do
 	 * @return Whether or not the user can do what's requested
 	 */
-	public boolean loggedInUserAllowedTo(HttpServletRequest request, PrivilegeType privilegeType);
+	public boolean loggedInUserAllowedTo(HttpServletRequest request, PrivilegeType privilegeType) throws ObjectNotFoundException;
 
 	/**
 	 * Checks whether the logged in user has a particular table-specific
