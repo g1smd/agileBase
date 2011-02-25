@@ -59,6 +59,10 @@ select, textarea, input {
   padding: 0.2em;
 }
 
+.bare_button {
+  cursor: pointer;
+}
+
 .fc-event {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;

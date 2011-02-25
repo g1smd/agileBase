@@ -48,7 +48,14 @@
   <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
   <div id="links">
     <div class="button" style="left: 0px;">
+		#set($databaseReturn = "gui/customisations/common/dashboard/dashboard")			
+        <a href="?return=$databaseReturn">
+    	  <img src="resources/toolbar/dashboard.png" /><br>Database
+    	</a>
+    </div>
+    <div class="button" style="left: 100px;">
 		#if($mobile_device)
+		  #set($databaseReturn = "gui/pane1")
 		#else
 		  #set($databaseReturn = "gui/display_application")			
 		#end
@@ -56,6 +63,9 @@
     	  <img src="customisations/common/dashboard/panes.png" /><br>Database
     	</a>
     </div>
+	<div id="new_record" class="bare_button" style="left: 200px;">
+		<img id="new_record" src="resources/toolbar/new.png" /><br>New event
+	</div>
   </div>
   <div id="selected_reports">
   </div>

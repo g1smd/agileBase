@@ -19,9 +19,6 @@ $(document).ready(function() {
       scroll(0,0); // workaround for popup showing at the top of the screen rather than the current scroll position
       fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event','fEditEventOK()','ok cancel','width=800px; height=600px');
     },
-    dayClick: function( date, allDay, jsEvent, view ) {
-      fShowModalDialog('gui/calendar/new_event','edit event','fEditEventOK()','back next ok cancel','width=800px; height=600px');
-    },
     eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
       var eventDate = event.start;
       var options = {
@@ -88,7 +85,9 @@ $(document).ready(function() {
     $("#report_selection").toggle('normal');
   });
   
-  
+  $("#new_record").click(function() {
+	fShowModalDialog('gui/calendar/new_event','new event','fEditEventOK()','back next ok cancel','width=800px; height=600px');
+  });
 });
 
 // checkboxElement is the checkbox to select/deselect a calendar
