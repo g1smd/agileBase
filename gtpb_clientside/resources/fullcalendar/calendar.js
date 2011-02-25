@@ -90,8 +90,7 @@ $(document).ready(function() {
 	  'gui/calendar/new_event',
 	  'new event',
 	  function(sResponseText,sResponseXML) {
-		alert('here');
-		$("#calendar").fullCalendar('rerenderEvents');
+		$("#calendar").fullCalendar('refetchEvents');
 	  },
 	  'back next ok cancel',
 	  'width=800px; height=600px');
