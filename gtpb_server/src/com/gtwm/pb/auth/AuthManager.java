@@ -37,6 +37,7 @@ import com.gtwm.pb.model.manageSchema.fields.DecimalFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
+import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.MissingParametersException;
@@ -112,7 +113,7 @@ public final class AuthManager implements AuthManagerInfo {
 					if (privilege instanceof UserTablePrivilege) {
 						UserTablePrivilege priv = (UserTablePrivilege) privilege;
 						CompanyInfo company = priv.getUser().getCompany();
-						if (TEST_MODE && !company.equals(gtwmCompany)) {
+						if (AppProperties.testMode && !company.equals(gtwmCompany)) {
 							continue PRIVILEGE_LOOP;
 						}
 						TableInfo table = priv.getTable();
@@ -126,7 +127,7 @@ public final class AuthManager implements AuthManagerInfo {
 					if (privilege instanceof RoleTablePrivilege) {
 						RoleTablePrivilege priv = (RoleTablePrivilege) privilege;
 						CompanyInfo company = priv.getRole().getCompany();
-						if (TEST_MODE && !company.equals(gtwmCompany)) {
+						if (AppProperties.testMode && !company.equals(gtwmCompany)) {
 							continue PRIVILEGE_LOOP;
 						}
 						TableInfo table = priv.getTable();
@@ -854,10 +855,4 @@ public final class AuthManager implements AuthManagerInfo {
 
 	private static final SimpleLogger logger = new SimpleLogger(AuthManager.class);
 	
-	/**
-	 * Setting this to true will speed up agileBase reloading by only loading one company - GTwM
-	 * 
-	 * SET THIS TO false IN PRODUCTION
-	 */
-	private static final boolean TEST_MODE = true;
 }

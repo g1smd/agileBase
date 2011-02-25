@@ -100,4 +100,11 @@ public class AppProperties {
 	 * Number of tables a company must have before discounting kicks in
 	 */
 	public static final int numFullPriceTables = 20;
+	
+	/**
+	 * Setting this to true will speed up agileBase reloading by only loading one company - GTwM
+	 * 
+	 * SET THIS TO false IN PRODUCTION
+	 */
+	public static final boolean testMode = false;
 }
