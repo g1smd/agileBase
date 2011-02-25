@@ -67,7 +67,6 @@
 	#end
 	</select>
 #else
-	Display value is ${fieldDisplayValue}<br>
   <div class="relation_field">##
   <input name="$internalFieldName" ##
   			       type="hidden" ##
@@ -86,6 +85,7 @@
 				   id="$inputId">##
   </div>##
   #if($userCanEdit)## && (!$ab_calendar_display)
+  User can edit
   <script language="JavaScript" src="resources/picker.js"></script>
   <script language="Javascript">
     ## Hack added by Oliver for iPod/iPhone compatibility
