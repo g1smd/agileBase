@@ -85,7 +85,6 @@
 				   id="$inputId">##
   </div>##
   #if($userCanEdit)## && (!$ab_calendar_display)
-  User can edit
   <script language="JavaScript" src="resources/picker.js"></script>
   <script language="Javascript">
     ## Hack added by Oliver for iPod/iPhone compatibility
@@ -113,7 +112,7 @@
     	if(!bIsGlobalEdit || (bIsGlobalEdit && !bIsAutoUpdate)) new fChange(this);
     };
     
-	//TODO: Test this in the latest version
+	//TODO: Test this in the latest IE and agileBase combination
 	if(jQuery.browser.msie) { // autocomplete doesn't work in IE so just show plain text for the time being
 		var oLabel=document.createElement('span');
 		oLabel.update=function(sValue) {

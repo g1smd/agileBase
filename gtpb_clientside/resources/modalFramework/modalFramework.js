@@ -526,3 +526,7 @@ function f_mdp_rowclick(oRow) {
   while(document.getElementById('_mfp_current_row')) document.getElementById('_mfp_current_row').removeAttribute('id');
   oRow.setAttribute('id','_mfp_current_row');
 }
+
+function fEvalScripts() {
+  eval($("#_md_dialog").find("script").text());	
+}

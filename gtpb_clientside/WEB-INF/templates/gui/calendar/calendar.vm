@@ -64,7 +64,7 @@
     	</a>
     </div>
 	<div id="new_record" class="bare_button" style="left: 200px;">
-		<img id="new_record" src="resources/toolbar/new.png" /><br>New event
+		<img id="new_record" src="resources/toolbar/new.png" /><br>New
 	</div>
   </div>
   <div id="selected_reports">

@@ -23,21 +23,22 @@
   }
 </style>
 #set($table = $sessionData.getTable())
+#set($internalTableName = $table.getInternalTableName())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr valign="top">
     <td class="table_details">
 	<b>Name:</b><br>
-      <input type="text" name="tablename" gtpb_update_table value="$table.getTableName()" onkeyup="top.oBuffer.writeBuffer(this); parent.pane_1.fUpdateTitle('$table.getInternalTableName()$table.getDefaultReport().getInternalReportName()', this.value);" maxKeyCount="6" identifier="$table.getInternalTableName()" gtpb_internaltablename="$table.getInternalTableName()" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/><p>
+      <input type="text" name="tablename" gtpb_update_table value="$table.getTableName()" onkeyup="top.oBuffer.writeBuffer(this); parent.pane_1.fUpdateTitle('$internalTableName$table.getDefaultReport().getInternalReportName()', this.value);" maxKeyCount="6" identifier="$internalTableName" gtpb_internaltablename="$internalTableName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/><p>
     <b>Purpose:</b><br><span class="greytext" style="font-size:8pt">Purpose of table and key stakeholders who value it</span><br>
-	  <textarea name="tabledesc" cols="50" rows="4" gtpb_update_table onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" gtpb_internaltablename="$table.getInternalTableName()" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">$table.getTableDescription()</textarea><p>
-      <input type="checkbox" name="lockable" gtpb_update_table #if($table.getRecordsLockable()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$table.getInternalTableName()" gtpb_internaltablename="$table.getInternalTableName()">
+	  <textarea name="tabledesc" cols="50" rows="4" gtpb_update_table onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" gtpb_internaltablename="$internalTableName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">$table.getTableDescription()</textarea><p>
+      <input type="checkbox" name="lockable" gtpb_update_table #if($table.getRecordsLockable()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$internalTableName" gtpb_internaltablename="$internalTableName">
 	  Records lockable<br>
 	  <span class="greytext" style="font-size:8pt">Allow custom actions (such as 'print invoice') to lock records against future editing</span><p>
-      <input type="checkbox" name="tableformpublic" gtpb_update_table #if($table.getTableFormPublic()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$table.getInternalTableName()" gtpb_internaltablename="$table.getInternalTableName()">
+      <input type="checkbox" name="tableformpublic" gtpb_update_table #if($table.getTableFormPublic()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$internalTableName" gtpb_internaltablename="$internalTableName">
 	  Public data entry<br>
-	  <span class="greytext" style="font-size:8pt">Publish a form which the general public can use to enter data</span><p>
+	  <span class="greytext" style="font-size:8pt">Publish a <a href="Publish.ab?show_form=true&c=$view.getLoggedInUser().getCompany().getInternalCompanyName()&t=$internalTableName" target="_blank">form</a> which the general public can use to enter data</span><p>
       <!-- table deletion button -->
-	<input type=button value="Delete Table" #if($view.loggedInUserAllowedTo('ADMINISTRATE')) onclick="top.location='AppController.servlet?return=gui/display_application&remove_table=true&internaltablename=$table.getInternalTableName()'" #else disabled=true #end>
+	<input type=button value="Delete Table" #if($view.loggedInUserAllowedTo('ADMINISTRATE')) onclick="top.location='AppController.servlet?return=gui/display_application&remove_table=true&internaltablename=$internalTableName'" #else disabled=true #end>
     </td>
 	<td class="table_details" style="background-color:#f4f4f4">
       <form method="POST" action="AppController.servlet" target="pane_1">
