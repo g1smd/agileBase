@@ -36,7 +36,7 @@
 	  <span class="greytext" style="font-size:8pt">Allow custom actions (such as 'print invoice') to lock records against future editing</span><p>
       <input type="checkbox" name="tableformpublic" gtpb_update_table #if($table.getTableFormPublic()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$internalTableName" gtpb_internaltablename="$internalTableName">
 	  Public data entry<br>
-	  <span class="greytext" style="font-size:8pt">Publish a <a href="Publish.ab?show_form=true&c=$view.getLoggedInUser().getCompany().getInternalCompanyName()&t=$internalTableName" target="_blank">form</a> which the general public can use to enter data</span><p>
+	  <span class="greytext" style="font-size:8pt">Publish a <a href="Public.ab?show_form=true&c=$view.getLoggedInUser().getCompany().getInternalCompanyName()&t=$internalTableName" target="_blank">form</a> which the general public can use to enter data</span><p>
       <!-- table deletion button -->
 	<input type=button value="Delete Table" #if($view.loggedInUserAllowedTo('ADMINISTRATE')) onclick="top.location='AppController.servlet?return=gui/display_application&remove_table=true&internaltablename=$internalTableName'" #else disabled=true #end>
     </td>
