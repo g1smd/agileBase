@@ -108,7 +108,8 @@ public interface UsageStatsInfo {
 	 * report along with some overview stats about each
 	 */
 	public ReportViewStatsInfo getReportViewStats(BaseReportInfo report)
-			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException, ObjectNotFoundException;
+			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException,
+			ObjectNotFoundException;
 
 	/**
 	 * Return any tables in the company that have had no report views (from any
@@ -118,13 +119,15 @@ public interface UsageStatsInfo {
 			ObjectNotFoundException;
 
 	/**
-	 * Return counts of the total no. log entries per week, in order from oldest to newest
+	 * Return counts of the total no. log entries per week, in order from oldest
+	 * to newest
 	 * 
 	 * @param options
-	 *            For the schema change logs, the constant 1 means
-	 *            only return log entries that are to do with schema building.
-	 *            -1 means return those that are to do with demolishing, e.g. remove a field, remove a table. 
-	 *            The parameter is ignored for other log types
+	 *            For the schema change logs, the constant 1 means only return
+	 *            log entries that are to do with schema building. -1 means
+	 *            return those that are to do with demolishing, e.g. remove a
+	 *            field, remove a table. The parameter is ignored for other log
+	 *            types
 	 * 
 	 * @see com.gtwm.pb.model.manageUsage.LogType See LogType for a list of
 	 *      allowed log types
@@ -132,4 +135,10 @@ public interface UsageStatsInfo {
 	public List<Integer> getTimelineCounts(String logType, int options) throws DisallowedException,
 			SQLException, ObjectNotFoundException;
 
+	/**
+	 * Returns a description of the last login time of the user
+	 * 
+	 * e.g. '3 days ago'
+	 */
+	public String getLastLoginAge(AppUserInfo user) throws SQLException;
 }

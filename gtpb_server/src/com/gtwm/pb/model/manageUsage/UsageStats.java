@@ -847,6 +847,40 @@ public class UsageStats implements UsageStatsInfo {
 		company.setCachedSparkline(logType, options, timelineCounts);
 		return timelineCounts;
 	}
+	
+	public String getLastLoginAge(AppUserInfo user) throws SQLException {
+		String lastLoginAge = null;
+		String SQLCode = "SELECT age(max(app_timestamp)) FROM dbint_log" + LogType.LOGIN.name().toLowerCase();
+		SQLCode += " WHERE app_user = ?";
+		Connection conn = null;
+		try {
+			conn = this.databaseDefn.getDataSource().getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			statement.setString(1, user.getUserName());
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				lastLoginAge = results.getString(1) + " ago";
+			}
+			results.close();
+			statement.close();
+			if (lastLoginAge == null) {
+				SQLCode = "select age(min(app_timestamp)::date) from dbint_log_login";
+				statement = conn.prepareStatement(SQLCode);
+				results = statement.executeQuery();
+				while(results.next()) {
+					lastLoginAge = "more than " + results.getString(1) + " ago";
+				}
+				results.close();
+				statement.close();
+			}
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}			
+		}
+		return lastLoginAge;
+	}
 
 	public String toString() {
 		return "Usage Stats object";
@@ -861,5 +895,4 @@ public class UsageStats implements UsageStatsInfo {
 	private final HttpServletRequest request;
 
 	private static final SimpleLogger logger = new SimpleLogger(UsageStats.class);
-
 }

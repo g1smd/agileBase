@@ -17,9 +17,6 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.view.VelocityViewServlet;
 import org.grlea.log.SimpleLogger;
-
-import com.gtwm.pb.auth.Authenticator;
-import com.gtwm.pb.auth.PublicUser;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
@@ -83,6 +80,7 @@ public class Public extends VelocityViewServlet {
 					table = this.getPublicTable(company, internalTableName);
 				} catch (AgileBaseException abex) {
 					AppController.logException(abex, request, "Error preparing public form");
+					return this.getUserInterfaceTemplate(request, response, "report_error", context);
 				}
 				switch (publicAction) {
 				case SHOW_FORM:
@@ -107,15 +105,15 @@ public class Public extends VelocityViewServlet {
 					} catch (AgileBaseException abex) {
 						AppController.logException(abex, request,
 								"General error performing save from public");
-						return getUserInterfaceTemplate(request, response, templateName, context);
+						return this.getUserInterfaceTemplate(request, response, templateName, context);
 					} catch (SQLException sqlex) {
 						AppController.logException(sqlex, request,
 								"SQL error performing save from public");
-						return getUserInterfaceTemplate(request, response, templateName, context);
+						return this.getUserInterfaceTemplate(request, response, templateName, context);
 					} catch (FileUploadException abex) {
 						AppController.logException(abex, request,
 								"General error doing file upload from public");
-						return getUserInterfaceTemplate(request, response, templateName, context);
+						return this.getUserInterfaceTemplate(request, response, templateName, context);
 					}
 					break;
 				}
