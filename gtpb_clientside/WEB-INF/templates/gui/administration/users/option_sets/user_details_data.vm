@@ -50,4 +50,8 @@
 	  </select>
 	</td>
   </tr>
+  <tr>
+	<td>Last login:</td>
+	<td>$view.getUsageStats.getLastLoginAge($sessionUser)</td>
+  </tr>
 </table>

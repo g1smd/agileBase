@@ -124,7 +124,6 @@
         oLabel.setAttribute('type','text');
         oLabel.setAttribute('internalTableName','$sessionTable.getInternalTableName()');
         oLabel.setAttribute('internalFieldName','$internalFieldName');
-		
 		oLabel.update=function(sValue) {
 			this.value=sValue;
 		};
