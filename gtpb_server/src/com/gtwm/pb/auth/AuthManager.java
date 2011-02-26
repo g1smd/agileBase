@@ -773,7 +773,7 @@ public final class AuthManager implements AuthManagerInfo {
 				.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
-		Set<UserGeneralPrivilegeInfo> userPrivileges = getPrivilegesForUser(request, user);
+		Set<UserGeneralPrivilegeInfo> userPrivileges = this.getPrivilegesForUser(request, user);
 		for (UserGeneralPrivilegeInfo privilege : userPrivileges) {
 			// We aren't interested in object specific privileges here, that's
 			// the other
@@ -793,7 +793,7 @@ public final class AuthManager implements AuthManagerInfo {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
-		Set<UserGeneralPrivilegeInfo> userPrivileges = getPrivilegesForUser(request, user);
+		Set<UserGeneralPrivilegeInfo> userPrivileges = this.getPrivilegesForUser(request, user);
 		for (UserGeneralPrivilegeInfo privilege : userPrivileges) {
 			// We're only interested in table-specific privileges here, general
 			// privileges are handled by the
@@ -815,7 +815,7 @@ public final class AuthManager implements AuthManagerInfo {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
-		Set<RoleGeneralPrivilegeInfo> rolePrivileges = getPrivilegesForRole(request, role);
+		Set<RoleGeneralPrivilegeInfo> rolePrivileges = this.getPrivilegesForRole(request, role);
 		for (RoleGeneralPrivilegeInfo privilege : rolePrivileges) {
 			if (privilege instanceof RoleTablePrivilegeInfo) {
 				if (privilege.getPrivilegeType().equals(privilegeType)
@@ -833,7 +833,7 @@ public final class AuthManager implements AuthManagerInfo {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
 		}
-		Set<RoleGeneralPrivilegeInfo> rolePrivileges = getPrivilegesForRole(request, role);
+		Set<RoleGeneralPrivilegeInfo> rolePrivileges = this.getPrivilegesForRole(request, role);
 		for (RoleGeneralPrivilegeInfo privilege : rolePrivileges) {
 			if (!(privilege instanceof RoleTablePrivilegeInfo)) {
 				if (privilege.getPrivilegeType().equals(privilegeType)) {

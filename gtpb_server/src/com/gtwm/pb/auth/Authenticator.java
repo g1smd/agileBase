@@ -284,7 +284,11 @@ public final class Authenticator implements AuthenticatorInfo {
 			TableInfo table) throws IllegalArgumentException {
 		UserTablePrivilegeInfo userPrivilege = new UserTablePrivilege(appUser, privilegeType,
 				table);
+		long startTime = System.currentTimeMillis();
 		this.getUserPrivilegesDirect().add(userPrivilege);
+		long duration = System.currentTimeMillis() - startTime;
+		logger.debug("Adding user privilege took " + duration + " milliseconds");
+		logger.debug("There are now " + this.getUserPrivilegesDirect().size() + " user privilege objects");
 		this.destroyCache();
 	}
 
