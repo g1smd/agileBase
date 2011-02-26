@@ -850,7 +850,7 @@ public class UsageStats implements UsageStatsInfo {
 	
 	public String getLastLoginAge(AppUserInfo user) throws SQLException {
 		String lastLoginAge = null;
-		String SQLCode = "SELECT age(max(app_timestamp)) FROM dbint_log_" + LogType.LOGIN.name().toLowerCase();
+		String SQLCode = "SELECT age(max(app_timestamp)::date) FROM dbint_log_" + LogType.LOGIN.name().toLowerCase();
 		SQLCode += " WHERE app_user = ?";
 		Connection conn = null;
 		try {
@@ -860,7 +860,7 @@ public class UsageStats implements UsageStatsInfo {
 			statement.setString(1, user.getUserName());
 			ResultSet results = statement.executeQuery();
 			while(results.next()) {
-				lastLoginAge = results.getString(1) + " ago";
+				lastLoginAge = results.getString(1);
 			}
 			results.close();
 			statement.close();
@@ -869,7 +869,7 @@ public class UsageStats implements UsageStatsInfo {
 				statement = conn.prepareStatement(SQLCode);
 				results = statement.executeQuery();
 				while(results.next()) {
-					lastLoginAge = "more than " + results.getString(1) + " ago";
+					lastLoginAge = "more than " + results.getString(1);
 				}
 				results.close();
 				statement.close();
@@ -878,6 +878,11 @@ public class UsageStats implements UsageStatsInfo {
 			if (conn != null) {
 				conn.close();
 			}			
+		}
+		if (lastLoginAge.equals("00:00:00")) {
+			lastLoginAge = "today";
+		} else {
+			lastLoginAge += " ago";
 		}
 		return lastLoginAge;
 	}
