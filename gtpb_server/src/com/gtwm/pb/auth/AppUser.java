@@ -220,6 +220,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		if (comparison != 0) {
 			return comparison;
 		}
+		//TODO: actually, two users can't have the same username, isn't this reduntant?
 		return this.getInternalUserName().compareTo(anotherAppUser.getInternalUserName());
 	}
 
