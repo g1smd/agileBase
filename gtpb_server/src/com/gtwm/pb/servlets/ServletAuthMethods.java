@@ -510,6 +510,7 @@ public final class ServletAuthMethods {
 			throw new CantDoThatException(
 					"When setting max privileges for a table, you must supply a table-specific privilege not a general one");
 		}
+		long startTime = System.currentTimeMillis();
 		HibernateUtil.startHibernateTransaction();
 		try {
 			if (assignTo.equals("user")) {
@@ -581,6 +582,8 @@ public final class ServletAuthMethods {
 						"Unrecognised 'assignto' parameter value. Please use either 'user' or 'role'");
 			}
 			HibernateUtil.currentSession().getTransaction().commit();
+			long duration = System.currentTimeMillis() - startTime;
+			logger.debug("Set max table privilege to " + maxPrivilegeType + " in " + duration + " ms");
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			throw new CantDoThatException("Privilege setting failed", hex);
