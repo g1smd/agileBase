@@ -69,7 +69,7 @@
 	</select>
 #else
   <div class="relation_field">##
-  <input name="$internalFieldName" ##
+    <input name="$internalFieldName" ##
   	type="hidden" class="relation_hidden" ##
   	gtpb_update_record="true" ##
   	value="$fieldValue" ##
@@ -98,12 +98,14 @@
 	<input type="text" internalTableName="$internalTableName" internalFieldName="$internalFieldName" ##
 	  class="autocomplete" ##
 	  value="$wholeDisplayValue">
-	<a href="#" class="clicker">change...</a>
-	#if($globalEdit)
-	  <button class="globalEdit">update globally</button>
+	#if($userCanEdit && (!$ab_calendar_display))
+	  <a href="#" class="clicker">change...</a>
+	  #if($globalEdit)
+	    <button class="globalEdit">update globally</button>
+	  #end
 	#end
   </div>##
-  #if($userCanEdit && (!$ab_calendar_display))
+  #if($userCanEdit)
   ## <script language="JavaScript" src="resources/picker.js"></script>  
   <!--[if IE]>
     <style>
