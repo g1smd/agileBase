@@ -104,8 +104,7 @@
 	#end
   </div>##
   #if($userCanEdit && (!$ab_calendar_display))
-  ##TODO: move this to head
-  <script language="JavaScript" src="resources/picker.js"></script>  
+  ## <script language="JavaScript" src="resources/picker.js"></script>  
   <!--[if IE]>
     <style>
       /* this block is overwriting styles below it.  Appears that in IE (v7 anyway) that
