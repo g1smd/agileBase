@@ -132,7 +132,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	      }
   	    } 
   	    else {
-  	      alert('No result detected\nPlease try again\nPerhaps the returned template is not the expected XML');
+  	      alert('No wizardResult detected\nPlease try again\nPerhaps the returned template is not the expected XML');
   	      return false; // there was no wizard result
   	    }
   	  }
@@ -525,8 +525,4 @@ function f_mdp_rowclick(oRow) {
   
   while(document.getElementById('_mfp_current_row')) document.getElementById('_mfp_current_row').removeAttribute('id');
   oRow.setAttribute('id','_mfp_current_row');
-}
-
-function fEvalScripts() {
-  eval($("#_md_dialog").find("script").text());	
 }
