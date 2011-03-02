@@ -69,7 +69,7 @@
 #else
   <div class="relation_field">##
   <input name="$internalFieldName" ##
-  			       type="hidden" ##
+  			       type="hidden" class="relation_hidden" ##
   			       gtpb_update_record="true" ##
   			       value="$fieldValue" ##
   			       displayValue="${fieldDisplayValue}#if($useSecondaryDisplayValue) {${secondaryDisplayValue}}#end" ##
@@ -92,26 +92,8 @@
 	  document.getElementById('gtpb_wrapper').style.overflow='auto';
 	}
 	
-    // finds the last one 
-    // var oHidden = document.getElementsByName('$internalFieldName')[document.getElementsByName('$internalFieldName').length-1];
-    var oHidden = document.getElementById('$inputId');
-    oHidden.doUpdate=function(sValue, bIsAutoUpdate) {
-    	#if($globalEdit)
-    		var bIsGlobalEdit=true;
-    	#else
-    		var bIsGlobalEdit=false;
-    	#end
-
-    	this.value=sValue;
-		if(!bIsGlobalEdit) {
-		  this.setAttribute('gtpb_set_row_id',sValue);
-		}
-		
-    	// if it's not a global edit, then always do the update
-    	// if it is a global edit, only update when the button is clicked i.e. not a global update
-    	if(!bIsGlobalEdit || (bIsGlobalEdit && !bIsAutoUpdate)) new fChange(this);
-    };
-    
+    //bit that was here moved to tabs.js
+	
 	//TODO: Test this in the latest IE and agileBase combination
 	if(jQuery.browser.msie) { // autocomplete doesn't work in IE so just show plain text for the time being
 		var oLabel=document.createElement('span');

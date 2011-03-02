@@ -531,16 +531,16 @@ public final class ServletAuthMethods {
 				for (PrivilegeType testPrivilegeType : PrivilegeType.values()) {
 					// ignore non-table specific privileges
 					if (testPrivilegeType.isObjectSpecificPrivilege()) {
+						boolean specifiedUserHasPrivilege = authManager.specifiedUserHasPrivilege(request,
+								testPrivilegeType, user, table);
 						if ((maxPrivilegeType.ordinal() >= testPrivilegeType.ordinal())
-								&& (!authManager.specifiedUserHasPrivilege(request,
-										testPrivilegeType, user, table))) {
+								&& (!specifiedUserHasPrivilege)) {
 							// if privilege requested higher (or the same as)
 							// than one they haven't got, give user
 							// the one they haven't got
 							authManager.addUserPrivilege(request, user, testPrivilegeType, table);
 						} else if ((maxPrivilegeType.ordinal() < testPrivilegeType.ordinal())
-								&& (authManager.specifiedUserHasPrivilege(request,
-										testPrivilegeType, user, table))) {
+								&& specifiedUserHasPrivilege) {
 							// if privilege requested lower than one they've
 							// got, remove it
 							authManager

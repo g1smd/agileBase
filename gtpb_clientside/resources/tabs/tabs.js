@@ -305,7 +305,25 @@ function fComboComponents() {
 	});
 }
 
-function fRelationPickers() {
+function fRelationPickers() {	
+  $("input.relation_hidden").each(function() {
+	var oHidden = this;
+	var jqHidden = $(oHidden);
+    oHidden.doUpdate=function(sValue, bIsAutoUpdate) {
+		var bIsGlobalEdit=false;
+    	if(jqHidden.attr("gtpb_set_row_id")) {
+    		var bIsGlobalEdit=true;
+    	}
+    	this.value=sValue;
+		if(!bIsGlobalEdit) {
+		  jqHidden.attr("gtpb_set_row_id",sValue);
+		}
+    	// if it's not a global edit, then always do the update
+    	// if it is a global edit, only update when the button is clicked i.e. not a global update
+    	if(!bIsGlobalEdit || (bIsGlobalEdit && !bIsAutoUpdate)) new fChange(this);
+    };		
+  });
+
   function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
 	      jqElement.autocomplete(
 				    "AppController.servlet", 
