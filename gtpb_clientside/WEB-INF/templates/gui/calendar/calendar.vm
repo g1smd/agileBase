@@ -31,6 +31,7 @@
   <link type="text/css" href="resources/tabs/tabs.css" rel="stylesheet" />
   <link type="text/css" href="resources/fullcalendar/calendar.css" rel="stylesheet" />
   <link type="text/css" href="resources/modalFramework/modalFramework.css" rel="stylesheet" />
+  <link type="text/css" href="resources/jquery.autocomplete.css" rel="stylesheet" />
   <link type="text/css" href="styles/report.css" rel="stylesheet" />
   <script src="resources/jquery.js" language="Javascript"></script>
   <script src="resources/jquery.autocomplete.js" language="Javascript"></script>
