@@ -21,7 +21,7 @@
   #parse('gui/customisations/wizard_result.vm') 
   #set($app_action_caption = "Edit '$table' event")
   #set($ab_calendar_display = false)
-  <htmlContent onload="fComboComponents(); fEvalScripts();"><![CDATA[
+  <htmlContent onload="fComboComponents(); fRelationPickers();"><![CDATA[
     #parse('gui/reports_and_tables/tabs/edit.vm')
   ]]>
   </htmlContent>

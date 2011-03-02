@@ -325,8 +325,7 @@ function fUpdateGlobalRelation() {
     aPostVars['returntype']='xml'; 
     aPostVars['return']='gui/resources/sessionReportInfo';
     var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);           
-}    
-
+}
 
 function fRelationPickers() {	
   $("input.relation_hidden").each(function() {
@@ -356,7 +355,6 @@ function fRelationPickers() {
 	  jqClicker.click(fSetOverflowHack,false);
 	}
 	var jqHidden = jqClicker.siblings("input.relation_hidden");
-	alert("hidden found: " + jqHidden.attr("field_name"));
 	this.formEl = jqHidden[0];
 	jqHidden[0].clicker = this;
   });
