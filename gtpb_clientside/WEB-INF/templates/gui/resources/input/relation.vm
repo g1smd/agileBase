@@ -15,6 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+#set($internalTableName = $sessionTable.getInternalTableName())
 #set($internalFieldName = $field.getInternalFieldName())
 #set($relatedField=$field.getRelatedField())##
 #set($relatedTable = $relatedField.getTableContainingField())
@@ -69,111 +70,43 @@
 #else
   <div class="relation_field">##
   <input name="$internalFieldName" ##
-  			       type="hidden" class="relation_hidden" ##
-  			       gtpb_update_record="true" ##
-  			       value="$fieldValue" ##
-  			       displayValue="${fieldDisplayValue}#if($useSecondaryDisplayValue) {${secondaryDisplayValue}}#end" ##
-  			       internalFieldName="$internalFieldName" ##
-  			       internalTableName="$sessionTable.getInternalTableName()"##
-				   #if(!$globalEdit)
-				     ## set the row ID for the related table
-				     ## so that if we choose a relation value for a particular record
-				     ## then click 'New' to add additional records, the same relation value is used
-  			         gtpb_rowidinternaltablename="$relatedTable.getInternalTableName()"##
-  			         gtpb_set_row_id="$fieldValue"##
-				   #end
-				   id="$inputId">##
-  </div>##
-  #if($userCanEdit && (!$ab_calendar_display))
-  <script language="JavaScript" src="resources/picker.js"></script>
-  <script language="Javascript">
-    ## Hack added by Oliver for iPod/iPhone compatibility
-	function fSetOverflowHack() {
-	  document.getElementById('gtpb_wrapper').style.overflow='auto';
-	}
-	
-    //bit that was here moved to tabs.js
-	
-	//TODO: Test this in the latest IE and agileBase combination
-	if(jQuery.browser.msie) { // autocomplete doesn't work in IE so just show plain text for the time being
-		var oLabel=document.createElement('span');
-		oLabel.update=function(sValue) {
-			$(this).html(sValue);
-		};
-		
-    } else {
-        var oLabel=document.createElement('input');
-        oLabel.setAttribute('type','text');
-        oLabel.setAttribute('internalTableName','$sessionTable.getInternalTableName()');
-        oLabel.setAttribute('internalFieldName','$internalFieldName');
-		oLabel.update=function(sValue) {
-			this.value=sValue;
-		};
-    	
-    	$(oLabel).addClass('autocomplete');
-	}
-	
+  	type="hidden" class="relation_hidden" ##
+  	gtpb_update_record="true" ##
+  	value="$fieldValue" ##
+    #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))##
+      field_name="$field.getSimplifiedFieldName()" ##
+    #else ##
+      field_name="$field" ##
+    #end ##
+  	displayValue="${fieldDisplayValue} #if($useSecondaryDisplayValue) {${secondaryDisplayValue}}#end" ##
+  	internalFieldName="$internalFieldName" ##
+  	internalTableName="$internalTableName"##
+	#if($globalEdit) ##
+	  gtpb_global_edit="true"
+	#else
+	  ## set the row ID for the related table
+	  ## so that if we choose a relation value for a particular record
+	  ## then click 'New' to add additional records, the same relation value is used
+  	  gtpb_rowidinternaltablename="$relatedTable.getInternalTableName()"##
+  	  gtpb_set_row_id="$fieldValue"##
+	#end ##
+	id="$inputId">##
 	#set($wholeDisplayValue = $viewTools.escape($fieldDisplayValue))
 	#if($useSecondaryDisplayValue == true)
 	  #set($wholeDisplayValue = "$wholeDisplayValue {" + $viewTools.escape("$secondaryDisplayValue") + "}")
     #end
-	oLabel.update('$wholeDisplayValue');
-	oLabel.formEl=oHidden;
-    oHidden.label=oHidden.parentNode.insertBefore(oLabel,oHidden.nextSibling);
-
-    var oClicker=document.createElement('A');
-    oClicker.setAttribute('href','#');
-	//oClicker.setAttribute('tabindex','$tabIndex');
-    $(oClicker).click(fPicker);
-	#if($mobile_device)
-	  $(oClicker).click(fSetOverflowHack,false);
+	<input type="text" internalTableName="$internalTableName" internalFieldName="$internalFieldName" ##
+	  class="autocomplete" ##
+	  value="$wholeDisplayValue">
+	<a href="#" class="clicker">change...</a>
+	#if($globalEdit)
+	  <button class="globalEdit">update globally</button>
 	#end
-    oClicker.innerHTML='change...';
-    oClicker.formEl=oHidden;
-    oHidden.clicker=oHidden.parentNode.insertBefore(oClicker,oHidden.label.nextSibling);
-    
-    #if($globalEdit)
-		function fUpdateGlobalRelation() {
-          function fResponse(sResponseText, sResponseXML) {
-            if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
-  	            var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
-  	            #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
-                  var sFieldName='$field.getSimplifiedFieldName()';
-                #else
-                  var sFieldName='$field';
-                #end
-  	            if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+oField.label.value+'?\nThis will update '+sRowsToChange+' records'))
-                new fChange(oField);
-            }
-          }
-          
-          var oField=this.field;
-          var aPostVars=new Array();
-          aPostVars['returntype']='xml'; 
-          aPostVars['return']='gui/resources/sessionReportInfo';
-          var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);           
-        }    
-    
-    
-        oHidden.setAttribute('gtpb_global_edit','true');
-        var oButton=document.createElement('BUTTON');
-        $(oButton).addClass('globalEdit');
-        oButton.appendChild(document.createTextNode('update globally'));
-        oButton.field=oHidden;
-        // attaching this way means that the click function points to the one just declared.
-        // this means that we can code some velocity variables straight into the JS rather than finding
-        // them from expandos on the element which will save some client processing time and memory
-        ##oButton.addEventListener('click',fUpdateGlobalText,false);
-        $(oButton).click(fUpdateGlobalRelation);
-                
-        oHidden.parentNode.appendChild(oButton);    
-    
-    #end
-    
-  </script>
-  
+  </div>##
+  #if($userCanEdit && (!$ab_calendar_display))
+  ##TODO: move this to head
+  <script language="JavaScript" src="resources/picker.js"></script>  
   <!--[if IE]>
-
     <style>
       /* this block is overwriting styles below it.  Appears that in IE (v7 anyway) that
          higher style blocks take precidence over blocks below.  Of course, in the sheet
@@ -185,9 +118,7 @@
       }
 
     </style>
-    
   <![endif]-->
-
   <style>   
     div.relation_field input {
       margin-right:10px;
