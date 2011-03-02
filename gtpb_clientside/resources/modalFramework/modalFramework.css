@@ -16,7 +16,7 @@ div#_md_blank {
   top:0;
   left:0;
   background:transparent url('blank.png');
-  z-index:999;
+  z-index:198; /* date picker is 199 */
 }
 
 div#_md_blank div#_md_dialog {
