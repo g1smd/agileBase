@@ -19,7 +19,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 ## edit the data in the session table
 
 ## used by the input element templates
-#set($updateAsType = true)
+#if(!$ab_calendar_display)
+  #set($updateAsType = true)
+#end
 #set($rowCount = 0)
 #set($tabCaption='edit')
 #set($sessionTable=$sessionData.getTable())
