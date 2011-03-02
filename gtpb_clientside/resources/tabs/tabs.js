@@ -305,14 +305,35 @@ function fComboComponents() {
 	});
 }
 
+// TODO: move this in to the mobile override CSS, doesn't need to be JS
+function fSetOverflowHack() {
+  document.getElementById('gtpb_wrapper').style.overflow='auto';
+}
+
+function fUpdateGlobalRelation() {
+    function fResponse(sResponseText, sResponseXML) {
+      if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
+            var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
+            sFieldName = $(this.field).attr("field_name");
+            if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+oField.label.value+'?\nThis will update '+sRowsToChange+' records'))
+          new fChange(oField);
+      }
+    }
+    var aPostVars=new Array();
+    aPostVars['returntype']='xml'; 
+    aPostVars['return']='gui/resources/sessionReportInfo';
+    var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);           
+}    
+
+
 function fRelationPickers() {	
   $("input.relation_hidden").each(function() {
 	var oHidden = this;
 	var jqHidden = $(oHidden);
     oHidden.doUpdate=function(sValue, bIsAutoUpdate) {
-		var bIsGlobalEdit=false;
+		var bIsGlobalEdit=true;
     	if(jqHidden.attr("gtpb_set_row_id")) {
-    		var bIsGlobalEdit=true;
+    	  bIsGlobalEdit=false;
     	}
     	this.value=sValue;
 		if(!bIsGlobalEdit) {
@@ -321,7 +342,26 @@ function fRelationPickers() {
     	// if it's not a global edit, then always do the update
     	// if it is a global edit, only update when the button is clicked i.e. not a global update
     	if(!bIsGlobalEdit || (bIsGlobalEdit && !bIsAutoUpdate)) new fChange(this);
-    };		
+    };
+    oHidden.label = jqHidden.next("input")[0];
+  });
+  
+  $("a.clicker").each(function() {
+	var jqClicker = $(this);
+	jqClicker.click(fPicker);
+	var deviceAgent = navigator.userAgent.toLowerCase();
+	if(deviceAgent.match(/(iphone|ipod|ipad)/)) {
+	  jqClicker.click(fSetOverflowHack,false);
+	}
+	var oHidden = jqClicker.prev("input.relation_hidden")[0];
+	this.formEl = oHidden;
+	oHidden.clicker = this;
+  });
+  
+  $("button.globalEdit").each(function() {
+	var jqButton = $(this);
+	this.field = jqButton.prev("input.relation_hidden")[0];
+	jqButton.click(fUpdateGlobalRelation);
   });
 
   function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
@@ -359,6 +399,11 @@ function fRelationPickers() {
   }
     
   $('.autocomplete').each(function(i) {
+	  var jqThis = $(this);
+	  this.update=function(sValue) {
+		this.value=sValue;
+	  };
+	  this.formEl = jqThis.prev("input")[0]; // the hidden field will be just before this
 	  // TODO: test newer IE, the code may work now
 	  if($.browser.msie) {
 		  //$('<span style="padding-right:10px">'+this.value+'</span>').insertBefore($(this));
@@ -366,7 +411,6 @@ function fRelationPickers() {
 		  return;
 	  }
 	  else {
-		  var jqThis = $(this);
 		  var internalTableName = jqThis.attr('internalTableName');
 		  var internalFieldName = jqThis.attr('internalFieldName');
 		  bindAutoComplete(jqThis, internalTableName, internalFieldName);
