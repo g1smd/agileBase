@@ -343,26 +343,25 @@ function fRelationPickers() {
     	// if it is a global edit, only update when the button is clicked i.e. not a global update
     	if(!bIsGlobalEdit || (bIsGlobalEdit && !bIsAutoUpdate)) new fChange(this);
     };
-    oHidden.label = jqHidden.next("input")[0];
+    oHidden.label = jqHidden.next()[0];
   });
   
   $("a.clicker").each(function() {
 	var jqClicker = $(this);
-	alert("clicker tag: " + jqClicker.text());
 	jqClicker.click(fPicker);
 	var deviceAgent = navigator.userAgent.toLowerCase();
 	if(deviceAgent.match(/(iphone|ipod|ipad)/)) {
 	  jqClicker.click(fSetOverflowHack,false);
 	}
-	var oHidden = jqClicker.prev("input.relation_hidden");
-	alert("hidden found: " + oHidden.attr("field_name"));
-	this.formEl = oHidden[0];
-	oHidden[0].clicker = this;
+	var jqHidden = jqClicker.siblings("input.relation_hidden");
+	alert("hidden found: " + jqHidden.attr("field_name"));
+	this.formEl = jqHidden[0];
+	jqHidden[0].clicker = this;
   });
   
   $("button.globalEdit").each(function() {
 	var jqButton = $(this);
-	this.field = jqButton.prev("input.relation_hidden")[0];
+	this.field = jqButton.siblings("input.relation_hidden")[0];
 	jqButton.click(fUpdateGlobalRelation);
   });
 
@@ -405,7 +404,7 @@ function fRelationPickers() {
 	  this.update=function(sValue) {
 		this.value=sValue;
 	  };
-	  this.formEl = jqThis.prev("input")[0]; // the hidden field will be just before this
+	  this.formEl = jqThis.siblings("input.relation_hidden")[0]; // the hidden field will be just before this
 	  // TODO: test newer IE, the code may work now
 	  if($.browser.msie) {
 		  //$('<span style="padding-right:10px">'+this.value+'</span>').insertBefore($(this));
