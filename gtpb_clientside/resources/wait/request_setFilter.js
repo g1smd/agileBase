@@ -113,11 +113,7 @@ function fRequest(sURL, aPostVars, fCallback, iShowWait){
 	oReq.open('POST',sURL,true);
 			 
 	if (aPostVars) {
-	  if ($("#ab_multipart_form_data")) {
-		oReq.setRequestHeader('Content-Type','multipart/form-data');
-	  } else {
-		oReq.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-	  }
+	  oReq.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 	}
 	oReq.send(fPostString());
     this.xml_http_request=oReq;
