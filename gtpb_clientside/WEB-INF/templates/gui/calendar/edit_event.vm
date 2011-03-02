@@ -22,7 +22,9 @@
   #set($app_action_caption = "Edit '$table' event")
   #set($ab_calendar_display = true)
   <htmlContent onload="fComboComponents(); fRelationPickers();"><![CDATA[
+    <form style="padding: 5px">
     #parse('gui/reports_and_tables/tabs/edit.vm')
+	</form>
   ]]>
   </htmlContent>
   <caption>$app_action_caption</caption>
