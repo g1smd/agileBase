@@ -57,6 +57,7 @@
 	  #set($referencedData = "#parse('gui/resources/input/referenced_report_data.vm')")
 	#end
 	#if(($fieldCategory != "REFERENCED_REPORT_DATA") || $referencedData.contains("span"))
+	  #if(($fieldCategory != "FILE") || (!$ab_calendar_display)) ## Don't show file fields in calendar editor for now
     	#set($rowCount = $rowCount + 1)
     	<tr #if($fieldCategory =='SEPARATOR') #set($rowCount=0) class="separator" #elseif($rowCount%2!=0) class="rowb" #else class="rowa" #end>
     		<td class=leading>&nbsp;</td>
@@ -75,6 +76,7 @@
             #if($fieldCategory !='SEPARATOR')<td>#parse('gui/resources/input/input.vm')</td>#end
             <td class=trailing>&nbsp;</td>
         </tr>
+	  #end
 	#end
   #end ## end if not partOfAddress
 #end ## remove to show primary key field
