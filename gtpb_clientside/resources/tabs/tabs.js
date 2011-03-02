@@ -348,6 +348,7 @@ function fRelationPickers() {
   
   $("a.clicker").each(function() {
 	var jqClicker = $(this);
+	alert("clicker tag: " + jqClicker.text());
 	jqClicker.click(fPicker);
 	var deviceAgent = navigator.userAgent.toLowerCase();
 	if(deviceAgent.match(/(iphone|ipod|ipad)/)) {
