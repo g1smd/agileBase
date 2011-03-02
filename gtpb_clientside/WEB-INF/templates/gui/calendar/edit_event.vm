@@ -22,6 +22,7 @@
   #set($app_action_caption = "Edit '$table' event")
   #set($ab_calendar_display = true)
   <htmlContent onload="fComboComponents(); fRelationPickers();"><![CDATA[
+    <input type="hidden" name="ab_multipart_form_data" id="ab_multipart_form_data" value="true">
     <form style="padding: 5px">
     #parse('gui/reports_and_tables/tabs/edit.vm')
 	</form>
