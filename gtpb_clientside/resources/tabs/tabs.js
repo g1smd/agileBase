@@ -314,13 +314,13 @@ function fUpdateGlobalRelation() {
     function fResponse(sResponseText, sResponseXML) {
       if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
         var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
-        var oField = this.field;
         sFieldName = $(oField).attr("field_name");
         if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+oField.label.value+'?\nThis will update '+sRowsToChange+' records')) {
           new fChange(oField);
         }
       }
     }
+    var oField = this.field;
     var aPostVars=new Array();
     aPostVars['returntype']='xml'; 
     aPostVars['return']='gui/resources/sessionReportInfo';
