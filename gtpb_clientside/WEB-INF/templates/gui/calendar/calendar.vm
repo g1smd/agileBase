@@ -32,8 +32,11 @@
   <link type="text/css" href="resources/fullcalendar/calendar.css" rel="stylesheet" />
   <link type="text/css" href="resources/modalFramework/modalFramework.css" rel="stylesheet" />
   <link type="text/css" href="resources/jquery.autocomplete.css" rel="stylesheet" />
+  <link type="text/css" href="resources/datePicker.css" rel="stylesheet" />
   <link type="text/css" href="styles/report.css" rel="stylesheet" />
   <script src="resources/jquery.js" language="Javascript"></script>
+  <script src="resources/date.js" language="Javascript"></script>
+  <script src="resources/jquery.datePicker.js" language="Javascript"></script>
   <script src="resources/jquery.autocomplete.js" language="Javascript"></script>
   ##<script src="resources/jquery.qtip.js" language="Javascript"></script>
   <script src="resources/wait/request_setFilter.js" language="Javascript"></script>
