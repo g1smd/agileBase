@@ -366,37 +366,36 @@ function fRelationPickers() {
   });
 
   function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
-	      jqElement.autocomplete(
-				    "AppController.servlet", 
-					{
-					  autoFill: true,
-					  cacheLength: 100,
-					  max: 99,
-					  extraParams:{
-						    gtpb_return: "gui/resources/input/return_relation_values",
-						  	set_custom_field: true,
-						  	fieldkey: "relationField",
-						  	custominternaltablename: internalTableName,
-						  	custominternalfieldname: internalFieldName
-						  },
-					  mustMatch: true,
-					  selectFirst: true,
-					  width: 296,
-					  formatItem: function(rawValue, i, optionsDataLength) {
-					    var formattedValue = rawValue[0].replace("{"," <span class='secondary'>");
-					    formattedValue = formattedValue.replace("}","</span>");
-					    return formattedValue;
-					  }
-				    }
-		   );
-		  
-		  jqElement.result(function(event, data, formatted) {
-			  if(data) {
-				  jqElement[0].formEl.doUpdate(data[1], true);
-			  } else {
-				  alert('Error saving data');
-			  }
-		  });
+    jqElement.autocomplete(
+    "AppController.servlet", 
+	{
+	  autoFill: true,
+	  cacheLength: 100,
+	  max: 99,
+	  extraParams:{
+		    gtpb_return: "gui/resources/input/return_relation_values",
+		  	set_custom_field: true,
+		  	fieldkey: "relationField",
+		  	custominternaltablename: internalTableName,
+		  	custominternalfieldname: internalFieldName
+		  },
+	  mustMatch: true,
+	  selectFirst: true,
+	  width: 296,
+	  formatItem: function(rawValue, i, optionsDataLength) {
+	    var formattedValue = rawValue[0].replace("{"," <span class='secondary'>");
+	    formattedValue = formattedValue.replace("}","</span>");
+	    return formattedValue;
+	  }
+    });
+  
+    jqElement.result(function(event, data, formatted) {
+	  if(data) {
+		  jqElement[0].formEl.doUpdate(data[1], true);
+	  } else {
+		  alert('Error saving data');
+	  }
+    });
   }
     
   $('.autocomplete').each(function(i) {
