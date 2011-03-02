@@ -24,8 +24,7 @@
 #set($CONST_SECOND = $viewTools.getCalendarConstant("SECOND"))##
 ##Calendar values are ordered as DAY_OF_MONTH < HOUR_OF_DAY < MINUTE etc.
 ##i.e. values denoting shorter time periods are larger numbers
-#if (!$tableDataRow || $tableDataRow.get($field).isNull() || $globalEdit)##
-  ## otherwise the function is printed to screen
+#if(!$tableDataRow || $tableDataRow.get($field).isNull() || $globalEdit)##
   #set($days="0")##
   #set($months="0")##
   #if($globalEdit || $field.getDateResolution() == $CONST_YEAR)##
