@@ -145,7 +145,7 @@
 			#set($colourStyle = "$colourStyle color:black; border-style: none;")
 		  #end
 		  #set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
-		  <li id="$internalTableName$internalReportName" class="report_$internalReportName" title="displayed by $report.getCalendarField()">
+		  <li id="$internalTableName$internalReportName" title="from $report.getModule(), displayed by $report.getCalendarField()">
 		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
 		    $report
 		  </li>
