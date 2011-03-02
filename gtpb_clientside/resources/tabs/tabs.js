@@ -353,9 +353,10 @@ function fRelationPickers() {
 	if(deviceAgent.match(/(iphone|ipod|ipad)/)) {
 	  jqClicker.click(fSetOverflowHack,false);
 	}
-	var oHidden = jqClicker.prev("input.relation_hidden")[0];
-	this.formEl = oHidden;
-	oHidden.clicker = this;
+	var oHidden = jqClicker.prev("input.relation_hidden");
+	alert("hidden found: " + oHidden.attr("field_name"));
+	this.formEl = oHidden[0];
+	oHidden[0].clicker = this;
   });
   
   $("button.globalEdit").each(function() {
