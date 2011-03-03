@@ -22,7 +22,7 @@ $(document).ready(function() {
     	  mobile_device = true;
       }
       if(mobile_device) {
-          fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=auto; height=auto');
+          fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=auto; height=auto; top:50px');
       } else {
           fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=800px; height=600px');
       }
@@ -94,12 +94,25 @@ $(document).ready(function() {
   });
   
   $("#new_record").click(function() {
-	fShowModalDialog(
-	  'gui/calendar/new_event',
-	  'new event',
-	  fEditEventOK,
-	  'back next ok cancel',
-	  'width=800px; height=600px');
+      var mobile_device = false;
+      if($("body").attr("id") == "mobile_device") {
+    	  mobile_device = true;
+      }
+      if(mobile_device) {
+    		fShowModalDialog(
+    				  'gui/calendar/new_event',
+    				  'new event',
+    				  fEditEventOK,
+    				  'back next ok cancel',
+    				  'width=auto; height=auto; top=50px');
+      } else {
+    		fShowModalDialog(
+    				  'gui/calendar/new_event',
+    				  'new event',
+    				  fEditEventOK,
+    				  'back next ok cancel',
+    				  'width=800px; height=600px');
+      }
   });
 });
 
