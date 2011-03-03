@@ -34,7 +34,7 @@
   <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
   <script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>
   <script type="text/javascript" src="resources/tabs/tabs.js"></script>
-  <script type="text/javascript" src="resources/fullcalendar/calendar.js"></script>
+  <script type="text/javascript" src="resources/fullcalendar/calendar_mobile.js"></script>
   #set($wizard_template = $sessionData.getCustomString("calendar_wizard_template"))
   #set($buttons = "ok next cancel")
   #if($wizard_template.equals("edit_event"))
