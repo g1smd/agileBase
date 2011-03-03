@@ -21,6 +21,7 @@ $(document).ready(function() {
       if($("#mobile_device")) {
     	dialogStyle="width:auto; height:auto;";
       }
+      alert("dialogStyle is " + dialogStyle);
       fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,
     		  'edit event',fEditEventOK,'ok cancel',dialogStyle);
     },
