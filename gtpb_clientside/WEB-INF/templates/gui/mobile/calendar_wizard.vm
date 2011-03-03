@@ -42,7 +42,7 @@
   #end
   <script type="text/javascript">
   $(document).ready(function() {
-    fShowModalDialog(${SQ}$wizardTemplate${SQ},'Edit Data',fEditEventOKMobile,${SQ}$buttons${SQ},'width=100%; height=auto');
+    fShowModalDialog(${SQ}$wizard_template${SQ},'Edit Data',fEditEventOKMobile,${SQ}$buttons${SQ},'width=100%; height=auto');
   });
   </script>
 </head>
