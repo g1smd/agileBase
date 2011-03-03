@@ -431,6 +431,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
 	    // if a positioning attribute is passed in the contructor call then the dialog will be positioned absolutely and we don't want to
 	    // automatically update it's position.
 	    // If only a left or right attriubute is set, it could be that we would want to maintain the vertical position - future functionality maybe...
+  	    oDialog.style.visibility='visible';
   	    try {
   	      if(oDialog.style.position=='absolute') return;
   	      var iParentHeight=oDialog.offsetParent.offsetHeight;
@@ -442,7 +443,6 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	    catch(e) {
   	      // don't do anything!
   	    }
-	    oDialog.style.visibility='visible';
   	    finally {
   	      //  maintain the central position by running again if the window is resized
     	  //top.addEventListener('resize',fCentraliseVertically,false);
