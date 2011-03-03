@@ -18,9 +18,9 @@ $(document).ready(function() {
       var eventId = calEvent.id;
       scroll(0,0); // workaround for popup showing at the top of the screen rather than the current scroll position
       if(fMobileDevice()) {
-          fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=auto; height=auto');
+      	document.location = "AppController.servlet?return=gui/mobile/calendar_wizard&set_custom_string=true&key=calendar_wizard_template&value=edit_event";
       } else {
-          fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=800px; height=600px');
+        fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=800px; height=600px');
       }
     },
     eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
@@ -95,12 +95,7 @@ $(document).ready(function() {
   
   $("#new_record").click(function() {
       if(fMobileDevice()) {
-    		fShowModalDialog(
-    				  'gui/calendar/new_event',
-    				  'new event',
-    				  fEditEventOK,
-    				  'back next ok cancel',
-    				  'width=auto; height=auto');
+    	document.location = "AppController.servlet?return=gui/mobile/calendar_wizard&set_custom_string=true&key=calendar_wizard_template&value=new_event";
       } else {
     		fShowModalDialog(
     				  'gui/calendar/new_event',
@@ -133,6 +128,10 @@ function addRemoveCalendar(checkboxElement) {
 
 function fEditEventOK(sResponseText,sResponseXML) {
   $("#calendar").fullCalendar('refetchEvents');
+}
+
+function fEditEventOKMobile(sResponseText,sResponseXML) {
+  document.location="AppController.servlet?return=gui/calendar/calendar";
 }
 
 function fMobileDevice() {
