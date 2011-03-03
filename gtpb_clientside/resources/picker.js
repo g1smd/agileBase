@@ -117,7 +117,6 @@ function fPicker(){
   // see http://developer.mozilla.org/en/docs/DOM:element.addEventListener
   // updated to use jQuery click() method for x-browser compatibility
   var oCaller=this;
-  alert("Caller = " + oCaller.name + " - " + $(oCaller).text());
   
   var oElements=new fHTMLElements();
   if (oElements.picker.reportsList) { // no reports list if the field is a Wiki field
