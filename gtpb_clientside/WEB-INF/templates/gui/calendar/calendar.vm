@@ -49,7 +49,7 @@
   <style>
   </style>
 </head>
-<body>
+<body #if($mobile_device) id="mobile_device" #end>
 <div id="header">
   <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
   <div id="links">

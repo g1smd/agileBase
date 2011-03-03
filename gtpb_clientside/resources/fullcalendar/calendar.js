@@ -17,7 +17,12 @@ $(document).ready(function() {
     eventClick: function(calEvent, jsEvent, view) {
       var eventId = calEvent.id;
       scroll(0,0); // workaround for popup showing at the top of the screen rather than the current scroll position
-      fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=800px; height=auto;');
+      var dialogStyle="width:800px; height:600px;";
+      if($("#mobile_device")) {
+    	dialogStyle="width:auto; height:auto;";
+      }
+      fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,
+    		  'edit event',fEditEventOK,'ok cancel',dialogStyle);
     },
     eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
       var eventDate = event.start;
@@ -86,12 +91,16 @@ $(document).ready(function() {
   });
   
   $("#new_record").click(function() {
+    var dialogStyle="width:800px; height:600px;";
+    if($("#mobile_device")) {
+      dialogStyle="width:auto; height:auto;";
+    }
 	fShowModalDialog(
 	  'gui/calendar/new_event',
 	  'new event',
 	  fEditEventOK,
 	  'back next ok cancel',
-	  'width=800px; height=auto;');
+	  dialogStyle);
   });
 });
 
