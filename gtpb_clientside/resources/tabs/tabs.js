@@ -356,7 +356,7 @@ function fRelationPickers() {
 	}
 	var jqHidden = jqClicker.siblings("input.relation_hidden");
 	this.formEl = jqHidden[0];
-	jqHidden[0].clicker = this;
+	this.formEl.clicker = this;
   });
   
   $("button.globalEdit").each(function() {
