@@ -336,9 +336,9 @@ function fRelationPickers() {
 	}
 	jqHidden.attr("ab_setup_complete","true");
     oHidden.doUpdate=function(sValue, bIsAutoUpdate) {
-		var bIsGlobalEdit=true;
-    	if(jqHidden.attr("gtpb_set_row_id") !== "undefined") {
-    	  bIsGlobalEdit=false;
+		var bIsGlobalEdit=false;
+    	if(jqHidden.attr("gtpb_global_edit")) {
+    	  bIsGlobalEdit=true;
     	}
     	this.value=sValue;
 		if(!bIsGlobalEdit) {
@@ -500,6 +500,7 @@ function fKeyUpEvent(inputElement) {
   fSetValueAtt(jqWrapper[0]);
   var globalEdit = false;
   // Note: why doesn't var globalEdit = (jqWrapper.attr("gtpb_global_edit") !== "undefined") work?
+  // A: see http://stackoverflow.com/questions/1318076/jquery-hasattr-checking-to-see-if-there-is-an-attribute-on-an-element
   if (jqWrapper.attr("gtpb_global_edit")) {
 	globalEdit = true;
   };
@@ -519,7 +520,6 @@ function fChangeEvent(inputElement) {
   jqWrapper.attr(sAttribute,$(inputElement).val());
   fSetValueAtt(jqWrapper[0]);
   var globalEdit = false;
-  // Note: why doesn't var globalEdit = (jqWrapper.attr("gtpb_global_edit") !== "undefined") work?
   if (jqWrapper.attr("gtpb_global_edit")) {
 	globalEdit = true;
   };
