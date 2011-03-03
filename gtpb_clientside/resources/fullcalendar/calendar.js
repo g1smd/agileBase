@@ -17,11 +17,7 @@ $(document).ready(function() {
     eventClick: function(calEvent, jsEvent, view) {
       var eventId = calEvent.id;
       scroll(0,0); // workaround for popup showing at the top of the screen rather than the current scroll position
-      var mobile_device = false;
-      if($("body").attr("id") == "mobile_device") {
-    	  mobile_device = true;
-      }
-      if(mobile_device) {
+      if(fMobileDevice()) {
           fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=auto; height=auto');
       } else {
           fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=800px; height=600px');
@@ -61,7 +57,7 @@ $(document).ready(function() {
   });
   // Show report selector if no reports are initially selected
   if($("#report_selection input:checked").length == 0) {
-	$("#report_selection").show("normal");
+	$("#report_selection").slideDown("normal");
   }
 
   // Add/remove calendars on click
@@ -90,15 +86,15 @@ $(document).ready(function() {
   });
 
   $("#report_selection_header").click(function() {
-    $("#report_selection").toggle('normal');
+	if(fMobileDevice()) {
+	  $("#report_selection").toggle();
+	} else {
+      $("#report_selection").toggle('normal');
+    }
   });
   
   $("#new_record").click(function() {
-      var mobile_device = false;
-      if($("body").attr("id") == "mobile_device") {
-    	  mobile_device = true;
-      }
-      if(mobile_device) {
+      if(fMobileDevice()) {
     		fShowModalDialog(
     				  'gui/calendar/new_event',
     				  'new event',
@@ -137,4 +133,11 @@ function addRemoveCalendar(checkboxElement) {
 
 function fEditEventOK(sResponseText,sResponseXML) {
   $("#calendar").fullCalendar('refetchEvents');
+}
+
+function fMobileDevice() {
+    if($("body").attr("id") == "mobile_device") {
+  	  return true;
+    }
+    return false;
 }
