@@ -336,9 +336,8 @@ function fRelationPickers() {
 	}
 	jqHidden.attr("ab_setup_complete","true");
     oHidden.doUpdate=function(sValue, bIsAutoUpdate) {
-    	alert('running doUpdate: setting to ' + sValue);
 		var bIsGlobalEdit=true;
-    	if(jqHidden.attr("gtpb_set_row_id")) {
+    	if(jqHidden.attr("gtpb_set_row_id") !== "undefined") {
     	  bIsGlobalEdit=false;
     	}
     	this.value=sValue;
