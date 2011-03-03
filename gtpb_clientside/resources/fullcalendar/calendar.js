@@ -18,7 +18,7 @@ $(document).ready(function() {
       var eventId = calEvent.id;
       scroll(0,0); // workaround for popup showing at the top of the screen rather than the current scroll position
       var dialogStyle="width:800px; height:600px;";
-      if($("#mobile_device")) {
+      if($("body").attr("id") == "mobile_device") {
     	dialogStyle="width:auto; height:auto;";
       }
       alert("dialogStyle is " + dialogStyle);
@@ -93,7 +93,7 @@ $(document).ready(function() {
   
   $("#new_record").click(function() {
     var dialogStyle="width:800px; height:600px;";
-    if($("#mobile_device")) {
+    if($("body").attr("id") == "mobile_device") {
       dialogStyle="width:auto; height:auto;";
     }
 	fShowModalDialog(
