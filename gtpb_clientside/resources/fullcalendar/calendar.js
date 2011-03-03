@@ -22,7 +22,7 @@ $(document).ready(function() {
     	  mobile_device = true;
       }
       if(mobile_device) {
-          fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=auto; height=auto; top=50px');
+          fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=100%; height=auto; top=50px');
       } else {
           fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok cancel','width=800px; height=600px');
       }
@@ -104,7 +104,7 @@ $(document).ready(function() {
     				  'new event',
     				  fEditEventOK,
     				  'back next ok cancel',
-    				  'width=auto; height=auto; top=50px');
+    				  'width=100%; height=auto; top=50px');
       } else {
     		fShowModalDialog(
     				  'gui/calendar/new_event',

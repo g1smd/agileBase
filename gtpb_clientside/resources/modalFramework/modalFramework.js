@@ -438,11 +438,11 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	      if (iMarginTop<0) iMarginTop=0; // position at the top if the dialog is taller than the available screen space  	    
   	      // Using the margin property because the left right position is set by setting the left-right margin to 'auto'
   	      oDialog.style.marginTop=iMarginTop+'px';  // use a margin to vertically position
-  	      oDialog.style.visibility='visible';
   	    } 
   	    catch(e) {
   	      // don't do anything!
   	    }
+	    oDialog.style.visibility='visible';
   	    finally {
   	      //  maintain the central position by running again if the window is resized
     	  //top.addEventListener('resize',fCentraliseVertically,false);
