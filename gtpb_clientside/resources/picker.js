@@ -152,12 +152,9 @@ function fPickItem(oRow) {
   
   var oPicker=fFindPicker();
   with (oPicker) {
-	alert('found picker');
     with(inputElement) {
-      alert('picking');
       value=oRow.getAttribute('keyValue');
       if (inputElement.label) { // there should always be a label
-    	alert('found label');
         // label.innerHTML=oRow.getAttribute('displayValue'); // no longer used
         // download the display value over XML - this can't be done directly from the template
         var aPostVars=new Array();
