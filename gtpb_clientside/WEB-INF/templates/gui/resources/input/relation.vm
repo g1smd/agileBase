@@ -107,7 +107,7 @@
 	#end
   </div>##
   ## TODO: move script to head
-  <script language="JavaScript" src="resources/picker.js"></script>  
+  ##<script language="JavaScript" src="resources/picker.js"></script>  
   <!--[if IE]>
     <style>
       /* this block is overwriting styles below it.  Appears that in IE (v7 anyway) that
