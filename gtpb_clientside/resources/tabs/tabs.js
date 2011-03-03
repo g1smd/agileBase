@@ -331,6 +331,10 @@ function fRelationPickers() {
   $("input.relation_hidden").each(function() {
 	var oHidden = this;
 	var jqHidden = $(oHidden);
+	if(jqHidden.attr("ab_setup_complete") == "true") {
+		return;
+	}
+	jqHidden.attr("ab_setup_complete","true");
     oHidden.doUpdate=function(sValue, bIsAutoUpdate) {
 		var bIsGlobalEdit=true;
     	if(jqHidden.attr("gtpb_set_row_id")) {
@@ -349,6 +353,10 @@ function fRelationPickers() {
   
   $("a.clicker").each(function() {
 	var jqClicker = $(this);
+	if(jqClicker.attr("ab_setup_complete") == "true") {
+		return;
+	}
+	jqClicker.attr("ab_setup_complete","true");
 	jqClicker.click(fPicker);
 	var deviceAgent = navigator.userAgent.toLowerCase();
 	if(deviceAgent.match(/(iphone|ipod|ipad)/)) {
@@ -361,6 +369,10 @@ function fRelationPickers() {
   
   $("button.globalEdit").each(function() {
 	var jqButton = $(this);
+	if(jqButton.attr("ab_setup_complete") == "true") {
+		return;
+	}
+	jqButton.attr("ab_setup_complete","true");
 	this.field = jqButton.siblings("input.relation_hidden")[0];
 	jqButton.click(fUpdateGlobalRelation);
   });
