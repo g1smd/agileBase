@@ -92,10 +92,6 @@
 							<input type="hidden" name="logout" value="true">
 							<input type="submit" value="logout">
 						</form>
-						<form method="get" action="AppController.servlet" style="float:left">
-							<input type="hidden" name="return" value="gui/customisations/common/dashboard/dashboard">
-							<input type="submit" value="dashboard">
-						</form>
 					</div>
 			</ul>
 		</li>
