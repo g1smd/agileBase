@@ -20,6 +20,9 @@
 #set($customAction = true)
 #set($table = $gtpbPublicTable) ## Set in Public servlet
 #set($company = $gtpbCompany)
+<style>
+  input { margin: 10px; }
+</style>
 <form name="agilebase_form" method="post" action="https://appserver.gtportalbase.com/agileBase/Public.ab">
   <input type="hidden" name="save_new_record" value="true">
   <input type="hidden" name="t" value="$table.getInternalTableName()"> 
