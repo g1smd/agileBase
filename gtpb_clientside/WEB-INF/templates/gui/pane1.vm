@@ -73,7 +73,7 @@
         	  <img src="resources/toolbar/dashboard.png" />Dashboard
         	</a>
         </div>
-        <div class="button" style="left: 100px;">
+        <div class="button" style="left: 200px;">
             <a href="?return=gui/calendar/calendar">
         	  <img src="resources/toolbar/calendar.png" />Calendar
         	</a>
