@@ -261,6 +261,7 @@ body{
 
 #header #links .button img {
 	border: 0;
+	vertical-align: top;
 }
 
 #header #links .button a {
