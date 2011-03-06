@@ -212,4 +212,61 @@ body{
 	
 	.module {
 	}
+	
+/* Mobile header */
+#header {
+	height:91px;
+	background-color:#ffffff;
+}
+
+#header #home {
+	display:block;
+	position:absolute;
+	height:65px;
+	width:253px;
+	left:15px;
+	top:15px;
+}
+ 
+#header #home img {
+ 	border:0px;
+}
+
+#header #links {
+	text-align:center;
+	display:inline;
+	position:absolute;
+	left: 280px;
+	top: 15px;
+	height: 61px; /* height of logo */
+}
+
+#header #links .button {
+	border: 1px solid #909090;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	position: absolute;
+	width: 72px;
+}
+
+#header #links .button:hover {
+	border-color: #486f98;
+	/* -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.5);
+	-moz-box-shadow: 0 3px 6px rgba(0,0,0,.5); */
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+	-moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+}
+
+#header #links .button img {
+	border: 0;
+}
+
+#header #links .button a {
+	text-decoration: none;
+	color: #486f98;
+}
+
+
 						
