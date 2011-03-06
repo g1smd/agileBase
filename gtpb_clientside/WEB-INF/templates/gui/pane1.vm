@@ -70,12 +70,12 @@
       <div id="links">
         <div class="button" style="left: 0px;">
             <a href="?return=gui/customisations/common/dashboard/dashboard">
-        	  <img src="resources/toolbar/dashboard.png" />Dashboard
+        	  <img src="resources/toolbar/dashboard.png" /> Dashboard
         	</a>
         </div>
         <div class="button" style="left: 200px;">
             <a href="?return=gui/calendar/calendar">
-        	  <img src="resources/toolbar/calendar.png" />Calendar
+        	  <img src="resources/toolbar/calendar.png" /> Calendar
         	</a>
         </div>
       </div> ## end links
