@@ -64,7 +64,24 @@
 	#end
 </head>
 <body>
-	<ol id="tree"> <!-- ordered list for sections -->      
+	#if($mobile_device)
+    <div id="header">
+      <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
+      <div id="links">
+        <div class="button" style="left: 0px;">
+            <a href="?return=gui/customisations/common/dashboard/dashboard">
+        	  <img src="resources/toolbar/dashboard.png" /><br>Dashboard
+        	</a>
+        </div>
+        <div class="button" style="left: 100px;">
+            <a href="?return=gui/calendar/calendar">
+        	  <img src="resources/toolbar/calendar.png" /><br>Calendar
+        	</a>
+        </div>
+      </div> ## end links
+    </div>
+	#end
+	<ol id="tree"> ##<!-- ordered list for sections -->      
 	  #parse('gui/reports_and_tables/report_list.vm')
 	  #if($mobile_device)
 		<li><h1><span>&nbsp;</span></h1>
