@@ -102,7 +102,7 @@
 	#if($userCanEdit && (!$ab_calendar_display))
 	  <a href="#" class="clicker">change...</a>
 	  #if($globalEdit)
-	    <button class="globalEdit">update globally</button>
+	    <button class="globalEdit globalEditRelation">update globally</button>
 	  #end
 	#end
   </div>##

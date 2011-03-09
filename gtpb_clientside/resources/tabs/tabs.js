@@ -310,8 +310,22 @@ function fSetOverflowHack() {
   document.getElementById('gtpb_wrapper').style.overflow='auto';
 }
 
-//TODO: this should be called fUpdateGlobalField as it is not relation-specific
 function fUpdateGlobalRelation() {
+    function fResponse(sResponseText, sResponseXML) {
+      if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
+        var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
+        sFieldName = $(oField).attr("field_name");
+        if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+oField.label.value+'?\nThis will update '+sRowsToChange+' records')) {
+          new fChange(oField);
+        }
+      }
+    }
+    var oField = this.field;
+    alert("oField is tag " + oField.tagName);
+    var aPostVars=new Array();
+    aPostVars['returntype']='xml'; 
+    aPostVars['return']='gui/resources/sessionReportInfo';
+    var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);           
 }
 
 function fRelationPickers() {	
@@ -356,30 +370,14 @@ function fRelationPickers() {
   
   // TODO: this isn't just a relation function, it affects all fields
   // Perhaps it should be in a separate function
-  $("button.globalEdit").each(function() {
+  $("button.globalEditRelation").each(function() {
 	var jqButton = $(this);
 	if(jqButton.attr("ab_setup_complete") == "true") {
 		return;
 	}
 	jqButton.attr("ab_setup_complete","true");
 	this.field = jqButton.siblings("input.relation_hidden")[0];
-	jqButton.click(function() {
-	    function fResponse(sResponseText, sResponseXML) {
-	        if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
-	          var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
-	          sFieldName = $(oField).attr("field_name");
-	          if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+oField.label.value+'?\nThis will update '+sRowsToChange+' records')) {
-	            new fChange(oField);
-	          }
-	        }
-	      }
-	      var oField = this.field;
-	      alert ("oField is tag " + oField.tagName);
-	      var aPostVars=new Array();
-	      aPostVars['returntype']='xml'; 
-	      aPostVars['return']='gui/resources/sessionReportInfo';
-	      var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);           
-	});
+	jqButton.click(fUpdateGlobalRelation);
   });
 
   function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
