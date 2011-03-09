@@ -321,7 +321,6 @@ function fUpdateGlobalRelation() {
       }
     }
     var oField = this.field;
-    alert("oField is tag " + oField.tagName);
     var aPostVars=new Array();
     aPostVars['returntype']='xml'; 
     aPostVars['return']='gui/resources/sessionReportInfo';
