@@ -310,6 +310,7 @@ function fSetOverflowHack() {
   document.getElementById('gtpb_wrapper').style.overflow='auto';
 }
 
+//TODO: this should be called fUpdateGlobalField as it is not relation-specific
 function fUpdateGlobalRelation() {
     function fResponse(sResponseText, sResponseXML) {
       if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
@@ -321,6 +322,7 @@ function fUpdateGlobalRelation() {
       }
     }
     var oField = this.field;
+    alert ("oField is " + oField.tagName);
     var aPostVars=new Array();
     aPostVars['returntype']='xml'; 
     aPostVars['return']='gui/resources/sessionReportInfo';
@@ -360,13 +362,15 @@ function fRelationPickers() {
 	jqClicker.click(fPicker);
 	var deviceAgent = navigator.userAgent.toLowerCase();
 	if(deviceAgent.match(/(iphone|ipod|ipad)/)) {
-	  jqClicker.click(fSetOverflowHack,false);
+		jqClicker.click(fSetOverflowHack,false);
 	}
 	var jqHidden = jqClicker.siblings("input.relation_hidden");
 	this.formEl = jqHidden[0];
 	this.formEl.clicker = this;
   });
   
+  // TODO: this isn't just a relation function, it affects all fields
+  // Perhaps it should be in a separate function
   $("button.globalEdit").each(function() {
 	var jqButton = $(this);
 	if(jqButton.attr("ab_setup_complete") == "true") {
@@ -390,7 +394,7 @@ function fRelationPickers() {
 		  	fieldkey: "relationField",
 		  	custominternaltablename: internalTableName,
 		  	custominternalfieldname: internalFieldName
-		  },
+	  },
 	  mustMatch: true,
 	  selectFirst: true,
 	  width: 296,
