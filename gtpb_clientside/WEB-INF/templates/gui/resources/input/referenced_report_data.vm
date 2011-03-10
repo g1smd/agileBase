@@ -80,11 +80,11 @@
 			#elseif($fieldCategory == "FILE")
         	  #set($rrd_displayValue = $rrd_reportDataRow.getValue($reportBaseField).getDisplayValue())
         	  #if($rrd_displayValue != "")
-			    #set($downloadBase = "$fieldTable.getInternalTableName()/$field.getInternalFieldName()/$rrd_rowId/")
+			    #set($downloadBase = "uploads/$fieldTable.getInternalTableName()/$field.getInternalFieldName()/$rrd_rowId/")
 			    #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$rrd_displayValue"))
 			    File $downloadUrl
 			    <a href="$downloadUrl" target="_blank">
-				  <img border="0" src="$downloadUrl" style="max-width:500px; float:left; position: relative; top:0" />
+				  <img border="0" src="$downloadUrl" style="max-width:300px; float:left; position: relative; top:0" />
 			    </a>
 			  #end
 		    #end
