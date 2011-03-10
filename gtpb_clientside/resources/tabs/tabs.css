@@ -232,6 +232,10 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
 
 .mandated {color: red}
 
+img.cross_reference_image {
+	max-width: 300px;
+}
+
 /* 3) Summary tab css */
 
 
