@@ -83,7 +83,7 @@
 			    #set($downloadBase = "uploads/$reportBaseField.getTableContainingField().getInternalTableName()/$reportBaseField.getInternalFieldName()/$rrd_reportDataRow.getRowId()/")
 			    #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$rrd_displayValue"))
 			    <a href="$downloadUrl" target="_blank">
-				  <img border="0" src="$downloadUrl" style="max-width:300px; float:left; position: relative; top:0" />
+				  <img border="0" src="$downloadUrl" style="max-width:300px;" />
 			    </a>
 			  #end
 		    #end
