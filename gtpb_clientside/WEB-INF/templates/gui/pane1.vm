@@ -72,12 +72,12 @@
       #end
 	  <div id="links" style="left:0px">
 		#if($browser == "iPod/iPhone")
-        <div class="button" style="left: 0px; width: 30px;">
+        <div class="button" style="left: 0px; width: 50px;">
             <a href="?return=gui/customisations/common/dashboard/dashboard">
         	  <img src="resources/toolbar/dashboard.png" /> 
         	</a>
         </div>
-        <div class="button" style="left: 50px; width: 30px;">
+        <div class="button" style="left: 80px; width: 50px;">
             <a href="?return=gui/calendar/calendar">
         	  <img src="resources/toolbar/calendar.png" /> 
         	</a>
