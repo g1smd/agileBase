@@ -68,6 +68,18 @@
     <div id="header">
       <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
       <div id="links">
+		#if($viewTools.getBrowser() == "APPLE_MOBILE")
+        <div class="button" style="left: 0px; width: 30px;">
+            <a href="?return=gui/customisations/common/dashboard/dashboard">
+        	  <img src="resources/toolbar/dashboard.png" /> 
+        	</a>
+        </div>
+        <div class="button" style="left: 50px; width: 30px;">
+            <a href="?return=gui/calendar/calendar">
+        	  <img src="resources/toolbar/calendar.png" /> 
+        	</a>
+        </div>
+		#else
         <div class="button" style="left: 0px;">
             <a href="?return=gui/customisations/common/dashboard/dashboard">
         	  <img src="resources/toolbar/dashboard.png" /> Dashboard
@@ -78,6 +90,7 @@
         	  <img src="resources/toolbar/calendar.png" /> Calendar
         	</a>
         </div>
+		#end
       </div> ## end links
     </div>
 	#end
