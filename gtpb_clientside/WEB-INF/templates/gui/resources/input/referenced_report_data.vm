@@ -76,8 +76,14 @@
 				  #end
 				#end
         		<span class="greytext">$reportBaseField:</span> $rrd_displayValue<br>
-        	  #end
-        	#end
+			  #end
+			#elseif($fieldCategory == "FILE")
+			  #set($downloadBase = "$fieldTable.getInternalTableName()/$field.getInternalFieldName()/$rrd_rowId/")
+			  #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValue"))
+			  <a href="$downloadUrl" target="_blank">
+				<img border="0" src="$downloadUrl" style="max-width:500px; float:left; position: relative; top:0" />
+			  </a>
+		    #end
     	#end
       #end
       #if($rowContainsData && ($rrd_reportDataRows.size() > $foreach.count)) <p></p> #end
