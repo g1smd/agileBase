@@ -70,7 +70,7 @@
 	  #if($browser != "iPod/iPhone")
       <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
       #end
-	  <div id="links">
+	  <div id="links" style="left:0px">
 		#if($browser == "iPod/iPhone")
         <div class="button" style="left: 0px; width: 30px;">
             <a href="?return=gui/customisations/common/dashboard/dashboard">
