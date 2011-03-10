@@ -78,6 +78,7 @@
         		<span class="greytext">$reportBaseField:</span> $rrd_displayValue<br>
 			  #end
 			#elseif($fieldCategory == "FILE")
+			  File
 			  #set($downloadBase = "$fieldTable.getInternalTableName()/$field.getInternalFieldName()/$rrd_rowId/")
 			  #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValue"))
 			  <a href="$downloadUrl" target="_blank">
