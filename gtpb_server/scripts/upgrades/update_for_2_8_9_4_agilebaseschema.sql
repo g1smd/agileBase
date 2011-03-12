@@ -1,0 +1,20 @@
+alter table basereportdefn rename column reportsummary_id to chart_id;
+alter table reportsummaryaggregatedefn rename to chartaggregatedefn;
+alter table reportsummarydefn rename to chartdefn;
+alter table reportsummarydefn_reportsummaryaggregatedefn rename to chartdefn_chartaggregatedefn;
+alter table reportsummarydefn_reportsummarygrouping rename to chartdefn_chartgrouping;
+alter table reportsummarygrouping rename to chartgrouping;
+alter table company_summaryidsfordashboarddirect rename to company_chartidsfordashboarddirect;
+alter table company_summaryidsnotfordashboarddirect rename to company_chartidsnotfordashboarddirect;
+--
+alter index reportsummarydefn_pkey rename to chartdefn_pkey;
+alter index reportsummaryaggregatedefn_pkey rename to chartaggregatedefn_pkey;
+alter index reportsummarydefn_reportsummarygrouping_groupingsdirect_id_key rename to chartdefn_chartgrouping_groupingsdirect_id_key;
+alter index reportsummarydefn_reportsummarygrouping_pkey rename to chartdefn_chartgrouping_pkey;
+alter index reportsummarygrouping_pkey rename to chartgrouping_pkey;
+alter index reportsummarydefn_reportsummaryaggregatedefn_pkey rename to chartdefn_chartaggregatedefn_pkey;
+alter index reportsummarydefn_reportsumma_aggregatefunctionsdirect_inte_key rename to chartdefn_chart_aggregatefunctionsdirect_inte_key; --can't work out the proper name for this one, just do our best
+--
+alter table chartdefn rename column summaryfilter to chartfilter;
+alter table chartdefn_chartaggregatedefn rename column reportsummarydefn_id to chartdefn_id;
+alter table chartdefn_chartgrouping rename column reportsummarydefn_id to chartdefn_id;
