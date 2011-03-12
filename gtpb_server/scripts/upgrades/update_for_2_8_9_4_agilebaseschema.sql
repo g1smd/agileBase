@@ -16,6 +16,8 @@ alter index reportsummarydefn_reportsummarygrouping_pkey rename to chartdefn_cha
 alter index reportsummarygrouping_pkey rename to chartgrouping_pkey;
 alter index reportsummarydefn_reportsummaryaggregatedefn_pkey rename to chartdefn_chartaggregatedefn_pkey;
 alter index reportsummarydefn_reportsumma_aggregatefunctionsdirect_inte_key rename to chartdefn_chart_aggregatefunctionsdirect_inte_key; --can't work out the proper name for this one, just do our best
+alter table company_summaryidsfordashboarddirect rename to company_chartidsfordashboarddirect;
+alter table company_summaryidsnotfordashboarddirect rename to company_chartidsnotfordashboarddirect;
 --
 alter table chartdefn rename column summaryfilter to chartfilter;
 alter table chartdefn_chartaggregatedefn rename column reportsummarydefn_id to chartdefn_id;
