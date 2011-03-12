@@ -48,9 +48,9 @@ import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportQuickFilterInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
+import com.gtwm.pb.model.interfaces.ChartInfo;
+import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
+import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
@@ -61,9 +61,9 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.HibernateUtil;
 
 @Entity
-public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSummaryInfo> {
+public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 
-	protected ReportSummaryDefn() {
+	protected ChartDefn() {
 	}
 
 	/**
@@ -72,12 +72,12 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	 * @param persist
 	 *            Whether to persist the summary to permanent storage
 	 */
-	public ReportSummaryDefn(BaseReportInfo report, boolean persist) {
+	public ChartDefn(BaseReportInfo report, boolean persist) {
 		this.setReport(report);
 		this.persist = persist;
 	}
 
-	public ReportSummaryDefn(BaseReportInfo report, String title, boolean persist) {
+	public ChartDefn(BaseReportInfo report, String title, boolean persist) {
 		this.setReport(report);
 		this.setTitle(title);
 		this.persist = persist;
@@ -103,7 +103,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 
 	public synchronized void addGrouping(ReportFieldInfo groupByReportField,
 			SummaryGroupingModifier groupingModifier) {
-		ReportSummaryGroupingInfo grouping = new ReportSummaryGrouping(groupByReportField,
+		ChartGroupingInfo grouping = new ChartGrouping(groupByReportField,
 				groupingModifier);
 		if (this.persist) {
 			// Need a save here because no link from grouping back to report
@@ -114,10 +114,10 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		this.getGroupingsDirect().add(grouping);
 	}
 
-	public synchronized ReportSummaryGroupingInfo removeGrouping(ReportFieldInfo reportFieldToRemove) {
-		for (Iterator<ReportSummaryGroupingInfo> iterator = this.getGroupingsDirect().iterator(); iterator
+	public synchronized ChartGroupingInfo removeGrouping(ReportFieldInfo reportFieldToRemove) {
+		for (Iterator<ChartGroupingInfo> iterator = this.getGroupingsDirect().iterator(); iterator
 				.hasNext();) {
-			ReportSummaryGroupingInfo grouping = iterator.next();
+			ChartGroupingInfo grouping = iterator.next();
 			if (grouping.getGroupingReportField().equals(reportFieldToRemove)) {
 				iterator.remove();
 				if (this.persist) {
@@ -129,17 +129,17 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		return null;
 	}
 
-	public synchronized void addFunction(ReportSummaryAggregateInfo addedAggFn)
+	public synchronized void addFunction(ChartAggregateInfo addedAggFn)
 			throws CantDoThatException {
 		this.getAggregateFunctionsDirect().add(addedAggFn);
 	}
 
-	public synchronized Set<ReportSummaryAggregateInfo> removeFunctions(
+	public synchronized Set<ChartAggregateInfo> removeFunctions(
 			ReportFieldInfo reportFieldToRemove) {
-		Set<ReportSummaryAggregateInfo> removedFunctions = new HashSet<ReportSummaryAggregateInfo>();
-		for (Iterator<ReportSummaryAggregateInfo> iterator = this.getAggregateFunctionsDirect()
+		Set<ChartAggregateInfo> removedFunctions = new HashSet<ChartAggregateInfo>();
+		for (Iterator<ChartAggregateInfo> iterator = this.getAggregateFunctionsDirect()
 				.iterator(); iterator.hasNext();) {
-			ReportSummaryAggregateInfo aggregateFunction = iterator.next();
+			ChartAggregateInfo aggregateFunction = iterator.next();
 			if (aggregateFunction.getReportField().equals(reportFieldToRemove)) {
 				iterator.remove();
 				removedFunctions.add(aggregateFunction);
@@ -157,11 +157,11 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		return removedFunctions;
 	}
 
-	public ReportSummaryAggregateInfo removeFunction(String internalAggregateName)
+	public ChartAggregateInfo removeFunction(String internalAggregateName)
 			throws ObjectNotFoundException {
-		for (Iterator<ReportSummaryAggregateInfo> iterator = this.getAggregateFunctionsDirect()
+		for (Iterator<ChartAggregateInfo> iterator = this.getAggregateFunctionsDirect()
 				.iterator(); iterator.hasNext();) {
-			ReportSummaryAggregateInfo aggregateFunction = iterator.next();
+			ChartAggregateInfo aggregateFunction = iterator.next();
 			if (aggregateFunction.getInternalAggregateName().equals(internalAggregateName)) {
 				iterator.remove();
 				return aggregateFunction;
@@ -172,14 +172,14 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	}
 
 	@Transient
-	public synchronized PreparedStatement getReportSummarySqlPreparedStatement(Connection conn,
+	public synchronized PreparedStatement getChartSqlPreparedStatement(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters) throws SQLException,
 			CantDoThatException {
 		String groupByFieldsCsv = "";
 		String aggregateFunctionsCsv = "";
-		Set<ReportSummaryGroupingInfo> groupings = this.getGroupings();
+		Set<ChartGroupingInfo> groupings = this.getGroupings();
 		boolean groupingsContainDateField = false;
-		for (ReportSummaryGroupingInfo grouping : groupings) {
+		for (ChartGroupingInfo grouping : groupings) {
 			String internalFieldName = grouping.getGroupingReportField().getInternalFieldName();
 			SummaryGroupingModifier groupingModifier = grouping.getGroupingModifier();
 			if (groupingModifier == null) {
@@ -206,7 +206,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 			}
 			groupByFieldsCsv += ", ";
 		}
-		for (ReportSummaryAggregateInfo aggregateFunction : this.getAggregateFunctionsDirect()) {
+		for (ChartAggregateInfo aggregateFunction : this.getAggregateFunctionsDirect()) {
 			aggregateFunctionsCsv += aggregateFunction.getSQLPartForAggregate() + ", ";
 		}
 		// Remove trailing commas
@@ -232,7 +232,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 			filtersUsed = whereClause.getValue();
 		}
 		// Add permanent filters if there are any
-		SummaryFilter summaryFilter = this.getSummaryFilter();
+		SummaryFilter summaryFilter = this.getChartFilter();
 		ReportFieldInfo filterReportField = this.getFilterReportField();
 		if (summaryFilter != null && filterReportField != null) {
 			String filterSQL = summaryFilter.getSQL();
@@ -305,32 +305,32 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	@Transient
 	public synchronized List<ReportFieldInfo> getGroupingReportFields() {
 		List<ReportFieldInfo> groupingReportFields = new LinkedList<ReportFieldInfo>();
-		for (ReportSummaryGroupingInfo grouping : this.getGroupings()) {
+		for (ChartGroupingInfo grouping : this.getGroupings()) {
 			groupingReportFields.add(grouping.getGroupingReportField());
 		}
 		return Collections.unmodifiableList(groupingReportFields);
 	}
 
 	@Transient
-	public SortedSet<ReportSummaryGroupingInfo> getGroupings() {
-		SortedSet<ReportSummaryGroupingInfo> groupings = new TreeSet<ReportSummaryGroupingInfo>(
+	public SortedSet<ChartGroupingInfo> getGroupings() {
+		SortedSet<ChartGroupingInfo> groupings = new TreeSet<ChartGroupingInfo>(
 				this.getGroupingsDirect());
 		return Collections.unmodifiableSortedSet(groupings);
 	}
 
-	@OneToMany(targetEntity = ReportSummaryGrouping.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = ChartGrouping.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	// Uni-directional
-	private Set<ReportSummaryGroupingInfo> getGroupingsDirect() {
+	private Set<ChartGroupingInfo> getGroupingsDirect() {
 		return this.groupings;
 	}
 
-	private void setGroupingsDirect(Set<ReportSummaryGroupingInfo> groupingFields) {
+	private void setGroupingsDirect(Set<ChartGroupingInfo> groupingFields) {
 		this.groupings = groupingFields;
 	}
 
 	public synchronized ReportFieldInfo getGroupingReportField(String internalFieldName)
 			throws ObjectNotFoundException {
-		for (ReportSummaryGroupingInfo grouping : this.getGroupings()) {
+		for (ChartGroupingInfo grouping : this.getGroupings()) {
 			ReportFieldInfo reportField = grouping.getGroupingReportField();
 			if (reportField.getInternalFieldName().equals(internalFieldName)) {
 				return reportField;
@@ -341,15 +341,15 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	}
 
 	@Transient
-	public synchronized Set<ReportSummaryAggregateInfo> getAggregateFunctions() {
-		return Collections.unmodifiableSet(new LinkedHashSet<ReportSummaryAggregateInfo>(this
+	public synchronized Set<ChartAggregateInfo> getAggregateFunctions() {
+		return Collections.unmodifiableSet(new LinkedHashSet<ChartAggregateInfo>(this
 				.getAggregateFunctionsDirect()));
 	}
 
 	@Transient
-	public synchronized ReportSummaryAggregateInfo getAggregateFunctionByInternalName(
+	public synchronized ChartAggregateInfo getAggregateFunctionByInternalName(
 			String internalAggregateName) throws ObjectNotFoundException {
-		for (ReportSummaryAggregateInfo aggFn : this.getAggregateFunctionsDirect()) {
+		for (ChartAggregateInfo aggFn : this.getAggregateFunctionsDirect()) {
 			if (aggFn.getInternalAggregateName().equals(internalAggregateName)) {
 				return aggFn;
 			}
@@ -358,18 +358,18 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 				+ internalAggregateName + " not found in summary");
 	}
 
-	@OneToMany(targetEntity = ReportSummaryAggregateDefn.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = ChartAggregateDefn.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	// Uni-directional one to many
-	private Set<ReportSummaryAggregateInfo> getAggregateFunctionsDirect() {
+	private Set<ChartAggregateInfo> getAggregateFunctionsDirect() {
 		return this.aggregateFunctions;
 	}
 
-	private void setAggregateFunctionsDirect(Set<ReportSummaryAggregateInfo> aggregateFunctions) {
+	private void setAggregateFunctionsDirect(Set<ChartAggregateInfo> aggregateFunctions) {
 		this.aggregateFunctions = aggregateFunctions;
 	}
 
 	public synchronized boolean containsNumericAggFns() {
-		for (ReportSummaryAggregateInfo aggregateFunction : this.getAggregateFunctionsDirect()) {
+		for (ChartAggregateInfo aggregateFunction : this.getAggregateFunctionsDirect()) {
 			if (!(aggregateFunction.isCountFunction())) {
 				return true;
 			}
@@ -389,11 +389,11 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	}
 
 	@Enumerated(EnumType.STRING)
-	public SummaryFilter getSummaryFilter() {
+	public SummaryFilter getChartFilter() {
 		return this.summaryFilter;
 	}
 
-	public void setSummaryFilter(SummaryFilter summaryFilter) {
+	public void setChartFilter(SummaryFilter summaryFilter) {
 		this.summaryFilter = summaryFilter;
 	}
 
@@ -449,7 +449,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 		if ((obj == null) || (obj.getClass() != this.getClass())) {
 			return false;
 		}
-		if (this.getId() == ((ReportSummaryDefn) obj).getId()) {
+		if (this.getId() == ((ChartDefn) obj).getId()) {
 			return true;
 		} else {
 			return false;
@@ -459,7 +459,7 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 	/**
 	 * Compare by report then ID
 	 */
-	public int compareTo(ReportSummaryInfo otherSummary) {
+	public int compareTo(ChartInfo otherSummary) {
 		int reportCompare = this.getReport().compareTo(otherSummary.getReport());
 		if (reportCompare != 0) {
 			return reportCompare;
@@ -487,9 +487,9 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 
 	private volatile int hashCode = 0;
 
-	private Set<ReportSummaryGroupingInfo> groupings = new HashSet<ReportSummaryGroupingInfo>();
+	private Set<ChartGroupingInfo> groupings = new HashSet<ChartGroupingInfo>();
 
-	private Set<ReportSummaryAggregateInfo> aggregateFunctions = new LinkedHashSet<ReportSummaryAggregateInfo>();
+	private Set<ChartAggregateInfo> aggregateFunctions = new LinkedHashSet<ChartAggregateInfo>();
 
 	private SummaryFilter summaryFilter = null;
 
@@ -507,5 +507,5 @@ public class ReportSummaryDefn implements ReportSummaryInfo, Comparable<ReportSu
 
 	private long id;
 
-	private static final SimpleLogger logger = new SimpleLogger(ReportSummaryDefn.class);
+	private static final SimpleLogger logger = new SimpleLogger(ChartDefn.class);
 }

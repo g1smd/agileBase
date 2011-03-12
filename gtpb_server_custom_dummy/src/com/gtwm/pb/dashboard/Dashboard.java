@@ -10,18 +10,18 @@ import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.dashboard.interfaces.DashboardGridInfo;
 import com.gtwm.pb.dashboard.interfaces.DashboardInfo;
 import com.gtwm.pb.dashboard.interfaces.DashboardOutlierInfo;
-import com.gtwm.pb.dashboard.interfaces.DashboardReportSummaryInfo;
+import com.gtwm.pb.dashboard.interfaces.DashboardChartInfo;
 import com.gtwm.pb.dashboard.interfaces.DashboardTrendOutlierInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
+import com.gtwm.pb.model.interfaces.ChartDataInfo;
+import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.Enumerations.UserType;
 
 public class Dashboard implements DashboardInfo {
 
-	public Map<ReportSummaryInfo, ReportSummaryDataInfo> getCompanyReportSummaries() {
+	public Map<ChartInfo, ChartDataInfo> getCompanyReportSummaries() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -87,12 +87,12 @@ public class Dashboard implements DashboardInfo {
 		return null;
 	}
 
-	public Map<ReportSummaryInfo, ReportSummaryDataInfo> getUserReportSummaries(AppUserInfo user) {
+	public Map<ChartInfo, ChartDataInfo> getUserReportSummaries(AppUserInfo user) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public SortedSet<DashboardReportSummaryInfo> getSuggestedReportSummaries() {
+	public SortedSet<DashboardChartInfo> getSuggestedReportSummaries() {
 		// TODO Auto-generated method stub
 		return null;
 	}

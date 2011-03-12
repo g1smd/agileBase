@@ -18,7 +18,7 @@ public interface DashboardInfo {
 	/**
 	 * Get report summary charts that agileBase automatically selects
 	 */
-	public SortedSet<DashboardReportSummaryInfo> getSuggestedReportSummaries();
+	public SortedSet<DashboardChartInfo> getSuggestedReportSummaries();
 	
 	/**
 	 * Return a set of headlines highlighting particular data from agileBase or the logs

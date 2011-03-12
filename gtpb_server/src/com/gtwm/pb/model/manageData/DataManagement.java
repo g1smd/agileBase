@@ -57,16 +57,16 @@ import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportQuickFilterInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
+import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.DataManagementInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryDataRowInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
+import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
+import com.gtwm.pb.model.interfaces.ChartDataInfo;
+import com.gtwm.pb.model.interfaces.ChartDataRowInfo;
+import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.TableDataInfo;
@@ -1792,8 +1792,8 @@ public final class DataManagement implements DataManagementInfo {
 		return displayLookup;
 	}
 
-	public ReportSummaryDataInfo getReportSummaryData(CompanyInfo company,
-			ReportSummaryInfo reportSummary, Map<BaseField, String> reportFilterValues,
+	public ChartDataInfo getChartData(CompanyInfo company,
+			ChartInfo reportSummary, Map<BaseField, String> reportFilterValues,
 			boolean alwaysUseCache) throws SQLException, CantDoThatException {
 		boolean needSummary = (reportSummary.getAggregateFunctions().size() > 0);
 		if (!needSummary) {
@@ -1805,33 +1805,33 @@ public final class DataManagement implements DataManagementInfo {
 		Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
 				reportFilterValues, false);
 		if (whereClauseMap.size() > 0) {
-			return this.fetchReportSummaryData(reportSummary, reportFilterValues);
+			return this.fetchChartData(reportSummary, reportFilterValues);
 		}
-		ReportSummaryDataInfo reportSummaryData = this.cachedReportSummaryDatas.get(reportSummary);
+		ChartDataInfo reportSummaryData = this.cachedChartDatas.get(reportSummary);
 		if (reportSummaryData == null) {
-			reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues);
-			this.cachedReportSummaryDatas.put(reportSummary, reportSummaryData);
-			this.summaryDataCacheMisses.incrementAndGet();
+			reportSummaryData = this.fetchChartData(reportSummary, reportFilterValues);
+			this.cachedChartDatas.put(reportSummary, reportSummaryData);
+			this.chartDataCacheMisses.incrementAndGet();
 		} else if (alwaysUseCache) {
-			this.summaryDataCacheHits.incrementAndGet();
+			this.chartDataCacheHits.incrementAndGet();
 		} else {
 			long lastDataChangeTime = this.getLastDataChangeTime(company);
 			long lastSchemaChangeTime = this.getLastSchemaChangeTime(company);
 			long cacheCreationTime = reportSummaryData.getCacheCreationTime();
 			if ((cacheCreationTime <= lastDataChangeTime)
 					|| (cacheCreationTime <= lastSchemaChangeTime)) {
-				reportSummaryData = this.fetchReportSummaryData(reportSummary, reportFilterValues);
-				this.cachedReportSummaryDatas.put(reportSummary, reportSummaryData);
-				this.summaryDataCacheMisses.incrementAndGet();
+				reportSummaryData = this.fetchChartData(reportSummary, reportFilterValues);
+				this.cachedChartDatas.put(reportSummary, reportSummaryData);
+				this.chartDataCacheMisses.incrementAndGet();
 			} else {
-				this.summaryDataCacheHits.incrementAndGet();
+				this.chartDataCacheHits.incrementAndGet();
 			}
 		}
-		if ((this.summaryDataCacheHits.get() + this.summaryDataCacheMisses.get()) > 100) {
-			logger.info("Summary data cache hits = " + this.summaryDataCacheHits + ", misses = "
-					+ this.summaryDataCacheMisses);
-			this.summaryDataCacheHits.set(0);
-			this.summaryDataCacheMisses.set(0);
+		if ((this.chartDataCacheHits.get() + this.chartDataCacheMisses.get()) > 100) {
+			logger.info("Summary data cache hits = " + this.chartDataCacheHits + ", misses = "
+					+ this.chartDataCacheMisses);
+			this.chartDataCacheHits.set(0);
+			this.chartDataCacheMisses.set(0);
 		}
 		return reportSummaryData;
 	}
@@ -1839,19 +1839,19 @@ public final class DataManagement implements DataManagementInfo {
 	/**
 	 * Fetch direct from the database
 	 */
-	private ReportSummaryDataInfo fetchReportSummaryData(ReportSummaryInfo reportSummary,
+	private ChartDataInfo fetchChartData(ChartInfo reportSummary,
 			Map<BaseField, String> reportFilterValues) throws CantDoThatException, SQLException {
-		Set<ReportSummaryAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
-		Set<ReportSummaryGroupingInfo> groupings = reportSummary.getGroupings();
-		List<ReportSummaryDataRowInfo> reportSummaryRows;
-		reportSummaryRows = new LinkedList<ReportSummaryDataRowInfo>();
+		Set<ChartAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
+		Set<ChartGroupingInfo> groupings = reportSummary.getGroupings();
+		List<ChartDataRowInfo> reportSummaryRows;
+		reportSummaryRows = new LinkedList<ChartDataRowInfo>();
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			// First, cache the set of display values for relation fields
 			Map<ReportFieldInfo, Map<String, String>> displayLookups = new HashMap<ReportFieldInfo, Map<String, String>>();
-			for (ReportSummaryGroupingInfo grouping : groupings) {
+			for (ChartGroupingInfo grouping : groupings) {
 				ReportFieldInfo groupingReportField = grouping.getGroupingReportField();
 				BaseField baseField = groupingReportField.getBaseField();
 				if (baseField instanceof RelationField) {
@@ -1870,21 +1870,21 @@ public final class DataManagement implements DataManagementInfo {
 			// aggregate column
 			// These numbers can be used e.g. to scale values when charting
 			// summary data
-			Map<ReportSummaryAggregateInfo, Number> maxAggValues = new HashMap<ReportSummaryAggregateInfo, Number>();
-			Map<ReportSummaryAggregateInfo, Number> minAggValues = new HashMap<ReportSummaryAggregateInfo, Number>();
-			Map<ReportSummaryAggregateInfo, Number> grandTotals = new HashMap<ReportSummaryAggregateInfo, Number>();
+			Map<ChartAggregateInfo, Number> maxAggValues = new HashMap<ChartAggregateInfo, Number>();
+			Map<ChartAggregateInfo, Number> minAggValues = new HashMap<ChartAggregateInfo, Number>();
+			Map<ChartAggregateInfo, Number> grandTotals = new HashMap<ChartAggregateInfo, Number>();
 			// Also a map for working with in the loop
 			Map<ReportFieldInfo, Date> previousDateValues = new HashMap<ReportFieldInfo, Date>();
 			Calendar calendar = Calendar.getInstance();
 			// Get database data
-			PreparedStatement statement = reportSummary.getReportSummarySqlPreparedStatement(conn,
+			PreparedStatement statement = reportSummary.getChartSqlPreparedStatement(conn,
 					reportFilterValues, false);
 			long startTime = System.currentTimeMillis();
 			ResultSet summaryResults = statement.executeQuery();
 			while (summaryResults.next()) {
-				ReportSummaryDataRowInfo resultRow = new ReportSummaryDataRow();
+				ChartDataRowInfo resultRow = new ChartDataRow();
 				int resultColumn = 0;
-				for (ReportSummaryGroupingInfo grouping : groupings) {
+				for (ChartGroupingInfo grouping : groupings) {
 					ReportFieldInfo groupingReportField = grouping.getGroupingReportField();
 					SummaryGroupingModifier groupingModifier = grouping.getGroupingModifier();
 					BaseField baseField = groupingReportField.getBaseField();
@@ -1952,7 +1952,7 @@ public final class DataManagement implements DataManagementInfo {
 					}
 					resultRow.addGroupingValue(grouping, value);
 				}
-				for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
+				for (ChartAggregateInfo aggregateFunction : aggregateFunctions) {
 					resultColumn++;
 					DatabaseFieldType dbType = aggregateFunction.getReportField().getBaseField()
 							.getDbType();
@@ -2015,7 +2015,7 @@ public final class DataManagement implements DataManagementInfo {
 				logger.debug("Long SELECT SQL execution time of " + durationSecs
 						+ " seconds for summary '" + reportSummary + "', statement = " + statement);
 			}
-			return new ReportSummaryData(reportSummaryRows, minAggValues, maxAggValues, grandTotals);
+			return new ChartData(reportSummaryRows, minAggValues, maxAggValues, grandTotals);
 		} catch (SQLException sqlex) {
 			throw new SQLException("Error getting report summary data " + reportSummary + ": "
 					+ sqlex);
@@ -2318,7 +2318,7 @@ public final class DataManagement implements DataManagementInfo {
 	 */
 	private Map<BaseReportInfo, ReportDataInfo> cachedReportDatas = new ConcurrentHashMap<BaseReportInfo, ReportDataInfo>();
 
-	private Map<ReportSummaryInfo, ReportSummaryDataInfo> cachedReportSummaryDatas = new ConcurrentHashMap<ReportSummaryInfo, ReportSummaryDataInfo>();
+	private Map<ChartInfo, ChartDataInfo> cachedChartDatas = new ConcurrentHashMap<ChartInfo, ChartDataInfo>();
 
 	private Map<String, CachedJSONInfo> cachedCalendarJSONs = new ConcurrentHashMap<String, CachedJSONInfo>();
 
@@ -2340,9 +2340,9 @@ public final class DataManagement implements DataManagementInfo {
 
 	private AtomicInteger reportDataCacheMisses = new AtomicInteger();
 
-	private AtomicInteger summaryDataCacheHits = new AtomicInteger();
+	private AtomicInteger chartDataCacheHits = new AtomicInteger();
 
-	private AtomicInteger summaryDataCacheMisses = new AtomicInteger();
+	private AtomicInteger chartDataCacheMisses = new AtomicInteger();
 
 	private AtomicInteger jsonCacheHits = new AtomicInteger();
 

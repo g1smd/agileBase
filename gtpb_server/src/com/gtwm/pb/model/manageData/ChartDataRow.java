@@ -18,28 +18,28 @@
 package com.gtwm.pb.model.manageData;
 
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryDataRowInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
+import com.gtwm.pb.model.interfaces.ChartDataRowInfo;
+import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
+import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
 
 import java.util.Map;
 import java.util.LinkedHashMap;
 
-public class ReportSummaryDataRow implements ReportSummaryDataRowInfo {
+public class ChartDataRow implements ChartDataRowInfo {
 
-	public ReportSummaryDataRow() {
+	public ChartDataRow() {
 	}
 
-	public synchronized void addGroupingValue(ReportSummaryGroupingInfo grouping, String value) {
+	public synchronized void addGroupingValue(ChartGroupingInfo grouping, String value) {
 		this.groupingValues.put(grouping, value);
 	}
 
-	public synchronized void addAggregateValue(ReportSummaryAggregateInfo aggregateFunction,
+	public synchronized void addAggregateValue(ChartAggregateInfo aggregateFunction,
 			Number value) {
 		this.aggregateValues.put(aggregateFunction, value);
 	}
 
-	public synchronized String getGroupingValue(ReportSummaryGroupingInfo grouping) {
+	public synchronized String getGroupingValue(ChartGroupingInfo grouping) {
 		String groupingValue = this.groupingValues.get(grouping);
 		if (groupingValue == null) {
 			return "";
@@ -49,7 +49,7 @@ public class ReportSummaryDataRow implements ReportSummaryDataRowInfo {
 	}
 
 	public String getGroupingValue(ReportFieldInfo groupingField) {
-		for (ReportSummaryGroupingInfo grouping : this.groupingValues.keySet()) {
+		for (ChartGroupingInfo grouping : this.groupingValues.keySet()) {
 			if (groupingField.equals(grouping.getGroupingReportField())) {
 				return this.getGroupingValue(grouping);
 			}
@@ -57,15 +57,15 @@ public class ReportSummaryDataRow implements ReportSummaryDataRowInfo {
 		return "";
 	}
 
-	public synchronized Number getAggregateValue(ReportSummaryAggregateInfo aggregateFunction) {
+	public synchronized Number getAggregateValue(ChartAggregateInfo aggregateFunction) {
 		return this.aggregateValues.get(aggregateFunction);
 	}
 	
-	public synchronized Map<ReportSummaryAggregateInfo, Number> getAggregateValues() {
+	public synchronized Map<ChartAggregateInfo, Number> getAggregateValues() {
 		return this.aggregateValues;
 	}
 	
-	public synchronized Map<ReportSummaryGroupingInfo, String> getGroupingValues() {
+	public synchronized Map<ChartGroupingInfo, String> getGroupingValues() {
 		return this.groupingValues;
 	}
 
@@ -81,7 +81,7 @@ public class ReportSummaryDataRow implements ReportSummaryDataRowInfo {
 		return returnValue;
 	}
 
-	private Map<ReportSummaryGroupingInfo, String> groupingValues = new LinkedHashMap<ReportSummaryGroupingInfo, String>();
+	private Map<ChartGroupingInfo, String> groupingValues = new LinkedHashMap<ChartGroupingInfo, String>();
 
-	private Map<ReportSummaryAggregateInfo, Number> aggregateValues = new LinkedHashMap<ReportSummaryAggregateInfo, Number>();
+	private Map<ChartAggregateInfo, Number> aggregateValues = new LinkedHashMap<ChartAggregateInfo, Number>();
 }

@@ -24,7 +24,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import org.grlea.log.SimpleLogger;
-import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
+import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.util.RandomString;
@@ -32,9 +32,9 @@ import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.CantDoThatException;
 
 @Entity
-public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
+public class ChartAggregateDefn implements ChartAggregateInfo {
 
-	protected ReportSummaryAggregateDefn() {
+	protected ChartAggregateDefn() {
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 	 *             the AggregateFunction enumeration
 	 * @see com.gtwm.pb.util.Enumerations.AggregateFunction
 	 */
-	public ReportSummaryAggregateDefn(AggregateFunction function, ReportFieldInfo reportField) {
+	public ChartAggregateDefn(AggregateFunction function, ReportFieldInfo reportField) {
 		this.setAggregateFunction(function);
 		this.setReportField(reportField);
 		this.setInternalAggregateName((new RandomString()).toString());
@@ -52,7 +52,7 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 	/**
 	 * Create an aggregate that acts on two fields, e.g. a weighted average
 	 */
-	public ReportSummaryAggregateDefn(AggregateFunction function, ReportFieldInfo reportField,
+	public ChartAggregateDefn(AggregateFunction function, ReportFieldInfo reportField,
 			ReportFieldInfo secondaryReportField) throws CantDoThatException {
 		if (secondaryReportField == null) {
 			throw new CantDoThatException(
@@ -166,7 +166,7 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 		if ((obj == null) || (obj.getClass() != this.getClass())) {
 			return false;
 		}
-		ReportSummaryAggregateDefn otherAggregateFunction = (ReportSummaryAggregateDefn) obj;
+		ChartAggregateDefn otherAggregateFunction = (ChartAggregateDefn) obj;
 		return this.getInternalAggregateName().equals(
 				otherAggregateFunction.getInternalAggregateName());
 	}
@@ -189,5 +189,5 @@ public class ReportSummaryAggregateDefn implements ReportSummaryAggregateInfo {
 
 	private String internalAggregateName = null;
 		
-	private static final SimpleLogger logger = new SimpleLogger(ReportSummaryAggregateDefn.class);
+	private static final SimpleLogger logger = new SimpleLogger(ChartAggregateDefn.class);
 }

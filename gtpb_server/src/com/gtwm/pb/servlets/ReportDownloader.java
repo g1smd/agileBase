@@ -46,11 +46,11 @@ import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryDataRowInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
+import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
+import com.gtwm.pb.model.interfaces.ChartDataRowInfo;
+import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
+import com.gtwm.pb.model.interfaces.ChartInfo;
+import com.gtwm.pb.model.interfaces.ChartDataInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.DataManagementInfo;
@@ -194,13 +194,13 @@ public final class ReportDownloader extends HttpServlet {
 		// Export info worksheet
 		addReportMetaDataWorksheet(company, user, sessionData, report, workbook);
 		// one worksheet for each of the report summaries
-		for (ReportSummaryInfo savedReportSummary : report.getSavedReportSummaries()) {
-			this.addSummaryWorksheet(company, sessionData, savedReportSummary, workbook);
+		for (ChartInfo savedChart : report.getSavedCharts()) {
+			this.addSummaryWorksheet(company, sessionData, savedChart, workbook);
 		}
 		// the default summary
-		ReportSummaryInfo reportSummary = report.getReportSummary();
-		Set<ReportSummaryAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
-		Set<ReportSummaryGroupingInfo> groupings = reportSummary.getGroupings();
+		ChartInfo reportSummary = report.getChart();
+		Set<ChartAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
+		Set<ChartGroupingInfo> groupings = reportSummary.getGroupings();
 		if ((groupings.size() > 0) || (aggregateFunctions.size() > 0)) {
 			this.addSummaryWorksheet(company, sessionData, reportSummary, workbook);
 		}
@@ -267,10 +267,10 @@ public final class ReportDownloader extends HttpServlet {
 	 * Add a worksheet to the report for the specified workbook
 	 */
 	private void addSummaryWorksheet(CompanyInfo company, SessionDataInfo sessionData,
-			ReportSummaryInfo reportSummary, HSSFWorkbook workbook) throws SQLException,
+			ChartInfo reportSummary, HSSFWorkbook workbook) throws SQLException,
 			CantDoThatException {
-		ReportSummaryDataInfo reportSummaryData = this.databaseDefn.getDataManagement()
-				.getReportSummaryData(company, reportSummary, sessionData.getReportFilterValues(),
+		ChartDataInfo reportSummaryData = this.databaseDefn.getDataManagement()
+				.getChartData(company, reportSummary, sessionData.getReportFilterValues(),
 						false);
 		if (reportSummaryData == null) {
 			return;
@@ -304,9 +304,9 @@ public final class ReportDownloader extends HttpServlet {
 		HSSFFont font = workbook.createFont();
 		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		boldCellStyle.setFont(font);
-		Set<ReportSummaryAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
-		Set<ReportSummaryGroupingInfo> groupings = reportSummary.getGroupings();
-		for (ReportSummaryGroupingInfo grouping : groupings) {
+		Set<ChartAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
+		Set<ChartGroupingInfo> groupings = reportSummary.getGroupings();
+		for (ChartGroupingInfo grouping : groupings) {
 			BaseField groupingBaseField = grouping.getGroupingReportField().getBaseField();
 			if (groupingBaseField instanceof RelationField) {
 				fieldValue = groupingBaseField.getTableContainingField() + ": "
@@ -319,25 +319,25 @@ public final class ReportDownloader extends HttpServlet {
 			cell.setCellStyle(boldCellStyle);
 			columnNum++;
 		}
-		for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
+		for (ChartAggregateInfo aggregateFunction : aggregateFunctions) {
 			fieldValue = aggregateFunction.toString();
 			cell = row.createCell(columnNum);
 			cell.setCellValue(new HSSFRichTextString(fieldValue));
 			cell.setCellStyle(boldCellStyle);
 			columnNum++;
 		}
-		List<ReportSummaryDataRowInfo> reportSummaryDataRows = reportSummaryData
-				.getReportSummaryDataRows();
+		List<ChartDataRowInfo> reportSummaryDataRows = reportSummaryData
+				.getChartDataRows();
 		rowNum++;
-		for (ReportSummaryDataRowInfo summaryDataRow : reportSummaryDataRows) {
+		for (ChartDataRowInfo summaryDataRow : reportSummaryDataRows) {
 			row = summarySheet.createRow(rowNum);
 			columnNum = 0;
-			for (ReportSummaryGroupingInfo grouping : groupings) {
+			for (ChartGroupingInfo grouping : groupings) {
 				fieldValue = summaryDataRow.getGroupingValue(grouping);
 				row.createCell(columnNum).setCellValue(new HSSFRichTextString(fieldValue));
 				columnNum++;
 			}
-			for (ReportSummaryAggregateInfo aggregateFunction : aggregateFunctions) {
+			for (ChartAggregateInfo aggregateFunction : aggregateFunctions) {
 				fieldValue = summaryDataRow.getAggregateValue(aggregateFunction).toString();
 				row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC).setCellValue(
 						new HSSFRichTextString(fieldValue));

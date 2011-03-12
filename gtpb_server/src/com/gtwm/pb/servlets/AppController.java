@@ -438,38 +438,38 @@ public final class AppController extends VelocityViewServlet {
 				case REMOVE_JOIN_FROM_REPORT:
 					ServletSchemaMethods.removeJoinFromReport(sessionData, request, databaseDefn);
 					break;
-				case ADD_GROUPING_TO_SUMMARY_REPORT:
+				case ADD_GROUPING_TO_CHART:
 					ServletSchemaMethods.addGroupingToSummaryReport(sessionData, request,
 							databaseDefn);
 					break;
-				case REMOVE_GROUPING_FROM_SUMMARY_REPORT:
+				case REMOVE_GROUPING_FROM_CHART:
 					ServletSchemaMethods.removeGroupingFromSummaryReport(sessionData, request,
 							databaseDefn);
 					break;
-				case ADD_FUNCTION_TO_SUMMARY_REPORT:
+				case ADD_FUNCTION_TO_CHART:
 					ServletSchemaMethods.addFunctionToSummaryReport(sessionData, request,
 							databaseDefn);
 					break;
-				case REMOVE_FUNCTION_FROM_SUMMARY_REPORT:
+				case REMOVE_FUNCTION_FROM_CHART:
 					ServletSchemaMethods.removeFunctionFromSummaryReport(sessionData, request,
 							databaseDefn);
 					break;
-				case SET_SUMMARY_FILTER:
+				case SET_CHART_FILTER:
 					ServletSchemaMethods.setSummaryReportFilter(sessionData, request, databaseDefn);
 					break;
-				case SET_SUMMARY_FILTER_FIELD:
+				case SET_CHART_FILTER_FIELD:
 					ServletSchemaMethods.setSummaryReportFilterField(sessionData, request, databaseDefn);
 					break;
-				case SET_SUMMARY_RANGE:
+				case SET_CHART_RANGE:
 					ServletSchemaMethods.setSummaryRange(sessionData, request, databaseDefn);
 					break;
-				case SAVE_REPORT_SUMMARY:
+				case SAVE_CHART:
 					ServletSchemaMethods.saveSummaryReport(sessionData, request, databaseDefn);
 					break;
-				case REMOVE_REPORT_SUMMARY:
+				case REMOVE_CHART:
 					ServletSchemaMethods.removeSummaryReport(sessionData, request, databaseDefn);
 					break;
-				case SET_DASHBOARD_SUMMARY_STATE:
+				case SET_DASHBOARD_CHART_STATE:
 					ServletDashboardMethods.setDashboardSummaryState(sessionData, request,
 							databaseDefn);
 					break;

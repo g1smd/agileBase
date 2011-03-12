@@ -149,8 +149,8 @@ public interface DataManagementInfo {
 	 * @return The report summary data, or null if the summary isn't valid, e.g.
 	 *         doesn't contain an aggregate function
 	 */
-	public ReportSummaryDataInfo getReportSummaryData(CompanyInfo company,
-			ReportSummaryInfo reportSummaryDefn, Map<BaseField, String> reportFilterValues,
+	public ChartDataInfo getChartData(CompanyInfo company,
+			ChartInfo reportSummaryDefn, Map<BaseField, String> reportFilterValues,
 			boolean alwaysUseCache) throws SQLException, CantDoThatException;
 
 	/**

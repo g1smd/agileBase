@@ -17,13 +17,13 @@
 ##
 ## This template displays a single chart. It expects these variables to be defined:
 ## - $report
-## - $reportSummary
-## - $reportSummaryRows
+## - $chart
+## - $chartRows
 #set($mathTool = $viewTools.getMathTool())
-#set($chart_id = "chart_$reportSummary.getId()")
-#set($groupings = $reportSummary.getGroupings())
-#set($aggregateFunctions = $reportSummary.getAggregateFunctions())
-#if($reportSummary.equals($report.getReportSummary()))
+#set($chart_id = "chart_$chart.getId()")
+#set($groupings = $chart.getGroupings())
+#set($aggregateFunctions = $chart.getAggregateFunctions())
+#if($chart.equals($report.getChart()))
   #set($chart_classes="default_chart")
 #else
   #set($chart_classes="summary_chart")
@@ -44,7 +44,7 @@
 	#end
   #end
 #end
-#if($reportSummaryRows.size() == 1)
+#if($chartRows.size() == 1)
   #set($dateAxis = false)
 #end	
 #if($dateAxis)
@@ -69,15 +69,15 @@
 #end
 ## Work out if we can display data as a pie chart
 #set($pieChart = false)
-#if((!$dateAxis) && ($reportSummaryRows.size() > 1) && ($reportSummaryRows.size() < 5) && ($aggregateFunctions.size() == 1))
+#if((!$dateAxis) && ($chartRows.size() > 1) && ($chartRows.size() < 5) && ($aggregateFunctions.size() == 1))
   #set($pieChart = true)
 #end
-#if($reportSummaryRows.size() > 0)
+#if($chartRows.size() > 0)
 #if((!$dateAxis) && (!$pieChart))
   ## we need to create category labels
   #set($xAxisCategories = [])
   #set($maxXAxisChars = 5)
-  #foreach($summaryRow in $reportSummaryRows)
+  #foreach($summaryRow in $chartRows)
     #set($xAxisCategory = "")
     #foreach($grouping in $groupings) 
 	  #if($grouping.equals($groupings.first()))
@@ -99,7 +99,7 @@
   #set($seriesName = $viewTools.escape("$aggregateFunction").toLowerCase())
   ## Add grand total to series
   #if(($aggregateFunction.getAggregateFunction() == "SUM") || ($aggregateFunction.isCountFunction()))
-	#set($grandTotal = "$mathTool.roundTo(2,$reportSummaryData.getGrandTotal($aggregateFunction))")
+	#set($grandTotal = "$mathTool.roundTo(2,$chartData.getGrandTotal($aggregateFunction))")
 	#if($grandTotal.endsWith(".00"))
 	  #set($endPos = $grandTotal.length() - 3)
 	  #set($grandTotal = $grandTotal.substring(0, $endPos))
@@ -112,7 +112,7 @@
   #set($seriesString = "$seriesString { name:'$seriesName', data: ")
   #set($seriesData = [])
   #if($dateAxis) ## Time series chart
-    #foreach($summaryRow in $reportSummaryRows)
+    #foreach($summaryRow in $chartRows)
 	  #set($day = 1)
 	  #set($month = 1)
 	  #set($year = 0)
@@ -142,7 +142,7 @@
     #end
   #elseif($pieChart)
 	#set($maxLegendChars = 5)
-    #foreach($summaryRow in $reportSummaryRows)
+    #foreach($summaryRow in $chartRows)
 	  #set($point = [])
 	  #set($wedgeName = "")
 	  #foreach($grouping in $groupings)
@@ -160,7 +160,7 @@
 	  #set($success = $seriesData.add($point))
     #end
   #else ## Column / bar chart
-    #foreach($summaryRow in $reportSummaryRows)
+    #foreach($summaryRow in $chartRows)
 	  #set($success = $seriesData.add($summaryRow.getAggregateValue($aggregateFunction)))
     #end
   #end
@@ -191,13 +191,13 @@
 	##set($pieMidX = $height / 2)
 	##set($pieMidY = $pieMidX)
   #end
-  #if($reportSummary.equals($report.getReportSummary())) ## if default chart in pane 3
+  #if($chart.equals($report.getChart())) ## if default chart in pane 3
 	#set($margin = "[10, 50, 60, $xAxisMargin]") ## top, right, bottom, left
 	#set($title = "")
   #else ## named chart in pane 3
 	#set($margin = "[50, 50, 60, $xAxisMargin]")
 	#set($height = $height + 40)
-    #set($title = $reportSummary.getTitle())
+    #set($title = $chart.getTitle())
   #end
   #set($subtitle = "")
   #set($export_filename = $viewTools.cleanString($title))

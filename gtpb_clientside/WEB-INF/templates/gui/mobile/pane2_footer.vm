@@ -27,7 +27,7 @@
 ## Report
 <button #if($mobile_pane2_selection == "report") disabled #end onclick="document.footerform.customstringvalue.value='report'; submit();">report</button> 
 ## Summary
-#set($summary = $report.getReportSummary())
+#set($summary = $report.getChart())
 #set($summary_enabled = false)
 ## With tag clouds there's always a summary
 ###if(($summary.getGroupingReportFields().size() > 0) || ($summary.getAggregateFunctions().size() > 0))

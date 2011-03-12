@@ -52,8 +52,8 @@ import com.gtwm.pb.model.interfaces.BaseFieldDescriptorOptionInfo;
 import com.gtwm.pb.model.interfaces.TextFieldDescriptorOptionInfo;
 import com.gtwm.pb.model.interfaces.BooleanFieldDescriptorOptionInfo;
 import com.gtwm.pb.model.interfaces.ListFieldDescriptorOptionInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
+import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
+import com.gtwm.pb.model.interfaces.ChartDataInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -62,8 +62,8 @@ import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ReportFilterInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
+import com.gtwm.pb.model.interfaces.ChartInfo;
+import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
 import com.gtwm.pb.model.interfaces.DataManagementInfo;
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
@@ -1690,14 +1690,14 @@ public final class DatabaseDefn implements DatabaseInfo {
 						}
 					}
 				}
-				ReportSummaryInfo reportSummary = testReport.getReportSummary();
-				for (ReportSummaryGroupingInfo grouping : reportSummary.getGroupings()) {
+				ChartInfo reportSummary = testReport.getChart();
+				for (ChartGroupingInfo grouping : reportSummary.getGroupings()) {
 					BaseField groupingBaseField = grouping.getGroupingReportField().getBaseField();
 					if (groupingBaseField.equals(field)) {
 						reportsUsedIn.add(testReport);
 					}
 				}
-				for (ReportSummaryAggregateInfo summaryAggregate : reportSummary
+				for (ChartAggregateInfo summaryAggregate : reportSummary
 						.getAggregateFunctions()) {
 					BaseField aggregateBaseField = summaryAggregate.getReportField().getBaseField();
 					if (aggregateBaseField.equals(field)) {
@@ -2147,10 +2147,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 			HttpServletRequest request) throws CantDoThatException, CodingErrorException,
 			ObjectNotFoundException {
 		// check the field isn't used in one of the report's own summaries
-		for (ReportSummaryInfo reportSummary : reportField.getParentReport()
-				.getSavedReportSummaries()) {
-			Set<ReportSummaryAggregateInfo> aggFns = reportSummary.getAggregateFunctions();
-			for (ReportSummaryAggregateInfo aggFn : aggFns) {
+		for (ChartInfo reportSummary : reportField.getParentReport()
+				.getSavedCharts()) {
+			Set<ChartAggregateInfo> aggFns = reportSummary.getAggregateFunctions();
+			for (ChartAggregateInfo aggFn : aggFns) {
 				ReportFieldInfo aggReportField = aggFn.getReportField();
 				if (aggReportField.equals(reportField)) {
 					throw new CantDoThatException("Please remove the report summary calculation "
@@ -2165,7 +2165,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 					}
 				}
 			}
-			for (ReportSummaryGroupingInfo grouping : reportSummary.getGroupings()) {
+			for (ChartGroupingInfo grouping : reportSummary.getGroupings()) {
 				if (grouping.getGroupingReportField().equals(reportField)) {
 					throw new CantDoThatException("Please remove the report summary grouping on "
 							+ reportField + " before removing the report field");
@@ -2268,18 +2268,18 @@ public final class DatabaseDefn implements DatabaseInfo {
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
-		ReportSummaryInfo reportSummary = report.getReportSummary();
+		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
-		reportSummary.setSummaryFilter(summaryFilter);
+		reportSummary.setChartFilter(summaryFilter);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
-		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report.getReportSummary(), blankFilterValues, false);
+		ChartDataInfo reportSummaryData = this.getDataManagement().getChartData(
+				company, report.getChart(), blankFilterValues, false);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.SET_SUMMARY_FILTER,
+		usageLogger.logReportSchemaChange(user, report, AppAction.SET_CHART_FILTER,
 				"summary filter: " + summaryFilter);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
@@ -2291,18 +2291,18 @@ public final class DatabaseDefn implements DatabaseInfo {
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
-		ReportSummaryInfo reportSummary = report.getReportSummary();
+		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
 		reportSummary.setFilterReportField(reportField);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
-		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report.getReportSummary(), blankFilterValues, false);
+		ChartDataInfo reportSummaryData = this.getDataManagement().getChartData(
+				company, report.getChart(), blankFilterValues, false);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.SET_SUMMARY_FILTER_FIELD,
+		usageLogger.logReportSchemaChange(user, report, AppAction.SET_CHART_FILTER_FIELD,
 				"report field: " + reportField);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
@@ -2314,7 +2314,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
-		ReportSummaryInfo reportSummary = report.getReportSummary();
+		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
 		reportSummary.setRangePercent(rangePercent);
 		reportSummary.setRangeDirection(rangeDirection);
@@ -2322,8 +2322,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
-		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report.getReportSummary(), blankFilterValues, false);
+		ChartDataInfo reportSummaryData = this.getDataManagement().getChartData(
+				company, report.getChart(), blankFilterValues, false);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		String logString = "";
@@ -2335,7 +2335,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			}
 		}
 		logString += rangePercent + "%";
-		usageLogger.logReportSchemaChange(user, report, AppAction.SET_SUMMARY_RANGE, logString);
+		usageLogger.logReportSchemaChange(user, report, AppAction.SET_CHART_RANGE, logString);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
@@ -2348,18 +2348,18 @@ public final class DatabaseDefn implements DatabaseInfo {
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
-		ReportSummaryInfo reportSummary = report.getReportSummary();
+		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
 		reportSummary.addGrouping(groupingReportField, groupingModifer);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
-		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report.getReportSummary(), blankFilterValues, false);
+		ChartDataInfo reportSummaryData = this.getDataManagement().getChartData(
+				company, report.getChart(), blankFilterValues, false);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.ADD_GROUPING_TO_SUMMARY_REPORT,
+		usageLogger.logReportSchemaChange(user, report, AppAction.ADD_GROUPING_TO_CHART,
 				"field: " + groupingReportField);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
@@ -2372,45 +2372,45 @@ public final class DatabaseDefn implements DatabaseInfo {
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
-		ReportSummaryInfo reportSummary = report.getReportSummary();
+		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
-		ReportSummaryGroupingInfo removedGrouping = reportSummary
+		ChartGroupingInfo removedGrouping = reportSummary
 				.removeGrouping(groupingReportField);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
-		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report.getReportSummary(), blankFilterValues, false);
+		ChartDataInfo reportSummaryData = this.getDataManagement().getChartData(
+				company, report.getChart(), blankFilterValues, false);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		usageLogger.logReportSchemaChange(user, report,
-				AppAction.REMOVE_GROUPING_FROM_SUMMARY_REPORT, "field: " + groupingReportField);
+				AppAction.REMOVE_GROUPING_FROM_CHART, "field: " + groupingReportField);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
 	public synchronized void addFunctionToSummaryReport(HttpServletRequest request,
-			ReportSummaryAggregateInfo addedAggFn) throws DisallowedException, CantDoThatException,
+			ChartAggregateInfo addedAggFn) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException, SQLException {
 		BaseReportInfo report = addedAggFn.getReportField().getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
-		ReportSummaryInfo reportSummary = report.getReportSummary();
+		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
 		reportSummary.addFunction(addedAggFn);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.ADD_FUNCTION_TO_SUMMARY_REPORT,
+		usageLogger.logReportSchemaChange(user, report, AppAction.ADD_FUNCTION_TO_CHART,
 				"function: " + addedAggFn);
 		UsageLogger.startLoggingThread(usageLogger);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
-		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report.getReportSummary(), blankFilterValues, false);
+		ChartDataInfo reportSummaryData = this.getDataManagement().getChartData(
+				company, report.getChart(), blankFilterValues, false);
 	}
 
 	public synchronized void removeFunctionFromSummaryReport(HttpServletRequest request,
@@ -2420,21 +2420,21 @@ public final class DatabaseDefn implements DatabaseInfo {
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
-		ReportSummaryInfo reportSummary = report.getReportSummary();
+		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
-		ReportSummaryAggregateInfo removedFunction = reportSummary
+		ChartAggregateInfo removedFunction = reportSummary
 				.removeFunction(internalAggregateName);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Map<BaseField, String> blankFilterValues = new HashMap<BaseField, String>();
-		ReportSummaryDataInfo reportSummaryData = this.getDataManagement().getReportSummaryData(
-				company, report.getReportSummary(), blankFilterValues, false);
+		ChartDataInfo reportSummaryData = this.getDataManagement().getChartData(
+				company, report.getChart(), blankFilterValues, false);
 		HibernateUtil.currentSession().delete(removedFunction);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		usageLogger.logReportSchemaChange(user, report,
-				AppAction.REMOVE_FUNCTION_FROM_SUMMARY_REPORT, "function: " + removedFunction);
+				AppAction.REMOVE_FUNCTION_FROM_CHART, "function: " + removedFunction);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
@@ -2445,32 +2445,32 @@ public final class DatabaseDefn implements DatabaseInfo {
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
-		ReportSummaryInfo templateSummary = report.getReportSummary();
-		Set<ReportSummaryAggregateInfo> aggregates = templateSummary.getAggregateFunctions();
-		Set<ReportSummaryGroupingInfo> groupings = templateSummary.getGroupings();
+		ChartInfo templateSummary = report.getChart();
+		Set<ChartAggregateInfo> aggregates = templateSummary.getAggregateFunctions();
+		Set<ChartGroupingInfo> groupings = templateSummary.getGroupings();
 		if (aggregates.size() == 0) {
 			throw new CantDoThatException(
 					"To save a report summary, it must contain one or more functions");
 		}
 		HibernateUtil.activateObject(templateSummary);
-		ReportSummaryInfo savedSummary = new ReportSummaryDefn(report, summaryTitle, true);
+		ChartInfo savedSummary = new ChartDefn(report, summaryTitle, true);
 		HibernateUtil.currentSession().save(savedSummary);
 		// Move aggregates from template summary to new summary
-		for (ReportSummaryAggregateInfo aggregate : aggregates) {
+		for (ChartAggregateInfo aggregate : aggregates) {
 			savedSummary.addFunction(aggregate);
-			ReportSummaryAggregateInfo removedFunction = templateSummary.removeFunction(aggregate
+			ChartAggregateInfo removedFunction = templateSummary.removeFunction(aggregate
 					.getInternalAggregateName());
 		}
 		// Move groupings from template summary to new summary
-		for (ReportSummaryGroupingInfo grouping : groupings) {
+		for (ChartGroupingInfo grouping : groupings) {
 			savedSummary.addGrouping(grouping.getGroupingReportField(),
 					grouping.getGroupingModifier());
-			ReportSummaryGroupingInfo removedGrouping = templateSummary.removeGrouping(grouping
+			ChartGroupingInfo removedGrouping = templateSummary.removeGrouping(grouping
 					.getGroupingReportField());
 		}
 		// Any date range filter
-		savedSummary.setSummaryFilter(templateSummary.getSummaryFilter());
-		templateSummary.setSummaryFilter(null);
+		savedSummary.setChartFilter(templateSummary.getChartFilter());
+		templateSummary.setChartFilter(null);
 		savedSummary.setFilterReportField(templateSummary.getFilterReportField());
 		templateSummary.setFilterReportField(null);
 		// Range (row limit)
@@ -2479,18 +2479,18 @@ public final class DatabaseDefn implements DatabaseInfo {
 		savedSummary.setRangePercent(templateSummary.getRangePercent());
 		templateSummary.setRangePercent(100);
 		// Summary title
-		report.saveReportSummary(savedSummary);
+		report.saveChart(savedSummary);
 		templateSummary.setTitle("");
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.SAVE_REPORT_SUMMARY, "title: "
+		usageLogger.logReportSchemaChange(user, report, AppAction.SAVE_CHART, "title: "
 				+ summaryTitle);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
 	public synchronized void removeSummaryReport(HttpServletRequest request,
-			ReportSummaryInfo reportSummary) throws DisallowedException, CantDoThatException,
+			ChartInfo reportSummary) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, reportSummary.getReport().getParentTable()))) {
@@ -2498,20 +2498,20 @@ public final class DatabaseDefn implements DatabaseInfo {
 					.getParentTable());
 		}
 		BaseReportInfo report = reportSummary.getReport();
-		if (reportSummary.equals(report.getReportSummary())) {
+		if (reportSummary.equals(report.getChart())) {
 			throw new CantDoThatException("The default report summary can't be removed");
 		}
 		HibernateUtil.activateObject(report);
-		report.removeSavedReportSummary(reportSummary);
+		report.removeSavedChart(reportSummary);
 		// Move the saved summary definition back to the default summary
-		ReportSummaryInfo oldDefaultReportSummary = report.getReportSummary();
-		((BaseReportDefn) report).setReportSummary(reportSummary);
-		report.removeSavedReportSummary(oldDefaultReportSummary);
-		HibernateUtil.currentSession().delete(oldDefaultReportSummary);
+		ChartInfo oldDefaultChart = report.getChart();
+		((BaseReportDefn) report).setChart(reportSummary);
+		report.removeSavedChart(oldDefaultChart);
+		HibernateUtil.currentSession().delete(oldDefaultChart);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.REMOVE_REPORT_SUMMARY, "title: "
+		usageLogger.logReportSchemaChange(user, report, AppAction.REMOVE_CHART, "title: "
 				+ reportSummary.getTitle());
 		UsageLogger.startLoggingThread(usageLogger);
 	}

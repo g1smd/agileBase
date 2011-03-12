@@ -23,9 +23,9 @@ import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
+import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
+import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
+import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.model.interfaces.RoleTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
@@ -188,24 +188,24 @@ public final class AuthManager implements AuthManagerInfo {
 				logger.info("......Report joins: " + simpleReport.getJoins());
 				logger.info("......Report sorts: " + simpleReport.getSorts());
 			}
-			ReportSummaryInfo reportSummary = report.getReportSummary();
+			ChartInfo reportSummary = report.getChart();
 			logger.info("......Report summary: " + reportSummary);
-			for (ReportSummaryGroupingInfo grouping : reportSummary.getGroupings()) {
+			for (ChartGroupingInfo grouping : reportSummary.getGroupings()) {
 				logger.info(".........Grouping details: " + grouping + " - "
 						+ grouping.getCreationTime() + " " + grouping.getGroupingModifier() + " "
 						+ grouping.getGroupingReportField());
 			}
-			for (ReportSummaryAggregateInfo aggregate : reportSummary.getAggregateFunctions()) {
+			for (ChartAggregateInfo aggregate : reportSummary.getAggregateFunctions()) {
 				logger.info(".........Aggregate details: " + aggregate);
 			}
-			for (ReportSummaryInfo savedReportSummary : report.getSavedReportSummaries()) {
-				logger.info("......Report summary: " + savedReportSummary);
-				for (ReportSummaryGroupingInfo grouping : savedReportSummary.getGroupings()) {
+			for (ChartInfo savedChart : report.getSavedCharts()) {
+				logger.info("......Report summary: " + savedChart);
+				for (ChartGroupingInfo grouping : savedChart.getGroupings()) {
 					logger.info(".........Grouping details: " + grouping + " - "
 							+ grouping.getCreationTime() + " " + grouping.getGroupingModifier()
 							+ " " + grouping.getGroupingReportField());
 				}
-				for (ReportSummaryAggregateInfo aggregate : savedReportSummary
+				for (ChartAggregateInfo aggregate : savedChart
 						.getAggregateFunctions()) {
 					logger.info(".........Aggregate details: " + aggregate);
 				}

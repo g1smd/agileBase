@@ -23,10 +23,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #if(!$report)
   #set($report = $sessionData.getReport())
 #end
-#set($reportSummary = $report.getReportSummary())
-#set($defaultReportSummary = $reportSummary)
-#set($groupings = $reportSummary.getGroupings())
-#set($aggregateFunctions = $reportSummary.getAggregateFunctions())
+#set($chart = $report.getChart())
+#set($defaultChart = $chart)
+#set($groupings = $chart.getGroupings())
+#set($aggregateFunctions = $chart.getAggregateFunctions())
 #set($numCols = 1 + $groupings.size() + $aggregateFunctions.size())
 #set($loggedInUserAllowedToEdit = $view.loggedInUserAllowedTo("EDIT_TABLE_DATA", $report.getParentTable()))
 #set($showManageUi = false)
@@ -42,20 +42,20 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 ## Saved charts
 #set($savedSummaries = $report.getSavedReportSummaries())
 <div id="saved_charts" #if($savedSummaries.size() > 2) class="two_cols" #end>
-#foreach($savedReportSummary in $savedSummaries)
-  #if(!$savedReportSummary.equals($defaultReportSummary))
-    #set($reportSummary = $savedReportSummary)
-    #set($reportSummaryData = $view.getReportSummaryData($reportSummary))
-    #set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
+#foreach($savedChart in $savedSummaries)
+  #if(!$savedChart.equals($defaultChart))
+    #set($chart = $savedChart)
+    #set($chartData = $view.getChartData($chart))
+    #set($chartRows = $chartData.getChartDataRows())
     #parse('gui/reports_and_tables/tabs/summary_chart.vm')
   #end
 #end
 </div>
 ## Reset to the default report summary - the chart being edited
-#set($reportSummary = "")
-#set($reportSummary = $report.getReportSummary())
-#set($groupings = $reportSummary.getGroupings())
-#set($aggregateFunctions = $reportSummary.getAggregateFunctions())
+#set($chart = "")
+#set($chart = $report.getChart())
+#set($groupings = $chart.getGroupings())
+#set($aggregateFunctions = $chart.getAggregateFunctions())
 #if($showManageUi)
 ## Separator
 <table id="reportData"><tr class="separator">
@@ -70,7 +70,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #if($groupings.size() > 0)
   Choose groupings: 
   #foreach($grouping in $groupings)
-  <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_grouping_from_summary_report=true&internalfieldname=$grouping.getGroupingReportField().getInternalFieldName()">
+  <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_grouping_from_chart=true&internalfieldname=$grouping.getGroupingReportField().getInternalFieldName()">
     $grouping
 	#set($groupingModifier = false)
 	#set($groupingModifier = $grouping.getGroupingModifier())
@@ -111,7 +111,7 @@ function fSubmitFunction() {
 <a href="#" onclick="fShowAddGroup();" id="addGroupLink">add...</a>
 <div id="addGroup" style="display:none"><br>
   <input type="hidden" name="return" value="$return_template" />
-  <input type="hidden" name="add_grouping_to_summary_report" value="1" />
+  <input type="hidden" name="add_grouping_to_chart" value="1" />
   						            <select name="internalfieldname" id="groupselect" onchange="fSubmitGroup();">
 										  <option value="" selected>-- please choose one --</option>
 							              #foreach($reportField in $report.getReportFields())
@@ -146,7 +146,7 @@ function fSubmitFunction() {
 #if($aggregateFunctions.size() >0)
   Choose functions: 
   #foreach($aggregateFunction in $aggregateFunctions)
-    <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_function_from_summary_report=true&internalaggregatename=$aggregateFunction.getInternalAggregateName()">
+    <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_function_from_chart=true&internalaggregatename=$aggregateFunction.getInternalAggregateName()">
       $aggregateFunction
     </a></span>&nbsp;
   #end
@@ -156,10 +156,10 @@ function fSubmitFunction() {
 <a href="#" onclick="fShowAddAgg();" id="addAggLink">add...</a>
 <div id="addAgg" style="display:none"><br>
 					            	<input type="hidden" name="return" value="$return_template" />
-						            <input type="hidden" name="add_function_to_summary_report" value="1" />
+						            <input type="hidden" name="add_function_to_chart" value="1" />
 						            <select name="function" id="aggregatefunction" onchange="fSubmitFunction();">
 										<option value="" selected>-- please choose a function --</option>
-						              	#foreach($function in $reportSummary.getPossibleFunctionTypes())
+						              	#foreach($function in $chart.getPossibleFunctionTypes())
 							              	  <option value="$function.toString()">$function.getLabel()</option>
 							            #end
 						            </select> 
@@ -185,10 +185,10 @@ function fSubmitFunction() {
 #end
 #if($dateReportFields.size() > 0)
   Date range: 
-#set($currentFilterReportField = $defaultReportSummary.getFilterReportField())
+#set($currentFilterReportField = $defaultChart.getFilterReportField())
 <form name="setfilterfield" method="post" action="AppController.servlet">
   <input type="hidden" name="return" value="$return_template" />
-  <input type="hidden" name="set_summary_filter_field" value="1" />
+  <input type="hidden" name="set_chart_filter_field" value="1" />
   <select name="internalfieldname" onchange="document.setfilterfield.submit();">
 	<option value="">-- please choose a field --</option>
 	#foreach($dateReportField in $dateReportFields)
@@ -196,24 +196,24 @@ function fSubmitFunction() {
 	#end
   </select>
 </form> 
-#set($currentSummaryFilter = $defaultReportSummary.getSummaryFilter())
+#set($currentChartFilter = $defaultChart.getChartFilter())
 <form name="setfilter" method="post" action="AppController.servlet">
   <input type="hidden" name="return" value="$return_template" />
-  <input type="hidden" name="set_summary_filter" value="1" />
+  <input type="hidden" name="set_chart_filter" value="1" />
   <select name="summaryfilter" onchange="document.setfilter.submit();">
 	<option value="">-- please choose a filter --</option>
-    <option value="LAST_30_DAYS" #if($currentSummaryFilter == "LAST_30_DAYS") selected #end>Last 30 days</option>
-    <option value="LAST_90_DAYS" #if($currentSummaryFilter == "LAST_90_DAYS") selected #end>Last 90 days</option>
-    <option value="THIS_YEAR" #if($currentSummaryFilter == "THIS_YEAR") selected #end>This year</option>
-    <option value="YEAR_ON_YEAR" #if($currentSummaryFilter == "YEAR_ON_YEAR") selected #end>Year on year</option>
+    <option value="LAST_30_DAYS" #if($currentChartFilter == "LAST_30_DAYS") selected #end>Last 30 days</option>
+    <option value="LAST_90_DAYS" #if($currentChartFilter == "LAST_90_DAYS") selected #end>Last 90 days</option>
+    <option value="THIS_YEAR" #if($currentChartFilter == "THIS_YEAR") selected #end>This year</option>
+    <option value="YEAR_ON_YEAR" #if($currentChartFilter == "YEAR_ON_YEAR") selected #end>Year on year</option>
   </select>
 </form><br>
 #end
 <form name="setlimit" method="post" action="AppController.servlet">
-  #set($rangeDirection = $defaultReportSummary.getRangeDirection())
-  #set($rangePercent = $defaultReportSummary.getRangePercent())
+  #set($rangeDirection = $defaultChart.getRangeDirection())
+  #set($rangePercent = $defaultChart.getRangePercent())
   <input type="hidden" name="return" value="$return_template" />
-  <input type="hidden" name="set_summary_range" value="1" />
+  <input type="hidden" name="set_chart_range" value="1" />
   Show 
   <input type="radio" name="rangedirection" value="true" #if($rangeDirection) checked #end> highest 
   <input type="radio" name="rangedirection" value="false" #if(!$rangeDirection) checked #end> lowest 
@@ -222,17 +222,17 @@ function fSubmitFunction() {
 </form><br>
 <form name="savechart">
 	Choose title: 
-	#set($title = $defaultReportSummary.getTitle())
+	#set($title = $defaultChart.getTitle())
 	<input type="text" name="summarytitle" #if($title && $title != "") value="$title" #end />
 	<input type="hidden" name="return" value="$return_template" />
-	<input type="hidden" name="save_report_summary" value="true" />
+	<input type="hidden" name="save_chart" value="true" />
 	<input type="submit" value="save chart" />
 </form>
 </div> ## End chart_controls div
 #end
 ## Display the default chart
-#set($reportSummaryData = $view.getReportSummaryData($reportSummary))
-#set($reportSummaryRows = $reportSummaryData.getReportSummaryDataRows())
+#set($chartData = $view.getChartData($chart))
+#set($chartRows = $chartData.getChartDataRows())
 #parse('gui/reports_and_tables/tabs/summary_chart.vm')
 #if($mobile_device)<p>
 	#parse("gui/mobile/pane2_footer.vm")

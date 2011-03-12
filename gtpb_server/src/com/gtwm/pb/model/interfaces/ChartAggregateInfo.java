@@ -26,7 +26,7 @@ import com.gtwm.pb.util.CantDoThatException;
  * e.g sum(myTable.myNumericField). Stores a pair of items - the function and
  * the field it operates on.
  */
-public interface ReportSummaryAggregateInfo {
+public interface ChartAggregateInfo {
 
 	/**
 	 * @throws CantDoThatException

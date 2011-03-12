@@ -90,24 +90,24 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	/**
 	 * Return the current editable report summary
 	 */
-	public ReportSummaryInfo getReportSummary();
+	public ChartInfo getChart();
 
 	/**
 	 * Return a specific summary identified by ID
 	 */
-	public ReportSummaryInfo getSavedReportSummary(long summaryId) throws ObjectNotFoundException;
+	public ChartInfo getSavedChart(long chartId) throws ObjectNotFoundException;
 
 	/**
 	 * Return any additional report summaries that have been named and saved
 	 */
-	public Set<ReportSummaryInfo> getSavedReportSummaries();
+	public Set<ChartInfo> getSavedCharts();
 
 	/**
 	 * Add a new saved summary to the report
 	 */
-	public void saveReportSummary(ReportSummaryInfo reportSummary);
+	public void saveChart(ChartInfo chart);
 
-	public void removeSavedReportSummary(ReportSummaryInfo reportSummary);
+	public void removeSavedChart(ChartInfo chart);
 
 	public int getRowCount();
 

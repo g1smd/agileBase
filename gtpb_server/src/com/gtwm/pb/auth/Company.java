@@ -228,16 +228,16 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		this.dashboard = dashboard;
 	}
 
-	public void addSummaryIdForDashboard(long id) {
+	public void addChartIdForDashboard(long id) {
 		this.getSummaryIdsForDashboardDirect().add(id);
 	}
 
-	public void addSummaryIdNotForDashboard(long id) {
+	public void addChartIdNotForDashboard(long id) {
 		this.getSummaryIdsNotForDashboardDirect().add(id);
 	}
 
 	@Transient
-	public SortedSet<Long> getSummaryIdsForDashboard() {
+	public SortedSet<Long> getChartIdsForDashboard() {
 		return Collections.unmodifiableSortedSet(this.getSummaryIdsForDashboardDirect());
 	}
 
@@ -253,7 +253,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	}
 
 	@Transient
-	public SortedSet<Long> getSummaryIdsNotForDashboard() {
+	public SortedSet<Long> getChartIdsNotForDashboard() {
 		return Collections.unmodifiableSortedSet(this.getSummaryIdsNotForDashboardDirect());
 	}
 
@@ -268,11 +268,11 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		this.summaryIdsNotForDashboard = sids;
 	}
 
-	public void removeSummaryIdForDashboard(long id) {
+	public void removeChartIdForDashboard(long id) {
 		this.getSummaryIdsForDashboardDirect().remove(id);
 	}
 
-	public void removeSummaryIdNotForDashboard(long id) {
+	public void removeChartIdNotForDashboard(long id) {
 		this.getSummaryIdsNotForDashboardDirect().remove(id);
 	}
 

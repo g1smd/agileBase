@@ -41,8 +41,8 @@ import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
+import com.gtwm.pb.model.interfaces.ChartDataInfo;
+import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ModuleActionInfo;
 import com.gtwm.pb.model.interfaces.TagInfo;
@@ -63,8 +63,8 @@ import com.gtwm.pb.model.interfaces.WikiRecordDataRowInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.manageSchema.JoinType;
 import com.gtwm.pb.model.manageSchema.JoinClause;
-import com.gtwm.pb.model.manageSchema.ReportSummaryAggregateDefn;
-import com.gtwm.pb.model.manageSchema.ReportSummaryDefn;
+import com.gtwm.pb.model.manageSchema.ChartAggregateDefn;
+import com.gtwm.pb.model.manageSchema.ChartDefn;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageUsage.UsageStats;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
@@ -635,63 +635,63 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return childDataTableRows;
 	}
 
-	public ReportSummaryDataInfo getReportSummaryData() throws DisallowedException, SQLException,
+	public ChartDataInfo getChartData() throws DisallowedException, SQLException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		BaseReportInfo report = this.sessionData.getReport();
-		return this.getReportSummaryData(report.getReportSummary());
+		return this.getChartData(report.getChart());
 	}
 
-	public ReportSummaryDataInfo getReportSummaryData(ReportSummaryInfo reportSummary)
+	public ChartDataInfo getChartData(ChartInfo reportSummary)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException {
-		return this.getReportSummaryData(reportSummary, false);
+		return this.getChartData(reportSummary, false);
 	}
 
-	public ReportSummaryDataInfo getCachedReportSummaryData(ReportSummaryInfo reportSummary)
+	public ChartDataInfo getCachedChartData(ChartInfo reportSummary)
 			throws DisallowedException, ObjectNotFoundException, CodingErrorException,
 			CantDoThatException, SQLException {
-		return this.getReportSummaryData(reportSummary, true);
+		return this.getChartData(reportSummary, true);
 	}
 
-	private ReportSummaryDataInfo getReportSummaryData(ReportSummaryInfo reportSummary,
+	private ChartDataInfo getChartData(ChartInfo reportSummary,
 			boolean useCache) throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException {
 		// Check privileges for all tables from which data in the report is
 		// displayed from, throw
 		// DisallowedException if privileges not sufficient
 		this.checkReportViewPrivileges(reportSummary.getReport());
-		ReportSummaryDataInfo reportSummaryData;
+		ChartDataInfo reportSummaryData;
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
 		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues();
-		reportSummaryData = this.databaseDefn.getDataManagement().getReportSummaryData(company,
+		reportSummaryData = this.databaseDefn.getDataManagement().getChartData(company,
 				reportSummary, reportFilterValues, useCache);
 		return reportSummaryData;
 	}
 
-	public ReportSummaryDataInfo getFieldSummaryData(ReportFieldInfo reportField)
+	public ChartDataInfo getFieldSummaryData(ReportFieldInfo reportField)
 			throws DisallowedException, SQLException, CodingErrorException,
 			ObjectNotFoundException, CantDoThatException {
 		BaseReportInfo report = reportField.getParentReport();
 		this.checkReportViewPrivileges(report);
-		ReportSummaryInfo reportSummary = new ReportSummaryDefn(report, reportField.getFieldName(),
+		ChartInfo reportSummary = new ChartDefn(report, reportField.getFieldName(),
 				false);
 		BaseField field = reportField.getBaseField();
 		FieldCategory fieldCategory = field.getFieldCategory();
 		if (fieldCategory.equals(FieldCategory.NUMBER)) {
-			reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.SUM,
+			reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.SUM,
 					reportField));
-			reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.AVG,
+			reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.AVG,
 					reportField));
 		} else if (fieldCategory.equals(FieldCategory.TEXT)) {
 			if (((TextField) field).usesLookup()) {
 				reportSummary.addGrouping(reportField, null);
-				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
+				reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT,
 						report.getReportField(report.getParentTable().getPrimaryKey()
 								.getInternalFieldName())));
 			} else if (!field.getTableContainingField().equals(report.getParentTable())) {
 				reportSummary.addGrouping(reportField, null);
-				reportSummary.addFunction(new ReportSummaryAggregateDefn(AggregateFunction.COUNT,
+				reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT,
 						report.getReportField(report.getParentTable().getPrimaryKey()
 								.getInternalFieldName())));
 			}
@@ -699,7 +699,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
-		return this.databaseDefn.getDataManagement().getReportSummaryData(company, reportSummary,
+		return this.databaseDefn.getDataManagement().getChartData(company, reportSummary,
 				filters, false);
 	}
 

@@ -33,7 +33,7 @@ import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
+import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
@@ -42,7 +42,7 @@ import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportFilterInfo;
 import com.gtwm.pb.model.interfaces.ReportSortInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
+import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
@@ -58,7 +58,7 @@ import com.gtwm.pb.model.manageSchema.JoinType;
 import com.gtwm.pb.model.manageSchema.ReportCalcFieldDefn;
 import com.gtwm.pb.model.manageSchema.ReportFilterDefn;
 import com.gtwm.pb.model.manageSchema.ReportSort;
-import com.gtwm.pb.model.manageSchema.ReportSummaryAggregateDefn;
+import com.gtwm.pb.model.manageSchema.ChartAggregateDefn;
 import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
@@ -2218,17 +2218,17 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getReportSummary()
+			groupingReportField.getParentReport().getChart()
 					.removeGrouping(groupingReportField);
 			throw new CantDoThatException("summary grouping addition failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getReportSummary()
+			groupingReportField.getParentReport().getChart()
 					.removeGrouping(groupingReportField);
 			throw new CantDoThatException("summary grouping addition failed", pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getReportSummary()
+			groupingReportField.getParentReport().getChart()
 					.removeGrouping(groupingReportField);
 			throw new CantDoThatException("summary grouping addition failed", sqlex);
 		} finally {
@@ -2246,9 +2246,9 @@ public final class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' parameter is required to remove a grouping field from a report summary");
 		}
-		ReportSummaryInfo summary = report.getReportSummary();
+		ChartInfo summary = report.getChart();
 		if (summary.getGroupings().size() == 1) {
-			for (ReportSummaryAggregateInfo aggregateFunction : summary.getAggregateFunctions()) {
+			for (ChartAggregateInfo aggregateFunction : summary.getAggregateFunctions()) {
 				if (aggregateFunction.getAggregateFunction().equals(
 						AggregateFunction.CUMULATIVE_COUNT)
 						|| aggregateFunction.getAggregateFunction().equals(
@@ -2273,12 +2273,12 @@ public final class ServletSchemaMethods {
 			throw new CantDoThatException("summary grouping removal failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getReportSummary()
+			groupingReportField.getParentReport().getChart()
 					.addGrouping(groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getReportSummary()
+			groupingReportField.getParentReport().getChart()
 					.addGrouping(groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", sqlex);
 		} finally {
@@ -2306,11 +2306,11 @@ public final class ServletSchemaMethods {
 			}
 		}
 		AggregateFunction function = AggregateFunction.valueOf(functionName.toUpperCase());
-		ReportSummaryAggregateInfo addedAggFn = null;
+		ChartAggregateInfo addedAggFn = null;
 		if (secondaryFunctionReportField == null) {
-			addedAggFn = new ReportSummaryAggregateDefn(function, functionReportField);
+			addedAggFn = new ChartAggregateDefn(function, functionReportField);
 		} else {
-			addedAggFn = new ReportSummaryAggregateDefn(function, functionReportField,
+			addedAggFn = new ChartAggregateDefn(function, functionReportField,
 					secondaryFunctionReportField);
 		}
 		try {
@@ -2320,7 +2320,7 @@ public final class ServletSchemaMethods {
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
 			try {
-				functionReportField.getParentReport().getReportSummary()
+				functionReportField.getParentReport().getChart()
 						.removeFunction(addedAggFn.getInternalAggregateName());
 			} catch (ObjectNotFoundException onfex) {
 				logger.error("Unable to rollback function addition - maybe it didn't get added");
@@ -2329,7 +2329,7 @@ public final class ServletSchemaMethods {
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			try {
-				functionReportField.getParentReport().getReportSummary()
+				functionReportField.getParentReport().getChart()
 						.removeFunction(addedAggFn.getInternalAggregateName());
 			} catch (ObjectNotFoundException onfex) {
 				logger.error("Unable to rollback function addition - maybe it didn't get added");
@@ -2338,7 +2338,7 @@ public final class ServletSchemaMethods {
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
 			try {
-				functionReportField.getParentReport().getReportSummary()
+				functionReportField.getParentReport().getChart()
 						.removeFunction(addedAggFn.getInternalAggregateName());
 			} catch (ObjectNotFoundException onfex) {
 				logger.error("Unable to rollback function addition - maybe it didn't get added");
@@ -2360,7 +2360,7 @@ public final class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalaggregatename' parameter is required to remove a function field from a report summary");
 		}
-		ReportSummaryAggregateInfo aggregateToRemove = report.getReportSummary()
+		ChartAggregateInfo aggregateToRemove = report.getChart()
 				.getAggregateFunctionByInternalName(internalAggregateName);
 		AggregateFunction aggFunctionType = aggregateToRemove.getAggregateFunction();
 		ReportFieldInfo functionReportField = aggregateToRemove.getReportField();
@@ -2371,15 +2371,15 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			functionReportField.getParentReport().getReportSummary().addFunction(aggregateToRemove);
+			functionReportField.getParentReport().getChart().addFunction(aggregateToRemove);
 			throw new CantDoThatException("summary function removal failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			functionReportField.getParentReport().getReportSummary().addFunction(aggregateToRemove);
+			functionReportField.getParentReport().getChart().addFunction(aggregateToRemove);
 			throw new CantDoThatException("summary function removal failed", pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
-			functionReportField.getParentReport().getReportSummary().addFunction(aggregateToRemove);
+			functionReportField.getParentReport().getChart().addFunction(aggregateToRemove);
 			throw new CantDoThatException("summary function removal failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
@@ -2431,8 +2431,8 @@ public final class ServletSchemaMethods {
 		long summaryId = Long.valueOf(summaryIdString);
 		try {
 			HibernateUtil.startHibernateTransaction();
-			ReportSummaryInfo summaryToRemove = null;
-			SUMMARY_LOOP: for (ReportSummaryInfo reportSummary : report.getSavedReportSummaries()) {
+			ChartInfo summaryToRemove = null;
+			SUMMARY_LOOP: for (ChartInfo reportSummary : report.getSavedCharts()) {
 				if (reportSummary.getId() == summaryId) {
 					summaryToRemove = reportSummary;
 					break SUMMARY_LOOP;

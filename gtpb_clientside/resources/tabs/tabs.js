@@ -715,7 +715,7 @@ function fSetupCharts() {
   $('.summary_chart').each(function(i) {
 	  var summaryDivName = $(this).attr('id');
 	  var summaryId = summaryDivName.replace('chart_','');
-	  $(this).append("<div class='chart_remover'><a href='?return=gui/reports_and_tables/pane3&remove_report_summary=true&summaryid=" + summaryId + "'><img border='0' src='resources/icons/cross-greyscale-round.png' /></a></div>");
+	  $(this).append("<div class='chart_remover'><a href='?return=gui/reports_and_tables/pane3&remove_chart=true&summaryid=" + summaryId + "'><img border='0' src='resources/icons/cross-greyscale-round.png' /></a></div>");
 	  $(this).hover(
 		function() {
 		  $(this).find('.chart_remover').fadeIn("normal");

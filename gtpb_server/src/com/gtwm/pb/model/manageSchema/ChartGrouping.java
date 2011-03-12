@@ -27,18 +27,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import com.gtwm.pb.model.interfaces.ReportSummaryGroupingInfo;
+import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.manageSchema.AbstractReportField;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 
 @Entity
-public class ReportSummaryGrouping implements ReportSummaryGroupingInfo {
+public class ChartGrouping implements ChartGroupingInfo {
 
-	protected ReportSummaryGrouping() {
+	protected ChartGrouping() {
 	}
 
-	public ReportSummaryGrouping(ReportFieldInfo groupingReportField,
+	public ChartGrouping(ReportFieldInfo groupingReportField,
 			SummaryGroupingModifier groupingModifier) {
 		this.setGroupingReportField(groupingReportField);
 		this.setCreationTimeDirect(new Date());
@@ -90,13 +90,13 @@ public class ReportSummaryGrouping implements ReportSummaryGroupingInfo {
 		this.creationTime = creationTime;
 	}
 
-	public int compareTo(ReportSummaryGroupingInfo otherGrouping) {
+	public int compareTo(ChartGroupingInfo otherGrouping) {
 		int creationTimeCompare = this.getCreationTime().compareTo(otherGrouping.getCreationTime());
 		if (creationTimeCompare != 0) {
 			return creationTimeCompare;
 		}
 		return Long.valueOf(this.getId()).compareTo(
-				Long.valueOf(((ReportSummaryGrouping) otherGrouping).getId()));
+				Long.valueOf(((ChartGrouping) otherGrouping).getId()));
 	}
 
 	public boolean equals(Object obj) {
@@ -106,7 +106,7 @@ public class ReportSummaryGrouping implements ReportSummaryGroupingInfo {
 		if ((obj == null) || (obj.getClass() != this.getClass())) {
 			return false;
 		}
-		return (this.getId() == ((ReportSummaryGrouping) obj).getId());
+		return (this.getId() == ((ChartGrouping) obj).getId());
 	}
 
 	public int hashCode() {

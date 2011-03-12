@@ -23,22 +23,22 @@ import java.util.Map;
  * Stores a single row of data in the report summary table. A report summary row is made up of two parts -
  * grouping field values and aggregate function values
  */
-public interface ReportSummaryDataRowInfo {
+public interface ChartDataRowInfo {
     
-    public void addGroupingValue(ReportSummaryGroupingInfo grouping, String value);
+    public void addGroupingValue(ChartGroupingInfo grouping, String value);
     
-    public void addAggregateValue(ReportSummaryAggregateInfo aggregateFunction, Number value);
+    public void addAggregateValue(ChartAggregateInfo aggregateFunction, Number value);
 
-    public String getGroupingValue(ReportSummaryGroupingInfo grouping);
+    public String getGroupingValue(ChartGroupingInfo grouping);
 
     /**
-     * @deprecated Replaced by #getGroupingValue(ReportSummaryGroupingInfo)
+     * @deprecated Replaced by #getGroupingValue(ChartGroupingInfo)
      */
     public String getGroupingValue(ReportFieldInfo groupingField);
 
-    public Number getAggregateValue(ReportSummaryAggregateInfo aggregateFunction);
+    public Number getAggregateValue(ChartAggregateInfo aggregateFunction);
     
-    public Map<ReportSummaryAggregateInfo, Number> getAggregateValues();
+    public Map<ChartAggregateInfo, Number> getAggregateValues();
     
-    public Map<ReportSummaryGroupingInfo, String> getGroupingValues();
+    public Map<ChartGroupingInfo, String> getGroupingValues();
 }
