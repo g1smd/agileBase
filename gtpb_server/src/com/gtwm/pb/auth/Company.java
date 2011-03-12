@@ -229,51 +229,51 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	}
 
 	public void addChartIdForDashboard(long id) {
-		this.getSummaryIdsForDashboardDirect().add(id);
+		this.getChartIdsForDashboardDirect().add(id);
 	}
 
 	public void addChartIdNotForDashboard(long id) {
-		this.getSummaryIdsNotForDashboardDirect().add(id);
+		this.getChartIdsNotForDashboardDirect().add(id);
 	}
 
 	@Transient
 	public SortedSet<Long> getChartIdsForDashboard() {
-		return Collections.unmodifiableSortedSet(this.getSummaryIdsForDashboardDirect());
+		return Collections.unmodifiableSortedSet(this.getChartIdsForDashboardDirect());
 	}
 
 	@CollectionOfElements(fetch = FetchType.EAGER)
 	@Sort(type = SortType.NATURAL)
-	private SortedSet<Long> getSummaryIdsForDashboardDirect() {
-		return this.summaryIdsForDashboard;
+	private SortedSet<Long> getChartIdsForDashboardDirect() {
+		return this.chartIdsForDashboard;
 	}
 	
 	/* Only used by Hibernate */
-	private void setSummaryIdsForDashboardDirect(SortedSet<Long> sids) {
-		this.summaryIdsForDashboard = sids;
+	private void setChartIdsForDashboardDirect(SortedSet<Long> sids) {
+		this.chartIdsForDashboard = sids;
 	}
 
 	@Transient
 	public SortedSet<Long> getChartIdsNotForDashboard() {
-		return Collections.unmodifiableSortedSet(this.getSummaryIdsNotForDashboardDirect());
+		return Collections.unmodifiableSortedSet(this.getChartIdsNotForDashboardDirect());
 	}
 
 	@CollectionOfElements(fetch = FetchType.EAGER)
 	@Sort(type = SortType.NATURAL)
-	private SortedSet<Long> getSummaryIdsNotForDashboardDirect() {
-		return this.summaryIdsNotForDashboard;
+	private SortedSet<Long> getChartIdsNotForDashboardDirect() {
+		return this.chartIdsNotForDashboard;
 	}
 
 	/* Only used by Hibernate */
-	private void setSummaryIdsNotForDashboardDirect(SortedSet<Long> sids) {
-		this.summaryIdsNotForDashboard = sids;
+	private void setChartIdsNotForDashboardDirect(SortedSet<Long> sids) {
+		this.chartIdsNotForDashboard = sids;
 	}
 
 	public void removeChartIdForDashboard(long id) {
-		this.getSummaryIdsForDashboardDirect().remove(id);
+		this.getChartIdsForDashboardDirect().remove(id);
 	}
 
 	public void removeChartIdNotForDashboard(long id) {
-		this.getSummaryIdsNotForDashboardDirect().remove(id);
+		this.getChartIdsNotForDashboardDirect().remove(id);
 	}
 
 	public int compareTo(CompanyInfo otherCompany) {
@@ -305,9 +305,9 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return this.getCompanyName();
 	}
 
-	private SortedSet<Long> summaryIdsForDashboard = new TreeSet<Long>();
+	private SortedSet<Long> chartIdsForDashboard = new TreeSet<Long>();
 
-	private SortedSet<Long> summaryIdsNotForDashboard = new TreeSet<Long>();
+	private SortedSet<Long> chartIdsNotForDashboard = new TreeSet<Long>();
 
 	private Set<AppUserInfo> usersCollection = new HashSet<AppUserInfo>();
 
