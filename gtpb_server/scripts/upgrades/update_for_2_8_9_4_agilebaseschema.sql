@@ -1,4 +1,6 @@
+begin;
 alter table basereportdefn rename column reportsummary_id to chart_id;
+--
 alter table reportsummaryaggregatedefn rename to chartaggregatedefn;
 alter table reportsummarydefn rename to chartdefn;
 alter table reportsummarydefn_reportsummaryaggregatedefn rename to chartdefn_chartaggregatedefn;
@@ -18,3 +20,4 @@ alter index reportsummarydefn_reportsumma_aggregatefunctionsdirect_inte_key rena
 alter table chartdefn rename column summaryfilter to chartfilter;
 alter table chartdefn_chartaggregatedefn rename column reportsummarydefn_id to chartdefn_id;
 alter table chartdefn_chartgrouping rename column reportsummarydefn_id to chartdefn_id;
+commit;
