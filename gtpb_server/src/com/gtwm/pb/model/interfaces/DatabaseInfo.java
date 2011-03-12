@@ -416,7 +416,7 @@ public interface DatabaseInfo {
 	 * Add an aggregate function so a summary report
 	 */
 	public void addFunctionToSummaryReport(HttpServletRequest request,
-			ReportSummaryAggregateInfo addedAggFn) throws DisallowedException, CantDoThatException,
+			ChartAggregateInfo addedAggFn) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException, SQLException;
 
 	/**
@@ -459,7 +459,7 @@ public interface DatabaseInfo {
 			String summaryTitle) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException;
 
-	public void removeSummaryReport(HttpServletRequest request, ReportSummaryInfo reportSummary)
+	public void removeSummaryReport(HttpServletRequest request, ChartInfo reportSummary)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException;
 
 	/**

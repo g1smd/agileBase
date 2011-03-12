@@ -140,9 +140,9 @@
 		</tbody>
       </table>
 	  #set($summariesExist = false)
-	  #foreach($reportSummary in $report.getSavedReportSummaries())
+	  #foreach($chart in $report.getSavedCharts())
           ## if a summary has been created
-          #if(($reportSummary.getGroupingReportFields().size() > 0) || ($reportSummary.getAggregateFunctions().size() > 0))
+          #if(($chart.getGroupingReportFields().size() > 0) || ($chart.getAggregateFunctions().size() > 0))
             #set($summariesExist = true)
     	  #end
 	  #end

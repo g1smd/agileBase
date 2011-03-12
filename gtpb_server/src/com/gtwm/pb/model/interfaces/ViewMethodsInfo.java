@@ -460,13 +460,13 @@ public interface ViewMethodsInfo {
 	 *             If the user doesn't have VIEW_TABLE_DATA privileges on all
 	 *             tables from which report data is taken
 	 */
-	public ReportSummaryDataInfo getReportSummaryData() throws DisallowedException, SQLException,
+	public ChartDataInfo getChartData() throws DisallowedException, SQLException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
 	/**
 	 * Return report summary data for a specific report
 	 */
-	public ReportSummaryDataInfo getReportSummaryData(ReportSummaryInfo reportSummary)
+	public ChartDataInfo getChartData(ChartInfo reportSummary)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException;
 
@@ -474,7 +474,7 @@ public interface ViewMethodsInfo {
 	 * Generate a temporary report summary (not persisted) for an individual
 	 * field and return the data
 	 */
-	public ReportSummaryDataInfo getFieldSummaryData(ReportFieldInfo reportField)
+	public ChartDataInfo getFieldSummaryData(ReportFieldInfo reportField)
 			throws DisallowedException, SQLException, CodingErrorException,
 			ObjectNotFoundException, CantDoThatException;
 
@@ -483,7 +483,7 @@ public interface ViewMethodsInfo {
 	 * cached data if available, even if the company schema or data has been
 	 * changed since the summary was saved to cache
 	 */
-	public ReportSummaryDataInfo getCachedReportSummaryData(ReportSummaryInfo reportSummary)
+	public ChartDataInfo getCachedChartData(ChartInfo reportSummary)
 			throws DisallowedException, ObjectNotFoundException, CodingErrorException,
 			CantDoThatException, SQLException;
 

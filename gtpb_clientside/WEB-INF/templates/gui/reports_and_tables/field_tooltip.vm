@@ -9,13 +9,13 @@ $reportField
   #set($displayDetails = false)
 #end
 #if($displayDetails)
-    #set($reportSummaryData = $view.getFieldSummaryData($reportField))
-    #set($reportSummaryDataRows = $reportSummaryData.getReportSummaryDataRows())
-	#if($reportSummaryDataRows.size() > 0)
-        #set($groupingValues = $reportSummaryDataRows.get(0).getGroupingValues())
+    #set($chartData = $view.getFieldSummaryData($reportField))
+    #set($chartDataRows = $chartData.getChartDataRows())
+	#if($chartDataRows.size() > 0)
+        #set($groupingValues = $chartDataRows.get(0).getGroupingValues())
         #if($groupingValues.size() == 0)
           <br>
-          #set($aggregateValues = $reportSummaryDataRows.get(0).getAggregateValues())
+          #set($aggregateValues = $chartDataRows.get(0).getAggregateValues())
           #foreach($aggregate in $aggregateValues.keySet())
         	$aggregate.getAggregateFunction().getLabel() = $aggregateValues.get($aggregate)<br>
           #end
@@ -23,9 +23,9 @@ $reportField
           <br>
           ##Sparkline
           #set($sparklineData = [])
-          #foreach($reportSummaryDataRow in $reportSummaryDataRows)
+          #foreach($chartDataRow in $chartDataRows)
             ## There will only be one agg - the count
-            #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
+            #set($aggregateValues = $chartDataRow.getAggregateValues())
         	#foreach($aggregate in $aggregateValues.keySet())
         	  #set($temp = $sparklineData.add($aggregateValues.get($aggregate)))
             #end
@@ -33,9 +33,9 @@ $reportField
           <span class="sparkline">$viewTools.joinWith($sparklineData,",")</span><br>
           ## Textual data
           <div class="tooltip_content">
-          #foreach($reportSummaryDataRow in $reportSummaryDataRows)
-            #set($aggregateValues = $reportSummaryDataRow.getAggregateValues())
-        	#set($groupingValues = $reportSummaryDataRow.getGroupingValues())
+          #foreach($chartDataRow in $chartDataRows)
+            #set($aggregateValues = $chartDataRow.getAggregateValues())
+        	#set($groupingValues = $chartDataRow.getGroupingValues())
             ## There will only be one agg - the count
         	#foreach($aggregate in $aggregateValues.keySet())
         	  $aggregateValues.get($aggregate).intValue() x 

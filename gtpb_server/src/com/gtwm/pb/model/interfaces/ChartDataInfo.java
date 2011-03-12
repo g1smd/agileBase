@@ -17,29 +17,28 @@
  */
 package com.gtwm.pb.model.interfaces;
 
-import com.gtwm.pb.model.interfaces.ReportFieldInfo;
-import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
+import java.util.List;
 
-import java.util.Date;
+import com.gtwm.pb.util.ObjectNotFoundException;
 
-/**
- * Represents a field to group by in a report summary
- */
-public interface ReportSummaryGroupingInfo extends Comparable<ReportSummaryGroupingInfo> {
-
-	public ReportFieldInfo getGroupingReportField();
+public interface ChartDataInfo {
+	/**
+	 * @return The data that this summary holds
+	 */
+	public List<ChartDataRowInfo> getChartDataRows();
 
 	/**
-	 * Return the modifier (if any) that should be used with this field. For
-	 * example, if the field is a date, the modifier could be 'year' which would
-	 * cause the grouping to be on the year only
+	 * This object stores information about the max. and min. values in the data
+	 * rows for each aggregate, so given a value, can calculate it as a % e.g.
+	 * if the min. value of a particular aggregate is 0 and the max 50, then the
+	 * value 25 would be 50%
 	 */
-	public SummaryGroupingModifier getGroupingModifier();
-
+	public int getValueAsPercentage(ChartAggregateInfo aggregate, Number value);
+	
 	/**
-	 * Used to sort grouping fields, ensuring earliest are at the start of the
-	 * report summary
+	 * For sum and count aggregates, grand totals are stored
 	 */
-	public Date getCreationTime();
-
+	public double getGrandTotal(ChartAggregateInfo aggregate) throws ObjectNotFoundException;
+	
+	public long getCacheCreationTime();
 }

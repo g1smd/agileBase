@@ -21,14 +21,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.grlea.log.SimpleLogger;
-import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryDataInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryDataRowInfo;
+import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
+import com.gtwm.pb.model.interfaces.ChartDataInfo;
+import com.gtwm.pb.model.interfaces.ChartDataRowInfo;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
-public class ReportSummaryData implements ReportSummaryDataInfo {
+public class ChartData implements ChartDataInfo {
 
-	private ReportSummaryData() {
+	private ChartData() {
 		this.reportSummaryDataRows = null;
 		this.minAggValues = null;
 		this.maxAggValues = null;
@@ -44,21 +44,21 @@ public class ReportSummaryData implements ReportSummaryDataInfo {
 	 * @param maxAggValues
 	 *            Similar to minAggValues
 	 */
-	public ReportSummaryData(List<ReportSummaryDataRowInfo> reportSummaryDataRows,
-			Map<ReportSummaryAggregateInfo, Number> minAggValues,
-			Map<ReportSummaryAggregateInfo, Number> maxAggValues,
-			Map<ReportSummaryAggregateInfo, Number> grandTotals) {
+	public ChartData(List<ChartDataRowInfo> reportSummaryDataRows,
+			Map<ChartAggregateInfo, Number> minAggValues,
+			Map<ChartAggregateInfo, Number> maxAggValues,
+			Map<ChartAggregateInfo, Number> grandTotals) {
 		this.reportSummaryDataRows = reportSummaryDataRows;
 		this.minAggValues = minAggValues;
 		this.maxAggValues = maxAggValues;
 		this.grandTotals = grandTotals;
 	}
 
-	public List<ReportSummaryDataRowInfo> getReportSummaryDataRows() {
+	public List<ChartDataRowInfo> getChartDataRows() {
 		return this.reportSummaryDataRows;
 	}
 
-	public int getValueAsPercentage(ReportSummaryAggregateInfo aggregate, Number value) {
+	public int getValueAsPercentage(ChartAggregateInfo aggregate, Number value) {
 		if (value == null) {
 			return 0;
 		}
@@ -78,7 +78,7 @@ public class ReportSummaryData implements ReportSummaryDataInfo {
 		return percentage.intValue();
 	}
 
-	public double getGrandTotal(ReportSummaryAggregateInfo aggregate)
+	public double getGrandTotal(ChartAggregateInfo aggregate)
 			throws ObjectNotFoundException {
 		Number grandTotal = this.grandTotals.get(aggregate);
 		if (grandTotal == null) {
@@ -95,18 +95,18 @@ public class ReportSummaryData implements ReportSummaryDataInfo {
 		return this.reportSummaryDataRows.toString();
 	}
 
-	private final List<ReportSummaryDataRowInfo> reportSummaryDataRows;
+	private final List<ChartDataRowInfo> reportSummaryDataRows;
 
-	private final Map<ReportSummaryAggregateInfo, Number> minAggValues;
+	private final Map<ChartAggregateInfo, Number> minAggValues;
 
-	private final Map<ReportSummaryAggregateInfo, Number> maxAggValues;
+	private final Map<ChartAggregateInfo, Number> maxAggValues;
 
-	private final Map<ReportSummaryAggregateInfo, Number> grandTotals;
+	private final Map<ChartAggregateInfo, Number> grandTotals;
 
 	/**
 	 * Set cache creation time to the creation time of the object
 	 */
 	private final long cacheCreationTime = (new Date()).getTime();
 
-	private static final SimpleLogger logger = new SimpleLogger(ReportSummaryData.class);
+	private static final SimpleLogger logger = new SimpleLogger(ChartData.class);
 }

@@ -1,14 +1,14 @@
 package com.gtwm.pb.dashboard.interfaces;
 
-import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
+import com.gtwm.pb.model.interfaces.ChartInfo;
 
 /**
  * Wraps a report summary with a bit of additional info useful when displaying it in a dashboard
- * @see ReportSummaryDataInfo
+ * @see ChartDataInfo
  */
-public interface DashboardReportSummaryInfo {
+public interface DashboardChartInfo {
 	
-	public ReportSummaryInfo getReportSummary();
+	public ChartInfo getChart();
 	
 	/**
 	 * Return a score that ranks the summary in the dashboard

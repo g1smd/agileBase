@@ -18,7 +18,7 @@
 package com.gtwm.pb.model.manageSchema;
 
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
-import com.gtwm.pb.model.interfaces.ReportSummaryInfo;
+import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.util.Naming;
@@ -105,17 +105,17 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		this.parentTable = parentTable;
 	}
 
-	@OneToOne(targetEntity = ReportSummaryDefn.class, cascade = CascadeType.ALL)
-	public ReportSummaryInfo getReportSummary() {
+	@OneToOne(targetEntity = ChartDefn.class, cascade = CascadeType.ALL)
+	public ChartInfo getChart() {
 		return this.reportSummary;
 	}
 
-	protected void setReportSummary(ReportSummaryInfo reportSummary) {
+	protected void setChart(ChartInfo reportSummary) {
 		this.reportSummary = reportSummary;
 	}
 
-	public ReportSummaryInfo getSavedReportSummary(long summaryId) throws ObjectNotFoundException {
-		for (ReportSummaryInfo reportSummary : this.getSavedReportSummariesDirect()) {
+	public ChartInfo getSavedChart(long summaryId) throws ObjectNotFoundException {
+		for (ChartInfo reportSummary : this.getSavedReportSummariesDirect()) {
 			if (reportSummary.getId() == summaryId) {
 				return reportSummary;
 			}
@@ -124,25 +124,25 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	}
 	
 	@Transient
-	public Set<ReportSummaryInfo> getSavedReportSummaries() {
-		return Collections.unmodifiableSet(new LinkedHashSet<ReportSummaryInfo>(this
+	public Set<ChartInfo> getSavedCharts() {
+		return Collections.unmodifiableSet(new LinkedHashSet<ChartInfo>(this
 				.getSavedReportSummariesDirect()));
 	}
 
-	@OneToMany(mappedBy = "report", targetEntity = ReportSummaryDefn.class, cascade = CascadeType.ALL)
-	private Set<ReportSummaryInfo> getSavedReportSummariesDirect() {
+	@OneToMany(mappedBy = "report", targetEntity = ChartDefn.class, cascade = CascadeType.ALL)
+	private Set<ChartInfo> getSavedReportSummariesDirect() {
 		return this.savedReportSummaries;
 	}
 
-	private void setSavedReportSummariesDirect(Set<ReportSummaryInfo> savedReportSummaries) {
+	private void setSavedReportSummariesDirect(Set<ChartInfo> savedReportSummaries) {
 		this.savedReportSummaries = savedReportSummaries;
 	}
 
-	public void removeSavedReportSummary(ReportSummaryInfo reportSummary) {
+	public void removeSavedChart(ChartInfo reportSummary) {
 		this.getSavedReportSummariesDirect().remove(reportSummary);
 	}
 
-	public void saveReportSummary(ReportSummaryInfo reportSummary) {
+	public void saveChart(ChartInfo reportSummary) {
 		this.getSavedReportSummariesDirect().add(reportSummary);
 	}
 
@@ -219,7 +219,7 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		return this.getInternalReportName().hashCode();
 	}
 
-	private Set<ReportSummaryInfo> savedReportSummaries = new LinkedHashSet<ReportSummaryInfo>(1);
+	private Set<ChartInfo> savedReportSummaries = new LinkedHashSet<ChartInfo>(1);
 
 	private String reportName = "";
 
@@ -231,7 +231,7 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 
 	private TableInfo parentTable;
 
-	private ReportSummaryInfo reportSummary = null;
+	private ChartInfo reportSummary = null;
 
 	private int rowCount = 0;
 

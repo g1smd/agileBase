@@ -79,7 +79,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		super.setReportName(reportName);
 		super.setReportDescription(reportDesc);
 		super.setParentTable(parentTable);
-		super.setReportSummary(new ReportSummaryDefn(this, true));
+		super.setChart(new ChartDefn(this, true));
 		if (module != null) {
 			super.setModule(module);
 		}
@@ -89,17 +89,6 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 			BaseField firstField = parentTable.getPrimaryKey();
 			ReportFieldInfo firstReportField = new ReportFieldDefn(this, firstField);
 			this.getReportFieldsDirect().add(firstReportField);
-			// If field is of a suitable type, add a basic summary for the new
-			// report
-			// Note: This can be annoying, turned off
-			// if (firstField instanceof RelationField) {
-			// super.getReportSummary().addGrouping((RelationField) firstField);
-			// super.getReportSummary().addCountFunction(firstField);
-			// } else if (firstField instanceof ManualDropdownField) {
-			// super.getReportSummary().addGrouping((ManualDropdownField)
-			// firstField);
-			// super.getReportSummary().addCountFunction(firstField);
-			// }
 		}
 	}
 
@@ -219,7 +208,6 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		}
 		reportField.setFieldIndex(this.getReportFieldsDirect().size());
 		this.getReportFieldsDirect().add(reportField);
-		// updateReportSummaryWithNewField(fieldToAdd);
 		return reportField;
 	}
 
@@ -399,8 +387,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		// Remove from summary if field is part of the summary
 		// Need to check both summary grouping fields and summary aggregate
 		// functions
-		super.getReportSummary().removeGrouping(reportFieldToRemove);
-		super.getReportSummary().removeFunctions(reportFieldToRemove);
+		super.getChart().removeGrouping(reportFieldToRemove);
+		super.getChart().removeFunctions(reportFieldToRemove);
 		// if removing the last field from a joined table, remove the joined
 		// table ID as well
 		if (!reportFieldToRemove.isFieldFromReport()) {

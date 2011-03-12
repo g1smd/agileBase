@@ -18,7 +18,7 @@
 package com.gtwm.pb.model.interfaces;
 
 import com.gtwm.pb.model.interfaces.fields.BaseField;
-import com.gtwm.pb.model.interfaces.ReportSummaryAggregateInfo;
+import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -39,7 +39,7 @@ import java.util.SortedSet;
  * group by certain types of field, as you can see from the methods. Similarly,
  * you can only add functions on certain types of field.
  */
-public interface ReportSummaryInfo {
+public interface ChartInfo {
 
 	/**
 	 * Group by a field filled from a report
@@ -54,12 +54,12 @@ public interface ReportSummaryInfo {
 	 * @return the removed grouping, or null if no grouping on the fieldToRemove
 	 *         exists
 	 */
-	public ReportSummaryGroupingInfo removeGrouping(ReportFieldInfo reportFieldToRemove);
+	public ChartGroupingInfo removeGrouping(ReportFieldInfo reportFieldToRemove);
 
 	/**
 	 * Add an aggregate function
 	 */
-	public void addFunction(ReportSummaryAggregateInfo addedAggFn) throws CantDoThatException;
+	public void addFunction(ChartAggregateInfo addedAggFn) throws CantDoThatException;
 
 	/**
 	 * Remove any aggregate functions acting on the specified field - there may
@@ -70,12 +70,12 @@ public interface ReportSummaryInfo {
 	 * 
 	 * @return the set of functions acting on fieldToRemove, which were removed
 	 */
-	public Set<ReportSummaryAggregateInfo> removeFunctions(ReportFieldInfo reportFieldToRemove);
+	public Set<ChartAggregateInfo> removeFunctions(ReportFieldInfo reportFieldToRemove);
 
 	/**
 	 * Remove a single aggregate function
 	 */
-	public ReportSummaryAggregateInfo removeFunction(String internalAggregateName)
+	public ChartAggregateInfo removeFunction(String internalAggregateName)
 			throws ObjectNotFoundException;
 
 	/**
@@ -97,7 +97,7 @@ public interface ReportSummaryInfo {
 	 * 
 	 * @return A string of SQL used to get the summary data from the database
 	 */
-	public PreparedStatement getReportSummarySqlPreparedStatement(Connection conn,
+	public PreparedStatement getChartSqlPreparedStatement(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters) throws SQLException,
 			CantDoThatException;
 
@@ -107,7 +107,7 @@ public interface ReportSummaryInfo {
 	 */
 	public List<ReportFieldInfo> getGroupingReportFields();
 
-	public SortedSet<ReportSummaryGroupingInfo> getGroupings();
+	public SortedSet<ChartGroupingInfo> getGroupings();
 
 	/**
 	 * Return a single grouping field
@@ -118,17 +118,17 @@ public interface ReportSummaryInfo {
 	/**
 	 * @return A read-only copy of the report summary's aggregate function list
 	 */
-	public Set<ReportSummaryAggregateInfo> getAggregateFunctions();
+	public Set<ChartAggregateInfo> getAggregateFunctions();
 
-	public ReportSummaryAggregateInfo getAggregateFunctionByInternalName(
+	public ChartAggregateInfo getAggregateFunctionByInternalName(
 			String internalAggregateName) throws ObjectNotFoundException;
 
 	/**
 	 * Return the filter acting on this summary, or null if there is none
 	 */
-	public SummaryFilter getSummaryFilter();
+	public SummaryFilter getChartFilter();
 
-	public void setSummaryFilter(SummaryFilter summaryFilter);
+	public void setChartFilter(SummaryFilter summaryFilter);
 
 	/**
 	 * Return the field that the summary filter acts on
