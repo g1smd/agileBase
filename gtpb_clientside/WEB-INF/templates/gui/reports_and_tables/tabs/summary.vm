@@ -40,9 +40,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   #set($return_template="gui/reports_and_tables/pane3")
 #end
 ## Saved charts
-#set($savedSummaries = $report.getSavedReportSummaries())
-<div id="saved_charts" #if($savedSummaries.size() > 2) class="two_cols" #end>
-#foreach($savedChart in $savedSummaries)
+#set($savedCharts = $report.getSavedCharts())
+<div id="saved_charts" #if($savedCharts.size() > 2) class="two_cols" #end>
+#foreach($savedChart in $savedCharts)
   #if(!$savedChart.equals($defaultChart))
     #set($chart = $savedChart)
     #set($chartData = $view.getChartData($chart))
