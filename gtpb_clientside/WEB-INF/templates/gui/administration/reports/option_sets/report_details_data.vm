@@ -22,13 +22,6 @@
     new fChange(groupingInputElement);
   }
 </script>
-<style>  
-  input[focused][type='text'],
-  textarea[focused] {
-    border:2px solid #A2B6FF;
-    background-color:#ECF0FF;
-  }
-</style>
 #set($report = $sessionData.getReport())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr>

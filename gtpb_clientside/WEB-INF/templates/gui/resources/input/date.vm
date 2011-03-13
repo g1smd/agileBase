@@ -63,14 +63,7 @@
     div.date[changed=true] input {
       text-decoration:underline;
     }
-    
-    input[focused][type='text'],
-    textarea[focused] {
-      border:2px solid #A2B6FF;
-      background-color:#ECF0FF;
-    }    
-  </style>
-  
+  </style>  
   <div id="date_wrapper_$field.getInternalFieldName()" #if($updateAsType) update_as_type="true" #end date_resolution="$dateResolution" class="date" name="$field.getInternalFieldName()" value="$field.formatCalendar($fieldValue)" #if($globalEdit) gtpb_global_edit="true" #else gtpb_update_record="true" #end gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_$field.getInternalFieldName()_days="$days" gtpb_$field.getInternalFieldName()_months="$months" gtpb_$field.getInternalFieldName()_years="$years" gtpb_$field.getInternalFieldName()_hours="$hours" gtpb_$field.getInternalFieldName()_minutes="$minutes" gtpb_$field.getInternalFieldName()_seconds="$seconds">
   ## date_js was here
   #if($dateResolution >= $CONST_DAY_OF_MONTH)

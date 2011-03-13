@@ -19,13 +19,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/table_field_crea
 ## Form for user to create a new table field with
 ## Called from ../table_fields.vm
 #set($viewableTables = $view.getTablesAllowedTo("VIEW_TABLE_DATA"))
-<style>  
-  input[focused][type='text'],
-  textarea[focused] {
-    border:2px solid #A2B6FF;
-    background-color:#ECF0FF;
-  }
-</style>
 	  ##nodrag and nodrop classes used by jquery.tableDnD plugin
 	  <tr id="addNewField" class="nodrag nodrop">
 	    <td class="leading" height="20">&nbsp;</td>
