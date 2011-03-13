@@ -93,7 +93,7 @@ public class Public extends VelocityViewServlet {
 					context.put("gtpbPublicTable", table);
 					context.put("gtpbCompany", company);
 					if(templateName == null) {
-						templateName = "form_plain";
+						templateName = "form";
 					}
 					templateName = templatePath + templateName;
 					break;
