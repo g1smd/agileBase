@@ -23,7 +23,7 @@
 <style>
   input { margin: 10px; }
 </style>
-<form class="agilebase" name="agilebase_form" method="post" action="https://appserver.gtportalbase.com/agileBase/Public.ab">
+<form class="agilebase" name="agilebase_form" method="post" action="$viewTools.getAppUrl()">
   <input type="hidden" name="save_new_record" value="true">
   <input type="hidden" name="t" value="$table.getInternalTableName()"> 
   <input type="hidden" name="c" value="$company.getInternalCompanyName()">
