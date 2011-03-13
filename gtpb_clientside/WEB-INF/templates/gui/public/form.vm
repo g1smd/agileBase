@@ -23,18 +23,30 @@
 <style>
   input { margin: 10px; }
 </style>
-<form name="agilebase_form" method="post" action="https://appserver.gtportalbase.com/agileBase/Public.ab">
+<form class="agilebase" name="agilebase_form" method="post" action="https://appserver.gtportalbase.com/agileBase/Public.ab">
   <input type="hidden" name="save_new_record" value="true">
   <input type="hidden" name="t" value="$table.getInternalTableName()"> 
-  <input type="hidden" name="c" value="$company.getInternalCompanyName()"> 
-  <table cellspacing="0" cellpadding="0" border="0" id="agilebase_form_table">
-	#set($fields = $table.getFields())
+  <input type="hidden" name="c" value="$company.getInternalCompanyName()">
+  #if($formType == "table")
+    <table cellspacing="0" cellpadding="0" border="0" id="agilebase_form_table">
+  #else
+	<ul>
+  #end
+  #set($fields = $table.getFields())
 	  #foreach($field in $fields)
 		## Skip certain types of field
 		#if(($field.getHidden() == false) && ($field.getClass().getSimpleName() != "RelationFieldDefn") && ($field.getClass().getSimpleName() != "ReferencedReportDataFieldDefn"))
-          #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+          #if($formType == "table")
+		    #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+		  #else
+		    #parse("gui/public/form_list_row.vm")
+		  #end
 		#end
 	#end
-  </table>	
+  #if($formType == "table")
+    </table>	
+  #else
+	</ul>
+  #end
   <input type="submit" value="Submit" />
 </form>

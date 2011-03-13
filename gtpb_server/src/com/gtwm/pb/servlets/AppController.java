@@ -18,12 +18,9 @@
 package com.gtwm.pb.servlets;
 
 import java.sql.SQLException;
-import java.lang.StackTraceElement;
 import java.util.Locale;
-import java.util.Map;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.LinkedList;
 import java.io.IOException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -60,13 +57,8 @@ import com.gtwm.pb.util.Enumerations.SessionContext;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.AppProperties;
-import org.apache.commons.fileupload.FileUpload;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.grlea.log.SimpleLogger;
 
 /*
@@ -128,19 +120,19 @@ public final class AppController extends VelocityViewServlet {
 			servletContext.setAttribute("com.gtwm.pb.servlets.relationalDataSource",
 					this.relationalDataSource);
 		} catch (NullPointerException npex) {
-			logException(npex, "Error initialising controller servlet");
+			ServletUtilMethods.logException(npex, "Error initialising controller servlet");
 			throw new ServletException("Error initialising controller servlet", npex);
 		} catch (SQLException sqlex) {
-			logException(sqlex, "Database error loading schema");
+			ServletUtilMethods.logException(sqlex, "Database error loading schema");
 			throw new ServletException("Database error loading schema", sqlex);
 		} catch (NamingException neex) {
-			logException(neex, "Can't get initial context");
+			ServletUtilMethods.logException(neex, "Can't get initial context");
 			throw new ServletException("Can't get initial context");
 		} catch (RuntimeException rtex) {
-			logException(rtex, "Runtime initialisation error");
+			ServletUtilMethods.logException(rtex, "Runtime initialisation error");
 			throw new ServletException("Runtime initialisation error", rtex);
 		} catch (Exception ex) {
-			logException(ex, "General initialisation error");
+			ServletUtilMethods.logException(ex, "General initialisation error");
 			throw new ServletException("General initialisation error", ex);
 		}
 		logger.info("Application fully loaded");
@@ -155,42 +147,26 @@ public final class AppController extends VelocityViewServlet {
 		logger.info("agileBase shut down");
 	}
 
-	public static List<FileItem> getMultipartItems(HttpServletRequest request) {
-		// Cache multipart form data so don't have to reparse it all the time
-		List<FileItem> multipartItems = new LinkedList<FileItem>();
-		if (FileUpload.isMultipartContent(new ServletRequestContext(request))) {
-			// See http://jakarta.apache.org/commons/fileupload/using.html
-			FileItemFactory factory = new DiskFileItemFactory();
-			ServletFileUpload upload = new ServletFileUpload(factory);
-			try {
-				multipartItems = upload.parseRequest(request);
-			} catch (FileUploadException fuex) {
-				logException(fuex, request, "Error parsing multi-part form data");
-			}
-		}
-		return multipartItems;
-	}
-
 	public static ResponseReturnType setReturnType(HttpServletRequest request,
 			HttpServletResponse response, List<FileItem> multipartItems) {
 		// Optionally return text/xml content rather than the default text/html
 		// This can be useful when using AJAX interfaces with XMLHttpRequest in
 		// the browser
-		String returnType = getParameter(request, "returntype", multipartItems);
+		String returnType = ServletUtilMethods.getParameter(request, "returntype", multipartItems);
 		ResponseReturnType responseReturnType = null;
 		if (returnType != null) {
 			try {
 				responseReturnType = ResponseReturnType.valueOf(returnType.toUpperCase());
 				response.setContentType(responseReturnType.getResponseType());
 				if (responseReturnType.equals(ResponseReturnType.DOWNLOAD)) {
-					String filename = getParameter(request, "returnfilename", multipartItems);
+					String filename = ServletUtilMethods.getParameter(request, "returnfilename", multipartItems);
 					response.setHeader("Content-Disposition", "attachment;filename=\"" + filename
 							+ "\"");
 				}
 			} catch (IllegalArgumentException iaex) {
 				EnumSet<ResponseReturnType> allReturnTypes = EnumSet
 						.allOf(ResponseReturnType.class);
-				logException(iaex, request, "Unknown returntype specified: " + returnType
+				ServletUtilMethods.logException(iaex, request, "Unknown returntype specified: " + returnType
 						+ " - must be one of " + allReturnTypes);
 			}
 		}
@@ -310,7 +286,7 @@ public final class AppController extends VelocityViewServlet {
 			// Store so exception handling has access to the action carried out
 			appActionName.setLength(0);
 			appActionName.append(appAction.toString());
-			String appActionValue = getParameter(request, appAction.toString().toLowerCase(Locale.UK), multipartItems);
+			String appActionValue = ServletUtilMethods.getParameter(request, appAction.toString().toLowerCase(Locale.UK), multipartItems);
 			if (appActionValue != null) {
 				sessionData.setLastAppAction(appAction);
 				switch (appAction) {
@@ -577,8 +553,8 @@ public final class AppController extends VelocityViewServlet {
 		// Start timing request
 		long handleRequestStartTime = System.currentTimeMillis();
 		// Cache multipart form data so don't have to reparse it all the time
-		List<FileItem> multipartItems = getMultipartItems(request);
-		logger.debug("Request: " + getRequestQuery(request));
+		List<FileItem> multipartItems = ServletUtilMethods.getMultipartItems(request);
+		logger.debug("Request: " + ServletUtilMethods.getRequestQuery(request));
 		ResponseReturnType returnType = setReturnType(request, response, multipartItems);
 		response.setCharacterEncoding("ISO-8859-1");
 		HttpSession session = request.getSession();
@@ -589,10 +565,10 @@ public final class AppController extends VelocityViewServlet {
 				// Set up a session for a newly logged in user
 				sessionData = new SessionData(this.databaseDefn, this.relationalDataSource, request);
 			} catch (SQLException sqlex) {
-				logException(sqlex, request, "SQL error creating session data object: " + sqlex);
+				ServletUtilMethods.logException(sqlex, request, "SQL error creating session data object: " + sqlex);
 				sessionData = new SessionData();
 			} catch (AgileBaseException pbex) {
-				logException(pbex, request, "Error creating session data object: " + pbex);
+				ServletUtilMethods.logException(pbex, request, "Error creating session data object: " + pbex);
 				sessionData = new SessionData();
 			}
 			// set up the wiki if the user is the first user logging in from a
@@ -601,7 +577,7 @@ public final class AppController extends VelocityViewServlet {
 			try {
 				company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 			} catch (ObjectNotFoundException onfex) {
-				logException(onfex, request,
+				ServletUtilMethods.logException(onfex, request,
 						"Company not found for user " + request.getRemoteUser());
 			}
 
@@ -621,36 +597,36 @@ public final class AppController extends VelocityViewServlet {
 				this.databaseDefn.addWikiManagement(company, wikiManagement);
 			}
 		}
-		String templateName = getParameter(request, "return", multipartItems);
+		String templateName = ServletUtilMethods.getParameter(request, "return", multipartItems);
 		try {
 			carryOutSessionActions(request, sessionData, this.databaseDefn, context, session,
 					multipartItems);
 		} catch (AgileBaseException pbex) {
-			logException(pbex, request, "Error setting session data");
+			ServletUtilMethods.logException(pbex, request, "Error setting session data");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, pbex, multipartItems);
 			}
 		} catch (NumberFormatException nfex) {
-			logException(nfex, request, "Non-numeric value specified for numeric parameter");
+			ServletUtilMethods.logException(nfex, request, "Non-numeric value specified for numeric parameter");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, nfex, multipartItems);
 			}
 		} catch (RuntimeException rtex) {
-			logException(rtex, request, "Runtime error setting session data");
+			ServletUtilMethods.logException(rtex, request, "Runtime error setting session data");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, rtex, multipartItems);
 			}
 		} catch (SQLException sqlex) {
-			logException(sqlex, request, "SQL error setting session data");
+			ServletUtilMethods.logException(sqlex, request, "SQL error setting session data");
 			// override to return the error template
 			templateName = "report_error";
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, sqlex, multipartItems);
 		} catch (Exception ex) {
-			logException(ex, request, "General error setting session data");
+			ServletUtilMethods.logException(ex, request, "General error setting session data");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, ex, multipartItems);
@@ -668,29 +644,29 @@ public final class AppController extends VelocityViewServlet {
 			carryOutAppActions(request, sessionData, this.databaseDefn, multipartItems,
 					appActionName);
 		} catch (MissingParametersException mpex) {
-			logException(mpex, request, "Required parameters missing for action " + appActionName);
+			ServletUtilMethods.logException(mpex, request, "Required parameters missing for action " + appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, mpex, multipartItems);
 		} catch (DisallowedException dex) {
-			logException(dex, request, "No privileges to perform action " + appActionName);
+			ServletUtilMethods.logException(dex, request, "No privileges to perform action " + appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, dex, multipartItems);
 		} catch (SQLException sqlex) {
-			logException(sqlex, request,
+			ServletUtilMethods.logException(sqlex, request,
 					"Error accessing relational database while performing action" + appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, sqlex, multipartItems);
 		} catch (ObjectNotFoundException onfex) {
-			logException(onfex, request, "An object mis-referenced while performing action "
+			ServletUtilMethods.logException(onfex, request, "An object mis-referenced while performing action "
 					+ appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, onfex, multipartItems);
 		} catch (InputRecordException irex) {
-			logException(irex, request, "Error saving data during " + appActionName);
+			ServletUtilMethods.logException(irex, request, "Error saving data during " + appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, irex, multipartItems);
 		} catch (Exception ex) {
-			logException(ex, request, "General error performing action " + appActionName);
+			ServletUtilMethods.logException(ex, request, "General error performing action " + appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, ex, multipartItems);
 		}
@@ -700,31 +676,31 @@ public final class AppController extends VelocityViewServlet {
 		try {
 			carryOutPostSessionActions(request, sessionData, this.databaseDefn, sessionActions);
 		} catch (ObjectNotFoundException onfex) {
-			logException(onfex, request, "Error setting session data");
+			ServletUtilMethods.logException(onfex, request, "Error setting session data");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, onfex, multipartItems);
 			}
 		} catch (NumberFormatException nfex) {
-			logException(nfex, request, "Non-numeric value specified for numeric parameter");
+			ServletUtilMethods.logException(nfex, request, "Non-numeric value specified for numeric parameter");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, nfex, multipartItems);
 			}
 		} catch (MissingParametersException mpex) {
-			logException(mpex, request, "Error setting session data");
+			ServletUtilMethods.logException(mpex, request, "Error setting session data");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, mpex, multipartItems);
 			}
 		} catch (RuntimeException rtex) {
-			logException(rtex, request, "Runtime error setting session data");
+			ServletUtilMethods.logException(rtex, request, "Runtime error setting session data");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, rtex, multipartItems);
 			}
 		} catch (Exception ex) {
-			logException(ex, request, "General error setting session data");
+			ServletUtilMethods.logException(ex, request, "General error setting session data");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, ex, multipartItems);
@@ -737,7 +713,7 @@ public final class AppController extends VelocityViewServlet {
 		if (secondsToHandleRequest > AppProperties.longProcessingTime) {
 			String warnMessage = "Long server request processing time of "
 					+ String.valueOf(secondsToHandleRequest) + " seconds for URL "
-					+ getRequestQuery(request) + "\r\n";
+					+ ServletUtilMethods.getRequestQuery(request) + "\r\n";
 			warnMessage += "Logged in user: " + request.getRemoteUser();
 			logger.warn(warnMessage);
 		}
@@ -747,52 +723,6 @@ public final class AppController extends VelocityViewServlet {
 		// Create ViewMethods object and return the requested template
 		return getUserInterfaceTemplate(request, response, templateName, context, session,
 				sessionData, null, multipartItems);
-	}
-
-	/**
-	 * Replacement for and wrapper around
-	 * HttpServletRequest.getParameter(String) which works for multi-part form
-	 * data as well as normal requests
-	 */
-	public static String getParameter(HttpServletRequest request, String parameterName,
-			List<FileItem> multipartItems) {
-		if (FileUpload.isMultipartContent(new ServletRequestContext(request))) {
-			for (FileItem item : multipartItems) {
-				if (item.getFieldName().equals(parameterName)) {
-					if (item.isFormField()) {
-						return item.getString();
-					} else {
-						return item.getName();
-					}
-				}
-			}
-			return null;
-		} else {
-			return request.getParameter(parameterName);
-		}
-	}
-
-	/**
-	 * Like HttpServletgetRequestQuery(request) but works for POST as well as
-	 * GET: In the case of POST requests, constructs a query string from
-	 * parameter names & values
-	 * 
-	 * @see HttpServletRequest#getQueryString()
-	 */
-	public static String getRequestQuery(HttpServletRequest request) {
-		String requestQuery = request.getQueryString();
-		if (requestQuery != null) {
-			return "GET: " + requestQuery;
-		}
-		if (FileUpload.isMultipartContent(new ServletRequestContext(request))) {
-			return "POST: file upload";
-		}
-		requestQuery = "POST: ";
-		Map<String, String[]> parameterMap = request.getParameterMap();
-		for (Map.Entry<String, String[]> parameterEntry : parameterMap.entrySet()) {
-			requestQuery += "&" + parameterEntry.getKey() + "=" + parameterEntry.getValue()[0];
-		}
-		return requestQuery;
 	}
 
 	/**
@@ -826,7 +756,7 @@ public final class AppController extends VelocityViewServlet {
 			}
 			context.put("viewTools", new ViewTools(request, response, this.webAppRoot));
 		} catch (ObjectNotFoundException onfex) {
-			logException(onfex, request, "Error creating view methods object");
+			ServletUtilMethods.logException(onfex, request, "Error creating view methods object");
 		}
 		// template ('return' parameter) *must* be specified
 		if (templateName == null) {
@@ -855,7 +785,7 @@ public final class AppController extends VelocityViewServlet {
 		try {
 			super.mergeTemplate(template, context, response);
 		} catch (Exception ex) {
-			logException(ex, "Error interpreting template " + template.getName());
+			ServletUtilMethods.logException(ex, "Error interpreting template " + template.getName());
 			try {
 				// Make the exception that just occurred accessible for
 				// reporting
@@ -865,11 +795,11 @@ public final class AppController extends VelocityViewServlet {
 				Template errorTemplate = getTemplate(AppProperties.errorTemplateLocation);
 				super.mergeTemplate(errorTemplate, context, response);
 			} catch (ResourceNotFoundException rnfe) {
-				logException(rnfe, "Error template not found");
+				ServletUtilMethods.logException(rnfe, "Error template not found");
 			} catch (ParseErrorException pee) {
-				logException(pee, "Syntax error in the template");
+				ServletUtilMethods.logException(pee, "Syntax error in the template");
 			} catch (Exception exex) {
-				logException(exex, "General templating error whilst reporting error");
+				ServletUtilMethods.logException(exex, "General templating error whilst reporting error");
 			}
 		}
 		float secondsToHandleMerge = (System.currentTimeMillis() - mergeTemplateStartTime)
@@ -887,84 +817,6 @@ public final class AppController extends VelocityViewServlet {
 				logger.warn("Unable to find logged in user: " + onfex);
 			}
 		}
-	}
-
-	/**
-	 * Log errors with as much information as possible: include user, URL,
-	 * recursive causes and a stack trace to the original occurence in the
-	 * application
-	 * 
-	 * NB Doesn't throw a servletException, that has to be done as well as
-	 * calling this
-	 */
-	public static void logException(Exception ex, HttpServletRequest request, String topLevelMessage) {
-		String errorMessage = "";
-		if (topLevelMessage != null) {
-			errorMessage += topLevelMessage + "\r\n" + " - ";
-		}
-		errorMessage += ex.toString() + "\r\n";
-		errorMessage += " - URL = " + getRequestQuery(request) + "\r\n";
-		errorMessage += " - Logged in user: " + request.getRemoteUser() + "\r\n";
-		errorMessage += getExceptionCauses(ex);
-		logger.error(errorMessage);
-	}
-
-	/**
-	 * Log errors in a helpful format. Use this version when no
-	 * HttpServletRequest object is available
-	 * 
-	 * @see #logException(Exception, HttpServletRequest, String)
-	 */
-	public static void logException(Exception ex, String topLevelMessage) {
-		String errorMessage = "";
-		if (topLevelMessage != null) {
-			errorMessage += topLevelMessage + "\r\n" + " - ";
-		}
-		errorMessage += ex.toString() + "\r\n";
-		errorMessage += getExceptionCauses(ex);
-		logger.warn(errorMessage);
-	}
-
-	/**
-	 * Return a string for logging purposes, of an exception's 'cause stack',
-	 * i.e. the original exception(s) thrown and stack trace, i.e. the methods
-	 * that the exception was thrown through.
-	 * 
-	 * Called by logException
-	 */
-	private static String getExceptionCauses(Exception ex) {
-		String errorMessage = ex.toString() + "\r\n";
-		if (ex.getCause() != null) {
-			// Recursively find causes of exception
-			errorMessage += " - Error was due to...";
-			Exception exceptionCause = ex;
-			String causeIndent = " - ";
-			errorMessage += causeIndent + ex.toString() + "\r\n";
-			while (exceptionCause.getCause() != null) {
-				if (exceptionCause.getCause() instanceof Exception) {
-					exceptionCause = (Exception) exceptionCause.getCause();
-					causeIndent += " - ";
-					errorMessage += causeIndent + getExceptionCauses(exceptionCause);
-				}
-			}
-		}
-		// Include out relevant parts of the stack trace
-		StackTraceElement[] stackTrace = ex.getStackTrace();
-		if (stackTrace.length > 0) {
-			errorMessage += " - Stack trace:\r\n";
-			int nonGtwmClassesLogged = 0;
-			for (StackTraceElement stackTraceElement : stackTrace) {
-				if (!stackTraceElement.getClassName().startsWith("com.gtwm.")) {
-					nonGtwmClassesLogged++;
-				}
-				// Only trace our own classes + a few more, stop shortly after
-				// we get to java language or 3rd party classes
-				if (nonGtwmClassesLogged < 15) {
-					errorMessage += "   " + stackTraceElement.toString() + "\r\n";
-				}
-			}
-		}
-		return errorMessage;
 	}
 
 	/**
