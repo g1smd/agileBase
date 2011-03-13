@@ -890,6 +890,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		for (AppUserInfo user : company.getUsers()) {
 			HibernateUtil.activateObject(user);
 			user.unhideReport(reportToRemove);
+			user.removeOperationalDashboardReport(reportToRemove);
 			if (reportToRemove.equals(user.getDefaultReport())) {
 				logger.warn("Default report " + reportToRemove.getModule() + " - " + reportToRemove
 						+ " removed for user " + user);
