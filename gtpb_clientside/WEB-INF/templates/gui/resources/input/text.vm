@@ -15,16 +15,6 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-<style>  
-  input[focused][type='text'],
-  textarea[focused] {
-    border:2px solid #A2B6FF;
-    background-color:#ECF0FF;
-  }
-  .gtpb_youtube {
-    padding-top:10px;
-  }
-</style>
 #set($fieldValueObject = $tableDataRow.get($field))##
 ##
 #if($globalEdit)##
