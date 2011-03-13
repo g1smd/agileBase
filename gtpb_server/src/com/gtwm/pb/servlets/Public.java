@@ -63,7 +63,13 @@ public class Public extends VelocityViewServlet {
 		response.setContentType(responseReturnType.getResponseType());
 		response.setCharacterEncoding("ISO-8859-1");
 		EnumSet<PublicAction> publicActions = EnumSet.allOf(PublicAction.class);
-		String templateName = null;
+		String templatePath = "gui/public/";
+		List<FileItem> multipartItems = ServletUtilMethods.getMultipartItems(request);
+		String templateName = ServletUtilMethods.getParameter(request, "return", multipartItems);
+		if (templateName != null) {
+			// var is from public input, clean
+			templateName = templateName.replaceAll("\\W", "");
+		}
 		for (PublicAction publicAction : publicActions) {
 			String publicActionValue = request.getParameter(publicAction.toString().toLowerCase());
 			if (publicActionValue != null) {
@@ -79,18 +85,23 @@ public class Public extends VelocityViewServlet {
 					}
 					table = this.getPublicTable(company, internalTableName);
 				} catch (AgileBaseException abex) {
-					AppController.logException(abex, request, "Error preparing public form");
+					ServletUtilMethods.logException(abex, request, "Error preparing public form");
 					return this.getUserInterfaceTemplate(request, response, "report_error", context);
 				}
 				switch (publicAction) {
 				case SHOW_FORM:
 					context.put("gtpbPublicTable", table);
 					context.put("gtpbCompany", company);
-					templateName = "gui/public/form";
+					if(templateName == null) {
+						templateName = "form_plain";
+					}
+					templateName = templatePath + templateName;
 					break;
 				case SAVE_NEW_RECORD:
-					templateName = "gui/public/posted";
-					List<FileItem> multipartItems = AppController.getMultipartItems(request);
+					if(templateName == null) {
+						templateName = "posted";
+					}
+					templateName = templatePath + templateName;
 					SessionDataInfo sessionData = new SessionData();
 					try {
 						ServletDataMethods.setSessionFieldInputValues(sessionData, request, true,
@@ -103,15 +114,15 @@ public class Public extends VelocityViewServlet {
 										.getFieldInputValues()), true, -1, sessionData,
 								multipartItems);
 					} catch (AgileBaseException abex) {
-						AppController.logException(abex, request,
+						ServletUtilMethods.logException(abex, request,
 								"General error performing save from public");
 						return this.getUserInterfaceTemplate(request, response, templateName, context);
 					} catch (SQLException sqlex) {
-						AppController.logException(sqlex, request,
+						ServletUtilMethods.logException(sqlex, request,
 								"SQL error performing save from public");
 						return this.getUserInterfaceTemplate(request, response, templateName, context);
 					} catch (FileUploadException abex) {
-						AppController.logException(abex, request,
+						ServletUtilMethods.logException(abex, request,
 								"General error doing file upload from public");
 						return this.getUserInterfaceTemplate(request, response, templateName, context);
 					}

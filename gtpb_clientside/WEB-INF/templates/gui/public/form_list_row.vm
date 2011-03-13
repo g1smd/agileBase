@@ -1,0 +1,41 @@
+##
+##  Copyright 2011 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## Used by view.vm and edit.vm
+## $tableDataRow and $field must be defined by them
+#if (! $field.getTableContainingField().getPrimaryKey().equals($field)) ## remove to show primary key field
+	#set($fieldCategory = $field.getFieldCategory())
+	#if($fieldCategory != "REFERENCED_REPORT_DATA")
+	  #if($fieldCategory != "FILE")
+    	<li #if($fieldCategory =='SEPARATOR') class="separator" #end>
+            <label for="$field.getInternalFieldName()">
+            #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+              $field.getSimplifiedFieldName()
+            #else
+              $field
+            #end
+              <span class="ab_field_description">$field.getFieldDescription()</span>
+            </label>
+            #if($fieldCategory !='SEPARATOR')
+			  <div class="ab_field_input">
+			  #parse('gui/resources/input/input.vm')
+			  </div>
+			#end
+        </li>
+	  #end
+	#end
+#end ## remove to show primary key field

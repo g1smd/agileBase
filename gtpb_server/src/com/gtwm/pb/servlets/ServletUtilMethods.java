@@ -17,7 +17,20 @@
  */
 package com.gtwm.pb.servlets;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.grlea.log.SimpleLogger;
 
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PublicUser;
@@ -37,6 +50,148 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 public final class ServletUtilMethods {
 
 	private ServletUtilMethods() {
+	}
+
+	/**
+	 * Replacement for and wrapper around
+	 * HttpServletRequest.getParameter(String) which works for multi-part form
+	 * data as well as normal requests
+	 */
+	public static String getParameter(HttpServletRequest request, String parameterName,
+			List<FileItem> multipartItems) {
+		if (FileUpload.isMultipartContent(new ServletRequestContext(request))) {
+			for (FileItem item : multipartItems) {
+				if (item.getFieldName().equals(parameterName)) {
+					if (item.isFormField()) {
+						return item.getString();
+					} else {
+						return item.getName();
+					}
+				}
+			}
+			return null;
+		} else {
+			return request.getParameter(parameterName);
+		}
+	}
+
+	/**
+	 * Provide the ability to cache multi-part items in a variable to save re-parsing
+	 */
+	public static List<FileItem> getMultipartItems(HttpServletRequest request) {
+		List<FileItem> multipartItems = new LinkedList<FileItem>();
+		if (FileUpload.isMultipartContent(new ServletRequestContext(request))) {
+			// See http://jakarta.apache.org/commons/fileupload/using.html
+			FileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			try {
+				multipartItems = upload.parseRequest(request);
+			} catch (FileUploadException fuex) {
+				logException(fuex, request, "Error parsing multi-part form data");
+			}
+		}
+		return multipartItems;
+	}
+
+	/**
+	 * Log errors with as much information as possible: include user, URL,
+	 * recursive causes and a stack trace to the original occurence in the
+	 * application
+	 * 
+	 * NB Doesn't throw a servletException, that has to be done as well as
+	 * calling this
+	 */
+	public static void logException(Exception ex, HttpServletRequest request, String topLevelMessage) {
+		String errorMessage = "";
+		if (topLevelMessage != null) {
+			errorMessage += topLevelMessage + "\r\n" + " - ";
+		}
+		errorMessage += ex.toString() + "\r\n";
+		errorMessage += " - URL = " + getRequestQuery(request) + "\r\n";
+		errorMessage += " - Logged in user: " + request.getRemoteUser() + "\r\n";
+		errorMessage += getExceptionCauses(ex);
+		logger.error(errorMessage);
+	}
+
+	/**
+	 * Log errors in a helpful format. Use this version when no
+	 * HttpServletRequest object is available
+	 * 
+	 * @see #logException(Exception, HttpServletRequest, String)
+	 */
+	public static void logException(Exception ex, String topLevelMessage) {
+		String errorMessage = "";
+		if (topLevelMessage != null) {
+			errorMessage += topLevelMessage + "\r\n" + " - ";
+		}
+		errorMessage += ex.toString() + "\r\n";
+		errorMessage += getExceptionCauses(ex);
+		logger.warn(errorMessage);
+	}
+
+	/**
+	 * Return a string for logging purposes, of an exception's 'cause stack',
+	 * i.e. the original exception(s) thrown and stack trace, i.e. the methods
+	 * that the exception was thrown through.
+	 * 
+	 * Called by logException
+	 */
+	private static String getExceptionCauses(Exception ex) {
+		String errorMessage = ex.toString() + "\r\n";
+		if (ex.getCause() != null) {
+			// Recursively find causes of exception
+			errorMessage += " - Error was due to...";
+			Exception exceptionCause = ex;
+			String causeIndent = " - ";
+			errorMessage += causeIndent + ex.toString() + "\r\n";
+			while (exceptionCause.getCause() != null) {
+				if (exceptionCause.getCause() instanceof Exception) {
+					exceptionCause = (Exception) exceptionCause.getCause();
+					causeIndent += " - ";
+					errorMessage += causeIndent + getExceptionCauses(exceptionCause);
+				}
+			}
+		}
+		// Include out relevant parts of the stack trace
+		StackTraceElement[] stackTrace = ex.getStackTrace();
+		if (stackTrace.length > 0) {
+			errorMessage += " - Stack trace:\r\n";
+			int nonGtwmClassesLogged = 0;
+			for (StackTraceElement stackTraceElement : stackTrace) {
+				if (!stackTraceElement.getClassName().startsWith("com.gtwm.")) {
+					nonGtwmClassesLogged++;
+				}
+				// Only trace our own classes + a few more, stop shortly after
+				// we get to java language or 3rd party classes
+				if (nonGtwmClassesLogged < 15) {
+					errorMessage += "   " + stackTraceElement.toString() + "\r\n";
+				}
+			}
+		}
+		return errorMessage;
+	}
+
+	/**
+	 * Like HttpServlet#getRequestQuery(request) but works for POST as well as
+	 * GET: In the case of POST requests, constructs a query string from
+	 * parameter names & values
+	 * 
+	 * @see HttpServletRequest#getQueryString()
+	 */
+	public static String getRequestQuery(HttpServletRequest request) {
+		String requestQuery = request.getQueryString();
+		if (requestQuery != null) {
+			return "GET: " + requestQuery;
+		}
+		if (FileUpload.isMultipartContent(new ServletRequestContext(request))) {
+			return "POST: file upload";
+		}
+		requestQuery = "POST: ";
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		for (Map.Entry<String, String[]> parameterEntry : parameterMap.entrySet()) {
+			requestQuery += "&" + parameterEntry.getKey() + "=" + parameterEntry.getValue()[0];
+		}
+		return requestQuery;
 	}
 
 	public static BaseReportInfo getReportForRequest(SessionDataInfo sessionData,
@@ -123,4 +278,5 @@ public final class ServletUtilMethods {
 
 	public static final boolean DO_NOT_USE_SESSION = false;
 
+	private static final SimpleLogger logger = new SimpleLogger(ServletUtilMethods.class);
 }

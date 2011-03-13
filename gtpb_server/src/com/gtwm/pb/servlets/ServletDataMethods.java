@@ -534,7 +534,7 @@ public final class ServletDataMethods {
 			CantDoThatException, CodingErrorException, FileUploadException, InputRecordException {
 		BaseValue fieldValue = null;
 		String internalFieldName = field.getInternalFieldName();
-		String fieldValueString = AppController.getParameter(request, internalFieldName,
+		String fieldValueString = ServletUtilMethods.getParameter(request, internalFieldName,
 				multipartItems);
 		DatabaseFieldType databaseFieldType = field.getDbType();
 		// reduce common errors for numbers (commas, spaces at end, - signs on
@@ -993,7 +993,7 @@ public final class ServletDataMethods {
 			boolean newRecord, DatabaseInfo databaseDefn, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, DisallowedException, SQLException,
 			InputRecordException, CodingErrorException, CantDoThatException, FileUploadException, MissingParametersException {
-		String internalTableName = AppController.getParameter(request, "internaltablename",
+		String internalTableName = ServletUtilMethods.getParameter(request, "internaltablename",
 				multipartItems);
 		TableInfo table;
 		if (internalTableName == null) {
@@ -1011,7 +1011,7 @@ public final class ServletDataMethods {
 		}
 		int rowId = -1;
 		if (!newRecord) {
-			String stringRowId = AppController.getParameter(request, "rowid", multipartItems);
+			String stringRowId = ServletUtilMethods.getParameter(request, "rowid", multipartItems);
 			if (stringRowId == null) {
 				rowId = sessionData.getRowId();
 				if (rowId == -1) {
@@ -1053,7 +1053,7 @@ public final class ServletDataMethods {
 			DatabaseInfo databaseDefn, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, DisallowedException, SQLException,
 			InputRecordException, CodingErrorException, CantDoThatException, MissingParametersException {
-		String internalTableName = AppController.getParameter(request, "internaltablename",
+		String internalTableName = ServletUtilMethods.getParameter(request, "internaltablename",
 				multipartItems);
 		TableInfo table;
 		if (internalTableName == null) {
@@ -1180,24 +1180,24 @@ public final class ServletDataMethods {
 			throw new DisallowedException(PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		// get import options
-		String generateRowIdsString = AppController.getParameter(request, "generate_row_ids",
+		String generateRowIdsString = ServletUtilMethods.getParameter(request, "generate_row_ids",
 				multipartItems);
 		boolean generateRowIds = Helpers.valueRepresentsBooleanTrue(generateRowIdsString);
-		String quoteCharString = AppController.getParameter(request, "quote_char", multipartItems);
+		String quoteCharString = ServletUtilMethods.getParameter(request, "quote_char", multipartItems);
 		if (quoteCharString == null) {
 			quoteCharString = "\"";
 		} else if (quoteCharString.equals("")) {
 			quoteCharString = "\"";
 		}
 		char quoteChar = quoteCharString.charAt(0);
-		String separatorString = AppController.getParameter(request, "separator", multipartItems);
+		String separatorString = ServletUtilMethods.getParameter(request, "separator", multipartItems);
 		if (separatorString == null) {
 			separatorString = ",";
 		} else if (separatorString.equals("")) {
 			separatorString = ",";
 		}
 		char separator = separatorString.charAt(0);
-		String numHeaderLinesString = AppController.getParameter(request, "num_header_lines",
+		String numHeaderLinesString = ServletUtilMethods.getParameter(request, "num_header_lines",
 				multipartItems);
 		if (numHeaderLinesString == null) {
 			numHeaderLinesString = "0";
@@ -1205,31 +1205,31 @@ public final class ServletDataMethods {
 			numHeaderLinesString = "0";
 		}
 		int numHeaderLines = Integer.valueOf(numHeaderLinesString);
-		String csvContent = AppController.getParameter(request, "csv_content", multipartItems);
-		String useRelationDisplayValuesString = AppController.getParameter(request,
+		String csvContent = ServletUtilMethods.getParameter(request, "csv_content", multipartItems);
+		String useRelationDisplayValuesString = ServletUtilMethods.getParameter(request,
 				"use_relation_display_values", multipartItems);
 		boolean useRelationDisplayValues = Helpers
 				.valueRepresentsBooleanTrue(useRelationDisplayValuesString);
-		String importSequenceValuesString = AppController.getParameter(request,
+		String importSequenceValuesString = ServletUtilMethods.getParameter(request,
 				"import_sequence_values", multipartItems);
 		boolean importSequenceValues = Helpers
 				.valueRepresentsBooleanTrue(importSequenceValuesString);
-		String bestGuessRelationsString = AppController.getParameter(request,
+		String bestGuessRelationsString = ServletUtilMethods.getParameter(request,
 				"best_guess_relations", multipartItems);
 		boolean requireExactRelationValues = !(Helpers
 				.valueRepresentsBooleanTrue(bestGuessRelationsString));
-		String importTypeString = AppController
+		String importTypeString = ServletUtilMethods
 				.getParameter(request, "import_type", multipartItems);
 		boolean updateExistingRecords = false;
-		String trimString = AppController.getParameter(request, "trim", multipartItems);
+		String trimString = ServletUtilMethods.getParameter(request, "trim", multipartItems);
 		boolean trim = Helpers.valueRepresentsBooleanTrue(trimString);
-		String mergeString = AppController.getParameter(request, "merge", multipartItems);
+		String mergeString = ServletUtilMethods.getParameter(request, "merge", multipartItems);
 		boolean merge = Helpers.valueRepresentsBooleanTrue(mergeString);
 		BaseField recordIdentifierField = table.getPrimaryKey();
 		if (importTypeString != null) {
 			if (importTypeString.toLowerCase().equals("update")) {
 				updateExistingRecords = true;
-				String recordIdentifierFieldInternalName = AppController.getParameter(request,
+				String recordIdentifierFieldInternalName = ServletUtilMethods.getParameter(request,
 						"record_identifier", multipartItems);
 				if (recordIdentifierFieldInternalName != null) {
 					if (!recordIdentifierFieldInternalName.equals("")) {
