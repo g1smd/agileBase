@@ -438,6 +438,10 @@ public class Enumerations {
 			this.htmlEntity = htmlEntity;
 		}
 		
+		public String toString() {
+			return this.getHtmlEntity();
+		}
+		
 		private String representation = null;
 		
 		private String htmlEntity = null;
