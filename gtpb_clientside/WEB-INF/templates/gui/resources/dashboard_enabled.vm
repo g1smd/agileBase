@@ -18,7 +18,7 @@
 
 ## Determine whether the closed source dashboard component is enabled
 #set($company = $view.getLoggedInUser().getCompany())
-#if($company == "GTWM" || $company == "Castell Howell" || $company == "Demo - Basic" || $company == "Bread Art Collective" || $company == "Think Drinks")
+#if($company == "GTWM" || $company == "Castell Howell" || $company == "Demo - Basic" || $company == "Bread Art Collective" || $company == "Think Drinks" || $company == "ThinkBuzan")
   #set($dashboard_enabled = true)
 #else
   #set($dashboard_enabled = false)
