@@ -333,7 +333,6 @@ public class ReportData implements ReportDataInfo {
 		// Chronic also confuses it with end of 25th etc.
 		// \d\d = start of a date not yet parseable
 		// * or % = text filtering, not for date parsing
-		logger.debug("Parsing " + valueToParse);
 		if (valueToParse.contains("%") || valueToParse.contains("*")
 				|| valueToParse.trim().equalsIgnoreCase("th")
 				|| valueToParse.matches("^\\d{1,2}\\s*$")) {
@@ -343,7 +342,6 @@ public class ReportData implements ReportDataInfo {
 			// Note: the regex above matches a string that *only* contains numbers
 			// Value is a unix 'epoch' timestamp
 			long epochTime = Long.valueOf(valueToParse);
-			logger.debug("Value is an epoch time " + epochTime);
 			// TODO: better calculation of end time, we just add an hour at the
 			// moment
 			Span timespan = new Span(epochTime, epochTime + 3600);
@@ -354,7 +352,6 @@ public class ReportData implements ReportDataInfo {
 				chronicOptions.setGuess(false);
 				chronicOptions.setContext(Pointer.PointerType.NONE);
 				Span timespan = Chronic.parse(valueToParse, chronicOptions);
-				logger.debug("Value is a normal time " + timespan);
 				return timespan;
 			} catch (IllegalStateException isex) {
 				return null;
