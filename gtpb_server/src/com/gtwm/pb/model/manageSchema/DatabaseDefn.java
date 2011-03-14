@@ -318,7 +318,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		TableInfo newTable = new TableDefn(internalTableName, tableName, tableDesc);
 		HibernateUtil.currentSession().save(newTable);
@@ -459,7 +459,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
 		}
 		HibernateUtil.activateObject(table);
 		if (newTableName != null) {
@@ -511,7 +511,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		// Check the table doesn't have any user-added fields
 		for (BaseField field : tableToRemove.getFields()) {
@@ -578,7 +578,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			MissingParametersException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
 		}
 		SimpleReportInfo report = null;
 		// Put the new report in the current session module
@@ -881,7 +881,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, reportToRemove.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE,
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE,
 					reportToRemove.getParentTable());
 		}
 		// Remove the report from any 'hidden report' lists belonging to users
@@ -922,10 +922,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
 			String newReportName, String newReportDesc, ModuleInfo newModule)
-			throws DisallowedException, CantDoThatException, SQLException {
+			throws DisallowedException, CantDoThatException, SQLException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
 		if (newReportName != null) {
@@ -1071,7 +1071,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ObjectNotFoundException, DisallowedException, CantDoThatException, CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
 		}
 		BaseField field = null;
 		field = this.generateFieldObject(request, table, fieldType, internalFieldName, fieldName,
@@ -1100,7 +1100,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		TableInfo table = field.getTableContainingField();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
 		}
 		HibernateUtil.activateObject(field);
 		// TODO: switch statement
@@ -1379,11 +1379,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void updateField(HttpServletRequest request, BaseField field, String fieldName,
-			String fieldDesc) throws DisallowedException {
+			String fieldDesc) throws DisallowedException, ObjectNotFoundException {
 		TableInfo table = field.getTableContainingField();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
 		}
 		HibernateUtil.activateObject(field);
 		// amend field name
@@ -1572,11 +1572,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 			DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, tableToAddTo))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, tableToAddTo);
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, tableToAddTo);
 		}
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.VIEW_TABLE_DATA, relatedTable))) {
-			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, relatedTable);
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.VIEW_TABLE_DATA, relatedTable);
 		}
 		String listValueFieldInternalName = request.getParameter(PossibleListOptions.LISTVALUEFIELD
 				.getFormInputName());
@@ -1737,7 +1737,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		TableInfo table = field.getTableContainingField();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
 		}
 		this.removeFieldChecks(field, request);
 		// Don't allow deletion of the primary key
@@ -1785,7 +1785,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		ReportFieldInfo newReportField = null;
 		HibernateUtil.activateObject(report);
@@ -1818,7 +1818,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
 		report.addJoin(join);
@@ -1836,7 +1836,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
 		report.removeJoin(join);
@@ -1856,7 +1856,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
 		report.addSort(reportField, ascending);
@@ -1870,7 +1870,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
 		report.updateSort(reportField, ascending);
@@ -1883,7 +1883,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			CantDoThatException, SQLException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
 		ReportSortInfo removedSort = report.removeSort(reportField);
@@ -1899,7 +1899,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			DisallowedException, CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
 		report.addFilter(filter);
@@ -1983,7 +1983,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
 		report.removeFilter(filter);
@@ -2062,7 +2062,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
 		Savepoint savepoint = null;
@@ -2094,7 +2094,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
 		Savepoint savepoint = null;
@@ -2135,7 +2135,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		Map<TableInfo, Set<BaseReportInfo>> availableDataStores = this
 				.getViewableDataStores(request);
@@ -2248,7 +2248,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		SimpleReportInfo report = (SimpleReportInfo) reportField.getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		HibernateUtil.activateObject(report);
 		this.removeFieldFromReportChecks(reportField, request);
@@ -2267,7 +2267,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			DisallowedException, ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
@@ -2290,7 +2290,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			DisallowedException, ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
@@ -2313,7 +2313,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			DisallowedException, ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
@@ -2347,7 +2347,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		BaseReportInfo report = groupingReportField.getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
@@ -2371,7 +2371,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		BaseReportInfo report = groupingReportField.getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
@@ -2396,7 +2396,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		BaseReportInfo report = addedAggFn.getReportField().getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
@@ -2419,7 +2419,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			CantDoThatException, ObjectNotFoundException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
@@ -2444,7 +2444,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		ChartInfo templateSummary = report.getChart();
 		Set<ChartAggregateInfo> aggregates = templateSummary.getAggregateFunctions();
@@ -2495,7 +2495,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, reportSummary.getReport().getParentTable()))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, reportSummary.getReport()
+			throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, reportSummary.getReport()
 					.getParentTable());
 		}
 		BaseReportInfo report = reportSummary.getReport();
@@ -2528,7 +2528,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			if (table.getTableName().equals(tableName)) {
 				this.tableCache.put(company.getInternalCompanyName() + tableName, table);
 				if (!this.userAllowedToAccessTable(request, table)) {
-					throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
+					throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.VIEW_TABLE_DATA, table);
 				} else {
 					return table;
 				}
@@ -2562,7 +2562,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		TableInfo cachedTable = this.tableCache.get(internalTableName);
 		if (cachedTable != null) {
 			if (!this.userAllowedToAccessTable(request, cachedTable)) {
-				throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, cachedTable);
+				throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.VIEW_TABLE_DATA, cachedTable);
 			} else {
 				return cachedTable;
 			}
@@ -2575,7 +2575,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		cachedTable = this.tableCache.get(company.getInternalCompanyName() + internalTableName);
 		if (cachedTable != null) {
 			if (!this.userAllowedToAccessTable(request, cachedTable)) {
-				throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, cachedTable);
+				throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.VIEW_TABLE_DATA, cachedTable);
 			} else {
 				return cachedTable;
 			}
@@ -2590,7 +2590,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				// privileges on that table,
 				// or be an administrator of the company the table is in
 				if (!this.userAllowedToAccessTable(request, companyTable)) {
-					throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, companyTable);
+					throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.VIEW_TABLE_DATA, companyTable);
 				} else {
 					return companyTable;
 				}
@@ -2612,7 +2612,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 							table)) {
 						return table;
 					} else {
-						throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
+						throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.VIEW_TABLE_DATA, table);
 					}
 				}
 			}
@@ -2645,7 +2645,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 							PrivilegeType.VIEW_TABLE_DATA, table)) {
 						return table;
 					} else {
-						throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
+						throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.VIEW_TABLE_DATA, table);
 					}
 				}
 			}
@@ -2671,7 +2671,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 							// can do
 							logger.error("Found report field " + reportField + "in report "
 									+ report + " but user not allowed to view that report");
-							throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA,
+							throw new DisallowedException(this.authManager.getLoggedInUser(request), PrivilegeType.VIEW_TABLE_DATA,
 									report.getParentTable());
 						}
 					}
@@ -2934,7 +2934,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			logger.error("Error getting SQL connection: " + sqlex);
 		}
 	}
-
+	
 	/**
 	 * Lookup of internal table name to table
 	 */

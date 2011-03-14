@@ -113,7 +113,8 @@ public interface AuthManagerInfo {
 	 */
 	public void updateUser(HttpServletRequest request, AppUserInfo appUser, String userName,
 			String surname, String forename, String password, UserType userType)
-			throws DisallowedException, MissingParametersException, CantDoThatException, ObjectNotFoundException;
+			throws DisallowedException, MissingParametersException, CantDoThatException,
+			ObjectNotFoundException;
 
 	/**
 	 * @param appUser
@@ -177,7 +178,8 @@ public interface AuthManagerInfo {
 	 *             is invalid for roles
 	 */
 	public void addRolePrivilege(HttpServletRequest request, AppRoleInfo role,
-			PrivilegeType privilegeType) throws DisallowedException, CantDoThatException, ObjectNotFoundException;
+			PrivilegeType privilegeType) throws DisallowedException, CantDoThatException,
+			ObjectNotFoundException;
 
 	/**
 	 * Creates and stores a table-specific privilege which is an object that
@@ -209,7 +211,8 @@ public interface AuthManagerInfo {
 	 *             user because it conflicts with other privileges
 	 */
 	public void addUserPrivilege(HttpServletRequest request, AppUserInfo appUser,
-			PrivilegeType privilegeType) throws DisallowedException, CantDoThatException, ObjectNotFoundException;
+			PrivilegeType privilegeType) throws DisallowedException, CantDoThatException,
+			ObjectNotFoundException;
 
 	/**
 	 * Add a table-specific user privilege
@@ -238,7 +241,7 @@ public interface AuthManagerInfo {
 	 *             the table
 	 */
 	public void removePrivilegesOnTable(HttpServletRequest request, TableInfo table)
-			throws DisallowedException;
+			throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @throws MissingParametersException
@@ -260,6 +263,9 @@ public interface AuthManagerInfo {
 
 	public AppUserInfo getUserByUserName(HttpServletRequest request, String userName)
 			throws ObjectNotFoundException, DisallowedException;
+
+	public AppUserInfo getLoggedInUser(HttpServletRequest request) throws DisallowedException,
+			ObjectNotFoundException;
 
 	/**
 	 * @return A list of users who can log in from the current company
@@ -329,7 +335,8 @@ public interface AuthManagerInfo {
 	 * roles the user is in and which validates the username
 	 */
 	public boolean specifiedUserHasPrivilege(HttpServletRequest request,
-			PrivilegeType privilegeType, AppUserInfo user) throws DisallowedException, ObjectNotFoundException;
+			PrivilegeType privilegeType, AppUserInfo user) throws DisallowedException,
+			ObjectNotFoundException;
 
 	/**
 	 * Checks whether the specified user has a particular table privilege
@@ -339,7 +346,8 @@ public interface AuthManagerInfo {
 			throws DisallowedException, ObjectNotFoundException;
 
 	public boolean specifiedRoleHasPrivilege(HttpServletRequest request,
-			PrivilegeType privilegeType, AppRoleInfo role) throws DisallowedException, ObjectNotFoundException;
+			PrivilegeType privilegeType, AppRoleInfo role) throws DisallowedException,
+			ObjectNotFoundException;
 
 	public boolean specifiedRoleHasPrivilege(HttpServletRequest request,
 			PrivilegeType privilegeType, AppRoleInfo role, TableInfo table)
@@ -352,7 +360,7 @@ public interface AuthManagerInfo {
 	 * @throws DisallowedException
 	 *             if the logged in user isn't an administrator
 	 */
-	public boolean specifiedUserAllowedToViewReport(HttpServletRequest request,
-			AppUserInfo user, BaseReportInfo report)
-			throws DisallowedException, CodingErrorException, ObjectNotFoundException;
+	public boolean specifiedUserAllowedToViewReport(HttpServletRequest request, AppUserInfo user,
+			BaseReportInfo report) throws DisallowedException, CodingErrorException,
+			ObjectNotFoundException;
 }

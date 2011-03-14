@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.auth;
 
+import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.util.AgileBaseException;
 
@@ -26,15 +27,17 @@ import com.gtwm.pb.util.AgileBaseException;
  */
 public class DisallowedException extends AgileBaseException {
 
-    public DisallowedException(PrivilegeType privilegeType) {
-        super("User is not allowed to " + privilegeType.getPrivilegeDescription());
+    public DisallowedException(AppUserInfo user, PrivilegeType privilegeType) {
+        super("User " + user + " is not allowed to " + privilegeType.getPrivilegeDescription());
         this.privilegeType = privilegeType;
+        this.user = user;
     }
     
-    public DisallowedException(PrivilegeType privilegeType, TableInfo table) {
-        super("User is not allowed to " + privilegeType.getPrivilegeDescription() + " in table '" + table.getTableName() + "'. An administrator can set up privileges so this can be allowed");
+    public DisallowedException(AppUserInfo user, PrivilegeType privilegeType, TableInfo table) {
+        super("User " + user + " is not allowed to " + privilegeType.getPrivilegeDescription() + " in table '" + table.getTableName() + "'. An administrator can set up privileges so this can be allowed");
         this.privilegeType = privilegeType;
         this.table = table;
+        this.user = user;
     }
     
     public PrivilegeType getPrivilegeType() {
@@ -49,4 +52,5 @@ public class DisallowedException extends AgileBaseException {
     
     private TableInfo table = null;
 
+    private AppUserInfo user = null;
 }

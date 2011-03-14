@@ -359,7 +359,7 @@ public class UsageStats implements UsageStatsInfo {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		if (!authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.ADMINISTRATE)) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(authManager.getLoggedInUser(this.request), PrivilegeType.ADMINISTRATE);
 		}
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
 		Set<TableInfo> companyTables = company.getTables();
@@ -410,7 +410,7 @@ public class UsageStats implements UsageStatsInfo {
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()) || authManager
 				.getAuthenticator().loggedInUserAllowedTo(this.request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			throw new DisallowedException(authManager.getLoggedInUser(this.request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
 		SortedSet<UserReportViewStatsInfo> userInfos = new TreeSet<UserReportViewStatsInfo>();
 		int averageViews = 0;
@@ -475,7 +475,7 @@ public class UsageStats implements UsageStatsInfo {
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.MANAGE_TABLE, table) || authManager.getAuthenticator()
 				.loggedInUserAllowedTo(this.request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(authManager.getLoggedInUser(this.request), PrivilegeType.MANAGE_TABLE, table);
 		}
 		List<List<String>> reportInfos = new LinkedList<List<String>>();
 		Map<TableInfo, Set<BaseReportInfo>> viewableDataStores = this.databaseDefn
@@ -556,7 +556,7 @@ public class UsageStats implements UsageStatsInfo {
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.MANAGE_TABLE, table) || authManager.getAuthenticator()
 				.loggedInUserAllowedTo(this.request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(authManager.getLoggedInUser(this.request), PrivilegeType.MANAGE_TABLE, table);
 		}
 		if (!(logType.equals(LogType.DATA_CHANGE) || logType.equals(LogType.TABLE_SCHEMA_CHANGE))) {
 			throw new CantDoThatException(
@@ -630,7 +630,7 @@ public class UsageStats implements UsageStatsInfo {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		if (!authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.ADMINISTRATE)) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(authManager.getLoggedInUser(this.request), PrivilegeType.ADMINISTRATE);
 		}
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
 		Set<TableInfo> companyTables = company.getTables();
@@ -800,7 +800,7 @@ public class UsageStats implements UsageStatsInfo {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		if (!authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.ADMINISTRATE)) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(authManager.getLoggedInUser(this.request), PrivilegeType.ADMINISTRATE);
 		}
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
 		// Check cache
@@ -890,7 +890,7 @@ public class UsageStats implements UsageStatsInfo {
 	public String toString() {
 		return "Usage Stats object";
 	}
-
+	
 	private int monthlyTableCost = 0;
 
 	private int numTables = 0;
