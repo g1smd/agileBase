@@ -164,7 +164,7 @@ public final class ServletSchemaMethods {
 		// than going through databaseDefn
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		String tabAddress = request.getParameter("tabaddress");
 		if (tabAddress == null) {
@@ -197,7 +197,7 @@ public final class ServletSchemaMethods {
 		// databaseDefn
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		String tabAddress = request.getParameter("tabaddress");
 		if (tabAddress == null) {
@@ -2464,7 +2464,7 @@ public final class ServletSchemaMethods {
 		// Authentication is here because we don't call any databaseDefn method
 		if (!databaseDefn.getAuthManager().getAuthenticator()
 				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
@@ -2495,7 +2495,7 @@ public final class ServletSchemaMethods {
 		// Authentication is here because we don't call any databaseDefn method
 		if (!databaseDefn.getAuthManager().getAuthenticator()
 				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
@@ -2572,7 +2572,7 @@ public final class ServletSchemaMethods {
 				.getAuthenticator()
 				.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
 						report.getParentTable())) {
-			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.VIEW_TABLE_DATA);
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
