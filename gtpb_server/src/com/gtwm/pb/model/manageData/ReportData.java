@@ -337,8 +337,9 @@ public class ReportData implements ReportDataInfo {
 				|| valueToParse.trim().equalsIgnoreCase("th")
 				|| valueToParse.matches("^\\d{1,2}\\s*$")) {
 			return null;
-		} else if ((!valueToParse.matches("\\D")) && (valueToParse.length() > 8)
+		} else if ((valueToParse.matches("^\\d$")) && (valueToParse.length() > 8)
 				&& (valueToParse.length() < 11)) {
+			// Note: the regex above matches a string that *only* contains numbers
 			// Value is a unix 'epoch' timestamp
 			long epochTime = Long.valueOf(valueToParse);
 			// TODO: better calculation of end time, we just add an hour at the
