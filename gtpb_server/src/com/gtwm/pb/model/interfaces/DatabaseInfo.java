@@ -161,7 +161,7 @@ public interface DatabaseInfo {
 	 */
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
 			String newReportName, String newReportDesc, ModuleInfo newModule)
-			throws DisallowedException, CantDoThatException, SQLException;
+			throws DisallowedException, CantDoThatException, SQLException, ObjectNotFoundException;
 
 	/**
 	 * 
@@ -217,7 +217,7 @@ public interface DatabaseInfo {
 	 * Update basic field details - name and description
 	 */
 	public void updateField(HttpServletRequest request, BaseField field, String fieldName,
-			String fieldDesc) throws DisallowedException;
+			String fieldDesc) throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * Update simple options for a table field, such as whether to use a lookup

@@ -397,15 +397,15 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return AppProperties.applicationVersion;
 	}
 
-	public List<RelationField> getUnchosenRelationFields() throws DisallowedException {
+	public List<RelationField> getUnchosenRelationFields() throws DisallowedException, ObjectNotFoundException {
 		return this.getUnchosenRelationFields(this.sessionData.getTable());
 	}
 
 	public List<RelationField> getUnchosenRelationFields(TableInfo table)
-			throws DisallowedException {
+			throws DisallowedException, ObjectNotFoundException {
 		if (!this.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.VIEW_TABLE_DATA, table)) {
-			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA, table);
 		}
 		List<RelationField> unchosenRelationFields = new LinkedList<RelationField>();
 		for (BaseField field : table.getFields()) {
@@ -428,7 +428,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			ObjectNotFoundException, SQLException, CantDoThatException, CodingErrorException {
 		if (!this.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.VIEW_TABLE_DATA, table)) {
-			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA, table);
 		}
 		int rowId = this.sessionData.getRowId(table);
 		return this.getTableDataRow(table, rowId);
@@ -439,7 +439,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			CodingErrorException {
 		if (!this.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.VIEW_TABLE_DATA, table)) {
-			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, table);
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA, table);
 		}
 		// If there was no error submitting the data
 		if (this.ex == null) {
@@ -452,10 +452,10 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public Set<Integer> getRelatedRowIds(int masterRowId, TableInfo relatedTable)
-			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException {
+			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException, ObjectNotFoundException {
 		BaseReportInfo sessionReport = this.sessionData.getReport();
 		if (!this.getAuthenticator().loggedInUserAllowedToViewReport(this.request, sessionReport)) {
-			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA,
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
 					sessionReport.getParentTable());
 		}
 		return this.databaseDefn.getDataManagement().getRelatedRowIds(sessionReport, masterRowId,
@@ -464,9 +464,9 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	public Set<Integer> getRelatedRowIds(BaseReportInfo masterReport, int masterRowId,
 			TableInfo relatedTable) throws DisallowedException, CantDoThatException, SQLException,
-			CodingErrorException {
+			CodingErrorException, ObjectNotFoundException {
 		if (!this.getAuthenticator().loggedInUserAllowedToViewReport(this.request, masterReport)) {
-			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA,
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
 					masterReport.getParentTable());
 		}
 		return this.databaseDefn.getDataManagement().getRelatedRowIds(masterReport, masterRowId,
@@ -595,11 +595,11 @@ public final class ViewMethods implements ViewMethodsInfo {
 	 * view that report
 	 */
 	private void checkReportViewPrivileges(BaseReportInfo report) throws DisallowedException,
-			CodingErrorException {
+			CodingErrorException, ObjectNotFoundException {
 		if (!this.getAuthenticator().loggedInUserAllowedToViewReport(this.request, report)) {
 			logger.warn("Report " + report + " is not viewable by user "
 					+ this.request.getRemoteUser());
-			throw new DisallowedException(PrivilegeType.VIEW_TABLE_DATA, report.getParentTable());
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA, report.getParentTable());
 		}
 	}
 
@@ -776,7 +776,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		TableInfo table = this.sessionData.getTable();
 		if (!(getAuthenticator().loggedInUserAllowedTo(this.request, PrivilegeType.MANAGE_TABLE,
 				table))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.MANAGE_TABLE, table);
 		}
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
@@ -947,8 +947,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public AppUserInfo getLoggedInUser() throws DisallowedException, ObjectNotFoundException {
-		String username = this.request.getRemoteUser();
-		return getAuthManager().getUserByUserName(this.request, username);
+		return this.getAuthManager().getLoggedInUser(this.request);
 	}
 
 	public String toString() {

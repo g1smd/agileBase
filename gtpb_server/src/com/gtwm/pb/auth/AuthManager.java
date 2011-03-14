@@ -244,7 +244,7 @@ public final class AuthManager implements AuthManagerInfo {
 	public SortedSet<CompanyInfo> getCompanies(HttpServletRequest request)
 			throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
-			throw new DisallowedException(PrivilegeType.MASTER);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.MASTER);
 		}
 		return ((Authenticator) this.authenticator).getCompanies();
 	}
@@ -253,7 +253,7 @@ public final class AuthManager implements AuthManagerInfo {
 			throws DisallowedException, CantDoThatException, CodingErrorException,
 			MissingParametersException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
-			throw new DisallowedException(PrivilegeType.MASTER);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.MASTER);
 		}
 		HibernateUtil.activateObject(this.authenticator);
 		((Authenticator) this.authenticator).addCompany(company);
@@ -286,7 +286,7 @@ public final class AuthManager implements AuthManagerInfo {
 			throws DisallowedException, CodingErrorException, CantDoThatException,
 			ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
-			throw new DisallowedException(PrivilegeType.MASTER);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.MASTER);
 		}
 		Set<TableInfo> companyTables = company.getTables();
 		if (companyTables.size() > 0) {
@@ -328,14 +328,14 @@ public final class AuthManager implements AuthManagerInfo {
 			throws DisallowedException, MissingParametersException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || this.authenticator
 				.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		// only MASTER user is allowed to add a user to a different company
 		if (!this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.MASTER)) {
 			CompanyInfo companyLoggedInTo = this.getCompanyForLoggedInUser(request);
 			CompanyInfo companyUserBelongsTo = newUser.getCompany();
 			if (!companyUserBelongsTo.equals(companyLoggedInTo)) {
-				throw new DisallowedException(PrivilegeType.MASTER);
+				throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.MASTER);
 			}
 		}
 		// Add user in memory by cascading addUser down to the actual
@@ -350,7 +350,7 @@ public final class AuthManager implements AuthManagerInfo {
 		// Allow updating of any user if administrator or yourself if not
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || appUser
 				.getUserName().equals(request.getRemoteUser()))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		// check which fields are to be updated:
 		// 1) treat zero-length strings as a deletion request,
@@ -400,7 +400,7 @@ public final class AuthManager implements AuthManagerInfo {
 			CantDoThatException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || this.authenticator
 				.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		if (appUser.getUserName().equals(request.getRemoteUser())) {
 			throw new CantDoThatException("Unable to edit own account");
@@ -422,10 +422,10 @@ public final class AuthManager implements AuthManagerInfo {
 		}
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
 			if (foundUser == null) {
-				throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+				throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 			}
 			if (!foundUser.getUserName().equals(request.getRemoteUser())) {
-				throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+				throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 			}
 		}
 		if (foundUser == null) {
@@ -441,14 +441,14 @@ public final class AuthManager implements AuthManagerInfo {
 			CodingErrorException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || this.authenticator
 				.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		// only MASTER user is allowed to add a user to a different company
 		if (!this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.MASTER)) {
 			CompanyInfo companyLoggedInTo = this.getCompanyForLoggedInUser(request);
 			CompanyInfo companyRoleBelongsTo = role.getCompany();
 			if (!companyRoleBelongsTo.equals(companyLoggedInTo)) {
-				throw new DisallowedException(PrivilegeType.MASTER);
+				throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.MASTER);
 			}
 		}
 		HibernateUtil.activateObject(this.authenticator);
@@ -459,7 +459,7 @@ public final class AuthManager implements AuthManagerInfo {
 			String newRoleName) throws DisallowedException, MissingParametersException,
 			ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		if (role == null) {
 			throw new MissingParametersException("oldRole field not specified");
@@ -481,7 +481,7 @@ public final class AuthManager implements AuthManagerInfo {
 			throws DisallowedException, ObjectNotFoundException, CodingErrorException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || this.authenticator
 				.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		logger.info("removing role " + role);
 		HibernateUtil.activateObject(this.authenticator);
@@ -501,7 +501,7 @@ public final class AuthManager implements AuthManagerInfo {
 	public synchronized void addRolePrivilege(HttpServletRequest request, AppRoleInfo role,
 			PrivilegeType privilegeType) throws DisallowedException, CantDoThatException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		HibernateUtil.activateObject(this.authenticator);
 		((Authenticator) this.authenticator).addRolePrivilege(role, privilegeType);
@@ -511,7 +511,7 @@ public final class AuthManager implements AuthManagerInfo {
 			PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException,
 			DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		HibernateUtil.activateObject(this.authenticator);
 		((Authenticator) this.authenticator).addRolePrivilege(role, privilegeType, table);
@@ -520,7 +520,7 @@ public final class AuthManager implements AuthManagerInfo {
 	public synchronized void removeRolePrivilege(HttpServletRequest request, AppRoleInfo role,
 			PrivilegeType privilegeType) throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		HibernateUtil.activateObject(this.authenticator);
 		RoleGeneralPrivilegeInfo removedPrivilege = ((Authenticator) this.authenticator)
@@ -532,7 +532,7 @@ public final class AuthManager implements AuthManagerInfo {
 			PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException,
 			DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		HibernateUtil.activateObject(this.authenticator);
 		RoleTablePrivilegeInfo removedPrivilege = ((Authenticator) this.authenticator)
@@ -543,7 +543,7 @@ public final class AuthManager implements AuthManagerInfo {
 	public synchronized void addUserPrivilege(HttpServletRequest request, AppUserInfo appUser,
 			PrivilegeType privilegeType) throws DisallowedException, CantDoThatException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		if (this.specifiedUserHasPrivilege(request, PrivilegeType.MASTER, appUser)) {
 			throw new CantDoThatException("User '" + appUser
@@ -557,7 +557,7 @@ public final class AuthManager implements AuthManagerInfo {
 			PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException,
 			DisallowedException, CantDoThatException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		if (this.specifiedUserHasPrivilege(request, PrivilegeType.MASTER, appUser)) {
 			throw new CantDoThatException("User '" + appUser
@@ -570,7 +570,7 @@ public final class AuthManager implements AuthManagerInfo {
 	public synchronized void removeUserPrivilege(HttpServletRequest request, AppUserInfo appUser,
 			PrivilegeType privilegeType) throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		HibernateUtil.activateObject(this.authenticator);
 		UserGeneralPrivilegeInfo removedPrivilege = ((Authenticator) this.authenticator)
@@ -582,7 +582,7 @@ public final class AuthManager implements AuthManagerInfo {
 			PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException,
 			DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		HibernateUtil.activateObject(this.authenticator);
 		UserTablePrivilegeInfo removedPrivilege = ((Authenticator) this.authenticator)
@@ -593,7 +593,7 @@ public final class AuthManager implements AuthManagerInfo {
 	public Set<RoleTablePrivilegeInfo> getRolePrivilegesOnTable(HttpServletRequest request,
 			TableInfo table) throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE, table);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE, table);
 		}
 		Set<RoleTablePrivilegeInfo> rolePrivilegesOnTable = new HashSet<RoleTablePrivilegeInfo>();
 		Set<RoleGeneralPrivilegeInfo> rolePrivileges = ((Authenticator) this.authenticator)
@@ -612,7 +612,7 @@ public final class AuthManager implements AuthManagerInfo {
 	public Set<UserTablePrivilegeInfo> getUserPrivilegesOnTable(HttpServletRequest request,
 			TableInfo table) throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE, table);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE, table);
 		}
 		Set<UserTablePrivilegeInfo> userPrivilegesOnTable = new HashSet<UserTablePrivilegeInfo>();
 		Set<UserGeneralPrivilegeInfo> userPrivileges = ((Authenticator) this.authenticator)
@@ -629,9 +629,9 @@ public final class AuthManager implements AuthManagerInfo {
 	}
 
 	public void removePrivilegesOnTable(HttpServletRequest request, TableInfo table)
-			throws DisallowedException {
+			throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
 		}
 		HibernateUtil.activateObject(this.authenticator);
 		Set<UserGeneralPrivilegeInfo> allUserPrivileges = ((Authenticator) this.authenticator)
@@ -668,7 +668,7 @@ public final class AuthManager implements AuthManagerInfo {
 			ObjectNotFoundException, CantDoThatException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || this.authenticator
 				.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		if (this.specifiedUserHasPrivilege(request, PrivilegeType.MASTER, user)) {
 			throw new CantDoThatException("User '" + user
@@ -683,7 +683,7 @@ public final class AuthManager implements AuthManagerInfo {
 			AppRoleInfo role) throws DisallowedException, MissingParametersException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		boolean roleIsCompanyAdmin = false;
 		for (RoleGeneralPrivilegeInfo roleGeneralPrivilege : this.getPrivilegesForRole(request,
@@ -706,7 +706,7 @@ public final class AuthManager implements AuthManagerInfo {
 				|| userName.equals(request.getRemoteUser())) {
 			return ((Authenticator) this.authenticator).getUserByUserName(userName);
 		} else {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 	}
 
@@ -716,7 +716,7 @@ public final class AuthManager implements AuthManagerInfo {
 			CompanyInfo company = this.getCompanyForLoggedInUser(request);
 			return company.getUsers();
 		} else {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 	}
 
@@ -726,7 +726,7 @@ public final class AuthManager implements AuthManagerInfo {
 			CompanyInfo company = this.getCompanyForLoggedInUser(request);
 			return company.getRoles();
 		} else {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 	}
 
@@ -735,7 +735,7 @@ public final class AuthManager implements AuthManagerInfo {
 		if (this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
 			return ((Authenticator) this.authenticator).getRolesForUser(user);
 		} else {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 	}
 
@@ -745,7 +745,7 @@ public final class AuthManager implements AuthManagerInfo {
 				|| this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.MASTER)) {
 			return ((Authenticator) this.authenticator).getPrivilegesForUser(user);
 		} else {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 	}
 
@@ -754,7 +754,7 @@ public final class AuthManager implements AuthManagerInfo {
 		if (this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
 			return ((Authenticator) this.authenticator).getPrivilegesForRole(role);
 		} else {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 	}
 
@@ -763,7 +763,7 @@ public final class AuthManager implements AuthManagerInfo {
 		if (this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
 			return EnumSet.allOf(PrivilegeType.class);
 		} else {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 	}
 
@@ -771,7 +771,7 @@ public final class AuthManager implements AuthManagerInfo {
 			PrivilegeType privilegeType, AppUserInfo user) throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || this.authenticator
 				.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		Set<UserGeneralPrivilegeInfo> userPrivileges = this.getPrivilegesForUser(request, user);
 		for (UserGeneralPrivilegeInfo privilege : userPrivileges) {
@@ -791,7 +791,7 @@ public final class AuthManager implements AuthManagerInfo {
 			PrivilegeType privilegeType, AppUserInfo user, TableInfo table)
 			throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		Set<UserGeneralPrivilegeInfo> userPrivileges = this.getPrivilegesForUser(request, user);
 		for (UserGeneralPrivilegeInfo privilege : userPrivileges) {
@@ -813,7 +813,7 @@ public final class AuthManager implements AuthManagerInfo {
 			PrivilegeType privilegeType, AppRoleInfo role, TableInfo table)
 			throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		Set<RoleGeneralPrivilegeInfo> rolePrivileges = this.getPrivilegesForRole(request, role);
 		for (RoleGeneralPrivilegeInfo privilege : rolePrivileges) {
@@ -831,7 +831,7 @@ public final class AuthManager implements AuthManagerInfo {
 	public boolean specifiedRoleHasPrivilege(HttpServletRequest request,
 			PrivilegeType privilegeType, AppRoleInfo role) throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		Set<RoleGeneralPrivilegeInfo> rolePrivileges = this.getPrivilegesForRole(request, role);
 		for (RoleGeneralPrivilegeInfo privilege : rolePrivileges) {
@@ -846,9 +846,15 @@ public final class AuthManager implements AuthManagerInfo {
 	
 	public boolean specifiedUserAllowedToViewReport(HttpServletRequest request, AppUserInfo user, BaseReportInfo report) throws DisallowedException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
 		return ((Authenticator) this.authenticator).specifiedUserAllowedToViewReport(user, report, new HashSet<BaseReportInfo>());
+	}
+	
+	public AppUserInfo getLoggedInUser(HttpServletRequest request) throws DisallowedException, ObjectNotFoundException {
+		return this.getUserByUserName(request, request
+				.getRemoteUser());
+
 	}
 
 	private AuthenticatorInfo authenticator = null;

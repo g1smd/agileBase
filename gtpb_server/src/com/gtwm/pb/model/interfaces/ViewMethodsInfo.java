@@ -124,7 +124,7 @@ public interface ViewMethodsInfo {
 	 * 
 	 * @see #getUnchosenRelationFields(TableInfo)
 	 */
-	public List<RelationField> getUnchosenRelationFields() throws DisallowedException;
+	public List<RelationField> getUnchosenRelationFields() throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * Return a list of relation fields in the given table that have no rowIDs
@@ -137,7 +137,7 @@ public interface ViewMethodsInfo {
 	 *             if the user can't view data in the given table
 	 */
 	public List<RelationField> getUnchosenRelationFields(TableInfo table)
-			throws DisallowedException;
+			throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * Return true if the current request included a toolbar name to display in
@@ -341,14 +341,14 @@ public interface ViewMethodsInfo {
 	 *             if relatedTable's primary key isn't in the report
 	 */
 	public Set<Integer> getRelatedRowIds(int masterRowId, TableInfo relatedTable)
-			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException;
+			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException, ObjectNotFoundException;
 
 	/**
 	 * @see #getRelatedRowIds(int, TableInfo)
 	 */
 	public Set<Integer> getRelatedRowIds(BaseReportInfo masterReport, int masterRowId,
 			TableInfo relatedTable) throws DisallowedException, CantDoThatException, SQLException,
-			CodingErrorException;
+			CodingErrorException, ObjectNotFoundException;
 
 	/**
 	 * Use this method to get the session report rows, using the session report,

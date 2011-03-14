@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.Set;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
+
+import com.gtwm.pb.auth.AuthManager;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
@@ -169,7 +171,7 @@ public final class ServletDataMethods {
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		((SessionData) sessionData).setRecordLockOverride();
 	}
@@ -1007,7 +1009,7 @@ public final class ServletDataMethods {
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		int rowId = -1;
 		if (!newRecord) {
@@ -1067,7 +1069,7 @@ public final class ServletDataMethods {
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		int rowId = sessionData.getRowId();
 		if (rowId == -1) {
@@ -1096,7 +1098,7 @@ public final class ServletDataMethods {
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
-			throw new DisallowedException(PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
 		}
 		// clear the cached record data:
 		sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
@@ -1156,7 +1158,7 @@ public final class ServletDataMethods {
 		// having obtained valid parameters, delete the record:
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		databaseDefn.getDataManagement().removeRecord(request, sessionData, databaseDefn, table,
 				iRowId, cascade);
@@ -1177,7 +1179,7 @@ public final class ServletDataMethods {
 				true);
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		// get import options
 		String generateRowIdsString = ServletUtilMethods.getParameter(request, "generate_row_ids",
@@ -1262,7 +1264,7 @@ public final class ServletDataMethods {
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		String lockType = request.getParameter("lock_type");
 		if (lockType == null) {
@@ -1287,7 +1289,7 @@ public final class ServletDataMethods {
 				ServletUtilMethods.USE_SESSION);
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		databaseDefn.getDataManagement().lockRecord(sessionData, table, rowId);
 	}
@@ -1302,7 +1304,7 @@ public final class ServletDataMethods {
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		// get field content types specified
 		Map<BaseField, FieldContentType> fieldContentTypes = new HashMap<BaseField, FieldContentType>();
