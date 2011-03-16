@@ -51,6 +51,11 @@ select, textarea, input {
   padding: 0.2em;
 }
 
+ul li {
+  /* Override position: relative in dashboard.css to fix column issue in webkit */
+  position: static;
+}
+
 .legend_report {
   margin: 0.1em;
   -moz-border-radius: 0.5em;
