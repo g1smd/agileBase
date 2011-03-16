@@ -545,7 +545,7 @@ public final class ServletDataMethods {
 				|| databaseFieldType.equals(DatabaseFieldType.SERIAL)
 				|| databaseFieldType.equals(DatabaseFieldType.FLOAT)) {
 			if (fieldValueString != null) {
-				fieldValueString = fieldValueString.trim().replaceAll(",", "");
+				fieldValueString = fieldValueString.trim().replace(",", "").replace("£", "").replace("$", "");
 				if (fieldValueString.endsWith("%")) {
 					fieldValueString = fieldValueString.substring(0, fieldValueString.length() - 1);
 				}

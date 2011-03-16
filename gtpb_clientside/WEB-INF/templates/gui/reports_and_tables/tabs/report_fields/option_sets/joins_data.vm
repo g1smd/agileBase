@@ -169,7 +169,7 @@ $join.getRightReportField().getFieldName()
 <TD>
 		<select name="jointype">
 		    <option value="INNER">inner</option>
-		    <option value="LEFT_OUTER">left outer</option>
+		    <option value="LEFT_OUTER" selected>left outer</option>
 		    <option value="RIGHT_OUTER">right outer</option>
 		    <option value="FULL_OUTER">full outer</option>
 		    <option value="NONE">none</option>
