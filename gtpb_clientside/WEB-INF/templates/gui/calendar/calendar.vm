@@ -94,12 +94,18 @@
 	#set($modules = $moduleReports.keySet())
     #foreach($module in $modules)
 	  #set($visibleModuleReports = $moduleReports.get($module))
-	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
 	  #set($visibleModuleReportsCopy = [])
 	  #set($temp = $visibleModuleReportsCopy.addAll($visibleModuleReports))
-	  #if($visibleModuleReports.size() > 0)
-	    #set($temp = $moduleReportsProcessed.put($module, $visibleModuleReports))
-		#set($numReports = $numReports + $visibleModuleReports.size())
+	  #set($temp = $visibleModuleReportsCopy.removeAll($hiddenReports))
+	  #if($visibleModuleReportsCopy.size() > 0)
+	    #set($temp = $moduleReportsProcessed.put($module, $visibleModuleReportsCopy))
+		#set($numCalendarModuleReports = 0)
+		#foreach($tempReport in $visibleModuleReportsCopy)
+		  #if($tempReport.getCalendarField())
+			#set($numCalendarModuleReports = $numCalendarModuleReports + 1)
+		  #end
+		#end
+		#set($numReports = $numReports + $numCalendarModuleReports)
 	  #end
 	#end
 	## Set up colours
