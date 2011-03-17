@@ -98,11 +98,11 @@ $(document).ready(function() {
     }
   });
 
-  $("#report_selection_header").click(function() {
+  $(".report_selection_header").click(function() {
 	if(fMobileDevice()) {
-	  $("#report_selection").toggle();
+	  $(this).next(".report_selection").toggle();
 	} else {
-      $("#report_selection").toggle('normal');
+	  $(this).next(".report_selection").toggle('normal');
     }
   });
   
