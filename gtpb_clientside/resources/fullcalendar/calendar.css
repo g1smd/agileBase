@@ -52,8 +52,13 @@ select, textarea, input {
 }
 
 ul li {
-  /* Override position: relative in dashboard.css to fix column issue in webkit */
+  /* Override position: relative in dashboard.css to fix column issue in webkit and iPad */
+  /* Note: this issue is fixed in webkit nightly */
   position: static;
+}
+
+.non_calendar {
+  color: gray;
 }
 
 .legend_report {

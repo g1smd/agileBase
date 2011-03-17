@@ -82,11 +82,10 @@
 </div>
 <div id="rest_of_page">
 <div id="report_selection_header">Calendars: </div>
-
 <div id="report_selection">
-    ## Create a collection $moduleReports: each module maps to an array of reports
-    #parse("gui/resources/calc_module_reports.vm")
-    #if($moduleReports.size() > 0)
+  ## Create a collection $moduleReports: each module maps to an array of reports
+  #parse("gui/resources/calc_module_reports.vm")
+  #if($moduleReports.size() > 0)
 	<ul>
 	## A bit of post-processing or the map - remove unsuitable reports
 	#set($numReports = 0)
@@ -98,17 +97,12 @@
 	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
 	  #set($visibleModuleReportsCopy = [])
 	  #set($temp = $visibleModuleReportsCopy.addAll($visibleModuleReports))
-	  #foreach($report in $visibleModuleReportsCopy)
-		#if(!$report.getCalendarField())
-		  #set($temp = $visibleModuleReports.remove($report))
-		#end
-	  #end
 	  #if($visibleModuleReports.size() > 0)
 	    #set($temp = $moduleReportsProcessed.put($module, $visibleModuleReports))
 		#set($numReports = $numReports + $visibleModuleReports.size())
 	  #end
 	#end
-	## Calculate colours
+	## Set up colours
 	#set($colourStyles = {}) ## map will hold style definition for each class, based on internal report name
 	#set($colourHueStep = 360 / $numReports)
 	#if($numReports > 19)
@@ -131,44 +125,51 @@
 		#if($visibleModuleReports.size() > 10)
 		  #set($colourLightnessStep = $colourLightnessStep * 2)
 		#end
-	    #foreach($report in $visibleModuleReports) 
+	    #foreach($report in $visibleModuleReports)
+		  #if($report.getCalendarField())
+			#set($hasCalendarField = true)
+		  #else
+			#set($hasCalendarField = false)
+		  #end
 		  #set($internalReportName = $report.getInternalReportName())
 		  #set($table=$report.getParentTable())
 		  #set($internalTableName = $table.getInternalTableName())
-		  #set($colourHue = $colourHue + $colourHueStep)
-		  #if($colourHue > 360)
-		    #set($colourHue = $colourHue - 360)
-			#set($secondRound = true)
-		  #end
-		  #if($secondRound)
-			#set($colourSaturation = $colourLightness + 10)
-		    ###if($colourLightness > 50)
-			##  #set($colourSaturation = 100)
-			###else
-			##  #set($colourSaturation = 30)
-			###end
-		  #end
-		  #set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
-		  #if($colourLightness < 45)
-			#set($colourStyle = "$colourStyle color:white; border-style: none;")
+		  #if($hasCalendarField)
+    		#set($colourHue = $colourHue + $colourHueStep)
+    		#if($colourHue > 360)
+    		  #set($colourHue = $colourHue - 360)
+    		  #set($secondRound = true)
+    		#end
+    		#if($secondRound)
+    		  #set($colourSaturation = $colourLightness + 10)
+    		#end
+    		#set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
+    		#if($colourLightness < 45)
+    		  #set($colourStyle = "$colourStyle color:white; border-style: none;")
+    		#else
+    		  #set($colourStyle = "$colourStyle color:black; border-style: none;")
+    		#end
+    		#set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
+			#set($title = "from $report.getModule(), displayed by $report.getCalendarField()")
 		  #else
-			#set($colourStyle = "$colourStyle color:black; border-style: none;")
+			#set($title = "")
 		  #end
-		  #set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
-		  <li id="$internalTableName$internalReportName" title="from $report.getModule(), displayed by $report.getCalendarField()">
+		  <li id="$internalTableName$internalReportName" title="$title" #if(!$hasCalendarField) class="non_calendar" #end>
 		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
 		    $report
 		  </li>
-		  #set($colourLightness = $colourLightness - $colourLightnessStep)
-		  #if($colourLightness < 20)
-			#set($colourLightness = 80)
+		  #if($hasCalendarField)
+		    #set($colourLightness = $colourLightness - $colourLightnessStep)
+		    #if($colourLightness < 20)
+			  #set($colourLightness = 80)
+			#end
 		  #end
 	    #end ## end of loop through reports in a module
 	    </ul>
 	  </li>
 	#end ## end loop through modules
 	</ul>
-#end ## end if there are any modules visible
+  #end ## end if there are any modules visible
 </div>
 <style>
 #foreach($colourClass in $colourStyles.keySet())
@@ -177,6 +178,9 @@
 #end
 </style>
 <div id="calendar"></div>
+<div id="panels">
 </div>
+</div>
+</div> ## End rest of page
 </body>
 </html>
