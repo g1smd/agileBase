@@ -9,6 +9,7 @@ body {
 
 #calendar {
   margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 select, textarea, input {
