@@ -179,7 +179,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 	public enum FieldCategory {
 		TEXT("Text", true), NUMBER("Number", true), DATE("Date", true), DURATION("Time duration",
 				false), SEQUENCE("Auto-generated number sequence", true), RELATION("Relation", true), CHECKBOX(
-				"Checkbox", true), FILE("File", true), SEPARATOR("Separator", true), REFERENCED_REPORT_DATA("Referenced report data", true);
+				"Checkbox", true), FILE("File", true), SEPARATOR("Separator", true), REFERENCED_REPORT_DATA("Cross referenced data", true);
 
 		FieldCategory(String typeDescription, boolean enabled) {
 			this.description = typeDescription;

@@ -52,12 +52,21 @@ $(document).ready(function() {
   });
   
   // Show initial calendars
-  $("#report_selection .has_calendar input:checked").each(function() {
+  $("#report_selection input:checked").each(function() {
     addRemoveCalendar(this);
   });
   // Show report selector if no reports are initially selected
   if($("#report_selection input:checked").length == 0) {
-	$("#report_selection").fadeIn("normal");
+	$("#report_selection").show();
+  }
+
+  // Show initial panels
+  $("#panel_selection input:checked").each(function() {
+    addRemovePanels(this);
+  });
+  // Show report selector if no reports are initially selected
+  if($("#panel_selection input:checked").length == 0) {
+	$("#panel_selection").show();
   }
 
   // Add/remove reports from calendar/panel on click
@@ -111,7 +120,8 @@ $(document).ready(function() {
   });
 });
 
-// checkboxElement is the checkbox to select/deselect a calendar
+// Add remove a JSON calendar feed
+// checkboxElement is the checkbox to select/deselect a report
 function addRemoveCalendar(checkboxElement) {
   var jqCheckbox = $(checkboxElement);
   var internalTableName = jqCheckbox.attr("internaltablename");
@@ -128,6 +138,10 @@ function addRemoveCalendar(checkboxElement) {
 	var legendId = "legend_" + internalReportName;
 	$("#" + legendId).remove();
   }
+}
+
+function addRemovePanel(checkboxElement) {
+
 }
 
 function fEditEventOK(sResponseText,sResponseXML) {

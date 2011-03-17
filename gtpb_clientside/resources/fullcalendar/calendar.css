@@ -21,7 +21,7 @@ select, textarea, input {
   right: 0px;
 }
 
-#report_selection {
+.report_selection {
   width: 100%;
   -moz-column-count: 4;
   -webkit-column-count: 4;
@@ -31,21 +31,21 @@ select, textarea, input {
   padding-top: 0.3em;
 }
 
-#report_selection ul {
+.report_selection ul {
   margin: 0;
   padding: 0;
 }
 
-#report_selection h2 {
+.report_selection h2 {
   font-size: 11pt;
   margin: 0px;
 }
 
-#report_selection h2 span img {
+.report_selection h2 span img {
   vertical-align: middle;
 }
 	
-#report_selection_header {
+.report_selection_header {
   background-color: #cccccc;
   cursor: pointer;
   padding: 0.2em;
@@ -55,10 +55,6 @@ ul li {
   /* Override position: relative in dashboard.css to fix column issue in webkit and iPad */
   /* Note: this issue is fixed in webkit nightly */
   position: static;
-}
-
-.has_panel {
-  color: gray;
 }
 
 .legend_report {

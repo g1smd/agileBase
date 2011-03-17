@@ -80,46 +80,54 @@
   <div id="selected_reports">
   </div>
 </div>
-<div id="rest_of_page">
-<div id="report_selection_header">Calendars: </div>
-<div id="report_selection">
-  ## Create a collection $moduleReports: each module maps to an array of reports
-  #parse("gui/resources/calc_module_reports.vm")
-  #if($moduleReports.size() > 0)
-	<ul>
-	## A bit of post-processing or the map - remove unsuitable reports
-	#set($numReports = 0)
-	#set($moduleReportsProcessed = {})
-    #set($hiddenReports = $user.getHiddenReports())
-	#set($modules = $moduleReports.keySet())
-    #foreach($module in $modules)
-	  #set($visibleModuleReports = $moduleReports.get($module))
-	  #set($visibleModuleReportsCopy = [])
-	  #set($temp = $visibleModuleReportsCopy.addAll($visibleModuleReports))
-	  #set($temp = $visibleModuleReportsCopy.removeAll($hiddenReports))
-	  #if($visibleModuleReportsCopy.size() > 0)
-	    #set($temp = $moduleReportsProcessed.put($module, $visibleModuleReportsCopy))
-		#set($numCalendarModuleReports = 0)
-		#foreach($tempReport in $visibleModuleReportsCopy)
-		  #if($tempReport.getCalendarField())
-			#set($numCalendarModuleReports = $numCalendarModuleReports + 1)
-		  #end
-		#end
-		#set($numReports = $numReports + $numCalendarModuleReports)
-	  #end
+## Create a collection $moduleReports: each module maps to an array of reports
+#parse("gui/resources/calc_module_reports.vm")
+#if($moduleReports.size() > 0)
+## A bit of post-processing or the map - remove unsuitable reports
+#set($numCalendarReports = 0)
+#set($calendarModuleReportsProcessed = {})
+#set($panelModuleReportsProcessed = {})
+#set($hiddenReports = $user.getHiddenReports())
+#set($modules = $moduleReports.keySet())
+#foreach($module in $modules)
+  #set($calendarModuleReports = $moduleReports.get($module))
+  #set($temp = $calendarModuleReports.removeAll($hiddenReports))
+  #set($panelModuleReports = [])
+  #set($temp = $panelModuleReports.addAll($calendarModuleReports))
+  ## Create a copy that we can use in a foreach loop
+  #set($calendarModuleReportsCopy = [])
+  #set($temp = $calendarModuleReportsCopy.addAll($calendarModuleReports))
+  #foreach($report in $calendarModuleReportsCopy)
+	#if(!$report.getCalendarField())
+	  #set($temp = $calendarModuleReports.remove($report))
+	#else
+	  #set($temp = $panelModuleReports.remove($report))
 	#end
-	## Set up colours
+  #end
+  #if($calendarModuleReports.size() > 0)
+    #set($temp = $calendarModuleReportsProcessed.put($module, $calendarModuleReports))
+	#set($numCalendarReports = $numCalendarReports + $calendarModuleReports.size())
+  #end
+  #if($panelModuleReports.size() > 0)
+    #set($temp = $panelModuleReportsProcessed.put($module, $panelModuleReports))
+  #end
+#end
+#set($savedReports = $user.getOperationalDashboardReports())
+<div id="rest_of_page">
+<div id="report_selection_header" class="report_selection_header">&plusmn; calendars: </div>
+<div id="report_selection" class="report_selection">
+	## Calculate colours
 	#set($colourStyles = {}) ## map will hold style definition for each class, based on internal report name
-	#set($colourHueStep = 360 / $numReports)
-	#if($numReports > 19)
+	#set($colourHueStep = 360 / $numCalendarReports)
+	#if($numCalendarReports > 19)
 	  #set($colourHueStep = $colourHueStep * 2)
 	#end
 	#set($colourHue = 0)
 	#set($colourSaturation = 70)
+	<ul>
 	## Display
-	#set($savedReports = $user.getOperationalDashboardReports())
-	#foreach($module in $moduleReportsProcessed.keySet())
-	  #set($visibleModuleReports = $moduleReportsProcessed.get($module))
+	#foreach($module in $calendarModuleReportsProcessed.keySet())
+	  #set($calendarModuleReports = $calendarModuleReportsProcessed.get($module))
   	  #set($internalModuleName = $module.getInternalModuleName())
 	  <li id="$internalModuleName">
 	    <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
@@ -127,55 +135,48 @@
 	    </span></h2>
 	    <ul parent="$internalModuleName">
 		#set($colourLightness = 85)
-		#set($colourLightnessStep = 80 / $visibleModuleReports.size())
-		#if($visibleModuleReports.size() > 10)
+		#set($colourLightnessStep = 80 / $calendarModuleReports.size())
+		#if($calendarModuleReports.size() > 10)
 		  #set($colourLightnessStep = $colourLightnessStep * 2)
 		#end
-	    #foreach($report in $visibleModuleReports)
-		  #if($report.getCalendarField())
-			#set($hasCalendarField = true)
-		  #else
-			#set($hasCalendarField = false)
-		  #end
+	    #foreach($report in $calendarModuleReports) 
 		  #set($internalReportName = $report.getInternalReportName())
 		  #set($table=$report.getParentTable())
 		  #set($internalTableName = $table.getInternalTableName())
-		  #if($hasCalendarField)
-    		#set($colourHue = $colourHue + $colourHueStep)
-    		#if($colourHue > 360)
-    		  #set($colourHue = $colourHue - 360)
-    		  #set($secondRound = true)
-    		#end
-    		#if($secondRound)
-    		  #set($colourSaturation = $colourLightness + 10)
-    		#end
-    		#set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
-    		#if($colourLightness < 45)
-    		  #set($colourStyle = "$colourStyle color:white; border-style: none;")
-    		#else
-    		  #set($colourStyle = "$colourStyle color:black; border-style: none;")
-    		#end
-    		#set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
-			#set($title = "from $report.getModule(), displayed by $report.getCalendarField()")
-		  #else
-			#set($title = "")
+		  #set($colourHue = $colourHue + $colourHueStep)
+		  #if($colourHue > 360)
+		    #set($colourHue = $colourHue - 360)
+			#set($secondRound = true)
 		  #end
-		  <li id="$internalTableName$internalReportName" title="$title" #if($hasCalendarField) class="has_calendar" #else class="has_panel" #end>
+		  #if($secondRound)
+			#set($colourSaturation = $colourLightness + 10)
+		    ###if($colourLightness > 50)
+			##  #set($colourSaturation = 100)
+			###else
+			##  #set($colourSaturation = 30)
+			###end
+		  #end
+		  #set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
+		  #if($colourLightness < 45)
+			#set($colourStyle = "$colourStyle color:white; border-style: none;")
+		  #else
+			#set($colourStyle = "$colourStyle color:black; border-style: none;")
+		  #end
+		  #set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
+		  <li id="$internalTableName$internalReportName" title="from $report.getModule(), displayed by $report.getCalendarField()" class="has_calendar">
 		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
 		    $report
 		  </li>
-		  #if($hasCalendarField)
-		    #set($colourLightness = $colourLightness - $colourLightnessStep)
-		    #if($colourLightness < 20)
-			  #set($colourLightness = 80)
-			#end
+		  #set($colourLightness = $colourLightness - $colourLightnessStep)
+		  #if($colourLightness < 20)
+			#set($colourLightness = 80)
 		  #end
 	    #end ## end of loop through reports in a module
 	    </ul>
 	  </li>
 	#end ## end loop through modules
 	</ul>
-  #end ## end if there are any modules visible
+#end ## end if there are any modules visible
 </div>
 <style>
 #foreach($colourClass in $colourStyles.keySet())
@@ -184,8 +185,31 @@
 #end
 </style>
 <div id="calendar"></div>
-<div id="panels">
+<div id="panel_selection_header" class="report_selection_header">&plusmn; report panels</div>
+<div id="panel_selection" class="report_selection">
+  <ul>
+	#foreach($module in $panelModuleReportsProcessed.keySet())
+	  #set($panelModuleReports = $panelModuleReportsProcessed.get($module))
+  	  #set($internalModuleName = $module.getInternalModuleName())
+	  <li id="$internalModuleName">
+	    <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
+	  	  $module
+	    </span></h2>
+	    <ul parent="$internalModuleName">
+	    #foreach($report in $panelModuleReports) 
+		  #set($internalReportName = $report.getInternalReportName())
+		  #set($table=$report.getParentTable())
+		  #set($internalTableName = $table.getInternalTableName())
+		  <li id="$internalTableName$internalReportName" title="from $report.getModule(), displayed by $report.getCalendarField()" class="has_panel">
+		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
+		    $report
+		  </li>
+	    #end ## end of loop through reports in a module
+	    </ul>
+	  </li>
+	#end ## end loop through modules
+  </ul>
 </div>
-</div> ## End rest of page
+</div> ## end of rest_of_page
 </body>
 </html>
