@@ -52,7 +52,7 @@ $(document).ready(function() {
   });
   
   // Show initial calendars
-  $("#report_selection.has_calendar input:checked").each(function() {
+  $("#report_selection .has_calendar input:checked").each(function() {
     addRemoveCalendar(this);
   });
   // Show report selector if no reports are initially selected
