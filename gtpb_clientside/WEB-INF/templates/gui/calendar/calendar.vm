@@ -160,7 +160,7 @@
 		  #else
 			#set($title = "")
 		  #end
-		  <li id="$internalTableName$internalReportName" title="$title" #if(!$hasCalendarField) class="non_calendar" #end>
+		  <li id="$internalTableName$internalReportName" title="$title" #if($hasCalendarField) class="has_calendar" #else class="has_panel" #end>
 		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
 		    $report
 		  </li>
@@ -185,7 +185,6 @@
 </style>
 <div id="calendar"></div>
 <div id="panels">
-</div>
 </div>
 </div> ## End rest of page
 </body>

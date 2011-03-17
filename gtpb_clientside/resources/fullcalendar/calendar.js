@@ -52,18 +52,22 @@ $(document).ready(function() {
   });
   
   // Show initial calendars
-  $("#report_selection input:checked").each(function() {
+  $("#report_selection.has_calendar input:checked").each(function() {
     addRemoveCalendar(this);
   });
   // Show report selector if no reports are initially selected
   if($("#report_selection input:checked").length == 0) {
-	$("#report_selection").slideDown("normal");
+	$("#report_selection").fadeIn("normal");
   }
 
-  // Add/remove calendars on click
+  // Add/remove reports from calendar/panel on click
   $("#report_selection input").change(function() {
-    addRemoveCalendar(this);
     var jqCheckbox = $(this);
+    if (jqCheckbox.parent().hasClass("has_calendar")) {
+      addRemoveCalendar(this);
+    } else {
+      alert('non-calendar');
+    }
     var internalTableName = jqCheckbox.attr("internaltablename");
     var internalReportName = jqCheckbox.attr("internalreportname");
     if (jqCheckbox.is(":checked")) {
