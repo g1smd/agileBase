@@ -58,7 +58,7 @@ $(document).ready(function() {
   }
 
   // Add/remove reports from calendar/panel on click
-  $("#report_selection input").change(function() {
+  $(".report_selection input").change(function() {
     var jqCheckbox = $(this);
     if (jqCheckbox.parent().hasClass("has_calendar")) {
       addRemoveCalendar(this);
