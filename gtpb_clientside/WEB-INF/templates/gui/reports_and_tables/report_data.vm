@@ -88,7 +88,7 @@
 	  #if($mobile_device)
 		#set($click="document.location='AppController.servlet?return=$return&set_row_id=$datarow.getRowId()';")
 	  #else
-        #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()', $datarow.getRowId(), $numberOfTabs)")##
+      #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()', $datarow.getRowId(), $numberOfTabs)")##
 	  #end##
 	#end##
     #set($uniqueid=$datarow.getRowId())##

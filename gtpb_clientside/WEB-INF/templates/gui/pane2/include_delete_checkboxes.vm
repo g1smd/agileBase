@@ -37,7 +37,7 @@
   #end ##end each row
 #end
 #end
-include_delete_checkboxes.vm. table_part_only is $table_part_only<br>
+<h1>include_delete_checkboxes.vm. table_part_only is $table_part_only</h1>
 #if($data_part_only)
   #parse('gui/pane2/pane2_body.vm')
 #elseif($table_part_only)
