@@ -135,7 +135,7 @@ function addRemovePanel(checkboxElement) {
   var panelUrl = "AppController.servlet?return=gui/calendar/panel&set_table=" + internalTableName + "&set_report=" + internalReportName;
   if (jqCheckbox.is(":checked")) {
     $.get(panelUrl, function(data) {
-      $(".portlet:first").before(data);
+      $("#panel_selection").after(data);
     });
   } else {
 	$("#portlet_" + internalReportName).remove();
