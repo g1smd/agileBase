@@ -210,10 +210,9 @@
 	#end ## end loop through modules
   </ul>
 </div>
-#foreach($module in $panelModuleReportsProcessed.keySet())
-  #set($panelModuleReports = $panelModuleReportsProcessed.get($module))
-  #foreach($report in $panelModuleReports) 
-	#parse("gui/calendar/panel.vm")
+#foreach($report in $savedReports)
+  #if(!$report.getCalendarField())
+    #parse("gui/calendar/panel.vm")
   #end
 #end
 </div> ## end of rest_of_page

@@ -15,86 +15,97 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+## To use a specific report, the calling template must define/override
+## $sessionReport
+## $sessionTable
+## $rowLimit
+## otherwise the session details will be used
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))##
 ## data from a report for pane2
 #set($resource_folder='tables')##
 #set($sessionContext = $sessionData.getContext().toString())##
 ##Check there's stuff in the session to stop an exception when there's not
 #if($sessionData.hasTable())##
-	  #set($sessionReport=$sessionData.getReport())##
-	  #set($sessionTable=$sessionData.getTable())##
-	  #set($return='gui/reports_and_tables/pane3')##
-	  #set($pane1_id="$sessionTable.getInternalTableName()$sessionReport.getInternalReportName()")##
-	  ##test to see whether a record has previously been selected and is stored in the session
-	  #if ($sessionData.getRowId())##
-		    #set($selection=$sessionData.getRowId())##
+  #if(!$sessionReport)## allow overrides
+    #set($sessionReport=$sessionData.getReport())##
+    #set($sessionTable=$sessionData.getTable())##
+  #end##
+  #set($return='gui/reports_and_tables/pane3')##
+  #set($pane1_id="$sessionTable.getInternalTableName()$sessionReport.getInternalReportName()")##
+  ##test to see whether a record has previously been selected and is stored in the session
+  #if($sessionData.getRowId())##
+	#set($selection=$sessionData.getRowId())##
+  #end##
+  #set($fields=[])##
+  #set($reportBaseFields = $sessionReport.getReportBaseFields())##
+  #foreach ($field in $reportBaseFields)##
+    #if( (!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
+	  #set($success=$fields.add([$field.getInternalFieldName(),$field]))##
+	#end ## added to show display field name for relation fields
+  #end##
+  #if($sessionTable.getDefaultReport().equals($sessionReport))##
+	#set($numberOfTabs = '-1')##
+  #else##
+	#set($numberOfTabs = '2')##
+	#if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))##
+	  #set($numberOfTabs = '6')##
+	#elseif($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))##
+	  #set($numberOfTabs = '3')##
+	#end##
+  #end##
+  #if($rowLimit)
+    #set($datarows = $view.getReportDataRows($sessionReport, $rowLimit))##
+  #else
+    #set($datarows = $view.getReportDataRows())##
+  #end
+  #set($data=[])##
+  #set($dataCapacity = $datarows.size() + 1)##
+  #set($success = $data.ensureCapacity($dataCapacity))##
+  #set($colsCapacity = $reportBaseFields.size() + 2)##
+  #foreach($datarow in $datarows)##
+    #set($row=[])##
+    #set($colours=[])##
+	#set($success = $row.ensureCapacity($colsCapacity))##
+	#set($success = $colours.ensureCapacity($colsCapacity))##
+    #set($dataRowFields = $datarow.getDataRowFields())##
+    #foreach($field in $reportBaseFields)##
+      #if((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
+        #set($dataRowField = $dataRowFields.get($field))##
+        #if(($printout) && ($field.getClass().getSimpleName().equals("BigTextFieldDefn")))##
+          #set($success=$row.add($dataRowField.getKeyValue()))##
+        #else##
+          #set($success=$row.add($dataRowField.getDisplayValue()))##
+        #end##
+        #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
 	  #end##
-	  #set($fields=[])##
-	  #set($reportBaseFields = $sessionReport.getReportBaseFields())##
-	  #foreach ($field in $reportBaseFields)##
-		    #if ( (!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
-				#set($success=$fields.add([$field.getInternalFieldName(),$field]))##
-			#end ## added to show display field name for relation fields
+    #end##
+    #set($success=$colours.add("")) ## needs an extra one for some reason
+    #if($printout)##
+      #set($click='')##
+      #set($locked=$view.isRecordLocked($sessionTable,$datarow.getRowId()))##
+    #else##
+      #set($locked='')##
+	  #if($mobile_device)
+		#set($click="document.location='AppController.servlet?return=$return&set_row_id=$datarow.getRowId()';")
+	  #else
+        #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()', $datarow.getRowId(), $numberOfTabs)")##
 	  #end##
-	  #if($sessionTable.getDefaultReport().equals($sessionReport))##
-		#set($numberOfTabs = '-1')##
-	  #else##
-		#set($numberOfTabs = '2')##
-		#if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionTable))##
-			#set($numberOfTabs = '6')##
-		#elseif($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))##
-			#set($numberOfTabs = '3')##
-		#end##
-	  #end##
-	  #set($datarows = $view.getReportDataRows())##
-	  #set($data=[])##
-	  #set($dataCapacity = $datarows.size() + 1)##
-	  #set($success = $data.ensureCapacity($dataCapacity))##
-	  #set($colsCapacity = $reportBaseFields.size() + 2)##
-	  #foreach($datarow in $datarows)##
-		    #set($row=[])##
-		    #set($colours=[])##
-			#set($success = $row.ensureCapacity($colsCapacity))##
-			#set($success = $colours.ensureCapacity($colsCapacity))##
-		    #set($dataRowFields = $datarow.getDataRowFields())##
-		    #foreach($field in $reportBaseFields)##
-		      #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
-			       #set($dataRowField = $dataRowFields.get($field))##
-			       #if(($printout) && ($field.getClass().getSimpleName().equals("BigTextFieldDefn")))##
-			         #set($success=$row.add($dataRowField.getKeyValue()))##
-			       #else##
-			         #set($success=$row.add($dataRowField.getDisplayValue()))##
-			       #end##
-			       #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
-			  #end##
-		    #end##
-		    #set($success=$colours.add("")) ## needs an extra one for some reason
-		    #if($printout)##
-		      #set($click='')##
-		      #set($locked=$view.isRecordLocked($sessionTable,$datarow.getRowId()))##
-		    #else##
-		      #set($locked='')##
-			  #if($mobile_device)
-				#set($click="document.location='AppController.servlet?return=$return&set_row_id=$datarow.getRowId()';")
-			  #else
-		        #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()', $datarow.getRowId(), $numberOfTabs)")##
-			  #end##
-			#end##
-		    #set($uniqueid=$datarow.getRowId())##
-		    #set($success=$data.add([$row,$click,$uniqueid,$colours,$locked]))##
-		    #if ($uniqueid==$selection)##
-		      #set($selectionFound = true)##
-		    #end##
-	  #end##
-	  #set($excludedId = -1)
-	  #if(!$selectionFound)
-		#set($excludedId = $selection)
-	  #end
-	  #if($printout)##
-	    #parse('gui/printouts/pane2_printout.vm')##
-	  #else##
-	    #parse('gui/pane2/include_delete_checkboxes.vm')##
-	  #end##
+	#end##
+    #set($uniqueid=$datarow.getRowId())##
+    #set($success=$data.add([$row,$click,$uniqueid,$colours,$locked]))##
+    #if ($uniqueid==$selection)##
+      #set($selectionFound = true)##
+    #end##
+  #end##
+  #set($excludedId = -1)##
+  #if(!$selectionFound)##
+	#set($excludedId = $selection)##
+  #end##
+  #if($printout)##
+    #parse('gui/printouts/pane2_printout.vm')##
+  #else##
+    #parse('gui/pane2/include_delete_checkboxes.vm')##
+  #end##
 #else ##if there's no report in the session
-	  #parse('gui/resources/nothing.vm')##
+  #parse('gui/resources/nothing.vm')##
 #end##
