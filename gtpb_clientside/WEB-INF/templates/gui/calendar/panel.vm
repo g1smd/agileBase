@@ -7,5 +7,5 @@
 #set($table_part_only = true)
 <div class="portlet">
 <h1>$report.getModule() - $report</h1>
-#parse("gui/reports_and_tables/report_data.vm")
+## #parse("gui/reports_and_tables/report_data.vm")
 </div>
