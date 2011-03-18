@@ -130,6 +130,14 @@ function addRemoveCalendar(checkboxElement) {
 
 function addRemovePanel(checkboxElement) {
   var jqCheckbox = $(checkboxElement);
+  var internalTableName = jqCheckbox.attr("internaltablename");
+  var internalReportName = jqCheckbox.attr("internalreportname");
+  var panelUrl = "AppController.servlet?return=gui/calendar/panel&set_table=" + internalTableName + "&set_report=" + internalReportName;
+  if (jqCheckbox.is(":checked")) {
+    $.get(panelUrl, function(data) {
+      $(".portlet:first").before(data);
+    });
+  }
 }
 
 function fEditEventOK(sResponseText,sResponseXML) {

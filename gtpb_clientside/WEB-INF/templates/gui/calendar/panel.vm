@@ -2,6 +2,9 @@
 #if(!$rowLimit)
   #set($rowLimit = 5)
 #end
+#if(!$report)
+  #set($report = $sessionData.getReport())
+#end
 #set($sessionReport = $report)
 #set($sessionTable = $report.getParentTable())
 #set($table_part_only = true)
