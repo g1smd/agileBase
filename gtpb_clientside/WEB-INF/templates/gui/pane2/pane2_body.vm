@@ -164,6 +164,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 #end ## end loop through report data rows
 ## a closing row
 ## also include count of records returned for the UI to pick up and display
+#if(!$table_part_only)
 <tr class=trailing>
   <td class=leading>&nbsp;##
   	## enable UI to pick up the number of rows returned, to display in pane 1
@@ -210,5 +211,6 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	#end
   </td>
 </tr>
+#end ## end if not table part only
 #end
 $viewTools.stopTimer("gui/pane2/pane2_body")
