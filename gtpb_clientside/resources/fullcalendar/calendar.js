@@ -137,6 +137,8 @@ function addRemovePanel(checkboxElement) {
     $.get(panelUrl, function(data) {
       $(".portlet:first").before(data);
     });
+  } else {
+	$("#portlet_" + internalReportName).remove();
   }
 }
 
