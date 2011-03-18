@@ -1,0 +1,53 @@
+##
+##  Copyright 2011 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<tr>
+  <th class=leading><div>&nbsp;</div></th>
+  #foreach($field in $fields)
+    #set($internalFieldName = $field.get(0))
+    #set($fieldObject = $field.get(1))
+    ## row0 contains the internal field name
+    ## row1 contains the display field
+    <th #if(($fieldObject.getClass().getSimpleName() == "TextFieldDefn") || ($fieldObject.getClass().getSimpleName() == "BigTextFieldDefn")) maxTextLength="$fieldObject.getContentSize()" #end #if($field.get(0) && $internalFieldName!="")internalName="$internalFieldName" onclick="fSetSort(this)"#end>
+    #if($fieldObject)
+      #if($internalFieldName && $internalFieldName!="")
+        <div class="ab_field_title">$fieldObject</div>
+        <div class="ab_tooltip" rel="?return=gui/reports_and_tables/field_tooltip&set_custom_string=true&key=tooltip_internalfieldname&value=$internalFieldName"></div>
+      #else
+        <div>$fieldObject</div>
+      #end
+    #else
+      <div>&nbsp;</div>
+    #end
+    </th>
+  #end
+  <th class=trailing><div>&nbsp;</div></th>
+</tr>
+## filtersShouldBeShown should either print the string 'true' or 'false'
+<tr name="fieldFilters" id="fieldFilters" #if($filtersShouldBeShown == 'false') style="display:none" #end>
+  <td class="leading">#if($mobile_device)&nbsp;#else<div id="filterhelp">?</div><div class="ab_tooltip" rel="resources/reports/filtering_help.htm"></div>#end</td>
+  #foreach($field in $fields)
+    #set($internalFieldName = $field.get(0))
+    #set($fieldObject = $field.get(1))
+    <td><div>
+      #if($internalFieldName!='')
+        <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" onkeyup="new fSetFilter(this)" gtpb_return="gui/reports_and_tables/report_data_only" #if($filters.get($fieldObject)) value="$filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(this)"#end>
+      #end
+    </div></td>
+  #end
+  <td class=trailing><div>&nbsp;</div></td>      
+</tr>
