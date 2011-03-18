@@ -8,5 +8,7 @@
 #set($module = $report.getModule())
 <div class="portlet">
 <h1><img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $module - $report</h1>
+<div style="width: 100%; overflow: hidden">
 #parse("gui/reports_and_tables/report_data.vm")
+</div>
 </div>
