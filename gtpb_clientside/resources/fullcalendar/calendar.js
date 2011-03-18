@@ -56,10 +56,6 @@ $(document).ready(function() {
   if($("#report_selection input:checked").length == 0) {
 	$("#report_selection").show();
   }
-  // Show panel report selector if no reports are initially selected
-  if($("#panel_selection input:checked").length == 0) {
-	$("#panel_selection").show();
-  }
 
   // Add/remove reports from calendar/panel on click
   $("#report_selection input").change(function() {
