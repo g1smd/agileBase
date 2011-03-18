@@ -20,6 +20,7 @@
 ## $sessionTable
 ## $rowLimit
 ## otherwise the session details will be used
+<h1>Report data for $sessionReport</h1>
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))##
 ## data from a report for pane2
 #set($resource_folder='tables')##
