@@ -1,0 +1,9 @@
+#set($rowLimit = $sessionData.getCustomInteger("operational_dashboard_row_limit"))
+#if(!$rowLimit)
+  #set($rowLimit = 5)
+#end
+#set($reportDataRows = $view.getReportDataRows($report, $rowLimit))
+<div class="portlet">
+<h1>$report.getModule() - $report</h1>
+#parse("gui/reports_and_tables/report_data.vm")
+</div>

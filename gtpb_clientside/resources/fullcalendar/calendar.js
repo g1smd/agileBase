@@ -42,9 +42,6 @@ $(document).ready(function() {
         options[event.dateFieldInternalName + '_hours'] = eventDate.getHours();
         options[event.dateFieldInternalName + '_minutes'] = eventDate.getMinutes();
       }
-      // and the change
-      //options[event.dateFieldInternalName + '_days_delta'] = dayDelta;
-      //options[event.dateFieldInternalName + '_minutes_delta'] = minuteDelta;      
       //TODO: visually change the event element while saving: add then remove a CSS class
       $.post("AppController.servlet", options);
     },
@@ -55,16 +52,11 @@ $(document).ready(function() {
   $("#report_selection input:checked").each(function() {
     addRemoveCalendar(this);
   });
-  // Show report selector if no reports are initially selected
+  // Show calendar report selector if no reports are initially selected
   if($("#report_selection input:checked").length == 0) {
 	$("#report_selection").show();
   }
-
-  // Show initial panels
-  $("#panel_selection input:checked").each(function() {
-    addRemovePanels(this);
-  });
-  // Show report selector if no reports are initially selected
+  // Show panel report selector if no reports are initially selected
   if($("#panel_selection input:checked").length == 0) {
 	$("#panel_selection").show();
   }
@@ -75,7 +67,7 @@ $(document).ready(function() {
     if (jqCheckbox.parent().hasClass("has_calendar")) {
       addRemoveCalendar(this);
     } else {
-      alert('non-calendar');
+      addRemovePanel(this);
     }
     var internalTableName = jqCheckbox.attr("internaltablename");
     var internalReportName = jqCheckbox.attr("internalreportname");
@@ -141,7 +133,7 @@ function addRemoveCalendar(checkboxElement) {
 }
 
 function addRemovePanel(checkboxElement) {
-
+  var jqCheckbox = $(checkboxElement);
 }
 
 function fEditEventOK(sResponseText,sResponseXML) {
@@ -153,8 +145,8 @@ function fEditEventOKMobile(sResponseText,sResponseXML) {
 }
 
 function fMobileDevice() {
-    if($("body").attr("id") == "mobile_device") {
-  	  return true;
-    }
-    return false;
+  if($("body").attr("id") == "mobile_device") {
+    return true;
+  }
+  return false;
 }

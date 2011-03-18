@@ -185,7 +185,7 @@
 #end
 </style>
 <div id="calendar"></div>
-<div id="panel_selection_header" class="report_selection_header">&plusmn; report panels</div>
+<div id="panel_selection_header" class="report_selection_header">&plusmn; reports</div>
 <div id="panel_selection" class="report_selection">
   <ul>
 	#foreach($module in $panelModuleReportsProcessed.keySet())
@@ -210,6 +210,12 @@
 	#end ## end loop through modules
   </ul>
 </div>
+#foreach($module in $panelModuleReportsProcessed.keySet())
+  #set($panelModuleReports = $panelModuleReportsProcessed.get($module))
+  #foreach($report in $panelModuleReports) 
+	#parse("gui/calendar/panel.vm")
+  #end
+#end
 </div> ## end of rest_of_page
 </body>
 </html>
