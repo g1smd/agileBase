@@ -15,33 +15,3 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-## This template used when including report data in a wiki page
-<h2><a target="agileBase" href="${viewTools.getAppUrl()}?return=gui/display_application&set_table=$sessionTable.getInternalTableName()&set_report=$sessionReport.getInternalReportName()">$sessionReport</a></h2>
-	      <table id="reportData" cellspacing="0">
-          <tr>
-            <td class="leading">&nbsp;</td>
-            #foreach($field in $fields)
-              #set($internalFieldName = $field.get(0))
-              #set($fieldObject = $field.get(1))
-              ## row0 contains the internal field name
-    		          ## row1 contains the display field
-<td #if(($fieldObject.getClass().getSimpleName() == "TextFieldDefn") || ($fieldObject.getClass().getSimpleName() == "BigTextFieldDefn")) maxTextLength="$fieldObject.getContentSize()" #end #if($field.get(0) && $internalFieldName!="")internalName="$internalFieldName" onclick="fSetSort(this)"#end>
-#if($fieldObject)
-#if($internalFieldName && $internalFieldName!="")
-<div title="$fieldObject">
-#end
- $fieldObject
-#if($internalFieldName && $internalFieldName!="")
-</div>
-#end
-#else
-&nbsp;
-#end
-</td>
-            #end
-            <td class="trailing">&nbsp;</td>
-          </tr>
-        <tbody name="reportBody" id="reportBody">
-          #parse("gui/pane2/pane2_body.vm")
-			     </tbody>
-      </table>
