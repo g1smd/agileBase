@@ -211,9 +211,7 @@
   </ul>
 </div>
 #foreach($report in $savedReports)
-  Checking $report<br>
   #if(!$report.getCalendarField())
-	Is not a calendar<br>
     #parse("gui/calendar/panel.vm")
   #end
 #end
