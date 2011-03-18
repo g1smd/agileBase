@@ -15,8 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-Table part only
-<table>
+<table id=reportData cellspacing="0" class='lowered'>
 <thead>
 #parse("gui/pane2/pane2_head.vm")
 </thead>
