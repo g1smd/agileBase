@@ -15,3 +15,12 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<table>
+<thead>
+#parse("gui/pane2/pane2_head.vm")
+</thead>
+<tbody name=reportBody id=reportBody class="selectable">
+#parse("gui/pane2/pane2_body.vm")
+</tbody>
+</table>
+</table>
