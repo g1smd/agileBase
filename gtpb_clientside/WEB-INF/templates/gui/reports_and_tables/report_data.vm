@@ -20,7 +20,6 @@
 ## $sessionTable
 ## $rowLimit
 ## otherwise the session details will be used
-<h1>Report data for $sessionReport</h1>
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))##
 ## data from a report for pane2
 #set($resource_folder='tables')##
@@ -102,7 +101,6 @@
   #if(!$selectionFound)##
 	#set($excludedId = $selection)##
   #end##
-  Data is $data
   #if($printout)##
     #parse('gui/printouts/pane2_printout.vm')##
   #else##
