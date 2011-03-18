@@ -19,7 +19,10 @@
 ## if we're not listing tables then the user must have delete privileges
 ## otherwise, check that the user has delete privileges
 ## Don't show delete boxes for mobile devices either though, deleting will be via pane 3
-#if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionData.getTable()))
+#if(!$sessionTable)
+  #set($sessionTable = $sessionData.getTable())
+#end
+#if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
 #if(!$mobile_device)
   #set($success=$fields.add(['','<div style="padding-left: 3px;"><input type="checkbox" onclick="fLocateDeleteMarkers(this); fSelectAll(this)"></div>']))
   #set($thisUniqueId = -1)
