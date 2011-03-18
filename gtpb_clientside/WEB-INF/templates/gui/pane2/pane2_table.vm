@@ -24,4 +24,3 @@ Table part only
 #parse("gui/pane2/pane2_body.vm")
 </tbody>
 </table>
-</table>
