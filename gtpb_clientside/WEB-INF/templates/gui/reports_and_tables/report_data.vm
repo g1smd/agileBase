@@ -102,10 +102,11 @@
   #if(!$selectionFound)##
 	#set($excludedId = $selection)##
   #end##
+  Data is $data
   #if($printout)##
     #parse('gui/printouts/pane2_printout.vm')##
   #else##
-    #parse('gui/pane2/include_delete_checkboxes.vm')##
+    ## #parse('gui/pane2/include_delete_checkboxes.vm')##
   #end##
 #else ##if there's no report in the session
   #parse('gui/resources/nothing.vm')##
