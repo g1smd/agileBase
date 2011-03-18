@@ -5,7 +5,8 @@
 #set($sessionReport = $report)
 #set($sessionTable = $report.getParentTable())
 #set($table_part_only = true)
+#set($module = $report.getModule())
 <div class="portlet">
-<h1>$report.getModule() - $report</h1>
+<h1><img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $module - $report</h1>
 #parse("gui/reports_and_tables/report_data.vm")
 </div>
