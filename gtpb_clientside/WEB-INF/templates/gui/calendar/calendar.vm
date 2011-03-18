@@ -212,7 +212,7 @@
 </div>
 #foreach($report in $savedReports)
   #if(!$report.getCalendarField())
-    #parse("gui/calendar/panel.vm")
+##    #parse("gui/calendar/panel.vm")
   #end
 #end
 </div> ## end of rest_of_page
