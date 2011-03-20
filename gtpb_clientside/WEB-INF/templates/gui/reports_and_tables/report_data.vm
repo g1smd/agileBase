@@ -28,8 +28,8 @@
 #if($sessionData.hasTable())##
   #if(!$sessionReport)## allow overrides
     #set($sessionReport=$sessionData.getReport())##
-    #set($sessionTable=$sessionData.getTable())##
   #end##
+  #set($sessionTable=$sessionReport.getParentTable())##
   #set($return='gui/reports_and_tables/pane3')##
   #set($pane1_id="$sessionTable.getInternalTableName()$sessionReport.getInternalReportName()")##
   ##test to see whether a record has previously been selected and is stored in the session
