@@ -53,9 +53,9 @@ $(document).ready(function() {
     addRemoveCalendar(this);
   });
   // Show calendar report selector if no reports are initially selected
-  if($("#report_selection input:checked").length == 0) {
-	$("#report_selection").show();
-  }
+  //if($("#report_selection input:checked").length == 0) {
+  //	$("#report_selection").show();
+  //}
 
   // Add/remove reports from calendar/panel on click
   $(".report_selection input").change(function() {

@@ -23,6 +23,8 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 public class AuthCacheObject implements AuthCacheObjectInfo {
 
 	private AuthCacheObject() {
+		this.table = null;
+		this.privilegeType = null;
 	}
 
 	public AuthCacheObject(TableInfo table, PrivilegeType privilegeType, boolean allowedTo) {
@@ -72,9 +74,9 @@ public class AuthCacheObject implements AuthCacheObjectInfo {
 
 	private volatile int hashCode = 0;
 
-	private TableInfo table;
+	private final TableInfo table;
 
-	private PrivilegeType privilegeType;
+	private final PrivilegeType privilegeType;
 
 	private boolean allowedTo = false;
 }
