@@ -1,0 +1,57 @@
+##
+##  Copyright 2011 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<request>
+  <caption>agileBase App Store</caption>
+  #parse('gui/customisations/wizard_result.vm') 
+    <okTemplate>gui/help/end</okTemplate>
+    <htmlContent><![CDATA[
+    <div style="padding:5px">
+      <h1>Available Apps</h1>
+      Plug into the data in agileBase to help make the most use of the system.
+      These enterprise apps are installed company-wide, there is <b>no per-user cost<b>.
+      &pound;50/month (&pound;25/month for subsequent apps) supports unlimited use<p>
+      <ul id="app_list">
+        <li>
+          <img src="resources/toolbar/dashboard.png"><b>Executive dashboard</b>To help helps executives "see" their organisation in full, using charts, usage and automated exception reporting
+        </li>
+        <li>
+          <img src="resources/toolbar/calendar.png"><b>Calendar</b>An operational calendar fully integrated with agileBase data to aid shared scheduling and visual management
+        </li>
+        <li>
+          <img src="resources/toolbar/wiki.png"><b>Wiki</b>A company wiki aids knowledge capture and collaboration on 'un-structured' data
+        </li>
+        <li>
+          <img src="resources/toolbar/a3.png"><b>A3 Reports</b>A3 reports promote improved problem solving and decision making - see www.a3reports.co.uk
+        </li>
+        <li>
+          <img src="resources/toolbar/tagcloud.png"><b>Tag clouds</b>Tag clouds help with retrospective sense-making of data, reducing the time-consuming manual process of categorisation
+        </li>
+        <li>
+          <img src="resources/toolbar/forms.png"><b>Public forms</b>Embed agileBase forms into public websites - allows data gathering from your customers/partners
+        </li>
+        <li>
+          <img src="resources/toolbar/mkis.png"><b>Marketing information system</b>Integrate with 3rd party analytics from various sources to show a timeline-based overview of all marketing activity and it's effect
+        </li>
+        <li>
+          <img src="resources/toolbar/search.png"><b>Global search</b>For large installations, a global search can help quickly find data, even searching within documents
+        </li>
+      </ul>
+    </div>
+    ]]>
+  </htmlContent>
+</request>

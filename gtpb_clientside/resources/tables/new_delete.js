@@ -43,6 +43,10 @@ function fHelp() {
 	top.fShowModalDialog('gui/help/1_help_centre','help centre','fHelpOK()','ok','width=800px; height=600px;');
 }
 
+function fAppStore() {
+	top.fShowModalDialog('gui/appstore/1_app_store','app store','fHelpOK()','ok','width=800px; height=600px;');
+}
+
 // Download the current session report
 function fExport()
 {    this.location.href='ReportDownloader.servlet';
