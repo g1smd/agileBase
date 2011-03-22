@@ -26,17 +26,31 @@ $viewTools.startTimer("gui/administration/information/option_sets/information_pr
 General information about the $appUser.getCompany() agileBase service<p>
 
 #if(!$disallowedUsernames.contains($appUser.getUserName()))
-<h2>Cost Calculation</h2>
+<h2>Current Licencing/hosting cost</h2>
 Monthly cost per table is &pound;10 for the first twenty tables and &pound;5 for any subsequent.<p>
 
 $view.getLoggedInUser().getCompany() has $usageStats.getNumberOfTables() tables<p>
 
-Total monthly cost = <b>&pound;$usageStats.getMonthlyTableCost()</b><p>
+Base monthly cost = <b>&pound;$usageStats.getMonthlyTableCost()</b><p>
 
-&pound;50/month will be added if the wiki is used
-
-<h2>Low Activity Tables</h2>
+Current addons available are
+<ul>
+  <li>executive dashboard for charts, usage information and exception reporting</li>
+  <li>integrated calendar for shared scheduling</li>
+  <li>wiki for un-structured collaboration and knowledge capture</li>
+  <li>A3 reports for improved problem solving and decision making</li>
+  <li>tag clouds for sense-making</li>
+  <li>public forms for customer feedback</li>
+  <li>marketing information system for tracking campaign statistics from multiple sources</li>
+</ul>
+Addons are available at volume discounts:
+<ul>
+  <li>1 addon = &pound;50</li>
+  <li>2 addons = &pound;75</li>
+  <li>Further addons = +&pound;25 each</li>
+</ul>
 #end
+<h2>Low Activity Tables</h2>
 These tables have low activity and are <i>possibly</i> unused:<p>
 
 #set($unusedTables = $usageStats.getUnusedTables())

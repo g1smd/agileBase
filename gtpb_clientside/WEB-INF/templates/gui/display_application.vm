@@ -173,19 +173,20 @@
 					  #set($userType = $appUser.getUserType())
 					  ## Still allow admins who haven't got a full dashboard to see the info treemap
 					  #if($view.loggedInUserAllowedTo("ADMINISTRATE") && (!$dashboard_enabled || $userType == "OPERATIONAL" || $userType == "EXTERNAL"))
-						#parse('gui/toolbar/buttons/info.vm')
+						  #parse('gui/toolbar/buttons/info.vm')
 					  #end
 					  #parse('gui/toolbar/buttons/dashboard.vm')
-			          #parse('gui/toolbar/buttons/calendar.vm')
-			          #set($sessionContext = $sessionData.getContext().toString())
-			          #if($sessionContext == "SYSADMIN")
-			            #parse('gui/toolbar/buttons/dev_tools.vm')
-			          #end
-			          #if($view.usesToolbarPlugin())
-			            #set($toolbarPluginName = $view.getToolbarPluginName())
-			            #parse("gui/plugins/$toolbarPluginName/toolbar.vm")
-			          #end
-			        </div>
+            #parse('gui/toolbar/buttons/calendar.vm')
+            #parse('gui/toolbar/buttons/apps.vm')
+	          #set($sessionContext = $sessionData.getContext().toString())
+	          #if($sessionContext == "SYSADMIN")
+	            #parse('gui/toolbar/buttons/dev_tools.vm')
+	          #end
+	          #if($view.usesToolbarPlugin())
+	            #set($toolbarPluginName = $view.getToolbarPluginName())
+	            #parse("gui/plugins/$toolbarPluginName/toolbar.vm")
+	          #end
+		        </div>
 					<div id="logout">
 						<img style="float:left" src="resources/toolbar/logout_left.png">
 						<span>
