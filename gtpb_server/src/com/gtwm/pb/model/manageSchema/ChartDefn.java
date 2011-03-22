@@ -390,11 +390,11 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 
 	@Enumerated(EnumType.STRING)
 	public SummaryFilter getChartFilter() {
-		return this.summaryFilter;
+		return this.chartFilter;
 	}
 
 	public void setChartFilter(SummaryFilter summaryFilter) {
-		this.summaryFilter = summaryFilter;
+		this.chartFilter = summaryFilter;
 	}
 
 	@ManyToOne(targetEntity = ReportFieldDefn.class)
@@ -491,7 +491,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 
 	private Set<ChartAggregateInfo> aggregateFunctions = new LinkedHashSet<ChartAggregateInfo>();
 
-	private SummaryFilter summaryFilter = null;
+	private SummaryFilter chartFilter = null;
 
 	private ReportFieldInfo filterReportField = null;
 

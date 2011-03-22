@@ -415,35 +415,35 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.removeJoinFromReport(sessionData, request, databaseDefn);
 					break;
 				case ADD_GROUPING_TO_CHART:
-					ServletSchemaMethods.addGroupingToSummaryReport(sessionData, request,
+					ServletSchemaMethods.addGroupingToChart(sessionData, request,
 							databaseDefn);
 					break;
 				case REMOVE_GROUPING_FROM_CHART:
-					ServletSchemaMethods.removeGroupingFromSummaryReport(sessionData, request,
+					ServletSchemaMethods.removeGroupingFromChart(sessionData, request,
 							databaseDefn);
 					break;
 				case ADD_FUNCTION_TO_CHART:
-					ServletSchemaMethods.addFunctionToSummaryReport(sessionData, request,
+					ServletSchemaMethods.addFunctionToChart(sessionData, request,
 							databaseDefn);
 					break;
 				case REMOVE_FUNCTION_FROM_CHART:
-					ServletSchemaMethods.removeFunctionFromSummaryReport(sessionData, request,
+					ServletSchemaMethods.removeFunctionFromChart(sessionData, request,
 							databaseDefn);
 					break;
 				case SET_CHART_FILTER:
-					ServletSchemaMethods.setSummaryReportFilter(sessionData, request, databaseDefn);
+					ServletSchemaMethods.setChartFilter(sessionData, request, databaseDefn);
 					break;
 				case SET_CHART_FILTER_FIELD:
-					ServletSchemaMethods.setSummaryReportFilterField(sessionData, request, databaseDefn);
+					ServletSchemaMethods.setChartFilterField(sessionData, request, databaseDefn);
 					break;
 				case SET_CHART_RANGE:
-					ServletSchemaMethods.setSummaryRange(sessionData, request, databaseDefn);
+					ServletSchemaMethods.setChartRange(sessionData, request, databaseDefn);
 					break;
 				case SAVE_CHART:
-					ServletSchemaMethods.saveSummaryReport(sessionData, request, databaseDefn);
+					ServletSchemaMethods.saveChart(sessionData, request, databaseDefn);
 					break;
 				case REMOVE_CHART:
-					ServletSchemaMethods.removeSummaryReport(sessionData, request, databaseDefn);
+					ServletSchemaMethods.removeChart(sessionData, request, databaseDefn);
 					break;
 				case SET_DASHBOARD_CHART_STATE:
 					ServletDashboardMethods.setDashboardSummaryState(sessionData, request,

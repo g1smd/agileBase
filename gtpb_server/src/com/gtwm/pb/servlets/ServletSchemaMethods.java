@@ -1934,7 +1934,6 @@ public final class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"A field owner (either table or report) must be specified for both the left and right fields");
 		}
-
 		JoinClauseInfo join = null;
 		if (leftTableField != null && rightTableField != null) {
 			join = new JoinClause(leftTableField, rightTableField, joinType);
@@ -2085,7 +2084,7 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void setSummaryReportFilter(SessionDataInfo sessionData,
+	public synchronized static void setChartFilter(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CantDoThatException, SQLException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
@@ -2101,26 +2100,26 @@ public final class ServletSchemaMethods {
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
-			databaseDefn.setSummaryReportFilter(request, report, summaryFilter);
+			databaseDefn.setChartFilter(request, report, summaryFilter);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			databaseDefn.setSummaryReportFilter(request, report, null);
+			databaseDefn.setChartFilter(request, report, null);
 			throw new CantDoThatException("summary filter addition failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			databaseDefn.setSummaryReportFilter(request, report, null);
+			databaseDefn.setChartFilter(request, report, null);
 			throw new CantDoThatException("summary filter addition failed", pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
-			databaseDefn.setSummaryReportFilter(request, report, null);
+			databaseDefn.setChartFilter(request, report, null);
 			throw new CantDoThatException("summary filter addition failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 	}
 
-	public synchronized static void setSummaryReportFilterField(SessionDataInfo sessionData,
+	public synchronized static void setChartFilterField(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CantDoThatException, SQLException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
@@ -2136,26 +2135,26 @@ public final class ServletSchemaMethods {
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
-			databaseDefn.setSummaryReportFilterField(request, report, reportField);
+			databaseDefn.setChartFilterField(request, report, reportField);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			databaseDefn.setSummaryReportFilter(request, report, null);
+			databaseDefn.setChartFilter(request, report, null);
 			throw new CantDoThatException("summary filter field addition failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			databaseDefn.setSummaryReportFilter(request, report, null);
+			databaseDefn.setChartFilter(request, report, null);
 			throw new CantDoThatException("summary filter field addition failed", pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
-			databaseDefn.setSummaryReportFilter(request, report, null);
+			databaseDefn.setChartFilter(request, report, null);
 			throw new CantDoThatException("summary filter field addition failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 	}
 
-	public synchronized static void setSummaryRange(SessionDataInfo sessionData,
+	public synchronized static void setChartRange(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CantDoThatException, SQLException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
@@ -2170,26 +2169,26 @@ public final class ServletSchemaMethods {
 		int rangePercent = Integer.valueOf(rangePercentString);
 		try {
 			HibernateUtil.startHibernateTransaction();
-			databaseDefn.setSummaryReportRange(request, report, rangePercent, rangeDirection);
+			databaseDefn.setChartRange(request, report, rangePercent, rangeDirection);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			databaseDefn.setSummaryReportRange(request, report, 100, true);
+			databaseDefn.setChartRange(request, report, 100, true);
 			throw new CantDoThatException("summary range addition failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			databaseDefn.setSummaryReportRange(request, report, 100, true);
+			databaseDefn.setChartRange(request, report, 100, true);
 			throw new CantDoThatException("summary range addition failed", pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
-			databaseDefn.setSummaryReportRange(request, report, 100, true);
+			databaseDefn.setChartRange(request, report, 100, true);
 			throw new CantDoThatException("summary range addition failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 	}
 
-	public synchronized static void addGroupingToSummaryReport(SessionDataInfo sessionData,
+	public synchronized static void addGroupingToChart(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			CantDoThatException, MissingParametersException, ObjectNotFoundException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
@@ -2214,7 +2213,7 @@ public final class ServletSchemaMethods {
 		ReportFieldInfo groupingReportField = report.getReportField(internalFieldName);
 		try {
 			HibernateUtil.startHibernateTransaction();
-			databaseDefn.addGroupingToSummaryReport(request, groupingReportField, groupingModifer);
+			databaseDefn.addGroupingToChart(request, groupingReportField, groupingModifer);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
@@ -2236,7 +2235,7 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void removeGroupingFromSummaryReport(SessionDataInfo sessionData,
+	public synchronized static void removeGroupingFromChart(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
@@ -2246,9 +2245,9 @@ public final class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalfieldname' parameter is required to remove a grouping field from a report summary");
 		}
-		ChartInfo summary = report.getChart();
-		if (summary.getGroupings().size() == 1) {
-			for (ChartAggregateInfo aggregateFunction : summary.getAggregateFunctions()) {
+		ChartInfo chart = report.getChart();
+		if (chart.getGroupings().size() == 1) {
+			for (ChartAggregateInfo aggregateFunction : chart.getAggregateFunctions()) {
 				if (aggregateFunction.getAggregateFunction().equals(
 						AggregateFunction.CUMULATIVE_COUNT)
 						|| aggregateFunction.getAggregateFunction().equals(
@@ -2259,17 +2258,17 @@ public final class ServletSchemaMethods {
 				}
 			}
 		}
-		ReportFieldInfo groupingReportField = summary.getGroupingReportField(internalFieldName);
+		ReportFieldInfo groupingReportField = chart.getGroupingReportField(internalFieldName);
 		HibernateUtil.startHibernateTransaction();
 		try {
-			databaseDefn.removeGroupingFromSummaryReport(request, groupingReportField);
+			databaseDefn.removeGroupingFromChart(request, groupingReportField);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
 			// TODO: making the second arg. null will remove any previous
 			// grouping modifier, but we can perhaps sort this out at a later
 			// date
-			summary.addGrouping(groupingReportField, null);
+			chart.addGrouping(groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
@@ -2286,7 +2285,7 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void addFunctionToSummaryReport(SessionDataInfo sessionData,
+	public synchronized static void addFunctionToChart(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
@@ -2315,7 +2314,7 @@ public final class ServletSchemaMethods {
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
-			databaseDefn.addFunctionToSummaryReport(request, addedAggFn);
+			databaseDefn.addFunctionToChart(request, addedAggFn);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
@@ -2350,7 +2349,7 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void removeFunctionFromSummaryReport(SessionDataInfo sessionData,
+	public synchronized static void removeFunctionFromChart(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
@@ -2367,7 +2366,7 @@ public final class ServletSchemaMethods {
 		ReportFieldInfo secondaryReportField = aggregateToRemove.getSecondaryReportField();
 		try {
 			HibernateUtil.startHibernateTransaction();
-			databaseDefn.removeFunctionFromSummaryReport(request, report, internalAggregateName);
+			databaseDefn.removeFunctionFromChart(request, report, internalAggregateName);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
@@ -2391,34 +2390,34 @@ public final class ServletSchemaMethods {
 	 * (specified by the user) and saves it to a permanent collection of
 	 * summaries in the report. Then the scratchpad summary is blanked
 	 */
-	public synchronized static void saveSummaryReport(SessionDataInfo sessionData,
+	public synchronized static void saveChart(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
-		String summaryTitle = request.getParameter("summarytitle");
-		if (summaryTitle == null) {
+		String chartTitle = request.getParameter("summarytitle");
+		if (chartTitle == null) {
 			throw new MissingParametersException(
 					"'summarytitle' parameter is required to save a report summary");
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
-			databaseDefn.saveSummaryReport(request, report, summaryTitle);
+			databaseDefn.saveChart(request, report, chartTitle);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
 			// Could have some code to roll back memory state here
 			// but will only add it if it becomes necessary
-			throw new CantDoThatException("summary saving failed", hex);
+			throw new CantDoThatException("chart saving failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("summary saving failed", pex);
+			throw new CantDoThatException("chart saving failed", pex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 	}
 
-	public synchronized static void removeSummaryReport(SessionDataInfo sessionData,
+	public synchronized static void removeChart(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
@@ -2426,7 +2425,7 @@ public final class ServletSchemaMethods {
 		String summaryIdString = request.getParameter("summaryid");
 		if (summaryIdString == null) {
 			throw new MissingParametersException(
-					"'summaryid' parameter is required to remove a report summary");
+					"'summaryid' parameter is required to remove a chart");
 		}
 		long summaryId = Long.valueOf(summaryIdString);
 		try {
@@ -2439,19 +2438,19 @@ public final class ServletSchemaMethods {
 				}
 			}
 			if (summaryToRemove == null) {
-				throw new ObjectNotFoundException("A report summary with the ID " + summaryIdString
+				throw new ObjectNotFoundException("A chart with the ID " + summaryIdString
 						+ " was not found in report " + report);
 			}
-			databaseDefn.removeSummaryReport(request, summaryToRemove);
+			databaseDefn.removeChart(request, summaryToRemove);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
 			// Could have some code to roll back memory state here
 			// but will only add it if it becomes necessary
-			throw new CantDoThatException("summary removal failed", hex);
+			throw new CantDoThatException("chart removal failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("summary removal failed", pex);
+			throw new CantDoThatException("chart removal failed", pex);
 		} finally {
 			HibernateUtil.closeSession();
 		}

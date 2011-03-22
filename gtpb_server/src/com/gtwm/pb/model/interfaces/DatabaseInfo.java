@@ -400,7 +400,7 @@ public interface DatabaseInfo {
 	 *             If the logged in user doesn't have MANAGE_TABLE privileges on
 	 *             the report's parent table
 	 */
-	public void addGroupingToSummaryReport(HttpServletRequest request,
+	public void addGroupingToChart(HttpServletRequest request,
 			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException;
 
@@ -408,14 +408,14 @@ public interface DatabaseInfo {
 	 * Remove groupings on groupingReportField from the summary of its parent
 	 * report
 	 */
-	public void removeGroupingFromSummaryReport(HttpServletRequest request,
+	public void removeGroupingFromChart(HttpServletRequest request,
 			ReportFieldInfo groupingReportField) throws DisallowedException,
 			ObjectNotFoundException, SQLException, CantDoThatException;
 
 	/**
 	 * Add an aggregate function so a summary report
 	 */
-	public void addFunctionToSummaryReport(HttpServletRequest request,
+	public void addFunctionToChart(HttpServletRequest request,
 			ChartAggregateInfo addedAggFn) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException, SQLException;
 
@@ -423,7 +423,7 @@ public interface DatabaseInfo {
 	 * Remove all aggregate functions based on the field supplied. Acts on the
 	 * parent report of the supplied functionReportField
 	 */
-	public void removeFunctionFromSummaryReport(HttpServletRequest request, BaseReportInfo report,
+	public void removeFunctionFromChart(HttpServletRequest request, BaseReportInfo report,
 			String internalAggregateName) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException, SQLException;
 
@@ -431,7 +431,7 @@ public interface DatabaseInfo {
 	 * Sets a filter criteria on the report filter (which acts on the field set
 	 * with with setSummaryReportFilterField)
 	 */
-	public void setSummaryReportFilter(HttpServletRequest request, BaseReportInfo report,
+	public void setChartFilter(HttpServletRequest request, BaseReportInfo report,
 			SummaryFilter summaryFilter) throws SQLException, DisallowedException,
 			ObjectNotFoundException, CantDoThatException;
 
@@ -439,14 +439,14 @@ public interface DatabaseInfo {
 	 * @see setSummaryReportFilter(HttpServletRequest, BaseReportInfo,
 	 *      SummaryFilter)
 	 */
-	public void setSummaryReportFilterField(HttpServletRequest request, BaseReportInfo report,
+	public void setChartFilterField(HttpServletRequest request, BaseReportInfo report,
 			ReportFieldInfo reportField) throws SQLException, DisallowedException,
 			ObjectNotFoundException, CantDoThatException;
 
 	/**
 	 * Set the range of rows returned, e.g. the top 25%
 	 */
-	public void setSummaryReportRange(HttpServletRequest request, BaseReportInfo report,
+	public void setChartRange(HttpServletRequest request, BaseReportInfo report,
 			int rangePercent, boolean rangeDirection) throws SQLException, DisallowedException,
 			ObjectNotFoundException, CantDoThatException;
 
@@ -455,11 +455,11 @@ public interface DatabaseInfo {
 	 * of named summary reports for the report. The current summary report will
 	 * then be reset - all groupings and calculations removed.
 	 */
-	public void saveSummaryReport(HttpServletRequest request, BaseReportInfo report,
+	public void saveChart(HttpServletRequest request, BaseReportInfo report,
 			String summaryTitle) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException;
 
-	public void removeSummaryReport(HttpServletRequest request, ChartInfo reportSummary)
+	public void removeChart(HttpServletRequest request, ChartInfo reportSummary)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException;
 
 	/**
