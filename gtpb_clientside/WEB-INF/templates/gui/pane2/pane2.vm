@@ -108,10 +108,11 @@
    	     top.document.getElementById('button_new').removeAttribute('disabled');
    	     top.document.getElementById('button_clone').removeAttribute('disabled');
    	     top.document.getElementById('button_delete').removeAttribute('disabled');
-   	     top.document.getElementById('button_import').removeAttribute('disabled');
+         top.document.getElementById('button_import').removeAttribute('disabled');
    	     top.document.getElementById('button_export').removeAttribute('disabled');
    	     top.document.getElementById('button_print').removeAttribute('disabled');
    	     top.document.getElementById('button_links').removeAttribute('disabled');
+         top.document.getElementById('button_apps').removeAttribute('disabled');
    	     if (top.document.getElementById('button_info')) {
 		   top.document.getElementById('button_info').removeAttribute('disabled');
 		 }
