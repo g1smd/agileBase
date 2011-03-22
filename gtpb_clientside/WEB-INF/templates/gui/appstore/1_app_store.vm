@@ -27,6 +27,7 @@
       }
       ul#app_list li img {
         float: left;
+        margin-right: 10px;
       }
     </style>
     <div style="padding:5px">
@@ -36,28 +37,28 @@
       &pound;50/month (&pound;25/month for subsequent apps) supports unlimited use<p>
       <ul id="app_list">
         <li>
-          <img src="resources/toolbar/dashboard.png"><b>Executive dashboard</b>To help helps executives "see" their organisation in full, using charts, usage and automated exception reporting
+          <img src="resources/toolbar/dashboard.png"><b>Executive dashboard</b> To help helps executives "see" their organisation in full, using charts, usage and automated exception reporting
         </li>
         <li>
-          <img src="resources/toolbar/calendar.png"><b>Calendar</b>An operational calendar fully integrated with agileBase data to aid shared scheduling and visual management
+          <img src="resources/toolbar/calendar.png"><b>Calendar</b> An operational calendar fully integrated with agileBase data to aid shared scheduling and visual management
         </li>
         <li>
-          <img src="resources/toolbar/wiki.png"><b>Wiki</b>A company wiki aids knowledge capture and collaboration on 'un-structured' data
+          <img src="resources/toolbar/wiki.png"><b>Wiki</b> A company wiki aids knowledge capture and collaboration on 'un-structured' data
         </li>
         <li>
-          <img src="resources/toolbar/a3.png"><b>A3 Reports</b>A3 reports promote improved problem solving and decision making - see www.a3reports.co.uk
+          <img src="resources/toolbar/a3.png"><b>A3 Reports</b> A3 reports promote improved problem solving and decision making - see www.a3reports.co.uk
         </li>
         <li>
-          <img src="resources/toolbar/tagcloud.png"><b>Tag clouds</b>Tag clouds help with retrospective sense-making of data, reducing the time-consuming manual process of categorisation
+          <img src="resources/toolbar/tagcloud.png"><b>Tag clouds</b> For retrospective sense-making of data, reducing the time-consuming manual process of categorisation
         </li>
         <li>
-          <img src="resources/toolbar/forms.png"><b>Public forms</b>Embed agileBase forms into public websites - allows data gathering from your customers/partners
+          <img src="resources/toolbar/forms.png"><b>Public forms</b> Embed agileBase forms into public websites - allows data gathering from your customers/partners
         </li>
         <li>
-          <img src="resources/toolbar/mkis.png"><b>Marketing information system</b>Integrate with 3rd party analytics from various sources to show a timeline-based overview of all marketing activity and it's effect
+          <img src="resources/toolbar/mkis.png"><b>Marketing information system</b> Integrate with 3rd party analytics from various sources to show a timeline-based overview of all marketing activity and it's effect
         </li>
         <li>
-          <img src="resources/toolbar/search.png"><b>Global search</b>For large installations, a global search can help quickly find data, even searching within documents
+          <img src="resources/toolbar/search.png"><b>Global search</b> For large installations, a global search can help quickly find data, even searching within documents
         </li>
       </ul>
     </div>
