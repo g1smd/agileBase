@@ -162,9 +162,9 @@
 					      #parse('gui/toolbar/buttons/pane2.vm')
 			          #parse('gui/toolbar/buttons/pane3.vm')
                 #parse('gui/toolbar/buttons/filter.vm')
+                #parse('gui/toolbar/buttons/print.vm')
 			        </div>
-			        <div class=buttonGroup> ## mass operations
-			          #parse('gui/toolbar/buttons/print.vm')
+			        <div class=buttonGroup> ## import/export
 			          #parse('gui/toolbar/buttons/links.vm')
 			          #parse('gui/toolbar/buttons/import.vm')
 			          #parse('gui/toolbar/buttons/export.vm')
