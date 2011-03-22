@@ -20,10 +20,13 @@
   #parse('gui/customisations/wizard_result.vm') 
     <okTemplate>gui/help/end</okTemplate>
     <htmlContent><![CDATA[
+    <style>
+      ul#app_list { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
+    </style>
     <div style="padding:5px">
       <h1>Available Apps</h1>
       Plug into the data in agileBase to help make the most use of the system.
-      These enterprise apps are installed company-wide, there is <b>no per-user cost<b>.
+      These enterprise apps are installed company-wide, there is <b>no per-user cost</b>.
       &pound;50/month (&pound;25/month for subsequent apps) supports unlimited use<p>
       <ul id="app_list">
         <li>
