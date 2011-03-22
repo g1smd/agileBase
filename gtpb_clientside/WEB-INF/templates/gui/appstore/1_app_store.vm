@@ -35,7 +35,7 @@
     </style>
     <div style="padding:5px">
       <h1>Available Apps</h1>
-      These enterprise apps can be installed company-wide, there is <b>no per-user cost</b>.
+      These apps enhance the core agileBase platform. They can be installed company-wide, there is <b>no per-user cost</b>.
       &pound;50/month (&pound;25/month for subsequent apps) supports unlimited use<p>
       <ul id="app_list">
         <li>
