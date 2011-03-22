@@ -35,8 +35,7 @@
     </style>
     <div style="padding:5px">
       <h1>Available Apps</h1>
-      Plug into the data in agileBase to help make the most use of the system.
-      These enterprise apps are installed company-wide, there is <b>no per-user cost</b>.
+      These enterprise apps can be installed company-wide, there is <b>no per-user cost</b>.
       &pound;50/month (&pound;25/month for subsequent apps) supports unlimited use<p>
       <ul id="app_list">
         <li>
@@ -52,7 +51,7 @@
           <img src="resources/toolbar/a3.png"><b>A3 Reports</b> A3 reports promote improved problem solving and decision making - see www.a3reports.co.uk
         </li>
         <li>
-          <img src="resources/toolbar/tagcloud.png"><b>Tag clouds</b> For retrospective sense-making of data
+          <img src="resources/toolbar/tagcloud.png"><b>Tag clouds</b> For retrospective sense-making of data, reducing manual categorisation processes
         </li>
         <li>
           <img src="resources/toolbar/forms.png"><b>Public forms</b> Embed agileBase forms into public websites - allows data gathering from your customers/partners
