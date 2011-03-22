@@ -1,0 +1,7 @@
+<request>
+ <caption>Help Centre</caption>
+ #parse('gui/customisations/wizard_result.vm') 
+ <htmlContent><![CDATA[
+	]]>
+ </htmlContent>
+</request>
