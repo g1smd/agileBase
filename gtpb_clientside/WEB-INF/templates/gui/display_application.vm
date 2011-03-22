@@ -157,13 +157,11 @@
 			          #parse('gui/toolbar/buttons/clone.vm')
 			          #parse('gui/toolbar/buttons/delete.vm')
 			        </div>
-			        <div class=buttonGroup> ## display preferences
+			        <div class=buttonGroup> ## display preferences and filtering
 			          #parse('gui/toolbar/buttons/pane1.vm')
-					  #parse('gui/toolbar/buttons/pane2.vm')
+					      #parse('gui/toolbar/buttons/pane2.vm')
 			          #parse('gui/toolbar/buttons/pane3.vm')
-			        </div>
-			        <div class=buttonGroup> ## pane 2 filter
-			          #parse('gui/toolbar/buttons/filter.vm')
+                #parse('gui/toolbar/buttons/filter.vm')
 			        </div>
 			        <div class=buttonGroup> ## mass operations
 			          #parse('gui/toolbar/buttons/print.vm')
