@@ -17,7 +17,7 @@
 ##
 #set($button_img='resources/toolbar/apps.png')
 #set($click="fAppStore()")
-#set($caption='App Store')
+#set($caption='AppStore')
 #set($id='button_apps')
 #set($params='toggleButton=false disabled=true')
 ###set($classes='disabled')
