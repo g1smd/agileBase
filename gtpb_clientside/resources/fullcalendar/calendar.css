@@ -93,12 +93,13 @@ ul li {
   padding: 1px;
 }
 
+/*
 .fc-event {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }	
-
+*/
 .fc-event:hover {
   height: auto!important;
   z-index: 999!important;
