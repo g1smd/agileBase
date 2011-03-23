@@ -8,7 +8,7 @@ $(document).ready(function() {
     editable: true,
     eventRender: function(event, jqElement, view) {
 	  if ((view.name == 'month') || ((view.name == 'agendaWeek') && event.allDay)) {
-        jqElement.height(15);
+        //jqElement.height(15);
       }
     },
     eventClick: function(calEvent, jsEvent, view) {
