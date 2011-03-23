@@ -139,17 +139,17 @@
 		#if($calendarModuleReports.size() > 10)
 		  #set($colourLightnessStep = $colourLightnessStep * 2)
 		#end
-	    #foreach($report in $calendarModuleReports) 
+    #foreach($report in $calendarModuleReports) 
 		  #set($internalReportName = $report.getInternalReportName())
 		  #set($table=$report.getParentTable())
 		  #set($internalTableName = $table.getInternalTableName())
 		  #set($colourHue = $colourHue + $colourHueStep)
 		  #if($colourHue > 360)
 		    #set($colourHue = $colourHue - 360)
-			#set($secondRound = true)
+			  #set($secondRound = true)
 		  #end
 		  #if($secondRound)
-			#set($colourSaturation = $colourLightness + 10)
+			  #set($colourSaturation = $colourLightness + 10)
 		    ###if($colourLightness > 50)
 			##  #set($colourSaturation = 100)
 			###else
@@ -158,18 +158,18 @@
 		  #end
 		  #set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
 		  #if($colourLightness < 45)
-			#set($colourStyle = "$colourStyle color:white; border-style: none;")
+			  #set($colourStyle = "$colourStyle color:white;")
 		  #else
-			#set($colourStyle = "$colourStyle color:black; border-style: none;")
+			  #set($colourStyle = "$colourStyle color:black;")
 		  #end
 		  #set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
 		  <li id="$internalTableName$internalReportName" title="from $report.getModule(), displayed by $report.getCalendarField()" class="has_calendar">
-		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
+		    <input type="checkbox" class="report_$internalReportName" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
 		    $report
 		  </li>
 		  #set($colourLightness = $colourLightness - $colourLightnessStep)
 		  #if($colourLightness < 20)
-			#set($colourLightness = 80)
+			  #set($colourLightness = 80)
 		  #end
 	    #end ## end of loop through reports in a module
 	    </ul>
