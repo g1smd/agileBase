@@ -52,11 +52,8 @@ $(document).ready(function() {
   $("#report_selection input:checked").each(function() {
     addRemoveCalendar(this);
   });
-  // Show calendar report selector if no reports are initially selected
-  //if($("#report_selection input:checked").length == 0) {
-  //	$("#report_selection").show();
-  //}
-
+  // Panels load from server so don't need an initial ajax in
+  
   // Add/remove reports from calendar/panel on click
   $(".report_selection input").change(function() {
     var jqCheckbox = $(this);
