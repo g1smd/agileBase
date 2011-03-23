@@ -102,7 +102,7 @@ $(document).ready(function() {
   });
   
   $(".fc-header-title h2").click(function() {
-	$(this).toggle('normal');
+	$("#calendar > .fc-content").toggle('normal');
   });
 });
 
