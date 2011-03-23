@@ -112,13 +112,14 @@ function addRemoveCalendar(checkboxElement) {
   var reportTooltip = jqCheckbox.parent().attr("title");
   var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
   var eventColour = jqCheckbox.siblings("span").css('background-color');
-  alert("Event colour is " + eventColour);
+  var textColour = jqCheckbox.siblings("span").css('color');
   if (jqCheckbox.is(":checked")) {
 	var eventSource = {
-//	  url: feedUrl,
-//	  color: 
+	  url: feedUrl,
+	  color: eventColour,
+	  textColor: textColour
 	}
-    $("#calendar").fullCalendar('addEventSource', feedUrl);
+    $("#calendar").fullCalendar('addEventSource', eventSource);
     var legendElement = $("<span class='legend_report report_" + internalReportName + "' id='legend_" + internalReportName + "' title='" + reportTooltip + "'>" + reportName + "</span>");
     $("#report_selection_header").append(legendElement);
   } else {
