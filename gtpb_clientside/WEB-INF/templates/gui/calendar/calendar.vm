@@ -164,8 +164,9 @@
 		  #end
 		  #set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
 		  <li id="$internalTableName$internalReportName" title="from $report.getModule(), displayed by $report.getCalendarField()" class="has_calendar">
-		    <input type="checkbox" class="report_$internalReportName" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
+		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
 		    $report
+        <span class="report_$internalReportName" style="display:none"></span> ## Just so JS can read colour style
 		  </li>
 		  #set($colourLightness = $colourLightness - $colourLightnessStep)
 		  #if($colourLightness < 20)

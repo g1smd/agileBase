@@ -9,9 +9,6 @@ $(document).ready(function() {
     eventRender: function(event, jqElement, view) {
 	  if ((view.name == 'month') || ((view.name == 'agendaWeek') && event.allDay)) {
         jqElement.height(15);
-  	    //jqElement.qtip({
-        //  content: event.title
-        //});
       }
     },
     eventClick: function(calEvent, jsEvent, view) {
@@ -114,7 +111,13 @@ function addRemoveCalendar(checkboxElement) {
   var reportName = jqCheckbox.parent().text();
   var reportTooltip = jqCheckbox.parent().attr("title");
   var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename=" + internalTableName + "&internalreportname=" + internalReportName;
+  var eventColour = jqCheckbox.siblings("span").css('background-color');
+  alert("Event colour is " + eventColour);
   if (jqCheckbox.is(":checked")) {
+	var eventSource = {
+//	  url: feedUrl,
+//	  color: 
+	}
     $("#calendar").fullCalendar('addEventSource', feedUrl);
     var legendElement = $("<span class='legend_report report_" + internalReportName + "' id='legend_" + internalReportName + "' title='" + reportTooltip + "'>" + reportName + "</span>");
     $("#report_selection_header").append(legendElement);
