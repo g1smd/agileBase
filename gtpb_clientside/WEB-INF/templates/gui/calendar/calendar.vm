@@ -42,6 +42,7 @@
   <script src="resources/date.js" language="Javascript"></script>
   <script src="resources/jquery.datePicker.js" language="Javascript"></script>
   <script src="resources/jquery.autocomplete.js" language="Javascript"></script>
+  <script src="resources/wait/jquery.ajaxmanager.js" language="Javascript"></script>
   ##<script src="resources/jquery.qtip.js" language="Javascript"></script>
   <script src="resources/wait/request_setFilter.js" language="Javascript"></script>
   <script src="resources/tabs/tabs.js" language="Javascript"></script>
