@@ -100,6 +100,10 @@ $(document).ready(function() {
     				  'width=800px; height=600px');
       }
   });
+  
+  $(".fc-header-title h2").click(function() {
+	$(this).toggle('normal');
+  });
 });
 
 // Add remove a JSON calendar feed
