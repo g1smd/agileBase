@@ -45,7 +45,7 @@
     #set($fieldObject = $field.get(1))
     <td><div>
       #if($internalFieldName!='')
-        <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" #if($table_part_only) gtpb_set_table="$sessionTable.getInternalTableName()" gtpb_set_report="$sessionReport.getInternalReportName()" #end onkeyup="new fSetFilter(this)" gtpb_return="gui/reports_and_tables/report_data_only" #if($filters.get($fieldObject)) value="$filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(this)"#end>
+        <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" #if($table_part_only) gtpb_return="gui/reports_and_tables/report_data_only_include" gtpb_set_table="$sessionTable.getInternalTableName()" gtpb_set_report="$sessionReport.getInternalReportName()" #else gtpb_return="gui/reports_and_tables/report_data_only" #end onkeyup="new fSetFilter(this)" #if($filters.get($fieldObject)) value="$filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(this)"#end>
       #end
     </div></td>
   #end
