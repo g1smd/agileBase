@@ -64,6 +64,7 @@ select, textarea, input {
 
 .portlet h1 {
   margin-bottom: 6px;
+  color: black;
 }
 
 ul li {
