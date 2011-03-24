@@ -161,3 +161,9 @@ function fMobileDevice() {
   }
   return false;
 }
+
+// Load an individual record, analagous to loadIntoPane3 in the standard interface
+function loadIntoPanel(url, internalReportName) {
+  var $jqPanelInner = $("portlet_" + internalReportName + " > div");
+  $jqPanelInner.load(url);
+}

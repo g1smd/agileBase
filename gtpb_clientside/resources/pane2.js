@@ -236,61 +236,50 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	var templateName = url.replace(/^.*return=/, '');
 	templateName = templateName.replace(/\&.*$/, '');
 	replacedTemplateUrl = url.replace('return=' + templateName, 'return=blank');
-	$
-			.post(
-					replacedTemplateUrl,
-					null,
-					function(data) {
-						// Refresh frame 3
-						if (typeof (parent.pane_3) != "undefined") {
-							// If user is loading a new report, it may have
-							// different privileges to the last one.
-							// If so, reload the whole of pane 3 to refresh the
-							// tab
-							// list, otherwise just refresh the current tab
-							if (typeof (parent.pane_3.pane3TabInterface) == "undefined") {
-								// something in pane 3 but not a tabset
-								parent.pane_3.document.location = url;
-							} else if (document.location.href
-									.match('set_module')) { // set_module
-								// means
-								// we
-								// must
-								// be
-								// viewing
-								// a
-								// report
-								if ((numberOfTabsExpected == null)
-										|| (numberOfTabsExpected == parent.pane_3.pane3TabInterface
-												.getNumberOfTabs())) {
-									// if pane 3 has the right number of tabs,
-									// we can
-									// just refresh the one tab
-									try {
-										parent.pane_3.pane3TabInterface
-												.refresh(rowId);
-									} catch (err) {
-										// alert("Fast refresh failed, falling
-										// back to
-										// slow - don't worry about this");
-										parent.pane_3.document.location = url;
-									}
-								} else {
-									// if it doesn't have the right number of
-									// tabs, we
-									// need to refresh the whole frame to reload
-									// the
-									// tabset
-									parent.pane_3.document.location = url;
-								}
-							} else {
-								// fallback after everything else: simple
-								// refresh of
-								// pane 3
-								parent.pane_3.document.location = url;
-							}
-						}
-					});
+	$.post(replacedTemplateUrl, null, function(data) {
+		// Refresh frame 3
+		if (typeof (parent.pane_3) != "undefined") {
+			// If user is loading a new report, it may have
+			// different privileges to the last one.
+			// If so, reload the whole of pane 3 to refresh the tab
+			// list, otherwise just refresh the current tab
+			if (typeof (parent.pane_3.pane3TabInterface) == "undefined") {
+				// something in pane 3 but not a tabset
+				parent.pane_3.document.location = url;
+			} else if (document.location.href
+					.match('set_module')) { // set_module
+				// means we must be viewing a report
+				if ((numberOfTabsExpected == null)
+						|| (numberOfTabsExpected == parent.pane_3.pane3TabInterface
+								.getNumberOfTabs())) {
+					// if pane 3 has the right number of tabs,
+					// we can
+					// just refresh the one tab
+					try {
+						parent.pane_3.pane3TabInterface
+								.refresh(rowId);
+					} catch (err) {
+						// alert("Fast refresh failed, falling
+						// back to
+						// slow - don't worry about this");
+						parent.pane_3.document.location = url;
+					}
+				} else {
+					// if it doesn't have the right number of
+					// tabs, we
+					// need to refresh the whole frame to reload
+					// the
+					// tabset
+					parent.pane_3.document.location = url;
+				}
+			} else {
+				// fallback after everything else: simple
+				// refresh of
+				// pane 3
+				parent.pane_3.document.location = url;
+			}
+		}
+	});
 }
 
 /*
