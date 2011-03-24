@@ -96,7 +96,7 @@ public final class ServletSessionMethods {
 	 *             If a record with the specified row ID isn't found in the
 	 *             table
 	 */
-	public static void setSessionRowId(SessionDataInfo sessionData, HttpServletRequest request,
+	public static void setRowId(SessionDataInfo sessionData, HttpServletRequest request,
 			String rowIdString, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
 			DisallowedException, CantDoThatException, SQLException {
 		String internalTableName = request.getParameter("rowidinternaltablename");
@@ -140,7 +140,7 @@ public final class ServletSessionMethods {
 	 *             If the user doesn't have manage privileges on the session
 	 *             table
 	 */
-	public static void setSessionLockOverride(SessionDataInfo sessionData,
+	public static void setLockOverride(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
 			DisallowedException {
 		TableInfo table = sessionData.getTable();
@@ -162,7 +162,7 @@ public final class ServletSessionMethods {
 	 * 
 	 * &set_report=a2a5e30cb86a5513f (internal report name)
 	 */
-	public static void setSessionReport(HttpServletRequest request, SessionDataInfo sessionData,
+	public static void setReport(HttpServletRequest request, SessionDataInfo sessionData,
 			String internalReportName, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
 			SQLException, DisallowedException {
 		// The report's parent table should be known, either
@@ -208,7 +208,7 @@ public final class ServletSessionMethods {
 	 * current table and then set the table to a different one ready for the
 	 * next wizard page
 	 */
-	public static void setSessionTable(SessionDataInfo sessionData, HttpServletRequest request,
+	public static void setTable(SessionDataInfo sessionData, HttpServletRequest request,
 			String tableInternalName, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
 			SQLException, DisallowedException {
 		TableInfo table = databaseDefn.getTable(request, tableInternalName);
@@ -226,7 +226,7 @@ public final class ServletSessionMethods {
 	 * @see SessionDataInfo#getCustomString(String) See
 	 *      SessionDataInfo.getCustomString(stringkey) to retrieve the value
 	 */
-	public static void setSessionCustomString(SessionDataInfo sessionData,
+	public static void setCustomString(SessionDataInfo sessionData,
 			HttpServletRequest request) throws MissingParametersException {
 		String key = request.getParameter("stringkey");
 		// backwards compatibility
@@ -256,7 +256,7 @@ public final class ServletSessionMethods {
 	 * @see SessionDataInfo#getCustomInteger(String) See
 	 *      SessionDataInfo.getCustomInteger(stringkey) to retrieve the value
 	 */
-	public static void setSessionCustomInteger(SessionDataInfo sessionData,
+	public static void setCustomInteger(SessionDataInfo sessionData,
 			HttpServletRequest request) throws MissingParametersException {
 		String key = request.getParameter("integerkey");
 		String valueString = request.getParameter("customintegervalue");
@@ -279,7 +279,7 @@ public final class ServletSessionMethods {
 	 * @see SessionDataInfo#getCustomLong(String) See
 	 *      SessionDataInfo.getCustomLong(stringkey) to retrieve the value
 	 */
-	public static void setSessionCustomLong(SessionDataInfo sessionData, HttpServletRequest request)
+	public static void setCustomLong(SessionDataInfo sessionData, HttpServletRequest request)
 			throws MissingParametersException {
 		String key = request.getParameter("longkey");
 		String valueString = request.getParameter("customlongvalue");
@@ -290,7 +290,7 @@ public final class ServletSessionMethods {
 		sessionData.setCustomLong(key, Long.valueOf(valueString));
 	}
 
-	public static void setSessionCustomBoolean(SessionDataInfo sessionData,
+	public static void setCustomBoolean(SessionDataInfo sessionData,
 			HttpServletRequest request) throws MissingParametersException {
 		String key = request.getParameter("booleankey");
 		String valueString = request.getParameter("custombooleanvalue");
@@ -301,7 +301,7 @@ public final class ServletSessionMethods {
 		sessionData.setCustomBoolean(key, Helpers.valueRepresentsBooleanTrue(valueString));
 	}
 
-	public static void setSessionCustomTable(SessionDataInfo sessionData,
+	public static void setCustomTable(SessionDataInfo sessionData,
 			HttpServletRequest request, boolean beforeAppActions, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
 		String postActionPrefix = "";
@@ -325,7 +325,7 @@ public final class ServletSessionMethods {
 		sessionData.setCustomTable(key, table);
 	}
 
-	public static void removeSessionCustomReport(SessionDataInfo sessionData, HttpServletRequest request, boolean beforeAppActions) {
+	public static void removeCustomReport(SessionDataInfo sessionData, HttpServletRequest request, boolean beforeAppActions) {
 		String postActionPrefix = "";
 		if (!beforeAppActions) {
 			postActionPrefix = "post";
@@ -334,7 +334,7 @@ public final class ServletSessionMethods {
 		sessionData.removeCustomReport(key);
 	}
 	
-	public static void setSessionCustomReport(SessionDataInfo sessionData,
+	public static void setCustomReport(SessionDataInfo sessionData,
 			HttpServletRequest request, boolean beforeAppActions, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
 		String postActionPrefix = "";
@@ -374,7 +374,7 @@ public final class ServletSessionMethods {
 		sessionData.setCustomReport(key, report);
 	}
 
-	public static void setSessionCustomField(SessionDataInfo sessionData,
+	public static void setCustomField(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
 		String key = request.getParameter("fieldkey");
@@ -426,7 +426,7 @@ public final class ServletSessionMethods {
 	 * @throws CantDoThatException
 	 *             If getFieldValue fails
 	 */
-	public static void setSessionFieldInputValues(SessionDataInfo sessionData,
+	public static void setFieldInputValues(SessionDataInfo sessionData,
 			HttpServletRequest request, boolean newRecord, DatabaseInfo databaseDefn,
 			TableInfo table, List<FileItem> multipartItems) throws ObjectNotFoundException,
 			DisallowedException, SQLException, CantDoThatException, CodingErrorException,
@@ -806,7 +806,7 @@ public final class ServletSessionMethods {
 	 * @throws DisallowedException
 	 *             If the currently logged in person isn't an administrator
 	 */
-	public static void setSessionUser(SessionDataInfo sessionData, HttpServletRequest request,
+	public static void setUser(SessionDataInfo sessionData, HttpServletRequest request,
 			String internalUserName, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
 			DisallowedException {
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request,
@@ -814,11 +814,9 @@ public final class ServletSessionMethods {
 		sessionData.setUser(appUser);
 	}
 
-	public static void setSessionModule(SessionDataInfo sessionData, HttpServletRequest request,
+	public static void setModule(SessionDataInfo sessionData, HttpServletRequest request,
 			String internalModuleName, DatabaseInfo databaseDefn) throws AgileBaseException {
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
-		// Findbugs found this unused variable
-		// Set<ModuleInfo> modules = company.getModules();
 		ModuleInfo module = company.getModuleByInternalName(internalModuleName);
 		sessionData.setModule(module);
 	}
@@ -871,7 +869,7 @@ public final class ServletSessionMethods {
 		sessionData.clearAllReportFilterValues();
 	}
 
-	public static void setSessionReportSort(SessionDataInfo sessionData,
+	public static void setReportSort(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, CantDoThatException {
 		String internalFieldName = request.getParameter("internalfieldname");
@@ -901,12 +899,12 @@ public final class ServletSessionMethods {
 		Boolean sortAscending = Boolean.valueOf(sortDirectionString);
 
 		// clear any previously set sorts:
-		clearAllSessionReportSorts(sessionData);
+		clearAllReportSorts(sessionData);
 		// set the requested sort:
 		sessionData.setReportSort(sortField, sortAscending);
 	}
 
-	public static void clearSessionReportSort(SessionDataInfo sessionData,
+	public static void clearReportSort(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException {
 		String internalFieldName = request.getParameter("internalfieldname");
@@ -927,7 +925,7 @@ public final class ServletSessionMethods {
 		sessionData.clearReportSort(sortField);
 	}
 
-	public static void clearAllSessionReportSorts(SessionDataInfo sessionData) {
+	public static void clearAllReportSorts(SessionDataInfo sessionData) {
 		sessionData.clearAllReportSorts();
 	}
 
