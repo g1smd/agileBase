@@ -2640,6 +2640,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return this.getTableByName(request, internalTableName);
 	}
 
+	//TODO: cache
 	public synchronized TableInfo findTableContainingReport(HttpServletRequest request,
 			String reportInternalName) throws ObjectNotFoundException, DisallowedException {
 		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
@@ -2661,6 +2662,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		throw new ObjectNotFoundException("Report '" + reportInternalName + "' is not in any table");
 	}
 
+	//TODO: cache
 	private synchronized TableInfo findTableContainingReportWithoutChecks(
 			String reportInternalName, HttpServletRequest request) throws ObjectNotFoundException {
 		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
