@@ -28,8 +28,6 @@ import java.util.Map;
 import java.util.Set;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
-
-import com.gtwm.pb.auth.AuthManager;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
@@ -76,6 +74,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.grlea.log.SimpleLogger;
 
 /**
+ * TODO: split out session methods
+ * 
  * Methods to do with managing data (creating & deleting records, managing the
  * session etc.) to be used by the main agileBase servlet AppController, or any
  * other custom servlet written for a particular application based on agileBase.
