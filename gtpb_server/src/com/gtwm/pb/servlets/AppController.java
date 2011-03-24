@@ -186,41 +186,41 @@ public final class AppController extends VelocityViewServlet {
 			if (sessionActionParam != null) {
 				switch (sessionAction) {
 				case PRESET_ROW_ID:
-					ServletDataMethods.setSessionRowId(sessionData, request, sessionActionParam,
+					ServletSessionMethods.setSessionRowId(sessionData, request, sessionActionParam,
 							databaseDefn);
 					break;
 				case SET_TABLE:
-					ServletDataMethods.setSessionTable(sessionData, request, sessionActionParam,
+					ServletSessionMethods.setSessionTable(sessionData, request, sessionActionParam,
 							databaseDefn);
 					break;
 				case SET_REPORT:
-					ServletDataMethods.setSessionReport(request, sessionData, sessionActionParam,
+					ServletSessionMethods.setSessionReport(request, sessionData, sessionActionParam,
 							databaseDefn);
 					break;
 				case SET_ROW_ID:
-					ServletDataMethods.setSessionRowId(sessionData, request, sessionActionParam,
+					ServletSessionMethods.setSessionRowId(sessionData, request, sessionActionParam,
 							databaseDefn);
 					break;
 				case SET_REPORT_ROW_LIMIT:
 					sessionData.setReportRowLimit(Integer.parseInt(sessionActionParam));
 					break;
 				case SET_REPORT_FILTER_VALUE:
-					ServletDataMethods.setReportFilterValue(sessionData, request, databaseDefn);
+					ServletSessionMethods.setReportFilterValue(sessionData, request, databaseDefn);
 					break;
 				case CLEAR_ALL_REPORT_FILTER_VALUES:
-					ServletDataMethods.clearAllReportFilterValues(sessionData);
+					ServletSessionMethods.clearAllReportFilterValues(sessionData);
 					break;
 				case SET_REPORT_SORT:
-					ServletDataMethods.setSessionReportSort(sessionData, request, databaseDefn);
+					ServletSessionMethods.setSessionReportSort(sessionData, request, databaseDefn);
 					break;
 				case CLEAR_REPORT_SORT:
-					ServletDataMethods.clearSessionReportSort(sessionData, request, databaseDefn);
+					ServletSessionMethods.clearSessionReportSort(sessionData, request, databaseDefn);
 					break;
 				case CLEAR_ALL_REPORT_SORTS:
-					ServletDataMethods.clearAllSessionReportSorts(sessionData);
+					ServletSessionMethods.clearAllSessionReportSorts(sessionData);
 					break;
 				case SET_USER:
-					ServletDataMethods.setSessionUser(sessionData, request, sessionActionParam,
+					ServletSessionMethods.setSessionUser(sessionData, request, sessionActionParam,
 							databaseDefn);
 					break;
 				case SET_ROLE:
@@ -237,37 +237,37 @@ public final class AppController extends VelocityViewServlet {
 				case SET_CUSTOM_STRING:
 					// SET_CUSTOM_VARIABLE is deprecated in favour of
 					// SET_CUSTOM_STRING
-					ServletDataMethods.setSessionCustomString(sessionData, request);
+					ServletSessionMethods.setSessionCustomString(sessionData, request);
 					break;
 				case SET_CUSTOM_INTEGER:
-					ServletDataMethods.setSessionCustomInteger(sessionData, request);
+					ServletSessionMethods.setSessionCustomInteger(sessionData, request);
 					break;
 				case SET_CUSTOM_LONG:
-					ServletDataMethods.setSessionCustomLong(sessionData, request);
+					ServletSessionMethods.setSessionCustomLong(sessionData, request);
 					break;
 				case SET_CUSTOM_BOOLEAN:
-					ServletDataMethods.setSessionCustomBoolean(sessionData, request);
+					ServletSessionMethods.setSessionCustomBoolean(sessionData, request);
 					break;
 				case SET_CUSTOM_TABLE:
-					ServletDataMethods.setSessionCustomTable(sessionData, request, true,
+					ServletSessionMethods.setSessionCustomTable(sessionData, request, true,
 							databaseDefn);
 					break;
 				case SET_CUSTOM_REPORT:
-					ServletDataMethods.setSessionCustomReport(sessionData, request, true,
+					ServletSessionMethods.setSessionCustomReport(sessionData, request, true,
 							databaseDefn);
 					break;
 				case SET_CUSTOM_FIELD:
-					ServletDataMethods.setSessionCustomField(sessionData, request, databaseDefn);
+					ServletSessionMethods.setSessionCustomField(sessionData, request, databaseDefn);
 					break;
 				case CLEAR_CUSTOM_VARIABLE:
 					sessionData.clearCustomVariable(sessionActionParam);
 					break;
 				case SET_MODULE:
-					ServletDataMethods.setSessionModule(sessionData, request, sessionActionParam,
+					ServletSessionMethods.setSessionModule(sessionData, request, sessionActionParam,
 							databaseDefn);
 					break;
 				case SET_LOCK_OVERRIDE:
-					ServletDataMethods.setSessionLockOverride(sessionData, request, databaseDefn);
+					ServletSessionMethods.setSessionLockOverride(sessionData, request, databaseDefn);
 					break;
 				case LOGOUT:
 					logout(request);
@@ -518,19 +518,19 @@ public final class AppController extends VelocityViewServlet {
 			if (sessionActionParam != null) {
 				switch (sessionAction) {
 				case POSTSET_TABLE:
-					ServletDataMethods.setSessionTable(sessionData, request, sessionActionParam,
+					ServletSessionMethods.setSessionTable(sessionData, request, sessionActionParam,
 							databaseDefn);
 					break;
 				case POSTSET_REPORT:
-					ServletDataMethods.setSessionReport(request, sessionData, sessionActionParam,
+					ServletSessionMethods.setSessionReport(request, sessionData, sessionActionParam,
 							databaseDefn);
 					break;
 				case POSTSET_CUSTOM_TABLE:
-					ServletDataMethods.setSessionCustomTable(sessionData, request, false,
+					ServletSessionMethods.setSessionCustomTable(sessionData, request, false,
 							databaseDefn);
 					break;
 				case POSTSET_CUSTOM_REPORT:
-					ServletDataMethods.setSessionCustomReport(sessionData, request, false,
+					ServletSessionMethods.setSessionCustomReport(sessionData, request, false,
 							databaseDefn);
 					break;
 				}

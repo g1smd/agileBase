@@ -104,7 +104,7 @@ public class Public extends VelocityViewServlet {
 					templateName = templatePath + templateName;
 					SessionDataInfo sessionData = new SessionData();
 					try {
-						ServletDataMethods.setSessionFieldInputValues(sessionData, request, true,
+						ServletSessionMethods.setSessionFieldInputValues(sessionData, request, true,
 								this.databaseDefn, table, multipartItems);
 						Map<BaseField, BaseValue> fieldInputValues = new LinkedHashMap<BaseField, BaseValue>();
 						this.databaseDefn.getDataManagement().saveRecord(
