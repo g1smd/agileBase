@@ -1,0 +1,6 @@
+#set($table = $sessionData.getTable())
+#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA", $table))
+  #parse("gui/reports_and_tables/tabs/edit.vm")
+#else
+  #parse("gui/reports_and_tables/tabs/view.vm")
+#end
