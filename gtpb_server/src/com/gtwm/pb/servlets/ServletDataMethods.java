@@ -480,7 +480,7 @@ public final class ServletDataMethods {
 		sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
 		// }
 		// try {
-		ServletSessionMethods.setSessionFieldInputValues(sessionData, request, newRecord, databaseDefn, table,
+		ServletSessionMethods.setFieldInputValues(sessionData, request, newRecord, databaseDefn, table,
 				multipartItems);
 		// then pass to DataManagement.saveRecord
 		databaseDefn.getDataManagement().saveRecord(request, table,
@@ -555,7 +555,7 @@ public final class ServletDataMethods {
 		sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
 		// false means we're editing existing records, not adding a new one
 		// so only values for specified fields will be set, not all table fields
-		ServletSessionMethods.setSessionFieldInputValues(sessionData, request, false, databaseDefn,
+		ServletSessionMethods.setFieldInputValues(sessionData, request, false, databaseDefn,
 				table, multipartItems);
 		int affectedRecords = databaseDefn.getDataManagement().globalEdit(request, table,
 				new LinkedHashMap<BaseField, BaseValue>(sessionData.getFieldInputValues()),
