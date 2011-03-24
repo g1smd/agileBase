@@ -19,7 +19,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 	<head>
 		<title>agileBase - a dedicated Lean Back Office platform</title>
 		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
-	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
+    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="/agileBase/website/scripts/thickbox.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"></script>
@@ -42,6 +42,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		@import url("/agileBase/website/styles/styles.css");
 		@import url("/agileBase/website/styles/fonts.css");
 		</style>
+    <meta name="google-site-verification" content="f-uEpO4sFJ0ePStIn6Svsj_wumUtsr153X4VYBA96K8" />
 	</head>
 	<body>
 	<div id="scroller">

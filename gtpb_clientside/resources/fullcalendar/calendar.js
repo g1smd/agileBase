@@ -166,7 +166,7 @@ function fMobileDevice() {
 function loadIntoPanel(internalReportName, rowId) {
   var jqPanelContent = $("#panel_content_" + internalReportName);
   jqPanelContent.load("AppController.servlet", {
-	'return': 'gui/reports_and_tables/tabs/edit',
+	'return': 'gui/calendar/panel_record',
 	'set_report': internalReportName,
 	'set_row_id': rowId
   });
