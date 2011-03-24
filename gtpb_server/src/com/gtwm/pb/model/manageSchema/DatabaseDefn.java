@@ -2683,6 +2683,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		for (TableInfo table : companyTables) {
 			for (BaseReportInfo report : table.getReports()) {
 				if (report.getInternalReportName().equals(reportInternalName)) {
+					this.reportTableCache.put(reportInternalName, table);
 					return table;
 				}
 			}
