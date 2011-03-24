@@ -30,10 +30,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
-import com.gtwm.pb.model.interfaces.ModuleInfo;
-import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
-import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageData.InputRecordException;
@@ -53,11 +50,9 @@ import com.gtwm.pb.model.interfaces.fields.DateValue;
 import com.gtwm.pb.model.interfaces.fields.DecimalField;
 import com.gtwm.pb.model.interfaces.fields.DurationField;
 import com.gtwm.pb.model.interfaces.fields.IntegerField;
-import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.FileField;
-import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.DataDependencyException;
@@ -65,25 +60,20 @@ import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
-import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.FieldContentType;
-import com.gtwm.pb.model.manageData.SessionData;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.FileItem;
 import org.grlea.log.SimpleLogger;
 
 /**
- * TODO: split out session methods
+ * Methods to do with managing data (creating & deleting records etc.) to be
+ * used by the main agileBase servlet AppController, or any other custom servlet
+ * written for a particular application based on agileBase. The JavaDoc here
+ * describes the HTTP requests that must be sent to use the methods.
  * 
- * Methods to do with managing data (creating & deleting records, managing the
- * session etc.) to be used by the main agileBase servlet AppController, or any
- * other custom servlet written for a particular application based on agileBase.
- * The JavaDoc here describes the HTTP requests that must be sent to use the
- * methods.
- * 
- * Part of a set of three interfaces, ServletSchemaMethods to manage setting up
- * the database schema, ServletDataMethods to manage data editing and
+ * Part of a set of four interfaces, ServletSchemaMethods to manage setting up
+ * the database schema, ServletDataMethods to manage data editing, ServletSessionMethods and
  * ServletAuthMethods to do with users, roles and privileges
  * 
  * @see ServletSchemaMethods
@@ -92,421 +82,6 @@ import org.grlea.log.SimpleLogger;
 public final class ServletDataMethods {
 
 	private ServletDataMethods() {
-	}
-
-	/**
-	 * Set the data record ID to identify a particular table record.
-	 * 
-	 * Http request usage examples:
-	 * 
-	 * 1) &set_row_id=50 - set the row id for the current session table
-	 * 
-	 * 2) &set_row_id=next - set the row id to that of the next record in the
-	 * current filtered session report
-	 * 
-	 * 3) &set_row_id=previous - set the row id to that of the previous record
-	 * in the current filtered session report
-	 * 
-	 * 4) &set_row_id=50&rowidinternaltablename=a2a5e30cb86a5513f - set the row
-	 * id for a table identified by internal table name (constant throughout
-	 * life of table)
-	 * 
-	 * 5) &set_row_id=50&rowidinternaltablename=Contacts - set the row id for a
-	 * table identified by name (name may change)
-	 * 
-	 * @throws ObjectNotFoundException
-	 *             If a record with the specified row ID isn't found in the
-	 *             table
-	 */
-	public static void setSessionRowId(SessionDataInfo sessionData, HttpServletRequest request,
-			String rowIdString, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
-			DisallowedException, CantDoThatException, SQLException {
-		String internalTableName = request.getParameter("rowidinternaltablename");
-		if (internalTableName == null) {
-			int rowId = -1;
-			if (rowIdString.toLowerCase().equals("next")) {
-				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData,
-						sessionData.getReport(), true);
-			} else if (rowIdString.toLowerCase().equals("previous")) {
-				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData,
-						sessionData.getReport(), false);
-			} else {
-				rowId = Integer.valueOf(rowIdString);
-			}
-			sessionData.setRowId(rowId);
-		} else {
-			TableInfo table = databaseDefn.getTable(request, internalTableName);
-			BaseReportInfo report = table.getDefaultReport();
-			String internalReportName = request.getParameter("rowidinternalreportname");
-			if (internalReportName != null) {
-				report = table.getReport(internalReportName);
-			}
-			int rowId = -1;
-			if (rowIdString.toLowerCase().equals("next")) {
-				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData, report, true);
-			} else if (rowIdString.toLowerCase().equals("previous")) {
-				rowId = databaseDefn.getDataManagement().getNextRowId(sessionData, report, false);
-			} else {
-				rowId = Integer.valueOf(rowIdString);
-			}
-			sessionData.setRowId(table, rowId);
-		}
-	}
-
-	/**
-	 * Sets an override so the user will be able to edit a locked record. The
-	 * lock on the record specified by the current session table and ID is
-	 * overridden
-	 * 
-	 * @throws DisallowedException
-	 *             If the user doesn't have manage privileges on the session
-	 *             table
-	 */
-	public static void setSessionLockOverride(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
-			DisallowedException {
-		TableInfo table = sessionData.getTable();
-		if (table == null) {
-			throw new ObjectNotFoundException("No table found in the session");
-		}
-		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
-		}
-		((SessionData) sessionData).setRecordLockOverride();
-	}
-
-	/**
-	 * Set the report the client is currently using. Also sets the current table
-	 * to the report's parent table.
-	 * 
-	 * Http request usage:
-	 * 
-	 * &set_report=a2a5e30cb86a5513f (internal report name)
-	 */
-	public static void setSessionReport(HttpServletRequest request, SessionDataInfo sessionData,
-			String internalReportName, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
-			SQLException, DisallowedException {
-		// The report's parent table should be known, either
-		// by it being set in the same request or previously - retrieve it so we
-		// can use it to obtain
-		// the report object
-		TableInfo table = sessionData.getTable();
-		BaseReportInfo report = null;
-		if (table == null) {
-			// If no table - could be possible if there was a session timeout or
-			// setSessionReport is
-			// being called without first having called setSessionTable sometime
-			// in the same session - then
-			// we have to search for it
-			table = databaseDefn.findTableContainingReport(request, internalReportName);
-		}
-		try {
-			report = table.getReport(internalReportName);
-		} catch (ObjectNotFoundException onfex) {
-			// Still possible that table in session is a different one to that
-			// containing the report we're
-			// trying to set - fall back to looking up the correct table
-			table = databaseDefn.findTableContainingReport(request, internalReportName);
-			report = table.getReport(internalReportName);
-		}
-		sessionData.setReport(report);
-	}
-
-	/**
-	 * Set the table the client is currently using. If this is the first time
-	 * that this table has been set as the current one, then also sets the
-	 * current report to the default report of that table.
-	 * 
-	 * Http request usage examples:
-	 * 
-	 * 1) &set_table=a2a5e30cb86a5513f - set the table by internal name
-	 * 
-	 * 2) &set_table=Contacts - set the table by name (name may change)
-	 * 
-	 * 3) &postset_table=a2a5e30cb86a5513f - set the table <b>after</b> doing
-	 * all other session and application actions. This can be useful if running
-	 * through a wizard for example, when you want to perform actions on the
-	 * current table and then set the table to a different one ready for the
-	 * next wizard page
-	 */
-	public static void setSessionTable(SessionDataInfo sessionData, HttpServletRequest request,
-			String tableInternalName, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
-			SQLException, DisallowedException {
-		TableInfo table = databaseDefn.getTable(request, tableInternalName);
-		sessionData.setTable(table);
-	}
-
-	/**
-	 * Set a custom string variable in the session, identified by a supplied key
-	 * 
-	 * Http request usage example:
-	 * 
-	 * &set_custom_string=true&stringkey=selecteditem&customstringvalue=
-	 * phonenumber - set a 'selecteditem' value to 'phonenumber'
-	 * 
-	 * @see SessionDataInfo#getCustomString(String) See
-	 *      SessionDataInfo.getCustomString(stringkey) to retrieve the value
-	 */
-	public static void setSessionCustomString(SessionDataInfo sessionData,
-			HttpServletRequest request) throws MissingParametersException {
-		String key = request.getParameter("stringkey");
-		// backwards compatibility
-		if (key == null) {
-			key = request.getParameter("key");
-		}
-		String value = request.getParameter("customstringvalue");
-		if (value == null) {
-			value = request.getParameter("value");
-		}
-		if (key == null || value == null) {
-			throw new MissingParametersException(
-					"stringkey and customstringvalue must be supplied to set a custom session string");
-		}
-		sessionData.setCustomString(key, value);
-	}
-
-	/**
-	 * Set a custom integer variable in the session, identified by a supplied
-	 * key
-	 * 
-	 * Http request usage example:
-	 * 
-	 * &set_custom_integer=true&integerkey=chosennumber&customintegervalue=5 -
-	 * set a 'chosennumber' value to 5
-	 * 
-	 * @see SessionDataInfo#getCustomInteger(String) See
-	 *      SessionDataInfo.getCustomInteger(stringkey) to retrieve the value
-	 */
-	public static void setSessionCustomInteger(SessionDataInfo sessionData,
-			HttpServletRequest request) throws MissingParametersException {
-		String key = request.getParameter("integerkey");
-		String valueString = request.getParameter("customintegervalue");
-		if (key == null || valueString == null) {
-			throw new MissingParametersException(
-					"integerkey and customintegervalue must be supplied to set a custom session integer");
-		}
-		sessionData.setCustomInteger(key, Integer.valueOf(valueString));
-	}
-
-	/**
-	 * Set a custom integer variable in the session, identified by a supplied
-	 * key
-	 * 
-	 * Http request usage example:
-	 * 
-	 * &set_custom_long=true&longkey=chosennumber&customlongvalue=5 - set a
-	 * 'chosennumber' value to 5
-	 * 
-	 * @see SessionDataInfo#getCustomLong(String) See
-	 *      SessionDataInfo.getCustomLong(stringkey) to retrieve the value
-	 */
-	public static void setSessionCustomLong(SessionDataInfo sessionData, HttpServletRequest request)
-			throws MissingParametersException {
-		String key = request.getParameter("longkey");
-		String valueString = request.getParameter("customlongvalue");
-		if (key == null || valueString == null) {
-			throw new MissingParametersException(
-					"longkey and customlongvalue must be supplied to set a custom session long");
-		}
-		sessionData.setCustomLong(key, Long.valueOf(valueString));
-	}
-
-	public static void setSessionCustomBoolean(SessionDataInfo sessionData,
-			HttpServletRequest request) throws MissingParametersException {
-		String key = request.getParameter("booleankey");
-		String valueString = request.getParameter("custombooleanvalue");
-		if (key == null || valueString == null) {
-			throw new MissingParametersException(
-					"booleankey and customboolean value must be supplied to set a custom session boolean");
-		}
-		sessionData.setCustomBoolean(key, Helpers.valueRepresentsBooleanTrue(valueString));
-	}
-
-	public static void setSessionCustomTable(SessionDataInfo sessionData,
-			HttpServletRequest request, boolean beforeAppActions, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
-		String postActionPrefix = "";
-		if (!beforeAppActions) {
-			postActionPrefix = "post";
-		}
-		String key = request.getParameter(postActionPrefix + "tablekey");
-		String internalTableName = request.getParameter(postActionPrefix
-				+ "custominternaltablename");
-		String tableName = request.getParameter(postActionPrefix + "customtablename");
-		if (key == null || (internalTableName == null && tableName == null)) {
-			throw new MissingParametersException(
-					"tablekey and custominternaltablename/customtablename must be supplied to set a custom session table");
-		}
-		TableInfo table;
-		if (internalTableName != null) {
-			table = databaseDefn.getTable(request, internalTableName);
-		} else {
-			table = databaseDefn.getTable(request, tableName);
-		}
-		sessionData.setCustomTable(key, table);
-	}
-
-	public static void removeSessionCustomReport(SessionDataInfo sessionData, HttpServletRequest request, boolean beforeAppActions) {
-		String postActionPrefix = "";
-		if (!beforeAppActions) {
-			postActionPrefix = "post";
-		}
-		String key = request.getParameter(postActionPrefix + "reportkey");
-		sessionData.removeCustomReport(key);
-	}
-	
-	public static void setSessionCustomReport(SessionDataInfo sessionData,
-			HttpServletRequest request, boolean beforeAppActions, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
-		String postActionPrefix = "";
-		if (!beforeAppActions) {
-			postActionPrefix = "post";
-		}
-		String key = request.getParameter(postActionPrefix + "reportkey");
-		// identify the parent table
-		String internalTableName = request.getParameter(postActionPrefix
-				+ "custominternaltablename");
-		String tableName = request.getParameter(postActionPrefix + "customtablename");
-		// identify the report
-		String internalReportName = request.getParameter(postActionPrefix
-				+ "custominternalreportname");
-		String reportName = request.getParameter(postActionPrefix + "customreportname");
-		if (key == null || (internalReportName == null && reportName == null)
-				|| (internalTableName == null && tableName == null && internalReportName == null)) {
-			throw new MissingParametersException(
-					"reportkey, custominternalreportname/(customreportname plus custominternaltablename/customtablename) must be supplied to set a custom session report");
-		}
-		TableInfo parentTable = null;
-		BaseReportInfo report;
-		if (internalReportName != null) {
-			parentTable = databaseDefn.findTableContainingReport(request, internalReportName);
-		} else {
-			if (internalTableName != null) {
-				parentTable = databaseDefn.getTable(request, internalTableName);
-			} else {
-				parentTable = databaseDefn.getTable(request, tableName);
-			}
-		}
-		if (internalReportName != null) {
-			report = parentTable.getReport(internalReportName);
-		} else {
-			report = parentTable.getReport(reportName);
-		}
-		sessionData.setCustomReport(key, report);
-	}
-
-	public static void setSessionCustomField(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
-		String key = request.getParameter("fieldkey");
-		// identify the parent table
-		String internalTableName = request.getParameter("custominternaltablename");
-		String tableName = request.getParameter("customtablename");
-		// identify the field
-		String internalFieldName = request.getParameter("custominternalfieldname");
-		String fieldName = request.getParameter("customfieldname");
-		if (key == null || (internalFieldName == null && fieldName == null)
-				|| (internalTableName == null && tableName == null && internalFieldName == null)) {
-			throw new MissingParametersException(
-					"fieldkey, reportkey, custominternalfieldname/(customfieldname plus custominternaltablename/customtablename) must be supplied to set a custom session field");
-		}
-		TableInfo parentTable = null;
-		BaseField field;
-		if (internalFieldName != null) {
-			parentTable = databaseDefn.findTableContainingField(request, internalFieldName);
-		} else {
-			if (internalTableName != null) {
-				parentTable = databaseDefn.getTable(request, internalTableName);
-			} else {
-				parentTable = databaseDefn.getTable(request, tableName);
-			}
-		}
-		if (internalFieldName != null) {
-			field = parentTable.getField(internalFieldName);
-		} else {
-			field = parentTable.getField(fieldName);
-		}
-		sessionData.setCustomField(key, field);
-	}
-
-	/**
-	 * When a user posts an input form, store the fields & values posted in the
-	 * session for later retrieval. Do a certain amount of input processing,
-	 * e.g. '.4' for a number would become '0.4' so that it could be interpreted
-	 * properly
-	 * 
-	 * TODO: Http usage example
-	 * 
-	 * @param sessionData
-	 *            Current table is obtained from the session
-	 * @param request
-	 *            Contains request parameters for field name -> value
-	 * @throws ObjectNotFoundException
-	 *             If current table can't be found (probably because of session
-	 *             timeout), or getFieldValue fails
-	 * @throws CantDoThatException
-	 *             If getFieldValue fails
-	 */
-	public static void setSessionFieldInputValues(SessionDataInfo sessionData,
-			HttpServletRequest request, boolean newRecord, DatabaseInfo databaseDefn,
-			TableInfo table, List<FileItem> multipartItems) throws ObjectNotFoundException,
-			DisallowedException, SQLException, CantDoThatException, CodingErrorException,
-			FileUploadException, InputRecordException {
-		Map<BaseField, BaseValue> fieldInputValues = new HashMap<BaseField, BaseValue>();
-		// get the list of fields in the current session table
-		Set<BaseField> fields = table.getFields();
-		// If we get an exception with a particular field, remember it but carry
-		// on saving the other field
-		// values to the session
-		Exception caughtException = null;
-		BaseField fieldWithException = null;
-		FIELDSLOOP: for (BaseField field : fields) {
-			if (field instanceof SeparatorField || field instanceof ReferencedReportDataField) {
-				continue FIELDSLOOP;
-			}
-			try {
-				BaseValue fieldValue = getFieldValue(request, field, newRecord,
-						databaseDefn, multipartItems);
-				// The following logic is:
-				// If we have a new record, and the field wasn't submitted, or
-				// it was submitted as empty, look up the default value.
-				// If the field was submitted as empty and there's no default,
-				// the fieldValue will represent null, store it.
-				// If no field was submitted at all and it's an existing record,
-				// skip it.
-				if (newRecord) {
-					if (fieldValue == null) {
-						fieldValue = getDefaultFieldValue(sessionData, request, field, databaseDefn);
-					} else if (fieldValue.isNull()) {
-						BaseValue defaultValue = getDefaultFieldValue(sessionData, request, field,
-								databaseDefn);
-						if (defaultValue != null) {
-							// TODO: why can't this be fieldValue = defaultValue
-							//fieldValue = getDefaultFieldValue(sessionData, request, field,
-							//		databaseDefn);
-							fieldValue = defaultValue;
-						}
-					}
-				}
-				if (fieldValue != null) {
-					fieldInputValues.put(field, fieldValue);
-				}
-			} catch (Exception ex) {
-				caughtException = ex;
-				fieldWithException = field;
-			}
-		}
-		sessionData.setFieldInputValues(fieldInputValues);
-		// Delayed error handling
-		if (caughtException != null) {
-			if (caughtException instanceof InputRecordException) {
-				// If already an input record exception, just rethrow
-				throw (InputRecordException) caughtException;
-			} else {
-				throw new InputRecordException(caughtException.getMessage(), fieldWithException, caughtException);
-			}
-		}
 	}
 
 	/**
@@ -530,10 +105,10 @@ public final class ServletDataMethods {
 	 *      boolean, DatabaseInfo, TableInfo, List) Called by
 	 *      setSessionFieldInputValues
 	 */
-	private static BaseValue getFieldValue(HttpServletRequest request,
-			BaseField field, boolean newRecord, DatabaseInfo databaseDefn,
-			List<FileItem> multipartItems) throws SQLException, ObjectNotFoundException,
-			CantDoThatException, CodingErrorException, FileUploadException, InputRecordException {
+	private static BaseValue getFieldValue(HttpServletRequest request, BaseField field,
+			boolean newRecord, DatabaseInfo databaseDefn, List<FileItem> multipartItems)
+			throws SQLException, ObjectNotFoundException, CantDoThatException,
+			CodingErrorException, FileUploadException, InputRecordException {
 		BaseValue fieldValue = null;
 		String internalFieldName = field.getInternalFieldName();
 		String fieldValueString = ServletUtilMethods.getParameter(request, internalFieldName,
@@ -545,7 +120,8 @@ public final class ServletDataMethods {
 				|| databaseFieldType.equals(DatabaseFieldType.SERIAL)
 				|| databaseFieldType.equals(DatabaseFieldType.FLOAT)) {
 			if (fieldValueString != null) {
-				fieldValueString = fieldValueString.trim().replace(",", "").replace("£", "").replace("$", "");
+				fieldValueString = fieldValueString.trim().replace(",", "").replace("£", "")
+						.replace("$", "");
 				if (fieldValueString.endsWith("%")) {
 					fieldValueString = fieldValueString.substring(0, fieldValueString.length() - 1);
 				}
@@ -565,7 +141,8 @@ public final class ServletDataMethods {
 						fieldValue = new IntegerValueDefn(Integer.valueOf(fieldValueString));
 					} catch (NumberFormatException nfex) {
 						throw new InputRecordException("Value " + fieldValueString
-								+ " not allowed because a whole number needs to be entered", field, nfex);
+								+ " not allowed because a whole number needs to be entered", field,
+								nfex);
 					}
 				}
 			}
@@ -605,7 +182,8 @@ public final class ServletDataMethods {
 					// .4 -> 0.4
 					// 4. -> 4.0
 					// . -> 0.0
-					// £46.50 -> 46.50 - from the error logs, users commonly input £ signs
+					// £46.50 -> 46.50 - from the error logs, users commonly
+					// input £ signs
 					fieldValueString = fieldValueString.replace("£", "");
 					fieldValueString = fieldValueString.replace("$", "");
 					if (fieldValueString.startsWith(".")) {
@@ -668,12 +246,15 @@ public final class ServletDataMethods {
 					if (seconds != null) {
 						dateFieldValue.set(Calendar.SECOND, seconds);
 					}
-					// Additionally, allow delta values to be submitted (add more on an as-needed basis)
-					Integer days_delta = getIntegerParameterValue(request, internalFieldName + "_days_delta");
+					// Additionally, allow delta values to be submitted (add
+					// more on an as-needed basis)
+					Integer days_delta = getIntegerParameterValue(request, internalFieldName
+							+ "_days_delta");
 					if (days_delta != null) {
 						dateFieldValue.add(Calendar.DAY_OF_MONTH, days_delta);
 					}
-					Integer minutes_delta = getIntegerParameterValue(request, internalFieldName + "_minutes_delta");
+					Integer minutes_delta = getIntegerParameterValue(request, internalFieldName
+							+ "_minutes_delta");
 					if (minutes_delta != null) {
 						dateFieldValue.add(Calendar.MINUTE, minutes_delta);
 					}
@@ -837,141 +418,6 @@ public final class ServletDataMethods {
 	}
 
 	/**
-	 * Set the user currently being edited/viewed by an administrator
-	 * 
-	 * TODO: Http usage example
-	 * 
-	 * @throws ObjectNotFoundException
-	 *             If userName doesn't map to an existing user object
-	 * @throws DisallowedException
-	 *             If the currently logged in person isn't an administrator
-	 */
-	public static void setSessionUser(SessionDataInfo sessionData, HttpServletRequest request,
-			String internalUserName, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
-			DisallowedException {
-		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request,
-				internalUserName);
-		sessionData.setUser(appUser);
-	}
-
-	public static void setSessionModule(SessionDataInfo sessionData, HttpServletRequest request,
-			String internalModuleName, DatabaseInfo databaseDefn) throws AgileBaseException {
-		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
-		// Findbugs found this unused variable
-		// Set<ModuleInfo> modules = company.getModules();
-		ModuleInfo module = company.getModuleByInternalName(internalModuleName);
-		sessionData.setModule(module);
-	}
-
-	/**
-	 * Set a 'quick filter' value
-	 * 
-	 * TODO: Http usage example
-	 */
-	public static void setReportFilterValue(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, CodingErrorException,
-			DisallowedException {
-		String internalFieldName = request.getParameter("internalfieldname");
-		if (internalFieldName == null) {
-			throw new MissingParametersException("'internalfieldname' parameter needed in request");
-		}
-		String fieldValue = request.getParameter("fieldvalue");
-		if (fieldValue == null) {
-			throw new MissingParametersException("'fieldvalue' parameter needed in request");
-		}
-		String filterSet = request.getParameter("customfilterset");
-		// get the actual field object from the field name
-		BaseField filterField;
-		try {
-			filterField = sessionData.getReport().getReportField(internalFieldName).getBaseField();
-		} catch (ObjectNotFoundException onfex) {
-			// If not in session report, fall back to looking in entire
-			// database.
-			// Method will throw its own ObjectNotFoundException if still not
-			// found.
-			filterField = databaseDefn.findReportFieldByInternalName(request, internalFieldName)
-					.getBaseField();
-		}
-		if (filterField.getDbType().equals(DatabaseFieldType.FLOAT)
-				&& fieldValue.replaceAll("0", "").equals(".")) {
-			fieldValue = "0";
-		}
-		if (filterSet == null) {
-			sessionData.setReportFilterValue(filterField, fieldValue);
-		} else {
-			sessionData.setCustomReportFilterValue(filterSet, filterField, fieldValue);
-		}
-	}
-
-	/**
-	 * Clear all report quick filtering
-	 */
-	public static void clearAllReportFilterValues(SessionDataInfo sessionData) {
-		sessionData.clearAllReportFilterValues();
-	}
-
-	public static void setSessionReportSort(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, CantDoThatException {
-		String internalFieldName = request.getParameter("internalfieldname");
-		String fieldName = request.getParameter("fieldname");
-		internalFieldName = internalFieldName != null ? internalFieldName : "";
-		fieldName = fieldName != null ? fieldName : "";
-		if ((internalFieldName.equals("")) && (fieldName.equals(""))) {
-			throw new MissingParametersException(
-					"'internalfieldname' or 'fieldname' parameter needed in request");
-		}
-		String sortDirectionString = request.getParameter("sortdirection");
-		if (sortDirectionString == null) {
-			throw new MissingParametersException("'sortdirection' parameter needed in request");
-		}
-		// get the actual field object from the field name
-		BaseField sortField;
-		if (!internalFieldName.equals("")) {
-			sortField = sessionData.getReport().getReportField(internalFieldName).getBaseField();
-		} else {
-			sortField = sessionData.getReport().getReportField(fieldName).getBaseField();
-		}
-		// throw an exception if we're trying to sort on a field type which
-		// hasn't been implemented/tested yet
-		if (sortField instanceof DurationField) {
-			throw new CantDoThatException("Sorting on this type of field is not yet implemented");
-		}
-		Boolean sortAscending = Boolean.valueOf(sortDirectionString);
-
-		// clear any previously set sorts:
-		clearAllSessionReportSorts(sessionData);
-		// set the requested sort:
-		sessionData.setReportSort(sortField, sortAscending);
-	}
-
-	public static void clearSessionReportSort(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException {
-		String internalFieldName = request.getParameter("internalfieldname");
-		String fieldName = request.getParameter("fieldname");
-		internalFieldName = internalFieldName != null ? internalFieldName : "";
-		fieldName = fieldName != null ? fieldName : "";
-		if ((internalFieldName.equals("")) && (fieldName.equals(""))) {
-			throw new MissingParametersException(
-					"'internalfieldname' or 'fieldname' parameter needed in request");
-		}
-		// get the actual field object from the field name
-		BaseField sortField;
-		if (!internalFieldName.equals("")) {
-			sortField = sessionData.getReport().getReportField(internalFieldName).getBaseField();
-		} else {
-			sortField = sessionData.getReport().getReportField(fieldName).getBaseField();
-		}
-		sessionData.clearReportSort(sortField);
-	}
-
-	public static void clearAllSessionReportSorts(SessionDataInfo sessionData) {
-		sessionData.clearAllReportSorts();
-	}
-
-	/**
 	 * Insert or update a database record. Fields passed in the request are
 	 * saved.
 	 * 
@@ -994,7 +440,8 @@ public final class ServletDataMethods {
 	public static void saveRecord(SessionDataInfo sessionData, HttpServletRequest request,
 			boolean newRecord, DatabaseInfo databaseDefn, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, DisallowedException, SQLException,
-			InputRecordException, CodingErrorException, CantDoThatException, FileUploadException, MissingParametersException {
+			InputRecordException, CodingErrorException, CantDoThatException, FileUploadException,
+			MissingParametersException {
 		String internalTableName = ServletUtilMethods.getParameter(request, "internaltablename",
 				multipartItems);
 		TableInfo table;
@@ -1009,7 +456,8 @@ public final class ServletDataMethods {
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		int rowId = -1;
 		if (!newRecord) {
@@ -1032,7 +480,7 @@ public final class ServletDataMethods {
 		sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
 		// }
 		// try {
-		setSessionFieldInputValues(sessionData, request, newRecord, databaseDefn, table,
+		ServletSessionMethods.setSessionFieldInputValues(sessionData, request, newRecord, databaseDefn, table,
 				multipartItems);
 		// then pass to DataManagement.saveRecord
 		databaseDefn.getDataManagement().saveRecord(request, table,
@@ -1054,7 +502,8 @@ public final class ServletDataMethods {
 	public static void cloneRecord(SessionDataInfo sessionData, HttpServletRequest request,
 			DatabaseInfo databaseDefn, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, DisallowedException, SQLException,
-			InputRecordException, CodingErrorException, CantDoThatException, MissingParametersException {
+			InputRecordException, CodingErrorException, CantDoThatException,
+			MissingParametersException {
 		String internalTableName = ServletUtilMethods.getParameter(request, "internaltablename",
 				multipartItems);
 		TableInfo table;
@@ -1069,7 +518,8 @@ public final class ServletDataMethods {
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		int rowId = sessionData.getRowId();
 		if (rowId == -1) {
@@ -1098,13 +548,14 @@ public final class ServletDataMethods {
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.MANAGE_TABLE, table);
 		}
 		// clear the cached record data:
 		sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
 		// false means we're editing existing records, not adding a new one
 		// so only values for specified fields will be set, not all table fields
-		ServletDataMethods.setSessionFieldInputValues(sessionData, request, false, databaseDefn,
+		ServletSessionMethods.setSessionFieldInputValues(sessionData, request, false, databaseDefn,
 				table, multipartItems);
 		int affectedRecords = databaseDefn.getDataManagement().globalEdit(request, table,
 				new LinkedHashMap<BaseField, BaseValue>(sessionData.getFieldInputValues()),
@@ -1158,7 +609,8 @@ public final class ServletDataMethods {
 		// having obtained valid parameters, delete the record:
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		databaseDefn.getDataManagement().removeRecord(request, sessionData, databaseDefn, table,
 				iRowId, cascade);
@@ -1179,20 +631,23 @@ public final class ServletDataMethods {
 				true);
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		// get import options
 		String generateRowIdsString = ServletUtilMethods.getParameter(request, "generate_row_ids",
 				multipartItems);
 		boolean generateRowIds = Helpers.valueRepresentsBooleanTrue(generateRowIdsString);
-		String quoteCharString = ServletUtilMethods.getParameter(request, "quote_char", multipartItems);
+		String quoteCharString = ServletUtilMethods.getParameter(request, "quote_char",
+				multipartItems);
 		if (quoteCharString == null) {
 			quoteCharString = "\"";
 		} else if (quoteCharString.equals("")) {
 			quoteCharString = "\"";
 		}
 		char quoteChar = quoteCharString.charAt(0);
-		String separatorString = ServletUtilMethods.getParameter(request, "separator", multipartItems);
+		String separatorString = ServletUtilMethods.getParameter(request, "separator",
+				multipartItems);
 		if (separatorString == null) {
 			separatorString = ",";
 		} else if (separatorString.equals("")) {
@@ -1220,8 +675,8 @@ public final class ServletDataMethods {
 				"best_guess_relations", multipartItems);
 		boolean requireExactRelationValues = !(Helpers
 				.valueRepresentsBooleanTrue(bestGuessRelationsString));
-		String importTypeString = ServletUtilMethods
-				.getParameter(request, "import_type", multipartItems);
+		String importTypeString = ServletUtilMethods.getParameter(request, "import_type",
+				multipartItems);
 		boolean updateExistingRecords = false;
 		String trimString = ServletUtilMethods.getParameter(request, "trim", multipartItems);
 		boolean trim = Helpers.valueRepresentsBooleanTrue(trimString);
@@ -1264,7 +719,8 @@ public final class ServletDataMethods {
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		String lockType = request.getParameter("lock_type");
 		if (lockType == null) {
@@ -1289,7 +745,8 @@ public final class ServletDataMethods {
 				ServletUtilMethods.USE_SESSION);
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		databaseDefn.getDataManagement().lockRecord(sessionData, table, rowId);
 	}
@@ -1297,14 +754,16 @@ public final class ServletDataMethods {
 	public static void anonymiseTableData(SessionDataInfo sessionData, HttpServletRequest request,
 			DatabaseInfo databaseDefn, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, DisallowedException, SQLException,
-			CodingErrorException, CantDoThatException, InputRecordException, MissingParametersException {
+			CodingErrorException, CantDoThatException, InputRecordException,
+			MissingParametersException {
 		TableInfo table = sessionData.getTable();
 		if (table == null) {
 			throw new ObjectNotFoundException("There's no table in the session");
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		// get field content types specified
 		Map<BaseField, FieldContentType> fieldContentTypes = new HashMap<BaseField, FieldContentType>();
