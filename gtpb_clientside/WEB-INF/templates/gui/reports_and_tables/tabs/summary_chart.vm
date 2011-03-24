@@ -192,11 +192,11 @@
 	##set($pieMidY = $pieMidX)
   #end
   #if($chart.equals($report.getChart())) ## if default chart in pane 3
-	#set($margin = "[10, 50, 60, $xAxisMargin]") ## top, right, bottom, left
-	#set($title = "")
+	  #set($margin = "[10, 50, 60, $xAxisMargin]") ## top, right, bottom, left
+	  #set($title = "")
   #else ## named chart in pane 3
-	#set($margin = "[50, 50, 60, $xAxisMargin]")
-	#set($height = $height + 40)
+	  #set($margin = "[50, 50, 60, $xAxisMargin]")
+	  #set($height = $height + 40)
     #set($title = $chart.getTitle())
   #end
   #set($subtitle = "")
@@ -214,8 +214,8 @@
 			#else
               defaultSeriesType: 'bar',
 			#end
-			height: $height,
-			margin: $margin
+			height: $height ##,
+			##margin: $margin
          },
 		 credits: {
 		 	enabled: false
