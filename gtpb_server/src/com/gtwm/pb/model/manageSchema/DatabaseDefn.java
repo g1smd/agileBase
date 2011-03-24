@@ -2293,9 +2293,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void setChartFilter(HttpServletRequest request,
-			BaseReportInfo report, SummaryFilter summaryFilter) throws SQLException,
-			DisallowedException, ObjectNotFoundException, CantDoThatException {
+	public synchronized void setChartFilter(HttpServletRequest request, BaseReportInfo report,
+			SummaryFilter summaryFilter) throws SQLException, DisallowedException,
+			ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2317,9 +2317,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void setChartFilterField(HttpServletRequest request,
-			BaseReportInfo report, ReportFieldInfo reportField) throws SQLException,
-			DisallowedException, ObjectNotFoundException, CantDoThatException {
+	public synchronized void setChartFilterField(HttpServletRequest request, BaseReportInfo report,
+			ReportFieldInfo reportField) throws SQLException, DisallowedException,
+			ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2341,9 +2341,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void setChartRange(HttpServletRequest request,
-			BaseReportInfo report, int rangePercent, boolean rangeDirection) throws SQLException,
-			DisallowedException, ObjectNotFoundException, CantDoThatException {
+	public synchronized void setChartRange(HttpServletRequest request, BaseReportInfo report,
+			int rangePercent, boolean rangeDirection) throws SQLException, DisallowedException,
+			ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2640,15 +2640,25 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return this.getTableByName(request, internalTableName);
 	}
 
-	//TODO: cache
 	public synchronized TableInfo findTableContainingReport(HttpServletRequest request,
 			String reportInternalName) throws ObjectNotFoundException, DisallowedException {
 		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
+		TableInfo cachedTable = this.reportTableCache.get(reportInternalName);
+		if (cachedTable != null) {
+			if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
+					cachedTable)) {
+				return cachedTable;
+			} else {
+				throw new DisallowedException(this.authManager.getLoggedInUser(request),
+						PrivilegeType.VIEW_TABLE_DATA, cachedTable);
+			}
+		}
 		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
 				.getTables();
 		for (TableInfo table : companyTables) {
 			for (BaseReportInfo report : table.getReports()) {
 				if (report.getInternalReportName().equals(reportInternalName)) {
+					this.reportTableCache.put(reportInternalName, table);
 					if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
 							table)) {
 						return table;
@@ -2662,9 +2672,12 @@ public final class DatabaseDefn implements DatabaseInfo {
 		throw new ObjectNotFoundException("Report '" + reportInternalName + "' is not in any table");
 	}
 
-	//TODO: cache
 	private synchronized TableInfo findTableContainingReportWithoutChecks(
 			String reportInternalName, HttpServletRequest request) throws ObjectNotFoundException {
+		TableInfo cachedTable = this.reportTableCache.get(reportInternalName);
+		if (cachedTable != null) {
+			return cachedTable;
+		}
 		Set<TableInfo> companyTables = this.getAuthManager().getCompanyForLoggedInUser(request)
 				.getTables();
 		for (TableInfo table : companyTables) {
@@ -2984,6 +2997,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * Lookup of internal table name to table
 	 */
 	private Map<String, TableInfo> tableCache = new HashMap<String, TableInfo>();
+
+	private Map<String, TableInfo> reportTableCache = new HashMap<String, TableInfo>();
 
 	/**
 	 * Keep a cache of the datasource so it's available quickly whenever needed
