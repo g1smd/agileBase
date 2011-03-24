@@ -11,7 +11,7 @@
 #set($module = $report.getModule())
 <div class="portlet" id="portlet_$report.getInternalReportName()">
 <h1><img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $module - $report</h1>
-<div style="width: 100%; overflow: auto">
+<div id="panel_content_$report.getInternalReportName()" style="width: 100%; overflow: auto">
 #parse("gui/reports_and_tables/report_data.vm")
 </div>
 </div>

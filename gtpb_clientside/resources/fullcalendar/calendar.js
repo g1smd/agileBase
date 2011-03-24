@@ -164,9 +164,10 @@ function fMobileDevice() {
 
 // Load an individual record, analagous to loadIntoPane3 in the standard interface
 function loadIntoPanel(internalReportName, rowId) {
-  var jqPanelInner = $("#portlet_" + internalReportName + " > div");
-  jqPanelInner.load("AppController.servlet", {
-	set_report: internalReportName,
-	set_row_id: rowId
+  var jqPanelContent = $("#panel_content_" + internalReportName);
+  jqPanelContent.load("AppController.servlet", {
+	'return': 'gui/reports_and_tables/tabs/edit',
+	'set_report': internalReportName,
+	'set_row_id': rowId
   });
 }
