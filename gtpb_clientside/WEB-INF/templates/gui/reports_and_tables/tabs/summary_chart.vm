@@ -186,10 +186,15 @@
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
   #if($pieChart)
     #set($xAxisMargin = 10)
-	#set($legendWidth = ($maxLegendChars * 7))
-	#set($height = 150)
-	##set($pieMidX = $height / 2)
-	##set($pieMidY = $pieMidX)
+	  #set($legendWidth = ($maxLegendChars * 7))
+	  #set($height = 150)
+	  ##set($pieMidX = $height / 2)
+	  ##set($pieMidY = $pieMidX)
+  #end
+  #if(!$dateAxis && !$pieChart)
+    #if($chartRows.size() > 2)
+      #set($height = $height * 2)
+    #end
   #end
   #if($chart.equals($report.getChart())) ## if default chart in pane 3
 	  #set($margin = "[10, 50, 60, $xAxisMargin]") ## top, right, bottom, left
