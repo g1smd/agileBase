@@ -421,30 +421,5 @@ public class Enumerations {
 
 		private String sqlRepresentation = "";
 	}
-	
-	public enum Currency {
-		GBP("£","&pound;"), USD("$","$"), EUR("Û","&euro;");
-		
-		public String getRepresentation() {
-			return this.representation;
-		}
-		
-		public String getHtmlEntity() {
-			return this.htmlEntity;
-		}
-		
-		Currency(String representation, String htmlEntity) {
-			this.representation = representation;
-			this.htmlEntity = htmlEntity;
-		}
-		
-		public String toString() {
-			return this.getHtmlEntity();
-		}
-		
-		private String representation = null;
-		
-		private String htmlEntity = null;
-	}
 
 }

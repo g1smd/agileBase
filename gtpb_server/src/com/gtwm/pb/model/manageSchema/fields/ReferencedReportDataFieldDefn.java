@@ -26,8 +26,10 @@ import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 
@@ -39,7 +41,8 @@ public class ReferencedReportDataFieldDefn extends AbstractField implements
 	}
 
 	public ReferencedReportDataFieldDefn(TableInfo tableContainingField, String internalFieldName,
-			String fieldName, String fieldDesc, BaseReportInfo referencedReport) throws CodingErrorException {
+			String fieldName, String fieldDesc, BaseReportInfo referencedReport)
+			throws CodingErrorException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
 			super.setInternalFieldName((new RandomString()).toString());
@@ -67,6 +70,14 @@ public class ReferencedReportDataFieldDefn extends AbstractField implements
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
 		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(
 				FieldCategory.REFERENCED_REPORT_DATA);
+		try {
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTKEYFIELD, this
+					.getReferencedReport().getInternalReportName(), this.getReferencedReport()
+					.getReportName());
+		} catch (ObjectNotFoundException onfex) {
+			throw new CantDoThatException("Internal error setting up " + this.getClass()
+					+ " field descriptor", onfex);
+		}
 		return fieldDescriptor;
 	}
 
