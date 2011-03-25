@@ -15,17 +15,17 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+#if($field.storesCurrency())
+  #set($currencyDenominator = "&pound;")
+#else
+  #set($currencyDenominator = "")
+#end
 #if ($field.getClass().getSimpleName() == "IntegerFieldDefn")##
   #if($globalEdit)##
     #set($fieldValue = "")##
   #else##
   	#set($fieldValue=$tableDataRow.get($field).toString())##
   #end##
-  #if($field.storesCurrency())
-    #set($currencyDenominator = "&pound;")
-  #else
-    #set($currencyDenominator = "")
-  #end
   	#if($userCanEdit)##
   	  #if($globalEdit || (!$updateAsType))##
   	    		$currencyDenominator <input type="number" name="$field.getInternalFieldName()" value="$fieldValue" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
