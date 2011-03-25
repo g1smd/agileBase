@@ -166,7 +166,7 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 		return this.listOption.toString() + " - " + optionsList.toString();
 	}
 
-	private PossibleListOptions listOption;
+	private final PossibleListOptions listOption;
 
 	private Map<String, String> optionsList = new LinkedHashMap<String, String>();
 

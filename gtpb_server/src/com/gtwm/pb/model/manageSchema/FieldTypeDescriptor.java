@@ -220,7 +220,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 		return this.fieldCategory.toString();
 	}
 
-	private FieldCategory fieldCategory;
+	private final FieldCategory fieldCategory;
 
 	private List<BaseFieldDescriptorOptionInfo> options = new ArrayList<BaseFieldDescriptorOptionInfo>();
 
