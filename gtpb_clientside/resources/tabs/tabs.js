@@ -497,14 +497,14 @@ function uploadFile(fileInputElement) {
 function fSexyUpload() {
   $("form.fileUploader").each(function() {
 	var jqForm = $(this);
-	var jqUploadInfo = jqForm.find(".upload_info");
+	var jqProgressBar = jqForm.find(".upload_progress_bar");
 	jqForm.sexyPost({
       progress: function(event, completed, loaded, total) {
-        jqUploadInfo.text("Uploading: " + (completed * 100).toFixed(2) + "% complete...")
+		jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
+        //jqUploadInfo.text("Uploading: " + (completed * 100).toFixed(2) + "% complete...")
       },
       complete: function(event, responseText) {
-    	alert('upload complete');
-        jqUploadInfo.text("Upload complete.")
+        jqUploadInfo.text("Upload complete")
       }
     });
   });
