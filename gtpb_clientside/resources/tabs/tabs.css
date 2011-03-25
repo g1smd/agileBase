@@ -253,6 +253,7 @@ img.cross_reference_image {
   width: 0px;
   color: #486f98;
   padding: 5px;
+  min-height: 10px;
 }
 
 /* 3) Summary tab css */
