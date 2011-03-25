@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #if($field.storesCurrency())
-  #set($currencyDenominator = "&pound;")
+  #set($currencyDenominator = "<span style='text-indent:-3em';>&pound;</span>")
 #else
   #set($currencyDenominator = "")
 #end
