@@ -22,8 +22,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 import javax.sql.DataSource;
-
-import org.apache.commons.lang.WordUtils;
 import org.grlea.log.SimpleLogger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,7 +48,6 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.AppProperties;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
