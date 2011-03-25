@@ -51,7 +51,8 @@ public class BooleanFieldDescriptorOption implements BooleanFieldDescriptorOptio
         DEFAULTTONOW("Use current time for new records", false), 
         DEFAULTTONULL("Always empty for new records", false),
         ALLOWNOTAPPLICABLE("Allow not applicable", true), 
-        USELOOKUP("Use dropdown for input", false), 
+        USELOOKUP("Use dropdown for input", false),
+        STORECURRENCY("Store currency amounts", true),
         HIDDEN("Hidden field",true),
         MANDATORY("Mandatory", true);
 
