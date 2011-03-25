@@ -31,7 +31,6 @@
       ul#app_list li img {
         float: left;
         margin-right: 10px;
-        width: 40px;
       }
     </style>
     <div style="padding:5px">
