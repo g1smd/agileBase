@@ -454,8 +454,6 @@ function appendWarning(warningRowHtml) {
 
 var warningRowHtmlSaved = '';
 
-// TODO: update when browser support becomes more standard and improves
-// as per https://developer.mozilla.org/En/Using%5FXMLHttpRequest#In%5FFirefox%5F3.5%5Fand%5Flater
 function uploadFile(fileInputElement) {
   // https://developer.mozilla.org/en/DOM/File
   var fileObject = fileInputElement.files[0];
@@ -466,7 +464,8 @@ function uploadFile(fileInputElement) {
 	}	
     if (fileSize) {
       var jqFileInput = $(fileInputElement);
-      var jqUploadInfo = jqFileInput.next();
+      var jqProgressContainer = jqFileInput.next();
+      var jqUploadInfo = jqProgressContainer.find(".upload_info");
       var fileSizeInfo = parseInt(fileSize / 1000000);
       if (fileSizeInfo == 0) {
         fileSizeInfo = '<img src="resources/upload_ajax-loader.gif" /> Uploading &frac12; MB';
@@ -491,6 +490,23 @@ function uploadFile(fileInputElement) {
     }
   }
   fileInputElement.form.submit();
+}
+
+/* Adds progress bar to file uploads
+ * https://github.com/jurisgalang/jquery-sexypost#readme */
+function fSexyUpload() {
+  $("form.fileUploader").each(function() {
+	var jqForm = $(this);
+	var jqUploadInfo = jqForm.find(".upload_info");
+	jqForm.sexyPost({
+      progress: function(event, completed, loaded, total) {
+        jqUploadInfo.text("Uploading: " + (completed * 100).toFixed(2) + "% complete...")
+      },
+      complete: function(event, responseText) {
+        jqUploadInfo.text("Upload complete.")
+      }
+    });
+  });
 }
 
 /* for date fields */
@@ -736,3 +752,4 @@ pane3Scripts.functionList.push(fRelationPickers);
 pane3Scripts.functionList.push(fDatePickers);
 pane3Scripts.functionList.push(fSetupCharts);
 pane3Scripts.functionList.push(fAssignButtonTableActions);
+pane3Scripts.functionList.push(fSexyUpload);
