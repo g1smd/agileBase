@@ -498,8 +498,10 @@ function fSexyUpload() {
   $("form.fileUploader").each(function() {
 	var jqForm = $(this);
 	var jqProgressBar = jqForm.find(".upload_progress_bar");
-	jqProgressBar.show();
 	jqForm.sexyPost({
+	  start: function(event) {
+		jqProgressBar.show();
+	  },
       progress: function(event, completed, loaded, total) {
 		jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
 		if (completed > 0.5) {
