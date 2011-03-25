@@ -243,17 +243,17 @@ img.cross_reference_image {
 .upload_progress_container {
   width: 100%;
   position: relative;
+  min-height: 10px;
 }
 
 .upload_progress_bar {
   position: absolute;
+  height: 100%;
   top: 0px;
   left: 0px;
-  height: 100%;
   width: 0px;
-  color: #486f98;
+  background-color: #486f98;
   padding: 5px;
-  min-height: 10px;
 }
 
 /* 3) Summary tab css */

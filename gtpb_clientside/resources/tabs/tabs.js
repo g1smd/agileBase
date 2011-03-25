@@ -501,7 +501,9 @@ function fSexyUpload() {
 	jqForm.sexyPost({
       progress: function(event, completed, loaded, total) {
 		jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
-        //jqUploadInfo.text("Uploading: " + (completed * 100).toFixed(2) + "% complete...")
+		if (completed > 0.5) {
+		  jqForm.find(".upload_info").css("color", "white");
+		}
       },
       complete: function(event, responseText) {
         jqUploadInfo.text("Upload complete")
