@@ -498,15 +498,14 @@ function fSexyUpload() {
   $("form.fileUploader").each(function() {
 	var jqForm = $(this);
 	var jqProgressBar = jqForm.find(".upload_progress_bar");
+	var jqUploadInfo = jqForm.find(".upload_info");
 	jqForm.sexyPost({
 	  start: function(event) {
 		jqProgressBar.show();
+		jqProgressBar.text(jqUploadInfo.text() + "(copied)");
 	  },
       progress: function(event, completed, loaded, total) {
 		jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
-		if (completed > 0.5) {
-		  jqForm.find(".upload_info").css("color", "white");
-		}
       },
       complete: function(event, responseText) {
         jqUploadInfo.text("Upload complete")

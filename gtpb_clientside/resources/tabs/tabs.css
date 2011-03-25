@@ -244,6 +244,7 @@ img.cross_reference_image {
   width: 100%;
   position: relative;
   min-height: 10px;
+  padding: 2px;
 }
 
 .upload_progress_bar {
@@ -255,6 +256,8 @@ img.cross_reference_image {
   background-color: #486f98;
   padding: 5px;
   display: none;
+  overflow: hidden;
+  color: white;
 }
 
 /* 3) Summary tab css */
