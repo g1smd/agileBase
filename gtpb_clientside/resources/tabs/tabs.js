@@ -509,6 +509,14 @@ function fSexyUpload() {
       },
       complete: function(event, responseText) {
         jqUploadInfo.text("Upload complete")
+      },
+      error: function(event) {
+        jqProgressBar.text("Error, file upload incomplete");
+      	jqUploadInfo.text("Error, file upload incomplete");
+      },
+      abort: function(event) {
+        jqProgressBar.text("Upload aborted");
+        jqUploadInfo.text("Upload aborted");
       }
     });
   });
