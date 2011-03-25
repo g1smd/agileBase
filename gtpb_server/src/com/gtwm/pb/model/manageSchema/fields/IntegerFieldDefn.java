@@ -59,7 +59,7 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 	public IntegerFieldDefn(DataSource dataSource, TableInfo tableContainingField,
 			String internalFieldName, String fieldName, String fieldDesc, boolean unique,
 			Integer defaultValue, boolean notNull, boolean notApplicable,
-			String notApplicableDescription, int notApplicableValue, boolean usesLookup)
+			String notApplicableDescription, int notApplicableValue, boolean usesLookup, boolean storesCurrency)
 			throws CantDoThatException {
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
@@ -79,6 +79,7 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 			this.setNotApplicableValueDirect(notApplicableValue);
 		}
 		this.setUsesLookup(usesLookup);
+		this.setStoresCurrency(storesCurrency);
 	}
 
 	public String formatIntegerValue(IntegerValue integerValue) {
@@ -148,6 +149,8 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super
 					.getNotNull());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.STORECURRENCY,
+					this.getStoresCurrency());
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.NUMBERPRECISION, "0");
 			if (this.hasDefault()) {
 				fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE, String
@@ -199,6 +202,19 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 	@Transient
 	public boolean usesLookup() {
 		return this.getUsesLookup();
+	}
+
+	private boolean getStoresCurrency() {
+		return this.storesCurrency;
+	}
+	
+	public void setStoresCurrency(boolean storesCurrency) {
+		this.storesCurrency = storesCurrency;
+	}
+	
+	@Transient
+	public boolean storesCurrency() {
+		return this.getStoresCurrency();
 	}
 
 	@Transient
@@ -273,7 +289,9 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 
 	private Integer notApplicableValue = -1;
 
-	private Boolean usesLookup = false;
+	private boolean usesLookup = false;
+	
+	private boolean storesCurrency = false;
 
 	private transient DataSource dataSource = null;
 }

@@ -80,6 +80,13 @@ public interface DecimalField extends BaseField {
      */
     public boolean usesLookup();
     
+    /**
+     * Returns whether this field is used to store currency amounts
+     */
+    public boolean storesCurrency();
+    
+    public void setStoresCurrency(boolean storesCurrency);
+    
 	/**
 	 * Returns a set of distinct values that are stored for this field in the
 	 * field's parent table. Useful for displaying a lookup / combo box of

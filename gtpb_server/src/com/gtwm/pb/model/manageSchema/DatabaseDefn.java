@@ -1005,6 +1005,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 					PossibleListOptions.NUMBERPRECISION.getFormInputName(), 0);
 			usesLookup = HttpRequestUtil.getBooleanValue(request,
 					PossibleBooleanOptions.USELOOKUP.getFormInputName());
+			boolean storesCurrency = HttpRequestUtil.getBooleanValue(request,
+					PossibleBooleanOptions.STORECURRENCY.getFormInputName());
 			if (precision > 0) {
 				Double defaultNumber = HttpRequestUtil.getDoubleValueStrict(request,
 						PossibleTextOptions.DEFAULTVALUE.getFormInputName(), null,
@@ -1012,7 +1014,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				Double notApplicableNumber = 0.0d;
 				field = new DecimalFieldDefn(this.relationalDataSource, table, internalFieldName,
 						fieldName, fieldDesc, unique, notNull, defaultNumber, precision,
-						notApplicable, notApplicableDescription, notApplicableNumber, usesLookup);
+						notApplicable, notApplicableDescription, notApplicableNumber, usesLookup, storesCurrency);
 			} else {
 				Integer defaultNumber = HttpRequestUtil.getIntegerValueStrict(request,
 						PossibleTextOptions.DEFAULTVALUE.getFormInputName(), null,
@@ -1020,7 +1022,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				int notApplicableNumber = -1;
 				field = new IntegerFieldDefn(this.relationalDataSource, table, internalFieldName,
 						fieldName, fieldDesc, unique, defaultNumber, notNull, notApplicable,
-						notApplicableDescription, notApplicableNumber, usesLookup);
+						notApplicableDescription, notApplicableNumber, usesLookup, storesCurrency);
 			}
 			break;
 		case DURATION:
@@ -1220,8 +1222,12 @@ public final class DatabaseDefn implements DatabaseInfo {
 					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
 						if (formInputName.equals("updateoption" + field.getInternalFieldName()
 								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
-							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 							decimalField.setNotNull(notNull);
+						} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
+								+ PossibleBooleanOptions.STORECURRENCY.getFormInputName())) {
+							boolean storesCurrency = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							decimalField.setStoresCurrency(storesCurrency);
 						}
 					} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
 						if (formInputName.equals("updateoption" + field.getInternalFieldName()
@@ -1256,6 +1262,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
 							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 							integerField.setNotNull(notNull);
+						} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
+								+ PossibleBooleanOptions.STORECURRENCY.getFormInputName())) {
+							boolean storesCurrency = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							integerField.setStoresCurrency(storesCurrency);
 						} else if (formInputName.equals("updateoption"
 								+ field.getInternalFieldName()
 								+ PossibleBooleanOptions.UNIQUE.getFormInputName())) {

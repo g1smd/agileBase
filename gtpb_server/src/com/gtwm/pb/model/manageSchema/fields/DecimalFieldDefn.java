@@ -54,177 +54,203 @@ import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 @Entity
 public class DecimalFieldDefn extends AbstractField implements DecimalField {
 
-    protected DecimalFieldDefn() {
-    }
+	protected DecimalFieldDefn() {
+	}
 
-    public DecimalFieldDefn(DataSource dataSource, TableInfo tableContainingField, String internalFieldName, String fieldName, String fieldDesc, boolean unique, boolean notNull,
-            Double defaultValue, int precision, boolean notApplicable, String notApplicableDescription, double notApplicableValue, boolean usesLookup) throws CantDoThatException {
-        this.setDataSource(dataSource);
-    	super.setTableContainingField(tableContainingField);
-        if (internalFieldName == null) {
-            super.setInternalFieldName((new RandomString()).toString());
-        } else {
-            super.setInternalFieldName(internalFieldName);
-        }
-        super.setFieldName(fieldName);
-        super.setFieldDescription(fieldDesc);
-        super.setUnique(unique);
-        this.setDefault(defaultValue);
-        super.setNotNull(notNull);
-        this.setPrecision(precision);
-        this.setNotApplicable(notApplicable);
-        if (notApplicable) {
-            this.setNotApplicableDescriptionDirect(notApplicableDescription);
-            this.setNotApplicableValueDirect(notApplicableValue);
-        }
-        this.setUsesLookup(usesLookup);
-    }
+	public DecimalFieldDefn(DataSource dataSource, TableInfo tableContainingField,
+			String internalFieldName, String fieldName, String fieldDesc, boolean unique,
+			boolean notNull, Double defaultValue, int precision, boolean notApplicable,
+			String notApplicableDescription, double notApplicableValue, boolean usesLookup,
+			boolean storesCurrency) throws CantDoThatException {
+		this.setDataSource(dataSource);
+		super.setTableContainingField(tableContainingField);
+		if (internalFieldName == null) {
+			super.setInternalFieldName((new RandomString()).toString());
+		} else {
+			super.setInternalFieldName(internalFieldName);
+		}
+		super.setFieldName(fieldName);
+		super.setFieldDescription(fieldDesc);
+		super.setUnique(unique);
+		this.setDefault(defaultValue);
+		super.setNotNull(notNull);
+		this.setPrecision(precision);
+		this.setNotApplicable(notApplicable);
+		if (notApplicable) {
+			this.setNotApplicableDescriptionDirect(notApplicableDescription);
+			this.setNotApplicableValueDirect(notApplicableValue);
+		}
+		this.setUsesLookup(usesLookup);
+		this.setStoresCurrency(storesCurrency);
+	}
 
-    public boolean allowNotApplicable() {
-        return this.getNotApplicable();
-    }
+	public boolean allowNotApplicable() {
+		return this.getNotApplicable();
+	}
 
-    private Boolean getNotApplicable() {
-        return this.notApplicable;
-    }
+	private Boolean getNotApplicable() {
+		return this.notApplicable;
+	}
 
-    private void setNotApplicable(Boolean notApplicable) {
-        this.notApplicable = notApplicable;
-    }
+	private void setNotApplicable(Boolean notApplicable) {
+		this.notApplicable = notApplicable;
+	}
 
-    @Transient
-    public String getNotApplicableDescription() throws CantDoThatException {
-        if (!this.getNotApplicable()) {
-            throw new CantDoThatException("The not applicable property is not active for field " + this.getFieldName());
-        }
-        return this.getNotApplicableDescriptionDirect();
-    }
-    
-    private void setNotApplicableDescriptionDirect(String notApplicableDescription) {
-        this.notApplicableDescription = notApplicableDescription;
-    }
-    
-    private String getNotApplicableDescriptionDirect() {
-        return this.notApplicableDescription;
-    }
+	@Transient
+	public String getNotApplicableDescription() throws CantDoThatException {
+		if (!this.getNotApplicable()) {
+			throw new CantDoThatException("The not applicable property is not active for field "
+					+ this.getFieldName());
+		}
+		return this.getNotApplicableDescriptionDirect();
+	}
 
-    @Transient
-    public double getNotApplicableValue() throws CantDoThatException {
-        if (!this.getNotApplicable()) {
-            throw new CantDoThatException("The not applicable property is not active for field " + this.getFieldName());
-        }
-        return this.getNotApplicableValueDirect();
-    }
-    
-    private void setNotApplicableValueDirect(Double notApplicableValue) {
-        this.notApplicableValue = notApplicableValue;
-    }
-    
-    private Double getNotApplicableValueDirect() {
-        return this.notApplicableValue;
-    }
+	private void setNotApplicableDescriptionDirect(String notApplicableDescription) {
+		this.notApplicableDescription = notApplicableDescription;
+	}
 
-    /**
-     * @param precision
-     *            the number of decimal places to display on screen The stored value is as accurate as the
-     *            float type storing it allows
-     */
-    public synchronized void setPrecision(Integer precision) {
-        this.precision = precision;
-    }
+	private String getNotApplicableDescriptionDirect() {
+		return this.notApplicableDescription;
+	}
 
-    public synchronized Integer getPrecision() {
-        return this.precision;
-    }
+	@Transient
+	public double getNotApplicableValue() throws CantDoThatException {
+		if (!this.getNotApplicable()) {
+			throw new CantDoThatException("The not applicable property is not active for field "
+					+ this.getFieldName());
+		}
+		return this.getNotApplicableValueDirect();
+	}
 
-    @Transient
-    public DatabaseFieldType getDbType() {
-        return DatabaseFieldType.FLOAT;
-    }
+	private void setNotApplicableValueDirect(Double notApplicableValue) {
+		this.notApplicableValue = notApplicableValue;
+	}
 
-    @Transient
-    public FieldCategory getFieldCategory() {
-        return FieldCategory.NUMBER;
-    }
+	private Double getNotApplicableValueDirect() {
+		return this.notApplicableValue;
+	}
 
-    @Transient
-    public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-        FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.NUMBER);
-        try {
-            fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
-			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super
-					.getNotNull());
-            fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.NUMBERPRECISION, String.valueOf(this.getPrecision()));
-            if (this.hasDefault()) {
-                fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE, String.valueOf(this.getDefault().toString()));
-            }
-        } catch (ObjectNotFoundException onfex) {
-            throw new CantDoThatException("Internal error setting up " + this.getClass() + " field descriptor", onfex);
-        }
-        return fieldDescriptor;
-    }
+	/**
+	 * @param precision
+	 *            the number of decimal places to display on screen The stored
+	 *            value is as accurate as the float type storing it allows
+	 */
+	public synchronized void setPrecision(Integer precision) {
+		this.precision = precision;
+	}
 
-    public synchronized void setDefault(Double defaultValue) throws CantDoThatException {
-        super.setDefaultDefined((defaultValue != null));
-        this.setDefaultDirect(defaultValue);
-    }
+	public synchronized Integer getPrecision() {
+		return this.precision;
+	}
 
-    @Transient
-    public synchronized Double getDefault() {
-        // Note by Oliver: See issue 318 in Mantis
-        // String formatString = "%1$." + precision + "f"; // convert '1st arg' to 'x decimal point precision'
-        // 'float'
-        // String formattedDefault = String.format(formatString, defaultValue);
-        // return Float.parseFloat(formattedDefault);
-        return this.getDefaultDirect();
-    }
-    
-    private void setDefaultDirect(Double defaultValue) {
-        this.defaultValue = defaultValue;
-    }
-    
-    // @Column(name="dec_defaultvalue")
-    private Double getDefaultDirect() {
-        return this.defaultValue;
-    }
+	@Transient
+	public DatabaseFieldType getDbType() {
+		return DatabaseFieldType.FLOAT;
+	}
 
-    public synchronized void clearDefault() {
-        super.setDefaultDefined(false);
-        this.setDefaultDirect(null);
+	@Transient
+	public FieldCategory getFieldCategory() {
+		return FieldCategory.NUMBER;
+	}
 
-    }
+	@Transient
+	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
+		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.NUMBER);
+		try {
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY,
+					super.getNotNull());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.STORECURRENCY,
+					this.getStoresCurrency());
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.NUMBERPRECISION,
+					String.valueOf(this.getPrecision()));
+			if (this.hasDefault()) {
+				fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE,
+						String.valueOf(this.getDefault().toString()));
+			}
+		} catch (ObjectNotFoundException onfex) {
+			throw new CantDoThatException("Internal error setting up " + this.getClass()
+					+ " field descriptor", onfex);
+		}
+		return fieldDescriptor;
+	}
 
-    public String formatDecimalValue(DecimalValue decimalValue) {
-    	if (decimalValue == null) {
-    		return "";
-    	}
-    	if (decimalValue.isNull()) {
-    		return "";
-    	}
-        return this.formatFloat(decimalValue.getValueFloat());
-    }
+	public synchronized void setDefault(Double defaultValue) throws CantDoThatException {
+		super.setDefaultDefined((defaultValue != null));
+		this.setDefaultDirect(defaultValue);
+	}
 
-    public synchronized String formatFloat(double decimalValue) {
-        String floatFormat = Helpers.generateJavaDecimalFormat(this.getPrecision());
-        return String.format(floatFormat, decimalValue);
-    }
+	@Transient
+	public synchronized Double getDefault() {
+		// Note by Oliver: See issue 318 in Mantis
+		// String formatString = "%1$." + precision + "f"; // convert '1st arg'
+		// to 'x decimal point precision'
+		// 'float'
+		// String formattedDefault = String.format(formatString, defaultValue);
+		// return Float.parseFloat(formattedDefault);
+		return this.getDefaultDirect();
+	}
 
-    private boolean getUsesLookup() {
-    	return this.usesLookup;
-    }
+	private void setDefaultDirect(Double defaultValue) {
+		this.defaultValue = defaultValue;
+	}
 
-    private void setUsesLookup(boolean usesLookup) {
-    	this.usesLookup = usesLookup;
-    }
-    
-    @Transient
-    public boolean usesLookup() {
-    	return this.getUsesLookup();
-    }
-    
-    @Transient
-    public SortedSet<Double> getItems() throws SQLException, CantDoThatException {
-		String SQLCode = "SELECT DISTINCT " + this.getInternalFieldName() + " FROM " + this.getTableContainingField().getInternalTableName();
+	// @Column(name="dec_defaultvalue")
+	private Double getDefaultDirect() {
+		return this.defaultValue;
+	}
+
+	public synchronized void clearDefault() {
+		super.setDefaultDefined(false);
+		this.setDefaultDirect(null);
+
+	}
+
+	public String formatDecimalValue(DecimalValue decimalValue) {
+		if (decimalValue == null) {
+			return "";
+		}
+		if (decimalValue.isNull()) {
+			return "";
+		}
+		return this.formatFloat(decimalValue.getValueFloat());
+	}
+
+	public synchronized String formatFloat(double decimalValue) {
+		String floatFormat = Helpers.generateJavaDecimalFormat(this.getPrecision());
+		return String.format(floatFormat, decimalValue);
+	}
+
+	private boolean getUsesLookup() {
+		return this.usesLookup;
+	}
+
+	private void setUsesLookup(boolean usesLookup) {
+		this.usesLookup = usesLookup;
+	}
+
+	@Transient
+	public boolean usesLookup() {
+		return this.getUsesLookup();
+	}
+
+	private boolean getStoresCurrency() {
+		return this.storesCurrency;
+	}
+
+	public void setStoresCurrency(boolean storesCurrency) {
+		this.storesCurrency = storesCurrency;
+	}
+
+	@Transient
+	public boolean storesCurrency() {
+		return this.getStoresCurrency();
+	}
+
+	@Transient
+	public SortedSet<Double> getItems() throws SQLException, CantDoThatException {
+		String SQLCode = "SELECT DISTINCT " + this.getInternalFieldName() + " FROM "
+				+ this.getTableContainingField().getInternalTableName();
 		Connection conn = null;
 		SortedSet<Double> items = new TreeSet<Double>();
 		try {
@@ -245,16 +271,19 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 		return items;
 	}
 
-	public SortedSet<Double> getItems(BaseReportInfo report, Map<BaseField, String> filterValues) throws SQLException, CantDoThatException {
+	public SortedSet<Double> getItems(BaseReportInfo report, Map<BaseField, String> filterValues)
+			throws SQLException, CantDoThatException {
 		Connection conn = null;
 		SortedSet<Double> items = new TreeSet<Double>();
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			ReportDataInfo reportData = new ReportData(conn, report, false, false);
-			// Generates a SELECT DISTINCT on this field including filterValues in the WHERE clause
-			Map<BaseField,Boolean> emptySorts = new HashMap<BaseField,Boolean>();
-			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn, filterValues, false, emptySorts, -1, this);
+			// Generates a SELECT DISTINCT on this field including filterValues
+			// in the WHERE clause
+			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
+			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
+					filterValues, false, emptySorts, -1, this);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				items.add(results.getDouble(1));
@@ -270,29 +299,33 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 		return items;
 	}
 
-    /**
-     * Don't use in code. Only to be used from the DatabaseDefn constructor, hence not in interface
-     */
-    public void setDataSource(DataSource dataSource) throws CantDoThatException {
-        if (dataSource == null) {
-            throw new CantDoThatException("Can't set the data source to null, that's not very useful");
-        }
-        this.dataSource = dataSource;
-    }
+	/**
+	 * Don't use in code. Only to be used from the DatabaseDefn constructor,
+	 * hence not in interface
+	 */
+	public void setDataSource(DataSource dataSource) throws CantDoThatException {
+		if (dataSource == null) {
+			throw new CantDoThatException(
+					"Can't set the data source to null, that's not very useful");
+		}
+		this.dataSource = dataSource;
+	}
 
-    private Double defaultValue = null;
+	private Double defaultValue = null;
 
-    private Integer precision = 2;
+	private Integer precision = 2;
 
-    private Boolean notApplicable = false;
+	private Boolean notApplicable = false;
 
-    private String notApplicableDescription = "Not applicable";
+	private String notApplicableDescription = "Not applicable";
 
-    private Double notApplicableValue = 0.0d;
-    
-    private Boolean usesLookup = false;
-    
-    private transient DataSource dataSource = null;
-    
+	private Double notApplicableValue = 0.0d;
+
+	private boolean usesLookup = false;
+
+	private boolean storesCurrency = false;
+
+	private transient DataSource dataSource = null;
+
 	private static final SimpleLogger logger = new SimpleLogger(DecimalFieldDefn.class);
 }
