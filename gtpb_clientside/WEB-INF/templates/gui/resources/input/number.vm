@@ -17,8 +17,10 @@
 ##
 #if($field.storesCurrency())
   #set($currencySymbol = "<span class='currency_symbol'>&pound;</span>")
+  #set($currencySymbolBare = "&pound;")
 #else
   #set($currencySymbol = "")
+  #set($currencySymbolBare = "")
 #end
 #if ($field.getClass().getSimpleName() == "IntegerFieldDefn")##
   #if($globalEdit)##
@@ -40,7 +42,7 @@
 		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
 		    #end##
   	#else##
-$fieldValue##
+      $currencySymbolBare $fieldValue##
   	#end##
 #else##  if not integer
   #if(!$globalEdit)##
@@ -60,7 +62,7 @@ $fieldValue##
 		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
 		    #end##
   	#else##
-$fieldValue##
+      $currencySymbolBare $fieldValue##
   	#end##
 #end##
 #if($globalEdit)
