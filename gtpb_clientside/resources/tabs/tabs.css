@@ -260,6 +260,15 @@ img.cross_reference_image {
   color: white;
 }
 
+/* Note: this is an example of how to make a character hang */
+.currency_symbol {
+  float: left;
+  left: -1.5em;
+  margin-top: 0.3em;
+  position: relative;
+  width: 0px;
+}
+
 /* 3) Summary tab css */
 
 

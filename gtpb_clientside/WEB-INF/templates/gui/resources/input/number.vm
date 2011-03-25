@@ -16,9 +16,9 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #if($field.storesCurrency())
-  #set($currencyDenominator = "<span style='text-indent:-3em';>&pound;</span>")
+  #set($currencySymbol = "<span class='currency_symbol'>&pound;</span>")
 #else
-  #set($currencyDenominator = "")
+  #set($currencySymbol = "")
 #end
 #if ($field.getClass().getSimpleName() == "IntegerFieldDefn")##
   #if($globalEdit)##
@@ -28,9 +28,9 @@
   #end##
   	#if($userCanEdit)##
   	  #if($globalEdit || (!$updateAsType))##
-  	    		$currencyDenominator <input type="number" name="$field.getInternalFieldName()" value="$fieldValue" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
+  	    		$currencySymbol <input type="number" name="$field.getInternalFieldName()" value="$fieldValue" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
   	  #else##
-  	    		$currencyDenominator <input type="number" #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+  	    		$currencySymbol <input type="number" #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
 				#if($field.getNotNull() && $fieldValue == "")
 					<span class="mandated">* Mandatory field - please enter a value</span>
 				#end
@@ -48,9 +48,9 @@ $fieldValue##
   	#end##
   	#if($userCanEdit)##
   	  #if($globalEdit || (!$updateAsType))##
-  	    		$currencyDenominator <input #if($fieldValue.contains("e")) type="text" #else type="number" #end name="$field.getInternalFieldName()" value="" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
+  	    		$currencySymbol <input #if($fieldValue.contains("e")) type="text" #else type="number" #end name="$field.getInternalFieldName()" value="" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
   	  #else##
-  	    		$currencyDenominator <input type="number" #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+  	    		$currencySymbol <input type="number" #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
 				#if($field.getNotNull() && $tableDataRow.get($field) == "")
 					<span class="mandated">* Mandatory field - please enter a value</span>
 				#end
