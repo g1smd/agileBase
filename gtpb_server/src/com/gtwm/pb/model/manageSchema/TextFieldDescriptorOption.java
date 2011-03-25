@@ -81,7 +81,7 @@ public class TextFieldDescriptorOption implements TextFieldDescriptorOptionInfo 
         return this.textOption.toString() + " = " + this.value;
     }
 
-    private PossibleTextOptions textOption;
+    private final PossibleTextOptions textOption;
 
     private String value;
 }
