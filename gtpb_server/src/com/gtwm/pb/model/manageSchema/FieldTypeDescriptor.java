@@ -53,6 +53,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.UNIQUE));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.USELOOKUP));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
+			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.STORECURRENCY));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.NUMBERPRECISION));
 			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.DEFAULTVALUE));
 			break;
