@@ -65,7 +65,7 @@
       <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
         <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
         <input type="hidden" name="update_record" value="true" />
-        <input type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" />
+        <input type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" class="submit-trigger" />
         <div class="upload_progress_container">
           <div class="upload_progress_bar"></div>
           <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>

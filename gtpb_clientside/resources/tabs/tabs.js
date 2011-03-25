@@ -503,6 +503,7 @@ function fSexyUpload() {
         jqUploadInfo.text("Uploading: " + (completed * 100).toFixed(2) + "% complete...")
       },
       complete: function(event, responseText) {
+    	alert('upload complete');
         jqUploadInfo.text("Upload complete.")
       }
     });
