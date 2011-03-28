@@ -71,7 +71,7 @@ public class ReferencedReportDataFieldDefn extends AbstractField implements
 		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(
 				FieldCategory.REFERENCED_REPORT_DATA);
 		try {
-			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTKEYFIELD, this
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTREPORT, this
 					.getReferencedReport().getInternalReportName(), this.getReferencedReport()
 					.getReportName());
 		} catch (ObjectNotFoundException onfex) {
