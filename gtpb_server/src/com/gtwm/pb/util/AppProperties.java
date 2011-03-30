@@ -106,5 +106,5 @@ public class AppProperties {
 	 * 
 	 * SET THIS TO false IN PRODUCTION
 	 */
-	public static final boolean testMode = false;
+	public static final boolean testMode = true;
 }
