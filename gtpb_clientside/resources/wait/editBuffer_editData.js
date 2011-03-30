@@ -376,7 +376,11 @@ function fIsBooleanType(oObj) {
   return false;
 }
 
+/**
+ * TODO: duplicated in request_setFilter.js, remove one
+ */
 function fEnableDisable(sAction, oFormObject) {
+	alert('editBuffer_editData');
   function fSetObjectCollection() {
     /* create a collection of all the objects with the name.  If this is a single
        object e.g. a text box it should just be one object but if it's a radio
@@ -404,6 +408,27 @@ function fEnableDisable(sAction, oFormObject) {
   }
   // enable or disable the current object or object group
 
+	var cObjects = document.getElementsByName(oFormObject
+			.getAttribute('name'));
+	for ( var i = 0; i < cObjects.length; i++) {
+		// see whether we've passed in the hidden field from a picker
+		var oObjToChange=((cObjects[i].getAttribute('type')=='hidden') && cObjects[i].label)?cObjects[i].label:cObjects[i];
+		// if we're enabling remember to *remove* the busy attribute
+		if (sAction == 'enable') {
+			oObjToChange.removeAttribute(fBusyAttr());
+			// For IE: because style doesn't work on expando property, add/remove class as well
+			if (sBusyAttr=='changed') {
+				$(oObjToChange).removeClass('changed');
+			}
+		} else {
+			oObjToChange.setAttribute(fBusyAttr(), 'true');
+			if (sBusyAttr=='changed') {
+				$(oObjToChange).addClass('changed');
+			}
+		}
+	}
+
+/*
   var cObjects=oFormObject.objectCollection?oFormObject.objectCollection:fSetObjectCollection();
   //var xx=cObjects.length;
   for(var i=0;i<cObjects.length;i++) {  
@@ -412,7 +437,8 @@ function fEnableDisable(sAction, oFormObject) {
 	// if we're enabling remember to *remove* the busy attribute
     if(sAction=='enable') oObjToChange.removeAttribute(fBusyAttr());
     else oObjToChange.setAttribute(fBusyAttr(),'true');   
-  }	  
+  }	
+  */  
 }
 
 function fChange(oObj)  {  
@@ -599,8 +625,6 @@ function fChange(oObj)  {
   } else {
     var vValue=(fIsBooleanType(oObj)?oObj.checked:(oObj.getAttribute('e_value')?oObj.getAttribute('e_value'):jqObj.val()));
   }
-  /* mark the input as busy.  What should be set depends on the type of form object.
-     NOTE: changed attribute is an expando with a style set to show it's applied */
   // a key value pair array of data to pass in the Post request
   var aPostVars=new Array();
   // the form object we're operating 
