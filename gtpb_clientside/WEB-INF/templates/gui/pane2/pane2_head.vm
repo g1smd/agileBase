@@ -49,5 +49,5 @@
       #end
     </div></td>
   #end
-  <td class=trailing><div>&nbsp;</div></td>      
+  <td class=trailing><div>$viewTools.getBrowser()</div></td>      
 </tr>
