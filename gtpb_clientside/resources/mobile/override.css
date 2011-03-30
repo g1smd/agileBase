@@ -184,7 +184,9 @@ div.dp-popup {
   width: 197px;
 }
 
+/* A more obvious 'unsaved' status than the desktop version */
 .changed {
+	text-decoration: none;
 	border: 0px;
   border-bottom: 5px dotted #486f98;
 }
