@@ -15,6 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+#set($browser=$viewTools.getBrowser().getBrowserName())
 <tr>
   <th class=leading><div>&nbsp;</div></th>
   #foreach($field in $fields)
@@ -45,9 +46,9 @@
     #set($fieldObject = $field.get(1))
     <td><div>
       #if($internalFieldName!='')
-        <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" #if($table_part_only) gtpb_return="gui/reports_and_tables/report_data_only_include" gtpb_set_table="$sessionTable.getInternalTableName()" gtpb_set_report="$sessionReport.getInternalReportName()" #else gtpb_return="gui/reports_and_tables/report_data_only" #end onkeyup="new fSetFilter(this); fReloadAfterDelay();" #if($filters.get($fieldObject)) value="$filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(this)"#end>
+        <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" #if($table_part_only) gtpb_return="gui/reports_and_tables/report_data_only_include" gtpb_set_table="$sessionTable.getInternalTableName()" gtpb_set_report="$sessionReport.getInternalReportName()" #else gtpb_return="gui/reports_and_tables/report_data_only" #end onkeyup="new fSetFilter(this); #if($browser == 'Konqueror') fReloadAfterDelay(); #end" #if($filters.get($fieldObject)) value="$filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(this)"#end>
       #end
     </div></td>
   #end
-  <td class=trailing><div>$viewTools.getBrowser()</div></td>      
+  <td class=trailing><div>&nbsp;</div></td>      
 </tr>
