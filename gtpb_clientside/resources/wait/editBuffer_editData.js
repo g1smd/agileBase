@@ -412,14 +412,15 @@ function fEnableDisable(sAction, oFormObject) {
 		// see whether we've passed in the hidden field from a picker
 		var oObjToChange=((cObjects[i].getAttribute('type')=='hidden') && cObjects[i].label)?cObjects[i].label:cObjects[i];
 		// if we're enabling remember to *remove* the busy attribute
+		var sBusyAttr = fBusyAttr();
 		if (sAction == 'enable') {
-			oObjToChange.removeAttribute(fBusyAttr());
+			oObjToChange.removeAttribute(sBusyAttr);
 			// For IE: because style doesn't work on expando property, add/remove class as well
 			if (sBusyAttr=='changed') {
 				$(oObjToChange).removeClass('changed');
 			}
 		} else {
-			oObjToChange.setAttribute(fBusyAttr(), 'true');
+			oObjToChange.setAttribute(sBusyAttr, 'true');
 			if (sBusyAttr=='changed') {
 				$(oObjToChange).addClass('changed');
 			}
