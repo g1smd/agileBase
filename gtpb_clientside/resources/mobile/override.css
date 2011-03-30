@@ -183,3 +183,7 @@ div.dp-popup {
   font-size: 18px;
   width: 197px;
 }
+
+.changed {
+  border-bottom: 5px dotted #486f98;
+}
