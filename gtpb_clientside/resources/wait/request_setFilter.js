@@ -479,5 +479,5 @@ var gtpbOldBrowserTimeout;
 
 function fReloadAfterDelay() {
   clearTimeout(gtpbOldBrowserTimeout);
-  gtpbOldBrowserTimeout = setTimeout("window.location.reload(true);", 4000);
+  gtpbOldBrowserTimeout = setTimeout("window.location.reload(true);", 3000);
 }
