@@ -380,7 +380,6 @@ function fIsBooleanType(oObj) {
  * TODO: duplicated in request_setFilter.js, remove one
  */
 function fEnableDisable(sAction, oFormObject) {
-	alert('editBuffer_editData');
   function fSetObjectCollection() {
     /* create a collection of all the objects with the name.  If this is a single
        object e.g. a text box it should just be one object but if it's a radio
