@@ -114,6 +114,9 @@
   #end
 #end
 #set($savedReports = $user.getOperationalDashboardReports())
+calendar reports are $calendarModuleReportsProcessed<p>
+panel reports are $panelModuleReportsProcessed<p>
+saved reports are $savedReports<p>
 <div id="rest_of_page">
 <div id="report_selection_header" class="report_selection_header">&plusmn; calendars: </div>
 <div id="report_selection" class="report_selection">
