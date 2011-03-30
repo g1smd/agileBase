@@ -234,7 +234,7 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 		 */
 		var cObjects = document.getElementsByName(oFormObject
 				.getAttribute('name'));
-		for ( var i = 0; i < cObjects.length; i++)
+		for ( var i = 0; i < cObjects.length; i++) {
 			// if we're enabling remember to *remove* the busy attribute
 			if (sAction == 'enable') {
 				cObjects[i].removeAttribute(sBusyAttr);
@@ -248,7 +248,7 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 					$(cObjects[i]).addClass('changed');
 				}
 			}
-		// oFormObject and sBusyAttr are global to the fChange object
+		}
 	}
 
 	// TODO: this fn duplicated in editBuffer_editData.js
