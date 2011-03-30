@@ -82,7 +82,6 @@ import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
 import org.grlea.log.SimpleLogger;
 import org.json.JSONException;
-
 import java.util.TreeSet;
 
 public final class ViewMethods implements ViewMethodsInfo {

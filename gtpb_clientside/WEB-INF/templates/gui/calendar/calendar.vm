@@ -216,7 +216,7 @@ saved reports are $savedReports<p>
   </ul>
 </div>
 #foreach($report in $savedReports)
-  #if(!$report.getCalendarField())
+  #if((!$report.getCalendarField()) && ($view.loggedInUserAllowedToViewReport($report)))
     #parse("gui/calendar/panel.vm")
   #end
 #end
