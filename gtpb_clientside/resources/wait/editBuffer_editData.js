@@ -407,8 +407,7 @@ function fEnableDisable(sAction, oFormObject) {
   }
   // enable or disable the current object or object group
 
-	var cObjects = document.getElementsByName(oFormObject
-			.getAttribute('name'));
+	var cObjects = oFormObject.objectCollection?oFormObject.objectCollection:fSetObjectCollection();
 	for ( var i = 0; i < cObjects.length; i++) {
 		// see whether we've passed in the hidden field from a picker
 		var oObjToChange=((cObjects[i].getAttribute('type')=='hidden') && cObjects[i].label)?cObjects[i].label:cObjects[i];
