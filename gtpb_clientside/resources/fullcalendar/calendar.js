@@ -164,6 +164,7 @@ function fMobileDevice() {
 
 // Load an individual record, analagous to loadIntoPane3 in the standard interface
 function loadIntoPanel(internalReportName, rowId) {
+  alert("loadIntoPanel: " + internalReportName);
   var jqPanelContent = $("#panel_content_" + internalReportName);
   jqPanelContent.load("AppController.servlet", {
 	'return': 'gui/calendar/panel_record',
