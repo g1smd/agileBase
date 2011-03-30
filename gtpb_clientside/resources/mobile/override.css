@@ -185,5 +185,6 @@ div.dp-popup {
 }
 
 .changed {
+	border: 0px;
   border-bottom: 5px dotted #486f98;
 }
