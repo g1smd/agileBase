@@ -188,5 +188,5 @@ div.dp-popup {
 .changed {
 	text-decoration: none!important;
 	border: 0px;
-  /* border-bottom: 5px dotted #486f98; */
+  border-bottom: 5px dotted black;
 }
