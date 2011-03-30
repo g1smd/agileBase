@@ -954,15 +954,12 @@ public final class ViewTools implements ViewToolsInfo {
 
 	public Browsers getBrowser() {
 		String userAgent = request.getHeader("User-Agent").toLowerCase();
-		logger.debug("Testing UA " + userAgent);
 		// The user agent may match multiple browsers, e.g. the iPhone will
 		// trigger IPHONE and SAFARI
 		EnumSet<Browsers> browsersMatched = EnumSet.noneOf(Browsers.class);
 		for (Browsers browser : EnumSet.allOf(Browsers.class)) {
-			logger.debug("Checking browser " + browser.getUserAgentString());
 			if (userAgent.contains(browser.getUserAgentString())) {
 				browsersMatched.add(browser);
-				logger.debug("match found");
 			}
 		}
 		// Treat the iPhone and iPod as one
