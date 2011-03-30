@@ -209,7 +209,6 @@ function fLoadReport(sResponseText, oElement, fCallback) {
  * ---------------------------------------------------- Set filter function
  * ----------------------------------------------------
  */
-
 function fSetFilter(oObj, fReqCompleteOverride) {
 	/*
 	 * object to handle changing a filter element and update the db immediately
@@ -326,8 +325,7 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 		for ( var sKey in aPostVars) {
 			if (sKey == 'containsValue')
 				continue; // this is a special case. containsValue is a
-							// prototype method. I can't think of another way to
-							// exclude it from the array :(
+						  // prototype method
 			if (sKey != 'return')
 				aPostVars[sKey] = encodeURIComponent(aPostVars[sKey]); // return
 																		// is a
@@ -471,4 +469,15 @@ function fSetSort(oColHeader) {
 	
 	$(oColHeader).addClass('waiting');
 	var oReq = new fRequest('AppController.servlet', aPostVars, fReqComplete, -1);
+}
+
+
+/*
+ * This function for older browsers only, i.e. early versions of Konqueror
+ */
+var gtpbOldBrowserTimeout;
+
+function fReloadAfterDelay() {
+  clearTimeout(gtpbOldBrowserTimeout);
+  gtpbOldBrowserTimeout = setTimeout("alert('reload');", 4000);
 }

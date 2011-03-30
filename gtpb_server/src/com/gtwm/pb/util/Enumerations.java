@@ -63,7 +63,7 @@ public class Enumerations {
 	public enum AppAction {
 		ADD_USER, REMOVE_USER, UPDATE_USER, ADD_ROLE, UPDATE_ROLE, REMOVE_ROLE, ASSIGN_USER_TO_ROLE, REMOVE_USER_FROM_ROLE, ADD_PRIVILEGE, REMOVE_PRIVILEGE, SET_MAX_TABLE_PRIVILEGE, CLEAR_ALL_TABLE_PRIVILEGES, ADD_TABLE, UPDATE_TABLE, REMOVE_TABLE, ADD_FIELD, REMOVE_FIELD, UPDATE_FIELD, UPDATE_FIELD_OPTION, SET_FIELD_INDEX, ADD_REPORT, UPDATE_REPORT, REMOVE_REPORT, ADD_FIELD_TO_REPORT, REMOVE_FIELD_FROM_REPORT, SET_REPORT_FIELD_INDEX, SET_REPORT_FIELD_SORTING, ADD_CALCULATION_TO_REPORT, UPDATE_CALCULATION_IN_REPORT, ADD_FILTER_TO_REPORT, REMOVE_FILTER_FROM_REPORT, ADD_JOIN_TO_REPORT, REMOVE_JOIN_FROM_REPORT, SAVE_NEW_RECORD, UPDATE_RECORD, REMOVE_RECORD, CSV_IMPORT, CSV_UPLOAD, ADD_GROUPING_TO_CHART, REMOVE_GROUPING_FROM_CHART, ADD_FUNCTION_TO_CHART, REMOVE_FUNCTION_FROM_CHART, SET_CHART_FILTER_FIELD, SET_CHART_FILTER, SET_CHART_RANGE, SAVE_CHART, REMOVE_CHART, GLOBAL_EDIT, ADD_COMPANY, REMOVE_COMPANY, ADD_TAB_ADDRESS, REMOVE_TAB_ADDRESS, CLONE_RECORD, ANONYMISE, ADD_MODULE, UPDATE_MODULE, REMOVE_MODULE, LOCK_RECORDS, LOCK_RECORD, SET_DASHBOARD_CHART_STATE, HIDE_REPORT, UNHIDE_REPORT, SET_USER_DEFAULT_REPORT, SET_CALENDAR_SYNCABLE, ADD_OPERATIONAL_DASHBOARD_REPORT, REMOVE_OPERATIONAL_DASHBOARD_REPORT
 	}
-	
+
 	/**
 	 * Actions potentially available to un-authenticated users
 	 */
@@ -74,8 +74,8 @@ public class Enumerations {
 	/*
 	 * Any additional actions that don't affect the server state
 	 * 
-	 * INCLUDE_TOOLBAR_PLUGIN=pluginname:<br>
-	 * Include template gui/plugins/[pluginname]/toolbar.vm in the toolbar
+	 * INCLUDE_TOOLBAR_PLUGIN=pluginname:<br> Include template
+	 * gui/plugins/[pluginname]/toolbar.vm in the toolbar
 	 */
 	public enum ExtraAction {
 		INCLUDE_TOOLBAR_PLUGIN
@@ -203,8 +203,8 @@ public class Enumerations {
 	}
 
 	/**
-	 * A list of aggregate functions that can be used in a chart. Not
-	 * all database-provided functions are listed, only those we'll use. Each
+	 * A list of aggregate functions that can be used in a chart. Not all
+	 * database-provided functions are listed, only those we'll use. Each
 	 * function has an associated plain English description for use e.g when
 	 * charting
 	 */
@@ -287,7 +287,7 @@ public class Enumerations {
 				"Firefox development version", "minefield"), CAMINO("Camino", "camino"), SYMBIAN_MOBILE(
 				"Safari on Symbian mobile", "symbian"), SAFARI("Safari", "applewebkit"), OPERA(
 				"Opera", "opera"), IPOD("iPod", "ipod"), IPHONE("iPhone", "iphone"), IPAD("iPad",
-				"ipad"), KONQUEROR("Konqueror","konqueror"),
+				"ipad"), KONQUEROR("Konqueror", "konqueror"),
 		// So we can treat the ipod and iphone as one. They have similar or the
 		// same rendering engines
 		APPLE_MOBILE("iPod/iPhone", "gtpb_ipod_or_iphone"), UNKNOWN("unknown",
@@ -316,6 +316,13 @@ public class Enumerations {
 
 		private String userAgentString = "";
 
+		/**
+		 * @param browserName
+		 *            User friendly browser name
+		 * @param userAgentString
+		 *            Lowercase version of user agent component that identifies
+		 *            the browser
+		 */
 		Browsers(String browserName, String userAgentString) {
 			this.browserName = browserName;
 			this.userAgentString = userAgentString;
@@ -323,9 +330,9 @@ public class Enumerations {
 	}
 
 	/**
-	 * In a chart you can group by any field in the report, but the
-	 * addition of field modifiers allows you to do things like group by year,
-	 * quarter or month of a date field
+	 * In a chart you can group by any field in the report, but the addition of
+	 * field modifiers allows you to do things like group by year, quarter or
+	 * month of a date field
 	 */
 	public enum SummaryGroupingModifier {
 		DATE_YEAR("year"), DATE_QUARTER("quarter"), DATE_MONTH("month"), DATE_DAY("day");
@@ -389,7 +396,7 @@ public class Enumerations {
 			this.sql = sql;
 		}
 	}
-	
+
 	public enum TextCase {
 		ANY(""), LOWER("lower"), UPPER("upper"), TITLE("initcap");
 
