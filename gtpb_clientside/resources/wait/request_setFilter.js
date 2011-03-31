@@ -474,11 +474,11 @@ function fSetSort(oColHeader) {
 
 
 /*
- * This function for older browsers only, i.e. early versions of Konqueror
- */
+ * This function for older browsers only where filtering as you type doesn't work
 var gtpbOldBrowserTimeout;
 
 function fReloadAfterDelay() {
   clearTimeout(gtpbOldBrowserTimeout);
   gtpbOldBrowserTimeout = setTimeout("window.location.reload(true);", 3000);
 }
+*/
