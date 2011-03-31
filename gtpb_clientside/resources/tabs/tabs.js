@@ -362,7 +362,9 @@ function fRelationPickers() {
 	if(deviceAgent.match(/(iphone|ipod|ipad)/)) {
 		jqClicker.click(fSetOverflowHack,false);
 		scroll(0,0);
+		alert('iPad');
 	} else if(deviceAgent.match(/konqueror/)) {
+		alert('konq');
 		scroll(0,0);
 	}
 	var jqHidden = jqClicker.siblings("input.relation_hidden");
