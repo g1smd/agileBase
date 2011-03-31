@@ -8,10 +8,12 @@
 <input type="hidden" name="stringkey" value="mobile_pane3_selection">
 <input type="hidden" name="customstringvalue" value="$mobile_pane3_selection">
 <input type="hidden" name="gtpbaction" value="true">
-	
 <button title="Create a new record" id="button_new" onclick="document.recordform.gtpbaction.name='save_new_record'; document.recordform.submit();" >New record</button> 
 
-#parse("gui/mobile/module_action_buttons.vm")
+#set($browser = $viewTools.getBrowser())
+#if(($browser != "Konqueror") && ($browser != "iPod/iPhone"))
+  #parse("gui/mobile/module_action_buttons.vm")
+#end
 </form>
 
 #end
