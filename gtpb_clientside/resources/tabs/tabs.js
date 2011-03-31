@@ -549,7 +549,6 @@ function fChangeEvent(inputElement) {
   var jqWrapper=$(inputElement).closest("div");
   var sAttribute=$(inputElement).attr('wrapperAttribute');
   jqWrapper.attr(sAttribute,$(inputElement).val());
-  alert("Set " + sAttribute + " to " + jqWrapper.attr(sAttribute));
   fSetValueAtt(jqWrapper[0]);
   var globalEdit = false;
   if (jqWrapper.attr("gtpb_global_edit")) {
@@ -601,8 +600,10 @@ function fSetValueAtt(oWrapperDiv) {
   with (oWrapperDiv) {
 	var sValue='';
 	if(dateResolution >= constDayOfMonth) {
+	  alert('Getting day part');
       if (getAttribute('gtpb_' + internalFieldName + '_days')==0) return;
       sValue+=fLPad(getAttribute('gtpb_' + internalFieldName + '_days'),2)+' ';
+      alert('Value is ' + sValue);
 	}
 	if(dateResolution >= constMonth) {
       if (getAttribute('gtpb_' + internalFieldName + '_months')==0) return;
