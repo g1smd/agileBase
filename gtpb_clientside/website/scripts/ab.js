@@ -45,7 +45,6 @@
 			// test for Konqueror
 			if(navigator.userAgent.match(/Konqueror/i)) {
 				if(document.location.href.indexOf("mobile") == -1) {
-					alert('Konq');
 					$('#login').html('<big>Konqueror/LadyLodge users log in at<br><a href="http://www.agilebase.co.uk/ll">www.agilebase.co.uk/ll</a></big>');
 				}
 			}
