@@ -17,8 +17,8 @@
  */
 package com.gtwm.pb.model.manageData;
 
-import com.gtwm.pb.model.interfaces.TagCloudInfo;
-import com.gtwm.pb.model.interfaces.TagInfo;
+import com.gtwm.pb.model.interfaces.WordCloudInfo;
+import com.gtwm.pb.model.interfaces.WordInfo;
 import org.apache.commons.math.stat.Frequency;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.grlea.log.SimpleLogger;
@@ -29,9 +29,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Iterator;
 
-public class TagCloud implements TagCloudInfo {
+public class WordCloud implements WordCloudInfo {
 
-	private TagCloud() {
+	private WordCloud() {
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class TagCloud implements TagCloudInfo {
 	 *            Set of words to specifically exclude, in addition to the
 	 *            standard set [and, not, after, yes, no, ...]
 	 */
-	public TagCloud(String textLowerCase, int minWeight, int maxWeight, int maxTags,
+	public WordCloud(String textLowerCase, int minWeight, int maxWeight, int maxTags,
 			Set<String> additionalStopWords) {
 		String[] wordArray = textLowerCase.split("\\W");
 		Set<String> stopWords = new HashSet<String>(Arrays.asList(stopWordsArray));
@@ -147,17 +147,17 @@ public class TagCloud implements TagCloudInfo {
 				} else {
 					weight = (int) (Math.ceil(new Double(wordFreq - minFreq) * scaleFactor) + minWeight);
 				}
-				TagInfo tag = new Tag(word, weight);
+				WordInfo tag = new Word(word, weight);
 				this.tags.add(tag);
 			}
 		}
 	}
 
-	public SortedSet<TagInfo> getTags() {
+	public SortedSet<WordInfo> getWords() {
 		return this.tags;
 	}
 
-	private SortedSet<TagInfo> tags = new TreeSet<TagInfo>();
+	private SortedSet<WordInfo> tags = new TreeSet<WordInfo>();
 
 	static private final int minWordLength = 3;
 	
@@ -185,6 +185,6 @@ public class TagCloud implements TagCloudInfo {
 			"would", "yes", "your", "yours", "yourself", "yourselves", "quot", "amp", "doesn",
 			"better", "rather", "you", "most", "need", "however", "whilst", "because" };
 
-	private static final SimpleLogger logger = new SimpleLogger(TagCloud.class);
+	private static final SimpleLogger logger = new SimpleLogger(WordCloud.class);
 
 }

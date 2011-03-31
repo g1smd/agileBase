@@ -45,7 +45,7 @@ import com.gtwm.pb.model.interfaces.ChartDataInfo;
 import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ModuleActionInfo;
-import com.gtwm.pb.model.interfaces.TagInfo;
+import com.gtwm.pb.model.interfaces.WordInfo;
 import com.gtwm.pb.model.interfaces.UsageStatsInfo;
 import com.gtwm.pb.model.interfaces.ViewMethodsInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
@@ -702,7 +702,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 				filters, false);
 	}
 
-	public SortedSet<TagInfo> getReportTagCloud(int minWeight, int maxWeight, int maxTags)
+	public SortedSet<WordInfo> getReportWordCloud(int minWeight, int maxWeight, int maxTags)
 			throws ObjectNotFoundException, DisallowedException, CodingErrorException,
 			CantDoThatException, SQLException {
 		BaseReportInfo report = this.sessionData.getReport();
@@ -711,20 +711,20 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		Set<BaseField> reportBaseFields = report.getReportBaseFields();
 		Set<String> stopWords = new HashSet<String>();
-		return this.getReportTagCloud(report, reportBaseFields, stopWords, minWeight, maxWeight,
+		return this.getReportWordCloud(report, reportBaseFields, stopWords, minWeight, maxWeight,
 				maxTags);
 	}
 
-	public SortedSet<TagInfo> getReportTagCloud(BaseReportInfo report, ReportFieldInfo reportField,
+	public SortedSet<WordInfo> getReportWordCloud(BaseReportInfo report, ReportFieldInfo reportField,
 			Set<String> stopWords, int minWeight, int maxWeight, int maxTags)
 			throws ObjectNotFoundException, DisallowedException, CodingErrorException,
 			CantDoThatException, SQLException {
 		Set<BaseField> fields = new HashSet<BaseField>();
 		fields.add(reportField.getBaseField());
-		return this.getReportTagCloud(report, fields, stopWords, minWeight, maxWeight, maxTags);
+		return this.getReportWordCloud(report, fields, stopWords, minWeight, maxWeight, maxTags);
 	}
 
-	private SortedSet<TagInfo> getReportTagCloud(BaseReportInfo report,
+	private SortedSet<WordInfo> getReportWordCloud(BaseReportInfo report,
 			Set<BaseField> reportBaseFields, Set<String> stopWords, int minWeight, int maxWeight,
 			int maxTags) throws ObjectNotFoundException, DisallowedException, CodingErrorException,
 			CantDoThatException, SQLException {
@@ -762,12 +762,12 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 
 		if (textFields.size() == 0) {
-			return new TreeSet<TagInfo>();
+			return new TreeSet<WordInfo>();
 		}
 		String conglomoratedText = this.databaseDefn.getDataManagement().getReportDataText(report,
 				textFields, 1000000);
-		TagCloud cloud = new TagCloud(conglomoratedText, minWeight, maxWeight, maxTags, stopWords);
-		return cloud.getTags();
+		WordCloud cloud = new WordCloud(conglomoratedText, minWeight, maxWeight, maxTags, stopWords);
+		return cloud.getWords();
 	}
 
 	public SortedMap<TableInfo, SortedSet<BaseField>> adminGetRelationCandidates()
