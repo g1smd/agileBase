@@ -132,7 +132,7 @@ function fRequest(sURL, aPostVars, fCallback, iShowWait){
 
 function fLoadReport(sResponseText, oElement, fCallback) {
 	if(navigator.userAgent.match(/Konqueror/i)) {
-	  alert('Konq filter');
+	  alert('Konq sort');
 	}
 	if (!$.browser.msie) {
 		// Everything but IE can use innerHTML for this
