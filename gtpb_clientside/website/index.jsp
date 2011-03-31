@@ -29,4 +29,4 @@ if (queryString.contains("boot_mobile")) {
   <%@ include file="a3/a3.jsp" %>
 <% } else { %>
   <%@ include file="agilebase.jsp" %>
-<% } %> <%-- End of non-mobile login page --%>
+<% } %>
