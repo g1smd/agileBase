@@ -131,18 +131,14 @@ function fRequest(sURL, aPostVars, fCallback, iShowWait){
  */
 
 function fLoadReport(sResponseText, oElement, fCallback) {
-	if(navigator.userAgent.match(/Konqueror/i)) {
-		//oElement.innerHTML = sResponseText;
-		//return;
-	}
 	if(!navigator.userAgent.match(/Konqueror/i)) {
-	if (!$.browser.msie) {
+	  if (!$.browser.msie) {
 		// Everything but IE can use innerHTML for this
 		oElement.innerHTML = sResponseText;
 		fUpdateOtherPanes();
 		if(fCallback) fCallback();
 		return;
-	}
+	  }
 	}
 	/*
 	 * parsing the whole xml document is very slow and causes the application to
