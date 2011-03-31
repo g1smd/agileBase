@@ -212,7 +212,7 @@ $(document).ready(function(){
 	  pane3Scripts.functionList.push(fInit);
 	}
 	pane3Scripts.update();
-})
+});
 
 /* 
  * =========================================================
@@ -549,6 +549,7 @@ function fChangeEvent(inputElement) {
   var jqWrapper=$(inputElement).closest("div");
   var sAttribute=$(inputElement).attr('wrapperAttribute');
   jqWrapper.attr(sAttribute,$(inputElement).val());
+  alert("Set " + sAttribute + " to " + $(inputElement).val());
   fSetValueAtt(jqWrapper[0]);
   var globalEdit = false;
   if (jqWrapper.attr("gtpb_global_edit")) {
@@ -720,7 +721,7 @@ function fEnableCalcSyntaxHighlight() {
   if($("#calculationdefn").length > 0) {
     editAreaLoader.init({
 	  id: "calculationdefn"		// textarea id
-	  ,syntax: "sql"			    // syntax to be uses for highlighting
+	  ,syntax: "sql"			    // syntax to be used for highlighting
 	  ,start_highlight: true		// to display with highlight mode on start-up
 	  ,allow_toggle: false
 	  ,browsers: "all"
