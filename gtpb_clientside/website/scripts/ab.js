@@ -42,6 +42,13 @@
 					$('#login').html('<big>Mobile or tablet users log in at<br><a href="http://www.agilebase.co.uk/mobile">www.agilebase.co.uk/mobile</a></big>');
 				}
 			}
+			// test for Konqueror
+			if(navigator.userAgent.match(/Konqueror/i)) {
+				if(document.location.href.indexOf("mobile") == -1) {
+					alert('Konq');
+					$('#login').html('<big>Konqueror/LadyLodge users log in at<br><a href="http://www.agilebase.co.uk/ll">www.agilebase.co.uk/ll</a></big>');
+				}
+			}
 			// if enter is pressed in username field with no password, don't submit details
 			$("#loginform").submit(function() {
 				if($('#j_password').val() == '') {
