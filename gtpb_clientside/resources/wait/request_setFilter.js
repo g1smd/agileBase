@@ -132,7 +132,8 @@ function fRequest(sURL, aPostVars, fCallback, iShowWait){
 
 function fLoadReport(sResponseText, oElement, fCallback) {
 	if(navigator.userAgent.match(/Konqueror/i)) {
-	  alert('Konq sort');
+		oElement.innerHTML = sResponseText;
+		return;
 	}
 	if (!$.browser.msie) {
 		// Everything but IE can use innerHTML for this
