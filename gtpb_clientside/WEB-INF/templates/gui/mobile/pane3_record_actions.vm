@@ -13,7 +13,10 @@
 <button title="Create a copy of this record" id="button_new" onclick="document.recordform.gtpbaction.name='clone_record'; submit();">Clone</button> 
 <button title="Remove this record" class="_gtpb" id="button_new" onclick="document.recordform.gtpbaction.name='remove_record'; submit();">Delete</button>
 
-#parse("gui/mobile/module_action_buttons.vm")
+#set($browser = $viewTools.getBrowser())
+#if(($browser != "Konqueror") && ($browser != "iPod/iPhone"))
+  #parse("gui/mobile/module_action_buttons.vm")
+#end
 </form>
 
 #end
