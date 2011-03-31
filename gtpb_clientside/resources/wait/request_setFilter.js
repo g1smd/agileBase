@@ -180,7 +180,9 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 	
 	function fRenderRows(begin, end) {
 		var len = aRowStrings.length;
-		alert("len is " + len);
+		if((navigator.userAgent.match(/Konqueror/i)) && (len < 4)) {
+			return;
+		}
 		var tempRenderIndex = 0;
 
 		// Parse 10 rows at a time
