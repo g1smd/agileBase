@@ -488,7 +488,7 @@ public interface ViewMethodsInfo {
 			CantDoThatException, SQLException;
 
 	/**
-	 * Return a tag cloud for the data in the current session report. The words
+	 * Return a word cloud for the data in the current session report. The words
 	 * come from the most relevant text fields in the report. Session filters
 	 * are applied.
 	 * 
@@ -501,16 +501,16 @@ public interface ViewMethodsInfo {
 	 * @param maxTags
 	 *            The max. number of tags that will be returned
 	 */
-	public SortedSet<TagInfo> getReportTagCloud(int minWeight, int maxWeight, int maxTags)
+	public SortedSet<WordInfo> getReportWordCloud(int minWeight, int maxWeight, int maxTags)
 			throws ObjectNotFoundException, DisallowedException, CodingErrorException,
 			CantDoThatException, SQLException;
 
 	/**
-	 * Get a tag cloud for specific field contents only in a specific report
+	 * Get a word cloud for specific field contents only in a specific report
 	 * 
 	 * Also allow specific stop words to be set to blacklist unwanted terms
 	 */
-	public SortedSet<TagInfo> getReportTagCloud(BaseReportInfo report, ReportFieldInfo reportField,
+	public SortedSet<WordInfo> getReportWordCloud(BaseReportInfo report, ReportFieldInfo reportField,
 			Set<String> stopWords, int minWeight, int maxWeight, int maxTags)
 			throws ObjectNotFoundException, DisallowedException, CodingErrorException,
 			CantDoThatException, SQLException;

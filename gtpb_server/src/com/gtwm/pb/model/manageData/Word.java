@@ -17,16 +17,16 @@
  */
 package com.gtwm.pb.model.manageData;
 
-import com.gtwm.pb.model.interfaces.TagInfo;
+import com.gtwm.pb.model.interfaces.WordInfo;
 
-public class Tag implements TagInfo, Comparable<TagInfo> {
+public class Word implements WordInfo, Comparable<WordInfo> {
 
-	private Tag() {
+	private Word() {
 		this.weight = 0;
 		this.name = null;
 	}
 
-	public Tag(String name, int weight) {
+	public Word(String name, int weight) {
 		this.name = name;
 		this.weight = weight;
 	}
@@ -49,7 +49,7 @@ public class Tag implements TagInfo, Comparable<TagInfo> {
 		if ((obj == null) || (obj.getClass() != this.getClass())) {
 			return false;
 		}
-		TagInfo otherTag = (TagInfo) obj;
+		WordInfo otherTag = (WordInfo) obj;
 		return (this.getName().equals(otherTag.getName()));
 	}
 
@@ -61,7 +61,7 @@ public class Tag implements TagInfo, Comparable<TagInfo> {
 	 * Compare in a non-obvious but consistent way - not alphabetical because we
 	 * don't want to attach meaning to the ordering
 	 */
-	public int compareTo(TagInfo otherTag) {
+	public int compareTo(WordInfo otherTag) {
 		int hashCode = this.hashCode();
 		int otherHashCode = otherTag.getName().hashCode();
 		if (hashCode == otherHashCode) {

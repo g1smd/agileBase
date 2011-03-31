@@ -18,10 +18,10 @@
 package com.gtwm.pb.model.interfaces;
 
 /**
- * Represents one tag from a tag cloud
- * @see TagCloudInfo
+ * Represents one word/tag from a word cloud
+ * @see WordCloudInfo
  */
-public interface TagInfo {
+public interface WordInfo {
 	
 	public String getName();
 	

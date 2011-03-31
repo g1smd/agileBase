@@ -20,14 +20,15 @@ package com.gtwm.pb.model.interfaces;
 import java.util.SortedSet;
 
 /**
- * Represents a tag cloud, all words lower case
+ * Represents a tag/word cloud, all words lower case
  * 
- * Found the it.exprivia.cnos cloud very slow on large data sets
+ * Found the it.exprivia.cnos cloud very slow on large data sets so this was
+ * written from scratch, it's an order of magnitude faster
  */
-public interface TagCloudInfo {
+public interface WordCloudInfo {
 
 	/**
-	 * Return all tags in the tag cloud
+	 * Return all words in the word cloud
 	 */
-	public SortedSet<TagInfo> getTags();
+	public SortedSet<WordInfo> getWords();
 }
