@@ -45,7 +45,7 @@
 			// test for Konqueror
 			if(navigator.userAgent.match(/Konqueror/i)) {
 				if(document.location.href.indexOf("mobile") == -1) {
-					$('#login').html('<big>Konqueror/LadyLodge users log in at<br><a href="http://www.agilebase.co.uk/ll">www.agilebase.co.uk/ll</a></big>');
+ 					$('#login').html('<big>Konqueror/LadyLodge users log in at<br><a href="http://www.agilebase.co.uk/ll">www.agilebase.co.uk/ll</a></big>');
 				}
 			}
 			// if enter is pressed in username field with no password, don't submit details

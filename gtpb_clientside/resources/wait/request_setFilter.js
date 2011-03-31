@@ -131,6 +131,9 @@ function fRequest(sURL, aPostVars, fCallback, iShowWait){
  */
 
 function fLoadReport(sResponseText, oElement, fCallback) {
+	if(navigator.userAgent.match(/Konqueror/i)) {
+	  alert('Konq filter');
+	}
 	if (!$.browser.msie) {
 		// Everything but IE can use innerHTML for this
 		oElement.innerHTML = sResponseText;
@@ -414,7 +417,7 @@ function fSetSort(oColHeader) {
 		// currently agileBase doesn't return over XML but the option was developed
 		// for GTtT 4.0 where records in p2 load incrementally
 		// this is less of an issue in FF than in IE. To set the return type as
-		// XML set gtpb_returntype=true
+		// XML set gtpb_returntype=xml
 		// if(bIsXMLRequest) new fParseXML(sResponseXML,oReportBody);
 		// else oReportBody.innerHTML=sResponseText;
 		//oReportBody.innerHTML = sResponseText;
