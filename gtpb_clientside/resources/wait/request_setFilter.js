@@ -180,6 +180,7 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 	
 	function fRenderRows(begin, end) {
 		var len = aRowStrings.length;
+		alert("len is " + len);
 		var tempRenderIndex = 0;
 
 		// Parse 10 rows at a time
