@@ -129,6 +129,10 @@ function fPicker(){
   document.getElementsByTagName('body')[0].appendChild(oElements.picker);
   oElements.picker.inputElement=oCaller.formEl;
   oElements.picker.destroy=fDestroy;
+  var deviceAgent = navigator.userAgent.toLowerCase();
+  if(deviceAgent.match(/(iphone|ipod|ipad|konqueror)/)) {
+	scroll(0,0);
+  }
   return false;
 }
 
