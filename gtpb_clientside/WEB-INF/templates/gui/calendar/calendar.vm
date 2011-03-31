@@ -81,6 +81,13 @@
   <div id="selected_reports">
   </div>
 </div>
+#set($browser = $viewTools.getBrowser())
+#if($browser == "Konqueror")
+  <div class="warningmessage">
+    <b>Browser incompatibility</b><p>
+    At present, the calendar view is incompatible with the $browser web browser
+  </div>
+#end
 ## Create a collection $moduleReports: each module maps to an array of reports
 #parse("gui/resources/calc_module_reports.vm")
 #if($moduleReports.size() > 0)
