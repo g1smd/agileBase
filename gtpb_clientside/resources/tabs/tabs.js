@@ -549,6 +549,9 @@ function fChangeEvent(inputElement) {
   var jqWrapper=$(inputElement).closest("div");
   var sAttribute=$(inputElement).attr('wrapperAttribute');
   jqWrapper.attr(sAttribute,$(inputElement).val());
+  if(navigator.userAgent.match(/Konqueror/i)) {
+    jqWrapper[0].setAttribute(sAttribute,$(inputElement).val());
+  }
   alert(sAttribute + " is now " + jqWrapper[0].getAttribute(sAttribute));
   fSetValueAtt(jqWrapper[0]);
   var globalEdit = false;
