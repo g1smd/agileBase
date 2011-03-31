@@ -89,7 +89,7 @@
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/> 
     		$module
-    		#if($mobile_device && ($moduleActions.size()>0))
+    		#if($mobile_device && ($moduleActions.size()>0) && ($browser_name != "Konqueror"))
     		  #foreach($moduleAction in $moduleActions)
     			<button class="moduleaction" internalmodulename="$internalModuleName" actionname="$moduleAction.getActionName()">&laquo; $moduleAction &raquo;</button>
     		  #end
