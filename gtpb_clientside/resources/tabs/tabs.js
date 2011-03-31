@@ -549,7 +549,7 @@ function fChangeEvent(inputElement) {
   var jqWrapper=$(inputElement).closest("div");
   var sAttribute=$(inputElement).attr('wrapperAttribute');
   jqWrapper.attr(sAttribute,$(inputElement).val());
-  alert("Set " + sAttribute + " to " + $(inputElement).val());
+  alert("Set " + sAttribute + " to " + jqWrapper.attr(sAttribute));
   fSetValueAtt(jqWrapper[0]);
   var globalEdit = false;
   if (jqWrapper.attr("gtpb_global_edit")) {
