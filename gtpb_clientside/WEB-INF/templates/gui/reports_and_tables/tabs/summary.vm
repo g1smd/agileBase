@@ -53,6 +53,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($wordCloudField = $report.getWordCloudField())
 #if($wordCloudField)
   <div id="wordcloud">
+  <h1>$wordCloudField</h1>
   #set($stopWords = $viewTools.getNewStringSet())
   ## min font size, max font size, max number of tags
   #set($minSize = 7)
