@@ -93,7 +93,7 @@ public interface ReportDataInfo {
 	 * 
 	 * This method is public so that it can be used by summary reports as well
 	 */
-	public void fillInFilterValues(List<ReportQuickFilterInfo> filtersUsed,
+	public PreparedStatement fillInFilterValues(List<ReportQuickFilterInfo> filtersUsed,
 			PreparedStatement statement) throws SQLException;
 
 	/**

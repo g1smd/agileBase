@@ -1707,6 +1707,9 @@ public final class DataManagement implements DataManagementInfo {
 	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> textFields, Map<BaseField, String> reportFilterValues,
 			int rowLimit) throws SQLException, CantDoThatException {
 		StringBuilder conglomoratedText = new StringBuilder(8192);
+		if (textFields.size() == 0) {
+			throw new CantDoThatException("One or more text fields must be supplied to get report data text");
+		}
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
@@ -1732,8 +1735,9 @@ public final class DataManagement implements DataManagementInfo {
 				SQLCode += " WHERE " + filterArgs;
 			}
 			SQLCode += " LIMIT " + rowLimit;
-			Statement statement = conn.createStatement();
-			ResultSet results = statement.executeQuery(SQLCode);
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			statement = reportData.fillInFilterValues(filtersUsed, statement);
+			ResultSet results = statement.executeQuery();
 			int colNum = 0;
 			int numCols = textFields.size();
 			while (results.next()) {
@@ -2100,7 +2104,7 @@ public final class DataManagement implements DataManagementInfo {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement statement = conn.prepareStatement(SQLCode);
-			reportData.fillInFilterValues(filtersUsed, statement);
+			statement = reportData.fillInFilterValues(filtersUsed, statement);
 			ResultSet results = statement.executeQuery();
 			if (results.next()) {
 				nextRowId = results.getInt(1);

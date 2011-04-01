@@ -512,11 +512,11 @@ public class ReportData implements ReportDataInfo {
 			SQLCode.append(" LIMIT ").append(rowLimit);
 		}
 		PreparedStatement statement = conn.prepareStatement(SQLCode.toString());
-		this.fillInFilterValues(filtersUsed, statement);
+		statement = this.fillInFilterValues(filtersUsed, statement);
 		return statement;
 	}
 
-	public void fillInFilterValues(List<ReportQuickFilterInfo> filtersUsed,
+	public PreparedStatement fillInFilterValues(List<ReportQuickFilterInfo> filtersUsed,
 			PreparedStatement statement) throws SQLException {
 		int i = 0;
 		// Fill in filters
@@ -564,6 +564,7 @@ public class ReportData implements ReportDataInfo {
 				statement.setString(i, filter.getFilterValue());
 			}
 		}
+		return statement;
 	}
 
 	/**

@@ -303,7 +303,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 		}
 		PreparedStatement statement = conn.prepareStatement(sqlForSummary);
 		if (validSummary) {
-			reportData.fillInFilterValues(filtersUsed, statement);
+			statement = reportData.fillInFilterValues(filtersUsed, statement);
 		}
 		return statement;
 	}
