@@ -80,13 +80,16 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   <form name="wordcloud" method="post" action="AppController.servlet">
     <input type="hidden" name="set_word_cloud_field" value="true">
     <input type="hidden" name="return" value="$return_template">
+    #set($wordCloudTableField = $wordCloudField.getBaseField())
+    #set($primaryKey = $report.getParentTable().getPrimaryKey())
     Generate a cloud from text in 
     <select name="internalfieldname" onchange="fSubmitWordCloud();">
       <option value="" #if(!$wordCloudField) selected #end>--please select a field--</option>
+      <option value="$primaryKey.getInternalFieldName()" #if($primaryKey.equals($wordCloudTableField)) selected #end>- All report text -</option>
       #foreach($reportField in $report.getReportFields())
         #set($tableField = $reportField.getBaseField())
         #if($tableField.getDbType() == "VARCHAR")
-          <option value="$tableField.getInternalFieldName()" #if($tableField.equals($wordCloudField.getBaseField())) selected #end>$reportField</option>
+          <option value="$tableField.getInternalFieldName()" #if($tableField.equals($wordCloudTableField)) selected #end>$reportField</option>
         #end
       #end
     </select>
