@@ -245,6 +245,7 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
 #wordcloud h1 {
   font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,Helvetica,sans-serif;
   color: #3E576F;
+  fill: #3E576F;
   font-size: 16px;
   background-color: #f4f4f4;
   margin: 0px;
