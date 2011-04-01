@@ -445,6 +445,9 @@ public final class AppController extends VelocityViewServlet {
 				case REMOVE_CHART:
 					ServletSchemaMethods.removeChart(sessionData, request, databaseDefn);
 					break;
+				case SET_WORD_CLOUD_FIELD:
+					ServletSchemaMethods.setReportWordCloudField(sessionData, request, databaseDefn);
+					break;
 				case SET_DASHBOARD_CHART_STATE:
 					ServletDashboardMethods.setDashboardSummaryState(sessionData, request,
 							databaseDefn);

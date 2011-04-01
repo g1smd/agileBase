@@ -2586,6 +2586,29 @@ public final class ServletSchemaMethods {
 		}
 	}
 
+	public synchronized static void setReportWordCloudField(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, true);
+		String internalFieldName = request.getParameter("internalfieldname");
+		if (internalFieldName == null) {
+			throw new MissingParametersException("internalfieldname parameter needed to set a report word cloud field");
+		}
+		ReportFieldInfo wordCloudReportField = null;
+		if (internalFieldName != "") {
+		  wordCloudReportField = report.getReportField(internalFieldName);
+		}
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(report);
+			report.setWordCloudField(wordCloudReportField);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("Setting report word cloud failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
 	public synchronized static void setUserDefaultReport(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
