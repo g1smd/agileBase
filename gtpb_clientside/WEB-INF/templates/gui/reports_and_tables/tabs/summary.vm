@@ -57,7 +57,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   #set($wordCloud = $view.getReportWordCloud($report, $wordCloudField, $stopWords, 10,30,40))
   #foreach($word in $wordCloud)
     #set($colour = ${word.getWeight()} * 9 - 50)
-    <a href="#" style="font-size:${tag.getWeight()}pt; color:rgb($colour, $colour, $colour)">&nbsp;${word}&nbsp;</a>
+    <a href="#" style="font-size:${word.getWeight()}pt; color:rgb($colour, $colour, $colour)">&nbsp;${word}&nbsp;</a>
   #end
 #end
 </div>
