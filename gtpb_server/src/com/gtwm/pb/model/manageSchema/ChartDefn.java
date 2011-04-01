@@ -295,7 +295,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 			sqlForSummary += " SELECT (count(*) * " + rangeFraction + ")::integer";
 			if (groupings.size() > 0) {
 				sqlForSummary += " FROM (SELECT " + groupByFieldsCsv + " FROM " + internalReportName;
-				sqlForSummary += " GROUP BY " + groupByFieldsCsv + ")";
+				sqlForSummary += " GROUP BY " + groupByFieldsCsv + ") AS grouped";
 			} else {
 				sqlForSummary += " FROM " + internalReportName;
 			}
