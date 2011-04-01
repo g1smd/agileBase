@@ -116,11 +116,12 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 				statement.setTimestamp(7, this.timestamp);
 				break;
 			case LOGIN:
-				SQLCode += "(company, app_user, ip_address, app_timestamp) VALUES (?,?,?,?)";
+				SQLCode += "(company, app_user, ip_address, app_timestamp, details) VALUES (?,?,?,?,?)";
 				statement = conn.prepareStatement(SQLCode);
 				statement.setString(1, companyName);
 				statement.setString(2, userName);
 				statement.setString(3, this.ipAddress);
+				statement.setString(4, this.details);
 				statement.setTimestamp(4, this.timestamp);
 				break;
 			}
@@ -196,10 +197,11 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 		this.timestamp.setTime(System.currentTimeMillis());
 	}
 
-	public void logLogin(AppUserInfo user, String ipAddress) {
+	public void logLogin(AppUserInfo user, String ipAddress, String browser) {
 		this.logType = LogType.LOGIN;
 		this.user = user;
 		this.ipAddress = ipAddress;
+		this.details = browser;
 		this.timestamp.setTime(System.currentTimeMillis());
 	}
 

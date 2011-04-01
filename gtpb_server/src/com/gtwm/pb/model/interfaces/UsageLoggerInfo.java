@@ -39,5 +39,5 @@ public interface UsageLoggerInfo {
 
 	public void logDataChange(AppUserInfo user, TableInfo table, AppAction appAction, int rowId, String details);
 
-	public void logLogin(AppUserInfo user, String ipAddress);
+	public void logLogin(AppUserInfo user, String ipAddress, String browser);
 }

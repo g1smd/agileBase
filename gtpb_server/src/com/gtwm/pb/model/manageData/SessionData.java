@@ -34,9 +34,11 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.Browsers;
 import com.gtwm.pb.util.Enumerations.SessionContext;
 import com.gtwm.pb.util.Enumerations.AppAction;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -79,7 +81,16 @@ public final class SessionData implements SessionDataInfo {
 		AppUserInfo user = databaseDefn.getAuthManager().getUserByUserName(request,
 				request.getRemoteUser());
 		UsageLogger usageLogger = new UsageLogger(relationalDataSource);
-		usageLogger.logLogin(user, request.getRemoteAddr());
+		String userAgent = request.getHeader("User-Agent").toLowerCase();
+		String browserName = "Unknown browser: " + userAgent;
+		EnumSet<Browsers> browsersMatched = EnumSet.noneOf(Browsers.class);
+		BROWSER_LOOP: for (Browsers browser : EnumSet.allOf(Browsers.class)) {
+			if (userAgent.contains(browser.getUserAgentString())) {
+				browserName = browser.getBrowserName();
+				break BROWSER_LOOP;
+			}
+		}
+		usageLogger.logLogin(user, request.getRemoteAddr(), browserName);
 		UsageLogger.startLoggingThread(usageLogger);
 		this.relationalDataSource = relationalDataSource;
 		AuthenticatorInfo authenticator = databaseDefn.getAuthManager().getAuthenticator();
