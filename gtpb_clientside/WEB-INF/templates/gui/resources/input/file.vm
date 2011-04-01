@@ -34,7 +34,7 @@
   ## #if($viewTools.getBrowser().getBrowserName() == "Konqueror")
     ## Konqueror on LadyLodge doesn't like opening docs with OpenOffice over https
     #set($appUrl = $viewTools.getAppUrl())
-    #set($appUrl = $appUrl.replaceAll("^https","http"))
+    #set($appUrl = $appUrl.replaceAll("^http","https"))
     #set($downloadUrl = "$appUrl/$downloadUrl")
   ## #end
     ## File icon
