@@ -82,7 +82,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     <input type="hidden" name="return" value="$return_template">
     #set($wordCloudTableField = $wordCloudField.getBaseField())
     #set($primaryKey = $report.getParentTable().getPrimaryKey())
-    Generate a cloud from text in 
+    or generate a word cloud from text in 
     <select name="internalfieldname" onchange="fSubmitWordCloud();">
       <option value="" #if(!$wordCloudField) selected #end>--please select a field--</option>
       <option value="$primaryKey.getInternalFieldName()" #if($primaryKey.equals($wordCloudTableField)) selected #end>- All report text -</option>
