@@ -1098,7 +1098,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		this.wordCloudField = wordCloudField;
 	}
 	
-	@OneToOne
+	@OneToOne(targetEntity=AbstractReportField.class)
 	public ReportFieldInfo getWordCloudField() {
 		return this.wordCloudField;
 	}
