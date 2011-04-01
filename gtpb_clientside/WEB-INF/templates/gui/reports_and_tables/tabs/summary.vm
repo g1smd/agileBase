@@ -56,8 +56,11 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   ## min font size, max font size, max number of tags
   #set($wordCloud = $view.getReportWordCloud($report, $wordCloudField, $stopWords, 7,30,60))
   #foreach($word in $wordCloud)
-    #set($colour = ${word.getWeight()} * 9 - 50)
-    <span style="font-size:${word.getWeight()}pt; color:rgb($colour, $colour, $colour)">&nbsp;${word}&nbsp;</span>
+    #set($hue = ${word.getWeight()} * (360 / 23))
+    #set($saturation = ${word.getWeight()} * (100 / 23))
+    #set($lightness = ${word.getWeight()} * (60 / 23))
+    ##set($colour = ${word.getWeight()} * 9 - 50)
+    <span style="font-size:${word.getWeight()}pt; color:hsl($hue, $saturation, $lightness)">&nbsp;${word}&nbsp;</span>
   #end
 #end
 </div>
