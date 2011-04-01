@@ -23,20 +23,20 @@
   #if(!$fieldValueObject.isNull())
     ## Download URL
     #if($relatedRowId)
-	  #set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$relatedRowId/")
+	    #set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$relatedRowId/")
       ## if we're parsing non-parent table data in the view tab
     #else
       #set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/")
-	#end
-	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValue"))
-	## Users were frequently having problems with browsers caching old document versions
-	#set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
-  #if($viewTools.getBrowser().getBrowserName() == "Konqueror")
-    ## Konqueror on LadyLodge doesn't like opening docs with OpenOffice over https
-    #set($appUrl = $viewTools.getAppUrl())
-    #set($appUrl = $appUrl.replaceAll("^https","http"))
-    #set($downloadUrl = "$appUrl/$downloadUrl")
-  #end
+	  #end
+  	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValue"))
+  	## Users were frequently having problems with browsers caching old document versions
+  	#set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
+    #if($viewTools.getBrowser().getBrowserName() == "Konqueror")
+      ## Konqueror on LadyLodge doesn't like opening docs with OpenOffice over https
+      #set($appUrl = $viewTools.getAppUrl())
+      #set($appUrl = $appUrl.replaceAll("^https","http"))
+      #set($downloadUrl = "$appUrl/$downloadUrl")
+    #end
     ## File icon
     #if(!$fieldValueObject.isImage())
       <img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/> $fieldValue
@@ -66,17 +66,17 @@
 	#if($ab_calendar_display)
 	  <input type="file" name="$field.getInternalFieldName()" >
 	#else
-      ##For file uploads, do a normal post not an XMLHttpRequest for now. Look at getting the AJAX stuff working later
+    ##For file uploads, do a normal post not an XMLHttpRequest for now. Look at getting the AJAX stuff working later
 	  ##when Firefox supports upload progress info (coming in v 3.7)
-      <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
-        <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
-        <input type="hidden" name="update_record" value="true" />
-        <input type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" class="submit-trigger" />
-        <div class="upload_progress_container">
-          <div class="upload_progress_bar"></div>
-          <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
-        </div>
-      </form>
+    <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
+      <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+      <input type="hidden" name="update_record" value="true" />
+      <input type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" class="submit-trigger" />
+      <div class="upload_progress_container">
+        <div class="upload_progress_bar"></div>
+        <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
+      </div>
+    </form>
 	#end
   #end
   #if(!$fieldValueObject.isNull())

@@ -133,6 +133,15 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	 */
 	public ReportFieldInfo getCalendarField() throws CodingErrorException;
 
+	public void setWordCloudField(ReportFieldInfo wordCloudField);
+	
+	/**
+	 * Return the field whose contents are to be used for generating a word
+	 * cloud. If the field is the report table's primary key, a cloud from all
+	 * relevant fields in the report joined together will be used
+	 */
+	public ReportFieldInfo getWordCloudField();
+
 	/**
 	 * Return whether the row count is definitive or an estimate based on a
 	 * sample of data

@@ -15,10 +15,9 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+## Show charts and other summaries for the report
 $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($mathTool = $viewTools.getMathTool())
-## Show summary data for the report
-
 #set($tabCaption='summary')
 #if(!$report)
   #set($report = $sessionData.getReport())
@@ -61,11 +60,26 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 <table id="reportData"><tr class="separator">
 	<td class="leading">&nbsp;</td>
 	<td class="capitalised printoutfieldnamecolumn">
-	<span class="fieldname">Create a new summary chart</span>
+	<span class="fieldname">Add a new chart or word cloud</span>
 	</td>
 	<td class="trailing">&nbsp;</td>
 </tr></table>
 <div class="chart_controls">
+<div id="wordcloud_controls">
+  #set($wordCloudField = $report.getWordCloudField())
+  <form name="wordcloud" method="post" action="AppController.servlet">
+    Generate a cloud from text in 
+    <select name="internalfieldname" onchange="fSubmitWordCloud();">
+      <option value="" #if(!$wordCloudField) selected #end>--please select a field--</option>
+      #foreach($reportField in $report.getReportFields())
+        #set($tableField = $reportField.getBaseField())
+        #if($tableField.getDbType() == "VARCHAR")
+          <option value="$tableField.getInternalFieldName()" #if($tableField.equals($wordCloudField.getBaseField())) selected #end>$reportField</option>
+        #end
+      #end
+    </select>
+  </form>
+</div>
 <form name=addgrouping method=post action="AppController.servlet">
 #if($groupings.size() > 0)
   Choose groupings: 
@@ -99,6 +113,10 @@ function fSubmitGroup() {
   }
 }
 
+function fSubmitWordCloud() {
+  document.wordcloud.submit();
+}
+
 function fSubmitFunction() {
   var aggregateFunction = jQuery("#aggregatefunction").val();
   var aggregateFunctionField = jQuery("#aggregatefunctionfield").val();
@@ -112,33 +130,33 @@ function fSubmitFunction() {
 <div id="addGroup" style="display:none"><br>
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_chart" value="1" />
-  						            <select name="internalfieldname" id="groupselect" onchange="fSubmitGroup();">
-										  <option value="" selected>-- please choose one --</option>
-							              #foreach($reportField in $report.getReportFields())
-												#set($baseField = $reportField.getBaseField())
-												#set($category = $baseField.getFieldCategory())
-								                #if ($category == "RELATION") ## added to show display field name for relation fields
-								                  	<option value="$reportField.getInternalFieldName()">$reportField.getBaseField().getRelatedTable().getTableName(): $reportField.getBaseField().getDisplayField()</option>
-								                #else
-							              			#if(!($baseField.equals($baseField.getTableContainingField().getPrimaryKey())))
-														## Dont't allow grouping by text without lookups
-														## unless the field is from a different table.
-														## Don't allow files in any situation
-														#if(!( (($category == "TEXT") && ($baseField.usesLookup() == false) && ($baseField.getTableContainingField().equals($report.getParentTable()))) || ($category =="FILE") ))
-															#if($category == "DATE")
-																<option value="$reportField.getInternalFieldName()_year">$reportField - year</option>
-																<option value="$reportField.getInternalFieldName()_quarter">$reportField - quarter</option>
-																<option value="$reportField.getInternalFieldName()_month">$reportField - month</option>
-																<option value="$reportField.getInternalFieldName()_day">$reportField - day</option>
-															#else
-																<option value="$reportField.getInternalFieldName()">$reportField</option>
-															#end
-														#end
-													#end
-								                #end
-							              #end
-					            	</select>
-									<!-- <input type="submit" value="add group"> -->
+        <select name="internalfieldname" id="groupselect" onchange="fSubmitGroup();">
+	  <option value="" selected>-- please choose one --</option>
+          #foreach($reportField in $report.getReportFields())
+			#set($baseField = $reportField.getBaseField())
+			#set($category = $baseField.getFieldCategory())
+              #if ($category == "RELATION") ## added to show display field name for relation fields
+                	<option value="$reportField.getInternalFieldName()">$reportField.getBaseField().getRelatedTable().getTableName(): $reportField.getBaseField().getDisplayField()</option>
+              #else
+          			#if(!($baseField.equals($baseField.getTableContainingField().getPrimaryKey())))
+					## Dont't allow grouping by text without lookups
+					## unless the field is from a different table.
+					## Don't allow files in any situation
+					#if(!( (($category == "TEXT") && ($baseField.usesLookup() == false) && ($baseField.getTableContainingField().equals($report.getParentTable()))) || ($category =="FILE") ))
+						#if($category == "DATE")
+							<option value="$reportField.getInternalFieldName()_year">$reportField - year</option>
+							<option value="$reportField.getInternalFieldName()_quarter">$reportField - quarter</option>
+							<option value="$reportField.getInternalFieldName()_month">$reportField - month</option>
+							<option value="$reportField.getInternalFieldName()_day">$reportField - day</option>
+						#else
+							<option value="$reportField.getInternalFieldName()">$reportField</option>
+						#end
+					#end
+				#end
+              #end
+          #end
+    	</select>
+<!-- <input type="submit" value="add group"> -->
 </div>
 </form>
 <br>
@@ -155,79 +173,82 @@ function fSubmitFunction() {
 #end
 <a href="#" onclick="fShowAddAgg();" id="addAggLink">add...</a>
 <div id="addAgg" style="display:none"><br>
-					            	<input type="hidden" name="return" value="$return_template" />
-						            <input type="hidden" name="add_function_to_chart" value="1" />
-						            <select name="function" id="aggregatefunction" onchange="fSubmitFunction();">
-										<option value="" selected>-- please choose a function --</option>
-						              	#foreach($function in $chart.getPossibleFunctionTypes())
-							              	  <option value="$function.toString()">$function.getLabel()</option>
-							            #end
-						            </select> 
-									<select name="internalfieldname" id="aggregatefunctionfield" onchange="fSubmitFunction()">
-										  <option value="" selected>-- please choose a field --</option>
-							              #foreach($reportField in $report.getReportFields())
-							              	#set($baseField = $reportField.getBaseField())
-							              	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
-							                  <option value="$reportField.getInternalFieldName()">each '$baseField.getTableContainingField()' record</option>
-											#else
-							                  <option value="$reportField.getInternalFieldName()">$reportField.getFieldName()</option>
-							                #end
-							              #end
-						            </select>
-									<!-- <input type="submit" value="add calculation"> -->
+        	<input type="hidden" name="return" value="$return_template" />
+          <input type="hidden" name="add_function_to_chart" value="1" />
+          <select name="function" id="aggregatefunction" onchange="fSubmitFunction();">
+			<option value="" selected>-- please choose a function --</option>
+            	#foreach($function in $chart.getPossibleFunctionTypes())
+              	  <option value="$function.toString()">$function.getLabel()</option>
+            #end
+          </select> 
+		<select name="internalfieldname" id="aggregatefunctionfield" onchange="fSubmitFunction()">
+			  <option value="" selected>-- please choose a field --</option>
+              #foreach($reportField in $report.getReportFields())
+              	#set($baseField = $reportField.getBaseField())
+              	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
+                  <option value="$reportField.getInternalFieldName()">each '$baseField.getTableContainingField()' record</option>
+				#else
+                  <option value="$reportField.getInternalFieldName()">$reportField.getFieldName()</option>
+                #end
+              #end
+          </select>
+		<!-- <input type="submit" value="add calculation"> -->
 </div>
 </form><br>
-#set($dateReportFields = [])
-#foreach($reportField in $report.getReportFields())
-  #if($reportField.getBaseField().getDbType() == "TIMESTAMP")
-	#set($temp = $dateReportFields.add($reportField))
-  #end
-#end
-#if($dateReportFields.size() > 0)
-  Date range: 
 #set($currentFilterReportField = $defaultChart.getFilterReportField())
-<form name="setfilterfield" method="post" action="AppController.servlet">
-  <input type="hidden" name="return" value="$return_template" />
-  <input type="hidden" name="set_chart_filter_field" value="1" />
-  <select name="internalfieldname" onchange="document.setfilterfield.submit();">
-	<option value="">-- please choose a field --</option>
-	#foreach($dateReportField in $dateReportFields)
-      <option value="$dateReportField.getInternalFieldName()" #if($dateReportField.equals($currentFilterReportField)) selected #end>$dateReportField</option>
-	#end
-  </select>
-</form> 
 #set($currentChartFilter = $defaultChart.getChartFilter())
-<form name="setfilter" method="post" action="AppController.servlet">
-  <input type="hidden" name="return" value="$return_template" />
-  <input type="hidden" name="set_chart_filter" value="1" />
-  <select name="summaryfilter" onchange="document.setfilter.submit();">
-	<option value="">-- please choose a filter --</option>
-    <option value="LAST_30_DAYS" #if($currentChartFilter == "LAST_30_DAYS") selected #end>Last 30 days</option>
-    <option value="LAST_90_DAYS" #if($currentChartFilter == "LAST_90_DAYS") selected #end>Last 90 days</option>
-    <option value="THIS_YEAR" #if($currentChartFilter == "THIS_YEAR") selected #end>This year</option>
-    <option value="YEAR_ON_YEAR" #if($currentChartFilter == "YEAR_ON_YEAR") selected #end>Year on year</option>
-  </select>
-</form><br>
-#end
-<form name="setlimit" method="post" action="AppController.servlet">
-  #set($rangeDirection = $defaultChart.getRangeDirection())
-  #set($rangePercent = $defaultChart.getRangePercent())
-  <input type="hidden" name="return" value="$return_template" />
-  <input type="hidden" name="set_chart_range" value="1" />
-  Show 
-  <input type="radio" name="rangedirection" value="true" #if($rangeDirection) checked #end> highest 
-  <input type="radio" name="rangedirection" value="false" #if(!$rangeDirection) checked #end> lowest 
-  <input type="number" name="rangepercent" value="$rangePercent"> % of results
-  <input type="submit" name="submit" value="Set limit">
-</form><br>
-<form name="savechart">
-	Choose title: 
-	#set($title = $defaultChart.getTitle())
-	<input type="text" name="summarytitle" #if($title && $title != "") value="$title" #end />
-	<input type="hidden" name="return" value="$return_template" />
-	<input type="hidden" name="save_chart" value="true" />
-	<input type="submit" value="save chart" />
-</form>
+#if(($aggregateFunctions.size() >0) || $currentFilterReportField || $currentChartFilter)
+  ## display advanced options
+  #set($dateReportFields = [])
+  #foreach($reportField in $report.getReportFields())
+    #if($reportField.getBaseField().getDbType() == "TIMESTAMP")
+  	#set($temp = $dateReportFields.add($reportField))
+    #end
+  #end
+  #if($dateReportFields.size() > 0)
+    Date range: 
+  <form name="setfilterfield" method="post" action="AppController.servlet">
+    <input type="hidden" name="return" value="$return_template" />
+    <input type="hidden" name="set_chart_filter_field" value="1" />
+    <select name="internalfieldname" onchange="document.setfilterfield.submit();">
+  	<option value="">-- please choose a field --</option>
+  	#foreach($dateReportField in $dateReportFields)
+      <option value="$dateReportField.getInternalFieldName()" #if($dateReportField.equals($currentFilterReportField)) selected #end>$dateReportField</option>
+  	#end
+    </select>
+  </form> 
+  <form name="setfilter" method="post" action="AppController.servlet">
+    <input type="hidden" name="return" value="$return_template" />
+    <input type="hidden" name="set_chart_filter" value="1" />
+    <select name="summaryfilter" onchange="document.setfilter.submit();">
+  	<option value="">-- please choose a filter --</option>
+      <option value="LAST_30_DAYS" #if($currentChartFilter == "LAST_30_DAYS") selected #end>Last 30 days</option>
+      <option value="LAST_90_DAYS" #if($currentChartFilter == "LAST_90_DAYS") selected #end>Last 90 days</option>
+      <option value="THIS_YEAR" #if($currentChartFilter == "THIS_YEAR") selected #end>This year</option>
+      <option value="YEAR_ON_YEAR" #if($currentChartFilter == "YEAR_ON_YEAR") selected #end>Year on year</option>
+    </select>
+  </form><br>
+  #end
+  <form name="setlimit" method="post" action="AppController.servlet">
+    #set($rangeDirection = $defaultChart.getRangeDirection())
+    #set($rangePercent = $defaultChart.getRangePercent())
+    <input type="hidden" name="return" value="$return_template" />
+    <input type="hidden" name="set_chart_range" value="1" />
+    Show 
+    <input type="radio" name="rangedirection" value="true" #if($rangeDirection) checked #end> highest 
+    <input type="radio" name="rangedirection" value="false" #if(!$rangeDirection) checked #end> lowest 
+    <input type="number" name="rangepercent" value="$rangePercent"> % of results
+    <input type="submit" name="submit" value="Set limit">
+  </form><br>
+  <form name="savechart">
+  	Choose title: 
+  	#set($title = $defaultChart.getTitle())
+  	<input type="text" name="summarytitle" #if($title && $title != "") value="$title" #end />
+  	<input type="hidden" name="return" value="$return_template" />
+  	<input type="hidden" name="save_chart" value="true" />
+  	<input type="submit" value="save chart" />
+  </form>
+#end ## end advanced options display
 </div> ## End chart_controls div
 #end
 ## Display the default chart
@@ -237,5 +258,4 @@ function fSubmitFunction() {
 #if($mobile_device)<p>
 	#parse("gui/mobile/pane2_footer.vm")
 #end
-
 $viewTools.stopTimer("gui/reports_and_tables/tabs/summary")

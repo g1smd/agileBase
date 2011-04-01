@@ -54,6 +54,7 @@ import java.lang.StringBuffer;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import org.grlea.log.SimpleLogger;
 
@@ -1093,6 +1094,15 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		this.distinctFields = distinctFields;
 	}
 
+	public void setWordCloudField(ReportFieldInfo wordCloudField) {
+		this.wordCloudField = wordCloudField;
+	}
+	
+	@OneToOne
+	public ReportFieldInfo getWordCloudField() {
+		return this.wordCloudField;
+	}
+	
 	public void setCalendarSyncable(Boolean calendarSyncable) {
 		this.calendarSyncable = calendarSyncable;
 	}
@@ -1201,6 +1211,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private Set<ReportSortInfo> sorts = new HashSet<ReportSortInfo>();
 
 	private boolean calendarSyncable = false;
+	
+	private ReportFieldInfo wordCloudField = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(SimpleReportDefn.class);
 }
