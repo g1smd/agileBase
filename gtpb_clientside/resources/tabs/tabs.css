@@ -241,6 +241,14 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
   margin: 0.5em;
 }
 
+/* Match chart headings */
+#wordcloud h1 {
+  font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,Helvetica,sans-serif;
+  color: #3E576F;
+  font-size: 16px;
+  background-color: #4f4f4f;
+}
+
 #wordcloud_controls {
   float: right;
 }
