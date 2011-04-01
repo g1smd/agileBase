@@ -235,6 +235,7 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
 #wordcloud {
   text-align: center;
   border: 5px dotted #cccccc;
+  -moz-border-radius: 1em;
 }
 
 #wordcloud_controls {
