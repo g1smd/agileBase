@@ -70,7 +70,7 @@ public class WordCloud implements WordCloudInfo {
 		}
 		double mean = stats.getMean();
 		double stdDev = stats.getStandardDeviation();
-		long minFreq = 32000;
+		long minFreq = Long.MAX_VALUE;
 		long maxFreq = 0;
 		// Remove outliers
 		freqIt = frequencies.valuesIterator();
@@ -123,6 +123,7 @@ public class WordCloud implements WordCloudInfo {
 				lowerLimit += step;
 			}
 			// The new min. freq. may have changed
+			minFreq = Long.MAX_VALUE;
 			freqIt = frequencies.valuesIterator();
 			while (freqIt.hasNext()) {
 				wordFreq = frequencies.getCount(freqIt.next());
