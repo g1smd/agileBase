@@ -68,6 +68,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 <div id="wordcloud_controls">
   #set($wordCloudField = $report.getWordCloudField())
   <form name="wordcloud" method="post" action="AppController.servlet">
+    <input type="hidden" name="set_word_cloud_field" value="true">
+    <input type="hidden" name="return" value="$return_template">
     Generate a cloud from text in 
     <select name="internalfieldname" onchange="fSubmitWordCloud();">
       <option value="" #if(!$wordCloudField) selected #end>--please select a field--</option>
