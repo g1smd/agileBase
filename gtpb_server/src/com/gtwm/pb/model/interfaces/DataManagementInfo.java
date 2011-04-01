@@ -77,8 +77,8 @@ public interface DataManagementInfo {
 	 * String of words. Useful for generating tag clouds with. Text will be
 	 * returned lower case
 	 */
-	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> fields, int rowLimit)
-			throws SQLException;
+	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> fields,
+			Map<BaseField, String> reportFilterValues, int rowLimit) throws SQLException, CantDoThatException;
 
 	/**
 	 * Return a calendar JSON feed for the data in a report, suitable for use
@@ -149,9 +149,9 @@ public interface DataManagementInfo {
 	 * @return The report summary data, or null if the summary isn't valid, e.g.
 	 *         doesn't contain an aggregate function
 	 */
-	public ChartDataInfo getChartData(CompanyInfo company,
-			ChartInfo reportSummaryDefn, Map<BaseField, String> reportFilterValues,
-			boolean alwaysUseCache) throws SQLException, CantDoThatException;
+	public ChartDataInfo getChartData(CompanyInfo company, ChartInfo reportSummaryDefn,
+			Map<BaseField, String> reportFilterValues, boolean alwaysUseCache) throws SQLException,
+			CantDoThatException;
 
 	/**
 	 * Get a single row as a map of field name => value, for editing or viewing
@@ -215,12 +215,14 @@ public interface DataManagementInfo {
 			LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord, int rowId,
 			SessionDataInfo sessionData, List<FileItem> multipartItems)
 			throws InputRecordException, ObjectNotFoundException, SQLException,
-			CodingErrorException, DisallowedException, CantDoThatException, MissingParametersException;
+			CodingErrorException, DisallowedException, CantDoThatException,
+			MissingParametersException;
 
 	public void cloneRecord(HttpServletRequest request, TableInfo table, int rowId,
 			SessionDataInfo sessionData, List<FileItem> multipartItems)
 			throws ObjectNotFoundException, SQLException, CantDoThatException,
-			CodingErrorException, InputRecordException, DisallowedException, MissingParametersException;
+			CodingErrorException, InputRecordException, DisallowedException,
+			MissingParametersException;
 
 	/**
 	 * Lock all unlocked table records in the current session table
@@ -333,7 +335,8 @@ public interface DataManagementInfo {
 	public int globalEdit(HttpServletRequest request, TableInfo table,
 			LinkedHashMap<BaseField, BaseValue> dataToEdit, SessionDataInfo sessionData,
 			List<FileItem> multipartItems) throws InputRecordException, ObjectNotFoundException,
-			SQLException, CodingErrorException, CantDoThatException, DisallowedException, MissingParametersException;
+			SQLException, CodingErrorException, CantDoThatException, DisallowedException,
+			MissingParametersException;
 
 	/**
 	 * Randomise data in a table
@@ -341,7 +344,8 @@ public interface DataManagementInfo {
 	public void anonymiseData(TableInfo table, HttpServletRequest request,
 			SessionDataInfo sessionData, Map<BaseField, FieldContentType> fieldContentTypes,
 			List<FileItem> multipartItems) throws SQLException, CodingErrorException,
-			CantDoThatException, InputRecordException, ObjectNotFoundException, DisallowedException, MissingParametersException;
+			CantDoThatException, InputRecordException, ObjectNotFoundException,
+			DisallowedException, MissingParametersException;
 
 	/**
 	 * Given an HTTP request, find the company owning the logged in user and

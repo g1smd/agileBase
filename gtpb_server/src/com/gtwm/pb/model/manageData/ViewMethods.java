@@ -284,7 +284,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return this.toolbarPluginName;
 	}
 
-	public SortedSet<CompanyInfo> getCompanies() throws DisallowedException, ObjectNotFoundException {
+	public SortedSet<CompanyInfo> getCompanies() throws DisallowedException,
+			ObjectNotFoundException {
 		return this.databaseDefn.getAuthManager().getCompanies(this.request);
 	}
 
@@ -396,7 +397,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return AppProperties.applicationVersion;
 	}
 
-	public List<RelationField> getUnchosenRelationFields() throws DisallowedException, ObjectNotFoundException {
+	public List<RelationField> getUnchosenRelationFields() throws DisallowedException,
+			ObjectNotFoundException {
 		return this.getUnchosenRelationFields(this.sessionData.getTable());
 	}
 
@@ -404,7 +406,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 			throws DisallowedException, ObjectNotFoundException {
 		if (!this.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.VIEW_TABLE_DATA, table)) {
-			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA, table);
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
+					table);
 		}
 		List<RelationField> unchosenRelationFields = new LinkedList<RelationField>();
 		for (BaseField field : table.getFields()) {
@@ -427,7 +430,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 			ObjectNotFoundException, SQLException, CantDoThatException, CodingErrorException {
 		if (!this.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.VIEW_TABLE_DATA, table)) {
-			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA, table);
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
+					table);
 		}
 		int rowId = this.sessionData.getRowId(table);
 		return this.getTableDataRow(table, rowId);
@@ -438,7 +442,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 			CodingErrorException {
 		if (!this.getAuthenticator().loggedInUserAllowedTo(this.request,
 				PrivilegeType.VIEW_TABLE_DATA, table)) {
-			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA, table);
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
+					table);
 		}
 		// If there was no error submitting the data
 		if (this.ex == null) {
@@ -451,7 +456,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public Set<Integer> getRelatedRowIds(int masterRowId, TableInfo relatedTable)
-			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException, ObjectNotFoundException {
+			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException,
+			ObjectNotFoundException {
 		BaseReportInfo sessionReport = this.sessionData.getReport();
 		if (!this.getAuthenticator().loggedInUserAllowedToViewReport(this.request, sessionReport)) {
 			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
@@ -543,14 +549,16 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return reportDataRows;
 	}
 
-	public String getReportCalendarJSON() throws CodingErrorException,
-			CantDoThatException, MissingParametersException, DisallowedException,
-			ObjectNotFoundException, SQLException, JSONException {
-		BaseReportInfo report = ServletUtilMethods.getReportForRequest(this.sessionData, this.request, this.databaseDefn, true);
+	public String getReportCalendarJSON() throws CodingErrorException, CantDoThatException,
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
+			JSONException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(this.sessionData,
+				this.request, this.databaseDefn, true);
 		// Check privileges for all tables from which data is displayed from,
 		// throw DisallowedException if privileges not sufficient
 		this.checkReportViewPrivileges(report);
-		Map<BaseField, String> filterValues = new HashMap<BaseField, String>(this.sessionData.getReportFilterValues());
+		Map<BaseField, String> filterValues = new HashMap<BaseField, String>(
+				this.sessionData.getReportFilterValues());
 		// Add start and end time filters
 		ReportFieldInfo eventDateReportField = report.getCalendarField();
 		if (eventDateReportField == null) {
@@ -565,16 +573,18 @@ public final class ViewMethods implements ViewMethodsInfo {
 			startEpoch = Long.valueOf(startString);
 			String endString = this.request.getParameter("end");
 			if (endString == null) {
-				throw new MissingParametersException("calendar event start parameter provided but not end");
+				throw new MissingParametersException(
+						"calendar event start parameter provided but not end");
 			}
 			endEpoch = Long.valueOf(endString);
 			String eventDateFilterString = ">" + startString + " AND <" + endString;
 			filterValues.put(eventDateField, eventDateFilterString);
 		}
 		AppUserInfo user = this.getLoggedInUser();
-		return this.databaseDefn.getDataManagement().getReportCalendarJSON(user, report, filterValues, startEpoch, endEpoch);
+		return this.databaseDefn.getDataManagement().getReportCalendarJSON(user, report,
+				filterValues, startEpoch, endEpoch);
 	}
-	
+
 	/**
 	 * @see WikiManagementInfo#getWikiRecordDataRows(CompanyInfo, String,
 	 *      String)
@@ -598,7 +608,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 		if (!this.getAuthenticator().loggedInUserAllowedToViewReport(this.request, report)) {
 			logger.warn("Report " + report + " is not viewable by user "
 					+ this.request.getRemoteUser());
-			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA, report.getParentTable());
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
+					report.getParentTable());
 		}
 	}
 
@@ -640,20 +651,18 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return this.getChartData(report.getChart());
 	}
 
-	public ChartDataInfo getChartData(ChartInfo reportSummary)
-			throws DisallowedException, SQLException, ObjectNotFoundException,
-			CodingErrorException, CantDoThatException {
+	public ChartDataInfo getChartData(ChartInfo reportSummary) throws DisallowedException,
+			SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		return this.getChartData(reportSummary, false);
 	}
 
-	public ChartDataInfo getCachedChartData(ChartInfo reportSummary)
-			throws DisallowedException, ObjectNotFoundException, CodingErrorException,
-			CantDoThatException, SQLException {
+	public ChartDataInfo getCachedChartData(ChartInfo reportSummary) throws DisallowedException,
+			ObjectNotFoundException, CodingErrorException, CantDoThatException, SQLException {
 		return this.getChartData(reportSummary, true);
 	}
 
-	private ChartDataInfo getChartData(ChartInfo reportSummary,
-			boolean useCache) throws DisallowedException, SQLException, ObjectNotFoundException,
+	private ChartDataInfo getChartData(ChartInfo reportSummary, boolean useCache)
+			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException {
 		// Check privileges for all tables from which data in the report is
 		// displayed from, throw
@@ -673,33 +682,30 @@ public final class ViewMethods implements ViewMethodsInfo {
 			ObjectNotFoundException, CantDoThatException {
 		BaseReportInfo report = reportField.getParentReport();
 		this.checkReportViewPrivileges(report);
-		ChartInfo reportSummary = new ChartDefn(report, reportField.getFieldName(),
-				false);
+		ChartInfo reportSummary = new ChartDefn(report, reportField.getFieldName(), false);
 		BaseField field = reportField.getBaseField();
 		FieldCategory fieldCategory = field.getFieldCategory();
 		if (fieldCategory.equals(FieldCategory.NUMBER)) {
-			reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.SUM,
-					reportField));
-			reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.AVG,
-					reportField));
+			reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.SUM, reportField));
+			reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.AVG, reportField));
 		} else if (fieldCategory.equals(FieldCategory.TEXT)) {
 			if (((TextField) field).usesLookup()) {
 				reportSummary.addGrouping(reportField, null);
-				reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT,
-						report.getReportField(report.getParentTable().getPrimaryKey()
+				reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
+						.getReportField(report.getParentTable().getPrimaryKey()
 								.getInternalFieldName())));
 			} else if (!field.getTableContainingField().equals(report.getParentTable())) {
 				reportSummary.addGrouping(reportField, null);
-				reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT,
-						report.getReportField(report.getParentTable().getPrimaryKey()
+				reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
+						.getReportField(report.getParentTable().getPrimaryKey()
 								.getInternalFieldName())));
 			}
 		}
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
-		return this.databaseDefn.getDataManagement().getChartData(company, reportSummary,
-				filters, false);
+		return this.databaseDefn.getDataManagement().getChartData(company, reportSummary, filters,
+				false);
 	}
 
 	public SortedSet<WordInfo> getReportWordCloud(int minWeight, int maxWeight, int maxTags)
@@ -715,9 +721,9 @@ public final class ViewMethods implements ViewMethodsInfo {
 				maxTags);
 	}
 
-	public SortedSet<WordInfo> getReportWordCloud(BaseReportInfo report, ReportFieldInfo reportField,
-			Set<String> stopWords, int minWeight, int maxWeight, int maxTags)
-			throws ObjectNotFoundException, DisallowedException, CodingErrorException,
+	public SortedSet<WordInfo> getReportWordCloud(BaseReportInfo report,
+			ReportFieldInfo reportField, Set<String> stopWords, int minWeight, int maxWeight,
+			int maxTags) throws ObjectNotFoundException, DisallowedException, CodingErrorException,
 			CantDoThatException, SQLException {
 		Set<BaseField> fields = new HashSet<BaseField>();
 		if (reportField.getBaseField().equals(report.getParentTable().getPrimaryKey())) {
@@ -770,7 +776,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			return new TreeSet<WordInfo>();
 		}
 		String conglomoratedText = this.databaseDefn.getDataManagement().getReportDataText(report,
-				textFields, 1000000);
+				textFields, this.sessionData.getReportFilterValues(), 1000000);
 		WordCloud cloud = new WordCloud(conglomoratedText, minWeight, maxWeight, maxTags, stopWords);
 		return cloud.getWords();
 	}
@@ -825,11 +831,13 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return getAuthManager().getRoles(this.request);
 	}
 
-	public SortedSet<AppRoleInfo> adminGetRolesForUser(AppUserInfo user) throws DisallowedException, ObjectNotFoundException {
+	public SortedSet<AppRoleInfo> adminGetRolesForUser(AppUserInfo user)
+			throws DisallowedException, ObjectNotFoundException {
 		return getAuthManager().getRolesForUser(this.request, user);
 	}
 
-	public EnumSet<PrivilegeType> adminGetPrivilegeTypes() throws DisallowedException, ObjectNotFoundException {
+	public EnumSet<PrivilegeType> adminGetPrivilegeTypes() throws DisallowedException,
+			ObjectNotFoundException {
 		return getAuthManager().getPrivilegeTypes(this.request);
 	}
 
