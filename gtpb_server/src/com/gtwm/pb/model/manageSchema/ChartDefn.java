@@ -103,8 +103,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 
 	public synchronized void addGrouping(ReportFieldInfo groupByReportField,
 			SummaryGroupingModifier groupingModifier) {
-		ChartGroupingInfo grouping = new ChartGrouping(groupByReportField,
-				groupingModifier);
+		ChartGroupingInfo grouping = new ChartGrouping(groupByReportField, groupingModifier);
 		if (this.persist) {
 			// Need a save here because no link from grouping back to report
 			// summary
@@ -129,16 +128,14 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 		return null;
 	}
 
-	public synchronized void addFunction(ChartAggregateInfo addedAggFn)
-			throws CantDoThatException {
+	public synchronized void addFunction(ChartAggregateInfo addedAggFn) throws CantDoThatException {
 		this.getAggregateFunctionsDirect().add(addedAggFn);
 	}
 
-	public synchronized Set<ChartAggregateInfo> removeFunctions(
-			ReportFieldInfo reportFieldToRemove) {
+	public synchronized Set<ChartAggregateInfo> removeFunctions(ReportFieldInfo reportFieldToRemove) {
 		Set<ChartAggregateInfo> removedFunctions = new HashSet<ChartAggregateInfo>();
-		for (Iterator<ChartAggregateInfo> iterator = this.getAggregateFunctionsDirect()
-				.iterator(); iterator.hasNext();) {
+		for (Iterator<ChartAggregateInfo> iterator = this.getAggregateFunctionsDirect().iterator(); iterator
+				.hasNext();) {
 			ChartAggregateInfo aggregateFunction = iterator.next();
 			if (aggregateFunction.getReportField().equals(reportFieldToRemove)) {
 				iterator.remove();
@@ -159,8 +156,8 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 
 	public ChartAggregateInfo removeFunction(String internalAggregateName)
 			throws ObjectNotFoundException {
-		for (Iterator<ChartAggregateInfo> iterator = this.getAggregateFunctionsDirect()
-				.iterator(); iterator.hasNext();) {
+		for (Iterator<ChartAggregateInfo> iterator = this.getAggregateFunctionsDirect().iterator(); iterator
+				.hasNext();) {
 			ChartAggregateInfo aggregateFunction = iterator.next();
 			if (aggregateFunction.getInternalAggregateName().equals(internalAggregateName)) {
 				iterator.remove();
@@ -290,15 +287,19 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 		}
 		int rangePercent = this.getRangePercent();
 		if (rangePercent < 100) {
-			//TODO: perhaps a window function cume_dist or percentage_rank would be faster than a subselect
+			// TODO: perhaps a window function cume_dist or percentage_rank
+			// would be faster than a subselect
 			double rangeFraction = ((double) rangePercent) / 100;
+			String internalReportName =  this.getReport().getInternalReportName();
 			sqlForSummary += " LIMIT (";
 			sqlForSummary += " SELECT (count(*) * " + rangeFraction + ")::integer";
-			sqlForSummary += " FROM " + this.getReport().getInternalReportName();
-			if(groupings.size() > 0) {
-				sqlForSummary += " GROUP BY " + groupByFieldsCsv;
+			if (groupings.size() > 0) {
+				sqlForSummary += " FROM (SELECT " + groupByFieldsCsv + " FROM " + internalReportName;
+				sqlForSummary += " GROUP BY " + groupByFieldsCsv + ")";
+			} else {
+				sqlForSummary += " FROM " + internalReportName;
 			}
-			sqlForSummary += ")";
+			sqlForSummary += ")"; // close LIMIT
 		}
 		PreparedStatement statement = conn.prepareStatement(sqlForSummary);
 		if (validSummary) {
