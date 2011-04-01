@@ -290,6 +290,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 		}
 		int rangePercent = this.getRangePercent();
 		if (rangePercent < 100) {
+			//TODO: perhaps a window function cume_dist or percentage_rank would be faster than a subselect
 			double rangeFraction = ((double) rangePercent) / 100;
 			sqlForSummary += " LIMIT (";
 			sqlForSummary += " SELECT (count(*) * " + rangeFraction + ")::integer";

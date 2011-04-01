@@ -49,6 +49,17 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     #parse('gui/reports_and_tables/tabs/summary_chart.vm')
   #end
 #end
+## And a word cloud
+#set($wordCloudField = $report.getWordCloudField())
+#if($wordCloudField)
+  #set($stopWords = $viewTools.getNewStringSet())
+  ## min font size, max font size, max number of tags
+  #set($wordCloud = $view.getReportWordCloud($report, $wordCloudField, $stopWords, 10,30,40))
+  #foreach($word in $wordCloud)
+    #set($colour = ${word.getWeight()} * 9 - 50)
+    <a href="#" style="font-size:${tag.getWeight()}pt; color:rgb($colour, $colour, $colour)">&nbsp;${word}&nbsp;</a>
+  #end
+#end
 </div>
 ## Reset to the default report summary - the chart being edited
 #set($chart = "")
@@ -66,7 +77,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 </tr></table>
 <div class="chart_controls">
 <div id="wordcloud_controls">
-  #set($wordCloudField = $report.getWordCloudField())
   <form name="wordcloud" method="post" action="AppController.servlet">
     <input type="hidden" name="set_word_cloud_field" value="true">
     <input type="hidden" name="return" value="$return_template">

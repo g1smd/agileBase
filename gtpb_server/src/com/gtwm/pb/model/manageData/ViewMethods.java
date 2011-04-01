@@ -720,7 +720,12 @@ public final class ViewMethods implements ViewMethodsInfo {
 			throws ObjectNotFoundException, DisallowedException, CodingErrorException,
 			CantDoThatException, SQLException {
 		Set<BaseField> fields = new HashSet<BaseField>();
-		fields.add(reportField.getBaseField());
+		if (reportField.getBaseField().equals(report.getParentTable().getPrimaryKey())) {
+			// Primary key means all fields in the report
+			fields.addAll(report.getReportBaseFields());
+		} else {
+			fields.add(reportField.getBaseField());
+		}
 		return this.getReportWordCloud(report, fields, stopWords, minWeight, maxWeight, maxTags);
 	}
 
