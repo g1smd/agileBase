@@ -52,6 +52,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 ## And a word cloud
 #set($wordCloudField = $report.getWordCloudField())
 #if($wordCloudField)
+  <div id="wordcloud">
   #set($stopWords = $viewTools.getNewStringSet())
   ## min font size, max font size, max number of tags
   #set($minSize = 7)
@@ -66,6 +67,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     ##set($colour = ${word.getWeight()} * 9 - 50)
     <span style="font-size:${word.getWeight()}pt; color:hsl($hue, ${saturation}%, ${lightness}%)">&nbsp;${word}&nbsp;</span>
   #end
+  </div>
 #end
 </div>
 ## Reset to the default report summary - the chart being edited

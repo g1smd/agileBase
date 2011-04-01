@@ -232,6 +232,11 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
 
 .mandated {color: red}
 
+#wordcloud {
+  text-align: center;
+  border: 5px dotted #cccccc;
+}
+
 #wordcloud_controls {
   float: right;
 }
