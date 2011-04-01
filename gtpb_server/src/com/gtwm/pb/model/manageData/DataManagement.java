@@ -1704,20 +1704,34 @@ public final class DataManagement implements DataManagementInfo {
 		return reportData;
 	}
 
-	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> textFields,
-			int rowLimit) throws SQLException {
-		String SQLCode = "SELECT ";
-		for (BaseField textField : textFields) {
-			SQLCode += "lower(" + textField.getInternalFieldName() + "), ";
-		}
-		SQLCode = SQLCode.substring(0, SQLCode.length() - 2);
-		SQLCode += " FROM " + reportDefn.getInternalReportName();
-		SQLCode += " LIMIT " + rowLimit;
+	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> textFields, Map<BaseField, String> reportFilterValues,
+			int rowLimit) throws SQLException, CantDoThatException {
 		StringBuilder conglomoratedText = new StringBuilder(8192);
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
+			ReportDataInfo reportData = new ReportData(conn, reportDefn, false, false);
+			Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
+					reportFilterValues, false);
+			String filterArgs = null;
+			List<ReportQuickFilterInfo> filtersUsed = null;
+			// TODO: there is only one WHERE clause - there should be an improvement
+			// over a loop
+			for (Map.Entry<String, List<ReportQuickFilterInfo>> whereClause : whereClauseMap.entrySet()) {
+				filterArgs = whereClause.getKey();
+				filtersUsed = whereClause.getValue();
+			}
+			String SQLCode = "SELECT ";
+			for (BaseField textField : textFields) {
+				SQLCode += "lower(" + textField.getInternalFieldName() + "), ";
+			}
+			SQLCode = SQLCode.substring(0, SQLCode.length() - 2);
+			SQLCode += " FROM " + reportDefn.getInternalReportName();
+			if (filterArgs.length() > 0) {
+				SQLCode += " WHERE " + filterArgs;
+			}
+			SQLCode += " LIMIT " + rowLimit;
 			Statement statement = conn.createStatement();
 			ResultSet results = statement.executeQuery(SQLCode);
 			int colNum = 0;
@@ -1792,9 +1806,9 @@ public final class DataManagement implements DataManagementInfo {
 		return displayLookup;
 	}
 
-	public ChartDataInfo getChartData(CompanyInfo company,
-			ChartInfo reportSummary, Map<BaseField, String> reportFilterValues,
-			boolean alwaysUseCache) throws SQLException, CantDoThatException {
+	public ChartDataInfo getChartData(CompanyInfo company, ChartInfo reportSummary,
+			Map<BaseField, String> reportFilterValues, boolean alwaysUseCache) throws SQLException,
+			CantDoThatException {
 		boolean needSummary = (reportSummary.getAggregateFunctions().size() > 0);
 		if (!needSummary) {
 			return null;
