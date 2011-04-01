@@ -60,7 +60,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     #set($saturation = ${word.getWeight()} * (100 / 23))
     #set($lightness = ${word.getWeight()} * (60 / 23))
     ##set($colour = ${word.getWeight()} * 9 - 50)
-    <span style="font-size:${word.getWeight()}pt; color:hsl($hue, $saturation, $lightness)">&nbsp;${word}&nbsp;</span>
+    <span style="font-size:${word.getWeight()}pt; color:hsl($hue, ${saturation}%, ${lightness}%)">&nbsp;${word}&nbsp;</span>
   #end
 #end
 </div>
