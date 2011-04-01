@@ -293,7 +293,11 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 			double rangeFraction = ((double) rangePercent) / 100;
 			sqlForSummary += " LIMIT (";
 			sqlForSummary += " SELECT (count(*) * " + rangeFraction + ")::integer";
-			sqlForSummary += " FROM " + this.getReport().getInternalReportName() + ")";
+			sqlForSummary += " FROM " + this.getReport().getInternalReportName();
+			if(groupings.size() > 0) {
+				sqlForSummary += " GROUP BY " + groupByFieldsCsv;
+			}
+			sqlForSummary += ")";
 		}
 		PreparedStatement statement = conn.prepareStatement(sqlForSummary);
 		if (validSummary) {
