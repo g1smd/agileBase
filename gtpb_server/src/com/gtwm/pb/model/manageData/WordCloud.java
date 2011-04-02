@@ -99,6 +99,7 @@ public class WordCloud implements WordCloudInfo {
 			// For a large input set, remove high and low outliers.
 			// For a smaller set, just high freq. outliers
 			if ((stemFreq > upperLimit) || ((stemFreq < lowerLimit) && removeLowOutliers)) {
+				logger.debug("Removing outlier " + wordStem + ", " + stemFreq);
 				freqIt.remove();
 			} else {
 				numWords++;
