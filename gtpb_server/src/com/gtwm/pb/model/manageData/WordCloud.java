@@ -85,7 +85,7 @@ public class WordCloud implements WordCloudInfo {
 		long maxFreq = 0;
 		// Remove outliers
 		freqIt = frequencies.valuesIterator();
-		int upperLimit = (int) (mean + (stdDev * 4));
+		int upperLimit = (int) (mean + (stdDev * 10));
 		int lowerLimit = (int) (mean - stdDev);
 		if (lowerLimit < 2) {
 			lowerLimit = 2;
