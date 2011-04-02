@@ -66,7 +66,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     #set($hue = $normWeight * (360 / $range))
     #set($saturation = $normWeight * (80 / $range))
     #set($lightness = $normWeight * (60 / $range))
-    <span style="font-size:${word.getWeight()}pt; color:hsl($hue, ${saturation}%, ${lightness}%)">&nbsp;${word}&nbsp;</span>
+    <span title="$word.getSynonyms()" style="font-size:${word.getWeight()}pt; color:hsl($hue, ${saturation}%, ${lightness}%)">&nbsp;${word}&nbsp;</span>
   #end
   </div>
 #end
