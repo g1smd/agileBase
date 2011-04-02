@@ -38,6 +38,7 @@ public class Word implements WordInfo, Comparable<WordInfo> {
 		this.name = name;
 		this.weight = weight;
 		this.synonyms = synonyms;
+		this.synonyms.remove(name);
 	}
 
 	public String getName() {
