@@ -99,7 +99,10 @@ public class WordCloud implements WordCloudInfo {
 			// For a large input set, remove high and low outliers.
 			// For a smaller set, just high freq. outliers
 			if ((stemFreq > upperLimit) || ((stemFreq < lowerLimit) && removeLowOutliers)) {
-				logger.debug("Removing outlier " + wordStem + ", " + stemFreq);
+				if (stemFreq > upperLimit) {
+					logger.debug("Removing upper outlier " + wordStem + ", " + stemFreq + " > "
+							+ upperLimit);
+				}
 				freqIt.remove();
 			} else {
 				numWords++;
@@ -146,7 +149,9 @@ public class WordCloud implements WordCloudInfo {
 		// Scale and create tag objects
 		double scaleFactor;
 		if (maxFreq == minFreq) {
-			scaleFactor = (maxWeight - minWeight) / 4; // TODO: a realistic scale factor in this case
+			scaleFactor = (maxWeight - minWeight) / 4; // TODO: a realistic
+														// scale factor in this
+														// case
 		} else {
 			scaleFactor = new Double(maxWeight - minWeight) / new Double(maxFreq - minFreq);
 		}
@@ -162,7 +167,7 @@ public class WordCloud implements WordCloudInfo {
 				weight = (int) (Math.ceil(new Double(stemFreq - minFreq) * scaleFactor) + minWeight);
 			}
 			Set<WordInfo> origins = this.stemOriginMap.get(wordStem);
-			for(WordInfo origin : origins) {
+			for (WordInfo origin : origins) {
 				logger.debug("Origin of " + wordStem + ": " + origin + ", " + origin.getWeight());
 			}
 			String mostCommonOrigin = this.stemOriginMap.get(wordStem).first().getName();
