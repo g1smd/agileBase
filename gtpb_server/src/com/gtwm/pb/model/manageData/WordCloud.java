@@ -161,7 +161,10 @@ public class WordCloud implements WordCloudInfo {
 			} else {
 				weight = (int) (Math.ceil(new Double(stemFreq - minFreq) * scaleFactor) + minWeight);
 			}
-			logger.debug("Origins of " + wordStem + " are " + this.stemOriginMap.get(wordStem));
+			Set<WordInfo> origins = this.stemOriginMap.get(wordStem);
+			for(WordInfo origin : origins) {
+				logger.debug("Origin of " + wordStem + ": " + origin + ", " + origin.getWeight());
+			}
 			String mostCommonOrigin = this.stemOriginMap.get(wordStem).first().getName();
 			WordInfo word = new Word(mostCommonOrigin, weight);
 			this.words.add(word);
