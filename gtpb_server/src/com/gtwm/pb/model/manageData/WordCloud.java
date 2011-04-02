@@ -188,13 +188,18 @@ public class WordCloud implements WordCloudInfo {
 			this.stemOriginMap.put(stem, stemOrigins);
 		} else {
 			SortedSet<WordInfo> newStemOrigins = new TreeSet<WordInfo>(new WordWeightComparator());
+			boolean wordFound = false;
 			for (WordInfo stemOrigin : stemOrigins) {
 				if (stemOrigin.getName().equals(wordString)) {
 					WordInfo newStemOrigin = new Word(wordString, stemOrigin.getWeight() + 1);
 					newStemOrigins.add(newStemOrigin);
+					wordFound = true;
 				} else {
 					newStemOrigins.add(stemOrigin);
 				}
+			}
+			if (!wordFound) {
+				newStemOrigins.add(new Word(wordString, 1));
 			}
 			this.stemOriginMap.put(stem, newStemOrigins);
 		}
