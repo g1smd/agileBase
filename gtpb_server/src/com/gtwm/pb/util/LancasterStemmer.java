@@ -32,6 +32,8 @@ public class LancasterStemmer {
 	 * 
 	 * * Purpose: strips suffix off word and returns * stem using paice stemming
 	 * algorithm *
+	 * 
+	 * Note by Oliver: due to the local cache, this method is not thread safe
 	 ****************************************************************/
 	public String stripSuffixes(String word) {
 		// First, check cache
@@ -161,11 +163,11 @@ public class LancasterStemmer {
 								// ...minimal stem is 2 letters
 								ruleOk = -1;
 							} else {
-								// ruleok=1; as ruleok must alread be positive
+								// ruleok=1; as ruleok must already be positive
 								// to reach this stage
 							}
 						}
-						// if word start swith consonant...
+						// if word start with consonant...
 						else if ((xl < 2) | (xl < pfv)) {
 							ruleOk = -1;
 							// ...minimal stem is 3 letters...
@@ -238,7 +240,7 @@ public class LancasterStemmer {
 	 * 
 	 * * Receives: char ch
 	 * 
-	 * * Purpose: returns the relevnt array index for * specified char 'a' to
+	 * * Purpose: returns the relevant array index for * specified char 'a' to
 	 * 'z' *
 	 ****************************************************************/
 	private int charCode(char ch) {
@@ -310,11 +312,11 @@ public class LancasterStemmer {
 	private int[] ruleIndex = new int[26]; // index to above
 
 	/**
-	 * From
+	 * Copied from
 	 * http://www.comp.lancs.ac.uk/computing/research/stemming/paice/stemrules
 	 * .txt
 	 * 
-	 * with spaces removed
+	 * April 2011, with spaces removed
 	 */
 	private static final List<String> ruleTable = Arrays.asList("ai*2.{-ia>-ifintact}",
 			"a*1.{-a>-ifintact}", "bb1.{-bb>-b}", "city3s.{-ytic>-ys}", "ci2>{-ic>-}",
