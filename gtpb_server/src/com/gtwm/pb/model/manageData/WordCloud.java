@@ -100,7 +100,7 @@ public class WordCloud implements WordCloudInfo {
 			// For a smaller set, just high freq. outliers
 			if ((stemFreq > upperLimit) || ((stemFreq < lowerLimit) && removeLowOutliers)) {
 				if (stemFreq > upperLimit) {
-					logger.debug("Removing upper outlier " + wordStem + ", " + stemFreq + " > "
+					logger.debug("Removing upper outlier " + wordStem + "(" + this.stemOriginMap.get(wordStem) + "), " + stemFreq + " > "
 							+ upperLimit);
 				}
 				freqIt.remove();
