@@ -70,7 +70,11 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     #set($lightness = $normWeight * (60 / $range))
     #set($synonyms = $word.getSynonyms())
     #if(!$wordCloudTableField.equals($primaryKey))
-      <a target="pane_2" href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_filter_value=true&internalfieldname=$wordCloudTableField.getInternalFieldName()&fieldvalue=*${word}">
+      #set($filter = "*${word}")
+      #foreach($synonym in $synonyms)
+        #set($filter = "$filter OR *${synonym}")
+      #end
+      <a target="pane_2" href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_filter_value=true&internalfieldname=$wordCloudTableField.getInternalFieldName()&fieldvalue=*${filter}">
     #end
     <span #if($synonyms.size() > 0) title="$synonyms" #end style="font-size:${word.getWeight()}pt; color:hsl($hue, ${saturation}%, ${lightness}%)">&nbsp;${word}&nbsp;</span>
     #if(!$wordCloudTableField.equals($primaryKey))
