@@ -121,8 +121,8 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 				statement.setString(1, companyName);
 				statement.setString(2, userName);
 				statement.setString(3, this.ipAddress);
-				statement.setString(4, this.details);
 				statement.setTimestamp(4, this.timestamp);
+				statement.setString(5, this.details);
 				break;
 			}
 			Thread.yield();
