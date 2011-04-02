@@ -170,7 +170,7 @@ public class WordCloud implements WordCloudInfo {
 			for (WordInfo origin : origins) {
 				logger.debug("Origin of " + wordStem + ": " + origin + ", " + origin.getWeight());
 			}
-			String mostCommonOrigin = this.stemOriginMap.get(wordStem).first().getName();
+			String mostCommonOrigin = this.stemOriginMap.get(wordStem).last().getName();
 			WordInfo word = new Word(mostCommonOrigin, weight);
 			this.words.add(word);
 		}
