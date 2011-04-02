@@ -58,7 +58,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   #set($filters = $sessionData.getReportFilterValues())
   #set($filterValues = $filters.get($wordCloudTableField))
   #if($filterValues)
-    #set($filterValues = " = $filterValues")
+    #set($filterValues = "where = $filterValues")
   #end
   #foreach($reportTableField in $report.getReportBaseFields())
     #if(!$reportTableField.equals($wordCloudTableField))
