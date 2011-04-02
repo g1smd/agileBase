@@ -75,11 +75,11 @@ public class Word implements WordInfo, Comparable<WordInfo> {
 	 * Compare in a non-obvious but consistent way - not alphabetical because we
 	 * don't want to attach meaning to the ordering
 	 */
-	public int compareTo(WordInfo otherTag) {
+	public int compareTo(WordInfo otherWord) {
 		int hashCode = this.hashCode();
-		int otherHashCode = otherTag.getName().hashCode();
+		int otherHashCode = otherWord.getName().hashCode();
 		if (hashCode == otherHashCode) {
-			return this.getName().compareTo(otherTag.getName());
+			return this.getName().compareTo(otherWord.getName());
 		}
 		if (hashCode > otherHashCode) {
 			return 1;
