@@ -49,8 +49,8 @@ public class Word implements WordInfo, Comparable<WordInfo> {
 		if ((obj == null) || (obj.getClass() != this.getClass())) {
 			return false;
 		}
-		WordInfo otherTag = (WordInfo) obj;
-		return (this.getName().equals(otherTag.getName()));
+		WordInfo otherWord = (WordInfo) obj;
+		return (this.getName().equals(otherWord.getName()));
 	}
 
 	public int hashCode() {
