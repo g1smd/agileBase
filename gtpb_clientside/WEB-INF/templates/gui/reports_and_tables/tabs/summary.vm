@@ -57,6 +57,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   <div id="wordcloud">
   #set($filters = $sessionData.getReportFilterValues())
   #set($filterValues = $filters.get($wordCloudTableField))
+  #if($filterValues)
+    #set($filterValues = " = $filterValues")
+  #end
   #foreach($reportTableField in $report.getReportBaseFields())
     #if(!$reportTableField.equals($wordCloudTableField))
       #if($filters.get($reportTableField))
@@ -69,7 +72,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     #end
   #end
   #if($filterValues)
-    <h1><a target="pane_2" href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_filter_value=true&internalfieldname=$wordCloudTableField.getInternalFieldName()&fieldvalue=">$wordCloudField = $filterValues</a></h1>
+    <h1><a target="pane_2" href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_filter_value=true&internalfieldname=$wordCloudTableField.getInternalFieldName()&fieldvalue=">$wordCloudField $filterValues</a></h1>
   #else
     <h1>$wordCloudField</h1>
   #end
