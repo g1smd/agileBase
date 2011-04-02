@@ -51,6 +51,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #end
 ## And a word cloud
 #set($wordCloudField = $report.getWordCloudField())
+#set($wordCloudTableField = $wordCloudField.getBaseField())
+#set($primaryKey = $report.getParentTable().getPrimaryKey())
 #if($wordCloudField)
   <div id="wordcloud">
   <h1>$wordCloudField</h1>
@@ -66,7 +68,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     #set($hue = $normWeight * (360 / $range))
     #set($saturation = $normWeight * (80 / $range))
     #set($lightness = $normWeight * (60 / $range))
-    <span title="$word.getSynonyms()" style="font-size:${word.getWeight()}pt; color:hsl($hue, ${saturation}%, ${lightness}%)">&nbsp;${word}&nbsp;</span>
+    #set($synonyms = $word.getSynonyms())
+    #if(!$wordCloudTableField.equals($primaryKey))
+      <a target="pane_2" href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_filter_value=true&internalfieldname=$wordCloudTableField.getInternalFieldName()&fieldvalue=*${word}">
+    #end
+    <span #if($synonyms.size() > 0) title="$synonyms" #end style="font-size:${word.getWeight()}pt; color:hsl($hue, ${saturation}%, ${lightness}%)">&nbsp;${word}&nbsp;</span>
+    #if(!$wordCloudTableField.equals($primaryKey))
+      </a>
+    #end
   #end
   </div>
 #end
@@ -90,8 +99,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   <form name="wordcloud" method="post" action="AppController.servlet">
     <input type="hidden" name="set_word_cloud_field" value="true">
     <input type="hidden" name="return" value="$return_template">
-    #set($wordCloudTableField = $wordCloudField.getBaseField())
-    #set($primaryKey = $report.getParentTable().getPrimaryKey())
     or generate a word cloud from text in 
     <select name="internalfieldname" onchange="fSubmitWordCloud();">
       <option value="" #if(!$wordCloudField) selected #end>--please select a field--</option>
