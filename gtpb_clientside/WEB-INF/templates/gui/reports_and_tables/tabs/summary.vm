@@ -59,13 +59,13 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   #set($minSize = 7)
   #set($maxSize = 30)
   #set($range = $maxSize - $minSize)
-  #set($wordCloud = $view.getReportWordCloud($report, $wordCloudField, $stopWords, $minSize, $maxSize, 60))
+  #set($numWords = 60)
+  #set($wordCloud = $view.getReportWordCloud($report, $wordCloudField, $stopWords, $minSize, $maxSize, $numWords))
   #foreach($word in $wordCloud)
     #set($normWeight = ${word.getWeight()} - $minSize)
     #set($hue = $normWeight * (360 / $range))
     #set($saturation = $normWeight * (80 / $range))
     #set($lightness = $normWeight * (60 / $range))
-    ##set($colour = ${word.getWeight()} * 9 - 50)
     <span style="font-size:${word.getWeight()}pt; color:hsl($hue, ${saturation}%, ${lightness}%)">&nbsp;${word}&nbsp;</span>
   #end
   </div>
@@ -155,32 +155,32 @@ function fSubmitFunction() {
 <div id="addGroup" style="display:none"><br>
   <input type="hidden" name="return" value="$return_template" />
   <input type="hidden" name="add_grouping_to_chart" value="1" />
-        <select name="internalfieldname" id="groupselect" onchange="fSubmitGroup();">
-	  <option value="" selected>-- please choose one --</option>
-          #foreach($reportField in $report.getReportFields())
-			#set($baseField = $reportField.getBaseField())
-			#set($category = $baseField.getFieldCategory())
-              #if ($category == "RELATION") ## added to show display field name for relation fields
-                	<option value="$reportField.getInternalFieldName()">$reportField.getBaseField().getRelatedTable().getTableName(): $reportField.getBaseField().getDisplayField()</option>
-              #else
-          			#if(!($baseField.equals($baseField.getTableContainingField().getPrimaryKey())))
-					## Dont't allow grouping by text without lookups
-					## unless the field is from a different table.
-					## Don't allow files in any situation
-					#if(!( (($category == "TEXT") && ($baseField.usesLookup() == false) && ($baseField.getTableContainingField().equals($report.getParentTable()))) || ($category =="FILE") ))
-						#if($category == "DATE")
-							<option value="$reportField.getInternalFieldName()_year">$reportField - year</option>
-							<option value="$reportField.getInternalFieldName()_quarter">$reportField - quarter</option>
-							<option value="$reportField.getInternalFieldName()_month">$reportField - month</option>
-							<option value="$reportField.getInternalFieldName()_day">$reportField - day</option>
-						#else
-							<option value="$reportField.getInternalFieldName()">$reportField</option>
-						#end
+  <select name="internalfieldname" id="groupselect" onchange="fSubmitGroup();">
+  <option value="" selected>-- please choose one --</option>
+  #foreach($reportField in $report.getReportFields())
+		#set($baseField = $reportField.getBaseField())
+		#set($category = $baseField.getFieldCategory())
+    #if ($category == "RELATION") ## added to show display field name for relation fields
+      	<option value="$reportField.getInternalFieldName()">$reportField.getBaseField().getRelatedTable().getTableName(): $reportField.getBaseField().getDisplayField()</option>
+    #else
+			#if(!($baseField.equals($baseField.getTableContainingField().getPrimaryKey())))
+				## Dont't allow grouping by text without lookups
+				## unless the field is from a different table.
+				## Don't allow files in any situation
+				#if(!( (($category == "TEXT") && ($baseField.usesLookup() == false) && ($baseField.getTableContainingField().equals($report.getParentTable()))) || ($category =="FILE") ))
+					#if($category == "DATE")
+						<option value="$reportField.getInternalFieldName()_year">$reportField - year</option>
+						<option value="$reportField.getInternalFieldName()_quarter">$reportField - quarter</option>
+						<option value="$reportField.getInternalFieldName()_month">$reportField - month</option>
+						<option value="$reportField.getInternalFieldName()_day">$reportField - day</option>
+					#else
+						<option value="$reportField.getInternalFieldName()">$reportField</option>
 					#end
 				#end
-              #end
-          #end
-    	</select>
+			#end
+    #end
+  #end
+  </select>
 <!-- <input type="submit" value="add group"> -->
 </div>
 </form>
@@ -198,26 +198,26 @@ function fSubmitFunction() {
 #end
 <a href="#" onclick="fShowAddAgg();" id="addAggLink">add...</a>
 <div id="addAgg" style="display:none"><br>
-        	<input type="hidden" name="return" value="$return_template" />
-          <input type="hidden" name="add_function_to_chart" value="1" />
-          <select name="function" id="aggregatefunction" onchange="fSubmitFunction();">
-			<option value="" selected>-- please choose a function --</option>
-            	#foreach($function in $chart.getPossibleFunctionTypes())
-              	  <option value="$function.toString()">$function.getLabel()</option>
-            #end
-          </select> 
-		<select name="internalfieldname" id="aggregatefunctionfield" onchange="fSubmitFunction()">
-			  <option value="" selected>-- please choose a field --</option>
-              #foreach($reportField in $report.getReportFields())
-              	#set($baseField = $reportField.getBaseField())
-              	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
-                  <option value="$reportField.getInternalFieldName()">each '$baseField.getTableContainingField()' record</option>
-				#else
-                  <option value="$reportField.getInternalFieldName()">$reportField.getFieldName()</option>
-                #end
+    	<input type="hidden" name="return" value="$return_template" />
+      <input type="hidden" name="add_function_to_chart" value="1" />
+      <select name="function" id="aggregatefunction" onchange="fSubmitFunction();">
+	<option value="" selected>-- please choose a function --</option>
+        	#foreach($function in $chart.getPossibleFunctionTypes())
+          	  <option value="$function.toString()">$function.getLabel()</option>
+        #end
+      </select> 
+	<select name="internalfieldname" id="aggregatefunctionfield" onchange="fSubmitFunction()">
+		  <option value="" selected>-- please choose a field --</option>
+            #foreach($reportField in $report.getReportFields())
+            	#set($baseField = $reportField.getBaseField())
+            	#if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
+                <option value="$reportField.getInternalFieldName()">each '$baseField.getTableContainingField()' record</option>
+			#else
+                <option value="$reportField.getInternalFieldName()">$reportField.getFieldName()</option>
               #end
-          </select>
-		<!-- <input type="submit" value="add calculation"> -->
+            #end
+        </select>
+	<!-- <input type="submit" value="add calculation"> -->
 </div>
 </form><br>
 #set($currentFilterReportField = $defaultChart.getFilterReportField())
