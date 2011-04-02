@@ -55,7 +55,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($primaryKey = $report.getParentTable().getPrimaryKey())
 #if($wordCloudField)
   <div id="wordcloud">
-  <h1>$wordCloudField</h1>
+  #set($filters = $sessionData.getReportFilterValues())
+  #set($filterValues = $filters.get($wordCloudTableField))
+  <h1>${wordCloudField}#if($filterValues) $filterValues #end</h1>
   #set($stopWords = $viewTools.getNewStringSet())
   ## min font size, max font size, max number of tags
   #set($minSize = 7)
