@@ -143,25 +143,27 @@ public class WordCloud implements WordCloudInfo {
 			}
 		}
 		// Scale and create tag objects
-		double scaleFactor = new Double(maxWeight - minWeight) / new Double(maxFreq - minFreq);
+		double scaleFactor;
+		if (maxFreq == minFreq) {
+			scaleFactor = (maxWeight - minWeight) / 4; // TODO: a realistic scale factor in this case
+		} else {
+			scaleFactor = new Double(maxWeight - minWeight) / new Double(maxFreq - minFreq);
+		}
 		freqIt = frequencies.valuesIterator();
 		int weight;
 		while (freqIt.hasNext()) {
 			wordStem = (String) freqIt.next();
-			if (maxFreq == minFreq) {
-				weight = minWeight + ((maxWeight - minWeight) / 4);
+			stemFreq = frequencies.getCount(wordStem);
+			// Might still be some left less than the min. threshold
+			if (stemFreq <= minFreq) {
+				weight = minWeight;
 			} else {
-				stemFreq = frequencies.getCount(wordStem);
-				// Might still be some left less than the min. threshold
-				if (stemFreq <= minFreq) {
-					weight = minWeight;
-				} else {
-					weight = (int) (Math.ceil(new Double(stemFreq - minFreq) * scaleFactor) + minWeight);
-				}
-				String mostCommonOrigin = this.stemOriginMap.get(wordStem).first().getName();
-				WordInfo word = new Word(mostCommonOrigin, weight);
-				this.words.add(word);
+				weight = (int) (Math.ceil(new Double(stemFreq - minFreq) * scaleFactor) + minWeight);
 			}
+			logger.debug("Origins of " + wordStem + " are " + this.stemOriginMap.get(wordStem));
+			String mostCommonOrigin = this.stemOriginMap.get(wordStem).first().getName();
+			WordInfo word = new Word(mostCommonOrigin, weight);
+			this.words.add(word);
 		}
 	}
 
