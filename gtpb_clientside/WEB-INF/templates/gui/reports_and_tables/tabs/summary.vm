@@ -57,7 +57,11 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   <div id="wordcloud">
   #set($filters = $sessionData.getReportFilterValues())
   #set($filterValues = $filters.get($wordCloudTableField))
-  <h1>${wordCloudField}#if($filterValues) = ${filterValues}#end</h1>
+  #if($filterValues)
+    <h1><a target="pane_2" href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_filter_value=true&internalfieldname=$wordCloudTableField.getInternalFieldName()&fieldvalue=">$wordCloudField = $filterValues</a></h1>
+  #else
+    <h1>$wordCloudField</h1>
+  #end
   #set($stopWords = $viewTools.getNewStringSet())
   ## min font size, max font size, max number of tags
   #set($minSize = 7)
