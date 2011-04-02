@@ -20,14 +20,12 @@ package com.gtwm.pb.model.manageData;
 import com.gtwm.pb.model.interfaces.WordCloudInfo;
 import com.gtwm.pb.model.interfaces.WordInfo;
 import com.gtwm.pb.util.LancasterStemmer;
-
 import org.apache.commons.math.stat.Frequency;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.grlea.log.SimpleLogger;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -100,10 +98,6 @@ public class WordCloud implements WordCloudInfo {
 			// For a large input set, remove high and low outliers.
 			// For a smaller set, just high freq. outliers
 			if ((stemFreq > upperLimit) || ((stemFreq < lowerLimit) && removeLowOutliers)) {
-				if (stemFreq > upperLimit) {
-					logger.debug("Removing upper outlier " + wordStem + "(" + this.stemOriginMap.get(wordStem) + "), " + stemFreq + " > "
-							+ upperLimit);
-				}
 				freqIt.remove();
 			} else {
 				numWords++;
@@ -168,9 +162,6 @@ public class WordCloud implements WordCloudInfo {
 				weight = (int) (Math.ceil(new Double(stemFreq - minFreq) * scaleFactor) + minWeight);
 			}
 			SortedSet<WordInfo> origins = this.stemOriginMap.get(wordStem);
-			for (WordInfo origin : origins) {
-				logger.debug("Origin of " + wordStem + ": " + origin + ", " + origin.getWeight());
-			}
 			String mostCommonOrigin = origins.last().getName();
 			Set<String> synonyms = new TreeSet<String>();
 			for (WordInfo origin : origins) {

@@ -287,8 +287,6 @@ public final class Authenticator implements AuthenticatorInfo {
 		long startTime = System.currentTimeMillis();
 		this.getUserPrivilegesDirect().add(userPrivilege);
 		long duration = System.currentTimeMillis() - startTime;
-		logger.debug("Adding user privilege took " + duration + " milliseconds");
-		logger.debug("There are now " + this.getUserPrivilegesDirect().size() + " user privilege objects");
 		this.destroyCache();
 	}
 
