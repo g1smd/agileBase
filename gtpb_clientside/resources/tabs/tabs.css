@@ -250,7 +250,20 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
   background-color: #f4f4f4;
   margin: 0px;
   -moz-border-radius: 0.5em 0.5em 0 0;
+  -webkit-border-radius: 0.5em 0.5em 0 0;
+  border-radius: 0.5em 0.5em 0 0;
   padding: 0.2em;
+}
+
+#wordcloud a {
+  text-decoration: none;
+}
+
+#wordcloud a:hover {
+  background-color: #f4f4f4;
+  -moz-border-radius: 0.5em 0.5em 0 0;
+  -webkit-border-radius: 0.5em 0.5em 0 0;
+  border-radius: 0.5em 0.5em 0 0;
 }
 
 #wordcloud_controls {
