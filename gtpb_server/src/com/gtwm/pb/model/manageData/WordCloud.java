@@ -19,11 +19,15 @@ package com.gtwm.pb.model.manageData;
 
 import com.gtwm.pb.model.interfaces.WordCloudInfo;
 import com.gtwm.pb.model.interfaces.WordInfo;
+import com.gtwm.pb.util.LancasterStemmer;
+
 import org.apache.commons.math.stat.Frequency;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.grlea.log.SimpleLogger;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -54,19 +58,26 @@ public class WordCloud implements WordCloudInfo {
 		for (String additionalStopWord : additionalStopWords) {
 			stopWords.add(additionalStopWord.toLowerCase().trim());
 		}
+		LancasterStemmer stemmer = new LancasterStemmer();
+		String wordStem;
 		Frequency frequencies = new Frequency();
-		for (String word : wordArray) {
-			if ((!stopWords.contains(word)) && (word.length() >= minWordLength)) {
-				frequencies.addValue(word);
+		for (String wordString : wordArray) {
+			if ((!stopWords.contains(wordString)) && (wordString.length() >= minWordLength)) {
+				wordStem = stemmer.stripSuffixes(wordString);
+				// Record the mapping of the stem to its origin so the most
+				// common origin can be re-introduced when the cloud is
+				// generated
+				this.recordStemOrigin(wordString, wordStem);
+				frequencies.addValue(wordStem);
 			}
 		}
 		// Compute std. dev of frequencies so we can remove outliers
 		DescriptiveStatistics stats = new DescriptiveStatistics();
 		Iterator freqIt = frequencies.valuesIterator();
-		long wordFreq;
+		long stemFreq;
 		while (freqIt.hasNext()) {
-			wordFreq = frequencies.getCount(freqIt.next());
-			stats.addValue(wordFreq);
+			stemFreq = frequencies.getCount(freqIt.next());
+			stats.addValue(stemFreq);
 		}
 		double mean = stats.getMean();
 		double stdDev = stats.getStandardDeviation();
@@ -79,23 +90,22 @@ public class WordCloud implements WordCloudInfo {
 		if (lowerLimit < 2) {
 			lowerLimit = 2;
 		}
-		String word;
 		int numWords = 0;
 		int numRawWords = wordArray.length;
 		boolean removeLowOutliers = (numRawWords > (maxTags * 10));
 		while (freqIt.hasNext()) {
-			word = (String) freqIt.next();
-			wordFreq = frequencies.getCount(word);
+			wordStem = (String) freqIt.next();
+			stemFreq = frequencies.getCount(wordStem);
 			// For a large input set, remove high and low outliers.
 			// For a smaller set, just high freq. outliers
-			if ((wordFreq > upperLimit) || ((wordFreq < lowerLimit) && removeLowOutliers)) {
+			if ((stemFreq > upperLimit) || ((stemFreq < lowerLimit) && removeLowOutliers)) {
 				freqIt.remove();
 			} else {
 				numWords++;
-				if (wordFreq > maxFreq) {
-					maxFreq = wordFreq;
-				} else if (wordFreq < minFreq) {
-					minFreq = wordFreq;
+				if (stemFreq > maxFreq) {
+					maxFreq = stemFreq;
+				} else if (stemFreq < minFreq) {
+					minFreq = stemFreq;
 				}
 			}
 		}
@@ -107,8 +117,8 @@ public class WordCloud implements WordCloudInfo {
 			while (numWords > maxTags) {
 				freqIt = frequencies.valuesIterator();
 				SMALLREMOVAL: while (freqIt.hasNext()) {
-					wordFreq = frequencies.getCount(freqIt.next());
-					if (wordFreq < lowerLimit) {
+					stemFreq = frequencies.getCount(freqIt.next());
+					if (stemFreq < lowerLimit) {
 						freqIt.remove();
 						numWords--;
 						if (numWords == maxTags) {
@@ -126,9 +136,9 @@ public class WordCloud implements WordCloudInfo {
 			minFreq = Long.MAX_VALUE;
 			freqIt = frequencies.valuesIterator();
 			while (freqIt.hasNext()) {
-				wordFreq = frequencies.getCount(freqIt.next());
-				if (wordFreq < minFreq) {
-					minFreq = wordFreq;
+				stemFreq = frequencies.getCount(freqIt.next());
+				if (stemFreq < minFreq) {
+					minFreq = stemFreq;
 				}
 			}
 		}
@@ -137,31 +147,58 @@ public class WordCloud implements WordCloudInfo {
 		freqIt = frequencies.valuesIterator();
 		int weight;
 		while (freqIt.hasNext()) {
-			word = (String) freqIt.next();
+			wordStem = (String) freqIt.next();
 			if (maxFreq == minFreq) {
 				weight = minWeight + ((maxWeight - minWeight) / 4);
 			} else {
-				wordFreq = frequencies.getCount(word);
+				stemFreq = frequencies.getCount(wordStem);
 				// Might still be some left less than the min. threshold
-				if (wordFreq <= minFreq) {
+				if (stemFreq <= minFreq) {
 					weight = minWeight;
 				} else {
-					weight = (int) (Math.ceil(new Double(wordFreq - minFreq) * scaleFactor) + minWeight);
+					weight = (int) (Math.ceil(new Double(stemFreq - minFreq) * scaleFactor) + minWeight);
 				}
-				WordInfo tag = new Word(word, weight);
-				this.tags.add(tag);
+				String mostCommonOrigin = this.stemOriginMap.get(wordStem).first().getName();
+				WordInfo word = new Word(mostCommonOrigin, weight);
+				this.words.add(word);
 			}
 		}
 	}
 
-	public SortedSet<WordInfo> getWords() {
-		return this.tags;
+	private void recordStemOrigin(String wordString, String stem) {
+		// Record words which have the same stem so they can be expanded
+		// back when returning the cloud
+		SortedSet<WordInfo> stemOrigins = this.stemOriginMap.get(stem);
+		if (stemOrigins == null) {
+			// Comparator so most common words are first
+			stemOrigins = new TreeSet<WordInfo>(new WordWeightComparator());
+			WordInfo newStemOrigin = new Word(wordString, 1);
+			stemOrigins.add(newStemOrigin);
+			this.stemOriginMap.put(stem, stemOrigins);
+		} else {
+			SortedSet<WordInfo> newStemOrigins = new TreeSet<WordInfo>(new WordWeightComparator());
+			for (WordInfo stemOrigin : stemOrigins) {
+				if (stemOrigin.getName().equals(wordString)) {
+					WordInfo newStemOrigin = new Word(wordString, stemOrigin.getWeight() + 1);
+					newStemOrigins.add(newStemOrigin);
+				} else {
+					newStemOrigins.add(stemOrigin);
+				}
+			}
+			this.stemOriginMap.put(stem, newStemOrigins);
+		}
 	}
 
-	private SortedSet<WordInfo> tags = new TreeSet<WordInfo>();
+	public SortedSet<WordInfo> getWords() {
+		return this.words;
+	}
+
+	private SortedSet<WordInfo> words = new TreeSet<WordInfo>();
+
+	private Map<String, SortedSet<WordInfo>> stemOriginMap = new HashMap<String, SortedSet<WordInfo>>();
 
 	static private final int minWordLength = 3;
-	
+
 	/**
 	 * We don't want these
 	 */

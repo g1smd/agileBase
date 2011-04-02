@@ -3,13 +3,19 @@
 	comments: 	The Paice/Husk Stemmer Translated from Pascal
 			adapted for algorithm demo and test program*/
 /**
+ * @see http 
+ *      ://www.comp.lancs.ac.uk/computing/research/stemming/paice/javademo
+ *      .htm
+ * 
  * Updated by Oliver Kohll 2011
  */
 
 package com.gtwm.pb.util;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LancasterStemmer {
 
@@ -22,22 +28,27 @@ public class LancasterStemmer {
 	 * 
 	 * * Returns: String
 	 * 
-	 * * Recievs: String word
+	 * * Recievs: String word - must be lower case
 	 * 
 	 * * Purpose: strips suffix off word and returns * stem using paice stemming
 	 * algorithm *
 	 ****************************************************************/
 	public String stripSuffixes(String word) {
+		// First, check cache
+		String cachedStem = this.cachedStems.get(word);
+		if (cachedStem != null) {
+			return cachedStem;
+		}
 		// integer variables 1 is positive, 0 undecided, -1 negative equivalent
 		// of pun vars positive undecided negative
 		int ruleOk = 0;
 		int continueGoing = 0;
 
-		// integer varables
+		// integer variables
 		int pll = 0; // position of last letter
-		int xl; // counter for nuber of chars to be replaced and length of
-				// stemmed word if rule was aplied
-		int pfv; // poition of first vowel
+		int xl; // counter for number of chars to be replaced and length of
+				// stemmed word if rule was applied
+		int pfv; // position of first vowel
 		int prt; // pointer into rule table
 		int ir; // index of rule
 		int iw; // index of word
@@ -45,17 +56,17 @@ public class LancasterStemmer {
 		// char variables
 		char ll; // last letter
 
-		// String variables eqiverlent of tenchar variables
-		String rule = ""; // varlable holding the current rule
+		// String variables equivalent of tenchar variables
+		String rule = ""; // variable holding the current rule
 		String stem = ""; // string holding the word as it is being stemmed this
 							// is returned as a stemmed word.
 
 		// boolean variable
 		boolean intact = true; // intact if the word has not yet been stemmed to
-								// determin a requirement of some stemming rules
+								// determine a requirement of some stemming rules
 
-		// set stem = to word
-		stem = word.toLowerCase();
+		// set stem = to word (removed .toLowerCase as the input is already lower case)
+		stem = word;
 		// set the position of pll to the last letter in the string
 		pll = 0;
 		// move through the word to find the position of the last letter before
@@ -70,7 +81,7 @@ public class LancasterStemmer {
 		// find the position of the first vowel
 		pfv = this.firstVowel(stem, pll);
 		iw = stem.length() - 1;
-		// repeat until continue == negative ie. -1
+		// repeat until continue == negative i.e. -1
 		while (continueGoing != -1) {
 			continueGoing = 0;
 			// SEEK RULE FOR A NEW FINAL LETTER
@@ -160,7 +171,7 @@ public class LancasterStemmer {
 							// ...minimal stem is 3 letters...
 							// ...including one or more vowel
 						} else {
-							// ruleok=1; as ruleok must alread be positive to
+							// ruleok=1; as ruleok must already be positive to
 							// reach this stage
 						}
 					}
@@ -200,6 +211,7 @@ public class LancasterStemmer {
 				}
 			}
 		}
+		this.cachedStems.put(word, stem);
 		return stem;
 	}
 
@@ -292,7 +304,9 @@ public class LancasterStemmer {
 			return false;
 		}
 	}
-
+	
+	private Map<String, String> cachedStems = new HashMap<String, String>();
+	
 	private int[] ruleIndex = new int[26]; // index to above
 
 	/**
@@ -301,10 +315,6 @@ public class LancasterStemmer {
 	 * .txt
 	 * 
 	 * with spaces removed
-	 * 
-	 * @see http 
-	 *      ://www.comp.lancs.ac.uk/computing/research/stemming/paice/javademo
-	 *      .htm
 	 */
 	private static final List<String> ruleTable = Arrays.asList("ai*2.{-ia>-ifintact}",
 			"a*1.{-a>-ifintact}", "bb1.{-bb>-b}", "city3s.{-ytic>-ys}", "ci2>{-ic>-}",
