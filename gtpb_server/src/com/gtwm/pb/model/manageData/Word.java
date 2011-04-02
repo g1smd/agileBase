@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.model.manageData;
 
+import java.util.Set;
 import com.gtwm.pb.model.interfaces.WordInfo;
 
 public class Word implements WordInfo, Comparable<WordInfo> {
@@ -24,11 +25,19 @@ public class Word implements WordInfo, Comparable<WordInfo> {
 	private Word() {
 		this.weight = 0;
 		this.name = null;
+		this.synonyms = null;
 	}
 
 	public Word(String name, int weight) {
 		this.name = name;
 		this.weight = weight;
+		this.synonyms = null;
+	}
+	
+	public Word(String name, int weight, Set<String> synonyms) {
+		this.name = name;
+		this.weight = weight;
+		this.synonyms = synonyms;
 	}
 
 	public String getName() {
@@ -37,6 +46,10 @@ public class Word implements WordInfo, Comparable<WordInfo> {
 
 	public int getWeight() {
 		return this.weight;
+	}
+	
+	public Set<String> getSynonyms() {
+		return this.synonyms;
 	}
 
 	/**
@@ -81,4 +94,6 @@ public class Word implements WordInfo, Comparable<WordInfo> {
 	private final String name;
 
 	private final int weight;
+	
+	private final Set<String> synonyms;
 }

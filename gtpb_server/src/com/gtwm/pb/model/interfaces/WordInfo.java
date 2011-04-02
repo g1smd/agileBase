@@ -17,6 +17,8 @@
  */
 package com.gtwm.pb.model.interfaces;
 
+import java.util.Set;
+
 /**
  * Represents one word/tag from a word cloud
  * @see WordCloudInfo
@@ -26,4 +28,9 @@ public interface WordInfo {
 	public String getName();
 	
 	public int getWeight();
+	
+	/**
+	 * Return all version of this word, e.g. smelly, smelling, smells
+	 */
+	public Set<String> getSynonyms();
 }

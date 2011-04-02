@@ -27,6 +27,7 @@ import org.grlea.log.SimpleLogger;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -166,12 +167,16 @@ public class WordCloud implements WordCloudInfo {
 			} else {
 				weight = (int) (Math.ceil(new Double(stemFreq - minFreq) * scaleFactor) + minWeight);
 			}
-			Set<WordInfo> origins = this.stemOriginMap.get(wordStem);
+			SortedSet<WordInfo> origins = this.stemOriginMap.get(wordStem);
 			for (WordInfo origin : origins) {
 				logger.debug("Origin of " + wordStem + ": " + origin + ", " + origin.getWeight());
 			}
-			String mostCommonOrigin = this.stemOriginMap.get(wordStem).last().getName();
-			WordInfo word = new Word(mostCommonOrigin, weight);
+			String mostCommonOrigin = origins.last().getName();
+			Set<String> synonyms = new TreeSet<String>();
+			for (WordInfo origin : origins) {
+				synonyms.add(origin.getName());
+			}
+			WordInfo word = new Word(mostCommonOrigin, weight, synonyms);
 			this.words.add(word);
 		}
 	}
