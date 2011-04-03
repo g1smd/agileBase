@@ -28,6 +28,8 @@
   <link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
   <link type="text/css" href="resources/jquery.autocomplete.css" rel="stylesheet" />
   <link type="text/css" href="resources/datePicker.css" rel="stylesheet" />
+  <link type="text/css" href="resources/tabs/tabs.css" rel="stylesheet" />
+  <link type="text/css" href="styles/report.css" rel="stylesheet" />
   <link href="resources/mobile/override.css" type="text/css" rel="stylesheet" />
   <link href="resources/mobile/wizard_override.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="resources/jquery.js"></script>
