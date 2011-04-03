@@ -18,6 +18,8 @@
 package com.gtwm.pb.servlets;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.EnumSet;
 import java.util.List;
@@ -567,6 +569,11 @@ public final class AppController extends VelocityViewServlet {
 			try {
 				// Set up a session for a newly logged in user
 				sessionData = new SessionData(this.databaseDefn, this.relationalDataSource, request);
+				// Set session cookie expiry date
+			    String id = request.getSession().getId();
+			    long expireTimestamp = System.currentTimeMillis() + (6 * 60 * 60 * 1000); // 6 hours ahead
+			    String expireDate = new SimpleDateFormat("EEE, dd-MMM-yyyy HH:mm:ss z").format(new Date(expireTimestamp));
+			    response.setHeader("Set-Cookie", String.format("JSESSIONID=%s;Expires=%s;Path=/", id, expireDate));
 			} catch (SQLException sqlex) {
 				ServletUtilMethods.logException(sqlex, request, "SQL error creating session data object: " + sqlex);
 				sessionData = new SessionData();
