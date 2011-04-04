@@ -127,7 +127,7 @@
     <session-config>
       <!-- 360 = 6 hours - set the session timeout to a long time so the app won't break if the user leaves it on screen for a few hours without doing anything -->
       <!-- 240 = 4 hours-->
-      <session-timeout>360</session-timeout>
+      <session-timeout>1</session-timeout>
     </session-config>
 
     <security-constraint>
