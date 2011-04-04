@@ -285,7 +285,7 @@ public class Enumerations {
 	public enum Browsers {
 		MSIE("Internet Explorer", "msie"), FIREFOX("Firefox", "firefox"), MINEFIELD(
 				"Firefox development version", "minefield"), CAMINO("Camino", "camino"), SYMBIAN_MOBILE(
-				"Safari on Symbian mobile", "symbian"), SAFARI("Safari", "applewebkit"), OPERA(
+				"Safari on Symbian mobile", "symbian"), CHROME("Google Chrome","chrome"), SAFARI("Safari", "applewebkit"), OPERA(
 				"Opera", "opera"), IPOD("iPod", "ipod"), IPHONE("iPhone", "iphone"), IPAD("iPad",
 				"ipad"), KONQUEROR("Konqueror", "konqueror"),
 		// So we can treat the ipod and iphone as one. They have similar or the
