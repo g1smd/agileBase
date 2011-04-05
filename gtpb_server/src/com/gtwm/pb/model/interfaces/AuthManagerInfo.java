@@ -319,16 +319,6 @@ public interface AuthManagerInfo {
 			AppRoleInfo role) throws DisallowedException, ObjectNotFoundException;
 
 	/**
-	 * @return A collection of all the privilege types recognised by the
-	 *         application. This is exposed so that an administrator can get a
-	 *         list of privileges from which to choose some to assign to a role
-	 * @throws DisallowedException
-	 *             If the current user doesn't have ADMINISTRATE privileges
-	 */
-	public EnumSet<PrivilegeType> getPrivilegeTypes(HttpServletRequest request)
-			throws DisallowedException, ObjectNotFoundException;
-
-	/**
 	 * IMPORTANT NOTE: Don't use these specifiedUserHasPrivilege methods to do
 	 * authentication on the logged in user, use
 	 * getAuthenticator().userAllowedTo instead which checks both user and any

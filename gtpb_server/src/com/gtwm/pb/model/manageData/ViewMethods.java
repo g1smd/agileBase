@@ -838,7 +838,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	public EnumSet<PrivilegeType> adminGetPrivilegeTypes() throws DisallowedException,
 			ObjectNotFoundException {
-		return getAuthManager().getPrivilegeTypes(this.request);
+		return EnumSet.allOf(PrivilegeType.class);
 	}
 
 	public boolean loggedInUserAllowedTo(String privilegeTypeToCheck)

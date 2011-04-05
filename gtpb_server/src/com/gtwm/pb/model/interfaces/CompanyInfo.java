@@ -17,14 +17,15 @@
  */
 package com.gtwm.pb.model.interfaces;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-
 import com.gtwm.pb.dashboard.interfaces.DashboardInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.manageUsage.UsageLogger.LogType;
+import com.gtwm.pb.util.Enumerations.Apps;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
 /**
@@ -122,4 +123,13 @@ public interface CompanyInfo {
 	public List<Integer> getCachedSparkline(LogType logType, int options);
 
 	public void setCachedSparkline(LogType logType, int options, List<Integer> sparklineData);
+	
+	/**
+	 * Return a list of activated apps
+	 */
+	public EnumSet<Apps> getApps();
+	
+	public void addApp(Apps app);
+	
+	public void removeApp(Apps app);
 }
