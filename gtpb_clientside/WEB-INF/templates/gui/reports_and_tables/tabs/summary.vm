@@ -55,24 +55,24 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($primaryKey = $report.getParentTable().getPrimaryKey())
 #if($wordCloudField)
   <div id="wordcloud">
-  #set($filters = $sessionData.getReportFilterValues())
-  #set($filterValues = $filters.get($wordCloudTableField))
-  #if($filterValues)
-    #set($filterValues = " = $filterValues")
+  #set($filters = $sessionData.getReportfilterValues())
+  #set($filterDescription = $filters.get($wordCloudTableField))
+  #if($filterDescription)
+    #set($filterDescription = " = $filterDescription")
   #end
   #foreach($reportTableField in $report.getReportBaseFields())
     #if(!$reportTableField.equals($wordCloudTableField))
       #if($filters.get($reportTableField))
-        #if($filterValues)
-          #set($filterValues = "$filterValues, $reportTableField = $filters.get($reportTableField)")
+        #if($filterDescription)
+          #set($filterDescription = "$filterDescription, $reportTableField = $filters.get($reportTableField)")
         #else
-          #set($filterValues = "where $reportTableField = $filters.get($reportTableField)")
+          #set($filterDescription = "where $reportTableField = $filters.get($reportTableField)")
         #end
       #end
     #end
   #end
-  #if($filterValues)
-    <h1><a target="pane_2" href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_filter_value=true&internalfieldname=$wordCloudTableField.getInternalFieldName()&fieldvalue=">$wordCloudField $filterValues</a></h1>
+  #if($filterDescription)
+    <h1><a target="pane_2" href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_filter_value=true&internalfieldname=$wordCloudTableField.getInternalFieldName()&fieldvalue=">$wordCloudField $filterDescription</a></h1>
   #else
     <h1>$wordCloudField</h1>
   #end
@@ -93,6 +93,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
       #set($filter = "*${word}")
       #foreach($synonym in $synonyms)
         #set($filter = "$filter OR *${synonym}")
+      #end
+      #if($filters.get($wordCloudTableField))
+        ## Chain with existing filter
+        #set($filter = "$filters.get($wordCloudTableField) AND $filter")
       #end
       <a target="pane_2" href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_filter_value=true&internalfieldname=$wordCloudTableField.getInternalFieldName()&fieldvalue=$filter">
     #end
