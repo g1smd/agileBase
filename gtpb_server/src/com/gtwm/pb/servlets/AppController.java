@@ -578,7 +578,7 @@ public final class AppController extends VelocityViewServlet {
 			}
 			// Set session cookie expiry date
 		    String id = request.getSession().getId();
-		    long expireTimestamp = System.currentTimeMillis() + (6 * 60 * 60 * 1000); // 6 hours ahead
+		    long expireTimestamp = System.currentTimeMillis() + (12 * 60 * 60 * 1000); // 12 hours ahead
 		    String expireDate = new SimpleDateFormat("EEE, dd-MMM-yyyy HH:mm:ss z").format(new Date(expireTimestamp));
 		    response.setHeader("Set-Cookie", String.format("JSESSIONID=%s;Expires=%s;Path=/agileBase", id, expireDate));
 			// set up the wiki if the user is the first user logging in from a

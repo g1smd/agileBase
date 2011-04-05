@@ -2294,6 +2294,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		HibernateUtil.activateObject(report);
 		this.removeFieldFromReportChecks(reportField, request);
 		report.removeField(reportField);
+		if (reportField.equals(report.getWordCloudField())) {
+			report.setWordCloudField(null);
+		}
 		updateViewDbAction(conn, report, request);
 		HibernateUtil.currentSession().delete(reportField);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
