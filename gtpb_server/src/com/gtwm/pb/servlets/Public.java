@@ -25,6 +25,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ViewToolsInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
+import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageData.SessionData;
 import com.gtwm.pb.model.manageData.ViewTools;
 import com.gtwm.pb.util.AgileBaseException;
@@ -76,7 +77,8 @@ public class Public extends VelocityViewServlet {
 				TableInfo table = null;
 				CompanyInfo company = null;
 				try {
-					AppUserInfo publicUser = ServletUtilMethods.getPublicUserForRequest(request, this.databaseDefn.getAuthManager().getAuthenticator());
+					AppUserInfo publicUser = ServletUtilMethods.getPublicUserForRequest(request,
+							this.databaseDefn.getAuthManager().getAuthenticator());
 					company = publicUser.getCompany();
 					String internalTableName = request.getParameter("t");
 					if (internalTableName == null) {
@@ -86,19 +88,20 @@ public class Public extends VelocityViewServlet {
 					table = this.getPublicTable(company, internalTableName);
 				} catch (AgileBaseException abex) {
 					ServletUtilMethods.logException(abex, request, "Error preparing public form");
-					return this.getUserInterfaceTemplate(request, response, "report_error", context);
+					return this
+							.getUserInterfaceTemplate(request, response, "report_error", context, abex);
 				}
 				switch (publicAction) {
 				case SHOW_FORM:
 					context.put("gtpbPublicTable", table);
 					context.put("gtpbCompany", company);
-					if(templateName == null) {
+					if (templateName == null) {
 						templateName = "form";
 					}
 					templateName = templatePath + templateName;
 					break;
 				case SAVE_NEW_RECORD:
-					if(templateName == null) {
+					if (templateName == null) {
 						templateName = "posted";
 					}
 					templateName = templatePath + templateName;
@@ -106,31 +109,44 @@ public class Public extends VelocityViewServlet {
 					try {
 						ServletSessionMethods.setFieldInputValues(sessionData, request, true,
 								this.databaseDefn, table, multipartItems);
-						Map<BaseField, BaseValue> fieldInputValues = new LinkedHashMap<BaseField, BaseValue>();
-						this.databaseDefn.getDataManagement().saveRecord(
-								request,
-								table,
-								new LinkedHashMap<BaseField, BaseValue>(sessionData
-										.getFieldInputValues()), true, -1, sessionData,
-								multipartItems);
+						//  Check that all mandatory fields have been filled in
+						LinkedHashMap<BaseField, BaseValue> fieldInputValues = new LinkedHashMap<BaseField, BaseValue>(
+								sessionData.getFieldInputValues());
+						for (Map.Entry<BaseField, BaseValue> inputEntry : fieldInputValues.entrySet()) {
+							BaseField inputField = inputEntry.getKey();
+							if (inputField.getNotNull()) {
+								BaseValue inputValue = inputEntry.getValue();
+								if (inputValue.isNull()) {
+									// If a mandatory field is empty, return to the form and report the error
+									templateName = templatePath + "form";
+									AgileBaseException exceptionCaught = new InputRecordException("This required field has to be filled in", inputField);
+									return this.getUserInterfaceTemplate(request, response, templateName, context, exceptionCaught);
+								}
+							}
+						}
+						this.databaseDefn.getDataManagement().saveRecord(request, table,
+								fieldInputValues, true, -1, sessionData, multipartItems);
 					} catch (AgileBaseException abex) {
 						ServletUtilMethods.logException(abex, request,
 								"General error performing save from public");
-						return this.getUserInterfaceTemplate(request, response, templateName, context);
+						return this.getUserInterfaceTemplate(request, response, templateName,
+								context, abex);
 					} catch (SQLException sqlex) {
 						ServletUtilMethods.logException(sqlex, request,
 								"SQL error performing save from public");
-						return this.getUserInterfaceTemplate(request, response, templateName, context);
-					} catch (FileUploadException abex) {
-						ServletUtilMethods.logException(abex, request,
+						return this.getUserInterfaceTemplate(request, response, templateName,
+								context, sqlex);
+					} catch (FileUploadException fuex) {
+						ServletUtilMethods.logException(fuex, request,
 								"General error doing file upload from public");
-						return this.getUserInterfaceTemplate(request, response, templateName, context);
+						return this.getUserInterfaceTemplate(request, response, templateName,
+								context, fuex);
 					}
 					break;
 				}
 			}
 		}
-		return this.getUserInterfaceTemplate(request, response, templateName, context);
+		return this.getUserInterfaceTemplate(request, response, templateName, context, null);
 	}
 
 	private TableInfo getPublicTable(CompanyInfo company, String internalTableName)
@@ -160,9 +176,10 @@ public class Public extends VelocityViewServlet {
 	 * @return The template requested, ready to parse by the UI
 	 */
 	private Template getUserInterfaceTemplate(HttpServletRequest request,
-			HttpServletResponse response, String templateName, Context context) {
+			HttpServletResponse response, String templateName, Context context, Exception exceptionCaught) {
 		ViewToolsInfo viewTools = new ViewTools(request, response, this.webAppRoot);
 		context.put("viewTools", viewTools);
+		context.put("exceptionCaught", exceptionCaught);
 		if (templateName == null) {
 			logger.error("No template specified.");
 		}

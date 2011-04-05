@@ -758,15 +758,6 @@ public final class AuthManager implements AuthManagerInfo {
 		}
 	}
 
-	public EnumSet<PrivilegeType> getPrivilegeTypes(HttpServletRequest request)
-			throws DisallowedException, ObjectNotFoundException {
-		if (this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
-			return EnumSet.allOf(PrivilegeType.class);
-		} else {
-			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
-		}
-	}
-
 	public boolean specifiedUserHasPrivilege(HttpServletRequest request,
 			PrivilegeType privilegeType, AppUserInfo user) throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || this.authenticator

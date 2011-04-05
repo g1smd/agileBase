@@ -23,6 +23,7 @@ import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.Module;
 import com.gtwm.pb.model.manageUsage.UsageLogger.LogType;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,16 +36,20 @@ import java.util.LinkedHashSet;
 import java.util.Collections;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
-
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
+import com.gtwm.pb.util.Enumerations.Apps;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
@@ -275,6 +280,20 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	public void removeChartIdNotForDashboard(long id) {
 		this.getChartIdsNotForDashboardDirect().remove(id);
 	}
+	
+	@ManyToMany
+	@Enumerated(EnumType.STRING)
+	public EnumSet<Apps> getApps() {
+		return this.apps;
+	}
+
+	public void addApp(Apps app) {
+		this.apps.add(app);
+	}
+
+	public void removeApp(Apps app) {
+		this.apps.remove(app);
+	}
 
 	public int compareTo(CompanyInfo otherCompany) {
 		if (this == otherCompany) {
@@ -332,5 +351,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	private Map<String, List<Integer>> cachedSparkLines = new HashMap<String, List<Integer>>();
 
 	private DashboardInfo dashboard = null;
+
+	private EnumSet<Apps> apps = EnumSet.noneOf(Apps.class);
 
 }

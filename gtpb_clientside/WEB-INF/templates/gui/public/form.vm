@@ -23,6 +23,18 @@
 <style>
   input { margin: 10px; }
 </style>
+## Test for an exception caused by a previous save attempt
+#if($exceptionCaught)
+<div class="agilebase_error">
+Please correct the error below and try entering the data again
+#set($fieldCausingException = $exceptionCaught.getFieldCausingException()) <p>
+#if($fieldCausingException)
+  Error in $fieldCausingException: $exceptionCaught.getMessage()
+#else
+  $exceptionCaught.getMessage()
+#end
+</div>
+#end
 <form class="agilebase" name="agilebase_form" method="post" action="$viewTools.getAppUrl()">
   <input type="hidden" name="save_new_record" value="true">
   <input type="hidden" name="t" value="$table.getInternalTableName()"> 

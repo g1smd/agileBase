@@ -21,7 +21,7 @@
 	#set($fieldCategory = $field.getFieldCategory())
 	#if($fieldCategory != "REFERENCED_REPORT_DATA")
 	  #if($fieldCategory != "FILE")
-    	<li #if($fieldCategory =='SEPARATOR') class="separator" #end>
+    	<li #if($fieldCategory =='SEPARATOR') class="separator" #end #if($fieldCausingException.equals($field)) class="agilebase_error_field" #end>
             <label for="$field.getInternalFieldName()">
             #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
               $field.getSimplifiedFieldName()
@@ -33,6 +33,9 @@
             #if($fieldCategory !='SEPARATOR')
 			  <div class="ab_field_input">
 			  #parse('gui/resources/input/input.vm')
+        #if($fieldCausingException.equals($field)) 
+          <div class="agilebase_error_message">$exceptionCaught.getMessage()</div>
+        #end
 			  </div>
 			#end
         </li>

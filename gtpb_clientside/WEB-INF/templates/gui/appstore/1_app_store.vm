@@ -53,6 +53,10 @@
         <li>
           <img src="resources/toolbar/tagcloud.png"><b>Word clouds</b> For retrospective sense-making of data, reducing manual categorisation processes
         </li>
+      </ul>
+      <h1>Beta Apps</h1>
+      These apps are currently in development or limited access testing - if you're interested in trying any, please <a href="mailto:oliver@agilebase.co.uk">let us know</a>
+      <ul>
         <li>
           <img src="resources/toolbar/forms.png"><b>Public forms</b> Embed agileBase forms into public websites - allows data gathering from your customers/partners
         </li>

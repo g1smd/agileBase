@@ -124,7 +124,8 @@ public interface ViewMethodsInfo {
 	 * 
 	 * @see #getUnchosenRelationFields(TableInfo)
 	 */
-	public List<RelationField> getUnchosenRelationFields() throws DisallowedException, ObjectNotFoundException;
+	public List<RelationField> getUnchosenRelationFields() throws DisallowedException,
+			ObjectNotFoundException;
 
 	/**
 	 * Return a list of relation fields in the given table that have no rowIDs
@@ -155,12 +156,15 @@ public interface ViewMethodsInfo {
 	 */
 	public String getToolbarPluginName();
 
-	public SortedSet<CompanyInfo> getCompanies() throws DisallowedException, ObjectNotFoundException;
+	public SortedSet<CompanyInfo> getCompanies() throws DisallowedException,
+			ObjectNotFoundException;
 
 	/**
-	 * @see com.gtwm.pb.model.interfaces.AuthManagerInfo#getPrivilegeTypes(HttpServletRequest)
+	 * Return the list of possible privilege types (public information in the
+	 * API)
 	 */
-	public EnumSet<PrivilegeType> adminGetPrivilegeTypes() throws DisallowedException, ObjectNotFoundException;
+	public EnumSet<PrivilegeType> adminGetPrivilegeTypes() throws DisallowedException,
+			ObjectNotFoundException;
 
 	/**
 	 * Provides information to let the user create a database relation. A list
@@ -195,7 +199,8 @@ public interface ViewMethodsInfo {
 	 * @see com.gtwm.pb.model.interfaces.AuthManagerInfo#getRolesForUser(HttpServletRequest,
 	 *      AppUserInfo)
 	 */
-	public SortedSet<AppRoleInfo> adminGetRolesForUser(AppUserInfo user) throws DisallowedException, ObjectNotFoundException;
+	public SortedSet<AppRoleInfo> adminGetRolesForUser(AppUserInfo user)
+			throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @see com.gtwm.pb.model.interfaces.AuthManagerInfo#getUsers(HttpServletRequest)
@@ -341,7 +346,8 @@ public interface ViewMethodsInfo {
 	 *             if relatedTable's primary key isn't in the report
 	 */
 	public Set<Integer> getRelatedRowIds(int masterRowId, TableInfo relatedTable)
-			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException, ObjectNotFoundException;
+			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException,
+			ObjectNotFoundException;
 
 	/**
 	 * @see #getRelatedRowIds(int, TableInfo)
@@ -466,9 +472,8 @@ public interface ViewMethodsInfo {
 	/**
 	 * Return report summary data for a specific report
 	 */
-	public ChartDataInfo getChartData(ChartInfo reportSummary)
-			throws DisallowedException, SQLException, ObjectNotFoundException,
-			CodingErrorException, CantDoThatException;
+	public ChartDataInfo getChartData(ChartInfo reportSummary) throws DisallowedException,
+			SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
 	/**
 	 * Generate a temporary report summary (not persisted) for an individual
@@ -483,9 +488,8 @@ public interface ViewMethodsInfo {
 	 * cached data if available, even if the company schema or data has been
 	 * changed since the summary was saved to cache
 	 */
-	public ChartDataInfo getCachedChartData(ChartInfo reportSummary)
-			throws DisallowedException, ObjectNotFoundException, CodingErrorException,
-			CantDoThatException, SQLException;
+	public ChartDataInfo getCachedChartData(ChartInfo reportSummary) throws DisallowedException,
+			ObjectNotFoundException, CodingErrorException, CantDoThatException, SQLException;
 
 	/**
 	 * Return a word cloud for the data in the current session report. The words
@@ -510,9 +514,9 @@ public interface ViewMethodsInfo {
 	 * 
 	 * Also allow specific stop words to be set to blacklist unwanted terms
 	 */
-	public SortedSet<WordInfo> getReportWordCloud(BaseReportInfo report, ReportFieldInfo reportField,
-			Set<String> stopWords, int minWeight, int maxWeight, int maxTags)
-			throws ObjectNotFoundException, DisallowedException, CodingErrorException,
+	public SortedSet<WordInfo> getReportWordCloud(BaseReportInfo report,
+			ReportFieldInfo reportField, Set<String> stopWords, int minWeight, int maxWeight,
+			int maxTags) throws ObjectNotFoundException, DisallowedException, CodingErrorException,
 			CantDoThatException, SQLException;
 
 	/**
