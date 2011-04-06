@@ -119,6 +119,8 @@ public class Public extends VelocityViewServlet {
 								if (inputValue.isNull()) {
 									// If a mandatory field is empty, return to the form and report the error
 									templateName = templatePath + "form";
+									context.put("gtpbPublicTable", table);
+									context.put("gtpbCompany", company);
 									AgileBaseException exceptionCaught = new InputRecordException("This required field has to be filled in", inputField);
 									return this.getUserInterfaceTemplate(request, response, templateName, context, exceptionCaught);
 								}
