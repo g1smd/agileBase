@@ -6,7 +6,7 @@ package com.gtwm.pb.model.interfaces;
 public interface CachedJSONInfo {
 
 	public String getJSON();
-	
-	/** Return the epoch time that this object was created */
-	public long getCacheTime();
+
+	/** Return the number of milliseconds since this object was created */
+	public long getCacheAge();
 }

@@ -17,7 +17,10 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.view.VelocityViewServlet;
 import org.grlea.log.SimpleLogger;
+import org.json.JSONException;
+
 import com.gtwm.pb.model.interfaces.AppUserInfo;
+import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
@@ -71,13 +74,14 @@ public class Public extends VelocityViewServlet {
 			// var is from public input, clean
 			templateName = templateName.replaceAll("\\W", "");
 		}
+		AppUserInfo publicUser = null;
 		for (PublicAction publicAction : publicActions) {
 			String publicActionValue = request.getParameter(publicAction.toString().toLowerCase());
 			if (publicActionValue != null) {
 				TableInfo table = null;
 				CompanyInfo company = null;
 				try {
-					AppUserInfo publicUser = ServletUtilMethods.getPublicUserForRequest(request,
+					publicUser = ServletUtilMethods.getPublicUserForRequest(request,
 							this.databaseDefn.getAuthManager().getAuthenticator());
 					company = publicUser.getCompany();
 					String internalTableName = request.getParameter("t");
@@ -87,11 +91,43 @@ public class Public extends VelocityViewServlet {
 					}
 					table = this.getPublicTable(company, internalTableName);
 				} catch (AgileBaseException abex) {
-					ServletUtilMethods.logException(abex, request, "Error preparing public form");
-					return this
-							.getUserInterfaceTemplate(request, response, "report_error", context, abex);
+					ServletUtilMethods.logException(abex, request, "Error preparing public data");
+					return this.getUserInterfaceTemplate(request, response, "report_error",
+							context, abex);
 				}
 				switch (publicAction) {
+				case GET_REPORT_JSON:
+					templateName = "report_json";
+					String internalReportName = request.getParameter("r");
+					try {
+						if (internalReportName == null) {
+							throw new MissingParametersException(
+									"r (internal report ID) parameter is necessary to export report JSON");
+						}
+						BaseReportInfo report = table.getReport(internalReportName);
+						if (!report.getCalendarSyncable()) {
+							throw new CantDoThatException("The report " + report
+									+ " has not been set as publicly exportable");
+						}
+						String reportJSON = this.databaseDefn.getDataManagement().getReportJSON(
+								publicUser, report);
+						context.put("gtwmReportJSON", reportJSON);
+					} catch (AgileBaseException abex) {
+						ServletUtilMethods.logException(abex, request,
+								"General error performing save from public");
+						return this.getUserInterfaceTemplate(request, response, templateName,
+								context, abex);
+					} catch (JSONException jsonex) {
+						ServletUtilMethods.logException(jsonex, request,
+								"General error performing save from public");
+						return this.getUserInterfaceTemplate(request, response, templateName,
+								context, jsonex);
+					} catch (SQLException sqlex) {
+						ServletUtilMethods.logException(sqlex, request,
+								"General error performing save from public");
+						return this.getUserInterfaceTemplate(request, response, templateName,
+								context, sqlex);
+					}
 				case SHOW_FORM:
 					context.put("gtpbPublicTable", table);
 					context.put("gtpbCompany", company);
@@ -99,6 +135,14 @@ public class Public extends VelocityViewServlet {
 						templateName = "form";
 					}
 					templateName = templatePath + templateName;
+					if (!table.getTableFormPublic()) {
+						CantDoThatException cdtex = new CantDoThatException("The table " + table
+								+ " has not been set for use as a public form");
+						ServletUtilMethods.logException(cdtex, request,
+								"General error performing save from public");
+						return this.getUserInterfaceTemplate(request, response, templateName,
+								context, cdtex);
+					}
 					break;
 				case SAVE_NEW_RECORD:
 					if (templateName == null) {
@@ -107,22 +151,30 @@ public class Public extends VelocityViewServlet {
 					templateName = templatePath + templateName;
 					SessionDataInfo sessionData = new SessionData();
 					try {
+						if (!table.getTableFormPublic()) {
+							throw new CantDoThatException("The table " + table
+									+ " has not been set for use as a public form");
+						}
 						ServletSessionMethods.setFieldInputValues(sessionData, request, true,
 								this.databaseDefn, table, multipartItems);
-						//  Check that all mandatory fields have been filled in
+						// Check that all mandatory fields have been filled in
 						LinkedHashMap<BaseField, BaseValue> fieldInputValues = new LinkedHashMap<BaseField, BaseValue>(
 								sessionData.getFieldInputValues());
-						for (Map.Entry<BaseField, BaseValue> inputEntry : fieldInputValues.entrySet()) {
+						for (Map.Entry<BaseField, BaseValue> inputEntry : fieldInputValues
+								.entrySet()) {
 							BaseField inputField = inputEntry.getKey();
 							if (inputField.getNotNull()) {
 								BaseValue inputValue = inputEntry.getValue();
 								if (inputValue.isNull()) {
-									// If a mandatory field is empty, return to the form and report the error
+									// If a mandatory field is empty, return to
+									// the form and report the error
 									templateName = templatePath + "form";
 									context.put("gtpbPublicTable", table);
 									context.put("gtpbCompany", company);
-									AgileBaseException exceptionCaught = new InputRecordException("This required field has to be filled in", inputField);
-									return this.getUserInterfaceTemplate(request, response, templateName, context, exceptionCaught);
+									AgileBaseException exceptionCaught = new InputRecordException(
+											"This required field has to be filled in", inputField);
+									return this.getUserInterfaceTemplate(request, response,
+											templateName, context, exceptionCaught);
 								}
 							}
 						}
@@ -152,14 +204,10 @@ public class Public extends VelocityViewServlet {
 	}
 
 	private TableInfo getPublicTable(CompanyInfo company, String internalTableName)
-			throws ObjectNotFoundException, MissingParametersException, CantDoThatException {
+			throws ObjectNotFoundException, MissingParametersException {
 		TableInfo table = null;
 		for (TableInfo testTable : company.getTables()) {
 			if (testTable.getInternalTableName().equals(internalTableName)) {
-				if (!testTable.getTableFormPublic()) {
-					throw new CantDoThatException("The table " + testTable
-							+ " has not been set for use as a public form");
-				}
 				return testTable;
 			}
 		}
@@ -178,7 +226,8 @@ public class Public extends VelocityViewServlet {
 	 * @return The template requested, ready to parse by the UI
 	 */
 	private Template getUserInterfaceTemplate(HttpServletRequest request,
-			HttpServletResponse response, String templateName, Context context, Exception exceptionCaught) {
+			HttpServletResponse response, String templateName, Context context,
+			Exception exceptionCaught) {
 		ViewToolsInfo viewTools = new ViewTools(request, response, this.webAppRoot);
 		context.put("viewTools", viewTools);
 		context.put("exceptionCaught", exceptionCaught);

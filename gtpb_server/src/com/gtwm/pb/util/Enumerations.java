@@ -68,7 +68,7 @@ public class Enumerations {
 	 * Actions potentially available to un-authenticated users
 	 */
 	public enum PublicAction {
-		SHOW_FORM, SAVE_NEW_RECORD
+		SHOW_FORM, SAVE_NEW_RECORD, GET_REPORT_JSON;
 	}
 
 	/*

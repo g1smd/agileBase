@@ -26,7 +26,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileItem;
 import org.json.JSONException;
-
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
@@ -97,6 +96,8 @@ public interface DataManagementInfo {
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
 			throws CodingErrorException, CantDoThatException, SQLException, JSONException;
 
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report) throws JSONException, CodingErrorException, CantDoThatException, SQLException;
+	
 	/**
 	 * Return a report data object that contains metadata about the report data.
 	 * Note, to get actual report rows which is the more usual case, use
