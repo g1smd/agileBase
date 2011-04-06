@@ -17,7 +17,7 @@
 ##
 ## Used by view.vm and edit.vm
 ## $tableDataRow and $field must be defined by them
-#if (! $field.getTableContainingField().getPrimaryKey().equals($field)) ## remove to show primary key field
+#if(!$field.getTableContainingField().getPrimaryKey().equals($field)) ## remove to show primary key field
 	#set($fieldCategory = $field.getFieldCategory())
 	#if($fieldCategory != "REFERENCED_REPORT_DATA")
 	  #if($fieldCategory != "FILE")

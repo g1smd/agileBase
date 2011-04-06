@@ -329,10 +329,6 @@ public class Enumerations {
 		}
 	}
 	
-	public enum Apps {
-		DASHBOARD, CALENDAR, WIKI, A3_REPORTS, WORDCLOUD, PUBLIC_FORMS, MKIS, GLOBAL_SEARCH;
-	}
-
 	/**
 	 * In a chart you can group by any field in the report, but the addition of
 	 * field modifiers allows you to do things like group by year, quarter or

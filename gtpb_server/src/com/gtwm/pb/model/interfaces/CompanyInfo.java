@@ -25,7 +25,6 @@ import com.gtwm.pb.dashboard.interfaces.DashboardInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.manageUsage.UsageLogger.LogType;
-import com.gtwm.pb.util.Enumerations.Apps;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
 /**
@@ -127,9 +126,9 @@ public interface CompanyInfo {
 	/**
 	 * Return a list of activated apps
 	 */
-	public EnumSet<Apps> getApps();
+	public Set<String> getApps();
 	
-	public void addApp(Apps app);
+	public void addApp(String app);
 	
-	public void removeApp(Apps app);
+	public void removeApp(String app);
 }
