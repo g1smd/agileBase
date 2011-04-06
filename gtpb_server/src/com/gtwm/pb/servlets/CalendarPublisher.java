@@ -96,11 +96,6 @@ public final class CalendarPublisher extends HttpServlet {
 			throw new ServletException("Unrecognised get parameter " + getType);
 		}
 	}
-
-	private void doFormGet(HttpServletRequest request, HttpServletResponse response)
-	throws ServletException {
-	
-	}
 	
 	private void doCalendarGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException {

@@ -1497,6 +1497,47 @@ public final class DataManagement implements DataManagementInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report) throws JSONException, CodingErrorException, CantDoThatException, SQLException {
+		String id = report.getInternalReportName();
+		CachedJSONInfo cachedJSON = this.cachedReportJSONs.get(id);
+		if (cachedJSON != null) {
+			long cacheAge = cachedJSON.getCacheAge();
+			if (cacheAge < (30 * 60 * 1000)) { // 30 minutes
+				this.reportJsonCacheHits.incrementAndGet();
+				return cachedJSON.getJSON();
+			}
+		}
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
+				new HashMap<BaseField, String>(0), false, new HashMap<BaseField, Boolean>(0), 10000);
+		JSONStringer js = new JSONStringer();
+		js.array();
+		for (DataRowInfo reportDataRow : reportDataRows) {
+			js.object();
+			// TODO: could potentially do a more complex JSON object if the need arises,
+			// with e.g. an array of fields and additional properties such as field names
+			for (ReportFieldInfo reportField : report.getReportFields()) {
+				DataRowFieldInfo value = reportDataRow.getValue(reportField);
+				js.key(reportField.getInternalFieldName()).value(value.toString());
+			}
+			js.endObject();
+		}
+		js.endArray();
+		UsageLogger usageLogger = new UsageLogger(this.dataSource);
+		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(), 10000, "getReportJSON");
+		UsageLogger.startLoggingThread(usageLogger);
+		String json = js.toString();
+		cachedJSON = new CachedJSON(json);
+		this.cachedReportJSONs.put(id, cachedJSON);
+		int cacheMisses = this.reportJsonCacheMisses.incrementAndGet();
+		if (cacheMisses > 100) {
+			logger.info("Report JSON cache hits: " + this.reportJsonCacheHits + ", misses "
+					+ cacheMisses);
+			this.reportJsonCacheHits.set(0);
+			this.reportJsonCacheMisses.set(0);
+		}
+		return json;
+	}
+
 	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
 			throws CodingErrorException, CantDoThatException, SQLException, JSONException {
@@ -1512,7 +1553,7 @@ public final class DataManagement implements DataManagementInfo {
 		String id = report.getInternalReportName() + sortedFilterValues.toString();
 		CachedJSONInfo cachedJSON = this.cachedCalendarJSONs.get(id);
 		if (cachedJSON != null) {
-			this.jsonCacheHits.incrementAndGet();
+			this.calendarJsonCacheHits.incrementAndGet();
 			// Note: if we choose not to invalidate the cache on every data
 			// change, we could return only JSON that was newer than a certain
 			// time here, say the last data change time plus ten secs
@@ -1573,11 +1614,12 @@ public final class DataManagement implements DataManagementInfo {
 		String json = js.toString();
 		cachedJSON = new CachedJSON(json);
 		this.cachedCalendarJSONs.put(id, cachedJSON);
-		int cacheMisses = this.jsonCacheMisses.incrementAndGet();
+		int cacheMisses = this.calendarJsonCacheMisses.incrementAndGet();
 		if (cacheMisses > 100) {
-			this.logger.info("JSON cache hits: " + this.jsonCacheHits + ", misses " + cacheMisses);
-			this.jsonCacheHits.set(0);
-			this.jsonCacheMisses.set(0);
+			logger.info("JSON cache hits: " + this.calendarJsonCacheHits + ", misses "
+					+ cacheMisses);
+			this.calendarJsonCacheHits.set(0);
+			this.calendarJsonCacheMisses.set(0);
 		}
 		return json;
 	}
@@ -1704,11 +1746,13 @@ public final class DataManagement implements DataManagementInfo {
 		return reportData;
 	}
 
-	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> textFields, Map<BaseField, String> reportFilterValues,
-			int rowLimit) throws SQLException, CantDoThatException {
+	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> textFields,
+			Map<BaseField, String> reportFilterValues, int rowLimit) throws SQLException,
+			CantDoThatException {
 		StringBuilder conglomoratedText = new StringBuilder(8192);
 		if (textFields.size() == 0) {
-			throw new CantDoThatException("One or more text fields must be supplied to get report data text");
+			throw new CantDoThatException(
+					"One or more text fields must be supplied to get report data text");
 		}
 		Connection conn = null;
 		try {
@@ -1719,9 +1763,11 @@ public final class DataManagement implements DataManagementInfo {
 					reportFilterValues, false);
 			String filterArgs = null;
 			List<ReportQuickFilterInfo> filtersUsed = null;
-			// TODO: there is only one WHERE clause - there should be an improvement
+			// TODO: there is only one WHERE clause - there should be an
+			// improvement
 			// over a loop
-			for (Map.Entry<String, List<ReportQuickFilterInfo>> whereClause : whereClauseMap.entrySet()) {
+			for (Map.Entry<String, List<ReportQuickFilterInfo>> whereClause : whereClauseMap
+					.entrySet()) {
 				filterArgs = whereClause.getKey();
 				filtersUsed = whereClause.getValue();
 			}
@@ -2340,6 +2386,8 @@ public final class DataManagement implements DataManagementInfo {
 
 	private Map<String, CachedJSONInfo> cachedCalendarJSONs = new ConcurrentHashMap<String, CachedJSONInfo>();
 
+	private Map<String, CachedJSONInfo> cachedReportJSONs = new ConcurrentHashMap<String, CachedJSONInfo>();
+
 	private final DataSource dataSource;
 
 	private final String webAppRoot;
@@ -2362,9 +2410,13 @@ public final class DataManagement implements DataManagementInfo {
 
 	private AtomicInteger chartDataCacheMisses = new AtomicInteger();
 
-	private AtomicInteger jsonCacheHits = new AtomicInteger();
+	private AtomicInteger calendarJsonCacheHits = new AtomicInteger();
 
-	private AtomicInteger jsonCacheMisses = new AtomicInteger();
+	private AtomicInteger calendarJsonCacheMisses = new AtomicInteger();
+
+	private AtomicInteger reportJsonCacheHits = new AtomicInteger();
+
+	private AtomicInteger reportJsonCacheMisses = new AtomicInteger();
 
 	private float uploadSpeed = 50000; // Default to 50KB per second
 

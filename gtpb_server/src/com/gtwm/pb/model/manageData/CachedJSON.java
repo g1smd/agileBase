@@ -18,8 +18,8 @@ public class CachedJSON implements CachedJSONInfo {
 		return this.cachedJSON;
 	}
 
-	public long getCacheTime() {
-		return this.cacheTime;
+	public long getCacheAge() {
+		return System.currentTimeMillis() - this.cacheTime;
 	}
 	
 	private final long cacheTime;
