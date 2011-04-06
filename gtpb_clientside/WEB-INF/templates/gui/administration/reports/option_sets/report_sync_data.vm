@@ -18,19 +18,14 @@
 #set($report = $sessionData.getReport())
 #set($calendarSyncable = $report.getCalendarSyncable())
 #set($calendarField = $report.getCalendarField())
-#if($calendarSyncable || $calendarField)
-  Allowing calendar synchronisation will allow users to export information in this report to Google Calendar (or other calendars).<p>
-  Once exported, data is no longer password protected by agileBase so please be aware of any security considerations<p>
-  <input type="checkbox" name="set_calendar_syncable" value="true" onclick="new fChange(this)" #if($calendarSyncable)checked #end> Allow calendar synchronization
-  #if($calendarField)
-	by $calendarField<p>
-	<a href="#" onclick="javascript:fShowModalDialog('gui/calendar_export/calendar_export_wizard','Calendar Export', function() {}, 'next ok cancel', 'width=800px; height=600px');">Export calendar</a>
-  #else
-	<div class="warningmessage">
-	  <b>No valid dates</b><p>
-	  This report contains no date fields that are accurate to the day, so can't be sync'ed to a calendar
-	</div>
-  #end
-#else
-  This calendar can't be synced as it doesn't contain any user-created date fields that are accurate to the day.
+This option will allow data from this report to be accessed by the public without any username, password or other authentication.<p>
+Please be aware of any security considerations<p>
+<input type="checkbox" name="set_calendar_syncable" value="true" onclick="new fChange(this)" #if($calendarSyncable)checked #end> Allow public access
+If public access is allowed, you can use one of these options to export data:
+#if($calendarField)
+  Use $calendarField to <a href="#" onclick="javascript:fShowModalDialog('gui/calendar_export/calendar_export_wizard','Calendar Export', function() {}, 'next ok cancel', 'width=800px; height=600px');">export to a public calendar</a>, such as Google Calendar or a mobile phone/tablet<p>
 #end
+#set($internalCompanyName = $view.getLoggedInUser().getCompany().getInternalCompanyName())
+#set($internalTableName = $report.getParentTable().getInternalTableName())
+#set($internalReportName = $report.getInternalReportName())
+Use <a target="_blank" href="Public.ab?get_report_json=true&c=$internalCompanyName&t=$internalTableName&r=$internalReportName">this url</a> to integrate with a third party website or service using JSON data exchange
