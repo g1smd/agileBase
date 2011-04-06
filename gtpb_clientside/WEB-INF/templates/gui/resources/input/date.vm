@@ -108,7 +108,7 @@
   </div>
 
   #if($userCanEdit && !$globalEdit)
-	#if($field.getNotNull() && ( ($tableDataRow.get($field).isNull() || $customAction) )
+	#if($field.getNotNull() && ( ($tableDataRow.get($field).isNull() || $customAction) ))
 		<span class="mandated">* Mandatory field - please enter a value</span>
 	#end
   #end
