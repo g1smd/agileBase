@@ -280,6 +280,13 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return this.apps;
 	}
 
+	/** 
+	 * Used only by Hibernate
+	 */
+	private void setApps(Set<String> apps) {
+		this.apps = apps;
+	}
+	
 	public void addApp(String app) {
 		this.apps.add(app);
 	}
