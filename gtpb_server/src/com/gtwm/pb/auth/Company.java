@@ -23,7 +23,6 @@ import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.Module;
 import com.gtwm.pb.model.manageUsage.UsageLogger.LogType;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,21 +34,16 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Collections;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.Sort;
 import org.hibernate.annotations.SortType;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
-import com.gtwm.pb.util.Enumerations.Apps;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
@@ -162,7 +156,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 				.getTabAddressesCollection()));
 	}
 
-	@CollectionOfElements
+	@ElementCollection(fetch = FetchType.EAGER)
 	private synchronized Set<String> getTabAddressesCollection() {
 		return this.tabAddresses;
 	}
@@ -246,7 +240,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return Collections.unmodifiableSortedSet(this.getChartIdsForDashboardDirect());
 	}
 
-	@CollectionOfElements(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@Sort(type = SortType.NATURAL)
 	private SortedSet<Long> getChartIdsForDashboardDirect() {
 		return this.chartIdsForDashboard;
@@ -262,7 +256,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return Collections.unmodifiableSortedSet(this.getChartIdsNotForDashboardDirect());
 	}
 
-	@CollectionOfElements(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	@Sort(type = SortType.NATURAL)
 	private SortedSet<Long> getChartIdsNotForDashboardDirect() {
 		return this.chartIdsNotForDashboard;
@@ -281,17 +275,16 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		this.getChartIdsNotForDashboardDirect().remove(id);
 	}
 	
-	@ManyToMany
-	@Enumerated(EnumType.STRING)
-	public EnumSet<Apps> getApps() {
+	@ElementCollection(fetch = FetchType.EAGER)
+	public Set<String> getApps() {
 		return this.apps;
 	}
 
-	public void addApp(Apps app) {
+	public void addApp(String app) {
 		this.apps.add(app);
 	}
 
-	public void removeApp(Apps app) {
+	public void removeApp(String app) {
 		this.apps.remove(app);
 	}
 
@@ -352,6 +345,6 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 
 	private DashboardInfo dashboard = null;
 
-	private EnumSet<Apps> apps = EnumSet.noneOf(Apps.class);
+	private Set<String> apps = new HashSet<String>();
 
 }
