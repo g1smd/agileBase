@@ -503,7 +503,7 @@ function fSexyUpload() {
 	jqForm.sexyPost({
 	  start: function(event) {
 		jqProgressBar.show();
-		jqProgressBar.html("<img src='resources/upload_ajax-loader.gif' /> " + jqUploadInfo.text());
+		jqProgressBar.html(jqUploadInfo.html());
 	  },
       progress: function(event, completed, loaded, total) {
 		jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
