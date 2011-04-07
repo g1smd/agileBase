@@ -36,7 +36,7 @@ var pane3Scripts = function() {
 
 // Tab interface object
 var TabInterfaceObject = function(containerElem) {
-var TabInterfaceObjectPub = new Object();
+	var TabInterfaceObjectPub = new Object();
 
 	var currentRowId = -1;
     var jqTabInterface = $(containerElem);
@@ -509,8 +509,8 @@ function fSexyUpload() {
 		jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
       },
       complete: function(event, responseText) {
-    	alert('upload complete');
-        jqUploadInfo.text("Upload complete");
+        jqProgressBar.text("Upload complete");
+        //TODO: refresh the tab
       },
       error: function(event) {
         jqProgressBar.text("Error, file upload incomplete");
