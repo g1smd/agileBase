@@ -489,7 +489,7 @@ function uploadFile(fileInputElement) {
       jqUploadInfo.html(fileSizeInfo);
     }
   }
-  fileInputElement.form.submit();
+  //fileInputElement.form.submit();
 }
 
 /* Adds progress bar to file uploads
@@ -513,11 +513,11 @@ function fSexyUpload() {
       error: function(event) {
         jqProgressBar.text("Error, file upload incomplete");
       	jqUploadInfo.text("Error, file upload incomplete");
-      },
+      }/* ,
       abort: function(event) {
         jqProgressBar.text("Upload aborted");
         jqUploadInfo.text("Upload aborted");
-      }
+      } */
     });
   });
 }
