@@ -1513,6 +1513,7 @@ public final class DataManagement implements DataManagementInfo {
 		js.array();
 		for (DataRowInfo reportDataRow : reportDataRows) {
 			js.object();
+			js.key("rowId").value(reportDataRow.getRowId());
 			// TODO: could potentially do a more complex JSON object if the need arises,
 			// with e.g. an array of fields and additional properties such as field names
 			for (ReportFieldInfo reportField : report.getReportFields()) {
