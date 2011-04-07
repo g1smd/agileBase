@@ -112,7 +112,7 @@ public class Public extends VelocityViewServlet {
 						String reportJSON = this.databaseDefn.getDataManagement().getReportJSON(
 								publicUser, report);
 						context.put("gtwmReportJSON", reportJSON);
-						response.setContentType("application/json");
+						//response.setContentType("application/json");
 					} catch (AgileBaseException abex) {
 						ServletUtilMethods.logException(abex, request,
 								"General error performing save from public");
