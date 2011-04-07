@@ -488,8 +488,9 @@ function uploadFile(fileInputElement) {
       }
       jqUploadInfo.html(fileSizeInfo);
     }
+  } else {
+    fileInputElement.form.submit();
   }
-  //fileInputElement.form.submit();
 }
 
 /* Adds progress bar to file uploads
@@ -502,13 +503,13 @@ function fSexyUpload() {
 	jqForm.sexyPost({
 	  start: function(event) {
 		jqProgressBar.show();
-		jqProgressBar.text(jqUploadInfo.text() + "(copied)");
+		jqProgressBar.text(jqUploadInfo.text());
 	  },
       progress: function(event, completed, loaded, total) {
 		jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
       },
       complete: function(event, responseText) {
-        jqUploadInfo.text("Upload complete")
+        jqUploadInfo.text("Upload complete");
       },
       error: function(event) {
         jqProgressBar.text("Error, file upload incomplete");
