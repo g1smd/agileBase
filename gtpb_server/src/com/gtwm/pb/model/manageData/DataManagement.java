@@ -1526,7 +1526,7 @@ public final class DataManagement implements DataManagementInfo {
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
 		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(), 10000, "getReportJSON");
 		UsageLogger.startLoggingThread(usageLogger);
-		String json = js.toString() + "\n";
+		String json = js.toString();
 		cachedJSON = new CachedJSON(json);
 		this.cachedReportJSONs.put(id, cachedJSON);
 		int cacheMisses = this.reportJsonCacheMisses.incrementAndGet();
