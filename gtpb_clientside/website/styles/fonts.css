@@ -1,14 +1,14 @@
 @font-face {
 	font-family: 'Pigiarniq';
 
-        /* for IE */
-	/* src: url('../fonts/Pigiarniq/Pigiarniq_Regular.ttf'); */
+  /* for IE */
+  /* src: url('../fonts/Pigiarniq/Pigiarniq_Regular.ttf'); */
 
-        /*
-         * for non-IE: first see if the font exists locally on the browser's
-         * computer.  If so, use that copy of the font.  Otherwise, load it
-         * from the server
-         */
+  /*
+   * for non-IE: first see if the font exists locally on the browser's
+   * computer.  If so, use that copy of the font.  Otherwise, load it
+   * from the server
+   */
 	src: local('Pigiarniq'),
 	     url('../fonts/Pigiarniq/Pigiarniq_Regular.ttf') format('truetype');
 }
