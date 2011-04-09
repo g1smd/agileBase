@@ -513,7 +513,7 @@ public class ReportData implements ReportDataInfo {
 		}
 		PreparedStatement statement = conn.prepareStatement(SQLCode.toString());
 		statement = this.fillInFilterValues(filtersUsed, statement);
-		logger.debug("Prepared statement: " + statement);
+		//logger.debug("Prepared statement: " + statement);
 		return statement;
 	}
 
