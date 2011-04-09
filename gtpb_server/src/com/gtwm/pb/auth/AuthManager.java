@@ -88,7 +88,7 @@ public final class AuthManager implements AuthManagerInfo {
 					"from Authenticator").uniqueResult();
 			if (this.authenticator != null) {
 				Authenticator auth = (Authenticator) this.authenticator;
-				CompanyInfo gtwmCompany = null;
+				CompanyInfo singleCompany = null;
 				for (CompanyInfo company : auth.getCompanies()) {
 					// All the logger.info lines below are basically to force
 					// Hibernate to read the objects into memory by printing out
@@ -97,8 +97,12 @@ public final class AuthManager implements AuthManagerInfo {
 					logger.info("" + company + " users: " + company.getUsers());
 					logger.info("" + company + " modules: " + company.getModules());
 					logger.info("" + company + " tabs: " + company.getTabAddresses());
+					// Company identifiers:
+					// GTwM = aeaa2e59ef1798629
+					// CH = aa1d402725710a94d
+					// TD = dg1mzrcv443adjnpg
 					if (company.getInternalCompanyName().equals("aeaa2e59ef1798629")) {
-						gtwmCompany = company;
+						singleCompany = company;
 					}
 				}
 				for(AppUserInfo user : auth.getUsers()) {
@@ -113,7 +117,7 @@ public final class AuthManager implements AuthManagerInfo {
 					if (privilege instanceof UserTablePrivilege) {
 						UserTablePrivilege priv = (UserTablePrivilege) privilege;
 						CompanyInfo company = priv.getUser().getCompany();
-						if (AppProperties.testMode && !company.equals(gtwmCompany)) {
+						if (AppProperties.testMode && !company.equals(singleCompany)) {
 							continue PRIVILEGE_LOOP;
 						}
 						TableInfo table = priv.getTable();
@@ -127,7 +131,7 @@ public final class AuthManager implements AuthManagerInfo {
 					if (privilege instanceof RoleTablePrivilege) {
 						RoleTablePrivilege priv = (RoleTablePrivilege) privilege;
 						CompanyInfo company = priv.getRole().getCompany();
-						if (AppProperties.testMode && !company.equals(gtwmCompany)) {
+						if (AppProperties.testMode && !company.equals(singleCompany)) {
 							continue PRIVILEGE_LOOP;
 						}
 						TableInfo table = priv.getTable();

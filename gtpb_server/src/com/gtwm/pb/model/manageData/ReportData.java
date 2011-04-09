@@ -641,17 +641,17 @@ public class ReportData implements ReportDataInfo {
 				filterValue = preprocessDateFilter(filterValue);
 			}
 			// OR/AND filtering of values (restricted to a given field)
-			String[] orFilterParts = filterValue.split(QuickFilterType.AND.getUserRepresentation()
+			String[] andFilterParts = filterValue.split(QuickFilterType.AND.getUserRepresentation()
 					.toLowerCase());
 			String filterStringForField = "";
-			for (String orFilterPartValue : orFilterParts) {
-				String[] andFilterParts = orFilterPartValue.split(QuickFilterType.OR
+			for (String andFilterPartValue : andFilterParts) {
+				String[] orFilterParts = andFilterPartValue.split(QuickFilterType.OR
 						.getUserRepresentation().toLowerCase());
-				if (andFilterParts.length > 1) {
-					for (String andFilterPartValue : andFilterParts) {
+				if (orFilterParts.length > 1) {
+					for (String orFilterPartValue : orFilterParts) {
 						// Generate sub-part filter string for field:
 						filterStringForField += "("
-								+ generateFilterStringForField(filterField, andFilterPartValue,
+								+ generateFilterStringForField(filterField, orFilterPartValue,
 										filtersUsed, exactFilters) + ")";
 						filterStringForField += QuickFilterType.OR.getSqlRepresentation();
 					}
@@ -663,26 +663,26 @@ public class ReportData implements ReportDataInfo {
 				} else {
 					// Generate sub-part filter string for field:
 					filterStringForField += "("
-							+ generateFilterStringForField(filterField, orFilterPartValue,
+							+ generateFilterStringForField(filterField, andFilterPartValue,
 									filtersUsed, exactFilters) + ")";
 				}
 				filterStringForField += QuickFilterType.AND.getSqlRepresentation();
 			}
 			if (filterStringForField.length() > 0) {
-				// remove trailing OR and spaces
+				// remove trailing AND and spaces
 				int charsToRemove = QuickFilterType.AND.getSqlRepresentation().length();
 				filterStringForField = filterStringForField.substring(0,
 						filterStringForField.length() - charsToRemove);
 				filterStringForField = "(" + filterStringForField + ")";
-				filterArguments.append(filterStringForField + " OR ");
+				filterArguments.append(filterStringForField + " AND ");
 			}
 		}
 		// check that filter arguments were supplied
 		String filterArgs = "";
 		if (filterArguments.length() > 0) {
 			// remove trailing AND
-			if (filterArguments.toString().endsWith(" OR ")) {
-				filterArgs = filterArguments.substring(0, filterArguments.length() - 4).trim();
+			if (filterArguments.toString().endsWith(" AND ")) {
+				filterArgs = filterArguments.substring(0, filterArguments.length() - 5).trim();
 			}
 		}
 		Map<String, List<ReportQuickFilterInfo>> whereClause = new HashMap<String, List<ReportQuickFilterInfo>>();
