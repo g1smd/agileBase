@@ -34,7 +34,7 @@
     </head>
 	<body>
 	  #parse("gui/mobile/pane2_header.vm")
-      #parse("gui/reports_and_tables/tabs/summary.vm")
+    #parse("gui/reports_and_tables/tabs/summary.vm")
 	</body></head>
   </html>
 #else

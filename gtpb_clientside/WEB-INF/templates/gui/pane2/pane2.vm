@@ -95,6 +95,7 @@
 	  <script type="text/javascript">
 	  $(document).ready(function() {
 	    assignButtonModuleActions();
+      loadCharts();
 	  });	  
 	  </script>
 	#else
@@ -114,8 +115,8 @@
    	     top.document.getElementById('button_links').removeAttribute('disabled');
          top.document.getElementById('button_apps').removeAttribute('disabled');
    	     if (top.document.getElementById('button_info')) {
-		   top.document.getElementById('button_info').removeAttribute('disabled');
-		 }
+		       top.document.getElementById('button_info').removeAttribute('disabled');
+		     }
         </script>
       #else
       <script language=Javascript>
@@ -127,22 +128,22 @@
    		       // do nothing
    		     }
 
-   		        top.document.getElementById('button_new').setAttribute('disabled','true');
-   	            top.document.getElementById('button_clone').setAttribute('disabled','true');
-   		        top.document.getElementById('button_delete').setAttribute('disabled','true');
-        		top.document.getElementById('button_import').setAttribute('disabled','true');
-        	#if($view.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
+           top.document.getElementById('button_new').setAttribute('disabled','true');
+           top.document.getElementById('button_clone').setAttribute('disabled','true');
+           top.document.getElementById('button_delete').setAttribute('disabled','true');
+           top.document.getElementById('button_import').setAttribute('disabled','true');
+        	 #if($view.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
 	    	    top.document.getElementById('button_export').removeAttribute('disabled');
    	     		top.document.getElementById('button_print').removeAttribute('disabled');
    	     		top.document.getElementById('button_links').removeAttribute('disabled');
-				if (top.document.getElementById('button_info')) {
-   	     		  top.document.getElementById('button_info').removeAttribute('disabled');
-				}
-        	#else
+    				if (top.document.getElementById('button_info')) {
+       	     		  top.document.getElementById('button_info').removeAttribute('disabled');
+    				}
+        	 #else
         		top.document.getElementById('button_export').setAttribute('disabled','true');
         		top.document.getElementById('button_print').setAttribute('disabled','true');
-   	            top.document.getElementById('button_links').setAttribute('disabled','true');
-   	        #end
+            top.document.getElementById('button_links').setAttribute('disabled','true');
+           #end
       </script>
 	  #end
     <script language=Javascript src="resources/$resource_folder/new_delete.js"></script>
