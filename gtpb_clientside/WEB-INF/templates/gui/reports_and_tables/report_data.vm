@@ -65,13 +65,13 @@
   #foreach($datarow in $datarows)##
     #set($row=[])##
     #set($colours=[])##
-	#set($success = $row.ensureCapacity($colsCapacity))##
-	#set($success = $colours.ensureCapacity($colsCapacity))##
+	  #set($success = $row.ensureCapacity($colsCapacity))##
+	  #set($success = $colours.ensureCapacity($colsCapacity))##
     #set($dataRowFields = $datarow.getDataRowFields())##
     #foreach($field in $reportBaseFields)##
       #if((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
         #set($dataRowField = $dataRowFields.get($field))##
-        #if(($printout) && ($field.getClass().getSimpleName().equals("BigTextFieldDefn")))##
+        #if($printout && ($field.getContentSize() > 500))##
           #set($success=$row.add($dataRowField.getKeyValue()))##
         #else##
           #set($success=$row.add($dataRowField.getDisplayValue()))##

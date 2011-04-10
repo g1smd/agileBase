@@ -29,3 +29,9 @@ function assignButtonModuleActions() {
 		return false;
 	});
 }
+
+function loadCharts() {
+	$('#abCharts').load("AppController.servlet?return=gui/reports_and_tables/tabs/summary", function() {
+		fSetupCharts();
+	});
+}
