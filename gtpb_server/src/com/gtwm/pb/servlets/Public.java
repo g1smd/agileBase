@@ -129,13 +129,8 @@ public class Public extends VelocityViewServlet {
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, sqlex);
 					}
+					break;
 				case SHOW_FORM:
-					context.put("gtpbPublicTable", table);
-					context.put("gtpbCompany", company);
-					if (templateName == null) {
-						templateName = "form";
-					}
-					templateName = templatePath + templateName;
 					if (!table.getTableFormPublic()) {
 						CantDoThatException cdtex = new CantDoThatException("The table " + table
 								+ " has not been set for use as a public form");
@@ -143,6 +138,16 @@ public class Public extends VelocityViewServlet {
 								"General error performing save from public");
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, cdtex);
+					}
+					context.put("gtpbPublicTable", table);
+					context.put("gtpbCompany", company);
+					if (templateName == null) {
+						templateName = "form";
+					}
+					templateName = templatePath + templateName;
+					String gtpbCss = request.getParameter("css");
+					if (gtpbCss != null) {
+						context.put("css", gtpbCss);
 					}
 					break;
 				case SAVE_NEW_RECORD:
