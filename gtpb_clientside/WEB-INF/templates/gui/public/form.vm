@@ -22,6 +22,9 @@
 #set($company = $gtpbCompany)
 <style>
   input { margin: 10px; }
+  #if($gtpbCss)
+  @import url("$gtpbCss");
+  #end
 </style>
 ## Test for an exception caused by a previous save attempt
 #if($exceptionCaught)
