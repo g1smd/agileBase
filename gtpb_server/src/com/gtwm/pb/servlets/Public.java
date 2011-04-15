@@ -147,7 +147,7 @@ public class Public extends VelocityViewServlet {
 					templateName = templatePath + templateName;
 					String gtpbCss = request.getParameter("css");
 					if (gtpbCss != null) {
-						context.put("css", gtpbCss);
+						context.put("gtpbCss", gtpbCss);
 					}
 					break;
 				case SAVE_NEW_RECORD:
