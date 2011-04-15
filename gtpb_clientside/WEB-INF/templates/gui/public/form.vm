@@ -22,10 +22,10 @@
 #set($company = $gtpbCompany)
 <style>
   input { margin: 10px; }
-  #if($gtpbCss)
-  @import url("$gtpbCss");
-  #end
 </style>
+#if($gtpbCss)
+  <link rel="stylesheet" type="text/css" href="$gtpbCss" />
+#end
 ## Test for an exception caused by a previous save attempt
 #if($exceptionCaught)
 <div class="agilebase_error">
