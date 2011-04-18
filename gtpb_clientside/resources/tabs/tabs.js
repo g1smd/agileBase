@@ -678,6 +678,24 @@ function fDatePickers() {
   });
 }
 
+function fExpandContractSection() {
+  $("tr.separator").click(function() {
+	 var jqSeparator = $(this);
+	 // Work out if the section's currently expanded or not
+	 var jqFirstField = jqSeparator.next("tr");
+	 var expanded = false;
+	 if (jqFirstField.is(":visible")) {
+	   expanded = true;
+	 }
+	 var sectionRows = jqSeparator.nextUntil("tr.separator");
+	 if (expanded) {
+	   sectionRows.slideUp("normal");
+	 } else {
+	   sectionRows.slideDown("normal");
+	 }
+  });
+}
+
 function fAssignButtonTableActions() {
   $('button.tableaction').click(function() {
 	var actionName = $(this).attr('actionname');
@@ -771,3 +789,4 @@ pane3Scripts.functionList.push(fDatePickers);
 pane3Scripts.functionList.push(fSetupCharts);
 pane3Scripts.functionList.push(fAssignButtonTableActions);
 pane3Scripts.functionList.push(fSexyUpload);
+pane3Scripts.functionList.push(fExpandContractSection);
