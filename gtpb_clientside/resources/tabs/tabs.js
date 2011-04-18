@@ -770,10 +770,10 @@ function fSetupCharts() {
 	  $(this).append("<div class='chart_remover'><a href='?return=gui/reports_and_tables/pane3&remove_chart=true&summaryid=" + summaryId + "'><img border='0' src='resources/icons/cross-greyscale-round.png' /></a></div>");
 	  $(this).hover(
 		function() {
-		  $(this).find('.chart_remover').show("normal");
+		  $(this).find('.chart_remover').show();
 	    }, 
 	    function() {
-	      $(this).find('.chart_remover').hide("normal");
+	      $(this).find('.chart_remover').hide();
 	    }
 	  );
   });
