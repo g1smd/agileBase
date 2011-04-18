@@ -689,9 +689,9 @@ function fExpandContractSection() {
 	 }
 	 var sectionRows = jqSeparator.nextUntil("tr.separator");
 	 if (expanded) {
-	   sectionRows.slideUp("normal");
+	   sectionRows.hide("normal");
 	 } else {
-	   sectionRows.slideDown("normal");
+	   sectionRows.show("normal");
 	 }
   });
 }
@@ -770,10 +770,10 @@ function fSetupCharts() {
 	  $(this).append("<div class='chart_remover'><a href='?return=gui/reports_and_tables/pane3&remove_chart=true&summaryid=" + summaryId + "'><img border='0' src='resources/icons/cross-greyscale-round.png' /></a></div>");
 	  $(this).hover(
 		function() {
-		  $(this).find('.chart_remover').show();
+		  $(this).find('.chart_remover').fadeIn("normal");
 	    }, 
 	    function() {
-	      $(this).find('.chart_remover').hide();
+	      $(this).find('.chart_remover').fadeOut("normal");
 	    }
 	  );
   });
