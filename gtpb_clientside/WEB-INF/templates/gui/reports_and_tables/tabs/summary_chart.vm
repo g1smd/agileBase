@@ -142,7 +142,7 @@
   	    #set($success = $seriesData.add($point))
         #set($calendar = $viewTools.getCalendar())
         #set($temp = $calendar.clear())
-        #set($temp = $calendar.set($Integer.parseInt($year), $Integer.parseInt($month), $Integer.parseInt($date)))
+        #set($temp = $calendar.set($Integer.parseInt($year), $Integer.parseInt($month), $Integer.parseInt($day)))
         #if((!$scatter) && $oldCalendar)
           #set($distance = $calendar.getTimeInMillis() - $oldCalendar.getTimeInMillis())
           #set($temp = $viewTools.log("Distance between $calendar.getTime() and $oldCalendar.getTime() is $distance"))
