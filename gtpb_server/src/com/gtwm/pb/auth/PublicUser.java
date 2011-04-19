@@ -149,6 +149,14 @@ public class PublicUser implements AppUserInfo {
 		throw new CantDoThatException("This public user can have no default report");
 	}
 	
+	public void contractSection(String internalFieldName) throws CantDoThatException {
+		throw new CantDoThatException("This public user can have no contracted sections");
+	}
+	
+	public void expandSection(String internalFieldName) throws CantDoThatException {
+		throw new CantDoThatException("This public user can have no contracted sections");
+	}
+
 	public String toString() {
 		return this.getUserName();
 	}
@@ -192,5 +200,4 @@ public class PublicUser implements AppUserInfo {
 	private final String surname;
 
 	private final String internalUserName = (new RandomString()).toString();
-
 }

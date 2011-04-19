@@ -91,6 +91,14 @@ public interface AppUserInfo {
 	public void unhideReport(BaseReportInfo report) throws CantDoThatException;
 	
 	/**
+	 * Record the fact that a section in the edit tab is contracted for this user
+	 * @param internalFieldName	The identifier of the section heading field
+	 */
+	public void contractSection(String internalFieldName) throws CantDoThatException;
+	
+	public void expandSection(String internalFieldName) throws CantDoThatException;
+	
+	/**
 	 * Get the initial report this user should see when logging in
 	 */
 	public BaseReportInfo getDefaultReport() throws CantDoThatException;

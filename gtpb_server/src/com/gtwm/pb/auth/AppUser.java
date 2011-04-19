@@ -28,15 +28,20 @@ import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.UserType;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
 public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
@@ -160,14 +165,14 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 
 	@ManyToMany(targetEntity = BaseReportDefn.class, cascade={})
-	private synchronized Set<BaseReportInfo> getHiddenReportsDirect() {
+	private Set<BaseReportInfo> getHiddenReportsDirect() {
 		return this.hiddenReports;
 	}
 
 	/**
 	 * For Hibernate use only
 	 */
-	private synchronized void setHiddenReportsDirect(Set<BaseReportInfo> hiddenReports) {
+	private void setHiddenReportsDirect(Set<BaseReportInfo> hiddenReports) {
 		this.hiddenReports = hiddenReports;
 	}
 
@@ -188,7 +193,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	@ManyToMany(targetEntity = BaseReportDefn.class, cascade={})
 	// We need a custom joinTable so Hibernate doesn't confuse this ManyToMany with that for hidden reports, which has the same object types
 	@JoinTable(name="appuser_basereportdefn_opdash")
-	private synchronized Set<BaseReportInfo> getOperationalDashboardReportsDirect() {
+	private Set<BaseReportInfo> getOperationalDashboardReportsDirect() {
 		return this.operationalDashboardReports;
 	}
 
@@ -199,6 +204,23 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.operationalDashboardReports = operationalDashboardReports;
 	}
 
+	public synchronized void contractSection(String internalFieldName) {
+		this.getContractedSections().add(internalFieldName);
+	}
+	
+	public synchronized void expandSection(String internalFieldName) {
+		this.getContractedSections().remove(internalFieldName);
+	}
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	private Set<String> getContractedSections() {
+		return this.contractedSections;
+	}
+	
+	private void setContractedSections(Set<String> contractedSections) {
+		this.contractedSections = contractedSections;
+	}
+	
 	@OneToOne(targetEntity = BaseReportDefn.class, cascade={})
 	public BaseReportInfo getDefaultReport() {
 		return this.defaultReport;
@@ -260,6 +282,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private Set<BaseReportInfo> hiddenReports = new HashSet<BaseReportInfo>();
 	
 	private Set<BaseReportInfo> operationalDashboardReports = new HashSet<BaseReportInfo>();
+	
+	private Set<String> contractedSections = new HashSet<String>();
 	
 	private BaseReportInfo defaultReport = null;
 }
