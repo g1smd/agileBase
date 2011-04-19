@@ -686,13 +686,14 @@ function fExpandContractSection() {
 	 var expanded = false;
 	 if (jqFirstField.is(":visible")) {
 	   expanded = true;
-	 }
 	 var sectionRows = jqSeparator.nextUntil("tr.separator");
 	 if (expanded) {
 	   sectionRows.hide("normal");
 	 } else {
 	   sectionRows.show("normal");
 	 }
+	 $.post("AppController.servlet");
+	 jqSeparator.toggleClass("contracted");
   });
 }
 

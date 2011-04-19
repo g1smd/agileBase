@@ -112,34 +112,53 @@
   #set($seriesString = "$seriesString { name:'$seriesName', data: ")
   #set($seriesData = [])
   #if($dateAxis) ## Time series chart
+    #set($scatter = false)
     #foreach($summaryRow in $chartRows)
-	  #set($day = 1)
-	  #set($month = 1)
-	  #set($year = 0)
-	  #set($point = [])
-	  #foreach($grouping in $groupings)
-		#set($groupingModifier = $grouping.getGroupingModifier())
-		#if($groupingModifier == "DATE_YEAR")
-		  #set($year = $summaryRow.getGroupingValue($grouping))
-		#elseif($groupingModifier == "DATE_QUARTER")
-		  #set($quarter = $summaryRow.getGroupingValue($grouping))
-		  #set($month = ($mathTool.toInteger($quarter) - 1) * 3) ## Approximate quartering of a year
-		#elseif($groupingModifier == "DATE_MONTH")
-		  #set($month = $mathTool.toInteger($summaryRow.getGroupingValue($grouping)) - 1)
-		#elseif($groupingModifier == "DATE_DAY")
-		  #set($day = $summaryRow.getGroupingValue($grouping))
-		#else
-		  $viewTools.log("Error: unrecognised grouping modifier $groupingModifier for date axis $grouping in summary $summaryReport")
-		#end
-	  #end
-	  ## Don't add null grouping
-	  ## NB on some graphs, the null grouping can have the largest value
-	  #if(($year!= "") && ($month!= ""))
-	    #set($success = $point.add("Date.UTC($year,$month,$day)"))
-		#set($success = $point.add($summaryRow.getAggregateValue($aggregateFunction)))
-	    #set($success = $seriesData.add($point))
-	  #end
-    #end
+  	  #set($day = 1)
+  	  #set($month = 1)
+  	  #set($year = 0)
+  	  #set($point = [])
+  	  #foreach($grouping in $groupings)
+    		#set($groupingModifier = $grouping.getGroupingModifier())
+    		#if($groupingModifier == "DATE_YEAR")
+    		  #set($year = $summaryRow.getGroupingValue($grouping))
+    		#elseif($groupingModifier == "DATE_QUARTER")
+    		  #set($quarter = $summaryRow.getGroupingValue($grouping))
+    		  #set($month = ($mathTool.toInteger($quarter) - 1) * 3) ## Approximate quartering of a year
+    		#elseif($groupingModifier == "DATE_MONTH")
+    		  #set($month = $mathTool.toInteger($summaryRow.getGroupingValue($grouping)) - 1)
+    		#elseif($groupingModifier == "DATE_DAY")
+    		  #set($day = $summaryRow.getGroupingValue($grouping))
+    		#else
+    		  $viewTools.log("Error: unrecognised grouping modifier $groupingModifier for date axis $grouping in summary $summaryReport")
+    		#end
+  	  #end
+  	  ## Don't add null grouping
+  	  ## NB on some graphs, the null grouping can have the largest value
+  	  #if(($year!= "") && ($month!= ""))
+  	    #set($success = $point.add("Date.UTC($year,$month,$day)"))
+  		  #set($success = $point.add($summaryRow.getAggregateValue($aggregateFunction)))
+  	    #set($success = $seriesData.add($point))
+        #set($calendar = $viewTools.getCalendar())
+        #set($temp = $calendar.set(1, $year))
+        #set($temp = $calendar.set(2, $month))
+        #set($temp = $calendar.set(5, $day))
+        #set($temp = $calendar.set(11, 0)) ## hours
+        #set($temp = $calendar.set(12, 0)) ## minutes
+        #set($temp = $calendar.set(13, 0)) ## seconds
+        #set($temp = $calendar.set(14, 0)) ## milliseconds
+        #if((!$scatter) && $oldCalendar)
+          #set($distance = $calendar.getTimeInMillis() - $oldCalendar.getTimeInMillis())
+          #if($oldDistance)
+            #if($distance != $oldDistance)
+              #set($scatter = true)
+            #end
+          #end
+          #set($oldDistance = $distance)
+        #end
+        #set($oldCalendar = $calendar)
+  	  #end
+    #end ## end each row
   #elseif($pieChart)
 	#set($maxLegendChars = 5)
     #foreach($summaryRow in $chartRows)
@@ -209,19 +228,23 @@
   #set($export_filename = "agilebase_$export_filename")
   <script language="JavaScript">
     var $chart_id = new Highcharts.Chart({
-         chart: {
-            renderTo: "$chart_id",
+      chart: {
+        renderTo: "$chart_id",
 			#if($dateAxis)
-              defaultSeriesType: 'area',
-			  zoomType: 'x',
+        #if($scatter)
+          defaultSeriesType: 'scatter',
+        #else
+          defaultSeriesType: 'area',
+        #end
+        zoomType: 'x',
 			#elseif($pieChart)
 			  defaultSeriesType: 'pie',
 			#else
-              defaultSeriesType: 'bar',
+        defaultSeriesType: 'bar',
 			#end
 			height: $height ##,
 			##margin: $margin
-         },
+     },
 		 credits: {
 		 	enabled: false
 		 },
