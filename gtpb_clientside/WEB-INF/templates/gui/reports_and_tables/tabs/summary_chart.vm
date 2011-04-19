@@ -145,7 +145,7 @@
         #set($temp = $calendar.set($year, $month, $day))
         #if((!$scatter) && $oldCalendar)
           #set($distance = $calendar.getTimeInMillis() - $oldCalendar.getTimeInMillis())
-          #set($temp = $viewTools.log("Distance between $calendar.getTime() and $oldCalendar.getTime() is $distance"))
+          #set($temp = $viewTools.log("Distance between $day/$month/$year and $oldCalendar.getTime() is $distance"))
           #if($oldDistance)
             #if($distance != $oldDistance)
               #set($scatter = true)
