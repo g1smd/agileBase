@@ -155,7 +155,7 @@
                 #set($scatter = true)
               #end
             #elseif($numDateFields == 2)
-              #if($difference > 127800000)
+              #if($difference > 345600000)
                 #set($scatter = true)
               #end
             #elseif($difference > 7200000)
