@@ -112,7 +112,7 @@
   #set($seriesString = "$seriesString { name:'$seriesName', data: ")
   #set($seriesData = [])
   #if($dateAxis) ## Time series chart
-    #set($scatter = false)
+    #set($scatter = true)
     #foreach($summaryRow in $chartRows)
   	  #set($day = 1)
   	  #set($month = 1)
