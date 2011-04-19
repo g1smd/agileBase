@@ -147,20 +147,18 @@
         #set($temp = $calendar.set($Integer.parseInt("$year"), $Integer.parseInt("$month"), $Integer.parseInt("$day")))
         #if((!$scatter) && $oldCalendar)
           #set($distance = $calendar.getTimeInMillis() - $oldCalendar.getTimeInMillis())
-          $viewTools.log("Distance $calendar.getTime() - $oldCalendar.getTime() = $distance")
           #if($oldDistance)
             #set($difference = $distance - $oldDistance)
             #set($difference = $mathTool.abs($difference))
-            $viewTools.log("Difference from last distance is $difference")
-            #if($numDateFields == 1)
-              #if($difference > 2592000000)
+            #if($numDateFields == 1) ## Graph by years
+              #if($difference > 2592000000) ## and more than a month or so
                 #set($scatter = true)
               #end
-            #elseif($numDateFields == 2)
-              #if($difference > 345600000)
+            #elseif($numDateFields == 2) ## Months
+              #if($difference > 345600000) ## and more than a few days
                 #set($scatter = true)
               #end
-            #elseif($difference > 7200000)
+            #elseif($difference > 7200000) ## Days and more than a few hours
               #set($scatter = true)
             #end
           #end
