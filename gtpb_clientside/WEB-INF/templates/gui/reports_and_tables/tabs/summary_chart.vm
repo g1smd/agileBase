@@ -149,7 +149,7 @@
         #set($temp = $calendar.set(14, 0)) ## milliseconds
         #if((!$scatter) && $oldCalendar)
           #set($distance = $calendar.getTimeInMillis() - $oldCalendar.getTimeInMillis())
-          #set($temp = $viewTools.log("Distance is $distance"))
+          #set($temp = $viewTools.log("Distance between $calendar.getDate() and $oldCalendar.getDate() is $distance"))
           #if($oldDistance)
             #if($distance != $oldDistance)
               #set($scatter = true)
