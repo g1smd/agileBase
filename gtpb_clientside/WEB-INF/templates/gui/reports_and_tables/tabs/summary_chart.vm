@@ -146,7 +146,7 @@
         #if((!$scatter) && $oldCalendar)
           #set($distance = $calendar.getTimeInMillis() - $oldCalendar.getTimeInMillis())
           #if($oldDistance)
-            #set($difference = $mathTool.abs($distance, $oldDistance))
+            #set($difference = $mathTool.abs($distance - $oldDistance))
             $viewTools.log("Difference is $difference")
             #if($numDateFields == 1)
               #if($difference > 2592000000)
