@@ -114,6 +114,8 @@
   #set($seriesData = [])
   #if($dateAxis) ## Time series chart
     #set($scatter = false)
+    #set($oldDistance = false)
+    #set($oldCalendar = false)
     #foreach($summaryRow in $chartRows)
   	  #set($day = 1)
   	  #set($month = 1)
