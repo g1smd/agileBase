@@ -20,6 +20,7 @@
 ## - $chart
 ## - $chartRows
 #set($mathTool = $viewTools.getMathTool())
+#set($Integer = 0)
 #set($chart_id = "chart_$chart.getId()")
 #set($groupings = $chart.getGroupings())
 #set($aggregateFunctions = $chart.getAggregateFunctions())
@@ -140,13 +141,8 @@
   		  #set($success = $point.add($summaryRow.getAggregateValue($aggregateFunction)))
   	    #set($success = $seriesData.add($point))
         #set($calendar = $viewTools.getCalendar())
-        #set($temp = $calendar.set(1, $year))
-        #set($temp = $calendar.set(2, $month))
-        #set($temp = $calendar.set(5, $day))
-        #set($temp = $calendar.set(11, 0)) ## hours
-        #set($temp = $calendar.set(12, 0)) ## minutes
-        #set($temp = $calendar.set(13, 0)) ## seconds
-        #set($temp = $calendar.set(14, 0)) ## milliseconds
+        #set($temp = $calendar.clear())
+        #set($temp = $calendar.set($Integer.parseInt($year), $Integer.parseInt($month), $Integer.parseInt($date)))
         #if((!$scatter) && $oldCalendar)
           #set($distance = $calendar.getTimeInMillis() - $oldCalendar.getTimeInMillis())
           #set($temp = $viewTools.log("Distance between $calendar.getTime() and $oldCalendar.getTime() is $distance"))
