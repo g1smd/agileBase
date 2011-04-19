@@ -683,16 +683,13 @@ function fExpandContractSection() {
 	 var jqSeparator = $(this);
 	 // Work out if the section's currently expanded or not
 	 var jqFirstField = jqSeparator.next("tr");
-	 var expanded = false;
-	 if (jqFirstField.is(":visible")) {
-	   expanded = true;
 	 var sectionRows = jqSeparator.nextUntil("tr.separator");
-	 if (expanded) {
+	 if (jqFirstField.is(":visible")) {
 	   sectionRows.hide("normal");
 	 } else {
 	   sectionRows.show("normal");
 	 }
-	 $.post("AppController.servlet");
+	 //$.post("AppController.servlet");
 	 jqSeparator.toggleClass("contracted");
   });
 }
