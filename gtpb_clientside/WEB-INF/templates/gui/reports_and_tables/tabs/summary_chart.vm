@@ -112,7 +112,7 @@
   #set($seriesString = "$seriesString { name:'$seriesName', data: ")
   #set($seriesData = [])
   #if($dateAxis) ## Time series chart
-    #set($scatter = true)
+    #set($scatter = false)
     #foreach($summaryRow in $chartRows)
   	  #set($day = 1)
   	  #set($month = 1)
@@ -135,7 +135,7 @@
   	  #end
   	  ## Don't add null grouping
   	  ## NB on some graphs, the null grouping can have the largest value
-  	  #if(($year!= "") && ($month!= ""))
+  	  #if(($year != "") && ($month != ""))
   	    #set($success = $point.add("Date.UTC($year,$month,$day)"))
   		  #set($success = $point.add($summaryRow.getAggregateValue($aggregateFunction)))
   	    #set($success = $seriesData.add($point))
@@ -149,6 +149,7 @@
         #set($temp = $calendar.set(14, 0)) ## milliseconds
         #if((!$scatter) && $oldCalendar)
           #set($distance = $calendar.getTimeInMillis() - $oldCalendar.getTimeInMillis())
+          #set($temp = $viewTools.log("Distance is $distance"))
           #if($oldDistance)
             #if($distance != $oldDistance)
               #set($scatter = true)
