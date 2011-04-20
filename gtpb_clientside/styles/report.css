@@ -203,12 +203,11 @@ td.calculations {
 }
 
 .separator td.leading:before {
-  content: "-";
+  content: "&ndash;";
   color: gray;
   position: relative;
   top: 1px;
   border: 1px solid #d0d0d0;
-  width: 200px;
 }
 
 .separator.contracted td.leading:before {
