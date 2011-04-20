@@ -60,7 +60,7 @@
 	#if(($fieldCategory != "REFERENCED_REPORT_DATA") || $referencedData.contains("span"))
 	  #if(($fieldCategory != "FILE") || (!$ab_calendar_display)) ## Don't show file fields in calendar editor for now
     	#set($rowCount = $rowCount + 1)
-      $viewTools.log("Testing whether $loggedInUser.getContractedSections() contains ($field.getInternalFieldName()")
+      $viewTools.log("Testing whether user $loggedInUser sections $loggedInUser.getContractedSections() contains ($field.getInternalFieldName()")
     	<tr #if($fieldCategory =='SEPARATOR') #set($rowCount=0) class="separator #if($loggedInUser.getContractedSections().contains($field.getInternalFieldName())) contracted #end"  internalfieldname="$field.getInternalFieldName()" #elseif($rowCount%2!=0) class="rowb" #else class="rowa" #end>
     		<td class=leading>&nbsp;</td>
             <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
