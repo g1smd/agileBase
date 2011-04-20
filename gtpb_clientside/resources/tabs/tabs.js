@@ -681,7 +681,7 @@ function fDatePickers() {
 function fExpandContractSection() {
   $("tr.separator").click(function() {
 	 var jqSeparator = $(this);
-	 var internalFieldName = jqSeparator.attr("internalfieldname"]);
+	 var internalFieldName = jqSeparator.attr("internalfieldname");
 	 // Work out if the section's currently expanded or not
 	 var jqFirstField = jqSeparator.next("tr");
 	 var sectionRows = jqSeparator.nextUntil("tr.separator");
