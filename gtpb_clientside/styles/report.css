@@ -200,6 +200,7 @@ td.calculations {
   font-weight:bold;
   margin-bottom:-3px;
   position:relative;
+  cursor: pointer;
 }
 
 .separator td.leading:before {
