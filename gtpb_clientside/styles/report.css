@@ -202,6 +202,15 @@ td.calculations {
   position:relative;
 }
 
+.separator:before {
+  content: "-";
+  color: gray;
+}
+
+.separator.contracted:before {
+  content: "+";
+}	
+
 .separator td {
   padding-top:20px!important;
   border-right:0px!important;

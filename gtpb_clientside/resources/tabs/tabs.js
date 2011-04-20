@@ -684,13 +684,25 @@ function fExpandContractSection() {
 	 // Work out if the section's currently expanded or not
 	 var jqFirstField = jqSeparator.next("tr");
 	 var sectionRows = jqSeparator.nextUntil("tr.separator");
-	 if (jqFirstField.is(":visible")) {
-	   sectionRows.hide("normal");
-	 } else {
-	   sectionRows.show("normal");
+	 var contracted = true;
+	 if(jqFirstField.is(":visible")) {
+	   contracted = false;
 	 }
-	 //$.post("AppController.servlet");
-	 jqSeparator.toggleClass("contracted");
+	 if (contracted) {
+	   sectionRows.show("normal");
+	   jqSeparator.removeClass("contracted");
+	   $.post("AppController.servlet", {
+	     internalfieldname: jqSeparator.attr["internalfieldname"],
+	     expand_section: true
+	   });
+	 } else {
+	   sectionRows.hide("normal");
+	   jqSeparator.addClass("contracted");
+	   $.post("AppController.servlet", {
+	     internalfieldname: jqSeparator.attr["internalfieldname"],
+		 contract_section: true
+	   });
+	 }
   });
 }
 

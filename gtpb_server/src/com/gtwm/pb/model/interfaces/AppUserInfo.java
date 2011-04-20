@@ -98,6 +98,8 @@ public interface AppUserInfo {
 	
 	public void expandSection(String internalFieldName) throws CantDoThatException;
 	
+	public Set<String> getContractedSections();
+	
 	/**
 	 * Get the initial report this user should see when logging in
 	 */
