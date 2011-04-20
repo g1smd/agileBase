@@ -208,6 +208,7 @@ td.calculations {
   position: relative;
   top: 1px;
   border: 1px solid #d0d0d0;
+  cursor: pointer;
 }
 
 .separator.contracted td.leading:before {
