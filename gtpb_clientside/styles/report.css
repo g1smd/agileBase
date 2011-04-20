@@ -200,7 +200,6 @@ td.calculations {
   font-weight:bold;
   margin-bottom:-3px;
   position:relative;
-  cursor: pointer;
 }
 
 .separator td.leading:before {
@@ -218,7 +217,6 @@ td.calculations {
 .separator td {
   padding-top:20px!important;
   border-right:0px!important;
-  cursor: pointer;
 }
 
 .separator span {
@@ -229,6 +227,7 @@ td.calculations {
 .separator .fieldname {
   margin-left:-25px;
   font-size: 10pt;
+  cursor: pointer;
 }
 
 /* Hide adjacent separators, i.e. ones with no content */
