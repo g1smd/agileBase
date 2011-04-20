@@ -218,6 +218,7 @@ td.calculations {
 .separator td {
   padding-top:20px!important;
   border-right:0px!important;
+  cursor: pointer;
 }
 
 .separator span {
