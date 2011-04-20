@@ -202,18 +202,15 @@ td.calculations {
   position:relative;
 }
 
-/*
-.separator:before {
+.separator td.printoutfieldnamecolumn:before {
   content: "-";
   color: black;
-  position: absolute;
-  left: 0px;
 }
 
-.separator.contracted:before {
+.separator.contracted td.printoutfieldnamecolumn:before {
   content: "+";
 }	
-*/
+
 
 .separator td {
   padding-top:20px!important;
