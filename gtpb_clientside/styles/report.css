@@ -204,8 +204,9 @@ td.calculations {
 
 .separator:before {
   content: "-";
-  color: gray;
-  float: left;
+  color: black;
+  position: absolute;
+  left: 0px;
 }
 
 .separator.contracted:before {
