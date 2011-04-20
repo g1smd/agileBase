@@ -204,7 +204,7 @@ td.calculations {
 
 .separator td.leading:before {
   content: "-";
-  color: black;
+  color: #d0d0d0;
 }
 
 .separator.contracted td.leading:before {
