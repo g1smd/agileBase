@@ -17,7 +17,7 @@
 ##
 ## Used by view.vm and edit.vm
 ## $tableDataRow and $field must be defined by them
-#set($loggedInUser = $viewMethods.getLoggedInUser())
+#set($loggedInUser = $view.getLoggedInUser())
 #if (! $field.getTableContainingField().getPrimaryKey().equals($field)) ## remove to show primary key field
   #if($address)
 	#if($address.size() > 0)
