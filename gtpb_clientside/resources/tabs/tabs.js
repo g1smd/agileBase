@@ -681,6 +681,7 @@ function fDatePickers() {
 function fExpandContractSection() {
   $("tr.separator").click(function() {
 	 var jqSeparator = $(this);
+	 var internalFieldName = jqSeparator.attr("internalfieldname"]);
 	 // Work out if the section's currently expanded or not
 	 var jqFirstField = jqSeparator.next("tr");
 	 var sectionRows = jqSeparator.nextUntil("tr.separator");
@@ -691,18 +692,18 @@ function fExpandContractSection() {
 	 if (contracted) {
 	   sectionRows.show("normal");
 	   jqSeparator.removeClass("contracted");
-	   alert('expanding');
+	   alert('expanding section');
 	   $.post("AppController.servlet", {
-	     internalfieldname: jqSeparator.attr["internalfieldname"],
+	     internalfieldname: internalFieldName,
 	     expand_section: true,
 	     "return": "blank"
 	   });
 	 } else {
 	   sectionRows.hide("normal");
 	   jqSeparator.addClass("contracted");
-	   alert('contracting');
+	   alert('contracting section');
 	   $.post("AppController.servlet", {
-	     internalfieldname: jqSeparator.attr["internalfieldname"],
+	     internalfieldname: internalFieldName,
 		 contract_section: true,
 		 "return": "blank"
 	   });
