@@ -202,6 +202,7 @@ td.calculations {
   position:relative;
 }
 
+/*
 .separator:before {
   content: "-";
   color: black;
@@ -212,6 +213,7 @@ td.calculations {
 .separator.contracted:before {
   content: "+";
 }	
+*/
 
 .separator td {
   padding-top:20px!important;
