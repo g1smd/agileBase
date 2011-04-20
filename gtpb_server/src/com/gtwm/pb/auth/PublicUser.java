@@ -157,6 +157,10 @@ public class PublicUser implements AppUserInfo {
 		throw new CantDoThatException("This public user can have no contracted sections");
 	}
 
+	public Set<String> getContractedSections() {
+		return new HashSet<String>();
+	}
+
 	public String toString() {
 		return this.getUserName();
 	}
@@ -200,4 +204,5 @@ public class PublicUser implements AppUserInfo {
 	private final String surname;
 
 	private final String internalUserName = (new RandomString()).toString();
+
 }
