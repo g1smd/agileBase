@@ -692,7 +692,6 @@ function fExpandContractSection() {
 	 if (contracted) {
 	   sectionRows.show("normal");
 	   jqSeparator.removeClass("contracted");
-	   alert('expanding section');
 	   $.post("AppController.servlet", {
 	     internalfieldname: internalFieldName,
 	     expand_section: true,
@@ -701,7 +700,6 @@ function fExpandContractSection() {
 	 } else {
 	   sectionRows.hide("normal");
 	   jqSeparator.addClass("contracted");
-	   alert('contracting section');
 	   $.post("AppController.servlet", {
 	     internalfieldname: internalFieldName,
 		 contract_section: true,
