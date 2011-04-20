@@ -205,7 +205,7 @@ td.calculations {
 .separator td.leading:before {
   content: "-";
   color: gray;
-  position: absolute;
+  position: relative;
   top: 10px;
 }
 
