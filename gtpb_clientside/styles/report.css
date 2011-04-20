@@ -207,6 +207,7 @@ td.calculations {
   color: gray;
   position: relative;
   top: 1px;
+  border: 1px solid gray;
 }
 
 .separator.contracted td.leading:before {
