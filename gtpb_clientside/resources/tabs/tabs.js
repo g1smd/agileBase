@@ -693,14 +693,16 @@ function fExpandContractSection() {
 	   jqSeparator.removeClass("contracted");
 	   $.post("AppController.servlet", {
 	     internalfieldname: jqSeparator.attr["internalfieldname"],
-	     expand_section: true
+	     expand_section: true,
+	     "return": "blank"
 	   });
 	 } else {
 	   sectionRows.hide("normal");
 	   jqSeparator.addClass("contracted");
 	   $.post("AppController.servlet", {
 	     internalfieldname: jqSeparator.attr["internalfieldname"],
-		 contract_section: true
+		 contract_section: true,
+		 "return": "blank"
 	   });
 	 }
   });
