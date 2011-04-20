@@ -28,7 +28,6 @@ import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.UserType;
-
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -40,8 +39,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
 public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
@@ -213,7 +210,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 	
 	@ElementCollection(fetch = FetchType.EAGER)
-	private Set<String> getContractedSections() {
+	public Set<String> getContractedSections() {
 		return this.contractedSections;
 	}
 	

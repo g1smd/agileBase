@@ -18,8 +18,6 @@
 package com.gtwm.pb.servlets;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.EnumSet;
 import java.util.List;
@@ -311,6 +309,12 @@ public final class AppController extends VelocityViewServlet {
 				case GLOBAL_EDIT:
 					ServletDataMethods.globalEdit(sessionData, request, databaseDefn,
 							multipartItems);
+					break;
+				case CONTRACT_SECTION:
+					ServletSchemaMethods.contractSection(sessionData, request, databaseDefn);
+					break;
+				case EXPAND_SECTION:
+					ServletSchemaMethods.expandSection(sessionData, request, databaseDefn);
 					break;
 				case ADD_USER:
 					ServletAuthMethods.addUser(sessionData, request, databaseDefn.getAuthManager());

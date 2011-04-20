@@ -2643,6 +2643,58 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-
+	
+	public synchronized static void contractSection(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
+		String internalFieldName = request.getParameter("internalfieldname");
+		if (internalFieldName == null) {
+			throw new MissingParametersException(
+					"An internalFieldName to identify the section is necessary to contract a section");
+		}
+		TableInfo table = sessionData.getTable();
+		// Get the field just to ensure the identifier is valid
+		BaseField field = table.getField(internalFieldName);
+		AppUserInfo appUser = databaseDefn.getAuthManager().getLoggedInUser(request);
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(appUser);
+			appUser.contractSection(field.getInternalFieldName());
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("contracting section " + field + " in table " + table + " failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
+	public synchronized static void expandSection(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
+		String internalFieldName = request.getParameter("internalfieldname");
+		if (internalFieldName == null) {
+			throw new MissingParametersException(
+					"An internalFieldName to identify the section is necessary to expand a section");
+		}
+		TableInfo table = sessionData.getTable();
+		// Get the field just to ensure the identifier is valid
+		BaseField field = table.getField(internalFieldName);
+		AppUserInfo appUser = databaseDefn.getAuthManager().getLoggedInUser(request);
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(appUser);
+			appUser.expandSection(field.getInternalFieldName());
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("expanding section " + field + " in table " + table + " failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
 	private static final SimpleLogger logger = new SimpleLogger(ServletSchemaMethods.class);
 }
