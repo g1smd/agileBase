@@ -583,7 +583,6 @@ public final class ServletAuthMethods {
 			}
 			HibernateUtil.currentSession().getTransaction().commit();
 			long duration = System.currentTimeMillis() - startTime;
-			logger.debug("Set max table privilege to " + maxPrivilegeType + " in " + duration + " ms");
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			throw new CantDoThatException("Privilege setting failed", hex);

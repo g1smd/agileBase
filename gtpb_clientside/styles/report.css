@@ -203,7 +203,7 @@ td.calculations {
 }
 
 .separator td.leading:before {
-  content: "\2013"; /* an &endash; */
+  content: "\2013"; /* a dash - entity &endash; */
   color: gray;
   position: relative;
   top: 1px;

@@ -97,7 +97,7 @@ public class Public extends VelocityViewServlet {
 				}
 				switch (publicAction) {
 				case GET_REPORT_JSON:
-					templateName = "report_json";
+					templateName = templatePath + "report_json";
 					String internalReportName = request.getParameter("r");
 					try {
 						if (internalReportName == null) {
