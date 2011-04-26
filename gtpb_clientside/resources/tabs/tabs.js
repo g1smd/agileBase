@@ -690,7 +690,7 @@ function fExpandContractSection() {
 	   contracted = false;
 	 }
 	 if (contracted) {
-	   sectionRows.show("normal");
+	   sectionRows.show(); // show immediately for speed, no animation
 	   jqSeparator.removeClass("contracted");
 	   $.post("AppController.servlet", {
 	     internalfieldname: internalFieldName,
@@ -698,7 +698,7 @@ function fExpandContractSection() {
 	     "return": "blank"
 	   });
 	 } else {
-	   sectionRows.hide("normal");
+	   sectionRows.hide("normal"); // animate the hide
 	   jqSeparator.addClass("contracted");
 	   $.post("AppController.servlet", {
 	     internalfieldname: internalFieldName,
