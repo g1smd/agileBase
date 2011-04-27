@@ -2694,5 +2694,53 @@ public final class ServletSchemaMethods {
 		}
 	}
 	
+	public synchronized static void enableApp(HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+		String app = request.getParameter("app");
+		if (app == null) {
+			throw new MissingParametersException("An app parameter is needed to add an app");
+		}
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
+		AppUserInfo user = authManager.getLoggedInUser(request);
+		CompanyInfo company = user.getCompany();
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
+			throw new DisallowedException(user, PrivilegeType.ADMINISTRATE);
+		}
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(company);
+			company.addApp(app);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch(HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("Adding app " + app + " to company " + company + " by user " + user + " failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
+	public synchronized static void disableApp(HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+		String app = request.getParameter("app");
+		if (app == null) {
+			throw new MissingParametersException("An app parameter is needed to remove an app");
+		}
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
+		AppUserInfo user = authManager.getLoggedInUser(request);
+		CompanyInfo company = user.getCompany();
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
+			throw new DisallowedException(user, PrivilegeType.ADMINISTRATE);
+		}
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(company);
+			company.removeApp(app);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch(HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("Removing app " + app + " from company " + company + " by user " + user + " failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
 	private static final SimpleLogger logger = new SimpleLogger(ServletSchemaMethods.class);
 }
