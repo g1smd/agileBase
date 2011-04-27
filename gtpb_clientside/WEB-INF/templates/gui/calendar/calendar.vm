@@ -126,12 +126,6 @@
 <div id="report_selection" class="report_selection">
 	## Calculate colours
 	#set($colourStyles = {}) ## map will hold style definition for each class, based on internal report name
-	#set($colourHueStep = 360 / $numCalendarReports)
-	#if($numCalendarReports > 19)
-	  #set($colourHueStep = $colourHueStep * 2)
-	#end
-	#set($colourHue = 0)
-	#set($colourSaturation = 70)
 	<ul>
 	## Display
 	#foreach($module in $calendarModuleReportsProcessed.keySet())
@@ -142,28 +136,14 @@
 	  	  $module
 	    </span></h2>
 	    <ul parent="$internalModuleName">
-		#set($colourLightness = 85)
-		#set($colourLightnessStep = 80 / $calendarModuleReports.size())
-		#if($calendarModuleReports.size() > 10)
-		  #set($colourLightnessStep = $colourLightnessStep * 2)
-		#end
     #foreach($report in $calendarModuleReports) 
 		  #set($internalReportName = $report.getInternalReportName())
 		  #set($table=$report.getParentTable())
 		  #set($internalTableName = $table.getInternalTableName())
-		  #set($colourHue = $colourHue + $colourHueStep)
-		  #if($colourHue > 360)
-		    #set($colourHue = $colourHue - 360)
-			  #set($secondRound = true)
-		  #end
-		  #if($secondRound)
-			  #set($colourSaturation = $colourLightness + 10)
-		    ###if($colourLightness > 50)
-			##  #set($colourSaturation = 100)
-			###else
-			##  #set($colourSaturation = 30)
-			###end
-		  #end
+      #set($reportHash = $report.hashCode())
+      #set($colourHue = $reportHash % 360)
+      #set($colourLightness = ($reportHash % 65) + 20)
+      #set($colourSaturation = 70)
 		  #set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
 		  #if($colourLightness < 45)
 			  #set($colourStyle = "$colourStyle color:white;")
@@ -176,11 +156,7 @@
 		    $report
         <span class="report_$internalReportName" style="display:none"></span> ## Just so JS can read colour style
 		  </li>
-		  #set($colourLightness = $colourLightness - $colourLightnessStep)
-		  #if($colourLightness < 20)
-			  #set($colourLightness = 80)
-		  #end
-	    #end ## end of loop through reports in a module
+    #end ## end of loop through reports in a module
 	    </ul>
 	  </li>
 	#end ## end loop through modules
