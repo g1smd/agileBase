@@ -141,6 +141,9 @@
 		  #set($table=$report.getParentTable())
 		  #set($internalTableName = $table.getInternalTableName())
       #set($reportHash = $report.hashCode())
+      #if($reportHash < 0)
+        #set($reportHash = -1 * $reportHash)
+      #end
       #set($colourHue = $reportHash % 360)
       #set($colourLightness = ($reportHash % 65) + 20)
       #set($colourSaturation = 70)
