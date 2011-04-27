@@ -146,7 +146,7 @@
       #end
       #set($colourHue = $reportHash % 360)
       #set($colourLightness = ($reportHash % 65) + 20)
-      #set($colourSaturation = 70)
+      #set($colourSaturation = ($reportHash % 20) + 60)
       $viewTools.log("$report $reportHash is $colourHue, $colourLightness")
 		  #set($colourStyle = "background-color: hsl($colourHue, $colourSaturation%, $colourLightness%);")
 		  #if($colourLightness < 45)
