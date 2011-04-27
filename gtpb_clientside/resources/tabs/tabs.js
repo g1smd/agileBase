@@ -698,7 +698,7 @@ function fExpandContractSection() {
 	     "return": "blank"
 	   });
 	 } else {
-	   sectionRows.hide("normal"); // animate the hide
+	   sectionRows.hide("fast"); // animate the hide
 	   jqSeparator.addClass("contracted");
 	   $.post("AppController.servlet", {
 	     internalfieldname: internalFieldName,
