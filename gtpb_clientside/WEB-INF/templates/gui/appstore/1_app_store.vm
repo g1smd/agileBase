@@ -21,14 +21,14 @@
     <okTemplate>gui/help/end</okTemplate>
     <htmlContent><![CDATA[
     <style>
-      ul#app_list {
+      ul.app_list {
         list-style: none;
       }
-      ul#app_list li {
+      ul.app_list li {
         padding: 0.2em;
         padding-bottom: 1em;
       }
-      ul#app_list li img {
+      ul.app_list li img {
         float: left;
         margin-right: 10px;
       }
@@ -37,9 +37,9 @@
       <h1>Available Apps</h1>
       These apps enhance the core agileBase platform. They can be installed company-wide, there is <b>no per-user cost</b>.
       &pound;50/month (&pound;25/month for subsequent apps) supports unlimited use<p>
-      <ul id="app_list">
+      <ul class="app_list">
         <li>
-          <img src="resources/toolbar/dashboard.png"><b>Executive dashboard</b> To help helps executives "see" their organisation in full, using charts, usage and automated exception reporting
+          <input type="checkbox" name="app" value="dashboard"> <img src="resources/toolbar/dashboard.png"><b>Executive dashboard</b> To help helps executives "see" their organisation in full, using charts, usage and automated exception reporting
         </li>
         <li>
           <img src="resources/toolbar/calendar.png"><b>Calendar</b> An operational calendar fully integrated with agileBase data to aid shared scheduling and visual management
@@ -56,7 +56,7 @@
       </ul>
       <h1>Beta Apps</h1>
       These apps are currently in development or limited access testing - if you're interested in trying any, please <a href="mailto:oliver@agilebase.co.uk">let us know</a>
-      <ul>
+      <ul class="app_list">
         <li>
           <img src="resources/toolbar/forms.png"><b>Public forms</b> Embed agileBase forms into public websites - allows data gathering from your customers/partners
         </li>
