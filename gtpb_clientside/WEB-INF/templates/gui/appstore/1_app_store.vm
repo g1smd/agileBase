@@ -41,22 +41,22 @@
       &pound;50/month (&pound;25/month for subsequent apps) supports unlimited use<p>
       <ul class="app_list">
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("dashboard")) checked #end gtpb_app="dashboard" gtpb_enable_disable_app="true"> <img src="resources/toolbar/dashboard.png"><b>Executive dashboard</b> To help helps executives "see" their organisation in full, using charts, usage and automated exception reporting
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("dashboard")) checked #end gtpb_app="dashboard" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/dashboard.png"><b>Executive dashboard</b> To help helps executives "see" their organisation in full, using charts, usage and automated exception reporting
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("calendar")) checked #end gtpb_app="calendar" gtpb_enable_disable_app="true"> <img src="resources/toolbar/calendar.png"><b>Calendar</b> An operational calendar fully integrated with agileBase data to aid shared scheduling and visual management
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("calendar")) checked #end gtpb_app="calendar" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/calendar.png"><b>Calendar</b> An operational calendar fully integrated with agileBase data to aid shared scheduling and visual management
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("wiki")) checked #end gtpb_app="wiki" gtpb_enable_disable_app="true"> <img src="resources/toolbar/wiki.png"><b>Wiki</b> A company wiki aids knowledge capture and collaboration on 'un-structured' data
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("wiki")) checked #end gtpb_app="wiki" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/wiki.png"><b>Wiki</b> A company wiki aids knowledge capture and collaboration on 'un-structured' data
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("a3")) checked #end gtpb_app="a3" gtpb_enable_disable_app="true"> <img src="resources/toolbar/a3.png"><b>A3 Reports</b> A3 reports promote improved problem solving and decision making - see www.a3reports.co.uk
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("a3")) checked #end gtpb_app="a3" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/a3.png"><b>A3 Reports</b> A3 reports promote improved problem solving and decision making - see www.a3reports.co.uk
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("tagcloud")) checked #end gtpb_app="tagcloud" gtpb_enable_disable_app="true"> <img src="resources/toolbar/tagcloud.png"><b>Word clouds</b> For retrospective sense-making of data, reducing manual categorisation processes
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("tagcloud")) checked #end gtpb_app="tagcloud" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/tagcloud.png"><b>Word clouds</b> For retrospective sense-making of data, reducing manual categorisation processes
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("forms")) checked #end gtpb_app="forms" gtpb_enable_disable_app="true"> <img src="resources/toolbar/forms.png"><b>Public forms</b> Embed agileBase forms into public websites - allows data gathering from your customers/partners
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("forms")) checked #end gtpb_app="forms" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/forms.png"><b>Public forms</b> Embed agileBase forms into public websites - allows data gathering from your customers/partners
         </li>
       </ul>
       <h1>Beta Apps</h1>
