@@ -55,7 +55,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #set($primaryKey = $report.getParentTable().getPrimaryKey())
 #if($wordCloudField)
   <div id="wordcloud">
-  #set($filters = $sessionData.getReportfilterValues())
+  #set($filters = $sessionData.getReportFilterValues())
   #set($filterDescription = $filters.get($wordCloudTableField))
   #if($filterDescription)
     #set($filterDescription = " = $filterDescription")
@@ -106,7 +106,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     #end
   #end
   </div>
-#end
+#end ## end word cloud
 </div>
 ## Reset to the default report summary - the chart being edited
 #set($chart = "")
