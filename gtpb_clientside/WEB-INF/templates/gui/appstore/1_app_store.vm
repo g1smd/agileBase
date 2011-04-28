@@ -17,6 +17,12 @@
 ##
 #set($company = $view.getLoggedInUser().getCompany())
 #set($enabledApps = $company.getApps())
+#set($appCost = $enabledApps.size() * 25)
+#if(!$usageStats)
+  #set($usageStats = $view.getUsageStats())
+#end
+#set($tableCost = $usageStats.getMonthlyTableCost())
+#set($totalCost = $tableCost + $appCost)
 <request>
   <caption>agileBase App Store</caption>
   #parse('gui/customisations/wizard_result.vm') 
@@ -38,7 +44,7 @@
     <div style="padding:5px">
       <h1>Available Apps</h1>
       These apps enhance the core agileBase platform. They can be installed company-wide, there is <b>no per-user cost</b>.
-      &pound;50/month (&pound;25/month for subsequent apps) supports unlimited use<p>
+      &pound;25/month each supports unlimited use - just tick to enable<p>
       <ul class="app_list">
         <li>
           <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("dashboard")) checked #end gtpb_app="dashboard" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/dashboard.png"><b>Executive dashboard</b> To help helps executives "see" their organisation in full, using charts, usage and automated exception reporting
@@ -69,7 +75,15 @@
           <img src="resources/toolbar/search.png"><b>Global search</b> For large installations, a global search can help quickly find data, even searching within documents
         </li>
       </ul>
-      Please contact support@agilebase.co.uk to enable/disable apps. Soon you'll be able to manage them from this screen.
+      <h1>Licensing calculation</h1>
+      The total monthly figure is calculated from the no. tables you've created and the number of apps you have enabled (chosen above).<p>
+      <ul>
+        <li>$company has $usageStats.getNumberOfTables() tables</li>
+        <li>Monthly cost per table is &pound;10 for the first twenty tables and &pound;5 for any subsequent</li>
+        <li>Base monthly cost = <b>&pound;$tableCost()</b></li>
+        <li>App monthly cost = $enabledApps.size() apps x 25 = <b>&pound;$appCost</b></li>
+        <li>Total = $totalCost</li>
+      </ul>
     </div>
     ]]>
   </htmlContent>
