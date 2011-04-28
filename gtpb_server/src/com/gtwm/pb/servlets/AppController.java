@@ -512,11 +512,8 @@ public final class AppController extends VelocityViewServlet {
 					boolean calendarSyncable = Helpers.valueRepresentsBooleanTrue(appActionValue);
 					ServletSchemaMethods.setCalendarSyncable(sessionData, request, databaseDefn, calendarSyncable);
 					break;
-				case ENABLE_APP:
-					ServletSchemaMethods.enableApp(request, databaseDefn);
-					break;
-				case DISABLE_APP:
-					ServletSchemaMethods.disableApp(request, databaseDefn);
+				case ENABLE_DISABLE_APP:
+					ServletSchemaMethods.enableDisableApp(request, databaseDefn);
 					break;
 				}
 			}

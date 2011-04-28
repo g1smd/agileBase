@@ -164,7 +164,8 @@ public final class ServletSchemaMethods {
 		// than going through databaseDefn
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.ADMINISTRATE);
 		}
 		String tabAddress = request.getParameter("tabaddress");
 		if (tabAddress == null) {
@@ -197,7 +198,8 @@ public final class ServletSchemaMethods {
 		// databaseDefn
 		if (!(authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.ADMINISTRATE))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.ADMINISTRATE);
 		}
 		String tabAddress = request.getParameter("tabaddress");
 		if (tabAddress == null) {
@@ -2217,18 +2219,15 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getChart()
-					.removeGrouping(groupingReportField);
+			groupingReportField.getParentReport().getChart().removeGrouping(groupingReportField);
 			throw new CantDoThatException("summary grouping addition failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getChart()
-					.removeGrouping(groupingReportField);
+			groupingReportField.getParentReport().getChart().removeGrouping(groupingReportField);
 			throw new CantDoThatException("summary grouping addition failed", pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getChart()
-					.removeGrouping(groupingReportField);
+			groupingReportField.getParentReport().getChart().removeGrouping(groupingReportField);
 			throw new CantDoThatException("summary grouping addition failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
@@ -2272,13 +2271,11 @@ public final class ServletSchemaMethods {
 			throw new CantDoThatException("summary grouping removal failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getChart()
-					.addGrouping(groupingReportField, null);
+			groupingReportField.getParentReport().getChart().addGrouping(groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
-			groupingReportField.getParentReport().getChart()
-					.addGrouping(groupingReportField, null);
+			groupingReportField.getParentReport().getChart().addGrouping(groupingReportField, null);
 			throw new CantDoThatException("summary grouping removal failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
@@ -2463,7 +2460,8 @@ public final class ServletSchemaMethods {
 		// Authentication is here because we don't call any databaseDefn method
 		if (!databaseDefn.getAuthManager().getAuthenticator()
 				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.ADMINISTRATE);
 		}
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
@@ -2494,7 +2492,8 @@ public final class ServletSchemaMethods {
 		// Authentication is here because we don't call any databaseDefn method
 		if (!databaseDefn.getAuthManager().getAuthenticator()
 				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.ADMINISTRATE);
 		}
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
@@ -2524,7 +2523,8 @@ public final class ServletSchemaMethods {
 			CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
-		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request, request.getRemoteUser());
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request,
+				request.getRemoteUser());
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(appUser);
@@ -2532,7 +2532,8 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("adding report " + report + " to operational dashboard of user " + appUser + " failed", hex);
+			throw new CantDoThatException("adding report " + report
+					+ " to operational dashboard of user " + appUser + " failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
@@ -2544,7 +2545,8 @@ public final class ServletSchemaMethods {
 			CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
-		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request, request.getRemoteUser());
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request,
+				request.getRemoteUser());
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(appUser);
@@ -2569,7 +2571,8 @@ public final class ServletSchemaMethods {
 				.getAuthenticator()
 				.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
 						report.getParentTable())) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.VIEW_TABLE_DATA);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.VIEW_TABLE_DATA);
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
@@ -2584,15 +2587,20 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void setReportWordCloudField(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
-		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, true);
+	public synchronized static void setReportWordCloudField(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, true);
 		String internalFieldName = request.getParameter("internalfieldname");
 		if (internalFieldName == null) {
-			throw new MissingParametersException("internalfieldname parameter needed to set a report word cloud field");
+			throw new MissingParametersException(
+					"internalfieldname parameter needed to set a report word cloud field");
 		}
 		ReportFieldInfo wordCloudReportField = null;
 		if (internalFieldName != "") {
-		  wordCloudReportField = report.getReportField(internalFieldName);
+			wordCloudReportField = report.getReportField(internalFieldName);
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
@@ -2606,7 +2614,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
+
 	public synchronized static void setUserDefaultReport(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
@@ -2641,7 +2649,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
+
 	public synchronized static void contractSection(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
@@ -2662,12 +2670,13 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("contracting section " + field + " in table " + table + " failed", hex);
+			throw new CantDoThatException("contracting section " + field + " in table " + table
+					+ " failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 	}
-	
+
 	public synchronized static void expandSection(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
@@ -2688,59 +2697,45 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("expanding section " + field + " in table " + table + " failed", hex);
+			throw new CantDoThatException("expanding section " + field + " in table " + table
+					+ " failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 	}
-	
-	public synchronized static void enableApp(HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+
+	public synchronized static void enableDisableApp(HttpServletRequest request,
+			DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException,
+			DisallowedException, CantDoThatException {
 		String app = request.getParameter("app");
 		if (app == null) {
 			throw new MissingParametersException("An app parameter is needed to add an app");
 		}
+		boolean enable = Helpers.valueRepresentsBooleanTrue(request.getParameter("enable"));
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		AppUserInfo user = authManager.getLoggedInUser(request);
 		CompanyInfo company = user.getCompany();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(user, PrivilegeType.ADMINISTRATE);
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(company);
-			company.addApp(app);
+			if (enable) {
+				company.addApp(app);
+			} else {
+				company.removeApp(app);
+			}
 			HibernateUtil.currentSession().getTransaction().commit();
-		} catch(HibernateException hex) {
+		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("Adding app " + app + " to company " + company + " by user " + user + " failed", hex);
+			throw new CantDoThatException("Adding/removing app " + app + " to company " + company
+					+ " by user " + user + " failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 	}
-	
-	public synchronized static void disableApp(HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
-		String app = request.getParameter("app");
-		if (app == null) {
-			throw new MissingParametersException("An app parameter is needed to remove an app");
-		}
-		AuthManagerInfo authManager = databaseDefn.getAuthManager();
-		AppUserInfo user = authManager.getLoggedInUser(request);
-		CompanyInfo company = user.getCompany();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
-			throw new DisallowedException(user, PrivilegeType.ADMINISTRATE);
-		}
-		try {
-			HibernateUtil.startHibernateTransaction();
-			HibernateUtil.activateObject(company);
-			company.removeApp(app);
-			HibernateUtil.currentSession().getTransaction().commit();
-		} catch(HibernateException hex) {
-			rollbackConnections(null);
-			throw new CantDoThatException("Removing app " + app + " from company " + company + " by user " + user + " failed", hex);
-		} finally {
-			HibernateUtil.closeSession();
-		}
-	}
-	
+
 	private static final SimpleLogger logger = new SimpleLogger(ServletSchemaMethods.class);
 }
