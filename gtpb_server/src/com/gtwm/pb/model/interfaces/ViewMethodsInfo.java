@@ -431,7 +431,12 @@ public interface ViewMethodsInfo {
 
 	/**
 	 * Get a calendar feed for a report suitable for use with
+	 * 
 	 * http://arshaw.com/fullcalendar/
+	 * 
+	 * or
+	 * 
+	 * http://www.simile-widgets.org/timeline/
 	 * 
 	 * The parameters 'start' and 'end' that fullcalendar provides in the HTTP
 	 * request are added to the filters taken from the session and applied to
@@ -439,10 +444,14 @@ public interface ViewMethodsInfo {
 	 * 
 	 * Parameters 'internaltablename' and 'internalreportname' specify the
 	 * report. If none are given, the session report is used
+	 * 
+	 * @param format
+	 *            Either 'fullcalendar' or 'timeline' for compatibility with one
+	 *            of the above libraries
 	 */
-	public String getReportCalendarJSON() throws CodingErrorException, CantDoThatException,
-			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
-			JSONException;
+	public String getReportCalendarJSON(String format) throws CodingErrorException,
+			CantDoThatException, MissingParametersException, DisallowedException,
+			ObjectNotFoundException, SQLException, JSONException;
 
 	/**
 	 * Returns true if the record identified by the session row ID is visible in

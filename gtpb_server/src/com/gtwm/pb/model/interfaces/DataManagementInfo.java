@@ -33,6 +33,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageData.DataRow;
 import com.gtwm.pb.util.DataDependencyException;
+import com.gtwm.pb.util.Enumerations.CalendarJsonFormat;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
@@ -77,12 +78,22 @@ public interface DataManagementInfo {
 	 * returned lower case
 	 */
 	public String getReportDataText(BaseReportInfo reportDefn, Set<BaseField> fields,
-			Map<BaseField, String> reportFilterValues, int rowLimit) throws SQLException, CantDoThatException;
+			Map<BaseField, String> reportFilterValues, int rowLimit) throws SQLException,
+			CantDoThatException;
 
 	/**
 	 * Return a calendar JSON feed for the data in a report, suitable for use
-	 * with http://arshaw.com/fullcalendar/
+	 * with
 	 * 
+	 * http://arshaw.com/fullcalendar/
+	 * 
+	 * or
+	 * 
+	 * http://www.simile-widgets.org/timeline/
+	 * 
+	 * @param format
+	 *            Either "fullcalendar" or "timeline" to produce JSON compatible
+	 *            with either of the two products above
 	 * @param filterValues
 	 *            Session filters *plus* a filter on the calendar date field so
 	 *            that only dates requested by fullcalendar are returned
@@ -92,12 +103,13 @@ public interface DataManagementInfo {
 	 * @param endEpoch
 	 *            The end unix timestamp as provided by fullcalendar
 	 */
-	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
+	public String getReportCalendarJSON(CalendarJsonFormat format, AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
 			throws CodingErrorException, CantDoThatException, SQLException, JSONException;
 
-	public String getReportJSON(AppUserInfo user, BaseReportInfo report) throws JSONException, CodingErrorException, CantDoThatException, SQLException;
-	
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report) throws JSONException,
+			CodingErrorException, CantDoThatException, SQLException;
+
 	/**
 	 * Return a report data object that contains metadata about the report data.
 	 * Note, to get actual report rows which is the more usual case, use
