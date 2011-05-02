@@ -29,6 +29,14 @@
       </a>
     </div>
   #end
+  #if($apps.contains("mkis"))
+    #set($left = $left + 100)
+    <div class="button" style="left: ${left}px;">
+      <a href="?return=gui/customisations/common/mkis/mkis">
+        <img src="resources/toolbar/mkis.png" /><br>Marketing IS
+      </a>
+    </div>
+  #end
   #if($current_app == "calendar")
     #set($left = $left + 100)
     <div id="new_record" class="bare_button" style="left: ${left}px;">
