@@ -51,8 +51,6 @@
   <script src="resources/fullcalendar/jquery-ui-custom.js" language="Javascript"></script>
   <script src="resources/fullcalendar/fullcalendar.js" language="Javascript"></script>
   <script src="resources/fullcalendar/calendar.js" language="Javascript"></script>
-  <style>
-  </style>
 </head>
 <body #if($mobile_device) id="mobile_device" #end>
 <div id="header">
