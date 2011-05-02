@@ -34,14 +34,15 @@
     <div id="new_record" class="bare_button" style="left: ${left}px;">
       <img id="new_record" src="resources/toolbar/new.png" /><br>New
     </div>
-  #elseif($current_app == "dashboard")
-    #set($headlineNotices = $dashboard.getHeadlineNotices())
-    #foreach($headlineNotice in $headlineNotices)
-      #set($firstWord = $headlineNotice.replaceAll(" .*",""))
-      #if($firstWord.length() > 1) ##ÊIgnore really small numbers
-        #set($rest = $headlineNotice.replaceAll("^.*? ",""))
-        <div class="headline"><span class="firstword">$firstWord</span> $rest</div>
-      #end
-    #end
   #end
 </div> ## end links
+#if($current_app == "dashboard")
+  #set($headlineNotices = $dashboard.getHeadlineNotices())
+  #foreach($headlineNotice in $headlineNotices)
+    #set($firstWord = $headlineNotice.replaceAll(" .*",""))
+    #if($firstWord.length() > 1) ##ÊIgnore really small numbers
+      #set($rest = $headlineNotice.replaceAll("^.*? ",""))
+      <div class="headline"><span class="firstword">$firstWord</span> $rest</div>
+    #end
+  #end
+#end
