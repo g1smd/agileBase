@@ -56,28 +56,8 @@
 </head>
 <body #if($mobile_device) id="mobile_device" #end>
 <div id="header">
-  <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
-  <div id="links">
-    <div class="button" style="left: 0px;">
-		#set($databaseReturn = "gui/customisations/common/dashboard/dashboard")			
-        <a href="?return=$databaseReturn">
-    	  <img src="resources/toolbar/dashboard.png" /><br>Dashboard
-    	</a>
-    </div>
-    <div class="button" style="left: 100px;">
-		#if($mobile_device)
-		  #set($databaseReturn = "gui/pane1")
-		#else
-		  #set($databaseReturn = "gui/display_application")			
-		#end
-        <a href="?return=$databaseReturn">
-    	  <img src="customisations/common/dashboard/panes.png" /><br>Database
-    	</a>
-    </div>
-	<div id="new_record" class="bare_button" style="left: 200px;">
-		<img id="new_record" src="resources/toolbar/new.png" /><br>New
-	</div>
-  </div>
+  #set($current_app = "calendar")
+  #parse("gui/appstore/app_header.vm")
   <div id="selected_reports">
   </div>
 </div>

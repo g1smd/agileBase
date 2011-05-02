@@ -69,10 +69,13 @@
       These apps are currently in development or limited access testing - if you're interested in trying any, please <a href="mailto:oliver@agilebase.co.uk">let us know</a>
       <ul class="app_list">
         <li>
-          <img src="resources/toolbar/mkis.png"><b>Marketing information system</b> Integrate with 3rd party analytics from various sources to show a timeline-based overview of all marketing activity and it's effect
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("mkis")) checked #end gtpb_app="mkis" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/mkis.png"><b>Marketing information system</b> Integrate with 3rd party analytics from various sources to show a timeline-based overview of all marketing activity and it's effect
         </li>
         <li>
-          <img src="resources/toolbar/search.png"><b>Global search</b> For large installations, a global search can help quickly find data, even searching within documents
+          <input type="checkbox" disabled name="enable" value="true" #if($enabledApps.contains("search")) checked #end gtpb_app="search" gtpb_enable_disable_app="true" onclick="new fChange(this)"><img src="resources/toolbar/search.png"><b>Global search</b> For large installations, a global search can help quickly find data, even searching within documents
+        </li>
+        <li>
+          <input type="checkbox" disabled name="enable" value="true" #if($enabledApps.contains("treemap")) checked #end gtpb_app="treemap" gtpb_enable_disable_app="true" onclick="new fChange(this)"><img src="resources/toolbar/treemap.png"><b>Treemap</b> Provides a graphical analysis comparing values in hierarchical data
         </li>
       </ul>
       <h1>Licensing calculation</h1>
@@ -80,9 +83,9 @@
       <ul>
         <li>$company has $usageStats.getNumberOfTables() tables</li>
         <li>Monthly cost per table is &pound;10 for the first twenty tables and &pound;5 for any subsequent</li>
-        <li>Base monthly cost = <b>&pound;$tableCost()</b></li>
+        <li>Base monthly cost = <b>&pound;$tableCost</b></li>
         <li>App monthly cost = $enabledApps.size() apps x 25 = <b>&pound;$appCost</b></li>
-        <li>Total = $totalCost</li>
+        <li>Total = <b>&pound;$totalCost</b></li>
       </ul>
     </div>
     ]]>
