@@ -33,7 +33,7 @@
     #set($left = $left + 100)
     <div class="button" style="left: ${left}px;">
       <a href="?return=gui/customisations/common/mkis/mkis">
-        <img src="resources/toolbar/mkis.png" /><br>Marketing IS
+        <img src="resources/toolbar/mkis.png" /><br>Marketing
       </a>
     </div>
   #end
