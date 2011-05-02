@@ -1,0 +1,47 @@
+#set($apps = $view.getLoggedInUser().getCompany().getApps())
+<a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
+<div id="links">
+  #set($left = 0)
+  <div class="button" style="left: ${left}px;">
+    #if($mobile_device)
+      #set($databaseReturn = "gui/pane1")
+    #else
+      #set($databaseReturn = "gui/display_application")     
+    #end
+    <a href="?return=$databaseReturn">
+      <img src="customisations/common/dashboard/panes.png" /><br>Database
+    </a>
+  </div>
+  #if($apps.contains("dashboard"))
+    #set($left = $left + 100)
+    <div class="button" style="left: ${left}px;">
+      #set($databaseReturn = "gui/customisations/common/dashboard/dashboard")     
+      <a href="?return=$databaseReturn">
+        <img src="resources/toolbar/dashboard.png" /><br>Dashboard
+      </a>
+    </div>
+  #end
+  #if($apps.contains("calendar"))
+    #set($left = $left + 100)
+    <div class="button" style="left: ${left}px;">
+      <a href="?return=gui/calendar/calendar">
+        <img src="resources/toolbar/calendar.png" /><br>Calendar
+      </a>
+    </div>
+  #end
+  #if($current_app == "calendar")
+    #set($left = $left + 100)
+    <div id="new_record" class="bare_button" style="left: ${left}px;">
+      <img id="new_record" src="resources/toolbar/new.png" /><br>New
+    </div>
+  #elseif($current_app == "dashboard")
+    #set($headlineNotices = $dashboard.getHeadlineNotices())
+    #foreach($headlineNotice in $headlineNotices)
+      #set($firstWord = $headlineNotice.replaceAll(" .*",""))
+      #if($firstWord.length() > 1) ##ÊIgnore really small numbers
+        #set($rest = $headlineNotice.replaceAll("^.*? ",""))
+        <div class="headline"><span class="firstword">$firstWord</span> $rest</div>
+      #end
+    #end
+  #end
+</div> ## end links
