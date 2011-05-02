@@ -96,6 +96,7 @@ import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.servlets.ServletUtilMethods;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.DataDependencyException;
+import com.gtwm.pb.util.Enumerations.CalendarJsonFormat;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -1539,7 +1540,7 @@ public final class DataManagement implements DataManagementInfo {
 		return json;
 	}
 
-	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
+	public String getReportCalendarJSON(CalendarJsonFormat format, AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
 			throws CodingErrorException, CantDoThatException, SQLException, JSONException {
 		ReportFieldInfo eventDateReportField = report.getCalendarField();
@@ -1576,6 +1577,12 @@ public final class DataManagement implements DataManagementInfo {
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
 				filterValues, false, new HashMap<BaseField, Boolean>(), 10000);
 		JSONStringer js = new JSONStringer();
+		if (format.equals(CalendarJsonFormat.TIMELINE)) {
+			js.object();
+		}
+		if (format.equals(CalendarJsonFormat.TIMELINE)) {
+			js.key("events");
+		}
 		js.array();
 		String internalReportName = report.getInternalReportName();
 		String internalTableName = report.getParentTable().getInternalTableName();
@@ -1602,13 +1609,17 @@ public final class DataManagement implements DataManagementInfo {
 			if (!allDayEvent) {
 				js.key("end").value(eventDateEpoch + 7200); // events last 2hrs
 			}
-			js.key("className").value("report_" + internalReportName);
+			js.key("className").value("report_" + internalReportName); // for fullcalendar
+			js.key("classname").value("report_" + internalReportName); // for timeplot
 			js.key("dateFieldInternalName").value(dateFieldInternalName);
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
 			js.key("title").value(eventTitle);
 			js.endObject();
 		}
 		js.endArray();
+		if (format.equals(CalendarJsonFormat.TIMELINE)) {
+			js.endObject();
+		}
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
 		usageLogger.logReportView(user, report, filterValues, 10000, "getCalendarJSON");
 		UsageLogger.startLoggingThread(usageLogger);
