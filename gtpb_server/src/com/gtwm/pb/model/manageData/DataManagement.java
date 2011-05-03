@@ -25,6 +25,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1498,7 +1500,8 @@ public final class DataManagement implements DataManagementInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public String getReportJSON(AppUserInfo user, BaseReportInfo report) throws JSONException, CodingErrorException, CantDoThatException, SQLException {
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report) throws JSONException,
+			CodingErrorException, CantDoThatException, SQLException {
 		String id = report.getInternalReportName();
 		CachedJSONInfo cachedJSON = this.cachedReportJSONs.get(id);
 		if (cachedJSON != null) {
@@ -1508,15 +1511,18 @@ public final class DataManagement implements DataManagementInfo {
 				return cachedJSON.getJSON();
 			}
 		}
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
-				new HashMap<BaseField, String>(0), false, new HashMap<BaseField, Boolean>(0), 10000);
+		List<DataRowInfo> reportDataRows = this
+				.getReportDataRows(user.getCompany(), report, new HashMap<BaseField, String>(0),
+						false, new HashMap<BaseField, Boolean>(0), 10000);
 		JSONStringer js = new JSONStringer();
 		js.array();
 		for (DataRowInfo reportDataRow : reportDataRows) {
 			js.object();
 			js.key("rowId").value(reportDataRow.getRowId());
-			// TODO: could potentially do a more complex JSON object if the need arises,
-			// with e.g. an array of fields and additional properties such as field names
+			// TODO: could potentially do a more complex JSON object if the need
+			// arises,
+			// with e.g. an array of fields and additional properties such as
+			// field names
 			for (ReportFieldInfo reportField : report.getReportFields()) {
 				DataRowFieldInfo value = reportDataRow.getValue(reportField);
 				js.key(reportField.getInternalFieldName()).value(value.toString());
@@ -1525,7 +1531,8 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		js.endArray();
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
-		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(), 10000, "getReportJSON");
+		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(), 10000,
+				"getReportJSON");
 		UsageLogger.startLoggingThread(usageLogger);
 		String json = js.toString();
 		cachedJSON = new CachedJSON(json);
@@ -1540,9 +1547,12 @@ public final class DataManagement implements DataManagementInfo {
 		return json;
 	}
 
-	public String getReportCalendarJSON(CalendarJsonFormat format, AppUserInfo user, BaseReportInfo report,
-			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
-			throws CodingErrorException, CantDoThatException, SQLException, JSONException {
+	public String getReportCalendarJSON(CalendarJsonFormat format, AppUserInfo user,
+			BaseReportInfo report, Map<BaseField, String> filterValues, Long startEpoch,
+			Long endEpoch) throws CodingErrorException, CantDoThatException, SQLException,
+			JSONException {
+		// RFC 2822 date format used by Simile timeline
+		DateFormat dateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
 		ReportFieldInfo eventDateReportField = report.getCalendarField();
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
@@ -1604,13 +1614,24 @@ public final class DataManagement implements DataManagementInfo {
 				}
 			}
 			js.key("allDay").value(allDayEvent);
-			Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
-			js.key("start").value(eventDateEpoch);
-			if (!allDayEvent) {
-				js.key("end").value(eventDateEpoch + 7200); // events last 2hrs
+			if (format.equals(CalendarJsonFormat.TIMELINE)) {
+				// timeline needs formatted dates
+				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue());
+				String formattedDate = dateFormatter.format(new Date(eventDateEpoch));
+				js.key("start").value(formattedDate);
+			} else {
+				// fullcalendar needs the number of seconds since the epoch
+				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
+				js.key("start").value(eventDateEpoch);
+				if (!allDayEvent) {
+					js.key("end").value(eventDateEpoch + 7200); // events last
+																// 2hrs
+				}
 			}
-			js.key("className").value("report_" + internalReportName); // for fullcalendar
-			js.key("classname").value("report_" + internalReportName); // for timeplot
+			js.key("className").value("report_" + internalReportName); // for
+																		// fullcalendar
+			js.key("classname").value("report_" + internalReportName); // for
+																		// timeplot
 			js.key("dateFieldInternalName").value(dateFieldInternalName);
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
 			js.key("title").value(eventTitle);
