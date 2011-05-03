@@ -1631,7 +1631,7 @@ public final class DataManagement implements DataManagementInfo {
 			js.key("className").value("report_" + internalReportName); // for
 																		// fullcalendar
 			js.key("classname").value("report_" + internalReportName); // for
-																		// timeplot
+																		// timeline
 			js.key("dateFieldInternalName").value(dateFieldInternalName);
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
 			js.key("title").value(eventTitle);
