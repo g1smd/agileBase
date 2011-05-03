@@ -1633,8 +1633,17 @@ public final class DataManagement implements DataManagementInfo {
 			js.key("classname").value("report_" + internalReportName); // for
 																		// timeline
 			js.key("dateFieldInternalName").value(dateFieldInternalName);
-			String eventTitle = buildCalendarEventTitle(report, reportDataRow);
-			js.key("title").value(eventTitle);
+			String eventTitle = buildCalendarEventTitle(report, reportDataRow, false);
+			if (format.equals(CalendarJsonFormat.TIMELINE)) {
+				js.key("caption").value(eventTitle);
+				// TODO: build short title from long title, don't rebuild from
+				// scratch. Just cut off everything after the 5th comma for
+				// example
+				String shortTitle = buildCalendarEventTitle(report, reportDataRow, true);
+				js.key("title").value(shortTitle);
+			} else {
+				js.key("title").value(eventTitle);
+			}
 			js.endObject();
 		}
 		js.endArray();
@@ -1659,14 +1668,23 @@ public final class DataManagement implements DataManagementInfo {
 
 	/**
 	 * TODO: perhaps move this static method to a more appropriate class
+	 * 
+	 * @param shortTitle
+	 *            If true, return only the first part of the title
 	 */
-	public static String buildCalendarEventTitle(BaseReportInfo report, DataRowInfo reportDataRow) {
+	public static String buildCalendarEventTitle(BaseReportInfo report, DataRowInfo reportDataRow,
+			boolean shortTitle) {
 		// ignore any date fields other than the one used for specifying
 		// the event date
 		// ignore any blank fields
 		// for numeric and boolean fields, include the field title
 		StringBuilder eventTitleBuilder = new StringBuilder();
+		int fieldCount = 0;
 		REPORT_FIELD_LOOP: for (ReportFieldInfo reportField : report.getReportFields()) {
+			fieldCount++;
+			if (shortTitle && (fieldCount > 5)) {
+				break REPORT_FIELD_LOOP;
+			}
 			BaseField baseField = reportField.getBaseField();
 			if (baseField.getDbType().equals(DatabaseFieldType.TIMESTAMP)
 					|| baseField.equals(baseField.getTableContainingField().getPrimaryKey())) {

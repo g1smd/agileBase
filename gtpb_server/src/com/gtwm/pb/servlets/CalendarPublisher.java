@@ -196,7 +196,7 @@ public final class CalendarPublisher extends HttpServlet {
 			VTimeZone tz = registry.getTimeZone("Europe/London").getVTimeZone();
 			calendar.getComponents().add(tz);
 			for (DataRowInfo reportDataRow : reportDataRows) {
-				String eventTitle = DataManagement.buildCalendarEventTitle(report, reportDataRow);
+				String eventTitle = DataManagement.buildCalendarEventTitle(report, reportDataRow, false);
 				DataRowFieldInfo eventDateInfo = reportDataRow.getValue(eventDateField
 						.getBaseField());
 				String eventEpochTimeString = eventDateInfo.getKeyValue();
