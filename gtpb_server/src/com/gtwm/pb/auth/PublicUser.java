@@ -22,6 +22,7 @@ import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
+import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.Enumerations.UserType;
 import com.gtwm.pb.util.MissingParametersException;
@@ -204,5 +205,17 @@ public class PublicUser implements AppUserInfo {
 	private final String surname;
 
 	private final String internalUserName = (new RandomString()).toString();
+
+	public Set<TableInfo> getFormTables() throws CantDoThatException {
+		throw new CantDoThatException("This public user can have no forms");
+	}
+
+	public void addFormTable(TableInfo table) throws CantDoThatException {
+		throw new CantDoThatException("This public user can have no forms");
+	}
+
+	public void removeFormTable(TableInfo table) throws CantDoThatException {
+		throw new CantDoThatException("This public user can have no forms");
+	}
 
 }

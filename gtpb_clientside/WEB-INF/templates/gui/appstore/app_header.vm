@@ -43,6 +43,24 @@
       <img id="new_record" src="resources/toolbar/new.png" /><br>New
     </div>
   #end
+  #if($apps.contains("forms"))
+    #set($left = $left + 100)
+    <div class="button" style="left: ${left}px;">
+      <a href="?return=gui/forms/forms">
+        <img src="resources/toolbar/forms.png" /><br>Forms
+      </a>
+    </div>
+  #end
+  #if($current_app == "forms")
+    #set($left = $left + 100)
+    <div id="new_record" class="bare_button" style="left: ${left}px;">
+      <img id="new_record" src="resources/toolbar/new.png" /><br>New
+    </div>
+    #set($left = $left + 100)
+    <div id="clone_record" class="bare_button" style="left: ${left}px;">
+      <img id="clone_record" src="resources/toolbar/clone.png" /><br>Clone
+    </div>
+  #end
 </div> ## end links
 #if($current_app == "dashboard")
   #set($headlineNotices = $dashboard.getHeadlineNotices())

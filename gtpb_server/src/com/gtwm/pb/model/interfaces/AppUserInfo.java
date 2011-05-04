@@ -86,6 +86,15 @@ public interface AppUserInfo {
 	
 	public void removeOperationalDashboardReport(BaseReportInfo report) throws CantDoThatException;
 	
+	/**
+	 * Tables that the user can use the 'form' data input method with
+	 */
+	public Set<TableInfo> getFormTables() throws CantDoThatException;
+	
+	public void addFormTable(TableInfo table) throws CantDoThatException;
+	
+	public void removeFormTable(TableInfo table) throws CantDoThatException;
+	
 	public void hideReport(BaseReportInfo report) throws CantDoThatException;
 	
 	public void unhideReport(BaseReportInfo report) throws CantDoThatException;

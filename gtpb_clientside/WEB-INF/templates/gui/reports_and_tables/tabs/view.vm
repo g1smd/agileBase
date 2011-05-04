@@ -61,12 +61,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		         #if ($tableDataRow.size() > 0)
 				   #if(($numRelatedRows == 1) || (!$headingDisplayed))
 					 #set($headingDisplayed = true)
-    	     	     <thead>
-    		        	<tr><th class="leading">&nbsp;</th>			
-    		        	<th>$reportFieldTable</th>
-    		        	<th>&nbsp;</th>			
-    		        	<th class="trailing">&nbsp;</th></tr>			
-    		          </thead>
+              <thead>
+  		        	<tr><th class="leading">&nbsp;</th>			
+  		        	<th>$reportFieldTable.getSimpleName()</th>
+  		        	<th>&nbsp;</th>			
+  		        	<th class="trailing">&nbsp;</th></tr>			
+              </thead>
 					#end
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
