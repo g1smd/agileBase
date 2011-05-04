@@ -47,13 +47,13 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
   #end
 	  <table cellspacing="0" cellpadding="0" border="0" id="reportData" #if($cloned_record) style="background:url('styles/cloned.png') no-repeat top right !important;" #end>
 			#if(!$mobile_device)
-			<thead>
-			      <tr>
-			        <th class="leading">&nbsp;</th>			
-			        <th>field</th>
-			        <th>value</th>
-			        <th class="trailing">&nbsp;</th>
-			      </tr>
+			  <thead>
+		      <tr>
+		        <th class="leading">&nbsp;</th>			
+		        <th>field</th>
+		        <th>value</th>
+		        <th class="trailing">&nbsp;</th>
+		      </tr>
 		    </thead>
 			#end
 		    #set($tableDataRow=$view.getTableDataRow())
@@ -133,8 +133,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 	    <button class="tableaction" actiontemplate="$tableAction.getActionTemplate()" actionbuttons="$tableAction.getButtons()" callbackfunction="$tableAction.getCallbackFuncion()" actionname="$tableAction.getActionName()">&laquo; $tableAction &raquo;</button>
 	  #end
 	  #if($view.isRecordLocked())
-	  		  <div id="recordBlank"></div>
-	  		  
+      <div id="recordBlank"></div>
 	  	#if($view.loggedInUserAllowedTo('MANAGE_TABLE',$sessionTable))
 	  		<div id="recordUnlock">
 	  		  <button id="recordUnlockButton">

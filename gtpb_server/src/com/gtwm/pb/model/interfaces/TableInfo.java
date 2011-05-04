@@ -41,6 +41,15 @@ public interface TableInfo extends Comparable<TableInfo> {
 	public String getTableName();
 
 	public String getInternalTableName();
+	
+	/**
+	 * Return the table name with any prefixes removed, e.g.
+	 * 
+	 * "a2.1) contacts" -> "contacts"
+	 * 
+	 * This can be useful for displaying in the end user UI
+	 */
+	public String getSimpleName();
 
 	public String getTableDescription();
 

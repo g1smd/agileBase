@@ -1,0 +1,67 @@
+##
+##  Copyright 2011 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+##<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
+#set($user = $view.getLoggedInUser())
+#set($company=$user.getCompany())
+<html>
+<head>
+  <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+  <title>
+    $company form
+  </title>
+  <link type="text/css" href="resources/fullcalendar/fullcalendar.css" rel="stylesheet" />
+  <link type="text/css" href="customisations/common/dashboard/dashboard.css" rel="stylesheet" />
+  <link type="text/css" href="resources/tabs/tabs.css" rel="stylesheet" />
+  <link type="text/css" href="resources/fullcalendar/calendar.css" rel="stylesheet" />
+  <link type="text/css" href="resources/modalFramework/modalFramework.css" rel="stylesheet" />
+  <link type="text/css" href="resources/jquery.autocomplete.css" rel="stylesheet" />
+  <link type="text/css" href="resources/datePicker.css" rel="stylesheet" />
+  <link type="text/css" href="styles/report.css" rel="stylesheet" />
+  #if($mobile_device)
+  <link href="resources/mobile/override.css" type="text/css" rel="stylesheet" />
+  <link href="resources/mobile/wizard_override.css" type="text/css" rel="stylesheet" />
+  #end
+  <script src="resources/jquery.js" language="Javascript"></script>
+  <script src="resources/date.js" language="Javascript"></script>
+  <script src="resources/jquery.datePicker.js" language="Javascript"></script>
+  <script src="resources/jquery.autocomplete.js" language="Javascript"></script>
+  <script src="resources/wait/jquery.ajaxmanager.js" language="Javascript"></script>
+  ##<script src="resources/jquery.qtip.js" language="Javascript"></script>
+  <script src="resources/wait/request_setFilter.js" language="Javascript"></script>
+  <script src="resources/tabs/tabs.js" language="Javascript"></script>
+  <script src="resources/picker.js" language="Javascript"></script>
+  <script src="resources/modalFramework/modalFramework.js" language="Javascript"></script>
+  <script src="resources/fullcalendar/jquery-ui-custom.js" language="Javascript"></script>
+  <script src="resources/fullcalendar/fullcalendar.js" language="Javascript"></script>
+  <script src="resources/fullcalendar/calendar.js" language="Javascript"></script>
+</head>
+<body #if($mobile_device) id="mobile_device" #end>
+<div id="header">
+  #set($current_app = "forms")
+  #parse("gui/appstore/app_header.vm")
+  <div id="selected_reports">
+  </div>
+</div>
+<div id="rest_of_page">
+#parse("gui/forms/form_selection.vm")
+Debug: $moduleTables
+</div> ## end of rest_of_page
+</body>
+</html>

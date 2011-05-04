@@ -93,6 +93,15 @@ public class TableDefn implements TableInfo {
 	public synchronized String getTableName() {
 		return this.tableName;
 	}
+	
+	@Transient
+	public String getSimpleName() {
+		if (this.simpleName != null) {
+			return this.simpleName;
+		}
+		this.simpleName = this.getTableName().replaceFirst("^.*\\)","");
+		return this.simpleName;
+	}
 
 	public synchronized String getTableDescription() {
 		return this.tableDesc;
@@ -422,6 +431,8 @@ public class TableDefn implements TableInfo {
 	private boolean lockable = false;
 	
 	private boolean tableFormPublic = false;
+	
+	private volatile String simpleName = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(TableDefn.class);
 }

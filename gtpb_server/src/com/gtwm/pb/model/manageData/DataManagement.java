@@ -1628,10 +1628,8 @@ public final class DataManagement implements DataManagementInfo {
 																// 2hrs
 				}
 			}
-			js.key("className").value("report_" + internalReportName); // for
-																		// fullcalendar
-			js.key("classname").value("report_" + internalReportName); // for
-																		// timeline
+			js.key("className").value("report_" + internalReportName); // fullcalendar
+			js.key("classname").value("report_" + internalReportName); // timeline
 			js.key("dateFieldInternalName").value(dateFieldInternalName);
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow, false);
 			if (format.equals(CalendarJsonFormat.TIMELINE)) {

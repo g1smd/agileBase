@@ -24,7 +24,9 @@ import java.util.TreeSet;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
+import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
+import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.UserType;
@@ -174,6 +176,32 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 
 	@Transient
+	public Set<TableInfo> getFormTables() {
+		return Collections.unmodifiableSortedSet(new TreeSet<TableInfo>(this
+				.getFormTablesDirect()));
+	}
+
+	public synchronized void removeFormTable(TableInfo table) {
+		this.getFormTablesDirect().remove(table);
+	}
+
+	public synchronized void addFormTable(TableInfo table) {
+		this.getFormTablesDirect().add(table);
+	}
+
+	@ManyToMany(targetEntity = TableDefn.class, cascade={})
+	private Set<TableInfo> getFormTablesDirect() {
+		return this.formTables;
+	}
+
+	/**
+	 * For Hibernate use only
+	 */
+	private synchronized void setFormTablesDirect(Set<TableInfo> formTables) {
+		this.formTables = formTables;
+	}
+
+	@Transient
 	public Set<BaseReportInfo> getOperationalDashboardReports() {
 		return Collections.unmodifiableSortedSet(new TreeSet<BaseReportInfo>(this
 				.getOperationalDashboardReportsDirect()));
@@ -279,6 +307,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private Set<BaseReportInfo> hiddenReports = new HashSet<BaseReportInfo>();
 	
 	private Set<BaseReportInfo> operationalDashboardReports = new HashSet<BaseReportInfo>();
+	
+	private Set<TableInfo> formTables = new HashSet<TableInfo>();
 	
 	private Set<String> contractedSections = new HashSet<String>();
 	
