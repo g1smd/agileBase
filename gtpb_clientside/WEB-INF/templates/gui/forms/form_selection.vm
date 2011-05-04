@@ -32,7 +32,7 @@
           #set($tablesArray=[])
         #end
         #set($success=$tablesArray.add($table))
-        #set($success=$tableReports.put($module, $tablesArray))
+        #set($success=$moduleTables.put($module, $tablesArray))
       #end
     #end
   #end
