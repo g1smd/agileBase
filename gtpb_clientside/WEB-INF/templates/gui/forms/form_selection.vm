@@ -1,0 +1,39 @@
+##
+##  Copyright 2011 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+
+## obtain a mapping of module to tables
+## based on the table's reports. If a table owns any reports that belong to a particular module,
+## the table will be included in that module's set of tables
+#set($moduleTables=$viewTools.getNewSortedModuleObjectMap())
+#set($editableTables = $view.getTablesAllowedTo("EDIT_TABLE_DATA"))
+#foreach($table in $editableTables)
+  #foreach($report in $table.getReports())
+    #if( !($report.equals($table.getDefaultReport) || $report.getReportName().startsWith("dbvcalc") || $report.getReportName().startsWith("dbvcrit")) )
+      #set($module = $report.getModule())
+      #if($module)
+        #if($moduleTables.containsKey($module))
+          #set($tablesArray=$moduleTables.get($module))
+        #else
+          #set($tablesArray=[])
+        #end
+        #set($success=$tablesArray.add($table))
+        #set($success=$tableReports.put($module, $tablesArray))
+      #end
+    #end
+  #end
+#end
