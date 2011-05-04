@@ -21,6 +21,7 @@
 ## the table will be included in that module's set of tables
 #set($moduleTables=$viewTools.getNewSortedModuleObjectMap())
 #set($editableTables = $view.getTablesAllowedTo("EDIT_TABLE_DATA"))
+#set($addedTables = [])
 #foreach($table in $editableTables)
   #foreach($report in $table.getReports())
     #if( !($report.equals($table.getDefaultReport) || $report.getReportName().startsWith("dbvcalc") || $report.getReportName().startsWith("dbvcrit")) )
