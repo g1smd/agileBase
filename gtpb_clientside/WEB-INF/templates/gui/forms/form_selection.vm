@@ -31,7 +31,8 @@
         #else
           #set($tablesArray=[])
         #end
-        #if(!$tablesArray.contains($table))
+        #if(!$addedTables.contains($table))
+          #set($success=$addedTables.add($table))
           #set($success=$tablesArray.add($table))
           #set($success=$moduleTables.put($module, $tablesArray))
         #end
