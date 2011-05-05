@@ -54,7 +54,6 @@ import org.hibernate.HibernateException;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.HashSet;
-import java.util.EnumSet;
 
 /**
  * Manages the application's Authenticator object - use the static methods in
@@ -108,6 +107,7 @@ public final class AuthManager implements AuthManagerInfo {
 				for(AppUserInfo user : auth.getUsers()) {
 					logger.info("User " + user + " hidden reports: " + user.getHiddenReports());
 					logger.info("User " + user + " operational dashboard reports: " + user.getOperationalDashboardReports());
+					logger.info("User " + user + " form tables: " + user.getFormTables());
 				}
 				for (AppRoleInfo role : auth.getRoles()) {
 					logger.info("Role " + role + " users: " + role.getUsers());
