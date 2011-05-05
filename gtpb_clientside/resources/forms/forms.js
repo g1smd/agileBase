@@ -51,7 +51,7 @@ function addRemoveForm(checkboxElement) {
   if (jqCheckbox.is(":checked")) {
     var legendElement = $("<input type='radio' name='form_radio' id='legend_" + internalTableName + "' />");
     $("#report_selection_header").append(legendElement);
-    var labelElement = $("<label for='legend_" + internalTableName + "' >" + simpleTableName + "</label>")
+    var labelElement = $("<label for='legend_" + internalTableName + "' >" + simpleTableName + "&nbsp;</label>")
     $("#report_selection_header").append(labelElement);
   } else {
 	var legendId = "legend_" + internalTableName;
