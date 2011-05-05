@@ -60,8 +60,15 @@
   </div>
 </div>
 <div id="rest_of_page">
+#if($user.getFormTables().size() == 0)
+<div class="warningmessage">
+Please ask a system administrator to set up forms for you. Forms allow quick and easy data entry.<p>
+  
+Administrators: use the form selection below to select forms for this $user.getForename()
+</div>
+#end
+
 #parse("gui/forms/form_selection.vm")
-Debug: $moduleTables
 </div> ## end of rest_of_page
 </body>
 </html>
