@@ -26,12 +26,13 @@ $(document).ready(function() {
     }
   });
 
-  $(".report_selection_header").click(function() {
+  $("a.expander").click(function() {
 	if(fMobileDevice()) {
 	  $(this).next(".report_selection").toggle();
 	} else {
 	  $(this).next(".report_selection").toggle('normal');
     }
+	return false;
   });
   
   $(".report_selection_header input").change(function(event) {
