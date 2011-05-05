@@ -50,7 +50,7 @@
   <script src="resources/modalFramework/modalFramework.js" language="Javascript"></script>
   <script src="resources/fullcalendar/jquery-ui-custom.js" language="Javascript"></script>
   <script src="resources/fullcalendar/fullcalendar.js" language="Javascript"></script>
-  <script src="resources/fullcalendar/calendar.js" language="Javascript"></script>
+  <script src="resources/forms/forms.js" language="Javascript"></script>
 </head>
 <body #if($mobile_device) id="mobile_device" #end>
 <div id="header">
@@ -64,7 +64,7 @@
 <div class="warningmessage">
 Please ask a system administrator to set up forms for you. Forms allow quick and easy data entry.<p>
   
-Administrators: use the form selection below to select forms for this $user.getForename()
+Administrators: use the form selection below to select forms for $user.getForename()
 </div>
 #end
 
