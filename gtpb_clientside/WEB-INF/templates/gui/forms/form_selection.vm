@@ -15,7 +15,7 @@
       <ul parent="$internalModuleName">
       #foreach($table in $formTables)
         <li id="$internalTableName">
-          <input type="checkbox" simpletablename="$table.getSimpleName()" internaltablename="$internalTableName" #if($savedTables.contains($table)) checked #end>$table
+          <input type="checkbox" simpletablename="$table.getSimpleName()" internaltablename="$table.getInternalTableName()" #if($savedTables.contains($table)) checked #end>$table
         </li> 
       #end
       </ul>
