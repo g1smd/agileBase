@@ -33,6 +33,11 @@ $(document).ready(function() {
 	  $(this).next(".report_selection").toggle('normal');
     }
   });
+  
+  $(".report_selection_header input").click(function(event) {
+	$("#form").load("AppController.servlet?return=gui/reports_and_tables/tabs/edit");
+	return false;
+  });
 	  
 });
 
