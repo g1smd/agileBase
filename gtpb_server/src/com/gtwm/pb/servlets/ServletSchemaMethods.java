@@ -2517,6 +2517,42 @@ public final class ServletSchemaMethods {
 		}
 	}
 
+	public synchronized static void addFormTable(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn, ServletUtilMethods.USE_SESSION);
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request,
+				request.getRemoteUser());
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(appUser);
+			appUser.addFormTable(table);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("adding table " + table
+					+ " to forms for user " + appUser + " failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
+	public synchronized static void removeFormTable(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn, ServletUtilMethods.USE_SESSION);
+		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request,
+				request.getRemoteUser());
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(appUser);
+			appUser.removeFormTable(table);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("removing table " + table
+					+ " from forms for user " + appUser + " failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
 	public synchronized static void addOperationalDashboardReport(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
