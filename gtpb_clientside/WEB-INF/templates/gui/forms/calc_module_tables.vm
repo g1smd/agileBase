@@ -27,14 +27,15 @@
   #foreach($report in $table.getReports())
     ...$report.getModule() -> $report<br>
     #if( !($report.equals($table.getDefaultReport) || $report.getReportName().startsWith("dbvcalc") || $report.getReportName().startsWith("dbvcrit")) )
-      #set($module = $report.getModule())
-      #if($module)
+      #if($report.getModule())
+        #set($module = $report.getModule())
         #if($moduleTables.containsKey($module))
           #set($tablesArray=$moduleTables.get($module))
         #else
           #set($tablesArray=[])
         #end
         #if(!$addedTables.contains($table))
+          *** Added table $table<br>
           #set($success=$addedTables.add($table))
           #set($success=$tablesArray.add($table))
           #set($success=$moduleTables.put($module, $tablesArray))
