@@ -20,6 +20,8 @@
   #parse("gui/calendar_export/google.vm")
 #elseif($calendarExportDestination == "ipad")
   #parse("gui/calendar_export/ipad.vm")
+#elseif($calendarExportDestination == "outlook")
+  #parse("gui/calendar_export/outlook.vm")
 #else
   Error: can't find template for calendar export destination calendar_export_destination
 #end
