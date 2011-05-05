@@ -34,7 +34,6 @@ $(document).ready(function() {
     }
   });
 	  
-  
 });
 
 function fMobileDevice() {
@@ -49,7 +48,11 @@ function addRemoveForm(checkboxElement) {
   var internalTableName = jqCheckbox.attr("internaltablename");
   var simpleTableName = jqCheckbox.attr("simpletablename");
   if (jqCheckbox.is(":checked")) {
-    var legendElement = $("<input type='radio' name='form_radio' id='legend_" + internalTableName + "' />");
+	var checked = "false";
+	if (jqCheckbox.attr("sessiontable") == "true") {
+	  checked = "true";
+	} 
+    var legendElement = $("<input type='radio' name='form_radio' id='legend_" + internalTableName + "' checked='" + checked + "' />");
     $("#report_selection_header").append(legendElement);
     var labelElement = $("<label for='legend_" + internalTableName + "' >" + simpleTableName + "&nbsp;</label>")
     $("#report_selection_header").append(labelElement);
@@ -59,4 +62,3 @@ function addRemoveForm(checkboxElement) {
 	$("#" + legendId).remove();
   }
 }
-
