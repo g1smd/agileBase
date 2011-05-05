@@ -69,6 +69,7 @@ Administrators: use the form selection below to select forms for $user.getForena
 #end
 #parse("gui/forms/form_selection.vm")
 <div id="form">
+#parse("gui/reports_and_tables/tabs/edit.vm")
 </div>
 </div> ## end of rest_of_page
 </body>
