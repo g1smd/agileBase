@@ -2,7 +2,7 @@
 #parse("gui/forms/calc_module_tables.vm")
 #set($sessionTable = $sessionData.getTable())
 #set($savedTables = $user.getFormTables())
-<div id="report_selection_header" class="report_selection_header"><a href="#" class="expander">&plusmn; forms: </a></div>
+<div id="report_selection_header" class="report_selection_header"><a href="#" class="expander">&plusmn; forms</a>: </div>
 <div id="report_selection" class="report_selection">
 #set($modules = $moduleTables.keySet())
 #foreach($module in $modules)
