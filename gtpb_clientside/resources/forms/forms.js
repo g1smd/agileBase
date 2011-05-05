@@ -52,6 +52,7 @@ function addRemoveForm(checkboxElement) {
     var legendElement = $("<input type='radio' name='form_radio' id='legend_" + internalTableName + "' />");
     $("#report_selection_header").append(legendElement);
     var labelElement = $("<label for='legend_" + internalTableName + "' >" + simpleTableName + "</label>")
+    $("#report_selection_header").append(labelElement);
   } else {
 	var legendId = "legend_" + internalTableName;
 	$("#" + legendId).next("label").remove();
