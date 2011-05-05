@@ -34,8 +34,10 @@ $(document).ready(function() {
     }
   });
   
-  $(".report_selection_header input").click(function(event) {
-	$("#form").load("AppController.servlet?return=gui/reports_and_tables/tabs/edit");
+  $(".report_selection_header input").change(function(event) {
+	var jqRadio = $(this);
+	var internalTableName = jqRadio.attr("id").replace("legend_","");
+	$("#form").load("AppController.servlet?return=gui/reports_and_tables/tabs/edit&set_table=" + internalTableName);
 	return false;
   });
 	  
