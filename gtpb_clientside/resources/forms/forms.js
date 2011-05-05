@@ -19,7 +19,7 @@ $(document).ready(function() {
     } else {
   	  var removeFormOptions = {
           'return': 'blank',
-          'remove_table_form': 'true',
+          'remove_form_table': 'true',
           'internaltablename': internalTableName
   	  }
       $.post("AppController.servlet", removeFormOptions);
