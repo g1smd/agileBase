@@ -1,5 +1,6 @@
 ## Create a collection $moduleReports: each module maps to an array of reports
 #parse("gui/forms/calc_module_tables.vm")
+#set($sessionTable = $sessionData.getTable())
 #set($savedTables = $user.getFormTables())
 <div id="report_selection_header" class="report_selection_header">&plusmn; forms: </div>
 <div id="report_selection" class="report_selection">
@@ -16,7 +17,7 @@
       #foreach($table in $formTables)
         #set($internalTableName = $table.getInternalTableName())
         <li id="$internalTableName">
-          <input type="checkbox" simpletablename="$table.getSimpleName()" internaltablename="$internalTableName" #if($savedTables.contains($table)) checked #end>$table
+          <input type="checkbox" #if($table.equals($sessionTable)) sessiontable="true" #end simpletablename="$table.getSimpleName()" internaltablename="$internalTableName" #if($savedTables.contains($table)) checked #end>$table
         </li> 
       #end
       </ul>
