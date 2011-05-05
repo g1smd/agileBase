@@ -26,11 +26,11 @@ $(document).ready(function() {
     }
   });
 
-  $("a.expander").click(function() {
+  $(".expander").click(function() {
 	if(fMobileDevice()) {
-	  $(this).next(".report_selection").toggle();
+	  $(this).parent().next(".report_selection").toggle();
 	} else {
-	  $(this).next(".report_selection").toggle('normal');
+	  $(this).parent().next(".report_selection").toggle('normal');
     }
 	return false;
   });
