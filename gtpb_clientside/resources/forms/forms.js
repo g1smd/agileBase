@@ -49,10 +49,12 @@ function addRemoveForm(checkboxElement) {
   var internalTableName = jqCheckbox.attr("internaltablename");
   var simpleTableName = jqCheckbox.attr("simpletablename");
   if (jqCheckbox.is(":checked")) {
-    var legendElement = $("<input type='radio' name='form_radio' id='legend_" + internalTableName + "'>" + simpleTableName + "</input>");
+    var legendElement = $("<input type='radio' name='form_radio' id='legend_" + internalTableName + "' />");
     $("#report_selection_header").append(legendElement);
+    var labelElement = $("<label for='legend_" + internalTableName + "' >" + simpleTableName + "</label>")
   } else {
 	var legendId = "legend_" + internalTableName;
+	$("#" + legendId).next("label").remove();
 	$("#" + legendId).remove();
   }
 }
