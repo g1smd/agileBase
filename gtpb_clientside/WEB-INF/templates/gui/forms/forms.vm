@@ -63,7 +63,7 @@
 <div id="rest_of_page">
 #if($user.getFormTables().size() == 0)
 <div class="warningmessage">
-Please ask a system administrator to set up forms for you. Forms allow quick and easy data entry.<p>
+Please ask a system administrator to set up your forms. Forms allow quick and easy data entry.<p>
   
 Administrators: use the form selection below to select forms for $user.getForename()
 </div>
