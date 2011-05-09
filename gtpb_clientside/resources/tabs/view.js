@@ -22,44 +22,41 @@
  */
 function loadMap(postcode) {
 	if (!postcode) {
-		return;
+	  return;
 	}
 	if (GBrowserIsCompatible()) {
 		var geocoder = new GClientGeocoder();
-		geocoder
-				.getLatLng(
-						postcode,
-						function(point) {
-							if (!point) {
-								alert("Postcode " + postcode + " not found");
-							} else {
-								var mapUrl = 'http://maps.google.com/staticmap?center=' + point
-										.toUrlValue() + '&zoom=11&size=100x100&maptype=terrain&key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg&sensor=false';
-								$('#map')
-										.html(
-												'<a href="http://maps.google.co.uk/maps?f=q&hl=en&q='
-														+ postcode
-														+ '" target="_blank"><img border="1" src="'
-														+ mapUrl + '" /></a>');
-							}
-						});
+		geocoder.getLatLng(
+			postcode,
+			function(point) {
+				if (!point) {
+				  alert("Postcode " + postcode + " not found");
+				} else {
+					var mapUrl = 'https://maps.google.com/staticmap?center=' + 
+					  point.toUrlValue() + '&zoom=11&size=100x100&maptype=terrain&key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg&sensor=false';
+					$('#map').html('<a href="http://maps.google.co.uk/maps?f=q&hl=en&q='
+					  + postcode
+					  + '" target="_blank"><img border="1" src="'
+					  + mapUrl + '" /></a>');
+				}
+		});
 	}
 }
 
 function fYouTube() {
 	$('a.gtpb_url').each(
-			function() {
-				var sHref = this.getAttribute('href');
-				if ((sHref.indexOf('youtube.com') > -1)
-						|| (sHref.indexOf('vimeo.com') > -1)) {
-					var oContainer = document.createElement('div');
-					oContainer = $(oContainer);
-					oContainer.addClass('gtpb_youtube');
-					$(this).replaceWith(oContainer);
-					oContainer.oembed(sHref);
-				}
-				// oContainer.find('embed').attr('rel',0);
-			});
+		function() {
+			var sHref = this.getAttribute('href');
+			if ((sHref.indexOf('youtube.com') > -1)
+					|| (sHref.indexOf('vimeo.com') > -1)) {
+				var oContainer = document.createElement('div');
+				oContainer = $(oContainer);
+				oContainer.addClass('gtpb_youtube');
+				$(this).replaceWith(oContainer);
+				oContainer.oembed(sHref);
+			}
+			// oContainer.find('embed').attr('rel',0);
+		});
 }
 
 /* ---------- Add functions to the callFunctions list ---------- */
