@@ -505,7 +505,6 @@ function fSexyUpload() {
 	if (jqForm.hasClass("uploadEventRegistered")) {
 	  return;
 	}
-	alert("registering");
 	var jqProgressBar = jqForm.find(".upload_progress_bar");
 	var jqUploadInfo = jqForm.find(".upload_info");
 	jqForm.sexyPost({
@@ -518,7 +517,7 @@ function fSexyUpload() {
       },
       complete: function(event, responseText) {
         jqProgressBar.text("Upload complete");
-        //TODO: refresh the tab
+        jqProgressBar.addClass("upload_complete");
       },
       error: function(event) {
         jqProgressBar.text("Error, file upload incomplete");
