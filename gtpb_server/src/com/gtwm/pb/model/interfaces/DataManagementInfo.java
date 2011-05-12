@@ -33,7 +33,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageData.DataRow;
 import com.gtwm.pb.util.DataDependencyException;
-import com.gtwm.pb.util.Enumerations.CalendarJsonFormat;
+import com.gtwm.pb.util.Enumerations.DataFormat;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
@@ -103,12 +103,24 @@ public interface DataManagementInfo {
 	 * @param endEpoch
 	 *            The end unix timestamp as provided by fullcalendar
 	 */
-	public String getReportCalendarJSON(CalendarJsonFormat format, AppUserInfo user, BaseReportInfo report,
-			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
-			throws CodingErrorException, CantDoThatException, SQLException, JSONException;
+	public String getReportCalendarJSON(DataFormat format, AppUserInfo user,
+			BaseReportInfo report, Map<BaseField, String> filterValues, Long startEpoch,
+			Long endEpoch) throws CodingErrorException, CantDoThatException, SQLException,
+			JSONException;
 
-	public String getReportJSON(AppUserInfo user, BaseReportInfo report) throws JSONException,
-			CodingErrorException, CantDoThatException, SQLException;
+	/**
+	 * @param user
+	 *            Allows the method to log the user that made this request
+	 * @param report
+	 *            The report to format as JSON or RSS
+	 * @param cacheMinutes
+	 *            The number of minutes to cache a response for a particular
+	 *            report before regenerating
+	 */
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
+			throws JSONException, CodingErrorException, CantDoThatException, SQLException;
+
+	public String getReportRSS(AppUserInfo user, BaseReportInfo report, int cacheMinutes) throws SQLException;
 
 	/**
 	 * Return a report data object that contains metadata about the report data.

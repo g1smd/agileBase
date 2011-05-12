@@ -98,7 +98,7 @@ import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.servlets.ServletUtilMethods;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.DataDependencyException;
-import com.gtwm.pb.util.Enumerations.CalendarJsonFormat;
+import com.gtwm.pb.util.Enumerations.DataFormat;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -532,7 +532,8 @@ public final class DataManagement implements DataManagementInfo {
 					} else if (fieldValue instanceof IntegerValue) {
 						// if no related value, set relation field to null
 						if (field instanceof RelationField
-								&& (((IntegerValue) fieldValue).getValueInteger() == -1)) {
+								&& (((IntegerValue) fieldValue).getValueInteger() == -1)
+								|| (fieldValue.isNull())) {
 							statement.setNull(fieldNumber, Types.NULL);
 						} else {
 							statement.setInt(fieldNumber,
@@ -1500,13 +1501,23 @@ public final class DataManagement implements DataManagementInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public String getReportJSON(AppUserInfo user, BaseReportInfo report) throws JSONException,
-			CodingErrorException, CantDoThatException, SQLException {
-		String id = report.getInternalReportName();
+	private String getReportDataAsFormat(DataFormat dataFormat, AppUserInfo user,
+			BaseReportInfo Report, int cacheMinutes) {
+		return null;
+	}
+
+	public String getReportRSS(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
+			throws SQLException {
+		return null;
+	}
+
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
+			throws JSONException, CodingErrorException, CantDoThatException, SQLException {
+		String id = "json_" + report.getInternalReportName();
 		CachedJSONInfo cachedJSON = this.cachedReportJSONs.get(id);
 		if (cachedJSON != null) {
 			long cacheAge = cachedJSON.getCacheAge();
-			if (cacheAge < (30 * 60 * 1000)) { // 30 minutes
+			if (cacheAge < (cacheMinutes * 60 * 1000)) { // 30 minutes
 				this.reportJsonCacheHits.incrementAndGet();
 				return cachedJSON.getJSON();
 			}
@@ -1514,6 +1525,25 @@ public final class DataManagement implements DataManagementInfo {
 		List<DataRowInfo> reportDataRows = this
 				.getReportDataRows(user.getCompany(), report, new HashMap<BaseField, String>(0),
 						false, new HashMap<BaseField, Boolean>(0), 10000);
+		String json = this.generateJSON(report, reportDataRows);
+		UsageLogger usageLogger = new UsageLogger(this.dataSource);
+		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(), 10000,
+				"getReportJSON");
+		UsageLogger.startLoggingThread(usageLogger);
+		cachedJSON = new CachedJSON(json);
+		this.cachedReportJSONs.put(id, cachedJSON);
+		int cacheMisses = this.reportJsonCacheMisses.incrementAndGet();
+		if (cacheMisses > 100) {
+			logger.info("Report JSON cache hits: " + this.reportJsonCacheHits + ", misses "
+					+ cacheMisses);
+			this.reportJsonCacheHits.set(0);
+			this.reportJsonCacheMisses.set(0);
+		}
+		return json;
+	}
+
+	private String generateJSON(BaseReportInfo report, List<DataRowInfo> reportDataRows)
+			throws JSONException {
 		JSONStringer js = new JSONStringer();
 		js.array();
 		for (DataRowInfo reportDataRow : reportDataRows) {
@@ -1530,27 +1560,13 @@ public final class DataManagement implements DataManagementInfo {
 			js.endObject();
 		}
 		js.endArray();
-		UsageLogger usageLogger = new UsageLogger(this.dataSource);
-		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(), 10000,
-				"getReportJSON");
-		UsageLogger.startLoggingThread(usageLogger);
 		String json = js.toString();
-		cachedJSON = new CachedJSON(json);
-		this.cachedReportJSONs.put(id, cachedJSON);
-		int cacheMisses = this.reportJsonCacheMisses.incrementAndGet();
-		if (cacheMisses > 100) {
-			logger.info("Report JSON cache hits: " + this.reportJsonCacheHits + ", misses "
-					+ cacheMisses);
-			this.reportJsonCacheHits.set(0);
-			this.reportJsonCacheMisses.set(0);
-		}
 		return json;
 	}
 
-	public String getReportCalendarJSON(CalendarJsonFormat format, AppUserInfo user,
-			BaseReportInfo report, Map<BaseField, String> filterValues, Long startEpoch,
-			Long endEpoch) throws CodingErrorException, CantDoThatException, SQLException,
-			JSONException {
+	public String getReportCalendarJSON(DataFormat format, AppUserInfo user, BaseReportInfo report,
+			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
+			throws CodingErrorException, CantDoThatException, SQLException, JSONException {
 		// RFC 2822 date format used by Simile timeline
 		DateFormat dateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
 		ReportFieldInfo eventDateReportField = report.getCalendarField();
@@ -1587,10 +1603,10 @@ public final class DataManagement implements DataManagementInfo {
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
 				filterValues, false, new HashMap<BaseField, Boolean>(), 10000);
 		JSONStringer js = new JSONStringer();
-		if (format.equals(CalendarJsonFormat.TIMELINE)) {
+		if (format.equals(DataFormat.JSON_TIMELINE)) {
 			js.object();
 		}
-		if (format.equals(CalendarJsonFormat.TIMELINE)) {
+		if (format.equals(DataFormat.JSON_TIMELINE)) {
 			js.key("events");
 		}
 		js.array();
@@ -1614,7 +1630,7 @@ public final class DataManagement implements DataManagementInfo {
 				}
 			}
 			js.key("allDay").value(allDayEvent);
-			if (format.equals(CalendarJsonFormat.TIMELINE)) {
+			if (format.equals(DataFormat.JSON_TIMELINE)) {
 				// timeline needs formatted dates
 				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue());
 				String formattedDate = dateFormatter.format(new Date(eventDateEpoch));
@@ -1632,7 +1648,7 @@ public final class DataManagement implements DataManagementInfo {
 			js.key("classname").value("report_" + internalReportName); // timeline
 			js.key("dateFieldInternalName").value(dateFieldInternalName);
 			String eventTitle = buildCalendarEventTitle(report, reportDataRow, false);
-			if (format.equals(CalendarJsonFormat.TIMELINE)) {
+			if (format.equals(DataFormat.JSON_TIMELINE)) {
 				js.key("caption").value(eventTitle);
 				// TODO: build short title from long title, don't rebuild from
 				// scratch. Just cut off everything after the 5th comma for
@@ -1645,7 +1661,7 @@ public final class DataManagement implements DataManagementInfo {
 			js.endObject();
 		}
 		js.endArray();
-		if (format.equals(CalendarJsonFormat.TIMELINE)) {
+		if (format.equals(DataFormat.JSON_TIMELINE)) {
 			js.endObject();
 		}
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
