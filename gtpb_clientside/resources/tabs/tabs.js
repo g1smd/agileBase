@@ -511,6 +511,8 @@ function fSexyUpload() {
 	  start: function(event) {
 		jqProgressBar.show();
 		jqProgressBar.html(jqUploadInfo.html());
+		jqProgressBar.removeClass("upload_complete");
+		jqProgressBar.css("width","0%");
 	  },
       progress: function(event, completed, loaded, total) {
 		jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
@@ -518,6 +520,7 @@ function fSexyUpload() {
       complete: function(event, responseText) {
         jqProgressBar.text("Upload complete");
         jqProgressBar.addClass("upload_complete");
+        jqProgressBar.css("width","100%");
       },
       error: function(event) {
         jqProgressBar.text("Error, file upload incomplete");
