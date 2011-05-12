@@ -72,7 +72,6 @@
   <div class="relation_field">##
     <input name="$internalFieldName" ##
   	type="hidden" class="relation_hidden" ##
-  	gtpb_update_record="true" ##
   	value="$fieldValue" ##
     #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))##
       field_name="$field.getSimplifiedFieldName()" ##
@@ -88,8 +87,9 @@
 	  ## set the row ID for the related table
 	  ## so that if we choose a relation value for a particular record
 	  ## then click 'New' to add additional records, the same relation value is used
-  	  gtpb_rowidinternaltablename="$relatedTable.getInternalTableName()"##
-  	  gtpb_set_row_id="$fieldValue"##
+    gtpb_update_record="true" ##
+    gtpb_rowidinternaltablename="$relatedTable.getInternalTableName()"##
+    gtpb_set_row_id="$fieldValue"##
 	#end ##
 	id="$inputId">##
 	#set($wholeDisplayValue = $viewTools.escape($fieldDisplayValue))
