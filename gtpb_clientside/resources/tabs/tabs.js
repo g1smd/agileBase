@@ -335,10 +335,14 @@ function fRelationPickers() {
 		return;
 	}
 	jqHidden.attr("ab_setup_complete","true");
-    oHidden.doUpdate=function(sValue, bIsAutoUpdate) {
+    oHidden.doUpdate=function(sValue) {
 		var bIsGlobalEdit=false;
+		var bIsAutoUpdate=false;
     	if(jqHidden.attr("gtpb_global_edit")) {
     	  bIsGlobalEdit=true;
+    	}
+    	if(jqHidden.attr("gtpb_set_row_id")) {
+    	  bIsAutoUpdate=true;
     	}
     	this.value=sValue;
 		if(!bIsGlobalEdit) {
@@ -405,7 +409,7 @@ function fRelationPickers() {
   
     jqElement.result(function(event, data, formatted) {
 	  if(data) {
-		  jqElement[0].formEl.doUpdate(data[1], true);
+		  jqElement[0].formEl.doUpdate(data[1]);
 	  } else {
 		  alert('Error saving data');
 	  }
