@@ -582,7 +582,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			filterValues.put(eventDateField, eventDateFilterString);
 		}
 		AppUserInfo user = this.getLoggedInUser();
-		DataFormat formatEnum = DataFormat.valueOf(format.toUpperCase());
+		DataFormat formatEnum = DataFormat.valueOf("JSON_" + format.toUpperCase());
 		return this.databaseDefn.getDataManagement().getReportCalendarJSON(formatEnum, user, report,
 				filterValues, startEpoch, endEpoch);
 	}
