@@ -511,7 +511,7 @@ function fSexyUpload() {
 		jqProgressBar.html(jqUploadInfo.html());
 	  },
       progress: function(event, completed, loaded, total) {
-		jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
+		jqProgressBar.css("width", (completed * 100).toFixed(1) + " percent");
       },
       complete: function(event, responseText) {
         jqProgressBar.text("Upload complete");
