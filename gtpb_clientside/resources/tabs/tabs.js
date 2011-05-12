@@ -502,16 +502,18 @@ function uploadFile(fileInputElement) {
 function fSexyUpload() {
   $("form.fileUploader").each(function() {
 	var jqForm = $(this);
+	if (jqForm.hasClass("uploadEventRegistered")) {
+	  return;
+	}
 	var jqProgressBar = jqForm.find(".upload_progress_bar");
 	var jqUploadInfo = jqForm.find(".upload_info");
-	alert('test');
 	jqForm.sexyPost({
 	  start: function(event) {
 		jqProgressBar.show();
 		jqProgressBar.html(jqUploadInfo.html());
 	  },
       progress: function(event, completed, loaded, total) {
-		jqProgressBar.css("width", (completed * 100).toFixed(1) + " percent");
+		jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
       },
       complete: function(event, responseText) {
         jqProgressBar.text("Upload complete");
@@ -526,6 +528,7 @@ function fSexyUpload() {
         jqUploadInfo.text("Upload aborted");
       } */
     });
+	jqForm.addClass("uploadEventRegistered");
   });
 }
 
