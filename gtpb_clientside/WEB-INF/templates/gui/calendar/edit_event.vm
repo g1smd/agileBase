@@ -23,6 +23,7 @@
   #set($ab_calendar_display = true)
   <htmlContent onload="fComboComponents(); fRelationPickers(); fDatePickers();"><![CDATA[
     <form style="padding: 5px">
+      <input type="hidden" name="update_record" value="true" />
       #parse('gui/reports_and_tables/tabs/edit.vm')
 	  </form>
   ]]>
