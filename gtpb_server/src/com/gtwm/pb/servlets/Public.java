@@ -110,7 +110,7 @@ public class Public extends VelocityViewServlet {
 									+ " has not been set as publicly exportable");
 						}
 						String reportJSON = this.databaseDefn.getDataManagement().getReportJSON(
-								publicUser, report);
+								publicUser, report, 30);
 						context.put("gtwmReportJSON", reportJSON);
 						//response.setContentType("application/json");
 					} catch (AgileBaseException abex) {

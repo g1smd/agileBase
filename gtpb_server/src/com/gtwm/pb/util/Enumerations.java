@@ -429,8 +429,8 @@ public class Enumerations {
 		private String sqlRepresentation = "";
 	}
 	
-	public enum CalendarJsonFormat {
-		FULLCALENDAR, TIMELINE;
+	public enum DataFormat {
+		RSS, JSON, JSON_FULLCALENDAR, JSON_TIMELINE;
 	}
 
 }

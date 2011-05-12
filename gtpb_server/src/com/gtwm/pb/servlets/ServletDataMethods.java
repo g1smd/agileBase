@@ -18,14 +18,12 @@
 package com.gtwm.pb.servlets;
 
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import com.gtwm.pb.auth.DisallowedException;
@@ -34,33 +32,15 @@ import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageData.InputRecordException;
-import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
-import com.gtwm.pb.model.manageData.fields.DateValueDefn;
-import com.gtwm.pb.model.manageData.fields.DecimalValueDefn;
-import com.gtwm.pb.model.manageData.fields.DurationValueDefn;
-import com.gtwm.pb.model.manageData.fields.IntegerValueDefn;
-import com.gtwm.pb.model.manageData.fields.TextValueDefn;
-import com.gtwm.pb.model.manageData.fields.FileValueDefn;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
-import com.gtwm.pb.model.interfaces.fields.CheckboxField;
-import com.gtwm.pb.model.interfaces.fields.DateField;
-import com.gtwm.pb.model.interfaces.fields.DateValue;
-import com.gtwm.pb.model.interfaces.fields.DecimalField;
-import com.gtwm.pb.model.interfaces.fields.DurationField;
-import com.gtwm.pb.model.interfaces.fields.IntegerField;
-import com.gtwm.pb.model.interfaces.fields.RelationField;
-import com.gtwm.pb.model.interfaces.fields.TextField;
-import com.gtwm.pb.model.interfaces.fields.FileField;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.DataDependencyException;
-import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
-import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.FieldContentType;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.FileItem;
@@ -85,256 +65,6 @@ public final class ServletDataMethods {
 	}
 
 	/**
-	 * Get user input value for a field being editing or inserted as part of a
-	 * record
-	 * 
-	 * @return An object containing the value of the specified field, as
-	 *         provided in HTTP request data, or null if there was no value for
-	 *         the field
-	 * @throws SQLException
-	 *             If date value can't be read from the database
-	 * @throws ObjectNotFoundException
-	 *             if getTableDataRow() fails when reading date from relational
-	 *             db
-	 * @throws CantDoThatException
-	 *             Ditto
-	 * @throws InputRecordException
-	 *             If there was invalid user input for a field, e.g. a letter
-	 *             for a number field
-	 * @see #setSessionFieldInputValues(SessionDataInfo, HttpServletRequest,
-	 *      boolean, DatabaseInfo, TableInfo, List) Called by
-	 *      setSessionFieldInputValues
-	 */
-	private static BaseValue getFieldValue(HttpServletRequest request, BaseField field,
-			boolean newRecord, DatabaseInfo databaseDefn, List<FileItem> multipartItems)
-			throws SQLException, ObjectNotFoundException, CantDoThatException,
-			CodingErrorException, FileUploadException, InputRecordException {
-		BaseValue fieldValue = null;
-		String internalFieldName = field.getInternalFieldName();
-		String fieldValueString = ServletUtilMethods.getParameter(request, internalFieldName,
-				multipartItems);
-		DatabaseFieldType databaseFieldType = field.getDbType();
-		// reduce common errors for numbers (commas, spaces at end, - signs on
-		// their own)
-		if (databaseFieldType.equals(DatabaseFieldType.INTEGER)
-				|| databaseFieldType.equals(DatabaseFieldType.SERIAL)
-				|| databaseFieldType.equals(DatabaseFieldType.FLOAT)) {
-			if (fieldValueString != null) {
-				fieldValueString = fieldValueString.trim().replace(",", "").replace("£", "")
-						.replace("$", "");
-				if (fieldValueString.endsWith("%")) {
-					fieldValueString = fieldValueString.substring(0, fieldValueString.length() - 1);
-				}
-				if (fieldValueString.equals("-") || (fieldValueString.equals("-."))) {
-					fieldValueString = "0";
-				}
-			}
-		}
-		if (databaseFieldType.equals(DatabaseFieldType.INTEGER)
-				|| databaseFieldType.equals(DatabaseFieldType.SERIAL)) {
-			if (fieldValueString != null) {
-				if (fieldValueString.equals("")) {
-					// empty string means null
-					fieldValue = new IntegerValueDefn(null);
-				} else {
-					try {
-						fieldValue = new IntegerValueDefn(Integer.valueOf(fieldValueString));
-					} catch (NumberFormatException nfex) {
-						throw new InputRecordException("Value " + fieldValueString
-								+ " not allowed because a whole number needs to be entered", field,
-								nfex);
-					}
-				}
-			}
-		} else if (databaseFieldType.equals(DatabaseFieldType.INTERVAL)) {
-			// For error reporting
-			String partGotTo = "year";
-			try {
-				Integer years = getIntegerParameterValue(request, internalFieldName + "_years");
-				if ((years > 0) && (years < 99)) {
-					years += 2000;
-				}
-				partGotTo = "month";
-				Integer months = getIntegerParameterValue(request, internalFieldName + "_months");
-				partGotTo = "day";
-				Integer days = getIntegerParameterValue(request, internalFieldName + "_days");
-				partGotTo = "hour";
-				Integer hours = getIntegerParameterValue(request, internalFieldName + "_hours");
-				partGotTo = "minute";
-				Integer minutes = getIntegerParameterValue(request, internalFieldName + "_minutes");
-				partGotTo = "second";
-				Integer seconds = getIntegerParameterValue(request, internalFieldName + "_seconds");
-				if (years != null && months != null && days != null && hours != null
-						&& minutes != null && seconds != null) {
-					fieldValue = new DurationValueDefn(years, months, days, hours, minutes, seconds);
-				}
-			} catch (NumberFormatException nfex) {
-				throw new InputRecordException("The " + partGotTo
-						+ " is invalid because it needs to be a whole number", field, nfex);
-			}
-		} else if (databaseFieldType.equals(DatabaseFieldType.FLOAT)) {
-			if (fieldValueString != null) {
-				if (fieldValueString.equals("")) {
-					// empty string translated to null
-					fieldValue = new DecimalValueDefn(null);
-				} else {
-					// reformat to ensure number can be recognised by Java
-					// .4 -> 0.4
-					// 4. -> 4.0
-					// . -> 0.0
-					// £46.50 -> 46.50 - from the error logs, users commonly
-					// input £ signs
-					fieldValueString = fieldValueString.replace("£", "");
-					fieldValueString = fieldValueString.replace("$", "");
-					if (fieldValueString.startsWith(".")) {
-						fieldValueString = "0" + fieldValueString;
-					}
-					if (fieldValueString.endsWith(".")) {
-						fieldValueString = fieldValueString + "0";
-					}
-					try {
-						fieldValue = new DecimalValueDefn(Double.valueOf(Double
-								.valueOf(fieldValueString)));
-					} catch (NumberFormatException nfex) {
-						throw new InputRecordException("Value " + fieldValueString
-								+ " not allowed because a number needs to be entered", field, nfex);
-					}
-				}
-			}
-		} else if (databaseFieldType.equals(DatabaseFieldType.TIMESTAMP)) {
-			Set<String> httpParameters = request.getParameterMap().keySet();
-			// Every date will include at least a year, use this to check if
-			// the date value been specifically sent by the user
-			if (httpParameters.contains(internalFieldName + "_years")) {
-				DateValue dateFieldValue = new DateValueDefn(null, null, null, null, null, null);
-				dateFieldValue.setDateResolution(((DateField) field).getDateResolution());
-				// obtain values passed within the request, (if any)
-				String partGotTo = "year";
-				Integer years = null;
-				Integer months = null;
-				Integer days = null;
-				Integer hours = null;
-				Integer minutes = null;
-				Integer seconds = null;
-				try {
-					years = getIntegerParameterValue(request, internalFieldName + "_years");
-					partGotTo = "month";
-					months = getIntegerParameterValue(request, internalFieldName + "_months");
-					partGotTo = "day";
-					days = getIntegerParameterValue(request, internalFieldName + "_days");
-					partGotTo = "hour";
-					hours = getIntegerParameterValue(request, internalFieldName + "_hours");
-					partGotTo = "minute";
-					minutes = getIntegerParameterValue(request, internalFieldName + "_minutes");
-					partGotTo = "second";
-					seconds = getIntegerParameterValue(request, internalFieldName + "_seconds");
-					if (years != null) {
-						dateFieldValue.set(Calendar.YEAR, years);
-					}
-					if (months != null) {
-						dateFieldValue.set(Calendar.MONTH, months);
-					}
-					if (days != null) {
-						dateFieldValue.set(Calendar.DAY_OF_MONTH, days);
-					}
-					if (hours != null) {
-						dateFieldValue.set(Calendar.HOUR_OF_DAY, hours);
-					}
-					if (minutes != null) {
-						dateFieldValue.set(Calendar.MINUTE, minutes);
-					}
-					if (seconds != null) {
-						dateFieldValue.set(Calendar.SECOND, seconds);
-					}
-					// Additionally, allow delta values to be submitted (add
-					// more on an as-needed basis)
-					Integer days_delta = getIntegerParameterValue(request, internalFieldName
-							+ "_days_delta");
-					if (days_delta != null) {
-						dateFieldValue.add(Calendar.DAY_OF_MONTH, days_delta);
-					}
-					Integer minutes_delta = getIntegerParameterValue(request, internalFieldName
-							+ "_minutes_delta");
-					if (minutes_delta != null) {
-						dateFieldValue.add(Calendar.MINUTE, minutes_delta);
-					}
-				} catch (NumberFormatException nfex) {
-					throw new InputRecordException("The " + partGotTo
-							+ " is invalid because it needs to be a whole number", field, nfex);
-				}
-				// If date value is null, leave fieldValue as a null object as
-				// well
-				// or the dateField in the database will be set to null
-				if (dateFieldValue.getValueDate() == null) {
-					// However if all fields have specifically been set as null
-					// by
-					// the user then do set the fieldValue to the dateFieldValue
-					// object representing null
-					switch (((DateField) field).getDateResolution()) {
-					case Calendar.YEAR:
-						if (years == null) {
-							fieldValue = dateFieldValue;
-						}
-						break;
-					case Calendar.MONTH:
-						if (years == null && months == null) {
-							fieldValue = dateFieldValue;
-						}
-						break;
-					case Calendar.DAY_OF_MONTH:
-						if (years == null && months == null && days == null) {
-							fieldValue = dateFieldValue;
-						}
-						break;
-					case Calendar.HOUR_OF_DAY:
-						if (years == null && months == null && days == null && hours == null) {
-							fieldValue = dateFieldValue;
-						}
-						break;
-					case Calendar.MINUTE:
-						if (years == null && months == null && days == null && hours == null
-								&& minutes == null) {
-							fieldValue = dateFieldValue;
-						}
-						break;
-					}
-				} else {
-					fieldValue = dateFieldValue;
-				}
-			}
-		} else if (databaseFieldType.equals(DatabaseFieldType.VARCHAR)) {
-			if (fieldValueString != null) {
-				if (field instanceof FileField && !fieldValueString.equals("")) {
-					// file values are the only ones that can't represent null
-					// just skip it if no filename specified
-					fieldValue = new FileValueDefn(request, (FileField) field, multipartItems);
-				} else {
-					if (fieldValueString.equals("")) {
-						fieldValue = new TextValueDefn(null);
-					} else {
-						TextCase textCase = ((TextField) field).getTextCase();
-						if (textCase != null) {
-							fieldValueString = textCase.transform(fieldValueString);
-						}
-						fieldValue = new TextValueDefn(fieldValueString);
-					}
-				}
-			}
-		} else if (databaseFieldType.equals(DatabaseFieldType.BOOLEAN)) {
-			if (fieldValueString != null) {
-				if (fieldValueString.equals("")) {
-					fieldValue = new CheckboxValueDefn(null);
-				} else {
-					// fieldValueString should be 'true' to set a true value,
-					// anything else means false
-					fieldValue = new CheckboxValueDefn(Boolean.valueOf(fieldValueString));
-				}
-			}
-		}
-		return fieldValue;
-	}
-
-	/**
 	 * Get the value of a single parameter in a HTTP request, or null if the
 	 * parameter doesn't exist or is empty in the request. The parameter must be
 	 * integer
@@ -350,71 +80,6 @@ public final class ServletDataMethods {
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * @return A default value for the specified table field
-	 */
-	private static BaseValue getDefaultFieldValue(SessionDataInfo sessionData,
-			HttpServletRequest request, BaseField field, DatabaseInfo databaseDefn)
-			throws ObjectNotFoundException, DisallowedException, SQLException, CantDoThatException,
-			CodingErrorException {
-		BaseValue fieldValue = null;
-		if (field.hasDefault()) {
-			if (field instanceof TextField) {
-				TextField textField = (TextField) field;
-				fieldValue = new TextValueDefn(textField.getDefault());
-			} else if (field instanceof DateField) {
-				DateField dateField = (DateField) field;
-				Calendar defaultDate = dateField.getDefault();
-				fieldValue = new DateValueDefn(defaultDate);
-				((DateValue) fieldValue).setDateResolution(((DateField) field).getDateResolution());
-			} else if (field instanceof DecimalField) {
-				DecimalField decimalField = (DecimalField) field;
-				fieldValue = new DecimalValueDefn(decimalField.getDefault());
-			} else if (field instanceof DurationField) {
-				fieldValue = ((DurationField) field).getDefault();
-			} else if (field instanceof IntegerField) {
-				IntegerField integerField = (IntegerField) field;
-				fieldValue = new IntegerValueDefn(integerField.getDefault());
-			} else if (field instanceof CheckboxField) {
-				CheckboxField checkboxField = (CheckboxField) field;
-				fieldValue = new CheckboxValueDefn(checkboxField.getDefault());
-			}
-		}
-		// now deal with mandatory fields not having default values:
-		if (field instanceof RelationField) {
-			RelationField relationField = (RelationField) field;
-			Boolean overrideDefaultToNull = Helpers.valueRepresentsBooleanTrue(request
-					.getParameter("gtpb_override_relation_default_to_null"));
-			// Only look up a value if the field's not set to default to null
-			if ((!relationField.getDefaultToNull()) || overrideDefaultToNull) {
-				// obtain a relevant primary key value from the related table's
-				// default report
-				// where a session rowid has been set for the related table, use
-				// this value
-				BaseField relatedField = relationField.getRelatedField();
-				if (!relatedField.getTableContainingField().getPrimaryKey().equals(relatedField)) {
-					throw new CantDoThatException(
-							"Unable to generate default for related field; expecting relation on primary key");
-				}
-				Integer relatedRowId = sessionData.getRowId(relatedField.getTableContainingField());
-				if (relatedRowId != null) {
-					fieldValue = new IntegerValueDefn(Integer.valueOf(relatedRowId));
-				} else {
-					TableInfo table = relatedField.getTableContainingField();
-					Map<BaseField, BaseValue> tableRow = databaseDefn.getDataManagement()
-							.getTableDataRow(table, -1);
-					for (Map.Entry<BaseField, BaseValue> fieldValueEntry : tableRow.entrySet()) {
-						if (fieldValueEntry.getKey().equals(relatedField)) {
-							fieldValue = fieldValueEntry.getValue();
-							break;
-						}
-					}
-				}
-			}
-		}
-		return fieldValue;
 	}
 
 	/**

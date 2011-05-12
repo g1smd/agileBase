@@ -20,7 +20,6 @@ package com.gtwm.pb.model.interfaces.fields;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
-import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;

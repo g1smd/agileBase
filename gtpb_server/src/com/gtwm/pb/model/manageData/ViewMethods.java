@@ -76,7 +76,7 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
-import com.gtwm.pb.util.Enumerations.CalendarJsonFormat;
+import com.gtwm.pb.util.Enumerations.DataFormat;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.ExtraAction;
 import com.gtwm.pb.util.Helpers;
@@ -582,7 +582,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			filterValues.put(eventDateField, eventDateFilterString);
 		}
 		AppUserInfo user = this.getLoggedInUser();
-		CalendarJsonFormat formatEnum = CalendarJsonFormat.valueOf(format.toUpperCase());
+		DataFormat formatEnum = DataFormat.valueOf(format.toUpperCase());
 		return this.databaseDefn.getDataManagement().getReportCalendarJSON(formatEnum, user, report,
 				filterValues, startEpoch, endEpoch);
 	}
