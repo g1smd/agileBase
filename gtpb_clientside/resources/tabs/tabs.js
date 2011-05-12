@@ -505,6 +505,7 @@ function fSexyUpload() {
 	if (jqForm.hasClass("uploadEventRegistered")) {
 	  return;
 	}
+	alert("registering");
 	var jqProgressBar = jqForm.find(".upload_progress_bar");
 	var jqUploadInfo = jqForm.find(".upload_info");
 	jqForm.sexyPost({
