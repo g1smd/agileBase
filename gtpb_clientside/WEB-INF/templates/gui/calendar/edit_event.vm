@@ -23,8 +23,8 @@
   #set($ab_calendar_display = true)
   <htmlContent onload="fComboComponents(); fRelationPickers(); fDatePickers();"><![CDATA[
     <form style="padding: 5px">
-    #parse('gui/reports_and_tables/tabs/edit.vm')
-	</form>
+      #parse('gui/reports_and_tables/tabs/edit.vm')
+	  </form>
   ]]>
   </htmlContent>
   <caption>$app_action_caption</caption>

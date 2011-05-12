@@ -84,7 +84,7 @@
   	internalTableName="$internalTableName"##
 	#if($globalEdit) ##
 	  gtpb_global_edit="true"
-	#else
+	#elseif($updateAsType)
 	  ## set the row ID for the related table
 	  ## so that if we choose a relation value for a particular record
 	  ## then click 'New' to add additional records, the same relation value is used
