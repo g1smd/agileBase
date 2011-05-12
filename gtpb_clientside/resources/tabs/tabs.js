@@ -345,7 +345,7 @@ function fRelationPickers() {
     	  bIsAutoUpdate=true;
     	}
     	this.value=sValue;
-		if(!bIsGlobalEdit) {
+		if((!bIsGlobalEdit) && bIsAutoUpdate) {
 		  jqHidden.attr("gtpb_set_row_id",sValue);
 		}
     	// if it's not a global edit, do the update if we're updating as we type
