@@ -293,6 +293,16 @@ img.cross_reference_image {
   display: none;
   overflow: hidden;
   color: white;
+  -webkit-transition-property: background-color, width;
+  -webkit-transition-duration: 1s;
+  -moz-transition-property: background-color, width;
+  -moz-transition-duration: 1s;
+  transition-property: background-color, width;
+  transition-duration: 1s;
+}
+
+.upload_progress_bar.upload_complete {
+  background-color: green;
 }
 
 /* Note: this is an example of how to make a character hang */
