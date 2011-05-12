@@ -40,7 +40,7 @@
 	          <input type="radio" name="set_table" id="radio_$internalTableName" value="$internalTableName" #if($table.equals($sessionTable)) checked #end>
 			</td>
 			<td style="padding: 10px">
-			  <label for="radio_$internalTableName"><b>$table</b></label>
+			  <label for="radio_$internalTableName"><b>$table.getSimpleName()</b></label>
 			</td>
 		  </tr>
 	    #end
