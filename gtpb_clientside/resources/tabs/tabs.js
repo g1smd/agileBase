@@ -504,8 +504,8 @@ function fSexyUpload() {
 	var jqForm = $(this);
 	var jqProgressBar = jqForm.find(".upload_progress_bar");
 	var jqUploadInfo = jqForm.find(".upload_info");
+	alert('test');
 	jqForm.sexyPost({
-	  alert('test');
 	  start: function(event) {
 		jqProgressBar.show();
 		jqProgressBar.html(jqUploadInfo.html());
