@@ -348,9 +348,9 @@ function fRelationPickers() {
 		if(!bIsGlobalEdit) {
 		  jqHidden.attr("gtpb_set_row_id",sValue);
 		}
-    	// if it's not a global edit, then always do the update
+    	// if it's not a global edit, do the update if we're updating as we type
     	// if it is a global edit, only update when the button is clicked i.e. not a global update
-    	if(!bIsGlobalEdit || (bIsGlobalEdit && !bIsAutoUpdate)) new fChange(this);
+    	if((!bIsGlobalEdit && bIsAutoUpdate) || (bIsGlobalEdit && !bIsAutoUpdate)) new fChange(this);
     };
     oHidden.label = jqHidden.next()[0];
   });
