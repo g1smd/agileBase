@@ -92,8 +92,9 @@ public class DataRow implements DataRowInfo {
 		this.loadDataRow(conn, statement);
 	}
 
-	private static Map<String, String> getKeyToDisplayMapping(Connection conn, String internalSourceName,
-			String internalKeyFieldName, String internalDisplayFieldName) throws SQLException {
+	private static Map<String, String> getKeyToDisplayMapping(Connection conn,
+			String internalSourceName, String internalKeyFieldName, String internalDisplayFieldName)
+			throws SQLException {
 		// Buffer the set of display values for this field:
 		String SQLCode = "SELECT " + internalKeyFieldName + ", " + internalDisplayFieldName;
 		SQLCode += " FROM " + internalSourceName;
@@ -101,8 +102,8 @@ public class DataRow implements DataRowInfo {
 		ResultSet results = statement.executeQuery();
 		Map<String, String> displayLookup = new LinkedHashMap<String, String>();
 		while (results.next()) {
-			displayLookup.put(results.getString(internalKeyFieldName), results
-					.getString(internalDisplayFieldName));
+			displayLookup.put(results.getString(internalKeyFieldName),
+					results.getString(internalDisplayFieldName));
 		}
 		return displayLookup;
 	}
@@ -149,7 +150,8 @@ public class DataRow implements DataRowInfo {
 						keyValue = keyValueDateValue.toString();
 						displayValue = keyValue;
 					}
-				} else if (field instanceof SeparatorField || field instanceof ReferencedReportDataField) {
+				} else if (field instanceof SeparatorField
+						|| field instanceof ReferencedReportDataField) {
 					// no data for separator fields
 				} else {
 					keyValue = results.getString(field.getInternalFieldName());
@@ -176,15 +178,15 @@ public class DataRow implements DataRowInfo {
 		return Collections
 				.unmodifiableMap(new LinkedHashMap<BaseField, DataRowFieldInfo>(this.row));
 	}
-	
+
 	public DataRowFieldInfo getValue(BaseField field) {
 		return this.row.get(field);
 	}
-	
+
 	public DataRowFieldInfo getValue(ReportFieldInfo reportField) {
 		return this.row.get(reportField.getBaseField());
 	}
-	
+
 	public DataRowFieldInfo getValue(String fieldID) throws ObjectNotFoundException {
 		for (Map.Entry<BaseField, DataRowFieldInfo> entry : this.row.entrySet()) {
 			if (entry.getKey().getInternalFieldName().equals(fieldID)) {
@@ -197,11 +199,13 @@ public class DataRow implements DataRowInfo {
 				return entry.getValue();
 			}
 		}
-		throw new ObjectNotFoundException("Field with ID or name '" + fieldID + "' not found in data row " + this.row);
+		throw new ObjectNotFoundException("Field with ID or name '" + fieldID
+				+ "' not found in data row " + this.row);
 	}
 
 	public Map<RelationField, List<DataRow>> getChildDataRows(DatabaseInfo databaseDefn,
-			Connection conn, HttpServletRequest request) throws SQLException, ObjectNotFoundException, CodingErrorException {
+			Connection conn, HttpServletRequest request) throws SQLException,
+			ObjectNotFoundException, CodingErrorException {
 		// declare the return value:
 		Map<RelationField, List<DataRow>> childDataRows = new HashMap<RelationField, List<DataRow>>();
 		// obtain a set of all tables containing any field from this table as a
@@ -274,7 +278,17 @@ public class DataRow implements DataRowInfo {
 	}
 
 	public String toString() {
-		return this.row.toString();
+		StringBuilder rowStringBuilder = new StringBuilder();
+		for (Map.Entry<BaseField, DataRowFieldInfo> entry : this.row.entrySet()) {
+			BaseField field = entry.getKey();
+			if (!field.equals(field.getTableContainingField().getPrimaryKey())) {
+				rowStringBuilder.append(field + ": " + entry.getValue().getDisplayValue() + ", ");
+			}
+		}
+		if (rowStringBuilder.length() > 2) {
+			rowStringBuilder.delete(rowStringBuilder.length() - 2, rowStringBuilder.length());
+		}
+		return rowStringBuilder.toString();
 	}
 
 	private final Map<BaseField, DataRowFieldInfo> row;

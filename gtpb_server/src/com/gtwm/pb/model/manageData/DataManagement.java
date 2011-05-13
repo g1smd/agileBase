@@ -1523,9 +1523,13 @@ public final class DataManagement implements DataManagementInfo {
 				return cachedFeed.getFeed();
 			}
 		}
+		int numRows = 10000;
+		if (dataFormat.equals(DataFormat.RSS)) {
+			numRows = 100;
+		}
 		List<DataRowInfo> reportDataRows = this
 				.getReportDataRows(user.getCompany(), report, new HashMap<BaseField, String>(0),
-						false, new HashMap<BaseField, Boolean>(0), 10000);
+						false, new HashMap<BaseField, Boolean>(0), numRows);
 		String dataFeedString = null;
 		if (dataFormat.equals(DataFormat.JSON)) {
 			dataFeedString = this.generateJSON(report, reportDataRows);
@@ -1585,7 +1589,7 @@ public final class DataManagement implements DataManagementInfo {
 		eventWriter.add(end);
 		logger.debug("Start of RSS is " + stringWriter.toString());
 		// Write the different nodes
-		this.createNode(eventWriter, "title", report.getModule().getModuleName() + " - " + report.getReportName() + " - agileBase");
+		this.createNode(eventWriter, "title", report.getModule().getModuleName() + " - " + report.getReportName());
 		String reportLink = this.getWebAppRoot() + "AppController.servlet?return=gui/display_application&set_table=" + report.getParentTable().getInternalTableName() + "&set_report=" + report.getInternalReportName();
 		this.createNode(eventWriter, "link", reportLink);
 		this.createNode(eventWriter, "description", "A live data feed from a www.agilebase.co.uk report");
