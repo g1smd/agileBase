@@ -30,5 +30,5 @@ If public access is allowed, you can use one of these options to export data:
 #set($internalTableName = $report.getParentTable().getInternalTableName())
 #set($internalReportName = $report.getInternalReportName())
 <li>Use <a target="_blank" href="Public.ab?get_report_json=true&c=$internalCompanyName&t=$internalTableName&r=$internalReportName">this url</a> to integrate with a third party website or service using JSON data exchange</li>
-<li>Use <a target="_blank" href="Public.ab?get_report_rss=true&c=$internalCompanyName&t=$internalTableName&r=$internalReportName">this RSS feed</a> to access live report data from an application or device</li>
+<li>Use <a target="_blank" href="Public.ab?get_report_rss=true&c=$internalCompanyName&t=$internalTableName&r=$internalReportName">this RSS feed</a> to access notifications of new data</li>
 </ul>
