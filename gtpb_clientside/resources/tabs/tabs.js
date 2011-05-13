@@ -341,7 +341,7 @@ function fRelationPickers() {
     	if(jqHidden.attr("gtpb_global_edit")) {
     	  bIsGlobalEdit=true;
     	}
-    	if(jqHidden.attr("gtpb_set_row_id")) {
+    	if(typeof jqHidden.attr("gtpb_set_row_id") != 'undefined') {
     	  bIsAutoUpdate=true;
     	}
     	this.value=sValue;
