@@ -1599,7 +1599,6 @@ public final class DataManagement implements DataManagementInfo {
 			createNode(eventWriter, "description", reportDataRow.toString());
 			String rowLink = reportLink + "&set_row_id=" + reportDataRow.getRowId();
 			createNode(eventWriter, "link", rowLink);
-			createNode(eventWriter, "author", reportDataRow.getValue(HiddenFields.MODIFIED_BY.getFieldName()).getDisplayValue());
 			createNode(eventWriter, "guid", rowLink);
 			eventWriter.add(end);
 			eventWriter.add(eventFactory.createEndElement("", "", "item"));
