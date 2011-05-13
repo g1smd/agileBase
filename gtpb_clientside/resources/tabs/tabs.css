@@ -294,11 +294,11 @@ img.cross_reference_image {
   overflow: hidden;
   color: white;
   -webkit-transition-property: background-color, width;
-  -webkit-transition-duration: 1s;
+  -webkit-transition-duration: 2s;
   -moz-transition-property: background-color, width;
-  -moz-transition-duration: 1s;
+  -moz-transition-duration: 2s;
   transition-property: background-color, width;
-  transition-duration: 1s;
+  transition-duration: 2s;
 }
 
 .upload_progress_bar.upload_complete {
