@@ -46,6 +46,7 @@ import java.io.File;
 import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -54,7 +55,7 @@ import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
-import com.gtwm.pb.model.interfaces.CachedJSONInfo;
+import com.gtwm.pb.model.interfaces.CachedReportFeedInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
@@ -112,6 +113,16 @@ import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
+import javax.xml.stream.XMLEventFactory;
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Characters;
+import javax.xml.stream.events.EndElement;
+import javax.xml.stream.events.StartDocument;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadException;
@@ -1275,7 +1286,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		// Put the file in a unique folder per row ID.
 		// This is in the format table ID / field ID / row ID
-		String uploadFolderName = this.webAppRoot + "uploads/"
+		String uploadFolderName = this.getWebAppRoot() + "uploads/"
 				+ field.getTableContainingField().getInternalTableName() + "/"
 				+ field.getInternalFieldName() + "/" + rowId;
 		File uploadFolder = new File(uploadFolderName);
@@ -1502,46 +1513,117 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	private String getReportDataAsFormat(DataFormat dataFormat, AppUserInfo user,
-			BaseReportInfo Report, int cacheMinutes) {
-		return null;
-	}
-
-	public String getReportRSS(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
-			throws SQLException {
-		return null;
-	}
-
-	public String getReportJSON(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
-			throws JSONException, CodingErrorException, CantDoThatException, SQLException {
-		String id = "json_" + report.getInternalReportName();
-		CachedJSONInfo cachedJSON = this.cachedReportJSONs.get(id);
-		if (cachedJSON != null) {
-			long cacheAge = cachedJSON.getCacheAge();
-			if (cacheAge < (cacheMinutes * 60 * 1000)) { // 30 minutes
-				this.reportJsonCacheHits.incrementAndGet();
-				return cachedJSON.getJSON();
+			BaseReportInfo report, int cacheMinutes) throws CodingErrorException, CantDoThatException, SQLException, JSONException, XMLStreamException, ObjectNotFoundException {
+		String id = dataFormat.toString() + report.getInternalReportName();
+		CachedReportFeedInfo cachedFeed = this.cachedReportFeeds.get(id);
+		if (cachedFeed != null) {
+			long cacheAge = cachedFeed.getCacheAge();
+			if (cacheAge < (cacheMinutes * 60 * 1000)) {
+				this.reportFeedCacheHits.incrementAndGet();
+				return cachedFeed.getFeed();
 			}
 		}
 		List<DataRowInfo> reportDataRows = this
 				.getReportDataRows(user.getCompany(), report, new HashMap<BaseField, String>(0),
 						false, new HashMap<BaseField, Boolean>(0), 10000);
-		String json = this.generateJSON(report, reportDataRows);
+		String dataFeedString = null;
+		if (dataFormat.equals(DataFormat.JSON)) {
+			dataFeedString = this.generateJSON(report, reportDataRows);
+		} else if(dataFormat.equals(DataFormat.RSS)) {
+			dataFeedString = this.generateRSS(user, report, reportDataRows);
+		} else {
+			throw new CodingErrorException("Format " + dataFormat + " has no report generator");
+		}
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
 		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(), 10000,
-				"getReportJSON");
+				dataFormat.toString());
 		UsageLogger.startLoggingThread(usageLogger);
-		cachedJSON = new CachedJSON(json);
-		this.cachedReportJSONs.put(id, cachedJSON);
-		int cacheMisses = this.reportJsonCacheMisses.incrementAndGet();
+		cachedFeed = new CachedFeed(dataFeedString);
+		this.cachedReportFeeds.put(id, cachedFeed);
+		int cacheMisses = this.reportFeedCacheMisses.incrementAndGet();
 		if (cacheMisses > 100) {
-			logger.info("Report JSON cache hits: " + this.reportJsonCacheHits + ", misses "
+			logger.info("Public report data cache hits: " + this.reportFeedCacheHits + ", misses "
 					+ cacheMisses);
-			this.reportJsonCacheHits.set(0);
-			this.reportJsonCacheMisses.set(0);
+			this.reportFeedCacheHits.set(0);
+			this.reportFeedCacheMisses.set(0);
 		}
-		return json;
+		return dataFeedString;
 	}
 
+	public String getReportRSS(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
+			throws SQLException, CodingErrorException, CantDoThatException, JSONException, XMLStreamException, ObjectNotFoundException {
+		return this.getReportDataAsFormat(DataFormat.RSS, user, report, cacheMinutes);
+	}
+
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
+			throws JSONException, CodingErrorException, CantDoThatException, SQLException, XMLStreamException, ObjectNotFoundException {
+		return this.getReportDataAsFormat(DataFormat.JSON, user, report, cacheMinutes);
+	}
+
+	/**
+	 * Based on http://www.vogella.de/articles/RSSFeed/article.html
+	 */
+	private String generateRSS(AppUserInfo user, BaseReportInfo report, List<DataRowInfo> reportDataRows) throws XMLStreamException, ObjectNotFoundException {
+		// Create a XMLOutputFactory
+		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+		// Create XMLEventWriter
+		StringWriter stringWriter = new StringWriter();
+		XMLEventWriter eventWriter = outputFactory.createXMLEventWriter(stringWriter);
+		// Create a EventFactory
+		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+		XMLEvent end = eventFactory.createDTD("\n");
+		// Create and write Start Tag
+		StartDocument startDocument = eventFactory.createStartDocument();
+		eventWriter.add(startDocument);
+		// Create open tag
+		eventWriter.add(end);
+		StartElement rssStart = eventFactory.createStartElement("", "", "rss");
+		eventWriter.add(rssStart);
+		eventWriter.add(eventFactory.createAttribute("version", "2.0"));
+		eventWriter.add(end);
+		eventWriter.add(eventFactory.createStartElement("", "", "channel"));
+		eventWriter.add(end);
+		// Write the different nodes
+		this.createNode(eventWriter, "title", report.getModule().getModuleName() + " - " + report.getReportName() + " - agileBase");
+		String reportLink = this.getWebAppRoot() + "AppController.servlet?return=gui/display_application&set_table=" + report.getParentTable().getInternalTableName() + "&set_report=" + report.getInternalReportName();
+		this.createNode(eventWriter, "link", reportLink);
+		this.createNode(eventWriter, "description", "A live data feed from a www.agilebase.co.uk report");
+		DateFormat dateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
+		Date lastDataChangeDate = new Date(this.getLastDataChangeTime(user.getCompany()));
+		this.createNode(eventWriter, "pubdate", dateFormatter.format(lastDataChangeDate));
+		for (DataRowInfo reportDataRow : reportDataRows) {
+			eventWriter.add(eventFactory.createStartElement("", "", "item"));
+			eventWriter.add(end);
+			createNode(eventWriter, "title", buildCalendarEventTitle(report, reportDataRow, false));
+			createNode(eventWriter, "description", reportDataRow.toString());
+			String rowLink = reportLink + "&set_row_id=" + reportDataRow.getRowId();
+			createNode(eventWriter, "link", rowLink);
+			createNode(eventWriter, "author", reportDataRow.getValue(HiddenFields.MODIFIED_BY.getFieldName()).getDisplayValue());
+			createNode(eventWriter, "guid", rowLink);
+			eventWriter.add(end);
+			eventWriter.add(eventFactory.createEndElement("", "", "item"));
+			eventWriter.add(end);
+		}
+		return stringWriter.toString();
+	}
+	
+	private void createNode(XMLEventWriter eventWriter, String name, String value) throws XMLStreamException {
+				XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+				XMLEvent end = eventFactory.createDTD("\n");
+				XMLEvent tab = eventFactory.createDTD("\t");
+				// Create Start node
+				StartElement sElement = eventFactory.createStartElement("", "", name);
+				eventWriter.add(tab);
+				eventWriter.add(sElement);
+				// Create Content
+				Characters characters = eventFactory.createCharacters(value);
+				eventWriter.add(characters);
+				// Create End node
+				EndElement eElement = eventFactory.createEndElement("", "", name);
+				eventWriter.add(eElement);
+				eventWriter.add(end);
+	}
+	
 	private String generateJSON(BaseReportInfo report, List<DataRowInfo> reportDataRows)
 			throws JSONException {
 		JSONStringer js = new JSONStringer();
@@ -1579,13 +1661,13 @@ public final class DataManagement implements DataManagementInfo {
 		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
 				filterValues);
 		String id = report.getInternalReportName() + sortedFilterValues.toString();
-		CachedJSONInfo cachedJSON = this.cachedCalendarJSONs.get(id);
+		CachedReportFeedInfo cachedJSON = this.cachedCalendarJSONs.get(id);
 		if (cachedJSON != null) {
 			this.calendarJsonCacheHits.incrementAndGet();
 			// Note: if we choose not to invalidate the cache on every data
 			// change, we could return only JSON that was newer than a certain
 			// time here, say the last data change time plus ten secs
-			return cachedJSON.getJSON();
+			return cachedJSON.getFeed();
 		}
 		String dateFieldInternalName = eventDateReportField.getInternalFieldName();
 		int dateResolution = 0;
@@ -1668,7 +1750,7 @@ public final class DataManagement implements DataManagementInfo {
 		usageLogger.logReportView(user, report, filterValues, 10000, "getCalendarJSON");
 		UsageLogger.startLoggingThread(usageLogger);
 		String json = js.toString();
-		cachedJSON = new CachedJSON(json);
+		cachedJSON = new CachedFeed(json);
 		this.cachedCalendarJSONs.put(id, cachedJSON);
 		int cacheMisses = this.calendarJsonCacheMisses.incrementAndGet();
 		if (cacheMisses > 100) {
@@ -2449,9 +2531,9 @@ public final class DataManagement implements DataManagementInfo {
 
 	private Map<ChartInfo, ChartDataInfo> cachedChartDatas = new ConcurrentHashMap<ChartInfo, ChartDataInfo>();
 
-	private Map<String, CachedJSONInfo> cachedCalendarJSONs = new ConcurrentHashMap<String, CachedJSONInfo>();
+	private Map<String, CachedReportFeedInfo> cachedCalendarJSONs = new ConcurrentHashMap<String, CachedReportFeedInfo>();
 
-	private Map<String, CachedJSONInfo> cachedReportJSONs = new ConcurrentHashMap<String, CachedJSONInfo>();
+	private Map<String, CachedReportFeedInfo> cachedReportFeeds = new ConcurrentHashMap<String, CachedReportFeedInfo>();
 
 	private final DataSource dataSource;
 
@@ -2479,9 +2561,9 @@ public final class DataManagement implements DataManagementInfo {
 
 	private AtomicInteger calendarJsonCacheMisses = new AtomicInteger();
 
-	private AtomicInteger reportJsonCacheHits = new AtomicInteger();
+	private AtomicInteger reportFeedCacheHits = new AtomicInteger();
 
-	private AtomicInteger reportJsonCacheMisses = new AtomicInteger();
+	private AtomicInteger reportFeedCacheMisses = new AtomicInteger();
 
 	private float uploadSpeed = 50000; // Default to 50KB per second
 

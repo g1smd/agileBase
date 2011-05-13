@@ -9,6 +9,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.stream.XMLStreamException;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.velocity.Template;
@@ -97,37 +99,53 @@ public class Public extends VelocityViewServlet {
 				}
 				switch (publicAction) {
 				case GET_REPORT_JSON:
-					templateName = templatePath + "report_json";
+				case GET_REPORT_RSS:
+					if (publicAction.equals(PublicAction.GET_REPORT_JSON)) {
+						templateName = templatePath + "report_json";
+					} else {
+						templateName = templatePath + "report_rss";
+					}
 					String internalReportName = request.getParameter("r");
 					try {
 						if (internalReportName == null) {
 							throw new MissingParametersException(
-									"r (internal report ID) parameter is necessary to export report JSON");
+									"r (internal report ID) parameter is necessary to export report JSON/RSS");
 						}
 						BaseReportInfo report = table.getReport(internalReportName);
 						if (!report.getCalendarSyncable()) {
 							throw new CantDoThatException("The report " + report
 									+ " has not been set as publicly exportable");
 						}
-						String reportJSON = this.databaseDefn.getDataManagement().getReportJSON(
-								publicUser, report, 30);
-						context.put("gtwmReportJSON", reportJSON);
-						//response.setContentType("application/json");
+						if (publicAction.equals(PublicAction.GET_REPORT_JSON)) {
+							String reportJSON = this.databaseDefn.getDataManagement()
+									.getReportJSON(publicUser, report, 30);
+							context.put("gtwmReportJSON", reportJSON);
+						} else {
+							String reportRSS = this.databaseDefn.getDataManagement().getReportRSS(
+									publicUser, report, 2);
+							context.put("gtwmReportRSS", reportRSS);
+							response.setContentType(ResponseReturnType.XML.getResponseType());
+						}
 					} catch (AgileBaseException abex) {
 						ServletUtilMethods.logException(abex, request,
-								"General error performing save from public");
+								"General error getting report JSON/RSS");
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, abex);
 					} catch (JSONException jsonex) {
 						ServletUtilMethods.logException(jsonex, request,
-								"General error performing save from public");
+								"General error getting report JSON/RSS");
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, jsonex);
 					} catch (SQLException sqlex) {
 						ServletUtilMethods.logException(sqlex, request,
-								"General error performing save from public");
+								"General error getting report JSON/RSS");
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, sqlex);
+					} catch (XMLStreamException xmlex) {
+						ServletUtilMethods.logException(xmlex, request,
+								"General error getting report JSON/RSS");
+						return this.getUserInterfaceTemplate(request, response, templateName,
+								context, xmlex);
 					}
 					break;
 				case SHOW_FORM:
