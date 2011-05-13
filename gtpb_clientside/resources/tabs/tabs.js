@@ -545,6 +545,7 @@ function fKeyUpEvent(inputElement) {
   var globalEdit = false;
   // Note: why doesn't var globalEdit = (jqWrapper.attr("gtpb_global_edit") !== "undefined") work?
   // A: see http://stackoverflow.com/questions/1318076/jquery-hasattr-checking-to-see-if-there-is-an-attribute-on-an-element
+  // A2: should be != rather than !==
   if (jqWrapper.attr("gtpb_global_edit")) {
 	globalEdit = true;
   };

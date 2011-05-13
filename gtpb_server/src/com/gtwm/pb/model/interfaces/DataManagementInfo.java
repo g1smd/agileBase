@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.stream.XMLStreamException;
+
 import org.apache.commons.fileupload.FileItem;
 import org.json.JSONException;
 import com.gtwm.pb.auth.DisallowedException;
@@ -118,9 +120,9 @@ public interface DataManagementInfo {
 	 *            report before regenerating
 	 */
 	public String getReportJSON(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
-			throws JSONException, CodingErrorException, CantDoThatException, SQLException;
+			throws JSONException, CodingErrorException, CantDoThatException, SQLException, XMLStreamException, ObjectNotFoundException;
 
-	public String getReportRSS(AppUserInfo user, BaseReportInfo report, int cacheMinutes) throws SQLException;
+	public String getReportRSS(AppUserInfo user, BaseReportInfo report, int cacheMinutes) throws SQLException, CodingErrorException, CantDoThatException, JSONException, XMLStreamException, ObjectNotFoundException;
 
 	/**
 	 * Return a report data object that contains metadata about the report data.

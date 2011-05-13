@@ -21,11 +21,14 @@
 This option will allow data from this report to be accessed by the public without any username, password or other authentication.<p>
 Please be aware of any security considerations<p>
 <input type="checkbox" name="set_calendar_syncable" value="true" onclick="new fChange(this)" #if($calendarSyncable)checked #end> Allow public access<p>
-If public access is allowed, you can use one of these options to export data:<p>
+If public access is allowed, you can use one of these options to export data:
+<ul>
 #if($calendarField)
-  Use $calendarField to <a href="#" onclick="javascript:fShowModalDialog('gui/calendar_export/calendar_export_wizard','Calendar Export', function() {}, 'next ok cancel', 'width=800px; height=600px');">export to a public calendar</a>, such as Google Calendar or a mobile phone/tablet<p>
+  <li>Use $calendarField to <a href="#" onclick="javascript:fShowModalDialog('gui/calendar_export/calendar_export_wizard','Calendar Export', function() {}, 'next ok cancel', 'width=800px; height=600px');">export to a public calendar</a>, such as Google Calendar or a mobile phone/tablet</li>
 #end
 #set($internalCompanyName = $view.getLoggedInUser().getCompany().getInternalCompanyName())
 #set($internalTableName = $report.getParentTable().getInternalTableName())
 #set($internalReportName = $report.getInternalReportName())
-Use <a target="_blank" href="Public.ab?get_report_json=true&c=$internalCompanyName&t=$internalTableName&r=$internalReportName">this url</a> to integrate with a third party website or service using JSON data exchange
+<li>Use <a target="_blank" href="Public.ab?get_report_json=true&c=$internalCompanyName&t=$internalTableName&r=$internalReportName">this url</a> to integrate with a third party website or service using JSON data exchange</li>
+<li>Use <a target="_blank" href="Public.ab?get_report_rss=true&c=$internalCompanyName&t=$internalTableName&r=$internalReportName">this RSS feed</a> to access live report data from an application or device</li>
+</ul>

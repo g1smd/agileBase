@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="gtpb_server/src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="lib" path="gtpb_server/external_libs/postgresql-8.3-603.jdbc4.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/external_libs/servlet-api.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/ant-1.6.5.jar"/>
@@ -73,5 +72,6 @@
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/velocity-1.7.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/velocity-tools-view-2.0.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/ical4j-1.0-rc3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
