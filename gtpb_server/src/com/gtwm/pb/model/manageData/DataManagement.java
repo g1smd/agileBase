@@ -1513,7 +1513,9 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	private String getReportDataAsFormat(DataFormat dataFormat, AppUserInfo user,
-			BaseReportInfo report, int cacheMinutes) throws CodingErrorException, CantDoThatException, SQLException, JSONException, XMLStreamException, ObjectNotFoundException {
+			BaseReportInfo report, int cacheMinutes) throws CodingErrorException,
+			CantDoThatException, SQLException, JSONException, XMLStreamException,
+			ObjectNotFoundException {
 		String id = dataFormat.toString() + report.getInternalReportName();
 		CachedReportFeedInfo cachedFeed = this.cachedReportFeeds.get(id);
 		if (cachedFeed != null) {
@@ -1527,13 +1529,13 @@ public final class DataManagement implements DataManagementInfo {
 		if (dataFormat.equals(DataFormat.RSS)) {
 			numRows = 100;
 		}
-		List<DataRowInfo> reportDataRows = this
-				.getReportDataRows(user.getCompany(), report, new HashMap<BaseField, String>(0),
-						false, new HashMap<BaseField, Boolean>(0), numRows);
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
+				new HashMap<BaseField, String>(0), false, new HashMap<BaseField, Boolean>(0),
+				numRows);
 		String dataFeedString = null;
 		if (dataFormat.equals(DataFormat.JSON)) {
 			dataFeedString = this.generateJSON(report, reportDataRows);
-		} else if(dataFormat.equals(DataFormat.RSS)) {
+		} else if (dataFormat.equals(DataFormat.RSS)) {
 			dataFeedString = this.generateRSS(user, report, reportDataRows);
 		} else {
 			throw new CodingErrorException("Format " + dataFormat + " has no report generator");
@@ -1555,19 +1557,22 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public String getReportRSS(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
-			throws SQLException, CodingErrorException, CantDoThatException, JSONException, XMLStreamException, ObjectNotFoundException {
+			throws SQLException, CodingErrorException, CantDoThatException, JSONException,
+			XMLStreamException, ObjectNotFoundException {
 		return this.getReportDataAsFormat(DataFormat.RSS, user, report, cacheMinutes);
 	}
 
 	public String getReportJSON(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
-			throws JSONException, CodingErrorException, CantDoThatException, SQLException, XMLStreamException, ObjectNotFoundException {
+			throws JSONException, CodingErrorException, CantDoThatException, SQLException,
+			XMLStreamException, ObjectNotFoundException {
 		return this.getReportDataAsFormat(DataFormat.JSON, user, report, cacheMinutes);
 	}
 
 	/**
 	 * Based on http://www.vogella.de/articles/RSSFeed/article.html
 	 */
-	private String generateRSS(AppUserInfo user, BaseReportInfo report, List<DataRowInfo> reportDataRows) throws XMLStreamException, ObjectNotFoundException {
+	private String generateRSS(AppUserInfo user, BaseReportInfo report,
+			List<DataRowInfo> reportDataRows) throws XMLStreamException, ObjectNotFoundException {
 		// Create a XMLOutputFactory
 		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
 		// Create XMLEventWriter
@@ -1589,10 +1594,15 @@ public final class DataManagement implements DataManagementInfo {
 		eventWriter.add(end);
 		logger.debug("Start of RSS is " + stringWriter.toString());
 		// Write the different nodes
-		this.createNode(eventWriter, "title", report.getModule().getModuleName() + " - " + report.getReportName());
-		String reportLink = this.getWebAppRoot() + "AppController.servlet?return=gui/display_application&set_table=" + report.getParentTable().getInternalTableName() + "&set_report=" + report.getInternalReportName();
+		this.createNode(eventWriter, "title",
+				report.getModule().getModuleName() + " - " + report.getReportName());
+		// TODO: Don't hard code host part of URL
+		String reportLink = "https://appserver.gtportalbase.com/agileBase/AppController.servlet?return=gui/display_application&set_table="
+				+ report.getParentTable().getInternalTableName()
+				+ "&set_report="
+				+ report.getInternalReportName();
 		this.createNode(eventWriter, "link", reportLink);
-		this.createNode(eventWriter, "description", "A live data feed from a www.agilebase.co.uk report");
+		this.createNode(eventWriter, "description", "A live data feed from www.agilebase.co.uk");
 		DateFormat dateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
 		Date lastDataChangeDate = new Date(this.getLastDataChangeTime(user.getCompany()));
 		this.createNode(eventWriter, "pubdate", dateFormatter.format(lastDataChangeDate));
@@ -1610,24 +1620,25 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		return stringWriter.toString();
 	}
-	
-	private void createNode(XMLEventWriter eventWriter, String name, String value) throws XMLStreamException {
-				XMLEventFactory eventFactory = XMLEventFactory.newInstance();
-				XMLEvent end = eventFactory.createDTD("\n");
-				XMLEvent tab = eventFactory.createDTD("\t");
-				// Create Start node
-				StartElement sElement = eventFactory.createStartElement("", "", name);
-				eventWriter.add(tab);
-				eventWriter.add(sElement);
-				// Create Content
-				Characters characters = eventFactory.createCharacters(value);
-				eventWriter.add(characters);
-				// Create End node
-				EndElement eElement = eventFactory.createEndElement("", "", name);
-				eventWriter.add(eElement);
-				eventWriter.add(end);
+
+	private void createNode(XMLEventWriter eventWriter, String name, String value)
+			throws XMLStreamException {
+		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+		XMLEvent end = eventFactory.createDTD("\n");
+		XMLEvent tab = eventFactory.createDTD("\t");
+		// Create Start node
+		StartElement sElement = eventFactory.createStartElement("", "", name);
+		eventWriter.add(tab);
+		eventWriter.add(sElement);
+		// Create Content
+		Characters characters = eventFactory.createCharacters(value);
+		eventWriter.add(characters);
+		// Create End node
+		EndElement eElement = eventFactory.createEndElement("", "", name);
+		eventWriter.add(eElement);
+		eventWriter.add(end);
 	}
-	
+
 	private String generateJSON(BaseReportInfo report, List<DataRowInfo> reportDataRows)
 			throws JSONException {
 		JSONStringer js = new JSONStringer();
@@ -1781,38 +1792,42 @@ public final class DataManagement implements DataManagementInfo {
 		StringBuilder eventTitleBuilder = new StringBuilder();
 		int fieldCount = 0;
 		REPORT_FIELD_LOOP: for (ReportFieldInfo reportField : report.getReportFields()) {
-			fieldCount++;
-			if (shortTitle && (fieldCount > 5)) {
-				break REPORT_FIELD_LOOP;
-			}
 			BaseField baseField = reportField.getBaseField();
+			DataRowFieldInfo dataRowField = reportDataRow.getValue(baseField);
+			String displayValue = dataRowField.getDisplayValue();
+			if (displayValue.equals("")) {
+				continue REPORT_FIELD_LOOP;
+			}
 			if (baseField.getDbType().equals(DatabaseFieldType.TIMESTAMP)
 					|| baseField.equals(baseField.getTableContainingField().getPrimaryKey())) {
 				continue REPORT_FIELD_LOOP;
 			}
-			DataRowFieldInfo dataRowField = reportDataRow.getValue(baseField);
+			fieldCount++;
+			if (shortTitle && (fieldCount > 5)) {
+				break REPORT_FIELD_LOOP;
+			}
 			switch (baseField.getDbType()) {
 			case BOOLEAN:
 				boolean reportFieldTrue = Helpers.valueRepresentsBooleanTrue(dataRowField
 						.getKeyValue());
 				if (reportFieldTrue) {
-					eventTitleBuilder.append(reportField.getFieldName());
+					eventTitleBuilder.append(reportField.getFieldName() + ", ");
 				}
 				break;
 			case INTEGER:
 				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-						.append(dataRowField.getDisplayValue());
+						.append(displayValue);
 				break;
 			case FLOAT:
 				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-						.append(dataRowField.getDisplayValue());
+						.append(displayValue);
 				break;
 			case SERIAL:
 				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
 						.append(dataRowField.getKeyValue());
 				break;
 			default:
-				eventTitleBuilder.append(dataRowField.getDisplayValue());
+				eventTitleBuilder.append(displayValue);
 			}
 			eventTitleBuilder.append(", ");
 		}
