@@ -1583,6 +1583,7 @@ public final class DataManagement implements DataManagementInfo {
 		eventWriter.add(end);
 		eventWriter.add(eventFactory.createStartElement("", "", "channel"));
 		eventWriter.add(end);
+		logger.debug("Start of RSS is " + stringWriter.toString());
 		// Write the different nodes
 		this.createNode(eventWriter, "title", report.getModule().getModuleName() + " - " + report.getReportName() + " - agileBase");
 		String reportLink = this.getWebAppRoot() + "AppController.servlet?return=gui/display_application&set_table=" + report.getParentTable().getInternalTableName() + "&set_report=" + report.getInternalReportName();
