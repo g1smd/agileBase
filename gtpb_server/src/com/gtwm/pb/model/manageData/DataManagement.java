@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.model.manageData;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,6 +53,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.Thumbnails.Builder;
 
 import org.apache.commons.math.util.MathUtils;
 import com.gtwm.pb.auth.PrivilegeType;
@@ -1372,12 +1374,17 @@ public final class DataManagement implements DataManagementInfo {
 					// image.png -> image.png.40.png
 					String thumb40Path = filePath + "." + 40 + "." + extension;
 					String thumb500Path = filePath + "." + 500 + "." + extension;
-					logger.debug("Creating thumb: " + thumb40Path);
 					File thumb40File = new File(thumb40Path);
 					File thumb500File = new File(thumb500Path);
 					try {
-						Thumbnails.of(selectedFile).size(40, 40).toFile(thumb40File);
-						Thumbnails.of(selectedFile).size(500, 500).toFile(thumb500File);
+						Builder<File> thumbBuilder = Thumbnails.of(selectedFile);
+						BufferedImage originalImage = thumbBuilder.asBufferedImage();
+						if ((originalImage.getHeight() > 500) || (originalImage.getWidth() > 500)) {
+							thumbBuilder.size(500, 500).toFile(thumb500File);
+						} else {
+							thumbBuilder.toFile(thumb500File);
+						}
+						thumbBuilder.size(40, 40).toFile(thumb40File);
 					} catch (IOException ioex) {
 						throw new FileUploadException("Error generating thumbnail: "
 								+ ioex.getMessage());
