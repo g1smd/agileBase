@@ -1367,8 +1367,8 @@ public final class DataManagement implements DataManagementInfo {
 					float uploadSpeed = ((float) fileSize) / secondsToUpload;
 					this.updateUploadSpeed(uploadSpeed);
 				}
-				if (extension.equals(".jpg") || extension.equals(".jpeg")
-						|| extension.equals(".png")) {
+				if (extension.equals("jpg") || extension.equals("jpeg")
+						|| extension.equals("png")) {
 					// image.png -> image.png.40.png
 					String thumb40Path = filePath + "." + 40 + "." + extension;
 					String thumb500Path = filePath + "." + 500 + "." + extension;
