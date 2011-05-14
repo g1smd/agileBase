@@ -29,8 +29,6 @@
       #set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/")
 	  #end
   	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValue"))
-  	## Users were frequently having problems with browsers caching old document versions
-  	#set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
     #if($viewTools.getBrowser().getBrowserName() == "Konqueror")
       ## Konqueror on LadyLodge doesn't like opening docs with OpenOffice over https
       #set($appUrl = $viewTools.getAppUrl())
@@ -40,27 +38,29 @@
     ## File icon
     #if(!$fieldValueObject.isImage())
       <img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/> $fieldValue
+      ## Users were frequently having problems with browsers caching old document versions
+      #set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
       <a href="$downloadUrl">download</a>
-	  #if(!$userCanEdit)
-	    #set($previousFileVersions = $field.getPreviousFileVersions($viewTools.getWebAppRoot(), $sessionRowId, $fieldValue))
-	    #if($previousFileVersions.size() > 0)
-		  <br clear="left">
-		  <div class="greytext"><i>Previous versions</i>
-		  #foreach($previousFileVersion in $previousFileVersions)
-			<br>
-		    #set($lastModified = $previousFileVersion.getLastModified())
-		    #set($yearConst = $viewTools.getCalendarConstant("YEAR"))
-		    #set($monthConst = $viewTools.getCalendarConstant("MONTH"))
-		    #set($dayConst = $viewTools.getCalendarConstant("DAY_OF_MONTH"))
-			#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$previousFileVersion"))
-			#set($lastModifiedMonth = $lastModified.get($monthConst) + 1)
-		    $lastModified.get($dayConst)/$lastModifiedMonth/$lastModified.get($yearConst)
-			- <a href="$downloadUrl" style="color:gray">$previousFileVersion</a>
-		  #end
-		  </div>
-	    #end
-	  #end ## !$userCanEdit
-    #end
+  	  #if(!$userCanEdit)
+  	    #set($previousFileVersions = $field.getPreviousFileVersions($viewTools.getWebAppRoot(), $sessionRowId, $fieldValue))
+  	    #if($previousFileVersions.size() > 0)
+  		  <br clear="left">
+  		  <div class="greytext"><i>Previous versions</i>
+  		  #foreach($previousFileVersion in $previousFileVersions)
+  			<br>
+  		    #set($lastModified = $previousFileVersion.getLastModified())
+  		    #set($yearConst = $viewTools.getCalendarConstant("YEAR"))
+  		    #set($monthConst = $viewTools.getCalendarConstant("MONTH"))
+  		    #set($dayConst = $viewTools.getCalendarConstant("DAY_OF_MONTH"))
+    			#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$previousFileVersion"))
+    			#set($lastModifiedMonth = $lastModified.get($monthConst) + 1)
+  		    $lastModified.get($dayConst)/$lastModifiedMonth/$lastModified.get($yearConst)
+  			  - <a href="$downloadUrl" style="color:gray">$previousFileVersion</a>
+  		  #end
+  		  </div>
+  	    #end
+  	  #end ## !$userCanEdit
+    #end ## if not image
   #end ## if !$fieldValueObject.isNull()
   #if($userCanEdit && (!$mobile_device))
 	#if($ab_calendar_display)
