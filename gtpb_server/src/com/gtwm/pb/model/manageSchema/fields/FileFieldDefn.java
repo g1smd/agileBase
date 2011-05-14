@@ -28,6 +28,7 @@ import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.FileField;
 import com.gtwm.pb.model.interfaces.fields.FileVersion;
+import com.gtwm.pb.model.manageData.fields.FileValueDefn;
 import com.gtwm.pb.model.manageData.fields.FileVersionDefn;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
@@ -70,10 +71,15 @@ public class FileFieldDefn extends AbstractField implements FileField {
 			// If folder isn't there, there have probably never been any files uploaded for this record
 			return fileVersions;
 		}
+		boolean isImage = (new FileValueDefn(currentFileName)).isImage();
 		File[] fileArray = uploadFolder.listFiles();
-		for (File file : fileArray) {
+		FILE_LIST: for (File file : fileArray) {
 			String fileName = file.getName();
 			if (!fileName.equals(currentFileName)) {
+				// Ignore thumbnails
+				if (isImage && (fileName.contains(".40.")) || (fileName.contains(".500."))) {
+					continue FILE_LIST;
+				}
 				long lastModified = file.lastModified();
 				Calendar lastModifiedCal = Calendar.getInstance();
 				lastModifiedCal.setTimeInMillis(lastModified);
