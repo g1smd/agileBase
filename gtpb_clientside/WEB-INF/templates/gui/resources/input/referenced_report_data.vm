@@ -80,12 +80,12 @@
 			#elseif($fieldCategory == "FILE")
         	  #set($rrd_displayValue = $rrd_reportDataRow.getValue($reportBaseField).getDisplayValue())
         	  #if($rrd_displayValue != "")
-				#set($lowercaseFilename = $rrd_displayValue.toLowerCase())
-				#if($lowercaseFilename.endsWith(".png") || $lowercaseFilename.endsWith(".jpg") || $lowercaseFilename.endsWith(".jpeg") || $lowercaseFilename.endsWith(".gif"))
+        #set($fileValue = $viewTools.getFileValueTool($rrd_displayValue))
+				#if($fileValue.isImage())
 			      #set($downloadBase = "uploads/$reportBaseField.getTableContainingField().getInternalTableName()/$reportBaseField.getInternalFieldName()/$rrd_reportDataRow.getRowId()/")
-			      #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$rrd_displayValue"))
+			      #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fileValue"))
 			      <a href="$downloadUrl" target="_blank">
-				    <img border="0" src="$downloadUrl" class="cross_reference_image" />
+				    <img border="0" src="$downloadUrl.40.$fileValue.getExtension()" class="cross_reference_image" />
 			      </a>
 				#end
 			  #end

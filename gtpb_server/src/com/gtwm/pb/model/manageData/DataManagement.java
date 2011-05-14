@@ -132,6 +132,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.apache.commons.io.FileUtils;
 import org.grlea.log.SimpleLogger;
 import org.glowacki.CalendarParser;
 import org.glowacki.CalendarParserException;
@@ -1379,10 +1380,13 @@ public final class DataManagement implements DataManagementInfo {
 					try {
 						Builder<File> thumbBuilder = Thumbnails.of(selectedFile);
 						BufferedImage originalImage = thumbBuilder.asBufferedImage();
-						if ((originalImage.getHeight() > 500) || (originalImage.getWidth() > 500)) {
+						int height = originalImage.getHeight();
+						int width = originalImage.getWidth();
+						// Conditional resize
+						if ((height > 500) || (width > 500)) {
 							thumbBuilder.size(500, 500).toFile(thumb500File);
 						} else {
-							thumbBuilder.toFile(thumb500File);
+							FileUtils.copyFile(selectedFile, thumb500File);
 						}
 						thumbBuilder.size(40, 40).toFile(thumb40File);
 					} catch (IOException ioex) {
