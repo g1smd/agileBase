@@ -75,6 +75,16 @@ public class FileValueDefn implements FileValue {
 			return this.filename;
 		}
 	}
+	
+	public String getExtension() {
+		if (this.isNull()) {
+			return "";
+		} else if (this.filename.contains(".")) {
+			return this.filename.replaceAll(".*\\.", "").toLowerCase();
+		} else {
+			return "";
+		}
+	}
 
 	public boolean isNull() {
 		return (this.filename == null);

@@ -73,5 +73,6 @@
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/velocity-tools-view-2.0.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/ical4j-1.0-rc3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/Thumbnailator-0.3.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
