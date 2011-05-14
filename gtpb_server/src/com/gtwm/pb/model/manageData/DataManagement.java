@@ -50,6 +50,9 @@ import java.io.StringWriter;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import net.coobird.thumbnailator.Thumbnails;
+
 import org.apache.commons.math.util.MathUtils;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -1308,14 +1311,16 @@ public final class DataManagement implements DataManagementInfo {
 				}
 				String filePath = uploadFolderName + "/" + fileValue.toString();
 				File selectedFile = new File(filePath);
+				String extension = "";
+				if (filePath.contains(".")) {
+					extension = filePath.replaceAll("^.*\\.", "").toLowerCase();
+				}
 				if (selectedFile.exists()) {
 					// rename the existing file to something else so we don't
 					// overwrite it
 					String basePath = filePath;
 					int fileNum = 1;
-					String extension = "";
 					if (basePath.contains(".")) {
-						extension = basePath.replaceAll("^.*\\.", "");
 						basePath = basePath
 								.substring(0, basePath.length() - extension.length() - 1);
 					}
@@ -1349,6 +1354,7 @@ public final class DataManagement implements DataManagementInfo {
 				try {
 					item.write(selectedFile);
 				} catch (Exception ex) {
+					// TODO: catching a general exception?!
 					throw new FileUploadException("Error writing file: " + ex.getMessage());
 				}
 				// Record upload speed
@@ -1360,6 +1366,22 @@ public final class DataManagement implements DataManagementInfo {
 					// errors
 					float uploadSpeed = ((float) fileSize) / secondsToUpload;
 					this.updateUploadSpeed(uploadSpeed);
+				}
+				String lcFilePath = filePath.toLowerCase();
+				if (extension.equals(".jpg") || extension.equals(".jpeg")
+						|| extension.equals(".png")) {
+					for (int maxSize : new int[] { 40, 500 }) {
+						// image.png -> image.png.40.png
+						String thumbFileName = filePath + "." + maxSize + "." + extension;
+						File thumbnailFile = new File(thumbFileName);
+						try {
+							Thumbnails.of(selectedFile).size(maxSize, maxSize)
+									.toFile(thumbnailFile);
+						} catch (IOException ioex) {
+							throw new FileUploadException("Error generating thumbnail: "
+									+ ioex.getMessage());
+						}
+					}
 				}
 			}
 		}
@@ -1519,8 +1541,10 @@ public final class DataManagement implements DataManagementInfo {
 		String id = dataFormat.toString() + report.getInternalReportName();
 		CachedReportFeedInfo cachedFeed = this.cachedReportFeeds.get(id);
 		if (cachedFeed != null) {
+			long lastDataChangeAge = System.currentTimeMillis()
+					- this.getLastDataChangeTime(user.getCompany());
 			long cacheAge = cachedFeed.getCacheAge();
-			if (cacheAge < (cacheMinutes * 60 * 1000)) {
+			if ((cacheAge < lastDataChangeAge) || (cacheAge < (cacheMinutes * 60 * 1000))) {
 				this.reportFeedCacheHits.incrementAndGet();
 				return cachedFeed.getFeed();
 			}
@@ -1609,7 +1633,7 @@ public final class DataManagement implements DataManagementInfo {
 		for (DataRowInfo reportDataRow : reportDataRows) {
 			eventWriter.add(eventFactory.createStartElement("", "", "item"));
 			eventWriter.add(end);
-			createNode(eventWriter, "title", buildCalendarEventTitle(report, reportDataRow, false));
+			createNode(eventWriter, "title", buildEventTitle(report, reportDataRow, false));
 			createNode(eventWriter, "description", reportDataRow.toString());
 			String rowLink = reportLink + "&set_row_id=" + reportDataRow.getRowId();
 			createNode(eventWriter, "link", rowLink);
@@ -1744,13 +1768,13 @@ public final class DataManagement implements DataManagementInfo {
 			js.key("className").value("report_" + internalReportName); // fullcalendar
 			js.key("classname").value("report_" + internalReportName); // timeline
 			js.key("dateFieldInternalName").value(dateFieldInternalName);
-			String eventTitle = buildCalendarEventTitle(report, reportDataRow, false);
+			String eventTitle = buildEventTitle(report, reportDataRow, false);
 			if (format.equals(DataFormat.JSON_TIMELINE)) {
 				js.key("caption").value(eventTitle);
 				// TODO: build short title from long title, don't rebuild from
 				// scratch. Just cut off everything after the 5th comma for
 				// example
-				String shortTitle = buildCalendarEventTitle(report, reportDataRow, true);
+				String shortTitle = buildEventTitle(report, reportDataRow, true);
 				js.key("title").value(shortTitle);
 			} else {
 				js.key("title").value(eventTitle);
@@ -1783,7 +1807,7 @@ public final class DataManagement implements DataManagementInfo {
 	 * @param shortTitle
 	 *            If true, return only the first part of the title
 	 */
-	public static String buildCalendarEventTitle(BaseReportInfo report, DataRowInfo reportDataRow,
+	public static String buildEventTitle(BaseReportInfo report, DataRowInfo reportDataRow,
 			boolean shortTitle) {
 		// ignore any date fields other than the one used for specifying
 		// the event date

@@ -66,8 +66,6 @@
 	#if($ab_calendar_display)
 	  <input type="file" name="$field.getInternalFieldName()" >
 	#else
-    ##For file uploads, do a normal post not an XMLHttpRequest for now. Look at getting the AJAX stuff working later
-	  ##when Firefox supports upload progress info (coming in v 3.7)
     <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
       <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
       <input type="hidden" name="update_record" value="true" />
@@ -83,7 +81,7 @@
     #if($fieldValueObject.isImage())
 	  #if($userCanEdit)<br />#end
       <a href="$downloadUrl" target="_blank">
-      <img border="0" src="$downloadUrl" style="max-width:500px; float:left; position: relative; top:0" />
+      <img border="0" src="$downloadUrl.500.$fieldValueObject.getExtension()" style="float:left;" />
       </a>
     #end
   #end

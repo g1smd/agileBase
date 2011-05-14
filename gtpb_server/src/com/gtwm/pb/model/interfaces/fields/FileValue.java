@@ -26,6 +26,11 @@ public interface FileValue extends BaseValue {
 	 * Return the filename of the uploaded file
 	 */
 	public String getFilename();
+	
+	/**
+	 * Return file extension in lowercase
+	 */
+	public String getExtension();
 
 	/**
 	 * Returns the name of an icon, based on the file extension, for known file
