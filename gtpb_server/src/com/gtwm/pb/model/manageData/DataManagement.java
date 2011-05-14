@@ -116,6 +116,8 @@ import com.gtwm.pb.util.Enumerations.FieldContentType;
 import com.gtwm.pb.util.Enumerations.HiddenFields;
 import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
+
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import javax.xml.stream.XMLEventFactory;
@@ -1379,7 +1381,7 @@ public final class DataManagement implements DataManagementInfo {
 					File thumb500File = new File(thumb500Path);
 					try {
 						Builder<File> thumbBuilder = Thumbnails.of(selectedFile);
-						BufferedImage originalImage = thumbBuilder.asBufferedImage();
+						BufferedImage originalImage = ImageIO.read(selectedFile);
 						int height = originalImage.getHeight();
 						int width = originalImage.getWidth();
 						// Conditional resize
