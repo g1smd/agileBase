@@ -126,12 +126,21 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		  #set($fieldCategory = $field.getFieldCategory().toString())
 		  #if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
 		    #set($rightAlign = true)
-		  #end
-		  #if($field.getContentSize() > 100)
-            #set($cellContentLength=$cell.length() * 2)
-		  #else
-            #set($cellContentLength=$cell.length() / 2)
-		  #end
+      #end
+      #if($fieldCategory == "FILE")
+        #set($fileValue = $viewTools.getFileValueTool($cell))
+        #if($fileValue.isImage())
+          #set($field = $fields.get($cellNumber).get(1))
+          #set($srcUrl = "/agileBase/uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
+          #set($cell = "<img src='$srcUrl' />")
+        #end
+      #else
+  		  #if($field.getContentSize() > 100)
+          #set($cellContentLength=$cell.length() * 2)
+  		  #else
+          #set($cellContentLength=$cell.length() / 2)
+		    #end
+      #end
 		  #set($style="")
 		  #set($class="")
 		  #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
@@ -147,9 +156,9 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           #set($cellNumber = $foreach.count - 1)
 		  #set($field = $fields.get($cellNumber).get(1))
 		  #if($field.getContentSize() > 100)
-            #set($cellContentLength=$cell.length() * 2)
+        #set($cellContentLength=$cell.length() * 2)
 		  #else
-            #set($cellContentLength=$cell.length() / 2)
+        #set($cellContentLength=$cell.length() / 2)
 		  #end
           <td #if($cellContentLength<=10)nowrap="true" #end>
             <div style="min-width:${cellContentLength}px">
