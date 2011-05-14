@@ -51,10 +51,8 @@ import java.io.StringWriter;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.Thumbnails.Builder;
-
 import org.apache.commons.math.util.MathUtils;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -116,7 +114,6 @@ import com.gtwm.pb.util.Enumerations.FieldContentType;
 import com.gtwm.pb.util.Enumerations.HiddenFields;
 import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
-
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
@@ -129,7 +126,6 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartDocument;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadException;
@@ -140,7 +136,6 @@ import org.glowacki.CalendarParser;
 import org.glowacki.CalendarParserException;
 import org.json.JSONException;
 import org.json.JSONStringer;
-
 import au.com.bytecode.opencsv.CSVReader;
 
 public final class DataManagement implements DataManagementInfo {
@@ -1380,17 +1375,16 @@ public final class DataManagement implements DataManagementInfo {
 					File thumb40File = new File(thumb40Path);
 					File thumb500File = new File(thumb500Path);
 					try {
-						Builder<File> thumbBuilder = Thumbnails.of(selectedFile);
 						BufferedImage originalImage = ImageIO.read(selectedFile);
 						int height = originalImage.getHeight();
 						int width = originalImage.getWidth();
 						// Conditional resize
 						if ((height > 500) || (width > 500)) {
-							thumbBuilder.size(500, 500).toFile(thumb500File);
+							Thumbnails.of(selectedFile).size(500, 500).toFile(thumb500File);
 						} else {
 							FileUtils.copyFile(selectedFile, thumb500File);
 						}
-						thumbBuilder.size(40, 40).toFile(thumb40File);
+						Thumbnails.of(selectedFile).size(40, 40).toFile(thumb40File);
 					} catch (IOException ioex) {
 						throw new FileUploadException("Error generating thumbnail: "
 								+ ioex.getMessage());
