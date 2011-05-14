@@ -88,6 +88,8 @@
 				<pathelement location="WEB-INF/lib/ERChronic.jar"/>
 				<!-- iCal generation -->
 				<pathelement location="WEB-INF/lib/ical4j-1.0-rc3.jar"/>
+				<!-- Image resizer -->
+				<pathelement location="WEB-INF/lib/Thumbnailator-0.3.4.jar"/>
 				<!-- closed source dashboard -->
 				<pathelement location="WEB-INF/lib/gtpb-dashboard.jar"/>
 			</classpath>
