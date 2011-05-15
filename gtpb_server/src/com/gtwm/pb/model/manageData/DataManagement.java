@@ -1622,7 +1622,6 @@ public final class DataManagement implements DataManagementInfo {
 		eventWriter.add(end);
 		eventWriter.add(eventFactory.createStartElement("", "", "channel"));
 		eventWriter.add(end);
-		logger.debug("Start of RSS is " + stringWriter.toString());
 		// Write the different nodes
 		this.createNode(eventWriter, "title",
 				report.getModule().getModuleName() + " - " + report.getReportName());
@@ -1639,15 +1638,19 @@ public final class DataManagement implements DataManagementInfo {
 		for (DataRowInfo reportDataRow : reportDataRows) {
 			eventWriter.add(eventFactory.createStartElement("", "", "item"));
 			eventWriter.add(end);
-			createNode(eventWriter, "title", buildEventTitle(report, reportDataRow, false));
-			createNode(eventWriter, "description", reportDataRow.toString());
+			this.createNode(eventWriter, "title", buildEventTitle(report, reportDataRow, false));
+			this.createNode(eventWriter, "description", reportDataRow.toString());
 			String rowLink = reportLink + "&set_row_id=" + reportDataRow.getRowId();
-			createNode(eventWriter, "link", rowLink);
-			createNode(eventWriter, "guid", rowLink);
+			this.createNode(eventWriter, "link", rowLink);
+			this.createNode(eventWriter, "guid", rowLink);
 			eventWriter.add(end);
 			eventWriter.add(eventFactory.createEndElement("", "", "item"));
 			eventWriter.add(end);
 		}
+		eventWriter.add(eventFactory.createEndElement("","","channel"));
+		eventWriter.add(end);
+		eventWriter.add(eventFactory.createEndElement("","","rss"));
+		eventWriter.add(end);
 		return stringWriter.toString();
 	}
 
