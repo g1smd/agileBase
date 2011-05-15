@@ -147,11 +147,15 @@ public final class AppController extends VelocityViewServlet {
 		logger.info("agileBase shut down");
 	}
 
+	/**
+	 * Optionally return application/xml or other content rather than the
+	 * default text/html
+	 * 
+	 * This can be useful when using AJAX interfaces with XMLHttpRequest in the
+	 * browser
+	 */
 	public static ResponseReturnType setReturnType(HttpServletRequest request,
 			HttpServletResponse response, List<FileItem> multipartItems) {
-		// Optionally return text/xml content rather than the default text/html
-		// This can be useful when using AJAX interfaces with XMLHttpRequest in
-		// the browser
 		String returnType = ServletUtilMethods.getParameter(request, "returntype", multipartItems);
 		ResponseReturnType responseReturnType = null;
 		if (returnType != null) {
@@ -159,15 +163,16 @@ public final class AppController extends VelocityViewServlet {
 				responseReturnType = ResponseReturnType.valueOf(returnType.toUpperCase());
 				response.setContentType(responseReturnType.getResponseType());
 				if (responseReturnType.equals(ResponseReturnType.DOWNLOAD)) {
-					String filename = ServletUtilMethods.getParameter(request, "returnfilename", multipartItems);
+					String filename = ServletUtilMethods.getParameter(request, "returnfilename",
+							multipartItems);
 					response.setHeader("Content-Disposition", "attachment;filename=\"" + filename
 							+ "\"");
 				}
 			} catch (IllegalArgumentException iaex) {
 				EnumSet<ResponseReturnType> allReturnTypes = EnumSet
 						.allOf(ResponseReturnType.class);
-				ServletUtilMethods.logException(iaex, request, "Unknown returntype specified: " + returnType
-						+ " - must be one of " + allReturnTypes);
+				ServletUtilMethods.logException(iaex, request, "Unknown returntype specified: "
+						+ returnType + " - must be one of " + allReturnTypes);
 			}
 		}
 		return responseReturnType;
@@ -249,12 +254,10 @@ public final class AppController extends VelocityViewServlet {
 					ServletSessionMethods.setCustomBoolean(sessionData, request);
 					break;
 				case SET_CUSTOM_TABLE:
-					ServletSessionMethods.setCustomTable(sessionData, request, true,
-							databaseDefn);
+					ServletSessionMethods.setCustomTable(sessionData, request, true, databaseDefn);
 					break;
 				case SET_CUSTOM_REPORT:
-					ServletSessionMethods.setCustomReport(sessionData, request, true,
-							databaseDefn);
+					ServletSessionMethods.setCustomReport(sessionData, request, true, databaseDefn);
 					break;
 				case SET_CUSTOM_FIELD:
 					ServletSessionMethods.setCustomField(sessionData, request, databaseDefn);
@@ -286,7 +289,8 @@ public final class AppController extends VelocityViewServlet {
 			// Store so exception handling has access to the action carried out
 			appActionName.setLength(0);
 			appActionName.append(appAction.toString());
-			String appActionValue = ServletUtilMethods.getParameter(request, appAction.toString().toLowerCase(Locale.UK), multipartItems);
+			String appActionValue = ServletUtilMethods.getParameter(request, appAction.toString()
+					.toLowerCase(Locale.UK), multipartItems);
 			if (appActionValue != null) {
 				sessionData.setLastAppAction(appAction);
 				switch (appAction) {
@@ -421,20 +425,18 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.removeJoinFromReport(sessionData, request, databaseDefn);
 					break;
 				case ADD_GROUPING_TO_CHART:
-					ServletSchemaMethods.addGroupingToChart(sessionData, request,
-							databaseDefn);
+					ServletSchemaMethods.addGroupingToChart(sessionData, request, databaseDefn);
 					break;
 				case REMOVE_GROUPING_FROM_CHART:
-					ServletSchemaMethods.removeGroupingFromChart(sessionData, request,
-							databaseDefn);
+					ServletSchemaMethods
+							.removeGroupingFromChart(sessionData, request, databaseDefn);
 					break;
 				case ADD_FUNCTION_TO_CHART:
-					ServletSchemaMethods.addFunctionToChart(sessionData, request,
-							databaseDefn);
+					ServletSchemaMethods.addFunctionToChart(sessionData, request, databaseDefn);
 					break;
 				case REMOVE_FUNCTION_FROM_CHART:
-					ServletSchemaMethods.removeFunctionFromChart(sessionData, request,
-							databaseDefn);
+					ServletSchemaMethods
+							.removeFunctionFromChart(sessionData, request, databaseDefn);
 					break;
 				case SET_CHART_FILTER:
 					ServletSchemaMethods.setChartFilter(sessionData, request, databaseDefn);
@@ -452,7 +454,8 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.removeChart(sessionData, request, databaseDefn);
 					break;
 				case SET_WORD_CLOUD_FIELD:
-					ServletSchemaMethods.setReportWordCloudField(sessionData, request, databaseDefn);
+					ServletSchemaMethods
+							.setReportWordCloudField(sessionData, request, databaseDefn);
 					break;
 				case SET_DASHBOARD_CHART_STATE:
 					ServletDashboardMethods.setDashboardSummaryState(sessionData, request,
@@ -500,10 +503,12 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.unhideReportFromUser(sessionData, request, databaseDefn);
 					break;
 				case ADD_OPERATIONAL_DASHBOARD_REPORT:
-					ServletSchemaMethods.addOperationalDashboardReport(sessionData, request, databaseDefn);
+					ServletSchemaMethods.addOperationalDashboardReport(sessionData, request,
+							databaseDefn);
 					break;
 				case REMOVE_OPERATIONAL_DASHBOARD_REPORT:
-					ServletSchemaMethods.removeOperationalDashboardReport(sessionData, request, databaseDefn);
+					ServletSchemaMethods.removeOperationalDashboardReport(sessionData, request,
+							databaseDefn);
 					break;
 				case ADD_FORM_TABLE:
 					ServletSchemaMethods.addFormTable(sessionData, request, databaseDefn);
@@ -516,7 +521,8 @@ public final class AppController extends VelocityViewServlet {
 					break;
 				case SET_CALENDAR_SYNCABLE:
 					boolean calendarSyncable = Helpers.valueRepresentsBooleanTrue(appActionValue);
-					ServletSchemaMethods.setCalendarSyncable(sessionData, request, databaseDefn, calendarSyncable);
+					ServletSchemaMethods.setCalendarSyncable(sessionData, request, databaseDefn,
+							calendarSyncable);
 					break;
 				case ENABLE_DISABLE_APP:
 					ServletSchemaMethods.enableDisableApp(request, databaseDefn);
@@ -544,12 +550,11 @@ public final class AppController extends VelocityViewServlet {
 							databaseDefn);
 					break;
 				case POSTSET_CUSTOM_TABLE:
-					ServletSessionMethods.setCustomTable(sessionData, request, false,
-							databaseDefn);
+					ServletSessionMethods.setCustomTable(sessionData, request, false, databaseDefn);
 					break;
 				case POSTSET_CUSTOM_REPORT:
-					ServletSessionMethods.setCustomReport(sessionData, request, false,
-							databaseDefn);
+					ServletSessionMethods
+							.setCustomReport(sessionData, request, false, databaseDefn);
 					break;
 				}
 			}
@@ -583,25 +588,32 @@ public final class AppController extends VelocityViewServlet {
 				// Set up a session for a newly logged in user
 				sessionData = new SessionData(this.databaseDefn, this.relationalDataSource, request);
 			} catch (SQLException sqlex) {
-				ServletUtilMethods.logException(sqlex, request, "SQL error creating session data object: " + sqlex);
+				ServletUtilMethods.logException(sqlex, request,
+						"SQL error creating session data object: " + sqlex);
 				sessionData = new SessionData();
 			} catch (AgileBaseException pbex) {
-				ServletUtilMethods.logException(pbex, request, "Error creating session data object: " + pbex);
+				ServletUtilMethods.logException(pbex, request,
+						"Error creating session data object: " + pbex);
 				sessionData = new SessionData();
 			}
 			// Set session cookie expiry date
-		    //String id = request.getSession().getId();
-		    //long expireTimestamp = System.currentTimeMillis() + (12 * 60 * 60 * 1000); // 12 hours ahead
-		    //String expireDate = new SimpleDateFormat("EEE, dd-MMM-yyyy HH:mm:ss z").format(new Date(expireTimestamp));
-		    //response.setHeader("Set-Cookie", String.format("JSESSIONID=%s;Expires=%s;Path=/agileBase", id, expireDate));
+			// String id = request.getSession().getId();
+			// long expireTimestamp = System.currentTimeMillis() + (12 * 60 * 60
+			// * 1000); // 12 hours ahead
+			// String expireDate = new
+			// SimpleDateFormat("EEE, dd-MMM-yyyy HH:mm:ss z").format(new
+			// Date(expireTimestamp));
+			// response.setHeader("Set-Cookie",
+			// String.format("JSESSIONID=%s;Expires=%s;Path=/agileBase", id,
+			// expireDate));
 			// set up the wiki if the user is the first user logging in from a
 			// particular company
 			CompanyInfo company = null;
 			try {
 				company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 			} catch (ObjectNotFoundException onfex) {
-				ServletUtilMethods.logException(onfex, request,
-						"Company not found for user " + request.getRemoteUser());
+				ServletUtilMethods.logException(onfex, request, "Company not found for user "
+						+ request.getRemoteUser());
 			}
 
 			WikiManagementInfo wikiManagement = this.databaseDefn.getWikiManagement(company);
@@ -631,7 +643,8 @@ public final class AppController extends VelocityViewServlet {
 						sessionData, pbex, multipartItems);
 			}
 		} catch (NumberFormatException nfex) {
-			ServletUtilMethods.logException(nfex, request, "Non-numeric value specified for numeric parameter");
+			ServletUtilMethods.logException(nfex, request,
+					"Non-numeric value specified for numeric parameter");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, nfex, multipartItems);
@@ -667,11 +680,13 @@ public final class AppController extends VelocityViewServlet {
 			carryOutAppActions(request, sessionData, this.databaseDefn, multipartItems,
 					appActionName);
 		} catch (MissingParametersException mpex) {
-			ServletUtilMethods.logException(mpex, request, "Required parameters missing for action " + appActionName);
+			ServletUtilMethods.logException(mpex, request,
+					"Required parameters missing for action " + appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, mpex, multipartItems);
 		} catch (DisallowedException dex) {
-			ServletUtilMethods.logException(dex, request, "No privileges to perform action " + appActionName);
+			ServletUtilMethods.logException(dex, request, "No privileges to perform action "
+					+ appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, dex, multipartItems);
 		} catch (SQLException sqlex) {
@@ -680,16 +695,18 @@ public final class AppController extends VelocityViewServlet {
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, sqlex, multipartItems);
 		} catch (ObjectNotFoundException onfex) {
-			ServletUtilMethods.logException(onfex, request, "An object mis-referenced while performing action "
-					+ appActionName);
+			ServletUtilMethods.logException(onfex, request,
+					"An object mis-referenced while performing action " + appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, onfex, multipartItems);
 		} catch (InputRecordException irex) {
-			ServletUtilMethods.logException(irex, request, "Error saving data during " + appActionName);
+			ServletUtilMethods.logException(irex, request, "Error saving data during "
+					+ appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, irex, multipartItems);
 		} catch (Exception ex) {
-			ServletUtilMethods.logException(ex, request, "General error performing action " + appActionName);
+			ServletUtilMethods.logException(ex, request, "General error performing action "
+					+ appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, ex, multipartItems);
 		}
@@ -705,7 +722,8 @@ public final class AppController extends VelocityViewServlet {
 						sessionData, onfex, multipartItems);
 			}
 		} catch (NumberFormatException nfex) {
-			ServletUtilMethods.logException(nfex, request, "Non-numeric value specified for numeric parameter");
+			ServletUtilMethods.logException(nfex, request,
+					"Non-numeric value specified for numeric parameter");
 			if (returnType.equals(ResponseReturnType.XML)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, nfex, multipartItems);
@@ -808,7 +826,8 @@ public final class AppController extends VelocityViewServlet {
 		try {
 			super.mergeTemplate(template, context, response);
 		} catch (Exception ex) {
-			ServletUtilMethods.logException(ex, "Error interpreting template " + template.getName());
+			ServletUtilMethods
+					.logException(ex, "Error interpreting template " + template.getName());
 			try {
 				// Make the exception that just occurred accessible for
 				// reporting
@@ -822,7 +841,8 @@ public final class AppController extends VelocityViewServlet {
 			} catch (ParseErrorException pee) {
 				ServletUtilMethods.logException(pee, "Syntax error in the template");
 			} catch (Exception exex) {
-				ServletUtilMethods.logException(exex, "General templating error whilst reporting error");
+				ServletUtilMethods.logException(exex,
+						"General templating error whilst reporting error");
 			}
 		}
 		float secondsToHandleMerge = (System.currentTimeMillis() - mergeTemplateStartTime)
