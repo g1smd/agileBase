@@ -324,7 +324,7 @@ img.cross_reference_image {
 	  div#fieldOptionsSet[selected] { 
 	    display:block;
 	  }
-/*	  
+/* This causes the image disconnect problem where images appear 'beneath' form fields below them	  
 	  form { 
 	    height:100%;
 	  }
