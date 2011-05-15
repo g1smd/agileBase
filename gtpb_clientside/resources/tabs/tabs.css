@@ -324,11 +324,11 @@ img.cross_reference_image {
 	  div#fieldOptionsSet[selected] { 
 	    display:block;
 	  }
-	  
+/*	  
 	  form { 
 	    height:100%;
 	  }
-	
+*/	
 	  tr#addNewField td { 
 	    vertical-align:top;
     	font-size:8pt;
