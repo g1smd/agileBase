@@ -16,6 +16,6 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($option_set_id='report_sync')
-#set($option_set_title='calendar synchronisation')
+#set($option_set_title='synchronisation and integration')
 #set($option_set_data_path='gui/administration/reports/option_sets/report_sync_data.vm')
 #parse('gui/administration/option_set.vm')
