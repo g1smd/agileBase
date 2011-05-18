@@ -50,6 +50,7 @@ public class CheckboxFieldDefn extends AbstractField implements CheckboxField {
 		this.setDefault(defaultValue);
 		super.setNotNull(true);
 		super.setHidden(hidden);
+		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 	}
 
 	@Transient

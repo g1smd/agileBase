@@ -62,6 +62,7 @@ public class FileFieldDefn extends AbstractField implements FileField {
 		} catch (CantDoThatException cdtex) {
 			throw new CodingErrorException("Error setting file field not unique or nullable", cdtex);
 		}
+		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 	}
 
 	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId,

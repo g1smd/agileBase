@@ -90,6 +90,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		}
 		this.setUsesLookup(usesLookup);
 		super.setHidden(hidden);
+		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 	}
 
 	public boolean allowNotApplicable() {

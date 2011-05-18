@@ -81,6 +81,7 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 		}
 		this.setUsesLookup(usesLookup);
 		this.setStoresCurrency(storesCurrency);
+		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 	}
 
 	public String formatIntegerValue(IntegerValue integerValue) {

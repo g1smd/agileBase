@@ -75,6 +75,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		this.setDefaultToNull(defaultToNull);
 		super.setUnique(false);
 		super.setNotNullDirect(notNull);
+		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 	}
 
 	@ManyToOne(targetEntity = TableDefn.class)
