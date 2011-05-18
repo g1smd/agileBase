@@ -83,6 +83,7 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 		}
 		this.setUsesLookup(usesLookup);
 		this.setStoresCurrency(storesCurrency);
+		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 	}
 
 	public boolean allowNotApplicable() {

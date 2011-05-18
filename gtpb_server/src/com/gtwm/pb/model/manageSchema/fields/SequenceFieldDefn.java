@@ -49,8 +49,8 @@ public class SequenceFieldDefn extends AbstractField implements SequenceField {
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
 		super.setUnique(true);
-		super.setNotNullDirect(true); // bypass hasDefault() check of
-										// AbstractField
+		super.setNotNullDirect(true); // bypass hasDefault() check of AbstractField
+		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 	}
 
 	public void setNotNull(boolean notNull) throws CantDoThatException {

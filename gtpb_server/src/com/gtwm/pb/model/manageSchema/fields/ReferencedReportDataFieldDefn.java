@@ -60,6 +60,7 @@ public class ReferencedReportDataFieldDefn extends AbstractField implements
 					"Error setting separator field unique or not null property", cdtex);
 		}
 		this.setReferencedReport(referencedReport);
+		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 	}
 
 	@Transient
