@@ -90,6 +90,7 @@ import com.gtwm.pb.util.Enumerations.HiddenFields;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
@@ -1014,7 +1015,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				Double notApplicableNumber = 0.0d;
 				field = new DecimalFieldDefn(this.relationalDataSource, table, internalFieldName,
 						fieldName, fieldDesc, unique, notNull, defaultNumber, precision,
-						notApplicable, notApplicableDescription, notApplicableNumber, usesLookup, storesCurrency);
+						notApplicable, notApplicableDescription, notApplicableNumber, usesLookup,
+						storesCurrency);
 			} else {
 				Integer defaultNumber = HttpRequestUtil.getIntegerValueStrict(request,
 						PossibleTextOptions.DEFAULTVALUE.getFormInputName(), null,
@@ -1224,9 +1226,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
 							boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 							decimalField.setNotNull(notNull);
-						} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
+						} else if (formInputName.equals("updateoption"
+								+ field.getInternalFieldName()
 								+ PossibleBooleanOptions.STORECURRENCY.getFormInputName())) {
-							boolean storesCurrency = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							boolean storesCurrency = Helpers
+									.valueRepresentsBooleanTrue(formInputValue);
 							decimalField.setStoresCurrency(storesCurrency);
 						}
 					} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
@@ -1262,9 +1266,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
 							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 							integerField.setNotNull(notNull);
-						} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
+						} else if (formInputName.equals("updateoption"
+								+ field.getInternalFieldName()
 								+ PossibleBooleanOptions.STORECURRENCY.getFormInputName())) {
-							boolean storesCurrency = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							boolean storesCurrency = Helpers
+									.valueRepresentsBooleanTrue(formInputValue);
 							integerField.setStoresCurrency(storesCurrency);
 						} else if (formInputName.equals("updateoption"
 								+ field.getInternalFieldName()
@@ -1359,6 +1365,16 @@ public final class DatabaseDefn implements DatabaseInfo {
 				}
 			}
 		} // end of RelationField
+			// Simple properties common to all fields
+		BaseFieldDescriptorOptionInfo printoutOption = new ListFieldDescriptorOption(
+				PossibleListOptions.PRINTFORMAT);
+		String formInputName = "updateoption" + field.getInternalFieldName()
+				+ printoutOption.getFormInputName();
+		String formInputValue = request.getParameter(formInputName);
+		if (formInputValue != null) {
+			FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.valueOf(formInputValue);
+			field.setPrintoutSetting(printoutSetting);
+		}
 	}
 
 	/**

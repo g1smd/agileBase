@@ -48,6 +48,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.DEFAULTVALUE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.TEXTCONTENTSIZE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.TEXTCASE));
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			break;
 		case NUMBER:
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.UNIQUE));
@@ -56,11 +57,13 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.STORECURRENCY));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.NUMBERPRECISION));
 			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.DEFAULTVALUE));
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			break;
 		case DATE:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.DATERESOLUTION));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.DEFAULTTONOW));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			break;
 		case DURATION:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.DURATIONRESOLUTION));
@@ -72,20 +75,25 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTSECONDARYFIELD));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.DEFAULTTONULL));
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			break;
 		case CHECKBOX:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.CHECKBOXDEFAULT));
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			break;
 		case SEQUENCE:
-			// No options for sequence fields
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			break;
 		case FILE:
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			break;
 		case SEPARATOR:
+			// No options for separators
 			break;
 		case REFERENCED_REPORT_DATA:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTTABLE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTREPORT));
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			break;
 		}
 	}

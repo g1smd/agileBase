@@ -36,6 +36,7 @@ import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
 import com.gtwm.pb.util.CantDoThatException;
@@ -156,6 +157,8 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 				fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE, String
 						.valueOf(this.getDefault().toString()));
 			}
+			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);

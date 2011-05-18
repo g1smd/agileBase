@@ -26,6 +26,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -34,7 +35,7 @@ import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.CodingErrorException;
 
 /*
- * Doesn't extend AbstractField as implementation is completely different for calculations and calcs should not be persited to hibernate (AbstractField is a persistent class)
+ * Doesn't extend AbstractField as implementation is completely different for calculations and calcs should not be persisted to hibernate (AbstractField is a persistent class)
  */
 public class CalculationFieldDefn implements CalculationField {
 
@@ -191,8 +192,17 @@ public class CalculationFieldDefn implements CalculationField {
 		logger.warn("Call to irrelevant calculation method setUnique from calculation " + this);
 	}
 
+	public FieldPrintoutSetting getPrintoutSetting() {
+		// Calculations always print out (for now)
+		return FieldPrintoutSetting.NAME_AND_VALUE;
+	}
+	
 	public ReportCalcFieldInfo getReportCalcField() {
 		return this.reportCalcField;
+	}
+	
+	public void setPrintoutSetting(FieldPrintoutSetting printoutSetting) {
+		logger.warn("Call to irrelevant calculation method setPrintoutSetting from calculation " + this);
 	}
 
 	/**

@@ -69,10 +69,10 @@
 		      #elseif ($fieldValueObject.isPostcode())##
 		        <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue.trim()" target="_blank">map</a>##
 			  #elseif ($mobile_device && $fieldValueObject.isPhoneNumber())##
-				<a href="tel:$fieldValue">phone</a>##
-		      #elseif($field.getNotNull() && $fieldValue == "")
-			    <span class="mandated">* Mandatory field - please enter a value</span>
-		      #end##
+				    <a href="tel:$fieldValue">phone</a>##
+        #elseif($field.getNotNull() && $fieldValue == "")
+			      <span class="mandated">* Mandatory field - please enter a value</span>
+        #end##
     #end##
 		##
     #if($field.allowNotApplicable())##

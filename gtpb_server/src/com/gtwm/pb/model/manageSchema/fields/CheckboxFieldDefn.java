@@ -24,6 +24,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.CheckboxField;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -63,6 +64,8 @@ public class CheckboxFieldDefn extends AbstractField implements CheckboxField {
 			String defaultValue = this.getDefault().toString();
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.CHECKBOXDEFAULT,
 					defaultValue);
+			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
 			// if (this.hasDefault()) {
 			// fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE,
 			// String.valueOf(this.defaultValue.toString()));

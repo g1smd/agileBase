@@ -39,6 +39,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.model.manageSchema.DatabaseDefn;
@@ -510,6 +511,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 					this.getNotNull());
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.DEFAULTTONULL,
 					this.getDefaultToNull());
+			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);

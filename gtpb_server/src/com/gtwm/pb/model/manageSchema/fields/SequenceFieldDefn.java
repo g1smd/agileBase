@@ -25,46 +25,60 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.SequenceField;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 
 @Entity
 public class SequenceFieldDefn extends AbstractField implements SequenceField {
 
-    protected SequenceFieldDefn() {
-    }
+	protected SequenceFieldDefn() {
+	}
 
-    public SequenceFieldDefn(TableInfo tableContainingField, String internalFieldName, String fieldName, String fieldDesc) throws CantDoThatException {
-        super.setTableContainingField(tableContainingField);
-        if (internalFieldName == null) {
-            super.setInternalFieldName((new RandomString()).toString());
-        } else {
-            super.setInternalFieldName(internalFieldName);
-        }
-        super.setFieldName(fieldName);
-        super.setFieldDescription(fieldDesc);
-        super.setUnique(true);
-        super.setNotNullDirect(true); // bypass hasDefault() check of AbstractField
-    }
+	public SequenceFieldDefn(TableInfo tableContainingField, String internalFieldName,
+			String fieldName, String fieldDesc) throws CantDoThatException {
+		super.setTableContainingField(tableContainingField);
+		if (internalFieldName == null) {
+			super.setInternalFieldName((new RandomString()).toString());
+		} else {
+			super.setInternalFieldName(internalFieldName);
+		}
+		super.setFieldName(fieldName);
+		super.setFieldDescription(fieldDesc);
+		super.setUnique(true);
+		super.setNotNullDirect(true); // bypass hasDefault() check of
+										// AbstractField
+	}
 
-    public void setNotNull(boolean notNull) throws CantDoThatException {
-        // We will always be not null, we don't want orphan records
-        throw new CantDoThatException("A sequence field is always not null");
-    }
+	public void setNotNull(boolean notNull) throws CantDoThatException {
+		// We will always be not null, we don't want orphan records
+		throw new CantDoThatException("A sequence field is always not null");
+	}
 
-    @Transient
-    public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-        return new FieldTypeDescriptor(FieldCategory.SEQUENCE);
-    }
+	@Transient
+	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
+		FieldTypeDescriptor fieldDescriptor = new FieldTypeDescriptor(FieldCategory.SEQUENCE);
+		FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
+		try {
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
+					printoutSetting.name());
+		} catch (ObjectNotFoundException onfex) {
+			throw new CantDoThatException("Internal error setting up " + this.getClass()
+					+ " field descriptor", onfex);
+		}
+		return fieldDescriptor;
+	}
 
-    @Transient
-    public DatabaseFieldType getDbType() {
-        return DatabaseFieldType.SERIAL;
-    }
+	@Transient
+	public DatabaseFieldType getDbType() {
+		return DatabaseFieldType.SERIAL;
+	}
 
-    @Transient
-    public FieldCategory getFieldCategory() {
-        return FieldCategory.SEQUENCE;
-    }
+	@Transient
+	public FieldCategory getFieldCategory() {
+		return FieldCategory.SEQUENCE;
+	}
 }
