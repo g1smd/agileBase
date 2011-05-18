@@ -29,6 +29,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -101,7 +102,9 @@ public class DateFieldDefn extends AbstractField implements DateField {
         try {
             fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.DATERESOLUTION, String.valueOf(this.getDateResolutionDirect()));
             fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super.getNotNull());
-            fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.DEFAULTTONOW, getDefaultToNow());
+            fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.DEFAULTTONOW, this.getDefaultToNow());
+			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
         } catch (ObjectNotFoundException onfex) {
             throw new CantDoThatException("Internal error setting up " + this.getClass() + " field descriptor", onfex);
         }

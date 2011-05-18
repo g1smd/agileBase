@@ -21,8 +21,10 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
+import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 
 /**
  * Provides basic functionality common to all database fields, acts as a bases
@@ -134,6 +136,10 @@ public interface BaseField extends Comparable<BaseField> {
 	 */
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException,
 			CodingErrorException;
+	
+	public FieldPrintoutSetting getPrintoutSetting();
+	
+	public void setPrintoutSetting(FieldPrintoutSetting printoutSetting);
 
 	public static Boolean NOT_NULL_TRUE = true;
 

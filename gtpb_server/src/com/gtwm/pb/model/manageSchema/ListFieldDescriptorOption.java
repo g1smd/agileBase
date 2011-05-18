@@ -62,6 +62,11 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 				this.optionsList.put(textCase.toString(), textCase.toString().toLowerCase());
 			}
 			break;
+		case PRINTFORMAT:
+			for(FieldPrintoutSetting printoutSetting : FieldPrintoutSetting.values()) {
+				this.optionsList.put(printoutSetting.name(), printoutSetting.toString());
+			}
+			break;
 		}
 	}
 
@@ -114,7 +119,7 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 				"Accuracy", false), DURATIONSCALE("Max. duration", false), LISTTABLE(
 				"Table to use", false), LISTREPORT("Report to use", false), LISTKEYFIELD(
 				"Value to store", false), LISTVALUEFIELD("Value to display", false), LISTSECONDARYFIELD("Secondary value", true), CHECKBOXDEFAULT(
-				"Default value", true), TEXTCONTENTSIZE("Size", false), TEXTCASE("Text case", true);
+				"Default value", true), TEXTCONTENTSIZE("Size", false), TEXTCASE("Text case", true), PRINTFORMAT("Printout format", true);
 
 		PossibleListOptions(String optionDescription, boolean advancedOption) {
 			this.optionDescription = optionDescription;
@@ -160,6 +165,20 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 		private int numChars = 0;
 		
 		private String sizeDescription = "";
+	}
+	
+	public enum FieldPrintoutSetting {
+		NAME_AND_VALUE("Print field"), VALUE_ONLY("Print field value only"), NO_PRINTOUT("Don't print field");
+		
+		FieldPrintoutSetting(String description) {
+			this.description = description;
+		}
+		
+		private String description = null;
+		
+		public String toString() {
+			return this.description;
+		}
 	}
 
 	public String toString() {

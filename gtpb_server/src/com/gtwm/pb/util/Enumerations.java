@@ -432,5 +432,5 @@ public class Enumerations {
 	public enum DataFormat {
 		RSS, JSON, JSON_FULLCALENDAR, JSON_TIMELINE;
 	}
-
+	
 }

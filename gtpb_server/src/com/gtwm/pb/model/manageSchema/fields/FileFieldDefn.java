@@ -32,9 +32,12 @@ import com.gtwm.pb.model.manageData.fields.FileValueDefn;
 import com.gtwm.pb.model.manageData.fields.FileVersionDefn;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 
 @Entity
@@ -61,14 +64,16 @@ public class FileFieldDefn extends AbstractField implements FileField {
 		}
 	}
 
-	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId, String currentFileName) {
+	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId,
+			String currentFileName) {
 		SortedSet<FileVersion> fileVersions = new TreeSet<FileVersion>();
 		String uploadFolderName = webAppRoot + "uploads/"
 				+ this.getTableContainingField().getInternalTableName() + "/"
 				+ this.getInternalFieldName() + "/" + rowId;
 		File uploadFolder = new File(uploadFolderName);
 		if (!uploadFolder.exists()) {
-			// If folder isn't there, there have probably never been any files uploaded for this record
+			// If folder isn't there, there have probably never been any files
+			// uploaded for this record
 			return fileVersions;
 		}
 		boolean isImage = (new FileValueDefn(currentFileName)).isImage();
@@ -107,7 +112,16 @@ public class FileFieldDefn extends AbstractField implements FileField {
 
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-		return new FieldTypeDescriptor(FieldCategory.FILE);
+		FieldTypeDescriptor fieldDescriptor = new FieldTypeDescriptor(FieldCategory.FILE);
+		FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
+		try {
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
+					printoutSetting.name());
+		} catch (ObjectNotFoundException onfex) {
+			throw new CantDoThatException("Internal error setting up " + this.getClass()
+					+ " field descriptor", onfex);
+		}
+		return fieldDescriptor;
 	}
 
 	private static final SimpleLogger logger = new SimpleLogger(FileFieldDefn.class);

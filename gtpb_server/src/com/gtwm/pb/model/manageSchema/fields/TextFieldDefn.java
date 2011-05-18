@@ -37,6 +37,7 @@ import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
@@ -174,6 +175,8 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			}
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCASE,
 					textCase.toString());
+			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);

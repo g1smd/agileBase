@@ -18,6 +18,8 @@
 package com.gtwm.pb.model.manageSchema.fields;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -27,6 +29,7 @@ import javax.persistence.Column;
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.TableInfo;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.Naming;
@@ -229,6 +232,15 @@ public abstract class AbstractField implements BaseField {
 	private Boolean getDefaultDefined() {
 		return this.defaultDefined;
 	}
+	
+	@Enumerated(EnumType.STRING)
+	public FieldPrintoutSetting getPrintoutSetting() {
+		return this.printoutSetting;
+	}
+	
+	public void setPrintoutSetting(FieldPrintoutSetting printoutSetting) {
+		this.printoutSetting = printoutSetting;
+	}
 
 	/**
 	 * To be used by subclasses
@@ -258,6 +270,8 @@ public abstract class AbstractField implements BaseField {
 	private Boolean defaultDefined = false;
 
 	private Integer fieldIndex = 0;
+	
+	private FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.NAME_AND_VALUE;
 
 	private volatile int hashCode = 0;
 
