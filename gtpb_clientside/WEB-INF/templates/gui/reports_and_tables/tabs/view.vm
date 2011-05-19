@@ -44,7 +44,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
       ## if we have a relation to another table, show that table's data
       ## (if it has any related data)
       #if($field.equals($reportFieldTable.getPrimaryKey()))
-        #set($success = $tablesEncountered.add($reportFieldTable))
+        #set($success = $tablesEncountered.put($reportFieldTable, true))
 			  #if($reportFieldTable.equals($sessionTable))
 			   #set($relatedRowIds = [])
 			   #if(!$mobile_device) ## View and edit tabs are merged on mobile devices, don't display the session table data here
