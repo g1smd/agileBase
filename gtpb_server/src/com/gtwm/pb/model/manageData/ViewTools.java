@@ -46,6 +46,7 @@ import com.gtwm.pb.model.manageSchema.FilterTypeDescriptor;
 import com.gtwm.pb.util.Enumerations.FilterType;
 import com.gtwm.pb.util.Enumerations.Browsers;
 import com.gtwm.pb.util.Helpers;
+import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
@@ -843,7 +844,7 @@ public final class ViewTools implements ViewToolsInfo {
 		return address;
 	}
 
-	public Set<FieldTypeDescriptorInfo> getFieldTypeDescriptors() {
+	public Set<FieldTypeDescriptorInfo> getFieldTypeDescriptors() throws ObjectNotFoundException {
 		Set<FieldTypeDescriptorInfo> fieldTypeDescriptors = new LinkedHashSet<FieldTypeDescriptorInfo>();
 		for (FieldCategory possibleFieldType : EnumSet
 				.allOf(FieldTypeDescriptor.FieldCategory.class)) {

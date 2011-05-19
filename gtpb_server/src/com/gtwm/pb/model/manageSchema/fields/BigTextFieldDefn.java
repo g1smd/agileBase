@@ -103,18 +103,18 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
 
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.TEXT);
 		try {
+			FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.TEXT);
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCONTENTSIZE,
 					String.valueOf(this.getContentSize()));
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY,
 					super.getNotNull());
+			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
 		}
-		return fieldDescriptor;
 	}
 
 	public synchronized void setDefault(String defaultValue) throws CantDoThatException {

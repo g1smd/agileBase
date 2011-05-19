@@ -152,8 +152,8 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException,
 			CodingErrorException {
-		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.TEXT);
 		try {
+			FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.TEXT);
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCONTENTSIZE,
 					String.valueOf(this.getContentSize()));
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
@@ -178,11 +178,11 @@ public class TextFieldDefn extends AbstractField implements TextField {
 					textCase.toString());
 			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
+			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
 		}
-		return fieldDescriptor;
 	}
 
 	public synchronized void setDefault(String defaultValue) throws CantDoThatException {

@@ -113,16 +113,16 @@ public class FileFieldDefn extends AbstractField implements FileField {
 
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-		FieldTypeDescriptor fieldDescriptor = new FieldTypeDescriptor(FieldCategory.FILE);
 		FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
 		try {
+			FieldTypeDescriptor fieldDescriptor = new FieldTypeDescriptor(FieldCategory.FILE);
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
 					printoutSetting.name());
+			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
 		}
-		return fieldDescriptor;
 	}
 
 	private static final SimpleLogger logger = new SimpleLogger(FileFieldDefn.class);

@@ -30,6 +30,8 @@ import com.gtwm.pb.model.interfaces.fields.TextValue;
 import com.gtwm.pb.model.interfaces.fields.FileValue;
 import com.gtwm.pb.util.Enumerations.Browsers;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.ObjectNotFoundException;
+
 import org.apache.velocity.tools.generic.MathTool;
 
 /**
@@ -116,7 +118,7 @@ public interface ViewToolsInfo {
 	 *         information necessary to display the options relevant to each
 	 *         type on screen
 	 */
-	public Set<FieldTypeDescriptorInfo> getFieldTypeDescriptors();
+	public Set<FieldTypeDescriptorInfo> getFieldTypeDescriptors() throws ObjectNotFoundException;
 
 	public Set<FilterTypeDescriptorInfo> getFilterTypeDescriptors();
 

@@ -70,19 +70,19 @@ public class ReferencedReportDataFieldDefn extends AbstractField implements
 
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(
-				FieldCategory.REFERENCED_REPORT_DATA);
 		try {
+			FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(
+					FieldCategory.REFERENCED_REPORT_DATA);
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTREPORT, this
 					.getReferencedReport().getInternalReportName(), this.getReferencedReport()
 					.getReportName());
 			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
+			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
 		}
-		return fieldDescriptor;
 	}
 
 	@Transient

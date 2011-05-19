@@ -27,6 +27,7 @@ import com.gtwm.pb.model.interfaces.ListFieldDescriptorOptionInfo;
 import com.gtwm.pb.model.interfaces.TextFieldDescriptorOptionInfo;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -38,7 +39,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 	 * with the appropriate options so that all getter methods work without
 	 * further work
 	 */
-	public FieldTypeDescriptor(FieldCategory fieldType) {
+	public FieldTypeDescriptor(FieldCategory fieldType) throws ObjectNotFoundException {
 		this.fieldCategory = fieldType;
 		switch (fieldType) {
 		case TEXT:
@@ -49,6 +50,8 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.TEXTCONTENTSIZE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.TEXTCASE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
+			// Defaults for new fields
+			this.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, FieldPrintoutSetting.VALUE_ONLY.name());
 			break;
 		case NUMBER:
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.UNIQUE));
@@ -86,6 +89,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			break;
 		case FILE:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
+			this.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, FieldPrintoutSetting.VALUE_ONLY.name());
 			break;
 		case SEPARATOR:
 			// No options for separators

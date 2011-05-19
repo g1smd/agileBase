@@ -60,16 +60,16 @@ public class SequenceFieldDefn extends AbstractField implements SequenceField {
 
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-		FieldTypeDescriptor fieldDescriptor = new FieldTypeDescriptor(FieldCategory.SEQUENCE);
 		FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
 		try {
+			FieldTypeDescriptor fieldDescriptor = new FieldTypeDescriptor(FieldCategory.SEQUENCE);
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
 					printoutSetting.name());
+			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
 		}
-		return fieldDescriptor;
 	}
 
 	@Transient
