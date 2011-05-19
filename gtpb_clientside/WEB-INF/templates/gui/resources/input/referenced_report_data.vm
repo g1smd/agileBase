@@ -41,8 +41,8 @@
       #set($rowContainsData = false)
       #foreach($reportBaseField in $reportBaseFields)
     	#if(($reportBaseField.getClass().getSimpleName().equals("CalculationFieldDefn")) || (!$reportBaseField.getTableContainingField().equals($fieldTable)))
-        	#set($fieldCategory = $reportBaseField.getFieldCategory())
-        	#if($fieldCategory == "TEXT" || $fieldCategory == "DATE")
+        	#set($partFieldCategory = $reportBaseField.getFieldCategory())
+        	#if($partFieldCategory == "TEXT" || $partFieldCategory == "DATE")
         	  #set($rrd_displayValue = $rrd_reportDataRow.getValue($reportBaseField).getDisplayValue())
         	  #if($rrd_displayValue != "")
         		#set($rowContainsData = true)
@@ -81,7 +81,7 @@
 				#end
         		<span class="greytext">$reportBaseField:</span> $rrd_displayValue<br>
 			  #end
-			#elseif($fieldCategory == "FILE")
+			#elseif($partFieldCategory == "FILE")
         	  #set($rrd_displayValue = $rrd_reportDataRow.getValue($reportBaseField).getDisplayValue())
         	  #if($rrd_displayValue != "")
         #set($fileValue = $viewTools.getFileValueTool($rrd_displayValue))

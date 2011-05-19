@@ -47,7 +47,6 @@
   	#end
   #else ## not part of address
 	#set($fieldCategory = $field.getFieldCategory())
-  <br>$field is a $fieldCategory<br>
   #set($printoutSetting = $field.getPrintoutSetting().name())
 	#set($referencedData = "")
 	#if($fieldCategory == "REFERENCED_REPORT_DATA")
