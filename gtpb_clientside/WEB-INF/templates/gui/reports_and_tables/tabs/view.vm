@@ -45,7 +45,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
   #end
   #if($numTables > 1)
     #set($colSplit = $numTables / 2)
-    #if($numTables % 2 != 0)
+    Raw colSplit = $numTables / 2 = $colSplit<br>
+    #set($remainder = $numTables % 2)
+    Testing $numTables % 2 = $remainder<br>
+    #if($remainder != 0)
       #set($colSplit = $colSplit + 1)
     #end
   #end
@@ -109,8 +112,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
                  #end
 						   #end
 						 #end
-               	      #end
-		            #end ## end foreach field in table
+            #end
+          #end ## end foreach field in table
 					## Display calculations if there are any in the current report
 					#if($reportFieldTable.equals($sessionTable))
                 		#set($calculationReportFields = [])
