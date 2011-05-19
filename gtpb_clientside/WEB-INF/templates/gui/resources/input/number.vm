@@ -42,7 +42,7 @@
 		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
 		    #end##
   	#else##
-      $currencySymbolBare $fieldValue##
+      $currencySymbolBare $fieldValue,##
   	#end##
 #else##  if not integer
   #if(!$globalEdit)##
