@@ -69,6 +69,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 			    #set($relatedRowIds = [])
 			    #if(!$mobile_device) ## View and edit tabs are merged on mobile devices, don't display the session table data here
 			      #set($success = $relatedRowIds.add($sessionRowId))
+            #set($current = true)
+            <div class="current">
 			    #end
         #else
           #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $reportFieldTable))
@@ -143,7 +145,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 ##             <td>$numRelatedRows related records</td>
 ##             <td>#if($numRelatedRows > 0)not shown #else &nbsp; #end</td>
 		       #end ## end if number of related rows is a manageable amount
-           #if($related) </div> #set($related = false) #end
+           #if($related || $current) </div> #set($related = false) #set($current = false) #end
 		      #end
 		    #end
 		#end
