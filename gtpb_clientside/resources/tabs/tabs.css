@@ -166,7 +166,7 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
   float: left;
 }
 
-#reportDataView #rightCol {
+#reportDataView #rightcol {
   float: right;
   text-align: right;
 }	
