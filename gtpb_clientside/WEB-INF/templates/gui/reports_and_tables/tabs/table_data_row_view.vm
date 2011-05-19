@@ -54,7 +54,7 @@
 	  ## exists or not for this field so we can choose whether to display the row
 	  #set($referencedData = "#parse('gui/resources/input/referenced_report_data.vm')")
 	#end
-	#if(($fieldCategory != "REFERENCED_REPORT_DATA") || $referencedData.contains("span"))
+	#if(($fieldCategory != "REFERENCED_REPORT_DATA") || $referencedData.contains("span")) ## Only show referenced data that is not empty
 	  #if(($fieldCategory != "FILE") || (!$ab_calendar_display)) ## Don't show file fields in calendar editor for now
     	#set($rowCount = $rowCount + 1)
       #if($fieldCategory == 'SEPARATOR')
@@ -75,7 +75,7 @@
             #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
             <span class="fieldname">$field.getSimplifiedFieldName()</span>
             #else
-            <span class="fieldname">$field</span>
+            <span class="fieldname">$fieldCategory: $field</span>
             #end
             : #parse('gui/resources/input/input.vm')
           #else
