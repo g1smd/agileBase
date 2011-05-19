@@ -138,7 +138,7 @@
     #if ($fieldValueObject.isURL())
 	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>,##
 	#else
-    $viewTools.lineBreaksToParas($fieldValue),##
+    $viewTools.lineBreaksToParas($fieldValue)<br>##
 	#end
   #end##
 #end
