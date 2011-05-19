@@ -38,7 +38,7 @@ public class CheckboxFieldDefn extends AbstractField implements CheckboxField {
 	}
 
 	public CheckboxFieldDefn(TableInfo tableContainingField, String internalFieldName,
-			String fieldName, String fieldDesc, Boolean defaultValue, boolean hidden) throws CantDoThatException {
+			String fieldName, String fieldDesc, Boolean defaultValue, boolean hidden, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
 			super.setInternalFieldName((new RandomString()).toString());
@@ -50,7 +50,7 @@ public class CheckboxFieldDefn extends AbstractField implements CheckboxField {
 		this.setDefault(defaultValue);
 		super.setNotNull(true);
 		super.setHidden(hidden);
-		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		super.setPrintoutSetting(printoutSetting);
 	}
 
 	@Transient

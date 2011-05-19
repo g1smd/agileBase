@@ -48,7 +48,7 @@ public class DateFieldDefn extends AbstractField implements DateField {
 
 	public DateFieldDefn(TableInfo tableContainingField, String internalFieldName,
 			String fieldName, String fieldDesc, boolean unique, boolean notNull,
-			boolean defaultToNow, int dateResolution) throws CantDoThatException {
+			boolean defaultToNow, int dateResolution, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
 			super.setInternalFieldName((new RandomString()).toString());
@@ -64,7 +64,7 @@ public class DateFieldDefn extends AbstractField implements DateField {
 											// once a method of setting
 											// defaults has been added
 		this.setDateResolution(dateResolution);
-		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		super.setPrintoutSetting(printoutSetting);
 	}
 
 	/**

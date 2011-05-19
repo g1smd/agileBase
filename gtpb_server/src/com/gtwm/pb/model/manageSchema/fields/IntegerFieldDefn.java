@@ -60,7 +60,7 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 	public IntegerFieldDefn(DataSource dataSource, TableInfo tableContainingField,
 			String internalFieldName, String fieldName, String fieldDesc, boolean unique,
 			Integer defaultValue, boolean notNull, boolean notApplicable,
-			String notApplicableDescription, int notApplicableValue, boolean usesLookup, boolean storesCurrency)
+			String notApplicableDescription, int notApplicableValue, boolean usesLookup, boolean storesCurrency, FieldPrintoutSetting printoutSetting)
 			throws CantDoThatException {
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
@@ -81,7 +81,7 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 		}
 		this.setUsesLookup(usesLookup);
 		this.setStoresCurrency(storesCurrency);
-		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		super.setPrintoutSetting(printoutSetting);
 	}
 
 	public String formatIntegerValue(IntegerValue integerValue) {

@@ -39,7 +39,7 @@ public class SequenceFieldDefn extends AbstractField implements SequenceField {
 	}
 
 	public SequenceFieldDefn(TableInfo tableContainingField, String internalFieldName,
-			String fieldName, String fieldDesc) throws CantDoThatException {
+			String fieldName, String fieldDesc, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
 			super.setInternalFieldName((new RandomString()).toString());
@@ -50,7 +50,7 @@ public class SequenceFieldDefn extends AbstractField implements SequenceField {
 		super.setFieldDescription(fieldDesc);
 		super.setUnique(true);
 		super.setNotNullDirect(true); // bypass hasDefault() check of AbstractField
-		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		super.setPrintoutSetting(printoutSetting);
 	}
 
 	public void setNotNull(boolean notNull) throws CantDoThatException {
