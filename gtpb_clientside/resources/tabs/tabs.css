@@ -162,6 +162,15 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
   margin: 1em;
 }
 
+#reportDataView #leftcol {
+  float: left;
+}
+
+#reportDataView #rightCol {
+  float: right;
+  text-align: right;
+}	
+
 #reportDataView h1 {
   font-size: 12pt;
   font-weight: normal;
