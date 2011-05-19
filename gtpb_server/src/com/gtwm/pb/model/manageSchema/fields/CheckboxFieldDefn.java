@@ -60,8 +60,8 @@ public class CheckboxFieldDefn extends AbstractField implements CheckboxField {
 
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.CHECKBOX);
 		try {
+			FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.CHECKBOX);
 			String defaultValue = this.getDefault().toString();
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.CHECKBOXDEFAULT,
 					defaultValue);
@@ -71,11 +71,11 @@ public class CheckboxFieldDefn extends AbstractField implements CheckboxField {
 			// fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE,
 			// String.valueOf(this.defaultValue.toString()));
 			// }
+			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
 		}
-		return fieldDescriptor;
 	}
 
 	@Transient

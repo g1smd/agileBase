@@ -491,9 +491,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException,
 			CodingErrorException {
-		// return this.getRelatedField().getFieldDescriptor();
-		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.RELATION);
 		try {
+			FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.RELATION);
 			for (BaseField field : this.getRelatedTable().getFields()) {
 				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTVALUEFIELD,
 						field.getInternalFieldName(), field.getFieldName());
@@ -514,11 +513,11 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 					this.getDefaultToNull());
 			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
+			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
 		}
-		return fieldDescriptor;
 	}
 
 	/*

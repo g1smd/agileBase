@@ -81,14 +81,14 @@ public class DurationFieldDefn extends AbstractField implements DurationField {
     }
 
     public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-        FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.DURATION);
         try {
+            FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.DURATION);
             fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.DURATIONRESOLUTION, String.valueOf(this.durationResolution));
             fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.DURATIONSCALE, String.valueOf(this.scale));
+            return fieldDescriptor;
         } catch (ObjectNotFoundException onfex) {
             throw new CantDoThatException("Internal error setting up " + this.getClass() + " field descriptor", onfex);
         }
-        return fieldDescriptor;
     }
 
     public synchronized void setDefault(DurationValue defaultValue) throws CantDoThatException {

@@ -28,6 +28,7 @@ import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSet
 import com.gtwm.pb.model.manageSchema.fields.AbstractField;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 
@@ -63,8 +64,13 @@ public class SeparatorFieldDefn extends AbstractField implements SeparatorField 
 
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.SEPARATOR);
-		return fieldDescriptor;
+		try {
+			return new FieldTypeDescriptor(FieldCategory.SEPARATOR);
+		} catch (ObjectNotFoundException onfex) {
+			throw new CantDoThatException("Internal error setting up " + this.getClass()
+					+ " field descriptor", onfex);
+
+		}
 	}
 
 	@Transient

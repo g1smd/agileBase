@@ -101,8 +101,8 @@ public class DateFieldDefn extends AbstractField implements DateField {
 
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.DATE);
 		try {
+			FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.DATE);
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.DATERESOLUTION,
 					String.valueOf(this.getDateResolutionDirect()));
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY,
@@ -112,11 +112,11 @@ public class DateFieldDefn extends AbstractField implements DateField {
 			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
 					printoutSetting.name());
+			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
 		}
-		return fieldDescriptor;
 	}
 
 	public synchronized void setDefaultToNow(boolean defaultToNow) {

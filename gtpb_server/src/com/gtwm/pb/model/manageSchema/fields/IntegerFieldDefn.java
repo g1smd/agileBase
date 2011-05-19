@@ -146,8 +146,8 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-		FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.NUMBER);
 		try {
+			FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.NUMBER);
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super
 					.getNotNull());
@@ -160,11 +160,11 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 			}
 			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
+			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
 		}
-		return fieldDescriptor;
 	}
 
 	@Transient

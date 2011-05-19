@@ -79,32 +79,32 @@ public class CalculationFieldDefn implements CalculationField {
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException,
 			CodingErrorException {
 		FieldTypeDescriptorInfo fieldDescriptor = null;
-		// TODO: fill in rest of options under each case
-		switch (this.getDbType()) {
-		case BOOLEAN:
-			fieldDescriptor = new FieldTypeDescriptor(FieldCategory.CHECKBOX);
-			break;
-		case INTEGER:
-		case FLOAT:
-			fieldDescriptor = new FieldTypeDescriptor(FieldCategory.NUMBER);
-			break;
-		case VARCHAR:
-			fieldDescriptor = new FieldTypeDescriptor(FieldCategory.TEXT);
-			break;
-		case TIMESTAMP:
-			fieldDescriptor = new FieldTypeDescriptor(FieldCategory.DATE);
-			try {
+		try {
+			// TODO: fill in rest of options under each case
+			switch (this.getDbType()) {
+			case BOOLEAN:
+				fieldDescriptor = new FieldTypeDescriptor(FieldCategory.CHECKBOX);
+				break;
+			case INTEGER:
+			case FLOAT:
+				fieldDescriptor = new FieldTypeDescriptor(FieldCategory.NUMBER);
+				break;
+			case VARCHAR:
+				fieldDescriptor = new FieldTypeDescriptor(FieldCategory.TEXT);
+				break;
+			case TIMESTAMP:
+				fieldDescriptor = new FieldTypeDescriptor(FieldCategory.DATE);
 				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.DATERESOLUTION,
 						String.valueOf(this.getReportCalcField().getDateResolution()));
 				fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.DEFAULTTONOW, false);
 				fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, false);
-			} catch (ObjectNotFoundException onfex) {
-				throw new CodingErrorException("Error setting date options: ", onfex);
+				break;
+			default:
+				throw new CodingErrorException("Unknown field type " + this.getDbType()
+						+ " in calculation " + this.toString());
 			}
-			break;
-		default:
-			throw new CodingErrorException("Unknown field type " + this.getDbType()
-					+ " in calculation " + this.toString());
+		} catch (ObjectNotFoundException onfex) {
+			throw new CodingErrorException("Error setting date options: ", onfex);
 		}
 		return fieldDescriptor;
 	}
@@ -183,9 +183,8 @@ public class CalculationFieldDefn implements CalculationField {
 	}
 
 	public void setTableContainingField(TableInfo tableContainingField) {
-		logger
-				.warn("Call to irrelevant calculation method setTableContainingField from calculation "
-						+ this);
+		logger.warn("Call to irrelevant calculation method setTableContainingField from calculation "
+				+ this);
 	}
 
 	public void setUnique(Boolean fieldUnique) throws CantDoThatException {
@@ -196,13 +195,14 @@ public class CalculationFieldDefn implements CalculationField {
 		// Calculations always print out (for now)
 		return FieldPrintoutSetting.NAME_AND_VALUE;
 	}
-	
+
 	public ReportCalcFieldInfo getReportCalcField() {
 		return this.reportCalcField;
 	}
-	
+
 	public void setPrintoutSetting(FieldPrintoutSetting printoutSetting) {
-		logger.warn("Call to irrelevant calculation method setPrintoutSetting from calculation " + this);
+		logger.warn("Call to irrelevant calculation method setPrintoutSetting from calculation "
+				+ this);
 	}
 
 	/**
