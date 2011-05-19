@@ -60,6 +60,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
       ## (if it has any related data)
       #if($field.equals($reportFieldTable.getPrimaryKey()))
         #set($success = $tablesEncountered.put($reportFieldTable, true))
+        Checking if $tablesEncountered.size() == $colSplit<br>
         #if($tablesEncountered.size() == $colSplit)
           </div><div id="rightcol">
         #end
