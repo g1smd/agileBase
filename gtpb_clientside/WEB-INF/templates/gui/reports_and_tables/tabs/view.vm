@@ -34,7 +34,22 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 #else
 	#set($fieldsEncountered = {})
   #set($tablesEncountered = {})
-	<div id="reportDataView">
+  ## numTables used when arranging into columns
+  #set($numTables = 0)
+  #foreach($reportField in $sessionReport.getReportFields())
+    #set($field = $reportField.getBaseField())
+    #set($reportFieldTable = $field.getTableContainingField())
+    #if($field.getTableContainingField().equals($reportFieldTable.getPrimaryKey()))
+      #set($numTables = $numTables + 1)
+    #end
+  #end
+  #if($numTables > 1)
+    #set($colSplit = $numTables / 2)
+    #if($numTables % 2 != 0)
+      #set($colSplit = $colSplit + 1)
+    #end
+  #end
+	<div id="reportDataView"><div id="leftcol">
 	  ## NB: session table data used to be here
 		## Show related data
 		#foreach($reportField in $sessionReport.getReportFields())
@@ -45,6 +60,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
       ## (if it has any related data)
       #if($field.equals($reportFieldTable.getPrimaryKey()))
         #set($success = $tablesEncountered.put($reportFieldTable, true))
+        #if($tablesEncountered.size() == $colSplit)
+          </div><div id="rightcol">
+        #end
 			  #if($reportFieldTable.equals($sessionTable))
 			   #set($relatedRowIds = [])
 			   #if(!$mobile_device) ## View and edit tabs are merged on mobile devices, don't display the session table data here
@@ -122,6 +140,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		      #end
 		    #end
 		#end
-	</div>
+  </div></div>
 #end
 $viewTools.stopTimer("gui/reports_and_tables/tabs/view")
