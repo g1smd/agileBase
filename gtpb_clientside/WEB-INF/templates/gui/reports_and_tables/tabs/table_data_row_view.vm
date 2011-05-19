@@ -69,7 +69,7 @@
         #end
         #if($fieldCategory == 'SEPARATOR')
           #set($rowCount=0)
-          <h2 class="greytext">$field <span style="font-weight: normal">$field.getFieldDescription()</span></h2>
+          <h2 class="greytext">$field</h2>
         #else
           #if(($printoutSetting == "NAME_AND_VALUE") && ($fieldCategory != "REFERENCED_REPORT_DATA"))
             <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
