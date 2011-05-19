@@ -16,7 +16,11 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #if($referencedData.contains("span")) ## If there's any referenced data predefined
-	$referencedData
+  #if($viewOnly)
+	  <p>$referencedData</p>
+  #else
+    $referencedData
+  #end  
 #else
 	#set($referencedData = false)
     #set($fieldTable = $field.getTableContainingField())

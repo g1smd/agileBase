@@ -77,12 +77,12 @@
             #else
             <span class="fieldname">$field</span>
             #end
-            : #parse('gui/resources/input/input.vm'), 
+            : #parse('gui/resources/input/input.vm')
           #else
             #if(($rowCount == 1) && ($printoutSetting == "VALUE_ONLY"))
-              <b>#parse('gui/resources/input/input.vm')</b>, 
+              <b>#parse('gui/resources/input/input.vm')</b>
             #else
-              #parse('gui/resources/input/input.vm'), 
+              #parse('gui/resources/input/input.vm')
             #end
           #end
         </span>

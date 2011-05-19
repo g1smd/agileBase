@@ -26,43 +26,41 @@
   #else
     	<input type=checkbox name=$field.getInternalFieldName() #if($updateAsType) gtpb_update_record=true onclick="new fChange(this)" #end #if($fieldValue == true) checked #end>
   #end
-  
-    #if($globalEdit)
-      <script language="Javascript">
-        function fUpdateGlobalCheckbox() {
-          function fResponse(sResponseText, sResponseXML) {
-            if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
-  	            var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
-  	            #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
-                var sFieldName='$field.getSimplifiedFieldName()';
-              #else
-                var sFieldName='$field';
-              #end
-              var sFieldValue=oField.checked?'true':'false';
-  	            if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+sFieldValue+'?\nThis will update '+sRowsToChange+' records'))              
-				new fChange(oField);
-            }
+  #if($globalEdit)
+    <script language="Javascript">
+      function fUpdateGlobalCheckbox() {
+        function fResponse(sResponseText, sResponseXML) {
+          if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
+	            var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
+	            #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+              var sFieldName='$field.getSimplifiedFieldName()';
+            #else
+              var sFieldName='$field';
+            #end
+            var sFieldValue=oField.checked?'true':'false';
+	            if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+sFieldValue+'?\nThis will update '+sRowsToChange+' records'))              
+			new fChange(oField);
           }
-          
-          var oField=this.field;
-          var aPostVars=new Array();
-          aPostVars['returntype']='xml'; 
-          aPostVars['return']='gui/resources/sessionReportInfo';
-          var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);
         }
-        var oElement=document.getElementsByName('$field.getInternalFieldName()')[document.getElementsByName('$field.getInternalFieldName()').length-1];
-        oElement.setAttribute('gtpb_global_edit','true');
-        var oButton=document.createElement('BUTTON');
-        $(oButton).addClass('globalEdit');
-        oButton.innerHTML='update globally';
-        oButton.field=oElement;
-        ##oButton.addEventListener('click',fUpdateGlobalCheckbox,false);
-        $(oButton).click(fUpdateGlobalCheckbox);
         
-        oElement.parentNode.appendChild(oButton);
-      </script>
-    #end
-  
+        var oField=this.field;
+        var aPostVars=new Array();
+        aPostVars['returntype']='xml'; 
+        aPostVars['return']='gui/resources/sessionReportInfo';
+        var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);
+      }
+      var oElement=document.getElementsByName('$field.getInternalFieldName()')[document.getElementsByName('$field.getInternalFieldName()').length-1];
+      oElement.setAttribute('gtpb_global_edit','true');
+      var oButton=document.createElement('BUTTON');
+      $(oButton).addClass('globalEdit');
+      oButton.innerHTML='update globally';
+      oButton.field=oElement;
+      ##oButton.addEventListener('click',fUpdateGlobalCheckbox,false);
+      $(oButton).click(fUpdateGlobalCheckbox);
+      
+      oElement.parentNode.appendChild(oButton);
+    </script>
+  #end
 #else
-	$fieldValue
+	$fieldValue,
 #end

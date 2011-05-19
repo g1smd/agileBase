@@ -113,6 +113,6 @@
 	#end
   #end
 #else ##user can't edit
-$field.formatCalendar($fieldValue)##
+$field.formatCalendar($fieldValue),##
 #end##
 ##found date for $field.getFieldName(): $days/$months/$years

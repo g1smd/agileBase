@@ -189,6 +189,6 @@
   #end
 
   #else ##read-only
-    $fieldDisplayValue##
+    $fieldDisplayValue,##
   #end ## End read only
 #end ## End not dropdown
