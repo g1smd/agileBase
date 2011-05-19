@@ -51,7 +51,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
     #end
     #set($colSplit = $colSplit + 1)
   #end
-	<div id="reportDataView"><div id="leftcol">
+	<div id="reportDataView"><div id="leftcol" #if($numTables == 1) style="width: 100%" #end>
 	  ## NB: session table data used to be here
 		## Show related data
 		#foreach($reportField in $sessionReport.getReportFields())
