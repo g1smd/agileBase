@@ -51,6 +51,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
     #if($remainder != 0)
       #set($colSplit = $colSplit + 1)
     #end
+    colSplit is now $colSplit<br>
   #end
 	<div id="reportDataView"><div id="leftcol">
 	  ## NB: session table data used to be here
