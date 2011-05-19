@@ -69,6 +69,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 			    #set($relatedRowIds = [])
 			    #if(!$mobile_device) ## View and edit tabs are merged on mobile devices, don't display the session table data here
 			      #set($success = $relatedRowIds.add($sessionRowId))
+             <div class="current">
+             <h1>$reportFieldTable.getSimpleName()</h1>
 			    #end
         #else
           #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $reportFieldTable))
@@ -88,8 +90,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 				   #if(($numRelatedRows == 1) || (!$headingDisplayed))
 					   #set($headingDisplayed = true)
              #set($current = true)
-             <div class="current">
-             <h1>$reportFieldTable.getSimpleName()</h1>
 					#end
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
