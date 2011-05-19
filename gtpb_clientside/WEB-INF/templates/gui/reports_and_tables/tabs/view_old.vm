@@ -33,7 +33,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 	</div>
 #else
 	#set($fieldsEncountered = {})
-	<div id="reportDataView">
+	<table cellspacing="0" cellpadding="0" border="0" #if($mobile_device) id="reportDataView" #else id="reportData" #end>
 	  ## NB: session table data used to be here
 		## Show related data
 		#foreach($reportField in $sessionReport.getReportFields())
@@ -61,7 +61,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		         #if ($tableDataRow.size() > 0)
 				   #if(($numRelatedRows == 1) || (!$headingDisplayed))
 					 #set($headingDisplayed = true)
-              <h1>$reportFieldTable.getSimpleName()</h1>
+              <thead>
+  		        	<tr><th class="leading">&nbsp;</th>			
+  		        	<th>$reportFieldTable.getSimpleName()</th>
+  		        	<th>&nbsp;</th>			
+  		        	<th class="trailing">&nbsp;</th></tr>			
+              </thead>
 					#end
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
@@ -77,12 +82,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 						   #else
 							 #set($fieldEncountered = $field)
 						   #end
-						   #if((!$fieldsEncountered.containsKey($fieldEncountered)) && ($field.getPrintoutSetting().name() != "NO_PRINTOUT"))
-  							 #set($rrd_rowId = $relatedRowId) ## For use by input/referenced_report_data.vm
-  							 #parse("gui/reports_and_tables/tabs/table_data_row_view.vm")
-  							 #if($numRelatedRows == 1)
-  							   #set($success = $fieldsEncountered.put($fieldEncountered, true))
-                 #end
+						   #if(!$fieldsEncountered.containsKey($fieldEncountered))
+							 #set($rrd_rowId = $relatedRowId) ## For use by input/referenced_report_data.vm
+							 #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+							 #if($numRelatedRows == 1)
+							   #set($success = $fieldsEncountered.put($fieldEncountered, true))
+							 #end
 						   #end
 						 #end
                	      #end
@@ -100,26 +105,41 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
                 		  #set($success = $reportFilter.put($sessionTable.getPrimaryKey(),"$sessionRowId"))
 						  ## Note: limit to 1 row for now. There may be more than one row returned, deal with that later if necessary
                 		  #set($reportDataRows = $view.getReportDataRows($sessionReport, 1, $reportFilter, true))
-                			<div class="calculations">
+                		  <tr>
+                            <td class="leading">&nbsp;</td>
+                			<td class="capitalised printoutfieldnamecolumn">Calculations</td>
+							<td class="calculations">
                 			  #foreach($reportDataRow in $reportDataRows)
                 				#foreach($calcField in $calculationReportFields)
-                				  <span class="greytext capitalised">$calcField: </span>
+                				  <span class="greytext">$calcField: </span>
                 				  $reportDataRow.getValue($calcField.getBaseField())<br>
                 				#end
-                        #end
-                      </div>
+                			  #end
+                			</td>
+                            <td class="trailing">&nbsp;</td>
+                		  </tr>
                 		#end ## End of calculations display
 					#end
 		         #end ## end if ($tableDataRow.size() != 0)
 		        #end ## end foreach related row id
 		       #else
 		   #set($rowCount = $rowCount+1)
-##             <td>$numRelatedRows related records</td>
-##             <td>#if($numRelatedRows > 0)not shown #else &nbsp; #end</td>
+           <tr #if($rowCount%2!=0) class=rowa #else class=rowb #end>
+             <td class="leading">&nbsp;</td>
+             <td>$numRelatedRows related records</td>
+             <td>#if($numRelatedRows > 0)not shown #else &nbsp; #end</td>
+             <td class="trailing">&nbsp;</td>
+		   </tr>
 		       #end ## end if number of related rows is a manageable amount
 		      #end
 		    #end
 		#end
-	</div>
+		<tr class="trailing">
+	      <td>&nbsp;</td>
+		  <td>&nbsp;</td>
+		  <td>&nbsp;</td>
+		  <td>&nbsp;</td>
+		</tr>
+	</table>
 #end
 $viewTools.stopTimer("gui/reports_and_tables/tabs/view")
