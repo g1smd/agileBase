@@ -69,8 +69,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 			    #set($relatedRowIds = [])
 			    #if(!$mobile_device) ## View and edit tabs are merged on mobile devices, don't display the session table data here
 			      #set($success = $relatedRowIds.add($sessionRowId))
-            #set($current = true)
-            <div class="current">
 			    #end
         #else
           #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $reportFieldTable))
@@ -81,15 +79,17 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
         #end
 			  #set($numRelatedRows = $relatedRowIds.size())
 			  #set($headingDisplayed = false)
-			  #if ($numRelatedRows > 0)
+			  #if ($numRelatedRows >= 0)
 	 	      ## attempt to only display related data if it's a managable amount
-		       #if(($numRelatedRows == 1) || (($numRelatedRows * ($reportFieldTable.getFields().size() - 1)) < 30))
+		       #if(($numRelatedRows >= 0) && (($numRelatedRows * ($reportFieldTable.getFields().size() - 1)) < 30))
 		        #foreach($relatedRowId in $relatedRowIds)
 		         #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
 		         #if ($tableDataRow.size() > 0)
 				   #if(($numRelatedRows == 1) || (!$headingDisplayed))
-					 #set($headingDisplayed = true)
-           <h1>$reportFieldTable.getSimpleName()</h1>
+					   #set($headingDisplayed = true)
+             #set($current = true)
+             <div class="current">
+             <h1>$reportFieldTable.getSimpleName()</h1>
 					#end
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
