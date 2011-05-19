@@ -20,7 +20,8 @@
 <html>
   <head>
     <title>Record Details Printout</title>
-	<link href="styles/report.css" type="text/css" rel="stylesheet" />
+  <link href="styles/report.css" type="text/css" rel="stylesheet" />
+  <link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
 	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
     <style type="text/css">
 	      * {
