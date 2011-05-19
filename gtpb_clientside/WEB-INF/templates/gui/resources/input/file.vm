@@ -37,6 +37,7 @@
     #end
     ## File icon
     #if(!$fieldValueObject.isImage())
+      #if(!$userCanEdit) <br style="clear: left"> #end
       <img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/> $fieldValue
       ## Users were frequently having problems with browsers caching old document versions
       #set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
