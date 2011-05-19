@@ -35,15 +35,15 @@
   	#if($firstLineOfAddress)
       <p>
   		#set($rowCount = $rowCount + 1)
-  			<div id="map" style="width:100px; height:100px; float:left;"></div>
-      #end
-  	#parse('gui/resources/input/input.vm'), 
+      <div id="map" style="width:100px; height:100px; float:left;"></div>
+    #end
+    #parse('gui/resources/input/input.vm')
   	#if($address.lastKey().equals($field))
   		<script langauge="JavaScript">
   		  loadMap("$tableDataRow.get($field).toString()");
   		</script>
       #set($partOfAddress = false)
-      <p>
+      </p>
   	#end
   #else
 	#set($fieldCategory = $field.getFieldCategory())
@@ -70,7 +70,7 @@
         </div>
       #else
         <span class="field" #if($contracted) style="display:none;" #end>
-          #if($printoutSetting == "NAME_AND_VALUE")
+          #if(($printoutSetting == "NAME_AND_VALUE") && ($fieldCategory != "REFERENCED_REPORT_DATA"))
             <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
             #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
             <span class="fieldname">$field.getSimplifiedFieldName()</span>
