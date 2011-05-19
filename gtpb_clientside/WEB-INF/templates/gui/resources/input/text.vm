@@ -121,17 +121,17 @@
 ##
 #else ## user can't edit
   #if(($field.getContentSize() <= 50) && ($fieldValue.length() <= 100))##
-	#set($isPhoneNumber = $fieldValueObject.isPhoneNumber())
-	#if ($fieldValueObject.isEmailAddress())##
+	  #set($isPhoneNumber = $fieldValueObject.isPhoneNumber())
+	  #if ($fieldValueObject.isEmailAddress())##
       <a href="mailto:$fieldValue">$fieldValue</a>##
-	#elseif ($fieldValueObject.isURL())##
+	  #elseif ($fieldValueObject.isURL())##
   	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>##
-	#elseif ($fieldValueObject.isPostcode())##
+	  #elseif ($fieldValueObject.isPostcode())##
   	  <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue.trim()" target="_blank">$fieldValue</a>##
     #elseif ($mobile_device && $isPhoneNumber)##
-	  <a href="tel:$fieldValue">$fieldValue</a> <i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>##
+	  <a href="tel:$fieldValue">$fieldValue</a> <i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>,##
     #else##
-      $fieldValue#if($isPhoneNumber) <i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>,#end##
+      $fieldValue#if($isPhoneNumber) <i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>,#else,#end##
     #end##
   #else##
     ## can have long URLs
