@@ -22,14 +22,14 @@
 #set($internalFieldName = $field.getInternalFieldName())
 #if (! $field.getTableContainingField().getPrimaryKey().equals($field)) ## remove to show primary key field
   #if($address)
-	#if($address.size() > 0)
-	  #if($address.firstKey().equals($field)) #set($partOfAddress = true) #end
-      #if($partOfAddress && $address.firstKey().equals($field))
-	    #set($firstLineOfAddress = true)
-	  #else
-	    #set($firstLineOfAddress = false)
-	  #end
-	#end
+  	#if($address.size() > 0)
+  	  #if($address.firstKey().equals($field)) #set($partOfAddress = true) #end
+        #if($partOfAddress && $address.firstKey().equals($field))
+  	    #set($firstLineOfAddress = true)
+  	  #else
+  	    #set($firstLineOfAddress = false)
+  	  #end
+  	#end
   #end
   #if($partOfAddress)
   	#if($firstLineOfAddress)
@@ -45,8 +45,9 @@
       #set($partOfAddress = false)
       </p>
   	#end
-  #else
+  #else ## not part of address
 	#set($fieldCategory = $field.getFieldCategory())
+  <br>$field is a $fieldCategory<br>
   #set($printoutSetting = $field.getPrintoutSetting().name())
 	#set($referencedData = "")
 	#if($fieldCategory == "REFERENCED_REPORT_DATA")
@@ -75,7 +76,7 @@
             #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
             <span class="fieldname">$field.getSimplifiedFieldName()</span>
             #else
-            <span class="fieldname">$fieldCategory: $field</span>
+            <span class="fieldname">$field</span>
             #end
             : #parse('gui/resources/input/input.vm')
           #else
