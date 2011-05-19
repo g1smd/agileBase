@@ -88,8 +88,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		         #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
 		         #if ($tableDataRow.size() > 0)
 				   #if(($numRelatedRows == 1) || (!$headingDisplayed))
-					 #set($headingDisplayed = true)
-           <h1>$reportFieldTable.getSimpleName()</h1>
+					   #set($headingDisplayed = true)
+             <h1>$reportFieldTable.getSimpleName()</h1>
 					#end
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
@@ -145,7 +145,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 ##             <td>$numRelatedRows related records</td>
 ##             <td>#if($numRelatedRows > 0)not shown #else &nbsp; #end</td>
 		       #end ## end if number of related rows is a manageable amount
-           #if($related) </div> #set($related = false) #end
+           #if($related || $current) </div> #set($related = false) #set($current = false) #end
 		      #end
 		    #end
 		#end
