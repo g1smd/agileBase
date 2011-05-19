@@ -81,7 +81,7 @@
             : #parse('gui/resources/input/input.vm')
           #else
             #if(($rowCount == 1) && ($printoutSetting == "VALUE_ONLY"))
-              HERE with field $field: <b>#parse('gui/resources/input/input.vm')</b>
+              <b>#parse('gui/resources/input/input.vm')</b>
             #else
               #parse('gui/resources/input/input.vm')
             #end
