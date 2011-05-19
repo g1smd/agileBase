@@ -91,50 +91,50 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 					#end
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
-		            #foreach($field in $reportFieldTable.getFields())
-		          	  #set($tableDataValue = $tableDataRow.get($field))
+          #foreach($field in $reportFieldTable.getFields())
+        	  #set($tableDataValue = $tableDataRow.get($field))
 					  #set($fieldCategory = $field.getFieldCategory())
-            		  ## don't display hidden or blank fields
-            		  #if($fieldCategory=="REFERENCED_REPORT_DATA" || $fieldCategory=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
-            			 ## don't display checkbox values that are false
-            		     #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
-                           #if($fieldCategory == "RELATION")
-							 #set($fieldEncountered = $field.getDisplayField())
-						   #else
-							 #set($fieldEncountered = $field)
-						   #end
-						   #if((!$fieldsEncountered.containsKey($fieldEncountered)) && ($field.getPrintoutSetting().name() != "NO_PRINTOUT"))
-  							 #set($rrd_rowId = $relatedRowId) ## For use by input/referenced_report_data.vm
-  							 #parse("gui/reports_and_tables/tabs/table_data_row_view.vm")
-  							 #if($numRelatedRows == 1)
-  							   #set($success = $fieldsEncountered.put($fieldEncountered, true))
-                 #end
-						   #end
-						 #end
+      		  ## don't display hidden or blank fields
+      		  #if($fieldCategory=="REFERENCED_REPORT_DATA" || $fieldCategory=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
+            ## don't display checkbox values that are false
+              #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
+                #if($fieldCategory == "RELATION")
+                  #set($fieldEncountered = $field.getDisplayField())
+                #else
+                  #set($fieldEncountered = $field)
+                #end
+                #if((!$fieldsEncountered.containsKey($fieldEncountered)) && ($field.getPrintoutSetting().name() != "NO_PRINTOUT"))
+                  #set($rrd_rowId = $relatedRowId) ## For use by input/referenced_report_data.vm
+                  #parse("gui/reports_and_tables/tabs/table_data_row_view.vm")
+                  #if($numRelatedRows == 1)
+                    #set($success = $fieldsEncountered.put($fieldEncountered, true))
+                  #end
+                #end
+              #end
             #end
           #end ## end foreach field in table
 					## Display calculations if there are any in the current report
 					#if($reportFieldTable.equals($sessionTable))
-                		#set($calculationReportFields = [])
-                		#foreach($reportField in $sessionReport.getReportFields())
-                		  #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
-                			#set($success = $calculationReportFields.add($reportField))
-                		  #end
-                		#end
-                		#if($calculationReportFields.size() > 0)
-                		  #set($reportFilter = $viewTools.getNewFilterMap())
-                		  #set($success = $reportFilter.put($sessionTable.getPrimaryKey(),"$sessionRowId"))
-						  ## Note: limit to 1 row for now. There may be more than one row returned, deal with that later if necessary
-                		  #set($reportDataRows = $view.getReportDataRows($sessionReport, 1, $reportFilter, true))
-                			<div class="calculations">
-                			  #foreach($reportDataRow in $reportDataRows)
-                				#foreach($calcField in $calculationReportFields)
-                				  <span class="greytext capitalised">$calcField: </span>
-                				  $reportDataRow.getValue($calcField.getBaseField())<br>
-                				#end
-                        #end
-                      </div>
-                		#end ## End of calculations display
+          		#set($calculationReportFields = [])
+          		#foreach($reportField in $sessionReport.getReportFields())
+          		  #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
+          			#set($success = $calculationReportFields.add($reportField))
+          		  #end
+          		#end
+          		#if($calculationReportFields.size() > 0)
+          		  #set($reportFilter = $viewTools.getNewFilterMap())
+          		  #set($success = $reportFilter.put($sessionTable.getPrimaryKey(),"$sessionRowId"))
+			          ## Note: limit to 1 row for now. There may be more than one row returned, deal with that later if necessary
+          		  #set($reportDataRows = $view.getReportDataRows($sessionReport, 1, $reportFilter, true))
+          			<div class="calculations">
+          			  #foreach($reportDataRow in $reportDataRows)
+          				#foreach($calcField in $calculationReportFields)
+          				  <span class="greytext capitalised">$calcField: </span>
+          				  $reportDataRow.getValue($calcField.getBaseField())<br>
+          				#end
+                  #end
+                </div>
+          		#end ## End of calculations display
 					#end
 		         #end ## end if ($tableDataRow.size() != 0)
 		        #end ## end foreach related row id
