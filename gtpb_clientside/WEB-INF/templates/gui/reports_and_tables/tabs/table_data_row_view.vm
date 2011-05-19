@@ -65,9 +65,7 @@
       #end
       #if($fieldCategory == 'SEPARATOR')
         #set($rowCount=0)
-        <div class="separator #if($contracted) contracted #end" internalfieldname="$internalFieldName">
-          $field <i><span class="greytext">$field.getFieldDescription()</span></i>
-        </div>
+        <h2>$field <i><span class="greytext">$field.getFieldDescription()</span></i></h2>
       #else
         <span class="field" #if($contracted) style="display:none;" #end>
           #if(($printoutSetting == "NAME_AND_VALUE") && ($fieldCategory != "REFERENCED_REPORT_DATA"))
