@@ -39,7 +39,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
   #foreach($reportField in $sessionReport.getReportFields())
     #set($field = $reportField.getBaseField())
     #set($reportFieldTable = $field.getTableContainingField())
-    #if($field.getTableContainingField().equals($reportFieldTable.getPrimaryKey()))
+    #if($field.equals($reportFieldTable.getPrimaryKey()))
       #set($numTables = $numTables + 1)
     #end
   #end
