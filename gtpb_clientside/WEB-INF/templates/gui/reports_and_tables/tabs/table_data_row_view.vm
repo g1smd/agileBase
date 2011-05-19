@@ -20,7 +20,11 @@
 #set($loggedInUser = $view.getLoggedInUser())
 #set($contractedSections = $loggedInUser.getContractedSections())
 #set($internalFieldName = $field.getInternalFieldName())
-#if (! $field.getTableContainingField().getPrimaryKey().equals($field)) ## remove to show primary key field
+#set($fieldCategory = $field.getFieldCategory())
+#set($printoutSetting = $field.getPrintoutSetting().name())
+## don't show primary key field
+## don't show referenced fields if the raw data in the ref. field report parent table has already been displayed
+#if((!$field.getTableContainingField().getPrimaryKey().equals($field)) && (!$tablesEncountered.contains($field.getReferencedReport().getParentTable())))
   #if($address)
   	#if($address.size() > 0)
   	  #if($address.firstKey().equals($field)) #set($partOfAddress = true) #end
@@ -46,8 +50,6 @@
       </p>
   	#end
   #else ## not part of address
-	#set($fieldCategory = $field.getFieldCategory())
-  #set($printoutSetting = $field.getPrintoutSetting().name())
 	#set($referencedData = "")
 	#if($fieldCategory == "REFERENCED_REPORT_DATA")
 	  ## Capture the output of the parsing into a variable. We want to know whether a value
@@ -67,7 +69,7 @@
         #set($rowCount=0)
         <h2>$field <i><span class="greytext">$field.getFieldDescription()</span></i></h2>
       #else
-        <span class="field" #if($contracted) style="display:none;" #end>
+        <span class="field">
           #if(($printoutSetting == "NAME_AND_VALUE") && ($fieldCategory != "REFERENCED_REPORT_DATA"))
             <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
             #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))

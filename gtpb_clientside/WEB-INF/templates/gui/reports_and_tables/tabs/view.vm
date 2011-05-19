@@ -33,6 +33,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 	</div>
 #else
 	#set($fieldsEncountered = {})
+  #set($tablesEncountered = {})
 	<div id="reportDataView">
 	  ## NB: session table data used to be here
 		## Show related data
@@ -40,9 +41,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		  ## don't show fields we've already shown
 		  #set($field = $reportField.getBaseField())
 		  #set($reportFieldTable = $field.getTableContainingField())
-		    ## if we have a relation to another table, show that table's data
-		    ## (if it has any related data)
-		    #if($field.equals($reportFieldTable.getPrimaryKey()))
+      ## if we have a relation to another table, show that table's data
+      ## (if it has any related data)
+      #if($field.equals($reportFieldTable.getPrimaryKey()))
+        #set($success = $tablesEncountered.add($reportFieldTable))
 			  #if($reportFieldTable.equals($sessionTable))
 			   #set($relatedRowIds = [])
 			   #if(!$mobile_device) ## View and edit tabs are merged on mobile devices, don't display the session table data here
@@ -61,7 +63,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		         #if ($tableDataRow.size() > 0)
 				   #if(($numRelatedRows == 1) || (!$headingDisplayed))
 					 #set($headingDisplayed = true)
-              <h1 style="clear: both">$reportFieldTable.getSimpleName()</h1>
+           <h1 style="clear: both">$reportFieldTable.getSimpleName()</h1>
 					#end
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
