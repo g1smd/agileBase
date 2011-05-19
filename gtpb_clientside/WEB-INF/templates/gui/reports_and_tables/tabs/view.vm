@@ -87,7 +87,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		         #if ($tableDataRow.size() > 0)
 				   #if(($numRelatedRows == 1) || (!$headingDisplayed))
 					 #set($headingDisplayed = true)
-           <h1 style="clear: both">$reportFieldTable.getSimpleName()</h1>
+           <h1>$reportFieldTable.getSimpleName()</h1>
 					#end
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
