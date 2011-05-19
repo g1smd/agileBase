@@ -63,7 +63,7 @@
     <script type="text/javascript" src="resources/tabs/tabs.js"></script>
     <script type="text/javascript" src="resources/tabs/view.js"></script>
   </head>
-  <body>
+  <body style="background-color: white; overflow: visible"> <!-- override tabs.css -->
 	#set($printout=true)
     #parse('gui/reports_and_tables/tabs/view.vm')
   </body>
