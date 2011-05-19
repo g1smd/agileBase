@@ -245,7 +245,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				HiddenFields.WIKI_PAGE.getFieldName(),
 				HiddenFields.WIKI_PAGE.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
 				TextFieldDefn.NOT_NULL_FALSE, null, TextFieldDefn.NOT_APPLICABLE_FALSE, null, null,
-				TextFieldDefn.HIDDEN_FALSE, true);
+				TextFieldDefn.HIDDEN_FALSE, true, FieldPrintoutSetting.NO_PRINTOUT);
 		HibernateUtil.currentSession().save(wikiPageField);
 		table.addField(wikiPageField);
 		this.addFieldToRelationalDb(conn, table, wikiPageField);
@@ -256,7 +256,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		DateField dateCreatedField = new DateFieldDefn(table, null,
 				HiddenFields.DATE_CREATED.getFieldName(),
 				HiddenFields.DATE_CREATED.getFieldDescription(), DateFieldDefn.UNIQUE_FALSE,
-				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND);
+				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND, FieldPrintoutSetting.NO_PRINTOUT);
 		dateCreatedField.setHidden(DateFieldDefn.HIDDEN_TRUE);
 		HibernateUtil.currentSession().save(dateCreatedField);
 		table.addField(dateCreatedField);
@@ -270,7 +270,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				HiddenFields.CREATED_BY.getFieldName(),
 				HiddenFields.CREATED_BY.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
 				TextFieldDefn.NOT_NULL_FALSE, null, TextFieldDefn.NOT_APPLICABLE_FALSE, null, null,
-				TextFieldDefn.HIDDEN_TRUE, true);
+				TextFieldDefn.HIDDEN_TRUE, true, FieldPrintoutSetting.NAME_AND_VALUE);
 		HibernateUtil.currentSession().save(createdByField);
 		table.addField(createdByField);
 		this.addFieldToRelationalDb(conn, table, createdByField);
@@ -282,7 +282,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		DateField lastModifiedField = new DateFieldDefn(table, null,
 				HiddenFields.LAST_MODIFIED.getFieldName(),
 				HiddenFields.LAST_MODIFIED.getFieldDescription(), DateFieldDefn.UNIQUE_FALSE,
-				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND);
+				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND, FieldPrintoutSetting.NO_PRINTOUT);
 		lastModifiedField.setHidden(DateFieldDefn.HIDDEN_TRUE);
 		HibernateUtil.currentSession().save(lastModifiedField);
 		table.addField(lastModifiedField);
@@ -296,7 +296,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				HiddenFields.MODIFIED_BY.getFieldName(),
 				HiddenFields.MODIFIED_BY.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
 				TextFieldDefn.NOT_NULL_FALSE, null, TextFieldDefn.NOT_APPLICABLE_FALSE, null, null,
-				TextFieldDefn.HIDDEN_TRUE, true);
+				TextFieldDefn.HIDDEN_TRUE, true, FieldPrintoutSetting.NO_PRINTOUT);
 		HibernateUtil.currentSession().save(modifiedByField);
 		table.addField(modifiedByField);
 		this.addFieldToRelationalDb(conn, table, modifiedByField);
@@ -307,7 +307,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		CheckboxField recordLockedField = new CheckboxFieldDefn(table, null,
 				HiddenFields.LOCKED.getFieldName(), HiddenFields.LOCKED.getFieldDescription(),
-				false, true);
+				false, true, FieldPrintoutSetting.NO_PRINTOUT);
 		HibernateUtil.currentSession().save(recordLockedField);
 		table.addField(recordLockedField);
 		this.addFieldToRelationalDb(conn, table, recordLockedField);
@@ -337,7 +337,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			newTable.addReport(defaultReport, true);
 			// Add an auto-generated primary key to act as a row identifier
 			SequenceField primaryKeyField = new SequenceFieldDefn(newTable, internalPrimaryKeyName,
-					"ID:" + tableName, PRIMARY_KEY_DESCRIPTION);
+					"ID:" + tableName, PRIMARY_KEY_DESCRIPTION, FieldPrintoutSetting.NO_PRINTOUT);
 			HibernateUtil.currentSession().save(primaryKeyField);
 			newTable.addField(primaryKeyField);
 			newTable.setPrimaryKey(primaryKeyField);
@@ -974,6 +974,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 		boolean notApplicable = false;
 		String notApplicableDescription = null;
 		String notApplicableValue = null;
+		FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.NAME_AND_VALUE;
+		String printoutSettingString = HttpRequestUtil.getStringValue(request, PossibleListOptions.PRINTFORMAT.getFormInputName());
+		if (printoutSettingString != null) {
+			if (!printoutSettingString.equals("")) {
+				printoutSetting = FieldPrintoutSetting.valueOf(printoutSettingString.toUpperCase());
+			}
+		}
 		FieldCategory fieldCategoryRequested = FieldCategory.valueOf(fieldType
 				.toUpperCase(Locale.UK));
 		fieldName = fieldName.trim();
@@ -984,7 +991,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			boolean defaultToNow = HttpRequestUtil.getBooleanValue(request,
 					PossibleBooleanOptions.DEFAULTTONOW.getFormInputName());
 			field = new DateFieldDefn(table, internalFieldName, fieldName, fieldDesc, unique,
-					notNull, defaultToNow, dateResolution);
+					notNull, defaultToNow, dateResolution, printoutSetting);
 			break;
 		case TEXT:
 			String defaultValue = HttpRequestUtil.getStringValue(request,
@@ -993,7 +1000,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 					PossibleBooleanOptions.USELOOKUP.getFormInputName());
 			field = new TextFieldDefn(this.relationalDataSource, table, internalFieldName,
 					fieldName, fieldDesc, unique, notNull, defaultValue, notApplicable,
-					notApplicableDescription, notApplicableValue, usesLookup, false);
+					notApplicableDescription, notApplicableValue, usesLookup, false, printoutSetting);
 			int textContentSize = Integer.valueOf(request
 					.getParameter(PossibleListOptions.TEXTCONTENTSIZE.getFormInputName()));
 			((TextField) field).setContentSize(textContentSize);
@@ -1016,7 +1023,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				field = new DecimalFieldDefn(this.relationalDataSource, table, internalFieldName,
 						fieldName, fieldDesc, unique, notNull, defaultNumber, precision,
 						notApplicable, notApplicableDescription, notApplicableNumber, usesLookup,
-						storesCurrency);
+						storesCurrency, printoutSetting);
 			} else {
 				Integer defaultNumber = HttpRequestUtil.getIntegerValueStrict(request,
 						PossibleTextOptions.DEFAULTVALUE.getFormInputName(), null,
@@ -1024,7 +1031,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				int notApplicableNumber = -1;
 				field = new IntegerFieldDefn(this.relationalDataSource, table, internalFieldName,
 						fieldName, fieldDesc, unique, defaultNumber, notNull, notApplicable,
-						notApplicableDescription, notApplicableNumber, usesLookup, storesCurrency);
+						notApplicableDescription, notApplicableNumber, usesLookup, storesCurrency, printoutSetting);
 			}
 			break;
 		case DURATION:
@@ -1037,16 +1044,16 @@ public final class DatabaseDefn implements DatabaseInfo {
 			// default hardcoded as 0 interval -- amend this
 			break;
 		case SEQUENCE:
-			field = new SequenceFieldDefn(table, internalFieldName, fieldName, fieldDesc);
+			field = new SequenceFieldDefn(table, internalFieldName, fieldName, fieldDesc, printoutSetting);
 			break;
 		case CHECKBOX:
 			Boolean checkboxDefaultValue = HttpRequestUtil.getBooleanValue(request,
 					PossibleListOptions.CHECKBOXDEFAULT.getFormInputName());
 			field = new CheckboxFieldDefn(table, internalFieldName, fieldName, fieldDesc,
-					checkboxDefaultValue, false);
+					checkboxDefaultValue, false, printoutSetting);
 			break;
 		case FILE:
-			field = new FileFieldDefn(table, internalFieldName, fieldName, fieldDesc);
+			field = new FileFieldDefn(table, internalFieldName, fieldName, fieldDesc, printoutSetting);
 			break;
 		case SEPARATOR:
 			field = new SeparatorFieldDefn(table, internalFieldName, fieldName, fieldDesc);
@@ -1059,7 +1066,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			TableInfo referencedReportTable = this.getTable(request, internalTableName);
 			BaseReportInfo referencedReport = referencedReportTable.getReport(internalReportName);
 			field = new ReferencedReportDataFieldDefn(table, internalFieldName, fieldName,
-					fieldDesc, referencedReport);
+					fieldDesc, referencedReport, printoutSetting);
 			break;
 		default:
 			throw new CantDoThatException("Adding unrecognised field type '" + fieldType + "'");
@@ -1625,9 +1632,16 @@ public final class DatabaseDefn implements DatabaseInfo {
 		String defaultToNullString = request.getParameter(PossibleBooleanOptions.DEFAULTTONULL
 				.getFormInputName());
 		boolean defaultToNull = Helpers.valueRepresentsBooleanTrue(defaultToNullString);
+		FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.NAME_AND_VALUE;
+		String printoutSettingString = HttpRequestUtil.getStringValue(request, PossibleListOptions.PRINTFORMAT.getFormInputName());
+		if (printoutSettingString != null) {
+			if (!printoutSettingString.equals("")) {
+				printoutSetting = FieldPrintoutSetting.valueOf(printoutSettingString.toUpperCase());
+			}
+		}
 		// Create the relation object
 		RelationField relationToAdd = new RelationFieldDefn(this.relationalDataSource,
-				tableToAddTo, internalFieldName, relatedTable, relatedField, notNull, defaultToNull);
+				tableToAddTo, internalFieldName, relatedTable, relatedField, notNull, defaultToNull, printoutSetting);
 		relationToAdd.setFieldDescription(fieldDesc);
 		relationToAdd.setFieldName(fieldName);
 		if (listValueFieldInternalName == null) {

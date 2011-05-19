@@ -61,7 +61,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	 */
 	public RelationFieldDefn(DataSource dataSource, TableInfo tableContainingField,
 			String internalFieldName, TableInfo relatedTable, BaseField relatedField,
-			boolean notNull, boolean defaultToNull) throws CantDoThatException {
+			boolean notNull, boolean defaultToNull, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
 			super.setInternalFieldName((new RandomString()).toString());
@@ -75,7 +75,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		this.setDefaultToNull(defaultToNull);
 		super.setUnique(false);
 		super.setNotNullDirect(notNull);
-		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		super.setPrintoutSetting(printoutSetting);
 	}
 
 	@ManyToOne(targetEntity = TableDefn.class)

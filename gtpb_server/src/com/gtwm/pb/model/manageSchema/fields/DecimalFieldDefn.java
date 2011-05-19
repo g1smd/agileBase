@@ -62,7 +62,7 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 			String internalFieldName, String fieldName, String fieldDesc, boolean unique,
 			boolean notNull, Double defaultValue, int precision, boolean notApplicable,
 			String notApplicableDescription, double notApplicableValue, boolean usesLookup,
-			boolean storesCurrency) throws CantDoThatException {
+			boolean storesCurrency, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
@@ -83,7 +83,7 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 		}
 		this.setUsesLookup(usesLookup);
 		this.setStoresCurrency(storesCurrency);
-		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		super.setPrintoutSetting(printoutSetting);
 	}
 
 	public boolean allowNotApplicable() {

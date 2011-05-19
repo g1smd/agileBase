@@ -69,7 +69,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			String internalFieldName, String fieldName, String fieldDesc, boolean unique,
 			boolean notNull, String defaultValue, boolean notApplicable,
 			String notApplicableDescription, String notApplicableValue, boolean usesLookup,
-			boolean hidden) throws CantDoThatException {
+			boolean hidden, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		checkOptionsConsistency(this.contentSize, usesLookup, unique);
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
@@ -90,7 +90,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		}
 		this.setUsesLookup(usesLookup);
 		super.setHidden(hidden);
-		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		super.setPrintoutSetting(printoutSetting);
 	}
 
 	public boolean allowNotApplicable() {

@@ -24,6 +24,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.fields.AbstractField;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -46,6 +47,7 @@ public class SeparatorFieldDefn extends AbstractField implements SeparatorField 
 		}
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
+		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 		try {
 			super.setUnique(false);
 			super.setNotNull(false);

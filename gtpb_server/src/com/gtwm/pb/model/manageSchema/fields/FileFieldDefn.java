@@ -47,7 +47,7 @@ public class FileFieldDefn extends AbstractField implements FileField {
 	}
 
 	public FileFieldDefn(TableInfo tableContainingField, String internalFieldName,
-			String fieldName, String fieldDesc) throws CodingErrorException {
+			String fieldName, String fieldDesc, FieldPrintoutSetting printoutSetting) throws CodingErrorException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
 			super.setInternalFieldName((new RandomString()).toString());
@@ -62,7 +62,7 @@ public class FileFieldDefn extends AbstractField implements FileField {
 		} catch (CantDoThatException cdtex) {
 			throw new CodingErrorException("Error setting file field not unique or nullable", cdtex);
 		}
-		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		super.setPrintoutSetting(printoutSetting);
 	}
 
 	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId,

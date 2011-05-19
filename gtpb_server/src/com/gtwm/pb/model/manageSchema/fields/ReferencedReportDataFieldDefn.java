@@ -42,7 +42,7 @@ public class ReferencedReportDataFieldDefn extends AbstractField implements
 	}
 
 	public ReferencedReportDataFieldDefn(TableInfo tableContainingField, String internalFieldName,
-			String fieldName, String fieldDesc, BaseReportInfo referencedReport)
+			String fieldName, String fieldDesc, BaseReportInfo referencedReport, FieldPrintoutSetting printoutSetting)
 			throws CodingErrorException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
@@ -60,7 +60,7 @@ public class ReferencedReportDataFieldDefn extends AbstractField implements
 					"Error setting separator field unique or not null property", cdtex);
 		}
 		this.setReferencedReport(referencedReport);
-		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		super.setPrintoutSetting(printoutSetting);
 	}
 
 	@Transient
