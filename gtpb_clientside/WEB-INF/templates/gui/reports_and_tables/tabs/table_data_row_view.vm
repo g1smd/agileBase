@@ -52,42 +52,42 @@
       </p>
   	#end
   #else ## not part of address
-	#set($referencedData = "")
-	#if($fieldCategory == "REFERENCED_REPORT_DATA")
-	  ## Capture the output of the parsing into a variable. We want to know whether a value
-	  ## exists or not for this field so we can choose whether to display the row
-	  #set($referencedData = "#parse('gui/resources/input/referenced_report_data.vm')")
-	#end
-	#if(($fieldCategory != "REFERENCED_REPORT_DATA") || $referencedData.contains("span")) ## Only show referenced data that is not empty
-	  #if(($fieldCategory != "FILE") || (!$ab_calendar_display)) ## Don't show file fields in calendar editor for now
-    	#set($rowCount = $rowCount + 1)
-      #if($fieldCategory == 'SEPARATOR')
-        #set($contracted = false)
-        #if($contractedSections.contains($internalFieldName))
-          #set($contracted = true)
+  	#set($referencedData = "")
+  	#if($fieldCategory == "REFERENCED_REPORT_DATA")
+  	  ## Capture the output of the parsing into a variable. We want to know whether a value
+  	  ## exists or not for this field so we can choose whether to display the row
+  	  #set($referencedData = "#parse('gui/resources/input/referenced_report_data.vm')")
+  	#end
+  	#if(($fieldCategory != "REFERENCED_REPORT_DATA") || $referencedData.contains("span")) ## Only show referenced data that is not empty
+  	  #if(($fieldCategory != "FILE") || (!$ab_calendar_display)) ## Don't show file fields in calendar editor for now
+      	#set($rowCount = $rowCount + 1)
+        #if($fieldCategory == 'SEPARATOR')
+          #set($contracted = false)
+          #if($contractedSections.contains($internalFieldName))
+            #set($contracted = true)
+          #end
         #end
-      #end
-      #if($fieldCategory == 'SEPARATOR')
-        #set($rowCount=0)
-        <h2>$field <i><span class="greytext">$field.getFieldDescription()</span></i></h2>
-      #else
+        #if($fieldCategory == 'SEPARATOR')
+          #set($rowCount=0)
+          <h2>$field <i><span class="greytext">$field.getFieldDescription()</span></i></h2>
+        #else
           #if(($printoutSetting == "NAME_AND_VALUE") && ($fieldCategory != "REFERENCED_REPORT_DATA"))
             <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
             #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
-            <span class="fieldname">$field.getSimplifiedFieldName()</span>
+              <span class="fieldname">$field.getSimplifiedFieldName()</span>
             #else
-            <span class="fieldname">$field</span>
+              <span class="fieldname">$field</span>
             #end
             : #parse('gui/resources/input/input.vm')
           #else
             #if(($rowCount == 1) && ($printoutSetting == "VALUE_ONLY"))
-              <b>#parse('gui/resources/input/input.vm')</b>
+              HERE with field $field: <b>#parse('gui/resources/input/input.vm')</b>
             #else
               #parse('gui/resources/input/input.vm')
             #end
           #end
-      #end
-      #end
-	  #end
+        #end ## end not separator
+      #end ## end of not file in calendar
+	  #end ## end of non-empty referenced data or normal field
   #end ## end if not partOfAddress
 #end ## remove to show primary key field
