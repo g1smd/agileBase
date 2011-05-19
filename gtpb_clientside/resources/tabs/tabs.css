@@ -158,6 +158,10 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
 
 /* View and edit tab css */
 
+div#reportDataView {
+  margin: 1em;
+}
+
 div#recordBlank {
 	height: 100%;
 	width: 100%;
