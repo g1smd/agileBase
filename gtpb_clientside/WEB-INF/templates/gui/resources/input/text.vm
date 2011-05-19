@@ -131,14 +131,14 @@
     #elseif ($mobile_device && $isPhoneNumber)##
 	  <a href="tel:$fieldValue">$fieldValue</a> <i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>##
     #else##
-      $fieldValue #if($isPhoneNumber)<i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>#end##
+      $fieldValue#if($isPhoneNumber) <i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>,#end##
     #end##
   #else##
     ## can have long URLs
     #if ($fieldValueObject.isURL())
-	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>##
+	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>,##
 	#else
-      $viewTools.lineBreaksToParas($fieldValue)##
+    <p>$viewTools.lineBreaksToParas($fieldValue)</p>##
 	#end
   #end##
 #end

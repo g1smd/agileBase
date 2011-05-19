@@ -22,5 +22,5 @@
 #elseif((!$updateAsType) && (!$viewOnly))
   <br><i><span class="greytext">This value will be automatically generated</span></i>
 #else
-  $fieldValue
+  $fieldValue,
 #end
