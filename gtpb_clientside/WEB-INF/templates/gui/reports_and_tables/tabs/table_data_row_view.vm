@@ -41,13 +41,13 @@
   	#if($firstLineOfAddress)
       <p>
   		#set($rowCount = $rowCount + 1)
-      <div id="map" style="width:100px; height:100px; float:left;"></div>
+      ##<div id="map" style="width:100px; height:100px; float:left;"></div>
     #end
     #parse('gui/resources/input/input.vm')
   	#if($address.lastKey().equals($field))
-  		<script langauge="JavaScript">
-  		  loadMap("$tableDataRow.get($field).toString()");
-  		</script>
+  		##<script langauge="JavaScript">
+  		##  loadMap("$tableDataRow.get($field).toString()");
+  		##</script>
       #set($partOfAddress = false)
       </p>
   	#end
