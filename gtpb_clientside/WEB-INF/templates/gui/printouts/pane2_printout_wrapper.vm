@@ -145,6 +145,16 @@
             oIframe.contentWindow.print();
           #end    
         }
+        
+    function fEmail() {
+      var bodyText = "";
+      var jqBody = $(oIframe.contentWindow.document.getElementsByTagName('body')[0]);
+      bodyText = jqBody.text();
+      var jqTitle = $(oIframe.contentWindow.document.getElementsByTagName('title')[0]);
+      var subject = jqTitle.text();
+      document.location="mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(bodyText);
+    }
+
       
         function fCreateButton(sCaption,sImg,sTooltip,fClick) {
           var oButton=document.createElement('button');
@@ -184,7 +194,8 @@
         var oToolbar=document.createElement('div');
         oToolbar.setAttribute('id','toolbarDiv');
         
-        fCreateButton('Print','resources/toolbar/print_only.png','Print this report',fPrint);
+        fCreateButton('Print','resources/toolbar/print_only.png','Print this content',fPrint);
+        fCreateButton('Email','resources/toolbar/email_only.png','Email this content',fEmail);
         fCreateButton('Close','resources/toolbar/delete_only.png','Close the print preview',fClose);
         fCreatePrintoutSelector('Print out:',fSelectPrintoutType);
 		
