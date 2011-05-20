@@ -212,10 +212,6 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
 }
 
 #reportDataView #current {
-  margin: 5px;
-  margin-top: 0px;
-  padding: 1em;
-  padding-top: 0px;
   color: black;
   background: white;
 }
