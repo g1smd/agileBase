@@ -70,7 +70,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 			    #if(!$mobile_device) ## View and edit tabs are merged on mobile devices, don't display the session table data here
 			      #set($success = $relatedRowIds.add($sessionRowId))
             #set($current = true)
-            <div class="related"> <!-- current -->
+            <div class="related" id="current">
 			    #end
         #else
           #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $reportFieldTable))
