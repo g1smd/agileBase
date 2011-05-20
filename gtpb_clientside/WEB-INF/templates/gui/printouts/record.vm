@@ -64,7 +64,15 @@
     <script type="text/javascript" src="resources/tabs/view.js"></script>
   </head>
   <body style="background-color: white; overflow: visible"> <!-- override tabs.css -->
-	#set($printout=true)
+	  #set($printout=true)
+    #set($company = $view.getLoggedInUser().getCompany())
+    #set($companyName = $viewTools.cleanString($company.getCompanyName().toLowerCase()))
+    #if($viewTools.templateExists("gui/customisations/$companyName/printouts/header.vm"))
+      #parse("gui/customisations/$companyName/printouts/header.vm")
+    #end
     #parse('gui/reports_and_tables/tabs/view.vm')
+    #if($viewTools.templateExists("gui/customisations/$companyName/printouts/footer.vm"))
+      #parse("gui/customisations/$companyName/printouts/footer.vm")
+    #end
   </body>
 </html>
