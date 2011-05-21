@@ -149,7 +149,7 @@
     function fEmail() {
       var bodyText = "";
       var jqBody = $(oIframe.contentWindow.document.getElementsByTagName('body')[0]);
-      bodyText = jqBody.text().replace(/\s+/," ");
+      bodyText = jqBody.text().replace(/\s{2,}/g," ");
       var jqTitle = $(oIframe.contentWindow.document.getElementsByTagName('title')[0]);
       var subject = jqTitle.text();
       document.location="mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(bodyText);
