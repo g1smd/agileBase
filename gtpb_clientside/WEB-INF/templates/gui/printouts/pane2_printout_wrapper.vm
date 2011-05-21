@@ -150,8 +150,7 @@
       var bodyText = "";
       var jqBody = $(oIframe.contentWindow.document.getElementsByTagName('body')[0]);
       bodyText = jqBody.text();
-      bodyText = bodyText.replace(/\n\n/g,"=======================");
-      bodyText = bodyText.replace(/\n{2,}/g,"\n");
+      bodyText = bodyText.replace(/\n\n/g,"");
       bodyText = bodyText.replace(/\t/g," ").replace(/ {2,}/g," ");
       var jqTitle = $(oIframe.contentWindow.document.getElementsByTagName('title')[0]);
       var subject = jqTitle.text();
