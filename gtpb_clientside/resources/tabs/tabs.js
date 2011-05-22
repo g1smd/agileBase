@@ -739,12 +739,15 @@ function fAssignButtonTableActions() {
 /** http://tweet.seaofclouds.com/ */
 function fTwitter() {
   // Fetch 20 tweets, but filter out @replies, and display only 3:
-  $(".twitter").tweet({
-    avatar_size: 32,
-    count: 3,
-    fetch: 20,
-    filter: function(t){ return ! /^@\w+/.test(t["tweet_raw_text"]); },
-    username: $(this).attr("username")
+  $(".twitter").each(function() {
+	var username = $(this).attr("username");
+	$(this).tweet({
+      avatar_size: 32,
+      count: 3,
+      fetch: 20,
+      filter: function(t){ return ! /^@\w+/.test(t["tweet_raw_text"]); },
+      username: username
+    });
   });
 }
 
