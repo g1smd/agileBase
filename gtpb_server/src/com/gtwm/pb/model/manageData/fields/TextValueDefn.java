@@ -79,6 +79,26 @@ public class TextValueDefn implements TextValue {
 		return false;
 	}
 
+	public boolean isTwitterName() {
+		if (this.isNull()) {
+			return false;
+		}
+		if (this.textValue.trim().matches("^@([A-Za-z0-9_]+)$")) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isTwitterHashTag() {
+		if (this.isNull()) {
+			return false;
+		}
+		if (this.textValue.trim().matches("^#([A-Za-z0-9_]+)$")) {
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean isPhoneNumber() {
 		if (this.isNull()) {
 			return false;

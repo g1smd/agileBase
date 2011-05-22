@@ -29,6 +29,10 @@ public interface TextValue extends BaseValue {
     
     public boolean isURL();
     
+    public boolean isTwitterName();
+    
+    public boolean isTwitterHashTag();
+    
     public boolean isPhoneNumber();
     
     /**
