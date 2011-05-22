@@ -21,7 +21,6 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.SortedSet;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
-import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.TextCase;
