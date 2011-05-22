@@ -736,6 +736,18 @@ function fAssignButtonTableActions() {
   });
 }
 
+/** http://tweet.seaofclouds.com/ */
+function fTwitter() {
+  // Fetch 20 tweets, but filter out @replies, and display only 3:
+  $(".twitter").tweet({
+    avatar_size: 32,
+    count: 3,
+    fetch: 20,
+    filter: function(t){ return ! /^@\w+/.test(t["tweet_raw_text"]); },
+    username: $(this).attr("username")
+  });
+}
+
 /* 
  * Management tabs functions 
  */
@@ -815,3 +827,4 @@ pane3Scripts.functionList.push(fSetupCharts);
 pane3Scripts.functionList.push(fAssignButtonTableActions);
 pane3Scripts.functionList.push(fSexyUpload);
 pane3Scripts.functionList.push(fExpandContractSection);
+pane3Scripts.functionList.push(fTwitter);
