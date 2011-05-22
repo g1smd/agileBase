@@ -131,38 +131,8 @@
 	  #elseif ($fieldValueObject.isURL())##
   	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>##
     #elseif ($fieldValueObject.isTwitterName())##      
-      <a href="http://www.twitter.com/$fieldValueObject" target="_blank" class="gtpb_url">twitter</a><br>##
-      <script src="http://widgets.twimg.com/j/2/widget.js"></script>
-      <script>
-      new TWTR.Widget({
-        version: 2,
-        type: 'profile',
-        rpp: 3,
-        interval: 6000,
-        width: 'auto',
-        height: 100,
-        theme: {
-          shell: {
-            background: '#ffffff',
-            color: '#000000'
-          },
-          tweets: {
-            background: '#ffffff',
-            color: '#000000',
-            links: '#ff8040'
-          }
-        },
-        features: {
-          scrollbar: false,
-          loop: false,
-          live: false,
-          hashtags: true,
-          timestamp: true,
-          avatars: true,
-          behavior: 'all'
-        }
-      }).render().setUser('@Chris_Randall').start();
-      </script>
+      <a href="http://www.twitter.com/$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
+      <div class="twitter" username="$fieldValueObject"></div>
     #elseif ($fieldValueObject.isTwitterHashTag())##      
       <a href="http://twitter.com/#!/search?q=$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
 	  #elseif ($fieldValueObject.isPostcode())##
