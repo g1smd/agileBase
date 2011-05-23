@@ -82,7 +82,7 @@
     #if($fieldValueObject.isImage())
 	  #if($userCanEdit)<br />#end
       <a href="$downloadUrl" target="_blank">
-      <img border="0" src="$downloadUrl.500.$fieldValueObject.getExtension()" style="float:left;"/>
+      <img border="0" src="$downloadUrl.500.$fieldValueObject.getExtension()" style="float:left; max-width: 100%"/>
       </a>
     #end
   #end
