@@ -71,7 +71,6 @@
           #set($rowCount=0)
           <h2 class="greytext">$field</h2>
         #else
-          $printoutSetting:
           #if(($printoutSetting == "NAME_AND_VALUE") && ($fieldCategory != "REFERENCED_REPORT_DATA"))
             <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
             #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
