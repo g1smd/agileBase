@@ -46,8 +46,8 @@
 		  #if ($fieldValueObject.isURL())##      
 		    <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">website</a>##
 		  #elseif($field.getNotNull() && (($fieldValue == "") || $customAction))
-			<span class="mandated">* Mandatory field - please enter a value</span>
-	      #end##
+			  <span class="mandated">* Mandatory field - please enter a value</span>
+      #end##
 		#end##
 	  #else ## start of normal (not big text) field
 	    #if($field.usesLookup())##
@@ -58,8 +58,8 @@
 	      #else##
 	        <input type="text" #if($field.getNotNull()) required #end name="$field.getInternalFieldName()" value="$fieldValue" #if(($field.getContentSize() > 35) || ($fieldValue.length() > 35)) style="width:296px" #end
 				#if($updateAsType) maxKeyCount="6" gtpb_update_record gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" gtpbBasicTextField="true"#end onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device && $updateAsType) top.oBuffer.writeBuffer(this); #end">##
-	      #end##
-		    #end##
+      #end##
+    #end##
 		##
     #if((!$globalEdit) && $updateAsType)##
 	    #if ($fieldValueObject.isEmailAddress())##
