@@ -18,7 +18,15 @@ body {
   margin: 0;
   overflow: hidden;
 }
-  	  								
+  
+a {
+  color: #486f98;
+}
+
+a:visited {
+  color: #486f98;
+}
+
 td.trailing input[type=button] { 
   font-size:8pt; 
 }
