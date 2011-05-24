@@ -225,6 +225,11 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
   background: white;
 }
 
+#reportDataView .related img {
+  margin-right: 0.25em;
+  margin-bottom: 0.25em;
+}
+
 div#recordBlank {
 	height: 100%;
 	width: 100%;
