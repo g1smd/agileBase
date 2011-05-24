@@ -81,7 +81,7 @@
             : #parse('gui/resources/input/input.vm')
           #else
             #if(($rowCount == 1) && ($printoutSetting == "VALUE_ONLY") && (!$tableDataRow.get($field).isUrl()) && (!$tableDataRow.get($field).isEmailAddress()))
-              <b>#parse('gui/resources/input/input.vm')</b>
+              <b>$field.getTableContainingField().$field: #parse('gui/resources/input/input.vm')</b>
             #else
               #parse('gui/resources/input/input.vm')
             #end
