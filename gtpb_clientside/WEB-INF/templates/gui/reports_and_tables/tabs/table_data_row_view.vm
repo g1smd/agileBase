@@ -81,7 +81,7 @@
             : #parse('gui/resources/input/input.vm')
           #else
             #if(($rowCount == 1) && ($fields.size() > 2) && ($printoutSetting == "VALUE_ONLY") && (!$tableDataRow.get($field).isUrl()) && (!$tableDataRow.get($field).isEmailAddress()))
-              <b>#parse('gui/resources/input/input.vm')</b>
+              <b>#parse('gui/resources/input/input.vm')</b> ($rowCount of $fields.size() fields)
             #else
               #parse('gui/resources/input/input.vm')
             #end
