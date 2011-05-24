@@ -230,6 +230,10 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
   margin-bottom: 0.25em;
 }
 
+#reportDataView .related .mini-icon {
+  opacity: 0.6;
+}
+
 div#recordBlank {
 	height: 100%;
 	width: 100%;
