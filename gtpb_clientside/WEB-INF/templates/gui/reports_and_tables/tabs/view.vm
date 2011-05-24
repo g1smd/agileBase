@@ -93,7 +93,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 					#end
 					#set($rowCount = 0)
 					#set($address = $viewTools.getAddress($tableDataRow))
-          #foreach($field in $reportFieldTable.getFields())
+          #set($fields = $reportFieldTable.getFields())
+          #foreach($field in $fields)
         	  #set($tableDataValue = $tableDataRow.get($field))
 					  #set($fieldCategory = $field.getFieldCategory())
       		  ## don't display hidden or blank fields
