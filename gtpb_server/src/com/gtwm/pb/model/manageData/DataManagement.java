@@ -1835,36 +1835,37 @@ public final class DataManagement implements DataManagementInfo {
 					|| baseField.equals(baseField.getTableContainingField().getPrimaryKey())) {
 				continue REPORT_FIELD_LOOP;
 			}
-			fieldCount++;
-			if (shortTitle && (fieldCount > 5)) {
-				break REPORT_FIELD_LOOP;
-			}
 			switch (baseField.getDbType()) {
 			case BOOLEAN:
 				boolean reportFieldTrue = Helpers.valueRepresentsBooleanTrue(dataRowField
 						.getKeyValue());
 				if (reportFieldTrue) {
 					eventTitleBuilder.append(reportField.getFieldName() + ", ");
+					fieldCount++;
 				}
 				break;
-			case INTEGER:
+			case INTEGER: case FLOAT:
 				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-						.append(displayValue);
-				break;
-			case FLOAT:
-				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-						.append(displayValue);
+						.append(displayValue + ", ");
+				fieldCount++;
 				break;
 			case SERIAL:
 				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-						.append(dataRowField.getKeyValue());
+						.append(dataRowField.getKeyValue() + ", ");
+				fieldCount++;
 				break;
 			default:
-				eventTitleBuilder.append(displayValue);
+				eventTitleBuilder.append(displayValue + ", ");
+				fieldCount++;
 			}
-			eventTitleBuilder.append(", ");
+			if (shortTitle && (fieldCount > 3)) {
+				break REPORT_FIELD_LOOP;
+			}
 		}
 		eventTitleBuilder.delete(eventTitleBuilder.length() - 2, eventTitleBuilder.length());
+		if (eventTitleBuilder.length() > 50) {
+			eventTitleBuilder.delete(0, 45).append("...");
+		}
 		String eventTitle = eventTitleBuilder.toString();
 		return eventTitle;
 	}
