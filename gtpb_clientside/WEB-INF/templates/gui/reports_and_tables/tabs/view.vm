@@ -99,7 +99,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 					  #set($fieldCategory = $field.getFieldCategory())
       		  ## don't display hidden or blank fields
       		  #if($fieldCategory=="REFERENCED_REPORT_DATA" || $fieldCategory=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
-            ## don't display checkbox values that are false
+              ## don't display checkbox values that are false
               #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
                 #if($fieldCategory == "RELATION")
                   #set($fieldEncountered = $field.getDisplayField())
