@@ -127,7 +127,7 @@ ul li {
   border: 1px solid #aaa;
 }
 
-.timeline-event-tape {
+.timeline-event-label {
   max-height: 20px;
   max-width: 400px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* from view tab lozenge */
