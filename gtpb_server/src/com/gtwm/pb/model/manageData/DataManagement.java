@@ -1863,9 +1863,6 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		eventTitleBuilder.delete(eventTitleBuilder.length() - 2, eventTitleBuilder.length());
-		if (eventTitleBuilder.length() > 50) {
-			eventTitleBuilder.delete(0, 45).append("...");
-		}
 		String eventTitle = eventTitleBuilder.toString();
 		return eventTitle;
 	}
