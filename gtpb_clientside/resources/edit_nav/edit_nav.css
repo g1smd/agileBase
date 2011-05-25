@@ -1,7 +1,9 @@
-.block {
+#reportDataView .block {
   margin: 2em;
   float: left;
   width: 250px;
   height: 200px;
   overflow: hidden;
+  color: black;
+  background: white;
 }
