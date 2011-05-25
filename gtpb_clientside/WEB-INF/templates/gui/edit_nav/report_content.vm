@@ -9,7 +9,6 @@
       #set($field = $fields.get($cellNumber).get(1))
       #set($fieldCategory = $field.getFieldCategory().toString())
       #set($thisUniqueId = $row.get(2))
-      $fieldCategory 
       #set($image = false)
       #if($fieldCategory == "FILE")
         #set($fileValue = $viewTools.getFileValueTool($cell))
