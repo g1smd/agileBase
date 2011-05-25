@@ -18,9 +18,13 @@
       #set($style="")
       #set($class="")
       #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
-      #if($cell && ($cell != "") && !(($fieldCategory == "CHECKBOX") && ($cell == "false")))
+      #if($cell && ($cell != ""))
         #set($printoutSetting = $field.getPrintoutSetting())
-        #if($printoutSetting == "NAME_AND_VALUE")
+        #if($fieldCategory == "CHECKBOX")
+          #if($cell == "true")
+            <span style="$style" class="cell $class">$field</span>
+          #end
+        #elseif($printoutSetting == "NAME_AND_VALUE")
           <span class="fieldname">$field</span>: <span style="$style" class="cell $class">$cell</span><br>
         #else
           <span style="$style" class="cell $class">$cell</span>,
