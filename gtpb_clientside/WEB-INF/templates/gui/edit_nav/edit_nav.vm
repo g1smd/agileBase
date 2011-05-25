@@ -29,7 +29,7 @@
   <script src="resources/jquery.js" language="Javascript"></script>
   <script src="resources/edit_nav/edit_nav.js" language="Javascript"></script>
 </head>
-<body>
+<body style="overflow: visible"> ## override tabs.css
   <div id="breadcrumb"></div>
   <div id="levels"></div>
 </body>

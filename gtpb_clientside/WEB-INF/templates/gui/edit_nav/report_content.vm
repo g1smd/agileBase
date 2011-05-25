@@ -1,7 +1,7 @@
 #foreach($row in $data)
   #set($thisValues = $row.get(0))
   #set($rowColours = $row.get(3))
-  <div class="related current block">
+  <div class="related block">
     #foreach($cell in $thisValues)
       #set($cellNumber = $foreach.count - 1)
       #set($colour = $rowColours.get($cellNumber))
