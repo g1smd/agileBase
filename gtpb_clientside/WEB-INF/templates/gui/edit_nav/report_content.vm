@@ -1,3 +1,4 @@
+#set($sessionTable = $sessionData.getTable())
 #foreach($row in $data)
   #set($thisValues = $row.get(0))
   #set($rowColours = $row.get(3))
@@ -7,11 +8,12 @@
       #set($colour = $rowColours.get($cellNumber))
       #set($field = $fields.get($cellNumber).get(1))
       #set($fieldCategory = $field.getFieldCategory().toString())
+      #set($thisUniqueId = $row.get(2))
+      $fieldCategory 
       #set($image = false)
       #if($fieldCategory == "FILE")
         #set($fileValue = $viewTools.getFileValueTool($cell))
         #if($fileValue.isImage())
-          #set($field = $fields.get($cellNumber).get(1))
           #set($srcUrl = "/agileBase/uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
           <img src="$srcUrl" style="float:left"/>
           #set($image = true)
