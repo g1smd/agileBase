@@ -18,7 +18,14 @@
       #set($style="")
       #set($class="")
       #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
-      $field: <span style="$style" class="cell $class">$cell</span>,
+      #if($cell)
+        #set($printoutSetting = $field.getPrintoutSetting)
+        #if($printoutSetting == "FIELD_AND_VALUE")
+          <span class="fieldname">$field</span>: <span style="$style" class="cell $class">$cell</span><br>
+        #elseif($printoutSetting != "NO_PRINTOUT")
+          <span style="$style" class="cell $class">$cell</span>,
+        #end
+      #end
     #end
   </div>
 #end
