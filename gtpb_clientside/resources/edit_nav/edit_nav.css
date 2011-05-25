@@ -1,3 +1,9 @@
+/* override tabs.css */
+body {
+  overflow: visible ;
+  background-color: #dbdbdb;
+}
+
 #reportDataView .block {
   margin: 2em;
   float: left;
