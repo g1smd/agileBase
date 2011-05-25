@@ -20,7 +20,7 @@
       #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
       #if($cell && ($cell != "") && !(($fieldCategory == "CHECKBOX") && ($cell == "false")))
         #set($printoutSetting = $field.getPrintoutSetting())
-        #if($printoutSetting == "FIELD_AND_VALUE")
+        #if($printoutSetting == "NAME_AND_VALUE")
           <span class="fieldname">$field</span>: <span style="$style" class="cell $class">$cell</span><br>
         #else
           <span style="$style" class="cell $class">$cell</span>,
