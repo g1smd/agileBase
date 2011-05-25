@@ -65,7 +65,7 @@
           <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("forms")) checked #end gtpb_app="forms" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/forms.png"><b>Public forms</b> Embed agileBase forms into public websites - allows data gathering from your customers/partners
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("public")) checked #end gtpb_app="public" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/forms.png"><b>Public access</b> Access your data anywhere. Output agileBase data to RSS feeds, online calendars, public websites and other third party applications
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("public")) checked #end gtpb_app="public" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/public.png"><b>Public access</b> Access your data anywhere. Output agileBase data to RSS feeds, online calendars, public websites and other third party applications
         </li>
       </ul>
       <h1>Beta Apps</h1>
