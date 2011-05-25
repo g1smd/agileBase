@@ -26,5 +26,6 @@
   <script src="resources/edit_nav/edit_nav.js" language="Javascript"></script>
 </head>
 <body>
+  <div id="levels"></div>
 </body>
 </html>
