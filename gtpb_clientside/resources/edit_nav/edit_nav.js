@@ -7,7 +7,9 @@ $(document).ready(function() {
 });
 
 function createLevel(levelId) {
-  levelsList[currentLevel].levelId = levelId;
+  var newLevel = {};
+  newLevel.levelId = levelId;
+  levelsList[currentLevel] = newLevel;
   $("#levels").append("<div id='" + levelId + "' class='level invisible'></div>");
   $("#" + levelId).load(levelId); // levelId is a URL
   $("#" + levelId).removeClass("invisible");
