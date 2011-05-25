@@ -24,7 +24,7 @@
   <title>
     $company forms
   </title>
-  <link type="text/css" href="resources/pane3_alalgam.css" rel="stylesheet" />
+  <link type="text/css" href="resources/pane3_amalgam.css" rel="stylesheet" />
   <script src="resources/jquery.js" language="Javascript"></script>
   <script src="resources/edit_nav/edit_nav.js" language="Javascript"></script>
 </head>
