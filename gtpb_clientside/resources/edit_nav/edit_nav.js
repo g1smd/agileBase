@@ -3,17 +3,14 @@ var levelsList = [];
 var currentLevel = 0;
 
 $(document).ready(function() {
-  createLevel("test");
+  createLevel("AppController.servlet?return=gui/edit_nav/report");
 });
 
 function createLevel(levelId) {
   var newLevel = {};
   newLevel.levelId = levelId;
   levelsList[currentLevel] = newLevel;
-  $("#levels").append("<div id='" + levelId + "' class='level invisible'></div>");
-  $("#" + levelId).text("hello");
-  $("#" + levelId).load(levelId); // levelId is a URL
-  $("#" + levelId).removeClass("invisible");
+  $("#levels").append("<div class='level invisible'></div>").load(levelId).removeClass("invisible");
 }
 
 function showCurrentLevel() {
