@@ -1,0 +1,24 @@
+#foreach($row in $data)
+  #set($thisValues = $row.get(0))
+  #set($rowColours = $row.get(3))
+  <div class="block">
+    #foreach($cell in $thisValues)
+      #set($cellNumber = $foreach.count - 1)
+      #set($colour = $rowColours.get($cellNumber))
+      #set($field = $fields.get($cellNumber).get(1))
+      #set($fieldCategory = $field.getFieldCategory().toString())
+      #if($fieldCategory == "FILE")
+        #set($fileValue = $viewTools.getFileValueTool($cell))
+        #if($fileValue.isImage())
+          #set($field = $fields.get($cellNumber).get(1))
+          #set($srcUrl = "/agileBase/uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
+          #set($cell = "<img src='$srcUrl' style='float:left'/>")
+        #end
+      #end
+      #set($style="")
+      #set($class="")
+      #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
+      $field: <span style="$style" class="cell $class">$cell</span>,
+    #end
+  </div>
+#end
