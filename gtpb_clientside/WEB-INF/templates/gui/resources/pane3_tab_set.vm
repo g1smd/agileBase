@@ -214,7 +214,7 @@
 	  	  }
   	  </script>
 	#end
-    #parse('gui/resources/google_maps_api_key.vm')
+  #parse('gui/resources/google_maps_api_key.vm')
 	#if($google_maps_api_key)
     <script src="http://maps.google.com/maps?file=api&v=2&key=$google_maps_api_key&sensor=false" type="text/javascript"></script>
 	#end
