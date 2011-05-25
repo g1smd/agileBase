@@ -1,7 +1,7 @@
 <div id="search">
   <input name="search" type="search">
 </div>
-<div id="results">
+<div id="reportDataView">
   #set($noOutput = true) ## we'll do our own output
   #parse("gui/reports_and_tables/report_data.vm")
   #parse("gui/edit_nav/report_content.vm")
