@@ -3,7 +3,7 @@ var levelsList = [];
 var currentLevel = 0;
 
 $(document).ready(function() {
-  createLevel("AppController.servlet?return=gui/edit_nav/report");
+  createLevel("test");
 });
 
 function createLevel(levelId) {
