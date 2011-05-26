@@ -340,6 +340,7 @@ body {
  
  #how_do_i_use ul li img {
   float: left;
+  margin-right: 10px;
  }
 			
 .detail {
