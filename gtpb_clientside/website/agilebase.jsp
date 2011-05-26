@@ -183,12 +183,13 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
                   <li><img src="website/images/icons/applications-internet.png">Marketing information systems - to visualise and understand the relationships between activities and results</li>
                   <li><img src="website/images/icons/system-users.png">New business development - notes of 'interesting people'</li>
                   <li><img src="website/images/icons/contact-new.png">Sales pipeline - following suspects, prospects, leads and opportunities through to sale</li>
-                  <li><img src="website/images/icons/edit-paste.png">Project/programme/portfolio management - including the use of <a href="http://www.a3reports.co.uk">A3 reports</a></li>
+                  <li><img src="website/images/icons/folder-saved-search.png">Project/programme/portfolio management - including the use of <a href="http://www.a3reports.co.uk">A3 reports</a></li>
                   <li><img src="website/images/icons/edit-paste.png">Client support - ticket and enquiry management</li>
                   <li><img src="website/images/icons/emblem-important.png">Technical issues - bug tracking etc.</li>
                   <li><img src="website/images/icons/appointment-new.png">Timesheets and expenses</li>
                   <li><img src="website/images/icons/preferences-desktop-multimedia.png">Compliance - tracking commissions and evidence</li>
                   <li><img src="website/images/icons/x-office-spreadsheet.png">Management Accounts - invoice generation, payroll and management accounts</li>
+                  <li>...and many more</li>
 								  <li>
 								</ul>
                 <p>As you can see these are crafted to fit each organisation's own best practice. agileBase is perfect for organisations in rapidly changing environments, 
