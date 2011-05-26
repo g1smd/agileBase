@@ -351,6 +351,10 @@ img.cross_reference_image {
 	padding-top:10px;
 }
 
+.gtob_youtube object,embed {
+  max-width: 100%;
+}
+
 .upload_progress_container {
   width: 100%;
   position: relative;
