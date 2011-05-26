@@ -144,10 +144,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 						</div>
 						<div id="main" class="detail">
 							<div class="divider">
-								<iframe class="youtube-player" type="text/html" width="500" height="280" src="http://www.youtube.com/embed/HH_RRD7oqvQ" frameborder="0"></iframe>
-								Here's a brief introduction to our business philosophy by MD Clifford Calcutt
-							</div>
-							<div class="divider">
 								<h1>Why do I use it?</h1>
 								agileBase helps build back office software that is
 								<div id="just_in">
@@ -169,8 +165,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 								<p>As a cutting edge Lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 
 								at a pace to match a company's evolving learning, knowledge and understanding.</p>
 							</div>
-							<div id="how_do_i_use">
-								<h1>How do I use it?</h1>
+							<div id="how_do_i_use" class="divider">
+								<h1>What's agileBase used for'?</h1>
 								<p>Our vision was to make a product that allows business analysts
 								to create Lean, agile, Just-In-Time (JIT) back offices. Here are some apps clients have build</p>
 								<ul>
@@ -198,6 +194,10 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
                 <p>As you can see these are crafted to fit each organisation's own best practice. agileBase is perfect for organisations in rapidly changing environments, 
                 where scalability goes hand in hand with the need for a rapid Plan/Do/Check/Act cycle.</p>
 							</div>
+              <div>
+                <iframe class="youtube-player" type="text/html" width="500" height="280" src="http://www.youtube.com/embed/HH_RRD7oqvQ" frameborder="0"></iframe>
+                Here's a brief introduction to our business philosophy by MD Clifford Calcutt
+              </div>
 						</div>   <!-- end of main --> 
 						<div id="technical" class="detail">
 							<div class="divider">
