@@ -3,6 +3,10 @@ var levelsList = [];
 var currentLevel = 0;
 
 $(document).ready(function() {
+  $(".block").click(function() {
+    var href = $(this).attr("href"); 
+  });
+  
   createLevel("AppController.servlet?return=gui/edit_nav/report");
 });
 
@@ -11,8 +15,10 @@ function createLevel(levelId) {
   newLevel.levelId = levelId;
   levelsList[currentLevel] = newLevel;
   $("#levels").append("<div class='level invisible'></div>").load(levelId, function() {
-	var title = $(this).find(".title").text();
+	var jqLevel = $(this);
+	var title = jqLevel.find(".title").text();
 	levelsList[currentLevel].title = title;
+	levelsList[currentLevel].levelContent = this;
 	updateBreadcrumb();
   });
   $("#levels:last-child").removeClass("invisible");
@@ -96,4 +102,9 @@ function updateBreadcrumb() {
 	var url = levelsList[level].levelId;
 	jqBreadcrumb.append("<a href='" + url + "'>" + title + "</a> ");
   }
+}
+
+/* Utilities */
+function cleanString(dirtyString) {
+  return dirtyString.replace(/\W/g,"_");
 }
