@@ -189,6 +189,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
                   <li><img src="website/images/icons/appointment-new.png">Timesheets and expenses</li>
                   <li><img src="website/images/icons/preferences-desktop-multimedia.png">Compliance - tracking commissions and evidence</li>
                   <li><img src="website/images/icons/x-office-spreadsheet.png">Management Accounts - invoice generation, payroll and management accounts</li>
+                  <li><img src="website/images/icons/network-server.png">Asset tracking</li>
+                  <li><img src="website/images/icons/preferences-system.png">Job management, scheduling and statistical analysis</li>
+                  <li><img src="website/images/icons/package-x-generic.png">Delivery orders - from scheduling to van loadsheet generation</li>
                   <li>...and many more</li>
 								  <li>
 								</ul>
