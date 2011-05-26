@@ -169,7 +169,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 								<p>As a cutting edge Lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 
 								at a pace to match a company's evolving learning, knowledge and understanding.</p>
 							</div>
-							<div>
+							<div id="how_do_i_use">
 								<h1>How do I use it?</h1>
 								<p>Our vision was to make a product that allows business analysts
 								to create Lean, agile, Just-In-Time (JIT) back offices. Here are some apps clients have build</p>
