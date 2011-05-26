@@ -175,8 +175,18 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 								to create Lean, agile, Just-In-Time (JIT) back offices. Here are some apps clients have build</p>
 								<ul>
                   <li><img src="website/images/icons/x-office-address-book.png">CRM - most service companies start by recording organisations and contacts - the basis of their work</li>
-                  <li><img src="website/images/icons/edit-find-replace.png">Market Intelligence - gathering, recording and sharing background research and thought leaders</li>
+                  <li><img src="website/images/icons/edit-find-replace.png">Market intelligence - gathering, recording and sharing background research and thought leaders</li>
                   <li><img src="website/images/icons/x-office-presentation.png">Learning zone - a library of online videos, presentations, books and other materials, referenced and reviewed</li>
+                  <li><img src="website/images/icons/start-here.png">Strategy zone - for working on situational analyses, strategic initiatives and performance alignment</li>
+                  <li><img src="website/images/icons/applications-development.png">Human resources - staff administration</li>
+                  <li><img src="website/images/icons/document-open.png">Physical resources - for storing documents and tools</li>
+                  <li><img src="website/images/icons/applications-internet.png">Marketing Information Systems - to visualise and understand the relationships between activities and results</li>
+                  <li><img src="website/images/icons/system-users.png">New business development - notes of 'interesting people'</li>
+                  <li><img src="website/images/icons/contact-new.png">Sales pipeline - following suspects, prospects, leads and opportunities through to sale</li>
+                  <li><img src="website/images/icons/edit-paste.png">Project/programme/portfolio management - including the use of <a href="http://www.a3reports.co.uk">A3 reports</a></li>
+                  <li><img src="website/images/icons/edit-paste.png">Client support - ticket and enquiry management</li>
+                  <li><img src="website/images/icons/emblem-important.png">Technical issues - bug tracking etc.</li>
+                  <li><img src="website/images/icons/appointment-new.png">Timesheets</li>
 								  <li>
 								</ul>
                 <p>As you can see these are crafted to fit each organisation's own best practice. agileBase is perfect for organisations in rapidly changing environments, 
