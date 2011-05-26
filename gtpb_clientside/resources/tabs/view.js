@@ -53,9 +53,10 @@ function fYouTube() {
 				oContainer = $(oContainer);
 				oContainer.addClass('gtpb_youtube');
 				$(this).replaceWith(oContainer);
-				oContainer.oembed(sHref, {maxWidth: '100%'});
+				oContainer.oembed(sHref);
+				oContainer.find('object').css("maxWidth","100%");
+				oContainer.find('embed').css("maxWidth","100%");
 			}
-			// oContainer.find('embed').attr('rel',0);
 		});
 }
 
