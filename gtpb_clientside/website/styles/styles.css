@@ -16,6 +16,10 @@ body {
 	font-size:10pt;
 }
 
+li {
+  color: white;
+}
+
 #scroller {
 	position:relative;
 	width:100%;
