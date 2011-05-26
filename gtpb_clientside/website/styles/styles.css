@@ -1,23 +1,11 @@
 * {
 	font-family: tahoma, arial, sans-serif;
 }
-
-/*
-html, 
-body {
-	height:100%;
-	overflow:hidden;
-}	
-*/
    
 body {
 	padding:0;
 	margin:0;
 	font-size:10pt;
-}
-
-li {
-  color: white;
 }
 
 #scroller {
@@ -344,6 +332,10 @@ li {
  
  #navigation li a#nav_main.current span {
 	background-position:right 10px;
+ }
+ 
+ #how_do_i_user ul li {
+  color: white;
  }
 			
 .detail {
