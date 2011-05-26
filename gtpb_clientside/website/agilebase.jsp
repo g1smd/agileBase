@@ -171,10 +171,16 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 							</div>
 							<div>
 								<h1>How do I use it?</h1>
-								<p>agileBase is perfect for organisations in rapidly changing environments, 
-								where scalability goes hand in hand with the need for a rapid Plan/Do/Check/Act cycle.</p>
 								<p>Our vision was to make a product that allows business analysts
-								to create Lean, agile, Just-In-Time (JIT) back offices.</p>
+								to create Lean, agile, Just-In-Time (JIT) back offices. Here are some apps clients have build</p>
+								<ul>
+                  <li><img src="images/icons/x-office-address-book.png"><b>CRM</b> - most service companies start by recording organisations and contacts - the basis of their work</li>
+                  <li><img src="images/icons/edit-find-replace.png"><b>Market Intelligence</b> - gathering, recording and sharing background research and thought leaders</li>
+                  <li><img src="images/icons/x-office-presentation.png"><b>Learning zone</b> - a library of online videos, presentations, books and other materials, referenced and reviewed</li>
+								  <li>
+								</ul>
+                <p>As you can see these are crafted to fit each organisation's own best practice. agileBase is perfect for organisations in rapidly changing environments, 
+                where scalability goes hand in hand with the need for a rapid Plan/Do/Check/Act cycle.</p>
 							</div>
 						</div>   <!-- end of main --> 
 						<div id="technical" class="detail">
