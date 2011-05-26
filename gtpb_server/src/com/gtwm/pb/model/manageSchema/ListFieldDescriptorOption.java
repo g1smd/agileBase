@@ -168,7 +168,7 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 	}
 	
 	public enum FieldPrintoutSetting {
-		NAME_AND_VALUE("Print field"), VALUE_ONLY("Print field value only"), NO_PRINTOUT("Don't print field");
+		VALUE_ONLY("Field value only"), NAME_AND_VALUE("Field name and value"), NAME_VALUE_LINEBREAK("Field name, value and linebreak"), NO_PRINTOUT("Nothing");
 		
 		FieldPrintoutSetting(String description) {
 			this.description = description;

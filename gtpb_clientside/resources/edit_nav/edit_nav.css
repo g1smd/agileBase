@@ -13,3 +13,15 @@ body {
   color: black;
   background: white;
 }
+
+#reportDataView .block:hover {
+  cursor: pointer;
+}
+
+.title {
+  display: none;
+}
+
+.invisible {
+  opacity: 0;
+}

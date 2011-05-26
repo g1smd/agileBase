@@ -1,19 +1,20 @@
 #set($sessionTable = $sessionData.getTable())
+#set($internalTableName = $sessionTable.getInternalTableName())
 #foreach($row in $data)
   #set($thisValues = $row.get(0))
   #set($rowColours = $row.get(3))
-  <div class="related block">
+  #set($thisUniqueId = $row.get(2))
+  <div class="related block" href="AppController.servlet?return=gui/edit_nav/edit_nav/edit&set_table=$internalTableName&set_row_id=$thisUniqueId">
     #foreach($cell in $thisValues)
       #set($cellNumber = $foreach.count - 1)
       #set($colour = $rowColours.get($cellNumber))
       #set($field = $fields.get($cellNumber).get(1))
       #set($fieldCategory = $field.getFieldCategory().toString())
-      #set($thisUniqueId = $row.get(2))
       #set($image = false)
       #if($fieldCategory == "FILE")
         #set($fileValue = $viewTools.getFileValueTool($cell))
         #if($fileValue.isImage())
-          #set($srcUrl = "/agileBase/uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
+          #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
           <img src="$srcUrl" style="float:left"/>
           #set($image = true)
         #end

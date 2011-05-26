@@ -1,3 +1,5 @@
+#set($report = $sessionData.getReport())
+<div class="title">$report</div>
 <div id="search">
   <input name="search" type="search">
 </div>
