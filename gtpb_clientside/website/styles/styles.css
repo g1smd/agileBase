@@ -337,6 +337,10 @@ body {
  #how_do_i_use ul li {
   color: white;
  }
+ 
+ #how_do_i_use ul li img {
+  float: left;
+ }
 			
 .detail {
 	color:#bbbbbb;

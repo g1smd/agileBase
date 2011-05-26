@@ -174,9 +174,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 								<p>Our vision was to make a product that allows business analysts
 								to create Lean, agile, Just-In-Time (JIT) back offices. Here are some apps clients have build</p>
 								<ul>
-                  <li><img src="images/icons/x-office-address-book.png">CRM - most service companies start by recording organisations and contacts - the basis of their work</li>
-                  <li><img src="images/icons/edit-find-replace.png">Market Intelligence - gathering, recording and sharing background research and thought leaders</li>
-                  <li><img src="images/icons/x-office-presentation.png">Learning zone - a library of online videos, presentations, books and other materials, referenced and reviewed</li>
+                  <li><img src="website/images/icons/x-office-address-book.png">CRM - most service companies start by recording organisations and contacts - the basis of their work</li>
+                  <li><img src="website/images/icons/edit-find-replace.png">Market Intelligence - gathering, recording and sharing background research and thought leaders</li>
+                  <li><img src="website/images/icons/x-office-presentation.png">Learning zone - a library of online videos, presentations, books and other materials, referenced and reviewed</li>
 								  <li>
 								</ul>
                 <p>As you can see these are crafted to fit each organisation's own best practice. agileBase is perfect for organisations in rapidly changing environments, 
