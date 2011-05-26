@@ -1383,7 +1383,7 @@ public final class DataManagement implements DataManagementInfo {
 						} else {
 							FileUtils.copyFile(selectedFile, thumb500File);
 						}
-						Thumbnails.of(selectedFile).size(40, 40).toFile(thumb40File);
+						Thumbnails.of(selectedFile).size(40, 60).toFile(thumb40File); /* allow files that are up to 60px tall as long as the width is no > 40px */
 					} catch (IOException ioex) {
 						throw new FileUploadException("Error generating thumbnail: "
 								+ ioex.getMessage());
