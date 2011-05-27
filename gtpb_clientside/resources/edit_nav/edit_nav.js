@@ -23,9 +23,9 @@ $(document).ready(function() {
       return;
     }
     alert(event.which);
-    if (event.which == '38') {
+    if (event.keyCode == 38) {
       moveUp();
-    } else if (event.which == '40') {
+    } else if (event.keyCode == 40) {
       moveDown();
     }
   })
