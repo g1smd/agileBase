@@ -60,10 +60,10 @@
 		##<link rel="stylesheet" type="text/css" href="resources/tabs/edit-ie.css" />
 		##<![endif]-->
 		#if($view.loggedInUserAllowedTo("MANAGE_TABLE",$sessionData.getTable()))
-      	  <script type="text/javascript" src="resources/jquery.tablednd.js"></script>
+      <script type="text/javascript" src="resources/jquery.tablednd.js"></script>
 		  <script type="text/javascript" src="resources/edit_area/edit_area_full.js"></script>
 		  <script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>
-        #end
+    #end
 		<script language=Javascript> 
   	  // When submitting the newfield form to create a table field
   	  // disable all input elements not in the addNewField row of the reportData table
