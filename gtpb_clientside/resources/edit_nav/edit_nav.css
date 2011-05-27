@@ -87,3 +87,7 @@ body {
 .invisible {
   display: none;
 }
+
+.slide table#reportData tr.rowb {
+  background-image: none;
+}
