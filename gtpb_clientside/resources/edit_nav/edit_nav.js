@@ -9,7 +9,6 @@ $(document).ready(function() {
   });
   $("#breadcrumb a").live('click', function(event) {
 	event.preventDefault();
-	return;
 	var href = $(this).attr("href");
 	var level = $(this).attr("level");
 	if (currentLevel > level) {
