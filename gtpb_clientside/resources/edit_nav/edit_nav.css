@@ -30,10 +30,12 @@ body {
 
 .flyUp {
   top: -1000px;
+  height: 0px;
 }
 
 .flyDown {
   top: 1000px;
+  height: 0px;
 }
 
 .title {
