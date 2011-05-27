@@ -257,13 +257,13 @@
             if (this.current === null) return;
             
             document.querySelector('#presentation-counter').innerText = this.current;
-            if (history.pushState) {
-              if (!dontPush) {
-                history.pushState(this.current, 'Slide ' + this.current, '#slide' + this.current);
-              }
-            } else {
-              window.location.hash = 'slide' + this.current;
-            }
+            //if (history.pushState) {
+            //  if (!dontPush) {
+            //    history.pushState(this.current, 'Slide ' + this.current, '#slide' + this.current);
+            //  }
+            //} else {
+            //  window.location.hash = 'slide' + this.current;
+            //}
             for (var x = this.current-1; x < this.current + 7; x++) {
               if (this._slides[x-4]) {
                 this._slides[x-4].setState(Math.max(0, x-this.current));
@@ -283,9 +283,9 @@
             this._update();
           },
           go: function(num) {
-            if (history.pushState && this.current != num) {
-              history.replaceState(this.current, 'Slide ' + this.current, '#slide' + this.current);
-            }
+            //if (history.pushState && this.current != num) {
+            //  history.replaceState(this.current, 'Slide ' + this.current, '#slide' + this.current);
+            //}
             this.current = num;
             this._update(true);
           },
