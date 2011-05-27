@@ -233,7 +233,6 @@
             this.current = parseInt(h.split('#slide')[1], 10);
           }catch (e) { /* squeltch */ }
           this.current = isNaN(this.current) ? 1 : this.current;
-          alert("current slide " + this.current);
           var _t = this;
           doc.addEventListener('keydown', 
               function(e) { _t.handleKeys(e); }, false);
@@ -300,12 +299,7 @@
               case 37: // left arrow
                 this.prev(); break;
               case 39: // right arrow
-              case 32: // space
                 this.next(); break;
-              case 50: // 2
-                this.showNotes(); break;
-              case 51: // 3
-                this.switch3D(); break;
             }
           },
           _touchStartX: 0,
