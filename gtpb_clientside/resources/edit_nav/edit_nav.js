@@ -15,7 +15,6 @@ function createLevel(levelUrl) {
   var jqLevel = $("<div class='level invisible'></div>");
   $("#levels").append(jqLevel);
   jqLevel.load(levelUrl, function() {
-	alert('loading ' + levelUrl);
 	var newLevel = {};
 	newLevel.levelUrl = levelUrl;
 	newLevel.title = jqLevel.find(".title").text();

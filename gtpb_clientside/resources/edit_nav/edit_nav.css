@@ -18,6 +18,24 @@ body {
   cursor: pointer;
 }
 
+#levels {
+  position: relative;
+}
+
+.level {
+  position: absolute;
+  top: 0px;
+  -moz-transition-duration: 1s;
+}
+
+.flyUp {
+  top: -1000px;
+}
+
+.flyDown {
+  top: 1000px;
+}
+
 .title {
   display: none;
 }
