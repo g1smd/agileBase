@@ -16,8 +16,9 @@ function createLevel(levelId) {
   var newLevel = {};
   newLevel.levelId = levelId;
   levelsList[currentLevel] = newLevel;
-  $("#levels").append("<div id='test' class='level invisible'></div>").load(levelId, function() {
-	var jqLevel = $(this);
+  var jqLevel = $("<div id='test' class='level invisible'></div>");
+  $("#levels").append(jqLevel);
+  jqLevel.load(levelId, function() {
 	var title = jqLevel.find(".title").text();
 	levelsList[currentLevel].title = title;
 	levelsList[currentLevel].levelContent = this;
