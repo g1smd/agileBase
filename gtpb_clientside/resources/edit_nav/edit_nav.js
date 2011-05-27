@@ -5,6 +5,7 @@ var currentLevel = 0;
 $(document).ready(function() {
   $(".block").click(function() {
     var href = $(this).attr("href");
+    alert(href);
     moveDownTo(href);
   });
   // Initialise home screen for user
