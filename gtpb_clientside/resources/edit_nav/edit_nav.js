@@ -139,7 +139,7 @@ function updateBreadcrumb() {
 	jqBreadcrumb.append("<a level='" + level + "' href='" + url + "'>" + title + "</a> / ");
   }
   var title = levelsList[currentLevel].title;
-  jqBreadcrumb.append("<span class='currentLevel'"> + title + "<span>");
+  jqBreadcrumb.append("<span class='currentLevel'"> + title + "</span>");
   alert(levelsList);
 }
 
