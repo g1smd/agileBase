@@ -17,6 +17,17 @@ $(document).ready(function() {
 	  moveDownTo(href);
 	}
   });
+  $(document).keypress(function(event) {
+    if (/^(input|textarea)$/i.test(event.target.nodeName) ||
+        event.target.isContentEditable) {
+      return;
+    }
+    if (event.which == '38') {
+      moveUp();
+    } elseif (event.which == '40') {
+      moveDown();
+    }
+  })
   // Initialise home screen for user
   createLevel("AppController.servlet?return=gui/edit_nav/report");
 });
