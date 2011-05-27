@@ -7,9 +7,8 @@ $(document).ready(function() {
     var href = $(this).attr("href");
     moveDownTo(href);
   });
-  $(".breadcrumb a").live('click', function(event) {
+  $("#breadcrumb a").live('click', function(event) {
 	event.preventDefault();
-	alert('default prevented');
 	return;
 	var href = $(this).attr("href");
 	var level = $(this).attr("level");
