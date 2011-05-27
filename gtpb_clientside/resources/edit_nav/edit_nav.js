@@ -4,6 +4,7 @@ var currentLevel = 0;
 
 $(document).ready(function() {
   $(".block").click(function() {
+	alert('.block click');
     var href = $(this).attr("href");
     alert(href);
     moveDownTo(href);
