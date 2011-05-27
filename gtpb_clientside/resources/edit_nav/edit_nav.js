@@ -50,6 +50,7 @@ function createLevel(levelUrl) {
 function showCurrentLevel() {
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
   jqLevelContent.removeClass("flyDown").removeClass("flyUp").removeClass("invisible").removeClass("transparent");
+  updateBreadcrumb();
 }
 
 function moveUp() {
