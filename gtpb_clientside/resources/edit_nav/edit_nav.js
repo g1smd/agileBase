@@ -12,7 +12,7 @@ $(document).ready(function() {
 });
 
 function createLevel(levelUrl) {
-  var jqLevel = $("<div class='level invisible'></div>");
+  var jqLevel = $("<div class='level transparent'></div>");
   $("#levels").append(jqLevel);
   jqLevel.load(levelUrl, function() {
 	var newLevel = {};
@@ -20,14 +20,14 @@ function createLevel(levelUrl) {
 	newLevel.title = jqLevel.find(".title").text();
 	newLevel.levelContent = jqLevel[0];
 	levelsList[currentLevel] = newLevel;
-	jqLevel.removeClass("invisible");
+	jqLevel.removeClass("transparent").removeClass("invisible");
 	updateBreadcrumb();
   });
 }
 
 function showCurrentLevel() {
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
-  jqLevelContent.removeClass("flyDown").removeClass("flyUp").removeClass("invisible");
+  jqLevelContent.removeClass("flyDown").removeClass("flyUp").removeClass("transparent").removeClass("invisible");
 }
 
 function moveUp() {
@@ -35,7 +35,10 @@ function moveUp() {
 	return;
   }
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
-  jqLevelContent.addClass("flyDown").addClass("invisible");
+  jqLevelContent.addClass("flyDown").addClass("transparent");
+  setTimeout(function() {
+	jqLevelContent.addClass("invisible");
+  }, 500);
   currentLevel--;
   showCurrentLevel();
 }
@@ -45,7 +48,10 @@ function moveDown() {
 	return;
   }
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
-  jqLevelContent.addClass("flyUp").addClass("invisible");
+  jqLevelContent.addClass("flyUp").addClass("transparent");
+  setTimeout(function() {
+	jqLevelContent.addClass("invisible");
+  }, 500);
   currentLevel++;
   showCurrentLevel();
 }
@@ -55,18 +61,21 @@ function moveUpTo(levelUrl) {
   // search for the levelUrl somewhere above the current level
   for (var level = 0; level < currentLevel; level++) {
 	if (levelsList[level].levelUrl == levelUrl) {
-	  jqLevelContent.addClass("flyDown").addClass("invisible");
+	  jqLevelContent.addClass("flyDown").addClass("transparent");
+	  setTimeout(function() {
+		jqLevelContent.addClass("invisible");
+	  }, 500);
 	  currentLevel = level;
 	  showCurrentLevel();
 	  return;
 	}
   }
   // levelUrl not found, start from scratch creating it as the top element
-  jqLevelContent.addClass("invisible"); // no flyDown in this case
+  jqLevelContent.addClass("flyDown").addClass("transparent");
   $(".level").addClass("oldLevel");
   setTimeout(function() {
 	$(".oldLevel").remove();
-  }, 2000);
+  }, 500);
   levelsList = [];
   currentLevel = 0;
   createLevel(levelUrl);
@@ -74,7 +83,10 @@ function moveUpTo(levelUrl) {
 
 function moveDownTo(levelUrl) {
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
-  jqLevelContent.addClass("flyUp").addClass("invisible");
+  jqLevelContent.addClass("flyUp").addClass("transparent");
+  setTimeout(function() {
+	jqLevelContent.addClass("invisible");
+  }, 500);
   currentLevel++;
   //Check if there is a level below this one
   if (currentLevel < levelsList.length) {
@@ -92,7 +104,7 @@ function moveDownTo(levelUrl) {
   levelsList.splice(currentLevel, levelsList.length - currentLevel); // remove
   setTimeout(function() {
 	$(".oldLevel").remove();
-  }, 2000);
+  }, 500);
   createLevel(levelUrl);
 }
 
