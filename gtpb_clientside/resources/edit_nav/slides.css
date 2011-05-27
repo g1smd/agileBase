@@ -51,7 +51,7 @@
   height: 600px;
   left: 50%;
   top: 50%;
-  margin-top: -350px;
+  margin-top: -300px;
   background-color: #eee;
   background: -webkit-gradient(linear, left bottom, left top, from(#bbd), to(#fff));
   background: -moz-linear-gradient(bottom, #bbd, #fff);
