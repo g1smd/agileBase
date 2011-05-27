@@ -19,6 +19,15 @@ body {
   cursor: pointer;
 }
 
+#search {
+  margin-left: 2em;
+  margin-top: 0.5em;
+}
+
+#search input {
+  width: 30em;
+}
+
 #levels {
   position: relative;
 }
