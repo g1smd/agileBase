@@ -35,12 +35,12 @@ body {
 }
 
 .flyUp {
-  top: -900px;
+  top: -100px;
   /* height: 0px; */
 }
 
 .flyDown {
-  top: 900px;
+  top: 100px;
   /* height: 0px; */
 }
 
@@ -49,7 +49,7 @@ body {
 }
 
 .transparent {
-  /* opacity: 0; */
+  opacity: 0;
 }
 
 .invisible {
