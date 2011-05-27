@@ -290,36 +290,6 @@
             this._update(true);
           },
  
-          _notesOn: false,
-          showNotes: function() {
-            var isOn = this._notesOn = !this._notesOn;
-            query('.notes').forEach(function(el) {
-              el.style.display = (notesOn) ? 'block' : 'none';
-            });
-          },
-          switch3D: function() {
-            toggleClass(document.body, 'three-d');
-          },
-          handleWheel: function(e) {
-            var delta = 0;
-            if (e.wheelDelta) {
-              delta = e.wheelDelta/120;
-              if (isOpera) {
-                delta = -delta;
-              }
-            } else if (e.detail) {
-              delta = -e.detail/3;
-            }
- 
-            if (delta > 0 ) {
-              this.prev();
-              return;
-            }
-            if (delta < 0 ) {
-              this.next();
-              return;
-            }
-          },
           handleKeys: function(e) {
             if (/^(input|textarea)$/i.test(e.target.nodeName) ||
                 e.target.isContentEditable) {
@@ -358,37 +328,3 @@
             el.style.display = (el.offsetHeight) ? 'none' : 'block';
           });
         }
-        
-        function toggleSize() {
-          toArray(slides).forEach(function(el) {
-            if (!/reduced/.test(el.className)) {
-              addClass(el, 'reduced');
-            }
-            else {
-              removeClass(el, 'reduced');
-            }
-          });
-        }
- 
-        function toggleTransitions() {
-          toArray(slides).forEach(function(el) {
-            if (!/no-transitions/.test(el.className)) {
-              addClass(el, 'no-transitions');
-            }
-            else {
-              removeClass(el, 'no-transitions');
-            }
-          });
-        }
-        
-        function toggleGradients() {
-          toArray(slides).forEach(function(el) {
-            if (!/no-gradients/.test(el.className)) {
-              addClass(el, 'no-gradients');
-            }
-            else {
-              removeClass(el, 'no-gradients');
-            }
-          });
-        }
-
