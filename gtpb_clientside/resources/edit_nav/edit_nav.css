@@ -4,6 +4,10 @@ body {
   background-color: #bdbdbd; /* 777788 */
 }
 
+#you_are_here {
+  text-shadow: none;
+}
+
 #reportDataView .block {
   margin: 2em;
   float: left;

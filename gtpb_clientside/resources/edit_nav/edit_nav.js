@@ -135,7 +135,7 @@ function moveDownTo(levelUrl) {
 
 function updateBreadcrumb() {
   var jqBreadcrumb = $("#breadcrumb");
-  jqBreadcrumb.html("you are here: ");
+  jqBreadcrumb.html("<span id='you_are_here'>you are here: </span>");
   for (var level = 0; level < currentLevel; level++) {
 	var title = levelsList[level].title;
 	var url = levelsList[level].levelUrl;
