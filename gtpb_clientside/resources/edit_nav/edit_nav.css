@@ -15,11 +15,11 @@ body {
   /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
 }
 
-.block.new:first-line {
+.block .new {
   font-size: 14pt;
 }
 
-.block.new img {
+.block .new img {
   vertical-align: middle;
 }
 
