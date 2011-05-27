@@ -96,6 +96,7 @@ function moveUpTo(levelUrl) {
   // levelUrl not found, start from scratch creating it as the top element
   jqLevelContent.addClass("flyDown").addClass("transparent");
   $(".level").addClass("oldLevel");
+  $(".presentation").remove(); // more than one pres in the DOM can cause problems
   setTimeout(function() {
 	$(".oldLevel").remove();
   }, 500);
@@ -123,6 +124,7 @@ function moveDownTo(levelUrl) {
   // First remove, the existing child and all sub-levels
   for (var level = currentLevel; level < levelsList.length; level++) {
 	$(levelsList[level].levelContent).addClass("oldLevel");
+	$(levelsList[level].levelContent).find(".presentation").remove();
   }
   levelsList.splice(currentLevel, levelsList.length - currentLevel); // remove
   setTimeout(function() {
