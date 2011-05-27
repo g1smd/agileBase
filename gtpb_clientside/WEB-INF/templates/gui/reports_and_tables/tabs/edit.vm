@@ -49,10 +49,15 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			#if(!$mobile_device)
 			  <thead>
 		      <tr>
-		        #if(!$edit_nav)<th class="leading">&nbsp;</th>#end
+		        #if($edit_nav)
+              <th>&nbsp;</th>
+              <th>Edit record</th>
+            #else
+            <th class="leading">&nbsp;</th>
 		        <th>field</th>
 		        <th>value</th>
-		        #if(!$edit_nav)<th class="trailing">&nbsp;</th>#end
+		        <th class="trailing">&nbsp;</th>
+            #end
 		      </tr>
 		    </thead>
 			#end
