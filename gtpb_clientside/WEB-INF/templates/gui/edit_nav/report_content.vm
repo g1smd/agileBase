@@ -1,7 +1,7 @@
 #set($sessionTable = $sessionData.getTable())
 #set($internalTableName = $sessionTable.getInternalTableName())
-<div class="related block new" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&save_new_record=true">
-  <img src="resources/toolbar/new.png"> add new
+<div class="related block" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&save_new_record=true">
+  <div class="new"><img src="resources/toolbar/new.png"> add new</div>
 </div>
 #foreach($row in $data)
   #set($thisValues = $row.get(0))
