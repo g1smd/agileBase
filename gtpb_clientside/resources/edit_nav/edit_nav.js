@@ -12,16 +12,15 @@ $(document).ready(function() {
   createLevel("AppController.servlet?return=gui/edit_nav/report");
 });
 
-function createLevel(levelId) {
-  var newLevel = {};
-  newLevel.levelId = levelId;
-  levelsList[currentLevel] = newLevel;
+function createLevel(levelUrl) {
   var jqLevel = $("<div class='level invisible'></div>");
   $("#levels").append(jqLevel);
-  jqLevel.load(levelId, function() {
-	var title = jqLevel.find(".title").text();
-	levelsList[currentLevel].title = title;
-	levelsList[currentLevel].levelContent = this;
+  jqLevel.load(levelUrl, function() {
+	var newLevel = {};
+	newLevel.levelUrl = levelUrl;
+	newLevel.title = jqLevel.find(".title").text();
+	newLevel.levelContent = jqLevel[0];
+	levelsList[currentLevel] = newLevel;
 	jqLevel.removeClass("invisible");
 	updateBreadcrumb();
   });
@@ -52,18 +51,18 @@ function moveDown() {
   showCurrentLevel();
 }
 
-function moveUpTo(levelId) {
+function moveUpTo(levelUrl) {
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
-  // search for the levelId somewhere above the current level
+  // search for the levelUrl somewhere above the current level
   for (var level = 0; level < currentLevel; level++) {
-	if (levelsList[level].levelId == levelId) {
+	if (levelsList[level].levelUrl == levelUrl) {
 	  jqLevelContent.addClass("flyDown").addClass("invisible");
 	  currentLevel = level;
 	  showCurrentLevel();
 	  return;
 	}
   }
-  // levelId not found, start from scratch creating it as the top element
+  // levelUrl not found, start from scratch creating it as the top element
   jqLevelContent.addClass("invisible"); // no flyDown in this case
   $(".level").addClass("oldLevel");
   setTimeout(function() {
@@ -71,31 +70,31 @@ function moveUpTo(levelId) {
   }, 2000);
   levelsList = [];
   currentLevel = 0;
-  createLevel(levelId);
+  createLevel(levelUrl);
 }
 
-function moveDownTo(levelId) {
+function moveDownTo(levelUrl) {
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
   jqLevelContent.addClass("flyUp").addClass("invisible");
   currentLevel++;
   //Check if there is a level below this one
   if (currentLevel < levelsList.length) {
-    // Check if the level below is actually the one who'se ID we've been passed
-    if (levelsList[currentLevel].levelId == levelId) {
+    // Check if the level below is actually the one whose ID we've been passed
+    if (levelsList[currentLevel].levelUrl == levelUrl) {
       showCurrentLevel();
       return;
     }
   }
-  // levelId not found, create a new child of the level above
+  // levelUrl not found, create a new child of the level above
   // First remove, the existing child and all sub-levels
   for (var level = currentLevel; level < levelsList.length; level++) {
-	$("#" + levelsList[level].levelId).addClass("oldLevel");
+	$("#" + levelsList[level].levelUrl).addClass("oldLevel");
   }
   levelsList.splice(currentLevel, levelsList.length - currentLevel); // remove
   setTimeout(function() {
 	$(".oldLevel").remove();
   }, 2000);
-  createLevel(levelId);
+  createLevel(levelUrl);
 }
 
 function updateBreadcrumb() {
@@ -103,7 +102,7 @@ function updateBreadcrumb() {
   jqBreadcrumb.children().remove();
   for (var level = 0; level < levelsList.length; level++) {
 	var title = levelsList[level].title;
-	var url = levelsList[level].levelId;
+	var url = levelsList[level].levelUrl;
 	jqBreadcrumb.append("<a href='" + url + "'>" + title + "</a> ");
   }
 }
