@@ -138,11 +138,13 @@ function moveDownTo(levelUrl) {
 function updateBreadcrumb() {
   var jqBreadcrumb = $("#breadcrumb");
   jqBreadcrumb.children().remove();
-  for (var level = 0; level < levelsList.length; level++) {
+  for (var level = 0; level < currentLevel; level++) {
 	var title = levelsList[level].title;
 	var url = levelsList[level].levelUrl;
-	jqBreadcrumb.append("<a level='" + level + "' href='" + url + "'>" + title + "</a> ");
+	jqBreadcrumb.append("<a level='" + level + "' href='" + url + "'>" + title + "</a> / ");
   }
+  var title = levelsList[currenLevel].title;
+  jqBreadcrumb.append("<span class='currentLevel'"> + title + "<span>");
 }
 
 /* Utilities */
