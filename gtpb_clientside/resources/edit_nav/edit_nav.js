@@ -4,9 +4,10 @@ var currentLevel = 0;
 
 $(document).ready(function() {
   $(".block").click(function() {
-    var href = $(this).attr("href"); 
+    var href = $(this).attr("href");
+    moveDownTo(href);
   });
-  
+  // Initialise home screen for user
   createLevel("AppController.servlet?return=gui/edit_nav/report");
 });
 
@@ -72,9 +73,10 @@ function moveUpTo(levelId) {
 }
 
 function moveDownTo(levelId) {
-  var jqLevelContent = $(levelsList[currentLevel].levelContent);  //Check if there is a level below this one
+  var jqLevelContent = $(levelsList[currentLevel].levelContent);
   jqLevelContent.addClass("flyUp").addClass("invisible");
   currentLevel++;
+  //Check if there is a level below this one
   if (currentLevel < levelsList.length) {
     // Check if the level below is actually the one who'se ID we've been passed
     if (levelsList[currentLevel].levelId == levelId) {
