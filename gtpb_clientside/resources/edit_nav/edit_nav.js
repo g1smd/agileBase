@@ -27,12 +27,7 @@ function initialiseSlides() {
 	}
     // Initialize
     var slideshow = new SlideShow(query('.slide'));
-
     document.querySelector('#toggle-counter').addEventListener('click', toggleCounter, false);
-    document.querySelector('#toggle-size').addEventListener('click', toggleSize, false);
-    document.querySelector('#toggle-transitions').addEventListener('click', toggleTransitions, false);
-    document.querySelector('#toggle-gradients').addEventListener('click', toggleGradients, false);
-
     var counters = document.querySelectorAll('.counter');
     var slides = document.querySelectorAll('.slide');
 }
