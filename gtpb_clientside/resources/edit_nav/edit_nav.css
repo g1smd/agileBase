@@ -32,12 +32,22 @@ body {
   color: black;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   -moz-border-radius: 2em;
+  /* no webkit border radius, webkit styles input type=search anyway */
 }
 
 #breadcrumb {
   background-color: white;
   padding: 0.5em;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  color: gray;
+}
+
+#breadcrumb .currentLevel {
+  color: black;
+}
+
+#breadcrumb a {
+  color: #486f98;
 }
 
 #levels {
