@@ -3,6 +3,7 @@ var levelsList = [];
 var currentLevel = 0;
 
 $(document).ready(function() {
+  alert('ready');
   $(".block").click(function() {
 	alert('.block click');
     var href = $(this).attr("href");
