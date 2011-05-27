@@ -1,8 +1,6 @@
 #set($report = $sessionData.getReport())
 <div class="title">$report</div>
-<div id="search">
-  find <input name="search" type="search">
-</div>
+<div id="search">search for <input name="search" type="search"></div>
 <div id="reportDataView">
   #set($noOutput = true) ## we'll do our own output
   #parse("gui/reports_and_tables/report_data.vm")
