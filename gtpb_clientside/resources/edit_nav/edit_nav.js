@@ -132,7 +132,7 @@ function moveDownTo(levelUrl) {
 
 function updateBreadcrumb() {
   var jqBreadcrumb = $("#breadcrumb");
-  jqBreadcrumb.children().remove();
+  jqBreadcrumb.html("");
   for (var level = 0; level < currentLevel; level++) {
 	var title = levelsList[level].title;
 	var url = levelsList[level].levelUrl;
@@ -141,9 +141,4 @@ function updateBreadcrumb() {
   var title = levelsList[currentLevel].title;
   jqBreadcrumb.append("<span class='currentLevel'"> + title + "</span>");
   alert(levelsList);
-}
-
-/* Utilities */
-function cleanString(dirtyString) {
-  return dirtyString.replace(/\W/g,"_");
 }
