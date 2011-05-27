@@ -15,7 +15,7 @@ $(document).ready(function() {
 	} else {
 	  moveDownTo(href);
 	}
-	return false;
+	$(this).preventDefault();
   });
   // Initialise home screen for user
   createLevel("AppController.servlet?return=gui/edit_nav/report");
