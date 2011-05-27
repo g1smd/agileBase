@@ -7,7 +7,7 @@ $(document).ready(function() {
     var href = $(this).attr("href");
     moveDownTo(href);
   });
-  $(".breadcrumb a").live('click', function() {
+  $(".breadcrumb a").live('click', function(event) {
 	var href = $(this).attr("href");
 	var level = $(this).attr("level");
 	if (currentLevel > level) {
@@ -15,7 +15,7 @@ $(document).ready(function() {
 	} else {
 	  moveDownTo(href);
 	}
-	$(this).preventDefault();
+	event.preventDefault();
   });
   // Initialise home screen for user
   createLevel("AppController.servlet?return=gui/edit_nav/report");
