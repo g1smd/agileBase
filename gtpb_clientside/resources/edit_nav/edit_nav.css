@@ -25,10 +25,10 @@ body {
 .level {
   position: absolute;
   top: 0px;
-  -moz-transition: all 0.5s ease-out;
-  -webkit-transition: all 0.5s ease-out;
-  -ms-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-in;
+  -webkit-transition: all 0.5s ease-in;
+  -ms-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-in;
   width: 100%;
   height: 610px;
   overflow: visible;
