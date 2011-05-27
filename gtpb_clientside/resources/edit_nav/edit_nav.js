@@ -5,7 +5,6 @@ var currentLevel = 0;
 $(document).ready(function() {
   $(".block").live('click', function() {
     var href = $(this).attr("href");
-    alert(href);
     moveDownTo(href);
   });
   // Initialise home screen for user
@@ -16,6 +15,7 @@ function createLevel(levelUrl) {
   var jqLevel = $("<div class='level invisible'></div>");
   $("#levels").append(jqLevel);
   jqLevel.load(levelUrl, function() {
+	alert('loading ' + levelUrl);
 	var newLevel = {};
 	newLevel.levelUrl = levelUrl;
 	newLevel.title = jqLevel.find(".title").text();
