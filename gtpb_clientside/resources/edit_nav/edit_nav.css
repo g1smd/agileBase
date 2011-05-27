@@ -16,8 +16,11 @@ body {
 }
 
 .block.new {
-  vertical-align: middle;
   font-size: 14pt;
+}
+
+.block.new img {
+  vertical-align: middle;
 }
 
 #reportDataView .block:hover {
