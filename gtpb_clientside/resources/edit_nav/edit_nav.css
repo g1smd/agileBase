@@ -17,6 +17,10 @@ body {
 
 .block .new {
   font-size: 14pt;
+  position: relative;
+  top: -1em;
+  line-height: 150px;
+  padding-left: 50px;
 }
 
 .block .new img {
