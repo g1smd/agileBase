@@ -26,7 +26,7 @@
   top: 0px;
   display: block;
   overflow: hidden;
-  background: #778;
+  background: #bdbdbd; /* 778 */
 }
 
 .slides {
@@ -52,10 +52,10 @@
   left: 50%;
   top: 50%;
   margin-top: -300px;
-  background-color: #eee;
-  background: -webkit-gradient(linear, left bottom, left top, from(#bbd), to(#fff));
+  background-color: white;
+  /*background: -webkit-gradient(linear, left bottom, left top, from(#bbd), to(#fff));
   background: -moz-linear-gradient(bottom, #bbd, #fff);
-  background: linear-gradient(bottom, #bbd, #fff);
+  background: linear-gradient(bottom, #bbd, #fff); */
   -webkit-transition: all 0.25s ease-in-out;
   -moz-transition: all 0.25s ease-in-out;
   -o-transition: all 0.25s ease-in-out;
