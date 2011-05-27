@@ -15,15 +15,15 @@ body {
   /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
 }
 
-.block .new {
+#reportDataView .block .new {
   font-size: 14pt;
 }
 
-.block .new img {
+#reportDataView .block .new img {
   vertical-align: middle;
 }
 
-.block.centrebox {
+#reportDataView .block.centrebox {
    /* flexbox, por favor */
   display: -webkit-box;
   -webkit-box-orient: horizontal;
