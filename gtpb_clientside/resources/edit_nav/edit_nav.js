@@ -22,6 +22,9 @@ $(document).ready(function() {
 });
 
 function initialiseSlides() {
+	if ($(".slide").size() == 0) {
+		return;
+	}
     // Initialize
     var slideshow = new SlideShow(query('.slide'));
 
