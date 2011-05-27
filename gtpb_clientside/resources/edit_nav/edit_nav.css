@@ -27,6 +27,8 @@ body {
   top: 0px;
   -moz-transition-duration: 0.5s;
   width: 100%;
+  height: 500px;
+  overflow: visible;
 }
 
 .flyUp {
