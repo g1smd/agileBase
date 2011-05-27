@@ -49,10 +49,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			#if(!$mobile_device)
 			  <thead>
 		      <tr>
-		        <th class="leading">&nbsp;</th>			
+		        #if(!$edit_nav)<th class="leading">&nbsp;</th>#end
 		        <th>field</th>
 		        <th>value</th>
-		        <th class="trailing">&nbsp;</th>
+		        #if(!$edit_nav)<th class="trailing">&nbsp;</th>#end
 		      </tr>
 		    </thead>
 			#end
@@ -74,13 +74,13 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			  #if($unfilledMandatories)
 				  #set($rowCount = $rowCount + 1)
 				  <tr #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
-					<td class=leading>&nbsp;</td>
+					#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
 					<td colspan="2"><div class="warningmessage">
 					The following fields are mandated and must be completed before continuing.<br>
 					This record will be highlighted in the dashboard as an exception until values are filled in.<br>
 					If the information necessary isn't available yet, other records can continue to be edited.
 					</div></td>
-					<td class="trailing">&nbsp;</td>
+					#if(!$edit_nav)<td class="trailing">&nbsp;</td>#end
 				  </tr>
 			      #foreach($field in $fields)
 					#if($field.getNotNull() && $tableDataRow.get($field) == "")
@@ -89,10 +89,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			      #end ## end loop through fields
 				  #set($rowCount = $rowCount + 1)
 				  <tr #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
-					<td class=leading>&nbsp;</td>
+					#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
 					<td>&nbsp;</td>
 					<td><input type="button" value="Complete" alt="Complete the rest of the record" onclick="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';"></td>
-					<td class="trailing">&nbsp;</td>
+					#if(!$edit_nav)<td class="trailing">&nbsp;</td>#end
 				  </tr>
 			  #else
 			      #foreach($field in $fields)
@@ -101,21 +101,21 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 				        #end
 			      #end ## end loop through fields
 			  #end ## end if no unfilled mandatories
-			      #if($view.isWikiIntegrated() && (!$mobile_device))
+          #if($view.isWikiIntegrated() && (!$mobile_device))
 			        #parse("gui/reports_and_tables/tabs/wiki.vm")  
-			      					  <tr class="trailing">
-			          <td>&nbsp;</td>
+              <tr class="trailing">
+			          #if(!$edit_nav)<td>&nbsp;</td>#end
 			          <td colspan="2">&nbsp;</td>
-			          <td>&nbsp;</td>
+			          #if(!$edit_nav)<td>&nbsp;</td>#end
 		        </tr> 
 		      #else
-		    			    <tr class="trailing">
+              <tr class="trailing">
+			          #if(!$edit_nav)<td>&nbsp;</td>#end
 			          <td>&nbsp;</td>
 			          <td>&nbsp;</td>
-			          <td>&nbsp;</td>
-			          <td>&nbsp;</td>
-		        </tr> 
-					      #end
+			          #if(!$edit_nav)<td>&nbsp;</td>#end
+		          </tr> 
+          #end
 		    #end 
 	  </table>
 	  ## See if there are any actions for this table
