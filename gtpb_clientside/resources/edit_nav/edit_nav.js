@@ -16,16 +16,15 @@ function createLevel(levelId) {
   var newLevel = {};
   newLevel.levelId = levelId;
   levelsList[currentLevel] = newLevel;
-  var jqLevel = $("<div id='test' class='level invisible'></div>");
+  var jqLevel = $("<div class='level invisible'></div>");
   $("#levels").append(jqLevel);
   jqLevel.load(levelId, function() {
 	var title = jqLevel.find(".title").text();
 	levelsList[currentLevel].title = title;
 	levelsList[currentLevel].levelContent = this;
-	alert('levelContent is a ' + this.tagName + " with id " + jqLevel.attr("id"));
+	jqLevel.removeClass("invisible");
 	updateBreadcrumb();
   });
-  $("#levels:last-child").removeClass("invisible");
 }
 
 function showCurrentLevel() {
