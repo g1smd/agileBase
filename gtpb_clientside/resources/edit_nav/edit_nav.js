@@ -4,7 +4,6 @@ var currentLevel = 0;
 
 $(document).ready(function() {
   $(".block").live('click', function() {
-	alert('.block click');
     var href = $(this).attr("href");
     alert(href);
     moveDownTo(href);
@@ -17,11 +16,12 @@ function createLevel(levelId) {
   var newLevel = {};
   newLevel.levelId = levelId;
   levelsList[currentLevel] = newLevel;
-  $("#levels").append("<div class='level invisible'></div>").load(levelId, function() {
+  $("#levels").append("<div class='level invisible'>new level</div>").load(levelId, function() {
 	var jqLevel = $(this);
 	var title = jqLevel.find(".title").text();
 	levelsList[currentLevel].title = title;
 	levelsList[currentLevel].levelContent = this;
+	alert('levelContent is a ' + this.tagName + " - " + jqLevel.text());
 	updateBreadcrumb();
   });
   $("#levels:last-child").removeClass("invisible");
