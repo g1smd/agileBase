@@ -7,6 +7,15 @@ $(document).ready(function() {
     var href = $(this).attr("href");
     moveDownTo(href);
   });
+  $(".breadcrumb a").live('click', function() {
+	var href = $(this).attr("href");
+	var level = $(this).attr("level");
+	if (currentLevel > level) {
+	  moveUpTo(href);
+	} else {
+	  moveDownTo(href);
+	}
+  });
   // Initialise home screen for user
   createLevel("AppController.servlet?return=gui/edit_nav/report");
 });
@@ -114,7 +123,7 @@ function updateBreadcrumb() {
   for (var level = 0; level < levelsList.length; level++) {
 	var title = levelsList[level].title;
 	var url = levelsList[level].levelUrl;
-	jqBreadcrumb.append("<a href='" + url + "'>" + title + "</a> ");
+	jqBreadcrumb.append("<a level='" + level + "' href='" + url + "'>" + title + "</a> ");
   }
 }
 
