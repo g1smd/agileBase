@@ -295,7 +295,6 @@
                 e.target.isContentEditable) {
               return;
             }
-            alert(e.keyCode);
             switch (e.keyCode) {
               case 37: // left arrow
                 this.prev(); break;
