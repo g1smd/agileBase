@@ -131,6 +131,7 @@ function moveDownTo(levelUrl) {
 }
 
 function updateBreadcrumb() {
+  alert("current level is " + currentLevel);
   var jqBreadcrumb = $("#breadcrumb");
   jqBreadcrumb.html("");
   for (var level = 0; level < currentLevel; level++) {
