@@ -35,12 +35,12 @@ body {
 }
 
 .flyUp {
-  top: -1000px;
+  top: -500px;
   height: 0px;
 }
 
 .flyDown {
-  top: 1000px;
+  top: 500px;
   height: 0px;
 }
 
