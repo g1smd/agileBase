@@ -23,7 +23,7 @@ body {
   vertical-align: middle;
 }
 
-.centrebox {
+.block.centrebox {
    /* flexbox, por favor */
   display: -webkit-box;
   -webkit-box-orient: horizontal;
@@ -39,6 +39,8 @@ body {
   box-orient: horizontal;
   box-pack: center;
   box-align: center;
+  
+  overflow: visible; /* necessary for FF */
 }
 
 #reportDataView .block:hover {
