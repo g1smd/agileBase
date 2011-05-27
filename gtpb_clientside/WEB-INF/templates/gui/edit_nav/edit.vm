@@ -4,6 +4,7 @@
   <div class="slides"> 
     <div class="slide"> 
       <section class="middle"> 
+        #set($edit_nav = true)
         #parse("gui/reports_and_tables/tabs/edit.vm")
       </section> 
     </div>  

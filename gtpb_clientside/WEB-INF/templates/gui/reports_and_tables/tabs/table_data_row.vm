@@ -35,8 +35,8 @@
 	#if($firstLineOfAddress)
 		#set($rowCount = $rowCount + 1)
 		<tr #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
-			<td class=leading>&nbsp;</td>
-            <td class="capitalised">Address</td>
+			#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
+      <td class="capitalised">Address</td>
 			<td><table border="0"><tr><td width="100px" style="border-right:0"><div id="map" style="width:100px;height:100px"></div>
 			</td><td style="border-right:0">
     #end
@@ -48,7 +48,7 @@
 		    #set($partOfAddress = false)
 			</td></tr></table>
 			</td>
-			<td class=trailing>&nbsp;</td>
+			#if(!$edit_nav)<td class=trailing>&nbsp;</td>#end
 		</tr>
 	#end
   #else
@@ -69,7 +69,7 @@
         #end
       #end
     	<tr #if($fieldCategory =='SEPARATOR') #set($rowCount=0) class="separator #if($contracted) contracted #end" internalfieldname="$internalFieldName" #elseif($rowCount%2!=0) class="rowb" #else class="rowa" #end #if(($fieldCategory !='SEPARATOR') && $contracted) style="display:none;" #end>
-    		<td class=leading>&nbsp;</td>
+    		#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
             <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
             <td class="capitalised printoutfieldnamecolumn" #if($fieldCategory =='SEPARATOR') colspan="2" #end>
             #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
@@ -83,7 +83,7 @@
             #end
             </td>
             #if($fieldCategory !='SEPARATOR')<td>#parse('gui/resources/input/input.vm')</td>#end
-            <td class=trailing>&nbsp;</td>
+            #if(!$edit_nav)<td class=trailing>&nbsp;</td>#end
         </tr>
 	  #end
 	#end
