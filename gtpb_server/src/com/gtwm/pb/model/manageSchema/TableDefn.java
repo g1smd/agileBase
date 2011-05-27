@@ -18,7 +18,6 @@
 package com.gtwm.pb.model.manageSchema;
 
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
