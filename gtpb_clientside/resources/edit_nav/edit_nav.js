@@ -24,7 +24,7 @@ $(document).ready(function() {
     }
     if (event.which == '38') {
       moveUp();
-    } elseif (event.which == '40') {
+    } else if (event.which == '40') {
       moveDown();
     }
   })
