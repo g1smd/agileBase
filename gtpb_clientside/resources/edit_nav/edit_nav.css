@@ -24,6 +24,7 @@ body {
   margin-top: 0.5em;
   color: white;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 13pt;
 }
 
 #search input {
