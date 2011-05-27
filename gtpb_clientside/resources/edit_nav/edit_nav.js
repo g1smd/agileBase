@@ -22,6 +22,7 @@ $(document).ready(function() {
         event.target.isContentEditable) {
       return;
     }
+    alert(event.which);
     if (event.which == '38') {
       moveUp();
     } else if (event.which == '40') {
