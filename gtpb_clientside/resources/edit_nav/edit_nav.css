@@ -17,14 +17,28 @@ body {
 
 .block .new {
   font-size: 14pt;
-  position: relative;
-  top: -1em;
-  line-height: 150px;
-  padding-left: 50px;
 }
 
 .block .new img {
   vertical-align: middle;
+}
+
+.centrebox {
+   /* flexbox, por favor */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+ 
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  
+  display: box;
+  box-orient: horizontal;
+  box-pack: center;
+  box-align: center;
 }
 
 #reportDataView .block:hover {
