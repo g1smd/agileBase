@@ -1,7 +1,7 @@
 /* override tabs.css */
 body {
   overflow: visible ;
-  background-color: #777788;
+  background-color: #bdbdbd; 
 }
 
 #reportDataView .block {
