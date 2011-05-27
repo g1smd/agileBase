@@ -229,10 +229,11 @@
           });
  
           var h = window.location.hash;
-          try {
-            this.current = parseInt(h.split('#slide')[1], 10);
-          }catch (e) { /* squeltch */ }
-          this.current = isNaN(this.current) ? 1 : this.current;
+          //try {
+          //  this.current = parseInt(h.split('#slide')[1], 10);
+          //}catch (e) { /* squeltch */ }
+          //this.current = isNaN(this.current) ? 1 : this.current;
+          this.current = 1;
           var _t = this;
           doc.addEventListener('keydown', 
               function(e) { _t.handleKeys(e); }, false);
