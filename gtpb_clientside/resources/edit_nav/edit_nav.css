@@ -91,3 +91,8 @@ body {
 .slide table#reportData tr.rowb {
   background-image: none;
 }
+
+.slide table#reportData td.capitalised {
+  text-align: right;
+  width: auto;
+}
