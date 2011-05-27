@@ -25,7 +25,7 @@ body {
 .level {
   position: absolute;
   top: 0px;
-  -moz-transition-duration: 1s;
+  -moz-transition-duration: 0.5s;
 }
 
 .flyUp {
@@ -42,7 +42,10 @@ body {
   display: none;
 }
 
-.invisible {
+.transparent {
   opacity: 0;
+}
+
+.invisible {
   display: none;
 }
