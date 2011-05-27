@@ -41,6 +41,7 @@ body {
   box-align: center;
   
   overflow: visible; /* necessary for FF */
+  float: none;
 }
 
 #reportDataView .block:hover {
