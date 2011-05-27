@@ -14,6 +14,10 @@ body {
   /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
 }
 
+#reportDataView .block.current {
+  background: white;
+}
+
 #reportDataView .block .new {
   font-size: 14pt;
 }
