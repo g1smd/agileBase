@@ -236,10 +236,10 @@
           var _t = this;
           doc.addEventListener('keydown', 
               function(e) { _t.handleKeys(e); }, false);
-          doc.addEventListener('mousewheel', 
-              function(e) { _t.handleWheel(e); }, false);
-          doc.addEventListener('DOMMouseScroll', 
-              function(e) { _t.handleWheel(e); }, false);
+//          doc.addEventListener('mousewheel', 
+//              function(e) { _t.handleWheel(e); }, false);
+//          doc.addEventListener('DOMMouseScroll', 
+//              function(e) { _t.handleWheel(e); }, false);
           doc.addEventListener('touchstart', 
               function(e) { _t.handleTouchStart(e); }, false);
           doc.addEventListener('touchend', 
