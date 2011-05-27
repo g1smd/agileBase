@@ -33,6 +33,12 @@ body {
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+#breadcrumb {
+  background-color: white;
+  padding: 0.5em;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 #levels {
   position: relative;
 }
