@@ -126,7 +126,7 @@ function moveDownTo(levelUrl) {
   // levelUrl not found, create a new child of the level above
   // First remove, the existing child and all sub-levels
   for (var level = currentLevel; level < levelsList.length; level++) {
-	$("#" + levelsList[level].levelUrl).addClass("oldLevel");
+	$(levelsList[level].levelContent).addClass("oldLevel");
   }
   levelsList.splice(currentLevel, levelsList.length - currentLevel); // remove
   setTimeout(function() {
@@ -145,6 +145,7 @@ function updateBreadcrumb() {
   }
   var title = levelsList[currentLevel].title;
   jqBreadcrumb.append("<span class='currentLevel'"> + title + "<span>");
+  alert(levelsList);
 }
 
 /* Utilities */
