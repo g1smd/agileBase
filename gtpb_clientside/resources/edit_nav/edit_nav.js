@@ -17,18 +17,6 @@ $(document).ready(function() {
 	  moveDownTo(href);
 	}
   });
-  $(document).keypress(function(event) {
-    if (/^(input|textarea)$/i.test(event.target.nodeName) ||
-        event.target.isContentEditable) {
-      return;
-    }
-    alert(event.which);
-    if (event.keyCode == 38) {
-      moveUp();
-    } else if (event.keyCode == 40) {
-      moveDown();
-    }
-  })
   // Initialise home screen for user
   createLevel("AppController.servlet?return=gui/edit_nav/report");
 });
