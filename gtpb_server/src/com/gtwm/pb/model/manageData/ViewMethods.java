@@ -390,6 +390,10 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return dependentTables;
 	}
 
+	public Set<TableInfo> getDirectlyDependentTables(TableInfo baseTable) throws ObjectNotFoundException {
+		return this.databaseDefn.getDirectlyDependentTables(baseTable, this.request);
+	}
+	
 	public String getApplicationName() {
 		return AppProperties.applicationName;
 	}

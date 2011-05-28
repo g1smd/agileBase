@@ -5,7 +5,15 @@
     <div class="slide"> 
       <section class="middle"> 
         #set($edit_nav = true)
-        #parse("gui/reports_and_tables/tabs/edit.vm")
+        <div class="this_table">
+          #parse("gui/reports_and_tables/tabs/edit.vm")
+        </div>
+        <div class="dependent_tables">
+          #set($dependentTables = $view.getDirectlyDependentTables($sessionData.getTable()))
+          #foreach($dependentTable in $dependentTables)
+            <h1>$dependentTable</h1>
+          #end
+        </div>
       </section> 
     </div>  
   </div> <!-- slides --> 

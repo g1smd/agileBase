@@ -19,6 +19,7 @@ package com.gtwm.pb.model.interfaces;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import com.gtwm.pb.util.MissingParametersException;
@@ -126,7 +127,7 @@ public interface DatabaseInfo {
 	 * @param baseTable
 	 * @param dependentTables
 	 */
-	public void getDirectlyDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables,
+	public SortedSet<TableInfo> getDirectlyDependentTables(TableInfo baseTable,
 			HttpServletRequest request) throws ObjectNotFoundException;
 
 	/**
