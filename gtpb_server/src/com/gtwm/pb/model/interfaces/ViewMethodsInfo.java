@@ -258,6 +258,8 @@ public interface ViewMethodsInfo {
 	 */
 	public Set<TableInfo> getDependentTables() throws ObjectNotFoundException;
 
+	public Set<TableInfo> getDirectlyDependentTables(TableInfo baseTable) throws ObjectNotFoundException;
+	
 	/**
 	 * Calls DatabaseInfo#getDependentTables to retrieve a Set tables dependent
 	 * upon the Table passed as an argument to the method

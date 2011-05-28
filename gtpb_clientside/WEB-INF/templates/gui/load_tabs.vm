@@ -29,16 +29,16 @@
   <body>
 	#set($company = $view.getLoggedInUser().getCompany())
 	#set($tabAddresses = $company.getTabAddresses())
-      <script language="JavaScript" type="text/javascript">
-	       ## Make sure agileBase is the focussed tab
-		   ## by opening it last
-		   ## Unless opening tabs doesn't work (e.g. due to popup blocker)
-		   ## In which case open agileBase with document.location
-	       #foreach($tabAddress in $tabAddresses)
-		     var tab$foreach.count = window.open('$tabAddress','tab$foreach.count','');
-	       #end
-		   document.location='AppController.servlet?$app_params';
-		   window.focus();
-      </script>
+    <script language="JavaScript" type="text/javascript">
+     ## Make sure agileBase is the focussed tab
+	   ## by opening it last
+	   ## Unless opening tabs doesn't work (e.g. due to popup blocker)
+	   ## In which case open agileBase with document.location
+     #foreach($tabAddress in $tabAddresses)
+	     var tab$foreach.count = window.open('$tabAddress','tab$foreach.count','');
+     #end
+	   document.location='AppController.servlet?$app_params';
+	   window.focus();
+    </script>
   </body>
 </html>

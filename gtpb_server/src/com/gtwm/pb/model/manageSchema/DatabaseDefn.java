@@ -438,22 +438,22 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public void getDirectlyDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables,
+	public SortedSet<TableInfo> getDirectlyDependentTables(TableInfo baseTable,
 			HttpServletRequest request) throws ObjectNotFoundException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		Set<TableInfo> tables = company.getTables();
+		SortedSet<TableInfo> dependentTables = new TreeSet<TableInfo>();
 		for (TableInfo table : tables) {
-			// check relation fields in table itself:
-			if (table.equals(baseTable))
+			if (table.equals(baseTable)) {
 				continue;
-			// only check for table dependency if table in
-			// question is not the one to be deleted:
+			}
 			if (table.isDependentOn(baseTable)) {
 				if (!dependentTables.contains(table)) {
 					dependentTables.add(table);
 				}
 			}
 		}
+		return dependentTables;
 	}
 
 	public synchronized void updateTable(Connection conn, HttpServletRequest request,

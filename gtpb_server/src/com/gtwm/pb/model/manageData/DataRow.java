@@ -210,8 +210,7 @@ public class DataRow implements DataRowInfo {
 		Map<RelationField, List<DataRow>> childDataRows = new HashMap<RelationField, List<DataRow>>();
 		// obtain a set of all tables containing any field from this table as a
 		// RelationField
-		SortedSet<TableInfo> relationTables = new TreeSet<TableInfo>();
-		databaseDefn.getDirectlyDependentTables(this.table, relationTables, request);
+		SortedSet<TableInfo> relationTables = databaseDefn.getDirectlyDependentTables(this.table, request);
 		String localTableInternalName = this.table.getInternalTableName();
 		String localTablePrimaryKeyName = this.table.getPrimaryKey().getInternalFieldName();
 		// obtain the relation field(s) for each table & generate sql to get
