@@ -31,7 +31,6 @@
         #foreach($field in $report.getReportBaseFields())
           #if($field.getRelatedTable().equals($sessionTable))
             #set($success = $filters.put($field, "$sessionRowId"))
-            #break
           #end
         #end
       #else
