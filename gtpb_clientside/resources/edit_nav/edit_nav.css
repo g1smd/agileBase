@@ -8,7 +8,7 @@ body {
   text-shadow: none;
 }
 
-.block {
+.reportDataView .block {
   margin: 2em;
   float: left;
   width: 250px;
@@ -18,19 +18,19 @@ body {
   /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
 }
 
-.block.current {
+.reportDataView .block.current {
   background: white;
 }
 
-.block .new {
+.reportDataView .block .new {
   font-size: 14pt;
 }
 
-.block .new img {
+.reportDataView .block .new img {
   vertical-align: middle;
 }
 
-.block.centrebox {
+.reportDataView .block.centrebox {
    /* flexbox, por favor */
   display: -webkit-box;
   -webkit-box-orient: horizontal;
@@ -51,7 +51,7 @@ body {
   float: none;
 }
 
-.block:hover {
+.reportDataView .block:hover {
   cursor: pointer;
 }
 
