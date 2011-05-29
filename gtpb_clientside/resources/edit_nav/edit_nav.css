@@ -63,7 +63,8 @@ body {
 
 .slide .title {
   text-align: center;
-  font-weight: bold;
+  /* font-weight: bold; */
+  font-size: 14pt;
   margin: 1em;
 }
 
