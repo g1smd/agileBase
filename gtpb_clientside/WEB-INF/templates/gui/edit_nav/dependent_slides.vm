@@ -10,7 +10,7 @@
       #set($success = $linkingReports.add($report))
     #end
   #end
-  <div class="slide"> 
+  <div class="slide reportDataView">
     <section class="middle"> 
       <div class="title">
       $dependentTable.getSimpleName()

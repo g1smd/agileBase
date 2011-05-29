@@ -1,6 +1,6 @@
 #set($report = $sessionData.getReport())
 <div class="breadcrumb_title">$report</div>
 <div id="search"><input name="search" type="search"> search</div>
-<div id="reportDataView">
+<div class="reportDataView">
   #parse("gui/edit_nav/report_content.vm")
 </div>

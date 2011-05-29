@@ -166,21 +166,17 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
 
 /* View and edit tab css */
 
-#reportDataView {
-  /* margin: 1em; */
-}
-
-#reportDataView #leftcol {
+.reportDataView #leftcol {
   float: left;
   width: 50%;
 }
 
-#reportDataView #rightcol {
+.reportDataView #rightcol {
   float: right;
   width: 50%;
 }	
 
-#reportDataView h1 {
+.reportDataView h1 {
   font-size: 14pt;
   font-weight: normal;
   margin: 0.4em;
@@ -191,7 +187,7 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
   left: -0.5em;
 }
 
-#reportDataView h2 {
+.reportDataView h2 {
   font-size: 10pt;
   margin: 0.5em;
   margin-left: 0;
@@ -200,7 +196,7 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
   left: -0.5em;
 }
 
-#reportDataView .related {
+.reportDataView .related {
   color: #666666;
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e6e7ea)); /* for webkit browsers */
   background: -moz-linear-gradient(top,  #fff,  #e6e7ea); /* for firefox 3.6+ */
@@ -220,17 +216,17 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
   word-wrap: break-word;
 }
 
-#reportDataView #current {
+.reportDataView #current {
   color: black;
   background: white;
 }
 
-#reportDataView .related img {
+.reportDataView .related img {
   margin-right: 0.25em;
   margin-bottom: 0.25em;
 }
 
-#reportDataView .related .mini-icon {
+.reportDataView .related .mini-icon {
   opacity: 0.6;
 }
 
