@@ -1,9 +1,22 @@
 #set($sessionTable = $sessionData.getTable())
+#set($primaryKey = $sessionTable.getPrimaryKey())
+#set($sessionRowId = $sessionData.getRowId())
 #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
 #foreach($dependentTable in $dependentTables)
+  #set($linkingReports = [])
+  #set($reports = $dependentTable.getReports())
+  #foreach($report in $reports)
+    #if($report.getReportBaseFields().contains($primaryKey))
+      #set($success = $linkingReports.add($report))
+    #end
+  #end
   <div class="slide"> 
     <section class="middle"> 
-      <h1>$dependentTable.getSimpleName()</h1>
+      <select name="$dependentTable.getInternalTableName()_select">
+        #foreach($report in $linkingReports)
+          <option value="$report.getInternalReportName()">$report.getModule() - $report</option>
+        #end
+      </select>
     </section>
   </div>
 #end
