@@ -53,6 +53,7 @@ body {
 
 .reportDataView .block:hover {
   cursor: pointer;
+  border-color: #50add6; /* ab light blue */
 }
 
 .slide.reportDataView .related {
