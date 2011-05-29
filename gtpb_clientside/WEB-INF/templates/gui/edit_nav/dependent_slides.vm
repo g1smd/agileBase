@@ -26,8 +26,8 @@
       #else
         #set($report = $linkingReports.get(0))
       #end
-      #set($filter = $viewTools.getNewFilterMap())
-      #set($success = $filter.put($primaryKey, "$sessionRowId"))
+      #set($filters = $viewTools.getNewFilterMap())
+      #set($success = $filters.put($primaryKey, "$sessionRowId"))
       #parse("gui/edit_nav/report_content.vm")
     </section>
   </div>
