@@ -63,6 +63,7 @@ function createLevel(levelUrl) {
 	if (!loadDependentSlides()) {
 	  initialiseSlides();
 	}
+	window.scrollTo(0,0);
   });
 }
 
@@ -70,7 +71,6 @@ function showCurrentLevel() {
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
   jqLevelContent.removeClass("flyDown").removeClass("flyUp").removeClass("invisible").removeClass("transparent");
   updateBreadcrumb();
-  window.scrollTo(0,0);
 }
 
 function moveUp() {
