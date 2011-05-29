@@ -11,7 +11,7 @@
         <div class="dependent_tables">
           #set($dependentTables = $view.getDirectlyDependentTables($sessionData.getTable()))
           #foreach($dependentTable in $dependentTables)
-            <h1>$dependentTable</h1>
+            <h1>$dependentTable.getSimpleName()</h1>
           #end
         </div>
       </section> 
