@@ -34,7 +34,11 @@
         #elseif($printoutSetting == "NAME_AND_VALUE")
           <span class="fieldname">$field</span>: <span style="$style" class="cell $class">$cell</span><br>
         #else
+          #if(!$emboldened)
+            #set($style = "$style font-weight: bold; ")
+          #end
           <span style="$style" class="cell $class">$cell</span>,
+          #set($emboldened = true)
         #end
       #end
     #end
