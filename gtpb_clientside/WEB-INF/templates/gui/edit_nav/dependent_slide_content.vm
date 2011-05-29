@@ -1,0 +1,9 @@
+<div class="related block centrebox" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$report.getParentTable().getInternalTableName()&save_new_record=true">
+  <span class="new"><img src="resources/toolbar/new.png"> add new</span>
+</div>
+#set($filter = $viewTools.getNewFilterMap())
+#set($success = $filter.put($primaryKey, "$sessionRowId"))
+#set($reportDataRows = $view.getReportDataRows($report, 100, $filter, true))
+#foreach($reportDataRow in $reportDataRows)
+  
+#end
