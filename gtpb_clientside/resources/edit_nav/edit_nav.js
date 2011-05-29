@@ -27,6 +27,7 @@ function initialiseSlides() {
 	}
     // Initialize
     var slideshow = new SlideShow(query('.slide'));
+    alert("There are " + query('.slide').length + " slides");
     var counters = document.querySelectorAll('.counter');
     var slides = document.querySelectorAll('.slide');
 }
