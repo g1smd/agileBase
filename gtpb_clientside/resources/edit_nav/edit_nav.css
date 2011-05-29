@@ -58,6 +58,7 @@ body {
 .slide .reportDataView .related {
   box-shadow: none;
   text-shadow: none;
+  border: 1px solid #eeeeee;
 }
 
 #search {
