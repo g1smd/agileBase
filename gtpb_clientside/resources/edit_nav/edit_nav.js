@@ -27,7 +27,6 @@ function initialiseSlides() {
 	}
     // Initialize
     var slideshow = new SlideShow(query('.slide'));
-    document.querySelector('#toggle-counter').addEventListener('click', toggleCounter, false);
     var counters = document.querySelectorAll('.counter');
     var slides = document.querySelectorAll('.slide');
 }
