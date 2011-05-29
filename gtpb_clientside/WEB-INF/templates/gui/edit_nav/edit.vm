@@ -9,9 +9,16 @@
           #parse("gui/reports_and_tables/tabs/edit.vm")
         </div>
         <div class="dependent_tables">
-          #set($dependentTables = $view.getDirectlyDependentTables($sessionData.getTable()))
+          #set($sessionTable = $sessionData.getTable())
+          #set($primaryKey = $sessionTable.getPrimaryKey())
+          #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
           #foreach($dependentTable in $dependentTables)
-            <h1>$dependentTable.getSimpleName()</h1>
+            #foreach($report in $dependentTable.getReports())
+              #if($report.getReportBaseFields().contains($primaryKey))
+                <h1>$dependentTable.getSimpleName()</h1>
+                #break ## next table
+              #end
+            #end
           #end
         </div>
       </section> 
