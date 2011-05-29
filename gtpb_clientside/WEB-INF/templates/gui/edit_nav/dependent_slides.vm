@@ -10,6 +10,7 @@
       #set($success = $linkingReports.add($report))
     #end
   #end
+  #if($linkingReports.size() == 0) #break #end
   <div class="slide reportDataView">
     <section class="middle"> 
       <div class="title">
@@ -21,11 +22,7 @@
         <option value="$dependentTable.getDefaultReport().getInternalReportName()">all records</option>
       </select>
       </div>
-      #if($linkingReports.size() == 0)
-        #set($report = $dependentTable.getDefaultReport())
-      #else
-        #set($report = $linkingReports.get(0))
-      #end
+      #set($report = $linkingReports.get(0))
       #set($filters = $viewTools.getNewFilterMap())
       #set($success = $filters.put($primaryKey, "$sessionRowId"))
       #parse("gui/edit_nav/report_content.vm")
