@@ -26,8 +26,7 @@ function initialiseSlides() {
 		return;
 	}
     // Initialize
-    var slideshow = new SlideShow(query('.slide'));
-    alert("There are " + query('.slide').length + " slides");
+    var slideshow = new SlideShow($('.slide').toArray());
     var counters = document.querySelectorAll('.counter');
     var slides = document.querySelectorAll('.slide');
 }
