@@ -12,11 +12,23 @@
   #end
   <div class="slide"> 
     <section class="middle"> 
+      <div class="title">
+      $dependentTable.getSimpleName()
       <select name="$dependentTable.getInternalTableName()_select">
         #foreach($report in $linkingReports)
           <option value="$report.getInternalReportName()">$report.getModule() - $report</option>
         #end
+        <option value="$dependentTable.getDefaultReport().getInternalReportName()">all records</option>
       </select>
+      </div>
+      #if($linkingReports.size() == 0)
+        #set($report = $dependentTable.getDefaultReport())
+      #else
+        #set($report = $linkingReports.get(0))
+      #end
+      #set($filter = $viewTools.getNewFilterMap())
+      #set($success = $filter.put($primaryKey, "$sessionRowId"))
+      #parse("gui/edit_nav/report_content.vm")
     </section>
   </div>
 #end

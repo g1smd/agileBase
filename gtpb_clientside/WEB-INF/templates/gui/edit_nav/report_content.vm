@@ -1,45 +1,53 @@
-#set($sessionTable = $sessionData.getTable())
-#set($internalTableName = $sessionTable.getInternalTableName())
+#if(!$report)
+  #set($report = $sessionData.getReport())
+#end
+#if(!$filters)
+  #set($reportDataRows = $view.getReportDataRows($report, 100))
+#else
+  #set($reportDataRows = $view.getReportDataRows($report, 100, $filters, true))##
+#end
+#set($reportBaseFields = $sessionReport.getReportBaseFields())##
+#set($internalTableName = $report.getParentTable().getInternalTableName())
 <div class="related block centrebox" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&save_new_record=true">
   <span class="new"><img src="resources/toolbar/new.png"> add new</span>
 </div>
-#foreach($row in $data)
-  #set($thisValues = $row.get(0))
-  #set($rowColours = $row.get(3))
-  #set($thisUniqueId = $row.get(2))
+#foreach($row in $ReportDataRows)
+  #set($thisUniqueId = $row.getRowId())
   #set($emboldened = false)
   <div class="related block current" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&set_row_id=$thisUniqueId">
-    #foreach($cell in $thisValues)
-      #set($cellNumber = $foreach.count - 1)
-      #set($colour = $rowColours.get($cellNumber))
-      #set($field = $fields.get($cellNumber).get(1))
-      #set($fieldCategory = $field.getFieldCategory().toString())
-      #set($image = false)
-      #if($fieldCategory == "FILE")
-        #set($fileValue = $viewTools.getFileValueTool($cell))
-        #if($fileValue.isImage())
-          #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
-          <img src="$srcUrl" style="float:left"/>
-          #set($image = true)
+    #foreach($field in $reportBaseFields)##
+      #if(!$field.getTableContainingField().getPrimaryKey().equals($field))
+        #set($dataRowField = $dataRowFields.get($field))
+        #set($cell = $dataRowField.getDisplayValue())
+        #set($colour = $dataRowField.getStandardDevHexColour())
+        #set($fieldCategory = $field.getFieldCategory().toString())
+        #set($image = false)
+        #if($fieldCategory == "FILE")
+          #set($fileValue = $viewTools.getFileValueTool($cell))
+          #if($fileValue.isImage())
+            #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
+            <img src="$srcUrl" style="float:left"/>
+            #set($image = true)
+          #end
         #end
-      #end
-      #set($style="")
-      #set($class="")
-      #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
-      #if($cell && (!$image) && ($cell != ""))
-        #set($printoutSetting = $field.getPrintoutSetting())
-        #if($fieldCategory == "CHECKBOX")
-          #if($cell == "true")
-            <span style="$style" class="cell $class">$field</span>
+        #set($style="")
+        #set($class="")
+        #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
+        #if($cell && (!$image) && ($cell != ""))
+          #set($printoutSetting = $field.getPrintoutSetting())
+          #if($fieldCategory == "CHECKBOX")
+            #if($cell == "true")
+              <span style="$style" class="cell $class">$field</span>
+            #end
+          #elseif($printoutSetting == "NAME_AND_VALUE")
+            <span class="fieldname">$field</span>: <span style="$style" class="cell $class">$cell</span><br>
+          #else
+            #if(!$emboldened)
+              #set($style = "$style font-weight: bold; ")
+            #end
+            <span style="$style" class="cell $class">$cell</span>,
+            #set($emboldened = true)
           #end
-        #elseif($printoutSetting == "NAME_AND_VALUE")
-          <span class="fieldname">$field</span>: <span style="$style" class="cell $class">$cell</span><br>
-        #else
-          #if(!$emboldened)
-            #set($style = "$style font-weight: bold; ")
-          #end
-          <span style="$style" class="cell $class">$cell</span>,
-          #set($emboldened = true)
         #end
       #end
     #end

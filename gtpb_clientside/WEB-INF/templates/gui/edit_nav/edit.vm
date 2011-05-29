@@ -1,4 +1,4 @@
-<div class="title">edit record</div>
+<div class="breadcrumb_title">edit record</div>
 <div class="presentation"> 
   <div id="presentation-counter"></div> 
   <div class="slides">
