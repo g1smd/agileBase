@@ -26,14 +26,15 @@ function initialiseSlides() {
 		return;
 	}
     // Initialize
-	alert("There are " + $('.slide').toArray().length + " slides");
-    var slideshow = new SlideShow($('.slide').toArray());
+    var slideshow = new SlideShow(query('.slide'));
     var counters = document.querySelectorAll('.counter');
     var slides = document.querySelectorAll('.slide');
 }
 
 /* For any table (represented by a slide), there can be dependent tables that link to it. 
  * Show these as slides to the right
+ * 
+ * Return true if there were any dependent slides
  */
 function loadDependentSlides() {
   var jqSlides = $(levelsList[currentLevel].levelContent).find(".slides");
@@ -41,8 +42,11 @@ function loadDependentSlides() {
   if (firstSlide.find(".dependent_tables").children().size() > 0) {
     $.get("AppController.servlet?return=gui/edit_nav/dependent_slides", function(data) {
 	  jqSlides.append(data);
+	  initialiseSlides();
+	  return true;
     });
   }
+  return false;
 }
 
 function createLevel(levelUrl) {
@@ -56,8 +60,9 @@ function createLevel(levelUrl) {
 	levelsList[currentLevel] = newLevel;
 	jqLevel.removeClass("transparent").removeClass("invisible");
 	updateBreadcrumb();
-	loadDependentSlides();
-	initialiseSlides();
+	if (!loadDependentSlides()) {
+	  initialiseSlides();
+	}
   });
 }
 
