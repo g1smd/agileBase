@@ -137,3 +137,13 @@ body {
   background: white;
   border: 0;
 }
+
+.this_table {
+  width: 70%;
+  float: left;
+}
+
+.dependent_tables {
+  width: 30%;
+  float: right;
+}
