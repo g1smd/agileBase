@@ -1,7 +1,6 @@
 ## $report must be defined
 #set($internalTableName = $report.getParentTable().getInternalTableName())
 #set($reportBaseFields = $report.getReportBaseFields())##
-Filters are $filters
 #if(!$filters)
   #set($reportDataRows = $view.getReportDataRows($report, 100))
 #else
