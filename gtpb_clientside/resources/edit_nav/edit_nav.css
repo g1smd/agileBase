@@ -55,6 +55,11 @@ body {
   cursor: pointer;
 }
 
+.slide .reportDataView .related {
+  box-shadow: none;
+  text-shadow: none;
+}
+
 #search {
   margin-left: 2em;
   margin-top: 0.5em;
