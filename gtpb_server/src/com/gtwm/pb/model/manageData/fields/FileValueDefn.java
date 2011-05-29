@@ -91,6 +91,9 @@ public class FileValueDefn implements FileValue {
 	}
 
 	public String getIconName() {
+		if (this.isNull()) {
+			return "";
+		}
 		String filename = this.getFilename();
 		if (filename.contains(".")) {
 			String extensionStr = filename.replaceAll(".*\\.", "").toUpperCase();
@@ -106,6 +109,9 @@ public class FileValueDefn implements FileValue {
 	}
 
 	public boolean isImage() {
+		if (this.isNull()) {
+			return false;
+		}
 		String extension = this.filename.replaceAll("^.*\\.", "").toLowerCase();
 		if (extension.equals("jpg") || extension.equals("png") || extension.equals("gif")
 				|| extension.equals("jpeg")) {
