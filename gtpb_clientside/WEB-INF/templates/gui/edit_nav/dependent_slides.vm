@@ -1,0 +1,9 @@
+#set($sessionTable = $sessionData.getTable())
+#set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
+#foreach($dependentTable in $dependentTables)
+  <div class="slide"> 
+    <section class="middle"> 
+      <h1>$dependentTable.getSimpleName()</h1>
+    </section>
+  </div>
+#end
