@@ -10,6 +10,7 @@
   <span class="new"><img src="resources/toolbar/new.png"> add new</span>
 </div>
 #foreach($row in $reportDataRows)
+  #set($dataRowFields = $row.getDataRowFields())
   #set($thisUniqueId = $row.getRowId())
   #set($emboldened = false)
   <div class="related block current" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&set_row_id=$thisUniqueId">
