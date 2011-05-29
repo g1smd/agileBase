@@ -1,7 +1,7 @@
 <div class="title">edit record</div>
 <div class="presentation"> 
   <div id="presentation-counter"></div> 
-  <div class="slides"> 
+  <div class="slides">
     <div class="slide"> 
       <section class="middle"> 
         #set($edit_nav = true)

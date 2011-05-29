@@ -32,6 +32,19 @@ function initialiseSlides() {
     var slides = document.querySelectorAll('.slide');
 }
 
+/* For any table (represented by a slide), there can be dependent tables that link to it. 
+ * Show these as slides to the right
+ */
+function loadDependentSlides() {
+  var jqSlides = $(levelsList[currentLevel].levelContent).find(".slides");
+  var firstSlide = jqSlides.find(".slide").first();
+  if (firstSlide.find(".dependent_tables").children().size() > 0) {
+    $.get("AppController.servlet?return=gui/edit_nav/dependent_slides", function(data) {
+	  jqSlides.append(data);
+    });
+  }
+}
+
 function createLevel(levelUrl) {
   var jqLevel = $("<div class='level transparent'></div>");
   $("#levels").append(jqLevel);
@@ -43,6 +56,7 @@ function createLevel(levelUrl) {
 	levelsList[currentLevel] = newLevel;
 	jqLevel.removeClass("transparent").removeClass("invisible");
 	updateBreadcrumb();
+	loadDependentSlides();
 	initialiseSlides();
   });
 }
