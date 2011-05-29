@@ -61,6 +61,12 @@ body {
   border: 1px solid #eeeeee;
 }
 
+.slide .title {
+  text-align: center;
+  font-weight: bold;
+  margin: 1em;
+}
+
 #search {
   margin-left: 2em;
   margin-top: 0.5em;
