@@ -10,7 +10,7 @@
       #set($success = $linkingReports.add($report))
     #end
   #end
-  #if($linkingReports.size() == 0) #break #end
+  #if($linkingReports.size() > 0)
   <div class="slide reportDataView">
     <section class="middle"> 
       <div class="title">
@@ -28,4 +28,5 @@
       #parse("gui/edit_nav/report_content.vm")
     </section>
   </div>
+  #end
 #end
