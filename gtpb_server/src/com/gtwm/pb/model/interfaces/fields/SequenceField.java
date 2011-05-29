@@ -21,4 +21,14 @@ package com.gtwm.pb.model.interfaces.fields;
  * A field whose contents are an auto-generated sequence of numbers
  */
 public interface SequenceField extends BaseField {
+
+	/**
+	 * Sequence fields are often used for primary keys, in which case their name
+	 * will be complicated, like
+	 * 
+	 * ID:a1) organisations
+	 * 
+	 * Allow a simple version to be returned, e.g. 'organisations'
+	 */
+	public String getSimpleName();
 }

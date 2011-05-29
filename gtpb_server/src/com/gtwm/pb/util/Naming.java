@@ -50,6 +50,14 @@ public final class Naming {
 	}
 
 	/**
+	 * Take a table name, e.g. 'a1) organisations' or a field name like 'ID:a1)
+	 * organisations' and return the simple form - 'organisations'
+	 */
+	public static String getSimpleName(String complexName) {
+		return complexName.replaceFirst("^.*\\)","");
+	}
+
+	/**
 	 * Creates a reasonable name for a foreign key constraint. Note any given
 	 * relationField must always map to the same name as we need to be able to
 	 * regenerate the name at a later time in order to delete the constraint -

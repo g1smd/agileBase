@@ -28,6 +28,7 @@ import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.Naming;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
@@ -81,4 +82,10 @@ public class SequenceFieldDefn extends AbstractField implements SequenceField {
 	public FieldCategory getFieldCategory() {
 		return FieldCategory.SEQUENCE;
 	}
+	
+	@Transient
+	public String getSimpleName() {
+		return Naming.getSimpleName(this.getFieldName());
+	}
+
 }

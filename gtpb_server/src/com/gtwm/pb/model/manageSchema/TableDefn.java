@@ -33,6 +33,7 @@ import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
 import com.gtwm.pb.model.interfaces.fields.SequenceField;
 import com.gtwm.pb.model.manageSchema.fields.AbstractField;
+import com.gtwm.pb.util.Naming;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.CantDoThatException;
@@ -98,7 +99,7 @@ public class TableDefn implements TableInfo {
 		if (this.simpleName != null) {
 			return this.simpleName;
 		}
-		this.simpleName = this.getTableName().replaceFirst("^.*\\)","");
+		this.simpleName = Naming.getSimpleName(this.getTableName());
 		return this.simpleName;
 	}
 
