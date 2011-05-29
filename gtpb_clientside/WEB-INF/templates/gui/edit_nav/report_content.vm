@@ -1,5 +1,6 @@
 #if(!$report)
   #set($report = $sessionData.getReport())
+  Using session report
 #end
 #if(!$filters)
   #set($reportDataRows = $view.getReportDataRows($report, 100))
