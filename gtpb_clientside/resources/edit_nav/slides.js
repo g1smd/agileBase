@@ -17,7 +17,6 @@
   Modifications: Chrome Developer Relations <chrome-devrel@googlegroups.com>
 */
 /* From http://studio.html5rocks.com/#Deck */
-(function() {
 	    var doc = document;
         var disableBuilds = true;
  
@@ -323,4 +322,3 @@
             el.style.display = (el.offsetHeight) ? 'none' : 'block';
           });
         }
-})();
