@@ -7,6 +7,7 @@
   #set($thisValues = $row.get(0))
   #set($rowColours = $row.get(3))
   #set($thisUniqueId = $row.get(2))
+  #set($emboldened = false)
   <div class="related block current" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&set_row_id=$thisUniqueId">
     #foreach($cell in $thisValues)
       #set($cellNumber = $foreach.count - 1)
