@@ -1,4 +1,5 @@
-<div class="breadcrumb_title">edit record</div>
+#set($sessionTable = $sessionData.getTable())
+<div class="breadcrumb_title">edit $sessionTable.getSimpleName()</div>
 <div class="presentation"> 
   <div id="presentation-counter"></div> 
   <div class="slides">
@@ -9,7 +10,6 @@
           #parse("gui/reports_and_tables/tabs/edit.vm")
         </div>
         <div class="dependent_tables">
-          #set($sessionTable = $sessionData.getTable())
           #set($primaryKey = $sessionTable.getPrimaryKey())
           #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
           #foreach($dependentTable in $dependentTables)
