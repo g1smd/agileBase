@@ -167,6 +167,7 @@ body {
 .slide table#reportData th {
   background: white;
   border: 0;
+  text-shadow: none;
 }
 
 .this_table {
