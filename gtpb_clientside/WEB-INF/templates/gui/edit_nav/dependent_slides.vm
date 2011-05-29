@@ -27,7 +27,16 @@
         #set($report = $linkingReports.get(0))
       #end
       #set($filters = $viewTools.getNewFilterMap())
-      #set($success = $filters.put($primaryKey, "$sessionRowId"))
+      #if($report.equals($dependentTable.getDefaultReport()))
+        #foreach($field in $report.getReportBaseFields())
+          #if($field.getRelatedTable().equals($sessionTable))
+            #set($success = $filters.put($field, "$sessionRowId"))
+            #break
+          #end
+        #end
+      #else
+        #set($success = $filters.put($primaryKey, "$sessionRowId"))
+      #end
       #parse("gui/edit_nav/report_content.vm")
     </section>
   </div>
