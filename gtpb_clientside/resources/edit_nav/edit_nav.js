@@ -55,7 +55,7 @@ function createLevel(levelUrl) {
   jqLevel.load(levelUrl, function() {
 	var newLevel = {};
 	newLevel.levelUrl = levelUrl;
-	newLevel.title = jqLevel.find(".level_title").text();
+	newLevel.title = jqLevel.find(".breadcrumb_title").text();
 	newLevel.levelContent = jqLevel[0];
 	levelsList[currentLevel] = newLevel;
 	jqLevel.removeClass("transparent").removeClass("invisible");
