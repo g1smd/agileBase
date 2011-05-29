@@ -154,4 +154,5 @@ body {
 .dependent_tables {
   width: 30%;
   float: right;
+  padding-left: 0.2em;
 }
