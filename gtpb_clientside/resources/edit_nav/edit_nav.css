@@ -133,6 +133,10 @@ body {
   width: auto;
 }
 
+.slide table#reportData tr.separator td.capitalised {
+  text-align: left;
+}
+
 .slide table#reportData th {
   background: white;
   border: 0;
