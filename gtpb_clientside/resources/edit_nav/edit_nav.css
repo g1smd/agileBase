@@ -144,6 +144,10 @@ body {
   top: 0.5em;
 }
 
+.slide .separator span {
+  background: none;
+}
+
 .slide table#reportData th {
   background: white;
   border: 0;
