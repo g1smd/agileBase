@@ -72,7 +72,6 @@ function showCurrentLevel() {
   jqLevelContent.removeClass("flyDown").removeClass("flyUp").removeClass("invisible").removeClass("transparent");
   updateBreadcrumb();
   window.scrollTo(0,0);
-  alert('scrolled');
 }
 
 function moveUp() {
