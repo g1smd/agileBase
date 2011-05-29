@@ -14,7 +14,7 @@
           #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
           #foreach($dependentTable in $dependentTables)
             #foreach($report in $dependentTable.getReports())
-              #if($report.getReportBaseFields().contains($primaryKey))
+              #if(($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
                 <h1>$dependentTable.getSimpleName()</h1>
                 #break ## next table
               #end
