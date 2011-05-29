@@ -168,6 +168,8 @@ body {
   background: white;
   border: 0;
   text-shadow: none;
+  font-weight: normal;
+  font-size: 14pt;
 }
 
 .this_table {
