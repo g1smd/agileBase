@@ -62,6 +62,10 @@ body {
   border: 1px solid #eeeeee;
 }
 
+.slide.reportDataView .related:hover {
+  border-color: #50add6; /* ab light blue */
+}
+
 .slide .title {
   text-align: center;
   /* font-weight: bold; */
