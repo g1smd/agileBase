@@ -1,12 +1,10 @@
-#if(!$report)
-  #set($report = $sessionData.getReport())
-  Using session report
-#end
+## $report must be defined
 #if(!$filters)
   #set($reportDataRows = $view.getReportDataRows($report, 100))
 #else
   #set($reportDataRows = $view.getReportDataRows($report, 100, $filters, true))##
 #end
+Report data rows $reportDataRows
 #set($reportBaseFields = $sessionReport.getReportBaseFields())##
 #set($internalTableName = $report.getParentTable().getInternalTableName())
 <div class="related block centrebox" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&save_new_record=true">
