@@ -6,7 +6,7 @@
   #set($linkingReports = [])
   #set($reports = $dependentTable.getReports())
   #foreach($report in $reports)
-    #if($report.getReportBaseFields().contains($primaryKey))
+    #if(($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
       #set($success = $linkingReports.add($report))
     #end
   #end
