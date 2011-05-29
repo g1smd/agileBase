@@ -26,7 +26,7 @@ function initialiseSlides() {
 		return;
 	}
     // Initialize
-    var slideshow = new SlideShow(query('.slide'));
+    var slideshow = new SlideShow($(levelsList[currentLevel].levelContent).find(".slide").toArray());
     var counters = document.querySelectorAll('.counter');
     var slides = document.querySelectorAll('.slide');
 }
