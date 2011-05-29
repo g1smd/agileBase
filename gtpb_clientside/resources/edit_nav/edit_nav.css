@@ -65,6 +65,7 @@ body {
   text-align: center;
   /* font-weight: bold; */
   font-size: 14pt;
+  text-shadow: none;
   margin: 1em;
 }
 
