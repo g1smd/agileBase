@@ -81,7 +81,7 @@ body {
 
 .slide input {
   background: none;
-  border-color: 1px solid rgba(0, 0, 0, 0); /* transparent */
+  border-color: rgba(0, 0, 0, 0); /* transparent */
 }
 
 .slide input:hover {
