@@ -36,11 +36,16 @@ body {
   -webkit-box-orient: horizontal;
   -webkit-box-pack: center;
   -webkit-box-align: center;
- 
+  
   display: -moz-box;
   -moz-box-orient: horizontal;
   -moz-box-pack: center;
   -moz-box-align: center;
+  
+  display: -ms-box;
+  -ms-box-orient: horizontal;
+  -ms-box-pack: center;
+  -ms-box-align: center;
   
   display: box;
   box-orient: horizontal;
@@ -48,7 +53,6 @@ body {
   box-align: center;
   
   overflow: visible; /* necessary for FF */
-  float: none;
 }
 
 .reportDataView .block:hover {
