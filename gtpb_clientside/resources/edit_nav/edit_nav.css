@@ -81,12 +81,12 @@ body {
 
 .slide input {
   background: none;
-  border-style: none;
+  border-color: 1px solid rgba(0, 0, 0, 0); /* transparent */
 }
 
 .slide input:hover {
   background: white;
-  border-style: solid;
+  border-color: auto;
 }
 
 #search {
