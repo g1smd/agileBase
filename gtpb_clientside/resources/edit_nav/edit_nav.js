@@ -42,6 +42,11 @@ function initialiseSlides() {
     var slideshow = new SlideShow($(levelsList[currentLevel].levelContent).find(".slide").toArray());
     var counters = document.querySelectorAll('.counter');
     var slides = document.querySelectorAll('.slide');
+    
+    fComboComponents();
+    fRelationPickers();
+    fDatePickers();
+    /* fTwitter(); */
 }
 
 /* For any table (represented by a slide), there can be dependent tables that link to it. 
