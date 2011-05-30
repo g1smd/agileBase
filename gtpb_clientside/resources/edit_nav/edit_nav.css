@@ -86,7 +86,7 @@ body {
 
 .slide input:hover {
   background: white;
-  border-color: auto;
+  border-color: #50add6;
 }
 
 #search {
