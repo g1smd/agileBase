@@ -79,7 +79,7 @@
             : #parse('gui/resources/input/input.vm')
             #if($printoutSetting == "NAME_VALUE_LINEBREAK")<br>#end
           #else
-            #if(($rowCount == 1) && ($printoutSetting == "VALUE_ONLY") && (!$tableDataRow.get($field).isUrl()) && (!$tableDataRow.get($field).isEmailAddress()))
+            #if(($rowCount == 1) && ($printoutSetting == "VALUE_ONLY") && (!$tableDataRow.get($field).isURL()) && (!$tableDataRow.get($field).isEmailAddress()))
               <b>#parse('gui/resources/input/input.vm')</b>
             #else
               #parse('gui/resources/input/input.vm')
