@@ -7,6 +7,13 @@ $(document).ready(function() {
     var href = $(this).attr("href");
     moveDownTo(href);
   });
+  $("input").live('focus', function() {
+	$(this).addClass("editing");
+  }
+  $("input").live('blur', function() {
+	$(this).removeClass("editing");
+  }
+  
   $("#breadcrumb a").live('click', function(event) {
 	event.preventDefault();
 	var href = $(this).attr("href");
