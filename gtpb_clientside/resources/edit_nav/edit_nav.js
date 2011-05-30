@@ -7,10 +7,10 @@ $(document).ready(function() {
     var href = $(this).attr("href");
     moveDownTo(href);
   });
-  $("input").live('focus', function() {
+  $("input").add("textarea").live('focus', function() {
 	$(this).addClass("editing");
   });
-  $("input").live('blur', function() {
+  $("input").add("textarea").live('blur', function() {
 	$(this).removeClass("editing");
   });
   
