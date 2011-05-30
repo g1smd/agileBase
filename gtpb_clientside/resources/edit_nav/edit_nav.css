@@ -89,6 +89,11 @@ body {
   border-color: #50add6;
 }
 
+.slide .editing {
+  background: white;
+  border-color: #ff8040; /* agileBase orange */
+}
+
 #search {
   margin-left: 2em;
   margin-top: 0.5em;
