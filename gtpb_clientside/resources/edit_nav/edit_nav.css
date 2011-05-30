@@ -79,6 +79,16 @@ body {
   margin: 1em;
 }
 
+.slide input {
+  background: none;
+  border: none;
+}
+
+.slide input:hover {
+  background: white;
+  border: auto;
+}
+
 #search {
   margin-left: 2em;
   margin-top: 0.5em;
