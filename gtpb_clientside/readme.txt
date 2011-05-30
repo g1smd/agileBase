@@ -15,7 +15,3 @@ Locations of important files for pane 3:
 jQuery and libraries are in /resources
 
 Javascript and CSS to manage the tabs is in /resources/tabs
-
-CSS for report fields and manage tabs is the same but currently duplicated in files
-/resources/tabs/report_fields.css
-/resources/tabs/report_administration.css
