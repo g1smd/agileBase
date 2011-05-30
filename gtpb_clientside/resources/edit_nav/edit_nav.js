@@ -9,10 +9,10 @@ $(document).ready(function() {
   });
   $("input").live('focus', function() {
 	$(this).addClass("editing");
-  }
+  });
   $("input").live('blur', function() {
 	$(this).removeClass("editing");
-  }
+  });
   
   $("#breadcrumb a").live('click', function(event) {
 	event.preventDefault();
