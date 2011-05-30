@@ -3,6 +3,7 @@
 #set($sessionRowId = $sessionData.getRowId())
 #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
 #foreach($dependentTable in $dependentTables)
+#if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable))
   #set($linkingReports = [])
   #set($reports = $dependentTable.getReports())
   #foreach($report in $reports)
@@ -29,4 +30,5 @@
     </section>
   </div>
   #end
+#end
 #end
