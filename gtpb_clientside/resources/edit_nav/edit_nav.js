@@ -64,6 +64,7 @@ function createLevel(levelUrl) {
 	  initialiseSlides();
 	}
 	window.scrollTo(0,0);
+	firefoxBugWorkaround();
   });
 }
 
@@ -164,4 +165,13 @@ function updateBreadcrumb() {
   }
   var title = levelsList[currentLevel].title;
   jqBreadcrumb.append("<span class='currentLevel'>" + title + "</span>");
+}
+
+/**
+ * Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=660699
+ */
+function firefoxBugWorkaround() {	
+  if ($.browser.mozilla) {
+	$(".centrebox").css("float","none");
+  }
 }
