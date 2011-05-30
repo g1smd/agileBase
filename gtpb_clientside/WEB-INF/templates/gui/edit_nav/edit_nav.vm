@@ -28,6 +28,7 @@
   <link type="text/css" href="resources/edit_nav/edit_nav.css" rel="stylesheet" />
   <link type="text/css" href="resources/edit_nav/slides.css" rel="stylesheet" />
   <script src="resources/jquery.js" language="Javascript"></script>
+  <script src="resources/pane3_amalgam.js" language="Javascript"></script>
   <script src="resources/edit_nav/edit_nav.js" language="Javascript"></script>
   <script src="resources/edit_nav/slides.js" language="Javascript"></script>
 </head>
