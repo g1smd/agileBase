@@ -79,12 +79,12 @@ body {
   margin: 1em;
 }
 
-.slide input {
+.slide input,textarea {
   background: none;
   border-color: rgba(0, 0, 0, 0); /* transparent */
 }
 
-.slide input:hover {
+.slide input,textarea:hover {
   background: white;
   border-color: #50add6;
 }
