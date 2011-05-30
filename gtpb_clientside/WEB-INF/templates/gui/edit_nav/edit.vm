@@ -13,12 +13,14 @@
           #set($primaryKey = $sessionTable.getPrimaryKey())
           #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
           #foreach($dependentTable in $dependentTables)
+          #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable))
             #foreach($report in $dependentTable.getReports())
               #if(($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
                 <h1>$dependentTable.getSimpleName()</h1>
                 #break ## next table
               #end
             #end
+          #end
           #end
         </div>
       </section> 
