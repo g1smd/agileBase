@@ -94,6 +94,21 @@ body {
   border-color: #ff8040; /* agileBase orange */
 }
 
+.slide .currency_symbol {
+  float: none;
+  left: 0px;
+}
+
+.dependent_table {
+  height: 3em;
+}
+
+.snippet {
+  height: 1em;
+  width: 100%;
+  overflow: hidden;
+}
+
 #search {
   margin-left: 2em;
   margin-top: 0.5em;

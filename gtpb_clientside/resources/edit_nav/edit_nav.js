@@ -61,6 +61,7 @@ function loadDependentSlides() {
     $.get("AppController.servlet?return=gui/edit_nav/dependent_slides", function(data) {
 	  jqSlides.append(data);
 	  initialiseSlides();
+	  dependentSnippets();
 	  return true;
     });
   }
@@ -183,6 +184,23 @@ function updateBreadcrumb() {
   }
   var title = levelsList[currentLevel].title;
   jqBreadcrumb.append("<span class='currentLevel'>" + title + "</span>");
+}
+
+function dependentSnippets() {
+  var jqLevel = $(levelsList[level].levelContent);
+  var slides = jqLevel.find(".slide");
+  var firstSlide = slides.first();
+  var remainingSlides = slides.not(":first");
+  remainingSlides.each(function() {
+	var jqSlide = $(this);
+	var tableId = jqSlide.attr("id").replace("slide_","");
+	var jqSnippets = $("#dependent_table_" + tableId);
+	var firstCards = jqSlide.find(".block.current:lt(2)");
+	firstCards.each(function() {
+	  var snippetText = $(this).text();
+	  jqSnippets.append("<div class='snippet'>" + snippetText + "</div>");
+	});
+  });
 }
 
 /**
