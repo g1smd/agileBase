@@ -50,7 +50,7 @@ function initialiseSlides() {
     
     $(".dependent_table").click(function() {
       slideshow.go($(this).index() + 1);
-    }
+    });
 }
 
 /* For any table (represented by a slide), there can be dependent tables that link to it. 
