@@ -12,7 +12,7 @@
     #end
   #end
   #if($linkingReports.size() > 0)
-  <div class="slide reportDataView">
+  <div class="slide reportDataView" id="slide_$dependentTable.getInternalTableName()">
     <section class="middle"> 
       <div class="title">
       $dependentTable.getSimpleName()
