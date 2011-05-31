@@ -27,7 +27,7 @@
   display: block;
   /* overflow: hidden; */
   overflow-x: hidden;
-  background: #bdbdbd; /* 778 */
+  background: #486f98; /* 778, bdbdbd */
 }
 
 .slides {
@@ -127,7 +127,7 @@
 
 section, footer {
   color: #3f3f3f;
-  text-shadow: rgba(0, 0, 0, 0.2) 0 2px 5px;
+  /* text-shadow: rgba(0, 0, 0, 0.2) 0 2px 5px; */
   margin: 100px 30px 0;
   display: block;
   /* overflow: hidden; */
