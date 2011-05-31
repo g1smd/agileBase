@@ -51,7 +51,8 @@ function initialiseSlides() {
     $(".dependent_table").click(function() {
       slideshow.go($(this).index() + 2);
     });
-    $(".rewind").click(function() {
+    // live because only first few slide are created on load?
+    $(".rewind").live('click', function() {
       slideshow.go(1);
     });
     slideshow.go(1);
