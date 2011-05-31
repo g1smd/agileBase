@@ -50,7 +50,7 @@ function initialiseSlides() {
     
     $(".dependent_table").click(function() {
       slideshow.go($(this).index() + 2);
-      $(".presentation")[0].scrollTo(0,0);
+      $(".presentation").scrollTop(0);
     });
     // live because only first few slide are created on load?
     $(".rewind").live('click', function() {
