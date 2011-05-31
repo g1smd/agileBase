@@ -54,6 +54,7 @@ function initialiseSlides() {
     $(".rewind").click(function() {
       slideshow.go(1);
     });
+    slideshow.go(1);
 }
 
 /* For any table (represented by a slide), there can be dependent tables that link to it. 
