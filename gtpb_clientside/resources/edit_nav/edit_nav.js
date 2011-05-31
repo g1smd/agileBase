@@ -54,6 +54,7 @@ function initialiseSlides() {
     // live because only first few slide are created on load?
     $(".rewind").live('click', function() {
       slideshow.go(1);
+      showCurrentLevel();
     });
     slideshow.go(1);
 }
