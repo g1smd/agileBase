@@ -99,8 +99,16 @@ body {
   left: 0px;
 }
 
+.dependent_tables {
+  width: 30%;
+  float: right;
+  text-shadow: none;
+  margin-top: 1em;
+}
+
 .dependent_table {
-  height: 3em;
+  padding-left: 1em;
+	height: 3em;
   border-bottom: 1px solid #F2F2F2;
 }
 
@@ -225,9 +233,3 @@ body {
   float: left;
 }
 
-.dependent_tables {
-  width: 30%;
-  float: right;
-  padding-left: 1em;
-  text-shadow: none;
-}
