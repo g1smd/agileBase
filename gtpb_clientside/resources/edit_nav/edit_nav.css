@@ -126,6 +126,10 @@ body {
   color: black;
 }
 
+.dependent_table:hover {
+  cursor: pointer;
+}
+
 .snippet {
   height: 1.2em;
   width: 100%;
