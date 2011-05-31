@@ -118,6 +118,11 @@ body {
   font-weight: normal;
   font-size:14pt;
   text-transform: lowercase;
+  color: gray;
+}
+
+.dependent_table.active h1 {
+  color: black;
 }
 
 .snippet {
