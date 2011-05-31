@@ -81,7 +81,9 @@ body {
 
 .slide input, .slide textarea {
   background: none;
-  border-color: rgba(0, 0, 0, 0); /* transparent */
+  border: 1px solid rgba(0, 0, 0, 0); /* transparent */
+  position: relative;
+  top: -3px;
 }
 
 .slide input:hover, .slide textarea:hover {
