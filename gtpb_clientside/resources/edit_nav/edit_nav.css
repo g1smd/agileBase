@@ -101,6 +101,13 @@ body {
 
 .dependent_table {
   height: 3em;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.dependent_table h1 {
+  margin:0;
+  font-weight: normal;
+  font-size:14pt
 }
 
 .snippet {
