@@ -49,7 +49,7 @@ function initialiseSlides() {
     /* fTwitter(); */
     
     $(".dependent_table").click(function() {
-      slideshow.go($(this).index() + 1);
+      slideshow.go($(this).index() + 2);
     });
 }
 
