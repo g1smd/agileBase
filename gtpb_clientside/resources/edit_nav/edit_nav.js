@@ -53,7 +53,10 @@ function initialiseSlides() {
     });
     // live because only first few slide are created on load?
     $(".rewind").live('click', function() {
-      slideshow.prev();
+      var slideNum = $(this).closest(".slide").find(".counter").text();
+      for(var i =0; i < slideNum; i++) {
+        slideshow.prev();
+      }
     });
     slideshow.go(1);
 }
