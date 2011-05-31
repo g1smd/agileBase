@@ -101,6 +101,11 @@ body {
   left: 0px;
 }
 
+.rewind {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
 .dependent_tables {
   width: 30%;

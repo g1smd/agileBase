@@ -13,6 +13,7 @@
   #end
   #if($linkingReports.size() > 0)
   <div class="slide reportDataView" id="slide_$dependentTable.getInternalTableName()">
+    <img class="rewind" src="resources/edit_nav/rewind.png" />
     <section class="middle"> 
       <div class="title">
       $dependentTable.getSimpleName()
