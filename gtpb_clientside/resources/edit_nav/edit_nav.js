@@ -50,10 +50,12 @@ function initialiseSlides() {
     
     $(".dependent_table").click(function() {
       slideshow.go($(this).index() + 2);
+      window.scrollTo(0,0);
     });
     // live because only first few slide are created on load?
     $(".rewind").live('click', function() {
       var slideNum = $(this).closest(".slide").find(".counter").text();
+  	  //go(1) doesn't seem to work always here
       for(var i =0; i < slideNum; i++) {
         slideshow.prev();
       }
