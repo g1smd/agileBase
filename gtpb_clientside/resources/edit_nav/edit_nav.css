@@ -91,7 +91,7 @@ body {
 
 .slide .editing {
   background: white;
-  border-color: #ff8040; /* agileBase orange */
+  border-color: #ff8040!important; /* agileBase orange, override hover */
 }
 
 .slide .currency_symbol {
