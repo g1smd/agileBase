@@ -40,6 +40,17 @@ function initialiseSlides() {
     	$("#homeContent").html(data);
     	jqSearchBox.removeClass("changed");
       });
+      // also filter the table list
+      $(".jumpto_table").each(function() {
+    	var jqLink = $(this);
+        var tableName =  jqLink.text().toLowerCase();
+        var title = jqLink.attr("title").toLowerCase();
+        if ((title.contains(filterString.toLowerCase())) || (tableName.contains(filterString.toLowerCase()))) {
+          jqLink.removeClass("invisible");
+        } else {
+          jqLink.addClass("invisible");
+        }
+      });
     });
 	
 	if ($(".slide").size() == 0) {
