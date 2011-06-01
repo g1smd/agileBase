@@ -9,6 +9,7 @@
     #foreach($tableReport in $tableReports)
       #if($view.loggedInUserAllowedToViewReport($tableReport) && (!$tableReport.getReportName().contains("dbvcalc")) && (!$tableReport.getReportName().contains("dbvcrit")))
         #set($firstReport = $tableReport)
+        $firstReport
         #break
       #end
     #end
