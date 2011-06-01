@@ -51,6 +51,10 @@ function initialiseSlides() {
           jqLink.addClass("invisible");
         }
       });
+      // show all rather than none
+      if ($(".jumpto_table").size() == $(".jumpto_table.invisible").size()) {
+    	$(".jumpto_table").removeClass("invisible");
+      }
     });
 	
 	if ($(".slide").size() == 0) {
