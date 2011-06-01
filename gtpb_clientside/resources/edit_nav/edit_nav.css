@@ -170,9 +170,15 @@ body {
   color: #486f98;
 }
 
-#navrow {
+#jumpto {
   overflow: hidden;
   height: 1.4em;
+}
+
+.jumpto_table {
+  background: white;
+  float: left;
+  border: 1px solid #ccc;
 }
 
 #levels {

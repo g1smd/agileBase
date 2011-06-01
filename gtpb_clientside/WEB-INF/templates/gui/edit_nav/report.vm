@@ -2,19 +2,20 @@
 <div class="breadcrumb_title">$report</div>
 #set($filterString = $sessionData.getGlobalFilterString($report))
 <div id="navrow">
-  <input id="searchbox" name="searchbox" type="search" placeholder="search" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
-  Jump to: 
+  <input id="searchbox" name="searchbox" type="search" placeholder="search $report" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
+  <div id="jumpto"
+  Jump to:
   #foreach($table in $view.getPopularTables($view.getLoggedInUser()))
     #set($tableReports = $table.getReports())
     #foreach($tableReport in $tableReports)
       #if((!$tableReport.equals($table.getDefaultReport())) && ($view.loggedInUserAllowedToViewReport($tableReport)) && (!$tableReport.getReportName().contains("dbvcalc")) && (!$tableReport.getReportName().contains("dbvcrit")))
         #set($firstReport = $tableReport)
-        $firstReport
         #break
       #end
     #end
     <a class="jumpto_table #if($table.equals($report.getParentTable())) current #end" href="AppController.servlet?return=gui/edit_nav/report&set_table=$table.getInternalTableName()&set_report=$firstReport.getInternalReportName()">$table.getSimpleName()</a>
   #end
+  </div>
 </div>
 <div class="reportDataView" id="homeContent">
   #parse("gui/edit_nav/report_content.vm")
