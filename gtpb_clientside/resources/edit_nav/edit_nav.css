@@ -196,6 +196,11 @@ a.jumpto_table {
   text-decoration: none;
 }
 
+a.jumpto_table.current {
+  background-color: #486f98; /* ab dark blue */
+  color: white;
+}
+
 #levels {
   position: relative;
   background-color: #bdbdbd;
