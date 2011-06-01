@@ -254,3 +254,6 @@ body {
   float: left;
 }
 
+.changed {
+  text-decoration: underline;
+}
