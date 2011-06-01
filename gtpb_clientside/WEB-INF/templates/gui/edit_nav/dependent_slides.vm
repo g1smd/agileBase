@@ -17,12 +17,13 @@
     <section class="middle"> 
       <div class="title">
       $dependentTable.getSimpleName()
-      <select name="$dependentTable.getInternalTableName()_select">
-        #foreach($report in $linkingReports)
-          <option value="$report.getInternalReportName()">$report.getModule() - $report</option>
-        #end
-        <option value="$dependentTable.getDefaultReport().getInternalReportName()">all records</option>
-      </select>
+      ##<select name="$dependentTable.getInternalTableName()_select">
+      ##  #foreach($report in $linkingReports)
+      ##    <option value="$report.getInternalReportName()">$report.getModule() - $report</option>
+      ##  #end
+      ##  <option value="$dependentTable.getDefaultReport().getInternalReportName()">all records</option>
+      ##</select>
+      : $linkingReports.get(0)
       </div>
       #set($report = $linkingReports.get(0))
       #set($filters = $viewTools.getNewFilterMap())
