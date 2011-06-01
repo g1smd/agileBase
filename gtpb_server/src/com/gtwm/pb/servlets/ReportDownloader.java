@@ -59,6 +59,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
+import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -166,7 +167,7 @@ public final class ReportDownloader extends HttpServlet {
 		rowNum++;
 		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
 		List<DataRowInfo> reportDataRows = dataManagement.getReportDataRows(company, report,
-				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), -1);
+				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), -1, QuickFilterType.AND);
 		String fieldValue = "";
 		for (DataRowInfo dataRow : reportDataRows) {
 			Map<BaseField, DataRowFieldInfo> dataRowFieldMap = dataRow.getDataRowFields();

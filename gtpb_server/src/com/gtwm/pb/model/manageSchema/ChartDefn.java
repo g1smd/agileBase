@@ -54,6 +54,7 @@ import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
+import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.util.CantDoThatException;
@@ -219,7 +220,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 		// Compose complete SQL
 		ReportDataInfo reportData = new ReportData(conn, this.report, false, false);
 		Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
-				filterValues, exactFilters);
+				filterValues, exactFilters, QuickFilterType.AND);
 		String filterArgs = null;
 		List<ReportQuickFilterInfo> filtersUsed = null;
 		// TODO: there is only one WHERE clause - there should be an improvement

@@ -264,6 +264,16 @@ public final class SessionData implements SessionDataInfo {
 		// if fieldValue empty, clear the field filter
 		this.clearReportFilterValue(field);
 	}
+	
+	public synchronized void setGlobalFilterString(BaseReportInfo report, String filterString) {
+		if (filterString != null) {
+			if (!(filterString.equals(""))) {
+				this.globalFilterStrings.put(report, filterString);
+				return;
+			}
+		}
+		this.clearGlobalFilterString(report);
+	}
 
 	public synchronized void setCustomReportFilterValue(String filterSet, BaseField field,
 			String fieldValue) {
@@ -296,6 +306,10 @@ public final class SessionData implements SessionDataInfo {
 	public synchronized void clearReportFilterValue(BaseField field) {
 		this.reportFilterValues.remove(field);
 	}
+	
+	private synchronized void clearGlobalFilterString(BaseReportInfo report) {
+		this.globalFilterStrings.remove(report);
+	}
 
 	private synchronized void clearCustomReportFilterValue(String filterSet, BaseField field) {
 		Map<BaseField, String> customFilterValues = this.customReportFilterValues.get(filterSet);
@@ -311,6 +325,10 @@ public final class SessionData implements SessionDataInfo {
 
 	public synchronized Map<BaseField, String> getReportFilterValues() {
 		return Collections.unmodifiableMap(new HashMap<BaseField, String>(this.reportFilterValues));
+	}
+	
+	public synchronized String getGlobalFilterString(BaseReportInfo report) {
+		return this.globalFilterStrings.get(report);
 	}
 
 	public synchronized Map<BaseField, String> getCustomReportFilterValues(String filterSet) {
@@ -571,6 +589,8 @@ public final class SessionData implements SessionDataInfo {
 	private Map<String, BaseReportInfo> customReports = new HashMap<String, BaseReportInfo>();
 
 	private Map<String, BaseField> customFields = new HashMap<String, BaseField>();
+	
+	private Map<BaseReportInfo, String> globalFilterStrings = new HashMap<BaseReportInfo, String>();
 
 	private TableDependencyException tdex = null;
 

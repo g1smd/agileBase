@@ -51,6 +51,8 @@ import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
+import com.gtwm.pb.util.Enumerations.QuickFilterType;
+
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Property;
@@ -185,7 +187,7 @@ public final class CalendarPublisher extends HttpServlet {
 			// select only rows with an event date
 			reportFilterValues.put(eventDateField.getBaseField(), "!?");
 			List<DataRowInfo> reportDataRows = reportData.getReportDataRows(conn,
-					reportFilterValues, false, sessionReportSorts, rowLimit);
+					reportFilterValues, false, sessionReportSorts, rowLimit, QuickFilterType.AND);
 			Calendar calendar = new Calendar(); // an iCal Calendar, not a
 												// java.util.Calendar object
 			calendar.getProperties().add(

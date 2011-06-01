@@ -102,6 +102,7 @@ import com.gtwm.pb.servlets.ServletUtilMethods;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.DataDependencyException;
 import com.gtwm.pb.util.Enumerations.DataFormat;
+import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -208,7 +209,7 @@ public final class DataManagement implements DataManagementInfo {
 			Map<BaseField, String> filterValues = sessionData.getReportFilterValues();
 
 			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
-					filterValues, false, emptySorts, -1, primaryKey);
+					filterValues, false, emptySorts, -1, primaryKey, QuickFilterType.AND);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				Integer item = results.getInt(1);
@@ -304,7 +305,7 @@ public final class DataManagement implements DataManagementInfo {
 		Map<BaseField, String> filters = sessionData.getReportFilterValues();
 		Map<BaseField, Boolean> sorts = new HashMap<BaseField, Boolean>();
 		List<DataRowInfo> dataRows = this.getReportDataRows(company, report, filters, false, sorts,
-				-1);
+				-1, QuickFilterType.AND);
 		String lockFieldInternalName = table.getField(HiddenFields.LOCKED.getFieldName())
 				.getInternalFieldName();
 		String SQLCode = "UPDATE " + table.getInternalTableName() + " SET " + lockFieldInternalName
@@ -1561,7 +1562,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
 				new HashMap<BaseField, String>(0), false, new HashMap<BaseField, Boolean>(0),
-				numRows);
+				numRows,QuickFilterType.AND);
 		String dataFeedString = null;
 		if (dataFormat.equals(DataFormat.JSON)) {
 			dataFeedString = this.generateJSON(report, reportDataRows);
@@ -1731,7 +1732,7 @@ public final class DataManagement implements DataManagementInfo {
 			allDayValues = false;
 		}
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
-				filterValues, false, new HashMap<BaseField, Boolean>(), 10000);
+				filterValues, false, new HashMap<BaseField, Boolean>(), 10000, QuickFilterType.AND);
 		JSONStringer js = new JSONStringer();
 		if (format.equals(DataFormat.JSON_TIMELINE)) {
 			js.object();
@@ -1869,7 +1870,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	public List<DataRowInfo> getReportDataRows(CompanyInfo company, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> sessionSorts, int rowLimit) throws SQLException,
+			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType) throws SQLException,
 			CodingErrorException, CantDoThatException {
 		Connection conn = null;
 		List<DataRowInfo> reportDataRows = null;
@@ -1878,7 +1879,7 @@ public final class DataManagement implements DataManagementInfo {
 			conn.setAutoCommit(false);
 			ReportDataInfo reportData = this.getReportData(company, reportDefn, conn, true);
 			reportDataRows = reportData.getReportDataRows(conn, filterValues, exactFilters,
-					sessionSorts, rowLimit);
+					sessionSorts, rowLimit, filterType);
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -1957,7 +1958,7 @@ public final class DataManagement implements DataManagementInfo {
 			conn.setAutoCommit(false);
 			ReportDataInfo reportData = new ReportData(conn, reportDefn, false, false);
 			Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
-					reportFilterValues, false);
+					reportFilterValues, false, QuickFilterType.AND);
 			String filterArgs = null;
 			List<ReportQuickFilterInfo> filtersUsed = null;
 			// TODO: there is only one WHERE clause - there should be an
@@ -2064,7 +2065,7 @@ public final class DataManagement implements DataManagementInfo {
 		// returned data. If there are, always look up direct from db
 		ReportDataInfo reportData = new ReportData(null, reportSummary.getReport(), false, false);
 		Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
-				reportFilterValues, false);
+				reportFilterValues, false, QuickFilterType.AND);
 		if (whereClauseMap.size() > 0) {
 			return this.fetchChartData(reportSummary, reportFilterValues);
 		}
@@ -2313,7 +2314,7 @@ public final class DataManagement implements DataManagementInfo {
 		Map<BaseField, String> reportFilterValues = sessionData.getReportFilterValues();
 		ReportDataInfo reportData = new ReportData(null, report, false, false);
 		Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
-				reportFilterValues, false);
+				reportFilterValues, false, QuickFilterType.AND);
 		String filterArgs = null;
 		List<ReportQuickFilterInfo> filtersUsed = null;
 		for (Map.Entry<String, List<ReportQuickFilterInfo>> whereClause : whereClauseMap.entrySet()) {
@@ -2407,7 +2408,7 @@ public final class DataManagement implements DataManagementInfo {
 				"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 		// Get data we're going to anonymise
 		List<DataRowInfo> dataRows = this.getReportDataRows(null, table.getDefaultReport(),
-				new HashMap<BaseField, String>(), false, new HashMap<BaseField, Boolean>(), -1);
+				new HashMap<BaseField, String>(), false, new HashMap<BaseField, Boolean>(), -1, QuickFilterType.AND);
 		// Build up list of names
 		List<String> forenames = new ArrayList<String>(100);
 		List<String> surnames = new ArrayList<String>(100);

@@ -34,6 +34,7 @@ import com.gtwm.pb.model.interfaces.ReportSortInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.fields.AbstractField;
+import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -1190,6 +1191,19 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		return joinReferencedTables;
 	}
 
+	@Transient
+	public Map<BaseField, String> getGlobalFilterValues(String globalFilterString) {
+		String filterString = '*' + globalFilterString;
+		Map<BaseField, String> globalFilterValues = new HashMap<BaseField, String>();
+		for(ReportFieldInfo reportField : this.getReportFieldsDirect()) {
+			BaseField field = reportField.getBaseField();
+			if (field.getDbType().equals(DatabaseFieldType.VARCHAR)) {
+				globalFilterValues.put(field, filterString);
+			}
+		}
+		return globalFilterValues;
+	}
+	
 	/**
 	 * Fields in the report, i.e columns in the view from the DB's point of
 	 * view.

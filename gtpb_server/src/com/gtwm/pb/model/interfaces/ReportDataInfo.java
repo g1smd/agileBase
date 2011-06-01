@@ -20,6 +20,8 @@ package com.gtwm.pb.model.interfaces;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.Enumerations.QuickFilterType;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -38,6 +40,8 @@ public interface ReportDataInfo {
 	 *            "filtervalue"
 	 * @param rowLimit
 	 *            The maximum number of rows to return, -1 means no limit
+	 * @param filterType
+	 *            Whether to join separate field filters with AND or OR
 	 * @return Report data as ArrayList of ReportDataRow
 	 * @see http 
 	 *      ://java.sun.com/j2ee/sdk_1.3/techdocs/api/javax/servlet/ServletRequest
@@ -46,8 +50,8 @@ public interface ReportDataInfo {
 	 */
 	public List<DataRowInfo> getReportDataRows(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> reportSorts, int rowLimit) throws SQLException,
-			CodingErrorException, CantDoThatException;
+			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType)
+			throws SQLException, CodingErrorException, CantDoThatException;
 
 	/**
 	 * Return true if the record identified by the given number is present in
@@ -70,12 +74,14 @@ public interface ReportDataInfo {
 	 */
 	public PreparedStatement getReportSqlPreparedStatement(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> reportSorts, int rowLimit, BaseField selectField)
-			throws SQLException, CantDoThatException;
+			Map<BaseField, Boolean> reportSorts, int rowLimit, BaseField selectField,
+			QuickFilterType filterType) throws SQLException, CantDoThatException;
 
 	/**
 	 * Generate a SQL WHERE clause that will work on a report given a map of
 	 * filter values.
+	 * 
+	 * @filterType whether to treat field filters as joined by ANDs or ORs
 	 * 
 	 * @return A Map containing one entry. The string key is the WHERE clause
 	 *         (not containing the word 'WHERE') containing question marks for
@@ -84,7 +90,8 @@ public interface ReportDataInfo {
 	 *         statement
 	 */
 	public Map<String, List<ReportQuickFilterInfo>> getWhereClause(
-			Map<BaseField, String> filterValues, boolean exactFilters) throws CantDoThatException;
+			Map<BaseField, String> filterValues, boolean exactFilters, QuickFilterType filterType)
+			throws CantDoThatException;
 
 	/**
 	 * Given a set of filters (from getWhereClause) and the PreparedStatement

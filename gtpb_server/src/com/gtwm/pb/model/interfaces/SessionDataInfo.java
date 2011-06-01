@@ -106,6 +106,13 @@ public interface SessionDataInfo {
 	 */
 	public Map<BaseField, String> getReportFilterValues();
 
+	public String getGlobalFilterString(BaseReportInfo report);
+	
+	/**
+	 * For searches on any (relevant) field
+	 */
+	public void setGlobalFilterString(BaseReportInfo report, String filterString);
+	
 	public Map<BaseField, Boolean> getReportSorts();
 
 	public int getReportRowLimit();
