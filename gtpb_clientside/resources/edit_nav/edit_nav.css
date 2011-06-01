@@ -175,6 +175,7 @@ body {
   height: 2em;
   position: absolute;
   left: 30em;
+  top: 1em;
   height: 20px;
 }
 
@@ -183,7 +184,7 @@ body {
   float: left;
   border: 1px solid #ccc;
   padding: 2px;
-  height: 16px;
+  height: 20px;
 }
 
 #levels {
