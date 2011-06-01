@@ -221,6 +221,10 @@ function dependentSnippets() {
   var jqLevel = $(levelsList[currentLevel].levelContent);
   var slides = jqLevel.find(".slide");
   var firstSlide = slides.first();
+  if (firstSlide.find(".dependent_table.active")) {
+	// has already been initialised
+	return;
+  }
   var remainingSlides = slides.not(":first");
   remainingSlides.each(function() {
 	var jqSlide = $(this);
