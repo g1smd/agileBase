@@ -167,6 +167,7 @@ function moveUpTo(levelUrl) {
   // search for the levelUrl somewhere above the current level
   for (var level = 0; level < currentLevel; level++) {
 	if (levelsList[level].levelUrl == levelUrl) {
+	  alert("old level " + currentLevel);
 	  if(currentLevel > 0) {
 		jqLevelContent.addClass("flyDown");
 	  }
