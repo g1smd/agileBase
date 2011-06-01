@@ -221,7 +221,7 @@ function dependentSnippets() {
   var jqLevel = $(levelsList[currentLevel].levelContent);
   var slides = jqLevel.find(".slide");
   var firstSlide = slides.first();
-  if (firstSlide.find(".dependent_table.active")) {
+  if (firstSlide.find(".dependent_table.active").size() > 0) {
 	// has already been initialised
 	return;
   }
