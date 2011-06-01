@@ -222,12 +222,13 @@ body {
   text-align: left;
 }
 
+.slide .separator {
+	background: url("line.gif") repeat-x scroll 0 16px transparent;
+}
+
 .slide .separator .fieldname {
   margin-left: 0px;
   background: none;
-  position: relative;
-  top: 0.5em;
-  text-shadow: none;
 }
 
 .slide .separator span {
