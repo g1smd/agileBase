@@ -3043,7 +3043,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		if (popularTables == null) {
 			popularTables = new ArrayList<TableInfo>();
 			CompanyInfo company = user.getCompany();
-			String SQLCode = "SELECT app_table FROM dbint_log_data_change WHERE app_user=? ORDER by count(*) DESC";
+			String SQLCode = "SELECT app_table FROM dbint_log_data_change WHERE app_user=? GROUP BY app_table ORDER by count(*) DESC";
 			Connection conn = null;
 			try {
 				conn = this.relationalDataSource.getConnection();
