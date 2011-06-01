@@ -19,7 +19,7 @@ $(document).ready(function() {
   });
   $("a.jumpto_table").live('click', function(event) {
 	event.preventDefault();
-	var href= $(this.attr("href"));
+	var href= $(this).attr("href");
 	moveUpTo(href);
   });
   // Initialise home screen for user
