@@ -179,6 +179,14 @@ body {
   height: 24px;
 }
 
+.jump_label {
+  float: left;
+  position: relative;
+  top: 3px;
+  font-size: 13pt;
+  color: white;
+}
+
 a.jumpto_table {
   background: white;
   float: left;
