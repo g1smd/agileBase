@@ -25,54 +25,59 @@ public final class HttpRequestUtil {
 		String booleanValueString = request.getParameter(param);
 		return Helpers.valueRepresentsBooleanTrue(booleanValueString);
 	}
-	
-	public static Integer getIntegerValue(HttpServletRequest request, String param, Integer defaultValue) {
+
+	public static Integer getIntegerValue(HttpServletRequest request, String param,
+			Integer defaultValue) {
 		Integer value = defaultValue;
 		String valueString = request.getParameter(param);
 		if (valueString != null) {
-			if (! valueString.equals("")) {
+			if (!valueString.equals("")) {
 				value = Integer.valueOf(valueString);
 			}
 		}
 		return value;
 	}
-	
-	public static Integer getIntegerValueStrict(HttpServletRequest request, String param, Integer defaultValue, String exceptionMessage)
-	throws CantDoThatException {
+
+	public static Integer getIntegerValueStrict(HttpServletRequest request, String param,
+			Integer defaultValue, String exceptionMessage) throws CantDoThatException {
 		try {
 			return HttpRequestUtil.getIntegerValue(request, param, defaultValue);
 		} catch (NumberFormatException nfex) {
 			throw new CantDoThatException(exceptionMessage);
 		}
 	}
-	
-	public static Double getDoubleValue(HttpServletRequest request, String param, Double defaultValue) {
-		Double value =  defaultValue;
+
+	public static Double getDoubleValue(HttpServletRequest request, String param,
+			Double defaultValue) {
+		Double value = defaultValue;
 		String valueString = request.getParameter(param);
 		if (valueString != null) {
-			if (! valueString.equals("")) {
-				value = Double.parseDouble(valueString);				
+			if (!valueString.equals("")) {
+				value = Double.parseDouble(valueString);
 			}
 		}
 		return value;
 	}
-	
-	public static Double getDoubleValueStrict(HttpServletRequest request, String param, Double defaultValue, String exceptionMessage)
-	throws CantDoThatException {
+
+	public static Double getDoubleValueStrict(HttpServletRequest request, String param,
+			Double defaultValue, String exceptionMessage) throws CantDoThatException {
 		try {
 			return HttpRequestUtil.getDoubleValue(request, param, defaultValue);
 		} catch (NumberFormatException nfex) {
 			throw new CantDoThatException(exceptionMessage);
 		}
 	}
-	
+
 	public static String getStringValue(HttpServletRequest request, String param) {
 		String textValue = request.getParameter(param);
-		if (textValue.equals("")) {
-			textValue = null;
+		if (textValue != null) {
+			if (textValue.equals("")) {
+				textValue = null;
+			}
 		}
 		return textValue;
 	}
-	
-	//private static final SimpleLogger logger = new SimpleLogger(HttpRequestUtil.class);
+
+	// private static final SimpleLogger logger = new
+	// SimpleLogger(HttpRequestUtil.class);
 }
