@@ -3,7 +3,7 @@
 #set($filterString = $sessionData.getGlobalFilterString($report))
 <div id="navrow">
   <input id="searchbox" name="searchbox" type="search" placeholder="search $report" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
-  <div id="jumpto"
+  <div id="jumpto">
   Jump to:
   #foreach($table in $view.getPopularTables($view.getLoggedInUser()))
     #set($tableReports = $table.getReports())
