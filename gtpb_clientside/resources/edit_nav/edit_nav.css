@@ -176,15 +176,15 @@ body {
   position: absolute;
   left: 25em;
   top: 1em;
-  height: 20px;
+  height: 24px;
 }
 
 a.jumpto_table {
   background: white;
   float: left;
-  border: 1px solid #ccc;
-  padding: 2px;
-  height: 20px;
+  border: 2px solid #ccc;
+  padding: 4px;
+  height: 24px;
   text-decoration: none;
 }
 
