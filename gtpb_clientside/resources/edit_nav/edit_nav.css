@@ -170,6 +170,11 @@ body {
   color: #486f98;
 }
 
+#navrow {
+  overflow: hidden;
+  height: 1.4em;
+}
+
 #levels {
   position: relative;
   background-color: #bdbdbd;
