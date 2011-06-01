@@ -704,6 +704,11 @@ public interface ViewMethodsInfo {
 			throws DisallowedException, ObjectNotFoundException;
 
 	/**
+	 * Return a set of reports that the user has viewed, most commonly viewed reports first
+	 */
+	/* public List<BaseReportInfo> getPopularReports(AppUserInfo user); */
+	
+	/**
 	 * The only setter in this class - we use this method to save an exception
 	 * for later retrieval by the UI, if one occurs. Note: The exception isn't
 	 * stored in the session instead because requests can be asynchronous and
