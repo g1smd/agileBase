@@ -121,7 +121,7 @@ body {
   border-bottom: 1px solid #F2F2F2;
 }
 
-.dependent_table_active {
+.dependent_table.active {
   height: 5em;
 }
 
