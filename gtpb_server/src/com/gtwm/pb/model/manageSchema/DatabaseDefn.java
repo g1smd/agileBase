@@ -3034,10 +3034,45 @@ public final class DatabaseDefn implements DatabaseInfo {
 				}
 			}
 		} catch (SQLException sqlex) {
-			logger.error("Error getting SQL connection: " + sqlex);
+			logger.error("Error getting/closing SQL connection: " + sqlex);
 		}
 	}
 
+	public List<TableInfo> getPopularTables(HttpServletRequest request, AppUserInfo user) throws SQLException {
+		List<TableInfo> popularTables = this.userPopularTablesCache.get(user);
+		if (popularTables == null) {
+			popularTables = new ArrayList<TableInfo>();
+			CompanyInfo company = user.getCompany();
+			String SQLCode = "SELECT app_table FROM dbint_log_data_change WHERE app_user=? ORDER by count(*) DESC";
+			Connection conn = null;
+			try {
+				conn = this.relationalDataSource.getConnection();
+				conn.setAutoCommit(false);
+				PreparedStatement statement = conn.prepareStatement(SQLCode);
+				statement.setString(1, user.getUserName());
+				ResultSet results = statement.executeQuery();
+				while (results.next()) {
+					String internalTableName = results.getString(1);
+					try {
+						TableInfo table = this.getTable(request, internalTableName);
+						popularTables.add(table);
+					} catch (ObjectNotFoundException onfex) {
+						// table doesn't exist any more, ignore
+					} catch (DisallowedException dex) {
+						// user no longer has privileges on table, ignore
+					}
+				}
+				results.close();
+				statement.close();
+			} finally {
+				if (conn != null) {
+					conn.close();
+				}
+			}
+		}
+		return popularTables;
+	}
+	
 	/**
 	 * Lookup of internal table name to table
 	 */
@@ -3045,8 +3080,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	private Map<String, TableInfo> reportTableCache = new ConcurrentHashMap<String, TableInfo>();
 	
-
-	/**
+    private Map<AppUserInfo, List<TableInfo>> userPopularTablesCache = new ConcurrentHashMap<AppUserInfo, List<TableInfo>>();
+	
+    /**
 	 * Keep a cache of the datasource so it's available quickly whenever needed
 	 */
 	private DataSource relationalDataSource = null;

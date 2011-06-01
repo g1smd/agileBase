@@ -1,7 +1,10 @@
 #set($report = $sessionData.getReport())
 <div class="breadcrumb_title">$report</div>
 #set($filterString = $sessionData.getGlobalFilterString($report))
-<input id="searchbox" name="searchbox" type="search" placeholder="search" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
+<div id="navrow">
+  <input id="searchbox" name="searchbox" type="search" placeholder="search" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
+  Jump to: $view.getPopularTables()
+</div>
 <div class="reportDataView" id="homeContent">
   #parse("gui/edit_nav/report_content.vm")
 </div>

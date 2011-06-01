@@ -45,6 +45,8 @@ import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javax.servlet.http.*;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -382,7 +384,7 @@ public final class Authenticator implements AuthenticatorInfo {
 		return userAllowedTo(privilegeType, table, appUser);
 	}
 
-	protected synchronized boolean userAllowedTo(PrivilegeType privilegeType, TableInfo table,
+	protected boolean userAllowedTo(PrivilegeType privilegeType, TableInfo table,
 			AppUserInfo appUser) {
 		// Check cache
 		Set<AuthCacheObjectInfo> cachedResults = this.authCache.get(appUser);
@@ -492,7 +494,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	}
 
 	@Transient
-	protected synchronized AppUserInfo getUserByUserName(String userName)
+	protected AppUserInfo getUserByUserName(String userName)
 			throws ObjectNotFoundException {
 		AppUserInfo cachedUser = this.usersCache.get(userName);
 		if (cachedUser != null) {
@@ -633,12 +635,10 @@ public final class Authenticator implements AuthenticatorInfo {
 
 	/**
 	 * Used to removed cached checks when authentication info changes, e.g. a privilege removed
-	 * 
-	 * Note: not synchronized because all calling methods are
 	 */
 	protected void destroyCache() {
-		this.authCache = new HashMap<AppUserInfo, Set<AuthCacheObjectInfo>>();
-		this.usersCache = new HashMap<String, AppUserInfo>();
+		this.authCache = new ConcurrentHashMap<AppUserInfo, Set<AuthCacheObjectInfo>>();
+		this.usersCache = new ConcurrentHashMap<String, AppUserInfo>();
 	}
 	
 	public String toString() {
@@ -668,12 +668,12 @@ public final class Authenticator implements AuthenticatorInfo {
 	 * Use the UserGeneralPrivilegeInfo objects to cache the results of
 	 * loggedInUserAllowedTo() calls. Not their intended use but works well
 	 */
-	private Map<AppUserInfo, Set<AuthCacheObjectInfo>> authCache = new HashMap<AppUserInfo, Set<AuthCacheObjectInfo>>();
+	private Map<AppUserInfo, Set<AuthCacheObjectInfo>> authCache = new ConcurrentHashMap<AppUserInfo, Set<AuthCacheObjectInfo>>();
 
 	/**
 	 * Lookup of username to user object
 	 */
-	private Map<String, AppUserInfo> usersCache = new HashMap<String, AppUserInfo>();
+	private Map<String, AppUserInfo> usersCache = new ConcurrentHashMap<String, AppUserInfo>();
 	
 	private long id;
 	

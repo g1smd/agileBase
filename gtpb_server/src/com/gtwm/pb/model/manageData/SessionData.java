@@ -334,7 +334,7 @@ public final class SessionData implements SessionDataInfo {
 	public synchronized Map<BaseField, String> getCustomReportFilterValues(String filterSet) {
 		Map<BaseField, String> customFilterValues = this.customReportFilterValues.get(filterSet);
 		if (customFilterValues == null) {
-			return Collections.unmodifiableMap(new HashMap<BaseField, String>());
+			return Collections.unmodifiableMap(new HashMap<BaseField, String>(0));
 		} else {
 			return Collections.unmodifiableMap(new HashMap<BaseField, String>(customFilterValues));
 		}

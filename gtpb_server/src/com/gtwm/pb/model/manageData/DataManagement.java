@@ -1572,7 +1572,7 @@ public final class DataManagement implements DataManagementInfo {
 			throw new CodingErrorException("Format " + dataFormat + " has no report generator");
 		}
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
-		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(), 10000,
+		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(0), 10000,
 				dataFormat.toString());
 		UsageLogger.startLoggingThread(usageLogger);
 		cachedFeed = new CachedFeed(dataFeedString);
@@ -1732,7 +1732,7 @@ public final class DataManagement implements DataManagementInfo {
 			allDayValues = false;
 		}
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
-				filterValues, false, new HashMap<BaseField, Boolean>(), 10000, QuickFilterType.AND);
+				filterValues, false, new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND);
 		JSONStringer js = new JSONStringer();
 		if (format.equals(DataFormat.JSON_TIMELINE)) {
 			js.object();
@@ -2032,7 +2032,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		if (childDataTableRows == null) {
-			return new HashMap<RelationField, List<DataRow>>();
+			return new HashMap<RelationField, List<DataRow>>(0);
 		} else {
 			return childDataTableRows;
 		}
@@ -2303,7 +2303,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		if (tableDataRow == null) {
-			return new HashMap<BaseField, BaseValue>();
+			return new HashMap<BaseField, BaseValue>(0);
 		} else {
 			return tableDataRow;
 		}
@@ -2408,7 +2408,7 @@ public final class DataManagement implements DataManagementInfo {
 				"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 		// Get data we're going to anonymise
 		List<DataRowInfo> dataRows = this.getReportDataRows(null, table.getDefaultReport(),
-				new HashMap<BaseField, String>(), false, new HashMap<BaseField, Boolean>(), -1, QuickFilterType.AND);
+				new HashMap<BaseField, String>(), false, new HashMap<BaseField, Boolean>(0), -1, QuickFilterType.AND);
 		// Build up list of names
 		List<String> forenames = new ArrayList<String>(100);
 		List<String> surnames = new ArrayList<String>(100);

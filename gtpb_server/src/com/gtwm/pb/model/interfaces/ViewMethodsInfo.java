@@ -398,6 +398,15 @@ public interface ViewMethodsInfo {
 			DisallowedException, CodingErrorException, ObjectNotFoundException;
 
 	/**
+	 * Allow overriding the stats cache update, in cases where we just want the
+	 * data as quickly as possible and are not bothered about the stats
+	 * 
+	 * @see GetReportData
+	 */
+	public ReportDataInfo getReportData(BaseReportInfo report, boolean updateCacheIfObsolete)
+			throws SQLException, DisallowedException, CodingErrorException, ObjectNotFoundException;
+
+	/**
 	 * Use this method to get rows for a specified report, using the session row
 	 * limit - at the time of writing, this defaults to 100 - and session filter
 	 * values
@@ -426,9 +435,11 @@ public interface ViewMethodsInfo {
 
 	/**
 	 * Specify a global filter that will be used on all relevant fields in a
-	 * report, rather than separate filters for each field. This is somewhat similar to a full text search
+	 * report, rather than separate filters for each field. This is somewhat
+	 * similar to a full text search
 	 */
-	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report) throws DisallowedException, SQLException, ObjectNotFoundException,
+	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report)
+			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException;
 
 	/**
@@ -704,10 +715,11 @@ public interface ViewMethodsInfo {
 			throws DisallowedException, ObjectNotFoundException;
 
 	/**
-	 * Return a set of reports that the user has viewed, most commonly viewed reports first
+	 * Return a set of reports that the user has viewed, most commonly viewed
+	 * reports first
 	 */
-	public List<BaseReportInfo> getPopularReports(AppUserInfo user);
-	
+	public List<TableInfo> getPopularTables(AppUserInfo user) throws SQLException;
+
 	/**
 	 * The only setter in this class - we use this method to save an exception
 	 * for later retrieval by the UI, if one occurs. Note: The exception isn't

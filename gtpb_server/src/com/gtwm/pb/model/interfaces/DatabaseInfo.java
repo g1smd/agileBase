@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.model.interfaces;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -522,6 +523,11 @@ public interface DatabaseInfo {
 	public ModuleInfo addModule(HttpServletRequest request) throws ObjectNotFoundException,
 			DisallowedException;
 
+	/**
+	 * Return the tables that are most commonly edited by the given user, most common first
+	 */
+	public List<TableInfo> getPopularTables(HttpServletRequest request, AppUserInfo user) throws SQLException;
+	
 	/**
 	 * Return a reference to the object that manages and caches database data.
 	 * databaseDefn keeps one instance of this object
