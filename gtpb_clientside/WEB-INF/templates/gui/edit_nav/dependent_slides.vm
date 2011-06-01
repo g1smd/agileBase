@@ -16,14 +16,14 @@
     <img class="rewind" src="resources/edit_nav/rewind.png" />
     <section class="middle"> 
       <div class="title">
-      $dependentTable.getSimpleName()
+      ##$dependentTable.getSimpleName()
       ##<select name="$dependentTable.getInternalTableName()_select">
       ##  #foreach($report in $linkingReports)
       ##    <option value="$report.getInternalReportName()">$report.getModule() - $report</option>
       ##  #end
       ##  <option value="$dependentTable.getDefaultReport().getInternalReportName()">all records</option>
       ##</select>
-      : $linkingReports.get(0)
+      $linkingReports.get(0).getModule() - $linkingReports.get(0)
       </div>
       #set($report = $linkingReports.get(0))
       #set($filters = $viewTools.getNewFilterMap())
