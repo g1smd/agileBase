@@ -1,7 +1,8 @@
 #if(!$report)
   #set($report = $sessionData.getReport())
 #end
-#set($internalTableName = $report.getParentTable().getInternalTableName())
+#set($table = $report.getParentTable())
+#set($internalTableName = $table.getInternalTableName())
 #set($reportBaseFields = $report.getReportBaseFields())##
 #if(!$reportDataRows)
   #if(!$filters)
@@ -11,7 +12,7 @@
   #end
 #end
 <div class="related block centrebox" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&save_new_record=true&gtpb_override_relation_default_to_null=true">
-  <span class="new"><img src="resources/toolbar/new.png"> add new</span>
+  <span class="new"><img src="resources/toolbar/new.png"> add new $table.getSimpleName()</span>
 </div>
 #foreach($row in $reportDataRows)
   #set($dataRowFields = $row.getDataRowFields())
