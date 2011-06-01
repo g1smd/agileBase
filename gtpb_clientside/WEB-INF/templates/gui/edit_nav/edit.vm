@@ -15,7 +15,7 @@
           #foreach($dependentTable in $dependentTables)
             #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable))
               #foreach($report in $dependentTable.getReports())
-                #if(($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
+                #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
                   <div class="dependent_table" id="dependent_table_$dependentTable.getInternalTableName()">
                     <h1><span class="count"></span>$dependentTable.getSimpleName()</h1>
                     <div class="record_snippets">
