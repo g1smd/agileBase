@@ -23,14 +23,17 @@ $(document).ready(function() {
 
 function initialiseSlides() {
     $("#searchbox").keyup(function() {
-      var filterString = $("#searchbox").val();
+      var jqSearchBox = $(this);
+      jqSearchBox.addClass("changed");
+      var filterString = jqSearchBox.val();
       var internalReportName = $("#searchbox").attr("internalreportname");
       $.get("AppController.servlet?return=gui/edit_nav/report_content&set_report=" + internalReportName + "&set_global_report_filter_string=true&filterstring=" + filterString, function(data) {
         // response has come back from the server, check it isn't out of date
-    	if($("#searchbox").val() != filterString) {
+    	if(jqSearchBox.val() != filterString) {
     	  return;
     	}
     	$("#homeContent").html(data);
+    	jqSearchBox.removeClass("changed");
       });
     });
 	
