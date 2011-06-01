@@ -167,9 +167,7 @@ function moveUpTo(levelUrl) {
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
   // search for the levelUrl somewhere above the current level
   for (var level = 0; level < currentLevel; level++) {
-	alert("testing level " + level + " of " + currentLevel);
 	if (levelsList[level].levelUrl == levelUrl) {
-	  alert("old level " + currentLevel);
 	  if(currentLevel > 0) {
 		jqLevelContent.addClass("flyDown");
 	  }
@@ -183,7 +181,10 @@ function moveUpTo(levelUrl) {
 	}
   }
   // levelUrl not found, start from scratch creating it as the top element
-  jqLevelContent.addClass("flyDown").addClass("transparent");
+  if(currentLevel > 0) {
+	jqLevelContent.addClass("flyDown");
+  }
+  jqLevelContent.addClass("transparent");
   $(".level").addClass("oldLevel");
   $(".presentation").remove(); // more than one pres in the DOM can cause problems
   setTimeout(function() {
