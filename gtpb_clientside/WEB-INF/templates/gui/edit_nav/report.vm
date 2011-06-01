@@ -3,7 +3,7 @@
 #set($filterString = $sessionData.getGlobalFilterString($report))
 <div id="navrow">
   <input id="searchbox" name="searchbox" type="search" placeholder="search" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
-  Jump to: $view.getPopularTables()
+  Jump to: $view.getPopularTables($view.getLoggedInUser())
 </div>
 <div class="reportDataView" id="homeContent">
   #parse("gui/edit_nav/report_content.vm")
