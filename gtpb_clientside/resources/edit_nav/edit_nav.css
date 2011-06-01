@@ -117,8 +117,12 @@ body {
 
 .dependent_table {
   padding-left: 1em;
-	height: 5em;
+	height: 3em;
   border-bottom: 1px solid #F2F2F2;
+}
+
+.dependent_table_active {
+  height: 5em;
 }
 
 .dependent_table h1 {
@@ -127,7 +131,7 @@ body {
   font-weight: normal;
   font-size:14pt;
   text-transform: lowercase;
-  color: gray;
+  color: #bbbbbb;
 }
 
 .dependent_table.active h1 {
