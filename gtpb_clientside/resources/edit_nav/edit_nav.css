@@ -135,7 +135,7 @@ body {
 }
 
 .dependent_table.active h1 {
-  color: black;
+  color: #486F98;
 }
 
 .dependent_table:hover {
@@ -147,6 +147,7 @@ body {
   height: 1.2em;
   width: 100%;
   overflow: hidden;
+  color: #486F98;
 }
 
 #searchbox {
