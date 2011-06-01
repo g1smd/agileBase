@@ -13,7 +13,7 @@
         #break
       #end
     #end
-    <a class="jumpto_table #if($table.equals($report.getParentTable())) current #end" href="AppController.servlet?return=gui/edit_nav/report&set_table=$table.getInternalTableName()&set_report=$firstReport.getInternalReportName()">$table.getSimpleName()</a>
+    <a class="jumpto_table #if($table.equals($report.getParentTable())) current #end" href="AppController.servlet?return=gui/edit_nav/report&set_table=$table.getInternalTableName()&set_report=$firstReport.getInternalReportName()" title="$firstReport.getModule() - $firstReport">$table.getSimpleName()</a>
   #end
   </div>
 </div>
