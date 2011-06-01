@@ -223,7 +223,7 @@ body {
 }
 
 .slide .separator {
-	background: url("line.gif") repeat-x scroll 0 16px transparent;
+	background: url("../tabs/line.gif") repeat-x scroll 0 16px transparent;
 }
 
 .slide .separator .fieldname {
