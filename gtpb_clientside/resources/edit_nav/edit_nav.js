@@ -239,7 +239,12 @@ function dependentSnippets() {
 	var numCards = jqSlide.find(".block.current").size();
 	if (numCards > 0) {
 	  jqSnippets.addClass("active");
-	  jqSnippets.find(".count").text(numCards + " ");
+	  if (numCards == 100) {
+		numCardsText = "100+";
+	  } else {
+		numCardsText = numCards;
+	  }
+	  jqSnippets.find(".count").text(numCardsText + " ");
 	}
 	var firstCards = jqSlide.find(".block.current:lt(2)");
 	firstCards.each(function() {
