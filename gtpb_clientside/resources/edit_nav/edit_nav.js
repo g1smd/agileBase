@@ -64,8 +64,16 @@ function initialiseSlides() {
     });      
     
     $(".dependent_table").click(function() {
-      slideshow.go($(this).index() + 2);
+      var jqDependentTable = $(this);
+      if (!jqDependentTable.hasClass("active")) {
+    	return;
+      }
+      // find index of slide to go to
+      var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
+      var slideNum = $("#slide_" + internalTableName).index();
+      slideshow.go(slideNum + 1);
       $(".presentation").scrollTop(0);
+      }
     });
     // live because only first few slide are created on load?
     $(".rewind").live('click', function() {
