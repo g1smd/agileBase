@@ -24,10 +24,12 @@ import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
+import com.gtwm.pb.model.interfaces.fields.FileField;
 import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.interfaces.fields.SeparatorField;
+import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportSortInfo;
@@ -1098,12 +1100,12 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	public void setWordCloudField(ReportFieldInfo wordCloudField) {
 		this.wordCloudField = wordCloudField;
 	}
-	
-	@OneToOne(targetEntity=AbstractReportField.class)
+
+	@OneToOne(targetEntity = AbstractReportField.class)
 	public ReportFieldInfo getWordCloudField() {
 		return this.wordCloudField;
 	}
-	
+
 	public void setCalendarSyncable(Boolean calendarSyncable) {
 		this.calendarSyncable = calendarSyncable;
 	}
@@ -1133,7 +1135,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 					dateResolution = ((DateField) reportField.getBaseField()).getDateResolution();
 				}
 				if (dateResolution >= Calendar.DAY_OF_MONTH) {
-					calendarField = reportField;;
+					calendarField = reportField;
+					;
 				}
 			}
 		}
@@ -1193,17 +1196,31 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 
 	@Transient
 	public Map<BaseField, String> getGlobalFilterValues(String globalFilterString) {
-		String filterString = '*' + globalFilterString;
 		Map<BaseField, String> globalFilterValues = new HashMap<BaseField, String>();
-		for(ReportFieldInfo reportField : this.getReportFieldsDirect()) {
+		if (globalFilterString == null) {
+			return globalFilterValues;
+		}
+		if (globalFilterString.trim().equals("")) {
+			return globalFilterValues;
+		}
+		String filterString = '*' + globalFilterString.trim();
+		FIELD_LOOP: for (ReportFieldInfo reportField : this.getReportFieldsDirect()) {
 			BaseField field = reportField.getBaseField();
 			if (field.getDbType().equals(DatabaseFieldType.VARCHAR)) {
+				if (field instanceof FileField) {
+					continue FIELD_LOOP;
+				}
+				if (field instanceof TextField) {
+					if (((TextField) field).usesLookup()) {
+						continue FIELD_LOOP;
+					}
+				}
 				globalFilterValues.put(field, filterString);
 			}
 		}
 		return globalFilterValues;
 	}
-	
+
 	/**
 	 * Fields in the report, i.e columns in the view from the DB's point of
 	 * view.
@@ -1225,7 +1242,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private Set<ReportSortInfo> sorts = new HashSet<ReportSortInfo>();
 
 	private boolean calendarSyncable = false;
-	
+
 	private ReportFieldInfo wordCloudField = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(SimpleReportDefn.class);
