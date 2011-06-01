@@ -145,7 +145,7 @@ body {
   overflow: hidden;
 }
 
-#search input {
+#searchbox {
   margin-left: 2em;
   margin-top: 0.5em;
 	width: 15em;
