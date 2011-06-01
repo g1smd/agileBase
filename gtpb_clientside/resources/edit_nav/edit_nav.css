@@ -174,17 +174,18 @@ body {
   overflow: hidden;
   height: 2em;
   position: absolute;
-  left: 30em;
+  left: 25em;
   top: 1em;
   height: 20px;
 }
 
-.jumpto_table {
+a.jumpto_table {
   background: white;
   float: left;
   border: 1px solid #ccc;
   padding: 2px;
   height: 20px;
+  text-decoration: none;
 }
 
 #levels {
