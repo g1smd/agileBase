@@ -215,6 +215,9 @@ public final class AppController extends VelocityViewServlet {
 				case CLEAR_ALL_REPORT_FILTER_VALUES:
 					ServletSessionMethods.clearAllReportFilterValues(sessionData);
 					break;
+				case SET_GLOBAL_REPORT_FILTER_STRING:
+					ServletSessionMethods.setReportGlobalFilterString(sessionData, request, databaseDefn);
+					break;
 				case SET_REPORT_SORT:
 					ServletSessionMethods.setReportSort(sessionData, request, databaseDefn);
 					break;

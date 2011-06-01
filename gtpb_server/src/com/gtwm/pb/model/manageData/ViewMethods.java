@@ -79,6 +79,7 @@ import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.DataFormat;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.ExtraAction;
+import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
 import org.grlea.log.SimpleLogger;
@@ -531,6 +532,30 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return this.getReportDataRows(report, rowLimit, reportFilterValues, false);
 	}
 
+	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report) throws DisallowedException, SQLException, ObjectNotFoundException,
+			CodingErrorException, CantDoThatException {
+		if (report == null) {
+			throw new ObjectNotFoundException("No report was provided");
+		}
+		// Check privileges for all tables from which data is displayed from,
+		// throw DisallowedException if privileges not sufficient
+		this.checkReportViewPrivileges(report);
+		String globalFilterString = this.sessionData.getGlobalFilterString(report);
+		Map<BaseField, String> reportFilterValues = report.getGlobalFilterValues(globalFilterString);
+		AppUserInfo user = this.databaseDefn.getAuthManager().getUserByUserName(this.request,
+				this.request.getRemoteUser());
+		CompanyInfo company = user.getCompany();
+		Map<BaseField, Boolean> sessionReportSorts = new HashMap<BaseField, Boolean>(0);
+		boolean exactFilters = false;
+		int rowLimit = 100;
+		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
+				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit, QuickFilterType.OR);
+		UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
+		usageLogger.logReportView(user, report, reportFilterValues, rowLimit, "global search");
+		UsageLogger.startLoggingThread(usageLogger);
+		return reportDataRows;
+	}
+	
 	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit,
 			Map<BaseField, String> reportFilterValues, boolean exactFilters)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
@@ -542,13 +567,12 @@ public final class ViewMethods implements ViewMethodsInfo {
 		// throw DisallowedException if privileges not sufficient
 		this.checkReportViewPrivileges(report);
 		Map<BaseField, Boolean> sessionReportSorts = this.sessionData.getReportSorts();
-		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
-				this.request);
-		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
-				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit);
-		UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
 		AppUserInfo user = this.databaseDefn.getAuthManager().getUserByUserName(this.request,
 				this.request.getRemoteUser());
+		CompanyInfo company = user.getCompany();
+		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
+				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit, QuickFilterType.AND);
+		UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
 		usageLogger.logReportView(user, report, reportFilterValues, rowLimit, null);
 		UsageLogger.startLoggingThread(usageLogger);
 		return reportDataRows;

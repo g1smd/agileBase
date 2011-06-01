@@ -36,6 +36,7 @@ import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageData.DataRow;
 import com.gtwm.pb.util.DataDependencyException;
 import com.gtwm.pb.util.Enumerations.DataFormat;
+import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
@@ -67,12 +68,14 @@ public interface DataManagementInfo {
 	 *            Use to sort the results by particular a particular field
 	 * @param rowLimit
 	 *            The maximum number of rows to return, -1 means no limit
+	 * @param quickFilterType
+	 *            Whether to treat field filters as joined by AND or OR
 	 * @return report data as a list of rows
 	 */
 	public List<DataRowInfo> getReportDataRows(CompanyInfo company, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> sessionSorts, int rowLimit) throws SQLException,
-			CodingErrorException, CantDoThatException;
+			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType)
+			throws SQLException, CodingErrorException, CantDoThatException;
 
 	/**
 	 * Return all the text from the specified fields in the report as one big
@@ -105,10 +108,9 @@ public interface DataManagementInfo {
 	 * @param endEpoch
 	 *            The end unix timestamp as provided by fullcalendar
 	 */
-	public String getReportCalendarJSON(DataFormat format, AppUserInfo user,
-			BaseReportInfo report, Map<BaseField, String> filterValues, Long startEpoch,
-			Long endEpoch) throws CodingErrorException, CantDoThatException, SQLException,
-			JSONException;
+	public String getReportCalendarJSON(DataFormat format, AppUserInfo user, BaseReportInfo report,
+			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
+			throws CodingErrorException, CantDoThatException, SQLException, JSONException;
 
 	/**
 	 * @param user
@@ -120,9 +122,12 @@ public interface DataManagementInfo {
 	 *            report before regenerating
 	 */
 	public String getReportJSON(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
-			throws JSONException, CodingErrorException, CantDoThatException, SQLException, XMLStreamException, ObjectNotFoundException;
+			throws JSONException, CodingErrorException, CantDoThatException, SQLException,
+			XMLStreamException, ObjectNotFoundException;
 
-	public String getReportRSS(AppUserInfo user, BaseReportInfo report, int cacheMinutes) throws SQLException, CodingErrorException, CantDoThatException, JSONException, XMLStreamException, ObjectNotFoundException;
+	public String getReportRSS(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
+			throws SQLException, CodingErrorException, CantDoThatException, JSONException,
+			XMLStreamException, ObjectNotFoundException;
 
 	/**
 	 * Return a report data object that contains metadata about the report data.

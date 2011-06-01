@@ -3,23 +3,6 @@ var levelsList = [];
 var currentLevel = 0;
 
 $(document).ready(function() {
-  $(".block").live('click', function() {
-    var href = $(this).attr("href");
-    moveDownTo(href);
-  });
-  $("input").live('focus', function() {
-	$(this).addClass("editing");
-  });
-  $("input").live('blur', function() {
-	$(this).removeClass("editing");
-  });
-  $("textarea").live('focus', function() {
-	$(this).addClass("editing");
-  });
-  $("textarea").live('blur', function() {
-	$(this).removeClass("editing");
-  });
-  
   $("#breadcrumb a").live('click', function(event) {
 	event.preventDefault();
 	var href = $(this).attr("href");
@@ -35,6 +18,21 @@ $(document).ready(function() {
 });
 
 function initialiseSlides() {
+    $(".block").click(function() {
+      var href = $(this).attr("href");
+      moveDownTo(href);
+    });
+    $("#searchbox").keyup(function() {
+      var filterString = $("#searchbox").val();
+      $.get("AppController.servlet?return=gui/edit_nav/report_content&set_global_report_filter_string=" + filterString, function(data) {
+        // response has come back from the server, check it isn't out of date
+    	if($("#searchbox").val() != filterString) {
+    	  return;
+    	}
+    	$("#homeContent").html(data);
+      });
+    });
+	
 	if ($(".slide").size() == 0) {
 	  return;
 	}
@@ -47,6 +45,19 @@ function initialiseSlides() {
     fRelationPickers();
     fDatePickers();
     /* fTwitter(); */
+    
+    $("input").focus(function() {
+  	  $(this).addClass("editing");
+    });
+    $("input").blur(function() {
+	  $(this).removeClass("editing");
+    });
+    $("textarea").focus(function() {
+	  $(this).addClass("editing");
+    });
+    $("textarea").blur(function() {
+	  $(this).removeClass("editing");
+    });      
     
     $(".dependent_table").click(function() {
       slideshow.go($(this).index() + 2);
@@ -61,6 +72,7 @@ function initialiseSlides() {
       }
     });
     slideshow.go(1);
+    $(".presentation").scrollTop(0);
 }
 
 /* For any table (represented by a slide), there can be dependent tables that link to it. 

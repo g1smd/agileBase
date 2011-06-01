@@ -258,8 +258,9 @@ public interface ViewMethodsInfo {
 	 */
 	public Set<TableInfo> getDependentTables() throws ObjectNotFoundException;
 
-	public Set<TableInfo> getDirectlyDependentTables(TableInfo baseTable) throws ObjectNotFoundException;
-	
+	public Set<TableInfo> getDirectlyDependentTables(TableInfo baseTable)
+			throws ObjectNotFoundException;
+
 	/**
 	 * Calls DatabaseInfo#getDependentTables to retrieve a Set tables dependent
 	 * upon the Table passed as an argument to the method
@@ -421,6 +422,13 @@ public interface ViewMethodsInfo {
 	 */
 	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
+			CodingErrorException, CantDoThatException;
+
+	/**
+	 * Specify a global filter that will be used on all relevant fields in a
+	 * report, rather than separate filters for each field. This is somewhat similar to a full text search
+	 */
+	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report) throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException;
 
 	/**

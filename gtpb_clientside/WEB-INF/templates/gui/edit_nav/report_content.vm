@@ -2,7 +2,7 @@
 #set($internalTableName = $report.getParentTable().getInternalTableName())
 #set($reportBaseFields = $report.getReportBaseFields())##
 #if(!$filters)
-  #set($reportDataRows = $view.getReportDataRows($report, 100))
+  #set($reportDataRows = $view.getGloballyFilteredReportDataRows($report))
 #else
   #set($reportDataRows = $view.getReportDataRows($report, 100, $filters, true))##
 #end

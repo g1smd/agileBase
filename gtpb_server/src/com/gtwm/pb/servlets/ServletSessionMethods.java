@@ -821,6 +821,15 @@ public final class ServletSessionMethods {
 		sessionData.setModule(module);
 	}
 
+	public static void setReportGlobalFilterString(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, true);
+		String filterString = request.getParameter("filterstring");
+		if (filterString == null) {
+			throw new MissingParametersException("'filterstring' parameter needed");
+		}
+		sessionData.setGlobalFilterString(report, filterString);
+	}
+	
 	/**
 	 * Set a 'quick filter' value
 	 * 

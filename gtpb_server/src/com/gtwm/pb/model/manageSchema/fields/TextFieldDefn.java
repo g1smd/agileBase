@@ -44,6 +44,7 @@ import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOpti
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
@@ -400,7 +401,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			// in the WHERE clause
 			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
 			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
-					filterValues, false, emptySorts, -1, this);
+					filterValues, false, emptySorts, -1, this, QuickFilterType.AND);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				String item = results.getString(1);

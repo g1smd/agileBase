@@ -27,7 +27,6 @@ import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.ReportDataFieldStatsInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
-import com.gtwm.pb.model.interfaces.fields.FileField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.DecimalField;
@@ -420,7 +419,7 @@ public class ReportData implements ReportDataInfo {
 
 	public PreparedStatement getReportSqlPreparedStatement(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> reportSorts, int rowLimit, BaseField selectField)
+			Map<BaseField, Boolean> reportSorts, int rowLimit, BaseField selectField, QuickFilterType filterType)
 			throws SQLException, CantDoThatException {
 		StringBuilder SQLCode;
 		if (selectField == null) {
@@ -463,7 +462,7 @@ public class ReportData implements ReportDataInfo {
 		SQLCode.append(this.report.getInternalReportName());
 		// Apply filters if there are any
 		Map<String, List<ReportQuickFilterInfo>> whereClauseMap = this.getWhereClause(filterValues,
-				exactFilters);
+				exactFilters, filterType);
 		String filterArgs = null;
 		List<ReportQuickFilterInfo> filtersUsed = null;
 		for (Map.Entry<String, List<ReportQuickFilterInfo>> whereClause : whereClauseMap.entrySet()) {
@@ -595,7 +594,10 @@ public class ReportData implements ReportDataInfo {
 	}
 
 	public Map<String, List<ReportQuickFilterInfo>> getWhereClause(
-			Map<BaseField, String> filterValues, boolean exactFilters) throws CantDoThatException {
+			Map<BaseField, String> filterValues, boolean exactFilters, QuickFilterType filterType) throws CantDoThatException {
+		if ((!filterType.equals(QuickFilterType.AND)) && (!filterType.equals(QuickFilterType.OR))) {
+			throw new CantDoThatException("Filter type " + filterType + " should be AND or OR");
+		}
 		StringBuilder filterArguments = new StringBuilder();
 		Set<BaseField> reportBaseFields = this.report.getReportBaseFields();
 		List<ReportQuickFilterInfo> filtersUsed = new LinkedList<ReportQuickFilterInfo>();
@@ -675,15 +677,16 @@ public class ReportData implements ReportDataInfo {
 				filterStringForField = filterStringForField.substring(0,
 						filterStringForField.length() - charsToRemove);
 				filterStringForField = "(" + filterStringForField + ")";
-				filterArguments.append(filterStringForField + " AND ");
+				// now join the whole field filter to the last one with an AND or an OR
+				filterArguments.append(filterStringForField + filterType.getSqlRepresentation());
 			}
 		}
 		// check that filter arguments were supplied
 		String filterArgs = "";
 		if (filterArguments.length() > 0) {
-			// remove trailing AND
-			if (filterArguments.toString().endsWith(" AND ")) {
-				filterArgs = filterArguments.substring(0, filterArguments.length() - 5).trim();
+			// remove trailing AND or OR
+			if (filterArguments.toString().endsWith(filterType.getSqlRepresentation())) {
+				filterArgs = filterArguments.substring(0, filterArguments.length() - filterType.getSqlRepresentation().length()).trim();
 			}
 		}
 		Map<String, List<ReportQuickFilterInfo>> whereClause = new HashMap<String, List<ReportQuickFilterInfo>>();
@@ -711,7 +714,7 @@ public class ReportData implements ReportDataInfo {
 
 	public List<DataRowInfo> getReportDataRows(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> reportSorts, int rowLimit) throws SQLException,
+			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType) throws SQLException,
 			CodingErrorException, CantDoThatException {
 		List<DataRowInfo> reportData = null;
 		// 0) Obtain all display values taken from other sources:
@@ -730,7 +733,7 @@ public class ReportData implements ReportDataInfo {
 			}
 		}
 		PreparedStatement statement = this.getReportSqlPreparedStatement(conn, filterValues,
-				exactFilters, reportSorts, rowLimit, null);
+				exactFilters, reportSorts, rowLimit, null, filterType);
 		long executionStartTime = System.currentTimeMillis();
 		ResultSet results = statement.executeQuery();
 		float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);

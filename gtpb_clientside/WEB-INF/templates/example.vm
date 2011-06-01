@@ -8,8 +8,8 @@
 #foreach($field in $fields)
   #set($fieldCategory = $field.getFieldCategory())
   #if($fieldCategory == "TEXT")
-	#set($fieldWeWant = $field)
-	#break
+	  #set($fieldWeWant = $field)
+	  #break
   #end
 #end
 

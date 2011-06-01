@@ -18,6 +18,8 @@
 package com.gtwm.pb.model.interfaces;
 
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import com.gtwm.pb.model.interfaces.TableInfo;
@@ -142,6 +144,13 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	 */
 	public ReportFieldInfo getWordCloudField();
 
+	/**
+	 * Transform a string such as 'filter' into a full-text-like filter on the whole report, or at least all relevant fields, e.g.
+	 * 
+	 * field1='*filter' or field2='*filter' or field3='*filter'
+	 */
+	public Map<BaseField, String> getGlobalFilterValues(String globalFilterString);
+	
 	/**
 	 * Return whether the row count is definitive or an estimate based on a
 	 * sample of data

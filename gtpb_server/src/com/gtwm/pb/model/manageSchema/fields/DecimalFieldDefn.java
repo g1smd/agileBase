@@ -48,6 +48,7 @@ import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
+import com.gtwm.pb.util.Enumerations.QuickFilterType;
 
 /**
  * A simple decimal number field
@@ -287,7 +288,7 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 			// in the WHERE clause
 			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
 			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
-					filterValues, false, emptySorts, -1, this);
+					filterValues, false, emptySorts, -1, this, QuickFilterType.AND);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				items.add(results.getDouble(1));
