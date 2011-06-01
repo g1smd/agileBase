@@ -1,7 +1,7 @@
 #set($report = $sessionData.getReport())
 <div class="breadcrumb_title">$report</div>
 #set($filterString = $sessionData.getGlobalFilterString($report))
-<input id="searchbox" name="search" type="search" placeholder="search" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
+<input id="searchbox" name="searchbox" type="search" placeholder="search" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
 <div class="reportDataView" id="homeContent">
   #parse("gui/edit_nav/report_content.vm")
 </div>
