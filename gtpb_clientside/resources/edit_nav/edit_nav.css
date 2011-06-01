@@ -154,11 +154,11 @@ body {
 }
 
 #search input {
-  width: 30em;
+  width: 15em;
   color: black;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   -moz-border-radius: 2em;
-  /* no webkit border radius, webkit styles input type=search anyway */
+  /* no webkit border radius, webkit styles search inputs anyway */
 }
 
 #breadcrumb {

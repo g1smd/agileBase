@@ -15,8 +15,10 @@
 </div>
 #foreach($row in $reportDataRows)
   #set($dataRowFields = $row.getDataRowFields())
+  #set($lastUniqueId = $thisUniqueId)
   #set($thisUniqueId = $row.getRowId())
   #set($emboldened = false)
+  #if($thisUniqueId != $lastUniqueId)
   ##onclick is workaround for iOS bug http://blog.alanszlosek.com/post/4369588562/jquerys-live-click-handler-on-mobile-safari
   <div class="related block current" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&set_row_id=$thisUniqueId" onclick=""> 
     #foreach($field in $reportBaseFields)##
@@ -56,4 +58,5 @@
       #end
     #end
   </div>
+  #end
 #end
