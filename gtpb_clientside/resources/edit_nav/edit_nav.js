@@ -163,9 +163,11 @@ function moveDown() {
 }
 
 function moveUpTo(levelUrl) {
+  alert("moving up");
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
   // search for the levelUrl somewhere above the current level
   for (var level = 0; level < currentLevel; level++) {
+	alert("testing level " + level + " of " + currentLevel);
 	if (levelsList[level].levelUrl == levelUrl) {
 	  alert("old level " + currentLevel);
 	  if(currentLevel > 0) {
