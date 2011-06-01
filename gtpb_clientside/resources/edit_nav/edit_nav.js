@@ -241,7 +241,8 @@ function dependentSnippets() {
 /**
  * Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=660699
  */
-function firefoxBugWorkaround() {	
+function firefoxBugWorkaround() {
+  return; /* actually, the bug isn't that bad in our context */
   if ($.browser.mozilla) {
 	$(".centrebox").css("float","none");
   }
