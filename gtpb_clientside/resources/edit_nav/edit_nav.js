@@ -17,6 +17,11 @@ $(document).ready(function() {
     var href = $(this).attr("href");
     moveDownTo(href);
   });
+  $("a.jumpto_table").live('click', function(event) {
+	event.preventDefault();
+	var href= $(this.attr("href"));
+	moveUpTo(href);
+  });
   // Initialise home screen for user
   createLevel("AppController.servlet?return=gui/edit_nav/report");
 });
@@ -78,7 +83,7 @@ function initialiseSlides() {
     $(".rewind").live('click', function() {
       var slideNum = $(this).closest(".slide").find(".counter").text();
   	  //go(1) doesn't seem to work always here
-      for(var i =0; i < slideNum; i++) {
+      for(var i=0; i < slideNum; i++) {
         slideshow.prev();
       }
     });
@@ -162,7 +167,10 @@ function moveUpTo(levelUrl) {
   // search for the levelUrl somewhere above the current level
   for (var level = 0; level < currentLevel; level++) {
 	if (levelsList[level].levelUrl == levelUrl) {
-	  jqLevelContent.addClass("flyDown").addClass("transparent");
+	  if(currentLevel > 0) {
+		jqLevelContent.addClass("flyDown");
+	  }
+	  jqLevelContent.addClass("transparent");
 	  setTimeout(function() {
 		jqLevelContent.addClass("invisible");
 	  }, 500);
