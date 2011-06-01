@@ -37,6 +37,7 @@ import java.util.LinkedHashSet;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Calendar;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -2599,7 +2600,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Called uniquely by getTable
 	 */
-	private synchronized TableInfo getTableByName(HttpServletRequest request, String tableName)
+	private TableInfo getTableByName(HttpServletRequest request, String tableName)
 			throws ObjectNotFoundException, DisallowedException {
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Set<TableInfo> companyTables = company.getTables();
@@ -2637,7 +2638,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return false;
 	}
 
-	public synchronized TableInfo getTable(HttpServletRequest request, String internalTableName)
+	public TableInfo getTable(HttpServletRequest request, String internalTableName)
 			throws ObjectNotFoundException, DisallowedException {
 		TableInfo cachedTable = this.tableCache.get(internalTableName);
 		if (cachedTable != null) {
@@ -2683,7 +2684,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return this.getTableByName(request, internalTableName);
 	}
 
-	public synchronized TableInfo findTableContainingReport(HttpServletRequest request,
+	public TableInfo findTableContainingReport(HttpServletRequest request,
 			String reportInternalName) throws ObjectNotFoundException, DisallowedException {
 		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
 		TableInfo cachedTable = this.reportTableCache.get(reportInternalName);
@@ -2715,7 +2716,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		throw new ObjectNotFoundException("Report '" + reportInternalName + "' is not in any table");
 	}
 
-	private synchronized TableInfo findTableContainingReportWithoutChecks(
+	private TableInfo findTableContainingReportWithoutChecks(
 			String reportInternalName, HttpServletRequest request) throws ObjectNotFoundException {
 		TableInfo cachedTable = this.reportTableCache.get(reportInternalName);
 		if (cachedTable != null) {
@@ -2734,7 +2735,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		throw new ObjectNotFoundException("Report '" + reportInternalName + "' is not in any table");
 	}
 
-	public synchronized TableInfo findTableContainingField(HttpServletRequest request,
+	public TableInfo findTableContainingField(HttpServletRequest request,
 			String internalFieldName) throws ObjectNotFoundException, DisallowedException {
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Set<TableInfo> tables = company.getTables();
@@ -2754,7 +2755,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		throw new ObjectNotFoundException("Field '" + internalFieldName + "' is not in any table");
 	}
 
-	public synchronized ReportFieldInfo findReportFieldByInternalName(HttpServletRequest request,
+	public ReportFieldInfo findReportFieldByInternalName(HttpServletRequest request,
 			String internalFieldName) throws ObjectNotFoundException, DisallowedException,
 			CodingErrorException {
 		// look through report fields, some of which are calculations
@@ -3040,9 +3041,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Lookup of internal table name to table
 	 */
-	private Map<String, TableInfo> tableCache = new HashMap<String, TableInfo>();
+	private Map<String, TableInfo> tableCache = new ConcurrentHashMap<String, TableInfo>();
 
-	private Map<String, TableInfo> reportTableCache = new HashMap<String, TableInfo>();
+	private Map<String, TableInfo> reportTableCache = new ConcurrentHashMap<String, TableInfo>();
+	
 
 	/**
 	 * Keep a cache of the datasource so it's available quickly whenever needed
