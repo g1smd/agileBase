@@ -45,7 +45,7 @@ function initialiseSlides() {
     	var jqLink = $(this);
         var tableName =  jqLink.text().toLowerCase();
         var title = jqLink.attr("title").toLowerCase();
-        if ((title.contains(filterString.toLowerCase())) || (tableName.contains(filterString.toLowerCase()))) {
+        if ((title.indexOf(filterString.toLowerCase()) > -1) || (tableName.indexOf(filterString.toLowerCase()) > -1)) {
           jqLink.removeClass("invisible");
         } else {
           jqLink.addClass("invisible");
