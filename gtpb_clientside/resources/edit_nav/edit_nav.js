@@ -13,15 +13,15 @@ $(document).ready(function() {
 	  moveDownTo(href);
 	}
   });
+  $(".block").live('click', function() {
+    var href = $(this).attr("href");
+    moveDownTo(href);
+  });
   // Initialise home screen for user
   createLevel("AppController.servlet?return=gui/edit_nav/report");
 });
 
 function initialiseSlides() {
-    $(".block").click(function() {
-      var href = $(this).attr("href");
-      moveDownTo(href);
-    });
     $("#searchbox").keyup(function() {
       var filterString = $("#searchbox").val();
       var internalReportName = $("#searchbox").attr("internalreportname");
@@ -31,10 +31,6 @@ function initialiseSlides() {
     	  return;
     	}
     	$("#homeContent").html(data);
-        $(".block").click(function() {
-          var href = $(this).attr("href");
-          moveDownTo(href);
-        });
       });
     });
 	
