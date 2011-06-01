@@ -81,7 +81,7 @@ body {
 
 .slide input, .slide textarea {
   background: none;
-  border: 2px solid rgba(0, 0, 0, 0); /* transparent */
+  border: 2px solid #f2f2f2; /* rgba(0,0,0,0) = transparent */
   position: relative;
   top: -4px;
 }
@@ -194,6 +194,7 @@ a.jumpto_table {
   padding: 4px;
   height: 24px;
   text-decoration: none;
+  text-transform: lowercase;
 }
 
 a.jumpto_table.current {
