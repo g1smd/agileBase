@@ -30,6 +30,10 @@ function initialiseSlides() {
     	  return;
     	}
     	$("#homeContent").html(data);
+        $(".block").click(function() {
+          var href = $(this).attr("href");
+          moveDownTo(href);
+        });
       });
     });
 	
