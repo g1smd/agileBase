@@ -174,7 +174,6 @@ function moveUpTo(levelUrl) {
 }
 
 function moveDownTo(levelUrl) {
-  alert("moving down from level " + currentLevel + ", " + levelsList[currentLevel].levelUrl + " to " + levelUrl);
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
   jqLevelContent.addClass("flyUp").addClass("transparent");
   setTimeout(function() {
