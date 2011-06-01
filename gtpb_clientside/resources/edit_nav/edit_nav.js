@@ -73,7 +73,6 @@ function initialiseSlides() {
       var slideNum = $("#slide_" + internalTableName).index();
       slideshow.go(slideNum + 1);
       $(".presentation").scrollTop(0);
-      }
     });
     // live because only first few slide are created on load?
     $(".rewind").live('click', function() {
