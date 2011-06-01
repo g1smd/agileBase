@@ -106,7 +106,7 @@
 ##              <a #if(!$mobile_device) target="pane_2" #end href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_field_index&internalfieldname=$field.getBaseField().getInternalFieldName()&newfieldindex=$higherFieldIndex">&darr;</a>
 ##            #end
       #if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
-				<span class="greytext">Link to $field.getSimpleName()</span>
+				<span class="greytext">Link to $baseField.getTableContainingField().getSimpleName()</span>
 			#else $field
 			#end
           </td>
