@@ -3,10 +3,12 @@
 #end
 #set($internalTableName = $report.getParentTable().getInternalTableName())
 #set($reportBaseFields = $report.getReportBaseFields())##
-#if(!$filters)
-  #set($reportDataRows = $view.getGloballyFilteredReportDataRows($report))
-#else
-  #set($reportDataRows = $view.getReportDataRows($report, 100, $filters, true))##
+#if(!$reportDataRows)
+  #if(!$filters)
+    #set($reportDataRows = $view.getGloballyFilteredReportDataRows($report))
+  #else
+    #set($reportDataRows = $view.getReportDataRows($report, 100, $filters, true))##
+  #end
 #end
 <div class="related block centrebox" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&save_new_record=true&gtpb_override_relation_default_to_null=true">
   <span class="new"><img src="resources/toolbar/new.png"> add new</span>
