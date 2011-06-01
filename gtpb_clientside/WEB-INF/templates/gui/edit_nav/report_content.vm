@@ -1,4 +1,6 @@
-## $report must be defined
+#if(!$report)
+  #set($report = $sessionData.getReport())
+#end
 #set($internalTableName = $report.getParentTable().getInternalTableName())
 #set($reportBaseFields = $report.getReportBaseFields())##
 #if(!$filters)
