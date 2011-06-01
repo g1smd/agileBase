@@ -4,7 +4,7 @@
 <div id="navrow">
   <input id="searchbox" name="searchbox" type="search" placeholder="search $report" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
   <div id="jumpto">
-  <span style="float: left">Jump to: </span>
+  <span class="jump_label">Jump to: </span>
   #foreach($table in $view.getPopularTables($view.getLoggedInUser()))
     #set($tableReports = $table.getReports())
     #foreach($tableReport in $tableReports)
