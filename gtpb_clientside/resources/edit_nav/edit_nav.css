@@ -145,18 +145,12 @@ body {
   overflow: hidden;
 }
 
-#search {
+#search input {
   margin-left: 2em;
   margin-top: 0.5em;
-  color: white;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  font-size: 13pt;
-}
-
-#search input {
-  width: 15em;
-  color: black;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	width: 15em;
+	font-size: 13pt;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   -moz-border-radius: 2em;
   /* no webkit border radius, webkit styles search inputs anyway */
 }
