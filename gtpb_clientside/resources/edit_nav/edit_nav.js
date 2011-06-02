@@ -75,8 +75,6 @@ function initialiseSlides() {
     fDatePickers();
     /* fTwitter(); */
     
-    if(!initialised) {
-    	
     $("input").focus(function() {
   	  $(this).addClass("editing");
     });
@@ -90,6 +88,7 @@ function initialiseSlides() {
 	  $(this).removeClass("editing");
     });      
     
+    alert("adding depentent_table click to level " + currentLevel);
     jqLevel.find(".dependent_table").click(function() {
       var jqDependentTable = $(this);
       if (!jqDependentTable.hasClass("active")) {
@@ -116,8 +115,6 @@ function initialiseSlides() {
         slideshow.prev();
       }
     });
-    
-    } /* end if not initialised */
     
     slideshow.go(1);
     $(".presentation").scrollTop(0);
