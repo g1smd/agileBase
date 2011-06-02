@@ -34,7 +34,7 @@
                   #end
                 #end
               #end
-              <div class="dependent_table related #if($active) active #end" id="dependent_table_$relatedTable.getInternalTableName()">
+              <div class="dependent_table related #if($active) active #end" id="dependent_table_$relatedTable.getInternalTableName()" rowid="$relatedRowId">
                 <h1><span class="count"><img src="resources/edit_nav/up.png" alt="up"></span>$field.getSimplifiedFieldName(): $fieldDisplayValue</h1>
                 <div class="record_snippets">
                   <div class="snippet">$snippet</div>
