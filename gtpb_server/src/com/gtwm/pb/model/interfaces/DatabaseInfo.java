@@ -553,5 +553,15 @@ public interface DatabaseInfo {
 	 * Should be run at application shutdown to cancel any background tasks
 	 */
 	public void cancelScheduledEvents();
+	
+	/**
+	 * Should be called when a privilege affecting a user is removed
+	 */
+	public void clearPopularTablesCache(AppUserInfo user);
+	
+	/**
+	 * Clear the cache for all users in a company
+	 */
+	public void clearPopularTablesCacheForCompany(CompanyInfo company);
 
 }

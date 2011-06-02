@@ -141,9 +141,10 @@ public final class ServletAuthMethods {
 	 *             If the user isn't found in the application's list of users
 	 */
 	public synchronized static void removeUser(SessionDataInfo sessionData,
-			HttpServletRequest request, AuthManagerInfo authManager) throws DisallowedException,
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		String internalUserName = request.getParameter("internalusername");
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		AppUserInfo appUser;
 		if (internalUserName == null) {
 			appUser = sessionData.getUser();
@@ -181,6 +182,7 @@ public final class ServletAuthMethods {
 			HibernateUtil.closeSession();
 		}
 		sessionData.setUser(null);
+		databaseDefn.clearPopularTablesCache(appUser);
 	}
 
 	public synchronized static void updateUser(SessionDataInfo sessionData,
@@ -318,10 +320,11 @@ public final class ServletAuthMethods {
 	}
 
 	public synchronized static void removeRole(SessionDataInfo sessionData,
-			HttpServletRequest request, AuthManagerInfo authManager) throws DisallowedException,
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CodingErrorException,
 			CantDoThatException {
 		String internalRoleName = request.getParameter("rolename");
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
 		if (role == null) {
 			role = sessionData.getRole();
@@ -349,6 +352,8 @@ public final class ServletAuthMethods {
 			HibernateUtil.closeSession();
 		}
 		sessionData.setRole(null);
+		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
+		databaseDefn.clearPopularTablesCacheForCompany(company);
 	}
 
 	/**
@@ -424,6 +429,7 @@ public final class ServletAuthMethods {
 			DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException,
 			ObjectNotFoundException, IllegalArgumentException, CantDoThatException {
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
+		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
 		String privilegeTypeParameter = request.getParameter("privilegetype");
 		String internalRoleName = request.getParameter("internalrolename");
 		String internalUserName = request.getParameter("internalusername");
@@ -432,7 +438,6 @@ public final class ServletAuthMethods {
 			throw new MissingParametersException(
 					"The 'privilegetype' parameter and either 'internalusername' or 'internalrolename' are required to remove a privilege");
 		}
-		logger.info("starting remove privilege...");
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeParameter.toUpperCase());
 		String internalTableName = request.getParameter("internaltablename");
 		try {
@@ -443,11 +448,13 @@ public final class ServletAuthMethods {
 				if (internalRoleName != null) {
 					AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
 					authManager.removeRolePrivilege(request, role, privilegeType, table);
+					databaseDefn.clearPopularTablesCacheForCompany(company);
 				}
 				if (internalUserName != null) {
 					AppUserInfo appUser = authManager.getUserByInternalName(request,
 							internalUserName);
 					authManager.removeUserPrivilege(request, appUser, privilegeType, table);
+					databaseDefn.clearPopularTablesCache(appUser);
 				}
 			} else {
 				// Remove a general privilege
@@ -461,7 +468,6 @@ public final class ServletAuthMethods {
 					authManager.removeUserPrivilege(request, appUser, privilegeType);
 				}
 			}
-			logger.info("commiting Hibernate");
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (Exception ex) {
 			HibernateUtil.currentSession().getTransaction().rollback();
@@ -548,6 +554,7 @@ public final class ServletAuthMethods {
 						}
 					}
 				}
+				databaseDefn.clearPopularTablesCache(user);
 			} else if (assignTo.equals("role")) {
 				AppRoleInfo role = null;
 				if (internalRoleName == null) {
@@ -561,6 +568,7 @@ public final class ServletAuthMethods {
 					throw new MissingParametersException(
 							"Role not found. Please check 'internalrolename' parameter or ensure that the session role has been set");
 				}
+				CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
 				// role specific privileges handled similarly to user specific
 				// privileges above
 				for (PrivilegeType testPrivilegeType : PrivilegeType.values()) {
@@ -574,6 +582,7 @@ public final class ServletAuthMethods {
 										testPrivilegeType, role, table))) {
 							authManager
 									.removeRolePrivilege(request, role, testPrivilegeType, table);
+							databaseDefn.clearPopularTablesCacheForCompany(company);
 						}
 					}
 				}
@@ -639,8 +648,9 @@ public final class ServletAuthMethods {
 							authManager
 									.removeUserPrivilege(request, user, testPrivilegeType, table);
 						}
-					}
+					}	
 				}
+				databaseDefn.clearPopularTablesCache(user);
 			} else {
 				// removing privilege from role
 				AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
@@ -669,6 +679,8 @@ public final class ServletAuthMethods {
 					}
 				}
 			}
+			CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
+			databaseDefn.clearPopularTablesCacheForCompany(company);
 		} catch (AgileBaseException pbex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			throw new CantDoThatException("No privileges cleared: " + pbex.getMessage(), pbex);
@@ -713,7 +725,7 @@ public final class ServletAuthMethods {
 	}
 
 	public synchronized static void removeUserFromRole(HttpServletRequest request,
-			AuthManagerInfo authManager) throws ObjectNotFoundException, DisallowedException,
+			DatabaseInfo databaseDefn) throws ObjectNotFoundException, DisallowedException,
 			MissingParametersException, CodingErrorException, CantDoThatException {
 		String internalRoleName = request.getParameter("internalrolename");
 		String internalUserName = request.getParameter("internalusername");
@@ -721,6 +733,7 @@ public final class ServletAuthMethods {
 			throw new MissingParametersException(
 					"'internalrolename' and 'internalusername' parameters are required");
 		}
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		AppUserInfo user = authManager.getUserByInternalName(request, internalUserName);
 		AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
 		// begin updating model and persisting changes
@@ -741,6 +754,7 @@ public final class ServletAuthMethods {
 		} finally {
 			HibernateUtil.closeSession();
 		}
+		databaseDefn.clearPopularTablesCache(user);
 	}
 
 	private static final SimpleLogger logger = new SimpleLogger(ServletAuthMethods.class);

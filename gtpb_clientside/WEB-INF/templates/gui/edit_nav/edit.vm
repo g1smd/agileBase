@@ -10,6 +10,33 @@
           #parse("gui/reports_and_tables/tabs/edit.vm")
         </div>
         <div class="dependent_tables">
+          ## each relation field
+          #foreach($field in $sessionTable.getFields())
+            #if($field.getFieldCategory() == "RELATION")
+              #set($relatedTable = $field.getRelatedTable())
+              ## tableDataRow will have been set in edit.vm above
+              #if(!$tableDataRow)
+                #set($tableDataRow = $view.getTableDataRow())
+              #end
+              #set($relatedRowId = $tableDataRow.get($field))
+              #set($snippet = "")
+              #set($active = false)
+              #if($relatedRowId)
+                #set($active = true)
+                #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
+                #foreach($relatedField in $relatedDataRow.keySet())
+                  #set($snippet = "$snippet$relatedDataRow.get($relatedField), ")
+                #end
+              #end
+              <div class="dependent_table related #if($active) active #end" id="dependent_table_$relatedTable.getInternalTableName()">
+                <h1><span class="count"></span>edit $relatedTable.getSimpleName()</h1>
+                <div class="record_snippets">
+                  <div class="snippet">$snippet</div>
+                </div>
+              </div>
+            #end
+          #end
+          ## dependent child tables
           #set($primaryKey = $sessionTable.getPrimaryKey())
           #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
           #foreach($dependentTable in $dependentTables)
