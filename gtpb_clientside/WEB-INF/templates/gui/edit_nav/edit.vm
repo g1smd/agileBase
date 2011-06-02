@@ -29,7 +29,7 @@
                 #end
               #end
               <div class="dependent_table related #if($active) active #end" id="dependent_table_$relatedTable.getInternalTableName()">
-                <h1><span class="count"></span>edit $relatedTable.getSimpleName()</h1>
+                <h1><span class="count"></span>edit $field $relatedRowId</h1>
                 <div class="record_snippets">
                   <div class="snippet">$snippet</div>
                 </div>
