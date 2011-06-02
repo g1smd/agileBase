@@ -2,6 +2,8 @@ var levelsList = [];
 
 var currentLevel = 0;
 
+var homeUrl = "AppController.servlet?return=gui/edit_nav/report";
+
 $(document).ready(function() {
   $("#breadcrumb a").live('click', function(event) {
 	event.preventDefault();
@@ -23,7 +25,7 @@ $(document).ready(function() {
 	moveUpTo(href);
   });
   // Initialise home screen for user
-  createLevel("AppController.servlet?return=gui/edit_nav/report");
+  createLevel(homeUrl);
 });
 
 function initialiseSlides() {
@@ -92,7 +94,7 @@ function initialiseSlides() {
   	    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
   	    var rowId = jqDependentTable.attr("rowid");
   	    var levelUrl="AppController.servlet?return=gui/edit_nav/edit&set_table=" + internalTableName + "&set_row_id=" + rowId;
-  	    moveDownTo(levelUrl);
+  	    moveUpTo(levelUrl);
       } else {
 	    // find index of slide to go to
 	    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
@@ -213,7 +215,11 @@ function moveUpTo(levelUrl) {
   }, 500);
   levelsList = [];
   currentLevel = 0;
-  createLevel(levelUrl);
+  // make sure there is always a home URL though
+  createLevel(homeUrl);
+  if (levelUrl != homeUrl) {
+	moveDownTo(levelUrl);
+  }
 }
 
 function moveDownTo(levelUrl) {
