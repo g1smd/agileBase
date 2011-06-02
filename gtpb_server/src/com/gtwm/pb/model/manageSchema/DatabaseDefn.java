@@ -257,7 +257,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		DateField dateCreatedField = new DateFieldDefn(table, null,
 				HiddenFields.DATE_CREATED.getFieldName(),
 				HiddenFields.DATE_CREATED.getFieldDescription(), DateFieldDefn.UNIQUE_FALSE,
-				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND, FieldPrintoutSetting.NO_PRINTOUT);
+				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND,
+				FieldPrintoutSetting.NO_PRINTOUT);
 		dateCreatedField.setHidden(DateFieldDefn.HIDDEN_TRUE);
 		HibernateUtil.currentSession().save(dateCreatedField);
 		table.addField(dateCreatedField);
@@ -283,7 +284,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		DateField lastModifiedField = new DateFieldDefn(table, null,
 				HiddenFields.LAST_MODIFIED.getFieldName(),
 				HiddenFields.LAST_MODIFIED.getFieldDescription(), DateFieldDefn.UNIQUE_FALSE,
-				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND, FieldPrintoutSetting.NO_PRINTOUT);
+				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND,
+				FieldPrintoutSetting.NO_PRINTOUT);
 		lastModifiedField.setHidden(DateFieldDefn.HIDDEN_TRUE);
 		HibernateUtil.currentSession().save(lastModifiedField);
 		table.addField(lastModifiedField);
@@ -976,7 +978,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		String notApplicableDescription = null;
 		String notApplicableValue = null;
 		FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.NAME_AND_VALUE;
-		String printoutSettingString = HttpRequestUtil.getStringValue(request, PossibleListOptions.PRINTFORMAT.getFormInputName());
+		String printoutSettingString = HttpRequestUtil.getStringValue(request,
+				PossibleListOptions.PRINTFORMAT.getFormInputName());
 		if (printoutSettingString != null) {
 			if (!printoutSettingString.equals("")) {
 				printoutSetting = FieldPrintoutSetting.valueOf(printoutSettingString.toUpperCase());
@@ -1001,7 +1004,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 					PossibleBooleanOptions.USELOOKUP.getFormInputName());
 			field = new TextFieldDefn(this.relationalDataSource, table, internalFieldName,
 					fieldName, fieldDesc, unique, notNull, defaultValue, notApplicable,
-					notApplicableDescription, notApplicableValue, usesLookup, false, printoutSetting);
+					notApplicableDescription, notApplicableValue, usesLookup, false,
+					printoutSetting);
 			int textContentSize = Integer.valueOf(request
 					.getParameter(PossibleListOptions.TEXTCONTENTSIZE.getFormInputName()));
 			((TextField) field).setContentSize(textContentSize);
@@ -1032,7 +1036,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				int notApplicableNumber = -1;
 				field = new IntegerFieldDefn(this.relationalDataSource, table, internalFieldName,
 						fieldName, fieldDesc, unique, defaultNumber, notNull, notApplicable,
-						notApplicableDescription, notApplicableNumber, usesLookup, storesCurrency, printoutSetting);
+						notApplicableDescription, notApplicableNumber, usesLookup, storesCurrency,
+						printoutSetting);
 			}
 			break;
 		case DURATION:
@@ -1045,7 +1050,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 			// default hardcoded as 0 interval -- amend this
 			break;
 		case SEQUENCE:
-			field = new SequenceFieldDefn(table, internalFieldName, fieldName, fieldDesc, printoutSetting);
+			field = new SequenceFieldDefn(table, internalFieldName, fieldName, fieldDesc,
+					printoutSetting);
 			break;
 		case CHECKBOX:
 			Boolean checkboxDefaultValue = HttpRequestUtil.getBooleanValue(request,
@@ -1054,7 +1060,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 					checkboxDefaultValue, false, printoutSetting);
 			break;
 		case FILE:
-			field = new FileFieldDefn(table, internalFieldName, fieldName, fieldDesc, printoutSetting);
+			field = new FileFieldDefn(table, internalFieldName, fieldName, fieldDesc,
+					printoutSetting);
 			break;
 		case SEPARATOR:
 			field = new SeparatorFieldDefn(table, internalFieldName, fieldName, fieldDesc);
@@ -1634,7 +1641,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				.getFormInputName());
 		boolean defaultToNull = Helpers.valueRepresentsBooleanTrue(defaultToNullString);
 		FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.NAME_AND_VALUE;
-		String printoutSettingString = HttpRequestUtil.getStringValue(request, PossibleListOptions.PRINTFORMAT.getFormInputName());
+		String printoutSettingString = HttpRequestUtil.getStringValue(request,
+				PossibleListOptions.PRINTFORMAT.getFormInputName());
 		if (printoutSettingString != null) {
 			if (!printoutSettingString.equals("")) {
 				printoutSetting = FieldPrintoutSetting.valueOf(printoutSettingString.toUpperCase());
@@ -1642,7 +1650,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		// Create the relation object
 		RelationField relationToAdd = new RelationFieldDefn(this.relationalDataSource,
-				tableToAddTo, internalFieldName, relatedTable, relatedField, notNull, defaultToNull, printoutSetting);
+				tableToAddTo, internalFieldName, relatedTable, relatedField, notNull,
+				defaultToNull, printoutSetting);
 		relationToAdd.setFieldDescription(fieldDesc);
 		relationToAdd.setFieldName(fieldName);
 		if (listValueFieldInternalName == null) {
@@ -2684,8 +2693,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return this.getTableByName(request, internalTableName);
 	}
 
-	public TableInfo findTableContainingReport(HttpServletRequest request,
-			String reportInternalName) throws ObjectNotFoundException, DisallowedException {
+	public TableInfo findTableContainingReport(HttpServletRequest request, String reportInternalName)
+			throws ObjectNotFoundException, DisallowedException {
 		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
 		TableInfo cachedTable = this.reportTableCache.get(reportInternalName);
 		if (cachedTable != null) {
@@ -2716,8 +2725,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		throw new ObjectNotFoundException("Report '" + reportInternalName + "' is not in any table");
 	}
 
-	private TableInfo findTableContainingReportWithoutChecks(
-			String reportInternalName, HttpServletRequest request) throws ObjectNotFoundException {
+	private TableInfo findTableContainingReportWithoutChecks(String reportInternalName,
+			HttpServletRequest request) throws ObjectNotFoundException {
 		TableInfo cachedTable = this.reportTableCache.get(reportInternalName);
 		if (cachedTable != null) {
 			return cachedTable;
@@ -2735,8 +2744,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		throw new ObjectNotFoundException("Report '" + reportInternalName + "' is not in any table");
 	}
 
-	public TableInfo findTableContainingField(HttpServletRequest request,
-			String internalFieldName) throws ObjectNotFoundException, DisallowedException {
+	public TableInfo findTableContainingField(HttpServletRequest request, String internalFieldName)
+			throws ObjectNotFoundException, DisallowedException {
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		Set<TableInfo> tables = company.getTables();
 		for (TableInfo table : tables) {
@@ -3038,51 +3047,81 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public List<TableInfo> getPopularTables(HttpServletRequest request, AppUserInfo user) throws SQLException {
+	public List<TableInfo> getPopularTables(HttpServletRequest request, AppUserInfo user)
+			throws SQLException {
 		List<TableInfo> popularTables = this.userPopularTablesCache.get(user);
-		if (popularTables == null) {
-			popularTables = new ArrayList<TableInfo>();
-			CompanyInfo company = user.getCompany();
-			String SQLCode = "SELECT app_table FROM dbint_log_data_change WHERE app_user=? GROUP BY app_table ORDER by count(*) DESC";
-			Connection conn = null;
-			try {
-				conn = this.relationalDataSource.getConnection();
-				conn.setAutoCommit(false);
-				PreparedStatement statement = conn.prepareStatement(SQLCode);
-				statement.setString(1, user.getUserName());
-				ResultSet results = statement.executeQuery();
-				while (results.next()) {
-					String internalTableName = results.getString(1);
-					try {
-						TableInfo table = this.getTable(request, internalTableName);
+		if (popularTables != null) {
+			return popularTables;
+		}
+		popularTables = new ArrayList<TableInfo>();
+		CompanyInfo company = user.getCompany();
+		String SQLCode = "SELECT app_table FROM dbint_log_data_change WHERE app_user=? AND app_timestamp > (now() - '6 months'::interval) GROUP BY app_table ORDER by count(*) DESC";
+		Connection conn = null;
+		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
+		try {
+			conn = this.relationalDataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			statement.setString(1, user.getUserName());
+			ResultSet results = statement.executeQuery();
+			while (results.next()) {
+				String internalTableName = results.getString(1);
+				try {
+					TableInfo table = this.getTable(request, internalTableName);
+					// Check necessary because getTable doesn't throw
+					// exception if user is an administrator
+					if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
+							table)) {
 						popularTables.add(table);
-					} catch (ObjectNotFoundException onfex) {
-						// table doesn't exist any more, ignore
-					} catch (DisallowedException dex) {
-						// user no longer has privileges on table, ignore
 					}
+				} catch (ObjectNotFoundException onfex) {
+					// table doesn't exist any more, ignore
+				} catch (DisallowedException dex) {
+					// user no longer has privileges on table, ignore
 				}
-				results.close();
-				statement.close();
-			} finally {
-				if (conn != null) {
-					conn.close();
+			}
+			results.close();
+			statement.close();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		// At the end of the list, add in tables which the user hasn't
+		// edited recently but they still have privileges on
+		Set<TableInfo> tables = company.getTables();
+		for (TableInfo table : tables) {
+			if (!popularTables.contains(table)) {
+				if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
+						table)) {
+					popularTables.add(table);
 				}
 			}
 		}
+		this.userPopularTablesCache.put(user, popularTables);
 		return popularTables;
 	}
-	
+
+	public void clearPopularTablesCache(AppUserInfo user) {
+		this.userPopularTablesCache.remove(user);
+	}
+
+	public void clearPopularTablesCacheForCompany(CompanyInfo company) {
+		for (AppUserInfo user : company.getUsers()) {
+			this.userPopularTablesCache.remove(user);
+		}
+	}
+
 	/**
 	 * Lookup of internal table name to table
 	 */
 	private Map<String, TableInfo> tableCache = new ConcurrentHashMap<String, TableInfo>();
 
 	private Map<String, TableInfo> reportTableCache = new ConcurrentHashMap<String, TableInfo>();
-	
-    private Map<AppUserInfo, List<TableInfo>> userPopularTablesCache = new ConcurrentHashMap<AppUserInfo, List<TableInfo>>();
-	
-    /**
+
+	private Map<AppUserInfo, List<TableInfo>> userPopularTablesCache = new ConcurrentHashMap<AppUserInfo, List<TableInfo>>();
+
+	/**
 	 * Keep a cache of the datasource so it's available quickly whenever needed
 	 */
 	private DataSource relationalDataSource = null;
