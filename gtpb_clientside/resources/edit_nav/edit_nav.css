@@ -154,6 +154,10 @@ body {
   color: #486F98;
 }
 
+.related .snippet {
+  color: #50add6;
+}
+
 #searchbox {
   margin-left: 2em;
   margin-top: 0.5em;
