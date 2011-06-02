@@ -18,18 +18,22 @@
               #if(!$tableDataRow)
                 #set($tableDataRow = $view.getTableDataRow())
               #end
-              #set($relatedRowId = $tableDataRow.get($field.getRelatedField()).getValueInteger())
-              #set($snippet = "")
-              #set($active = false)
-              #if($relatedRowId)
-                #set($active = true)
-                #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
-                #set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
-                #foreach($relatedField in $relatedDataRow.keySet())
-                  #if(!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey()))
-                  #set($fieldValue = $relatedDataRow.get($relatedField))
-                    #if(($fieldValue != "") && ($fieldValue != "false"))
-                      #set($snippet = "$snippet$fieldValue, ")
+              #set($relatedRowIdValue = false)
+              #set($relatedRowIdValue = $tableDataRow.get($field.getRelatedField()))
+              #if($relatedRowIdValue)
+                #set($relatedRowId = $relatedRowIdValue.getValueInteger())
+                #set($snippet = "")
+                #set($active = false)
+                #if($relatedRowId)
+                  #set($active = true)
+                  #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
+                  #set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
+                  #foreach($relatedField in $relatedDataRow.keySet())
+                    #if(!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey()))
+                    #set($fieldValue = $relatedDataRow.get($relatedField))
+                      #if(($fieldValue != "") && ($fieldValue != "false"))
+                        #set($snippet = "$snippet$fieldValue, ")
+                      #end
                     #end
                   #end
                 #end
