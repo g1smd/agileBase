@@ -260,7 +260,6 @@ function dependentSnippets() {
   var jqLevel = $(levelsList[currentLevel].levelContent);
   var slides = jqLevel.find(".slide");
   var firstSlide = slides.first();
-  alert("Checking if " + firstSlide.find(".dependent_table.active").size() + " active > " + firstSlide.find(".dependent_table.related.active").size() + " related active");
   if (firstSlide.find(".dependent_table.active").size() > firstSlide.find(".dependent_table.related.active").size()) {
 	// has already been initialised
 	return;
@@ -271,6 +270,7 @@ function dependentSnippets() {
 	var tableId = jqSlide.attr("id").replace("slide_","");
 	var jqSnippets = $("#dependent_table_" + tableId);
 	var numCards = jqSlide.find(".block.current").size();
+	alert("table " + tableId + " numCards = " + numCards);
 	if (numCards > 0) {
 	  jqSnippets.addClass("active");
 	  if (numCards == 100) {
