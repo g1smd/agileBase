@@ -215,9 +215,11 @@ function moveUpTo(levelUrl) {
   }, 500);
   levelsList = [];
   currentLevel = 0;
-  // make sure there is always a home URL though
-  createLevel(homeUrl);
-  if (levelUrl != homeUrl) {
+  // make sure there is always a home URL based on a report though
+  if (levelUrl.indexOf("gui/edit_nav/report") > -1) {
+    createLevel(levelUrl);
+  } else {
+	createLevel(homeUrl);
 	moveDownTo(levelUrl);
   }
 }
