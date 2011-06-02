@@ -138,6 +138,10 @@ body {
   color: #486F98;
 }
 
+.dependent_table.active.related h1 {
+  color: #50add6;
+}
+
 .dependent_table:hover {
   cursor: pointer;
   background-color: white;
