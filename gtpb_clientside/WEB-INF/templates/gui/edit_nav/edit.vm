@@ -10,16 +10,16 @@
           #parse("gui/reports_and_tables/tabs/edit.vm")
         </div>
         <div class="dependent_tables">
+          ## tableDataRow will have been set in edit.vm above
+          #if(!$tableDataRow)
+            #set($tableDataRow = $view.getTableDataRow())
+          #end
           ## each relation field
           #foreach($field in $sessionTable.getFields())
             #if($field.getFieldCategory() == "RELATION")
               #set($relatedTable = $field.getRelatedTable())
-              ## tableDataRow will have been set in edit.vm above
-              #if(!$tableDataRow)
-                #set($tableDataRow = $view.getTableDataRow())
-              #end
-              Related row ID for relation $field is $tableDataRow.get($field.getRelatedField())<br>
-              #set($relatedRowId = $tableDataRow.get($field.getRelatedField()).getValueInteger())
+              #set($relatedRowIdValue = $tableDataRow.get($field.getRelatedField()))
+              #set($relatedRowId = $relatedRowIdValue.getValueInteger())
               #set($snippet = "")
               #set($active = false)
               #if($relatedRowId)
