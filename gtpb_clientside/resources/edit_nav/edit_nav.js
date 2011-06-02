@@ -24,7 +24,7 @@ $(document).ready(function() {
 	var href= $(this).attr("href");
 	moveUpTo(href);
   });
-  $(".dependent_table").click(function() {
+  $(".dependent_table").live('click', function() {
 	  var jqDependentTable = $(this);
 	  if (!jqDependentTable.hasClass("active")) {
 		return;
