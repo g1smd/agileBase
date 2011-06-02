@@ -64,6 +64,8 @@ function initialiseSlides() {
 	}
     // Initialize
 	var jqLevel = $(levelsList[currentLevel].levelContent);
+	var initialised = jqLevel.hasClass("initialised");
+	jqLevel.addClass("initialised");
     var slideshow = new SlideShow(jqLevel.find(".slide").toArray());
     var counters = document.querySelectorAll('.counter');
     var slides = document.querySelectorAll('.slide');
@@ -73,6 +75,8 @@ function initialiseSlides() {
     fDatePickers();
     /* fTwitter(); */
     
+    if(!initialised) {
+    	
     $("input").focus(function() {
   	  $(this).addClass("editing");
     });
@@ -112,6 +116,9 @@ function initialiseSlides() {
         slideshow.prev();
       }
     });
+    
+    } /* end if not initialised */
+    
     slideshow.go(1);
     $(".presentation").scrollTop(0);
 }
