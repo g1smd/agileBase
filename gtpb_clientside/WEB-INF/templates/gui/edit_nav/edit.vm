@@ -18,6 +18,7 @@
               #if(!$tableDataRow)
                 #set($tableDataRow = $view.getTableDataRow())
               #end
+              Related row ID for relation $field is $tableDataRow.get($field.getRelatedField())<br>
               #set($relatedRowId = $tableDataRow.get($field.getRelatedField()).getValueInteger())
               #set($snippet = "")
               #set($active = false)
