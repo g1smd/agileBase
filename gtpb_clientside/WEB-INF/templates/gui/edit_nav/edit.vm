@@ -19,7 +19,7 @@
                 #set($tableDataRow = $view.getTableDataRow())
               #end
               Table data row $tableDataRow
-              #set($relatedRowId = $tableDataRow.get($field.getRelatedField()))
+              #set($relatedRowId = $tableDataRow.get($field.getRelatedField()).getValueInteger())
               #set($snippet = "")
               #set($active = false)
               #if($relatedRowId)
