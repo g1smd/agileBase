@@ -217,6 +217,7 @@ function moveUpTo(levelUrl) {
 }
 
 function moveDownTo(levelUrl) {
+  alert("moving down from level " + currentLevel);
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
   jqLevelContent.addClass("flyUp").addClass("transparent");
   setTimeout(function() {
@@ -270,7 +271,6 @@ function dependentSnippets() {
 	var tableId = jqSlide.attr("id").replace("slide_","");
 	var jqSnippets = $("#dependent_table_" + tableId);
 	var numCards = jqSlide.find(".block.current").size();
-	alert("table " + tableId + " numCards = " + numCards);
 	if (numCards > 0) {
 	  jqSnippets.addClass("active");
 	  if (numCards == 100) {
