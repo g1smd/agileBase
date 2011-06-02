@@ -88,8 +88,6 @@ function initialiseSlides() {
 	  $(this).removeClass("editing");
     });      
     
-    debugCount++;
-    alert(debugCount + ": adding depentent_table click to level " + currentLevel);
     jqLevel.find(".dependent_table").click(function() {
       var jqDependentTable = $(this);
       if (!jqDependentTable.hasClass("active")) {
@@ -132,13 +130,10 @@ function loadDependentSlides() {
   if (firstSlide.find(".dependent_tables").children().size() > 0) {
     $.get("AppController.servlet?return=gui/edit_nav/dependent_slides", function(data) {
 	  jqSlides.append(data);
-	  alert("loaded dependent, now initialising");
 	  initialiseSlides();
 	  dependentSnippets();
-	  return true;
     });
   }
-  return false;
 }
 
 function createLevel(levelUrl) {
@@ -152,10 +147,7 @@ function createLevel(levelUrl) {
 	levelsList[currentLevel] = newLevel;
 	jqLevel.removeClass("transparent").removeClass("invisible");
 	updateBreadcrumb();
-	if (!loadDependentSlides()) {
-	  alert("no dependent slides to initialise, initialising rest now");
-	  initialiseSlides();
-	}
+	initialiseSlides();
 	window.scrollTo(0,0);
 	firefoxBugWorkaround();
   });
@@ -207,7 +199,6 @@ function moveUpTo(levelUrl) {
 		jqLevelContent.addClass("invisible");
 	  }, 500);
 	  currentLevel = level;
-	  alert("showing level " + level + ": " + levelUrl)
 	  showCurrentLevel();
 	  return;
 	}
