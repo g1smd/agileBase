@@ -191,6 +191,7 @@ function moveUpTo(levelUrl) {
   // search for the levelUrl somewhere above the current level
   for (var level = 0; level < currentLevel; level++) {
 	if (levelsList[level].levelUrl == levelUrl) {
+	  alert(levelsList[level].levelUrl + " = " + levelUrl);
 	  if(currentLevel > 0) {
 		jqLevelContent.addClass("flyDown");
 	  }
@@ -201,8 +202,6 @@ function moveUpTo(levelUrl) {
 	  currentLevel = level;
 	  showCurrentLevel();
 	  return;
-	} else {
-		alert(levelsList[level].levelUrl + " != " + levelUrl);
 	}
   }
   // levelUrl not found, start from scratch creating it as the top element
@@ -227,7 +226,6 @@ function moveUpTo(levelUrl) {
 }
 
 function moveDownTo(levelUrl) {
-  alert("moving down from level " + currentLevel);
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
   jqLevelContent.addClass("flyUp").addClass("transparent");
   setTimeout(function() {
