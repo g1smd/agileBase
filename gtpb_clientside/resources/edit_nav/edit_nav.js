@@ -257,6 +257,7 @@ function updateBreadcrumb() {
 }
 
 function dependentSnippets() {
+  alert('dependentSnippets');
   var jqLevel = $(levelsList[currentLevel].levelContent);
   var slides = jqLevel.find(".slide");
   var firstSlide = slides.first();
