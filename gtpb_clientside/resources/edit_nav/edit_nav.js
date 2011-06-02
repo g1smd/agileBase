@@ -85,23 +85,29 @@ function initialiseSlides() {
 	  $(this).removeClass("editing");
     });      
     
-    $(".dependent_table").live('click',function() {
-      var jqDependentTable = $(this);
-      if (!jqDependentTable.hasClass("active")) {
+    $(".dependent_table").each(function() {
+      if ($(this).hasClass("click_added")) {
     	return;
       }
-      if (jqDependentTable.hasClass("related")) {
-  	    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
-  	    var rowId = jqDependentTable.attr("rowid");
-  	    var levelUrl="AppController.servlet?return=gui/edit_nav/edit&set_table=" + internalTableName + "&set_row_id=" + rowId;
-  	    moveUpTo(levelUrl);
-      } else {
-	    // find index of slide to go to
-	    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
-	    var slideNum = $("#slide_" + internalTableName).index();
-	    slideshow.go(slideNum + 1);
-	    $(".presentation").scrollTop(0);
-      }
+      $(this).click(function() {
+	      var jqDependentTable = $(this);
+	      if (!jqDependentTable.hasClass("active")) {
+	    	return;
+	      }
+	      if (jqDependentTable.hasClass("related")) {
+	  	    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
+	  	    var rowId = jqDependentTable.attr("rowid");
+	  	    var levelUrl="AppController.servlet?return=gui/edit_nav/edit&set_table=" + internalTableName + "&set_row_id=" + rowId;
+	  	    moveUpTo(levelUrl);
+	      } else {
+		    // find index of slide to go to
+		    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
+		    var slideNum = $("#slide_" + internalTableName).index();
+		    slideshow.go(slideNum + 1);
+		    $(".presentation").scrollTop(0);
+	      }
+      });
+      $(this).addClass("click_added");
     });
     // live because only first few slide are created on load?
     $(".rewind").live('click', function() {
