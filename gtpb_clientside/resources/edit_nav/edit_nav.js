@@ -92,7 +92,7 @@ function initialiseSlides() {
   	    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
   	    var rowId = jqDependentTable.attr("rowid");
   	    var levelUrl="AppController.servlet?return=gui/edit_nav/edit&set_table=" + internalTableName + "&set_row_id=" + rowId;
-  	    moveUpTo(levelUrl);
+  	    moveDownTo(levelUrl);
       } else {
 	    // find index of slide to go to
 	    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
