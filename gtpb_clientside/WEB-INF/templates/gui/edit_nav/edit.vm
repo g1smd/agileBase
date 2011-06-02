@@ -19,19 +19,20 @@
             #if($field.getFieldCategory() == "RELATION")
               #set($relatedTable = $field.getRelatedTable())
               #set($relatedRowIdValue = $tableDataRow.get($field.getRelatedField()))
-              $viewTools.log("Related row ID for $field is $relatedRowIdValue")
-              #set($relatedRowId = $relatedRowIdValue.getValueInteger())
-              #set($snippet = "")
-              #set($active = false)
-              #if($relatedRowId)
-                #set($active = true)
-                #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
-                #set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
-                #foreach($relatedField in $relatedDataRow.keySet())
-                  #if(!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey()))
-                  #set($fieldValue = $relatedDataRow.get($relatedField))
-                    #if(($fieldValue != "") && ($fieldValue != "false"))
-                      #set($snippet = "$snippet$fieldValue, ")
+              #if(!$relatedRowIdValue.isNull())
+                #set($relatedRowId = $relatedRowIdValue.getValueInteger())
+                #set($snippet = "")
+                #set($active = false)
+                #if($relatedRowId)
+                  #set($active = true)
+                  #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
+                  #set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
+                  #foreach($relatedField in $relatedDataRow.keySet())
+                    #if(!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey()))
+                    #set($fieldValue = $relatedDataRow.get($relatedField))
+                      #if(($fieldValue != "") && ($fieldValue != "false"))
+                        #set($snippet = "$snippet$fieldValue, ")
+                      #end
                     #end
                   #end
                 #end
