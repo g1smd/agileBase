@@ -191,7 +191,6 @@ function moveUpTo(levelUrl) {
   // search for the levelUrl somewhere above the current level
   for (var level = 0; level < currentLevel; level++) {
 	if (levelsList[level].levelUrl == levelUrl) {
-	  alert(levelsList[level].levelUrl + " = " + levelUrl);
 	  if(currentLevel > 0) {
 		jqLevelContent.addClass("flyDown");
 	  }
@@ -200,6 +199,7 @@ function moveUpTo(levelUrl) {
 		jqLevelContent.addClass("invisible");
 	  }, 500);
 	  currentLevel = level;
+	  alert("showing level " + level + ": " + levelUrl)
 	  showCurrentLevel();
 	  return;
 	}
