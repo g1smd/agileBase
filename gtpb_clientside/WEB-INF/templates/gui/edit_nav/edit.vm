@@ -26,7 +26,10 @@
                 #set($fieldDisplayValue = $field.getDisplayValue($relatedRowId))##
                 #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
                 #foreach($relatedField in $relatedDataRow.keySet())
-                  #set($snippet = "$snippet$relatedDataRow.get($relatedField), ")
+                  #set($fieldValue = $relatedDataRow.get($relatedField))
+                  #if (($fieldValue != "") && ($fieldValue != "false"))
+                    #set($snippet = "$snippet$fieldValue, ")
+                  #end
                 #end
               #end
               <div class="dependent_table related #if($active) active #end" id="dependent_table_$relatedTable.getInternalTableName()">
