@@ -19,7 +19,7 @@
             #if($field.getFieldCategory() == "RELATION")
               #set($relatedTable = $field.getRelatedTable())
               #set($relatedRowIdValue = $tableDataRow.get($field.getRelatedField()))
-              $field::
+              $viewTools.log("Related row ID for $field is $relatedRowIdValue")
               #set($relatedRowId = $relatedRowIdValue.getValueInteger())
               #set($snippet = "")
               #set($active = false)
