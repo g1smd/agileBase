@@ -23,9 +23,8 @@
               #set($active = false)
               #if($relatedRowId)
                 #set($active = true)
-                #set($fieldDisplayValue = $field.getDisplayValue($relatedRowId))##
-                Display value for $field . getDisplayValue ( $relatedRowId ) is $fieldDisplayValue
                 #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
+                #set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
                 #foreach($relatedField in $relatedDataRow.keySet())
                   #if(!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey()))
                   #set($fieldValue = $relatedDataRow.get($relatedField))
