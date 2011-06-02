@@ -190,6 +190,7 @@ function moveUpTo(levelUrl) {
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
   // search for the levelUrl somewhere above the current level
   for (var level = 0; level < currentLevel; level++) {
+	alert("Comparing " + levelsList[level].levelUrl + " with " + levelUrl);
 	if (levelsList[level].levelUrl == levelUrl) {
 	  if(currentLevel > 0) {
 		jqLevelContent.addClass("flyDown");
