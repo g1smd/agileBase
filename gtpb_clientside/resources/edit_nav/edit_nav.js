@@ -66,8 +66,6 @@ function initialiseSlides() {
 	}
     // Initialize
 	var jqLevel = $(levelsList[currentLevel].levelContent);
-	var initialised = jqLevel.hasClass("initialised");
-	jqLevel.addClass("initialised");
     var slideshow = new SlideShow(jqLevel.find(".slide").toArray());
     var counters = document.querySelectorAll('.counter');
     var slides = document.querySelectorAll('.slide');
@@ -134,6 +132,7 @@ function loadDependentSlides() {
   if (firstSlide.find(".dependent_tables").children().size() > 0) {
     $.get("AppController.servlet?return=gui/edit_nav/dependent_slides", function(data) {
 	  jqSlides.append(data);
+	  alert("loaded dependent, now initialising");
 	  initialiseSlides();
 	  dependentSnippets();
 	  return true;
@@ -154,6 +153,7 @@ function createLevel(levelUrl) {
 	jqLevel.removeClass("transparent").removeClass("invisible");
 	updateBreadcrumb();
 	if (!loadDependentSlides()) {
+	  alert("no dependent slides to initialise, initialising rest now");
 	  initialiseSlides();
 	}
 	window.scrollTo(0,0);
