@@ -24,32 +24,6 @@ $(document).ready(function() {
 	var href= $(this).attr("href");
 	moveUpTo(href);
   });
-  $(".dependent_table").live('click', function() {
-	  var jqDependentTable = $(this);
-	  if (!jqDependentTable.hasClass("active")) {
-		return;
-	  }
-	  if (jqDependentTable.hasClass("related")) {
-	    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
-	    var rowId = jqDependentTable.attr("rowid");
-	    var levelUrl="AppController.servlet?return=gui/edit_nav/edit&set_table=" + internalTableName + "&set_row_id=" + rowId;
-	    moveUpTo(levelUrl);
-	  } else {
-	    // find index of slide to go to
-	    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
-	    var slideNum = $("#slide_" + internalTableName).index();
-	    slideshow.go(slideNum + 1);
-	    $(".presentation").scrollTop(0);
-	  }
-	});
-	// live because only first few slide are created on load?
-	$(".rewind").live('click', function() {
-	  var slideNum = $(this).closest(".slide").find(".counter").text();
-	  //go(1) doesn't seem to work always here
-	  for(var i=0; i < slideNum; i++) {
-	    slideshow.prev();
-	  }
-	});
   // Initialise home screen for user
   createLevel(homeUrl);
 });
@@ -111,6 +85,32 @@ function initialiseSlides() {
 	  $(this).removeClass("editing");
     });      
     
+    $(".dependent_table").live('click',function() {
+      var jqDependentTable = $(this);
+      if (!jqDependentTable.hasClass("active")) {
+    	return;
+      }
+      if (jqDependentTable.hasClass("related")) {
+  	    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
+  	    var rowId = jqDependentTable.attr("rowid");
+  	    var levelUrl="AppController.servlet?return=gui/edit_nav/edit&set_table=" + internalTableName + "&set_row_id=" + rowId;
+  	    moveUpTo(levelUrl);
+      } else {
+	    // find index of slide to go to
+	    var internalTableName = jqDependentTable.attr("id").replace("dependent_table_","");
+	    var slideNum = $("#slide_" + internalTableName).index();
+	    slideshow.go(slideNum + 1);
+	    $(".presentation").scrollTop(0);
+      }
+    });
+    // live because only first few slide are created on load?
+    $(".rewind").live('click', function() {
+      var slideNum = $(this).closest(".slide").find(".counter").text();
+  	  //go(1) doesn't seem to work always here
+      for(var i=0; i < slideNum; i++) {
+        slideshow.prev();
+      }
+    });
     slideshow.go(1);
     $(".presentation").scrollTop(0);
 }
@@ -199,6 +199,7 @@ function moveUpTo(levelUrl) {
 		jqLevelContent.addClass("invisible");
 	  }, 500);
 	  currentLevel = level;
+	  alert("showing level " + level + ": " + levelUrl)
 	  showCurrentLevel();
 	  return;
 	}
