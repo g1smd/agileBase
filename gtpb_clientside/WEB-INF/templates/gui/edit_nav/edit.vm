@@ -26,9 +26,11 @@
                 #set($fieldDisplayValue = $field.getDisplayValue($relatedRowId))##
                 #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
                 #foreach($relatedField in $relatedDataRow.keySet())
+                  #if(!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey()))
                   #set($fieldValue = $relatedDataRow.get($relatedField))
-                  #if (($fieldValue != "") && ($fieldValue != "false"))
-                    #set($snippet = "$snippet$fieldValue, ")
+                    #if(($fieldValue != "") && ($fieldValue != "false"))
+                      #set($snippet = "$snippet$fieldValue, ")
+                    #end
                   #end
                 #end
               #end
