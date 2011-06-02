@@ -42,7 +42,7 @@
       #foreach($reportBaseField in $reportBaseFields)
     	#if(($reportBaseField.getClass().getSimpleName().equals("CalculationFieldDefn")) || (!$reportBaseField.getTableContainingField().equals($fieldTable)))
         	#set($partFieldCategory = $reportBaseField.getFieldCategory())
-        	#if($partFieldCategory == "TEXT" || $partFieldCategory == "DATE")
+        	#if($partFieldCategory == "TEXT" || $partFieldCategory == "DATE" || $partFieldCategory == "NUMBER")
         	  #set($rrd_displayValue = $rrd_reportDataRow.getValue($reportBaseField).getDisplayValue())
         	  #if($rrd_displayValue != "")
         		#set($rowContainsData = true)
