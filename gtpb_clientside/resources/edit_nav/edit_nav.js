@@ -4,6 +4,8 @@ var currentLevel = 0;
 
 var homeUrl = "AppController.servlet?return=gui/edit_nav/report";
 
+var debugCount = 0;
+
 $(document).ready(function() {
   $("#breadcrumb a").live('click', function(event) {
 	event.preventDefault();
@@ -88,7 +90,8 @@ function initialiseSlides() {
 	  $(this).removeClass("editing");
     });      
     
-    alert("adding depentent_table click to level " + currentLevel);
+    debugCount++;
+    alert(debugCount + ": adding depentent_table click to level " + currentLevel);
     jqLevel.find(".dependent_table").click(function() {
       var jqDependentTable = $(this);
       if (!jqDependentTable.hasClass("active")) {
