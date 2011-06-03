@@ -323,6 +323,7 @@ function dependentSnippets() {
 		var tableId = jqSlide.attr("id").replace("slide_", "");
 		var jqSnippets = $("#dependent_table_" + tableId);
 		var numCards = jqSlide.find(".block.current").size();
+		alert("numCards for " + tableId + " is " + numCards);
 		if (numCards > 0) {
 			jqSnippets.addClass("active");
 			if (numCards == 100) {
@@ -332,8 +333,8 @@ function dependentSnippets() {
 			}
 			jqSnippets.find(".count").text(numCardsText + " ");
 		}
-		var firstCards = jqSlide.find(".block.current:lt(2)");
-		firstCards.each(function() {
+		var firstTwoCards = jqSlide.find(".block.current:lt(2)");
+		firstTwoCards.each(function() {
 			var snippetText = $(this).text();
 			jqSnippets.append("<div class='snippet'>" + snippetText + "</div>");
 		});
