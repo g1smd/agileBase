@@ -58,8 +58,8 @@ body {
 .reportDataView .block:hover {
   cursor: pointer;
   border-color: #50add6; /* ab light blue */
-  /* box-shadow: 0 1px 3px rgba(80, 173, 214, 0.3); /* RGB ab light blue */
-  box-shadow: 0 1px 3px rgba(72, 111, 152, 0.3); /* RGB ab dark blue */
+  box-shadow: 0 1px 3px rgba(80, 173, 214, 0.5); /* RGB ab light blue */
+  /* box-shadow: 0 1px 3px rgba(72, 111, 152, 0.3); /* RGB ab dark blue */
 }
 
 .slide.reportDataView .related {
@@ -71,8 +71,8 @@ body {
 
 .slide.reportDataView .related:hover {
   border-color: #50add6; /* ab light blue */
-  /* box-shadow: 0 1px 3px rgba(80, 173, 214, 0.3); /* RGB ab light blue */
-  box-shadow: 0 1px 3px rgba(72, 111, 152, 0.3); /* RGB ab dark blue */
+  box-shadow: 0 1px 3px rgba(80, 173, 214, 0.5); /* RGB ab light blue */
+  /* box-shadow: 0 1px 3px rgba(72, 111, 152, 0.3); /* RGB ab dark blue */
 }
 
 .slide .title {
