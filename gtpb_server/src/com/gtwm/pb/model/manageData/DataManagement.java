@@ -57,6 +57,7 @@ import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
+import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.CachedReportFeedInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
@@ -1367,8 +1368,7 @@ public final class DataManagement implements DataManagementInfo {
 					float uploadSpeed = ((float) fileSize) / secondsToUpload;
 					this.updateUploadSpeed(uploadSpeed);
 				}
-				if (extension.equals("jpg") || extension.equals("jpeg")
-						|| extension.equals("png")) {
+				if (extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png")) {
 					// image.png -> image.png.40.png
 					String thumb40Path = filePath + "." + 40 + "." + extension;
 					String thumb500Path = filePath + "." + 500 + "." + extension;
@@ -1384,7 +1384,27 @@ public final class DataManagement implements DataManagementInfo {
 						} else {
 							FileUtils.copyFile(selectedFile, thumb500File);
 						}
-						Thumbnails.of(selectedFile).size(40, 60).toFile(thumb40File); /* allow files that are up to 60px tall as long as the width is no > 40px */
+						Thumbnails.of(selectedFile).size(40, 60).toFile(thumb40File); /*
+																					 * allow
+																					 * files
+																					 * that
+																					 * are
+																					 * up
+																					 * to
+																					 * 60
+																					 * px
+																					 * tall
+																					 * as
+																					 * long
+																					 * as
+																					 * the
+																					 * width
+																					 * is
+																					 * no
+																					 * >
+																					 * 40
+																					 * px
+																					 */
 					} catch (IOException ioex) {
 						throw new FileUploadException("Error generating thumbnail: "
 								+ ioex.getMessage());
@@ -1562,7 +1582,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
 				new HashMap<BaseField, String>(0), false, new HashMap<BaseField, Boolean>(0),
-				numRows,QuickFilterType.AND);
+				numRows, QuickFilterType.AND);
 		String dataFeedString = null;
 		if (dataFormat.equals(DataFormat.JSON)) {
 			dataFeedString = this.generateJSON(report, reportDataRows);
@@ -1648,9 +1668,9 @@ public final class DataManagement implements DataManagementInfo {
 			eventWriter.add(eventFactory.createEndElement("", "", "item"));
 			eventWriter.add(end);
 		}
-		eventWriter.add(eventFactory.createEndElement("","","channel"));
+		eventWriter.add(eventFactory.createEndElement("", "", "channel"));
 		eventWriter.add(end);
-		eventWriter.add(eventFactory.createEndElement("","","rss"));
+		eventWriter.add(eventFactory.createEndElement("", "", "rss"));
 		eventWriter.add(end);
 		return stringWriter.toString();
 	}
@@ -1731,8 +1751,9 @@ public final class DataManagement implements DataManagementInfo {
 		if (dateResolution > Calendar.DAY_OF_MONTH) {
 			allDayValues = false;
 		}
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
-				filterValues, false, new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND);
+		List<DataRowInfo> reportDataRows = this
+				.getReportDataRows(user.getCompany(), report, filterValues, false,
+						new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND);
 		JSONStringer js = new JSONStringer();
 		if (format.equals(DataFormat.JSON_TIMELINE)) {
 			js.object();
@@ -1845,7 +1866,8 @@ public final class DataManagement implements DataManagementInfo {
 					fieldCount++;
 				}
 				break;
-			case INTEGER: case FLOAT:
+			case INTEGER:
+			case FLOAT:
 				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
 						.append(displayValue + ", ");
 				fieldCount++;
@@ -1870,8 +1892,8 @@ public final class DataManagement implements DataManagementInfo {
 
 	public List<DataRowInfo> getReportDataRows(CompanyInfo company, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType) throws SQLException,
-			CodingErrorException, CantDoThatException {
+			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType)
+			throws SQLException, CodingErrorException, CantDoThatException {
 		Connection conn = null;
 		List<DataRowInfo> reportDataRows = null;
 		try {
@@ -2408,7 +2430,8 @@ public final class DataManagement implements DataManagementInfo {
 				"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 		// Get data we're going to anonymise
 		List<DataRowInfo> dataRows = this.getReportDataRows(null, table.getDefaultReport(),
-				new HashMap<BaseField, String>(), false, new HashMap<BaseField, Boolean>(0), -1, QuickFilterType.AND);
+				new HashMap<BaseField, String>(), false, new HashMap<BaseField, Boolean>(0), -1,
+				QuickFilterType.AND);
 		// Build up list of names
 		List<String> forenames = new ArrayList<String>(100);
 		List<String> surnames = new ArrayList<String>(100);
@@ -2522,6 +2545,113 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
+	public BaseReportInfo getMostPopularReport(HttpServletRequest request,
+			DatabaseInfo databaseDefn, AppUserInfo user) throws SQLException, CodingErrorException {
+		BaseReportInfo mostPopularReport = this.userMostPopularReportCache.get(user);
+		if (mostPopularReport != null) {
+			return mostPopularReport;
+		}
+		String SQLCode = "SELECT report FROM dbint_log_report_view WHERE app_user=? AND app_timestamp > (now() - '4 months'::interval) GROUP BY report ORDER BY count(*) DESC";
+		Connection conn = null;
+		AuthenticatorInfo authenticator = this.authManager.getAuthenticator();
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			statement.setString(1, user.getUserName());
+			ResultSet results = statement.executeQuery();
+			while (results.next()) {
+				String internalReportName = results.getString(1);
+				try {
+					TableInfo table = databaseDefn.findTableContainingReport(request,
+							internalReportName);
+					BaseReportInfo report = table.getReport(internalReportName);
+					if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
+						results.close();
+						statement.close();
+						return report;
+					}
+				} catch (ObjectNotFoundException e) {
+					// The report from the logs no longer exists
+				} catch (DisallowedException e) {
+					// The user no longer has privileges on the most popular report
+				}
+			}
+			results.close();
+			statement.close();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return null;
+	}
+
+	public List<TableInfo> getPopularTables(HttpServletRequest request, DatabaseInfo databaseDefn,
+			AppUserInfo user) throws SQLException {
+		List<TableInfo> popularTables = this.userPopularTablesCache.get(user);
+		if (popularTables != null) {
+			return popularTables;
+		}
+		popularTables = new ArrayList<TableInfo>();
+		CompanyInfo company = user.getCompany();
+		String SQLCode = "SELECT app_table FROM dbint_log_data_change WHERE app_user=? AND app_timestamp > (now() - '4 months'::interval) GROUP BY app_table ORDER BY count(*) DESC";
+		Connection conn = null;
+		AuthenticatorInfo authenticator = this.authManager.getAuthenticator();
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			statement.setString(1, user.getUserName());
+			ResultSet results = statement.executeQuery();
+			while (results.next()) {
+				String internalTableName = results.getString(1);
+				try {
+					TableInfo table = databaseDefn.getTable(request, internalTableName);
+					// Check necessary because getTable doesn't throw
+					// exception if user is an administrator
+					if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
+							table)) {
+						popularTables.add(table);
+					}
+				} catch (ObjectNotFoundException onfex) {
+					// table doesn't exist any more, ignore
+				} catch (DisallowedException dex) {
+					// user no longer has privileges on table, ignore
+				}
+			}
+			results.close();
+			statement.close();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		// At the end of the list, add in tables which the user hasn't
+		// edited recently but they still have privileges on
+		Set<TableInfo> tables = company.getTables();
+		for (TableInfo table : tables) {
+			if (!popularTables.contains(table)) {
+				if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
+						table)) {
+					popularTables.add(table);
+				}
+			}
+		}
+		this.userPopularTablesCache.put(user, popularTables);
+		return popularTables;
+	}
+
+	public void clearPopularTablesCache(AppUserInfo user) {
+		this.userPopularTablesCache.remove(user);
+	}
+
+	public void clearPopularTablesCacheForCompany(CompanyInfo company) {
+		for (AppUserInfo user : company.getUsers()) {
+			this.userPopularTablesCache.remove(user);
+		}
+	}
+
 	public String toString() {
 		return "DataManagement is a class for managing data (duh!)";
 	}
@@ -2599,6 +2729,10 @@ public final class DataManagement implements DataManagementInfo {
 	private Map<CompanyInfo, Long> lastDataChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
 
 	private Map<CompanyInfo, Long> lastSchemaChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
+
+	private Map<AppUserInfo, List<TableInfo>> userPopularTablesCache = new ConcurrentHashMap<AppUserInfo, List<TableInfo>>();
+
+	private Map<AppUserInfo, BaseReportInfo> userMostPopularReportCache = new ConcurrentHashMap<AppUserInfo, BaseReportInfo>();
 
 	private AtomicInteger reportDataCacheHits = new AtomicInteger();
 

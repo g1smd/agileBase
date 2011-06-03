@@ -85,8 +85,8 @@ public interface DatabaseInfo {
 	 *             of users
 	 */
 	public void updateTable(Connection conn, HttpServletRequest request, TableInfo table,
-			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic) throws DisallowedException,
-			CantDoThatException, ObjectNotFoundException, SQLException;
+			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic)
+			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException;
 
 	/**
 	 * Remove table tableToRemove provided no dependencies exist; otherwise
@@ -402,9 +402,9 @@ public interface DatabaseInfo {
 	 *             If the logged in user doesn't have MANAGE_TABLE privileges on
 	 *             the report's parent table
 	 */
-	public void addGroupingToChart(HttpServletRequest request,
-			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer)
-			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException;
+	public void addGroupingToChart(HttpServletRequest request, ReportFieldInfo groupingReportField,
+			SummaryGroupingModifier groupingModifer) throws DisallowedException,
+			CantDoThatException, ObjectNotFoundException, SQLException;
 
 	/**
 	 * Remove groupings on groupingReportField from the summary of its parent
@@ -417,9 +417,8 @@ public interface DatabaseInfo {
 	/**
 	 * Add an aggregate function so a summary report
 	 */
-	public void addFunctionToChart(HttpServletRequest request,
-			ChartAggregateInfo addedAggFn) throws DisallowedException, CantDoThatException,
-			ObjectNotFoundException, SQLException;
+	public void addFunctionToChart(HttpServletRequest request, ChartAggregateInfo addedAggFn)
+			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException;
 
 	/**
 	 * Remove all aggregate functions based on the field supplied. Acts on the
@@ -448,8 +447,8 @@ public interface DatabaseInfo {
 	/**
 	 * Set the range of rows returned, e.g. the top 25%
 	 */
-	public void setChartRange(HttpServletRequest request, BaseReportInfo report,
-			int rangePercent, boolean rangeDirection) throws SQLException, DisallowedException,
+	public void setChartRange(HttpServletRequest request, BaseReportInfo report, int rangePercent,
+			boolean rangeDirection) throws SQLException, DisallowedException,
 			ObjectNotFoundException, CantDoThatException;
 
 	/**
@@ -457,9 +456,8 @@ public interface DatabaseInfo {
 	 * of named summary reports for the report. The current summary report will
 	 * then be reset - all groupings and calculations removed.
 	 */
-	public void saveChart(HttpServletRequest request, BaseReportInfo report,
-			String summaryTitle) throws DisallowedException, CantDoThatException,
-			ObjectNotFoundException;
+	public void saveChart(HttpServletRequest request, BaseReportInfo report, String summaryTitle)
+			throws DisallowedException, CantDoThatException, ObjectNotFoundException;
 
 	public void removeChart(HttpServletRequest request, ChartInfo reportSummary)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException;
@@ -524,11 +522,6 @@ public interface DatabaseInfo {
 			DisallowedException;
 
 	/**
-	 * Return the tables that are most commonly edited by the given user, most common first
-	 */
-	public List<TableInfo> getPopularTables(HttpServletRequest request, AppUserInfo user) throws SQLException;
-	
-	/**
 	 * Return a reference to the object that manages and caches database data.
 	 * databaseDefn keeps one instance of this object
 	 */
@@ -553,15 +546,5 @@ public interface DatabaseInfo {
 	 * Should be run at application shutdown to cancel any background tasks
 	 */
 	public void cancelScheduledEvents();
-	
-	/**
-	 * Should be called when a privilege affecting a user is removed
-	 */
-	public void clearPopularTablesCache(AppUserInfo user);
-	
-	/**
-	 * Clear the cache for all users in a company
-	 */
-	public void clearPopularTablesCacheForCompany(CompanyInfo company);
 
 }

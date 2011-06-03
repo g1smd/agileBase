@@ -405,4 +405,29 @@ public interface DataManagementInfo {
 	 */
 	public int getNextRowId(SessionDataInfo sessionData, BaseReportInfo report,
 			boolean forwardSearch) throws SQLException, CantDoThatException;
+
+	/**
+	 * Return the report that's most commonly viewed by the user
+	 */
+	public BaseReportInfo getMostPopularReport(HttpServletRequest request,
+			DatabaseInfo databaseDefn, AppUserInfo user) throws SQLException, CodingErrorException;
+
+	/**
+	 * Return the tables that are most commonly edited by the given user, most
+	 * common first
+	 */
+	public List<TableInfo> getPopularTables(HttpServletRequest request, DatabaseInfo databaseDefn,
+			AppUserInfo user) throws SQLException;
+
+	/**
+	 * Should be called when a privilege affecting a user is removed
+	 */
+	public void clearPopularTablesCache(AppUserInfo user);
+
+	/**
+	 * Clear the cache for all users in a company, should be called whenever
+	 * something occurs that could affect users in the company, e.g. a role
+	 * deletion
+	 */
+	public void clearPopularTablesCacheForCompany(CompanyInfo company);
 }

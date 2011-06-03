@@ -94,6 +94,7 @@ public final class SessionData implements SessionDataInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 		this.relationalDataSource = relationalDataSource;
 		AuthenticatorInfo authenticator = databaseDefn.getAuthManager().getAuthenticator();
+		// First try the default report that's been set by the user, if there is one
 		BaseReportInfo defaultReport = user.getDefaultReport();
 		if (defaultReport != null) {
 			if (authenticator.loggedInUserAllowedToViewReport(request, defaultReport)) {
@@ -101,7 +102,14 @@ public final class SessionData implements SessionDataInfo {
 				return;
 			}
 		}
-		// There's no (visible) default report set, just set the
+		// Next get the user's most popular report
+		defaultReport = databaseDefn.getDataManagement().getMostPopularReport(request, databaseDefn, user);
+		if (defaultReport != null) {
+			// authenticator check not necessary as getMostPopularReport does that
+			this.setReport(defaultReport);
+			return;
+		}
+		// If that fails (perhaps they've never logged in), just set the
 		// session report to the first that the logged in user can view
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 		Set<BaseReportInfo> hiddenReports = user.getHiddenReports();

@@ -3047,79 +3047,12 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public List<TableInfo> getPopularTables(HttpServletRequest request, AppUserInfo user)
-			throws SQLException {
-		List<TableInfo> popularTables = this.userPopularTablesCache.get(user);
-		if (popularTables != null) {
-			return popularTables;
-		}
-		popularTables = new ArrayList<TableInfo>();
-		CompanyInfo company = user.getCompany();
-		String SQLCode = "SELECT app_table FROM dbint_log_data_change WHERE app_user=? AND app_timestamp > (now() - '6 months'::interval) GROUP BY app_table ORDER by count(*) DESC";
-		Connection conn = null;
-		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
-		try {
-			conn = this.relationalDataSource.getConnection();
-			conn.setAutoCommit(false);
-			PreparedStatement statement = conn.prepareStatement(SQLCode);
-			statement.setString(1, user.getUserName());
-			ResultSet results = statement.executeQuery();
-			while (results.next()) {
-				String internalTableName = results.getString(1);
-				try {
-					TableInfo table = this.getTable(request, internalTableName);
-					// Check necessary because getTable doesn't throw
-					// exception if user is an administrator
-					if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
-							table)) {
-						popularTables.add(table);
-					}
-				} catch (ObjectNotFoundException onfex) {
-					// table doesn't exist any more, ignore
-				} catch (DisallowedException dex) {
-					// user no longer has privileges on table, ignore
-				}
-			}
-			results.close();
-			statement.close();
-		} finally {
-			if (conn != null) {
-				conn.close();
-			}
-		}
-		// At the end of the list, add in tables which the user hasn't
-		// edited recently but they still have privileges on
-		Set<TableInfo> tables = company.getTables();
-		for (TableInfo table : tables) {
-			if (!popularTables.contains(table)) {
-				if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
-						table)) {
-					popularTables.add(table);
-				}
-			}
-		}
-		this.userPopularTablesCache.put(user, popularTables);
-		return popularTables;
-	}
-
-	public void clearPopularTablesCache(AppUserInfo user) {
-		this.userPopularTablesCache.remove(user);
-	}
-
-	public void clearPopularTablesCacheForCompany(CompanyInfo company) {
-		for (AppUserInfo user : company.getUsers()) {
-			this.userPopularTablesCache.remove(user);
-		}
-	}
-
 	/**
 	 * Lookup of internal table name to table
 	 */
 	private Map<String, TableInfo> tableCache = new ConcurrentHashMap<String, TableInfo>();
 
 	private Map<String, TableInfo> reportTableCache = new ConcurrentHashMap<String, TableInfo>();
-
-	private Map<AppUserInfo, List<TableInfo>> userPopularTablesCache = new ConcurrentHashMap<AppUserInfo, List<TableInfo>>();
 
 	/**
 	 * Keep a cache of the datasource so it's available quickly whenever needed
