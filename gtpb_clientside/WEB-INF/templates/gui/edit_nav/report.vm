@@ -2,8 +2,8 @@
 <div class="breadcrumb_title">$report</div>
 #set($filterString = $sessionData.getGlobalFilterString($report))
 <div id="navrow">
-  #set($placeHolder = $report.getReportName().replaceAll(" - .*",""))
-  <input id="searchbox" name="searchbox" type="search" placeholder="search $placeHolder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
+  #set($placeholder = $report.getReportName().replaceAll("\\s\\-\\s.*",""))
+  <input id="searchbox" name="searchbox" type="search" placeholder="search $placeholder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
   <div id="jumpto">
   <span class="jump_label">Jump to: </span>
   #foreach($table in $view.getPopularTables($view.getLoggedInUser()))
