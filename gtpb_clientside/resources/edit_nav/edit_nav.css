@@ -127,6 +127,10 @@ body {
   overflow: hidden;
 }
 
+.dependent_table.cross_reference {
+  background-color: #486f98;
+}
+
 .dependent_table.active {
   height: 5em;
 }
