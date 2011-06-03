@@ -128,7 +128,7 @@ body {
 }
 
 .dependent_table.cross_reference {
-  background-color: #50add6;
+  border: 1px solid #ff8040;
 }
 
 .dependent_table.active {
