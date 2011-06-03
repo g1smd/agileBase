@@ -38,7 +38,7 @@
                   #end
                 #end
               #end
-              <div class="dependent_table related #if($active) active #end" id="dependent_table_$relatedTable.getInternalTableName()" rowid="$relatedRowId">
+              <div class="dependent_table related #if($active) active #end" id="dependent_relation_$sessionTable.getInternalTableName()_$relatedTable.getInternalTableName()" internaltablename="$relatedTable.getInternalTableName()" rowid="$relatedRowId">
                 <h1><span class="count"><img src="resources/edit_nav/up.png" alt="up" /></span>$field.getSimplifiedFieldName()#if($fieldDisplayValue != ""): $fieldDisplayValue#end</h1>
                 <div class="record_snippets">
                   <div class="snippet">$snippet</div>
@@ -53,7 +53,7 @@
             #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable))
               #foreach($report in $dependentTable.getReports())
                 #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
-                  <div class="dependent_table" id="dependent_table_$dependentTable.getInternalTableName()">
+                  <div class="dependent_table" id="dependent_table_$sessionTable.getInternalTableName()_$dependentTable.getInternalTableName()">
                     <h1><span class="count"></span>$dependentTable.getSimpleName()</h1>
                     <div class="record_snippets">
                     </div>
