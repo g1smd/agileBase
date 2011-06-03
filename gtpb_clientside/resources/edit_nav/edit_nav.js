@@ -192,8 +192,15 @@ function moveDown() {
 
 function moveUpTo(levelUrl) {
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
-  // search for the levelUrl somewhere above the current level
-  for (var level = 0; level < currentLevel; level++) {
+  // Search for the levelUrl somewhere above the current level.
+  // If the levelUrl represents a 'report' level, then allow it to be the new root
+  // otherwise ensure the current root stays
+  var startLevel = 0;
+  if (levelUrl.indexOf("gui/edit_nav/report") == -1) {
+    startLevel = 1;
+  }
+  alert("Start level is " + startLevel);
+  for (var level = startLevel; level < currentLevel; level++) {
 	if (levelsList[level].levelUrl == levelUrl) {
 	  if(currentLevel > 0) {
 		jqLevelContent.addClass("flyDown");
@@ -208,25 +215,26 @@ function moveUpTo(levelUrl) {
 	}
   }
   // levelUrl not found, start from scratch creating it as the top element
-  if(currentLevel > 0) {
+  if(currentLevel > startLevel) {
 	jqLevelContent.addClass("flyDown");
   }
   jqLevelContent.addClass("transparent");
-  $(".level").addClass("oldLevel");
+  if (startLevel == 0) {
+    $(".level").addClass("oldLevel");
+  } else {
+	$(".level").not(":first").addClass("oldLevel");
+  }
   $(".presentation").remove(); // more than one pres in the DOM can cause problems
   setTimeout(function() {
 	$(".oldLevel").remove();
   }, 500);
+  var firstLevelObject = levelsList[0];
   levelsList = [];
-  currentLevel = 0;
-  // make sure there is always a home URL based on a report though
-  if (levelUrl.indexOf("gui/edit_nav/report") > -1) {
-    createLevel(levelUrl);
-  } else {
-	alert("going to create home then " + levelUrl);
-	createLevel(homeUrl);
-	moveDownTo(levelUrl);
+  if (startLevel == 1) {
+	levelsList.push(firstLevelObject);
   }
+  currentLevel = startLevel;
+  createLevel(levelUrl);
 }
 
 function moveDownTo(levelUrl) {
