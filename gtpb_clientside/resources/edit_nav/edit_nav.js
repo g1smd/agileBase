@@ -108,8 +108,7 @@ function initialiseDependencies() {
 							return;
 						}
 						if (jqDependentTable.hasClass("related")) {
-							var internalTableName = jqDependentTable.attr("id").replace(
-									"dependent_table_", "");
+							var internalTableName = jqDependentTable.attr("internaltablename");
 							var rowId = jqDependentTable.attr("rowid");
 							var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
 									+ internalTableName + "&set_row_id=" + rowId;
@@ -320,8 +319,8 @@ function dependentSnippets() {
 	var remainingSlides = slides.not(":first");
 	remainingSlides.each(function() {
 		var jqSlide = $(this);
-		var tableId = jqSlide.attr("id").replace("slide_", "");
-		var jqSnippets = $("#dependent_table_" + tableId);
+		var snippetHolderId = jqSlide.attr("id").replace("slide_", "#dependent_table_");
+		var jqSnippets = $(snippetHolderId);
 		alert("There is " + jqSnippets.size() " snippet for " + tableId); // there should be 1
 		var numCards = jqSlide.find(".block.current").size();
 		if (numCards > 0) {

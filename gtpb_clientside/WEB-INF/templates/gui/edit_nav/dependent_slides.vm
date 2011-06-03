@@ -17,7 +17,7 @@
     #set($success = $filters.put($primaryKey, "$sessionRowId"))
     #set($reportDataRows = $view.getReportDataRows($report, 100, $filters, true))##
     #if($reportDataRows.size() > 0)
-    <div class="slide reportDataView" id="slide_$dependentTable.getInternalTableName()">
+    <div class="slide reportDataView" id="slide_$sessionTable.getInternalTableName()_$dependentTable.getInternalTableName()">
       <img class="rewind" src="resources/edit_nav/rewind.png" />
       <section class="middle"> 
         <div class="title">
