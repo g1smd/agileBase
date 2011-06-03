@@ -976,7 +976,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 	
 	public List<TableInfo> getPopularTables(AppUserInfo user) throws SQLException {
-		return this.databaseDefn.getPopularTables(this.request, user);
+		return this.databaseDefn.getDataManagement().getPopularTables(this.request, this.databaseDefn, user);
 	}
 
 	public boolean getWhetherExceptionOccurred() {
