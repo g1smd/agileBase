@@ -19,7 +19,7 @@ $(document).ready(function() {
 	});
 	$(".block").live('click', function() {
 		var href = $(this).attr("href");
-		moveDownTo(href);
+		moveUpTo(href, true); // move up only if level already exists above, otherwise move down
 	});
 	$("a.jumpto_table").live('click', function(event) {
 		event.preventDefault();
@@ -238,7 +238,6 @@ function moveUpTo(levelUrl, fallbackToDown) {
 		}
 	}
 	if (fallbackToDown == true) {
-		alert("Didn't find " + levelUrl);
 		moveDownTo(levelUrl)
 	} else {
 		// start from scratch creating it as the top element
