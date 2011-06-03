@@ -238,7 +238,7 @@ function moveUpTo(levelUrl, fallbackToDown) {
 		}
 	}
 	if (fallbackToDown == true) {
-		alert("Didn't find ") + levelUrl;
+		alert("Didn't find " + levelUrl);
 		moveDownTo(levelUrl)
 	} else {
 		// start from scratch creating it as the top element
