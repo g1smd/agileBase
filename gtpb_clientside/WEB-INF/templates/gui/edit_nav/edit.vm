@@ -73,7 +73,7 @@
               #set($referencedReport = $field.getReferencedReport())
               #set($referencedTable = $referencedReport.getParentTable())
               #if(!$includedTables.keySet().contains($referencedTable))
-              <div class="dependent_table" id="dependent_table_$sessionTable.getInternalTableName()_$referencedTable.getInternalTableName()"
+              <div class="dependent_table cross_reference" id="dependent_table_$sessionTable.getInternalTableName()_$referencedTable.getInternalTableName()"
                 <h1><span class="count"></span>$field</h1>
                 <div class="record_snippets">
                 </div>
