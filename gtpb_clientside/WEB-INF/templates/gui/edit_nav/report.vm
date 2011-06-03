@@ -2,7 +2,6 @@
 <div class="breadcrumb_title">$report</div>
 #set($filterString = $sessionData.getGlobalFilterString($report))
 <div id="navrow">
-  #set($dash = "/all/")
   #set($placeholder = "sdfsdfs")
   <input id="searchbox" name="searchbox" type="search" placeholder="search $placeholder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
   <div id="jumpto">
