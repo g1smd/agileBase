@@ -28,7 +28,7 @@ $(document).ready(function() {
 	});
 	// Initialise home screen for user
 	createLevel(homeUrl);
-	var levelHeight = $(window).height() - 10;
+	var levelHeight = $(window).height() - 20;
 	$("#levels").height(levelHeight);
 });
 
