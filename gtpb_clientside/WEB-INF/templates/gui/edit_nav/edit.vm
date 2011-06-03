@@ -1,4 +1,6 @@
 #set($sessionTable = $sessionData.getTable())
+#set($fields = $sessionTable.getFields())
+#set($includedTables = {})
 <div class="breadcrumb_title">edit $sessionTable.getSimpleName()</div>
 <div class="presentation"> 
   <div id="presentation-counter"></div> 
@@ -15,7 +17,7 @@
             #set($tableDataRow = $view.getTableDataRow())
           #end
           ## each relation field
-          #foreach($field in $sessionTable.getFields())
+          #foreach($field in $fields)
             #if($field.getFieldCategory() == "RELATION")
               #set($relatedTable = $field.getRelatedTable())
               #set($relatedRowIdValue = $tableDataRow.get($field.getRelatedField()))
@@ -38,6 +40,7 @@
                   #end
                 #end
               #end
+              #set($success = $includedTables.put($relatedTable, ""))
               <div class="dependent_table related #if($active) active #end" id="dependent_relation_$sessionTable.getInternalTableName()_$relatedTable.getInternalTableName()" internaltablename="$relatedTable.getInternalTableName()" rowid="$relatedRowId">
                 <h1><span class="count"><img src="resources/edit_nav/up.png" alt="up" /></span>$field.getSimplifiedFieldName()#if($fieldDisplayValue != ""): $fieldDisplayValue#end</h1>
                 <div class="record_snippets">
@@ -53,6 +56,7 @@
             #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable))
               #foreach($report in $dependentTable.getReports())
                 #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
+                  #set($success = $includedTables.put($dependentTable, ""))
                   <div class="dependent_table" id="dependent_table_$sessionTable.getInternalTableName()_$dependentTable.getInternalTableName()">
                     <h1><span class="count"></span>$dependentTable.getSimpleName()</h1>
                     <div class="record_snippets">
@@ -60,6 +64,20 @@
                   </div>
                   #break ## next table
                 #end
+              #end
+            #end
+          #end
+          ## cross-reference fields
+          #foreach($field in $fields)
+            #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
+              #set($referencedReport = $field.getReferencedReport())
+              #set($referencedTable = $referencedReport.getParentTable())
+              #if(!$includedTables.keySet().contains($referencedTable))
+              <div class="dependent_table" id="dependent_table_$sessionTable.getInternalTableName()_$referencedTable.getInternalTableName()"
+                <h1><span class="count"></span>$field</h1>
+                <div class="record_snippets">
+                </div>
+              </div>
               #end
             #end
           #end
