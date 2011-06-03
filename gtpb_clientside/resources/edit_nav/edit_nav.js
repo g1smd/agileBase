@@ -30,7 +30,7 @@ $(document).ready(function() {
 	createLevel(homeUrl);
 	initialiseHeight();
 	$(window).resize(function() {
-		inialiseHeight();
+		initialiseHeight();
 	});
 });
 
