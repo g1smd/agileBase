@@ -334,7 +334,6 @@ function dependentSnippets() {
 		var firstTwoCards = jqSlide.find(".block.current:lt(2)");
 		firstTwoCards.each(function() {
 			var snippetText = $(this).text();
-			alert("appending " + snippetText + " to " + tableId + " snippet");
 			jqSnippets.append("<div class='snippet'>" + snippetText + "</div>");
 		});
 	});
