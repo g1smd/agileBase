@@ -20,5 +20,3 @@ button.gtpb[disabled],
 button.gtpb[disabled]:hover,
 button.gtpb[disabled]:active,
 button.gtpb[disabled].selected { background:#f1f2ed; color:#aaaaaa }
-
-button.gtpb[disabled] img { -moz-opacity:0.2 }
