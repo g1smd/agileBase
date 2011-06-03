@@ -28,9 +28,17 @@ $(document).ready(function() {
 	});
 	// Initialise home screen for user
 	createLevel(homeUrl);
+	initialiseHeight();
+	$(window).resize(function() {
+		inialiseHeight();
+	});
+});
+
+// Nasty JS height, can't we get some pure CSS to work?
+function initialiseHeight() {
 	var levelHeight = $(window).height() - 30;
 	$("#levels").height(levelHeight);
-});
+}
 
 function initialiseSlides() {
 	$("#searchbox").keyup(
