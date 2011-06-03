@@ -2,7 +2,7 @@
 <div class="breadcrumb_title">$report</div>
 #set($filterString = $sessionData.getGlobalFilterString($report))
 <div id="navrow">
-  #set($placeholder = $report.getReportName().replaceAll("\\\s",""))
+  #set($placeholder = $report.getReportName().replaceAll(" - .*",""))
   <input id="searchbox" name="searchbox" type="search" placeholder="search $placeholder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
   <div id="jumpto">
   <span class="jump_label">Jump to: </span>
