@@ -103,6 +103,7 @@ body {
 .slide .currency_symbol {
   float: none;
   left: 0px;
+  top: -4px;
 }
 
 .rewind {
