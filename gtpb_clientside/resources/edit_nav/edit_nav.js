@@ -319,9 +319,9 @@ function dependentSnippets() {
 	var remainingSlides = slides.not(":first");
 	remainingSlides.each(function() {
 		var jqSlide = $(this);
-		var snippetHolderId = jqSlide.attr("id").replace("slide_", "#dependent_table_");
-		var jqSnippets = $(snippetHolderId);
-		alert("There is " + jqSnippets.size() " snippet for " + tableId); // there should be 1
+		var snippetHolderId = jqSlide.attr("id").replace("slide_", "dependent_table_");
+		var jqSnippets = $("#" + snippetHolderId);
+		alert("There is " + jqSnippets.size() + " snippet for " + tableId); // there should be 1
 		var numCards = jqSlide.find(".block.current").size();
 		if (numCards > 0) {
 			jqSnippets.addClass("active");
