@@ -28,6 +28,8 @@ $(document).ready(function() {
 	});
 	// Initialise home screen for user
 	createLevel(homeUrl);
+	var levelHeight = $(window).height();
+	$("#levels").height(levelHeight);
 });
 
 function initialiseSlides() {

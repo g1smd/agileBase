@@ -218,6 +218,7 @@ a.jumpto_table.current {
 #levels {
   position: relative;
   background-color: #bdbdbd;
+  height: 610px;
 }
 
 .level {
@@ -228,7 +229,7 @@ a.jumpto_table.current {
   -ms-transition: all 0.5s ease-in;
   transition: all 0.5s ease-in;
   width: 100%;
-  height: 610px;
+  height: 100%;
   overflow: visible;
 }
 
