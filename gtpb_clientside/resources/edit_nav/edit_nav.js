@@ -24,7 +24,7 @@ $(document).ready(function() {
 	$("a.jumpto_table").live('click', function(event) {
 		event.preventDefault();
 		var href = $(this).attr("href");
-		moveUpTo(href, true); // true means move up if exits, otherwise move down
+		moveUpTo(href, false); // true means move up if exits, otherwise move down
 	});
 	// Initialise home screen for user
 	createLevel(homeUrl);
@@ -113,7 +113,7 @@ function initialiseDependencies() {
 							var rowId = jqDependentTable.attr("rowid");
 							var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
 									+ internalTableName + "&set_row_id=" + rowId;
-							moveUpTo(levelUrl, false);
+							moveUpTo(levelUrl, true);
 						} else {
 							// find index of slide to go to
 							var internalTableName = jqDependentTable.attr("id").replace(
