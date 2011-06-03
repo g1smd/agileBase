@@ -119,6 +119,7 @@ body {
   padding-left: 1em;
 	height: 3em;
   border-bottom: 1px solid #F2F2F2;
+  overflow: hidden;
 }
 
 .dependent_table.active {
@@ -203,11 +204,15 @@ body {
 a.jumpto_table {
   background: white;
   float: left;
-  border: 2px solid #ccc;
+  border: 2px solid white;
   padding: 4px;
   height: 24px;
   text-decoration: none;
   text-transform: lowercase;
+}
+
+a.jumpto_table:hover {
+  border-color: #50add6;
 }
 
 a.jumpto_table.current {
