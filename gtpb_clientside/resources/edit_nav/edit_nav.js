@@ -191,7 +191,6 @@ function moveDown() {
 }
 
 function moveUpTo(levelUrl) {
-  alert("moving up to " + levelUrl);
   var jqLevelContent = $(levelsList[currentLevel].levelContent);
   // search for the levelUrl somewhere above the current level
   for (var level = 0; level < currentLevel; level++) {
@@ -224,6 +223,7 @@ function moveUpTo(levelUrl) {
   if (levelUrl.indexOf("gui/edit_nav/report") > -1) {
     createLevel(levelUrl);
   } else {
+	alert("going to create home then " + levelUrl);
 	createLevel(homeUrl);
 	moveDownTo(levelUrl);
   }
