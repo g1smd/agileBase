@@ -90,7 +90,7 @@ function initialiseDependencies() {
     var slideshow = new SlideShow(jqLevel.find(".slide").toArray());
     var counters = document.querySelectorAll('.counter');
     var slides = document.querySelectorAll('.slide');
-    
+    alert("initialiseDependencies for level " + currentLevel);
     jqLevel.find(".dependent_table").click(function() {
       var jqDependentTable = $(this);
       if (!jqDependentTable.hasClass("active")) {
