@@ -240,7 +240,6 @@ div#recordBlank {
 	right: 0;
 	padding: 20px;
 	background-color: #FF0000;
-	-moz-opacity: 0.3;
 	opacity: 0.3;
 	filter: alpha(opacity = 30);
 }
