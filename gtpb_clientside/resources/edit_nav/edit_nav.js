@@ -322,8 +322,8 @@ function dependentSnippets() {
 		var jqSlide = $(this);
 		var tableId = jqSlide.attr("id").replace("slide_", "");
 		var jqSnippets = $("#dependent_table_" + tableId);
+		alert("There is " + jqSnippets.size() " snippet for " + tableId); // there should be 1
 		var numCards = jqSlide.find(".block.current").size();
-		alert("numCards for " + tableId + " is " + numCards);
 		if (numCards > 0) {
 			jqSnippets.addClass("active");
 			if (numCards == 100) {
@@ -336,6 +336,7 @@ function dependentSnippets() {
 		var firstTwoCards = jqSlide.find(".block.current:lt(2)");
 		firstTwoCards.each(function() {
 			var snippetText = $(this).text();
+			alert("appending " + snippetText + " to " + tableId + " snippet");
 			jqSnippets.append("<div class='snippet'>" + snippetText + "</div>");
 		});
 	});
