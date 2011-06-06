@@ -164,7 +164,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// activity
 		int hourNow = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 		int initialDelay = 24 + AppProperties.lowActivityHour - hourNow;
-		final ScheduledExecutorService dashboardScheduler = Executors
+		this.dashboardScheduler = Executors
 				.newSingleThreadScheduledExecutor();
 		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
 				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
@@ -173,11 +173,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void cancelScheduledEvents() {
+		//TODO: check which of these are necessary, perhaps just the last will do
 		if (this.initialDashboardPopulatorThread != null) {
 			this.initialDashboardPopulatorThread.interrupt();
 		}
 		if (this.scheduledDashboardPopulate != null) {
 			this.scheduledDashboardPopulate.cancel(true);
+		}
+		if (this.dashboardScheduler != null) {
+			this.dashboardScheduler.shutdown();
 		}
 	}
 
@@ -3067,6 +3071,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public static final String PRIMARY_KEY_DESCRIPTION = "Unique record identifier";
 
+	private ScheduledExecutorService dashboardScheduler = null;
+	
 	private ScheduledFuture<?> scheduledDashboardPopulate = null;
 
 	private Thread initialDashboardPopulatorThread = null;
