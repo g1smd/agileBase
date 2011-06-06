@@ -35,18 +35,18 @@ public final class Naming {
 	 * Replace invalid characters in XML, i.e. angle brackets, ampersands and
 	 * double quotes with their HTML codes
 	 * 
-	 * TODO: Sure there is a 3rd party utility e.g. an apache commons one to do
-	 * this better
+	 * Note there is an Apache 3rd party utility to do
+	 * this better but it converts all entities not just the few we need
 	 */
 	public static String makeValidXML(String xmlValue) {
 		if (xmlValue == null) {
 			return null;
 		}
-		String returnValue = xmlValue.replaceAll("&(?!(\\w+|#\\d+);)", "&amp;");
+		String returnValue = xmlValue.replaceAll("&(?!(\\w+|#\\d+);)", "&amp;"); // &s which are not part of an entity
 		returnValue = returnValue.replaceAll("<", "&lt;");
 		returnValue = returnValue.replaceAll(">", "&gt;");
 		returnValue = returnValue.replaceAll("\"", "&quot;");
-		returnValue = returnValue.replaceAll("£", "&pound;");
+		returnValue = returnValue.replaceAll("\u00A3", "&pound;");
 		return returnValue;
 	}
 
