@@ -30,7 +30,7 @@
 #foreach($field in $sessionTable.getFields())
   #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
     #set($report = $field.getReferencedReport())
-    #set($success = $crossReferencedTableReports.put($referencedReport.getParentTable(), $referencedReport))
+    #set($dependentTable = $report.getParentTable())
     #parse("gui/edit_nav/dependent_slide.vm")  
   #end
 #end
