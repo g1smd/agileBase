@@ -220,16 +220,19 @@ public class Public extends VelocityViewServlet {
 					} catch (AgileBaseException abex) {
 						ServletUtilMethods.logException(abex, request,
 								"General error performing save from public");
+						templateName = templatePath + "form";
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, abex);
 					} catch (SQLException sqlex) {
 						ServletUtilMethods.logException(sqlex, request,
 								"SQL error performing save from public");
+						templateName = templatePath + "form";
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, sqlex);
 					} catch (FileUploadException fuex) {
 						ServletUtilMethods.logException(fuex, request,
 								"General error doing file upload from public");
+						templateName = templatePath + "form";
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, fuex);
 					}
