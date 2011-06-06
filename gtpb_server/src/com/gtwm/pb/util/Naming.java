@@ -43,10 +43,10 @@ public final class Naming {
 			return null;
 		}
 		String returnValue = xmlValue.replaceAll("&(?!(\\w+|#\\d+);)", "&amp;"); // &s which are not part of an entity
-		returnValue = returnValue.replaceAll("<", "&lt;");
-		returnValue = returnValue.replaceAll(">", "&gt;");
-		returnValue = returnValue.replaceAll("\"", "&quot;");
-		returnValue = returnValue.replaceAll("\u00A3", "&pound;");
+		returnValue = returnValue.replace("<", "&lt;");
+		returnValue = returnValue.replace(">", "&gt;");
+		returnValue = returnValue.replace("\"", "&quot;");
+		returnValue = returnValue.replace("\u00A3", "&pound;");
 		return returnValue;
 	}
 
