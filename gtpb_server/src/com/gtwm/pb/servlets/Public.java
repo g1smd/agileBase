@@ -2,6 +2,7 @@ package com.gtwm.pb.servlets;
 
 import java.sql.SQLException;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,13 +117,14 @@ public class Public extends VelocityViewServlet {
 							throw new CantDoThatException("The report " + report
 									+ " has not been set as publicly exportable");
 						}
+						Map<BaseField, String> filters = getFilters(table, request);
 						if (publicAction.equals(PublicAction.GET_REPORT_JSON)) {
 							String reportJSON = this.databaseDefn.getDataManagement()
-									.getReportJSON(publicUser, report, 30);
+									.getReportJSON(publicUser, report, filters, 30);
 							context.put("gtwmReportJSON", reportJSON);
 						} else {
 							String reportRSS = this.databaseDefn.getDataManagement().getReportRSS(
-									publicUser, report, 2);
+									publicUser, report, filters, 2);
 							context.put("gtwmReportRSS", reportRSS);
 							response.setContentType(ResponseReturnType.XML.getResponseType());
 						}
@@ -271,6 +273,19 @@ public class Public extends VelocityViewServlet {
 		return template;
 	}
 
+	private static Map<BaseField, String> getFilters(TableInfo table, HttpServletRequest request) {
+		Map<BaseField, String> filters = new HashMap<BaseField, String>();
+		for(BaseField field : table.getFields()) {
+			String internalFieldName = field.getInternalFieldName();
+			String fieldValue = request.getParameter(internalFieldName);
+			if (fieldValue != null) {
+				filters.put(field, fieldValue);
+			}
+		}
+		logger.debug("Got filters " + filters);
+		return filters;
+	}
+	
 	private DatabaseInfo databaseDefn = null;
 
 	private String webAppRoot;

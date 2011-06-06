@@ -51,6 +51,9 @@ import java.io.StringWriter;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.math.util.MathUtils;
 import com.gtwm.pb.auth.PrivilegeType;
@@ -1562,18 +1565,23 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	private String getReportDataAsFormat(DataFormat dataFormat, AppUserInfo user,
-			BaseReportInfo report, int cacheMinutes) throws CodingErrorException,
-			CantDoThatException, SQLException, JSONException, XMLStreamException,
-			ObjectNotFoundException {
+			BaseReportInfo report, Map<BaseField, String> filters, int cacheMinutes)
+			throws CodingErrorException, CantDoThatException, SQLException, JSONException,
+			XMLStreamException, ObjectNotFoundException {
 		String id = dataFormat.toString() + report.getInternalReportName();
-		CachedReportFeedInfo cachedFeed = this.cachedReportFeeds.get(id);
-		if (cachedFeed != null) {
-			long lastDataChangeAge = System.currentTimeMillis()
-					- this.getLastDataChangeTime(user.getCompany());
-			long cacheAge = cachedFeed.getCacheAge();
-			if ((cacheAge < lastDataChangeAge) || (cacheAge < (cacheMinutes * 60 * 1000))) {
-				this.reportFeedCacheHits.incrementAndGet();
-				return cachedFeed.getFeed();
+		CachedReportFeedInfo cachedFeed = null;
+		if (filters.size() == 0) {
+			// For now, only cache when there are no filters. Can reconsider
+			// this in future if necessary
+			cachedFeed = this.cachedReportFeeds.get(id);
+			if (cachedFeed != null) {
+				long lastDataChangeAge = System.currentTimeMillis()
+						- this.getLastDataChangeTime(user.getCompany());
+				long cacheAge = cachedFeed.getCacheAge();
+				if ((cacheAge < lastDataChangeAge) || (cacheAge < (cacheMinutes * 60 * 1000))) {
+					this.reportFeedCacheHits.incrementAndGet();
+					return cachedFeed.getFeed();
+				}
 			}
 		}
 		int numRows = 10000;
@@ -1581,8 +1589,7 @@ public final class DataManagement implements DataManagementInfo {
 			numRows = 100;
 		}
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
-				new HashMap<BaseField, String>(0), false, new HashMap<BaseField, Boolean>(0),
-				numRows, QuickFilterType.AND);
+				filters, false, new HashMap<BaseField, Boolean>(0), numRows, QuickFilterType.AND);
 		String dataFeedString = null;
 		if (dataFormat.equals(DataFormat.JSON)) {
 			dataFeedString = this.generateJSON(report, reportDataRows);
@@ -1595,8 +1602,10 @@ public final class DataManagement implements DataManagementInfo {
 		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(0), 10000,
 				dataFormat.toString());
 		UsageLogger.startLoggingThread(usageLogger);
-		cachedFeed = new CachedFeed(dataFeedString);
-		this.cachedReportFeeds.put(id, cachedFeed);
+		if (filters.size() > 0) {
+			cachedFeed = new CachedFeed(dataFeedString);
+			this.cachedReportFeeds.put(id, cachedFeed);
+		}
 		int cacheMisses = this.reportFeedCacheMisses.incrementAndGet();
 		if (cacheMisses > 100) {
 			logger.info("Public report data cache hits: " + this.reportFeedCacheHits + ", misses "
@@ -1607,16 +1616,16 @@ public final class DataManagement implements DataManagementInfo {
 		return dataFeedString;
 	}
 
-	public String getReportRSS(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
+	public String getReportRSS(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, int cacheMinutes)
 			throws SQLException, CodingErrorException, CantDoThatException, JSONException,
 			XMLStreamException, ObjectNotFoundException {
-		return this.getReportDataAsFormat(DataFormat.RSS, user, report, cacheMinutes);
+		return this.getReportDataAsFormat(DataFormat.RSS, user, report, filters, cacheMinutes);
 	}
 
-	public String getReportJSON(AppUserInfo user, BaseReportInfo report, int cacheMinutes)
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, int cacheMinutes)
 			throws JSONException, CodingErrorException, CantDoThatException, SQLException,
 			XMLStreamException, ObjectNotFoundException {
-		return this.getReportDataAsFormat(DataFormat.JSON, user, report, cacheMinutes);
+		return this.getReportDataAsFormat(DataFormat.JSON, user, report, filters, cacheMinutes);
 	}
 
 	/**
@@ -2433,15 +2442,21 @@ public final class DataManagement implements DataManagementInfo {
 				new HashMap<BaseField, String>(), false, new HashMap<BaseField, Boolean>(0), -1,
 				QuickFilterType.AND);
 		// Build up list of names
-		List<String> forenames = new ArrayList<String>(100);
-		List<String> surnames = new ArrayList<String>(100);
-		List<String> emailAddresses = new ArrayList<String>(100);
-		List<String> phoneNumbers = new ArrayList<String>();
-		List<String> niNumbers = new ArrayList<String>();
+		List<String> forenames = new LinkedList<String>();
+		List<String> surnames = new LinkedList<String>();
+		List<String> emailAddresses = new LinkedList<String>();
+		List<String> companyNameParts = new LinkedList<String>();
+		List<String> phoneNumbers = new LinkedList<String>();
+		List<String> niNumbers = new LinkedList<String>();
 		for (DataRowInfo dataRow : dataRows) {
 			for (BaseField field : fieldContentTypes.keySet()) {
 				FieldContentType contentType = fieldContentTypes.get(field);
-				if (contentType.equals(FieldContentType.FULL_NAME)) {
+				if (contentType.equals(FieldContentType.COMPANY_NAME)) {
+					String companyName = dataRow.getDataRowFields().get(field).getKeyValue();
+					for (String part : companyName.split("\\s")) {
+						companyNameParts.add(part);
+					}
+				} else if (contentType.equals(FieldContentType.FULL_NAME)) {
 					String fullName = dataRow.getDataRowFields().get(field).getKeyValue();
 					String surname = fullName.replaceAll("^.*\\s", "");
 					String forename = fullName.substring(0, fullName.length() - surname.length());
@@ -2479,7 +2494,17 @@ public final class DataManagement implements DataManagementInfo {
 				} else if (contentType.equals(FieldContentType.EMAIL_ADDRESS)) {
 					String originalEmail = dataRow.getDataRowFields().get(field).getKeyValue();
 					if (originalEmail.contains("@")) {
-						emailAddresses.add("email.address@agilebase.co.uk");
+						switch (randomGenerator.nextInt(3)) {
+						case 0:
+							emailAddresses.add("email.address@gmail.com");
+							break;
+						case 1:
+							emailAddresses.add("email.address@agilebase.co.uk");
+							break;
+						case 2:
+							emailAddresses.add("email.address@example.com");
+							break;
+						}
 					} else {
 						emailAddresses.add("");
 					}
@@ -2487,11 +2512,41 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		// Anonymise
+		Pattern numeralPattern = Pattern.compile("[123456789]"); // no zero
 		for (DataRowInfo dataRow : dataRows) {
 			int rowId = dataRow.getRowId();
 			LinkedHashMap<BaseField, BaseValue> dataToSave = new LinkedHashMap<BaseField, BaseValue>();
 			for (BaseField field : fieldContentTypes.keySet()) {
 				FieldContentType contentType = fieldContentTypes.get(field);
+				if (contentType.equals(FieldContentType.COMPANY_NAME)) {
+					int partIndex = randomGenerator.nextInt(companyNameParts.size());
+					String companyName = "";
+					while (companyName.equals("")) {
+						String companyNamePart = companyNameParts.get(partIndex);
+						if (!companyNamePart.trim().toLowerCase().equals("ltd")) {
+							companyName += companyNamePart + " ";
+						}
+						if (randomGenerator.nextBoolean()) {
+							partIndex = randomGenerator.nextInt(companyNameParts.size());
+							companyNamePart = companyNameParts.get(partIndex);
+							companyName += companyNamePart + " ";
+							if (!companyNamePart.trim().toLowerCase().equals("ltd")) {
+								if (randomGenerator.nextBoolean()) {
+									partIndex = randomGenerator.nextInt(companyNameParts.size());
+									companyNamePart = companyNameParts.get(partIndex);
+									companyName += companyNamePart + " ";
+								}
+							}
+						}
+						if (companyName.trim().toLowerCase().equals("ltd")) {
+							companyName = "";
+						}
+					}
+					// remove last space
+					companyName = companyName.substring(0, companyName.length() - 1);
+					TextValue companyNameValue = new TextValueDefn(companyName);
+					dataToSave.put(field, companyNameValue);
+				}
 				if (contentType.equals(FieldContentType.FULL_NAME)) {
 					int forenameIndex = randomGenerator.nextInt(forenames.size());
 					String randomForename = forenames.get(forenameIndex);
@@ -2533,7 +2588,14 @@ public final class DataManagement implements DataManagementInfo {
 					String randomKey = randomDataRow.getDataRowFields().get(field).getKeyValue();
 					// only know how to mix up text and relation fields so far
 					if (field instanceof TextField) {
-						TextValue textValue = new TextValueDefn(randomKey);
+						// Anonymise numbers within the text
+						Matcher matcher = numeralPattern.matcher(randomKey);
+						char[] keyChars = randomKey.toCharArray();
+						while (matcher.matches()) {
+							int position = matcher.start();
+							keyChars[position] = alphabet[randomGenerator.nextInt(26)].charAt(0);
+						}
+						TextValue textValue = new TextValueDefn(keyChars.toString());
 						dataToSave.put(field, textValue);
 					} else if (field instanceof RelationField) {
 						IntegerValue intValue = new IntegerValueDefn(Integer.valueOf(randomKey));
@@ -2574,7 +2636,8 @@ public final class DataManagement implements DataManagementInfo {
 				} catch (ObjectNotFoundException e) {
 					// The report from the logs no longer exists
 				} catch (DisallowedException e) {
-					// The user no longer has privileges on the most popular report
+					// The user no longer has privileges on the most popular
+					// report
 				}
 			}
 			results.close();
