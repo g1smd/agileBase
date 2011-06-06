@@ -87,11 +87,11 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 					</div></td>
 					#if(!$edit_nav)<td class="trailing">&nbsp;</td>#end
 				  </tr>
-			      #foreach($field in $fields)
-					#if($field.getNotNull() && $tableDataRow.get($field) == "")
-						#parse("gui/reports_and_tables/tabs/table_data_row.vm")
-					#end
-			      #end ## end loop through fields
+          #foreach($field in $fields)
+					  #if($field.getNotNull() && $tableDataRow.get($field) == "")
+						  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+					  #end
+          #end ## end loop through fields
 				  #set($rowCount = $rowCount + 1)
 				  <tr #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
 					#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
@@ -100,11 +100,13 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 					#if(!$edit_nav)<td class="trailing">&nbsp;</td>#end
 				  </tr>
 			  #else
-			      #foreach($field in $fields)
-				        #if($field.getHidden() == false)
-							#parse("gui/reports_and_tables/tabs/table_data_row.vm")
-				        #end
-			      #end ## end loop through fields
+          #foreach($field in $fields)
+            #if($field.getHidden() == false)
+              #if(!($abSlide && ($field.getFieldCategory() == "REFERENCED_REPORT_DATA")))
+							  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+              #end
+            #end
+          #end ## end loop through fields
 			  #end ## end if no unfilled mandatories
           #if($view.isWikiIntegrated() && (!$mobile_device))
 			        #parse("gui/reports_and_tables/tabs/wiki.vm")  

@@ -1,3 +1,4 @@
+#set($abSlide = true)
 #set($sessionTable = $sessionData.getTable())
 #set($fields = $sessionTable.getFields())
 #set($referencedTableReports = {})
