@@ -132,7 +132,7 @@ body {
   border-top: none;
 }
 
-.dependent_table.cross_reference:first-child {
+.dependent_table.cross_reference:first-of-type {
 	/* with above, forms collapsed borders */
   border-top: 1px solid #ff8040;
 }
