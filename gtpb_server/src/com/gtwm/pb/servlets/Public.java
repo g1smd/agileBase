@@ -296,7 +296,6 @@ public class Public extends VelocityViewServlet {
 				filters.put(field, fieldValue);
 			}
 		}
-		logger.debug("Got filters " + filters);
 		return filters;
 	}
 
