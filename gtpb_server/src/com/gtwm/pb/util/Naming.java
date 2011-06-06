@@ -46,6 +46,7 @@ public final class Naming {
 		returnValue = returnValue.replaceAll(">", "&gt;");
 		returnValue = returnValue.replaceAll("&", "&amp;");
 		returnValue = returnValue.replaceAll("\"", "&quot;");
+		returnValue = returnValue.replaceAll("£", "&pound;");
 		return returnValue;
 	}
 
