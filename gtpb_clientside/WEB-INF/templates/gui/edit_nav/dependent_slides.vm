@@ -8,22 +8,25 @@
   #end
 #end
 #set($referencedTables = $referencedTableReports.keySet())
+Referenced tables are $referencedTables<br>
 ## Loop through tables
 #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
 #foreach($dependentTable in $dependentTables)
-#if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable) && (!$referencedTables.contains($dependentTable)))
-  #set($linkingReports = [])
-  #set($reports = $dependentTable.getReports())
-  #foreach($report in $reports)
-    #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
-      #set($success = $linkingReports.add($report))
+  Testing dependent table $dependentTable
+  #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable) && (!$referencedTables.contains($dependentTable)))
+    #set($linkingReports = [])
+    #set($reports = $dependentTable.getReports())
+    #foreach($report in $reports)
+      #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
+        #set($success = $linkingReports.add($report))
+      #end
+    #end
+    which has reports $linkingReports<br>
+    #if($linkingReports.size() > 0)
+      #set($report = $linkingReports.get(0))
+      #parse("gui/edit_nav/dependent_slide.vm")  
     #end
   #end
-  #if($linkingReports.size() > 0)
-    #set($report = $linkingReports.get(0))
-    #parse("gui/edit_nav/dependent_slide.vm")  
-  #end
-#end
 #end ## end dependent tables
 ## add in tables for cross referenced fields
 #foreach($field in $sessionTable.getFields())
