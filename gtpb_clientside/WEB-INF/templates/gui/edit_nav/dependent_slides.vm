@@ -1,7 +1,7 @@
 #set($sessionTable = $sessionData.getTable())
-#set($primaryKey = $sessionTable.getPrimaryKey())
 #set($sessionRowId = $sessionData.getRowId())
 #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
+## TODO: remove those which are covered by cross-referenced fields
 #foreach($dependentTable in $dependentTables)
 #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable))
   #set($linkingReports = [])
@@ -13,27 +13,15 @@
   #end
   #if($linkingReports.size() > 0)
     #set($report = $linkingReports.get(0))
-    #set($filters = $viewTools.getNewFilterMap())
-    #set($success = $filters.put($primaryKey, "$sessionRowId"))
-    #set($reportDataRows = $view.getReportDataRows($report, 100, $filters, true))##
-    #if($reportDataRows.size() > 0)
-    <div class="slide reportDataView" id="slide_$sessionTable.getInternalTableName()_$dependentTable.getInternalTableName()">
-      <img class="rewind" src="resources/edit_nav/rewind.png" />
-      <section class="middle"> 
-        <div class="title">
-        ##$dependentTable.getSimpleName()
-        ##<select name="$dependentTable.getInternalTableName()_select">
-        ##  #foreach($report in $linkingReports)
-        ##    <option value="$report.getInternalReportName()">$report.getModule() - $report</option>
-        ##  #end
-        ##  <option value="$dependentTable.getDefaultReport().getInternalReportName()">all records</option>
-        ##</select>
-        $report.getModule() - $report
-        </div>
-        #parse("gui/edit_nav/report_content.vm")
-      </section>
-    </div>
-    #end
+    #parse("gui/edit_nav/dependent_slide.vm")  
   #end
 #end
+#end ## end dependent tables
+## add in tables for cross referenced fields
+#foreach($field in $sessionTable.getFields())
+  #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
+    #set($report = $field.getReferencedReport())
+    #set($success = $crossReferencedTableReports.put($referencedReport.getParentTable(), $referencedReport))
+  #end
 #end
+

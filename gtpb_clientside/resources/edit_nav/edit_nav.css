@@ -128,7 +128,7 @@ body {
 }
 
 .dependent_table.cross_reference {
-  border: 1px solid #ff8040;
+  border: 1px solid #ff8040; /* aB orange */
 }
 
 .dependent_table.active {
