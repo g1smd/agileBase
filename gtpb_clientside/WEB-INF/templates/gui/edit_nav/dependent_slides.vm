@@ -1,4 +1,5 @@
 #set($sessionTable = $sessionData.getTable())
+#set($primaryKey = $sessionTable.getPrimaryKey())
 #set($sessionRowId = $sessionData.getRowId())
 #set($referencedTableReports = {})
 #foreach($field in $sessionTable.getFields())
