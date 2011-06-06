@@ -101,6 +101,7 @@ import com.gtwm.pb.model.manageData.fields.DateValueDefn;
 import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageData.fields.IntegerValueDefn;
 import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
+import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.servlets.ServletUtilMethods;
 import com.gtwm.pb.util.AppProperties;
@@ -1565,9 +1566,9 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	private String getReportDataAsFormat(DataFormat dataFormat, AppUserInfo user,
-			BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters, int cacheMinutes)
-			throws CodingErrorException, CantDoThatException, SQLException, JSONException,
-			XMLStreamException, ObjectNotFoundException {
+			BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters,
+			int cacheMinutes) throws CodingErrorException, CantDoThatException, SQLException,
+			JSONException, XMLStreamException, ObjectNotFoundException {
 		String id = dataFormat.toString() + report.getInternalReportName();
 		CachedReportFeedInfo cachedFeed = null;
 		if (filters.size() == 0) {
@@ -1589,7 +1590,8 @@ public final class DataManagement implements DataManagementInfo {
 			numRows = 100;
 		}
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
-				filters, exactFilters, new HashMap<BaseField, Boolean>(0), numRows, QuickFilterType.AND);
+				filters, exactFilters, new HashMap<BaseField, Boolean>(0), numRows,
+				QuickFilterType.AND);
 		String dataFeedString = null;
 		if (dataFormat.equals(DataFormat.JSON)) {
 			dataFeedString = this.generateJSON(report, reportDataRows);
@@ -1616,16 +1618,20 @@ public final class DataManagement implements DataManagementInfo {
 		return dataFeedString;
 	}
 
-	public String getReportRSS(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters,  int cacheMinutes)
+	public String getReportRSS(AppUserInfo user, BaseReportInfo report,
+			Map<BaseField, String> filters, boolean exactFilters, int cacheMinutes)
 			throws SQLException, CodingErrorException, CantDoThatException, JSONException,
 			XMLStreamException, ObjectNotFoundException {
-		return this.getReportDataAsFormat(DataFormat.RSS, user, report, filters, exactFilters, cacheMinutes);
+		return this.getReportDataAsFormat(DataFormat.RSS, user, report, filters, exactFilters,
+				cacheMinutes);
 	}
 
-	public String getReportJSON(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters, int cacheMinutes)
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report,
+			Map<BaseField, String> filters, boolean exactFilters, int cacheMinutes)
 			throws JSONException, CodingErrorException, CantDoThatException, SQLException,
 			XMLStreamException, ObjectNotFoundException {
-		return this.getReportDataAsFormat(DataFormat.JSON, user, report, filters, exactFilters, cacheMinutes);
+		return this.getReportDataAsFormat(DataFormat.JSON, user, report, filters, exactFilters,
+				cacheMinutes);
 	}
 
 	/**
@@ -1713,9 +1719,22 @@ public final class DataManagement implements DataManagementInfo {
 			// arises,
 			// with e.g. an array of fields and additional properties such as
 			// field names
+			String valueString = null;
 			for (ReportFieldInfo reportField : report.getReportFields()) {
+				BaseField field = reportField.getBaseField();
 				DataRowFieldInfo value = reportDataRow.getValue(reportField);
-				js.key(reportField.getInternalFieldName()).value(value.toString());
+				boolean useKey = false;
+				if (field instanceof TextField) {
+					if (((TextField) field).getContentSize().equals(TextContentSizes.FEW_PARAS)) {
+						useKey = true;
+					}
+				}
+				if (useKey) {
+					valueString = value.getKeyValue();
+				} else {
+					valueString = value.getDisplayValue();
+				}
+				js.key(reportField.getInternalFieldName()).value(valueString);
 			}
 			js.endObject();
 		}
