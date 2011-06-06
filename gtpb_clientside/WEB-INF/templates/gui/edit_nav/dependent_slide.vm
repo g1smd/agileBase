@@ -1,0 +1,23 @@
+## requires $report, $sessionTable, $dependentTable
+#set($primaryKey = $sessionTable.getPrimaryKey())
+#set($filters = $viewTools.getNewFilterMap())
+#set($success = $filters.put($primaryKey, "$sessionRowId"))
+#set($reportDataRows = $view.getReportDataRows($report, 100, $filters, true))##
+#if($reportDataRows.size() > 0)
+<div class="slide reportDataView" id="slide_$sessionTable.getInternalTableName()_$dependentTable.getInternalTableName()">
+  <img class="rewind" src="resources/edit_nav/rewind.png" />
+  <section class="middle"> 
+    <div class="title">
+    ##$dependentTable.getSimpleName()
+    ##<select name="$dependentTable.getInternalTableName()_select">
+    ##  #foreach($report in $linkingReports)
+    ##    <option value="$report.getInternalReportName()">$report.getModule() - $report</option>
+    ##  #end
+    ##  <option value="$dependentTable.getDefaultReport().getInternalReportName()">all records</option>
+    ##</select>
+    $report.getModule() - $report
+    </div>
+    #parse("gui/edit_nav/report_content.vm")
+  </section>
+</div>
+#end
