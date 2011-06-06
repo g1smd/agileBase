@@ -129,6 +129,12 @@ body {
 
 .dependent_table.cross_reference {
   border: 1px solid #ff8040; /* aB orange */
+  border-top: none;
+}
+
+.dependent_table.cross_reference:first-child {
+	/* with above, forms collapsed borders */
+  border-top: 1px solid #ff8040;
 }
 
 .dependent_table.active {
