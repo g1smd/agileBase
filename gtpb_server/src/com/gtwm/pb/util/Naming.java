@@ -42,9 +42,9 @@ public final class Naming {
 		if (xmlValue == null) {
 			return null;
 		}
-		String returnValue = xmlValue.replaceAll("<", "&lt;");
+		String returnValue = xmlValue.replaceAll("&(?!(\\w+|#\\d+);)", "&amp;");
+		returnValue = returnValue.replaceAll("<", "&lt;");
 		returnValue = returnValue.replaceAll(">", "&gt;");
-		returnValue = returnValue.replaceAll("&", "&amp;");
 		returnValue = returnValue.replaceAll("\"", "&quot;");
 		returnValue = returnValue.replaceAll("£", "&pound;");
 		return returnValue;
