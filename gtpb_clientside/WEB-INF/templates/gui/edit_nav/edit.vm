@@ -1,6 +1,13 @@
 #set($sessionTable = $sessionData.getTable())
 #set($fields = $sessionTable.getFields())
-#set($includedTables = {})
+#set($referencedTableReports = {})
+#foreach($field in $fields)
+  #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
+    #set($referencedReport = $field.getReferencedReport())
+    #set($success = $referencedTableReports.put($referencedReport.getParentTable(), $referencedReport))
+  #end
+#end
+#set($referencedTables = $referencedTableReports.keySet())
 <div class="breadcrumb_title">edit $sessionTable.getSimpleName()</div>
 <div class="presentation"> 
   <div id="presentation-counter"></div> 
@@ -40,7 +47,6 @@
                   #end
                 #end
               #end
-              #set($success = $includedTables.put($relatedTable, ""))
               <div class="dependent_table related #if($active) active #end" id="dependent_relation_$sessionTable.getInternalTableName()_$relatedTable.getInternalTableName()" internaltablename="$relatedTable.getInternalTableName()" rowid="$relatedRowId">
                 <h1><span class="count"><img src="resources/edit_nav/up.png" alt="up" /></span>$field.getSimplifiedFieldName()#if($fieldDisplayValue != ""): $fieldDisplayValue#end</h1>
                 <div class="record_snippets">
@@ -52,18 +58,19 @@
           ## dependent child tables
           #set($primaryKey = $sessionTable.getPrimaryKey())
           #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
-          ## TODO: remove those which are covered by cross-referenced fields
           #foreach($dependentTable in $dependentTables)
-            #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable))
-              #foreach($report in $dependentTable.getReports())
-                #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
-                  #set($success = $includedTables.put($dependentTable, ""))
-                  <div class="dependent_table" id="dependent_table_$sessionTable.getInternalTableName()_$dependentTable.getInternalTableName()">
-                    <h1><span class="count"></span>$dependentTable.getSimpleName()</h1>
-                    <div class="record_snippets">
+            ## don't include those which are covered by cross-referenced fields
+            #if(!$referencedTables.contains($dependentTable))
+              #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable))
+                #foreach($report in $dependentTable.getReports())
+                  #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
+                    <div class="dependent_table" id="dependent_table_$sessionTable.getInternalTableName()_$dependentTable.getInternalTableName()">
+                      <h1><span class="count"></span>$dependentTable.getSimpleName()</h1>
+                      <div class="record_snippets">
+                      </div>
                     </div>
-                  </div>
-                  #break ## next table
+                    #break ## next table
+                  #end
                 #end
               #end
             #end
@@ -73,13 +80,11 @@
             #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
               #set($referencedReport = $field.getReferencedReport())
               #set($referencedTable = $referencedReport.getParentTable())
-              #if(!$includedTables.keySet().contains($referencedTable))
               <div class="dependent_table cross_reference" id="dependent_table_$sessionTable.getInternalTableName()_$referencedTable.getInternalTableName()">
                 <h1><span class="count"></span>$field</h1>
                 <div class="record_snippets">
                 </div>
               </div>
-              #end
             #end
           #end
         </div>
