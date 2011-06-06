@@ -17,6 +17,9 @@
 ##
 #set($table = $sessionData.getTable())
 #set($internalTableName = $table.getInternalTableName())
+#if($view.getWhetherExceptionOccurred())
+  #parse("gui/error.vm")
+#end
 <table cellspacing=0 border=0 cellpadding=0>
   <tr valign="top">
     <td class="table_details">
