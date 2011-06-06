@@ -128,8 +128,9 @@ body {
 }
 
 .dependent_table.cross_reference {
-  border: 1px solid #ff8040; /* aB orange */
-  border-top: none;
+  border-bottom: 1px solid #ff8040; /* aB orange */
+  border-left:  1px solid #ff8040;
+  border-right:  1px solid #ff8040; 
 }
 
 .dependent_table.cross_reference:nth-of-type(1) {
