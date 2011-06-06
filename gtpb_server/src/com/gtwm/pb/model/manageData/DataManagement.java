@@ -1565,7 +1565,7 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	private String getReportDataAsFormat(DataFormat dataFormat, AppUserInfo user,
-			BaseReportInfo report, Map<BaseField, String> filters, int cacheMinutes)
+			BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters, int cacheMinutes)
 			throws CodingErrorException, CantDoThatException, SQLException, JSONException,
 			XMLStreamException, ObjectNotFoundException {
 		String id = dataFormat.toString() + report.getInternalReportName();
@@ -1589,7 +1589,7 @@ public final class DataManagement implements DataManagementInfo {
 			numRows = 100;
 		}
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
-				filters, false, new HashMap<BaseField, Boolean>(0), numRows, QuickFilterType.AND);
+				filters, exactFilters, new HashMap<BaseField, Boolean>(0), numRows, QuickFilterType.AND);
 		String dataFeedString = null;
 		if (dataFormat.equals(DataFormat.JSON)) {
 			dataFeedString = this.generateJSON(report, reportDataRows);
@@ -1616,16 +1616,16 @@ public final class DataManagement implements DataManagementInfo {
 		return dataFeedString;
 	}
 
-	public String getReportRSS(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, int cacheMinutes)
+	public String getReportRSS(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters,  int cacheMinutes)
 			throws SQLException, CodingErrorException, CantDoThatException, JSONException,
 			XMLStreamException, ObjectNotFoundException {
-		return this.getReportDataAsFormat(DataFormat.RSS, user, report, filters, cacheMinutes);
+		return this.getReportDataAsFormat(DataFormat.RSS, user, report, filters, exactFilters, cacheMinutes);
 	}
 
-	public String getReportJSON(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, int cacheMinutes)
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters, int cacheMinutes)
 			throws JSONException, CodingErrorException, CantDoThatException, SQLException,
 			XMLStreamException, ObjectNotFoundException {
-		return this.getReportDataAsFormat(DataFormat.JSON, user, report, filters, cacheMinutes);
+		return this.getReportDataAsFormat(DataFormat.JSON, user, report, filters, exactFilters, cacheMinutes);
 	}
 
 	/**

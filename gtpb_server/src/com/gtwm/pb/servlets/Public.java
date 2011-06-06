@@ -37,6 +37,7 @@ import com.gtwm.pb.model.manageData.ViewTools;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.Enumerations.PublicAction;
+import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.Enumerations.ResponseReturnType;
@@ -102,7 +103,16 @@ public class Public extends VelocityViewServlet {
 				case GET_REPORT_JSON:
 				case GET_REPORT_RSS:
 					if (publicAction.equals(PublicAction.GET_REPORT_JSON)) {
-						templateName = templatePath + "report_json";
+						String jsonFormat = request.getParameter("json_format");
+						if (jsonFormat != null) {
+							if (jsonFormat.equals("json")) {
+								templateName = templatePath + "report_json_bare";
+							} else {
+								templateName = templatePath + "report_json";
+							}
+						} else {
+							templateName = templatePath + "report_json";
+						}
 					} else {
 						templateName = templatePath + "report_rss";
 					}
@@ -118,13 +128,14 @@ public class Public extends VelocityViewServlet {
 									+ " has not been set as publicly exportable");
 						}
 						Map<BaseField, String> filters = getFilters(table, request);
+						boolean exactFilters = Helpers.valueRepresentsBooleanTrue(request.getParameter("exact_filters"));
 						if (publicAction.equals(PublicAction.GET_REPORT_JSON)) {
 							String reportJSON = this.databaseDefn.getDataManagement()
-									.getReportJSON(publicUser, report, filters, 30);
+									.getReportJSON(publicUser, report, filters, exactFilters, 30);
 							context.put("gtwmReportJSON", reportJSON);
 						} else {
 							String reportRSS = this.databaseDefn.getDataManagement().getReportRSS(
-									publicUser, report, filters, 2);
+									publicUser, report, filters, exactFilters, 2);
 							context.put("gtwmReportRSS", reportRSS);
 							response.setContentType(ResponseReturnType.XML.getResponseType());
 						}
@@ -275,7 +286,7 @@ public class Public extends VelocityViewServlet {
 
 	private static Map<BaseField, String> getFilters(TableInfo table, HttpServletRequest request) {
 		Map<BaseField, String> filters = new HashMap<BaseField, String>();
-		for(BaseField field : table.getFields()) {
+		for (BaseField field : table.getFields()) {
 			String internalFieldName = field.getInternalFieldName();
 			String fieldValue = request.getParameter(internalFieldName);
 			if (fieldValue != null) {
@@ -285,7 +296,7 @@ public class Public extends VelocityViewServlet {
 		logger.debug("Got filters " + filters);
 		return filters;
 	}
-	
+
 	private DatabaseInfo databaseDefn = null;
 
 	private String webAppRoot;
