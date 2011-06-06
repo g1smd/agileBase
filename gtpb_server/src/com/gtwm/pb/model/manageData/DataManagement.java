@@ -84,6 +84,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.interfaces.fields.CheckboxValue;
 import com.gtwm.pb.model.interfaces.fields.DateField;
+import com.gtwm.pb.model.interfaces.fields.IntegerField;
 import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
@@ -98,6 +99,7 @@ import com.gtwm.pb.model.interfaces.fields.DecimalField;
 import com.gtwm.pb.model.interfaces.fields.DateValue;
 import com.gtwm.pb.model.interfaces.fields.FileValue;
 import com.gtwm.pb.model.manageData.fields.DateValueDefn;
+import com.gtwm.pb.model.manageData.fields.DecimalValueDefn;
 import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageData.fields.IntegerValueDefn;
 import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
@@ -2467,6 +2469,7 @@ public final class DataManagement implements DataManagementInfo {
 		List<String> companyNameParts = new LinkedList<String>();
 		List<String> phoneNumbers = new LinkedList<String>();
 		List<String> niNumbers = new LinkedList<String>();
+		int randomMultiplier = randomGenerator.nextInt(8) + 2;
 		for (DataRowInfo dataRow : dataRows) {
 			for (BaseField field : fieldContentTypes.keySet()) {
 				FieldContentType contentType = fieldContentTypes.get(field);
@@ -2616,7 +2619,28 @@ public final class DataManagement implements DataManagementInfo {
 						}
 						TextValue textValue = new TextValueDefn(keyChars.toString());
 						dataToSave.put(field, textValue);
-					} else if (field instanceof RelationField) {
+					} else if (field instanceof IntegerField) {
+						String valueString = dataRow.getValue(field).getKeyValue();
+						if (valueString != null) {
+							if (!valueString.equals("")) {
+								int integer = Integer.valueOf(valueString);
+								integer = integer * randomMultiplier;
+								IntegerValue intValue = new IntegerValueDefn(integer);
+								dataToSave.put(field, intValue);
+							}
+						}
+					} else if (field instanceof DecimalField) {
+						String valueString = dataRow.getValue(field).getKeyValue();
+						if (valueString != null) {
+							if (!valueString.equals("")) {
+								double decimal = Double.valueOf(valueString);
+								decimal = decimal * randomMultiplier;
+								DecimalValue decimalValue = new DecimalValueDefn(decimal);
+								dataToSave.put(field, decimalValue);
+							}
+						}
+					}
+					else if (field instanceof RelationField) {
 						IntegerValue intValue = new IntegerValueDefn(Integer.valueOf(randomKey));
 						dataToSave.put(field, intValue);
 					}
