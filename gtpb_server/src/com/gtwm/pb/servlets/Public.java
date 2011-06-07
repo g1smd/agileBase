@@ -54,7 +54,7 @@ public class Public extends VelocityViewServlet {
 				.getAttribute("com.gtwm.pb.servlets.databaseDefn");
 		if (this.databaseDefn == null) {
 			throw new ServletException(
-					"Error starting CalendarPublisher servlet. No databaseDefn object in the servlet context");
+					"Error starting Public servlet. No databaseDefn object in the servlet context");
 		}
 		this.webAppRoot = servletContext.getRealPath("/");
 	}
