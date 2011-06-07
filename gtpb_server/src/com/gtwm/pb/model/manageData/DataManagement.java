@@ -2455,6 +2455,9 @@ public final class DataManagement implements DataManagementInfo {
 			List<FileItem> multipartItems) throws SQLException, CodingErrorException,
 			CantDoThatException, InputRecordException, ObjectNotFoundException,
 			DisallowedException, MissingParametersException {
+		if (!request.getServerName().contains("gtwmbackup")) {
+			throw new CantDoThatException("For safety, anonymisation can only run on a test/backup server");
+		}
 		Random randomGenerator = new Random();
 		String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
 				"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
