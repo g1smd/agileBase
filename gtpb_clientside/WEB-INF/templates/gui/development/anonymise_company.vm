@@ -16,3 +16,25 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## Hard code values to anonymise a sample agileBase account
+
+## Only allow anonymisation to be run on the test/backup server
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html>
+<head>
+  <title>Anonymise data in an entire company</title>
+  <script src="resources/jquery.js" language="Javascript"></script>
+  <script src="resources/development/anonymise_company.js" language="Javascript"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      anonymiseCompany();
+    });
+  </script>
+</head>
+<body>
+#if(!$viewTools.getAppUrl().contains("gtwmbackup"))
+  <div id="results"></div>
+#else
+  Anonymisation can only be run on the test/backup server
+#end
+</body>
+</html>
