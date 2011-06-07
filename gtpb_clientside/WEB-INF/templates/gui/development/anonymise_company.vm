@@ -31,6 +31,7 @@
   </script>
 </head>
 <body>
+Running on $viewTools.getAppUrl()<p>
 #if(!$viewTools.getAppUrl().contains("gtwmbackup"))
   <div id="results"></div>
 #else
