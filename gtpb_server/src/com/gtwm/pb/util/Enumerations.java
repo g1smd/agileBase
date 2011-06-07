@@ -253,7 +253,7 @@ public class Enumerations {
 	 * is in each field
 	 */
 	public enum FieldContentType {
-		COMPANY_NAME, FULL_NAME, PHONE_NUMBER, EMAIL_ADDRESS, NI_NUMBER, CODE, OTHER
+		COMPANY_NAME, FULL_NAME, PHONE_NUMBER, EMAIL_ADDRESS, NI_NUMBER, CODE, NOTES, OTHER
 	}
 
 	public enum HiddenFields {

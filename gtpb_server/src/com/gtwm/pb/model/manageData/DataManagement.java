@@ -2472,25 +2472,29 @@ public final class DataManagement implements DataManagementInfo {
 		List<String> companyNameParts = new LinkedList<String>();
 		List<String> phoneNumbers = new LinkedList<String>();
 		List<String> niNumbers = new LinkedList<String>();
+		List<String> capitalisedWords = new LinkedList<String>();
+		Pattern numeralPattern = Pattern.compile("[123456789]"); // no zero
+		Pattern capitalWordsPattern = Pattern.compile("[A-Z][a-z0-9]+");
 		int randomMultiplier = randomGenerator.nextInt(8) + 2;
 		for (DataRowInfo dataRow : dataRows) {
 			for (BaseField field : fieldContentTypes.keySet()) {
 				FieldContentType contentType = fieldContentTypes.get(field);
+				String keyValue = dataRow.getDataRowFields().get(field).getKeyValue();
 				if (contentType.equals(FieldContentType.COMPANY_NAME)) {
-					String companyName = dataRow.getDataRowFields().get(field).getKeyValue();
-					for (String part : companyName.split("\\s")) {
+					for (String part : keyValue.split("\\s")) {
 						companyNameParts.add(part);
+						capitalisedWords.add(part);
 					}
 				} else if (contentType.equals(FieldContentType.FULL_NAME)) {
-					String fullName = dataRow.getDataRowFields().get(field).getKeyValue();
+					String fullName = keyValue;
 					String surname = fullName.replaceAll("^.*\\s", "");
 					String forename = fullName.substring(0, fullName.length() - surname.length());
 					forenames.add(forename);
 					surnames.add(surname);
+					capitalisedWords.add(forename);
+					capitalisedWords.add(surname);
 				} else if (contentType.equals(FieldContentType.PHONE_NUMBER)) {
-					String existingPhoneNumber = dataRow.getDataRowFields().get(field)
-							.getKeyValue();
-					if (existingPhoneNumber.length() > 0) {
+					if (keyValue.length() > 0) {
 						StringBuffer phoneNumber = new StringBuffer("01632 ");
 						for (int i = 0; i < 6; i++) {
 							phoneNumber.append(randomGenerator.nextInt(10));
@@ -2500,8 +2504,7 @@ public final class DataManagement implements DataManagementInfo {
 						phoneNumbers.add("");
 					}
 				} else if (contentType.equals(FieldContentType.NI_NUMBER)) {
-					String existingNINumber = dataRow.getDataRowFields().get(field).getKeyValue();
-					if (existingNINumber.length() > 0) {
+					if (keyValue.length() > 0) {
 						StringBuffer niNumber = new StringBuffer();
 						niNumber.append(alphabet[randomGenerator.nextInt(26)]);
 						niNumber.append(alphabet[randomGenerator.nextInt(26)]);
@@ -2517,8 +2520,7 @@ public final class DataManagement implements DataManagementInfo {
 						niNumbers.add("");
 					}
 				} else if (contentType.equals(FieldContentType.EMAIL_ADDRESS)) {
-					String originalEmail = dataRow.getDataRowFields().get(field).getKeyValue();
-					if (originalEmail.contains("@")) {
+					if (keyValue.contains("@")) {
 						switch (randomGenerator.nextInt(3)) {
 						case 0:
 							emailAddresses.add("email.address@gmail.com");
@@ -2533,11 +2535,16 @@ public final class DataManagement implements DataManagementInfo {
 					} else {
 						emailAddresses.add("");
 					}
+				} else if (contentType.equals(FieldContentType.NOTES)) {
+					// extract capitalised words
+					Matcher matcher = capitalWordsPattern.matcher(keyValue);
+					while (matcher.find()) {
+						capitalisedWords.add(matcher.group());
+					}
 				}
 			}
 		}
 		// Anonymise
-		Pattern numeralPattern = Pattern.compile("[123456789]"); // no zero
 		for (DataRowInfo dataRow : dataRows) {
 			int rowId = dataRow.getRowId();
 			LinkedHashMap<BaseField, BaseValue> dataToSave = new LinkedHashMap<BaseField, BaseValue>();
@@ -2607,11 +2614,30 @@ public final class DataManagement implements DataManagementInfo {
 						TextValue codeValue = new TextValueDefn(code.toString());
 						dataToSave.put(field, codeValue);
 					}
-				} else {
+				} else if (contentType.equals(FieldContentType.NOTES)) {
+					// Replace all capitalised words with another capitalised word
+					int dataRowIndex = randomGenerator.nextInt(dataRows.size());
+					String currentKey = dataRow.getDataRowFields().get(field).getKeyValue();
+					String newKey = currentKey;
+					Matcher capitalWordMatcher = capitalWordsPattern.matcher(currentKey);
+					while (capitalWordMatcher.find()) {
+						int capitalWordIndex = randomGenerator.nextInt(capitalisedWords.size());
+						String capitalWord = capitalisedWords.get(capitalWordIndex);
+						newKey = newKey.replace(capitalWordMatcher.group(), capitalWord);
+					}
+					// Also anonymise numbers within the text
+					Matcher numeralMatcher = numeralPattern.matcher(newKey);
+					char[] keyChars = newKey.toCharArray();
+					while (numeralMatcher.matches()) {
+						int position = numeralMatcher.start();
+						keyChars[position] = alphabet[randomGenerator.nextInt(26)].charAt(0);
+					}
+					TextValue textValue = new TextValueDefn(keyChars.toString());
+					dataToSave.put(field, textValue);
+				} else if (contentType.equals(FieldContentType.OTHER)) {
 					int dataRowIndex = randomGenerator.nextInt(dataRows.size());
 					DataRowInfo randomDataRow = dataRows.get(dataRowIndex);
 					String randomKey = randomDataRow.getDataRowFields().get(field).getKeyValue();
-					// only know how to mix up text and relation fields so far
 					if (field instanceof TextField) {
 						// Anonymise numbers within the text
 						Matcher matcher = numeralPattern.matcher(randomKey);
@@ -2647,6 +2673,8 @@ public final class DataManagement implements DataManagementInfo {
 						IntegerValue intValue = new IntegerValueDefn(Integer.valueOf(randomKey));
 						dataToSave.put(field, intValue);
 					}
+				} else {
+					throw new CodingErrorException("Unhandled anonymisation content type " + contentType);
 				}
 			}
 			this.saveRecord(request, table, dataToSave, false, rowId, sessionData, multipartItems);
