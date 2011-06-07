@@ -2633,13 +2633,12 @@ public final class DataManagement implements DataManagementInfo {
 						int position = numeralMatcher.start();
 						keyChars[position] = alphabet[randomGenerator.nextInt(26)].charAt(0);
 					}
-					TextValue textValue = new TextValueDefn(keyChars.toString());
+					TextValue textValue = new TextValueDefn(String.valueOf(keyChars));
 					dataToSave.put(field, textValue);
 				} else if (contentType.equals(FieldContentType.OTHER)) {
 					int dataRowIndex = randomGenerator.nextInt(dataRows.size());
 					DataRowInfo randomDataRow = dataRows.get(dataRowIndex);
 					String randomKey = randomDataRow.getValue(field).getKeyValue();
-					logger.debug("randomKey is " + randomKey);
 					if (field instanceof TextField) {
 						// Anonymise numbers within the text
 						Matcher matcher = numeralPattern.matcher(randomKey);
@@ -2648,9 +2647,8 @@ public final class DataManagement implements DataManagementInfo {
 							int position = matcher.start();
 							keyChars[position] = alphabet[randomGenerator.nextInt(26)].charAt(0);
 						}
-						TextValue textValue = new TextValueDefn(keyChars.toString());
+						TextValue textValue = new TextValueDefn(String.valueOf(keyChars));
 						dataToSave.put(field, textValue);
-						logger.debug("Saving " + textValue + " to field " + field);
 					} else if (field instanceof IntegerField) {
 						String valueString = dataRow.getValue(field).getKeyValue();
 						if (valueString != null) {
