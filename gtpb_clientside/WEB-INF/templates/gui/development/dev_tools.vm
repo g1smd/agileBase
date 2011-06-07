@@ -41,6 +41,7 @@
     #end
     <a href="AppController.servlet?return=gui/development/update_calculation">Update a Calculation</a><p>
     <a href="AppController.servlet?return=gui/development/anonymise_table">Anonymise $table table data</a><p>
+    <a href="AppController.servlet?return=gui/development/anonymise_company">Anonymise entire $view.getLoggedInUser().getCompany() data</a><p>
     <!-- <a href="AppController.servlet?return=gui/development/clone_report">Clone a report</a><p> -->
     <!-- <a href="AppController.servlet?return=gui/development/delete">Delete a table, field or report</a><p> -->
     <!-- <a href="AppController.servlet?return=gui/development/table_fields_editor">Amend table field</a><p> -->
