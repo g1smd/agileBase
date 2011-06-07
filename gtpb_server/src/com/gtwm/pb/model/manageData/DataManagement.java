@@ -2456,7 +2456,8 @@ public final class DataManagement implements DataManagementInfo {
 			CantDoThatException, InputRecordException, ObjectNotFoundException,
 			DisallowedException, MissingParametersException {
 		if (!request.getServerName().contains("gtwmbackup")) {
-			throw new CantDoThatException("For safety, anonymisation can only run on a test/backup server");
+			throw new CantDoThatException(
+					"For safety, anonymisation can only run on a test/backup server");
 		}
 		Random randomGenerator = new Random();
 		String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
@@ -2578,8 +2579,7 @@ public final class DataManagement implements DataManagementInfo {
 					companyName = companyName.substring(0, companyName.length() - 1);
 					TextValue companyNameValue = new TextValueDefn(companyName);
 					dataToSave.put(field, companyNameValue);
-				}
-				if (contentType.equals(FieldContentType.FULL_NAME)) {
+				} else if (contentType.equals(FieldContentType.FULL_NAME)) {
 					int forenameIndex = randomGenerator.nextInt(forenames.size());
 					String randomForename = forenames.get(forenameIndex);
 					int surnameIndex = randomGenerator.nextInt(surnames.size());
@@ -2615,7 +2615,8 @@ public final class DataManagement implements DataManagementInfo {
 						dataToSave.put(field, codeValue);
 					}
 				} else if (contentType.equals(FieldContentType.NOTES)) {
-					// Replace all capitalised words with another capitalised word
+					// Replace all capitalised words with another capitalised
+					// word
 					int dataRowIndex = randomGenerator.nextInt(dataRows.size());
 					String currentKey = dataRow.getDataRowFields().get(field).getKeyValue();
 					String newKey = currentKey;
@@ -2668,13 +2669,13 @@ public final class DataManagement implements DataManagementInfo {
 								dataToSave.put(field, decimalValue);
 							}
 						}
-					}
-					else if (field instanceof RelationField) {
+					} else if (field instanceof RelationField) {
 						IntegerValue intValue = new IntegerValueDefn(Integer.valueOf(randomKey));
 						dataToSave.put(field, intValue);
 					}
 				} else {
-					throw new CodingErrorException("Unhandled anonymisation content type " + contentType);
+					throw new CodingErrorException("Unhandled anonymisation content type "
+							+ contentType);
 				}
 			}
 			this.saveRecord(request, table, dataToSave, false, rowId, sessionData, multipartItems);
