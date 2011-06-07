@@ -2483,8 +2483,9 @@ public final class DataManagement implements DataManagementInfo {
 				String keyValue = dataRow.getDataRowFields().get(field).getKeyValue();
 				if (contentType.equals(FieldContentType.COMPANY_NAME)) {
 					for (String part : keyValue.split("\\s")) {
-						companyNameParts.add(part);
-						capitalisedWords.add(part);
+						String cleanedPart = part.replace("(", "").replace(")", "");
+						companyNameParts.add(cleanedPart);
+						capitalisedWords.add(cleanedPart);
 					}
 				} else if (contentType.equals(FieldContentType.FULL_NAME)) {
 					String fullName = keyValue;
@@ -2555,8 +2556,9 @@ public final class DataManagement implements DataManagementInfo {
 				if (contentType.equals(FieldContentType.COMPANY_NAME)) {
 					int partIndex = randomGenerator.nextInt(companyNameParts.size());
 					String companyName = "";
-					// we don't want duplicates
-					while (companyName.equals("")) {
+					int pass = 0;
+					while (companyName.equals("") && (pass < 100)) {
+						pass++;
 						String companyNamePart = companyNameParts.get(partIndex);
 						if (!companyNamePart.trim().toLowerCase().equals("ltd")) {
 							companyName += companyNamePart + " ";
@@ -2576,8 +2578,11 @@ public final class DataManagement implements DataManagementInfo {
 						companyName = companyName.trim();
 						// Company name may be unsuitable for a whole host
 						// of reasons
-						if (companyName.trim().toLowerCase().equals("ltd")
-								|| companyName.trim().toLowerCase().endsWith(" the")
+						if (companyName.toLowerCase().equals("ltd")
+								|| companyName.toLowerCase().endsWith(" the")
+								|| companyName.toLowerCase().endsWith(" for")
+								|| companyName.toLowerCase().endsWith(" &")
+								|| companyName.toLowerCase().endsWith(" of")
 								|| companyName.matches("^\\W.*")
 								|| generatedCompanyNames.contains(companyName)) {
 							companyName = "";
