@@ -20,6 +20,7 @@ var gtwmJson = [{
 function anonymiseCompany() {
   for (var i = 0; i < gtwmJson.length; i++) {
   	tableCommand = gtwmJson[i];
+  	$("#results").append("Anonymising...<br>");
   	$.post("AppController.servlet", tableCommand, function() {
   		$("#results").append("Table anonymised: " + tableCommand.table_description + "<br>");
   	});

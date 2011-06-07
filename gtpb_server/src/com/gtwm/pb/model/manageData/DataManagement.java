@@ -2546,6 +2546,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		// Anonymise
+		Set<String> generatedCompanyNames = new HashSet<String>(1000);
 		for (DataRowInfo dataRow : dataRows) {
 			int rowId = dataRow.getRowId();
 			LinkedHashMap<BaseField, BaseValue> dataToSave = new LinkedHashMap<BaseField, BaseValue>();
@@ -2553,8 +2554,8 @@ public final class DataManagement implements DataManagementInfo {
 				FieldContentType contentType = fieldContentTypes.get(field);
 				if (contentType.equals(FieldContentType.COMPANY_NAME)) {
 					int partIndex = randomGenerator.nextInt(companyNameParts.size());
-					Set<String> generatedCompanyNames = new HashSet<String>(1000);
 					String companyName = "";
+					// we don't want duplicates
 					while (companyName.equals("")) {
 						String companyNamePart = companyNameParts.get(partIndex);
 						if (!companyNamePart.trim().toLowerCase().equals("ltd")) {
@@ -2573,7 +2574,8 @@ public final class DataManagement implements DataManagementInfo {
 							}
 						}
 						companyName = companyName.trim();
-						// Company name may be unsuitable for a whole host of reasons
+						// Company name may be unsuitable for a whole host
+						// of reasons
 						if (companyName.trim().toLowerCase().equals("ltd")
 								|| companyName.trim().toLowerCase().endsWith(" the")
 								|| companyName.matches("^\\W.*")
@@ -2581,7 +2583,6 @@ public final class DataManagement implements DataManagementInfo {
 							companyName = "";
 						}
 					}
-					// remove last space
 					generatedCompanyNames.add(companyName);
 					TextValue companyNameValue = new TextValueDefn(companyName);
 					dataToSave.put(field, companyNameValue);
