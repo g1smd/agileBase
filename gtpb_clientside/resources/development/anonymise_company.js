@@ -56,7 +56,7 @@ var gtwmJson = [{
 	anonymise : true,
 	'return': 'blank',
 	set_table : 'abc1bfbb798d8ed70',
-	table_description: 'contacts'
+	table_description: '...'
 }];
 
 // a recursive function that moves on to the next table on completion of the
@@ -69,6 +69,8 @@ function anonymiseCompany(tableIndex) {
   		var newTableIndex = tableIndex + 1;
   		if (newTableIndex < gtwmJson.length) {
   			anonymiseCompany(newTableIndex);
+  		} else {
+  	  	$("#results").append("Finished.");
   		}
   	});
 }
