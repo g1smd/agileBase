@@ -121,9 +121,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 						</form>
 				</div>     
 				<ul id="navigation">
-					<li><a href="javascript:showSection('main');" id="nav_main" class="current"><span>business</span></a>
-					<li><a href="javascript:showSection('technical');" id="nav_technical"><span>technical</span></a>
-					<li id="li_analyst"><a href="javascript:showSection('analyst');" id="nav_analyst"><span>analyst</span></a>
+					<li><a href="javascript:showSection('main');" id="nav_main" class="current"><span>business</span></a></li>
+					<li><a href="javascript:showSection('technical');" id="nav_technical"><span>technical</span></a></li>
+					<li id="li_analyst"><a href="javascript:showSection('analyst');" id="nav_analyst"><span>analyst</span></a></li>
 				</ul>
 				<div id="announce"><!-- populated by JavaScript RSS feed --></div>
 				</div>   <!-- end content -->
@@ -135,14 +135,14 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 							<div id="quotes">
 								<span class="bqstart">&#8220;</span>
 								I used to use Oracle at my previous Fortune 100. I'm now an agileBase convert - I adapt it to my needs as soon as I learn a better way of doing something.
-								<span class="attribution">- <a href="http://www.thinkdrinks.co.uk"><img src="website/images/icons/applications-internet.png" />John Collins, Business Analyst @ Think Drinks</a></span><br><br><br>
+								<span class="attribution">- <a href="http://www.thinkdrinks.co.uk"><img src="website/images/icons/applications-internet.png" />John Collins, Business Analyst @ Think Drinks</a></span><br><br><br><br><br>
 								<span class="bqstart">&#8220;</span>
 								After ten years of rapid growth we have found agileBase truly invaluable. We are able to build modules in hours whenever a new need arises at very little cost. Because of this we have not needed to upgrade our ERP system and saved ourselves considerable outlay and upheaval.
 								<!--As a rapidly growing company, agileBase is perfect for us. As we grow, agileBase allows us to develop and test new apps in hours, then integrate with the core ERP system when they become widely used.-->
-								<span class="attribution">- <a href="http://www.linkedin.com/pub/nigel-williams/11/a56/182"><img src="website/images/linkedin.png" />Nigel Williams, Finance Director @ CHF</a></span><br><br>
+								<span class="attribution">- <a href="http://www.linkedin.com/pub/nigel-williams/11/a56/182"><img src="website/images/linkedin.png" />Nigel Williams, Finance Director @ CHF</a></span><br><br><br><br>
                 <span class="bqstart">&#8220;</span>
                 We wanted to build a new web application but needed more than just an application framework. We needed to be able to analyse the data in real time and we needed to build it quickly. I was astounded at the speed we built a proof of concept. In just four hours we had built our core data model and integrated it seamlessly into our web site. When the reports were viewed after some trial data was entered we could not have been happier.
-                <span class="attribution">- <a href="http://www.linkedin.com/in/damianwebber"><img src="website/images/linkedin.png" />Damian Webber, Content Management Expert @ Portsurf</a></span><br>
+                <span class="attribution">- <a href="http://www.linkedin.com/in/damianwebber"><img src="website/images/linkedin.png" />Damian Webber, Content Management Expert @ Portsurf</a></span>
 							</div>
 						</div>
 						<div id="main" class="detail">
