@@ -2533,11 +2533,11 @@ public final class DataManagement implements DataManagementInfo {
 						String emailSansSuffix = keyValue.trim().toLowerCase();
 						logger.debug("Email key is " + emailSansSuffix);
 						for (String emailSuffix : emailSuffixes) {
-							emailSansSuffix = emailSansSuffix.replaceAll(emailSuffix + "$", "");
+							emailSansSuffix = emailSansSuffix.replaceAll(Pattern.quote(emailSuffix) + "$", "");
 						}
 						String[] emailComponents = emailSansSuffix.split(emailSansSuffix.replace(
 								"@", "."));
-						logger.debug("The components are " + String.valueOf(emailComponents));
+						logger.debug("Components are " + Arrays.asList(emailComponents));
 						for (String emailComponent : emailComponents) {
 							emailParts.add(emailComponent);
 						}
