@@ -521,6 +521,10 @@ body {
   color: white;
 }
 
+.attribution img {
+  float: right;
+}
+
 #footer {
 	margin-top:70px;
 	border-top:1px solid white;
