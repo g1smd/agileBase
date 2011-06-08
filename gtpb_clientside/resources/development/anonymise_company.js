@@ -56,10 +56,11 @@ var gtwmJson = [{
 	anonymise : true,
 	'return': 'blank',
 	set_table : 'abc1bfbb798d8ed70',
-	table_description: 'contacts',
-];
+	table_description: 'contacts'
+}];
 
-// a recursive function that moves on to the next table on completion of the previous
+// a recursive function that moves on to the next table on completion of the
+// previous
 function anonymiseCompany(tableIndex) {
   	tableCommand = gtwmJson[tableIndex];
   	$("#results").append("Anonymising...<br>");
