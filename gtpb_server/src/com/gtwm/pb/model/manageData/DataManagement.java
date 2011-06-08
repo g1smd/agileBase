@@ -2535,6 +2535,7 @@ public final class DataManagement implements DataManagementInfo {
 						for (String emailSuffix : emailSuffixes) {
 							emailSansSuffix = emailSansSuffix.replaceAll(Pattern.quote(emailSuffix) + "$", "");
 						}
+						logger.debug("emailSansSuffix is " + emailSansSuffix);
 						String[] emailComponents = emailSansSuffix.split(emailSansSuffix.replace(
 								"@", "."));
 						logger.debug("Components are " + Arrays.asList(emailComponents));
