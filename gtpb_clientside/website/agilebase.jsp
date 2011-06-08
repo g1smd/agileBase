@@ -135,7 +135,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 							<div id="quotes">
 								<span class="bqstart">&#8220;</span>
 								I used to use Oracle at my previous Fortune 100. I'm now an agileBase convert - I adapt it to my needs as soon as I learn a better way of doing something.
-								<span class="attribution">- <a href="http://www.thinkdrinks.co.uk"><img src="website/images/icons/applications-internet.png" />John Collins, Business Analyst, Think Drinks</a></span><br><br><br><br><br>
+								<span class="attribution">- <a href="http://uk.linkedin.com/pub/john-collins/5/590/69b"><img src="website/images/linkedin.png" />John Collins, Business Analyst, Think Drinks</a></span><br><br><br><br><br>
 								<span class="bqstart">&#8220;</span>
 								After ten years of rapid growth we have found agileBase truly invaluable. We are able to build modules in hours whenever a new need arises at very little cost. Because of this we have not needed to upgrade our ERP system and saved ourselves considerable outlay and upheaval.
 								<!--As a rapidly growing company, agileBase is perfect for us. As we grow, agileBase allows us to develop and test new apps in hours, then integrate with the core ERP system when they become widely used.-->
