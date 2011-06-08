@@ -2474,6 +2474,13 @@ public final class DataManagement implements DataManagementInfo {
 		List<String> phoneNumbers = new LinkedList<String>();
 		List<String> niNumbers = new LinkedList<String>();
 		List<String> capitalisedWords = new LinkedList<String>();
+		List<String> emailParts = new LinkedList<String>();
+		Set<String> emailSuffixes = new LinkedHashSet<String>();
+		emailSuffixes.add(".co.uk");
+		emailSuffixes.add("com");
+		emailSuffixes.add(".org.uk");
+		emailSuffixes.add(".org");
+		emailSuffixes.add(".net");
 		Pattern numeralPattern = Pattern.compile("[123456789]"); // no zero
 		Pattern capitalWordsPattern = Pattern.compile("[A-Z][a-z0-9]+");
 		int randomMultiplier = randomGenerator.nextInt(8) + 2;
@@ -2523,19 +2530,15 @@ public final class DataManagement implements DataManagementInfo {
 					}
 				} else if (contentType.equals(FieldContentType.EMAIL_ADDRESS)) {
 					if (keyValue.contains("@")) {
-						switch (randomGenerator.nextInt(3)) {
-						case 0:
-							emailAddresses.add("email.address@gmail.com");
-							break;
-						case 1:
-							emailAddresses.add("email.address@agilebase.co.uk");
-							break;
-						case 2:
-							emailAddresses.add("email.address@example.com");
-							break;
+						String emailSansSuffix = keyValue.trim().toLowerCase();
+						for (String emailSuffix : emailSuffixes) {
+							emailSansSuffix = emailSansSuffix.replaceAll(emailSuffix + "$", "");
 						}
-					} else {
-						emailAddresses.add("");
+						String[] emailComponents = emailSansSuffix.split(emailSansSuffix.replace(
+								"@", "."));
+						for (String emailComponent : emailComponents) {
+							emailParts.add(emailComponent);
+						}
 					}
 				} else if (contentType.equals(FieldContentType.NOTES)) {
 					// extract capitalised words
@@ -2607,9 +2610,36 @@ public final class DataManagement implements DataManagementInfo {
 					TextValue niNumber = new TextValueDefn(niNumbers.get(niIndex));
 					dataToSave.put(field, niNumber);
 				} else if (contentType.equals(FieldContentType.EMAIL_ADDRESS)) {
-					int emailIndex = randomGenerator.nextInt(emailAddresses.size());
-					TextValue emailValue = new TextValueDefn(emailAddresses.get(emailIndex));
-					dataToSave.put(field, emailValue);
+					int dataRowIndex = randomGenerator.nextInt(dataRows.size());
+					String currentKey = dataRow.getDataRowFields().get(field).getKeyValue();
+					if (currentKey != null) {
+						String emailAddress = "";
+						if (currentKey.contains("@")) {
+							int partIndex = randomGenerator.nextInt(emailParts.size());
+							emailAddress = emailParts.get(partIndex);
+							if (randomGenerator.nextBoolean()) {
+								emailAddress += "."
+										+ emailParts
+												.get(randomGenerator.nextInt(emailParts.size()));
+							}
+							emailAddress += "@";
+							emailAddress += emailParts.get(randomGenerator.nextInt(emailParts
+									.size()));
+							if (randomGenerator.nextBoolean()) {
+								emailAddress += ".com";
+							} else if (randomGenerator.nextBoolean()) {
+								emailAddress += ".co.uk";
+							} else if (randomGenerator.nextBoolean()) {
+								emailAddress += ".org.uk";
+							} else if (randomGenerator.nextBoolean()) {
+								emailAddress += ".net";
+							} else {
+								emailAddress += ".org";
+							}
+						}
+						TextValue emailValue = new TextValueDefn(emailAddress);
+						dataToSave.put(field, emailValue);
+					}
 				} else if (contentType.equals(FieldContentType.CODE)) {
 					int dataRowIndex = randomGenerator.nextInt(dataRows.size());
 					String currentKey = dataRow.getDataRowFields().get(field).getKeyValue();
