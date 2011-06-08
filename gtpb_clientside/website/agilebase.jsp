@@ -162,14 +162,14 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 								<td class="just_for_us"><span>
 								  <img src="/agileBase/website/images/pix-orange.png"></img> <a href="#">just for us </a>
 								  <div class="just_tooltip">customisable to business needs and processes</div>
-								<span></td>
+								</span></td>
 								</tr></table>
 								</div>
 								<p>As a cutting edge Lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 
 								at a pace to match a company's evolving learning, knowledge and understanding.</p>
 							</div>
 							<div id="how_do_i_use" class="divider">
-								<h1>What's agileBase used for'?</h1>
+								<h1>What's agileBase used for?</h1>
 								<p>Our vision was to make a product that allows business analysts
 								to create Lean, agile, Just-In-Time (JIT) back offices. Here are some apps clients have build</p>
 								<ul>
