@@ -495,22 +495,26 @@ body {
 }
 
 .bqstart {
-     float: left;
-     font-size: 200pt;
-     margin-top: -65pt;
-     opacity: 0.9;
-     font-style: normal;
-     height: 155px;
-     clear: both;
- }
+  float: left;
+  font-size: 200pt;
+  margin-top: -65pt;
+  opacity: 0.9;
+  font-style: normal;
+  height: 155px;
+  clear: both;
+}
 
 
 .bqend {
-     float: right;
-     height: 25px;
-     margin-top: 0px;
-     padding-top: 45px;
-     font-size: 700%;
+  float: right;
+  height: 25px;
+  margin-top: 0px;
+  padding-top: 45px;
+  font-size: 700%;
+}
+
+.attribution {
+  float: right;
 }
 
 #footer {

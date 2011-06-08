@@ -135,11 +135,14 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 							<div id="quotes">
 								<span class="bqstart">&#8220;</span>
 								I used to use Oracle at my previous Fortune 100. I'm now an agileBase convert - I adapt it to my needs as soon as I learn a better way of doing something.
-								<span style="float: right">- John Collins, Think Drinks</span><br><br><br>
+								<span class="attribution">- <a href="http://www.thinkdrinks.co.uk">John Collins, Business Analyst @ Think Drinks</a></span><br><br><br>
 								<span class="bqstart">&#8220;</span>
 								After ten years of rapid growth we have found agileBase truly invaluable. We are able to build modules in hours whenever a new need arises at very little cost. Because of this we have not needed to upgrade our ERP system and saved ourselves considerable outlay and upheaval.
 								<!--As a rapidly growing company, agileBase is perfect for us. As we grow, agileBase allows us to develop and test new apps in hours, then integrate with the core ERP system when they become widely used.-->
-								<span style="float: right">- Nigel Williams, CH Foods</span>
+								<span class="attribution">- <a href="http://www.linkedin.com/pub/nigel-williams/11/a56/182"></a>Nigel Williams, Finance Director @ CHF</a></span>
+                <span class="bqstart">&#8220;</span>
+                We wanted to build a new web application but needed more than just an application framework. We needed to be able to analyse the data in real time and we needed to build it quickly. I was astounded at the speed we built a proof of concept. In just four hours we had built our core data model and integrated it seamlessly into our web site. When the reports were viewed after some trial data was entered we could not have been happier.
+                <span class="attribution">- <a href="http://www.linkedin.com/in/damianwebber">Damian Webber, Content Management Expert @ Portsurf</a></span><br><br><br>
 							</div>
 						</div>
 						<div id="main" class="detail">
