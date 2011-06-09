@@ -76,7 +76,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 						<small>* agileBase is open source but custom components may be licensed</small>
 					</div>
 					<div id="popupDemoContent" class="popup">
-						Log in with username and password <b>demo</b> for a basic demo.<br>
+						Log in to the demo server at <a href="http://www.agilebase.co.uk/test">www.agilebase.co.uk/test</a> with username and password <b>demo</b> for a sample demo.<br>
 						Please contact us for custom demos
 					</div>
 					<div id="popupHelpContent" class="popup">

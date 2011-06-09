@@ -2484,7 +2484,7 @@ public final class DataManagement implements DataManagementInfo {
 		emailSuffixes.add(".ac.uk");
 		Pattern numeralPattern = Pattern.compile("[123456789]"); // no zero
 		Pattern capitalWordsPattern = Pattern.compile("[A-Z][a-z0-9]+");
-		int randomMultiplier = randomGenerator.nextInt(8) + 2;
+		int randomMultiplier = randomGenerator.nextInt(10) + 5;
 		for (DataRowInfo dataRow : dataRows) {
 			for (BaseField field : fieldContentTypes.keySet()) {
 				FieldContentType contentType = fieldContentTypes.get(field);
@@ -2696,7 +2696,7 @@ public final class DataManagement implements DataManagementInfo {
 						TextValue textValue = new TextValueDefn(String.valueOf(keyChars));
 						dataToSave.put(field, textValue);
 					} else if (field instanceof IntegerField) {
-						String valueString = dataRow.getValue(field).getKeyValue();
+						String valueString = randomDataRow.getValue(field).getKeyValue();
 						if (valueString != null) {
 							if (!valueString.equals("")) {
 								int integer = Integer.valueOf(valueString);
@@ -2706,7 +2706,7 @@ public final class DataManagement implements DataManagementInfo {
 							}
 						}
 					} else if (field instanceof DecimalField) {
-						String valueString = dataRow.getValue(field).getKeyValue();
+						String valueString = randomDataRow.getValue(field).getKeyValue();
 						if (valueString != null) {
 							if (!valueString.equals("")) {
 								double decimal = Double.valueOf(valueString);
