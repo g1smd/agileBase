@@ -211,21 +211,14 @@ var gtwmJson = [{
 	anonymise : true,
 	'return': 'blank',
 	set_table : 'aff6022675e2299c8',
-	table_description: 'b7.1) timesheet,
-	a94e46c316ea5b0c0: 'NOTES' // notes
-},
-{
-	anonymise : true,
-	'return': 'blank',
-	set_table : 'aff6022675e2299c8',
-	table_description: 'b7.1) timesheet,
+	table_description: 'b7.1) timesheet',
 	a94e46c316ea5b0c0: 'NOTES' // notes
 },
 {
 	anonymise : true,
 	'return': 'blank',
 	set_table : 's0mhcrftheqfetlzd',
-	table_description: 'c1.1) email metrics,
+	table_description: 'c1.1) email metrics',
 	uwncovushaiq0v8rb: 'OTHER', // opens
 	jnejxk7upwfq1lffz: 'OTHER' // clickthroughs
 },
@@ -233,7 +226,7 @@ var gtwmJson = [{
 	anonymise : true,
 	'return': 'blank',
 	set_table : 'afa0be55b91ebf715',
-	table_description: 'c3.0) purchase invoices,
+	table_description: 'c3.0) purchase invoices',
 	ad02f2dc798bbcfc8: 'OTHER', // external ref
 	a28868f37c860801f: 'OTHER', // total
 	a113e422d7206b273: 'NOTES' // notes
@@ -242,7 +235,7 @@ var gtwmJson = [{
 	anonymise : true,
 	'return': 'blank',
 	set_table : 'a584d5131d5744c0',
-	table_description: 'c3.1) expenses,
+	table_description: 'c3.1) expenses',
 	ae3ef48ceb586caa5: 'OTHER', // claimant
 	a313cae2c6fd45e83: 'COMPANY_NAME' // payee
 },
@@ -250,7 +243,7 @@ var gtwmJson = [{
 	anonymise : true,
 	'return': 'blank',
 	set_table : 'a635b46ea42d4d4d0',
-	table_description: 'c4.1) billing,
+	table_description: 'c4.1) billing',
 	a7d41586083a81733: 'OTHER', // amount
 	aaae6b9240603b247: 'NOTES', // notes
 	bx0rdjzijharzzkq3: 'NOTES' // internal notes
