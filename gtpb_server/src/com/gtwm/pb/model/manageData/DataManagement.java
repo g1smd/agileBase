@@ -2531,18 +2531,14 @@ public final class DataManagement implements DataManagementInfo {
 				} else if (contentType.equals(FieldContentType.EMAIL_ADDRESS)) {
 					if (keyValue.contains("@")) {
 						String emailSansSuffix = keyValue.trim().toLowerCase();
-						logger.debug("Email key is " + emailSansSuffix);
 						for (String emailSuffix : emailSuffixes) {
 							emailSansSuffix = emailSansSuffix.replaceAll(Pattern.quote(emailSuffix) + "$", "");
 						}
-						logger.debug("emailSansSuffix is " + emailSansSuffix);
 						String[] emailComponents = emailSansSuffix.replace(
 								"@", ".").split("\\.");
-						logger.debug("Components are " + Arrays.asList(emailComponents));
 						for (String emailComponent : emailComponents) {
 							emailParts.add(emailComponent);
 						}
-						logger.debug("emailParts is now " + emailParts);
 					}
 				} else if (contentType.equals(FieldContentType.NOTES)) {
 					// extract capitalised words
