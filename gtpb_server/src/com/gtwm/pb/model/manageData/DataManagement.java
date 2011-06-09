@@ -2509,8 +2509,6 @@ public final class DataManagement implements DataManagementInfo {
 							phoneNumber.append(randomGenerator.nextInt(10));
 						}
 						phoneNumbers.add(phoneNumber.toString());
-					} else {
-						phoneNumbers.add("");
 					}
 				} else if (contentType.equals(FieldContentType.NI_NUMBER)) {
 					if (keyValue.length() > 0) {
@@ -2532,10 +2530,10 @@ public final class DataManagement implements DataManagementInfo {
 					if (keyValue.contains("@")) {
 						String emailSansSuffix = keyValue.trim().toLowerCase();
 						for (String emailSuffix : emailSuffixes) {
-							emailSansSuffix = emailSansSuffix.replaceAll(Pattern.quote(emailSuffix) + "$", "");
+							emailSansSuffix = emailSansSuffix.replaceAll(Pattern.quote(emailSuffix)
+									+ "$", "");
 						}
-						String[] emailComponents = emailSansSuffix.replace(
-								"@", ".").split("\\.");
+						String[] emailComponents = emailSansSuffix.replace("@", ".").split("\\.");
 						for (String emailComponent : emailComponents) {
 							emailParts.add(emailComponent);
 						}
@@ -2602,9 +2600,12 @@ public final class DataManagement implements DataManagementInfo {
 					TextValue fullNameValue = new TextValueDefn(randomForename + randomSurname);
 					dataToSave.put(field, fullNameValue);
 				} else if (contentType.equals(FieldContentType.PHONE_NUMBER)) {
-					int phoneIndex = randomGenerator.nextInt(phoneNumbers.size());
-					TextValue phoneNumber = new TextValueDefn(phoneNumbers.get(phoneIndex));
-					dataToSave.put(field, phoneNumber);
+					String currentKey = dataRow.getDataRowFields().get(field).getKeyValue();
+					if (!currentKey.equals("")) {
+						int phoneIndex = randomGenerator.nextInt(phoneNumbers.size());
+						TextValue phoneNumber = new TextValueDefn(phoneNumbers.get(phoneIndex));
+						dataToSave.put(field, phoneNumber);
+					}
 				} else if (contentType.equals(FieldContentType.NI_NUMBER)) {
 					int niIndex = randomGenerator.nextInt(niNumbers.size());
 					TextValue niNumber = new TextValueDefn(niNumbers.get(niIndex));
