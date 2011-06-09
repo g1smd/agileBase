@@ -2481,6 +2481,7 @@ public final class DataManagement implements DataManagementInfo {
 		emailSuffixes.add(".org.uk");
 		emailSuffixes.add(".org");
 		emailSuffixes.add(".net");
+		emailSuffixes.add(".ac.uk");
 		Pattern numeralPattern = Pattern.compile("[123456789]"); // no zero
 		Pattern capitalWordsPattern = Pattern.compile("[A-Z][a-z0-9]+");
 		int randomMultiplier = randomGenerator.nextInt(8) + 2;
@@ -2632,6 +2633,8 @@ public final class DataManagement implements DataManagementInfo {
 								emailAddress += ".co.uk";
 							} else if (randomGenerator.nextBoolean()) {
 								emailAddress += ".org.uk";
+							} else if (randomGenerator.nextBoolean()) {
+								emailAddress += ".ac.uk";
 							} else if (randomGenerator.nextBoolean()) {
 								emailAddress += ".net";
 							} else {
