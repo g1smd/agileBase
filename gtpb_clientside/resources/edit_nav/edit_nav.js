@@ -19,7 +19,8 @@ $(document).ready(function() {
 	});
 	$(".block").live('click', function() {
 		var href = $(this).attr("href");
-		moveUpTo(href, true); // move up only if level already exists above, otherwise move down
+		moveUpTo(href, true); // move up only if level already exists above,
+		// otherwise move down
 	});
 	$("a.jumpto_table").live('click', function(event) {
 		event.preventDefault();
@@ -29,7 +30,8 @@ $(document).ready(function() {
 	$("a.referenced_link").live('click', function(event) {
 		event.preventDefault();
 		var href = $(this).attr("href");
-		moveUpTo(href, true); // move up only if level already exists above, otherwise move down
+		moveUpTo(href, true); // move up only if level already exists above,
+		// otherwise move down
 	});
 	// Initialise home screen for user
 	createLevel(homeUrl);
@@ -120,10 +122,18 @@ function initialiseDependencies() {
 					function() {
 						var jqDependentTable = $(this);
 						if (!jqDependentTable.hasClass("active")) {
+							if (jqDependentTable.hasClass("has_new")) {
+								internalTableName = jqDependentTable.attr("id").replace(
+										"/.*\_/", "");
+								var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
+										+ internalTableName + "save_new_record=true";
+								moveDownTo(levelUrl);
+							}
 							return;
 						}
 						if (jqDependentTable.hasClass("related")) {
-							var internalTableName = jqDependentTable.attr("internaltablename");
+							var internalTableName = jqDependentTable
+									.attr("internaltablename");
 							var rowId = jqDependentTable.attr("rowid");
 							var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
 									+ internalTableName + "&set_row_id=" + rowId;
@@ -334,7 +344,8 @@ function dependentSnippets() {
 	var remainingSlides = slides.not(":first");
 	remainingSlides.each(function() {
 		var jqSlide = $(this);
-		var snippetHolderId = jqSlide.attr("id").replace("slide_", "dependent_table_");
+		var snippetHolderId = jqSlide.attr("id").replace("slide_",
+				"dependent_table_");
 		var jqSnippets = $("#" + snippetHolderId);
 		var numCards = jqSlide.find(".block.current").size();
 		if (numCards > 0) {
@@ -353,15 +364,20 @@ function dependentSnippets() {
 		});
 	});
 	// add 'new' buttons to any unactivated links
-	firstSlide.find(".dependent_table").each(function() {
-		var jqSnippets = $(this);
-		if (!jqSnippets.hasClass("active")) {
-			var snippetHtml = "<img src='resources/toolbar/new.png' style='float: left'/>";
-			snippetHtml += "&nbsp;" + jqSnippets.find("h1").text();
-			jqSnippets.find("h1").html(snippetHtml);
-			jqSnippets.click("alert('new record');");
-		}
-	});
+	firstSlide
+			.find(".dependent_table")
+			.each(
+					function() {
+						var jqSnippets = $(this);
+						if (!jqSnippets.hasClass("active")) {
+							if (!jqSnippets.hasClass("has_new")) {
+								jqSnippets.addClass("has_new");
+								var snippetHtml = "<img src='resources/toolbar/new.png' style='float: left'/>";
+								snippetHtml += "&nbsp;" + jqSnippets.find("h1").text();
+								jqSnippets.find("h1").html(snippetHtml);
+							}
+						}
+					});
 }
 
 /**
