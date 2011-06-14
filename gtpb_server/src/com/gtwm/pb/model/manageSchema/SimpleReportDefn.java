@@ -1195,7 +1195,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	}
 
 	@Transient
-	public Map<BaseField, String> getGlobalFilterValues(String globalFilterString) {
+	public Map<BaseField, String> getGlobalFilterValues(String globalFilterString) throws CodingErrorException {
 		Map<BaseField, String> globalFilterValues = new HashMap<BaseField, String>();
 		if (globalFilterString == null) {
 			return globalFilterValues;
@@ -1206,7 +1206,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		String filterString = '*' + globalFilterString.trim();
 		FIELD_LOOP: for (ReportFieldInfo reportField : this.getReportFieldsDirect()) {
 			BaseField field = reportField.getBaseField();
-			if (field.getDbType().equals(DatabaseFieldType.VARCHAR)) {
+			if (field.getDbType().equals(DatabaseFieldType.VARCHAR) || field.getFieldCategory().equals(FieldCategory.RELATION)) {
 				if (field instanceof FileField) {
 					continue FIELD_LOOP;
 				}

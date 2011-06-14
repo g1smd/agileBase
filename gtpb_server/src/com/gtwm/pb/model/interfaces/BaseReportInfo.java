@@ -149,7 +149,7 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	 * 
 	 * field1='*filter' or field2='*filter' or field3='*filter'
 	 */
-	public Map<BaseField, String> getGlobalFilterValues(String globalFilterString);
+	public Map<BaseField, String> getGlobalFilterValues(String globalFilterString) throws CodingErrorException;
 	
 	/**
 	 * Return whether the row count is definitive or an estimate based on a
