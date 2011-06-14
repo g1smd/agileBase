@@ -356,9 +356,9 @@ function dependentSnippets() {
 	firstSlide.find(".dependent_table").each(function() {
 		var jqSnippets = $(this);
 		if (!jqSnippets.hasClass("active")) {
-			var snippetHtml = "<img src='resources/toolbar/new.png' style='float: left'/>&nbsp;";
-			snippetHtml += jqSnippets.find("h1").text();
-			jqSnippets.find("h1").html(snippetHtml);
+			var snippetHtml = "<img src='resources/toolbar/new.png' style='float: left'/>";
+			snippetHtml += "&nbsp;" + jqSnippets.find("h1").text();
+			jqSnippets.find("h1").html("snippetHtml);
 			jqSnippets.click("alert('new record');");
 		}
 	});
