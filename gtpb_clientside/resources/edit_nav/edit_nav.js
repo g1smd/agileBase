@@ -124,9 +124,9 @@ function initialiseDependencies() {
 						if (!jqDependentTable.hasClass("active")) {
 							if (jqDependentTable.hasClass("has_new")) {
 								internalTableName = jqDependentTable.attr("id").replace(
-										"/.*\_/", "");
+										/.*\_/, "");
 								var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
-										+ internalTableName + "save_new_record=true";
+										+ internalTableName + "&save_new_record=true";
 								moveDownTo(levelUrl);
 							}
 							return;
