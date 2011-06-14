@@ -24,7 +24,12 @@ $(document).ready(function() {
 	$("a.jumpto_table").live('click', function(event) {
 		event.preventDefault();
 		var href = $(this).attr("href");
-		moveUpTo(href, false); // true means move up if exits, otherwise move down
+		moveUpTo(href, false); // always move up
+	});
+	$("a.referenced_link").live('click', function(event) {
+		event.preventDefault();
+		var href = $(this).attr("href");
+		moveUpTo(href, true); // move up only if level already exists above, otherwise move down
 	});
 	// Initialise home screen for user
 	createLevel(homeUrl);

@@ -40,7 +40,8 @@
     #foreach($rrd_reportDataRow in $rrd_reportDataRows)
       #set($rowContainsData = false)
       #foreach($reportBaseField in $reportBaseFields)
-    	#if(($reportBaseField.getClass().getSimpleName().equals("CalculationFieldDefn")) || (!$reportBaseField.getTableContainingField().equals($fieldTable)))
+        #set($printoutSetting = $reportBaseField.getPrintoutSetting().name())
+    	  #if(($reportBaseField.getClass().getSimpleName().equals("CalculationFieldDefn")) || (!$reportBaseField.getTableContainingField().equals($fieldTable)))
         	#set($partFieldCategory = $reportBaseField.getFieldCategory())
         	#if($partFieldCategory == "TEXT" || $partFieldCategory == "DATE" || $partFieldCategory == "NUMBER")
         	  #set($rrd_displayValue = $rrd_reportDataRow.getValue($reportBaseField).getDisplayValue())
@@ -78,8 +79,13 @@
 				  #elseif($displayCategory == "low")
 					<img src="resources/icons/applications/16x16/Star.png" class="mini_icon">
 				  #end
-				#end
-        		<span class="greytext">$reportBaseField:</span> $rrd_displayValue<br>
+        #end
+          #if($abSlide)<a class="reference_link" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$fieldTable.getInternalTableName()&set_row_id=$rrd_rowId">#end
+          #if(($printoutSetting == "NAME_AND_VALUE") || ($printoutSetting == "NAME_VALUE_LINEBREAK"))
+            <span class="greytext">$reportBaseField:</span>
+          #end
+          $rrd_displayValue<br>
+          #if($abSlide)</a>#end
 			  #end
 			#elseif($partFieldCategory == "FILE")
         	  #set($rrd_displayValue = $rrd_reportDataRow.getValue($reportBaseField).getDisplayValue())
@@ -88,9 +94,9 @@
 				#if($fileValue.isImage())
 			      #set($downloadBase = "uploads/$reportBaseField.getTableContainingField().getInternalTableName()/$reportBaseField.getInternalFieldName()/$rrd_reportDataRow.getRowId()/")
 			      #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fileValue"))
-			      <a href="$downloadUrl" target="_blank">
+			      #if(!$abSlide)<a href="$downloadUrl" target="_blank">#end
 				    <img border="0" src="$downloadUrl.40.$fileValue.getExtension()" class="cross_reference_image" />
-			      </a>
+			      #if(!$abSlide)</a>#end
 				#end
 			  #end
 		    #end
