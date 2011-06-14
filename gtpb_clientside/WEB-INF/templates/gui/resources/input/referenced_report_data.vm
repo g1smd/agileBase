@@ -39,6 +39,7 @@
     #set($rrd_reportDataRows = $view.getReportDataRows($referencedReport, 20, $filter, true))
     #foreach($rrd_reportDataRow in $rrd_reportDataRows)
       #set($rowContainsData = false)
+      #set($linked = false)
       #foreach($reportBaseField in $reportBaseFields)
         #set($printoutSetting = $reportBaseField.getPrintoutSetting().name())
     	  #if(($reportBaseField.getClass().getSimpleName().equals("CalculationFieldDefn")) || (!$reportBaseField.getTableContainingField().equals($fieldTable)))
@@ -80,12 +81,12 @@
 					<img src="resources/icons/applications/16x16/Star.png" class="mini_icon">
 				  #end
         #end
-          #if($abSlide)<a class="reference_link" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$fieldTable.getInternalTableName()&set_row_id=$rrd_rowId">#end
+          #if($abSlide && !$linked)<a class="reference_link" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$fieldTable.getInternalTableName()&set_row_id=$rrd_rowId">#end
           #if(($printoutSetting == "NAME_AND_VALUE") || ($printoutSetting == "NAME_VALUE_LINEBREAK"))
             <span class="greytext">$reportBaseField:</span>
           #end
           $rrd_displayValue<br>
-          #if($abSlide)</a>#end
+          #if($abSlide && !$linked)</a> #set($linked = true) #end
 			  #end
 			#elseif($partFieldCategory == "FILE")
         	  #set($rrd_displayValue = $rrd_reportDataRow.getValue($reportBaseField).getDisplayValue())
