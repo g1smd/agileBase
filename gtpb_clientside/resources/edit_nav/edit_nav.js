@@ -48,9 +48,9 @@ function initialiseHeight() {
 }
 
 function initialiseSlides() {
+	alert('search init');
 	$("#searchbox").keyup(
 			function() {
-				alert('search init');
 				var jqSearchBox = $(this);
 				jqSearchBox.addClass("changed");
 				var filterString = jqSearchBox.val();
