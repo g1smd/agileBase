@@ -102,9 +102,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			  #else
           #foreach($field in $fields)
             #if($field.getHidden() == false)
-              #if(!($abSlide && ($field.getFieldCategory() == "REFERENCED_REPORT_DATA")))
-							  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-              #end
+              #parse("gui/reports_and_tables/tabs/table_data_row.vm")
             #end
           #end ## end loop through fields
 			  #end ## end if no unfilled mandatories
