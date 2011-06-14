@@ -171,7 +171,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 							<div id="how_do_i_use" class="divider">
 								<h1>What's agileBase used for?</h1>
 								<p>Our vision was to make a product that allows business analysts
-								to create Lean, agile, Just-In-Time (JIT) back offices. Here are some apps clients have build</p>
+								to create Lean, agile, Just-In-Time (JIT) back offices. Here are some apps clients have built</p>
 								<ul>
                   <li><img src="website/images/icons/x-office-address-book.png">CRM - most service companies start by recording organisations and contacts - the basis of their work</li>
                   <li><img src="website/images/icons/edit-find-replace.png">Market intelligence - gathering, recording and sharing background research and thought leaders</li>
