@@ -352,6 +352,15 @@ function dependentSnippets() {
 			jqSnippets.append("<div class='snippet'>" + snippetText + "</div>");
 		});
 	});
+	// add 'new' buttons to any unactivated links
+	firstSlide.find(".dependent_table").each(function() {
+		var jqSnippets = $(this);
+		if (!jqSnippets.hasClass("active")) {
+			var snippetHtml = "<img src='resources/toolbar/new.png' style='float: left'/>";
+			jqSnippets.append(snippetHtml);
+			jqSnippets.click("alert('new record');");
+		}
+	});
 }
 
 /**
