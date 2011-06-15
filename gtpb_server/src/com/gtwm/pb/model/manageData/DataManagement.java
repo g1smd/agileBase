@@ -1583,6 +1583,7 @@ public final class DataManagement implements DataManagementInfo {
 				long cacheAge = cachedFeed.getCacheAge();
 				if ((cacheAge < lastDataChangeAge) || (cacheAge < (cacheSeconds * 1000))) {
 					this.reportFeedCacheHits.incrementAndGet();
+					logger.debug("Retrieving from cache");
 					return cachedFeed.getFeed();
 				}
 			}
@@ -1606,8 +1607,9 @@ public final class DataManagement implements DataManagementInfo {
 		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(0), 10000,
 				dataFormat.toString());
 		UsageLogger.startLoggingThread(usageLogger);
-		if (filters.size() > 0) {
+		if (filters.size() == 0) {
 			cachedFeed = new CachedFeed(dataFeedString);
+			logger.debug("Adding feed output to cache");
 			this.cachedReportFeeds.put(id, cachedFeed);
 		}
 		int cacheMisses = this.reportFeedCacheMisses.incrementAndGet();
