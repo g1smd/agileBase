@@ -102,6 +102,11 @@ public class Public extends VelocityViewServlet {
 				switch (publicAction) {
 				case GET_REPORT_JSON:
 				case GET_REPORT_RSS:
+					Long cacheSeconds = null;
+					String cacheSecondsString = request.getParameter("cache_seconds");
+					if (cacheSecondsString != null) {
+						cacheSeconds = Long.valueOf(cacheSecondsString);
+					}
 					if (publicAction.equals(PublicAction.GET_REPORT_JSON)) {
 						String jsonFormat = request.getParameter("json_format");
 						if (jsonFormat != null) {
@@ -113,8 +118,14 @@ public class Public extends VelocityViewServlet {
 						} else {
 							templateName = templatePath + "report_json";
 						}
+						if (cacheSeconds == null) {
+							cacheSeconds = Long.valueOf(30*60); // default to 30 mins cache
+						}
 					} else {
 						templateName = templatePath + "report_rss";
+						if (cacheSeconds == null) {
+							cacheSeconds = Long.valueOf(2*60); // default to 2 mins cache
+						}
 					}
 					String internalReportName = request.getParameter("r");
 					try {
@@ -131,11 +142,11 @@ public class Public extends VelocityViewServlet {
 						boolean exactFilters = Helpers.valueRepresentsBooleanTrue(request.getParameter("exact_filters"));
 						if (publicAction.equals(PublicAction.GET_REPORT_JSON)) {
 							String reportJSON = this.databaseDefn.getDataManagement()
-									.getReportJSON(publicUser, report, filters, exactFilters, 30);
+									.getReportJSON(publicUser, report, filters, exactFilters, cacheSeconds);
 							context.put("gtwmReportJSON", reportJSON);
 						} else {
 							String reportRSS = this.databaseDefn.getDataManagement().getReportRSS(
-									publicUser, report, filters, exactFilters, 2);
+									publicUser, report, filters, exactFilters, cacheSeconds);
 							context.put("gtwmReportRSS", reportRSS);
 							response.setContentType(ResponseReturnType.XML.getResponseType());
 						}

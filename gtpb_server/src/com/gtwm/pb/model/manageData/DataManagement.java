@@ -1569,7 +1569,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	private String getReportDataAsFormat(DataFormat dataFormat, AppUserInfo user,
 			BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters,
-			int cacheMinutes) throws CodingErrorException, CantDoThatException, SQLException,
+			long cacheSeconds) throws CodingErrorException, CantDoThatException, SQLException,
 			JSONException, XMLStreamException, ObjectNotFoundException {
 		String id = dataFormat.toString() + report.getInternalReportName();
 		CachedReportFeedInfo cachedFeed = null;
@@ -1581,7 +1581,7 @@ public final class DataManagement implements DataManagementInfo {
 				long lastDataChangeAge = System.currentTimeMillis()
 						- this.getLastDataChangeTime(user.getCompany());
 				long cacheAge = cachedFeed.getCacheAge();
-				if ((cacheAge < lastDataChangeAge) || (cacheAge < (cacheMinutes * 60 * 1000))) {
+				if ((cacheAge < lastDataChangeAge) || (cacheAge < (cacheSeconds * 1000))) {
 					this.reportFeedCacheHits.incrementAndGet();
 					return cachedFeed.getFeed();
 				}
@@ -1621,19 +1621,19 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public String getReportRSS(AppUserInfo user, BaseReportInfo report,
-			Map<BaseField, String> filters, boolean exactFilters, int cacheMinutes)
+			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
 			throws SQLException, CodingErrorException, CantDoThatException, JSONException,
 			XMLStreamException, ObjectNotFoundException {
 		return this.getReportDataAsFormat(DataFormat.RSS, user, report, filters, exactFilters,
-				cacheMinutes);
+				cacheSeconds);
 	}
 
 	public String getReportJSON(AppUserInfo user, BaseReportInfo report,
-			Map<BaseField, String> filters, boolean exactFilters, int cacheMinutes)
+			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
 			throws JSONException, CodingErrorException, CantDoThatException, SQLException,
 			XMLStreamException, ObjectNotFoundException {
 		return this.getReportDataAsFormat(DataFormat.JSON, user, report, filters, exactFilters,
-				cacheMinutes);
+				cacheSeconds);
 	}
 
 	/**
@@ -1733,6 +1733,7 @@ public final class DataManagement implements DataManagementInfo {
 				}
 				if (useKey) {
 					valueString = value.getKeyValue();
+					logger.debug("Using key for field " + field);
 				} else {
 					valueString = value.getDisplayValue();
 				}

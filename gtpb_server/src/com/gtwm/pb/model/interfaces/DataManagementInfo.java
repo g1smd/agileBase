@@ -121,11 +121,11 @@ public interface DataManagementInfo {
 	 *            The number of minutes to cache a response for a particular
 	 *            report before regenerating
 	 */
-	public String getReportJSON(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters, int cacheMinutes)
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters,long cacheSeconds)
 			throws JSONException, CodingErrorException, CantDoThatException, SQLException,
 			XMLStreamException, ObjectNotFoundException;
 
-	public String getReportRSS(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters, int cacheMinutes)
+	public String getReportRSS(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
 			throws SQLException, CodingErrorException, CantDoThatException, JSONException,
 			XMLStreamException, ObjectNotFoundException;
 
