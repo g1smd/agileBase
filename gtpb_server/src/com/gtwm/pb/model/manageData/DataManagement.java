@@ -1717,18 +1717,13 @@ public final class DataManagement implements DataManagementInfo {
 		for (DataRowInfo reportDataRow : reportDataRows) {
 			js.object();
 			js.key("rowId").value(reportDataRow.getRowId());
-			// TODO: could potentially do a more complex JSON object if the need
-			// arises,
-			// with e.g. an array of fields and additional properties such as
-			// field names
 			String valueString = null;
 			for (ReportFieldInfo reportField : report.getReportFields()) {
 				BaseField field = reportField.getBaseField();
 				DataRowFieldInfo value = reportDataRow.getValue(reportField);
 				boolean useKey = false;
 				if (field instanceof TextField) {
-					if (((TextField) field).getContentSize().equals(TextContentSizes.FEW_PARAS.getNumChars())) {
-						
+					if (((TextField) field).getContentSize().equals(TextContentSizes.FEW_PARAS.getNumChars())) {			
 						useKey = true;
 					}
 				}
