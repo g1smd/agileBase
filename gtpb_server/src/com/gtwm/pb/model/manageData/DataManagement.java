@@ -1583,7 +1583,6 @@ public final class DataManagement implements DataManagementInfo {
 				long cacheAge = cachedFeed.getCacheAge();
 				if ((cacheAge < lastDataChangeAge) || (cacheAge < (cacheSeconds * 1000))) {
 					this.reportFeedCacheHits.incrementAndGet();
-					logger.debug("Retrieving from cache");
 					return cachedFeed.getFeed();
 				}
 			}
@@ -1609,7 +1608,6 @@ public final class DataManagement implements DataManagementInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 		if (filters.size() == 0) {
 			cachedFeed = new CachedFeed(dataFeedString);
-			logger.debug("Adding feed output to cache");
 			this.cachedReportFeeds.put(id, cachedFeed);
 		}
 		int cacheMisses = this.reportFeedCacheMisses.incrementAndGet();
@@ -1729,13 +1727,13 @@ public final class DataManagement implements DataManagementInfo {
 				DataRowFieldInfo value = reportDataRow.getValue(reportField);
 				boolean useKey = false;
 				if (field instanceof TextField) {
-					if (((TextField) field).getContentSize().equals(TextContentSizes.FEW_PARAS)) {
+					if (((TextField) field).getContentSize().equals(TextContentSizes.FEW_PARAS.getNumChars())) {
+						
 						useKey = true;
 					}
 				}
 				if (useKey) {
 					valueString = value.getKeyValue();
-					logger.debug("Using key for field " + field);
 				} else {
 					valueString = value.getDisplayValue();
 				}
