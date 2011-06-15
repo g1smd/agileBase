@@ -193,12 +193,23 @@ public class Public extends VelocityViewServlet {
 					}
 					break;
 				case SAVE_NEW_RECORD:
+				case UPDATE_RECORD:
+					int rowId = -1;
+					boolean newRecord = true;
 					if (templateName == null) {
 						templateName = "posted";
 					}
 					templateName = templatePath + templateName;
 					SessionDataInfo sessionData = new SessionData();
 					try {
+						if (publicAction.equals(PublicAction.UPDATE_RECORD)) {
+							String rowIdString = ServletUtilMethods.getParameter(request, "row_id", multipartItems);
+							if (rowIdString == null) {
+								throw new CantDoThatException("row_id must be provided to update a record");
+							}
+							rowId = Integer.valueOf(rowIdString);
+							newRecord = false;
+						}
 						if (!table.getTableFormPublic()) {
 							throw new CantDoThatException("The table " + table
 									+ " has not been set for use as a public form");
@@ -227,7 +238,7 @@ public class Public extends VelocityViewServlet {
 							}
 						}
 						this.databaseDefn.getDataManagement().saveRecord(request, table,
-								fieldInputValues, true, -1, sessionData, multipartItems);
+								fieldInputValues, newRecord, rowId, sessionData, multipartItems);
 					} catch (AgileBaseException abex) {
 						ServletUtilMethods.logException(abex, request,
 								"General error performing save from public");
