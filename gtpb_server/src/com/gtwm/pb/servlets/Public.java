@@ -140,6 +140,7 @@ public class Public extends VelocityViewServlet {
 						}
 						Map<BaseField, String> filters = getFilters(table, request);
 						boolean exactFilters = Helpers.valueRepresentsBooleanTrue(request.getParameter("exact_filters"));
+						logger.debug("Using cache seconds = " + cacheSeconds);
 						if (publicAction.equals(PublicAction.GET_REPORT_JSON)) {
 							String reportJSON = this.databaseDefn.getDataManagement()
 									.getReportJSON(publicUser, report, filters, exactFilters, cacheSeconds);
