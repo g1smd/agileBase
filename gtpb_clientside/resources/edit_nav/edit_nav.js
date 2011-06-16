@@ -290,6 +290,24 @@ function moveUpTo(levelUrl, fallbackToDown) {
 	}
 }
 
+/**
+ * Replace the existing level with a new one - don't move up or down
+ */
+function moveOverTo(levelUrl) {
+	var jqLevelContent = $(levelsList[currentLevel].levelContent);
+	jqLevelContent.addClass("transparent").addClass("oldLevel");
+	// First remove, the existing level and all sub-levels
+	for (var level = currentLevel; level < levelsList.length; level++) {
+		$(levelsList[level].levelContent).addClass("oldLevel");
+		$(levelsList[level].levelContent).find(".presentation").remove();
+	}
+	levelsList.splice(currentLevel, levelsList.length - currentLevel); // remove
+	setTimeout(function() {
+		$(".oldLevel").remove();
+	}, 500);
+	createLevel(levelUrl);
+}
+
 function moveDownTo(levelUrl) {
 	var jqLevelContent = $(levelsList[currentLevel].levelContent);
 	jqLevelContent.addClass("flyUp").addClass("transparent");
