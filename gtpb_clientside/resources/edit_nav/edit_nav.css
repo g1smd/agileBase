@@ -344,14 +344,14 @@ a.jumpto_table.current {
 }
 
 .slide_controls .button_group {
-  margin-left: 1em;
-  position: relative;
-  top: 0;
+  margin-left: 2em;
+  float: left;
 }
 
 .slide_controls button {
 	margin: 0;
 	margin-top: 0.5em;
+	margin-left: 0.5em;
 }
 
 .slide_controls button img {
