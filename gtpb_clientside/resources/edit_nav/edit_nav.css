@@ -4,6 +4,16 @@ body {
   background-color: #dbdbdb; /* 777788, bdbdbd */
 }
 
+#mini_links .button {
+  float: right;
+}
+
+#mini_links .button img {
+  height: 22px;
+  width: 22px;
+  border: 0;
+}
+
 #you_are_here {
   text-shadow: none;
 }
