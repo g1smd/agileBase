@@ -44,6 +44,69 @@ $(document)
 												+ internalTableName + "&save_new_record=true";
 										moveOverTo(levelUrl);
 									});
+					$("button#control_clone")
+							.live(
+									'click',
+									function(event) {
+										var internalTableName = $(this).attr("internaltablename");
+										var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
+												+ internalTableName + "&clone_record=true";
+										moveOverTo(levelUrl);
+									});
+					$("button#control_delete")
+							.live(
+									'click',
+									function(event) {
+										var internalTableName = $(this).attr("internaltablename");
+										var rowId = $(this).attr("rowid");
+										if (confirm("Delete this record?")) {
+											$
+													.post(
+															"AppController.servlet",
+															{
+																"return" : "gui/administration/xmlreturn_fieldchange",
+																remove_record : true,
+																returntype : "xml",
+																set_table : internalTableName,
+																rowid : rowId
+															},
+															function(xml) {
+																var jqXml = $(xml);
+																if (jqXml.find("response").text() != 'ok') {
+																	var prompt = jqXml.find("exception").text()
+																			+ '.\n\nDelete all of this?';
+																	if (confirm(prompt)) {
+																		$
+																				.post(
+																						"AppController.servlet",
+																						{
+																							"return" : "gui/administration/xmlreturn_fieldchange",
+																							remove_record : true,
+																							returntype : "xml",
+																							set_table : internalTableName,
+																							rowid : rowId,
+																							cascadedelete : true
+																						},
+																						function(xml) {
+																							jqXml = $(xml);
+																							if (jqXml.find("response").text() == 'ok') {
+																								dataChanged = true;
+																								moveUp();
+																							} else {
+																								var message = jqXml.find(
+																										"exception").text();
+																								alert('Deletion failed.\n\n'
+																										+ message);
+																							}
+																						});
+																	}
+																}
+															});
+										}
+										var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
+												+ internalTableName + "&clone_record=true";
+										moveOverTo(levelUrl);
+									});
 					// Initialise home screen for user
 					createLevel(homeUrl);
 					initialiseHeight();
@@ -206,7 +269,9 @@ function createLevel(levelUrl) {
 		window.scrollTo(0, 0);
 		firefoxBugWorkaround();
 	});
-	if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) || (levelUrl.indexOf("remove_record") > -1)) {
+	if ((levelUrl.indexOf("save_new_record") > -1)
+			|| (levelUrl.indexOf("clone_record") > -1)
+			|| (levelUrl.indexOf("remove_record") > -1)) {
 		dataChanged = true;
 	}
 }
@@ -282,7 +347,9 @@ function moveUpTo(levelUrl, fallbackToDown) {
 				jqLevelContent.addClass("invisible");
 			}, 500);
 			currentLevel = level;
-			if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) || (levelUrl.indexOf("remove_record") > -1)) {
+			if ((levelUrl.indexOf("save_new_record") > -1)
+					|| (levelUrl.indexOf("clone_record") > -1)
+					|| (levelUrl.indexOf("remove_record") > -1)) {
 				dataChanged = true;
 			}
 			showCurrentLevel();
@@ -347,7 +414,9 @@ function moveDownTo(levelUrl) {
 		// Check if the level below is actually the one whose ID we've been
 		// passed
 		if (levelsList[currentLevel].levelUrl == levelUrl) {
-			if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) || (levelUrl.indexOf("remove_record") > -1)) {
+			if ((levelUrl.indexOf("save_new_record") > -1)
+					|| (levelUrl.indexOf("clone_record") > -1)
+					|| (levelUrl.indexOf("remove_record") > -1)) {
 				dataChanged = true;
 			}
 			showCurrentLevel();
@@ -418,7 +487,8 @@ function dependentSnippets() {
 					function() {
 						var jqSnippets = $(this);
 						if (!jqSnippets.hasClass("active")) {
-							if ((!jqSnippets.hasClass("has_new")) && (!jqSnippets.hasClass("related"))) {
+							if ((!jqSnippets.hasClass("has_new"))
+									&& (!jqSnippets.hasClass("related"))) {
 								jqSnippets.addClass("has_new");
 								var snippetHtml = "<img src='resources/toolbar/new.png' style='float: left'/>";
 								snippetHtml += "&nbsp;" + jqSnippets.find("h1").text();
