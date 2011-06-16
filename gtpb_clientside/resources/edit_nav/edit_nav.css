@@ -334,11 +334,12 @@ a.jumpto_table.current {
 }
 
 .slide_controls {
-  height: 2em;
-  position: absolute;
+  height: 3.5em;
+  position: relative;
   bottom: 0px;
   width: 100%;
   border-top: 1px solid #ff8040;
+  text-align: center;
 }
 
 .this_table {
