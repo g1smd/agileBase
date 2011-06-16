@@ -64,7 +64,7 @@
     	#set($rowCount = $rowCount + 1)
       #if($fieldCategory == 'SEPARATOR')
         #set($contracted = false)
-        #if($contractedSections.contains($internalFieldName))
+        #if((!$edit_nav) && $contractedSections.contains($internalFieldName))
           #set($contracted = true)
         #end
       #end
