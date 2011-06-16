@@ -202,7 +202,7 @@ function fSubmitFunction() {
 				## Dont't allow grouping by text without lookups
 				## unless the field is from a different table.
 				## Don't allow files in any situation
-				#if(!($category =="FILE"))
+				#if(!($category == "FILE"))
 					#if($category == "DATE")
 						<option value="$reportField.getInternalFieldName()_year">$reportField - year</option>
 						<option value="$reportField.getInternalFieldName()_quarter">$reportField - quarter</option>
