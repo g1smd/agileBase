@@ -333,6 +333,14 @@ a.jumpto_table.current {
   padding-top: 1em;
 }
 
+.slide_controls {
+  height: 2em;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  border-top: 1px solid #ff8040;
+}
+
 .this_table {
   width: 70%;
   float: left;
