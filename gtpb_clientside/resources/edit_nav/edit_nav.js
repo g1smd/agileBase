@@ -418,7 +418,7 @@ function dependentSnippets() {
 					function() {
 						var jqSnippets = $(this);
 						if (!jqSnippets.hasClass("active")) {
-							if (!jqSnippets.hasClass("has_new")) {
+							if ((!jqSnippets.hasClass("has_new")) && (!jqSnippets.hasClass("related"))) {
 								jqSnippets.addClass("has_new");
 								var snippetHtml = "<img src='resources/toolbar/new.png' style='float: left'/>";
 								snippetHtml += "&nbsp;" + jqSnippets.find("h1").text();
