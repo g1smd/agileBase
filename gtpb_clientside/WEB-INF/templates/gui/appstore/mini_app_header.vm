@@ -1,7 +1,6 @@
 #set($apps = $view.getLoggedInUser().getCompany().getApps())
 <div id="mini_links">
-  #set($left = 0)
-  <div class="button" style="left: ${left}px;">
+  <div class="button">
     #if($mobile_device)
       #set($databaseReturn = "gui/pane1")
     #else
@@ -9,49 +8,35 @@
     #end
     <a href="?return=$databaseReturn">
       <img src="customisations/common/dashboard/panes.png" /> Database
-    </a>
+    </a>&nbsp;
   </div>
   #if($apps.contains("dashboard"))
-    #set($left = $left + 100)
-    <div class="button" style="left: ${left}px;">
+    <div class="button">
       #set($databaseReturn = "gui/customisations/common/dashboard/dashboard")     
       <a href="?return=$databaseReturn">
         <img src="resources/toolbar/dashboard.png" /> Dashboard
-      </a>
+      </a>&nbsp;
     </div>
   #end
   #if($apps.contains("calendar"))
-    #set($left = $left + 100)
-    <div class="button" style="left: ${left}px;">
+    <div class="button">
       <a href="?return=gui/calendar/calendar">
         <img src="resources/toolbar/calendar.png" /> Calendar
-      </a>
+      </a>&nbsp;
     </div>
   #end
   #if($apps.contains("mkis"))
-    #set($left = $left + 100)
-    <div class="button" style="left: ${left}px;">
+    <div class="button">
       <a href="?return=gui/customisations/common/mkis/mkis">
         <img src="resources/toolbar/mkis.png" /> Marketing
-      </a>
+      </a>&nbsp;
     </div>
   #end
   #if($apps.contains("forms"))
-    #set($left = $left + 100)
-    <div class="button" style="left: ${left}px;">
+    <div class="button">
       <a href="?return=gui/edit_nav/edit_nav">
         <img src="resources/toolbar/forms.png" /> Forms
-      </a>
+      </a>&nbsp;
     </div>
   #end
 </div> ## end links
-#if($current_app == "dashboard")
-  #set($headlineNotices = $dashboard.getHeadlineNotices())
-  #foreach($headlineNotice in $headlineNotices)
-    #set($firstWord = $headlineNotice.replaceAll(" .*",""))
-    #if($firstWord.length() > 1) ##ÊIgnore really small numbers
-      #set($rest = $headlineNotice.replaceAll("^.*? ",""))
-      <div class="headline"><span class="firstword">$firstWord</span> $rest</div>
-    #end
-  #end
-#end

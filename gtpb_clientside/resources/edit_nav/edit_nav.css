@@ -14,6 +14,10 @@ body {
   float: right;
 }
 
+#mini_links a {
+  text-decoration: none;
+}
+
 #mini_links .button img {
   height: 22px;
   width: 22px;
