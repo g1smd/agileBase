@@ -12,6 +12,7 @@ body {
 
 #mini_links .button {
   float: right;
+  padding-top: 3px;
 }
 
 #mini_links a {
@@ -22,7 +23,7 @@ body {
   height: 22px;
   width: 22px;
   border: 0;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 #you_are_here {
