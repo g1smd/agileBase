@@ -4,47 +4,53 @@ var currentLevel = 0;
 
 var homeUrl = "AppController.servlet?return=gui/edit_nav/report";
 
-var debugCount = 0;
+var dataChanged = false;
 
-$(document).ready(function() {
-	$("#breadcrumb a").live('click', function(event) {
-		event.preventDefault();
-		var href = $(this).attr("href");
-		var level = $(this).attr("level");
-		if (currentLevel > level) {
-			moveUpTo(href, false);
-		} else {
-			moveDownTo(href);
-		}
-	});
-	$(".block").live('click', function() {
-		var href = $(this).attr("href");
-		moveUpTo(href, true); // move up only if level already exists above,
-		// otherwise move down
-	});
-	$("a.jumpto_table").live('click', function(event) {
-		event.preventDefault();
-		var href = $(this).attr("href");
-		moveUpTo(href, false); // always move up
-	});
-	$("a.reference_link").live('click', function(event) {
-		event.preventDefault();
-		var href = $(this).attr("href");
-		moveUpTo(href, true); // move up only if level already exists above,
-		// otherwise move down
-	});
-	$("button#control_new").live('click', function(event) {
-		var internalTableName = $(this).attr("internaltablename");
-		var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table=" + internalTableName + "&save_new_record=true";
-		moveOverTo(levelUrl);
-	});
-	// Initialise home screen for user
-	createLevel(homeUrl);
-	initialiseHeight();
-	$(window).resize(function() {
-		initialiseHeight();
-	});
-});
+$(document)
+		.ready(
+				function() {
+					$("#breadcrumb a").live('click', function(event) {
+						event.preventDefault();
+						var href = $(this).attr("href");
+						var level = $(this).attr("level");
+						if (currentLevel > level) {
+							moveUpTo(href, false);
+						} else {
+							moveDownTo(href);
+						}
+					});
+					$(".block").live('click', function() {
+						var href = $(this).attr("href");
+						moveUpTo(href, true); // move up only if level already exists above,
+						// otherwise move down
+					});
+					$("a.jumpto_table").live('click', function(event) {
+						event.preventDefault();
+						var href = $(this).attr("href");
+						moveUpTo(href, false); // always move up
+					});
+					$("a.reference_link").live('click', function(event) {
+						event.preventDefault();
+						var href = $(this).attr("href");
+						moveUpTo(href, true); // move up only if level already exists above,
+						// otherwise move down
+					});
+					$("button#control_new")
+							.live(
+									'click',
+									function(event) {
+										var internalTableName = $(this).attr("internaltablename");
+										var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
+												+ internalTableName + "&save_new_record=true";
+										moveOverTo(levelUrl);
+									});
+					// Initialise home screen for user
+					createLevel(homeUrl);
+					initialiseHeight();
+					$(window).resize(function() {
+						initialiseHeight();
+					});
+				});
 
 // Nasty JS height, can't we get some pure CSS to work?
 function initialiseHeight() {
@@ -128,8 +134,8 @@ function initialiseDependencies() {
 						var jqDependentTable = $(this);
 						if (!jqDependentTable.hasClass("active")) {
 							if (jqDependentTable.hasClass("has_new")) {
-								internalTableName = jqDependentTable.attr("id").replace(
-										/.*\_/, "");
+								internalTableName = jqDependentTable.attr("id").replace(/.*\_/,
+										"");
 								var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
 										+ internalTableName + "&save_new_record=true";
 								moveDownTo(levelUrl);
@@ -200,21 +206,27 @@ function createLevel(levelUrl) {
 		window.scrollTo(0, 0);
 		firefoxBugWorkaround();
 	});
+	if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) (levelUrl.indexOf("remove_record") > -1)) {
+		dataChanged = true;
+	}
 }
 
 function showCurrentLevel() {
 	var jqLevel = $(levelsList[currentLevel].levelContent);
-	jqLevel.removeClass("flyDown").removeClass("flyUp").removeClass(
-			"invisible").removeClass("transparent");
+	jqLevel.removeClass("flyDown").removeClass("flyUp").removeClass("invisible")
+			.removeClass("transparent");
 	updateBreadcrumb();
 	window.scrollTo(0, 0);
 	var levelUrl = levelsList[currentLevel].levelUrl;
 	// reload slide and related slides in case related content has changed
-	jqLevel.load(levelUrl, function() {
-		levelsList[currentLevel].levelContent = jqLevel[0];
-		loadDependentSlides();
-		initialiseSlides();
-	});
+	if (dataChanged) {
+		jqLevel.load(levelUrl, function() {
+			levelsList[currentLevel].levelContent = jqLevel[0];
+			loadDependentSlides();
+			initialiseSlides();
+		});
+		dataChanged = false;
+	}
 }
 
 function moveUp() {
@@ -270,6 +282,9 @@ function moveUpTo(levelUrl, fallbackToDown) {
 				jqLevelContent.addClass("invisible");
 			}, 500);
 			currentLevel = level;
+			if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) (levelUrl.indexOf("remove_record") > -1)) {
+				dataChanged = true;
+			}
 			showCurrentLevel();
 			return;
 		}
@@ -309,7 +324,7 @@ function moveOverTo(levelUrl) {
 	var jqLevelContent = $(levelsList[currentLevel].levelContent);
 	jqLevelContent.addClass("transparent").addClass("oldLevel");
 	// First remove, the existing level and all sub-levels
-	for (var level = currentLevel; level < levelsList.length; level++) {
+	for ( var level = currentLevel; level < levelsList.length; level++) {
 		$(levelsList[level].levelContent).addClass("oldLevel");
 		$(levelsList[level].levelContent).find(".presentation").remove();
 	}
@@ -332,6 +347,9 @@ function moveDownTo(levelUrl) {
 		// Check if the level below is actually the one whose ID we've been
 		// passed
 		if (levelsList[currentLevel].levelUrl == levelUrl) {
+			if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) (levelUrl.indexOf("remove_record") > -1)) {
+				dataChanged = true;
+			}
 			showCurrentLevel();
 			return;
 		}
