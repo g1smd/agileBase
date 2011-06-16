@@ -90,8 +90,14 @@
         </div>
       </section> 
       <div class="slide_controls">
-        <button name="delete" internaltablename="$sessionTable.getInternalTableName()" rowid="$sessionData.getRowId()"><img src="resources/toolbar/delete.png" /> delete</button>
-        <button name="print" ><img src="resources/toolbar/print_only.png" /> print</button>
+        <div class="button_group">
+          <button name="new" ><img src="resources/toolbar/new.png" /> new</button>
+          <button name="clone" ><img src="resources/toolbar/clone.png" /> clone</button>
+          <button name="delete" internaltablename="$sessionTable.getInternalTableName()" rowid="$sessionData.getRowId()"><img src="resources/toolbar/delete.png" /> delete</button>
+        </div>
+        <div class="button_group">
+          <button name="print" ><img src="resources/toolbar/print_only.png" /> print</button>
+        </div>
       </div>
     </div> <!-- slide --> 
   </div> <!-- slides --> 
