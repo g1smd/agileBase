@@ -27,7 +27,7 @@ $(document).ready(function() {
 		var href = $(this).attr("href");
 		moveUpTo(href, false); // always move up
 	});
-	$("a.referenced_link").live('click', function(event) {
+	$("a.reference_link").live('click', function(event) {
 		event.preventDefault();
 		var href = $(this).attr("href");
 		moveUpTo(href, true); // move up only if level already exists above,
