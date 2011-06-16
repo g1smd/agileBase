@@ -241,6 +241,16 @@ body{
 	height: 61px; /* height of logo */
 }
 
+#mini_links .button {
+  float: right;
+}
+
+#mini_links .button img {
+  height: 22px;
+  width: 22px;
+  border: 0;
+}
+
 #header #links .button {
 	border: 1px solid #909090;
 	-moz-border-radius: 5px;
