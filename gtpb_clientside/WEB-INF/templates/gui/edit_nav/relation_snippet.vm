@@ -1,0 +1,27 @@
+#set($relatedTable = $field.getRelatedTable())
+#set($relatedRowIdValue = $tableDataRow.get($field.getRelatedField()))
+#set($snippet = "")
+#set($active = false)
+#set($fieldDisplayValue = "")
+#if(!$relatedRowIdValue.isNull())
+  #set($relatedRowId = $relatedRowIdValue.getValueInteger())
+  #if($relatedRowId)
+    #set($active = true)
+    #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
+    #set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
+    #foreach($relatedField in $relatedDataRow.keySet())
+      #if(!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey()))
+      #set($fieldValue = $relatedDataRow.get($relatedField))
+        #if(($fieldValue != "") && ($fieldValue != "false"))
+          #set($snippet = "$snippet$fieldValue, ")
+        #end
+      #end
+    #end
+  #end
+#end
+<div class="dependent_table related #if($active) active #end" id="dependent_relation_$sessionTable.getInternalTableName()_$relatedTable.getInternalTableName()" internaltablename="$relatedTable.getInternalTableName()" rowid="$relatedRowId">
+  <h1><span class="count"><img src="resources/edit_nav/up.png" alt="up" /></span>$field.getSimplifiedFieldName()#if($fieldDisplayValue != ""): $fieldDisplayValue#end</h1>
+  <div class="record_snippets">
+    <div class="snippet">$snippet</div>
+  </div>
+</div>
