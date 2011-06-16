@@ -57,7 +57,8 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 		// a slow action even slower by adding in a log statement in
 		// the middle.
 		try {
-			Thread.sleep(1000);
+			// requests seldom take longer than 100ms. Log inserts are approx. 1ms
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			logger.error("UsageLogger interrupted while sleeping");
 		}

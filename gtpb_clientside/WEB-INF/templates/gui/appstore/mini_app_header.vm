@@ -1,13 +1,7 @@
 #set($apps = $view.getLoggedInUser().getCompany().getApps())
 <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
-<div id="links">
+<div id="mini_links">
   #set($left = 0)
-  #if($current_app == "calendar")
-    <div id="new_record" class="bare_button" style="left: ${left}px;">
-      <img id="new_record" src="resources/toolbar/new.png" /><br>New
-    </div>
-    #set($left = $left + 100)
-  #end
   <div class="button" style="left: ${left}px;">
     #if($mobile_device)
       #set($databaseReturn = "gui/pane1")
@@ -15,7 +9,7 @@
       #set($databaseReturn = "gui/display_application")     
     #end
     <a href="?return=$databaseReturn">
-      <img src="customisations/common/dashboard/panes.png" /><br>Database
+      <img src="customisations/common/dashboard/panes.png" /> Database
     </a>
   </div>
   #if($apps.contains("dashboard"))
@@ -23,7 +17,7 @@
     <div class="button" style="left: ${left}px;">
       #set($databaseReturn = "gui/customisations/common/dashboard/dashboard")     
       <a href="?return=$databaseReturn">
-        <img src="resources/toolbar/dashboard.png" /><br>Dashboard
+        <img src="resources/toolbar/dashboard.png" /> Dashboard
       </a>
     </div>
   #end
@@ -31,7 +25,7 @@
     #set($left = $left + 100)
     <div class="button" style="left: ${left}px;">
       <a href="?return=gui/calendar/calendar">
-        <img src="resources/toolbar/calendar.png" /><br>Calendar
+        <img src="resources/toolbar/calendar.png" /> Calendar
       </a>
     </div>
   #end
@@ -39,7 +33,7 @@
     #set($left = $left + 100)
     <div class="button" style="left: ${left}px;">
       <a href="?return=gui/customisations/common/mkis/mkis">
-        <img src="resources/toolbar/mkis.png" /><br>Marketing
+        <img src="resources/toolbar/mkis.png" /> Marketing
       </a>
     </div>
   #end
@@ -47,7 +41,7 @@
     #set($left = $left + 100)
     <div class="button" style="left: ${left}px;">
       <a href="?return=gui/edit_nav/edit_nav">
-        <img src="resources/toolbar/forms.png" /><br>Forms
+        <img src="resources/toolbar/forms.png" /> Forms
       </a>
     </div>
   #end
