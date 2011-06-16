@@ -342,6 +342,10 @@ a.jumpto_table.current {
   text-align: center;
 }
 
+.slide_controls button {
+
+}
+
 .this_table {
   width: 70%;
   float: left;

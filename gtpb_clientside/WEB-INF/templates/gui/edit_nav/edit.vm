@@ -90,8 +90,8 @@
         </div>
       </section> 
       <div class="slide_controls">
-        <button name="delete" internaltablename="$sessionTable.getInternalTableName()" rowid="$sessionData.getRowId()">delete</button>
-        <button name="print" >print</button>
+        <button name="delete" internaltablename="$sessionTable.getInternalTableName()" rowid="$sessionData.getRowId()"><img src="resources/toolbar/delete.png" /> delete</button>
+        <button name="print" ><img src="resources/toolbar/print_only.png" /> print</button>
       </div>
     </div> <!-- slide --> 
   </div> <!-- slides --> 
