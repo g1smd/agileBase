@@ -343,8 +343,15 @@ a.jumpto_table.current {
 }
 
 .slide_controls button {
-
+  margin-left: 5em;
+  margin-right: 5em;
 }
+
+.slide_controls button img {
+  vertical-align: middle;
+}
+
+.sli
 
 .this_table {
   width: 70%;
