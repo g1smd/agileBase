@@ -33,6 +33,11 @@ $(document).ready(function() {
 		moveUpTo(href, true); // move up only if level already exists above,
 		// otherwise move down
 	});
+	$("button#control_new").live('click', function(event) {
+		var internalTableName = $(this).attr("internaltablename");
+		var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table=" + internalTableName + "&save_new_record=true";
+		moveOverTo(levelUrl);
+	});
 	// Initialise home screen for user
 	createLevel(homeUrl);
 	initialiseHeight();
