@@ -1723,7 +1723,8 @@ public final class DataManagement implements DataManagementInfo {
 				DataRowFieldInfo value = reportDataRow.getValue(reportField);
 				boolean useKey = false;
 				if (field instanceof TextField) {
-					if (((TextField) field).getContentSize().equals(TextContentSizes.FEW_PARAS.getNumChars())) {			
+					if (((TextField) field).getContentSize().equals(
+							TextContentSizes.FEW_PARAS.getNumChars())) {
 						useKey = true;
 					}
 				}
@@ -2745,10 +2746,13 @@ public final class DataManagement implements DataManagementInfo {
 					TableInfo table = databaseDefn.findTableContainingReport(request,
 							internalReportName);
 					BaseReportInfo report = table.getReport(internalReportName);
-					if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
-						results.close();
-						statement.close();
-						return report;
+					if (!report.equals(table.getDefaultReport())) {
+						if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
+							results.close();
+							statement.close();
+							this.userMostPopularReportCache.put(user, report);
+							return report;
+						}
 					}
 				} catch (ObjectNotFoundException e) {
 					// The report from the logs no longer exists
