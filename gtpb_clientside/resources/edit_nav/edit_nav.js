@@ -206,7 +206,7 @@ function createLevel(levelUrl) {
 		window.scrollTo(0, 0);
 		firefoxBugWorkaround();
 	});
-	if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) (levelUrl.indexOf("remove_record") > -1)) {
+	if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) || (levelUrl.indexOf("remove_record") > -1)) {
 		dataChanged = true;
 	}
 }
@@ -282,7 +282,7 @@ function moveUpTo(levelUrl, fallbackToDown) {
 				jqLevelContent.addClass("invisible");
 			}, 500);
 			currentLevel = level;
-			if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) (levelUrl.indexOf("remove_record") > -1)) {
+			if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) || (levelUrl.indexOf("remove_record") > -1)) {
 				dataChanged = true;
 			}
 			showCurrentLevel();
@@ -347,7 +347,7 @@ function moveDownTo(levelUrl) {
 		// Check if the level below is actually the one whose ID we've been
 		// passed
 		if (levelsList[currentLevel].levelUrl == levelUrl) {
-			if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) (levelUrl.indexOf("remove_record") > -1)) {
+			if ((levelUrl.indexOf("save_new_record") > -1) || (levelUrl.indexOf("clone_record") > -1) || (levelUrl.indexOf("remove_record") > -1)) {
 				dataChanged = true;
 			}
 			showCurrentLevel();
