@@ -203,11 +203,18 @@ function createLevel(levelUrl) {
 }
 
 function showCurrentLevel() {
-	var jqLevelContent = $(levelsList[currentLevel].levelContent);
-	jqLevelContent.removeClass("flyDown").removeClass("flyUp").removeClass(
+	var jqLevel = $(levelsList[currentLevel].levelContent);
+	jqLevel.removeClass("flyDown").removeClass("flyUp").removeClass(
 			"invisible").removeClass("transparent");
 	updateBreadcrumb();
 	window.scrollTo(0, 0);
+	var levelUrl = levelsList[currentLevel].levelUrl;
+	// reload slide and related slides in case related content has changed
+	jqLevel.load(levelUrl, function() {
+		levelsList[currentLevel].levelContent = jqLevel[0];
+		loadDependentSlides();
+		initialiseSlides();
+	});
 }
 
 function moveUp() {
