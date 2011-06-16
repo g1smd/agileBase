@@ -1,5 +1,4 @@
 #set($apps = $view.getLoggedInUser().getCompany().getApps())
-<a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
 <div id="mini_links">
   #set($left = 0)
   <div class="button" style="left: ${left}px;">
