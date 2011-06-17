@@ -3,6 +3,7 @@
 #set($snippet = "")
 #set($active = false)
 #set($fieldDisplayValue = "")
+#set($snippet = "")
 #if(!$relatedRowIdValue.isNull())
   #set($relatedRowId = $relatedRowIdValue.getValueInteger())
   #if($relatedRowId)

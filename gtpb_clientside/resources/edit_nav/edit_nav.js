@@ -262,7 +262,7 @@ function relationChangeActions(oHidden) {
 		custominternaltablename : internalTableName,
 		custominternalfieldname : internalFieldName
 	}, function(data) {
-		$("#" + snippetId).html(data);
+		alert(data);
 	});
 }
 
