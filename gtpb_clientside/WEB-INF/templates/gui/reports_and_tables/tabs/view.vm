@@ -146,13 +146,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
             There are $numRelatedRows related $reportFieldTable.getSimpleName() records
           #end ## end if number of related rows is a manageable amount
           #if($related || $current)
-            #if($numRelatedRows == 0) No $reportFieldTable.getSimpleName() attached #end
             </div>
             #set($related = false)
             #set($current = false)
           #end
         #else
-          No $reportFieldTable.getSimpleName() attached
+          <div class="related">No $reportFieldTable.getSimpleName() attached</div>
         #end
       #end
 		#end
