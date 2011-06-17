@@ -75,7 +75,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
           #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $reportFieldTable))
           #if($relatedRowIds.size() > 0)
             #set($related = true)
-            <div class="related">
+            <div class="related">Debug: related $reportFieldTable IDs: $relatedRowIds<br>
           #end
         #end
 			  #set($numRelatedRows = $relatedRowIds.size())
@@ -146,7 +146,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
             There are $numRelatedRows related $reportFieldTable.getSimpleName() records
           #end ## end if number of related rows is a manageable amount
           #if($related || $current)
-            Debug: $numRelatedRows related rows
             #if($numRelatedRows == 0) No $reportFieldTable.getSimpleName() attached #end
             </div>
             #set($related = false)
