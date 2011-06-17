@@ -148,6 +148,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 ##             <td>#if($numRelatedRows > 0)not shown #else &nbsp; #end</td>
           #end ## end if number of related rows is a manageable amount
           #if($related || $current) </div> #set($related = false) #set($current = false) #end
+        #else
+          Debug: here
         #end
       #end
 		#end
