@@ -68,7 +68,8 @@ var gtwmJson = [{
 	a504a83214cbddcaa: 'OTHER',
 	a10c53ec626a8fd2: 'NOTES', // next of kin
 	a4027570fb096c2a2: 'NOTES', // notes
-	v0hck1cuzf1ypdr3d: 'OTHER' // exit notes
+	v0hck1cuzf1ypdr3d: 'OTHER', // exit notes
+	yrcasgdonsm4fagtk: 'FULL_NAME' // staff id
 },
 {
 	anonymise : true,
