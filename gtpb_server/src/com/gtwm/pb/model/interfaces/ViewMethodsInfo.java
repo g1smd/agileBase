@@ -327,17 +327,12 @@ public interface ViewMethodsInfo {
 			CodingErrorException;
 
 	/**
-	 * When passed a row ID, finds rows in the session report with the parent
-	 * table's row ID set to that ID. For each row found, if relatedTable's
-	 * primary key is in the report, return the value of it.
+	 * When passed a row ID, finds rows in the related table that link to that
+	 * row of the session table
 	 * 
-	 * For example, if the session report is orgs and masterRowId specifies a
+	 * For example, if the session table is orgs and masterRowId specifies a
 	 * particular organisation, you can find any related contacts by passing
 	 * 'contacts' as the related table.
-	 * 
-	 * This assumes that orgs is a report from the organisations table which has
-	 * a join in it to contacts, and the contacts primary key is present in the
-	 * orgs report
 	 * 
 	 * @param masterRowId
 	 *            Row ID used as lookup: a value of the session report parent
@@ -346,7 +341,7 @@ public interface ViewMethodsInfo {
 	 *            Table whose primary key value(s) we want from the session
 	 *            report
 	 * @throws CantDoThatException
-	 *             if relatedTable's primary key isn't in the report
+	 *             if the session table's primary key isn't in the related table
 	 */
 	public Set<Integer> getRelatedRowIds(int masterRowId, TableInfo relatedTable)
 			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException,
@@ -355,7 +350,7 @@ public interface ViewMethodsInfo {
 	/**
 	 * @see #getRelatedRowIds(int, TableInfo)
 	 */
-	public Set<Integer> getRelatedRowIds(BaseReportInfo masterReport, int masterRowId,
+	public Set<Integer> getRelatedRowIds(TableInfo masterTable, int masterRowId,
 			TableInfo relatedTable) throws DisallowedException, CantDoThatException, SQLException,
 			CodingErrorException, ObjectNotFoundException;
 

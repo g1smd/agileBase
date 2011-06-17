@@ -2416,21 +2416,33 @@ public final class DataManagement implements DataManagementInfo {
 		return nextRowId;
 	}
 
-	public Set<Integer> getRelatedRowIds(BaseReportInfo masterReport, int masterRowId,
+	public Set<Integer> getRelatedRowIds(TableInfo masterTable, int masterRowId,
 			TableInfo relatedTable) throws CantDoThatException, SQLException {
-		if (!masterReport.getReportBaseFields().contains(relatedTable.getPrimaryKey())) {
-			throw new CantDoThatException("Field " + relatedTable.getPrimaryKey()
-					+ " not found in report " + masterReport);
+		// Find the relation to the master table
+		RelationField relationField = null;
+		FIELDS_LOOP: for (BaseField field : relatedTable.getFields()) {
+			if (field instanceof RelationField) {
+				if (((RelationField) field).getRelatedTable().equals(masterTable)) {
+					relationField = ((RelationField) field);
+					break FIELDS_LOOP;
+				}
+			}
+		}
+		if (relationField == null) {
+			throw new CantDoThatException("Unable to find relation to " + masterTable + " from " + relatedTable);
 		}
 		Connection conn = null;
 		Set<Integer> relatedRowIds = new LinkedHashSet<Integer>();
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
+			//String SQLCode = "SELECT " + relatedTable.getPrimaryKey().getInternalFieldName();
+			//SQLCode += " FROM " + masterReport.getInternalReportName();
+			//SQLCode += " WHERE " + masterReport.getInternalReportName() + "."
+			//		+ masterReport.getParentTable().getPrimaryKey().getInternalFieldName() + "=?";
 			String SQLCode = "SELECT " + relatedTable.getPrimaryKey().getInternalFieldName();
-			SQLCode += " FROM " + masterReport.getInternalReportName();
-			SQLCode += " WHERE " + masterReport.getInternalReportName() + "."
-					+ masterReport.getParentTable().getPrimaryKey().getInternalFieldName() + "=?";
+			SQLCode += " FROM " + relatedTable.getInternalTableName();
+			SQLCode += " WHERE " + relationField.getInternalFieldName() + "=?";
 			PreparedStatement statement = conn.prepareStatement(SQLCode);
 			statement.setInt(1, masterRowId);
 			ResultSet results = statement.executeQuery();
