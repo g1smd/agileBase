@@ -231,9 +231,6 @@ function initialiseSlides() {
 	$("textarea").blur(function() {
 		$(this).removeClass("editing");
 	});
-	$("input.relation_hidden").change(function() {
-		alert("relation change");
-	});
 }
 
 function initialiseDependencies() {
