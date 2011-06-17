@@ -196,9 +196,19 @@ public interface DataManagementInfo {
 			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException;
 
 	/**
-	 * Find the IDs of rows in a child (related) table which have a relation to the master report's table
+	 * When passed a row ID and a report, finds rows in the report with the
+	 * parent table's row ID set to that ID. For each row found, if
+	 * relatedTable's primary key is in the report, return the value of it.
+	 * 
+	 * @param masterRowId
+	 *            Row ID used as lookup: a value of the report parent table's
+	 *            primary key
+	 * @param relatedTable
+	 *            Table whose primary key value(s) we want from the report
+	 * @throws CantDoThatException
+	 *             if relatedTable's primary key isn't in the report
 	 */
-	public Set<Integer> getRelatedRowIds(TableInfo masterTable, int masterRowId,
+	public Set<Integer> getRelatedRowIds(BaseReportInfo masterReport, int masterRowId,
 			TableInfo relatedTable) throws CantDoThatException, SQLException;
 
 	/**
