@@ -21,16 +21,13 @@ var pane3InterfaceUpdateFunctions = new Array();
 // Store and execute scripts required for different content
 var pane3Scripts = function() {
 	pane3ScriptsPub = new Object();
-	
 	pane3ScriptsPub.functionList = new Array();
-	
 	pane3ScriptsPub.update = function() {
 		var len = pane3ScriptsPub.functionList.length;
 		for (var i=0; i<len; i++) {
 			pane3ScriptsPub.functionList[i]();
 		}
 	}
-	
 	return pane3ScriptsPub;
 }();
 
@@ -39,10 +36,10 @@ var TabInterfaceObject = function(containerElem) {
 	var TabInterfaceObjectPub = new Object();
 
 	var currentRowId = -1;
-    var jqTabInterface = $(containerElem);
-    var jqTabContentContainer = jqTabInterface.find('.tab-content');
-    var tabList = new Array();
-    var currentTab;
+  var jqTabInterface = $(containerElem);
+  var jqTabContentContainer = jqTabInterface.find('.tab-content');
+  var tabList = new Array();
+  var currentTab;
 
 	var loadSpinner = function() {
 		loadSpinnerLoadingPub = new Object;
@@ -465,7 +462,7 @@ function uploadFile(fileInputElement) {
 	var fileSize = fileObject.size; // the new way
 	if (!fileSize) {
 	  fileSize = fileObject.fileSize; // the deprecated way
-	}	
+	}
     if (fileSize) {
       var jqFileInput = $(fileInputElement);
       var jqProgressContainer = jqFileInput.next();
@@ -482,7 +479,7 @@ function uploadFile(fileInputElement) {
       if (expectedMinutes == 0) {
         fileSizeInfo = fileSizeInfo + ". Please wait a few seconds...";
       } else if (expectedMinutes > 6) {
-    	// Round the expected time
+    	  // Round the expected time
         expectedMinutes = Math.round(expectedMinutes / 10) * 10;
         fileSizeInfo = fileSizeInfo + ". This is likely to take about " + expectedMinutes + " minutes";
       } else if (expectedMinutes > 3) {
