@@ -253,8 +253,9 @@ function relationChangeActions(oHidden) {
 	var rowId = jqHidden.val();
 	var internalFieldName = jqHidden.attr("internalfieldname");
 	var internalTableName = jqHidden.attr("internaltablename");
+	var relatedTableInternalName = jqHidden.attr("gtpb_rowidinternaltablename");
 	var snippetId = "dependent_relation_" + internalTableName + "_"
-			+ internalFieldName;
+			+ relatedTableInternalName;
 	alert("snippetId " + snippetId);
 	$.post("AppController.servlet", {
 		"return" : "gui/edit_nav/relation_snippet_direct",
@@ -263,7 +264,7 @@ function relationChangeActions(oHidden) {
 		custominternaltablename : internalTableName,
 		custominternalfieldname : internalFieldName
 	}, function(data) {
-		alert(data);
+		$("#" + snippetId).html(data);
 	});
 }
 
