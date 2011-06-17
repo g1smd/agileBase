@@ -1,0 +1,18 @@
+#set($field = $sessionData.getCustomField("relation_snippet_field"))
+#set($table = $field.getTableContainingField())
+#set($relatedTable = $field.getRelatedTable())
+#set($relatedRowId = $sessionData.getRowId($relatedTable))
+#set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
+#set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
+#foreach($relatedField in $relatedDataRow.keySet())
+  #if(!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey()))
+  #set($fieldValue = $relatedDataRow.get($relatedField))
+    #if(($fieldValue != "") && ($fieldValue != "false"))
+      #set($snippet = "$snippet$fieldValue, ")
+    #end
+  #end
+#end
+<h1><span class="count"><img src="resources/edit_nav/up.png" alt="up" /></span>$field.getSimplifiedFieldName()#if($fieldDisplayValue != ""): $fieldDisplayValue#end</h1>
+<div class="record_snippets">
+  <div class="snippet">$snippet</div>
+</div>
