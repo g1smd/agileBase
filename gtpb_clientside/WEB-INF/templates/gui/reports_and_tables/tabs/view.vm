@@ -146,14 +146,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
             #if($numRelatedRows > 0)There are $numRelatedRows related $reportFieldTable.getSimpleName() records#end
 ##             <td>$numRelatedRows related records</td>
 ##             <td>#if($numRelatedRows > 0)not shown #else &nbsp; #end</td>
-          #end ## end if number of related rows is a manageable amount
-          #if($related || $current) </div> #set($related = false) #set($current = false) #end
-        #else
-          Debug: here
+            #end ## end if number of related rows is a manageable amount
+            #if($related || $current) Ending div</div> #set($related = false) #set($current = false) #end
+          #end
         #end
-      #else
-        Debug: here 2
-      #end
 		#end
   </div></div>
 #end
