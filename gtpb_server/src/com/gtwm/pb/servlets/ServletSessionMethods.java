@@ -387,7 +387,7 @@ public final class ServletSessionMethods {
 		if (key == null || (internalFieldName == null && fieldName == null)
 				|| (internalTableName == null && tableName == null && internalFieldName == null)) {
 			throw new MissingParametersException(
-					"fieldkey, reportkey, custominternalfieldname/(customfieldname plus custominternaltablename/customtablename) must be supplied to set a custom session field");
+					"fieldkey, custominternalfieldname/(customfieldname plus custominternaltablename/customtablename) must be supplied to set a custom session field");
 		}
 		TableInfo parentTable = null;
 		BaseField field;

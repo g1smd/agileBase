@@ -1,3 +1,6 @@
+#if(!$field)
+  #set($field = $sessionData.getCustomField("relation_snippet_field"))
+#end
 #set($relatedTable = $field.getRelatedTable())
 #set($relatedRowIdValue = $tableDataRow.get($field.getRelatedField()))
 #set($snippet = "")
