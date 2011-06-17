@@ -151,6 +151,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
         #else
           Debug: here
         #end
+      #else
+        Debug: here 2
       #end
 		#end
   </div></div>
