@@ -2703,6 +2703,7 @@ public final class DataManagement implements DataManagementInfo {
 						String valueString = randomDataRow.getValue(field).getKeyValue();
 						if (valueString != null) {
 							if (!valueString.equals("")) {
+								valueString = valueString.replace(",", "");
 								int integer = Integer.valueOf(valueString);
 								integer = integer * randomMultiplier;
 								IntegerValue intValue = new IntegerValueDefn(integer);
@@ -2713,6 +2714,7 @@ public final class DataManagement implements DataManagementInfo {
 						String valueString = randomDataRow.getValue(field).getKeyValue();
 						if (valueString != null) {
 							if (!valueString.equals("")) {
+								valueString = valueString.replace(",", "");
 								double decimal = Double.valueOf(valueString);
 								logger.debug("" + decimal + " x " + randomMultiplier + " = " + decimal * randomMultiplier);
 								decimal = decimal * randomMultiplier;
