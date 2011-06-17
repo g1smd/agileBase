@@ -253,15 +253,16 @@ function relationChangeActions(oHidden) {
 	var rowId = jqHidden.val();
 	var internalFieldName = jqHidden.attr("internalfieldname");
 	var internalTableName = jqHidden.attr("internaltablename");
-	var snippetId = "dependent_relation_" + internalTableName + "_" + internalFieldName;
+	var snippetId = "dependent_relation_" + internalTableName + "_"
+			+ internalFieldName;
 	$.post("AppController.servlet", {
-		"return": "gui/edit_nav/relation_snippet",
-		set_custom_field: true,
-		fieldkey: "relation_snippet_field",
-		custominternaltablename: internalTableName,
-		custominternalfieldname: internalFieldName
+		"return" : "gui/edit_nav/relation_snippet_direct",
+		set_custom_field : true,
+		fieldkey : "relation_snippet_field",
+		custominternaltablename : internalTableName,
+		custominternalfieldname : internalFieldName
 	}, function(data) {
-		$("#" + snippetId).replaceWith(data);
+		$("#" + snippetId).html(data);
 	});
 }
 
