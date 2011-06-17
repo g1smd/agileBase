@@ -67,11 +67,11 @@
       <div class="slide_controls">
         <div class="button_group">
           <button name="new" id="control_new" internaltablename="$internalTableName"><img src="resources/toolbar/new.png" /> new</button>
-          <button name="clone" id="control_clone" internaltablename="$internalTableName"><img src="resources/toolbar/clone.png" /> clone</button>
+          <button name="clone" id="control_clone" internaltablename="$internalTableName" rowid="$sessionData.getRowId()"><img src="resources/toolbar/clone.png" /> clone</button>
           <button name="delete" id="control_delete" internaltablename="$internalTableName" rowid="$sessionData.getRowId()"><img src="resources/toolbar/delete.png" /> delete</button>
         </div>
         <div class="button_group">
-          <button name="print" id="control_print" internaltablename="$sessionTable.getInternalTableName()"><img src="resources/toolbar/print_only.png" /> print</button>
+          <button name="print" id="control_print" internaltablename="$sessionTable.getInternalTableName()" rowid="$sessionData.getRowId()"><img src="resources/toolbar/print_only.png" /> print</button>
         </div>
       </div>
     </div> <!-- slide --> 
