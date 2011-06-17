@@ -2437,7 +2437,12 @@ public final class DataManagement implements DataManagementInfo {
 				// There will always be at least one row in the master report,
 				// if there are no related rows the value will be null
 				if (!results.wasNull()) {
-					relatedRowIds.add(results.getInt(1));
+					int rowId = results.getInt(1);
+					if (rowId != 0) {
+						relatedRowIds.add(results.getInt(1));
+					} else {
+						logger.warn("Row ID of 0 found");
+					}
 				}
 			}
 			results.close();
