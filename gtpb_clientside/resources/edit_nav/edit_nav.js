@@ -76,6 +76,7 @@ $(document)
 															function(xml) {
 																var jqXml = $(xml);
 																if (jqXml.find("response").text() == 'ok') {
+																	dataChanged = true; // mark level up for reload
 																	moveUp();
 																} else {
 																	var prompt = jqXml.find("exception").text()
