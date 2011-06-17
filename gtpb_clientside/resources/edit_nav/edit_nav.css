@@ -75,6 +75,13 @@ body {
   box-align: center;
   
   overflow: visible; /* necessary for FF */
+  
+  /* Also style centrebox */
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e6e7ea)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #e6e7ea); /* for firefox 3.6+ */
+  background: -ms-linear-gradient(top,  #fff,  #e6e7ea);
+  background: linear-gradient(top,  #fff,  #e6e7ea);
+  
 }
 
 .reportDataView .block:hover {
