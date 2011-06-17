@@ -53,7 +53,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.math.util.MathUtils;
 import com.gtwm.pb.auth.PrivilegeType;
@@ -2435,7 +2434,11 @@ public final class DataManagement implements DataManagementInfo {
 			statement.setInt(1, masterRowId);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
-				relatedRowIds.add(results.getInt(1));
+				// There will always be at least one row in the master report,
+				// if there are no related rows the value will be null
+				if (!results.wasNull()) {
+					relatedRowIds.add(results.getInt(1));
+				}
 			}
 			results.close();
 			statement.close();
