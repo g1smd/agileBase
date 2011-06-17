@@ -142,6 +142,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		        #end ## end foreach related row id
           #else
 		        #set($rowCount = $rowCount+1)
+            Debug: $numRelatedRows related records
             #if($numRelatedRows > 0)There are $numRelatedRows related $reportFieldTable.getSimpleName() records#end
 ##             <td>$numRelatedRows related records</td>
 ##             <td>#if($numRelatedRows > 0)not shown #else &nbsp; #end</td>
