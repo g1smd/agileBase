@@ -2714,6 +2714,7 @@ public final class DataManagement implements DataManagementInfo {
 						if (valueString != null) {
 							if (!valueString.equals("")) {
 								double decimal = Double.valueOf(valueString);
+								logger.debug("" + decimal + " x " + randomMultiplier + " = " + decimal * randomMultiplier);
 								decimal = decimal * randomMultiplier;
 								DecimalValue decimalValue = new DecimalValueDefn(decimal);
 								dataToSave.put(field, decimalValue);
