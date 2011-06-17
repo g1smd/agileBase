@@ -269,6 +269,7 @@ function relationChangeActions(oHidden) {
 					function(data) {
 						var jqSnippet = $("#" + snippetId);
 						jqSnippet.html(data);
+						jqSnippet.addClass("active");
 						jqSnippet.attr("rowid", rowId);
 						if (!jqSnippet.hasClass("active")) {
 							jqSnippet.addClass("active");
@@ -277,7 +278,7 @@ function relationChangeActions(oHidden) {
 					});
 }
 
-function relationClick(var jqDependentTable) {
+function relationClick(jqDependentTable) {
 	var internalTableName = jqDependentTable
 	.attr("internaltablename");
 	var rowId = jqDependentTable.attr("rowid");
