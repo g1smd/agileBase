@@ -3,6 +3,7 @@
 #set($relatedTable = $field.getRelatedTable())
 #set($relatedRowId = $sessionData.getRowId($relatedTable))
 #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
+#set($snippet = "")
 #set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
 #foreach($relatedField in $relatedDataRow.keySet())
   #if(!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey()))

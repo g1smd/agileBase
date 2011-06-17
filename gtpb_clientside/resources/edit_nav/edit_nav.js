@@ -255,6 +255,7 @@ function relationChangeActions(oHidden) {
 	var internalTableName = jqHidden.attr("internaltablename");
 	var snippetId = "dependent_relation_" + internalTableName + "_"
 			+ internalFieldName;
+	alert("snippetId " + snippetId);
 	$.post("AppController.servlet", {
 		"return" : "gui/edit_nav/relation_snippet_direct",
 		set_custom_field : true,
