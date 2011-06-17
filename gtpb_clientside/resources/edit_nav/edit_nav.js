@@ -77,7 +77,7 @@ $(document)
 														{
 															"return" : "gui/resources/xmlreturn_rowid",
 															set_table : internalTableName,
-															set_row_id: rowId,
+															set_row_id : rowId,
 															clone_record : true
 														},
 														function(xml) {
@@ -117,7 +117,7 @@ $(document)
 																var jqXml = $(xml);
 																if (jqXml.find("response").text() == 'ok') {
 																	dataChanged = true; // mark level up for
-																											// reload
+																	// reload
 																	moveUp();
 																} else {
 																	var prompt = jqXml.find("exception").text()
@@ -151,11 +151,19 @@ $(document)
 															});
 										}
 									});
-					$("button#control_print").live('click', function() {
-						var internalTableName = $(this).attr("internaltablename");
-						var rowId = $(this).attr("rowid");
-            var oPrintWin=window.open('AppController.servlet?return=gui/printouts/pane2_printout_wrapper&set_table=' + internalTableName + '&set_row_id=' + rowId,'print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes');	
-					});
+					$("button#control_print")
+							.live(
+									'click',
+									function() {
+										var internalTableName = $(this).attr("internaltablename");
+										var rowId = $(this).attr("rowid");
+										var oPrintWin = window
+												.open(
+														'AppController.servlet?return=gui/printouts/pane2_printout_wrapper&set_table='
+																+ internalTableName + '&set_row_id=' + rowId,
+														'print_window',
+														'toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes');
+									});
 					// Initialise home screen for user
 					createLevel(homeUrl);
 					initialiseHeight();
@@ -231,6 +239,17 @@ function initialiseSlides() {
 	$("textarea").blur(function() {
 		$(this).removeClass("editing");
 	});
+}
+
+/**
+ * Called by fRelationPickers() in tabs.js when a relation is changed
+ * 
+ * @param oHidden
+ *          The hidden field containing the row ID of the new selection and
+ *          other details
+ */
+function relationChangeActions(oHidden) {
+	alert("relation change");
 }
 
 function initialiseDependencies() {

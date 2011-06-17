@@ -359,7 +359,12 @@ function fRelationPickers() {
 					if ((!bIsGlobalEdit && bIsAutoUpdate)
 							|| (bIsGlobalEdit && !bIsAutoUpdate)) {
 						new fChange(this);
-						alert('change');
+						try {
+							relationChangeActions(this);
+						} catch(err) {
+							// relationChangeActions may not exist,
+							// it is only defined in some circumstances
+						}
 					}
 				};
 				oHidden.label = jqHidden.next()[0];
