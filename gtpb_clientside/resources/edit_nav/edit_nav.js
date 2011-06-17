@@ -154,7 +154,7 @@ $(document)
 					$("button#control_print").live('click', function() {
 						var internalTableName = $(this).attr("internaltablename");
 						var rowId = $(this).attr("rowid");
-            var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/printouts/pane2_printout_wrapper&set_table=' + internalTableName + '&set_row_id=' + rowId,'print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes');	
+            var oPrintWin=window.open('AppController.servlet?return=gui/printouts/pane2_printout_wrapper&set_table=' + internalTableName + '&set_row_id=' + rowId,'print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes');	
 					});
 					// Initialise home screen for user
 					createLevel(homeUrl);
