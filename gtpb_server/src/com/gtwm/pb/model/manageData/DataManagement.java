@@ -1526,9 +1526,12 @@ public final class DataManagement implements DataManagementInfo {
 				// for (TableInfo dependentTable : tablesWithDependentRecords) {
 				// dependentTables += dependentTable.getTableName() + "\n";
 				// }
-				throw new DataDependencyException(
-						"Record has dependent data stored within the following tables:\n"
-								+ tablesWithDependentRecords);
+				String warning = "Other data is dependent on this\n";
+				for (TableInfo dependentTable : tablesWithDependentRecords) {
+					warning += dependentTable.getSimpleName() + "\n";
+				}
+				warning += "\nDelete all of this data?";
+				throw new DataDependencyException(warning);
 			}
 		}
 
