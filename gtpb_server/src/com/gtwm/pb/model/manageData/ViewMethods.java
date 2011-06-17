@@ -464,23 +464,21 @@ public final class ViewMethods implements ViewMethodsInfo {
 	public Set<Integer> getRelatedRowIds(int masterRowId, TableInfo relatedTable)
 			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException,
 			ObjectNotFoundException {
-		BaseReportInfo sessionReport = this.sessionData.getReport();
-		if (!this.getAuthenticator().loggedInUserAllowedToViewReport(this.request, sessionReport)) {
-			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
-					sessionReport.getParentTable());
-		}
-		return this.databaseDefn.getDataManagement().getRelatedRowIds(sessionReport, masterRowId,
-				relatedTable);
+		return this.getRelatedRowIds(this.sessionData.getTable(), masterRowId, relatedTable);
 	}
 
-	public Set<Integer> getRelatedRowIds(BaseReportInfo masterReport, int masterRowId,
+	public Set<Integer> getRelatedRowIds(TableInfo masterTable, int masterRowId,
 			TableInfo relatedTable) throws DisallowedException, CantDoThatException, SQLException,
 			CodingErrorException, ObjectNotFoundException {
-		if (!this.getAuthenticator().loggedInUserAllowedToViewReport(this.request, masterReport)) {
+		if (!this.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, masterTable)) {
 			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
-					masterReport.getParentTable());
+					masterTable);
 		}
-		return this.databaseDefn.getDataManagement().getRelatedRowIds(masterReport, masterRowId,
+		if (!this.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, relatedTable)) {
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
+					relatedTable);
+		}
+		return this.databaseDefn.getDataManagement().getRelatedRowIds(masterTable, masterRowId,
 				relatedTable);
 	}
 
