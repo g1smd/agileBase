@@ -1608,7 +1608,7 @@ public final class DataManagement implements DataManagementInfo {
 		usageLogger.logReportView(user, report, new HashMap<BaseField, String>(0), 10000,
 				dataFormat.toString());
 		UsageLogger.startLoggingThread(usageLogger);
-		if (filters.size() == 0) {
+		if ((filters.size() == 0) && (cacheSeconds > 0)) {
 			cachedFeed = new CachedFeed(dataFeedString);
 			this.cachedReportFeeds.put(id, cachedFeed);
 		}
@@ -2716,7 +2716,6 @@ public final class DataManagement implements DataManagementInfo {
 							if (!valueString.equals("")) {
 								valueString = valueString.replace(",", "");
 								double decimal = Double.valueOf(valueString);
-								logger.debug("" + decimal + " x " + randomMultiplier + " = " + decimal * randomMultiplier);
 								decimal = decimal * randomMultiplier;
 								DecimalValue decimalValue = new DecimalValueDefn(decimal);
 								dataToSave.put(field, decimalValue);

@@ -248,6 +248,13 @@ var gtwmJson = [{
 	a7d41586083a81733: 'OTHER', // amount
 	aaae6b9240603b247: 'NOTES', // notes
 	bx0rdjzijharzzkq3: 'NOTES' // internal notes
+},
+{
+	anonymise : true,
+	'return': 'blank',
+	set_table : 'ad6f1c3bf77fc5625',
+	table_description: 'c5.1) sales invoices',
+	a6480d8fda5a5b232: 'OTHER' // total
 }];
 
 // a recursive function that moves on to the next table on completion of the
