@@ -70,18 +70,20 @@ $(document)
 									'click',
 									function(event) {
 										var internalTableName = $(this).attr("internaltablename");
+										var rowId = $(this).attr("rowid");
 										$
 												.post(
 														"AppController.servlet",
 														{
 															"return" : "gui/resources/xmlreturn_rowid",
 															set_table : internalTableName,
+															set_row_id: rowId,
 															clone_record : true
 														},
 														function(xml) {
 															var jqXml = $(xml);
 															if (jqXml.find("response").text() == "ok") {
-																var rowId = jqXml.find("rowid").text();
+																rowId = jqXml.find("rowid").text();
 																var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
 																		+ internalTableName
 																		+ "&set_row_id="
@@ -149,6 +151,11 @@ $(document)
 															});
 										}
 									});
+					$("button#control_print").live('click', function() {
+						var internalTableName = $(this).attr("internaltablename");
+						var rowId = $(this).attr("rowid");
+            var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/printouts/pane2_printout_wrapper&set_table=' + internalTableName + '&set_row_id=' + rowId,'print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes');	
+					});
 					// Initialise home screen for user
 					createLevel(homeUrl);
 					initialiseHeight();
