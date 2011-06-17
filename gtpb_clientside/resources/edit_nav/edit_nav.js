@@ -75,7 +75,9 @@ $(document)
 															},
 															function(xml) {
 																var jqXml = $(xml);
-																if (jqXml.find("response").text() != 'ok') {
+																if (jqXml.find("response").text() == 'ok') {
+																	moveUp();
+																} else {
 																	var prompt = jqXml.find("exception").text()
 																			+ '.\n\nDelete all of this?';
 																	if (confirm(prompt)) {
@@ -106,9 +108,6 @@ $(document)
 																}
 															});
 										}
-										var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
-												+ internalTableName + "&clone_record=true";
-										moveOverTo(levelUrl);
 									});
 					// Initialise home screen for user
 					createLevel(homeUrl);
