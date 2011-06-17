@@ -256,16 +256,33 @@ function relationChangeActions(oHidden) {
 	var relatedTableInternalName = jqHidden.attr("gtpb_rowidinternaltablename");
 	var snippetId = "dependent_relation_" + internalTableName + "_"
 			+ relatedTableInternalName;
-	alert("snippetId " + snippetId);
-	$.post("AppController.servlet", {
-		"return" : "gui/edit_nav/relation_snippet_direct",
-		set_custom_field : true,
-		fieldkey : "relation_snippet_field",
-		custominternaltablename : internalTableName,
-		custominternalfieldname : internalFieldName
-	}, function(data) {
-		$("#" + snippetId).html(data);
-	});
+	$
+			.post(
+					"AppController.servlet",
+					{
+						"return" : "gui/edit_nav/relation_snippet_direct",
+						set_custom_field : true,
+						fieldkey : "relation_snippet_field",
+						custominternaltablename : internalTableName,
+						custominternalfieldname : internalFieldName
+					},
+					function(data) {
+						var jqSnippet = $("#" + snippetId);
+						jqSnippet.html(data);
+						jqSnippet.attr("rowid", rowId);
+						if (!jqSnippet.hasClass("active")) {
+							jqSnippet.addClass("active");
+							jqSnippet.click(relationClick(jqSnippet));
+						}
+					});
+}
+
+function relationClick(var jqDependentTable) {
+	var internalTableName = jqDependentTable
+	.attr("internaltablename");
+	var rowId = jqDependentTable.attr("rowid");
+	var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table=" + internalTableName + "&set_row_id=" + rowId;
+	moveUpTo(levelUrl, true);
 }
 
 function initialiseDependencies() {
@@ -290,12 +307,7 @@ function initialiseDependencies() {
 							return;
 						}
 						if (jqDependentTable.hasClass("related")) {
-							var internalTableName = jqDependentTable
-									.attr("internaltablename");
-							var rowId = jqDependentTable.attr("rowid");
-							var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
-									+ internalTableName + "&set_row_id=" + rowId;
-							moveUpTo(levelUrl, true);
+							relationClick(jqDependentTable);
 						} else {
 							// find index of slide to go to
 							var internalTableName = jqDependentTable.attr("id").replace(
