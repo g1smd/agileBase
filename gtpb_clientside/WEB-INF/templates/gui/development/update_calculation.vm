@@ -55,8 +55,8 @@
             		      <option value="VARCHAR" #if ($databaseType.equals("VARCHAR")) selected="selected" #end>Text</option>
             		      <option value="INTEGER" #if ($databaseType.equals("INTEGER")) selected="selected" #end>Whole number</option>
             		      <option value="FLOAT" #if ($databaseType.equals("FLOAT")) selected="selected" #end>Decimal number</option>
-            		      <option value="TIMESTAMP" #if ($databaseType.equals("TIMESTAMP")) selected="selected" #end>Date/time</option>
-            		      <option value="INTERVAL" #if ($databaseType.equals("INTERVAL")) selected="selected" #end>Time interval</option>
+                      <option value="TIMESTAMP" #if ($databaseType.equals("TIMESTAMP")) selected="selected" #end>Date/time</option>
+                      <option value="BOOLEAN" #if ($databaseType.equals("BOOLEAN")) selected="selected" #end>Boolean</option>
             		    </select>
         	      </td>
             </tr>

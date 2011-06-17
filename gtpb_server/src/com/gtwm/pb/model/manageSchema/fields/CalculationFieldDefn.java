@@ -70,6 +70,8 @@ public class CalculationFieldDefn implements CalculationField {
 			return FieldCategory.DATE;
 		case VARCHAR:
 			return FieldCategory.TEXT;
+		case BOOLEAN:
+			return FieldCategory.CHECKBOX;
 		default:
 			throw new CodingErrorException("Unrecognised database field type "
 					+ this.getDbType().toString());
@@ -240,9 +242,9 @@ public class CalculationFieldDefn implements CalculationField {
 		String otherReportName = otherReportCalcField.getParentReport().getReportName();
 		String otherInternalFieldName = anotherFieldDefn.getInternalFieldName();
 		return (thisReportCalcField.getParentReport().getReportName().toLowerCase(Locale.UK)
-				+ this.getFieldName().toLowerCase(Locale.UK) + this.getInternalFieldName())
-				.compareTo(otherReportName.toLowerCase(Locale.UK)
-						+ otherFieldName.toLowerCase(Locale.UK) + otherInternalFieldName);
+				+ this.getFieldName().toLowerCase() + this.getInternalFieldName())
+				.compareTo(otherReportName.toLowerCase()
+						+ otherFieldName.toLowerCase() + otherInternalFieldName);
 	}
 
 	public String toString() {

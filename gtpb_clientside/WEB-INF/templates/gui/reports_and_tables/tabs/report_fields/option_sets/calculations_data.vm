@@ -54,8 +54,8 @@
 		            <option value="VARCHAR">Text</option>
 		            <option value="INTEGER">Whole number</option>
 		            <option value="FLOAT">Decimal number</option>
-		            <option value="TIMESTAMP">Date/time</option>
-		            <option value="INTERVAL">Time interval</option>
+                <option value="TIMESTAMP">Date/time</option>
+                <option value="BOOLEAN">Boolean</option>
 		          </select>
 		</td>
       </tr>
