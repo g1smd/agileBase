@@ -40,8 +40,11 @@ $(document)
 									'click',
 									function(event) {
 										var internalTableName = $(this).attr("internaltablename");
+										$.post("AppController.servlet", {
+											"return": blank
+										});
 										var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
-												+ internalTableName + "&save_new_record=true";
+												+ internalTableName;
 										moveOverTo(levelUrl);
 									});
 					$("button#control_clone")
