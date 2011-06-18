@@ -138,7 +138,7 @@ public class Public extends VelocityViewServlet {
 							throw new CantDoThatException("The report " + report
 									+ " has not been set as publicly exportable");
 						}
-						Map<BaseField, String> filters = getFilters(table, request);
+						Map<BaseField, String> filters = getFilters(report, request);
 						boolean exactFilters = Helpers.valueRepresentsBooleanTrue(request.getParameter("exact_filters"));
 						if (publicAction.equals(PublicAction.GET_REPORT_JSON)) {
 							String reportJSON = this.databaseDefn.getDataManagement()
@@ -309,9 +309,9 @@ public class Public extends VelocityViewServlet {
 		return template;
 	}
 
-	private static Map<BaseField, String> getFilters(TableInfo table, HttpServletRequest request) {
+	private static Map<BaseField, String> getFilters(BaseReportInfo report, HttpServletRequest request) {
 		Map<BaseField, String> filters = new HashMap<BaseField, String>();
-		for (BaseField field : table.getFields()) {
+		for (BaseField field : report.getReportBaseFields()) {
 			String internalFieldName = field.getInternalFieldName();
 			String fieldValue = request.getParameter(internalFieldName);
 			if (fieldValue != null) {

@@ -1593,7 +1593,6 @@ public final class DataManagement implements DataManagementInfo {
 		if (dataFormat.equals(DataFormat.RSS)) {
 			numRows = 100;
 		}
-		logger.debug("Filters are " + filters);
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
 				filters, exactFilters, new HashMap<BaseField, Boolean>(0), numRows,
 				QuickFilterType.AND);
