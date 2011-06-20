@@ -6,8 +6,10 @@
   ## Don't start with a 'raw table' report
   #set($tableReports = $table.getReports())
   #foreach($tableReport in $tableReports)
+    Checking $tableReport<br>
     #if((!$tableReport.equals($table.getDefaultReport())) && ($view.loggedInUserAllowedToViewReport($tableReport)) && (!$tableReport.getReportName().contains("dbvcalc")) && (!$tableReport.getReportName().contains("dbvcrit")))
       #set($report = $tableReport)
+      Using report $report
       #break
     #end
   #end
