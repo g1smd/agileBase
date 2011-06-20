@@ -157,14 +157,14 @@ body {
 }
 
 .dependent_table.cross_reference {
-  border-top: 1px solid #ff8040; /* aB orange */
-  border-left:  1px solid #ff8040;
-  border-right:  1px solid #ff8040; 
+  border-top: 1px solid rgba(255, 128, 64, 0.4); /* aB orange, 40% */
+  /* border-left:  1px solid #ff8040;
+  border-right:  1px solid #ff8040;  */
 }
 
 .dependent_table.cross_reference:last-child {
 	/* with above, forms collapsed borders */
-  border-bottom: 1px solid #ff8040;
+  border-bottom: 1px solid rgba(255, 128, 64, 0.4);
 }
 
 .dependent_table.active {
