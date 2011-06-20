@@ -1,4 +1,5 @@
 #set($report = $sessionData.getReport())
+#set($table = $report.getParentTable())
 #if($report.equals($table.getDefaultReport()))
   ## Don't start with a 'raw table' report
   #set($tableReports = $table.getReports())
