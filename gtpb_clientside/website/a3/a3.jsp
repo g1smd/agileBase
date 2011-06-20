@@ -16,16 +16,16 @@ if (requestURL.contains("appserver.")) {
 		
 		<script type="text/javascript" src="jquery.js"></script>
 		
-        <script language="javascript">
-            $(document).ready(function() {
+    <script language="javascript">
+      $(document).ready(function() {
                 
-                $('.container:first-child').addClass('first');
-                $('.container:last-child').addClass('last');
-                $('.container:nth-child(even)').addClass('alternate');
+        $('.container:first-child').addClass('first');
+        $('.container:last-child').addClass('last');
+        $('.container:nth-child(even)').addClass('alternate');
 
 				$.localScroll({target:'#scroller'});
 				
-                $('.video').each(function() {
+        $('.video').each(function() {
 					$(this).flashembed($(this).attr('url')+'&rel=0&showinfo=0&');
 				});
 				
@@ -34,7 +34,7 @@ if (requestURL.contains("appserver.")) {
 					if ($('#email_input').val() == "your email address") {
 						$('#email_input').val("");
 					}
-				}
+				});
 			});
 		</script>
 <script type="text/javascript">
