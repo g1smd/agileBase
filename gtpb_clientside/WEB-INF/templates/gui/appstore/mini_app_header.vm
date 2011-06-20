@@ -35,7 +35,7 @@
   #if($apps.contains("forms"))
     <div class="button">
       <a href="?return=gui/edit_nav/edit_nav">
-        <img src="resources/toolbar/forms.png" /> Forms
+        <img src="resources/toolbar/contact-new.png" /> Cards
       </a>&nbsp;
     </div>
   #end
