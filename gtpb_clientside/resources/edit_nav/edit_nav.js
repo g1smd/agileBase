@@ -225,7 +225,8 @@ function initialiseSlides() {
 	fComboComponents();
 	fRelationPickers();
 	fDatePickers();
-	/* fTwitter(); */
+	fSexyPost();
+	fTwitter();
 
 	$("input").focus(function() {
 		$(this).addClass("editing");
