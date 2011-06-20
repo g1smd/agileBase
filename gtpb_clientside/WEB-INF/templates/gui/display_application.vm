@@ -19,7 +19,8 @@
 <html>
   <head>
 	#set($appUser = $view.getLoggedInUser())
-    #set($company_name=$appUser.getCompany().getCompanyName())
+  #set($company = $appUser.getCompany())
+  #set($company_name=$company.getCompanyName())
 	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
 	<link href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" type="text/css" rel="stylesheet" />
 	<link href="resources/display_application.css" type="text/css" rel="stylesheet" />      
@@ -90,9 +91,13 @@
               var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/dashboard','info_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')	
         	}
 			
-			function fDashboard() {
-			  document.location = 'AppController.servlet?return=gui/customisations/common/dashboard/dashboard';
-			}
+      function fDashboard() {
+        document.location = 'AppController.servlet?return=gui/customisations/common/dashboard/dashboard';
+      }
+        
+      function fForms() {
+        document.location = 'AppController.servlet?return=gui/edit_nav/edit_nav';
+      }
         
       function fCalendar() {
         document.location = 'AppController.servlet?return=gui/calendar/calendar';
@@ -173,12 +178,16 @@
 			          ## #parse('gui/toolbar/buttons/wiki.vm')
 					  #parse('gui/resources/dashboard_enabled.vm')
 					  #set($userType = $appUser.getUserType())
-					  ## Still allow admins who haven't got a full dashboard to see the info treemap
-					  #if($view.loggedInUserAllowedTo("ADMINISTRATE") && (!$dashboard_enabled || $userType == "OPERATIONAL" || $userType == "EXTERNAL"))
-						  #parse('gui/toolbar/buttons/info.vm')
-					  #end
-					  #parse('gui/toolbar/buttons/dashboard.vm')
-            #parse('gui/toolbar/buttons/calendar.vm')
+            #set($apps = $company.getApps())
+            #if($apps.contains("forms"))
+              #parse("gui/toolbar/buttons/forms.vm")
+            #end
+            #if($apps.contains("calendar"))
+              #parse('gui/toolbar/buttons/calendar.vm')
+            #end
+            #if($apps.contains("dashboard"))
+					    #parse('gui/toolbar/buttons/dashboard.vm')
+            #end
             #parse('gui/toolbar/buttons/apps.vm')
 	          #set($sessionContext = $sessionData.getContext().toString())
 	          #if($sessionContext == "SYSADMIN")

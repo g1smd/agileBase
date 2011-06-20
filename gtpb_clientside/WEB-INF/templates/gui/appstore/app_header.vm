@@ -47,7 +47,7 @@
     #set($left = $left + 100)
     <div class="button" style="left: ${left}px;">
       <a href="?return=gui/edit_nav/edit_nav">
-        <img src="resources/toolbar/forms.png" /><br>Forms
+        <img src="resources/toolbar/contact-new.png" /><br>Cards
       </a>
     </div>
   #end
