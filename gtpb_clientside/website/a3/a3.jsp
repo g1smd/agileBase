@@ -14,7 +14,7 @@ if (requestURL.contains("appserver.")) {
 		  @import url('website/a3/styles-thickbox.css');
 		</style>
 		
-		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="website/scripts/jquery.js"></script>
 		
     <script language="javascript">
       $(document).ready(function() {
