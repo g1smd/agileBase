@@ -23,14 +23,13 @@ if (requestURL.contains("appserver.")) {
         $('.container:last-child').addClass('last');
         $('.container:nth-child(even)').addClass('alternate');
 
-				$.localScroll({target:'#scroller'});
+				//$.localScroll({target:'#scroller'});
 				
-        $('.video').each(function() {
-					$(this).flashembed($(this).attr('url')+'&rel=0&showinfo=0&');
-				});
+        //$('.video').each(function() {
+				//	$(this).flashembed($(this).attr('url')+'&rel=0&showinfo=0&');
+				//});
 				
 				$('#email_input').focus(function() {
-					//TODO: this doesn't seem to work, the focus function doesn't fire
 					if ($('#email_input').val() == "your email address") {
 						$('#email_input').val("");
 					}
