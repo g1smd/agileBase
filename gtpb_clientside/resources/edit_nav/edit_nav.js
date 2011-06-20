@@ -179,7 +179,7 @@ function initialiseHeight() {
 }
 
 function initialiseSlides() {
-	$("#searchbox").keyup(
+	$(".searchbox").keyup(
 			function() {
 				var jqSearchBox = $(this);
 				jqSearchBox.addClass("changed");
