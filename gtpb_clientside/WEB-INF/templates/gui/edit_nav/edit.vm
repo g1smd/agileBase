@@ -56,7 +56,7 @@
             #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
               #set($referencedReport = $field.getReferencedReport())
               #set($referencedTable = $referencedReport.getParentTable())
-              <div class="dependent_table cross_reference" internaltablename="$dependentTable.getInternalTableName()" id="dependent_table_${internalTableName}_${referencedTable.getInternalTableName()}_$rowId">
+              <div class="dependent_table cross_reference" internaltablename="$referencedTable.getInternalTableName()" id="dependent_table_${internalTableName}_${referencedTable.getInternalTableName()}_$rowId">
                 <h1><span class="count"></span>$field</h1>
                 <div class="record_snippets">
                 </div>
