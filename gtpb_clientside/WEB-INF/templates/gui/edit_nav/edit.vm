@@ -11,7 +11,7 @@
   #end
 #end
 #set($referencedTables = $referencedTableReports.keySet())
-<div class="breadcrumb_title">edit $sessionTable.getSimpleName()</div>
+<div class="breadcrumb_title">$sessionTable.getSimpleName()</div>
 <div class="presentation"> 
   <div id="presentation-counter"></div> 
   <div class="slides">
