@@ -311,7 +311,9 @@ function initialiseDependencies() {
 							relationClick(jqDependentTable);
 						} else {
 							// find index of slide to go to
-							var slideNum = $("#slide_" + internalTableName).index();
+							var slideId jqDependentTable.attr("id").replace("dependent_table_",
+							"slide_");
+							var slideNum = $("#" + slideId).index();
 							slideshow.go(slideNum + 1);
 							$(".presentation").scrollTop(0);
 						}
