@@ -114,9 +114,12 @@
    	     top.document.getElementById('button_print').removeAttribute('disabled');
    	     top.document.getElementById('button_links').removeAttribute('disabled');
          top.document.getElementById('button_apps').removeAttribute('disabled');
-   	     if (top.document.getElementById('button_info')) {
-		       top.document.getElementById('button_info').removeAttribute('disabled');
-		     }
+         if (top.document.getElementById('button_forms')) {
+           top.document.getElementById('button_forms').removeAttribute('disabled');
+         }
+         if (top.document.getElementById('button_info')) {
+           top.document.getElementById('button_info').removeAttribute('disabled');
+         }
         </script>
       #else
       <script language=Javascript>
@@ -136,8 +139,11 @@
 	    	    top.document.getElementById('button_export').removeAttribute('disabled');
    	     		top.document.getElementById('button_print').removeAttribute('disabled');
    	     		top.document.getElementById('button_links').removeAttribute('disabled');
+            if (top.document.getElementById('button_forms')) {
+              top.document.getElementById('button_forms').removeAttribute('disabled');
+            }
     				if (top.document.getElementById('button_info')) {
-       	     		  top.document.getElementById('button_info').removeAttribute('disabled');
+              top.document.getElementById('button_info').removeAttribute('disabled');
     				}
         	 #else
         		top.document.getElementById('button_export').setAttribute('disabled','true');
