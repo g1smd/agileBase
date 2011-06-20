@@ -117,9 +117,6 @@
          if (top.document.getElementById('button_forms')) {
            top.document.getElementById('button_forms').removeAttribute('disabled');
          }
-         if (top.document.getElementById('button_info')) {
-           top.document.getElementById('button_info').removeAttribute('disabled');
-         }
         </script>
       #else
       <script language=Javascript>
@@ -139,12 +136,6 @@
 	    	    top.document.getElementById('button_export').removeAttribute('disabled');
    	     		top.document.getElementById('button_print').removeAttribute('disabled');
    	     		top.document.getElementById('button_links').removeAttribute('disabled');
-            if (top.document.getElementById('button_forms')) {
-              top.document.getElementById('button_forms').removeAttribute('disabled');
-            }
-    				if (top.document.getElementById('button_info')) {
-              top.document.getElementById('button_info').removeAttribute('disabled');
-    				}
         	 #else
         		top.document.getElementById('button_export').setAttribute('disabled','true');
         		top.document.getElementById('button_print').setAttribute('disabled','true');
@@ -171,14 +162,15 @@
           top.document.getElementById('filter').removeAttribute('disabled');
     	#end
     	## Enable the dashboard if relevant
-    	#parse('gui/resources/dashboard_enabled.vm')
-    	#if($dashboard_enabled)
-    	  #set($userType = $view.getLoggedInUser().getUserType())
-    	  #if($userType == "EXECUTIVE" || $userType == "MANAGERIAL")
-    	    top.document.getElementById('button_dashboard').removeAttribute('disabled');
-    	  #end
-    	#end
+      if (top.document.getElementById('button_dashboard')) {
+        top.document.getElementById('button_dashboard').removeAttribute('disabled');
+      }
+      if (top.document.getElementById('button_forms')) {
+        top.document.getElementById('button_forms').removeAttribute('disabled');
+      }
+      if (top.document.getElementById('button_calendar')) {
         top.document.getElementById('button_calendar').removeAttribute('disabled');
+      }
 		
 	  function loadPane3() {
 		  var url = 'AppController.servlet?return=$return';
