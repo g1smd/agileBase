@@ -298,10 +298,9 @@ function initialiseDependencies() {
 			.click(
 					function() {
 						var jqDependentTable = $(this);
+						var internalTableName = jqDependentTable.attr("internaltablename");
 						if (!jqDependentTable.hasClass("active")) {
 							if (jqDependentTable.hasClass("has_new")) {
-								internalTableName = jqDependentTable.attr("id").replace(/.*\_/,
-										"");
 								var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
 										+ internalTableName + "&save_new_record=true";
 								moveDownTo(levelUrl);
@@ -312,8 +311,6 @@ function initialiseDependencies() {
 							relationClick(jqDependentTable);
 						} else {
 							// find index of slide to go to
-							var internalTableName = jqDependentTable.attr("id").replace(
-									"dependent_table_", "");
 							var slideNum = $("#slide_" + internalTableName).index();
 							slideshow.go(slideNum + 1);
 							$(".presentation").scrollTop(0);
