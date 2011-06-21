@@ -19,7 +19,9 @@
 ## javascript autocompleter sets the 'q' parameter
 #set($requestParameters = $viewTools.getRequestParameters())
 #set($q = $requestParameters.get("q").get(0))
-#if($q == "--")
+#set($blank_value = "--blank value")
+#if(($blank_value.startsWith($q)) && ($q.length() > 1))
+###if($q.startsW"--")
 --blank value|-1
 #end
 #set($items = $relationField.getItems(true,$q,50))
@@ -30,3 +32,4 @@
 #if($items.size() >= 49)
   [showing top 50 results]|-1
 #end
+add a new one...|-2

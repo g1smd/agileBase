@@ -358,8 +358,15 @@ function fRelationPickers() {
 					// not a global update
 					if ((!bIsGlobalEdit && bIsAutoUpdate)
 							|| (bIsGlobalEdit && !bIsAutoUpdate)) {
-						new fChange(this);
+						if ((!bIsGlobalEdit) && (sValue == "-2")) {
+							// create a new record to link to
+							relationNewRecord(this);
+						} else {
+							// a normal save
+						  new fChange(this);
+						}
 						try {
+							// any additional actions to the save
 							relationChangeActions(this);
 						} catch(err) {
 							// relationChangeActions may not exist,
@@ -397,7 +404,7 @@ function fRelationPickers() {
 		this.field = jqButton.siblings("input.relation_hidden")[0];
 		jqButton.click(fUpdateGlobalRelation);
 	});
-
+	
 	function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
 		jqElement.autocomplete("AppController.servlet", {
 			autoFill : true,
@@ -451,7 +458,13 @@ function fRelationPickers() {
 			bindAutoComplete(jqThis, internalTableName, internalFieldName);
 		}
 	});
-
+  
+	function relationNewRecord(oHidden) {
+		// Identify the related table and identifying field for this relation
+		var internalTableName
+		var internalFieldName = 
+	}
+	
 }
 
 function appendWarningAction() {
