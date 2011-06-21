@@ -573,7 +573,7 @@ function dependentSnippets() {
 		var firstTwoCards = jqSlide.find(".block.current:lt(2)");
 		firstTwoCards.each(function() {
 			var snippetText = $(this).text();
-			jqSnippets.append("<div class='snippet'>" + snippetText + "</div>");
+			jqSnippets.append("<div class='snippet'><img src='gui/edit_nav/right.png'/>" + snippetText + "</div>");
 		});
 	});
 	// add 'new' buttons to any unactivated links
