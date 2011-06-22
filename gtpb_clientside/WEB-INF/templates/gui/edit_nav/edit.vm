@@ -40,7 +40,7 @@
           ## each relation field
           #if($relationFields.size() > 0)
             <div class="related_header">This $sessionTable.getSingularName() belongs to</div>
-            #foreach($relationField in $relationFields)
+            #foreach($field in $relationFields)
               #parse("gui/edit_nav/relation_snippet.vm")
             #end
           #end
