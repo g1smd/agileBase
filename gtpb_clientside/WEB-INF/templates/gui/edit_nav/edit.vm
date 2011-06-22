@@ -30,7 +30,6 @@
   <div id="presentation-counter"></div> 
   <div class="slides">
     <div class="slide"> 
-      <img class="slide_icon" src="resources/icons/applications/tango/$module.getIconPath()" />
       <section class="middle"> 
         <div class="this_table">
           #parse("gui/reports_and_tables/tabs/edit.vm")
