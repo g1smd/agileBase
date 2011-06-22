@@ -51,7 +51,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 		      <tr>
 		        #if($edit_nav)
               <th>&nbsp;</th>
-              <th>$sessionTable.getSimpleName()</th>
+              <th>Edit $sessionTable.getSingularName()</th>
             #else
             <th class="leading">&nbsp;</th>
 		        <th>field</th>
