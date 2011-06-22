@@ -568,7 +568,9 @@ function dependentSnippets() {
 			} else {
 				numCardsText = numCards;
 			}
-			jqSnippets.find(".count").text("(" + numCardsText + ")");
+			if (numCardsText > 1) {
+			  jqSnippets.find(".count").text("(" + numCardsText + ")");
+			}
 		}
 		var firstTwoCards = jqSlide.find(".block.current:lt(2)");
 		firstTwoCards.each(function() {
