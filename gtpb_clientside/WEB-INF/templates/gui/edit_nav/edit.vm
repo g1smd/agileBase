@@ -3,6 +3,18 @@
 #set($internalTableName = $sessionTable.getInternalTableName())
 #set($rowId = $sessionData.getRowId())
 #set($fields = $sessionTable.getFields())
+#set($relationFields = [])
+#foreach($field in $fields)
+  #if($field.getFieldCategory() == "RELATION")
+    #set($success = $relationFields.add($field))
+  #end
+#end
+#set($crossReferencedFields = [])
+#foreach($field in $fields)
+  #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
+    #set($success = $crossReferencedFields.add($field))
+  #end
+#end
 #set($referencedTableReports = {})
 #foreach($field in $fields)
   #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
@@ -26,11 +38,13 @@
             #set($tableDataRow = $view.getTableDataRow())
           #end
           ## each relation field
-          #foreach($field in $fields)
-            #if($field.getFieldCategory() == "RELATION")
+          #if($relationFields.size() > 0)
+            <div class="related_header">This $sessionTable.getSingularName() belongs to</div>
+            #foreach($relationField in $relationFields)
               #parse("gui/edit_nav/relation_snippet.vm")
             #end
           #end
+          <div class="related_header">Related data</div>
           ## dependent child tables
           #set($primaryKey = $sessionTable.getPrimaryKey())
           #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
@@ -54,8 +68,9 @@
             #end
           #end
           ## cross-reference fields
-          #foreach($field in $fields)
-            #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
+          #if($crossReferencedFields.size() > 0)
+            <div class="related_header">See also</div>
+            #foreach($field in $crossReferencedFields)
               #set($referencedReport = $field.getReferencedReport())
               #set($referencedTable = $referencedReport.getParentTable())
               <div class="dependent_table cross_reference" internaltablename="$referencedTable.getInternalTableName()" id="dependent_table_${internalTableName}_${referencedTable.getInternalTableName()}_$rowId">
