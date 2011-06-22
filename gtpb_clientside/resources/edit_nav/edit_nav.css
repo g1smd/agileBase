@@ -378,9 +378,10 @@ a.jumpto_table.current {
 .related_header {
   color: white;
   background-color: #486f98;
-  font-weight: bold;
   border-bottom: 1px solid #ff8040;
   margin-bottom: 0.5em;
+  padding-left: 0.5em;
+  padding-top: 0.5em;
 }
 
 img.go_right {
