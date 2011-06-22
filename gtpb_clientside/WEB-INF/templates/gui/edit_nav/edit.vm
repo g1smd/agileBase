@@ -44,7 +44,7 @@
               #parse("gui/edit_nav/relation_snippet.vm")
             #end
           #end
-          <div class="related_header">Related data</div>
+          <div class="related_header">Add/view data</div>
           ## dependent child tables
           #set($primaryKey = $sessionTable.getPrimaryKey())
           #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
