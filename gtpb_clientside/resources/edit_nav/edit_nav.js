@@ -325,6 +325,9 @@ function initialiseDependencies() {
 			slideshow.prev();
 		}
 	});
+	$(".slide_icon").live('click', function() {
+		moveUp();
+	});
 
 	slideshow.go(1);
 	$(".presentation").scrollTop(0);
