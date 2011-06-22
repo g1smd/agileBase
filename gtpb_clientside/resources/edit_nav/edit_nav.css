@@ -398,6 +398,6 @@ img.go_new {
   display: block;
 }
 
-.active img:go_right {
+.active img.go_right {
   display: block;
 }
