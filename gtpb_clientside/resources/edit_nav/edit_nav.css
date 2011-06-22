@@ -147,6 +147,8 @@ body {
   top: 0;
   left: 0;
   cursor: pointer;
+  padding-left: 1em;
+  padding-top: 1em;
 }
 
 .dependent_tables {
@@ -202,7 +204,7 @@ body {
 }
 
 .snippet {
-  height: 1.2em;
+  height: 1.3em;
   width: 100%;
   overflow: hidden;
   color: #486F98;
