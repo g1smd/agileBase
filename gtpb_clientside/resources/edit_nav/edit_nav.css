@@ -378,6 +378,7 @@ a.jumpto_table.current {
   color: white;
   background-color: #486f98;
   font-weight: bold;
+  border: 1px solid #ff8040;
 }
 
 img.go_right {
