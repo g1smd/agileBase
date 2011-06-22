@@ -373,3 +373,21 @@ a.jumpto_table.current {
 .changed {
   text-decoration: underline;
 }
+
+img.go_right {
+  display: none;
+  float: left;
+}
+
+img.go_new {
+	display: none;
+  float: left;
+}
+
+.has_new img.go_new {
+  display: block;
+}
+
+.active img:go_right {
+  display: block;
+}

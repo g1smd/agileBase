@@ -11,7 +11,7 @@
   #end
 #end
 #set($referencedTables = $referencedTableReports.keySet())
-<div class="breadcrumb_title">edit $sessionTable.getSimpleName()</div>
+<div class="breadcrumb_title">edit $sessionTable.getSingularName()</div>
 <div class="presentation"> 
   <div id="presentation-counter"></div> 
   <div class="slides">
@@ -41,7 +41,9 @@
                 #foreach($report in $dependentTable.getReports())
                   #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
                     <div class="dependent_table" internaltablename="$dependentTable.getInternalTableName()" id="dependent_table_${internalTableName}_${dependentTable.getInternalTableName()}_$rowId">
-                      <h1><span class="count"></span>$dependentTable.getSimpleName()</h1>
+                      <img src="resources/edit_nav/new_flat.png" class="go_new" />
+                      <img src="resources/edit_nav/right.png" class="go_right" />
+                      <h1>$dependentTable.getSimpleName() <span class="count"></span></h1>
                       <div class="record_snippets">
                       </div>
                     </div>
