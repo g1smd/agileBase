@@ -460,9 +460,10 @@ function fRelationPickers() {
 	});
   
 	function relationNewRecord(oHidden) {
+		alert('new record');
 		// Identify the related table and identifying field for this relation
-		var internalTableName
-		var internalFieldName = 
+		// var internalTableName
+		// var internalFieldName = 
 	}
 	
 }

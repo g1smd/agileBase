@@ -50,6 +50,13 @@ public interface TableInfo extends Comparable<TableInfo> {
 	 * This can be useful for displaying in the end user UI
 	 */
 	public String getSimpleName();
+	
+	/**
+	 * First get the simple name, then return the singular version of that.
+	 * 
+	 * For example, given a table name 'a1) organisations', return 'organisation'
+	 */
+	public String getSingularName();
 
 	public String getTableDescription();
 

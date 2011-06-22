@@ -568,12 +568,12 @@ function dependentSnippets() {
 			} else {
 				numCardsText = numCards;
 			}
-			jqSnippets.find(".count").text(numCardsText + " ");
+			jqSnippets.find(".count").text("(" + numCardsText + ")");
 		}
 		var firstTwoCards = jqSlide.find(".block.current:lt(2)");
 		firstTwoCards.each(function() {
 			var snippetText = $(this).text();
-			jqSnippets.append("<div class='snippet'><img src='resources/edit_nav/right.png'/>" + snippetText + "</div>");
+			jqSnippets.append("<div class='snippet'>" + snippetText + "</div>");
 		});
 	});
 	// add 'new' buttons to any unactivated links
@@ -586,8 +586,7 @@ function dependentSnippets() {
 							if ((!jqSnippets.hasClass("has_new"))
 									&& (!jqSnippets.hasClass("related"))) {
 								jqSnippets.addClass("has_new");
-								var snippetHtml = "<img src='resources/toolbar/new.png' style='float: left'/>";
-								snippetHtml += "&nbsp;" + jqSnippets.find("h1").text();
+								var snippetHtml = "&nbsp;" + jqSnippets.find("h1").text();
 								jqSnippets.find("h1").html(snippetHtml);
 							}
 						}

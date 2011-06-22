@@ -44,6 +44,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import org.grlea.log.SimpleLogger;
+import javatools.parsers.PlingStemmer;
 
 @Entity
 public class TableDefn implements TableInfo {
@@ -70,7 +71,7 @@ public class TableDefn implements TableInfo {
 
 	@Id
 	// Hibernate note: don't use @GeneratedValue, see section 4.3 of the manual
-	// wrt equals and hashCode
+	// w.r.t. equals and hashCode
 	public String getInternalTableName() {
 		return this.internalTableName;
 	}
@@ -84,6 +85,9 @@ public class TableDefn implements TableInfo {
 
 	public synchronized void setTableName(String tableName) {
 		this.tableName = tableName;
+		// reset other forms of name (they'll be regenerated when the relevant getters are called)
+		this.simpleName = null;
+		this.singularName = null;
 	}
 
 	public synchronized void setTableDescription(String tableDesc) {
@@ -101,6 +105,15 @@ public class TableDefn implements TableInfo {
 		}
 		this.simpleName = Naming.getSimpleName(this.getTableName());
 		return this.simpleName;
+	}
+	
+	@Transient
+	public String getSingularName() {
+		if (this.singularName != null) {
+			return this.singularName;
+		}
+		String simpleName = this.getSimpleName();
+		return PlingStemmer.stem(simpleName); 
 	}
 
 	public synchronized String getTableDescription() {
@@ -433,6 +446,8 @@ public class TableDefn implements TableInfo {
 	private boolean tableFormPublic = false;
 	
 	private volatile String simpleName = null;
+	
+	private volatile String singularName = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(TableDefn.class);
 }
