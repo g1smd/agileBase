@@ -430,3 +430,7 @@ img.go_new {
   overflow-x: auto;
   height: 100%;
 }
+
+.pane1 h2 {
+  height: auto;
+}
