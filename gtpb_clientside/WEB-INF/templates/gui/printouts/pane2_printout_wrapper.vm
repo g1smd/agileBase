@@ -206,7 +206,6 @@
         oToolbar.appendChild(oRadio);
         oToolbar.appendChild(document.createTextNode(' no custom printout available '));
       #end
-		}
         
         var oToolbar=document.createElement('div');
         oToolbar.setAttribute('id','toolbarDiv');
