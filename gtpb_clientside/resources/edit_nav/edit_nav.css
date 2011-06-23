@@ -441,6 +441,6 @@ img.go_new {
   background: none;
   font-style: normal;
   margin-bottom: auto;
-  padding: auto;
+  padding: 0;
   text-align: left;
 }
