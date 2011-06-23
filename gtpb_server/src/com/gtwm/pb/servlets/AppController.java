@@ -18,9 +18,11 @@
 package com.gtwm.pb.servlets;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Map;
 import java.io.IOException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -37,11 +39,19 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.exception.ParseErrorException;
 import com.gtwm.pb.integration.MediaWikiManagement;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
+import com.gtwm.pb.model.interfaces.BaseReportInfo;
+import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
+import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
+import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
+import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ViewMethodsInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.WikiManagementInfo;
+import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.BaseValue;
+import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.manageData.SessionData;
 import com.gtwm.pb.model.manageData.ViewMethods;
 import com.gtwm.pb.model.manageData.ViewTools;
@@ -50,6 +60,8 @@ import com.gtwm.pb.model.manageSchema.DatabaseDefn;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.auth.DisallowedException;
+import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.SessionAction;
 import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.ResponseReturnType;
@@ -216,7 +228,8 @@ public final class AppController extends VelocityViewServlet {
 					ServletSessionMethods.clearAllReportFilterValues(sessionData);
 					break;
 				case SET_GLOBAL_REPORT_FILTER_STRING:
-					ServletSessionMethods.setReportGlobalFilterString(sessionData, request, databaseDefn);
+					ServletSessionMethods.setReportGlobalFilterString(sessionData, request,
+							databaseDefn);
 					break;
 				case SET_REPORT_SORT:
 					ServletSessionMethods.setReportSort(sessionData, request, databaseDefn);
@@ -327,8 +340,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletAuthMethods.addUser(sessionData, request, databaseDefn.getAuthManager());
 					break;
 				case REMOVE_USER:
-					ServletAuthMethods.removeUser(sessionData, request,
-							databaseDefn);
+					ServletAuthMethods.removeUser(sessionData, request, databaseDefn);
 					break;
 				case UPDATE_USER:
 					ServletAuthMethods.updateUser(sessionData, request,
@@ -342,8 +354,7 @@ public final class AppController extends VelocityViewServlet {
 							databaseDefn.getAuthManager());
 					break;
 				case REMOVE_ROLE:
-					ServletAuthMethods.removeRole(sessionData, request,
-							databaseDefn);
+					ServletAuthMethods.removeRole(sessionData, request, databaseDefn);
 					break;
 				case ASSIGN_USER_TO_ROLE:
 					ServletAuthMethods.assignUserToRole(request, databaseDefn.getAuthManager());
@@ -394,7 +405,8 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.updateReport(sessionData, request, databaseDefn);
 					break;
 				case UPLOAD_CUSTOM_TEMPLATE:
-					ServletSchemaMethods.uploadCustomReportTemplate(sessionData, request, databaseDefn, multipartItems);
+					ServletSchemaMethods.uploadCustomReportTemplate(sessionData, request,
+							databaseDefn, multipartItems);
 					break;
 				case REMOVE_REPORT:
 					ServletSchemaMethods.removeReport(sessionData, request, databaseDefn);
@@ -802,6 +814,22 @@ public final class AppController extends VelocityViewServlet {
 				context.put("sessionData", sessionData);
 			}
 			context.put("viewTools", new ViewTools(request, response, this.webAppRoot));
+			// If a custom template, add in field variables from session table
+			// and report
+			if (templateName != null) {
+				if (templateName.startsWith("uploads/")) {
+					try {
+						addCurrentDataToContext(context, sessionData, request, viewMethods);
+					} catch (AgileBaseException abex) {
+						logger.debug("Error preparing uploaded custom template variables: " + abex);
+						viewMethods.setException(abex);
+					} catch (SQLException sqlex) {
+						logger.debug("SQL Error preparing uploaded custom template variables: "
+								+ sqlex);
+						viewMethods.setException(sqlex);
+					}
+				}
+			}
 		} catch (ObjectNotFoundException onfex) {
 			ServletUtilMethods.logException(onfex, request, "Error creating view methods object");
 		}
@@ -820,6 +848,46 @@ public final class AppController extends VelocityViewServlet {
 			logger.error("Syntax error in the template: " + pee);
 		}
 		return template;
+	}
+
+	/**
+	 * Add Velocity variables to the Velocity context for each field in the
+	 * current report (values from the current report row) and current table
+	 */
+	private static void addCurrentDataToContext(Context context, SessionDataInfo sessionData,
+			HttpServletRequest request, ViewMethodsInfo view) throws DisallowedException,
+			ObjectNotFoundException, CodingErrorException, CantDoThatException, SQLException {
+		BaseReportInfo report = sessionData.getReport();
+		int rowId = sessionData.getRowId();
+		TableInfo table = sessionData.getTable();
+		Map<BaseField, String> filters = new HashMap<BaseField, String>();
+		filters.put(table.getPrimaryKey(), String.valueOf(rowId));
+		List<DataRowInfo> reportDataRows = view.getReportDataRows(report, 1, filters, true);
+		// There will be only one
+		for (DataRowInfo dataRow : reportDataRows) {
+			for (ReportFieldInfo reportField : report.getReportFields()) {
+				BaseField field = reportField.getBaseField();
+				String rinsedFieldName = Helpers.rinseString(
+						reportField.getFieldName().toLowerCase()).replace(" ", "_");
+				DataRowFieldInfo value = dataRow.getValue(field);
+				if (field instanceof TextField) {
+					context.put(rinsedFieldName, value.getKeyValue());
+					context.put(field.getInternalFieldName(), value.getKeyValue());
+				} else {
+					context.put(rinsedFieldName, value.getDisplayValue());
+					context.put(field.getInternalFieldName(), value.getDisplayValue());
+				}
+			}
+		}
+		Map<BaseField, BaseValue> tableData = view.getTableDataRow();
+		for (Map.Entry<BaseField, BaseValue> tableRow : tableData.entrySet()) {
+			BaseField field = tableRow.getKey();
+			String value = tableRow.getValue().toString();
+			String rinsedFieldName = Helpers.rinseString(field.getFieldName().toLowerCase())
+					.replace(" ", "_");
+			context.put(rinsedFieldName, value);
+			context.put(field.getInternalFieldName(), value);
+		}
 	}
 
 	/**
