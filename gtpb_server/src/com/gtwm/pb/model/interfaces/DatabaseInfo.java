@@ -38,6 +38,9 @@ import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+
 /**
  * Contains a collection of tables and reports (database views). It is the main
  * repository of schema functionality. Tables in turn contain fields, and
@@ -164,6 +167,12 @@ public interface DatabaseInfo {
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
 			String newReportName, String newReportDesc, ModuleInfo newModule)
 			throws DisallowedException, CantDoThatException, SQLException, ObjectNotFoundException;
+
+	/**
+	 * Attach a custom template to a report for printout / outputs
+	 */
+	public void uploadCustomReportTemplate(HttpServletRequest request, BaseReportInfo report,
+			String fileName, List<FileItem> multipartItems) throws DisallowedException, ObjectNotFoundException, CantDoThatException, FileUploadException;
 
 	/**
 	 * 

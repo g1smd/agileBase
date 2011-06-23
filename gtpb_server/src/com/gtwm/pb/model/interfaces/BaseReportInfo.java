@@ -152,6 +152,13 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	public Map<BaseField, String> getGlobalFilterValues(String globalFilterString) throws CodingErrorException;
 	
 	/**
+	 * Return the name of a custom printout / output template that's been uploaded for this report
+	 */
+	public String getCustomTemplateName();
+	
+	public void setCustomTemplateName(String templateName);
+	
+	/**
 	 * Return whether the row count is definitive or an estimate based on a
 	 * sample of data
 	 */

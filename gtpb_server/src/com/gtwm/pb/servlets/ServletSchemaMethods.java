@@ -20,12 +20,18 @@ package com.gtwm.pb.servlets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
 import com.gtwm.pb.auth.Company;
@@ -657,6 +663,7 @@ public final class ServletSchemaMethods {
 			rollbackConnections(conn);
 			// remove report from memory
 			if (newReport != null) {
+				// TODO: Eclipse reports this as dead code, why?
 				if (table.getReports().contains(newReport)) {
 					table.removeReport(newReport);
 				}
@@ -668,6 +675,26 @@ public final class ServletSchemaMethods {
 		}
 		// change the session report to update pane 2 & 3
 		sessionData.setReport(newReport);
+	}
+
+	//TODO: this upload could take significant time, think whether it's possible to un-synchronize
+	public synchronized static void uploadCustomReportTemplate(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn, List<FileItem> multipartItems) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+		// TODO: use ServletUtilMethods.getReportForRequest but updating it for multi-part form data
+		BaseReportInfo report = sessionData.getReport();
+		String templateName = ServletUtilMethods.getParameter(request, "templatename", multipartItems);
+		try {
+			HibernateUtil.startHibernateTransaction();
+			databaseDefn.uploadCustomReportTemplate(request, report, templateName, multipartItems);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("template upload failed", hex);
+		} catch (FileUploadException fuex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("template upload failed", fuex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
 	}
 
 	public synchronized static void updateReport(SessionDataInfo sessionData,
