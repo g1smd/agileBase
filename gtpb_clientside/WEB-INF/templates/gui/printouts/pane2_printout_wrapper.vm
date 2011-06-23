@@ -106,7 +106,7 @@
 		    jqIframe.attr('src','AppController.servlet?return=gui/printouts/record');
 		  } else if(printoutType == 'custom_template') {
         jqIframe.attr('src','AppController.servlet?return=gui/printouts/custom_record');
-      } else
+      } else {
 		    jqIframe.attr('src','AppController.servlet?return=gui/printouts/records');
 		  }
 		}
@@ -206,6 +206,7 @@
         oToolbar.appendChild(oRadio);
         oToolbar.appendChild(document.createTextNode(' no custom printout available '));
       #end
+		}
         
         var oToolbar=document.createElement('div');
         oToolbar.setAttribute('id','toolbarDiv');
