@@ -193,7 +193,7 @@
       #if($report.getCustomTemplateName())
         $(oRadio).click(fClick);
         oToolbar.appendChild(oRadio);
-        oToolbar.appendChild(document.createTextNode(' ' + $report.getCustomTemplateName().replace("_"," ") + ' '));
+        oToolbar.appendChild(document.createTextNode(' $report.getCustomTemplateName().replace("_"," ") '));
       #else
         oRadio.setAttribute('disabled', 'true');
         oToolbar.appendChild(oRadio);
