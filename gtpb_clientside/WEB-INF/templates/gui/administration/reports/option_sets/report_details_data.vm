@@ -62,7 +62,7 @@
       <form class="fileUploader" method="POST" action="AppController.servlet">
         <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
         <input type="hidden" name="upload_custom_template" value="true" />
-        <input type="file" name="templatename" class="submit-trigger" onChange="uploadFile(this);" />#if($report.getCustomTemplateName()) $report.getCustomTemplateName() #end
+        <input type="file" name="templatename" class="submit-trigger" onChange="uploadFile(this);" />#if($report.getCustomTemplateName())<br>$report.getCustomTemplateName() #end
         <div class="upload_progress_container">
           <div class="upload_progress_bar"></div>
           <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
