@@ -427,4 +427,5 @@ img.go_new {
   position: fixed;
   top: 0;
   left: 0;
+  overflow: scroll;
 }
