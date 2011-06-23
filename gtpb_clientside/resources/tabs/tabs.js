@@ -494,6 +494,7 @@ function appendWarning(warningRowHtml) {
 var warningRowHtmlSaved = '';
 
 function uploadFile(fileInputElement) {
+	alert("uploading...");
 	// https://developer.mozilla.org/en/DOM/File
 	var fileObject = fileInputElement.files[0];
 	if (fileObject) {
