@@ -97,7 +97,7 @@
       </div> ## end links
     </div>
 	#end
-	<ol id="tree"> ##<!-- ordered list for sections -->      
+	<ol id="tree"> ##<!-- ordered list for sections -->
 	  #parse('gui/reports_and_tables/report_list.vm')
 	  #if($mobile_device)
 		<li><h1><span>&nbsp;</span></h1>
