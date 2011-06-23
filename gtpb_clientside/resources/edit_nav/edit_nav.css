@@ -214,6 +214,10 @@ body {
   /* color: #50add6; */
 }
 
+#navrow {
+  width: 100%;
+}
+
 #searchbox {
   margin-left: 2em;
   margin-top: 0.5em;
@@ -221,6 +225,7 @@ body {
 	font-size: 13pt;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   -moz-border-radius: 2em;
+  float: right;
   /* no webkit border radius, webkit styles search inputs anyway */
 }
 
