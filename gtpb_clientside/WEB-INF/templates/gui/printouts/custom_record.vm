@@ -2,5 +2,6 @@
 #set($report = $sessionData.getReport())
 $viewTools.log("Report is $report")
 #set($customTemplateName = $report.getCustomTemplateName())
+$viewTools.log("Custom template name is $customTemplateName")
 #set($templateLocation = "uploads/${company.getInternalCompanyName()}/${report.getInternalReportName()}/$customTemplateName.vm")
 #parse($templateLocation)
