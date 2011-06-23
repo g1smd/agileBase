@@ -868,10 +868,11 @@ public final class AppController extends VelocityViewServlet {
 			for (ReportFieldInfo reportField : report.getReportFields()) {
 				BaseField field = reportField.getBaseField();
 				String rinsedFieldName = Helpers.rinseString(
-						reportField.getFieldName().toLowerCase()).replace(" ", "_");
+						field.getFieldName().toLowerCase()).replace(" ", "_");
 				DataRowFieldInfo value = dataRow.getValue(field);
 				if (field instanceof TextField) {
 					context.put(rinsedFieldName, value.getKeyValue());
+					logger.debug(rinsedFieldName + " -> " + value.getKeyValue());
 					context.put(field.getInternalFieldName(), value.getKeyValue());
 				} else {
 					context.put(rinsedFieldName, value.getDisplayValue());
