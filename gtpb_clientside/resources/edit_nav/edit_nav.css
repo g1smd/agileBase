@@ -416,3 +416,9 @@ img.go_new {
 .active img.go_right {
   display: block;
 }
+
+.pane1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
