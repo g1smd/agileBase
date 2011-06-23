@@ -195,7 +195,7 @@ body {
 }
 
 .dependent_table.active.related h1 {
-  color: #50add6;
+  /* color: #50add6; */
 }
 
 .dependent_table:hover {
@@ -211,7 +211,7 @@ body {
 }
 
 .related .snippet {
-  color: #50add6;
+  /* color: #50add6; */
 }
 
 #searchbox {
