@@ -872,7 +872,6 @@ public final class AppController extends VelocityViewServlet {
 				DataRowFieldInfo value = dataRow.getValue(field);
 				if (field instanceof TextField) {
 					context.put(rinsedFieldName, value.getKeyValue());
-					logger.debug(rinsedFieldName + " -> " + value.getKeyValue());
 					context.put(field.getInternalFieldName(), value.getKeyValue());
 				} else {
 					context.put(rinsedFieldName, value.getDisplayValue());
