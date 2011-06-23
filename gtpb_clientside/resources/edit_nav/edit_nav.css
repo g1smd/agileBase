@@ -284,7 +284,7 @@ a.jumpto_table.current {
   position: relative;
   background-color: #bdbdbd;
   height: 610px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .level {
