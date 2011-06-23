@@ -393,6 +393,9 @@ public final class AppController extends VelocityViewServlet {
 				case UPDATE_REPORT:
 					ServletSchemaMethods.updateReport(sessionData, request, databaseDefn);
 					break;
+				case UPLOAD_CUSTOM_TEMPLATE:
+					ServletSchemaMethods.uploadCustomReportTemplate(sessionData, request, databaseDefn, multipartItems);
+					break;
 				case REMOVE_REPORT:
 					ServletSchemaMethods.removeReport(sessionData, request, databaseDefn);
 					break;
