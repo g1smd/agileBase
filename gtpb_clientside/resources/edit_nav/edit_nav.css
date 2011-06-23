@@ -432,6 +432,15 @@ img.go_new {
   width: 250px;
 }
 
+/* Pane1 overrides */
 .pane1 h2 {
   height: auto;
+}
+
+.dependent_table h1 {
+  background: none;
+  font-style: normal;
+  margin-bottom: auto;
+  padding: auto;
+  text-align: left;
 }
