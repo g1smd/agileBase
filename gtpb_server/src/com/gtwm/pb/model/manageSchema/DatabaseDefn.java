@@ -18,6 +18,8 @@
 package com.gtwm.pb.model.manageSchema;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -123,6 +125,11 @@ import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.model.interfaces.WikiManagementInfo;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -164,8 +171,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// activity
 		int hourNow = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 		int initialDelay = 24 + AppProperties.lowActivityHour - hourNow;
-		this.dashboardScheduler = Executors
-				.newSingleThreadScheduledExecutor();
+		this.dashboardScheduler = Executors.newSingleThreadScheduledExecutor();
 		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
 				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
 		// one-off boot actions
@@ -173,7 +179,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void cancelScheduledEvents() {
-		//TODO: check which of these are necessary, perhaps just the last will do
+		// TODO: check which of these are necessary, perhaps just the last will
+		// do
 		if (this.initialDashboardPopulatorThread != null) {
 			this.initialDashboardPopulatorThread.interrupt();
 		}
@@ -933,6 +940,50 @@ public final class DatabaseDefn implements DatabaseInfo {
 				throw new SQLException(sqlex + ": error code " + errorCode);
 			}
 		}
+	}
+
+	public void uploadCustomReportTemplate(HttpServletRequest request, BaseReportInfo report,
+			String templateName, List<FileItem> multipartItems) throws DisallowedException,
+			ObjectNotFoundException, CantDoThatException, FileUploadException {
+		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+			throw new DisallowedException(this.authManager.getLoggedInUser(request),
+					PrivilegeType.MANAGE_TABLE, report.getParentTable());
+		}
+		if (!FileUpload.isMultipartContent(new ServletRequestContext(request))) {
+			throw new CantDoThatException(
+					"To upload a template, the form must be posted as multi-part form data");
+		}
+		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
+		String rinsedFileName = Helpers.rinseString(templateName).replace(" ", "_");
+		String uploadFolderName = this.getDataManagement().getWebAppRoot()
+				+ "WEB-INF/templates/uploads/" + company.getInternalCompanyName() + "/"
+				+ report.getInternalReportName();
+		File uploadFolder = new File(uploadFolderName);
+		if (!uploadFolder.exists()) {
+			if (!uploadFolder.mkdirs()) {
+				throw new CantDoThatException("Error creating upload folder " + uploadFolderName);
+			}
+		}
+		for (FileItem item : multipartItems) {
+			// if item is a file
+			if (!item.isFormField()) {
+				long fileSize = item.getSize();
+				if (fileSize == 0) {
+					throw new CantDoThatException("An empty file was submitted, no upload done");
+				}
+				String filePath = uploadFolderName + "/" + rinsedFileName + ".vm";
+				File selectedFile = new File(filePath);
+				try {
+					item.write(selectedFile);
+				} catch (Exception ex) {
+					// Catching a general exception?! This is because the library throws a raw exception. Not very good
+					throw new FileUploadException("Error writing file: " + ex.getMessage());
+				}
+			}
+		}
+		HibernateUtil.activateObject(report);
+		report.setCustomTemplateName(rinsedFileName);
 	}
 
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
@@ -3072,7 +3123,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	public static final String PRIMARY_KEY_DESCRIPTION = "Unique record identifier";
 
 	private ScheduledExecutorService dashboardScheduler = null;
-	
+
 	private ScheduledFuture<?> scheduledDashboardPopulate = null;
 
 	private Thread initialDashboardPopulatorThread = null;

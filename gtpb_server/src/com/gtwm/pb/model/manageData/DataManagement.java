@@ -1293,6 +1293,10 @@ public final class DataManagement implements DataManagementInfo {
 			throw new CantDoThatException(
 					"To upload a file, the form must be posted as multi-part form data");
 		}
+		if (fileValue.toString().contains("/")) {
+			throw new CantDoThatException(
+					"Filename contains a slash character which is not allowed, no upload done");
+		}
 		// Put the file in a unique folder per row ID.
 		// This is in the format table ID / field ID / row ID
 		String uploadFolderName = this.getWebAppRoot() + "uploads/"
@@ -1310,10 +1314,6 @@ public final class DataManagement implements DataManagementInfo {
 				long fileSize = item.getSize();
 				if (fileSize == 0) {
 					throw new CantDoThatException("An empty file was submitted, no upload done");
-				}
-				if (fileValue.toString().contains("/")) {
-					throw new CantDoThatException(
-							"Filename contains a slash character which is not allowed, no upload done");
 				}
 				String filePath = uploadFolderName + "/" + fileValue.toString();
 				File selectedFile = new File(filePath);
@@ -1360,7 +1360,7 @@ public final class DataManagement implements DataManagementInfo {
 				try {
 					item.write(selectedFile);
 				} catch (Exception ex) {
-					// TODO: catching a general exception?!
+					// Catching a general exception?! This is because the library throws a raw exception. Not very good
 					throw new FileUploadException("Error writing file: " + ex.getMessage());
 				}
 				// Record upload speed
