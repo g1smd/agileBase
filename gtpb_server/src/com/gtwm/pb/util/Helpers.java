@@ -234,7 +234,7 @@ public final class Helpers {
 			rinsedStringBuilder.append((word.replaceAll("\\W", "") + " "));
 		}
 		// remove the last space(s)
-		return rinsedStringBuilder.toString().replaceAll("\\s+$", "");
+		return rinsedStringBuilder.toString().trim();
 	}
 
 	/**
