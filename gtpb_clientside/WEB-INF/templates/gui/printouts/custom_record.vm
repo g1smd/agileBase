@@ -1,6 +1,6 @@
 #set($company = $view.getLoggedInUser().getCompany())
 #set($report = $sessionData.getReport())
-Report is $report<br>
+$viewTools.log("Report is $report")
 #set($customTemplateName = $report.getCustomTemplateName())
 #set($templateLocation = "uploads/${company.getInternalCompanyName()}/${report.getInternalReportName()}/$customTemplateName.vm")
 #parse($templateLocation)
