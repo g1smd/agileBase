@@ -817,7 +817,7 @@ public final class AppController extends VelocityViewServlet {
 			// If a custom template, add in field variables from session table
 			// and report
 			if (templateName != null) {
-				if (templateName.startsWith("uploads/")) {
+				if (templateName.equals("gui/printouts/custom_record")) {
 					try {
 						addCurrentDataToContext(context, sessionData, request, viewMethods);
 					} catch (AgileBaseException abex) {

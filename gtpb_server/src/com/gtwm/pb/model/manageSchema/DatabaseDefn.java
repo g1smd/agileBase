@@ -955,7 +955,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 					"To upload a template, the form must be posted as multi-part form data");
 		}
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
-		String rinsedFileName = Helpers.rinseString(templateName).replace(" ", "_");
+		// strip extension
+		String rinsedFileName = templateName.toLowerCase().replaceAll("\\..*$", "");
+		rinsedFileName = Helpers.rinseString(rinsedFileName).replace(" ", "_");
 		String uploadFolderName = this.getDataManagement().getWebAppRoot()
 				+ "WEB-INF/templates/uploads/" + company.getInternalCompanyName() + "/"
 				+ report.getInternalReportName();
