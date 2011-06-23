@@ -423,6 +423,10 @@ img.go_new {
   display: block;
 }
 
+#homeContent {
+  padding-left: 250px;
+}
+
 .pane1 {
   position: fixed;
   top: 0;
