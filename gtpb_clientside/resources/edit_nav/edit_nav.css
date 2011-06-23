@@ -393,6 +393,12 @@ a.jumpto_table.current {
   padding-top: 0.5em;
 }
 
+.related_header:first-child {
+  -ms-border-top-right-radius: 0.8em;
+  -webkit-border-top-right-radius: 0.8em;
+	border-top-right-radius: 0.8em;
+}
+
 img.go_right {
   display: none;
   float: left;
