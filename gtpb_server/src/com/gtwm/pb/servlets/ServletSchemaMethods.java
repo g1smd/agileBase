@@ -680,8 +680,10 @@ public final class ServletSchemaMethods {
 	//TODO: this upload could take significant time, think whether it's possible to un-synchronize
 	public synchronized static void uploadCustomReportTemplate(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn, List<FileItem> multipartItems) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
 		// TODO: use ServletUtilMethods.getReportForRequest but updating it for multi-part form data
+		logger.debug("Uploading custom report template");
 		BaseReportInfo report = sessionData.getReport();
 		String templateName = ServletUtilMethods.getParameter(request, "templatename", multipartItems);
+		logger.debug("Template name is " + templateName);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			databaseDefn.uploadCustomReportTemplate(request, report, templateName, multipartItems);
