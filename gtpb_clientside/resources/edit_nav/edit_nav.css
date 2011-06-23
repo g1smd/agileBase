@@ -1,6 +1,6 @@
 /* override tabs.css */
 body {
-  overflow: visible ;
+  overflow: hidden;
   background-color: #dbdbdb; /* 777788, bdbdbd */
 }
 
@@ -285,6 +285,7 @@ a.jumpto_table.current {
   position: relative;
   background-color: #bdbdbd;
   height: 610px;
+  overflow: scroll;
 }
 
 .level {
