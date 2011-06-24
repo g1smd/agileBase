@@ -39,7 +39,7 @@ function fUpdateTitle(sName, sNewTitle) {
 }
 
 $(document).ready(function(){
-
+  alert("doc ready");
 	// Tree expanding and contracting
 	$('h2').click(function(event){
 		var parentElem = $(this).parent();
