@@ -39,6 +39,10 @@ function fUpdateTitle(sName, sNewTitle) {
 }
 
 $(document).ready(function(){
+	pane1Setup();
+});
+
+function pane1Setup() {
 	// Tree expanding and contracting
 	$('h2').click(function(event){
     alert("h2 click");
@@ -80,43 +84,4 @@ $(document).ready(function(){
 		}
 	});
 	
-	// Searching for a report
-	
-	  $('#reportsearch').mouseover(function() {
-		    var reportsearchbox = $('#reportsearchbox');
-			reportsearchbox.show('fast');
-			reportsearchbox.focus();
-		  });
-		  
-	$('#reportsearchbox').keyup(function(event) {
-	  var box = $(this);
-	  var searchstring = box.val();
-	  if (searchstring.length == 0) {
-		// finished searching, put everything back to normal
-		$('.module-tree-item-wrap').removeClass('greytext').removeClass('found');
-		// close all modules apart from the one with the current report in
-		$('.moduleexpanded').children('h2').click();
-		$('#currentOption').parent().siblings('h2').click();
-		box.fadeOut('fast');
-	  } else if (searchstring.length > 1) {
-		$('.module-tree-item-wrap').addClass('greytext').removeClass('found');
-		$(".module-tree-item-wrap:contains('"+searchstring+"')").removeClass('greytext').addClass('found');
-		$('.modulecollapsed').each(function(i) {
-			  var module = $(this);
-			  if ((module.find('.found').length > 0) /* || (module.find("h2 span:contains('"+searchstring+"')").length > 0) */) {
-				  module.show();
-				  module.children('h2').click();
-			  } else {
-				  module.hide();
-			  }
-		    });
-		$('.moduleexpanded').each(function(i) {
-			  var module = $(this);
-			  if ((module.find('.found').length == 0) /* || (module.find("h2 span:contains('"+searchstring+"')").length == 0) */) {
-				  module.children('h2').click();
-				  module.hide();
-			  }
-		    });
-	  }
-	});
-});
+}

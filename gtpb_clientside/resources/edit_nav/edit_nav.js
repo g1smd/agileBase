@@ -218,6 +218,8 @@ function initialiseSlides() {
 				}
 			});
 
+	pane1Setup();
+	
 	if ($(".slide").size() == 0) {
 		return;
 	}
