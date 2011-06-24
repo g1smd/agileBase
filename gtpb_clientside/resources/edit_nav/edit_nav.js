@@ -542,7 +542,12 @@ function updateBreadcrumb() {
 	var jqBreadcrumb = $("#breadcrumb");
 	jqBreadcrumb.html("<span id='you_are_here'>you are here: </span>");
 	for ( var level = 0; level < currentLevel; level++) {
-		var title = levelsList[level].title;
+		var title;
+		if (level == 0) {
+			title = "home";
+		} else {
+		  title = levelsList[level].title;
+		}
 		var url = levelsList[level].levelUrl;
 		jqBreadcrumb.append("<a level='" + level + "' href='" + url + "'>" + title
 				+ "</a> / ");
