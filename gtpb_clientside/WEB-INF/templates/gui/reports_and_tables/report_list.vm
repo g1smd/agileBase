@@ -107,9 +107,15 @@
     		#set($table=$report.getParentTable())
     		<li id="$table.getInternalTableName()$report.getInternalReportName()">
     		  <div class="module-tree-item-wrap">
+          #if($edit_nav)
+          <a class="report_tooltip" rel="AppController.servlet?return=gui/reports_and_tables/report_tooltip&set_custom_report=true&reportkey=tooltip_report&custominternalreportname=$report.getInternalReportName()">
+            $report
+          </a>
+          #else
     			<a href="AppController.servlet?return=$pane2_template&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()&set_report_row_limit=$reportRowLimit&clear_all_report_sorts=true&set_module=$module.getInternalModuleName()&cachebust=$viewTools.getRandomString()" #if(!$mobile_device)target="pane_2" class="report_tooltip" rel="AppController.servlet?return=gui/reports_and_tables/report_tooltip&set_custom_report=true&reportkey=tooltip_report&custominternalreportname=$report.getInternalReportName()"#end >
     				$report
     			</a>
+          #end
     			<span class="recordcount">()</span>
     		  </div>
     		</li>

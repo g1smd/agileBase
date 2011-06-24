@@ -1,0 +1,22 @@
+<div class="breadcrumb_title">$report</div>
+#set($filterString = $sessionData.getGlobalFilterString($report))
+<div id="navrow">
+  #set($placeholder = $report.getReportName().replaceAll(" - .*",""))
+  <input id="searchbox" class="searchbox" name="searchbox" type="search" placeholder="search $placeholder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
+##  <div id="jumpto">
+##  <span class="jump_label">Jump to: </span>
+##  #foreach($table in $view.getPopularTables($view.getLoggedInUser()))
+##    #set($tableReports = $table.getReports())
+##    #foreach($tableReport in $tableReports)
+##      #if((!$tableReport.equals($table.getDefaultReport())) && ($view.loggedInUserAllowedToViewReport($tableReport)) && (!$tableReport.getReportName().contains("dbvcalc")) && (!$tableReport.getReportName().contains("dbvcrit")))
+##        #set($firstReport = $tableReport)
+##      #end
+##      #break
+##    #end
+##    <a class="jumpto_table #if($table.equals($report.getParentTable())) current #end" href="AppController.servlet?return=gui/edit_nav/report&set_table=$table.getInternalTableName()&set_report=$firstReport.getInternalReportName()" title="$firstReport.getModule() - $firstReport">$table.getSimpleName()</a>
+##  #end
+##  </div>
+</div>
+<div class="reportDataView" id="homeContent">
+  #parse("gui/edit_nav/report_content.vm")
+</div>
