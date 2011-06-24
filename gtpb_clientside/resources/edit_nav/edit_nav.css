@@ -437,7 +437,7 @@ ol#tree {
 }
 
 /* Pane1 overrides */
-.pane1 h2 {
+#tree h2 {
   height: auto;
 }
 

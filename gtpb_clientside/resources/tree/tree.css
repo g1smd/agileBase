@@ -13,7 +13,7 @@ body{
 		font-weight: bold;
 		font-style: italic;
 		margin-bottom: -3px;
-		background: transparent url(line.gif) repeat-x 0 50%;
+		background: white url(line.gif) repeat-x 0 50%;
 		color: #888;
 		text-align: right;
 	}
