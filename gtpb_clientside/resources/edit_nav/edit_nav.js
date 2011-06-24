@@ -35,6 +35,11 @@ $(document)
 						moveUpTo(href, true); // move up only if level already exists above,
 						// otherwise move down
 					});
+					$("a.report_tooltip").live('click', function(event) {
+						event.preventDefault();
+						var href= $(this).attr("href");
+						$(".report_including_content").load(href);
+					});
 					// TODO: refactor new and clone into a single function
 					$("button#control_new")
 							.live(
