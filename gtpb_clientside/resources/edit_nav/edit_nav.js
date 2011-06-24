@@ -383,6 +383,7 @@ function createLevel(levelUrl) {
 		window.scrollTo(0, 0);
 		firefoxBugWorkaround();
 		if (levelUrl == homeUrl) {
+			alert("initial load");
 	  	var rowCount = $(".row_count").html();
 			fSetCurrentOption(id, rowCount);
 		}
