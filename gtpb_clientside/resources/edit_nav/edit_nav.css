@@ -299,6 +299,13 @@ a.jumpto_table.current {
   overflow: visible;
 }
 
+.report_including_content {
+  -moz-transition: all 0.5s ease-in;
+  -webkit-transition: all 0.5s ease-in;
+  -ms-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-in;
+}
+
 .flyUp {
   top: -100px;
   /* height: 0px; */
