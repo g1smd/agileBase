@@ -81,7 +81,17 @@
 					<img src="resources/icons/applications/16x16/Star.png" class="mini_icon">
 				  #end
         #end
-          #if($edit_nav && !$linked)<a class="reference_link" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$referencedReport.getParentTable().getInternalTableName()&set_row_id=$rrd_reportDataRow.getRowId()">#end
+          #if($edit_nav && !$linked)
+            #if($referencedReport.getParentTable().equals($fieldTable))
+              ## We are referencing up (or sideways) - the referenced report is based on the same table as the main slide table
+              #set($goToTable = $reportBaseField.getTableContainingField())
+              #set($goToRowId = $rrd_reportDataRow.getValue($goToTable.getPrimaryKey()))
+            #else
+              #set($goToTable = $referencedReport.getParentTable())
+              #set($goToRowId = $rrd_reportDataRow.getRowId())
+            #end
+            <a class="reference_link" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$goToTable.getInternalTableName()&set_row_id=$goToRowId">
+          #end
           #if(($printoutSetting == "NAME_AND_VALUE") || ($printoutSetting == "NAME_VALUE_LINEBREAK"))
             <span class="greytext">$reportBaseField:</span>
           #end
