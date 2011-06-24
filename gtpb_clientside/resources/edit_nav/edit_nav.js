@@ -382,6 +382,10 @@ function createLevel(levelUrl) {
 		initialiseSlides();
 		window.scrollTo(0, 0);
 		firefoxBugWorkaround();
+		if (levelUrl == homeUrl) {
+	  	var rowCount = $(".row_count").html();
+			fSetCurrentOption(id, rowCount);
+		}
 	});
 	if ((levelUrl.indexOf("save_new_record") > -1)
 			|| (levelUrl.indexOf("clone_record") > -1)
