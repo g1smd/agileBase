@@ -565,6 +565,9 @@ function updateBreadcrumb() {
 				+ "</a> / ");
 	}
 	var title = levelsList[currentLevel].title;
+	if (currentLevel == 0) {
+		title = "home";
+	}
 	jqBreadcrumb.append("<span class='currentLevel'>" + title + "</span>");
 }
 

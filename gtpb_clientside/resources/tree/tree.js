@@ -43,8 +43,13 @@ $(document).ready(function(){
 });
 
 function pane1Setup() {
+	if ($("#tree").hasClass("setup")) {
+		return;
+	} else {
+		$("#tree").addClass("setup");
+	}
 	// Tree expanding and contracting
-	$('h2').click(function(event){
+	$('#tree h2').click(function(event){
 		var parentElem = $(this).parent();
 		if (parentElem.hasClass('modulecollapsed')) {
 			parentElem.children('ul').slideDown('fast');
