@@ -40,8 +40,11 @@ $(document)
 						var jqLink = $(this);
 						var href= jqLink.attr("href");
 					  var id = jqLink.closest("li").attr("id");
-						$(".report_including_content").load(href, function() {
+					  var jqReportIncludingContent = $(".report_including_content");
+					  jqReportIncludingContent.addClass("transparent");
+					  jqReportIncludingContent.load(href, function() {
 							fSetCurrentOption(id, "10");
+							jqReportIncludingContent.removeClass("transparent");
 						});
 					});
 					// TODO: refactor new and clone into a single function
