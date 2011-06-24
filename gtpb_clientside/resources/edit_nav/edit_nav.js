@@ -384,6 +384,7 @@ function createLevel(levelUrl) {
 		firefoxBugWorkaround();
 		if (levelUrl == homeUrl) {
 			alert("initial load");
+			var id = $(".pane1_id").text();
 	  	var rowCount = $(".row_count").html();
 			fSetCurrentOption(id, rowCount);
 		}

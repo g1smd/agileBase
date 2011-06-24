@@ -324,6 +324,10 @@ a.jumpto_table.current {
 	display: none;
 }
 
+.pane1_id {
+  display: none;
+}
+
 .transparent {
   opacity: 0;
 }
