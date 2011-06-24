@@ -6,7 +6,7 @@ body{
 	font: 13px/1.5 Arial, Sans-serif;
 }
 
-#tree h1{
+	h1{
 		position: relative; /* Fixes some obscure bug in IE */
 		padding: 5px 0 8px 10px;
 		background: #fff;
@@ -18,12 +18,12 @@ body{
 		text-align: right;
 	}
 	
-#tree h1 span {
+	h1 span {
 		background: #fff;
 		padding: 0 10px;
 	}
 	
-#tree h2{
+	h2{
 		display: block;
 		margin-bottom: -3px;
 		padding: 8px 10px 5px 5px;
@@ -36,7 +36,7 @@ body{
 		border-top: #CECECE 1px solid;
 	}
 	
-#tree h2 span{
+		h2 span{
 			padding-left: 20px;
 			background-position: left;
 			background-repeat: no-repeat;
