@@ -18,7 +18,7 @@ body{
 		text-align: right;
 	}
 	
-	h1 span {
+	#tree h1 span {
 		background: #fff;
 		padding: 0 10px;
 	}
