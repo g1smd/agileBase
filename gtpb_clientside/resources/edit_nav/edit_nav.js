@@ -48,8 +48,7 @@ $(document)
 							jqReportIncludingContent.removeClass("transparent");
 						});
 					});
-					$(".searchbox").live('keyup', function() (
-							function() {
+					$(".searchbox").live('keyup', function() {
 								var jqSearchBox = $(this);
 								jqSearchBox.addClass("changed");
 								var filterString = jqSearchBox.val();
