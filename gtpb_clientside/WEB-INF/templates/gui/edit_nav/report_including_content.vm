@@ -1,3 +1,6 @@
+#if(!$report)
+  #set($report = $sessionData.getReport())
+#end
 <div class="breadcrumb_title">$report</div>
 #set($filterString = $sessionData.getGlobalFilterString($report))
 <div id="navrow">
