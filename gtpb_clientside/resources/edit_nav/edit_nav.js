@@ -553,18 +553,16 @@ function moveDownTo(levelUrl) {
 function updateBreadcrumb() {
 	var jqBreadcrumb = $("#breadcrumb");
 	jqBreadcrumb.html("<span id='you_are_here'>you are here: </span>");
-	var title;
 	for ( var level = 0; level < currentLevel; level++) {
-		if (level == 0) {
-			title = "home"
-		} else {
-		  title = levelsList[level].title;
-		}
+		var title = levelsList[level].title;
 		var url = levelsList[level].levelUrl;
 		jqBreadcrumb.append("<a level='" + level + "' href='" + url + "'>" + title
 				+ "</a> / ");
 	}
-	title = levelsList[currentLevel].title;
+	var title = levelsList[currentLevel].title;
+	if (currentLevel == 0) {
+		title = "home";
+	}
 	jqBreadcrumb.append("<span class='currentLevel'>" + title + "</span>");
 }
 
