@@ -320,6 +320,10 @@ a.jumpto_table.current {
   display: none;
 }
 
+.row_count {
+	display: none;
+}
+
 .transparent {
   opacity: 0;
 }
