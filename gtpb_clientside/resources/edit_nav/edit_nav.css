@@ -429,7 +429,7 @@ img.go_new {
 
 .pane1 {
   position: fixed;
-  top: 0;
+  top: 40px;
   left: 0;
   overflow-x: auto;
   height: 100%;
