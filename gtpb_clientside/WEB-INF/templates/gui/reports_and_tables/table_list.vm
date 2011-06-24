@@ -17,13 +17,9 @@
 ##
 ## a list of all the reports and tables for pane1
 #set($sessionContext=$sessionData.getContext().toString())
-
 ## Only show the table list if the user has manage privileges on at least one table
 ## or user is an administrator
 #if(($manageableTables.size() > 0) || $view.loggedInUserAllowedTo('ADMINISTRATE'))
-
-
-	
 <li branch="true"
 #if($sessionReport.equals($sessionTable.getDefaultReport()))
 	class="moduleexpanded silver"
@@ -32,7 +28,6 @@
 #end
 ><h2><span>Tables</span></h2>
 	<ul>
-	  
     #foreach($table in $manageableTables)
         #set($tableReports = $view.getViewableReports($table))
         ##find out whether only the default report exists
@@ -85,13 +80,11 @@
 			</div>
     	</li>
 	#end
-	
 		#if($view.loggedInUserAllowedTo('ADMINISTRATE'))
 		<li option="true">
 			<a href="AppController.servlet?return=gui/pane1&add_table&set_custom_string=true&key=table_tabindex&value=5">create a new table</a>
 		</li>
 		#end	
 	</ul>
-</li>  
-	  
+</li> 
 #end
