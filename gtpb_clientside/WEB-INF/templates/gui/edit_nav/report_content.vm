@@ -4,13 +4,24 @@
 #set($table = $report.getParentTable())
 #set($internalTableName = $table.getInternalTableName())
 #set($reportBaseFields = $report.getReportBaseFields())##
+#set($reportRowLimit = 100) ## hard code for now
 #if(!$reportDataRows)
   #if(!$filters)
     #set($reportDataRows = $view.getGloballyFilteredReportDataRows($report))
   #else
-    #set($reportDataRows = $view.getReportDataRows($report, 100, $filters, true))##
+    #set($reportDataRows = $view.getReportDataRows($report, $reportRowLimit, $filters, true))##
   #end
 #end
+#set($numRows = $reportDataRows.size())
+#if($numRows < $reportRowLimit)
+  #set($rowCount = $numRows)
+#else
+  #set($rowCount = $report.getRowCount())
+  #if($report.isRowCountEstimate())
+    #set($rowCount = "<i title='$rowCount is the approximate number of records in total'>$rowCount</i>")
+  #end
+#end
+<div class="row_count">$rowCount</div>
 <div class="related block centrebox" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&save_new_record=true&gtpb_override_relation_default_to_null=true">
   <span class="new"><img src="resources/toolbar/new.png"> add new $table.getSingularName()</span>
 </div>

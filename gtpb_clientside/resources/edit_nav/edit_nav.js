@@ -43,7 +43,8 @@ $(document)
 					  var jqReportIncludingContent = $(".report_including_content");
 					  jqReportIncludingContent.addClass("transparent");
 					  jqReportIncludingContent.load(href, function() {
-							fSetCurrentOption(id, "10");
+					  	var rowCount = $(".row_count").html();
+							fSetCurrentOption(id, rowCount);
 							jqReportIncludingContent.removeClass("transparent");
 						});
 					});
