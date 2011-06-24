@@ -10,9 +10,9 @@
     #end
   #end
 #end
-<div class="pane1">
+<ol id="tree">
   #parse('gui/reports_and_tables/report_list.vm')
-</div>
+</ol>
 <div class="breadcrumb_title">$report</div>
 #set($filterString = $sessionData.getGlobalFilterString($report))
 <div id="navrow">
