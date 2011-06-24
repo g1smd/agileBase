@@ -60,7 +60,6 @@ function pane1Setup() {
 	
 	// Initial expand?
 	var numReports = $('.module-tree-item-wrap').size();
-	alert('numReports is ' + numReports);
 	if (numReports < 20) {
 	  $('.modulecollapsed').each(function() {
 		  if ($(this).parents('li#setup').size() == 0) {
