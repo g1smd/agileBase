@@ -39,11 +39,10 @@ function fUpdateTitle(sName, sNewTitle) {
 }
 
 $(document).ready(function(){
-  alert("doc ready");
 	// Tree expanding and contracting
 	$('h2').click(function(event){
+    alert("h2 click");
 		var parentElem = $(this).parent();
-
 		if (parentElem.hasClass('modulecollapsed')) {
 			parentElem.children('ul').slideDown('fast');
 			parentElem.removeClass('modulecollapsed');
