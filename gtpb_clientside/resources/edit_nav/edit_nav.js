@@ -37,8 +37,12 @@ $(document)
 					});
 					$("a.report_tooltip").live('click', function(event) {
 						event.preventDefault();
-						var href= $(this).attr("href");
-						$(".report_including_content").load(href);
+						var jqLink = $(this);
+						var href= jqLink.attr("href");
+					  var id = jqLink.closest("li").attr("id");
+						$(".report_including_content").load(href, function() {
+							fSetCurrentOption(id, "10");
+						});
 					});
 					// TODO: refactor new and clone into a single function
 					$("button#control_new")
