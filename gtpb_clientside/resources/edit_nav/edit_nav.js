@@ -48,6 +48,28 @@ $(document)
 							jqReportIncludingContent.removeClass("transparent");
 						});
 					});
+					$(".searchbox").live('keyup', function() (
+							function() {
+								var jqSearchBox = $(this);
+								jqSearchBox.addClass("changed");
+								var filterString = jqSearchBox.val();
+								var internalReportName = $("#searchbox").attr("internalreportname");
+								$.get(
+										"AppController.servlet?return=gui/edit_nav/report_content&set_report="
+												+ internalReportName
+												+ "&set_global_report_filter_string=true&filterstring="
+												+ filterString, function(data) {
+											// response has come back from the
+											// server, check it isn't out of
+											// date
+											if (jqSearchBox.val() != filterString) {
+												return;
+											}
+											$("#homeContent").html(data);
+											jqSearchBox.removeClass("changed");
+										});
+							});
+
 					// TODO: refactor new and clone into a single function
 					$("button#control_new")
 							.live(
@@ -192,44 +214,6 @@ function initialiseHeight() {
 }
 
 function initialiseSlides() {
-	$(".searchbox").keyup(
-			function() {
-				var jqSearchBox = $(this);
-				jqSearchBox.addClass("changed");
-				var filterString = jqSearchBox.val();
-				var internalReportName = $("#searchbox").attr("internalreportname");
-				$.get(
-						"AppController.servlet?return=gui/edit_nav/report_content&set_report="
-								+ internalReportName
-								+ "&set_global_report_filter_string=true&filterstring="
-								+ filterString, function(data) {
-							// response has come back from the
-							// server, check it isn't out of
-							// date
-							if (jqSearchBox.val() != filterString) {
-								return;
-							}
-							$("#homeContent").html(data);
-							jqSearchBox.removeClass("changed");
-						});
-				// also filter the table list
-				$(".jumpto_table").each(
-						function() {
-							var jqLink = $(this);
-							var tableName = jqLink.text().toLowerCase();
-							var title = jqLink.attr("title").toLowerCase();
-							if ((title.indexOf(filterString.toLowerCase()) > -1)
-									|| (tableName.indexOf(filterString.toLowerCase()) > -1)) {
-								jqLink.removeClass("invisible");
-							} else {
-								jqLink.addClass("invisible");
-							}
-						});
-				// show all rather than none
-				if ($(".jumpto_table").size() == $(".jumpto_table.invisible").size()) {
-					$(".jumpto_table").removeClass("invisible");
-				}
-			});
 
 	pane1Setup();
 	
