@@ -427,19 +427,19 @@ img.go_new {
   padding-left: 250px;
 }
 
-.pane1 {
+/* .pane1 {
   position: fixed;
   top: 0;
   left: 0;
   overflow-x: auto;
   height: 100%;
   width: 250px;
-}
+} */
 
 /* Pane1 overrides */
-.pane1 h2 {
+/* .pane1 h2 {
   height: auto;
-}
+} */
 
 .dependent_table h1 {
   background: none;
