@@ -427,9 +427,9 @@ img.go_new {
   padding-left: 250px;
 }
 
-.pane1 {
+ol#tree {
   position: fixed;
-  top: 40px;
+  top: 33px;
   left: 0;
   overflow-x: auto;
   height: 100%;
