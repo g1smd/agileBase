@@ -13,6 +13,7 @@
   #end
 #end
 #set($numRows = $reportDataRows.size())
+NumRows is $numRows<br>
 #if($numRows < $reportRowLimit)
   #set($rowCount = $numRows)
 #else
@@ -27,6 +28,7 @@
   <span class="new"><img src="resources/toolbar/new.png"> add new $table.getSingularName()</span>
 </div>
 #foreach($row in $reportDataRows)
+  Report data row<br>
   #set($dataRowFields = $row.getDataRowFields())
   #set($lastUniqueId = $thisUniqueId)
   #set($thisUniqueId = $row.getRowId())
@@ -34,6 +36,7 @@
   #if($thisUniqueId != $lastUniqueId)
   ##onclick is workaround for iOS bug http://blog.alanszlosek.com/post/4369588562/jquerys-live-click-handler-on-mobile-safari
   <div class="related block current" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&set_row_id=$thisUniqueId" onclick=""> 
+    Block<br>
     #foreach($field in $reportBaseFields)##
       #if(!$field.getTableContainingField().getPrimaryKey().equals($field))
         #set($dataRowField = $dataRowFields.get($field))
