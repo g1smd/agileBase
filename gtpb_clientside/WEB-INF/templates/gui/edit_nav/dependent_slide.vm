@@ -5,23 +5,25 @@
 #set($success = $filters.put($primaryKey, "$sessionRowId"))
 #set($reportDataRows = $view.getReportDataRows($report, 100, $filters, true))##
 #if($reportDataRows.size() > 0)
-<div class="slide reportDataView" id="slide_$sessionTable.getInternalTableName()_$dependentTable.getInternalTableName()_$sessionRowId">
-  <img class="rewind" src="resources/edit_nav/rewind.png" />
-  <section class="middle"> 
-    <div class="title">
-    Filter is $filters<br>
-    Report is $report<br>
-    ReportDataRows is $reportDataRows<br>
-    ##$dependentTable.getSimpleName()
-    ##<select name="$dependentTable.getInternalTableName()_select">
-    ##  #foreach($report in $linkingReports)
-    ##    <option value="$report.getInternalReportName()">$report.getModule() - $report</option>
-    ##  #end
-    ##  <option value="$dependentTable.getDefaultReport().getInternalReportName()">all records</option>
-    ##</select>
-    <img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $report
-    </div>
-    #parse("gui/edit_nav/report_content.vm")
-  </section>
-</div>
+  #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
+    #set($slide_id = "slide_$sessionTable.getInternalTableName()_$dependentTable.getInternalTableName()_$field.getInternalFieldName()_$sessionRowId")
+  #else
+    #set($slide_id = "slide_$sessionTable.getInternalTableName()_$dependentTable.getInternalTableName()_$sessionRowId")
+  #end
+  <div class="slide reportDataView" id="$slide_id">
+    <img class="rewind" src="resources/edit_nav/rewind.png" />
+    <section class="middle"> 
+      <div class="title">
+      ##$dependentTable.getSimpleName()
+      ##<select name="$dependentTable.getInternalTableName()_select">
+      ##  #foreach($report in $linkingReports)
+      ##    <option value="$report.getInternalReportName()">$report.getModule() - $report</option>
+      ##  #end
+      ##  <option value="$dependentTable.getDefaultReport().getInternalReportName()">all records</option>
+      ##</select>
+      <img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $report
+      </div>
+      #parse("gui/edit_nav/report_content.vm")
+    </section>
+  </div>
 #end
