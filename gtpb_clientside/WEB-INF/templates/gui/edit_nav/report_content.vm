@@ -32,7 +32,7 @@
   #set($lastUniqueId = $thisUniqueId)
   #set($thisUniqueId = $row.getRowId())
   #set($emboldened = false)
-  #if($thisUniqueId != $lastUniqueId)
+  #if(($thisUniqueId != $lastUniqueId) || ($field.getFieldCategory() == "REFERENCED_REPORT_DATA"))
     #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
       #set($referencedReport = $field.getReferencedReport())
       #if($referencedReport.getParentTable().equals($field.getTableContainingField()))
