@@ -33,44 +33,58 @@
   #set($thisUniqueId = $row.getRowId())
   #set($emboldened = false)
   #if($thisUniqueId != $lastUniqueId)
-  ##onclick is workaround for iOS bug http://blog.alanszlosek.com/post/4369588562/jquerys-live-click-handler-on-mobile-safari
-  <div class="related block current" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&set_row_id=$thisUniqueId" onclick=""> 
-    #foreach($field in $reportBaseFields)##
-      #if(!$field.getTableContainingField().getPrimaryKey().equals($field))
-        #set($dataRowField = $dataRowFields.get($field))
-        #set($cell = $dataRowField.getDisplayValue())
-        #set($colour = $dataRowField.getStandardDevHexColour())
-        #set($fieldCategory = $field.getFieldCategory().toString())
-        #set($image = false)
-        #if($fieldCategory == "FILE")
-          #set($fileValue = $viewTools.getFileValueTool($cell))
-          #if($fileValue.isImage())
-            #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
-            <img src="$srcUrl" style="float:left"/>
-            #set($image = true)
+    #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
+      #set($referencedReport = $field.getReferencedReport())
+      #if($referencedReport.getParentTable().equals($field.getTableContainingField()))
+        ## We are referencing up (or sideways) - the referenced report is based on the same table as the main slide table
+        #set($goToTable = $reportBaseField.getTableContainingField())
+        #set($goToRowId = $row.getValue($goToTable.getPrimaryKey()))
+      #else
+        #set($goToTable = $referencedReport.getParentTable())
+        #set($goToRowId = $row.getRowId())
+      #end
+    #else
+      #set($goToTable = $report.getParentTable())
+      #set($goToRowId = $thisUniqueId)
+    #end
+    ##onclick is workaround for iOS bug http://blog.alanszlosek.com/post/4369588562/jquerys-live-click-handler-on-mobile-safari
+    <div class="related block current" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$goToTable.getInternalTableName()&set_row_id=$goToRowId" onclick=""> 
+      #foreach($field in $reportBaseFields)##
+        #if(!$field.getTableContainingField().getPrimaryKey().equals($field))
+          #set($dataRowField = $dataRowFields.get($field))
+          #set($cell = $dataRowField.getDisplayValue())
+          #set($colour = $dataRowField.getStandardDevHexColour())
+          #set($fieldCategory = $field.getFieldCategory().toString())
+          #set($image = false)
+          #if($fieldCategory == "FILE")
+            #set($fileValue = $viewTools.getFileValueTool($cell))
+            #if($fileValue.isImage())
+              #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
+              <img src="$srcUrl" style="float:left"/>
+              #set($image = true)
+            #end
           #end
-        #end
-        #set($style="")
-        #set($class="")
-        #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
-        #if($cell && (!$image) && ($cell != ""))
-          #set($printoutSetting = $field.getPrintoutSetting())
-          #if($fieldCategory == "CHECKBOX")
-            #if($cell == "true")
-              <span style="$style" class="cell $class">$field</span>
+          #set($style="")
+          #set($class="")
+          #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
+          #if($cell && (!$image) && ($cell != ""))
+            #set($printoutSetting = $field.getPrintoutSetting())
+            #if($fieldCategory == "CHECKBOX")
+              #if($cell == "true")
+                <span style="$style" class="cell $class">$field</span>
+              #end
+            #elseif($printoutSetting == "NAME_AND_VALUE")
+              <span class="fieldname">$field</span>: <span style="$style" class="cell $class">$cell</span><br>
+            #else
+              #if(!$emboldened)
+                #set($style = "$style font-weight: bold; ")
+              #end
+              <span style="$style" class="cell $class">$cell</span>,
+              #set($emboldened = true)
             #end
-          #elseif($printoutSetting == "NAME_AND_VALUE")
-            <span class="fieldname">$field</span>: <span style="$style" class="cell $class">$cell</span><br>
-          #else
-            #if(!$emboldened)
-              #set($style = "$style font-weight: bold; ")
-            #end
-            <span style="$style" class="cell $class">$cell</span>,
-            #set($emboldened = true)
           #end
         #end
       #end
-    #end
-  </div>
+    </div>
   #end
 #end
