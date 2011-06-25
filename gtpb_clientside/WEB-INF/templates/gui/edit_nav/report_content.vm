@@ -26,13 +26,11 @@
 <div class="related block centrebox" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$internalTableName&save_new_record=true&gtpb_override_relation_default_to_null=true">
   <span class="new"><img src="resources/toolbar/new.png"> add new $table.getSingularName()</span>
 </div>
+#set($thisUniqueId = false)
 #foreach($row in $reportDataRows)
   #set($dataRowFields = $row.getDataRowFields())
-  #if(!$thisUniqueId)
-    #set($thisUniqueId = $row.getRowId())
-  #else
-    #set($lastUniqueId = $thisUniqueId)
-    #set($thisUniqueId = $row.getRowId())
+  #set($lastUniqueId = $thisUniqueId)
+  #set($thisUniqueId = $row.getRowId())
   #end
   #set($emboldened = false)
   thisUniqueId id $thisUniqueId, lastUniqueId = $lastUniqueId<br>
