@@ -43,10 +43,11 @@
 	<td>
 	  #set($sessionUserType = $sessionUser.getUserType())
 	  <select name="usertype" gtpb_internalusername="$sessionUser.getInternalUserName()" gtpb_update_user value="$sessionUserType" onchange="top.oBuffer.writeBuffer(this);">
-		<option value="EXTERNAL" #if($sessionUserType == "EXTERNAL") selected #end>External - someone outside the organisation</option>
-		<option value="OPERATIONAL" #if($sessionUserType == "OPERATIONAL") selected #end>Operational - a standard user</option>
-		<option value="MANAGERIAL" #if($sessionUserType == "MANAGERIAL") selected #end>Managerial</option>
-		<option value="EXECUTIVE" #if($sessionUserType == "EXECUTIVE") selected #end>Executive - has a global overview</option>
+		<option value="EXTERNAL" #if($sessionUserType == "EXTERNAL") selected #end>External user - sees limited interface on login</option>
+    <option value="DATA_INPUT" #if($sessionUserType == "DATA_INPUT") selected #end>Data input - sees cards interface on login</option>
+    <option value="OPERATIONAL" #if($sessionUserType == "OPERATIONAL") selected #end>Operational - sees standard interface on login</option>
+		<option value="MANAGERIAL" #if($sessionUserType == "MANAGERIAL") selected #end>Managerial - sees standard interface on login</option>
+		<option value="EXECUTIVE" #if($sessionUserType == "EXECUTIVE") selected #end>Executive - sees dashboard on login</option>
 	  </select>
 	</td>
   </tr>

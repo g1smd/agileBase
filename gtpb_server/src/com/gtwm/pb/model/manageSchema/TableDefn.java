@@ -85,7 +85,8 @@ public class TableDefn implements TableInfo {
 
 	public synchronized void setTableName(String tableName) {
 		this.tableName = tableName;
-		// reset other forms of name (they'll be regenerated when the relevant getters are called)
+		// reset other forms of name (they'll be regenerated when the relevant
+		// getters are called)
 		this.simpleName = null;
 		this.singularName = null;
 	}
@@ -97,7 +98,7 @@ public class TableDefn implements TableInfo {
 	public synchronized String getTableName() {
 		return this.tableName;
 	}
-	
+
 	@Transient
 	public String getSimpleName() {
 		if (this.simpleName != null) {
@@ -106,7 +107,7 @@ public class TableDefn implements TableInfo {
 		this.simpleName = Naming.getSimpleName(this.getTableName());
 		return this.simpleName;
 	}
-	
+
 	@Transient
 	public String getSingularName() {
 		if (this.singularName != null) {
@@ -114,10 +115,13 @@ public class TableDefn implements TableInfo {
 		}
 		String simpleName = this.getSimpleName();
 		if (simpleName.toLowerCase().endsWith("premises")) {
-			// PlingStemmer doesn't return the correct singular form of "premises" which is also "premises"
-			return simpleName;
+			// PlingStemmer doesn't return the correct singular form of
+			// "premises" which is also "premises"
+			this.singularName = simpleName;
+		} else {
+			this.singularName = PlingStemmer.stem(simpleName);
 		}
-		return PlingStemmer.stem(simpleName); 
+		return this.singularName;
 	}
 
 	public synchronized String getTableDescription() {
@@ -163,7 +167,8 @@ public class TableDefn implements TableInfo {
 			}
 		}
 		fieldToOrder.setFieldIndex(validIndex);
-		// just ensure everything's right - in old tables, field indexes may be corrupt
+		// just ensure everything's right - in old tables, field indexes may be
+		// corrupt
 		this.correctFieldIndexes();
 	}
 
@@ -236,8 +241,7 @@ public class TableDefn implements TableInfo {
 	}
 
 	@Transient
-	public synchronized BaseField getField(String fieldID)
-			throws ObjectNotFoundException {
+	public synchronized BaseField getField(String fieldID) throws ObjectNotFoundException {
 		// everyone's a suspect!
 		Set<BaseField> fields = this.getFieldsCollection();
 		for (BaseField suspectField : fields) {
@@ -308,8 +312,7 @@ public class TableDefn implements TableInfo {
 	}
 
 	@Transient
-	public synchronized BaseReportInfo getReport(String reportID)
-			throws ObjectNotFoundException {
+	public synchronized BaseReportInfo getReport(String reportID) throws ObjectNotFoundException {
 		Set<BaseReportInfo> reports = this.getReportsCollection();
 		for (BaseReportInfo report : reports) {
 			if (report.getInternalReportName().equals(reportID)) {
@@ -348,7 +351,8 @@ public class TableDefn implements TableInfo {
 			return 0;
 		}
 		// For performance, compare first on item most likely to differ
-		int comparison = this.getTableName().toLowerCase().compareTo(otherTable.getTableName().toLowerCase());
+		int comparison = this.getTableName().toLowerCase()
+				.compareTo(otherTable.getTableName().toLowerCase());
 		if (comparison != 0) {
 			return comparison;
 		}
@@ -418,11 +422,11 @@ public class TableDefn implements TableInfo {
 	public Boolean getRecordsLockable() {
 		return this.lockable;
 	}
-	
+
 	public void setTableFormPublic(boolean tableFormPublic) {
 		this.tableFormPublic = tableFormPublic;
 	}
-	
+
 	public boolean getTableFormPublic() {
 		return this.tableFormPublic;
 	}
@@ -446,11 +450,11 @@ public class TableDefn implements TableInfo {
 	private BaseField primaryKeyField = null;
 
 	private boolean lockable = false;
-	
+
 	private boolean tableFormPublic = false;
-	
+
 	private volatile String simpleName = null;
-	
+
 	private volatile String singularName = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(TableDefn.class);

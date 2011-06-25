@@ -356,8 +356,8 @@ public class Enumerations {
 	 * Possible types of user who can log in to agileBase
 	 */
 	public enum UserType {
-		EXTERNAL("a user outside the company"), OPERATIONAL("standard user"), MANAGERIAL(
-				"standard user"), EXECUTIVE("has a global overview");
+		EXTERNAL("sees limited interface on login"), DATA_INPUT("sees cards interface on login"), OPERATIONAL("sees standard interface on login"), MANAGERIAL(
+				"sees standard interface on login"), EXECUTIVE("sees dashboard on login");
 
 		public String getDescription() {
 			return this.description;
