@@ -31,7 +31,6 @@
   #set($dataRowFields = $row.getDataRowFields())
   #set($lastUniqueId = $thisUniqueId)
   #set($thisUniqueId = $row.getRowId())
-  #end
   #set($emboldened = false)
   thisUniqueId id $thisUniqueId, lastUniqueId = $lastUniqueId<br>
   #if($thisUniqueId != $lastUniqueId)
