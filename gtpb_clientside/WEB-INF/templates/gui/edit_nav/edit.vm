@@ -78,7 +78,7 @@
               <div class="dependent_table cross_reference" internaltablename="$referencedTable.getInternalTableName()" id="dependent_table_${internalTableName}_${referencedTable.getInternalTableName()}_${field.getInternalFieldName()}_$rowId">
                 <img src="resources/edit_nav/new_flat.png" class="go_new" />
                 <img src="resources/edit_nav/right.png" class="go_right" />
-                <h1><span class="count"></span>$field</h1>
+                <h1>$field <span class="count"></span></h1>
                 <div class="record_snippets">
                 </div>
               </div>
