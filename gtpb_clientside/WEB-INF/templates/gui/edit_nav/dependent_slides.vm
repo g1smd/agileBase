@@ -16,13 +16,18 @@
   #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable) && (!$referencedTables.contains($dependentTable)))
     #set($linkingReports = [])
     #set($reports = $dependentTable.getReports())
+    #set($rowCount = 0)
+    ##ÊFind report with the highest row count
     #foreach($report in $reports)
       #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
-        #set($success = $linkingReports.add($report))
+        #if($report.getRowCount() > $rowCount)
+          #set($rowCount = $report.getRowCount())
+          #set($linkingReport = $report)
+        #end
       #end
     #end
-    #if($linkingReports.size() > 0)
-      #set($report = $linkingReports.get(0))
+    #if($rowCount > 0)
+      #set($report = $linkingReport)
       #parse("gui/edit_nav/dependent_slide.vm")  
     #end
   #end
