@@ -1360,7 +1360,8 @@ public final class DataManagement implements DataManagementInfo {
 				try {
 					item.write(selectedFile);
 				} catch (Exception ex) {
-					// Catching a general exception?! This is because the library throws a raw exception. Not very good
+					// Catching a general exception?! This is because the
+					// library throws a raw exception. Not very good
 					throw new FileUploadException("Error writing file: " + ex.getMessage());
 				}
 				// Record upload speed
@@ -1740,8 +1741,7 @@ public final class DataManagement implements DataManagementInfo {
 			js.endObject();
 		}
 		js.endArray();
-		String json = js.toString();
-		return json;
+		return js.toString();
 	}
 
 	public String getReportCalendarJSON(DataFormat format, AppUserInfo user, BaseReportInfo report,
@@ -2358,6 +2358,32 @@ public final class DataManagement implements DataManagementInfo {
 		} else {
 			return tableDataRow;
 		}
+	}
+
+	public String getTableDataRowJson(TableInfo table, int rowId) throws SQLException,
+			ObjectNotFoundException, CantDoThatException, CodingErrorException, JSONException {
+		Map<BaseField, BaseValue> tableDataRow = this.getTableDataRow(table, rowId);
+		JSONStringer js = new JSONStringer();
+		js.object();
+		for (Map.Entry<BaseField, BaseValue> rowEntry : tableDataRow.entrySet()) {
+			BaseField field = rowEntry.getKey();
+			BaseValue value = rowEntry.getValue();
+			if (field.equals(table.getPrimaryKey())) {
+				js.key("rowId").value(((IntegerValue) value).getValueInteger());
+			} else if (value instanceof IntegerValue) {
+				js.key(field.getInternalFieldName())
+						.value(((IntegerValue) value).getValueInteger());
+			} else if (value instanceof CheckboxValue) {
+				js.key(field.getInternalFieldName()).value(
+						((CheckboxValue) value).getValueBoolean());
+			} else if (value instanceof DecimalValue) {
+				js.key(field.getInternalFieldName()).value(((DecimalValue) value).getValueFloat());
+			} else {
+				js.key(field.getInternalFieldName()).value(value.toString());
+			}
+		}
+		js.endObject();
+		return js.toString();
 	}
 
 	public int getNextRowId(SessionDataInfo sessionData, BaseReportInfo report,

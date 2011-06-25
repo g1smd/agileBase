@@ -391,10 +391,11 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return dependentTables;
 	}
 
-	public Set<TableInfo> getDirectlyDependentTables(TableInfo baseTable) throws ObjectNotFoundException {
+	public Set<TableInfo> getDirectlyDependentTables(TableInfo baseTable)
+			throws ObjectNotFoundException {
 		return this.databaseDefn.getDirectlyDependentTables(baseTable, this.request);
 	}
-	
+
 	public String getApplicationName() {
 		return AppProperties.applicationName;
 	}
@@ -425,6 +426,12 @@ public final class ViewMethods implements ViewMethodsInfo {
 			}
 		}
 		return unchosenRelationFields;
+	}
+
+	public String getTableDataRowJson() throws DisallowedException, ObjectNotFoundException,
+			SQLException, CantDoThatException, CodingErrorException, JSONException {
+		return this.databaseDefn.getDataManagement().getTableDataRowJson(
+				this.sessionData.getTable(), this.sessionData.getRowId());
 	}
 
 	public Map<BaseField, BaseValue> getTableDataRow() throws DisallowedException,
@@ -532,7 +539,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return this.getReportDataRows(report, rowLimit, reportFilterValues, false);
 	}
 
-	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report) throws DisallowedException, SQLException, ObjectNotFoundException,
+	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report)
+			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException {
 		if (report == null) {
 			throw new ObjectNotFoundException("No report was provided");
@@ -541,7 +549,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 		// throw DisallowedException if privileges not sufficient
 		this.checkReportViewPrivileges(report);
 		String globalFilterString = this.sessionData.getGlobalFilterString(report);
-		Map<BaseField, String> reportFilterValues = report.getGlobalFilterValues(globalFilterString);
+		Map<BaseField, String> reportFilterValues = report
+				.getGlobalFilterValues(globalFilterString);
 		AppUserInfo user = this.databaseDefn.getAuthManager().getUserByUserName(this.request,
 				this.request.getRemoteUser());
 		CompanyInfo company = user.getCompany();
@@ -549,13 +558,14 @@ public final class ViewMethods implements ViewMethodsInfo {
 		boolean exactFilters = false;
 		int rowLimit = 100;
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
-				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit, QuickFilterType.OR);
+				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
+				QuickFilterType.OR);
 		UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
 		usageLogger.logReportView(user, report, reportFilterValues, rowLimit, "global search");
 		UsageLogger.startLoggingThread(usageLogger);
 		return reportDataRows;
 	}
-	
+
 	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit,
 			Map<BaseField, String> reportFilterValues, boolean exactFilters)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
@@ -571,16 +581,17 @@ public final class ViewMethods implements ViewMethodsInfo {
 				this.request.getRemoteUser());
 		CompanyInfo company = user.getCompany();
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
-				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit, QuickFilterType.AND);
+				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
+				QuickFilterType.AND);
 		UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
 		usageLogger.logReportView(user, report, reportFilterValues, rowLimit, null);
 		UsageLogger.startLoggingThread(usageLogger);
 		return reportDataRows;
 	}
 
-	public String getReportCalendarJSON(String format) throws CodingErrorException, CantDoThatException,
-			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
-			JSONException {
+	public String getReportCalendarJSON(String format) throws CodingErrorException,
+			CantDoThatException, MissingParametersException, DisallowedException,
+			ObjectNotFoundException, SQLException, JSONException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(this.sessionData,
 				this.request, this.databaseDefn, true);
 		// Check privileges for all tables from which data is displayed from,
@@ -611,8 +622,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		AppUserInfo user = this.getLoggedInUser();
 		DataFormat formatEnum = DataFormat.valueOf("JSON_" + format.toUpperCase());
-		return this.databaseDefn.getDataManagement().getReportCalendarJSON(formatEnum, user, report,
-				filterValues, startEpoch, endEpoch);
+		return this.databaseDefn.getDataManagement().getReportCalendarJSON(formatEnum, user,
+				report, filterValues, startEpoch, endEpoch);
 	}
 
 	/**
@@ -974,9 +985,10 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		return candidateJoins;
 	}
-	
+
 	public List<TableInfo> getPopularTables(AppUserInfo user) throws SQLException {
-		return this.databaseDefn.getDataManagement().getPopularTables(this.request, this.databaseDefn, user);
+		return this.databaseDefn.getDataManagement().getPopularTables(this.request,
+				this.databaseDefn, user);
 	}
 
 	public boolean getWhetherExceptionOccurred() {
