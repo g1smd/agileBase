@@ -121,11 +121,13 @@ public interface DataManagementInfo {
 	 *            The number of minutes to cache a response for a particular
 	 *            report before regenerating
 	 */
-	public String getReportJSON(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters,long cacheSeconds)
+	public String getReportJSON(AppUserInfo user, BaseReportInfo report,
+			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
 			throws JSONException, CodingErrorException, CantDoThatException, SQLException,
 			XMLStreamException, ObjectNotFoundException;
 
-	public String getReportRSS(AppUserInfo user, BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
+	public String getReportRSS(AppUserInfo user, BaseReportInfo report,
+			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
 			throws SQLException, CodingErrorException, CantDoThatException, JSONException,
 			XMLStreamException, ObjectNotFoundException;
 
@@ -194,6 +196,9 @@ public interface DataManagementInfo {
 	 */
 	public Map<BaseField, BaseValue> getTableDataRow(TableInfo table, int rowId)
 			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException;
+
+	public String getTableDataRowJson(TableInfo table, int rowId) throws SQLException,
+			ObjectNotFoundException, CantDoThatException, CodingErrorException, JSONException;
 
 	/**
 	 * When passed a row ID and a report, finds rows in the report with the
