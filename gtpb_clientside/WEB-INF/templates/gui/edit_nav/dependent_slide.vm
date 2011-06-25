@@ -9,6 +9,8 @@
   <img class="rewind" src="resources/edit_nav/rewind.png" />
   <section class="middle"> 
     <div class="title">
+    Filter is $filters<br>
+    Report is $report<br>
     ##$dependentTable.getSimpleName()
     ##<select name="$dependentTable.getInternalTableName()_select">
     ##  #foreach($report in $linkingReports)

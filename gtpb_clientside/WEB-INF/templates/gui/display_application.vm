@@ -176,7 +176,6 @@
 			        </div>
 			        <div class=buttonGroup> ## external applications, built in and customised
 			          ## #parse('gui/toolbar/buttons/wiki.vm')
-					  #parse('gui/resources/dashboard_enabled.vm')
 					  #set($userType = $appUser.getUserType())
             #set($apps = $company.getApps())
             #if($apps.contains("forms"))
