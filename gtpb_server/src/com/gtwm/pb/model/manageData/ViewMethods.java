@@ -428,12 +428,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return unchosenRelationFields;
 	}
 
-	public String getTableDataRowJson() throws DisallowedException, ObjectNotFoundException,
-			SQLException, CantDoThatException, CodingErrorException, JSONException {
-		return this.databaseDefn.getDataManagement().getTableDataRowJson(
-				this.sessionData.getTable(), this.sessionData.getRowId());
-	}
-
 	public Map<BaseField, BaseValue> getTableDataRow() throws DisallowedException,
 			ObjectNotFoundException, SQLException, CantDoThatException, CodingErrorException {
 		return getTableDataRow(this.sessionData.getTable());

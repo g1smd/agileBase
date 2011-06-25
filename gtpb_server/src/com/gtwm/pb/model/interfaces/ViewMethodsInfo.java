@@ -292,9 +292,6 @@ public interface ViewMethodsInfo {
 	 */
 	public Exception getException();
 
-	public String getTableDataRowJson() throws DisallowedException, ObjectNotFoundException,
-			SQLException, CantDoThatException, CodingErrorException, JSONException;
-
 	/**
 	 * @return The list of field values for a particular record, so the record
 	 *         can be displayed or edited. The session will know what table and

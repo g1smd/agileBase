@@ -700,7 +700,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		if (newRecord) {
-			sessionData.setRowId(newRowId);
+			sessionData.setRowId(table, newRowId);
 		}
 		this.logLastDataChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
