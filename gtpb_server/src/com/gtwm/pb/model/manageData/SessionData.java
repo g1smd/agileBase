@@ -137,7 +137,7 @@ public final class SessionData implements SessionDataInfo {
 		// clear the cached record data:
 		this.setFieldInputValues(new HashMap<BaseField, BaseValue>());
 		this.table = table;
-		if (table == null) {
+		if (table == null || this.relationalDataSource == null) {
 			return;
 		}
 		// Also set the current report to the default report (if no current
