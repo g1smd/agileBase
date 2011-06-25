@@ -574,16 +574,11 @@ function dependentSnippets() {
 		var snippetHolderId = jqSlide.attr("id").replace("slide_",
 				"dependent_table_");
 		var jqSnippets = $("#" + snippetHolderId);
-		var numCards = jqSlide.find(".block.current").size();
+		var numCards = jqSlide.find(".row_count").text();
 		if (numCards > 0) {
 			jqSnippets.addClass("active");
-			if (numCards == 100) {
-				numCardsText = "many";
-			} else {
-				numCardsText = numCards;
-			}
-			if (numCardsText > 1) {
-			  jqSnippets.find(".count").text("(" + numCardsText + ")");
+			if (numCards > 1) {
+			  jqSnippets.find(".count").text("(" + numCards + ")");
 			}
 		}
 		var firstTwoCards = jqSlide.find(".block.current:lt(2)");
