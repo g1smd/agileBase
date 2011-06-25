@@ -24,4 +24,9 @@ where
 #else records<br>
 #end ##end if there are filters
 <br>
-$report.getReportDescription()
+#set($reportDescription = $report.getReportDescription())
+#if($reportDescription != "")
+  $reportDescription
+#else
+  $report.getParentTable().getTableDescription()
+#end
