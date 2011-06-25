@@ -202,6 +202,7 @@ public class Public extends VelocityViewServlet {
 					templateName = templatePath + templateName;
 					SessionDataInfo sessionData = new SessionData();
 					try {
+						sessionData.setTable(table);
 						if (publicAction.equals(PublicAction.UPDATE_RECORD)) {
 							String rowIdString = ServletUtilMethods.getParameter(request, "row_id", multipartItems);
 							if (rowIdString == null) {
