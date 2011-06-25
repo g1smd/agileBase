@@ -11,6 +11,7 @@
     <div class="title">
     Filter is $filters<br>
     Report is $report<br>
+    ReportDataRows is $reportDataRows<br>
     ##$dependentTable.getSimpleName()
     ##<select name="$dependentTable.getInternalTableName()_select">
     ##  #foreach($report in $linkingReports)
