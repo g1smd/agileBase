@@ -37,8 +37,17 @@
       #set($referencedReport = $field.getReferencedReport())
       #if($referencedReport.getParentTable().equals($field.getTableContainingField()))
         ## We are referencing up (or sideways) - the referenced report is based on the same table as the main slide table
-        #set($goToTable = $reportBaseField.getTableContainingField())
-        #set($goToRowId = $row.getValue($goToTable.getPrimaryKey()))
+        ## Find the other table in the referenced report
+        ## A bit of a hack because there may be more than one, therefore this may not work in all cases
+        #foreach($reportBaseField in $reportBaseFields)
+          #set($tableContainingField = $reportBaseField.getTableContainingField()) 
+          #if($reportBaseField.equals($tableContainingField.getPrimaryKey()))
+            #if(!$tableContainingField.equals($referencedReport.getParentTable()))
+              #set($goToTable = $tableContainingField)
+              #set($goToRowId = $row.getValue($goToTable.getPrimaryKey()))
+            #end
+          #end
+        #end
       #else
         #set($goToTable = $referencedReport.getParentTable())
         #set($goToRowId = $row.getRowId())
