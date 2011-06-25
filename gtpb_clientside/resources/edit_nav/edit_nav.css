@@ -206,7 +206,7 @@ body {
   height: 1.3em;
   width: 100%;
   overflow: hidden;
-  color: #486F98;
+  /* color: #486F98; */
 }
 
 .related .snippet {
