@@ -13,7 +13,6 @@
   #end
 #end
 #set($numRows = $reportDataRows.size())
-NumRows is $numRows<br>
 #if($numRows < $reportRowLimit)
   #set($rowCount = $numRows)
 #else
@@ -28,10 +27,13 @@ NumRows is $numRows<br>
   <span class="new"><img src="resources/toolbar/new.png"> add new $table.getSingularName()</span>
 </div>
 #foreach($row in $reportDataRows)
-  Report data row<br>
   #set($dataRowFields = $row.getDataRowFields())
-  #set($lastUniqueId = $thisUniqueId)
-  #set($thisUniqueId = $row.getRowId())
+  #if(!$thisUniqueId)
+    #set($thisUniqueId = $row.getRowId())
+  #else
+    #set($lastUniqueId = $thisUniqueId)
+    #set($thisUniqueId = $row.getRowId())
+  #end
   #set($emboldened = false)
   #if($thisUniqueId != $lastUniqueId)
   ##onclick is workaround for iOS bug http://blog.alanszlosek.com/post/4369588562/jquerys-live-click-handler-on-mobile-safari
