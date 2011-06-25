@@ -25,6 +25,7 @@ import org.json.JSONException;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
+import com.gtwm.pb.model.interfaces.DataManagementInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
@@ -79,6 +80,7 @@ public class Public extends VelocityViewServlet {
 			templateName = templateName.replaceAll("\\W", "");
 		}
 		AppUserInfo publicUser = null;
+		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
 		for (PublicAction publicAction : publicActions) {
 			String publicActionValue = request.getParameter(publicAction.toString().toLowerCase());
 			if (publicActionValue != null) {
@@ -119,12 +121,16 @@ public class Public extends VelocityViewServlet {
 							templateName = templatePath + "report_json";
 						}
 						if (cacheSeconds == null) {
-							cacheSeconds = Long.valueOf(30*60); // default to 30 mins cache
+							cacheSeconds = Long.valueOf(30 * 60); // default to
+																	// 30 mins
+																	// cache
 						}
 					} else {
 						templateName = templatePath + "report_rss";
 						if (cacheSeconds == null) {
-							cacheSeconds = Long.valueOf(2*60); // default to 2 mins cache
+							cacheSeconds = Long.valueOf(2 * 60); // default to 2
+																	// mins
+																	// cache
 						}
 					}
 					String internalReportName = request.getParameter("r");
@@ -139,14 +145,15 @@ public class Public extends VelocityViewServlet {
 									+ " has not been set as publicly exportable");
 						}
 						Map<BaseField, String> filters = getFilters(report, request);
-						boolean exactFilters = Helpers.valueRepresentsBooleanTrue(request.getParameter("exact_filters"));
+						boolean exactFilters = Helpers.valueRepresentsBooleanTrue(request
+								.getParameter("exact_filters"));
 						if (publicAction.equals(PublicAction.GET_REPORT_JSON)) {
-							String reportJSON = this.databaseDefn.getDataManagement()
-									.getReportJSON(publicUser, report, filters, exactFilters, cacheSeconds);
+							String reportJSON = dataManagement.getReportJSON(publicUser, report,
+									filters, exactFilters, cacheSeconds);
 							context.put("gtwmReportJSON", reportJSON);
 						} else {
-							String reportRSS = this.databaseDefn.getDataManagement().getReportRSS(
-									publicUser, report, filters, exactFilters, cacheSeconds);
+							String reportRSS = dataManagement.getReportRSS(publicUser, report,
+									filters, exactFilters, cacheSeconds);
 							context.put("gtwmReportRSS", reportRSS);
 							response.setContentType(ResponseReturnType.XML.getResponseType());
 						}
@@ -202,11 +209,12 @@ public class Public extends VelocityViewServlet {
 					templateName = templatePath + templateName;
 					SessionDataInfo sessionData = new SessionData();
 					try {
-						sessionData.setTable(table);
 						if (publicAction.equals(PublicAction.UPDATE_RECORD)) {
-							String rowIdString = ServletUtilMethods.getParameter(request, "row_id", multipartItems);
+							String rowIdString = ServletUtilMethods.getParameter(request, "row_id",
+									multipartItems);
 							if (rowIdString == null) {
-								throw new CantDoThatException("row_id must be provided to update a record");
+								throw new CantDoThatException(
+										"row_id must be provided to update a record");
 							}
 							rowId = Integer.valueOf(rowIdString);
 							newRecord = false;
@@ -238,8 +246,10 @@ public class Public extends VelocityViewServlet {
 								}
 							}
 						}
-						this.databaseDefn.getDataManagement().saveRecord(request, table,
-								fieldInputValues, newRecord, rowId, sessionData, multipartItems);
+						dataManagement.saveRecord(request, table, fieldInputValues, newRecord,
+								rowId, sessionData, multipartItems);
+						String tableDataRowJson = dataManagement.getTableDataRowJson(table, sessionData.getRowId(table));
+						context.put("tableDataRowJson", tableDataRowJson);
 					} catch (AgileBaseException abex) {
 						ServletUtilMethods.logException(abex, request,
 								"General error performing save from public");
@@ -258,6 +268,12 @@ public class Public extends VelocityViewServlet {
 						templateName = templatePath + "form";
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, fuex);
+					} catch (JSONException jsonex) {
+						ServletUtilMethods.logException(jsonex, request,
+								"General error performing save from public");
+						templateName = templatePath + "form";
+						return this.getUserInterfaceTemplate(request, response, templateName,
+								context, jsonex);
 					}
 					break;
 				}
@@ -310,7 +326,8 @@ public class Public extends VelocityViewServlet {
 		return template;
 	}
 
-	private static Map<BaseField, String> getFilters(BaseReportInfo report, HttpServletRequest request) {
+	private static Map<BaseField, String> getFilters(BaseReportInfo report,
+			HttpServletRequest request) {
 		Map<BaseField, String> filters = new HashMap<BaseField, String>();
 		for (BaseField field : report.getReportBaseFields()) {
 			String internalFieldName = field.getInternalFieldName();
