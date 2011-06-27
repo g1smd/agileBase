@@ -128,7 +128,7 @@ public final class ServletDataMethods {
 		if (!newRecord) {
 			String stringRowId = ServletUtilMethods.getParameter(request, "rowid", multipartItems);
 			if (stringRowId == null) {
-				rowId = sessionData.getRowId();
+				rowId = sessionData.getRowId(table);
 				if (rowId == -1) {
 					throw new ObjectNotFoundException("There's no record identifier in the session");
 				}
