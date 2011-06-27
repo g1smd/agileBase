@@ -264,10 +264,10 @@ function relationChangeActions(oHidden) {
 						var jqSnippet = $("#" + snippetId);
 						jqSnippet.html(data);
 						jqSnippet.attr("rowid", rowId);
-						if (!jqSnippet.hasClass("active")) {
-							jqSnippet.addClass("active");
+						if (!(jqSnippet.closest('.dependent_table').hasClass('active'))) {
+							jqSnippet.addClass('active');
 							alert("assigning relation click");
-							jqSnippet.click(relationClick(jqSnippet));
+							//jqSnippet.click(relationClick(jqSnippet));
 						}
 					});
 }
