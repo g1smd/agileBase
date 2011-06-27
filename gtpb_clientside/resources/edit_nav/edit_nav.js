@@ -392,7 +392,6 @@ function showCurrentLevel() {
 }
 
 function moveUp() {
-	alert(arguments.callee.caller.toString());
 	if (currentLevel == 0) {
 		return;
 	}
@@ -426,6 +425,7 @@ function moveDown() {
  *          instead
  */
 function moveUpTo(levelUrl, fallbackToDown) {
+	alert(arguments.callee.caller.toString());
 	var jqLevelContent = $(levelsList[currentLevel].levelContent);
 	// Search for the levelUrl somewhere above the current level.
 	// If the levelUrl represents a 'report' level, then allow it to be the new
