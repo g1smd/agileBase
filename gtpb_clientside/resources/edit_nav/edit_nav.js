@@ -263,9 +263,10 @@ function relationChangeActions(oHidden) {
 					function(data) {
 						var jqSnippet = $("#" + snippetId);
 						jqSnippet.html(data);
+						alert(data);
 						jqSnippet.attr("rowid", rowId);
-						if (!(jqSnippet.closest('.dependent_table').hasClass('active'))) {
-							jqSnippet.closest('.dependent_table').addClass('active');
+						if (!(jqSnippet.hasClass('active'))) {
+							jqSnippet.addClass('active');
 							alert("assigning relation click");
 							//jqSnippet.click(relationClick(jqSnippet));
 						}
