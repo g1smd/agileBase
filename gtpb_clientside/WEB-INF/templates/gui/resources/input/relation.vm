@@ -78,9 +78,11 @@
     #else ##
       field_name="$field" ##
     #end ##
-  	displayValue="${fieldDisplayValue} #if($useSecondaryDisplayValue) {${secondaryDisplayValue}}#end" ##
-  	internalFieldName="$internalFieldName" ##
+  	displayValue="$fieldDisplayValue #if($useSecondaryDisplayValue) {${secondaryDisplayValue}}#end" ##
+  	internalFieldName="$internalFieldName"##
   	internalTableName="$internalTableName"##
+    displayFieldInternalName="$field.getDisplayField().getInternalFieldName()"##
+    displayFieldName="$field.getDisplayField()"##
 	#if($globalEdit) ##
 	  gtpb_global_edit="true"
 	#elseif($updateAsType)
