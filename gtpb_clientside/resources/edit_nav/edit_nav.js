@@ -20,7 +20,6 @@ $(document)
 						}
 					});
 					$(".block").live('click', function() {
-						alert(".block click");
 						var href = $(this).attr("href");
 						moveUpTo(href, true); // move up only if level already exists above,
 						// otherwise move down
@@ -274,8 +273,7 @@ function relationChangeActions(oHidden) {
 }
 
 function relationClick(jqDependentTable) {
-	var internalTableName = jqDependentTable
-	.attr("internaltablename");
+	var internalTableName = jqDependentTable.attr("internaltablename");
 	var rowId = jqDependentTable.attr("rowid");
 	var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table=" + internalTableName + "&set_row_id=" + rowId;
 	moveUpTo(levelUrl, true);

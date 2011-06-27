@@ -363,14 +363,14 @@ function fRelationPickers() {
 							relationNewRecord(this);
 						} else {
 							// a normal save
-						  new fChange(this);
-						}
-						try {
-							// any additional actions to the save
-							relationChangeActions(this);
-						} catch(err) {
-							// relationChangeActions may not exist,
-							// it is only defined in some circumstances
+							new fChange(this);
+							try {
+								// any additional actions to the save
+								relationChangeActions(this);
+							} catch (err) {
+								// relationChangeActions may not exist,
+								// it is only defined in some circumstances
+							}
 						}
 					}
 				};
@@ -404,7 +404,7 @@ function fRelationPickers() {
 		this.field = jqButton.siblings("input.relation_hidden")[0];
 		jqButton.click(fUpdateGlobalRelation);
 	});
-	
+
 	function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
 		jqElement.autocomplete("AppController.servlet", {
 			autoFill : true,
@@ -443,9 +443,9 @@ function fRelationPickers() {
 			this.value = sValue;
 		};
 		this.formEl = jqThis.siblings("input.relation_hidden")[0]; // the hidden
-																																// field will be
-																																// just before
-																																// this
+		// field will be
+		// just before
+		// this
 		// TODO: test newer IE, the code may work now
 		if ($.browser.msie) {
 			// $('<span
@@ -458,7 +458,7 @@ function fRelationPickers() {
 			bindAutoComplete(jqThis, internalTableName, internalFieldName);
 		}
 	});
-  
+
 	function relationNewRecord(oHidden) {
 		var jqHidden = $(oHidden);
 		// Identify the related table and identifying field for this relation
@@ -467,9 +467,9 @@ function fRelationPickers() {
 		var displayFieldName = jqHidden.attr("displayFieldName");
 		var newValue = prompt("Please enter a new " + displayFieldName);
 		var postData = {
-			"return": "gui/resources/input/xmlreturn_record_info",
-			set_table: relatedInternalTableName,
-			save_new_record: true
+			"return" : "gui/resources/input/xmlreturn_record_info",
+			set_table : relatedInternalTableName,
+			save_new_record : true
 		};
 		postData[displayFieldInternalName] = newValue;
 		$.post("AppController.servlet", postData, function(data) {
@@ -482,14 +482,14 @@ function fRelationPickers() {
 			new fChange(jqHidden[0]);
 			try {
 				// any additional actions to the save
-				//relationChangeActions(jqHidden[0]);
-			} catch(err) {
+				// relationChangeActions(jqHidden[0]);
+			} catch (err) {
 				// relationChangeActions may not exist,
 				// it is only defined in some circumstances
 			}
 		});
 	}
-	
+
 }
 
 function appendWarningAction() {
