@@ -466,12 +466,13 @@ function fRelationPickers() {
 		var displayFieldInternalName = jqHidden.attr("displayFieldInternalName");
 		var displayFieldName = jqHidden.attr("displayFieldName");
 		var newValue = prompt("Please enter a new " + displayFieldName);
-		$.post("AppController.servlet", {
+		var postData = {
 			"return": "gui/resources/input/xmlreturn_record_info",
 			set_table: internalTableName,
-			save_new_record: true,
-			jqHidden.attr("displayFieldName"): newValue
-		}, function(data) {
+			save_new_record: true
+		};
+		postData[displayFieldName] = newValue;
+		$.post("AppController.servlet", postData, function(data) {
 			var newRowId = $(data).find("rowId").text();
 			jqHidden.val(newRowId);
 			jqHidden.next("input").val(newValue);
