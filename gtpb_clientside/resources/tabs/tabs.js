@@ -474,7 +474,16 @@ function fRelationPickers() {
 		postData[displayFieldInternalName] = newValue;
 		$.post("AppController.servlet", postData, function(data) {
 			var newRowId = $(data).find("rowId").text();
-			jqHidden.doUpdate(newRowId);
+			jqHidden.val(newRowId);
+			jqHidden.attr("gtpb_set_row_id", newRowId);
+			new fChange(jqHidden[0]);
+			try {
+				// any additional actions to the save
+				relationChangeActions(jqHidden[0]);
+			} catch(err) {
+				// relationChangeActions may not exist,
+				// it is only defined in some circumstances
+			}
 		});
 	}
 	
