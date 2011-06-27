@@ -133,7 +133,7 @@ public final class ServletDataMethods {
 					throw new ObjectNotFoundException("There's no record identifier in the session");
 				}
 			} else {
-				// TODO: need to test sending up incorrect row id (e.g. incase
+				// TODO: need to test sending up incorrect row id (e.g. in case
 				// record being amended has been deleted by another user)
 				rowId = Integer.parseInt(stringRowId);
 			}

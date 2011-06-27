@@ -480,7 +480,7 @@ function fRelationPickers() {
 			new fChange(jqHidden[0]);
 			try {
 				// any additional actions to the save
-				// relationChangeActions(jqHidden[0]);
+				relationChangeActions(jqHidden[0]);
 			} catch (err) {
 				// relationChangeActions may not exist,
 				// it is only defined in some circumstances
