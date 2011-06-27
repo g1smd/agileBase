@@ -20,6 +20,7 @@ $(document)
 						}
 					});
 					$(".block").live('click', function() {
+						alert(".block click");
 						var href = $(this).attr("href");
 						moveUpTo(href, true); // move up only if level already exists above,
 						// otherwise move down
