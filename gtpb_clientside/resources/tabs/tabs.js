@@ -462,13 +462,13 @@ function fRelationPickers() {
 	function relationNewRecord(oHidden) {
 		var jqHidden = $(oHidden);
 		// Identify the related table and identifying field for this relation
-		var internalTableName = jqHidden.attr("gtpb_rowidinternaltablename");
+		var relatedInternalTableName = jqHidden.attr("gtpb_rowidinternaltablename");
 		var displayFieldInternalName = jqHidden.attr("displayFieldInternalName");
 		var displayFieldName = jqHidden.attr("displayFieldName");
 		var newValue = prompt("Please enter a new " + displayFieldName);
 		var postData = {
 			"return": "gui/resources/input/xmlreturn_record_info",
-			set_table: internalTableName,
+			set_table: relatedInternalTableName,
 			save_new_record: true
 		};
 		postData[displayFieldInternalName] = newValue;
