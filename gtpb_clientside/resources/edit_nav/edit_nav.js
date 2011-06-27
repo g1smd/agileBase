@@ -245,8 +245,8 @@ function initialiseSlides() {
 function relationChangeActions(oHidden) {
 	var jqHidden = $(oHidden);
 	var rowId = jqHidden.val();
-	var internalFieldName = jqHidden.attr("internalfieldname");
-	var internalTableName = jqHidden.attr("internaltablename");
+	var internalFieldName = jqHidden.attr("internalFieldName");
+	var internalTableName = jqHidden.attr("gtpb_internaltablename");
 	var relatedTableInternalName = jqHidden.attr("gtpb_rowidinternaltablename");
 	var snippetId = "dependent_relation_" + internalTableName + "_"
 			+ relatedTableInternalName;
