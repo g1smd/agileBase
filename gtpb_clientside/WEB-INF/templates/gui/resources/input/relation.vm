@@ -89,6 +89,7 @@
 	  ## so that if we choose a relation value for a particular record
 	  ## then click 'New' to add additional records, the same relation value is used
     gtpb_update_record="true" ##
+    gtpb_internaltablename="$internalTableName"
     gtpb_rowidinternaltablename="$relatedTable.getInternalTableName()"##
     gtpb_set_row_id="$fieldValue"##
 	#end ##
