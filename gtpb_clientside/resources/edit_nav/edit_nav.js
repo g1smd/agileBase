@@ -24,11 +24,6 @@ $(document)
 						moveUpTo(href, true); // move up only if level already exists above,
 						// otherwise move down
 					});
-					$("a.jumpto_table").live('click', function(event) {
-						event.preventDefault();
-						var href = $(this).attr("href");
-						moveUpTo(href, false); // always move up
-					});
 					$("a.reference_link").live('click', function(event) {
 						event.preventDefault();
 						var href = $(this).attr("href");
@@ -397,6 +392,7 @@ function showCurrentLevel() {
 }
 
 function moveUp() {
+	alert(arguments.callee.caller.toString());
 	if (currentLevel == 0) {
 		return;
 	}
