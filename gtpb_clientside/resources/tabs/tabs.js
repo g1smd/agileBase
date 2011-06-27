@@ -473,6 +473,7 @@ function fRelationPickers() {
 		};
 		postData[displayFieldInternalName] = newValue;
 		$.post("AppController.servlet", postData, function(data) {
+			alert("Posted save_new_record");
 			var newRowId = $(data).find("rowId").text();
 			jqHidden.val(newRowId);
 			jqHidden.attr("gtpb_set_row_id", newRowId);
