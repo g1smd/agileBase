@@ -471,7 +471,7 @@ function fRelationPickers() {
 			set_table: internalTableName,
 			save_new_record: true
 		};
-		postData[displayFieldName] = newValue;
+		postData[displayFieldInternalName] = newValue;
 		$.post("AppController.servlet", postData, function(data) {
 			var newRowId = $(data).find("rowId").text();
 			jqHidden.val(newRowId);
