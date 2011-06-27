@@ -263,10 +263,10 @@ function relationChangeActions(oHidden) {
 					function(data) {
 						var jqSnippet = $("#" + snippetId);
 						jqSnippet.html(data);
-						jqSnippet.addClass("active");
 						jqSnippet.attr("rowid", rowId);
 						if (!jqSnippet.hasClass("active")) {
 							jqSnippet.addClass("active");
+							alert("assigning relation click");
 							jqSnippet.click(relationClick(jqSnippet));
 						}
 					});
