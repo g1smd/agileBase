@@ -262,6 +262,7 @@ function relationChangeActions(oHidden) {
 					},
 					function(data) {
 						var jqSnippet = $("#" + snippetId);
+						alert("Current snippet title is " + jqSnippet.find("h1").text());
 						jqSnippet.html(data);
 						alert(data);
 						jqSnippet.attr("rowid", rowId);
