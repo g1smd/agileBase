@@ -476,6 +476,8 @@ function fRelationPickers() {
 			var newRowId = $(data).find("rowId").text();
 			jqHidden.val(newRowId);
 			jqHidden.attr("gtpb_set_row_id", newRowId);
+			jqHidden.next("input").val(newValue);
+			alert("about to save " + newValue);
 			new fChange(jqHidden[0]);
 			try {
 				// any additional actions to the save
