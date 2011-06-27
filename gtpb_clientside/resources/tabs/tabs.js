@@ -470,11 +470,11 @@ function fRelationPickers() {
 			"return": "gui/resources/input/xmlreturn_record_info",
 			set_table: internalTableName,
 			save_new_record: true,
-			displayFieldInternalName: newValue
+			jqHidden.attr("displayFieldName"): newValue
 		}, function(data) {
 			var newRowId = $(data).find("rowId").text();
-			jqHidden.value(newRowId);
-			jqHidden.next("input").value(newValue);
+			jqHidden.val(newRowId);
+			jqHidden.next("input").val(newValue);
 			new fChange(oHidden);
 		});
 	}
