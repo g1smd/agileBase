@@ -460,10 +460,23 @@ function fRelationPickers() {
 	});
   
 	function relationNewRecord(oHidden) {
-		alert('new record');
+		var jqHidden = $(oHidden);
 		// Identify the related table and identifying field for this relation
-		// var internalTableName
-		// var internalFieldName = 
+		var internalTableName = jqHidden.attr("gtpb_rowidinternaltablename");
+		var displayFieldInternalName = jqHidden.attr("displayFieldInternalName");
+		var displayFieldName = jqHidden.attr("displayFieldName");
+		var newValue = prompt("Please enter a new " + displayFieldName);
+		$.post("AppController.servlet", {
+			"return": "gui/resources/input/xmlreturn_record_info",
+			set_table: internalTableName,
+			save_new_record: true,
+			displayFieldInternalName: newValue
+		}, function(data) {
+			var newRowId = $(data).find("rowId").text();
+			jqHidden.value(newRowId);
+			jqHidden.next("input").value(newValue);
+			new fChange(oHidden);
+		});
 	}
 	
 }

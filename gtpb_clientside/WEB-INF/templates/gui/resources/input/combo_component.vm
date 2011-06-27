@@ -27,7 +27,8 @@
 	#if($globalEdit || !$updateAsType)
 		id="$field.getInternalFieldName()_dropdown_global-edit"
 	#else
-		id="$field.getInternalFieldName()_dropdown_edit"
+		id="$field.getInternalFieldName()_dropdown_edit" ##
+    gtpb_internaltablename="$field.getTableContainingField().getInternalTableName()" gtpb_rowid="$sessionRowId()"
 	#end
 	>
     #if($field.getNotNull() && (!$fieldValue || $fieldValue != ""))
@@ -80,11 +81,12 @@
 		 id="$field.getInternalFieldName()_text_global-edit"
 	#else
 		 id="$field.getInternalFieldName()_text_edit"	
-	#end
+  #end
 	value="$fieldValue" 
 	#if((!$globalEdit) && ($updateAsType)) 
 		onkeyup="top.oBuffer.writeBuffer(this)" 
-		gtpb_update_record=""
+		gtpb_update_record="true"
+    gtpb_internaltablename="$field.getTableContainingField().getInternalTableName()" gtpb_rowid="$sessionRowId()"
 	#end
 	#if($mobile_device && $updateAsType)
 		onblur="top.oBuffer.writeBuffer(this)"

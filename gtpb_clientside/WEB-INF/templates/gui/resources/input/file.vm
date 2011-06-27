@@ -23,10 +23,10 @@
   #if(!$fieldValueObject.isNull())
     ## Download URL
     #if($relatedRowId)
-	    #set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$relatedRowId/")
+	    #set($downloadBase = "uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$relatedRowId/")
       ## if we're parsing non-parent table data in the view tab
     #else
-      #set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/")
+      #set($downloadBase = "uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/")
 	  #end
   	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValue"))
     #if($viewTools.getBrowser().getBrowserName() == "Konqueror")
@@ -70,6 +70,8 @@
     <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
       <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
       <input type="hidden" name="update_record" value="true" />
+      <input type="hidden" name="internaltablename" value="$sessionTable.getInternalTableName()"
+      <input type="hidden" name="rowid" value="$sessionRowId()"
       <input type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" class="submit-trigger" />
       <div class="upload_progress_container">
         <div class="upload_progress_bar"></div>
