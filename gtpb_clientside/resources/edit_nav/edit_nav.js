@@ -262,13 +262,10 @@ function relationChangeActions(oHidden) {
 					},
 					function(data) {
 						var jqSnippet = $("#" + snippetId);
-						alert("snippet ID is " + snippetId);
 						jqSnippet.html(data);
-						alert(data);
 						jqSnippet.attr("rowid", rowId);
 						if (!(jqSnippet.hasClass('active'))) {
 							jqSnippet.addClass('active');
-							alert("assigning relation click");
 							//jqSnippet.click(relationClick(jqSnippet));
 						}
 					});
