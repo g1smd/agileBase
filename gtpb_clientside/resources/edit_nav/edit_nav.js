@@ -265,7 +265,7 @@ function relationChangeActions(oHidden) {
 						jqSnippet.html(data);
 						jqSnippet.attr("rowid", rowId);
 						if (!(jqSnippet.closest('.dependent_table').hasClass('active'))) {
-							jqSnippet.addClass('active');
+							jqSnippet.closest('.dependent_table').addClass('active');
 							alert("assigning relation click");
 							//jqSnippet.click(relationClick(jqSnippet));
 						}
