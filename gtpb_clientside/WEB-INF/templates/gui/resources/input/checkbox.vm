@@ -24,7 +24,7 @@
   #if($globalEdit)
     	<input type=checkbox name=$field.getInternalFieldName()> ## always unchecked
   #else
-    	<input type=checkbox name=$field.getInternalFieldName() #if($updateAsType) gtpb_update_record=true gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_rowid="$sessionRowId()" onclick="new fChange(this)" #end #if($fieldValue == true) checked #end>
+    	<input type=checkbox name=$field.getInternalFieldName() #if($updateAsType) gtpb_update_record=true gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_rowid="$sessionRowId" onclick="new fChange(this)" #end #if($fieldValue == true) checked #end>
   #end
   #if($globalEdit)
     <script language="Javascript">

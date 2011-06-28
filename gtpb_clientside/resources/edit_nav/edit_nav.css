@@ -156,6 +156,7 @@ body {
   text-shadow: none;
   margin-top: 1em;
   padding-right: 0.5em;
+  border-left: 1px solid #486F98;
 }
 
 .dependent_table {
