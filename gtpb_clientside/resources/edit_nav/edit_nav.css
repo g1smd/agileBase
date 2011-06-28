@@ -197,6 +197,7 @@ body {
 
 .dependent_table.active h1 {
   color: #486F98;
+  font-weight: bold;
 }
 
 .dependent_table.active.related h1 {
