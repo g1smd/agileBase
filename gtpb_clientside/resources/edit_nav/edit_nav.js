@@ -308,7 +308,7 @@ function initialiseDependencies() {
 							$(".presentation").scrollTop(0);
 						}
 					});
-	slides.click(function() {
+	$(".slide").click(function() {
 		if ($(this).hasClass("future")) {
 			slideshow.next();
 		} else if ($(this).hasClass("past")) {
