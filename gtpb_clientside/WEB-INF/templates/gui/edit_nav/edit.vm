@@ -30,11 +30,72 @@
   <div id="presentation-counter"></div> 
   <div class="slides">
     <div class="slide"> 
-      <section class="middle">
-              <div class="this_table">
+      <section class="middle"> 
+        <div class="this_table">
           #parse("gui/reports_and_tables/tabs/edit.vm")
         </div>
-      </section>
+        <div class="dependent_tables">
+          ## tableDataRow will have been set in edit.vm above
+          #if(!$tableDataRow)
+            #set($tableDataRow = $view.getTableDataRow())
+          #end
+          ## each relation field
+          #if($relationFields.size() > 0)
+            <div class="related_header">This $sessionTable.getSingularName() belongs to</div>
+            #foreach($field in $relationFields)
+              #parse("gui/edit_nav/relation_snippet.vm")
+            #end
+          #end
+          <div class="related_header">Add / View related data</div>
+          ## dependent child tables
+          #set($primaryKey = $sessionTable.getPrimaryKey())
+          #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
+          #foreach($dependentTable in $dependentTables)
+            ## don't include those which are covered by cross-referenced fields
+            #if(!$referencedTables.contains($dependentTable))
+              #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA", $dependentTable))
+                #foreach($report in $dependentTable.getReports())
+                  #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
+                    <div class="dependent_table" internaltablename="$dependentTable.getInternalTableName()" id="dependent_table_${internalTableName}_${dependentTable.getInternalTableName()}_$rowId">
+                      <img src="resources/edit_nav/new_flat.png" class="go_new" />
+                      <img src="resources/edit_nav/right.png" class="go_right" />
+                      <h1>$dependentTable.getSimpleName() <span class="count"></span></h1>
+                      <div class="record_snippets">
+                      </div>
+                    </div>
+                    #break ## next table
+                  #end
+                #end
+              #end
+            #end
+          #end
+          ## cross-reference fields
+          #if($crossReferencedFields.size() > 0)
+            <div class="related_header">See also</div>
+            #foreach($field in $crossReferencedFields)
+              #set($referencedReport = $field.getReferencedReport())
+              #set($referencedTable = $referencedReport.getParentTable())
+              <div class="dependent_table cross_reference" internaltablename="$referencedTable.getInternalTableName()" id="dependent_table_${internalTableName}_${referencedTable.getInternalTableName()}_${field.getInternalFieldName()}_$rowId">
+                <img src="resources/edit_nav/new_flat.png" class="go_new" />
+                <img src="resources/edit_nav/right.png" class="go_right" />
+                <h1>$field <span class="count"></span></h1>
+                <div class="record_snippets">
+                </div>
+              </div>
+            #end
+          #end
+        </div>
+      </section> 
+      <div class="slide_controls">
+        <div class="button_group">
+          <button name="new" id="control_new" internaltablename="$internalTableName"><img src="resources/toolbar/new.png" /> new</button>
+          <button name="clone" id="control_clone" internaltablename="$internalTableName" rowid="$rowId"><img src="resources/toolbar/clone.png" /> clone</button>
+          <button name="delete" id="control_delete" internaltablename="$internalTableName" rowid="$rowId"><img src="resources/toolbar/delete.png" /> delete</button>
+        </div>
+        <div class="button_group">
+          <button name="print" id="control_print" internaltablename="$internalTableName" rowid="$rowId"><img src="resources/toolbar/print_only.png" /> print</button>
+        </div>
+      </div>
     </div> <!-- slide --> 
   </div> <!-- slides --> 
 </div> <!-- presentation --> 
