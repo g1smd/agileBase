@@ -46,7 +46,7 @@
               #parse("gui/edit_nav/relation_snippet.vm")
             #end
           #end
-          <div class="related_header">Add / View related data</div>
+          <div class="related_header">Add / View related data (arrow right)</div>
           ## dependent child tables
           #set($primaryKey = $sessionTable.getPrimaryKey())
           #set($dependentTables = $view.getDirectlyDependentTables($sessionTable))
@@ -71,7 +71,7 @@
           #end
           ## cross-reference fields
           #if($crossReferencedFields.size() > 0)
-            <div class="related_header">See also</div>
+            <div class="related_header">See also (arrow right)</div>
             #foreach($field in $crossReferencedFields)
               #set($referencedReport = $field.getReferencedReport())
               #set($referencedTable = $referencedReport.getParentTable())
