@@ -8,11 +8,12 @@
   #if($relatedRowId)
     #set($active = true)
     #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
+    #set($displayField = $field.getDisplayField())
     #set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
     #foreach($relatedField in $relatedDataRow.keySet())
-      #if(!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey()))
+      #if((!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey())) && (!($relatedField.getFieldCategory() == "CHECKBOX")) && (!($relatedField.equals($displayField))))
       #set($fieldValue = $relatedDataRow.get($relatedField))
-        #if(($fieldValue != "") && ($fieldValue != "false"))
+        #if(($fieldValue != ""))
           #set($snippet = "$snippet$fieldValue, ")
         #end
       #end
