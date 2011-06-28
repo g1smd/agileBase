@@ -66,7 +66,7 @@
   -o-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
   -moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
+  /* -webkit-border-radius: 20px; */
   -ms-border-radius: 20px;
   border-radius: 20px;
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
