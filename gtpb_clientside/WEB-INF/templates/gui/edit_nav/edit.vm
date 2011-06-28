@@ -30,7 +30,11 @@
   <div id="presentation-counter"></div> 
   <div class="slides">
     <div class="slide"> 
-      <section class="middle">Hello</section>
+      <section class="middle">
+              <div class="this_table">
+          #parse("gui/reports_and_tables/tabs/edit.vm")
+        </div>
+      </section>
     </div> <!-- slide --> 
   </div> <!-- slides --> 
 </div> <!-- presentation --> 
