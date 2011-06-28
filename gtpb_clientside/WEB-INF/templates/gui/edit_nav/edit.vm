@@ -30,6 +30,7 @@
   <div id="presentation-counter"></div> 
   <div class="slides">
     <div class="slide"> 
+      Hello
     </div> <!-- slide --> 
   </div> <!-- slides --> 
 </div> <!-- presentation --> 
