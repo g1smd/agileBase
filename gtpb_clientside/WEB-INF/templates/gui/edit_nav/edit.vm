@@ -57,8 +57,8 @@
                 #foreach($report in $dependentTable.getReports())
                   #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
                     <div class="dependent_table" internaltablename="$dependentTable.getInternalTableName()" id="dependent_table_${internalTableName}_${dependentTable.getInternalTableName()}_$rowId">
-                      <img src="resources/edit_nav/new_flat.png" class="go_new" />
-                      <img src="resources/edit_nav/right.png" class="go_right" />
+                      <img src="resources/edit_nav/new_flat.png" class="go_new" title="add $dependentTable.getSingularName()" />
+                      <img src="resources/edit_nav/right.png" class="go_right" title="view/edit $dependentTable.getSimpleName()" />
                       <h1>$dependentTable.getSimpleName() <span class="count"></span></h1>
                       <div class="record_snippets">
                       </div>
@@ -76,8 +76,8 @@
               #set($referencedReport = $field.getReferencedReport())
               #set($referencedTable = $referencedReport.getParentTable())
               <div class="dependent_table cross_reference" internaltablename="$referencedTable.getInternalTableName()" id="dependent_table_${internalTableName}_${referencedTable.getInternalTableName()}_${field.getInternalFieldName()}_$rowId">
-                <img src="resources/edit_nav/new_flat.png" class="go_new" />
-                <img src="resources/edit_nav/right.png" class="go_right" />
+                <img src="resources/edit_nav/new_flat.png" class="go_new" title="add $field" />
+                <img src="resources/edit_nav/right.png" class="go_right" title="view/edit $field" />
                 <h1>$field <span class="count"></span></h1>
                 <div class="record_snippets">
                 </div>
