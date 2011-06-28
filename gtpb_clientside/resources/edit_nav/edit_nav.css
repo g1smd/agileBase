@@ -186,6 +186,10 @@ body {
   height: 5em;
 }
 
+.dependent_table.related.active {
+  height: 6em;
+}
+
 .dependent_table h1 {
   margin:0;
   margin-top: 0.2em;
