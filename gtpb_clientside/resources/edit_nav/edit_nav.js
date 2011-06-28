@@ -580,6 +580,7 @@ function dependentSnippets() {
 			jqSnippets.append("<div class='snippet'>" + snippetText + "</div>");
 		});
 	});
+	var jqActiveSnippets = firstSlide.find(".dependent_table.active");
 	// add 'new' buttons to any unactivated links
 	firstSlide
 			.find(".dependent_table")
@@ -595,6 +596,7 @@ function dependentSnippets() {
 							}
 						}
 					});
+	var jqInactiveSnippets = firstSlide.find(".dependent_table.has_new");
 }
 
 /**

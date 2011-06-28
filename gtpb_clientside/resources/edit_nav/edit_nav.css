@@ -158,6 +158,9 @@ body {
   padding-right: 0.5em;
   border-left: 1px solid #486F98;
   border-bottom: 1px solid #486F98;
+  background-color: white;
+  border-top-left-radius: 0.8em;
+  border-top-right-radius: 0.8em;
 }
 
 .dependent_table {
@@ -421,6 +424,7 @@ a.jumpto_table.current {
   -ms-border-top-right-radius: 0.8em;
   -webkit-border-top-right-radius: 0.8em;
 	border-top-right-radius: 0.8em;
+	border-top-left-radius: 0.8em;
 }
 
 img.go_right {
