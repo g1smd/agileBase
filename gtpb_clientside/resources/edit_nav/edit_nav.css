@@ -151,11 +151,11 @@ body {
 }
 
 .dependent_tables {
-  width: 30%;
+  width: 260px; /* 30% of 900px - 10px */
   float: right;
   text-shadow: none;
   margin-top: 1em;
-  padding-right: 0.5em;
+  margin-right: 10px;
   border-left: 1px solid #486F98;
   border-bottom: 1px solid #486F98;
   background-color: white;
@@ -403,7 +403,7 @@ a.jumpto_table.current {
 }
 
 .this_table {
-  width: 70%;
+  width: 630px; /* 70% of 900px */
   float: left;
 }
 
