@@ -320,6 +320,7 @@ function initialiseDependencies() {
 		moveUp();
 	});
 	$(".slide").live('click', function() {
+		alert("slide click");
 		if ($(this).hasClass("future")) {
 			slideShow.next();
 		} else if ($(this).hasClass("past")) {
