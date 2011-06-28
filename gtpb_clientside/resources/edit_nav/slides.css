@@ -68,7 +68,7 @@
   -moz-border-radius: 20px;
   -webkit-border-radius: 20px;
   -ms-border-radius: 20px;
-  /* border-radius: 20px; */
+  border-radius: 20px;
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);

@@ -30,7 +30,7 @@
   <div id="presentation-counter"></div> 
   <div class="slides">
     <div class="slide"> 
-      <section class="middle"> 
+      ##<section class="middle"> 
         <div class="this_table">
           #parse("gui/reports_and_tables/tabs/edit.vm")
         </div>
@@ -85,7 +85,7 @@
             #end
           #end
         </div>
-      </section> 
+      ##</section> 
       <div class="slide_controls">
         <div class="button_group">
           <button name="new" id="control_new" internaltablename="$internalTableName"><img src="resources/toolbar/new.png" /> new</button>
