@@ -308,6 +308,14 @@ function initialiseDependencies() {
 							$(".presentation").scrollTop(0);
 						}
 					});
+	slides.click(function() {
+		if ($(this).hasClass("future")) {
+			slideshow.next();
+		} else if ($(this).hasClass("past")) {
+			slideshow.prev();
+		}
+	});
+
 	// live because only first few slide are created on load?
 	$(".rewind").live('click', function() {
 		var slideNum = $(this).closest(".slide").find(".counter").text();
@@ -318,13 +326,6 @@ function initialiseDependencies() {
 	});
 	$(".slide_icon").live('click', function() {
 		moveUp();
-	});
-	$(".slide").live('click', function() {
-		if ($(this).hasClass("future")) {
-			slideshow.next();
-		} else if ($(this).hasClass("past")) {
-			slideshow.prev();
-		}
 	});
 
 	slideshow.go(1);
