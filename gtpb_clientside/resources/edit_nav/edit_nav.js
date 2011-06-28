@@ -304,6 +304,7 @@ function initialiseDependencies() {
 							// find index of slide to go to
 							var slideId = jqDependentTable.attr("id").replace("dependent_table_","slide_");
 							var slideNum = $("#" + slideId).index();
+							alert("going to slide " + slideNum);
 							slideshow.go(slideNum + 1);
 							$(".presentation").scrollTop(0);
 						}
@@ -602,7 +603,6 @@ function dependentSnippets() {
 							}
 						}
 					});
-	var jqInactiveSnippets = firstSlide.find(".dependent_table.has_new");
 }
 
 /**
