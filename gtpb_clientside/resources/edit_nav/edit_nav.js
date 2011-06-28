@@ -304,7 +304,6 @@ function initialiseDependencies() {
 							// find index of slide to go to
 							var slideId = jqDependentTable.attr("id").replace("dependent_table_","slide_");
 							var slideNum = $("#" + slideId).index();
-							alert("going to slide " + slideNum);
 							slideshow.go(slideNum + 1);
 							$(".presentation").scrollTop(0);
 						}
@@ -325,6 +324,8 @@ function initialiseDependencies() {
 			slideshow.next();
 		} else if ($(this).hasClass("past")) {
 			slideshow.prev();
+		} else {
+			alert("another slide");
 		}
 	});
 
