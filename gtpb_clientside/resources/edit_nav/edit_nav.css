@@ -205,14 +205,14 @@ body {
 
 .dependent_table:hover {
   cursor: pointer;
-  background-color: white;
+  /* background-color: white; */
 }
 
 .snippet {
   height: 1.3em;
   width: 100%;
   overflow: hidden;
-  /* color: #486F98; */
+  color: #bbbbbb;
 }
 
 .related .snippet {
