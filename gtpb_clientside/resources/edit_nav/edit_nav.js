@@ -319,6 +319,13 @@ function initialiseDependencies() {
 	$(".slide_icon").live('click', function() {
 		moveUp();
 	});
+	$(".slide").live('click', function() {
+		if ($(this).hasClass("future")) {
+			slideShow.next();
+		} else if ($(this).hasClass("past")) {
+			slideShow.prev();
+		}
+	});
 
 	slideshow.go(1);
 	$(".presentation").scrollTop(0);
