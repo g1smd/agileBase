@@ -157,11 +157,13 @@ body {
   margin-top: 1em;
   padding-right: 0.5em;
   border-left: 1px solid #486F98;
+  border-bottom: 1px solid #486F98;
 }
 
 .dependent_table {
   padding-left: 1em;
 	height: 3em;
+	margin-top: 0.5em;
   border-bottom: 1px solid #F2F2F2;
   overflow: hidden;
 }
@@ -410,7 +412,7 @@ a.jumpto_table.current {
   color: white;
   background-color: #486f98;
   border-bottom: 1px solid #ff8040;
-  margin-bottom: 0.5em;
+  /* margin-bottom: 0.5em; */
   padding-left: 0.5em;
   padding-top: 0.5em;
 }
