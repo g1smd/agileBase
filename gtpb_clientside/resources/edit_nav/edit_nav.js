@@ -324,8 +324,6 @@ function initialiseDependencies() {
 			slideshow.next();
 		} else if ($(this).hasClass("past")) {
 			slideshow.prev();
-		} else {
-			alert("another slide");
 		}
 	});
 
