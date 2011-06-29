@@ -57,7 +57,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 						</table>
 					</div>
 		  </div> <!-- end of header -->
-          <div id="popupPricingContent" style="display:none">
+          <div id="popupPricingContent" class="popup">
             <h1>Setup</h1>
             We typically spend the first day with a client prototyping a system in real time. 
             By the end of the day, clients have firstly, a useful working basic system and secondly a good idea of how long further development is likely to take (and cost) based on their ambitions. 
