@@ -21,13 +21,10 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
     <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
-		<script type="text/javascript" src="/agileBase/website/scripts/thickbox.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"></script>
         <% if(ssl) { %>
-			<script src="https://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 			<script src="https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 		<% } else { %>
-		    <script src="http://www.google.com/uds/solutions/slideshow/gfslideshow.js" type="text/javascript"></script>
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 	    <% } %>
 		<script type="text/javascript">
@@ -37,8 +34,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<style>
 		/* Google RSS stylesheet */
 		@import url("/agileBase/website/styles/gfdynamicfeedcontrol.css");
-		@import url("/agileBase/website/styles/thickbox.css");
-		@import url("/agileBase/website/styles/thickbox_override.css");
 		@import url("/agileBase/website/styles/styles.css");
 		@import url("/agileBase/website/styles/fonts.css");
 		</style>
@@ -131,19 +126,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				<div class="wrapper">
 					<div class="content"> 
 					  <div id="detail_right">
-							<div id="screenshots"><!-- populated by JavaScript slideshow --></div>
-							<div id="quotes">
-								<span class="bqstart">&#8220;</span>
-								I used to use Oracle at my previous Fortune 100. I'm now an agileBase convert - I adapt it to my needs as soon as I learn a better way of doing something.
-								<span class="attribution">- <a href="http://uk.linkedin.com/pub/john-collins/5/590/69b"><img src="website/images/linkedin.png" />John Collins, Business Analyst, Think Drinks</a></span><br><br><br><br><br>
-								<span class="bqstart">&#8220;</span>
-								After ten years of rapid growth we have found agileBase truly invaluable. We are able to build modules in hours whenever a new need arises at very little cost. Because of this we have not needed to upgrade our ERP system and saved ourselves considerable outlay and upheaval.
-								<!--As a rapidly growing company, agileBase is perfect for us. As we grow, agileBase allows us to develop and test new apps in hours, then integrate with the core ERP system when they become widely used.-->
-								<span class="attribution">- <a href="http://www.linkedin.com/pub/nigel-williams/11/a56/182"><img src="website/images/linkedin.png" />Nigel Williams, Finance Director, CHF</a></span><br><br><br><br>
-                <span class="bqstart">&#8220;</span>
-                We wanted to build a new web application but needed more than just an application framework. We needed to be able to analyse the data in real time and we needed to build it quickly. I was astounded at the speed we built a proof of concept. In just four hours we had built our core data model and integrated it seamlessly into our web site. When the reports were viewed after some trial data was entered we could not have been happier.
-                <span class="attribution">- <a href="http://www.linkedin.com/in/damianwebber"><img src="website/images/linkedin.png" />Damian Webber, Content Management Expert, Portsurf</a></span>
-							</div>
 						</div>
 						<div id="main" class="detail">
 							<div class="divider">
@@ -168,39 +150,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 								<p>As a cutting edge Lean provider, we believe an <b>agile platform</b> can enable companies to build what they need, 
 								at a pace to match a company's evolving learning, knowledge and understanding.</p>
 							</div>
-							<div id="how_do_i_use" class="divider">
-								<h1>What's agileBase used for?</h1>
-								<p>Our vision was to make a product that allows business analysts
-								to create Lean, agile, Just-In-Time (JIT) back offices. Here are some apps clients have built</p>
-								<ul>
-                  <li><img src="website/images/icons/x-office-address-book.png">CRM - most service companies start by recording organisations and contacts - the basis of their work</li>
-                  <li><img src="website/images/icons/edit-find-replace.png">Market intelligence - gathering, recording and sharing background research and thought leaders</li>
-                  <li><img src="website/images/icons/x-office-presentation.png">Learning zone - a library of online videos, presentations, books and other materials, referenced and reviewed</li>
-                  <li><img src="website/images/icons/start-here.png">Strategy zone - for working on situational analyses, strategic initiatives and performance alignment</li>
-                  <li><img src="website/images/icons/applications-development.png">Human resources - staff administration</li>
-                  <li><img src="website/images/icons/document-open.png">Physical resources - for storing documents and tools</li>
-                  <li><img src="website/images/icons/applications-internet.png">Marketing information systems - to visualise and understand the relationships between activities and results</li>
-                  <li><img src="website/images/icons/system-users.png">New business development - notes of 'interesting people'</li>
-                  <li><img src="website/images/icons/contact-new.png">Sales pipeline - following suspects, prospects, leads and opportunities through to sale</li>
-                  <li><img src="website/images/icons/folder-saved-search.png">Project/programme/portfolio management - including the use of <a href="http://www.a3reports.co.uk">A3 reports</a></li>
-                  <li><img src="website/images/icons/edit-paste.png">Client support - ticket and enquiry management</li>
-                  <li><img src="website/images/icons/emblem-important.png">Technical issues - bug tracking etc.</li>
-                  <li><img src="website/images/icons/appointment-new.png">Timesheets and expenses</li>
-                  <li><img src="website/images/icons/preferences-desktop-multimedia.png">Compliance - tracking commissions and evidence</li>
-                  <li><img src="website/images/icons/x-office-spreadsheet.png">Management Accounts - invoice generation, payroll and management accounts</li>
-                  <li><img src="website/images/icons/network-server.png">Asset tracking</li>
-                  <li><img src="website/images/icons/preferences-system.png">Job management, scheduling and statistical analysis</li>
-                  <li><img src="website/images/icons/package-x-generic.png">Delivery orders - from scheduling to van loadsheet generation</li>
-                  <li>...and many more</li>
-								  <li>
-								</ul>
-                <p>As you can see these are crafted to fit each organisation's own best practice. agileBase is perfect for organisations in rapidly changing environments, 
-                where scalability goes hand in hand with the need for a rapid Plan/Do/Check/Act cycle.</p>
-							</div>
-              <div>
-                <iframe class="youtube-player" type="text/html" width="500" height="280" src="http://www.youtube.com/embed/HH_RRD7oqvQ" frameborder="0"></iframe>
-                Here's a brief introduction to our business philosophy by MD Clifford Calcutt
-              </div>
 						</div>   <!-- end of main --> 
 						<div id="technical" class="detail">
 							<div class="divider">
