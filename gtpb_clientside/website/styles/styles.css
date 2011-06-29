@@ -34,6 +34,14 @@ body {
   border-bottom-right-radius: 1em;
 }
 
+td.selected {
+  background-color: #50add6;
+}
+
+.popup h1 {
+  font-size: 11pt; 
+}
+
 .popupWrapper {
   width:100%;
   height:100%;
