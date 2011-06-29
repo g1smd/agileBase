@@ -21,14 +21,17 @@ body {
 }
 
 .popup {
-	display:none;
-	width:200px;
-	height:200px;
-	border:5px solid red;
-	background:white;
-	z-index:999999999999999;
-	margin-left:auto;
-    margin-right:auto; 
+  display:none;
+  width:100%;
+  height:auto;
+  background:white;
+  width: 875px;
+  margin: 0;
+  padding: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
 }
 
 .popupWrapper {
