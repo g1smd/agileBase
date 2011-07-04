@@ -249,6 +249,13 @@ td.selected {
 	padding:0;
 }
 
+#urls {
+  border-radius: 2px;
+  border: 2px solid white;
+  background: url('../images/bg-login-urls.png');
+  border-top: 0px;
+}
+
 #navigation li {
 	float:left;
 	padding:0;
