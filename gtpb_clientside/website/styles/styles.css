@@ -255,7 +255,16 @@ td.selected {
   background: url('../images/bg-login-urls.png');
   border-top: 0px;
   font-size: 14px;
-  font-weight: bold;
+  color: black;
+  padding: 20px;
+  width: 460px;
+}
+
+#urls a {
+	color: gray;
+}
+
+#urls p {
   color: black;
 }
 
