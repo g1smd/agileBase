@@ -261,6 +261,10 @@ td.selected {
   width: 460px;
 }
 
+#urls h1 {
+  color: black;
+}
+
 #urls a {
 	color: gray;
 }
