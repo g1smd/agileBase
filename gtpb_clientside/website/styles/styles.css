@@ -254,6 +254,9 @@ td.selected {
   border: 2px solid white;
   background: url('../images/bg-login-urls.png');
   border-top: 0px;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
 }
 
 #navigation li {
