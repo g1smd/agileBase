@@ -110,6 +110,12 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 								<a id="button_login" href="javascript:document.loginform.submit();">login</a>
 						</form>
 				</div>
+				<div id="urls" class="detail">
+				  Bookmark<p>
+				  <a href="https://www.agilebase.co.uk/start">www.agilebase.co.uk/start</a><p>
+				  to return to this login page<p>
+				  iPad and phone users log in at <a href="http://www.agilebase.co.uk/mobile">www.agilebase.co.uk/mobile</a>
+				</div>
 				<div id="announce"><!-- populated by JavaScript RSS feed --></div>
 				</div>   <!-- end content -->
 			</div> <!-- end wrapper -->
