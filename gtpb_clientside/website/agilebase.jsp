@@ -114,10 +114,10 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				  <img style="float: left" src="website/images/locked.png" /><h1>Log in to agileBase &rarr;</h1>
 				  <br clear="left" />
 				  Bookmark<p>
-				  &nbsp;<a href="https://www.agilebase.co.uk/start">www.agilebase.co.uk/start</a><p>
+				  <a href="https://www.agilebase.co.uk/start">www.agilebase.co.uk/start</a><p>
 				  to return to this login page.<p><br>
-				  <img style="float: left" src="website.images/ipad.png" />iPad and phone users log in at<p>
-				  &nbsp;<a href="http://www.agilebase.co.uk/mobile">www.agilebase.co.uk/mobile</a>
+				  <img style="float: left" src="website/images/ipad.png" />iPad and phone users log in at<p>
+				  <a href="http://www.agilebase.co.uk/mobile">www.agilebase.co.uk/mobile</a>
 				</div>
 				<div id="announce"><!-- populated by JavaScript RSS feed --></div>
 				</div>   <!-- end content -->
