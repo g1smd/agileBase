@@ -113,7 +113,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				<div id="urls" class="detail">
 				  Bookmark<p>
 				  &nbsp;<a href="https://www.agilebase.co.uk/start">www.agilebase.co.uk/start</a><p>
-				  to return to this login page<p>
+				  to return to this login page.<p><br>
 				  iPad and phone users log in at<p>
 				  &nbsp;<a href="http://www.agilebase.co.uk/mobile">www.agilebase.co.uk/mobile</a>
 				</div>
