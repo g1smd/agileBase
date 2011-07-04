@@ -109,12 +109,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 								<input type="submit" value="login" style="display:none"/>
 								<a id="button_login" href="javascript:document.loginform.submit();">login</a>
 						</form>
-				</div>     
-				<ul id="navigation">
-					<li><a href="javascript:showSection('main');" id="nav_main" class="current"><span>business</span></a></li>
-					<li><a href="javascript:showSection('technical');" id="nav_technical"><span>technical</span></a></li>
-					<li id="li_analyst"><a href="javascript:showSection('analyst');" id="nav_analyst"><span>analyst</span></a></li>
-				</ul>
+				</div>
 				<div id="announce"><!-- populated by JavaScript RSS feed --></div>
 				</div>   <!-- end content -->
 			</div> <!-- end wrapper -->
