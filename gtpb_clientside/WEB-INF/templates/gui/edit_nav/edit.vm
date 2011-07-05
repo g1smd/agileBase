@@ -31,10 +31,15 @@
   <div class="slides">
     <div class="slide"> 
       <section class="middle"> 
-        <div class="this_table">
+        #if(($relationFields.size() > 0) || ($dependentTables.size() > 0) || ($crossReferencedFields.size() > 0))
+          #set($dependenciesExist = true)
+        #else
+          #set($dependenciesExit = false)
+        #end
+        <div class="this_table" #if(!$dependenciesExist) style="width:100%" #end>
           #parse("gui/reports_and_tables/tabs/edit.vm")
         </div>
-        #if(($relationFields.size() > 0) || ($dependentTables.size() > 0) || ($crossReferencedFields.size() > 0))
+        #if($dependenciesExist)
         <div class="dependent_tables">
           ## tableDataRow will have been set in edit.vm above
           #if(!$tableDataRow)
