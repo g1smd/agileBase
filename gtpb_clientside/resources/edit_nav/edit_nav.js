@@ -250,8 +250,7 @@ function relationChangeActions(oHidden) {
 	var relatedTableInternalName = jqHidden.attr("gtpb_rowidinternaltablename");
 	var snippetId = "dependent_relation_" + internalTableName + "_"
 			+ relatedTableInternalName;
-	$
-			.post(
+	$.post(
 					"AppController.servlet",
 					{
 						"return" : "gui/edit_nav/relation_snippet_direct",
@@ -348,6 +347,9 @@ function loadDependentSlides() {
 					initialiseDependencies();
 					dependentSnippets();
 				});
+	} else {
+		// Need to initialise the slideshow even if there are no other slides
+		initialiseDependencies();
 	}
 }
 
