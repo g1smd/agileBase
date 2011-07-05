@@ -34,6 +34,7 @@
         <div class="this_table">
           #parse("gui/reports_and_tables/tabs/edit.vm")
         </div>
+        #if(($relationFields.size() > 0) || ($dependentTables.size() > 0) || ($crossReferencedFields.size() > 0))
         <div class="dependent_tables">
           ## tableDataRow will have been set in edit.vm above
           #if(!$tableDataRow)
@@ -91,6 +92,7 @@
             #end
           #end
         </div>
+        #end ## end if there are any dependencies of any type
       </section> 
       <div class="slide_controls">
         <div class="button_group">
