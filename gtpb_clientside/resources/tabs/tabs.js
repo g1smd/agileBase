@@ -477,14 +477,8 @@ function fRelationPickers() {
 			jqHidden.val(newRowId);
 			jqHidden.attr("gtpb_set_row_id", newRowId);
 			jqHidden.next("input").val(newValue);
-			new fChange(jqHidden[0]);
-			try {
-				// any additional actions to the save
-				relationChangeActions(jqHidden[0]);
-			} catch (err) {
-				// relationChangeActions may not exist,
-				// it is only defined in some circumstances
-			}
+			// relationChangeActions = any additional actions after the save
+			new fChange(jqHidden[0], relationChangeActions);
 		});
 	}
 
