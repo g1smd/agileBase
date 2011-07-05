@@ -440,7 +440,7 @@ function fEnableDisable(sAction, oFormObject) {
   */  
 }
 
-function fChange(oObj)  {  
+function fChange(oObj, postChangeFunction)  {  
   /* object to handle changing the value of a form element and update the db immediately
 	 over XMLHTTP.
 			
@@ -592,6 +592,13 @@ function fChange(oObj)  {
     fUpdatePane2();
     fUpdatePane3();
     fEnableDisable('enable',oObj);
+    if(typeof postChangeFunction == 'function') {
+			try {
+				postChangeFunction(oObj);
+			} catch (err) {
+				alert('Error performing post save actions: ' + err);
+			}
+    }
   }
    
   function fSetPostVars() {  

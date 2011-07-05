@@ -111,7 +111,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 						</form>
 				</div>
 				<div id="urls" class="detail">
-				  <img style="float: left" src="website/images/locked.png" /><h1>Log in to agileBase &rarr;</h1>
+				  <h1>Log in to agileBase &rarr;</h1>
 				  <br clear="left" />
 				  Bookmark<p>
 				  <a href="https://www.agilebase.co.uk/start">www.agilebase.co.uk/start</a><p>
