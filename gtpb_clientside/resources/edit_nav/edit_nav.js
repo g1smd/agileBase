@@ -211,7 +211,7 @@ function initialiseHeight() {
 }
 
 function initialiseSlides() {
-
+  alert('initialising slides');
 	pane1Setup();
 
 	if ($(".slide").size() == 0) {
