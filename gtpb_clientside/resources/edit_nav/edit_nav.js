@@ -6,8 +6,7 @@ var homeUrl = "AppController.servlet?return=gui/edit_nav/report";
 
 var dataChanged = false;
 
-$(document)
-		.ready(
+$(document).ready(
 				function() {
 					$("#breadcrumb a").live('click', function(event) {
 						event.preventDefault();
@@ -329,7 +328,9 @@ function initialiseDependencies() {
 		moveUp();
 	});
 
-	slideshow.go(1);
+	if(slideshow) {
+	  slideshow.go(1);
+	}
 	$(".presentation").scrollTop(0);
 }
 
