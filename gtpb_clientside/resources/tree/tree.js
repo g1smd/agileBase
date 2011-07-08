@@ -43,7 +43,7 @@ $(document).ready(function(){
 });
 
 function pane1Setup() {
-	alrt("setting up pane 1");
+	alert("setting up pane 1");
 	if ($("#tree").hasClass("setup")) {
 		return;
 	} else {
