@@ -43,6 +43,7 @@ $(document).ready(function(){
 });
 
 function pane1Setup() {
+	alert('pane1 setup');
 	if ($("#tree").hasClass("setup")) {
 		return;
 	} else {
