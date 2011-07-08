@@ -174,6 +174,9 @@ public final class SessionData implements SessionDataInfo {
 					+ " FROM " + getReport().getInternalReportName() + " LIMIT 1";
 			Connection conn = null;
 			try {
+				if (this.relationalDataSource == null) {
+					logger.error("SessionData relationalDataSource is null");
+				}
 				conn = this.relationalDataSource.getConnection();
 				conn.setAutoCommit(false);
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
