@@ -604,6 +604,7 @@ public final class AppController extends VelocityViewServlet {
 		if (sessionData == null) {
 			try {
 				// Set up a session for a newly logged in user
+				logger.debug("Setting up a new session with datasource " + this.relationalDataSource);
 				sessionData = new SessionData(this.databaseDefn, this.relationalDataSource, request);
 			} catch (SQLException sqlex) {
 				ServletUtilMethods.logException(sqlex, request,
@@ -800,6 +801,7 @@ public final class AppController extends VelocityViewServlet {
 			List<FileItem> multipartItems) {
 		try {
 			boolean sessionValid = request.isRequestedSessionIdValid();
+			logger.debug("Session valid: " + sessionValid);
 			// Check user's logged in otherwise an exception will be thrown
 			if (sessionValid) {
 				// Save any changes to the session data

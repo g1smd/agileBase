@@ -126,7 +126,7 @@ public final class ServletUtilMethods {
 		}
 		errorMessage += ex.toString() + "\r\n";
 		errorMessage += getExceptionCauses(ex);
-		logger.warn(errorMessage);
+		logger.error(errorMessage);
 	}
 
 	/**
