@@ -119,7 +119,6 @@ public final class AppController extends VelocityViewServlet {
 			relationalDataSource = (DataSource) initialContext
 					.lookup("java:comp/env/jdbc/agileBaseData");
 			if (relationalDataSource == null) {
-				logger.error("Can't get relational data source");
 				throw new ServletException("Can't get data source");
 			}
 			this.relationalDataSource = relationalDataSource;
@@ -604,7 +603,6 @@ public final class AppController extends VelocityViewServlet {
 		if (sessionData == null) {
 			try {
 				// Set up a session for a newly logged in user
-				logger.debug("Setting up a new session with datasource " + this.relationalDataSource);
 				sessionData = new SessionData(this.databaseDefn, this.relationalDataSource, request);
 			} catch (SQLException sqlex) {
 				ServletUtilMethods.logException(sqlex, request,
@@ -801,7 +799,6 @@ public final class AppController extends VelocityViewServlet {
 			List<FileItem> multipartItems) {
 		try {
 			boolean sessionValid = request.isRequestedSessionIdValid();
-			logger.debug("Session valid: " + sessionValid);
 			// Check user's logged in otherwise an exception will be thrown
 			if (sessionValid) {
 				// Save any changes to the session data
@@ -823,10 +820,10 @@ public final class AppController extends VelocityViewServlet {
 					try {
 						addCurrentDataToContext(context, sessionData, request, viewMethods);
 					} catch (AgileBaseException abex) {
-						logger.debug("Error preparing uploaded custom template variables: " + abex);
+						logger.error("Error preparing uploaded custom template variables: " + abex);
 						viewMethods.setException(abex);
 					} catch (SQLException sqlex) {
-						logger.debug("SQL Error preparing uploaded custom template variables: "
+						logger.error("SQL Error preparing uploaded custom template variables: "
 								+ sqlex);
 						viewMethods.setException(sqlex);
 					}
