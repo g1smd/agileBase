@@ -198,7 +198,6 @@ $(document).ready(
 					// Initialise home screen for user
 					createLevel(homeUrl);
 					initialiseHeight();
-					pane1Setup();
 					$(window).resize(function() {
 						initialiseHeight();
 					});
@@ -369,6 +368,7 @@ function createLevel(levelUrl) {
 		updateBreadcrumb();
 		loadDependentSlides();
 		initialiseSlides();
+		pane1Setup();
 		window.scrollTo(0, 0);
 		firefoxBugWorkaround();
 		if (levelUrl == homeUrl) {
