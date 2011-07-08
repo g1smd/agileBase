@@ -199,6 +199,7 @@ $(document)
 					// Initialise home screen for user
 					createLevel(homeUrl);
 					initialiseHeight();
+					pane1Setup();
 					$(window).resize(function() {
 						initialiseHeight();
 					});
@@ -211,9 +212,6 @@ function initialiseHeight() {
 }
 
 function initialiseSlides() {
-  alert('initialising slides');
-	pane1Setup();
-
 	if ($(".slide").size() == 0) {
 		return;
 	}
