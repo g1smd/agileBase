@@ -43,15 +43,13 @@ $(document).ready(function(){
 });
 
 function pane1Setup() {
-	alert('pane1Setup');
 	if ($("#tree").hasClass("setup")) {
 		return;
 	} else {
 		$("#tree").addClass("setup");
 	}
 	// Tree expanding and contracting
-	$('#tree h2').click(function(event){
-		alert('h2 click');
+	$('#tree h2').click(function(event) {
 		var parentElem = $(this).parent();
 		if (parentElem.hasClass('modulecollapsed')) {
 			parentElem.children('ul').slideDown('fast');
