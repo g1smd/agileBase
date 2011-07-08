@@ -33,21 +33,24 @@ $(document)
 					$("a.report_tooltip").live('click', function(event) {
 						event.preventDefault();
 						var jqLink = $(this);
-						var href= jqLink.attr("href");
-					  var id = jqLink.closest("li").attr("id");
-					  var jqReportIncludingContent = $(".report_including_content");
-					  jqReportIncludingContent.addClass("transparent");
-					  jqReportIncludingContent.load(href, function() {
-					  	var rowCount = $(".row_count").html();
+						var href = jqLink.attr("href");
+						var id = jqLink.closest("li").attr("id");
+						var jqReportIncludingContent = $(".report_including_content");
+						jqReportIncludingContent.addClass("transparent");
+						jqReportIncludingContent.load(href, function() {
+							var rowCount = $(".row_count").html();
 							fSetCurrentOption(id, rowCount);
 							jqReportIncludingContent.removeClass("transparent");
 						});
 					});
-					$(".searchbox").live('keyup', function() {
+					$(".searchbox").live(
+							'keyup',
+							function() {
 								var jqSearchBox = $(this);
 								jqSearchBox.addClass("changed");
 								var filterString = jqSearchBox.val();
-								var internalReportName = $("#searchbox").attr("internalreportname");
+								var internalReportName = $("#searchbox").attr(
+										"internalreportname");
 								$.get(
 										"AppController.servlet?return=gui/edit_nav/report_content&set_report="
 												+ internalReportName
@@ -210,7 +213,7 @@ function initialiseHeight() {
 function initialiseSlides() {
 
 	pane1Setup();
-	
+
 	if ($(".slide").size() == 0) {
 		return;
 	}
@@ -250,37 +253,37 @@ function relationChangeActions(oHidden) {
 	var relatedTableInternalName = jqHidden.attr("gtpb_rowidinternaltablename");
 	var snippetId = "dependent_relation_" + internalTableName + "_"
 			+ relatedTableInternalName;
-	$.post(
-					"AppController.servlet",
-					{
-						"return" : "gui/edit_nav/relation_snippet_direct",
-						set_custom_field : true,
-						fieldkey : "relation_snippet_field",
-						custominternaltablename : internalTableName,
-						custominternalfieldname : internalFieldName
-					},
-					function(data) {
-						var jqSnippet = $("#" + snippetId);
-						jqSnippet.html(data);
-						jqSnippet.attr("rowid", rowId);
-						if (!(jqSnippet.hasClass('active'))) {
-							jqSnippet.addClass('active');
-							//jqSnippet.click(relationClick(jqSnippet));
-						}
-					});
+	$.post("AppController.servlet", {
+		"return" : "gui/edit_nav/relation_snippet_direct",
+		set_custom_field : true,
+		fieldkey : "relation_snippet_field",
+		custominternaltablename : internalTableName,
+		custominternalfieldname : internalFieldName
+	}, function(data) {
+		var jqSnippet = $("#" + snippetId);
+		jqSnippet.html(data);
+		jqSnippet.attr("rowid", rowId);
+		if (!(jqSnippet.hasClass('active'))) {
+			jqSnippet.addClass('active');
+			// jqSnippet.click(relationClick(jqSnippet));
+		}
+	});
 }
 
 function relationClick(jqDependentTable) {
 	var internalTableName = jqDependentTable.attr("internaltablename");
 	var rowId = jqDependentTable.attr("rowid");
-	var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table=" + internalTableName + "&set_row_id=" + rowId;
+	var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
+			+ internalTableName + "&set_row_id=" + rowId;
 	moveUpTo(levelUrl, true);
 }
 
 function initialiseDependencies() {
 	// Initialize
 	var jqLevel = $(levelsList[currentLevel].levelContent);
-	var slideshow = new SlideShow(jqLevel.find(".slide").toArray());
+	if (jqLevel.find(".slide").length > 0) {
+		var slideshow = new SlideShow(jqLevel.find(".slide").toArray());
+	}
 	var counters = document.querySelectorAll('.counter');
 	var slides = document.querySelectorAll('.slide');
 	jqLevel
@@ -301,7 +304,8 @@ function initialiseDependencies() {
 							relationClick(jqDependentTable);
 						} else {
 							// find index of slide to go to
-							var slideId = jqDependentTable.attr("id").replace("dependent_table_","slide_");
+							var slideId = jqDependentTable.attr("id").replace(
+									"dependent_table_", "slide_");
 							var slideNum = $("#" + slideId).index();
 							slideshow.go(slideNum + 1);
 							$(".presentation").scrollTop(0);
@@ -370,7 +374,7 @@ function createLevel(levelUrl) {
 		firefoxBugWorkaround();
 		if (levelUrl == homeUrl) {
 			var id = $(".pane1_id").text();
-	  	var rowCount = $(".row_count").html();
+			var rowCount = $(".row_count").html();
 			fSetCurrentOption(id, rowCount);
 		}
 	});
@@ -549,7 +553,7 @@ function updateBreadcrumb() {
 		if (level == 0) {
 			title = "home";
 		} else {
-		  title = levelsList[level].title;
+			title = levelsList[level].title;
 		}
 		var url = levelsList[level].levelUrl;
 		jqBreadcrumb.append("<a level='" + level + "' href='" + url + "'>" + title
@@ -581,7 +585,7 @@ function dependentSnippets() {
 		if (numCards > 0) {
 			jqSnippets.addClass("active");
 			if (numCards > 1) {
-			  jqSnippets.find(".count").text("(" + numCards + ")");
+				jqSnippets.find(".count").text("(" + numCards + ")");
 			}
 		}
 		var firstTwoCards = jqSlide.find(".block.current:lt(2)");
@@ -591,20 +595,18 @@ function dependentSnippets() {
 		});
 	});
 	// add 'new' buttons to any unactivated links
-	firstSlide
-			.find(".dependent_table")
-			.each(
-					function() {
-						var jqSnippets = $(this);
-						if (!jqSnippets.hasClass("active")) {
-							if ((!jqSnippets.hasClass("has_new"))
-									&& (!jqSnippets.hasClass("related"))) {
-								jqSnippets.addClass("has_new");
-								var snippetHtml = "&nbsp;" + jqSnippets.find("h1").text();
-								jqSnippets.find("h1").html(snippetHtml);
-							}
-						}
-					});
+	firstSlide.find(".dependent_table").each(
+			function() {
+				var jqSnippets = $(this);
+				if (!jqSnippets.hasClass("active")) {
+					if ((!jqSnippets.hasClass("has_new"))
+							&& (!jqSnippets.hasClass("related"))) {
+						jqSnippets.addClass("has_new");
+						var snippetHtml = "&nbsp;" + jqSnippets.find("h1").text();
+						jqSnippets.find("h1").html(snippetHtml);
+					}
+				}
+			});
 }
 
 /**
