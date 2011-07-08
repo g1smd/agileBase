@@ -2789,15 +2789,17 @@ public final class DataManagement implements DataManagementInfo {
 							return report;
 						}
 					}
-				} catch (ObjectNotFoundException e) {
+				} catch (ObjectNotFoundException onfex) {
 					// The report from the logs no longer exists
-				} catch (DisallowedException e) {
+				} catch (DisallowedException dex) {
 					// The user no longer has privileges on the most popular
 					// report
 				}
 			}
 			results.close();
 			statement.close();
+		} catch (SQLException sqlex) {
+			logger.error("Unable to get most popular report from logs: " + sqlex);
 		} finally {
 			if (conn != null) {
 				conn.close();
