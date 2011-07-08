@@ -43,6 +43,7 @@ $(document).ready(function(){
 });
 
 function pane1Setup() {
+	alert('pane1Setup');
 	if ($("#tree").hasClass("setup")) {
 		return;
 	} else {
@@ -50,6 +51,7 @@ function pane1Setup() {
 	}
 	// Tree expanding and contracting
 	$('#tree h2').click(function(event){
+		alert('h2 click');
 		var parentElem = $(this).parent();
 		if (parentElem.hasClass('modulecollapsed')) {
 			parentElem.children('ul').slideDown('fast');
