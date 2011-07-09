@@ -116,8 +116,10 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 			}
 			if (!otherDateComponents) {
 				for (SummaryGroupingModifier possibleModifier : SummaryGroupingModifier.values()) {
-					if (possibleModifier.compareTo(groupingModifier) < 0) {
-						ChartGroupingInfo grouping = new ChartGrouping(groupByReportField, possibleModifier);
+					if ((possibleModifier.compareTo(groupingModifier) < 0)
+							&& (!possibleModifier.equals(SummaryGroupingModifier.DATE_QUARTER))) {
+						ChartGroupingInfo grouping = new ChartGrouping(groupByReportField,
+								possibleModifier);
 						if (this.persist) {
 							HibernateUtil.currentSession().save(grouping);
 						}
@@ -313,11 +315,12 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 			// TODO: perhaps a window function cume_dist or percentage_rank
 			// would be faster than a subselect
 			double rangeFraction = ((double) rangePercent) / 100;
-			String internalReportName =  this.getReport().getInternalReportName();
+			String internalReportName = this.getReport().getInternalReportName();
 			sqlForSummary += " LIMIT (";
 			sqlForSummary += " SELECT (count(*) * " + rangeFraction + ")::integer";
 			if (groupings.size() > 0) {
-				sqlForSummary += " FROM (SELECT " + groupByFieldsCsv + " FROM " + internalReportName;
+				sqlForSummary += " FROM (SELECT " + groupByFieldsCsv + " FROM "
+						+ internalReportName;
 				sqlForSummary += " GROUP BY " + groupByFieldsCsv + ") AS grouped";
 			} else {
 				sqlForSummary += " FROM " + internalReportName;
