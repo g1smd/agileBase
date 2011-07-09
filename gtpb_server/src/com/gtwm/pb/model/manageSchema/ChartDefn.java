@@ -52,6 +52,7 @@ import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
 import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
@@ -104,6 +105,27 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 
 	public synchronized void addGrouping(ReportFieldInfo groupByReportField,
 			SummaryGroupingModifier groupingModifier) {
+		if (groupByReportField.getBaseField() instanceof DateField) {
+			Set<ChartGroupingInfo> existingGroupings = this.getGroupingsDirect();
+			boolean otherDateComponents = false;
+			DATE_COMPONENT_SEARCH: for (ChartGroupingInfo existingGrouping : existingGroupings) {
+				if (existingGrouping.getGroupingReportField().equals(groupByReportField)) {
+					otherDateComponents = true;
+					break DATE_COMPONENT_SEARCH;
+				}
+			}
+			if (!otherDateComponents) {
+				for (SummaryGroupingModifier possibleModifier : SummaryGroupingModifier.values()) {
+					if (possibleModifier.compareTo(groupingModifier) < 0) {
+						ChartGroupingInfo grouping = new ChartGrouping(groupByReportField, groupingModifier);
+						if (this.persist) {
+							HibernateUtil.currentSession().save(grouping);
+						}
+						this.getGroupingsDirect().add(grouping);
+					}
+				}
+			}
+		}
 		ChartGroupingInfo grouping = new ChartGrouping(groupByReportField, groupingModifier);
 		if (this.persist) {
 			// Need a save here because no link from grouping back to report

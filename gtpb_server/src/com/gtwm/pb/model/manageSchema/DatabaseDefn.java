@@ -2404,7 +2404,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public synchronized void setChartFilter(HttpServletRequest request, BaseReportInfo report,
-			SummaryFilter summaryFilter) throws SQLException, DisallowedException,
+			SummaryFilter chartFilter) throws SQLException, DisallowedException,
 			ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
@@ -2413,7 +2413,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		ChartInfo reportSummary = report.getChart();
 		HibernateUtil.activateObject(reportSummary);
-		reportSummary.setChartFilter(summaryFilter);
+		reportSummary.setChartFilter(chartFilter);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
@@ -2423,7 +2423,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		usageLogger.logReportSchemaChange(user, report, AppAction.SET_CHART_FILTER,
-				"summary filter: " + summaryFilter);
+				"chart filter: " + chartFilter);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
