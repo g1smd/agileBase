@@ -117,7 +117,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 			if (!otherDateComponents) {
 				for (SummaryGroupingModifier possibleModifier : SummaryGroupingModifier.values()) {
 					if (possibleModifier.compareTo(groupingModifier) < 0) {
-						ChartGroupingInfo grouping = new ChartGrouping(groupByReportField, groupingModifier);
+						ChartGroupingInfo grouping = new ChartGrouping(groupByReportField, possibleModifier);
 						if (this.persist) {
 							HibernateUtil.currentSession().save(grouping);
 						}
