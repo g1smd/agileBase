@@ -324,11 +324,11 @@ $.Autocompleter = function(input, options) {
 		select.hide();
 		clearTimeout(timeout);
 		stopLoading();
-		if (options.mustMatch) {
+		// Oliver: new_relation_value hack/check
+		if (options.mustMatch && (!$input.hasClass("new_relation_value"))) {
 			// call search and run callback
 			$input.search(
 				function (result){
-					alert("Search result is " + result);
 					// if no value found, clear the input box
 					//if( !result ) {
 					// Oliver: add !valueSelected
