@@ -477,7 +477,7 @@ function fRelationPickers() {
 			jqHidden.val(newRowId);
 			jqHidden.attr("gtpb_set_row_id", newRowId);
 			jqHidden.next("input").val(newValue);
-			jqHidden.next("input").addClass("new_relation_value"); // bit of a hack - see jquery.autocomplete.js
+			//jqHidden.next("input").addClass("new_relation_value"); // bit of a hack - see jquery.autocomplete.js
 			// relationChangeActions = any additional actions after the save
 			new fChange(jqHidden[0], relationChangeActions);
 		});
