@@ -1390,27 +1390,10 @@ public final class DataManagement implements DataManagementInfo {
 						} else {
 							FileUtils.copyFile(selectedFile, thumb500File);
 						}
-						Thumbnails.of(selectedFile).size(40, 60).toFile(thumb40File); /*
-																					 * allow
-																					 * files
-																					 * that
-																					 * are
-																					 * up
-																					 * to
-																					 * 60
-																					 * px
-																					 * tall
-																					 * as
-																					 * long
-																					 * as
-																					 * the
-																					 * width
-																					 * is
-																					 * no
-																					 * >
-																					 * 40
-																					 * px
-																					 */
+						/*
+						 * allow files that are up to 60 px tall as long as the
+						 * width is no > 40 px
+						 */Thumbnails.of(selectedFile).size(40, 60).toFile(thumb40File);
 					} catch (IOException ioex) {
 						throw new FileUploadException("Error generating thumbnail: "
 								+ ioex.getMessage());
@@ -2152,10 +2135,10 @@ public final class DataManagement implements DataManagementInfo {
 	/**
 	 * Fetch direct from the database
 	 */
-	private ChartDataInfo fetchChartData(ChartInfo reportSummary,
-			Map<BaseField, String> reportFilterValues) throws CantDoThatException, SQLException {
-		Set<ChartAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
-		Set<ChartGroupingInfo> groupings = reportSummary.getGroupings();
+	private ChartDataInfo fetchChartData(ChartInfo chart, Map<BaseField, String> reportFilterValues)
+			throws CantDoThatException, SQLException {
+		Set<ChartAggregateInfo> aggregateFunctions = chart.getAggregateFunctions();
+		Set<ChartGroupingInfo> groupings = chart.getGroupings();
 		List<ChartDataRowInfo> reportSummaryRows;
 		reportSummaryRows = new LinkedList<ChartDataRowInfo>();
 		Connection conn = null;
@@ -2190,7 +2173,7 @@ public final class DataManagement implements DataManagementInfo {
 			Map<ReportFieldInfo, Date> previousDateValues = new HashMap<ReportFieldInfo, Date>();
 			Calendar calendar = Calendar.getInstance();
 			// Get database data
-			PreparedStatement statement = reportSummary.getChartSqlPreparedStatement(conn,
+			PreparedStatement statement = chart.getChartSqlPreparedStatement(conn,
 					reportFilterValues, false);
 			long startTime = System.currentTimeMillis();
 			ResultSet summaryResults = statement.executeQuery();
@@ -2326,12 +2309,11 @@ public final class DataManagement implements DataManagementInfo {
 			float durationSecs = (System.currentTimeMillis() - startTime) / ((float) 1000);
 			if (durationSecs > AppProperties.longSqlTime) {
 				logger.debug("Long SELECT SQL execution time of " + durationSecs
-						+ " seconds for summary '" + reportSummary + "', statement = " + statement);
+						+ " seconds for summary '" + chart + "', statement = " + statement);
 			}
 			return new ChartData(reportSummaryRows, minAggValues, maxAggValues, grandTotals);
 		} catch (SQLException sqlex) {
-			throw new SQLException("Error getting report summary data " + reportSummary + ": "
-					+ sqlex);
+			throw new SQLException("Error getting report summary data " + chart + ": " + sqlex);
 		} finally {
 			if (conn != null) {
 				conn.close();
