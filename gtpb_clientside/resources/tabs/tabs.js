@@ -479,7 +479,11 @@ function fRelationPickers() {
 			jqHidden.next("input").val(newValue);
 			//jqHidden.next("input").addClass("new_relation_value"); // bit of a hack - see jquery.autocomplete.js
 			// relationChangeActions = any additional actions after the save
-			new fChange(jqHidden[0], relationChangeActions);
+			if (typeof relationChangeActions == 'function') {
+			  new fChange(jqHidden[0], relationChangeActions);
+			} else {
+			  new fChange(jqHidden[0], null);
+			}
 		});
 	}
 
