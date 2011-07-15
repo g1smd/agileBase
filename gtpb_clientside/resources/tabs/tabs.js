@@ -430,7 +430,6 @@ function fRelationPickers() {
 
 		jqElement.result(function(event, data, formatted) {
 			if (data) {
-				alert("About to do update with " + data[1]);
 				jqElement[0].formEl.doUpdate(data[1]);
 			} else {
 				alert('Error saving data');
