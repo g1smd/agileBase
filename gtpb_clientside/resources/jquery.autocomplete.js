@@ -330,8 +330,8 @@ $.Autocompleter = function(input, options) {
 				function (result){
 					// if no value found, clear the input box
 					//if( !result ) {
-					// Oliver: add !valueSelected and new_relation_value test
-					if ((!result || !valueSelected) && (!$input.hasClass("new_relation_value"))) {
+					// Oliver: add !valueSelected
+					if (!result || !valueSelected) {
 						if (options.multiple) {
 							var words = trimWords($input.val()).slice(0, -1);
 							$input.val( words.join(options.multipleSeparator) + (words.length ? options.multipleSeparator : "") );
