@@ -328,6 +328,7 @@ $.Autocompleter = function(input, options) {
 			// call search and run callback
 			$input.search(
 				function (result){
+					alert("Search result is " + result);
 					// if no value found, clear the input box
 					//if( !result ) {
 					// Oliver: add !valueSelected
