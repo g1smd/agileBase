@@ -167,7 +167,8 @@ public class ReportData implements ReportDataInfo {
 				results.close();
 				statement.close();
 			} catch (SQLException sqlex) {
-				throw new SQLException("Error calculating field statistics: " + sqlex);
+				logger.error("Error calculating field statistics for report " + report + " in module " + report.getModule() + " from table " + report.getParentTable() + ": " + sqlex);
+				//throw new SQLException("Error calculating field statistics: " + sqlex);
 			}
 			this.millisecsTakenToGenerateStats = System.currentTimeMillis() - startTime;
 			float durationSecs = this.millisecsTakenToGenerateStats / ((float) 1000);
