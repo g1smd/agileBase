@@ -28,9 +28,9 @@
 	    #set($numCols = 50)##
 	    #set($numRows = 3)##
 	    #set($numCols = $numCols + ($fieldValue.length() / 20))##
-	    #if($numCols > 80)##
-	      #set($numCols = 80)##
-	      #set($numRows = $fieldValue.length() / 80)##
+	    #if($numCols > 76)##
+	      #set($numCols = 76)##
+	      #set($numRows = $fieldValue.length() / 76)##
 	      #if($numRows > 5)##
 	        #set($numRows = 5)##
 	      #end##
