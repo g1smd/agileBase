@@ -10,7 +10,7 @@
     #set($relatedDataRow = $view.getTableDataRow($relatedTable, $relatedRowId))
     #set($displayField = $field.getDisplayField())
     #set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
-    #foreach($relatedField in $relatedDataRow.keySet())
+    #foreach($relatedField in $relatedTable.getFields())
       #if((!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey())) && (!($relatedField.getFieldCategory() == "CHECKBOX")) && (!($relatedField.equals($displayField))) && (!$relatedField.getHidden()))
       #set($fieldValue = $relatedDataRow.get($relatedField))
         #if(($fieldValue != ""))

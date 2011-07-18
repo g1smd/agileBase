@@ -324,7 +324,7 @@ $.Autocompleter = function(input, options) {
 		select.hide();
 		clearTimeout(timeout);
 		stopLoading();
-		// Oliver: new_relation_value hack/check
+		// Oliver: new_relation_value hack/check, see tabs.js
 		if (options.mustMatch && (!$input.hasClass("new_relation_value"))) {
 			// call search and run callback
 			$input.search(
