@@ -29,22 +29,22 @@
     font-size:8pt;
     display: none;
     border-top:1px solid orange;
-  }
-            
-  tr#addNewJoin.show {
-    display:table-row;
-  }     
+  }        
+  
+  ##tr#addNewJoin.show {
+  ##  display:table-row;
+  ##}     
 
   tr#addDownwardJoin { 
     vertical-align:top;
     font-size:8pt;
-    ##display: none;
+    display: none;
     border-top:1px solid orange;
   }
             
-  tr#addDownwardJoin.show {
-    display:table-row;
-  }     
+  ##tr#addDownwardJoin.show {
+  ##  display:table-row;
+  ##}     
 </style>
 
 <script language=javascript>
@@ -129,6 +129,7 @@
     ##set($joinedTables = $report.getJoinedTables())
     ##set($joinedReports = $report.getJoinedReports())
     <!-- links to add new joins -->
+    #set($dependentTables = $view.getDirectlyDependentTables($reportTable))
     <tr>
 			<td class="leading">&nbsp;</td>
 			<td colspan="5">
@@ -137,12 +138,15 @@
 					#set($rightField = $candidateJoin.getRightTableField())
 					<a target="pane_2" href="?return=gui/reports_and_tables/report_data&add_join_to_report=true&leftinternaltablename=$leftField.getTableContainingField().getInternalTableName()&leftinternalfieldname=$leftField.getInternalFieldName()&rightinternaltablename=$rightField.getTableContainingField().getInternalTableName()&rightinternalfieldname=$rightField.getInternalFieldName()&jointype=$candidateJoin.getJoinType().name()">Join $leftField.getTableContainingField() to $rightField.getTableContainingField()</a><br>
 				#end
-				<a title="add a more complex join, e.g. to a report or a calculated field" href="#" onclick="$('#addNewJoin').show();">Add complex join</a>
+        #if($dependentTables.size() > 1)
+          <a title="Add a join down to a child table" href="#" onclick="$('#addDownwardJoin').show();">See more joins down to child tables</a>
+        #else
+          <a title="add a more complex join, e.g. to a report or a calculated field" href="#" onclick="$('#addNewJoin').show();">Add a complex join manually</a>
+        #end
 			</td>
 			<td class="trailing">&nbsp;</td>
     </tr>
     <!-- add a downward join -->
-    #set($dependentTables = $view.getDirectlyDependentTables($reportTable))
     #set($leftField = $reportTable.getPrimaryKey())
     <tr id="addDownwardJoin">
       <td class=leading height="20">&nbsp;</td>
@@ -151,9 +155,12 @@
         #foreach($field in $dependentTable.getFields())
           #if($field.getRelatedTable().equals($reportTable))
             #set($rightField = $field)
-            <a target="pane_2" href="?return=gui/reports_and_tables/report_data&add_join_to_report=true&leftinternaltablename=$leftField.getTableContainingField().getInternalTableName()&leftinternalfieldname=$leftField.getInternalFieldName()&rightinternaltablename=$rightField.getTableContainingField().getInternalTableName()&rightinternalfieldname=$rightField.getInternalFieldName()&jointype=$candidateJoin.getJoinType().name()">Join $leftField.getTableContainingField() to $rightField.getTableContainingField()</a><br>
+            <a target="pane_2" href="?return=gui/reports_and_tables/report_data&add_join_to_report=true&leftinternaltablename=$leftField.getTableContainingField().getInternalTableName()&leftinternalfieldname=$leftField.getInternalFieldName()&rightinternaltablename=$rightField.getTableContainingField().getInternalTableName()&rightinternalfieldname=$rightField.getInternalFieldName()&jointype=$candidateJoin.getJoinType().name()">Join $leftField.getTableContainingField() down to $rightField.getTableContainingField()</a><br>
           #end
         #end
+      #end
+      #if($dependentTables.size() > 1)
+        <a title="add a more complex join, e.g. to a report or a calculated field" href="#" onclick="$('#addNewJoin').show();">Add a more complex join manually</a>
       #end
       </td>
       <td class="trailing">&nbsp;</td>
