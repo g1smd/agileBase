@@ -16,26 +16,36 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## edit the joins in a report
-
-<STYLE>
+#set($reportTable = $report.getParentTable())
+<style>
 	@import url("styles/report.css");
 	
 	div#fieldOptionsSet { display:none }
 	div#fieldOptionsSet[selected] { display:block }
 	form { height:100% }
 	
-	tr#addNewJoin { 
-	  vertical-align:top;
-  	font-size:8pt;
-						  display: none;
-						  border-top:1px solid orange;
-						}
-						
-							tr#addNewJoin.show {
-							  display:table-row;
-							}
-							
-</STYLE>
+  tr#addNewJoin { 
+    vertical-align:top;
+    font-size:8pt;
+    display: none;
+    border-top:1px solid orange;
+  }
+            
+  tr#addNewJoin.show {
+    display:table-row;
+  }     
+
+  tr#addDownwardJoin { 
+    vertical-align:top;
+    font-size:8pt;
+    ##display: none;
+    border-top:1px solid orange;
+  }
+            
+  tr#addDownwardJoin.show {
+    display:table-row;
+  }     
+</style>
 
 <script language=javascript>
 	function fArrayContains(aArray, vTest)
@@ -43,42 +53,36 @@
 			if (aArray[i]==vTest) return true;
 		return false;
 	}
-	
 </script>
 
-<FORM action="AppController.servlet" target="pane_2" method=post id=newjoin>
+<form action="AppController.servlet" target="pane_2" method=post id=newjoin>
 <input type="hidden" name="return" value="gui/reports_and_tables/report_data" />
 <input type="hidden" name="add_join_to_report" value="true" />
-
-##defined in ../../report_fields.vm
-##set($report = $sessionData.getReport())
-
 <table id=reportData cellspacing="0">
-	<THEAD >
-		<TR >
+	<thead >
+		<tr>
 			<th class=leading>&nbsp;</th>
-			<TH >Left Table</TH>
-			<TH >Left Field</TH>
-			<TH >Join Type</TH>
-			<TH >Right Table</TH>
-			<TH >Right Field</TH>
+			<th >Left Table</th>
+			<th >Left Field</th>
+			<th >Join Type</th>
+			<th >Right Table</th>
+			<th >Right Field</th>
 			<th class=trailing>&nbsp;</th>
 		</TR>
-	</THEAD>
+	</thead>
 	<tbody>
-	 #set($joins = $report.getJoins())
-		#foreach ($join in $joins)
-			<tr #if($foreach.count%2!=0) class=rowa #else class=rowb #end>
-    			<td class=leading>&nbsp;</td>
-    			<td>
-					##Left = the table or report that the next field was taken from
-					#if($join.isLeftPartTable())
-						table: $join.getLeftTableField().getTableContainingField().getTableName()
-										#else
-report: $join.getLeftReportField().getParentReport().getReportName()
-					#end
-			</td>
-			##Field name
+  #set($joins = $report.getJoins())
+  #foreach($join in $joins)
+	<tr #if($foreach.count%2!=0) class=rowa #else class=rowb #end>
+		<td class=leading>&nbsp;</td>
+		<td>
+		##Left = the table or report that the next field was taken from
+		#if($join.isLeftPartTable())
+			table: $join.getLeftTableField().getTableContainingField().getTableName()
+		#else
+      report: $join.getLeftReportField().getParentReport().getReportName()
+		#end
+	</td>
 	<td>
 	#if($join.isLeftPartTable())
 			$join.getLeftTableField().getFieldName()
@@ -86,23 +90,22 @@ report: $join.getLeftReportField().getParentReport().getReportName()
    $join.getLeftReportField().getFieldName()
 	#end
 </td>
-			##Join Type
-			<td>$join.getJoinType()</td>
-			<td>
-				##Right = the table or report that the next field was taken from
-					#if($join.isRightPartTable())
-						table: $join.getRightTableField().getTableContainingField().getTableName()
-										#else
-report: $join.getRightReportField().getParentReport().getReportName()
-					#end
-			</td>
-					##Field name
+	##Join Type
+	<td>$join.getJoinType()</td>
+	<td>
+		##Right = the table or report that the next field was taken from
+			#if($join.isRightPartTable())
+				table: $join.getRightTableField().getTableContainingField().getTableName()
+      #else
+        report: $join.getRightReportField().getParentReport().getReportName()
+			#end
+	</td>
 	<td>
 	#if($join.isRightPartTable())
-						$join.getRightTableField().getFieldName()
-										#else
-$join.getRightReportField().getFieldName()
-					#end
+    $join.getRightTableField().getFieldName()
+	#else
+    $join.getRightReportField().getFieldName()
+  #end
 			</td>
 			<td class=trailing>
 			 #if($foreach.count == $joins.size())
@@ -121,12 +124,12 @@ $join.getRightReportField().getFieldName()
 			<td>&nbsp;</td>
 			<td class="trailing">&nbsp;</td>
 		</tr>
-## Defined outside in ../../report_fields.vm
-##set($joinReferencedTables = $report.getJoinReferencedTables())
-##set($joinedTables = $report.getJoinedTables())
-##set($joinedReports = $report.getJoinedReports())
-<!-- links to add new joins -->
-<tr>
+    ## Defined outside in ../../report_fields.vm
+    ##set($joinReferencedTables = $report.getJoinReferencedTables())
+    ##set($joinedTables = $report.getJoinedTables())
+    ##set($joinedReports = $report.getJoinedReports())
+    <!-- links to add new joins -->
+    <tr>
 			<td class="leading">&nbsp;</td>
 			<td colspan="5">
 				#foreach($candidateJoin in $view.getCandidateJoins($report))
@@ -137,11 +140,28 @@ $join.getRightReportField().getFieldName()
 				<a title="add a more complex join, e.g. to a report or a calculated field" href="#" onclick="$('#addNewJoin').show();">Add complex join</a>
 			</td>
 			<td class="trailing">&nbsp;</td>
-</tr>
-<!-- add a complex join -->
-		<TR id="addNewJoin">
+    </tr>
+    <!-- add a downward join -->
+    #set($dependentTables = $view.getDirectlyDependentTables($reportTable))
+    #set($leftField = $reportTable.getPrimaryKey())
+    <tr id="addDownwardJoin">
+      <td class=leading height="20">&nbsp;</td>
+      <td colspan="5">
+      #foreach($dependentTable in $dependentTables)
+        #foreach($field in $dependentTable.getFields())
+          #if($field.getRelatedTable().equals($reportTable))
+            #set($rightField = $field)
+            <a target="pane_2" href="?return=gui/reports_and_tables/report_data&add_join_to_report=true&leftinternaltablename=$leftField.getTableContainingField().getInternalTableName()&leftinternalfieldname=$leftField.getInternalFieldName()&rightinternaltablename=$rightField.getTableContainingField().getInternalTableName()&rightinternalfieldname=$rightField.getInternalFieldName()&jointype=$candidateJoin.getJoinType().name()">Join $leftField.getTableContainingField() to $rightField.getTableContainingField()</a><br>
+          #end
+        #end
+      #end
+      </td>
+      <td class="trailing">&nbsp;</td>
+    </tr>
+    <!-- add a complex join -->
+		<tr id="addNewJoin">
 			<td class=leading height="20">&nbsp;</td>
-			<TD height="20">
+			<td height="20">
 			  ##List of reports
 			  <select name="leftinternalreportname" id="leftinternalreportname_reportjoins">
   				#foreach($table in $joinReferencedTables)
@@ -159,14 +179,14 @@ $join.getRightReportField().getFieldName()
 			  	  </optgroup>
 				  #end
 			  </select><p>
-			</TD>
-			<TD height=20>
+			</td>
+			<td height=20>
 			  ##The actual field, content filled by separate XML request
 			  <select name="leftinternalfieldname" parent="leftinternalreportname" parentid="leftinternalreportname_reportjoins">
 			  </select>
-			</TD>
+			</td>
 			
-<TD>
+  <td>
 		<select name="jointype">
 		    <option value="INNER">inner</option>
 		    <option value="LEFT_OUTER" selected>left outer</option>
@@ -174,9 +194,9 @@ $join.getRightReportField().getFieldName()
 		    <option value="FULL_OUTER">full outer</option>
 		    <option value="NONE">none</option>
 		  </select>
-	</TD>
+	</td>
 			
-			<TD height=20>
+			<td height=20>
 			  ##List of reports
 			  <select name="rightinternalreportname" id="rightinternalreportname_reportjoins">
 			   #set($viewableTables = $view.getTablesAllowedTo("VIEW_TABLE_DATA"))
@@ -192,18 +212,18 @@ $join.getRightReportField().getFieldName()
 			  	  </optgroup>
 				  #end
 			  </select><p>
-			</TD>
-			<TD height=20>
+			</td>
+			<td height=20>
 			  ##The actual field
 			  <select name="rightinternalfieldname" parent="rightinternalreportname" parentid="rightinternalreportname_reportjoins">
 			  </select>
-			</TD>
+			</td>
 			
-				<TD height=20 class=trailing>
-					<INPUT type="submit" value="create join">
-				</TD>
-			</TR>
+				<td height=20 class=trailing>
+					<input type="submit" value="create join">
+				</td>
+			</tr>
 		</tbody>
-	</TABLE>
-</FORM>
+	</table>
+</form>
 <script language=javascript src="resources/wait/interdependent_fields.js"></script>
