@@ -155,7 +155,7 @@
         #foreach($field in $dependentTable.getFields())
           #if($field.getRelatedTable().equals($reportTable))
             #set($rightField = $field)
-            <a target="pane_2" href="?return=gui/reports_and_tables/report_data&add_join_to_report=true&leftinternaltablename=$leftField.getTableContainingField().getInternalTableName()&leftinternalfieldname=$leftField.getInternalFieldName()&rightinternaltablename=$rightField.getTableContainingField().getInternalTableName()&rightinternalfieldname=$rightField.getInternalFieldName()&jointype=$candidateJoin.getJoinType().name()">Join $leftField.getTableContainingField() down to $rightField.getTableContainingField()</a><br>
+            <a target="pane_2" href="?return=gui/reports_and_tables/report_data&add_join_to_report=true&leftinternaltablename=$leftField.getTableContainingField().getInternalTableName()&leftinternalfieldname=$leftField.getInternalFieldName()&rightinternaltablename=$rightField.getTableContainingField().getInternalTableName()&rightinternalfieldname=$rightField.getInternalFieldName()&jointype=LEFT_OUTER">Join $leftField.getTableContainingField() down to $rightField.getTableContainingField()</a><br>
           #end
         #end
       #end
