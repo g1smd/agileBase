@@ -125,3 +125,7 @@ ul li {
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* from view tab lozenge */
 }
+
+.timeline-event-icon img {
+  opacity: 0;
+}
