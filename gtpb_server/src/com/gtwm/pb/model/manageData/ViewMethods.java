@@ -583,9 +583,27 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return reportDataRows;
 	}
 
-	public String getReportCalendarJSON(String format) throws CodingErrorException,
-			CantDoThatException, MissingParametersException, DisallowedException,
-			ObjectNotFoundException, SQLException, JSONException {
+	public String getReportTimelineJSON() throws CodingErrorException, CantDoThatException,
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
+			JSONException {
+		AppUserInfo user = this.getLoggedInUser();
+		SortedSet<BaseReportInfo> timelineReports = new TreeSet<BaseReportInfo>();
+		Set<BaseReportInfo> reports = user.getOperationalDashboardReports();
+		for (BaseReportInfo report : reports) {
+			if (report.getCalendarField() != null) {
+				this.checkReportViewPrivileges(report);
+				timelineReports.add(report);
+			}
+		}
+		Map<BaseField, String> filterValues = new HashMap<BaseField, String>(
+				this.sessionData.getReportFilterValues());
+		return this.databaseDefn.getDataManagement().getReportTimelineJSON(user, timelineReports,
+				filterValues);
+	}
+
+	public String getReportCalendarJSON() throws CodingErrorException, CantDoThatException,
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
+			JSONException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(this.sessionData,
 				this.request, this.databaseDefn, true);
 		// Check privileges for all tables from which data is displayed from,
@@ -615,26 +633,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 			filterValues.put(eventDateField, eventDateFilterString);
 		}
 		AppUserInfo user = this.getLoggedInUser();
-		DataFormat formatEnum = DataFormat.valueOf("JSON_" + format.toUpperCase());
-		if (formatEnum.equals(DataFormat.JSON_TIMELINE)) {
-			// Amalgamate all report JSONs into one string
-			StringBuilder calendarJsonBuilder = new StringBuilder(4096);
-			for (BaseReportInfo selectedReport : user.getOperationalDashboardReports()) {
-				if (selectedReport.getCalendarSyncable()) {
-					String calendarJson = this.databaseDefn.getDataManagement().getReportCalendarJSON(formatEnum, user,
-							selectedReport, filterValues, startEpoch, endEpoch);
-					calendarJsonBuilder.append(calendarJson);
-					calendarJsonBuilder.setLength(calendarJsonBuilder.length() - 2);
-					calendarJsonBuilder.append(",");
-				}
-			}
-			calendarJsonBuilder.setLength(calendarJsonBuilder.length() - 1);
-			calendarJsonBuilder.append("]}");
-			return calendarJsonBuilder.toString();
-		} else {
-			return this.databaseDefn.getDataManagement().getReportCalendarJSON(formatEnum, user,
-					report, filterValues, startEpoch, endEpoch);
-		}
+		return this.databaseDefn.getDataManagement().getReportCalendarJSON(user, report,
+				filterValues, startEpoch, endEpoch);
 	}
 
 	/**
