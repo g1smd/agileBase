@@ -616,8 +616,25 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		AppUserInfo user = this.getLoggedInUser();
 		DataFormat formatEnum = DataFormat.valueOf("JSON_" + format.toUpperCase());
-		return this.databaseDefn.getDataManagement().getReportCalendarJSON(formatEnum, user,
-				report, filterValues, startEpoch, endEpoch);
+		if (formatEnum.equals(DataFormat.JSON_TIMELINE)) {
+			// Amalgamate all report JSONs into one string
+			StringBuilder calendarJsonBuilder = new StringBuilder(4096);
+			for (BaseReportInfo selectedReport : user.getOperationalDashboardReports()) {
+				if (selectedReport.getCalendarSyncable()) {
+					String calendarJson = this.databaseDefn.getDataManagement().getReportCalendarJSON(formatEnum, user,
+							selectedReport, filterValues, startEpoch, endEpoch);
+					calendarJsonBuilder.append(calendarJson);
+					calendarJsonBuilder.setLength(calendarJsonBuilder.length() - 1);
+					calendarJsonBuilder.append(",");
+				}
+			}
+			calendarJsonBuilder.setLength(calendarJsonBuilder.length() - 1);
+			calendarJsonBuilder.append("]");
+			return calendarJsonBuilder.toString();
+		} else {
+			return this.databaseDefn.getDataManagement().getReportCalendarJSON(formatEnum, user,
+					report, filterValues, startEpoch, endEpoch);
+		}
 	}
 
 	/**
