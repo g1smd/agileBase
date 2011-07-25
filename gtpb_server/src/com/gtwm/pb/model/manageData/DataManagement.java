@@ -1727,11 +1727,83 @@ public final class DataManagement implements DataManagementInfo {
 		return js.toString();
 	}
 
-	public String getReportCalendarJSON(DataFormat format, AppUserInfo user, BaseReportInfo report,
-			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
-			throws CodingErrorException, CantDoThatException, SQLException, JSONException {
+	public String getReportTimelineJSON(AppUserInfo user, Set<BaseReportInfo> reports,
+			Map<BaseField, String> filterValues) throws JSONException, CodingErrorException, CantDoThatException, SQLException {
+		String id = "";
+		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
+				filterValues);
+		for (BaseReportInfo report : reports) {
+			ReportFieldInfo eventDateReportField = report.getCalendarField();
+			if (eventDateReportField == null) {
+				throw new CantDoThatException("The report '" + report
+						+ "' has no suitable date field");
+			}
+			id += report.getInternalReportName();
+		}
+		id += sortedFilterValues.toString();
+		CachedReportFeedInfo cachedJSON = this.cachedCalendarJSONs.get(id);
+		if (cachedJSON != null) {
+			this.calendarJsonCacheHits.incrementAndGet();
+			// Note: if we choose not to invalidate the cache on every data
+			// change, we could return only JSON that was newer than a certain
+			// time here, say the last data change time plus ten secs
+			return cachedJSON.getFeed();
+		}
 		// RFC 2822 date format used by Simile timeline
 		DateFormat dateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
+		UsageLogger usageLogger = new UsageLogger(this.dataSource);
+		JSONStringer js = new JSONStringer();
+		js.object();
+		js.key("events");
+		js.array();
+		for (BaseReportInfo report : reports) {
+			String className = "report_" + report.getInternalReportName();
+			ReportFieldInfo eventDateReportField = report.getCalendarField();
+			List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
+					filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
+					QuickFilterType.AND);
+			ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
+				DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
+				if (eventDateValue.getKeyValue().equals("")) {
+					continue ROWS_LOOP;
+				}
+				js.object();
+				// timeline needs formatted dates
+				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue());
+				String formattedDate = dateFormatter.format(new Date(eventDateEpoch));
+				js.key("start").value(formattedDate);
+				String eventTitle = buildEventTitle(report, reportDataRow, false);
+				js.key("caption").value(eventTitle);
+				js.key("description").value(eventTitle);
+				// TODO: build short title from long title, don't rebuild from
+				// scratch. Just cut off everything after the 5th comma for
+				// example
+				String shortTitle = buildEventTitle(report, reportDataRow, true);
+				js.key("classname").value(className);
+				js.endObject();
+			}
+			usageLogger.logReportView(user, report, filterValues, 10000, "getTimelineJSON");
+			UsageLogger.startLoggingThread(usageLogger);
+		}
+		js.endArray();
+		js.endObject();
+		String json = js.toString();
+		cachedJSON = new CachedFeed(json);
+		this.cachedCalendarJSONs.put(id, cachedJSON);
+		int cacheMisses = this.calendarJsonCacheMisses.incrementAndGet();
+		if (cacheMisses > 100) {
+			logger.info("JSON cache hits: " + this.calendarJsonCacheHits + ", misses "
+					+ cacheMisses);
+			this.calendarJsonCacheHits.set(0);
+			this.calendarJsonCacheMisses.set(0);
+		}
+		return json;
+
+	}
+
+	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
+			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
+			throws CodingErrorException, CantDoThatException, SQLException, JSONException {
 		ReportFieldInfo eventDateReportField = report.getCalendarField();
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
@@ -1767,12 +1839,6 @@ public final class DataManagement implements DataManagementInfo {
 				.getReportDataRows(user.getCompany(), report, filterValues, false,
 						new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND);
 		JSONStringer js = new JSONStringer();
-		if (format.equals(DataFormat.JSON_TIMELINE)) {
-			js.object();
-		}
-		if (format.equals(DataFormat.JSON_TIMELINE)) {
-			js.key("events");
-		}
 		js.array();
 		String internalReportName = report.getInternalReportName();
 		String internalTableName = report.getParentTable().getInternalTableName();
@@ -1794,40 +1860,21 @@ public final class DataManagement implements DataManagementInfo {
 				}
 			}
 			js.key("allDay").value(allDayEvent);
-			if (format.equals(DataFormat.JSON_TIMELINE)) {
-				// timeline needs formatted dates
-				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue());
-				String formattedDate = dateFormatter.format(new Date(eventDateEpoch));
-				js.key("start").value(formattedDate);
-			} else {
-				// fullcalendar needs the number of seconds since the epoch
-				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
-				js.key("start").value(eventDateEpoch);
-				if (!allDayEvent) {
-					js.key("end").value(eventDateEpoch + 7200); // events last
-																// 2hrs
-				}
+			// fullcalendar needs the number of seconds since the epoch
+			Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
+			js.key("start").value(eventDateEpoch);
+			if (!allDayEvent) {
+				js.key("end").value(eventDateEpoch + 7200); // events last 2hrs
 			}
 			js.key("className").value("report_" + internalReportName); // fullcalendar
-			js.key("classname").value("report_" + internalReportName); // timeline
+			// TODO: check if classname is used in UI, remove if not
+			js.key("classname").value("report_" + internalReportName);
 			js.key("dateFieldInternalName").value(dateFieldInternalName);
 			String eventTitle = buildEventTitle(report, reportDataRow, false);
-			if (format.equals(DataFormat.JSON_TIMELINE)) {
-				js.key("caption").value(eventTitle);
-				// TODO: build short title from long title, don't rebuild from
-				// scratch. Just cut off everything after the 5th comma for
-				// example
-				String shortTitle = buildEventTitle(report, reportDataRow, true);
-				js.key("title").value(shortTitle);
-			} else {
-				js.key("title").value(eventTitle);
-			}
+			js.key("title").value(eventTitle);
 			js.endObject();
 		}
 		js.endArray();
-		if (format.equals(DataFormat.JSON_TIMELINE)) {
-			js.endObject();
-		}
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
 		usageLogger.logReportView(user, report, filterValues, 10000, "getCalendarJSON");
 		UsageLogger.startLoggingThread(usageLogger);

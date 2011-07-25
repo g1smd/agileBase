@@ -96,9 +96,6 @@ public interface DataManagementInfo {
 	 * 
 	 * http://www.simile-widgets.org/timeline/
 	 * 
-	 * @param format
-	 *            Either "fullcalendar" or "timeline" to produce JSON compatible
-	 *            with either of the two products above
 	 * @param filterValues
 	 *            Session filters *plus* a filter on the calendar date field so
 	 *            that only dates requested by fullcalendar are returned
@@ -108,9 +105,13 @@ public interface DataManagementInfo {
 	 * @param endEpoch
 	 *            The end unix timestamp as provided by fullcalendar
 	 */
-	public String getReportCalendarJSON(DataFormat format, AppUserInfo user, BaseReportInfo report,
+	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
 			throws CodingErrorException, CantDoThatException, SQLException, JSONException;
+
+	public String getReportTimelineJSON(AppUserInfo user, Set<BaseReportInfo> reports,
+			Map<BaseField, String> filterValues) throws JSONException, CodingErrorException,
+			CantDoThatException, SQLException;
 
 	/**
 	 * @param user

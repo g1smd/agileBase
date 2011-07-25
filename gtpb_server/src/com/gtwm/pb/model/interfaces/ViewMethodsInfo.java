@@ -225,8 +225,8 @@ public interface ViewMethodsInfo {
 	 * that are already joined
 	 * 
 	 * @param direction
-	 *            True = upward joins - child to parent. False = downward joins -
-	 *            parent to child
+	 *            True = upward joins - child to parent. False = downward joins
+	 *            - parent to child
 	 */
 	public List<JoinClauseInfo> getCandidateJoins(SimpleReportInfo report, boolean direction)
 			throws CodingErrorException, ObjectNotFoundException;
@@ -459,10 +459,6 @@ public interface ViewMethodsInfo {
 	 * 
 	 * http://arshaw.com/fullcalendar/
 	 * 
-	 * or
-	 * 
-	 * http://www.simile-widgets.org/timeline/
-	 * 
 	 * The parameters 'start' and 'end' that fullcalendar provides in the HTTP
 	 * request are added to the filters taken from the session and applied to
 	 * the date field
@@ -470,13 +466,17 @@ public interface ViewMethodsInfo {
 	 * Parameters 'internaltablename' and 'internalreportname' specify the
 	 * report. If none are given, the session report is used
 	 * 
-	 * @param format
-	 *            Either 'fullcalendar' or 'timeline' for compatibility with one
-	 *            of the above libraries
 	 */
-	public String getReportCalendarJSON(String format) throws CodingErrorException,
-			CantDoThatException, MissingParametersException, DisallowedException,
-			ObjectNotFoundException, SQLException, JSONException;
+	public String getReportCalendarJSON() throws CodingErrorException, CantDoThatException,
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
+			JSONException;
+
+	/**
+	 * Get a timeline feed suitable for use with Simile Timeplot
+	 */
+	public String getReportTimelineJSON() throws CodingErrorException, CantDoThatException,
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
+			JSONException;
 
 	/**
 	 * Returns true if the record identified by the session row ID is visible in
