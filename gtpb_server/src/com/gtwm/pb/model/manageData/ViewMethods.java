@@ -624,12 +624,12 @@ public final class ViewMethods implements ViewMethodsInfo {
 					String calendarJson = this.databaseDefn.getDataManagement().getReportCalendarJSON(formatEnum, user,
 							selectedReport, filterValues, startEpoch, endEpoch);
 					calendarJsonBuilder.append(calendarJson);
-					calendarJsonBuilder.setLength(calendarJsonBuilder.length() - 1);
+					calendarJsonBuilder.setLength(calendarJsonBuilder.length() - 2);
 					calendarJsonBuilder.append(",");
 				}
 			}
 			calendarJsonBuilder.setLength(calendarJsonBuilder.length() - 1);
-			calendarJsonBuilder.append("]");
+			calendarJsonBuilder.append("]}");
 			return calendarJsonBuilder.toString();
 		} else {
 			return this.databaseDefn.getDataManagement().getReportCalendarJSON(formatEnum, user,
