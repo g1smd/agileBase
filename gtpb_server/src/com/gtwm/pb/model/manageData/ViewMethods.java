@@ -949,7 +949,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, role, table);
 	}
 
-	public List<JoinClauseInfo> getCandidateJoins(SimpleReportInfo report)
+	public List<JoinClauseInfo> getCandidateJoins(SimpleReportInfo report, boolean direction)
 			throws CodingErrorException, ObjectNotFoundException {
 		List<JoinClauseInfo> candidateJoins = new LinkedList<JoinClauseInfo>();
 		// Collect all tables which are already joined or have child reports
@@ -963,15 +963,36 @@ public final class ViewMethods implements ViewMethodsInfo {
 		Set<TableInfo> viewableTables = this.getTablesAllowedTo(PrivilegeType.VIEW_TABLE_DATA);
 		// Look for the joins
 		for (TableInfo leftTable : alreadyJoinedTables) {
-			for (BaseField field : leftTable.getFields()) {
-				if (field instanceof RelationField) {
-					RelationField relationField = ((RelationField) field);
-					TableInfo rightTable = relationField.getRelatedTable();
-					if (viewableTables.contains(rightTable)) {
-						if (!dontJoinToTables.contains(rightTable)) {
-							JoinClauseInfo candidateJoin = new JoinClause(field,
-									relationField.getRelatedField(), JoinType.LEFT_OUTER);
-							candidateJoins.add(candidateJoin);
+			if (direction) {
+				// upward joins
+				for (BaseField field : leftTable.getFields()) {
+					if (field instanceof RelationField) {
+						RelationField relationField = ((RelationField) field);
+						TableInfo rightTable = relationField.getRelatedTable();
+						if (viewableTables.contains(rightTable)) {
+							if (!dontJoinToTables.contains(rightTable)) {
+								JoinClauseInfo candidateJoin = new JoinClause(field,
+										relationField.getRelatedField(), JoinType.LEFT_OUTER);
+								candidateJoins.add(candidateJoin);
+							}
+						}
+					}
+				}
+			} else {
+				// downward joins
+				for (TableInfo dependentTable : this.getDirectlyDependentTables(leftTable)) {
+					if (viewableTables.contains(dependentTable)
+							&& (!dontJoinToTables.contains(dependentTable))) {
+						for (BaseField field : dependentTable.getFields()) {
+							if (field instanceof RelationField) {
+								RelationField relationField = ((RelationField) field);
+								if (relationField.getRelatedTable().equals(leftTable)) {
+									JoinClauseInfo candidateJoin = new JoinClause(
+											leftTable.getPrimaryKey(), relationField,
+											JoinType.LEFT_OUTER);
+									candidateJoins.add(candidateJoin);
+								}
+							}
 						}
 					}
 				}

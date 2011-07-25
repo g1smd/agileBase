@@ -223,8 +223,12 @@ public interface ViewMethodsInfo {
 	/**
 	 * return any possible joins to tables from this report, not including any
 	 * that are already joined
+	 * 
+	 * @param direction
+	 *            True = upward joins - child to parent. False = downward joins -
+	 *            parent to child
 	 */
-	public List<JoinClauseInfo> getCandidateJoins(SimpleReportInfo report)
+	public List<JoinClauseInfo> getCandidateJoins(SimpleReportInfo report, boolean direction)
 			throws CodingErrorException, ObjectNotFoundException;
 
 	/**
