@@ -20,6 +20,7 @@ package com.gtwm.pb.model.interfaces;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
@@ -164,6 +165,11 @@ public interface ChartInfo {
 	public boolean getRangeDirection();
 
 	public void setRangeDirection(boolean rangeDirection);
+	
+	/**
+	 * Return true if this chart can be represented with a date/time x-axis
+	 */
+	public boolean isTimeSeries() throws CodingErrorException;
 	
 	public static final boolean UPPER_RANGE = true;
 	

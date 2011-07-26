@@ -22,7 +22,6 @@
 #set($mathTool = $viewTools.getMathTool())
 #set($Integer = 0)
 #set($chart_id = "chart_$chart.getId()")
-#set($groupings = $chart.getGroupings())
 #set($aggregateFunctions = $chart.getAggregateFunctions())
 #if($chart.equals($report.getChart()))
   #set($chart_classes="default_chart")
@@ -31,20 +30,8 @@
 #end
 <div id="$chart_id" class="$chart_classes"></div>
 ## Work out if we can display data as a time series
-#set($dateAxis = true)
-#foreach($grouping in $groupings)
-  #set($fieldCategory = $grouping.getGroupingReportField().getBaseField().getFieldCategory())
-  #if($fieldCategory != "DATE")
-	#set($dateAxis = false)
-	#break
-  #end
-  #if(($groupings.size() == 1) && ($fieldCategory == "DATE"))
-	#set($groupingModifier = $grouping.getGroupingModifier())
-	#if($groupingModifier != "DATE_YEAR")
-	  #set($dateAxis = false)
-	#end
-  #end
-#end
+#set($dateAxis = $chart.isTimeSeries())
+#set($groupings = $chart.getGroupings())
 #if($chartRows.size() == 1)
   #set($dateAxis = false)
 #end	
