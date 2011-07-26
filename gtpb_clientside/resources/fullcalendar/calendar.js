@@ -62,21 +62,29 @@ $(document).ready(function() {
     var internalTableName = jqCheckbox.attr("internaltablename");
     var internalReportName = jqCheckbox.attr("internalreportname");
     if (jqCheckbox.is(":checked")) {
-	  var addReportOptions = {
-        'return': 'blank',
+    	var addReportOptions = {
+	  		'return': 'blank',
         'add_operational_dashboard_report': 'true',
         'internaltablename': internalTableName,
         'internalreportname': internalReportName
-	  }
-      $.post("AppController.servlet", addReportOptions);
+	    }
+      $.post("AppController.servlet", addReportOptions, function() {
+      	if (typeof timelineLoad == 'function') {
+      		timelineLoad();
+      	}
+      });
     } else {
-	  var removeReportOptions = {
-        'return': 'blank',
-        'remove_operational_dashboard_report': 'true',
-        'internaltablename': internalTableName,
-        'internalreportname': internalReportName
-	  }
-      $.post("AppController.servlet", removeReportOptions);
+		  var removeReportOptions = {
+	        'return': 'blank',
+	        'remove_operational_dashboard_report': 'true',
+	        'internaltablename': internalTableName,
+	        'internalreportname': internalReportName
+		  }
+      $.post("AppController.servlet", removeReportOptions, function() {
+      	if (typeof timelineLoad == 'function') {
+      		timelineLoad();
+      	}
+      });
     }
   });
 
@@ -118,18 +126,18 @@ function addRemoveCalendar(checkboxElement) {
   var eventColour = jqCheckbox.siblings("span").css('background-color');
   var textColour = jqCheckbox.siblings("span").css('color');
   if (jqCheckbox.is(":checked")) {
-	var eventSource = {
-	  url: feedUrl,
-	  color: eventColour,
-	  textColor: textColour
-	}
+		var eventSource = {
+		  url: feedUrl,
+		  color: eventColour,
+		  textColor: textColour
+		}
     $("#calendar").fullCalendar('addEventSource', eventSource);
     var legendElement = $("<span class='legend_report report_" + internalReportName + "' id='legend_" + internalReportName + "' title='" + reportTooltip + "'>" + reportName + "</span>");
     $("#report_selection_header").append(legendElement);
   } else {
-	$("#calendar").fullCalendar('removeEventSource', feedUrl);
-	var legendId = "legend_" + internalReportName;
-	$("#" + legendId).remove();
+		$("#calendar").fullCalendar('removeEventSource', feedUrl);
+		var legendId = "legend_" + internalReportName;
+		$("#" + legendId).remove();
   }
 }
 
