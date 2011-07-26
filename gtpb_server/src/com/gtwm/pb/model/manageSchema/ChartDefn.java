@@ -54,6 +54,8 @@ import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.manageData.ReportData;
+import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
@@ -462,6 +464,30 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 	@Transient
 	public static EnumSet<AggregateFunction> getPossibleFunctionTypes() {
 		return EnumSet.allOf(AggregateFunction.class);
+	}
+
+	@Transient
+	public boolean isTimeSeries() throws CodingErrorException {
+		boolean timeSeries = true;
+		Set<ChartGroupingInfo> groupings = this.getGroupingsDirect();
+		GROUPINGS: for (ChartGroupingInfo grouping : groupings) {
+			FieldCategory fieldCategory = grouping.getGroupingReportField().getBaseField()
+					.getFieldCategory();
+			if (!fieldCategory.equals(FieldCategory.DATE)) {
+				timeSeries = false;
+				break GROUPINGS;
+			}
+		}
+		if (timeSeries && (groupings.size() == 1)) {
+			SummaryGroupingModifier groupingModifier = (new TreeSet<ChartGroupingInfo>(groupings))
+					.first().getGroupingModifier();
+			if (groupingModifier != null) {
+				if (!groupingModifier.equals(SummaryGroupingModifier.DATE_YEAR)) {
+					timeSeries = false;
+				}
+			}
+		}
+		return timeSeries;
 	}
 
 	public String toString() {
