@@ -392,7 +392,7 @@
 		 },
          series: $series
     });
-    alert("Created chart " + $chart_id.options.title.text);
+    alert("Created chart " + ${chart_id}.options.title.text);
     if (typeof abCharts == "object") {
       abCharts.push($chart_id);
     }
