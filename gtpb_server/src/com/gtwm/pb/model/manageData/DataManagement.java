@@ -1770,8 +1770,9 @@ public final class DataManagement implements DataManagementInfo {
 				js.object();
 				// timeline needs formatted dates
 				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue());
-				String formattedDate = dateFormatter.format(new Date(eventDateEpoch));
-				js.key("start").value(formattedDate);
+				JSONDate jsonDate = new JSONDate(eventDateEpoch);
+				//String formattedDate = dateFormatter.format(new Date(eventDateEpoch));
+				js.key("start").value(jsonDate);
 				String eventTitle = buildEventTitle(report, reportDataRow, false);
 				js.key("caption").value(eventTitle);
 				js.key("description").value(eventTitle);
@@ -1798,7 +1799,6 @@ public final class DataManagement implements DataManagementInfo {
 			this.calendarJsonCacheMisses.set(0);
 		}
 		return json;
-
 	}
 
 	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
