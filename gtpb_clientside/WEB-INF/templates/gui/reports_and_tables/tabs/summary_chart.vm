@@ -392,10 +392,10 @@
 		 },
          series: $series
     });
-    alert("Created chart " + ${chart_id}.options.title.text);
-    if (typeof abCharts == "object") {
-      abCharts.push($chart_id);
+    if (typeof abCharts != "object") {
+      var abCharts = new Array();
     }
+    abCharts.push(${chart_id});
   </script>
 #end ## end javascript
 #end
