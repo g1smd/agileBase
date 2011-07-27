@@ -391,7 +391,10 @@
     		},
 		 },
          series: $series
-      });
+    });
+    if (typeof abCharts == "object") {
+      abCharts.push($chart_id);
+    }
   </script>
 #end ## end javascript
 #end
