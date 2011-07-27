@@ -492,29 +492,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 	}
 
 	public String toString() {
-		String toString = this.getTitle() + ": ";
-		for (ChartAggregateInfo aggregate : this.getAggregateFunctionsDirect()) {
-			toString += aggregate + ", ";
-		}
-		if (toString.endsWith(", ")) {
-			toString = toString.substring(0, toString.length() - 2);
-		}
-		toString += " by ";
-		boolean hadDate = false;
-		for (ChartGroupingInfo grouping : this.getGroupingsDirect()) {
-			boolean isDate = grouping.getGroupingReportField().getBaseField().getDbType().equals(DatabaseFieldType.TIMESTAMP);
-			if (!(isDate && hadDate)) {
-				// won't deal with the unlikely event we're grouping by two separate date fields
-				if (isDate) {
-					hadDate = true;
-				}
-				toString += grouping + ", ";
-			}
-		}
-		if (toString.endsWith(", ")) {
-			toString = toString.substring(0, toString.length() - 2);
-		}
-		return toString;
+		return this.getTitle();
 	}
 
 	/**
