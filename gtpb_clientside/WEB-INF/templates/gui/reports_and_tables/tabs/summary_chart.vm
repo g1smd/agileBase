@@ -228,6 +228,8 @@
 			#if($dateAxis)
         #if($scatter)
           defaultSeriesType: 'scatter',
+        #elseif($timeline)
+          defaultSeriesType: 'line',
         #else
           defaultSeriesType: 'area',
         #end
