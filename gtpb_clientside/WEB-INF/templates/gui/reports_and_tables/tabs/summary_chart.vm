@@ -292,7 +292,10 @@
            },
 		 #end
 		 legend: {
-		 	style: {
+      #if($timeline)
+        enabled: false;
+      #else
+		 	  style: {
 ##		      position: 'absolute',
 			  textTransform: 'lowercase',
 		      #if($pieChart)
@@ -307,6 +310,7 @@
 ##				padding: '5px'
 			  #end
 			}
+      #end
 		 },
 		 tooltip: {
 		   #if($dateAxis)
