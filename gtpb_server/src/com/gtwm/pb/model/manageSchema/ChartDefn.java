@@ -57,6 +57,7 @@ import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
+import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
@@ -491,9 +492,28 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 	}
 
 	public String toString() {
-		String toString = this.getReport().toString() + " - " + this.getTitle() + "("
-				+ this.getId() + ")" + " summary schema - functions: "
-				+ this.getAggregateFunctions() + ", groupings: " + this.getGroupings();
+		String toString = this.getTitle() + ": ";
+		for (ChartAggregateInfo aggregate : this.getAggregateFunctionsDirect()) {
+			toString += aggregate + ", ";
+		}
+		if (toString.endsWith(", ")) {
+			toString = toString.substring(0, toString.length() - 2);
+		}
+		toString += " by ";
+		boolean hadDate = false;
+		for (ChartGroupingInfo grouping : this.getGroupingsDirect()) {
+			boolean isDate = grouping.getGroupingReportField().getBaseField().getDbType().equals(DatabaseFieldType.TIMESTAMP);
+			if (!(isDate && hadDate)) {
+				// won't deal with the unlikely event we're grouping by two separate date fields
+				if (isDate) {
+					hadDate = true;
+				}
+				toString += grouping + ", ";
+			}
+		}
+		if (toString.endsWith(", ")) {
+			toString = toString.substring(0, toString.length() - 2);
+		}
 		return toString;
 	}
 
