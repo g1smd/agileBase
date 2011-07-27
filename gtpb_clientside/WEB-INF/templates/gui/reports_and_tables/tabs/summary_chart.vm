@@ -293,7 +293,7 @@
 		 #end
 		 legend: {
       #if($timeline)
-        enabled: false;
+        enabled: false
       #else
 		 	  style: {
 ##		      position: 'absolute',
