@@ -248,7 +248,10 @@
 		 #if($title != "")
 		   title: {
 		     text: "$title",
-			 style: { textTransform: 'capitalize' }
+         #if($timeline)
+           floating: true,
+         #end
+			   style: { textTransform: 'capitalize' }
 		   },
 		   #if($subtitle != "")
 		     subtitle: {
