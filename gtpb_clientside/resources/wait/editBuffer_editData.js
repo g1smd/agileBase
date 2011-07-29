@@ -571,7 +571,7 @@ function fChange(oObj, postChangeFunction)  {
       var vCurrentValue = jqObj.html();
   	  // if jsHtmlToText library is present
   	  if (typeof htmlToText == "function") {
-  	  	vCurrentValue = htmlToText(new String(vValue));
+  	  	vCurrentValue = htmlToText(new String(vCurrentValue));
   	  }
     } else {
       // TODO: should this line be exactly the same as the similar one earlier?
@@ -583,7 +583,10 @@ function fChange(oObj, postChangeFunction)  {
       return; 
     }
 
-    if(vCurrentValue!=vValue) return; // the current value has changed since this request was sent
+    if(vCurrentValue!=vValue) {
+    	alert(vCurrentValue + "\n\n" + vValue);
+    	return; // the current value has changed since this request was sent
+    }
     fClearError(false);
     fClearWarning();
     var warningElements = sResponseXML.getElementsByTagName('warning');
