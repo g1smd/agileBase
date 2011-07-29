@@ -572,6 +572,7 @@ function fChange(oObj, postChangeFunction)  {
   	  // if jsHtmlToText library is present
   	  if (typeof htmlToText == "function") {
   	  	vValue = htmlToText(new String(vValue));
+  	  	alert("saving " + vValue);
   	  }
     } else {
       // TODO: should this line be exactly the same as the similar one earlier?
