@@ -115,6 +115,10 @@ html, body {
     cursor: text;
 }
 
+.editable p {
+  margin: 0;
+}
+
 .editable a {
   color: black;
   text-decoration: none;
