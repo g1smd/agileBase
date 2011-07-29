@@ -2192,6 +2192,7 @@ public final class DataManagement implements DataManagementInfo {
 		List<ChartDataRowInfo> reportSummaryRows;
 		reportSummaryRows = new LinkedList<ChartDataRowInfo>();
 		Connection conn = null;
+		PreparedStatement statement = null;
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
@@ -2223,7 +2224,7 @@ public final class DataManagement implements DataManagementInfo {
 			Map<ReportFieldInfo, Date> previousDateValues = new HashMap<ReportFieldInfo, Date>();
 			Calendar calendar = Calendar.getInstance();
 			// Get database data
-			PreparedStatement statement = chart.getChartSqlPreparedStatement(conn,
+			statement = chart.getChartSqlPreparedStatement(conn,
 					reportFilterValues, false);
 			long startTime = System.currentTimeMillis();
 			ResultSet summaryResults = statement.executeQuery();
@@ -2363,7 +2364,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			return new ChartData(reportSummaryRows, minAggValues, maxAggValues, grandTotals);
 		} catch (SQLException sqlex) {
-			throw new SQLException("Error getting report summary data " + chart + ": " + sqlex);
+			throw new SQLException("Error getting report summary data " + chart + ": " + sqlex + ". SQL = " + statement);
 		} finally {
 			if (conn != null) {
 				conn.close();
