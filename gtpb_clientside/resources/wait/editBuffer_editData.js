@@ -584,7 +584,6 @@ function fChange(oObj, postChangeFunction)  {
     }
 
     if(vCurrentValue!=vValue) {
-    	alert(vCurrentValue + "\n\n" + vValue);
     	return; // the current value has changed since this request was sent
     }
     fClearError(false);
