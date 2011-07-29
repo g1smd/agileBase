@@ -1728,7 +1728,8 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public String getReportTimelineJSON(AppUserInfo user, Set<BaseReportInfo> reports,
-			Map<BaseField, String> filterValues) throws JSONException, CodingErrorException, CantDoThatException, SQLException {
+			Map<BaseField, String> filterValues) throws JSONException, CodingErrorException,
+			CantDoThatException, SQLException {
 		String id = "";
 		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
 				filterValues);
@@ -1771,9 +1772,11 @@ public final class DataManagement implements DataManagementInfo {
 				// timeline needs formatted dates
 				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue());
 				JSONDate jsonDate = new JSONDate(eventDateEpoch);
-				//String formattedDate = dateFormatter.format(new Date(eventDateEpoch));
+				// String formattedDate = dateFormatter.format(new
+				// Date(eventDateEpoch));
 				js.key("start").value(jsonDate);
-				String eventTitle = buildEventTitle(report, reportDataRow, false);
+				String eventTitle = eventDateValue.getDisplayValue() + ": "
+						+ buildEventTitle(report, reportDataRow, false);
 				js.key("caption").value(eventTitle);
 				js.key("description").value(eventTitle);
 				// TODO: build short title from long title, don't rebuild from
