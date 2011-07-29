@@ -24,7 +24,8 @@ function htmlToText(html) {
 		// Turn </li>'s into line breaks.
  		.replace(/<\s*\/li[^>]*>/ig,"\n") 
 		// Turn <p>'s into double line breaks.
- 		.replace(/<\s*p[^>]*>/ig,"\n\n") 
+ 		// Oliver: No, single ones are better for us
+ 		.replace(/<\s*p[^>]*>/ig,"\n") 
 		// Remove content in script tags.
  		.replace(/<\s*script[^>]*>[\s\S]*?<\/script>/mig,"")
 		// Remove content in style tags.
