@@ -571,7 +571,7 @@ function fChange(oObj, postChangeFunction)  {
       var vCurrentValue = jqObj.html();
   	  // if jsHtmlToText library is present
   	  if (typeof htmlToText == "function") {
-  	  	vValue = htmlToText(new String(vValue));
+  	  	vCurrentValue = htmlToText(new String(vValue));
   	  }
     } else {
       // TODO: should this line be exactly the same as the similar one earlier?
