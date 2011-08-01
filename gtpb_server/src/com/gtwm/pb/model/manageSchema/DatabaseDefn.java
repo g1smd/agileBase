@@ -383,7 +383,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			} else if (errorCode.equals("42601")) {
 				throw new SQLException("Table couldn't be created");
 			} else {
-				throw new SQLException(sqlex + ": error code " + errorCode);
+				throw new SQLException(sqlex + ": error code " + errorCode, sqlex);
 			}
 		}
 		// Cache the table in the company object
@@ -579,7 +579,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 						+ " from relational database, it's not there");
 				// TODO: review why we're swallowing this error
 			} else {
-				throw new SQLException(sqlex + ": error code " + errorCode);
+				throw new SQLException(sqlex + ": error code " + errorCode, sqlex);
 			}
 		}
 		this.authManager.getCompanyForLoggedInUser(request).removeTable(tableToRemove);
@@ -690,11 +690,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 			} else {
 				// if view didn't exist already, the error must be more serious
 				// than just the CREATE OR REPLACE not working
-				logger.error("Requested change to report " + report.getReportName()
-						+ " would break view. Error = " + sqlex);
-				logger.error("SQL = " + report.getSQLForDetail());
+				//logger.error("Requested change to report " + report.getReportName()
+				//		+ " would break view. Error = " + sqlex);
+				//logger.error("SQL = " + report.getSQLForDetail());
 				throw new SQLException("The requested change would cause an error in the report: "
-						+ sqlex.getMessage(), sqlex.getSQLState());
+						+ sqlex.getMessage(), sqlex.getSQLState(), sqlex);
 			}
 		}
 		return createOrReplaceWorked;
@@ -809,7 +809,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		} catch (SQLException sqlex) {
 			conn.rollback(savepoint);
 			throw new SQLException("The requested change would cause an error in the report: "
-					+ sqlex.getMessage(), sqlex.getSQLState());
+					+ sqlex.getMessage(), sqlex.getSQLState(), sqlex);
 		}
 	}
 
@@ -834,11 +834,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 			statement.close();
 		} catch (SQLException sqlex) {
 			// log the cause but return a more user friendly message
-			logger.error("Requested change to report " + report.getReportName()
-					+ " would break view. Error = " + sqlex);
-			logger.error("SQL = " + report.getSQLForDetail());
+			//logger.error("Requested change to report " + report.getReportName()
+			//		+ " would break view. Error = " + sqlex);
+			//logger.error("SQL = " + report.getSQLForDetail());
 			throw new SQLException("The requested change would cause an error in the report: "
-					+ sqlex.getMessage(), sqlex.getSQLState());
+					+ sqlex.getMessage(), sqlex.getSQLState(), sqlex);
 		}
 	}
 
@@ -935,9 +935,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 			String errorCode = sqlex.getSQLState();
 			if (errorCode.equals("42P01")) {
 				throw new SQLException("Can't delete report " + reportToRemove
-						+ " because it doesn't exist in the data store");
+						+ " because it doesn't exist in the data store", sqlex);
 			} else {
-				throw new SQLException(sqlex + ": error code " + errorCode);
+				throw new SQLException(sqlex + ": error code " + errorCode, sqlex);
 			}
 		}
 	}
