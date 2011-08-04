@@ -29,5 +29,5 @@
   #set($sessionRowId = $dataRow.getRowId())
   #parse('gui/reports_and_tables/tabs/view.vm')
   <br><hr>
-  <div style="page-break-after: always"></div>
+  <div style="page-break-after: always; clear: both"></div>
 #end
