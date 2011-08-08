@@ -18,9 +18,9 @@
 ## We're printing multiple records, so make the columns are equal width, lining them up
 ## TODO: This doesn't work, they still come out different widths on different pages
 <style>
-	.printoutfieldnamecolumn {
-		width: 30%;
-	}
+.printoutfieldnamecolumn {
+	width: 30%;
+}
 </style>
 <div style="page-break-after: always"></div>
 <h2>Details</h2>

@@ -224,6 +224,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		ReportCalcFieldInfo referencedCalc = this.getReferencedCalc();
 		String calculationSQL = referencedCalc.getParentReport().getInternalReportName() + "."
 				+ referencedCalc.getInternalFieldName();
+		logger.debug("Referencing another calculation: " + referencedCalc);
 		this.setCalculationSQLDirect(calculationSQL);
 	}
 
@@ -241,7 +242,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		String identifierToReplace = null;
 		String identifierToMatch = null;
 		String replacement = null;
-		// Replace division signs with our own custom division operator, //
+		// Replace division signs with our own custom division operator.
 		// This is specially created not to throw divide by zero errors
 		// but rather return null;
 		calculationSQL = calculationSQL.replaceAll("\\/", "//");
@@ -423,6 +424,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		// set alias
 		calculationSQL = "(" + calculationSQL + ")::" + this.getDbType().toString() + " AS "
 				+ this.getInternalFieldName();
+		logger.debug("Calculation SQL is " + calculationSQL);
 		this.setCalculationSQLDirect(calculationSQL);
 	}
 
