@@ -690,9 +690,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 			} else {
 				// if view didn't exist already, the error must be more serious
 				// than just the CREATE OR REPLACE not working
-				//logger.error("Requested change to report " + report.getReportName()
-				//		+ " would break view. Error = " + sqlex);
-				//logger.error("SQL = " + report.getSQLForDetail());
+				// logger.error("Requested change to report " +
+				// report.getReportName()
+				// + " would break view. Error = " + sqlex);
+				// logger.error("SQL = " + report.getSQLForDetail());
 				throw new SQLException("The requested change would cause an error in the report: "
 						+ sqlex.getMessage(), sqlex.getSQLState(), sqlex);
 			}
@@ -834,9 +835,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 			statement.close();
 		} catch (SQLException sqlex) {
 			// log the cause but return a more user friendly message
-			//logger.error("Requested change to report " + report.getReportName()
-			//		+ " would break view. Error = " + sqlex);
-			//logger.error("SQL = " + report.getSQLForDetail());
+			// logger.error("Requested change to report " +
+			// report.getReportName()
+			// + " would break view. Error = " + sqlex);
+			// logger.error("SQL = " + report.getSQLForDetail());
 			throw new SQLException("The requested change would cause an error in the report: "
 					+ sqlex.getMessage(), sqlex.getSQLState(), sqlex);
 		}
@@ -979,7 +981,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				try {
 					item.write(selectedFile);
 				} catch (Exception ex) {
-					// Catching a general exception?! This is because the library throws a raw exception. Not very good
+					// Catching a general exception?! This is because the
+					// library throws a raw exception. Not very good
 					throw new FileUploadException("Error writing file: " + ex.getMessage());
 				}
 			}
@@ -2358,6 +2361,19 @@ public final class DatabaseDefn implements DatabaseInfo {
 							}
 						}
 					}
+				}
+			}
+		}
+		// check field isn't referenced from any calcs in the same reports
+		for (ReportFieldInfo testReportField : reportField.getParentReport().getReportFields()) {
+			if (testReportField instanceof ReportCalcFieldInfo) {
+				ReportCalcFieldInfo testCalc = (ReportCalcFieldInfo) testReportField;
+				String calcSQL = testCalc.getCalculationSQL(false);
+				if (calcSQL.contains(reportField.getInternalFieldName())) {
+					throw new CantDoThatException("The report field " + reportField
+							+ " is referenced by the calculation " + testCalc
+							+ ". Please remove or update this calculation before removing "
+							+ reportField);
 				}
 			}
 		}

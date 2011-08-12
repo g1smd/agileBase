@@ -456,7 +456,7 @@ public final class DataManagement implements DataManagementInfo {
 			MissingParametersException {
 		if ((dataToSave.size() == 0) && (!newRecord)) {
 			// Note: this does actually happen quite a lot, from two particular
-			// users.
+			// users, therefore I've commented out the log warning.
 			// Haven't tracked down the cause but it doesn't seem to be creating
 			// a problem.
 			// logger.warn("Call to saveRecord with no data to save. User = "
@@ -643,7 +643,6 @@ public final class DataManagement implements DataManagementInfo {
 			// Find out which field caused the error by looking for internal
 			// field names in the error message
 			String errorMessage = sqlex.getMessage();
-
 			for (BaseField possibleCauseField : dataToSave.keySet()) {
 				if (errorMessage.contains(possibleCauseField.getInternalFieldName())) {
 					if (errorMessage.contains("check constraint")) {

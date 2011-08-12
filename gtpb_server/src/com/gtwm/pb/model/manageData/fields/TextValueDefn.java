@@ -18,7 +18,6 @@
 package com.gtwm.pb.model.manageData.fields;
 
 import org.grlea.log.SimpleLogger;
-
 import com.gtwm.pb.model.interfaces.fields.TextValue;
 import com.gtwm.pb.util.Naming;
 
