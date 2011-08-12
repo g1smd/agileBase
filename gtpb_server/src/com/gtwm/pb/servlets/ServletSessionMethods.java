@@ -716,7 +716,7 @@ public final class ServletSessionMethods {
 						// Format phone numbers to include a space so that when they're exported to CSV, spreadsheets recognise them as text rather than numbers
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
 							if (!fieldValueString.contains(" ")) {
-								fieldValueString = fieldValueString.substring(0, 4) + " " + fieldValueString.substring(5);
+								fieldValueString = fieldValueString.substring(0, 5) + " " + fieldValueString.substring(5);
 							}
 						}
 						fieldValue = new TextValueDefn(fieldValueString);
