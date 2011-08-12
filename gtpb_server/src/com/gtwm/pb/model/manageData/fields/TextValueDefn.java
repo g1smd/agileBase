@@ -87,7 +87,7 @@ public class TextValueDefn implements TextValue {
 		}
 		return false;
 	}
-	
+
 	public boolean isTwitterHashTag() {
 		if (this.isNull()) {
 			return false;
@@ -97,17 +97,20 @@ public class TextValueDefn implements TextValue {
 		}
 		return false;
 	}
-	
+
 	public boolean isPhoneNumber() {
 		if (this.isNull()) {
 			return false;
 		}
-		// regex from http://www.regexlib.com/
-		if (this.textValue
-				.trim()
-				.matches(
-						"^((\\(?0\\d{4}\\)?\\s?\\d{3}\\s?\\d{3})|(\\(?0\\d{3}\\)?\\s?\\d{3}\\s?\\d{4})|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#(\\d{4}|\\d{3}))?$")) {
-			return true;
+		int length = this.textValue.trim().length();
+		if ((length > 10) && (length < 20)) {
+			// regex from http://www.regexlib.com/
+			if (this.textValue
+					.trim()
+					.matches(
+							"^((\\(?0\\d{4}\\)?\\s?\\d{3}\\s?\\d{3})|(\\(?0\\d{3}\\)?\\s?\\d{3}\\s?\\d{4})|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#(\\d{4}|\\d{3}))?$")) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -131,8 +134,8 @@ public class TextValueDefn implements TextValue {
 		// work for newer postcodes
 		// used instead
 		// http://www.govtalk.gov.uk/gdsc/schemaHtml/bs7666-v2-0-xsd-PostCodeType.htm
-		if (this.textValue.trim().toUpperCase().matches(
-				"^[A-Z]{1,2}[0-9R][0-9A-Z]?\\s[0-9][A-Z-[CIKMOV]]{2}$")) {
+		if (this.textValue.trim().toUpperCase()
+				.matches("^[A-Z]{1,2}[0-9R][0-9A-Z]?\\s[0-9][A-Z-[CIKMOV]]{2}$")) {
 			return true;
 		}
 		return false;
