@@ -419,11 +419,13 @@ function fEnableDisable(sAction, oFormObject) {
 			if (sBusyAttr=='changed') {
 				$(oObjToChange).removeClass('changed');
 			}
+			$(oObjToChange).addClass("saved");
 		} else {
 			oObjToChange.setAttribute(sBusyAttr, 'true');
 			if (sBusyAttr=='changed') {
 				$(oObjToChange).addClass('changed');
 			}
+			$(oObjToChange).removeClass("saved");
 		}
 	}
 
