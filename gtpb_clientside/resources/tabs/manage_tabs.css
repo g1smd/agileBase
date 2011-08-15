@@ -21,7 +21,7 @@
    }
     *[changed] { text-decoration:underline }
     .changed { text-decoration:underline }
-    .saved { border-right: 1em solid green }
+    .saved { border-right: 1em solid green; border-bottom: 1px solid gray; }
 	*[error] { color:red }
 	a[error] { font-size:8pt }
     	           
