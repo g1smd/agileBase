@@ -202,8 +202,8 @@ public final class CalendarPublisher extends HttpServlet {
 				DataRowFieldInfo eventDateInfo = reportDataRow.getValue(eventDateField
 						.getBaseField());
 				String eventEpochTimeString = eventDateInfo.getKeyValue();
-				// +1 ms to ensure that midnight times get interpreted as the start of a day rather than the end
-				long eventEpochTime = Long.valueOf(eventEpochTimeString) + 1;
+				// +1s to ensure that midnight times get interpreted as the start of a day rather than the end
+				long eventEpochTime = Long.valueOf(eventEpochTimeString) + 1000L;
 				net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
 						eventEpochTime);
 				VEvent rowEvent = new VEvent(eventIcalDate, eventTitle);
