@@ -289,10 +289,12 @@ function fComboComponents() {
 					jqTextBox.val(jqSelect.val())
 					jqTextBox.hide();
 					if (!globalEdit) {
+						alert("fDropdownChange 1");
 						new fChange(jqTextBox[0]);
 					}
 				}
 			} else {
+				alert("fDropdownChange 2");
 				new fChange(elem);
 			}
 		}
