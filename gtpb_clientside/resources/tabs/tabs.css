@@ -18,7 +18,18 @@ body {
   margin: 0;
   overflow: hidden;
 }
-  
+ 
+*[changed] { text-decoration:underline; }
+.changed { text-decoration:underline; }
+.saved {
+  background-image:url('/agileBase/resources/icons/tick.png');
+  background-repeat: no-repeat;
+  background-position: right top;
+}
+
+*[error] { color:red; }
+a[error] { font-size:8pt; }
+
 a {
   color: #486f98;
 }
