@@ -408,7 +408,7 @@ function fEnableDisable(sAction, oFormObject) {
   // enable or disable the current object or object group
 
 	var cObjects = oFormObject.objectCollection?oFormObject.objectCollection:fSetObjectCollection();
-	alert("No.: " + cObjects.length);
+	alert("No. elements: " + cObjects.length);
 	for ( var i = 0; i < cObjects.length; i++) {
 		// see whether we've passed in the hidden field from a picker
 		var oObjToChange=((cObjects[i].getAttribute('type')=='hidden') && cObjects[i].label)?cObjects[i].label:cObjects[i];
@@ -448,6 +448,7 @@ function fEnableDisable(sAction, oFormObject) {
 }
 
 function fChange(oObj, postChangeFunction)  {  
+	alert('fChange');
   /* object to handle changing the value of a form element and update the db immediately
 	 over XMLHTTP.
 			
