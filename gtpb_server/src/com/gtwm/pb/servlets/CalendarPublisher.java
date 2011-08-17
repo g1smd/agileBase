@@ -207,6 +207,7 @@ public final class CalendarPublisher extends HttpServlet {
 			TimeZoneRegistry registry = TimeZoneRegistryFactory.getInstance().createRegistry();
 			VTimeZone tz = registry.getTimeZone("Europe/London").getVTimeZone();
 			calendar.getComponents().add(tz);
+			java.util.Calendar eventCalendar = java.util.Calendar.getInstance();
 			TimeZone timeZone = java.util.Calendar.getInstance().getTimeZone();
 			for (DataRowInfo reportDataRow : reportDataRows) {
 				String eventTitle = DataManagement.buildEventTitle(report, reportDataRow, false);
@@ -217,16 +218,19 @@ public final class CalendarPublisher extends HttpServlet {
 				// BST epoch time if relevant
 				long rawEventEpochTime = Long.valueOf(eventEpochTimeString);
 				long eventEpochTime = rawEventEpochTime; // + timeZone.getOffset(rawEventEpochTime);
+				eventCalendar.setTimeInMillis(eventEpochTime);
+				int hours = eventCalendar.get(java.util.Calendar.HOUR_OF_DAY);
+				int minutes = eventCalendar.get(java.util.Calendar.MINUTE);
 				VEvent rowEvent = null;
 				// Whole day events if the field has no hours/minutes, or if they are both zero
-				if ((dateResolution < java.util.Calendar.HOUR_OF_DAY) || (rawEventEpochTime % (24*60*60*1000) == 0)) {
+				if ((dateResolution < java.util.Calendar.HOUR_OF_DAY) || ((hours == 0) && (minutes == 0))) {
 					net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
 							eventEpochTime);
-					rowEvent = new VEvent(eventIcalDate, "t: " + eventEpochTime + " - " + eventTitle);
+					rowEvent = new VEvent(eventIcalDate, "whole day: " + eventEpochTime + " - " + eventTitle);
 				} else {
 					net.fortuna.ical4j.model.DateTime startTime = new net.fortuna.ical4j.model.DateTime(eventEpochTime);
 					net.fortuna.ical4j.model.DateTime endTime = new net.fortuna.ical4j.model.DateTime(eventEpochTime + (1000 * 60 * 60));
-					rowEvent = new VEvent(startTime, endTime, eventTitle);
+					rowEvent = new VEvent(startTime, endTime,  "hour event: " + eventEpochTime + " - " + eventTitle);
 				}
 				// add Timezone
 				TzId tzParam = new TzId(tz.getProperties().getProperty(Property.TZID).getValue());
