@@ -216,13 +216,13 @@ public final class CalendarPublisher extends HttpServlet {
 				// Add dst savings milliseconds - this will add 1 hour to the
 				// BST epoch time if relevant
 				long rawEventEpochTime = Long.valueOf(eventEpochTimeString);
-				long eventEpochTime = rawEventEpochTime + timeZone.getOffset(rawEventEpochTime);
+				long eventEpochTime = rawEventEpochTime; // + timeZone.getOffset(rawEventEpochTime);
 				VEvent rowEvent = null;
 				// Whole day events if the field has no hours/minutes, or if they are both zero
 				if ((dateResolution < java.util.Calendar.HOUR_OF_DAY) || (rawEventEpochTime % (24*60*60*1000) == 0)) {
 					net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
 							eventEpochTime);
-					rowEvent = new VEvent(eventIcalDate, eventTitle);
+					rowEvent = new VEvent(eventIcalDate, "t: " + eventEpochTime + " - " + eventTitle);
 				} else {
 					net.fortuna.ical4j.model.DateTime startTime = new net.fortuna.ical4j.model.DateTime(eventEpochTime);
 					net.fortuna.ical4j.model.DateTime endTime = new net.fortuna.ical4j.model.DateTime(eventEpochTime + (1000 * 60 * 60));
