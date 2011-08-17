@@ -13,22 +13,6 @@ table#reportData tbody tr button.globalEdit {
 /* Report fields tab CSS */
 
   
-* {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-}
-*[changed] { text-decoration:underline }
-.changed { text-decoration:underline }
-.saved {
-	background-image:url('/agileBase/resources/icons/tick.png');
-	background-repeat: no-repeat;
-	background-position: right top;
-}
-*[error] { color:red }
-a[error] { font-size:8pt }
-   	           
 #navigation { position:absolute; 
   height:100%;
   width:120px;
