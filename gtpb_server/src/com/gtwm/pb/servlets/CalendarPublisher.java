@@ -224,6 +224,9 @@ public final class CalendarPublisher extends HttpServlet {
 				VEvent rowEvent = null;
 				// Whole day events if the field has no hours/minutes, or if they are both zero
 				if ((dateResolution < java.util.Calendar.HOUR_OF_DAY) || ((hours == 0) && (minutes == 0))) {
+					if (dateResolution >= java.util.Calendar.HOUR_OF_DAY) {
+						eventEpochTime += 1000;
+					}
 					net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
 							eventEpochTime);
 					rowEvent = new VEvent(eventIcalDate, "whole day: " + eventEpochTime + " - " + eventTitle);
