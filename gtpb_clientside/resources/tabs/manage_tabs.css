@@ -21,7 +21,7 @@ table#reportData tbody tr button.globalEdit {
  }
  *[changed] { text-decoration:underline }
  .changed { text-decoration:underline }
- .saved { background-color: green; }
+ .saved { background:url('resources/icons/tick.png'); }
 *[error] { color:red }
 a[error] { font-size:8pt }
    	           
