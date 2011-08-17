@@ -26,6 +26,8 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,10 +42,12 @@ import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
+import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AgileBaseException;
@@ -98,7 +102,7 @@ public final class CalendarPublisher extends HttpServlet {
 			throw new ServletException("Unrecognised get parameter " + getType);
 		}
 	}
-	
+
 	private void doCalendarGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException {
 		String internalCompanyName = request.getParameter("c");
@@ -135,7 +139,8 @@ public final class CalendarPublisher extends HttpServlet {
 						+ " not found in company " + company);
 			}
 			BaseReportInfo report = table.getReport(internalReportName);
-			net.fortuna.ical4j.model.Calendar calendar = this.getCalendar(request, publicUser, report);
+			net.fortuna.ical4j.model.Calendar calendar = this.getCalendar(request, publicUser,
+					report);
 			response.setContentType("text/calendar");
 			PrintWriter out = response.getWriter();
 			CalendarOutputter calendarOutputter = new CalendarOutputter();
@@ -161,9 +166,9 @@ public final class CalendarPublisher extends HttpServlet {
 		}
 	}
 
-	private net.fortuna.ical4j.model.Calendar getCalendar(HttpServletRequest request, AppUserInfo publicUser,
-			BaseReportInfo report) throws CantDoThatException, CodingErrorException, SQLException,
-			ParseException, SocketException {
+	private net.fortuna.ical4j.model.Calendar getCalendar(HttpServletRequest request,
+			AppUserInfo publicUser, BaseReportInfo report) throws CantDoThatException,
+			CodingErrorException, SQLException, ParseException, SocketException {
 		if (!report.getCalendarSyncable()) {
 			throw new CantDoThatException("The report " + report
 					+ " has not been set as publicly exportable");
@@ -172,6 +177,12 @@ public final class CalendarPublisher extends HttpServlet {
 		if (eventDateField == null) {
 			throw new CantDoThatException("The report " + report
 					+ " contains no date fields that can be used for calendar syncing");
+		}
+		int dateResolution;
+		if (eventDateField instanceof ReportCalcFieldInfo) {
+			dateResolution = ((ReportCalcFieldInfo) eventDateField).getDateResolution();
+		} else {
+			dateResolution = ((DateField) eventDateField.getBaseField()).getDateResolution();
 		}
 		// We don't need to know the company
 		ReportDataInfo reportData = this.databaseDefn.getDataManagement().getReportData(null,
@@ -196,17 +207,27 @@ public final class CalendarPublisher extends HttpServlet {
 			TimeZoneRegistry registry = TimeZoneRegistryFactory.getInstance().createRegistry();
 			VTimeZone tz = registry.getTimeZone("Europe/London").getVTimeZone();
 			calendar.getComponents().add(tz);
-			int dstSavings = java.util.Calendar.getInstance().getTimeZone().getDSTSavings();
+			TimeZone timeZone = java.util.Calendar.getInstance().getTimeZone();
 			for (DataRowInfo reportDataRow : reportDataRows) {
 				String eventTitle = DataManagement.buildEventTitle(report, reportDataRow, false);
 				DataRowFieldInfo eventDateInfo = reportDataRow.getValue(eventDateField
 						.getBaseField());
 				String eventEpochTimeString = eventDateInfo.getKeyValue();
-				// Add dst savings milliseconds - this will add 1 hour to the BST epoch time if relevant
-				long eventEpochTime = Long.valueOf(eventEpochTimeString) + dstSavings;
-				net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
-						eventEpochTime);
-				VEvent rowEvent = new VEvent(eventIcalDate, eventTitle);
+				// Add dst savings milliseconds - this will add 1 hour to the
+				// BST epoch time if relevant
+				long rawEventEpochTime = Long.valueOf(eventEpochTimeString);
+				long eventEpochTime = rawEventEpochTime + timeZone.getOffset(rawEventEpochTime);
+				VEvent rowEvent = null;
+				// Whole day events if the field has no hours/minutes, or if they are both zero
+				if ((dateResolution < java.util.Calendar.HOUR_OF_DAY) || (rawEventEpochTime % (24*60*60*1000) == 0)) {
+					net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
+							eventEpochTime);
+					rowEvent = new VEvent(eventIcalDate, eventTitle);
+				} else {
+					net.fortuna.ical4j.model.DateTime startTime = new net.fortuna.ical4j.model.DateTime(eventEpochTime);
+					net.fortuna.ical4j.model.DateTime endTime = new net.fortuna.ical4j.model.DateTime(eventEpochTime + (1000 * 60 * 60));
+					rowEvent = new VEvent(startTime, endTime, eventTitle);
+				}
 				// add Timezone
 				TzId tzParam = new TzId(tz.getProperties().getProperty(Property.TZID).getValue());
 				rowEvent.getProperties().getProperty(Property.DTSTART).getParameters().add(tzParam);
