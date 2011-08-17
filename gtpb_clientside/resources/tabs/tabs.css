@@ -377,7 +377,7 @@ img.cross_reference_image {
 }
 
 .upload_progress_bar.upload_complete {
-  background-color: green;
+  background-color: rgb(131,214,27); /* match 'saved' tick icon */
 }
 
 /* Note: this is an example of how to make a character hang */
