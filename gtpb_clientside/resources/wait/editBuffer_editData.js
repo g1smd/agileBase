@@ -444,8 +444,7 @@ function fEnableDisable(sAction, oFormObject) {
   */  
 }
 
-function fChange(oObj, postChangeFunction)  {  
-	alert('fChange');
+function fChange(oObj, postChangeFunction)  {
   /* object to handle changing the value of a form element and update the db immediately
 	 over XMLHTTP.
 			
