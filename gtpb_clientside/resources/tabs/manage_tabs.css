@@ -21,7 +21,7 @@
    }
     *[changed] { text-decoration:underline }
     .changed { text-decoration:underline }
-    .saved:after { url("resources/icons/tick.png"); }
+    .saved:after { content:url("resources/icons/tick.png"); }
 	*[error] { color:red }
 	a[error] { font-size:8pt }
     	           
