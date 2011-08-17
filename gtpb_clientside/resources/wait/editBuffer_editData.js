@@ -422,6 +422,7 @@ function fEnableDisable(sAction, oFormObject) {
 			// add a tick to show it's been saved.
 			// Can't do this with just oObjToChange.addClass because :after isn't supported on input elements
 			$(oObjToChange).closest("td").prev("td").addClass("saved");
+			alert($(oObjToChange).closest("td").prev("td").text());
 		} else {
 			oObjToChange.setAttribute(sBusyAttr, 'true');
 			if (sBusyAttr=='changed') {
