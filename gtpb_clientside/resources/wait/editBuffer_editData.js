@@ -408,11 +408,13 @@ function fEnableDisable(sAction, oFormObject) {
   // enable or disable the current object or object group
 
 	var cObjects = oFormObject.objectCollection?oFormObject.objectCollection:fSetObjectCollection();
+	alert("No.: " + cObjects.length);
 	for ( var i = 0; i < cObjects.length; i++) {
 		// see whether we've passed in the hidden field from a picker
 		var oObjToChange=((cObjects[i].getAttribute('type')=='hidden') && cObjects[i].label)?cObjects[i].label:cObjects[i];
 		// if we're enabling remember to *remove* the busy attribute
 		var sBusyAttr = fBusyAttr();
+		alert("sBusyAttr is " + sBusyAttr);
 		if (sAction == 'enable') {
 			oObjToChange.removeAttribute(sBusyAttr);
 			// For IE: because style doesn't work on expando property, add/remove class as well
