@@ -419,13 +419,15 @@ function fEnableDisable(sAction, oFormObject) {
 			if (sBusyAttr=='changed') {
 				$(oObjToChange).removeClass('changed');
 			}
-			$(oObjToChange).addClass("saved");
+			// add a tick to show it's been saved.
+			// Can't do this with just oObjToChange.addClass because :after isn't supported on input elements
+			$(oObjToChange).closest("td").prev("td").addClass("saved");
 		} else {
 			oObjToChange.setAttribute(sBusyAttr, 'true');
 			if (sBusyAttr=='changed') {
 				$(oObjToChange).addClass('changed');
 			}
-			$(oObjToChange).removeClass("saved");
+			$(oObjToChange).closest("td").prev("td").removeClass("saved");
 		}
 	}
 

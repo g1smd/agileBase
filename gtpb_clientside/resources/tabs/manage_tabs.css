@@ -21,19 +21,19 @@ table#reportData tbody tr button.globalEdit {
  }
  *[changed] { text-decoration:underline }
  .changed { text-decoration:underline }
- .saved:after { content:" saved"; }
+ .saved { background-color: green; }
 *[error] { color:red }
 a[error] { font-size:8pt }
    	           
 #navigation { position:absolute; 
-  height:100%;
-  width:120px;
-  background-color:#f1f2ed;
-  border-top:2px solid #cccccc;
-  border-right:1px solid #cecece;
-  top:0;
-  left:0;
-  text-align:center;
+       height:100%;
+       width:120px;
+       background-color:#f1f2ed;
+       border-top:2px solid #cccccc;
+       border-right:1px solid #cecece;
+       top:0;
+       left:0;
+       text-align:center;
   overflow:auto;
 }
 			
