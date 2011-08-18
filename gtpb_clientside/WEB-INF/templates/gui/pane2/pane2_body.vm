@@ -54,7 +54,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
       <td class="leading">&nbsp;</td>
       #foreach($field in $reportBaseFields)
 	    #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
-		  <td nowrap="true">
+		  <td nowrap="true"><div class="in_cell" style="max-width:500px">
 		    #if($tableDataRow.get($field))
               $tableDataRow.get($field)
 		    #else
@@ -65,7 +65,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 				#if($relatedValue) $relatedValue #break #end
 			  #end
 		    #end
-		  </td>
+      </div></td>
 	    #end
 	  #end
 	  <td>&nbsp;</td>		##TODO: should there be an 'if edit privileges' check around this td?
