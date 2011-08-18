@@ -23,7 +23,7 @@ body {
 	padding-top: 7px;
 	border-bottom: 5px solid #eaba72;
 	z-index: 1;
-	background-color: #f1f2ed;
+	background-color: rgb(240,240,240); /* #f1f2ed; */
 	position: absolute;
 	left: 0px;
 	width: 100%;
