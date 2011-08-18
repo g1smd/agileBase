@@ -47,7 +47,7 @@ function pane1Setup() {
 		return;
 	}
 	$("#tree").addClass("setup");
-	if (("#tree img").size() > 0) {
+	if ($("#tree img").size() > 0) {
 	  grayscale($("#tree img"));
 	}
 	// Tree expanding and contracting
