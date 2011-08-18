@@ -127,9 +127,11 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		  #if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
 		    #set($rightAlign = true)
       #end
+      #set($image = false)
       #if($fieldCategory == "FILE")
         #set($fileValue = $viewTools.getFileValueTool($cell))
         #if($fileValue.isImage())
+          #set($image = true)
           #set($field = $fields.get($cellNumber).get(1))
           #set($srcUrl = "/agileBase/uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
           #set($cell = "<img src='$srcUrl' />")
@@ -149,7 +151,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		  #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
 		  #if($rightAlign) #set($style = "$style text-align:right; ") #end
           <td #if($cellContentLength<=10)nowrap="true"#end #if($style != "")style="$style"#end #if($class != "")class="$class"#end>
-            <div style="min-width:${cellContentLength}px" #if($cellContentLength > 30) class="in_cell" #end>
+            <div style="min-width:${cellContentLength}px" #if($cellContentLength > 20 || $image) class="in_cell" #end>
               #if(!(($thisUniqueId == $lastUniqueId) && ($cell == $lastValues.get($cellNumber))))$cell#else<span class="greytext">$cell</span>#end
             </div>
           </td>
@@ -167,7 +169,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #set($cellContentLength = 500)
       #end
           <td #if($cellContentLength<=10)nowrap="true" #end>
-            <div style="min-width:${cellContentLength}px" class="in_cell">
+            <div style="min-width:${cellContentLength}px" #if($cellContentLength > 20 || $image) class="in_cell" #end>
               #if(!(($thisUniqueId == $lastUniqueId) && ($cell == $lastValues.get($cellNumber))))$cell#end
             </div>
           </td>
