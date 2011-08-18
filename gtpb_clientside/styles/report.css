@@ -139,6 +139,12 @@ table#reportData tr.rowa td {
 
 .in_cell {
   max-height: 43px;
+  overflow: hidden;
+}
+
+.in_cell:hover {
+	background-color: white;
+	overflow:visible;
 }
 
 table#reportData tr.rowb  { 
