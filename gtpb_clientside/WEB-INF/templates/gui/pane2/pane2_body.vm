@@ -140,8 +140,8 @@ $viewTools.startTimer("gui/pane2/pane2_body")
   		  #else
           #set($cellContentLength=$cell.length() / 2)
 		    #end
-        #if($cellContentLength > 300)
-          #set($cellContentLength = 300)
+        #if($cellContentLength > 500)
+          #set($cellContentLength = 500)
         #end
       #end
 		  #set($style="")
@@ -163,8 +163,8 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		  #else
         #set($cellContentLength=$cell.length() / 2)
 		  #end
-      #if($cellContentLength > 300)
-        #set($cellContentLength = 300)
+      #if($cellContentLength > 500)
+        #set($cellContentLength = 500)
       #end
           <td #if($cellContentLength<=10)nowrap="true" #end>
             <div style="min-width:${cellContentLength}px" class="in_cell">
