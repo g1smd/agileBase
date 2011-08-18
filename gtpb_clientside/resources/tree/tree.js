@@ -87,4 +87,6 @@ function pane1Setup() {
 		}
 	});
 	
+	greyscale($("#tree img"));
+	
 }

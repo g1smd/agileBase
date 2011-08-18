@@ -62,6 +62,7 @@
 	});
     </script>
 	#end
+  <script type="text/javascript" src="resources/greyscale.js"></script>
 </head>
 <body>
 	#if($mobile_device)
