@@ -922,12 +922,12 @@ public class ReportData implements ReportDataInfo {
 												.getNotApplicableDescription();
 									}
 								} else {
-									int textFieldSize = fieldSchemaText.getContentSize();
-									if (textFieldSize > 100) {
-										textFieldSize = 100; // max out
-									}
-									if (keyValue.length() > (textFieldSize + 1)) {
-										displayValue = keyValue.substring(0, textFieldSize)
+									//int textFieldSize = fieldSchemaText.getContentSize() * 2;
+									//if (textFieldSize > 400) {
+									//	textFieldSize = 400; // max out
+									//}
+									if (keyValue.length() > 401) {
+										displayValue = keyValue.substring(0, 400)
 												+ "...";
 									}
 								}
