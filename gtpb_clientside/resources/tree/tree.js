@@ -47,6 +47,8 @@ function pane1Setup() {
 		return;
 	} else {
 		$("#tree").addClass("setup");
+		alert("about to grayscale " + $("#tree img").size() + " images");
+		grayscale($("#tree img"));
 	}
 	// Tree expanding and contracting
 	$('#tree h2').click(function(event) {
@@ -86,7 +88,5 @@ function pane1Setup() {
 			}
 		}
 	});
-	
-	grayscale($("#tree").find("img"));
 	
 }
