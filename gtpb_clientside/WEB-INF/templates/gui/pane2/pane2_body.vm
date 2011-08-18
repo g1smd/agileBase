@@ -137,11 +137,13 @@ $viewTools.startTimer("gui/pane2/pane2_body")
       #else
   		  #if($field.getContentSize() > 100)
           #set($cellContentLength=$cell.length() * 2)
+          $viewTools.log("*2 = $cellContentLength")
           #if($cellContentLength > 300)
             #set($cellContentLength = 300)
           #end
   		  #else
           #set($cellContentLength=$cell.length() / 2)
+          $viewTools.log("/2 = $cellContentLength")
 		    #end
       #end
 		  #set($style="")
@@ -167,9 +169,9 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #set($cellContentLength=$cell.length() / 2)
 		  #end
           <td #if($cellContentLength<=10)nowrap="true" #end>
-            <div style="min-width:${cellContentLength}px" class="in_cell"><div class="cell_in">
+            <div style="min-width:${cellContentLength}px" class="in_cell">
               #if(!(($thisUniqueId == $lastUniqueId) && ($cell == $lastValues.get($cellNumber))))$cell#end
-            </div></div>
+            </div>
           </td>
         #end            
       #end
