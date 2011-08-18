@@ -87,6 +87,6 @@ function pane1Setup() {
 		}
 	});
 	
-	grayscale($("#tree img"));
+	grayscale($("#tree").find("img"));
 	
 }
