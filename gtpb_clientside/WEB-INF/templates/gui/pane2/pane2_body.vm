@@ -161,7 +161,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #set($cellContentLength=$cell.length() / 2)
 		  #end
           <td #if($cellContentLength<=10)nowrap="true" #end>
-            <div style="min-width:${cellContentLength}px">
+            <div style="min-width:${cellContentLength}px" class="in_cell">
               #if(!(($thisUniqueId == $lastUniqueId) && ($cell == $lastValues.get($cellNumber))))$cell#end
             </div>
           </td>
