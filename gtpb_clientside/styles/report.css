@@ -149,6 +149,10 @@ table#reportData tr.rowa td {
   z-index: 999;
 }
 
+#currentRow .in_cell:hover {
+  text-shadow: 0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588;
+}
+
 table#reportData tr.rowb  { 
   background-image: url('../styles/rowb.png');
 }
