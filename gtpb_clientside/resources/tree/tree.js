@@ -45,11 +45,9 @@ $(document).ready(function(){
 function pane1Setup() {
 	if ($("#tree").hasClass("setup")) {
 		return;
-	} else {
-		$("#tree").addClass("setup");
-		alert("about to grayscale " + $("#tree img").size() + " images");
-		grayscale($("#tree img"));
 	}
+	$("#tree").addClass("setup");
+	grayscale($("#tree img"));
 	// Tree expanding and contracting
 	$('#tree h2').click(function(event) {
 		var parentElem = $(this).parent();
