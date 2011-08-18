@@ -140,13 +140,11 @@ table#reportData tr.rowa td {
 .in_cell {
   max-height: 43px;
   overflow: hidden;
-  position: relative;
 }
 
 .in_cell:hover {
 	overflow:visible;
-	position: relative;
-  text-shadow: 0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white;
+  text-shadow: 0px 0px 1em white,0px 1px 1em white,1px 0px 1em white,1px 1px 1em white,0px -1px 1em white,-1px 0px 1em white,-1px -1px 1em white;
   z-index: 999;
 }
 
