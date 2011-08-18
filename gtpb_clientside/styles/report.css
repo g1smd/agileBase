@@ -144,7 +144,8 @@ table#reportData tr.rowa td {
 
 .in_cell:hover {
 	overflow:visible;
-	text-shadow: 0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white;
+	color: white;
+  text-shadow: 0px 0px 1em black,0px 0px 1em black,0px 0px 1em black,0px 0px 1em black,0px 0px 1em black,0px 0px 1em black;
 }
 
 table#reportData tr.rowb  { 
