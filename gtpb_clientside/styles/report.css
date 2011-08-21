@@ -89,7 +89,7 @@ table#reportData thead td {
 
 table#reportData .selectable tr.rowa:hover td,
 table#reportData .selectable tr.rowb:hover td { 
-  background-color:#dae2ff;
+  /* background-color:#dae2ff; */
 }
 
 table#reportData tbody tr.rowa:hover td.colored,
@@ -119,6 +119,7 @@ table#reportData td:last-child {
 
 table#reportData tr#currentRow td { 
   background-color: rgb(56,117,215); /* #ffd588; */
+  color: white;
   /*background-image: url(styles/selected_row_fine_angled.png);*/
   /*font-family:"Arial Bold";*/
 }				
@@ -144,13 +145,14 @@ table#reportData tr.rowa td {
 
 .in_cell:hover {
 	overflow:visible;
-  text-shadow: 0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff,0px 0px 1em #dae2ff;
+  text-shadow: 0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white;
   position: relative;
   z-index: 999;
 }
 
 #currentRow .in_cell:hover {
-  text-shadow: 0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588,0px 0px 1em #ffd588;
+  text-shadow: 0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7;
+  color: white;
 }
 
 table#reportData tr.rowb  { 
