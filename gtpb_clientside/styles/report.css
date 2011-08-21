@@ -93,8 +93,8 @@ table#reportData .selectable tr.rowb:hover td {
   /* background-color:#dae2ff; */
 }
 
-table#reportData tbody tr.rowa:hover td.colored,
-table#reportData tbody tr.rowb:hover td.colored { 
+table#reportData tbody td.colored,
+table#reportData tbody td.colored { 
   background-image: url('../styles/highlighted_row_fine_angled.png'); 
 }   
 					  
