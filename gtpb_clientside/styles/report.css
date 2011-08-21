@@ -119,7 +119,7 @@ table#reportData td:last-child {
 
 table#reportData tr#currentRow td { 
   background-color: rgb(56,117,215); /* #ffd588; */
-  color: white;
+  color: white!important;
   /*background-image: url(styles/selected_row_fine_angled.png);*/
   /*font-family:"Arial Bold";*/
 }				
