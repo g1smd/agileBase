@@ -21,7 +21,7 @@ body {
 	height: 72px;
 	top: 0;
 	padding-top: 7px;
-	border-bottom: 5px solid #eaba72;
+	border-bottom: 1px solid #9E9E9E; /* 5px solid #eaba72; */
 	z-index: 1;
 	background-color: rgb(240,240,240); /* #f1f2ed; */
 	position: absolute;
@@ -88,12 +88,13 @@ div#_md_blank.window_disable h1 {
 }
 
 #logout span {
-	background-color: #eaba72;
+	/* background-color: #eaba72; */
 	padding-bottom:10px;
 }
 
 #logout a {
-	color: white;
+	color: #444444;
+	text-shadow: 0px 1px 0px white
 	font-size: 9pt;
 	text-decoration: none;
 	margin-right: 4px;
