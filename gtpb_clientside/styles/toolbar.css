@@ -21,7 +21,8 @@ body { font-family:"MS Sans Serif",arial, sans_serif;
 							width:100%; 
 							padding-left:20px; 
 							padding-top:2px; 
-							border-bottom:5px solid #eaba72 }
+							border-bottom: 1px solid #9E9E9E; /* 5px solid #eaba72; */
+						}
 													
 #toolbarDiv img.divider { height:45px; 
 													width:1px; 
