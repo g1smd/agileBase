@@ -7,6 +7,7 @@ table#reportData {
 
 #wrapper table#reportData td {
   padding: 2px 6px;
+  cursor: pointer;
 }
 
 #wrapper table#reportData th {
