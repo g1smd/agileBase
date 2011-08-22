@@ -590,7 +590,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		SortedSet<BaseReportInfo> timelineReports = new TreeSet<BaseReportInfo>();
 		Set<BaseReportInfo> reports = user.getOperationalDashboardReports();
 		for (BaseReportInfo report : reports) {
-			if (report.getCalendarField() != null) {
+			if (report.getCalendarStartField() != null) {
 				this.checkReportViewPrivileges(report);
 				timelineReports.add(report);
 			}
@@ -612,7 +612,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		Map<BaseField, String> filterValues = new HashMap<BaseField, String>(
 				this.sessionData.getReportFilterValues());
 		// Add start and end time filters
-		ReportFieldInfo eventDateReportField = report.getCalendarField();
+		ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report " + report + " has no applicable date fields");
 		}

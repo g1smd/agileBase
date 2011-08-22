@@ -173,16 +173,17 @@ public final class CalendarPublisher extends HttpServlet {
 			throw new CantDoThatException("The report " + report
 					+ " has not been set as publicly exportable");
 		}
-		ReportFieldInfo eventDateField = report.getCalendarField();
-		if (eventDateField == null) {
+		ReportFieldInfo eventStartField = report.getCalendarStartField();
+		ReportFieldInfo eventEndField = report.getCalendarEndField();
+		if (eventStartField == null) {
 			throw new CantDoThatException("The report " + report
 					+ " contains no date fields that can be used for calendar syncing");
 		}
 		int dateResolution;
-		if (eventDateField instanceof ReportCalcFieldInfo) {
-			dateResolution = ((ReportCalcFieldInfo) eventDateField).getDateResolution();
+		if (eventStartField instanceof ReportCalcFieldInfo) {
+			dateResolution = ((ReportCalcFieldInfo) eventStartField).getDateResolution();
 		} else {
-			dateResolution = ((DateField) eventDateField.getBaseField()).getDateResolution();
+			dateResolution = ((DateField) eventStartField.getBaseField()).getDateResolution();
 		}
 		// We don't need to know the company
 		ReportDataInfo reportData = this.databaseDefn.getDataManagement().getReportData(null,
@@ -196,7 +197,7 @@ public final class CalendarPublisher extends HttpServlet {
 			Map<BaseField, Boolean> sessionReportSorts = new HashMap<BaseField, Boolean>();
 			Map<BaseField, String> reportFilterValues = new HashMap<BaseField, String>();
 			// select only rows with an event date
-			reportFilterValues.put(eventDateField.getBaseField(), "!?");
+			reportFilterValues.put(eventStartField.getBaseField(), "!?");
 			List<DataRowInfo> reportDataRows = reportData.getReportDataRows(conn,
 					reportFilterValues, false, sessionReportSorts, rowLimit, QuickFilterType.AND);
 			net.fortuna.ical4j.model.Calendar calendar = new Calendar();
@@ -211,15 +212,15 @@ public final class CalendarPublisher extends HttpServlet {
 			TimeZone timeZone = java.util.Calendar.getInstance().getTimeZone();
 			for (DataRowInfo reportDataRow : reportDataRows) {
 				String eventTitle = DataManagement.buildEventTitle(report, reportDataRow, false);
-				DataRowFieldInfo eventDateInfo = reportDataRow.getValue(eventDateField
-						.getBaseField());
-				long eventEpochTime = Long.valueOf(eventDateInfo.getKeyValue());
+				DataRowFieldInfo eventStartInfo = reportDataRow.getValue(eventStartField);
+				long eventEpochTime = Long.valueOf(eventStartInfo.getKeyValue());
 				eventCalendar.setTimeInMillis(eventEpochTime);
 				int hours = eventCalendar.get(java.util.Calendar.HOUR_OF_DAY);
 				int minutes = eventCalendar.get(java.util.Calendar.MINUTE);
+				boolean wholeDay = (dateResolution < java.util.Calendar.HOUR_OF_DAY) || ((hours == 0) && (minutes == 0));
 				VEvent rowEvent = null;
 				// Whole day events if the field has no hours/minutes, or if they are both zero
-				if ((dateResolution < java.util.Calendar.HOUR_OF_DAY) || ((hours == 0) && (minutes == 0))) {
+				if (wholeDay) {
 					if (dateResolution >= java.util.Calendar.HOUR_OF_DAY) {
 						// For some reason, whole day events need the GMT offset adding but timed events don't
 						eventEpochTime += timeZone.getOffset(eventEpochTime);
@@ -229,7 +230,19 @@ public final class CalendarPublisher extends HttpServlet {
 					rowEvent = new VEvent(eventIcalDate, eventTitle);
 				} else {
 					net.fortuna.ical4j.model.DateTime startTime = new net.fortuna.ical4j.model.DateTime(eventEpochTime);
-					net.fortuna.ical4j.model.DateTime endTime = new net.fortuna.ical4j.model.DateTime(eventEpochTime + (1000 * 60 * 60));
+					DataRowFieldInfo eventEndInfo = reportDataRow.getValue(eventEndField);
+					String endEpochString = eventEndInfo.getKeyValue();
+					Long endEpochTime = null;
+					if (!eventEndInfo.equals("")) {
+						endEpochTime = Long.valueOf(endEpochString);
+					} else {
+						endEpochTime = eventEpochTime + (1000 * 60 * 60);
+					}
+					// sanity check
+					if (eventEpochTime > endEpochTime) {
+						endEpochTime = eventEpochTime + (1000 * 60 * 60);
+					}
+					net.fortuna.ical4j.model.DateTime endTime = new net.fortuna.ical4j.model.DateTime(endEpochTime);
 					rowEvent = new VEvent(startTime, endTime, eventTitle);
 				}
 				// add Timezone

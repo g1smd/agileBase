@@ -17,7 +17,7 @@
 ##
 #set($report = $sessionData.getReport())
 #set($calendarSyncable = $report.getCalendarSyncable())
-#set($calendarField = $report.getCalendarField())
+#set($calendarField = $report.getCalendarStartField())
 This option will allow data from this report to be accessed by the public without any username, password or other authentication.<p>
 Please be aware of any security considerations<p>
 <input type="checkbox" name="set_calendar_syncable" value="true" onclick="new fChange(this)" #if($calendarSyncable)checked #end> Allow public access<p>

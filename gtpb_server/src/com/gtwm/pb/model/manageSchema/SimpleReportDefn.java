@@ -47,6 +47,8 @@ import com.ibm.icu.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -1115,8 +1117,34 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	}
 
 	@Transient
-	public ReportFieldInfo getCalendarField() throws CodingErrorException {
-		ReportFieldInfo calendarField = null;
+	public ReportFieldInfo getCalendarStartField() throws CodingErrorException {
+		List<ReportFieldInfo> dateFields = this.getDateFields();
+		if (dateFields.size() == 0) {
+			return null;
+		}
+		if (dateFields.size() == 1) {
+			return dateFields.get(0);
+		}
+		// there is more than one date field, return the penultimate
+		return dateFields.get(dateFields.size() - 2);
+	}
+	
+	@Transient
+	public ReportFieldInfo getCalendarEndField() throws CodingErrorException {
+		List<ReportFieldInfo> dateFields = this.getDateFields();
+		if (dateFields.size() == 0) {
+			return null;
+		}
+		// return the last date field
+		return dateFields.get(dateFields.size() - 1);
+	}
+
+	/**
+	 * Return a set of date fields in the order they appear in the report
+	 */
+	@Transient
+	private List<ReportFieldInfo> getDateFields() throws CodingErrorException {
+		List<ReportFieldInfo> dateFields = new LinkedList<ReportFieldInfo>();
 		REPORT_FIELD_LOOP: for (ReportFieldInfo reportField : this.getReportFields()) {
 			if (reportField.getBaseField().getFieldCategory().equals(FieldCategory.DATE)) {
 				if (reportField.getBaseField().getHidden()) {
@@ -1128,19 +1156,18 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 						dateResolution = ((ReportCalcFieldInfo) reportField).getDateResolution();
 					} catch (CantDoThatException cdtex) {
 						throw new CodingErrorException(
-								"Field is a date calculation yet we can't get the date resolution",
+								"Field " + this + " -> " + reportField + " is a date calculation yet we can't get the date resolution",
 								cdtex);
 					}
 				} else {
 					dateResolution = ((DateField) reportField.getBaseField()).getDateResolution();
 				}
 				if (dateResolution >= Calendar.DAY_OF_MONTH) {
-					calendarField = reportField;
-					;
+					dateFields.add(reportField);
 				}
 			}
 		}
-		return calendarField;
+		return dateFields;
 	}
 
 	@Transient
