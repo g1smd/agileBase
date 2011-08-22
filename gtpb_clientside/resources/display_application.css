@@ -81,9 +81,10 @@ div#_md_blank.window_disable h1 {
 #logout {
 	position:absolute;
 	text-align:right;
-	right:-3px;
-	top:-3px;
+	right:-2px;
+	top:-2px;
 	padding:3px;
+	padding-left: 6px;
 	margin:0;
 	background-color: #cecece;
   border-bottom-left-radius: 0.5em;
