@@ -201,7 +201,7 @@
 						##<img style="float:left" src="resources/toolbar/logout_left.png">
 						<span>
               <a onclick="fHelp();" href="#" title="load help centre to view documentation or ask a question">help</a>
-						  &nbsp;<span style="color:white">|</span>&nbsp;
+						  <span style="color:white">|</span> 
 						  <a href="AppController.servlet?return=boot&logout=true">logout</a>
 						</span>
 					</div>
