@@ -134,6 +134,7 @@ table#reportData tr#currentRow td.trailing {
 
 table#reportData tr#currentRow td.colored {
   background-image: url('../styles/selected_row_fine_angled.png');
+  color: black!important;
 }
 					 
 table#reportData tr.rowb td, 
