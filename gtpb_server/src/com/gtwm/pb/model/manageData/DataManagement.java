@@ -1733,7 +1733,7 @@ public final class DataManagement implements DataManagementInfo {
 		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
 				filterValues);
 		for (BaseReportInfo report : reports) {
-			ReportFieldInfo eventDateReportField = report.getCalendarField();
+			ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 			if (eventDateReportField == null) {
 				throw new CantDoThatException("The report '" + report
 						+ "' has no suitable date field");
@@ -1758,7 +1758,7 @@ public final class DataManagement implements DataManagementInfo {
 		js.array();
 		for (BaseReportInfo report : reports) {
 			String className = "report_" + report.getInternalReportName();
-			ReportFieldInfo eventDateReportField = report.getCalendarField();
+			ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 			List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
 					filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
 					QuickFilterType.AND);
@@ -1806,7 +1806,7 @@ public final class DataManagement implements DataManagementInfo {
 	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
 			throws CodingErrorException, CantDoThatException, SQLException, JSONException {
-		ReportFieldInfo eventDateReportField = report.getCalendarField();
+		ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
 		}

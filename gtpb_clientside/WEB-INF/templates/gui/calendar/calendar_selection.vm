@@ -16,7 +16,7 @@
   #set($calendarModuleReportsCopy = [])
   #set($temp = $calendarModuleReportsCopy.addAll($calendarModuleReports))
   #foreach($report in $calendarModuleReportsCopy)
-  #if(!$report.getCalendarField())
+  #if(!$report.getCalendarStartField())
     #set($temp = $calendarModuleReports.remove($report))
   #else
     #set($temp = $panelModuleReports.remove($report))
@@ -63,7 +63,7 @@
         #set($colourStyle = "$colourStyle color:black;")
       #end
       #set($temp = $colourStyles.put("report_$internalReportName", $colourStyle))
-      <li id="$internalTableName$internalReportName" title="from $report.getModule(), displayed by $report.getCalendarField()" class="has_calendar">
+      <li id="$internalTableName$internalReportName" title="from $report.getModule(), displayed by $report.getCalendarStartField()" class="has_calendar">
         <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
         $report
         <span class="report_$internalReportName" style="display:none"></span> ## Just so JS can read colour style

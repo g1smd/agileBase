@@ -84,7 +84,7 @@
 		  #set($internalReportName = $report.getInternalReportName())
 		  #set($table=$report.getParentTable())
 		  #set($internalTableName = $table.getInternalTableName())
-		  <li id="$internalTableName$internalReportName" title="from $report.getModule(), displayed by $report.getCalendarField()" class="has_panel">
+		  <li id="$internalTableName$internalReportName" title="from $report.getModule(), displayed by $report.getCalendarStartField()" class="has_panel">
 		    <input type="checkbox" internaltablename="$internalTableName" internalreportname="$internalReportName" #if($savedReports.contains($report)) checked #end> 
 		    $report
 		  </li>
@@ -95,7 +95,7 @@
   </ul>
 </div>
 #foreach($report in $savedReports)
-  #if((!$report.getCalendarField()) && ($view.loggedInUserAllowedToViewReport($report)))
+  #if((!$report.getCalendarStartField()) && ($view.loggedInUserAllowedToViewReport($report)))
     #parse("gui/calendar/panel.vm")
   #end
 #end
