@@ -18,7 +18,7 @@ table#reportData {
 }
 
 table#reportData th {
-  background-color: rgb(240,240,240); /* #f1f2ed; */
+  background-color: #f0f0f0; /* #f1f2ed; */
   font-size:10pt; 
   color:black;
   font-weight:bold;

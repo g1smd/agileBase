@@ -19,4 +19,4 @@ button.gtpb.selected { background:transparent url(button_bg_down.png) no-repeat 
 button.gtpb[disabled],
 button.gtpb[disabled]:hover,
 button.gtpb[disabled]:active,
-button.gtpb[disabled].selected { background:#f1f2ed; color:#aaaaaa }
+button.gtpb[disabled].selected { background:#f0f0f0; color:#aaaaaa }

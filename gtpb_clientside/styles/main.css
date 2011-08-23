@@ -19,8 +19,8 @@ div#header small { color:#dddddd; font-weight:bold }
 table.data { width:100% }
 table.data tr.rowa td, table.data tr.rowb td { padding:5px }
 table.data tr.rowa td small { color:#ffffff }
-table.data tr.rowb td { background-color:#f1f2ed }
-table.data tr.rowb td small { color:#f1f2ed }
+table.data tr.rowb td { background-color:#f0f0f0 }
+table.data tr.rowb td small { color:#f0f0f0 }
 
 table.data small { font-size:8pt; color:#cccccc }
 
