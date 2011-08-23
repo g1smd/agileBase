@@ -24,9 +24,9 @@
 		  Once you've carried out these steps once, you won't need to again. The device will keep itself up to date automatically.
 		  <ol>
 		    <li>
-			  Email this link to the iPad/iPhone:<br>
+			    Email this code to the iPad/iPhone:<br>
 		      #parse("gui/calendar_export/calc_calendar_url.vm")
-		      <a href="mailto:test@example.com&subject=Calendar&body=$calendarUrl">$calendarUrl</a>
+		      <textarea style="width:100%">$calendarUrl</textarea>
  			</li>
 			<li>Just tap the link in the email on the device to import the calendar</li>
 		  </ol>
