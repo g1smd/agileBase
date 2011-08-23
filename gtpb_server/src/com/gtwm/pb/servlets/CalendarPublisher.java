@@ -217,23 +217,48 @@ public final class CalendarPublisher extends HttpServlet {
 				eventCalendar.setTimeInMillis(eventEpochTime);
 				int hours = eventCalendar.get(java.util.Calendar.HOUR_OF_DAY);
 				int minutes = eventCalendar.get(java.util.Calendar.MINUTE);
-				boolean wholeDay = (dateResolution < java.util.Calendar.HOUR_OF_DAY) || ((hours == 0) && (minutes == 0));
+				boolean wholeDay = (dateResolution < java.util.Calendar.HOUR_OF_DAY)
+						|| ((hours == 0) && (minutes == 0));
 				VEvent rowEvent = null;
-				// Whole day events if the field has no hours/minutes, or if they are both zero
+				// Whole day events if the field has no hours/minutes, or if
+				// they are both zero
 				if (wholeDay) {
-					if (dateResolution >= java.util.Calendar.HOUR_OF_DAY) {
-						// For some reason, whole day events need the GMT offset adding but timed events don't
-						eventEpochTime += timeZone.getOffset(eventEpochTime);
-					}
+					// if (dateResolution >= java.util.Calendar.HOUR_OF_DAY) {
+					// For some reason, whole day events need the GMT offset
+					// adding but timed events don't
+					eventEpochTime += timeZone.getOffset(eventEpochTime);
+					// }
 					net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
 							eventEpochTime);
-					rowEvent = new VEvent(eventIcalDate, eventTitle);
+					if (eventEndField.equals(eventStartField)) {
+						rowEvent = new VEvent(eventIcalDate, eventTitle);
+					} else {
+						DataRowFieldInfo eventEndInfo = reportDataRow.getValue(eventEndField);
+						String endEpochString = eventEndInfo.getKeyValue();
+						if (endEpochString.equals("")) {
+							rowEvent = new VEvent(eventIcalDate, eventTitle);
+						} else {
+							Long endEpochTime = Long.valueOf(endEpochString);
+							endEpochTime += timeZone.getOffset(endEpochTime);
+							net.fortuna.ical4j.model.Date eventEndDate = new net.fortuna.ical4j.model.Date(
+									endEpochTime);
+							if (eventEndDate.after(eventIcalDate)) {
+								rowEvent = new VEvent(eventIcalDate, eventEndDate, eventTitle);
+							} else {
+								rowEvent = new VEvent(eventIcalDate, eventTitle);
+							}
+						}
+					}
 				} else {
-					net.fortuna.ical4j.model.DateTime startTime = new net.fortuna.ical4j.model.DateTime(eventEpochTime);
-					DataRowFieldInfo eventEndInfo = reportDataRow.getValue(eventEndField);
-					String endEpochString = eventEndInfo.getKeyValue();
+					net.fortuna.ical4j.model.DateTime startTime = new net.fortuna.ical4j.model.DateTime(
+							eventEpochTime);
+					String endEpochString = "";
+					if (!eventEndField.equals(eventStartField)) {
+						DataRowFieldInfo eventEndInfo = reportDataRow.getValue(eventEndField);
+						endEpochString = eventEndInfo.getKeyValue();
+					}
 					Long endEpochTime = null;
-					if (!eventEndInfo.equals("")) {
+					if (!endEpochString.equals("")) {
 						endEpochTime = Long.valueOf(endEpochString);
 					} else {
 						endEpochTime = eventEpochTime + (1000 * 60 * 60);
@@ -242,7 +267,8 @@ public final class CalendarPublisher extends HttpServlet {
 					if (eventEpochTime > endEpochTime) {
 						endEpochTime = eventEpochTime + (1000 * 60 * 60);
 					}
-					net.fortuna.ical4j.model.DateTime endTime = new net.fortuna.ical4j.model.DateTime(endEpochTime);
+					net.fortuna.ical4j.model.DateTime endTime = new net.fortuna.ical4j.model.DateTime(
+							endEpochTime);
 					rowEvent = new VEvent(startTime, endTime, eventTitle);
 				}
 				// add Timezone

@@ -1810,6 +1810,7 @@ public final class DataManagement implements DataManagementInfo {
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
 		}
+		ReportFieldInfo endDateReportField = report.getCalendarEndField();
 		// Try cache first
 		// Make a sortedMap so toString is always consistent for the same
 		// key/value pairs and we can use it as an ID
@@ -1866,7 +1867,33 @@ public final class DataManagement implements DataManagementInfo {
 			Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
 			js.key("start").value(eventDateEpoch);
 			if (!allDayEvent) {
-				js.key("end").value(eventDateEpoch + 7200); // events last 2hrs
+				if (endDateReportField.equals(eventDateReportField)) {
+					js.key("end").value(eventDateEpoch + 3600);
+				} else {
+					DataRowFieldInfo endDateValue = reportDataRow.getValue(endDateReportField);
+					String endDateEpochString = endDateValue.getKeyValue();
+					if (endDateEpochString.equals("")) {
+						// events last 1 hr by default
+						js.key("end").value(eventDateEpoch + 3600);
+					} else {
+						Long endDateEpoch = Long.parseLong(endDateValue.getKeyValue()) / 1000;
+						if (endDateEpoch > eventDateEpoch) {
+							js.key("end").value(endDateEpoch);
+						} else {
+							js.key("end").value(eventDateEpoch + 3600);
+						}
+					}
+				}
+			} else if (!endDateReportField.equals(eventDateReportField)) {
+				// all day event possibly spans multiple days
+				DataRowFieldInfo endDateValue = reportDataRow.getValue(endDateReportField);
+				String endDateEpochString = endDateValue.getKeyValue();
+				if (!endDateEpochString.equals("")) {
+					Long endDateEpoch = Long.parseLong(endDateValue.getKeyValue()) / 1000;
+					if (endDateEpoch > eventDateEpoch) {
+						js.key("end").value(endDateEpoch);
+					}
+				}
 			}
 			js.key("className").value("report_" + internalReportName); // fullcalendar
 			// TODO: check if classname is used in UI, remove if not
@@ -2223,8 +2250,7 @@ public final class DataManagement implements DataManagementInfo {
 			Map<ReportFieldInfo, Date> previousDateValues = new HashMap<ReportFieldInfo, Date>();
 			Calendar calendar = Calendar.getInstance();
 			// Get database data
-			statement = chart.getChartSqlPreparedStatement(conn,
-					reportFilterValues, false);
+			statement = chart.getChartSqlPreparedStatement(conn, reportFilterValues, false);
 			long startTime = System.currentTimeMillis();
 			ResultSet summaryResults = statement.executeQuery();
 			while (summaryResults.next()) {
@@ -2363,7 +2389,8 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			return new ChartData(reportSummaryRows, minAggValues, maxAggValues, grandTotals);
 		} catch (SQLException sqlex) {
-			throw new SQLException("Error getting report summary data " + chart + ": " + sqlex + ". SQL = " + statement);
+			throw new SQLException("Error getting report summary data " + chart + ": " + sqlex
+					+ ". SQL = " + statement);
 		} finally {
 			if (conn != null) {
 				conn.close();
