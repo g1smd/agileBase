@@ -73,12 +73,12 @@ table#reportData th.waiting {
 	
 table#reportData thead tr#fieldFilters,
 table#reportData thead tr.wikiTitle { 
-  background-color:#e2e1d9;
+  background-color:#dddddd;
 }
 
 div#wrapper table#reportData #fieldFilters td {
   padding: 2px 3px;
-  border-right: 1px solid #e2e1d9;
+  border-right: 1px solid #dddddd;
 }
 
 table#reportData thead tr#fieldFilters input { 

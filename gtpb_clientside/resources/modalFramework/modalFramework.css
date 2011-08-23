@@ -179,7 +179,7 @@ div#_md_blank div#_md_dialog div#_md_content table#reportData th div {
 }
 
 div#_md_blank div#_md_dialog div#_md_content table#reportData thead tr#fieldFilters { 
-  background-color:#e2e1d9 
+  background-color:#dddddd; 
 }
 
 div#_md_blank div#_md_dialog div#_md_content table#reportData thead tr#fieldFilters input { 
