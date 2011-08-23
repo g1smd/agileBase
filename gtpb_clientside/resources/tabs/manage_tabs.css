@@ -16,7 +16,7 @@ table#reportData tbody tr button.globalEdit {
 #navigation { position:absolute; 
   height:100%;
   width:120px;
-  background-color:#f1f2ed;
+  background-color:#f0f0f0;
   border-top:2px solid #cccccc;
   border-right:1px solid #cecece;
   top:0;
