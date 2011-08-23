@@ -26,7 +26,7 @@
 		    <li>
 			  Email this link to the iPad/iPhone:<br>
 		      #parse("gui/calendar_export/calc_calendar_url.vm")
-		      <a href="mailto:&subject=Calendar&body=$calendarUrl">$calendarUrl</a>
+		      <a href="mailto:test@example.com&subject=Calendar&body=$calendarUrl">$calendarUrl</a>
  			</li>
 			<li>Just tap the link in the email on the device to import the calendar</li>
 		  </ol>

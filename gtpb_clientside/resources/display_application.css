@@ -21,7 +21,7 @@ body {
 	height: 72px;
 	top: 0;
 	padding-top: 7px;
-	border-bottom: 1px solid #9E9E9E; /* 5px solid #eaba72; */
+	border-bottom: 1px solid #cecece; /* 5px solid #eaba72; */
 	z-index: 1;
 	background-color: rgb(240,240,240); /* #f1f2ed; */
 	position: absolute;
