@@ -90,6 +90,19 @@ public final class Helpers {
 			return false;
 		}
 	}
+	
+	public static boolean isImage(String fileName) {
+		if (fileName == null) {
+			return false;
+		}
+		String extension = fileName.replaceAll("^.*\\.", "").toLowerCase().trim();
+		if (extension.equals("jpg") || extension.equals("png") || extension.equals("gif")
+				|| extension.equals("jpeg")) {
+			return true;
+		}
+		return false;
+	}
+
 
 	/**
 	 * Given a date resolution that is a Calendar value, e.g. Calendar.MONTH,
