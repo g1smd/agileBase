@@ -48,6 +48,7 @@
     #set($fieldObject = $field.get(1))
     <td><div>
       #if($internalFieldName!='')
+        $field.getFieldCategory()
         #if($viewingTable && $field.getFieldCategory() == "RELATION")
           <input type="text" disabled value="To filter, please use a report" title="To filter, please use a report" />
         #else
