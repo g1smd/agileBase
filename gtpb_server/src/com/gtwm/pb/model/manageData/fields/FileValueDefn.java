@@ -27,6 +27,7 @@ import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.fields.FileValue;
 import com.gtwm.pb.model.interfaces.fields.FileField;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
 public class FileValueDefn implements FileValue {
@@ -75,7 +76,7 @@ public class FileValueDefn implements FileValue {
 			return this.filename;
 		}
 	}
-	
+
 	public String getExtension() {
 		if (this.isNull()) {
 			return "";
@@ -100,7 +101,7 @@ public class FileValueDefn implements FileValue {
 			try {
 				Extension extension = Extension.valueOf(extensionStr);
 				return extensionStr.toLowerCase();
-			} catch(IllegalArgumentException iaex) {
+			} catch (IllegalArgumentException iaex) {
 				logger.warn("No icon for filetype " + extensionStr);
 				return "unknown";
 			}
@@ -109,15 +110,7 @@ public class FileValueDefn implements FileValue {
 	}
 
 	public boolean isImage() {
-		if (this.isNull()) {
-			return false;
-		}
-		String extension = this.filename.replaceAll("^.*\\.", "").toLowerCase();
-		if (extension.equals("jpg") || extension.equals("png") || extension.equals("gif")
-				|| extension.equals("jpeg")) {
-			return true;
-		}
-		return false;
+		return Helpers.isImage(this.filename);
 	}
 
 	public String toString() {
@@ -131,7 +124,7 @@ public class FileValueDefn implements FileValue {
 	private enum Extension {
 		CSV, DOC, DOCX, HTM, PDF, PPT, PSD, TIF, TIFF, TXT, XLS, XLSX, ZIP;
 	}
-	
+
 	private String filename = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(FileValueDefn.class);

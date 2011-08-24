@@ -19,6 +19,7 @@ package com.gtwm.pb.model.manageData.fields;
 
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.fields.TextValue;
+import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.Naming;
 
 public class TextValueDefn implements TextValue {
@@ -79,15 +80,7 @@ public class TextValueDefn implements TextValue {
 	}
 	
 	public boolean isImage() {
-		if (this.isNull()) {
-			return false;
-		}
-		String extension = this.textValue.replaceAll("^.*\\.", "").toLowerCase().trim();
-		if (extension.equals("jpg") || extension.equals("png") || extension.equals("gif")
-				|| extension.equals("jpeg")) {
-			return true;
-		}
-		return false;
+		return Helpers.isImage(this.textValue);
 	}
 
 	public boolean isTwitterName() {
