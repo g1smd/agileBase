@@ -77,6 +77,18 @@ public class TextValueDefn implements TextValue {
 		}
 		return false;
 	}
+	
+	public boolean isImage() {
+		if (this.isNull()) {
+			return false;
+		}
+		String extension = this.textValue.replaceAll("^.*\\.", "").toLowerCase().trim();
+		if (extension.equals("jpg") || extension.equals("png") || extension.equals("gif")
+				|| extension.equals("jpeg")) {
+			return true;
+		}
+		return false;
+	}
 
 	public boolean isTwitterName() {
 		if (this.isNull()) {

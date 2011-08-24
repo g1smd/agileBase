@@ -29,6 +29,8 @@ public interface TextValue extends BaseValue {
     
     public boolean isURL();
     
+    public boolean isImage();
+    
     public boolean isTwitterName();
     
     public boolean isTwitterHashTag();
