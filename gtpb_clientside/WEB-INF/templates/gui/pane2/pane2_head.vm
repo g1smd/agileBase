@@ -39,6 +39,8 @@
   <th class=trailing><div>&nbsp;</div></th>
 </tr>
 ## filtersShouldBeShown should either print the string 'true' or 'false'
+#set($report = $sessionData.getReport())
+#set($viewingTable = $report.equals($report.getParentTable().getDefaultReport()))
 <tr name="fieldFilters" id="fieldFilters" #if($filtersShouldBeShown == 'false') style="display:none" #end>
   <td class="leading">#if($mobile_device)&nbsp;#else<div id="filterhelp">?</div><div class="ab_tooltip" rel="resources/reports/filtering_help.htm"></div>#end</td>
   #foreach($field in $fields)
@@ -46,7 +48,11 @@
     #set($fieldObject = $field.get(1))
     <td><div>
       #if($internalFieldName!='')
-        <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" #if($table_part_only) gtpb_return="gui/reports_and_tables/report_data_only_include" gtpb_set_table="$sessionTable.getInternalTableName()" gtpb_set_report="$sessionReport.getInternalReportName()" #else gtpb_return="gui/reports_and_tables/report_data_only" #end onkeyup="new fSetFilter(this);" #if($filters.get($fieldObject)) value="$filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(this)"#end>
+        #if($viewingTable)
+          <input type="text" disabled value="To filter, please use a report" title="To filter, please use a report" />
+        #else
+          <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" #if($table_part_only) gtpb_return="gui/reports_and_tables/report_data_only_include" gtpb_set_table="$sessionTable.getInternalTableName()" gtpb_set_report="$sessionReport.getInternalReportName()" #else gtpb_return="gui/reports_and_tables/report_data_only" #end onkeyup="new fSetFilter(this);" #if($filters.get($fieldObject)) value="$filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(this)"#end>
+        #end
       #end
     </div></td>
   #end
