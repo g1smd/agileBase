@@ -169,6 +169,17 @@ table#reportData td input[type='text'] {
 
 table#reportData td select {
   min-width: 296px;  
+  border-radius: 0.5em;
+  border: 1px solid #cecece;
+  padding: 0.3em;
+}
+
+table#reportData td .date select {
+  min-width: auto;
+}
+
+table#reportData td img {
+  border-radius: 0.5em;
 }
 
 .draggingRow {
