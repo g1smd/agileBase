@@ -54,8 +54,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
               <th>Edit $sessionTable.getSingularName()</th>
             #else
             <th class="leading">&nbsp;</th>
-		        <th>field</th>
-		        <th>value</th>
+		        <th colspan="2">&nbsp;</th>
 		        <th class="trailing">&nbsp;</th>
             #end
 		      </tr>
