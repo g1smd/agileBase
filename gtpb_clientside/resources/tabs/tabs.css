@@ -178,6 +178,10 @@ table#reportData td .date select {
   min-width: 0;
 }
 
+table#reportData td .date input[type='text'] {
+  width: auto;
+}
+
 table#reportData td img {
   border-radius: 0.5em;
 }
