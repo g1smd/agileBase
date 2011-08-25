@@ -60,7 +60,7 @@
 	      #if($globalEdit)##
         	<input type="text" gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" name="$field.getInternalFieldName()" value="$fieldValue" gtpbBasicTextField="true" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
 	      #else##
-	        <input type="text" #if($field.getNotNull()) required #end name="$field.getInternalFieldName()" value="$fieldValue" #if(($field.getContentSize() > 35) || ($fieldValue.length() > 35)) style="width:296px" #end
+	        <input type="text" #if($field.getNotNull()) required #end name="$field.getInternalFieldName()" value="$fieldValue"
 				#if($updateAsType) maxKeyCount="6" gtpb_update_record gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" onkeyup="top.oBuffer.writeBuffer(this)" onpaste="top.oBuffer.writeBuffer(this)" gtpbBasicTextField="true"#end onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device && $updateAsType) top.oBuffer.writeBuffer(this); #end">##
       #end##
     #end##

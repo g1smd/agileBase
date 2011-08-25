@@ -157,6 +157,10 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
   background-color:#dae2ff!important;
 }
 
+table#reportData td input {
+  width: 296px;
+}
+
 .draggingRow {
   border-width: 1px;
   border-color: black;
