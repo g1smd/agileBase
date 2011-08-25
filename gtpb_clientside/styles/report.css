@@ -225,9 +225,15 @@ table#reportData tr.excludedRecord td {
 .capitalised { text-transform: capitalize; }
 
 table#reportData td.capitalised {
-	width: 30%;
+  width: 30%;
   text-align: right;
   padding-top: 5px;
+}
+
+table#reportData.draggable td.capitalised {
+  width: auto;
+  text-align: left;
+  padding-top: auto;
 }
 
 table#reportData tr.separator td.capitalised {
