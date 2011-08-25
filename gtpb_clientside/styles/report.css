@@ -121,7 +121,7 @@ table#reportData td:last-child {
 }
 
 table#reportData tr#currentRow td { 
-  background-color: rgb(56,117,215); /* #ffd588; */
+  background-color: #3875d7!important; /* #ffd588; */
   color: white!important;
   border-right: none;
   /*background-image: url(styles/selected_row_fine_angled.png);*/
@@ -130,12 +130,14 @@ table#reportData tr#currentRow td {
 
 table#reportData tr#currentRow td.leading,
 table#reportData tr#currentRow td.trailing {
-  background-color: rgb(56,117,215); /* #FFBA3B; */
+  background-color: #3875d7; /* #FFBA3B; */
 }	  
 
 table#reportData tr#currentRow td.colored {
+/*
   background-image: url('../styles/selected_row_fine_angled.png');
   color: black!important;
+/*
 }
 					 
 table#reportData tr.rowb td, 
