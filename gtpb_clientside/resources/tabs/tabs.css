@@ -175,7 +175,7 @@ table#reportData td select {
 }
 
 table#reportData td .date select {
-  min-width: auto;
+  min-width: 0;
 }
 
 table#reportData td img {
