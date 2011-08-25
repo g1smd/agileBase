@@ -151,7 +151,7 @@ table#reportData tr.rowa td {
 }
 
 .tab-item table#reportData.draggable tr td {
-  height: 0px;
+  height: 20px;
 }
 
 .in_cell {
