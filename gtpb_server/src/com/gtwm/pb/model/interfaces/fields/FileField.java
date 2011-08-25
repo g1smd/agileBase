@@ -19,6 +19,8 @@ package com.gtwm.pb.model.interfaces.fields;
 
 import java.util.SortedSet;
 
+import com.gtwm.pb.util.Enumerations.AttachmentType;
+
 /**
  * For storing uploaded files
  */
@@ -44,4 +46,8 @@ public interface FileField extends BaseField {
 	 */
 	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId,
 			String currentFileName);
+	
+	public AttachmentType getAttachmentType();
+	
+	public void setAttachmentType(AttachmentType attachmentType);
 }

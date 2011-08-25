@@ -22,6 +22,8 @@ import java.util.Calendar;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
@@ -34,6 +36,7 @@ import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
+import com.gtwm.pb.util.Enumerations.AttachmentType;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -47,7 +50,8 @@ public class FileFieldDefn extends AbstractField implements FileField {
 	}
 
 	public FileFieldDefn(TableInfo tableContainingField, String internalFieldName,
-			String fieldName, String fieldDesc, FieldPrintoutSetting printoutSetting) throws CodingErrorException {
+			String fieldName, String fieldDesc, FieldPrintoutSetting printoutSetting)
+			throws CodingErrorException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
 			super.setInternalFieldName((new RandomString()).toString());
@@ -63,6 +67,15 @@ public class FileFieldDefn extends AbstractField implements FileField {
 			throw new CodingErrorException("Error setting file field not unique or nullable", cdtex);
 		}
 		super.setPrintoutSetting(printoutSetting);
+	}
+
+	public void setAttachmentType(AttachmentType attachmentType) {
+		this.attachmentType = attachmentType;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public AttachmentType getAttachmentType() {
+		return this.attachmentType;
 	}
 
 	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId,
@@ -113,17 +126,20 @@ public class FileFieldDefn extends AbstractField implements FileField {
 
 	@Transient
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException {
-		FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
 		try {
 			FieldTypeDescriptor fieldDescriptor = new FieldTypeDescriptor(FieldCategory.FILE);
-			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
-					printoutSetting.name());
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.ATTACHMENTTYPE, this
+					.getAttachmentType().name());
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, this
+					.getPrintoutSetting().name());
 			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
 		}
 	}
+
+	private AttachmentType attachmentType = AttachmentType.DOCUMENT;
 
 	private static final SimpleLogger logger = new SimpleLogger(FileFieldDefn.class);
 

@@ -89,6 +89,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			break;
 		case FILE:
+			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.ATTACHMENTTYPE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			this.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, FieldPrintoutSetting.VALUE_ONLY.name());
 			break;
