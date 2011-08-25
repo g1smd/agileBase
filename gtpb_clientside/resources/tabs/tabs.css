@@ -157,7 +157,7 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
   background-color:#dae2ff!important;
 }
 
-table#reportData td input {
+table#reportData td input[type='text'] {
   width: 296px;
 }
 
