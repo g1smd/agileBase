@@ -143,6 +143,10 @@ table#reportData tr.rowa td {
   height:30px ;
 }
 
+.tab-item table#reportData tr td {
+	height: 35px;
+}
+
 .in_cell {
   max-height: 43px;
   overflow: hidden;
