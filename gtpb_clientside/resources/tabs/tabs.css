@@ -169,9 +169,12 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
 *[changed] { text-decoration:underline; }
 .changed { text-decoration:underline; }
 .saved {
-  background-image:url('/agileBase/resources/icons/tick.png');
+/*
+	background-image:url('/agileBase/resources/icons/tick.png');
   background-repeat: no-repeat;
   background-position: right top;
+*/
+	display: none;
 }
 
 *[error] { color:red; }
