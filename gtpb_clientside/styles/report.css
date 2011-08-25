@@ -150,7 +150,7 @@ table#reportData tr.rowa td {
 	height: 35px;
 }
 
-.tab-item .draggable table#reportData tr td {
+.tab-item table#reportData.draggable tr td {
   height: auto;
 }
 
