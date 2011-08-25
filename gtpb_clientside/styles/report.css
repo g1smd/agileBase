@@ -150,6 +150,10 @@ table#reportData tr.rowa td {
 	height: 35px;
 }
 
+.options_wrapper .tab-item table#reportData tr td {
+  height: auto;
+}
+
 .in_cell {
   max-height: 43px;
   overflow: hidden;
