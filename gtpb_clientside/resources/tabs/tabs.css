@@ -191,6 +191,7 @@ textarea {
   border-radius: 0.5em;
   padding: 0.3em;
   font-family: Arial, sans-serif;
+  font-size: 10pt;
 }
 
 .draggingRow {
