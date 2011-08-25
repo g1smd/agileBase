@@ -182,6 +182,10 @@ table#reportData td .date select {
   min-width: 0;
 }
 
+.options_wrapper table#reportData td select {
+  min-width: 0;
+}
+
 table#reportData td .date input[type='text'] {
   width: auto;
 }
