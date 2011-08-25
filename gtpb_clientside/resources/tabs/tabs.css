@@ -167,6 +167,10 @@ table#reportData td input[type='text'] {
   width: 296px;
 }
 
+table#reportData.draggable td input[type='text'] {
+  width: auto;
+}
+
 table#reportData td input[type='file'] {
   width: 296px;
 }
