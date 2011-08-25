@@ -89,6 +89,7 @@ import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.servlets.ServletSchemaMethods;
 import com.gtwm.pb.util.Enumerations.AppAction;
+import com.gtwm.pb.util.Enumerations.AttachmentType;
 import com.gtwm.pb.util.Enumerations.HiddenFields;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
@@ -1439,8 +1440,27 @@ public final class DatabaseDefn implements DatabaseInfo {
 					}
 				}
 			}
-		} // end of RelationField
-			// Simple properties common to all fields
+		} else if (field instanceof FileField) {
+			FileField fileField = (FileField) field;
+			FieldTypeDescriptorInfo fieldDescriptor = fileField.getFieldDescriptor();
+			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
+			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
+				String formInputName = "updateoption" + field.getInternalFieldName()
+						+ fieldOption.getFormInputName();
+				String formInputValue = request.getParameter(formInputName);
+				if (formInputValue != null) {
+					if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+						if (formInputName.equals("updateoption" + field.getInternalFieldName()
+								+ PossibleListOptions.ATTACHMENTTYPE.getFormInputName())) {
+							AttachmentType attachmentType = AttachmentType.valueOf(formInputValue);
+							fileField.setAttachmentType(attachmentType);
+						}
+					}
+				}
+			}
+		}
+		// end of all fields
+		// Simple properties common to all fields
 		BaseFieldDescriptorOptionInfo printoutOption = new ListFieldDescriptorOption(
 				PossibleListOptions.PRINTFORMAT);
 		String formInputName = "updateoption" + field.getInternalFieldName()

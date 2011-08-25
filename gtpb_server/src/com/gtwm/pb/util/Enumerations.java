@@ -436,4 +436,17 @@ public class Enumerations {
 		RSS, JSON, JSON_FULLCALENDAR, JSON_TIMELINE;
 	}
 	
+	public enum AttachmentType {
+		DOCUMENT("Document"), IMAGE("Image/photo"), PROFILE_PHOTO("Photo of a person");
+		
+		public String getDescription() {
+			return this.description;
+		}
+		
+		AttachmentType(String description) {
+			this.description = description;
+		}
+		
+		private String description = "";
+	}
 }

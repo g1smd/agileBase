@@ -23,6 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.Calendar;
 import java.util.Collections;
 import com.gtwm.pb.model.interfaces.ListFieldDescriptorOptionInfo;
+import com.gtwm.pb.util.Enumerations.AttachmentType;
 import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
@@ -67,6 +68,10 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 				this.optionsList.put(printoutSetting.name(), printoutSetting.toString());
 			}
 			break;
+		case ATTACHMENTTYPE:
+			for (AttachmentType attachmentType : AttachmentType.values()) {
+				this.optionsList.put(attachmentType.toString(), attachmentType.getDescription());
+			}
 		}
 	}
 
@@ -116,7 +121,7 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 
 	public enum PossibleListOptions {
 		DATERESOLUTION("Accuracy", false), NUMBERPRECISION("Precision (decimal places)", false), DURATIONRESOLUTION(
-				"Accuracy", false), DURATIONSCALE("Max. duration", false), LISTTABLE(
+				"Accuracy", false), DURATIONSCALE("Max. duration", false), ATTACHMENTTYPE("Type", false), LISTTABLE(
 				"Table to use", false), LISTREPORT("Report to use", false), LISTKEYFIELD(
 				"Value to store", false), LISTVALUEFIELD("Value to display", false), LISTSECONDARYFIELD("Secondary value", true), CHECKBOXDEFAULT(
 				"Default value", true), TEXTCONTENTSIZE("Size", false), TEXTCASE("Text case", true), PRINTFORMAT("Printout format", true);
