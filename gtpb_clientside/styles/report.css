@@ -80,6 +80,7 @@ table#reportData thead tr.wikiTitle {
 div#wrapper table#reportData #fieldFilters td {
   padding: 2px 3px;
   border-right: 1px solid #dddddd;
+  height: 20px;
 }
 
 table#reportData thead tr#fieldFilters input { 
