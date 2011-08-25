@@ -72,7 +72,7 @@
     		#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
             <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
             <td class="capitalised printoutfieldnamecolumn" #if($fieldCategory =='SEPARATOR') colspan="2" #end>
-            <span class="saved" id="saved_$internalFieldName"><image src="resources/icons/tick.png" style="vertical-align: top" /> </span>
+            <span class="saved" id="saved_$internalFieldName"><image src="resources/icons/tick.png" style="vertical-align: middle" /> </span>
             #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
               <span class="fieldname">$field.getSimplifiedFieldName()</span>
             #else
