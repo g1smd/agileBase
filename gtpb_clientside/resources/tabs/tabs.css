@@ -161,7 +161,6 @@ table#reportData td input {
   border: 1px solid #cecece;
   border-radius: 0.5em;
   padding: 0.3em;
-  font-size: 10pt;
 }
 
 table#reportData td input[type='text'] {
@@ -169,9 +168,7 @@ table#reportData td input[type='text'] {
 }
 
 table#reportData td select {
-  min-width: 296px;
-  font-size: 10pt;
-  
+  min-width: 296px;  
 }
 
 .draggingRow {
