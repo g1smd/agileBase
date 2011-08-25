@@ -139,7 +139,7 @@ table#reportData tr#currentRow td.colored {
 					 
 table#reportData tr.rowb td, 
 table#reportData tr.rowa td { 
-  height:25px 
+  height:30px 
 }
 
 .in_cell {
@@ -160,11 +160,10 @@ table#reportData tr.rowa td {
 }
 
 table#reportData tr.rowb  { 
-  background-image: url('../styles/rowb.png');
+  /* background-image: url('../styles/rowb.png'); */
 }
 
 #wrapper table#reportData tr.rowb  { 
-  background-image: none;
   border: 1px solid #f2f2f2;
 }
 
@@ -213,7 +212,16 @@ table#reportData tr.excludedRecord td {
 
 .capitalised { text-transform: capitalize; }
 
-table#reportData td.capitalised { width: 30%; }
+table#reportData td.capitalised {
+	width: 30%;
+  text-align: right;
+  padding-top: 5px;
+}
+
+table#reportData tr.separator td.capitalised {
+	text-align: left;
+}
+
 
 td.calculations {
   font-weight: bold;
