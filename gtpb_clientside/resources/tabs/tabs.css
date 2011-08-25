@@ -167,6 +167,10 @@ table#reportData td input[type='text'] {
   width: 296px;
 }
 
+table#reportData td input[type='file'] {
+  width: 296px;
+}
+
 table#reportData td select {
   min-width: 296px;  
   border-radius: 0.5em;
