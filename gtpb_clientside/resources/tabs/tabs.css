@@ -186,6 +186,13 @@ table#reportData td img {
   border-radius: 0.5em;
 }
 
+textarea {
+  border: 1px solid #cecece;
+  border-radius: 0.5em;
+  padding: 0.3em;
+  font-face: Arial, sans-serif;
+}
+
 .draggingRow {
   border-width: 1px;
   border-color: black;
