@@ -35,10 +35,11 @@ table#reportData th {
 
 .tab-item table#reportData th {
   font-size: 11pt!important; /* override modalFramework.css */
-  border-bottom: 1px solid #888888!important;
+  border-bottom: 1px solid #cecece!important;
   border-top: none!important;
   border-left: none!important;
   border-right: none!important;
+  height: 10px;
 }
 
 table#reportData th[onclick]:hover {
@@ -139,7 +140,7 @@ table#reportData tr#currentRow td.colored {
 					 
 table#reportData tr.rowb td, 
 table#reportData tr.rowa td { 
-  height:30px 
+  height:30px ;
 }
 
 .in_cell {
