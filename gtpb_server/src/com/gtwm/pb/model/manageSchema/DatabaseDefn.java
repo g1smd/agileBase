@@ -1898,7 +1898,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 					logger.info("Removing " + reportField + " from report " + defaultReport);
 					defaultReport.removeField(reportField);
 					removedReportField = reportField;
-					updateViewDbAction(conn, defaultReport, request);
+					this.updateViewDbAction(conn, defaultReport, request);
 				}
 			}
 		}
@@ -1939,7 +1939,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			ReportFieldInfo reportField = sourceReport.getReportField(field.getInternalFieldName());
 			newReportField = report.addReportField(reportField);
 		}
-		updateViewDbAction(conn, report, request);
+		this.updateViewDbAction(conn, report, request);
 		// this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
@@ -1986,7 +1986,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		report.removeJoin(join);
-		updateViewDbAction(conn, report, request);
+		this.updateViewDbAction(conn, report, request);
 		HibernateUtil.currentSession().delete(join);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
@@ -2007,7 +2007,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		report.addSort(reportField, ascending);
-		updateViewDbAction(conn, report, request);
+		this.updateViewDbAction(conn, report, request);
 		// this.dataManagement.logLastSchemaChangeTime(request);
 	}
 
@@ -2022,7 +2022,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		report.updateSort(reportField, ascending);
-		updateViewDbAction(conn, report, request);
+		this.updateViewDbAction(conn, report, request);
 		// this.dataManagement.logLastSchemaChangeTime(request);
 	}
 
@@ -2036,7 +2036,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		ReportSortInfo removedSort = report.removeSort(reportField);
-		updateViewDbAction(conn, report, request);
+		this.updateViewDbAction(conn, report, request);
 		if (removedSort != null) {
 			HibernateUtil.currentSession().delete(removedSort);
 		}
@@ -2053,7 +2053,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		report.addFilter(filter);
-		updateViewDbAction(conn, report, request);
+		this.updateViewDbAction(conn, report, request);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
@@ -2138,7 +2138,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		report.removeFilter(filter);
-		updateViewDbAction(conn, report, request);
+		this.updateViewDbAction(conn, report, request);
 		HibernateUtil.currentSession().delete(filter);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
@@ -2231,7 +2231,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 					|| sqlex.getMessage().contains("aggregates not allowed in GROUP BY clause")) {
 				conn.rollback(savepoint);
 				calculationField.setAggregateFunction(true);
-				updateViewDbAction(conn, report, request);
+				this.updateViewDbAction(conn, report, request);
 			} else {
 				throw sqlex;
 			}
@@ -2272,7 +2272,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 					|| sqlex.getMessage().contains("aggregates not allowed in GROUP BY clause")) {
 				conn.rollback(savepoint);
 				calculationField.setAggregateFunction(true);
-				updateViewDbAction(conn, report, request);
+				this.updateViewDbAction(conn, report, request);
 			} else {
 				throw sqlex;
 			}
@@ -2430,7 +2430,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		if (reportField.equals(report.getWordCloudField())) {
 			report.setWordCloudField(null);
 		}
-		updateViewDbAction(conn, report, request);
+		this.updateViewDbAction(conn, report, request);
 		HibernateUtil.currentSession().delete(reportField);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());

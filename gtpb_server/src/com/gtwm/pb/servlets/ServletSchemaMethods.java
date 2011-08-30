@@ -2096,17 +2096,17 @@ public final class ServletSchemaMethods {
 			rollbackConnections(conn);
 			// return report join to memory
 			report.addJoin(join);
-			throw new CantDoThatException("Join removal failed", sqlex);
+			throw new CantDoThatException("Removing this join would cause an error in the report", sqlex);
 		} catch (HibernateException hex) {
 			rollbackConnections(conn);
 			// return report join to memory
 			report.addJoin(join);
 			throw new CantDoThatException("Join removal failed", hex);
-		} catch (AgileBaseException pex) {
+		} catch (AgileBaseException abex) {
 			rollbackConnections(conn);
 			// return report join to memory
 			report.addJoin(join);
-			throw new CantDoThatException("Join removal failed", pex);
+			throw new CantDoThatException("Join removal failed: " + abex.getMessage(), abex);
 		} finally {
 			conn.close();
 			HibernateUtil.closeSession();

@@ -21,15 +21,19 @@
   #foreach($field in $fields)
     #set($internalFieldName = $field.get(0))
     #set($fieldObject = $field.get(1))
+    #set($fieldName = $fieldObject.toString())
+    #if($fieldObject.getHidden())
+      #set($fieldName = $fieldName.replace(" [Auto]",""))
+    #end
     ## row0 contains the internal field name
     ## row1 contains the display field
     <th #if(($fieldObject.getClass().getSimpleName() == "TextFieldDefn") || ($fieldObject.getClass().getSimpleName() == "BigTextFieldDefn")) maxTextLength="$fieldObject.getContentSize()" #end #if($field.get(0) && $internalFieldName!="")internalName="$internalFieldName" onclick="fSetSort(this)"#end>
     #if($fieldObject)
       #if($internalFieldName && $internalFieldName!="")
-        <div class="ab_field_title">$fieldObject</div>
+        <div class="ab_field_title">$fieldName</div>
         <div class="ab_tooltip" rel="?return=gui/reports_and_tables/field_tooltip&set_custom_string=true&key=tooltip_internalfieldname&value=$internalFieldName"></div>
       #else
-        <div>$fieldObject</div>
+        <div>$fieldName</div>
       #end
     #else
       <div>&nbsp;</div>

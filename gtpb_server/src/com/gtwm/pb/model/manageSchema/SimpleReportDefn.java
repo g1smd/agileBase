@@ -861,28 +861,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 									+ " report is still used in this report, field " + reportField);
 						}
 					}
-				} else {
-					TableInfo tableContainingField = reportField.getBaseField()
-							.getTableContainingField();
-					if (!tableContainingField.equals(this.getParentTable())) {
-						if (lastLeftReference && join.isLeftPartTable()) {
-							if (join.getLeftTableField().getTableContainingField()
-									.equals(tableContainingField)) {
-								throw new CantDoThatException("The " + tableContainingField
-										+ " table is still used in this report, field "
-										+ reportField);
-							}
-						}
-						if (lastRightReference && join.isRightPartTable()) {
-							if (join.getRightTableField().getTableContainingField()
-									.equals(tableContainingField)) {
-								throw new CantDoThatException("The " + tableContainingField
-										+ " table is still used in this report, field "
-										+ reportField);
-							}
-						}
-					}
 				}
+				// Note: skipped table checks, they were too fragile. Rely on SQL to report an error
 			}
 		}
 		this.getJoinsDirect().remove(join);
