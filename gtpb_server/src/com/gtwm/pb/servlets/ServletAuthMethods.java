@@ -106,7 +106,7 @@ public final class ServletAuthMethods {
 		}
 		String password = request.getParameter(AppUserInfo.PASSWORD.toLowerCase(Locale.UK));
 		if (password == null) {
-			password = (new RandomString()).toString();
+			password = RandomString.generate();
 		}
 		// begin updating model and persisting changes
 		AppUserInfo newUser = new AppUser(company, internalUserName, username, surname, forename,

@@ -76,7 +76,7 @@ public class ReportFilterDefn implements ReportFilterInfo {
 		for (String filterValue : filterValues) {
 			this.getFilterValuesDirect().add(filterValue);
 		}
-		this.setInternalName((new RandomString()).toString());
+		this.setInternalName(RandomString.generate());
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class ReportFilterDefn implements ReportFilterInfo {
 			this.setFilterBaseField(filterField);
 		}
 		this.setFilterTypeDirect(FilterType.valueOf(filterType.toUpperCase(Locale.UK)));
-		this.setInternalName((new RandomString()).toString());
+		this.setInternalName(RandomString.generate());
 		if (filterValue != null) {
 			Helpers.checkForSQLInjection(filterValue);
 			this.setFilterValueDirect(filterValue.toLowerCase());

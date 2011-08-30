@@ -74,7 +74,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		super.setParentReport(parentReport);
 		super.setReportFieldIsFromDirect(parentReport);
 		if (internalFieldName == null) {
-			this.setBaseFieldInternalFieldNameDirect((new RandomString()).toString());
+			this.setBaseFieldInternalFieldNameDirect(RandomString.generate());
 		} else {
 			this.setBaseFieldInternalFieldNameDirect(internalFieldName);
 		}

@@ -56,7 +56,7 @@ public class TableDefn implements TableInfo {
 		this.setTableName(tableName);
 		// store db friendly version of the table name
 		if (internalTableName == null) {
-			this.setInternalTableName((new RandomString()).toString());
+			this.setInternalTableName(RandomString.generate());
 		} else {
 			this.setInternalTableName(internalTableName);
 		}

@@ -41,7 +41,7 @@ public class CheckboxFieldDefn extends AbstractField implements CheckboxField {
 			String fieldName, String fieldDesc, Boolean defaultValue, boolean hidden, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
-			super.setInternalFieldName((new RandomString()).toString());
+			super.setInternalFieldName(RandomString.generate());
 		} else {
 			super.setInternalFieldName(internalFieldName);
 		}

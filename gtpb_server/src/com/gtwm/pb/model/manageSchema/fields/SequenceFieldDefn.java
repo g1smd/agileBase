@@ -43,7 +43,7 @@ public class SequenceFieldDefn extends AbstractField implements SequenceField {
 			String fieldName, String fieldDesc, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
-			super.setInternalFieldName((new RandomString()).toString());
+			super.setInternalFieldName(RandomString.generate());
 		} else {
 			super.setInternalFieldName(internalFieldName);
 		}

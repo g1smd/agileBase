@@ -46,7 +46,7 @@ public class ChartAggregateDefn implements ChartAggregateInfo {
 	public ChartAggregateDefn(AggregateFunction function, ReportFieldInfo reportField) {
 		this.setAggregateFunction(function);
 		this.setReportField(reportField);
-		this.setInternalAggregateName((new RandomString()).toString());
+		this.setInternalAggregateName(RandomString.generate());
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class ChartAggregateDefn implements ChartAggregateInfo {
 		this.setAggregateFunction(function);
 		this.setReportField(reportField);
 		this.setSecondaryReportField(secondaryReportField);
-		this.setInternalAggregateName((new RandomString()).toString());
+		this.setInternalAggregateName(RandomString.generate());
 	}
 
 	@Id

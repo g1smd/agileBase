@@ -29,7 +29,7 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 	}
 	
 	public Module(String moduleName, String iconPath, int indexNumber) {
-		this.setInternalModuleName((new RandomString()).toString());
+		this.setInternalModuleName(RandomString.generate());
 		this.setModuleName(moduleName);
 		this.setIconPath(iconPath);
 		this.setIndexNumber(indexNumber);

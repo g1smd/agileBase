@@ -22,6 +22,10 @@ public class CachedFeed implements CachedReportFeedInfo {
 		return System.currentTimeMillis() - this.cacheTime;
 	}
 	
+	public String toString() {
+		return this.cachedFeed;
+	}
+	
 	private final long cacheTime;
 	
 	private final String cachedFeed;

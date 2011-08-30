@@ -1119,7 +1119,7 @@ public final class ViewTools implements ViewToolsInfo {
 	}
 
 	public String getRandomString() {
-		return new RandomString().toString();
+		return RandomString.generate();
 	}
 
 	public String getAppUrl() {

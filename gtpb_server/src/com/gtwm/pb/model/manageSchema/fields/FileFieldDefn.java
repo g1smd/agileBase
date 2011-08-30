@@ -54,7 +54,7 @@ public class FileFieldDefn extends AbstractField implements FileField {
 			throws CodingErrorException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
-			super.setInternalFieldName((new RandomString()).toString());
+			super.setInternalFieldName(RandomString.generate());
 		} else {
 			super.setInternalFieldName(internalFieldName);
 		}

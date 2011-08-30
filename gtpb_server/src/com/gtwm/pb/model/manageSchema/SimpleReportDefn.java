@@ -78,7 +78,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	public SimpleReportDefn(TableInfo parentTable, String internalReportName, String reportName,
 			String reportDesc, ModuleInfo module) {
 		if (internalReportName == null) {
-			super.setInternalReportName((new RandomString()).toString());
+			super.setInternalReportName(RandomString.generate());
 		} else {
 			super.setInternalReportName(internalReportName);
 		}

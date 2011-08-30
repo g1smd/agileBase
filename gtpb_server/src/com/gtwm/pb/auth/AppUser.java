@@ -58,7 +58,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		}
 		this.setCompany(company);
 		if (internalUserName == null) {
-			this.setInternalUserName((new RandomString()).toString());
+			this.setInternalUserName(RandomString.generate());
 		} else {
 			this.setInternalUserName(internalUserName);
 		}

@@ -42,7 +42,7 @@ public class SeparatorFieldDefn extends AbstractField implements SeparatorField 
 			String fieldName, String fieldDesc) throws CodingErrorException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
-			super.setInternalFieldName((new RandomString()).toString());
+			super.setInternalFieldName(RandomString.generate());
 		} else {
 			super.setInternalFieldName(internalFieldName);
 		}
