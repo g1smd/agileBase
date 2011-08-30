@@ -55,7 +55,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 
 	public Company(String companyName) {
 		this.setCompanyName(companyName);
-		this.setInternalCompanyName((new RandomString()).toString());
+		this.setInternalCompanyName(RandomString.generate());
 	}
 
 	@Id

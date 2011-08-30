@@ -152,7 +152,7 @@ public final class AuthManager implements AuthManagerInfo {
 				try {
 					this.authenticator = new Authenticator();
 					hibernateSession.save(this.authenticator);
-					String masterPassword = (new RandomString()).toString();
+					String masterPassword = RandomString.generate();
 					String masterUsername = "master";
 					CompanyInfo masterCompany = new Company("Master Company");
 					((Authenticator) this.authenticator).addCompany(masterCompany);
@@ -264,7 +264,7 @@ public final class AuthManager implements AuthManagerInfo {
 		// now add an initial user to the company so it can be logged in to
 		String adminUsername = "admin" + company.getCompanyName().toLowerCase();
 		adminUsername = adminUsername.replaceAll("\\W", "");
-		String adminPassword = (new RandomString()).toString();
+		String adminPassword = RandomString.generate();
 		AppUserInfo adminUser = new AppUser(company, null, adminUsername, "User", "Admin",
 				adminPassword);
 		String adminRolename = adminUsername;

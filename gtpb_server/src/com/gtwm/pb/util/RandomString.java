@@ -17,34 +17,36 @@
  */
 package com.gtwm.pb.util;
 
+import java.util.Random;
+
 import org.apache.commons.lang.RandomStringUtils;
 
 /**
- * Instantiating an object of this class generates a random string.
- * 
- * TODO: make this static
+ * Generates random strings for use as IDs
  */
 public class RandomString {
+	
+	private RandomString() {}
 
 	/**
-	 * Creates a new random lowercase alphanumeric string. This can be used to generate random
-	 * passwords, internal table names etc. It will be a valid postgres object
-	 * name so can be used for any database object.
+	 * Creates a new random lowercase alphanumeric string. This can be used to
+	 * generate random passwords, internal table names etc. It will be a valid
+	 * Postgres object name so can be used for any database object.
 	 */
-	public RandomString() {
-		// to be a valid postgres object name, start with a letter
-		this.generatedHexString = (RandomStringUtils.randomAlphabetic(1)
-				+ RandomStringUtils.randomAlphanumeric(16)).toLowerCase();
+	public static String generate() {
+		if (!AppProperties.testMode) {
+			return (RandomStringUtils.randomAlphabetic(1) + RandomStringUtils
+					.randomAlphanumeric(16)).toLowerCase();
+		}
+		// For testing, use deterministic results - seed the random generator
+		// with a constant
+		if (random == null) {
+			random = new Random(42);
+		}
+		return RandomStringUtils.random(1, 0, 0, true, false, null, random)
+				+ RandomStringUtils.random(16, 0, 0, true, true, null, random);
 	}
 
-	/**
-	 * Use this to access the generated string
-	 */
-	public String toString() {
-		return this.generatedHexString;
-	}
+	private static Random random = null;
 
-	private final String generatedHexString;
-
-	//private static final SimpleLogger logger = new SimpleLogger(RandomString.class);
 }

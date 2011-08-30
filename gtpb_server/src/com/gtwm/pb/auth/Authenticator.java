@@ -83,12 +83,6 @@ public final class Authenticator implements AuthenticatorInfo {
 		this.getCompaniesCollection().remove(company);
 	}
 
-	protected synchronized void updateCompany(CompanyInfo company, String companyName) {
-		this.getCompaniesCollection().remove(company);
-		company.setCompanyName(companyName);
-		this.getCompaniesCollection().add(company);
-	}
-
 	@Transient
 	protected SortedSet<CompanyInfo> getCompanies() {
 		return Collections

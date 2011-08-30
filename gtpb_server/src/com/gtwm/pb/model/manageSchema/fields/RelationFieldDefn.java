@@ -64,7 +64,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			boolean notNull, boolean defaultToNull, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
-			super.setInternalFieldName((new RandomString()).toString());
+			super.setInternalFieldName(RandomString.generate());
 		} else {
 			super.setInternalFieldName(internalFieldName);
 		}

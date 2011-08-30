@@ -2096,7 +2096,7 @@ public final class ServletSchemaMethods {
 			rollbackConnections(conn);
 			// return report join to memory
 			report.addJoin(join);
-			throw new CantDoThatException("Removing this join would cause an error in the report", sqlex);
+			throw new CantDoThatException("Removing this join would cause an error as the joined data is still in use in the report", sqlex);
 		} catch (HibernateException hex) {
 			rollbackConnections(conn);
 			// return report join to memory

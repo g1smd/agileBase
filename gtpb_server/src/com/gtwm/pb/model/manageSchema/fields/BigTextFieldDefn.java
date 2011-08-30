@@ -61,7 +61,7 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
 			throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
-			super.setInternalFieldName((new RandomString()).toString());
+			super.setInternalFieldName(RandomString.generate());
 		} else {
 			super.setInternalFieldName(internalFieldName);
 		}

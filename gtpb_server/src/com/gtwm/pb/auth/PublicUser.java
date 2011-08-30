@@ -204,7 +204,7 @@ public class PublicUser implements AppUserInfo {
 	
 	private final String surname;
 
-	private final String internalUserName = (new RandomString()).toString();
+	private final String internalUserName = RandomString.generate();
 
 	public Set<TableInfo> getFormTables() throws CantDoThatException {
 		throw new CantDoThatException("This public user can have no forms");

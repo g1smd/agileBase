@@ -42,7 +42,7 @@ public class AppRole implements AppRoleInfo, Comparable<AppRoleInfo> {
 	public AppRole(CompanyInfo company, String internalRoleName, String roleName) {
 		this.setCompany(company);
 		if (internalRoleName == null) {
-			this.setInternalRoleName((new RandomString()).toString());
+			this.setInternalRoleName(RandomString.generate());
 		} else {
 			this.setInternalRoleName(internalRoleName);
 		}

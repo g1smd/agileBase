@@ -75,7 +75,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
-			super.setInternalFieldName((new RandomString()).toString());
+			super.setInternalFieldName(RandomString.generate());
 		} else {
 			super.setInternalFieldName(internalFieldName);
 		}

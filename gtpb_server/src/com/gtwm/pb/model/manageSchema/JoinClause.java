@@ -44,7 +44,7 @@ public class JoinClause implements JoinClauseInfo {
 	 * Construct a table to table join
 	 */
 	public JoinClause(BaseField leftField, BaseField rightField, JoinType joinType) {
-		this.setInternalJoinName((new RandomString()).toString());
+		this.setInternalJoinName(RandomString.generate());
 		this.setJoinType(joinType);
 		this.setLeftTableFieldDirect(leftField);
 		this.setRightTableFieldDirect(rightField);
@@ -57,7 +57,7 @@ public class JoinClause implements JoinClauseInfo {
 	 * Construct a table to report join
 	 */
 	public JoinClause(BaseField leftField, ReportFieldInfo rightReportField, JoinType joinType) {
-		this.setInternalJoinName((new RandomString()).toString());
+		this.setInternalJoinName(RandomString.generate());
 		this.setJoinType(joinType);
 		this.setLeftTableFieldDirect(leftField);
 		this.setRightReportFieldDirect(rightReportField);
@@ -70,7 +70,7 @@ public class JoinClause implements JoinClauseInfo {
 	 * Construct a report to table join
 	 */
 	public JoinClause(ReportFieldInfo leftReportField, BaseField rightField, JoinType joinType) {
-		this.setInternalJoinName((new RandomString()).toString());
+		this.setInternalJoinName(RandomString.generate());
 		this.setJoinType(joinType);
 		this.setLeftReportFieldDirect(leftReportField);
 		this.setRightTableFieldDirect(rightField);
@@ -84,7 +84,7 @@ public class JoinClause implements JoinClauseInfo {
 	 */
 	public JoinClause(ReportFieldInfo leftReportField, ReportFieldInfo rightReportField,
 			JoinType joinType) {
-		this.setInternalJoinName((new RandomString()).toString());
+		this.setInternalJoinName(RandomString.generate());
 		this.setJoinType(joinType);
 		this.setLeftReportFieldDirect(leftReportField);
 		this.setRightReportFieldDirect(rightReportField);
