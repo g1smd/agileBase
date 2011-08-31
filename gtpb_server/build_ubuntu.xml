@@ -92,6 +92,8 @@
 				<pathelement location="WEB-INF/lib/Thumbnailator-0.3.6.jar"/>
         <!-- Plural to singular -->
         <pathelement location="WEB-INF/lib/javatools.jar"/>
+				<!-- Testing -->
+        <pathelement location="WEB-INF/lib/JWalk11.jar"/>
 				<!-- closed source dashboard -->
 				<pathelement location="WEB-INF/lib/gtpb-dashboard.jar"/>
 			</classpath>
