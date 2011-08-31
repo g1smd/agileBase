@@ -38,15 +38,17 @@ public class RandomString {
 			return (RandomStringUtils.randomAlphabetic(1) + RandomStringUtils
 					.randomAlphanumeric(16)).toLowerCase();
 		}
+		rand++;
+		return String.valueOf(rand);
 		// For testing, use deterministic results - seed the random generator
 		// with a constant
-		if (random == null) {
+/*		if (random == null) {
 			random = new Random(42);
 		}
 		return RandomStringUtils.random(1, 0, 0, true, false, null, random)
 				+ RandomStringUtils.random(16, 0, 0, true, true, null, random);
-	}
+*/	}
 
-	private static Random random = null;
+	private static int rand = 1;
 
 }

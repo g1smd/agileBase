@@ -23,7 +23,7 @@ package com.gtwm.pb.util;
 public class AppProperties {
 	public static final String applicationName = "agileBase";
 
-	public static final String applicationVersion = "3.1.3";
+	public static final String applicationVersion = "3.1.4";
 
 	/**
 	 * Location of the Velocity template used to report template processing
@@ -102,7 +102,8 @@ public class AppProperties {
 	public static final int numFullPriceTables = 20;
 	
 	/**
-	 * Setting this to true will speed up agileBase reloading by only loading one company - GTwM
+	 * Setting this to true will prepare agileBase for testing	 
+	 * and also speed up agileBase reloading by only loading one company - GTwM
 	 * 
 	 * SET THIS TO false IN PRODUCTION
 	 */
