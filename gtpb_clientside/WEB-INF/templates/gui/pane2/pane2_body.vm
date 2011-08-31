@@ -133,6 +133,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #if($fileValue.isImage())
           #set($image = true)
           #set($srcUrl = "/agileBase/uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
+          #set($cell = "<img src='$srcUrl' />")
         #else
           #set($placeholderIcon = "$field.getAttachmentType().name().toLowerCase().png")
           #if($placeholderIcon.equals("profile_photo"))
