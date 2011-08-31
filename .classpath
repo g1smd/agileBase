@@ -75,5 +75,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/javatools.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/Thumbnailator-0.3.6.jar"/>
+	<classpathentry kind="lib" path="gtpb_server/external_libs/JWalk11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
