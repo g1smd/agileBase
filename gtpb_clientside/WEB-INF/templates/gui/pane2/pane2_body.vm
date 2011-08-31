@@ -135,9 +135,11 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           #set($srcUrl = "/agileBase/uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
         #else
           #set($placeholderIcon = "$field.getAttachmentType().name().toLowerCase().png")
-          #set($srcUrl = "/agileBase/resources/icons/file_placeholders/$placeholderIcon")
+          #if($placeholderIcon.equals("profile_photo"))
+            #set($srcUrl = "/agileBase/resources/icons/file_placeholders/$placeholderIcon")
+            #set($cell = "<img src='$srcUrl' />")
+          #end
         #end
-        #set($cell = "<img src='$srcUrl' />")
       #else
   		  #if($field.getContentSize() > 100)
           #set($cellContentLength=$cell.length() * 2)
