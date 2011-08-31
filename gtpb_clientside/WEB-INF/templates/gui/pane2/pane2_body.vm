@@ -136,7 +136,6 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           #set($cell = "<img src='$srcUrl' />")
         #else
           #set($placeholderIcon = "${field.getAttachmentType().name().toLowerCase()}.png")
-          $viewTools.log("placeholderIcon $placeholderIcon")
           #if($placeholderIcon.equals("profile_photo.png"))
             #set($srcUrl = "/agileBase/resources/icons/file_placeholders/$placeholderIcon")
             #set($cell = "<img src='$srcUrl' />")
