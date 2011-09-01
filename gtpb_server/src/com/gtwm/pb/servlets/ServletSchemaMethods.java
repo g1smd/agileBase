@@ -723,6 +723,7 @@ public final class ServletSchemaMethods {
 		ReportStyle reportStyle = null;
 		if (reportStyleName != null) {
 			reportStyle = ReportStyle.valueOf(reportStyleName.toUpperCase());
+			logger.debug("Report style is going to be " + reportStyle);
 		}
 		// store current values that may be overwritten by
 		// DatabaseDefn.updateReport so they can be rolled back

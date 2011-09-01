@@ -59,6 +59,8 @@ import java.util.TreeSet;
 import java.lang.StringBuffer;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -1097,6 +1099,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		return this.calendarSyncable;
 	}
 	
+	@Enumerated(EnumType.STRING)
 	public ReportStyle getReportStyle() {
 		return this.reportStyle;
 	}
