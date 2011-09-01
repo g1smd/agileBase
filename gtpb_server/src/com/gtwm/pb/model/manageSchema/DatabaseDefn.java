@@ -113,6 +113,7 @@ import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.ReportStyle;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.HttpRequestUtil;
@@ -993,7 +994,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
-			String newReportName, String newReportDesc, ModuleInfo newModule)
+			String newReportName, String newReportDesc, ModuleInfo newModule, ReportStyle reportStyle)
 			throws DisallowedException, CantDoThatException, SQLException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {

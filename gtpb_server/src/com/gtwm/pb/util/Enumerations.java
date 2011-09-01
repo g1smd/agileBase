@@ -449,4 +449,18 @@ public class Enumerations {
 		
 		private String description = "";
 	}
+	
+	public enum ReportStyle {
+		SPREADSHEET("Standard spreadsheet-like rows"), SECTIONED("Data broken up into sections with headings");
+		
+		public String getDescription() {
+			return this.description;
+		}
+		
+		ReportStyle(String description) {
+			this.description = description;
+		}
+		
+		private String description = "";
+	}
 }
