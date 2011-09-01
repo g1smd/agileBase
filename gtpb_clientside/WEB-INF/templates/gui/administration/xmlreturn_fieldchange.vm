@@ -26,7 +26,7 @@
 	#set($fields = $fieldInputValues.keySet())
 	## Find the field being edited (the pKey and hidden metadata may also be saved)
 	#foreach($singleField in $fields)
-	  #if(!$singleField.equals($singleField.getTableContainingField().getPrimaryKey()))
+	  #if(!$singleField.isPrimaryKey())
 	    #if(!$singleField.getHidden())
 		  #set($value = $fieldInputValues.get($singleField))
 		  #if(!$value.isNull()) ## dates may have a 'null value'

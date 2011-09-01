@@ -96,7 +96,7 @@
 </tr>
 #foreach($field in $sessionTable.getFields())
   #set($sequenceFieldNames = "")
-  #if(($field.getClass().getSimpleName() == "SequenceFieldDefn") && (! $field.equals($sessionTable.getPrimaryKey())))
+  #if(($field.getClass().getSimpleName() == "SequenceFieldDefn") && (! $field.isPrimaryKey()))
 	#set($sequenceFieldNames = "$sequenceFieldNames $field")
 	#set($importSequenceFields = true)
   #end 

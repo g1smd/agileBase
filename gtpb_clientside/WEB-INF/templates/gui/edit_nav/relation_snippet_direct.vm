@@ -6,7 +6,7 @@
 #set($snippet = "")
 #set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
 #foreach($relatedField in $relatedTable.getFields())
-  #if(!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey()))
+  #if(!$relatedField.isPrimaryKey())
   #set($fieldValue = $relatedDataRow.get($relatedField))
     #if(($fieldValue != "") && ($fieldValue != "false"))
       #set($snippet = "$snippet$fieldValue, ")

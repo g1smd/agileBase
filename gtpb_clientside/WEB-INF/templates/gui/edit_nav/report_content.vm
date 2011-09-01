@@ -41,7 +41,7 @@
         ## A bit of a hack because there may be more than one, therefore this may not work in all cases
         #foreach($reportBaseField in $reportBaseFields)
           #set($tableContainingField = $reportBaseField.getTableContainingField()) 
-          #if($reportBaseField.equals($tableContainingField.getPrimaryKey()))
+          #if($reportBaseField.isPrimaryKey())
             #if(!$tableContainingField.equals($referencedReport.getParentTable()))
               #set($goToTable = $tableContainingField)
               #set($goToRowId = $row.getValue($goToTable.getPrimaryKey()))
@@ -59,7 +59,7 @@
     ##onclick is workaround for iOS bug http://blog.alanszlosek.com/post/4369588562/jquerys-live-click-handler-on-mobile-safari
     <div class="related block current" href="AppController.servlet?return=gui/edit_nav/edit&set_table=$goToTable.getInternalTableName()&set_row_id=$goToRowId" onclick=""> 
       #foreach($field in $reportBaseFields)##
-        #if(!$field.getTableContainingField().getPrimaryKey().equals($field))
+        #if(!$field.isPrimaryKey())
           #set($dataRowField = $dataRowFields.get($field))
           #set($cell = $dataRowField.getDisplayValue())
           #set($colour = $dataRowField.getStandardDevHexColour())

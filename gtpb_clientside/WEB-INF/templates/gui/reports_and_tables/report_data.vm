@@ -39,7 +39,7 @@
   #set($fields=[])##
   #set($reportBaseFields = $sessionReport.getReportBaseFields())##
   #foreach ($field in $reportBaseFields)##
-    #if( (!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
+    #if( (!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN"))##
 	  #set($success=$fields.add([$field.getInternalFieldName(),$field]))##
 	#end ## added to show display field name for relation fields
   #end##
@@ -69,7 +69,7 @@
 	  #set($success = $colours.ensureCapacity($colsCapacity))##
     #set($dataRowFields = $datarow.getDataRowFields())##
     #foreach($field in $reportBaseFields)##
-      #if((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
+      #if((!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN"))##
         #set($dataRowField = $dataRowFields.get($field))##
         #if($printout && ($field.getContentSize() > 500))##
           #set($success=$row.add($dataRowField.getKeyValue()))##

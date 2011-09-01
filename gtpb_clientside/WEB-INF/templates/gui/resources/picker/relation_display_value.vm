@@ -25,7 +25,7 @@
 ##Check it out
 
 #set($displayField = $pickerField.getDisplayField())
-#if($displayField.equals($displayField.getTableContainingField().getPrimaryKey()))
+#if($displayField.isPrimaryKey())
   #set($displayValue = $pickerField.getDisplayValue($pickerValue))##
 #else
   #set($displayValue = $pickerValue)##

@@ -40,7 +40,7 @@ $viewTools.startTimer("gui/mobile/pane3_related")
 		  #if(! ($fieldTable.equals($sessionTable)))
 		    ## if we have a relation to another table, show that table's data
 		    ## (if it has any related data)
-		    #if($field.equals($fieldTable.getPrimaryKey()))
+		    #if($field.isPrimaryKey())
 		     #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $fieldTable))
 		     #set($numRelatedRows = $relatedRowIds.size())
 			 #if ($numRelatedRows > 0)

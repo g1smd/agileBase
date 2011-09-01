@@ -105,7 +105,7 @@
 ##            #else &nbsp;
 ##              <a #if(!$mobile_device) target="pane_2" #end href="AppController.servlet?return=gui/reports_and_tables/report_data&set_report_field_index&internalfieldname=$field.getBaseField().getInternalFieldName()&newfieldindex=$higherFieldIndex">&darr;</a>
 ##            #end
-      #if($baseField.equals($baseField.getTableContainingField().getPrimaryKey()))
+      #if($baseField.isPrimaryKey())
 				<span class="greytext">Link to $baseField.getTableContainingField().getSimpleName()</span>
 			#else $field
 			#end
@@ -123,7 +123,7 @@
 						   #end
 					    #end
     			        ## only show sorts for non-ID fields
-    			        #if((!$baseField.equals($baseField.getTableContainingField().getPrimaryKey())) || ($fieldSorting!="unsorted"))
+    			        #if((!$baseField.isPrimaryKey()) || ($fieldSorting!="unsorted"))
 					            ##Provide a SELECT box to show/change the sorting
 					            #set($selectId = "sortdirection${field.getInternalFieldName()}")
 					            <select id="$selectId" name="$selectId" onChange="new fChange(this); parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';"
@@ -135,7 +135,7 @@
 					          #end ## end if not primary key
           </td>
         		  <td class="trailing">
-        		  #if(!($field.getBaseField().equals($report.getParentTable().getPrimaryKey())))
+        		  #if(!$field.getBaseField().isPrimaryKey())
 				          <input type="button" value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_field_from_report=true gtpb_internalfieldname="$field.getBaseField().getInternalFieldName()">
 			         #end
 			         </td>

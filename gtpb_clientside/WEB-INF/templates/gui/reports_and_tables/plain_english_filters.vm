@@ -9,7 +9,7 @@
 	#set($tableField = $field)
 	#set($source = $tableField.getTableContainingField())
   #end
-  #if($tableField.equals($tableField.getTableContainingField().getPrimaryKey()))
+  #if($tableField.isPrimaryKey())
 	#set($fieldIsPrimaryKey = true)
   #end
   #set($filterValues = $filter.getFilterValues())

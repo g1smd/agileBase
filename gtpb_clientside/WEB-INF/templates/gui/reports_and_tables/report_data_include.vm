@@ -40,7 +40,7 @@
 	  #set($fields=[])
 	  #set($reportBaseFields = $sessionReport.getReportBaseFields())
 	  #foreach ($field in $reportBaseFields)
-		    #if ( (!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))
+		    #if ( (!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN"))
 ##		      #if ($field.getFieldCategory().getDescription().equals("Relation")) ## added to show display field name for relation fields
 ##        #set($relationFieldDisplay = "$field.getRelatedTable().getTableName(): $field.getDisplayField().getFieldName()")
 ##        #set($success=$fields.add([$field.getInternalFieldName(),$relationFieldDisplay]))		 ## added to show display field name for relation fields
@@ -55,7 +55,7 @@
 		    #set($colours=[])
 		    #set($dataRowFields = $datarow.getDataRowFields())
 		    #foreach($field in $reportBaseFields)
-		      #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))
+		      #if ((!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN"))
 			       #set($dataRowField = $dataRowFields.get($field))
 			       #set($textValue = $viewTools.getTextValueTool($dataRowField.getKeyValue()))
 			       #if(($printout) && ($field.getClass().getSimpleName().equals("BigTextFieldDefn")))

@@ -79,14 +79,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 			#if($foreach.count%2==0)
 				#set($class="rowb")
 			#end
-			#if($field.equals($sessionTable.getPrimaryKey())) 
+			#if($field.isPrimaryKey()) 
 				## can't move the position of the primary key
 				#set($class="$class nodrag nodrop")
 			#end
 	        <tr class="$class" id="$field.getInternalFieldName()" currentFieldIndex="$field.getFieldIndex()">
     	      <td class=leading>&nbsp;</td>
     	      <td class="capitalised">
-				#if($field.equals($sessionTable.getPrimaryKey())) $field #else
+				#if($field.isPrimaryKey()) $field #else
     	        <div class="fieldinfo #if($category == 'Separator') separator #end" id="fieldname_$field.getInternalFieldName()" onClick="makeFieldEditable(this)">$field</div>
 				<input class="input_fieldinfo" id="input_fieldname_$field.getInternalFieldName()" type="text" gtpb_internalfieldname="$field.getInternalFieldName()" gtpb_update_field="true" name="fieldname" value="$field.getFieldName()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)">
     	        #end
@@ -170,7 +170,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 				</div>
 		          </td>
     	      <td class="trailing">
-		            #if(!($field.equals($field.getTableContainingField().getPrimaryKey())))
+		            #if(!$field.isPrimaryKey())
 		              <input type=button value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_field=true gtpb_internalfieldname="$internalFieldName">
 		            #end
 		          </td>

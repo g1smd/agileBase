@@ -29,7 +29,7 @@
 #foreach($reportField in $sessionReport.getReportFields())
   #set($field = $reportField.getBaseField())
   #set($table = $field.getTableContainingField())
-  #if($field.equals($table.getPrimaryKey()))
+  #if($field.isPrimaryKey())
     #if(!$detailStarted)
       #if(!$table.equals($previousTable))
         #if($detailStartsNext)
@@ -68,7 +68,7 @@
     #set($cellNumber = $foreach.count - 1)
     #set($field = $fields.get($cellNumber).get(1))
     #set($table = $field.getTableContainingField())
-    #if($headingTables.contains($table) && $field.equals($table.getPrimaryKey()))
+    #if($headingTables.contains($table) && $field.isPrimaryKey())
       #if($cell != $lastValues.get($cellNumber))
         #set($headingLevel = $headingMap.get($table))
         <tr name="$thisUniqueId" 
@@ -85,7 +85,7 @@
             #foreach($testCell in $thisValues)
               #set($testCellNumber = $foreach.count - 1)
               #set($field = $fields.get($testCellNumber).get(1))
-              #if(!$field.equals($field.getTableContainingField().getPrimaryKey()))
+              #if(!$field.isPrimaryKey())
                 $field: $testCell - 
               #end
             #end
