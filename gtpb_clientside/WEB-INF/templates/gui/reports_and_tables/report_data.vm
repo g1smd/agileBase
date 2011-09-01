@@ -58,6 +58,7 @@
   #else
     #set($datarows = $view.getReportDataRows())##
   #end
+  #set($sectionedReport = ($sessionReport.getReportStyle() == "SECTIONED"))
   #set($data=[])##
   #set($dataCapacity = $datarows.size() + 1)##
   #set($success = $data.ensureCapacity($dataCapacity))##
@@ -69,7 +70,7 @@
 	  #set($success = $colours.ensureCapacity($colsCapacity))##
     #set($dataRowFields = $datarow.getDataRowFields())##
     #foreach($field in $reportBaseFields)##
-      #if((!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN"))##
+      #if((!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN") || $sectionedReport)
         #set($dataRowField = $dataRowFields.get($field))##
         #if($printout && ($field.getContentSize() > 500))##
           #set($success=$row.add($dataRowField.getKeyValue()))##
