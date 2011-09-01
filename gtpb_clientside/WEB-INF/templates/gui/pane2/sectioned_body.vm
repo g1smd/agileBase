@@ -45,12 +45,16 @@
       #end
     #end
   #end
-  #if($detailStarted)
+#end
+#set($headingTables = $headingMap.keySet())
+## Any tables which aren't for the heading must be for the detail
+#foreach($reportField in $sessionReport.getReportFields())
+  #set($table = $reportField.getBaseField().getTableContainingField())
+  #if(!$headingTables.contains($table))
     #set($success = $detailMap.put($table, true))
   #end
 #end
 #set($numDetailFields = $detailMap.size())
-#set($headingTables = $headingMap.keySet())
 #set($detailTables = $detailMap.keySet())
 <tr><td>Heading tables $headingTables</td></tr>
 <tr><td>Detail tables $headingTables</td></tr>
