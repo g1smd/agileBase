@@ -52,8 +52,6 @@
 #set($numDetailFields = $detailMap.size())
 #set($headingTables = $headingMap.keySet())
 #set($detailTables = $detailMap.keySet())
-<tr><td>Heading tables $headingTables</td></tr>
-<tr><td>Detail tables $headingTables</td></tr>
 ## Now the actual data
 #foreach($row in $data)
   ## row[0] contains the data to display in each field
@@ -64,7 +62,6 @@
   ## row[5] contains expando properties for the row
   #set($lastValues = $thisValues)
   #set($thisValues = $row.get(0))
-  <tr><td>row $thisValues</td></tr>
   #set($thisUniqueId = $row.get(2))
   ## See if we're due any headings
   #foreach($cell in $thisValues)
