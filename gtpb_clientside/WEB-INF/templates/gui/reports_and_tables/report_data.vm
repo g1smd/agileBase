@@ -22,6 +22,7 @@
 ## otherwise the session details will be used
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))##
 #set($sectionedReport = ($sessionReport.getReportStyle() == "SECTIONED"))
+<h1>Sectioned report: $sectionedReport</h1>
 ## data from a report for pane2
 #set($resource_folder='tables')##
 #set($sessionContext = $sessionData.getContext().toString())##
