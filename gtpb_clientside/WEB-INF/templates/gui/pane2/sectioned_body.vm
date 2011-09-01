@@ -52,6 +52,8 @@
 #set($numDetailFields = $detailMap.size())
 #set($headingTables = $headingMap.keySet())
 #set($detailTables = $detailMap.keySet())
+<tr><td>Heading tables $headingTables</td></tr>
+<tr><td>Detail tables $headingTables</td></tr>
 ## Now the actual data
 #foreach($row in $data)
   ## row[0] contains the data to display in each field
