@@ -11,7 +11,7 @@
     #set($displayField = $field.getDisplayField())
     #set($fieldDisplayValue = $relatedDataRow.get($field.getDisplayField()))##
     #foreach($relatedField in $relatedTable.getFields())
-      #if((!$relatedField.equals($relatedField.getTableContainingField().getPrimaryKey())) && (!($relatedField.getFieldCategory() == "CHECKBOX")) && (!($relatedField.equals($displayField))) && (!$relatedField.getHidden()))
+      #if((!$relatedField.isPrimaryKey()) && (!($relatedField.getFieldCategory() == "CHECKBOX")) && (!($relatedField.equals($displayField))) && (!$relatedField.getHidden()))
       #set($fieldValue = $relatedDataRow.get($relatedField))
         #if(($fieldValue != ""))
           #set($snippet = "$snippet$fieldValue, ")

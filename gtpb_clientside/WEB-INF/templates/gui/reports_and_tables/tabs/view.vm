@@ -39,7 +39,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
   #foreach($reportField in $sessionReport.getReportFields())
     #set($field = $reportField.getBaseField())
     #set($reportFieldTable = $field.getTableContainingField())
-    #if($field.equals($reportFieldTable.getPrimaryKey()))
+    #if($field.isPrimaryKey())
       #set($numTables = $numTables + 1)
     #end
   #end
@@ -59,7 +59,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 		  #set($reportFieldTable = $field.getTableContainingField())
       ## if we have a relation to another table, show that table's data
       ## (if it has any related data)
-      #if($field.equals($reportFieldTable.getPrimaryKey()))
+      #if($field.isPrimaryKey())
         #set($success = $tablesEncountered.put($reportFieldTable, true))
         #if($tablesEncountered.size() == $colSplit)
           </div><div id="rightcol">

@@ -37,7 +37,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	#set($relatedDataMap = {})
 	#foreach($field in $tableDataRow.keySet())
 	    #set($tableContainingField = $field.getTableContainingField())
-        #if($field.equals($tableContainingField.getPrimaryKey()) && (!$tableContainingField.equals($sessionTable)))
+        #if($field.isPrimaryKey() && (!$tableContainingField.equals($sessionTable)))
 		  #set($value = $tableDataRow.get($field))
 		  #if($value != "")
 		    #set($relatedRowId = $mathTool.toInteger($value))
@@ -53,7 +53,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
       name="$selection" class="rowa excludedRecord" onclick="$click" forcehighlight="true">
       <td class="leading">&nbsp;</td>
       #foreach($field in $reportBaseFields)
-	    #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
+	    #if ((!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN"))##
 		  <td nowrap="true"><div class="in_cell" style="max-width:500px">
 		    #if($tableDataRow.get($field))
               $tableDataRow.get($field)
@@ -78,7 +78,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
   <tr class="rowa">
 	<td class="leading">&nbsp;</td>
       #foreach($field in $reportBaseFields)
-	    #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))##
+	    #if ((!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN"))##
 		  <td style="width:150px">&nbsp;</td>
 		#end
 	  #end

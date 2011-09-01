@@ -20,7 +20,7 @@
 #set($fields=[])
 	#set($reportBaseFields = $pickerReport.getReportBaseFields())
 	#foreach ($field in $reportBaseFields)
-		#if ( (!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))
+		#if ( (!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN"))
 			#set($success=$fields.add([$field.getInternalFieldName(),$field]))
 		#end ## uncomment to remove to show primary key field
 	#end

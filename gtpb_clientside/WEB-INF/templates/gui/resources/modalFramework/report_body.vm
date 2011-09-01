@@ -27,7 +27,7 @@
   #set($colours=[])
   #set($dataRowFields = $datarow.getDataRowFields())
   #foreach($field in $reportBaseFields)
-    #if ((!$field.getTableContainingField().getPrimaryKey().equals($field)) || ($sessionContext == "SYSADMIN"))
+    #if ((!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN"))
 	  #set($dataRowField = $dataRowFields.get($field))
 	  #set($success=$row.add($dataRowField.getDisplayValue()))
 	  #set($success=$colours.add($dataRowField.getStandardDevHexColour()))

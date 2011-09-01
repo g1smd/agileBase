@@ -26,7 +26,7 @@
 ## don't show referenced fields if the raw data in the ref. field report parent table has already been displayed
 #set($refFieldTableEncountered = false)
 #set($refFieldTableEncountered = $tablesEncountered.containsKey($field.getReferencedReport().getParentTable()))
-#if((!$field.getTableContainingField().getPrimaryKey().equals($field)) && (!$refFieldTableEncountered))
+#if((!$field.isPrimaryKey()) && (!$refFieldTableEncountered))
   #if($address)
   	#if($address.size() > 0)
   	  #if($address.firstKey().equals($field)) #set($partOfAddress = true) #end
