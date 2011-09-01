@@ -31,4 +31,9 @@ public interface SequenceField extends BaseField {
 	 * Allow a simple version to be returned, e.g. 'organisations'
 	 */
 	public String getSimpleName();
+	
+	/**
+	 * Return true if this field is the primary key for its table
+	 */
+	public boolean isPrimaryKey();
 }

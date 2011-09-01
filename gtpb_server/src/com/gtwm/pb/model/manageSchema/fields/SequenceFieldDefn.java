@@ -87,5 +87,10 @@ public class SequenceFieldDefn extends AbstractField implements SequenceField {
 	public String getSimpleName() {
 		return Naming.getSimpleName(this.getFieldName());
 	}
+	
+	@Transient
+	public boolean isPrimaryKey() {
+		return this.equals(this.getTableContainingField().getPrimaryKey());
+	}
 
 }
