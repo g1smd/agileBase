@@ -37,6 +37,7 @@ import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.fields.AbstractField;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
+import com.gtwm.pb.util.Enumerations.ReportStyle;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -1095,6 +1096,14 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	public Boolean getCalendarSyncable() {
 		return this.calendarSyncable;
 	}
+	
+	public ReportStyle getReportStyle() {
+		return this.reportStyle;
+	}
+	
+	public void setReportStyle(ReportStyle reportStyle) {
+		this.reportStyle = reportStyle;
+	}
 
 	@Transient
 	public ReportFieldInfo getCalendarStartField() throws CodingErrorException {
@@ -1261,6 +1270,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private ReportFieldInfo wordCloudField = null;
 	
 	private String customTemplateName = null;
+	
+	private ReportStyle reportStyle = ReportStyle.SPREADSHEET;
 
 	private static final SimpleLogger logger = new SimpleLogger(SimpleReportDefn.class);
 }

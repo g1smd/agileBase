@@ -23,6 +23,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import com.gtwm.pb.util.Enumerations.ReportStyle;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.InconsistentStateException;
@@ -165,7 +167,7 @@ public interface DatabaseInfo {
 	 *             If a report with the specified name already exists
 	 */
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
-			String newReportName, String newReportDesc, ModuleInfo newModule)
+			String newReportName, String newReportDesc, ModuleInfo newModule, ReportStyle reportStyle)
 			throws DisallowedException, CantDoThatException, SQLException, ObjectNotFoundException;
 
 	/**

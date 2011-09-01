@@ -70,6 +70,7 @@ import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.ReportStyle;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.Helpers;
@@ -707,9 +708,10 @@ public final class ServletSchemaMethods {
 		String newReportName = request.getParameter("reportname");
 		String newReportDesc = request.getParameter("reportdesc");
 		String internalModuleName = request.getParameter("internalmodulename");
-		if (newReportName == null && newReportDesc == null && internalModuleName == null) {
+		String reportStyleName = request.getParameter("reportstyle");
+		if (newReportName == null && newReportDesc == null && internalModuleName == null && reportStyleName == null) {
 			throw new MissingParametersException(
-					"A reportname, reportdesc or internalmodulename parameter must be supplied to update a report with a new name or description");
+					"A reportname, reportdesc, reportstyle or internalmodulename parameter must be supplied to update a report with a new name or description");
 		}
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 		ModuleInfo module = null;
@@ -718,11 +720,16 @@ public final class ServletSchemaMethods {
 				module = company.getModuleByInternalName(internalModuleName);
 			}
 		}
+		ReportStyle reportStyle = null;
+		if (reportStyleName != null) {
+			reportStyle = ReportStyle.valueOf(reportStyleName.toUpperCase());
+		}
 		// store current values that may be overwritten by
 		// DatabaseDefn.updateReport so they can be rolled back
 		String oldReportName = report.getReportName();
 		String oldReportDesc = report.getReportDescription();
 		ModuleInfo oldModule = report.getModule();
+		ReportStyle oldReportStyle = report.getReportStyle();
 		// begin updating model and persisting changes
 		Connection conn = null;
 		try {
@@ -730,7 +737,7 @@ public final class ServletSchemaMethods {
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
 			// update the report:
-			databaseDefn.updateReport(conn, request, report, newReportName, newReportDesc, module);
+			databaseDefn.updateReport(conn, request, report, newReportName, newReportDesc, module, reportStyle);
 			HibernateUtil.currentSession().getTransaction().commit();
 			conn.commit();
 		} catch (SQLException sqlex) {
@@ -739,6 +746,7 @@ public final class ServletSchemaMethods {
 			report.setReportName(oldReportName);
 			report.setReportDescription(oldReportDesc);
 			report.setModule(oldModule);
+			report.setReportStyle(oldReportStyle);
 			throw new CantDoThatException("Updating report failed", sqlex);
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
@@ -746,6 +754,7 @@ public final class ServletSchemaMethods {
 			report.setReportName(oldReportName);
 			report.setReportDescription(oldReportDesc);
 			report.setModule(oldModule);
+			report.setReportStyle(oldReportStyle);
 			throw new CantDoThatException("Updating report failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
@@ -753,6 +762,7 @@ public final class ServletSchemaMethods {
 			report.setReportName(oldReportName);
 			report.setReportDescription(oldReportDesc);
 			report.setModule(oldModule);
+			report.setReportStyle(oldReportStyle);
 			throw new CantDoThatException("Updating report failed", pex);
 		} finally {
 			conn.close();

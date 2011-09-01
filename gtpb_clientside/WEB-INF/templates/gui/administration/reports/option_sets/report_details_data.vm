@@ -71,6 +71,18 @@
     </td>
   </tr>
   <tr>
+    #set($reportStyle = $report.getReportStyle())
+    <td>
+      Style:<br><span class='greytext'><i>Please select a visual style for the report (only applicable in certain cases)</i></span>
+    </td>
+    <td>
+        <select name="reportstyle" id="reportstyle" gtpb_update_report onchange="new fChange(this); parent.pane_1.document.location = 'AppController.servlet?return=gui/pane1';" identifier="report.getInternalReportName()">
+            <option value="SPREADSHEET" #if($reportStyle == "SPREADSHEET") selected #end>Spreadsheet - standard output in rows</option>
+            <option value="SECTIONED" #if($reportStyle == "SECTIONED") selected #end>Sectioned - rows split into sections, with headings</option>
+        </select>
+    </td>
+  </tr>
+  <tr>
     <td>&nbsp;</td>
     <td>
       <input type=button value="Delete Report" onclick="parent.pane_1.document.location='AppController.servlet?return=gui/pane1&remove_report=true&internalreportname=$report.getInternalReportName()'">

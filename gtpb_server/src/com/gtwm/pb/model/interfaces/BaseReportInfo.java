@@ -25,6 +25,7 @@ import java.util.SortedSet;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.ReportStyle;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
 /**
@@ -159,6 +160,10 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	public String getCustomTemplateName();
 	
 	public void setCustomTemplateName(String templateName);
+	
+	public ReportStyle getReportStyle();
+	
+	public void setReportStyle(ReportStyle reportStyle);
 	
 	/**
 	 * Return whether the row count is definitive or an estimate based on a
