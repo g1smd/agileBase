@@ -140,6 +140,17 @@ table#reportData tr#currentRow td.colored {
   color: black!important;
 */
 }
+
+tr.h1 {
+  font-size: 12pt;
+  font-weight: bold;
+  border-bottom: 1px solid black;
+}
+
+tr.h2 {
+	font-weight: bold;
+  border-bottom: 1px solid gray;
+}
 					 
 table#reportData tr.rowb td, 
 table#reportData tr.rowa td { 
