@@ -145,11 +145,15 @@ table#reportData tr.h1 td {
   font-size: 12pt;
   font-weight: bold;
   border-bottom: 1px solid black;
+  height: 3em;
+  vertical-align: bottom;
 }
 
 table#reportData tr.h2 td {
 	font-weight: bold;
   border-bottom: 1px solid gray;
+  height: 3em;
+  vertical-align: bottom;
 }
 					 
 table#reportData tr.rowb td, 
