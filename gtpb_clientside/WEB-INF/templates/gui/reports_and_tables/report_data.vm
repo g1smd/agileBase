@@ -30,7 +30,6 @@
     #set($sessionReport=$sessionData.getReport())##
   #end##
   #set($sectionedReport = ($sessionReport.getReportStyle() == "SECTIONED"))
-  <h1>Sectioned report: $sectionedReport</h1>
   #set($sessionTable=$sessionReport.getParentTable())##
   #set($return='gui/reports_and_tables/pane3')##
   #set($pane1_id="$sessionTable.getInternalTableName()$sessionReport.getInternalReportName()")##
