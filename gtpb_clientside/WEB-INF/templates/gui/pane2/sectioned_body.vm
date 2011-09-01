@@ -56,8 +56,6 @@
 #end
 #set($numDetailFields = $detailMap.size())
 #set($detailTables = $detailMap.keySet())
-<tr><td>Heading tables $headingTables</td></tr>
-<tr><td>Detail tables $detailTables</td></tr>
 ## Now the actual data
 #foreach($row in $data)
   ## row[0] contains the data to display in each field
@@ -74,6 +72,8 @@
     #set($cellNumber = $foreach.count - 1)
     #set($field = $fields.get($cellNumber).get(1))
     #set($table = $field.getTableContainingField())
+    $viewTools.log("headingTables.contains($table): $headingTables.contains($table)")
+    $viewTools.log("$field field.isPrimaryKey(): $field.isPrimaryKey()")
     #if($headingTables.contains($table) && $field.isPrimaryKey())
       #if($cell != $lastValues.get($cellNumber))
         #set($headingLevel = $headingMap.get($table))
