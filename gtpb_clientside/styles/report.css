@@ -147,6 +147,7 @@ table#reportData tr.h1 td {
   border-bottom: 1px solid black;
   height: 3em;
   vertical-align: bottom;
+  background-color: #f8f8f8;
 }
 
 table#reportData tr.h2 td {
@@ -154,6 +155,7 @@ table#reportData tr.h2 td {
   border-bottom: 1px solid gray;
   height: 3em;
   vertical-align: bottom;
+  background-color: #f8f8f8;
 }
 					 
 table#reportData tr.rowb td, 
