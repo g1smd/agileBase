@@ -93,9 +93,9 @@ $viewTools.startTimer("gui/pane2/pane2_body")
   ## row[4] tells whether the row is locked
   ## row[5] contains expando properties for the row
   #if($row.size()>=5)
-	#if($row.get(4)!=true)
-		#set($unlockedRecords=true) 
-	#end
+	  #if($row.get(4)!=true)
+		  #set($unlockedRecords=true) 
+	  #end
   #end
   #set($lastValues = $thisValues)
   #set($thisValues = $row.get(0))
