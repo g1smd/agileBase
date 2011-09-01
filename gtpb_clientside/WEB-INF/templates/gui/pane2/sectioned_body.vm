@@ -48,13 +48,14 @@
 #end
 #set($headingTables = $headingMap.keySet())
 ## Any tables which aren't for the heading must be for the detail
+#set($numDetailsFields = 0)
 #foreach($reportField in $sessionReport.getReportFields())
   #set($table = $reportField.getBaseField().getTableContainingField())
   #if(!$headingTables.contains($table))
     #set($success = $detailMap.put($table, true))
+    #set($numDetailFields = $numDetailFields + 1)
   #end
 #end
-#set($numDetailFields = $detailMap.size())
 #set($detailTables = $detailMap.keySet())
 ## Now the actual data
 #foreach($row in $data)
