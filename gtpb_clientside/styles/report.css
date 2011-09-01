@@ -141,13 +141,13 @@ table#reportData tr#currentRow td.colored {
 */
 }
 
-tr.h1 {
+table#reportData tr.h1 td {
   font-size: 12pt;
   font-weight: bold;
   border-bottom: 1px solid black;
 }
 
-tr.h2 {
+table#reportData tr.h2 td {
 	font-weight: bold;
   border-bottom: 1px solid gray;
 }
