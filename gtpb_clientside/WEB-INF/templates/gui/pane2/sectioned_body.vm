@@ -92,7 +92,7 @@
               #set($testCellNumber = $foreach.count - 1)
               #set($field = $fields.get($testCellNumber).get(1))
               #if((!$field.isPrimaryKey()) && $field.getTableContainingField().equals($table) && ($field.getClass().getSimpleName() != "CalculationFieldDefn"))
-                $field: $testCell - 
+                $field: $testCell &nbsp;&nbsp;&nbsp;&nbsp;
               #end
             #end
           </td>
