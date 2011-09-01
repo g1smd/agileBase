@@ -69,10 +69,10 @@
   #set($thisUniqueId = $row.get(2))
   ## See if we're due any headings
   #foreach($cell in $thisValues)
+    #set($headingLevel = 0)
     #set($cellNumber = $foreach.count - 1)
     #set($field = $fields.get($cellNumber).get(1))
     #set($table = $field.getTableContainingField())
-    $viewTools.log("$field isPrimaryKey(): $field.isPrimaryKey()")
     #if($headingTables.contains($table) && $field.isPrimaryKey())
       #if($cell != $lastValues.get($cellNumber))
         #set($headingLevel = $headingMap.get($table))
@@ -90,7 +90,7 @@
             #foreach($testCell in $thisValues)
               #set($testCellNumber = $foreach.count - 1)
               #set($field = $fields.get($testCellNumber).get(1))
-              #if(!$field.isPrimaryKey())
+              #if((!$field.isPrimaryKey()) && $field.getTableContainingField.equals($table))
                 $field: $testCell - 
               #end
             #end
