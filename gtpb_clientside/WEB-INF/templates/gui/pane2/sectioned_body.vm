@@ -90,7 +90,7 @@
             #foreach($testCell in $thisValues)
               #set($testCellNumber = $foreach.count - 1)
               #set($field = $fields.get($testCellNumber).get(1))
-              #if((!$field.isPrimaryKey()) && $field.getTableContainingField.equals($table))
+              #if((!$field.isPrimaryKey()) && $field.getTableContainingField().equals($table))
                 $field: $testCell - 
               #end
             #end
