@@ -30,7 +30,6 @@
 #foreach($reportField in $sessionReport.getReportFields())
   #set($field = $reportField.getBaseField())
   #set($table = $field.getTableContainingField())
-  <p>Testing $reportField - $reportField.getClass().getSimpleName()<p>
   #if($field.isPrimaryKey())
     #if(!$detailStarted)
       #if(!$table.equals($previousTable))
@@ -130,9 +129,11 @@
     #foreach($cell in $thisValues)
       #set($cellNumber = $foreach.count - 1)
       #set($field = $fields.get($cellNumber).get(1))
-      #set($detailCalc = true)
-      #if($headingCalcs.contains($field.getReportCalcField()))
-        #set($detailCalc = false)
+      #set($detailCalc = false)
+      #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
+        #if(!$headingCalcs.contains($field.getReportCalcField()))
+          #set($detailCalc = true)
+        #end
       #end
       #if(($detailTables.contains($field.getTableContainingField()) || ($detailCalc)) && (!$field.isPrimaryKey()))
         #set($rightAlign = false)
