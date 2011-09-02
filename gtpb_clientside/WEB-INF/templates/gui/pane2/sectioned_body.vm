@@ -32,12 +32,7 @@
   #set($table = $field.getTableContainingField())
   #if($field.isPrimaryKey())
     #if(!$detailStarted)
-      <p>Testing report field $reportField which is a $reportField.getClass().getSimpleName()<p>
-      #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
-        ## Calcs just go in the current heading
-        #set($success = $headingCalcMap.put($reportField, $headingLevel))
-        <p>Calculation $reportField = $reportField.getCalculationDefinition() is in heading $headingLevel<p>
-      #elseif(!$table.equals($previousTable))
+      #if(!$table.equals($previousTable))
         #if($detailStartsNext)
           #set($detailStarted = true)
         #else
@@ -49,6 +44,12 @@
       #if($table.equals($sessionTable))
         #set($detailStartsNext = true) ## Detail starts at the next table we encounter
       #end
+    #end
+  #elseif($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
+    #if(!$detailStarted)
+      ## Calcs just go in the current heading
+      #set($success = $headingCalcMap.put($reportField, $headingLevel))
+      <p>Calculation $reportField = $reportField.getCalculationDefinition() is in heading $headingLevel<p>
     #end
   #end
 #end
