@@ -15,23 +15,35 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#foreach($cell in $thisValues)
-  #set($cellNumber = $foreach.count - 1)
-  #set($field = $fields.get($cellNumber).get(1))
-  #set($detailCalc = false)
-  #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
-    #if(!$headingCalcs.contains($field.getReportCalcField()))
-      #set($detailCalc = true)
+<tr name="$thisUniqueId"
+  #if($headingRow) class="rowb" #end 
+  #if($row.size()>=6 && $row.get(5))
+    #foreach($expando in $row.get(5))
+      $expando.get(0)="$expando.get(1)"
+    #end
+  #end 
+  onclick="$row.get(1)" 
+  forcehighlight="true">
+  <td class="leading">&nbsp;</td>
+  #foreach($cell in $thisValues)
+    #set($cellNumber = $foreach.count - 1)
+    #set($field = $fields.get($cellNumber).get(1))
+    #set($detailCalc = false)
+    #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
+      #if(!$headingCalcs.contains($field.getReportCalcField()))
+        #set($detailCalc = true)
+      #end
+    #end
+    #if(($detailTables.contains($field.getTableContainingField()) || ($detailCalc)) && (!$field.isPrimaryKey()))
+      #set($rightAlign = false)
+      #set($fieldCategory = $field.getFieldCategory().toString())
+      #if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
+        #set($rightAlign = true)
+      #end
+      #set($style="")
+      #if($rightAlign) #set($style = "$style text-align:right; ") #end
+      <td #if($style != "")style="$style"#end>#if($headingRow) $field #else $cell #end</td>
     #end
   #end
-  #if(($detailTables.contains($field.getTableContainingField()) || ($detailCalc)) && (!$field.isPrimaryKey()))
-    #set($rightAlign = false)
-    #set($fieldCategory = $field.getFieldCategory().toString())
-    #if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
-      #set($rightAlign = true)
-    #end
-    #set($style="")
-    #if($rightAlign) #set($style = "$style text-align:right; ") #end
-    <td #if($headingRow) class="rowb" #end #if($style != "")style="$style"#end>#if($headingRow) $field #else $cell #end</td>
-  #end
-#end
+  <td class="trailing">&nbsp;</td>
+</tr>
