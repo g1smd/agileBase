@@ -49,7 +49,7 @@
   #elseif($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
     #if(!$detailStarted)
       ## Calcs just go in the current heading
-      #set($success = $headingCalcMap.put($reportField, $headingLevel))
+      #set($success = $headingCalcMap.put($reportField, $headingLevel - 1))
       <p>Calculation $reportField = $reportField.getCalculationDefinition() is in heading $headingLevel<p>
     #end
   #end
