@@ -113,6 +113,8 @@
           </td>
           <td class="trailing">&nbsp;</td>
         </tr>
+        ## A subheading row for the detail field names
+        #if($headingLevel == $headingTables.size())
         <tr name="$thisUniqueId"
           #if($row.size()>=6 && $row.get(5))
             #foreach($expando in $row.get(5))
@@ -126,6 +128,7 @@
           #parse("gui/pane2/sectioned_detail_row.vm")
           <td class="trailing">&nbsp;</td>
         </tr>
+        #end
       #end
     #end
   #end
