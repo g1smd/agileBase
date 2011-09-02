@@ -139,7 +139,7 @@
     onclick="$row.get(1)" 
     forcehighlight="true">
     <td class="leading">&nbsp;</td>
-    #set($headingRow=true)
+    #set($headingRow=false)
     #parse("gui/pane2/sectioned_detail_row.vm")
     <td class="trailing">&nbsp;</td>
   </tr>
