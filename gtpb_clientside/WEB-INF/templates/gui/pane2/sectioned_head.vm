@@ -1,0 +1,42 @@
+##
+##  Copyright 2011 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($headingLevel = 1)
+#set($numHeadingLevels = $headingTables.size())
+#foreach($headingLevel in [1..$numHeadingLevels])
+  ## Find the table corresponding with this heading level
+  #foreach($testHeadingTable in $headingTables)
+    #if($headingMap.get($testHeadingTable) == $headingLevel)
+      #set($headingTable = $testHeadingTable)
+      #break
+    #end
+  #end
+  #foreach($reportField in $sessionReport.getReportFields())
+    #set($field = $reportField.getBaseField())
+    #set($table = $field.getTableContainingField())
+    #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
+      #if($headingCalcMap.get($reportField) == $headingLevel)
+        $field: <input type="text" name="$field.getInternalFieldName()" /> 
+      #end
+    #elseif(!$field.isPrimaryKey())
+      #if($table.equals($headingTable))
+        $field: <input type="text" name="$field.getInternalFieldName()" /> 
+      #end
+    #end
+  #end
+  <br />
+#end
