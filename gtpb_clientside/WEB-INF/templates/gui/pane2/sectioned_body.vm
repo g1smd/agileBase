@@ -30,6 +30,7 @@
 #foreach($reportField in $sessionReport.getReportFields())
   #set($field = $reportField.getBaseField())
   #set($table = $field.getTableContainingField())
+  <p>Testing $reportField - $reportField.getClass().getSimpleName()<p>
   #if($field.isPrimaryKey())
     #if(!$detailStarted)
       #if(!$table.equals($previousTable))
