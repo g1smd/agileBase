@@ -1,0 +1,37 @@
+##
+##  Copyright 2011 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#foreach($cell in $thisValues)
+  #set($cellNumber = $foreach.count - 1)
+  #set($field = $fields.get($cellNumber).get(1))
+  #set($detailCalc = false)
+  #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
+    #if(!$headingCalcs.contains($field.getReportCalcField()))
+      #set($detailCalc = true)
+    #end
+  #end
+  #if(($detailTables.contains($field.getTableContainingField()) || ($detailCalc)) && (!$field.isPrimaryKey()))
+    #set($rightAlign = false)
+    #set($fieldCategory = $field.getFieldCategory().toString())
+    #if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
+      #set($rightAlign = true)
+    #end
+    #set($style="")
+    #if($rightAlign) #set($style = "$style text-align:right; ") #end
+    <td #if($style != "")style="$style"#end>#if($headingRow) $field #else $cell #end</td>
+  #end
+#end
