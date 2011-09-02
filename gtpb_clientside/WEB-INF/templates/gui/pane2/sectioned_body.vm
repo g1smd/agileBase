@@ -115,35 +115,13 @@
         </tr>
         ## A subheading row for the detail field names
         #if($headingLevel == $headingTables.size())
-        <tr name="$thisUniqueId"
-          #if($row.size()>=6 && $row.get(5))
-            #foreach($expando in $row.get(5))
-              $expando.get(0)="$expando.get(1)"
-            #end
-          #end 
-          onclick="$row.get(1)" 
-          forcehighlight="true">
-          <td class="leading">&nbsp;</td>
           #set($headingRow=true)
           #parse("gui/pane2/sectioned_detail_row.vm")
-          <td class="trailing">&nbsp;</td>
-        </tr>
         #end
       #end
     #end
   #end
   ## Headings done (if any), print normal rows
-  <tr name="$thisUniqueId" 
-    #if($row.size()>=6 && $row.get(5))
-      #foreach($expando in $row.get(5))
-        $expando.get(0)="$expando.get(1)"
-      #end
-    #end 
-    onclick="$row.get(1)" 
-    forcehighlight="true">
-    <td class="leading">&nbsp;</td>
-    #set($headingRow=false)
-    #parse("gui/pane2/sectioned_detail_row.vm")
-    <td class="trailing">&nbsp;</td>
-  </tr>
+  #set($headingRow=false)
+  #parse("gui/pane2/sectioned_detail_row.vm")
 #end
