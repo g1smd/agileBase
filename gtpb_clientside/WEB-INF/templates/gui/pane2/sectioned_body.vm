@@ -24,7 +24,7 @@
 #set($previousTable = "")
 #set($headingMap = {}) ## store heading level associated with each table
 #set($detailMap = {})  ## store tables that are for the detail section
-#set($detailCalculations = {}) ## Calculations can either be heading or detail, separate the two types
+#set($detailCalculationsMap = {}) ## Calculations can either be heading or detail, separate the two types
 #set($sessionReport = $sessionData.getReport())##
 #set($sessionTable = $sessionReport.getParentTable())
 #foreach($reportField in $sessionReport.getReportFields())
@@ -57,8 +57,8 @@
     #foreach($fieldUsed in $reportField.getFieldsUsed())
       #set($table = $fieldUsed.getTableContainingField())
       #if(!$headingTables.contains($table))
-        #set($success = $detailCalculations.put($reportField, 1))
-        Calculation $reportField is for the detail because it references $fieldUsed<br>
+        #set($success = $detailCalculationsMap.put($reportField, 1))
+        Calculation $reportField is for the detail because it references $table.$fieldUsed<br>
         #break
       #end
     #end
@@ -69,7 +69,7 @@
   #set($table = $reportField.getBaseField().getTableContainingField())
   #if(!$headingTables.contains($table))
     #set($success = $detailMap.put($table, true))
-    #if(($reportField.getClass().getSimpleName() != "ReportCalcFieldDefn") || ($detailCalculations.keySet().contains($reportField)))
+    #if(($reportField.getClass().getSimpleName() != "ReportCalcFieldDefn") || ($detailCalculationsMap.keySet().contains($reportField)))
       #set($numDetailFields = $numDetailFields + 1)
     #end
   #end
@@ -111,7 +111,7 @@
               #set($field = $fields.get($testCellNumber).get(1))
               #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
                 #set($reportCalcField = $field.getReportCalcField())
-                #if(!$detailCalculations.keySet().contains($reportCalcField))
+                #if(!$detailCalculationsMap.keySet().contains($reportCalcField))
                   | $field = $testCell | &nbsp;&nbsp;&nbsp;&nbsp;
                 #end
               #elseif((!$field.isPrimaryKey()) && $field.getTableContainingField().equals($table))
@@ -137,7 +137,7 @@
     #foreach($cell in $thisValues)
       #set($cellNumber = $foreach.count - 1)
       #set($field = $fields.get($cellNumber).get(1))
-      #if(($detailTables.contains($field.getTableContainingField()) || ($detailCalculations.keySet().contains($field.getReportCalcField()))) && (!$field.isPrimaryKey()))
+      #if(($detailTables.contains($field.getTableContainingField()) || ($detailCalculationsMap.keySet().contains($field.getReportCalcField()))) && (!$field.isPrimaryKey()))
         #set($rightAlign = false)
         #set($fieldCategory = $field.getFieldCategory().toString())
         #if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
