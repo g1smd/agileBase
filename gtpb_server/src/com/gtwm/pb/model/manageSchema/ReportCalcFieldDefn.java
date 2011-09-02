@@ -273,7 +273,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 				}
 				if (calculationSQL.contains(identifierToMatch)) {
 					calculationSQL = calculationSQL.replaceAll(identifierToReplace, replacement);
-					this.getFieldsUsed().add(field);
+					this.fieldsUsed.add(field);
 				}
 			}
 		}
@@ -311,7 +311,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 						if (calculationSQL.contains(identifierToMatch)) {
 							calculationSQL = calculationSQL.replaceAll(identifierToReplace,
 									replacement);
-							this.getFieldsUsed().add(field);
+							this.fieldsUsed.add(field);
 						}
 					}
 				}
@@ -347,7 +347,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 						if (calculationSQL.contains(identifierToMatch)) {
 							calculationSQL = calculationSQL.replaceAll(identifierToReplace,
 									replacement);
-							this.getFieldsUsed().add(field);
+							this.fieldsUsed.add(field);
 						}
 					}
 				}
@@ -377,7 +377,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 				}
 				if (calculationSQL.contains(identifierToMatch)) {
 					calculationSQL = calculationSQL.replaceAll(identifierToReplace, replacement);
-					this.getFieldsUsed().add(field);
+					this.fieldsUsed.add(field);
 				}
 			}
 		}
@@ -387,7 +387,8 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		if (calculationSQL.contains("{")) {
 			for (TableInfo table : ((SimpleReportInfo) this.getParentReport()).getJoinedTables()) {
 				FIELDSLOOP: for (BaseField field : table.getFields()) {
-					if (field instanceof SeparatorField || field instanceof ReferencedReportDataField) {
+					if (field instanceof SeparatorField
+							|| field instanceof ReferencedReportDataField) {
 						continue FIELDSLOOP;
 					}
 					String fieldName = field.getFieldName().toLowerCase(Locale.UK);
@@ -404,7 +405,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 					if (calculationSQL.contains(identifierToMatch)) {
 						calculationSQL = calculationSQL
 								.replaceAll(identifierToReplace, replacement);
-						this.getFieldsUsed().add(field);
+						this.fieldsUsed.add(field);
 					}
 				}
 			}
@@ -439,10 +440,49 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		return calcSQLToReturn;
 	}
 
-	// Only used by setCalculationSQL and setDateResolution so doesn't need to
-	// be persisted
+	// Transient because can be calculated during SQL creation, or from SQL
+	// definition
 	@Transient
-	private Set<BaseField> getFieldsUsed() {
+	public synchronized Set<BaseField> getFieldsUsed() throws CodingErrorException {
+		if (this.fieldsUsed.size() > 0) {
+			return this.fieldsUsed;
+		}
+		// Calculate fields used from SQL
+		// Note: not guaranteed to be complete, as it's possible the calc. could
+		// reference fields from reports/tables not joined to the parent report
+		SimpleReportInfo parentReport = (SimpleReportInfo) this.getParentReport();
+		for (BaseField field : parentReport.getReportBaseFields()) {
+			if (this.calculationSQL.contains(field.getInternalFieldName())) {
+				this.fieldsUsed.add(field);
+			}
+		}
+		for (BaseReportInfo joinedReport : parentReport.getJoinedReports()) {
+			for (BaseField field : joinedReport.getReportBaseFields()) {
+				if (this.calculationSQL.contains(field.getInternalFieldName())) {
+					this.fieldsUsed.add(field);
+				}
+			}
+		}
+		for (BaseField field : parentReport.getParentTable().getFields()) {
+			if (this.calculationSQL.contains(field.getInternalFieldName())) {
+				this.fieldsUsed.add(field);
+			}
+		}
+		for (TableInfo table : parentReport.getJoinedTables()) {
+			for (BaseField field : table.getFields()) {
+				if (this.calculationSQL.contains(field.getInternalFieldName())) {
+					this.fieldsUsed.add(field);
+				}
+			}
+		}
+		// You never know, there may be a reference to a not directly joined table
+		for (TableInfo table : parentReport.getJoinReferencedTables()) {
+			for (BaseField field : table.getFields()) {
+				if (this.calculationSQL.contains(field.getInternalFieldName())) {
+					this.fieldsUsed.add(field);
+				}
+			}
+		}
 		return this.fieldsUsed;
 	}
 
