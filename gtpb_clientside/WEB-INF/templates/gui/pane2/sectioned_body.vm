@@ -51,7 +51,7 @@
       ## Calcs just go in the current heading
       #set($calcLevel = $headingLevel - 1)
       #set($success = $headingCalcMap.put($reportField, $calcLevel))
-      <p>Calculation $reportField = $reportField.getCalculationDefinition() is in heading $headingLevel<p>
+      <p>Calculation $reportField = $reportField.getCalculationDefinition() is in heading $calcLevel<p>
     #end
   #end
 #end
@@ -105,6 +105,7 @@
               #set($field = $fields.get($testCellNumber).get(1))
               #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
                 #set($reportCalcField = $field.getReportCalcField())
+                Testing level of $headingCalcs = $headingCalcs.get($reportCalcField) against $headingLevel<br>
                 #if($headingCalcs.get($reportCalcField) == $headingLevel)
                   | $field = $testCell | &nbsp;&nbsp;&nbsp;&nbsp;
                 #end
