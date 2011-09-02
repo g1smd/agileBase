@@ -55,7 +55,7 @@
   #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
     #foreach($field in $reportField.getFieldsUsed())
       #set($table = $field.getTableContainingField())
-      #if(!$headingTables.contains($table))
+      #if(!$headingTables.keySet().contains($table))
         #set($success = $detailCalculations.put($reportField, 1))
       #end
     #end
