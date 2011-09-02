@@ -105,8 +105,7 @@
               #set($field = $fields.get($testCellNumber).get(1))
               #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
                 #set($reportCalcField = $field.getReportCalcField())
-                Field $field's calc us $reportCalcField<br>
-                #if($headingCalcs.get($reportCalcField) == $headingLevel)
+                #if($headingCalcMap.get($reportCalcField) == $headingLevel)
                   | $field = $testCell | &nbsp;&nbsp;&nbsp;&nbsp;
                 #end
               #elseif((!$field.isPrimaryKey()) && $field.getTableContainingField().equals($table))
