@@ -32,6 +32,7 @@
   #set($table = $field.getTableContainingField())
   #if($field.isPrimaryKey())
     #if(!$detailStarted)
+      <p>Testing report field $reportField.getClass().getSimpleName() which is a $reportField.getClass().getSimpleName()<p>
       #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
         ## Calcs just go in the current heading
         #set($success = $headingCalcMap.put($reportField, $headingLevel))
