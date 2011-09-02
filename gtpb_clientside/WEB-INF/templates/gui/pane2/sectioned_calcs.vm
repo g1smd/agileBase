@@ -1,0 +1,69 @@
+##
+##  Copyright 2011 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+## Return $headingMap, $detailMap, $headingCalcMap,
+## $headingTables, $detailTables, $headingCalcs
+##
+#set($detailStarted = false)
+#set($detailStartsNext = false)
+#set($headingLevel = 1)
+#set($previousTable = "")
+#set($headingMap = {}) ## store heading level associated with each table
+#set($detailMap = {})  ## store tables that are for the detail section
+#set($headingCalcMap = {}) ## Record which heading (if any) each calc is in
+#set($sessionReport = $sessionData.getReport())##
+#set($sessionTable = $sessionReport.getParentTable())
+#foreach($reportField in $sessionReport.getReportFields())
+  #set($field = $reportField.getBaseField())
+  #set($table = $field.getTableContainingField())
+  #if($field.isPrimaryKey())
+    #if(!$detailStarted)
+      #if(!$table.equals($previousTable))
+        #if($detailStartsNext)
+          #set($detailStarted = true)
+        #else
+          #set($success = $headingMap.put($table, $headingLevel))
+          #set($headingLevel = $headingLevel + 1)
+          #set($previousTable = $table)
+        #end
+      #end
+      #if($table.equals($sessionTable))
+        #set($detailStartsNext = true) ## Detail starts at the next table we encounter
+      #end
+    #end
+  #elseif($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
+    #if(!$detailStarted)
+      ## Calcs just go in the current heading
+      #set($calcLevel = $headingLevel - 1)
+      #set($success = $headingCalcMap.put($reportField, $calcLevel))
+    #end
+  #end
+#end
+#set($headingTables = $headingMap.keySet())
+#set($headingCalcs = $headingCalcMap.keySet())
+## Any tables which aren't for the heading must be for the detail
+#set($numDetailFields = 0)
+#foreach($reportField in $sessionReport.getReportFields())
+  #set($table = $reportField.getBaseField().getTableContainingField())
+  #if(!$headingTables.contains($table))
+    #set($success = $detailMap.put($table, true))
+    #if(($reportField.getClass().getSimpleName() != "ReportCalcFieldDefn") || ($headingCalcs.contains($reportField)))
+      #set($numDetailFields = $numDetailFields + 1)
+    #end
+  #end
+#end
+#set($detailTables = $detailMap.keySet())
