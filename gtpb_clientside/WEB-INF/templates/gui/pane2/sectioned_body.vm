@@ -53,11 +53,12 @@
 ## They will belong to detail if they include at least one table that isn't in the heading
 #foreach($reportField in $sessionReport.getReportFields())
   #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
-    <p>Calculation found: $reportField<p>
+    <p>Calculation found: $reportField = $reportField.getCalculationDefinition()<p>
     #foreach($fieldUsed in $reportField.getFieldsUsed())
       #set($table = $fieldUsed.getTableContainingField())
       #if(!$headingTables.contains($table))
         #set($success = $detailCalculations.put($reportField, 1))
+        Calculation $reportField is for the detail because it references $fieldUsed<br>
         #break
       #end
     #end
