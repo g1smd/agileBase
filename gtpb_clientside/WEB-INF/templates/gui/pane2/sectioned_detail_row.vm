@@ -32,6 +32,6 @@
     #end
     #set($style="")
     #if($rightAlign) #set($style = "$style text-align:right; ") #end
-    <td #if($style != "")style="$style"#end>#if($headingRow) $field #else $cell #end</td>
+    <td #if($headingRow) class="rowb" #end #if($style != "")style="$style"#end>#if($headingRow) $field #else $cell #end</td>
   #end
 #end
