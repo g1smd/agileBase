@@ -51,7 +51,6 @@
       ## Calcs just go in the current heading
       #set($calcLevel = $headingLevel - 1)
       #set($success = $headingCalcMap.put($reportField, $calcLevel))
-      <p>Calculation $reportField = $reportField.getCalculationDefinition() is in heading $calcLevel<p>
     #end
   #end
 #end
@@ -131,9 +130,9 @@
     #foreach($cell in $thisValues)
       #set($cellNumber = $foreach.count - 1)
       #set($field = $fields.get($cellNumber).get(1))
-      #set($detailCalc = false)
+      #set($detailCalc = true)
       #if($headingCalcs.contains($field.getReportCalcField()))
-        #set($detailCalc = true)
+        #set($detailCalc = false)
       #end
       #if(($detailTables.contains($field.getTableContainingField()) || ($detailCalc)) && (!$field.isPrimaryKey()))
         #set($rightAlign = false)
