@@ -105,7 +105,7 @@
               #set($field = $fields.get($testCellNumber).get(1))
               #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
                 #set($reportCalcField = $field.getReportCalcField())
-                Testing level of $headingCalcs = $headingCalcs.get($reportCalcField) against $headingLevel<br>
+                Field $field is a $field.getClass().getSimpleName()<br>
                 #if($headingCalcs.get($reportCalcField) == $headingLevel)
                   | $field = $testCell | &nbsp;&nbsp;&nbsp;&nbsp;
                 #end
