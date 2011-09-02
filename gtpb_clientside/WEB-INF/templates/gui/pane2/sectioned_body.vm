@@ -16,58 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## A report style similar to CrystalReports / JasperReports
-## ---
-## First work out heading levels
-#set($detailStarted = false)
-#set($detailStartsNext = false)
-#set($headingLevel = 1)
-#set($previousTable = "")
-#set($headingMap = {}) ## store heading level associated with each table
-#set($detailMap = {})  ## store tables that are for the detail section
-#set($headingCalcMap = {}) ## Record which heading (if any) each calc is in
-#set($sessionReport = $sessionData.getReport())##
-#set($sessionTable = $sessionReport.getParentTable())
-#foreach($reportField in $sessionReport.getReportFields())
-  #set($field = $reportField.getBaseField())
-  #set($table = $field.getTableContainingField())
-  #if($field.isPrimaryKey())
-    #if(!$detailStarted)
-      #if(!$table.equals($previousTable))
-        #if($detailStartsNext)
-          #set($detailStarted = true)
-        #else
-          #set($success = $headingMap.put($table, $headingLevel))
-          #set($headingLevel = $headingLevel + 1)
-          #set($previousTable = $table)
-        #end
-      #end
-      #if($table.equals($sessionTable))
-        #set($detailStartsNext = true) ## Detail starts at the next table we encounter
-      #end
-    #end
-  #elseif($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
-    #if(!$detailStarted)
-      ## Calcs just go in the current heading
-      #set($calcLevel = $headingLevel - 1)
-      #set($success = $headingCalcMap.put($reportField, $calcLevel))
-    #end
-  #end
-#end
-#set($headingTables = $headingMap.keySet())
-#set($headingCalcs = $headingCalcMap.keySet())
-## Any tables which aren't for the heading must be for the detail
-#set($numDetailFields = 0)
-#foreach($reportField in $sessionReport.getReportFields())
-  #set($table = $reportField.getBaseField().getTableContainingField())
-  #if(!$headingTables.contains($table))
-    #set($success = $detailMap.put($table, true))
-    #if(($reportField.getClass().getSimpleName() != "ReportCalcFieldDefn") || ($headingCalcs.contains($reportField)))
-      #set($numDetailFields = $numDetailFields + 1)
-    #end
-  #end
-#end
-#set($detailTables = $detailMap.keySet())
-## Now the actual data
+##
 #foreach($row in $data)
   ## row[0] contains the data to display in each field
   ## row[1] contains the click event parameters for the row

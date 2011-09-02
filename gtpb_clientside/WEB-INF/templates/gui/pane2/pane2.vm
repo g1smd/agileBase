@@ -261,16 +261,21 @@
 		  #parse("gui/mobile/pane2_header.vm")
 	  #end
 	  <table id=reportData cellspacing="0" #if($filtersShouldBeShown == 'true') class='lowered' #end>
-      <thead>
-        #parse("gui/pane2/pane2_head.vm")
-      </thead>
-      <tbody name=reportBody id=reportBody class="selectable">
-        #if($sessionReport.getReportStyle() == "SECTIONED")
+      #if($sessionReport.getReportStyle() == "SECTIONED")
+        ## First work out heading levels
+        #parse("gui/pane2/sectioned_calcs.vm")
+        #parse("gui/pane2/sectioned_head.vm")
+        <tbody name=reportBody id=reportBody class="selectable">
           #parse("gui/pane2/sectioned_body.vm")
-        #else
+  		  </tbody>
+      #else
+        <thead>
+          #parse("gui/pane2/pane2_head.vm")
+        </thead>
+        <tbody name=reportBody id=reportBody class="selectable">
           #parse("gui/pane2/pane2_body.vm")
-        #end
-		  </tbody>
+        </tbody>
+      #end
     </table>
 	  #if($mobile_device)
       <p>
