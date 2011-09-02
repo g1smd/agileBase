@@ -58,7 +58,7 @@
       #set($table = $fieldUsed.getTableContainingField())
       #if(!$headingTables.contains($table))
         #set($success = $detailCalculationsMap.put($reportField, 1))
-        Calculation $reportField is for the detail because it references $table.$fieldUsed<br>
+        Calculation $reportField is for the detail because it references $table.$fieldUsed, not one of the heading tables $headingTables<br>
         #break
       #end
     #end
