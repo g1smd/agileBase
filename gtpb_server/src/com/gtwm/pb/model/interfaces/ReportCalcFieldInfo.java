@@ -19,7 +19,10 @@ package com.gtwm.pb.model.interfaces;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Set;
+
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
+import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
@@ -63,6 +66,11 @@ public interface ReportCalcFieldInfo extends ReportFieldInfo {
      */
     public DatabaseFieldType getDbType();
 
+    /**
+     * Return a set of fields used in the calculation
+     */
+    public Set<BaseField> getFieldsUsed() throws CodingErrorException;
+    
     /**
      * Format a float string passed in for display, in accordance with the properties of this calculation. Use
      * the maximum display precision of all decimal fields used in the calculation
