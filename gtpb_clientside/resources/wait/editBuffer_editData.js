@@ -281,12 +281,15 @@ function fInit() {
   // oCells is a collection of the cells in the heading row of the table
   function fMatchFields() {  
   	var oViewPane = top.document.getElementById('oViewPane');
-	if (oViewPane == null) {
-	  return;
-	}
-	if (!oViewPane.contentWindow.pane_2) {
-	  return;
-	}
+		if (oViewPane == null) {
+		  return;
+		}
+		if (!oViewPane.contentWindow.pane_2) {
+		  return;
+		}
+		if (!oViewPane.contentWindow.pane_2.document.getElementById('reportData').tHead) {
+			return;
+		}
     var oCells = oViewPane.contentWindow.pane_2.document.getElementById('reportData').tHead.rows[0].cells;
     // the index of the current row
     if(oViewPane.contentWindow.pane_2.document.getElementById('currentRow'))
