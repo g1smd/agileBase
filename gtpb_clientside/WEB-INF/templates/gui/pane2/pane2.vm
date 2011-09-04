@@ -60,7 +60,7 @@
 		margin-top: 30px;
 		}
 
-    #if($sessionReport.getReportStyle() == "SECTIONED")
+    #if($sessionReport.getReportStyle() != "SECTIONED")
 		div#wrapper table#reportData.lowered {
 		margin-top: 57px;
 		}
