@@ -220,11 +220,16 @@ table#reportData tr.excludedRecord td {
   line-height: 2em;
 }
 
+.sectioned_filter_row input {
+  width: 5em;
+}
+
 .sectioned_filter_name {
   font-weight: bold;
-  background-color: black;
+  background-color: gray;
   padding: 2px;
   color: white;
+  border-radius: 5px;
 }
 
 .error { color: red; }
