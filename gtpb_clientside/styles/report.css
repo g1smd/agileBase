@@ -226,7 +226,6 @@ table#reportData tr.excludedRecord td {
   border-bottom: 1px solid #cecece;
   font-size: 10pt;
   line-height: 2em;
-  margin-left: 0.2em
 }
 
 .sectioned_filter_row input {
@@ -239,6 +238,7 @@ table#reportData tr.excludedRecord td {
   padding: 2px;
   color: white;
   border-radius: 5px;
+  margin-left: 0.2em
 }
 
 .error { color: red; }
