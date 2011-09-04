@@ -217,10 +217,14 @@ table#reportData tr.excludedRecord td {
   background-color: #dddddd;
   border-bottom: 1px solid #cecece;
   font-size: 10pt;
+  line-height: 2em;
 }
 
 .sectioned_filter_name {
   font-weight: bold;
+  background-color: black;
+  padding: 2px;
+  color: white;
 }
 
 .error { color: red; }
