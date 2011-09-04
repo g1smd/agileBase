@@ -213,6 +213,16 @@ table#reportData tr.excludedRecord td {
   color: white!important;
 }
 
+.sectioned_filter_row {
+  background-color: #dddddd;
+  border-bottom: 1px solid #cecece;
+  font-size: 10pt;
+}
+
+.sectioned_filter_name {
+  font-weight: bold;
+}
+
 .error { color: red; }
 
 .greytext {
