@@ -42,5 +42,21 @@
       #end
     #end
   </div>
+  <div class="sectioned_filter_row">
+    <span class="sectioned_filter_name">Detail:</span> 
+    #foreach($reportField in $sessionReport.getReportFields())
+      #set($field = $reportField.getBaseField())
+      #set($table = $field.getTableContainingField())
+      #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
+        #if(!$headingCalcs.contains($reportField))
+          $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
+        #end
+      #elseif(!$field.isPrimaryKey())
+        #if(!$headingTables.contains($table))
+          $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
+        #end
+      #end
+    #end
+  </div>
 #end
 </div>
