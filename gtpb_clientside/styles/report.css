@@ -218,10 +218,11 @@ table#reportData tr.excludedRecord td {
   border-bottom: 1px solid #cecece;
   font-size: 10pt;
   line-height: 2em;
+  margin-left: 0.2em
 }
 
 .sectioned_filter_row input {
-  width: 9em;
+  width: 8em;
 }
 
 .sectioned_filter_name {
