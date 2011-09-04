@@ -20,7 +20,7 @@
 <div id="fieldFilters">
 #foreach($headingLevel in [1..$numHeadingLevels])
   <div class="sectioned_filter_row">
-    <span class="sectioned_filter_name">Level $headingLevel</span>&#09;&#09;&#09;
+    <span class="sectioned_filter_name">Level $headingLevel:</span>
     ## Find the table corresponding with this heading level
     #foreach($testHeadingTable in $headingTables)
       #if($headingMap.get($testHeadingTable) == $headingLevel)
@@ -33,11 +33,11 @@
       #set($table = $field.getTableContainingField())
       #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
         #if($headingCalcMap.get($reportField) == $headingLevel)
-          $field: <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
+          $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
         #end
       #elseif(!$field.isPrimaryKey())
         #if($table.equals($headingTable))
-          $field: <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
+          $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
         #end
       #end
     #end
