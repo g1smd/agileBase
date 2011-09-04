@@ -266,7 +266,9 @@
       #if($sessionReport.getReportStyle() == "SECTIONED")
         ## First work out heading levels
         #parse("gui/pane2/sectioned_calcs.vm")
-        #parse("gui/pane2/sectioned_head.vm")
+        #if($filtersShouldBeShown)
+          #parse("gui/pane2/sectioned_head.vm")
+        #end
         <tbody name=reportBody id=reportBody class="selectable">
           #parse("gui/pane2/sectioned_body.vm")
   		  </tbody>
