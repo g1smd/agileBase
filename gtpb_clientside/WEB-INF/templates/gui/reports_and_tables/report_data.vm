@@ -58,6 +58,7 @@
     #if($sessionReport.getReportStyle() == "SECTIONED")
       #set($rowLimit = $rowLimit * 10)
     #end
+    $viewTools.log("Getting $rowLimit rows")
     #set($datarows = $view.getReportDataRows($sessionReport, $rowLimit))##
   #else
     #set($datarows = $view.getReportDataRows())##
