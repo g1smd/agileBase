@@ -150,6 +150,14 @@ table#reportData tr.h1 td {
   background-color: #f8f8f8;
 }
 
+table#reportData tr.h1 td.leading {
+  background-color: gray;
+}
+
+table#reportData tr.h1 td.trailing {
+  background-color: gray;
+}
+
 table#reportData tr.h2 td {
 	font-weight: bold;
   border-bottom: 1px solid gray;
