@@ -56,14 +56,14 @@
 	      }
 	#if($browser != "Internet Explorer" && !$mobile_device)
 	/* for fixed (frozen) table header */
-		div#wrapper table#reportData {
-		margin-top: 30px;
-		}
-
     #if($sessionReport.getReportStyle() != "SECTIONED")
-		div#wrapper table#reportData.lowered {
-		margin-top: 57px;
-		}
+  		div#wrapper table#reportData {
+  		margin-top: 30px;
+  		}
+  
+  		div#wrapper table#reportData.lowered {
+  		margin-top: 57px;
+  		}
     #end
 
 		div#wrapper table#reportData thead {
