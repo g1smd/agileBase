@@ -142,7 +142,7 @@ table#reportData tr#currentRow td.colored {
 }
 
 table#reportData tr.h1 td {
-  font-size: 12pt;
+  font-size: 14pt;
   font-weight: bold;
   border-bottom: 1px solid black;
   height: 3em;
