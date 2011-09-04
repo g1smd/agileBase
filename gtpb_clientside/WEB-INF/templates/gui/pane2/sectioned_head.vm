@@ -18,30 +18,31 @@
 #set($headingLevel = 1)
 #set($numHeadingLevels = $headingTables.size())
 <div id="fieldFilters">
-#foreach($headingLevel in [1..$numHeadingLevels])
-  <div class="sectioned_filter_row">
-    <span class="sectioned_filter_name">Level $headingLevel:</span>
-    ## Find the table corresponding with this heading level
-    #foreach($testHeadingTable in $headingTables)
-      #if($headingMap.get($testHeadingTable) == $headingLevel)
-        #set($headingTable = $testHeadingTable)
-        #break
-      #end
-    #end
-    #foreach($reportField in $sessionReport.getReportFields())
-      #set($field = $reportField.getBaseField())
-      #set($table = $field.getTableContainingField())
-      #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
-        #if($headingCalcMap.get($reportField) == $headingLevel)
-          $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
-        #end
-      #elseif(!$field.isPrimaryKey())
-        #if($table.equals($headingTable))
-          $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
+  #foreach($headingLevel in [1..$numHeadingLevels])
+    <div class="sectioned_filter_row">
+      <span class="sectioned_filter_name">Level $headingLevel:</span>
+      ## Find the table corresponding with this heading level
+      #foreach($testHeadingTable in $headingTables)
+        #if($headingMap.get($testHeadingTable) == $headingLevel)
+          #set($headingTable = $testHeadingTable)
+          #break
         #end
       #end
-    #end
-  </div>
+      #foreach($reportField in $sessionReport.getReportFields())
+        #set($field = $reportField.getBaseField())
+        #set($table = $field.getTableContainingField())
+        #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
+          #if($headingCalcMap.get($reportField) == $headingLevel)
+            $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
+          #end
+        #elseif(!$field.isPrimaryKey())
+          #if($table.equals($headingTable))
+            $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
+          #end
+        #end
+      #end
+    </div>
+  #end
   <div class="sectioned_filter_row">
     <span class="sectioned_filter_name">Detail:</span> 
     #foreach($reportField in $sessionReport.getReportFields())
@@ -58,5 +59,4 @@
       #end
     #end
   </div>
-#end
 </div>
