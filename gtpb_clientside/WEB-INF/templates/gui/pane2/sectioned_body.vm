@@ -45,7 +45,9 @@
           onclick="$row.get(1)" 
           forcehighlight="true"
           class="h${headingLevel}">
-          <td class="leading">&nbsp;</td>
+          #if($headingLevel > 1) ## Indent level 1 headings
+            <td class="leading">&nbsp;</td>
+          #end
           <td colspan="$numDetailFields">
             #foreach($testCell in $thisValues)
               #set($testCellNumber = $foreach.count - 1)
@@ -60,7 +62,9 @@
               #end
             #end
           </td>
-          <td class="trailing">&nbsp;</td>
+          #if($headingLevel > 1) ## Indent level 1 headings
+            <td class="trailing">&nbsp;</td>
+          #end
         </tr>
         ## A subheading row for the detail field names
         #if($headingLevel == $headingTables.size())
