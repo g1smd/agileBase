@@ -26,12 +26,12 @@ button.gtpb[disabled]:hover,
 button.gtpb[disabled]:active,
 button.gtpb[disabled].selected { background:#f0f0f0; color:#aaaaaa }
 
-.buttonGroup .button:first-child {
+.buttonGroup button.gtpb:first-child {
   border-top-left-radius: 0.5em;
   border-bottom-left-radius: 0.5em;
 }
 
-.buttonGroup .button:last-child {
+.buttonGroup button.gtpb:last-child {
   border-top-right-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
 }
