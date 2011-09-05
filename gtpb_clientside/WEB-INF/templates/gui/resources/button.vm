@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## $viewTools.startTimer("gui/resources/button")
-<STYLE>@import url("resources/button/button.css");</STYLE>
+##<STYLE>@import url("resources/button/button.css");</STYLE>
 ##<SCRIPT language=Javascript src="resources/button/button.js"></SCRIPT>
 #if(!$button_img)#set($button_img='resources/toolbar/blank.png')#end
 <button #if($tooltip) title="$tooltip" #end class="gtpb #if($classes)$classes#end"
