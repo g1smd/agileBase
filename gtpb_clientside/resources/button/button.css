@@ -1,6 +1,5 @@
 button.gtpb {
   border:0;
-  border-right: 1px solid #dddddd;
   width:68px; /* formerly 70px */
   height:55px;
   text-decoration:none;
@@ -10,31 +9,15 @@ button.gtpb {
   /* background-color:#f0f0f0; */
   /* background: -moz-linear-gradient(top,  #fff,  #cecece); */
   text-shadow: 0px 1px 0px white;
-  float: left;
 }
 	 
 button.gtpb img { border:0; }
-/*
+
 button.gtpb:hover { background:transparent url('button/button_bg_over.png') no-repeat center center }		 
 button.gtpb:active { background-image:url('button/button_bg_down.png') }
 button.gtpb.selected { background:transparent url('button/button_bg_down.png') no-repeat center center }
-*/
-button.gtpb:hover { background-color: #dddddd }    
-button.gtpb:active { background-color: #cecece }
-button.gtpb.selected { background-color: #cecece }
 
 button.gtpb[disabled],
 button.gtpb[disabled]:hover,
 button.gtpb[disabled]:active,
 button.gtpb[disabled].selected { background:#f0f0f0; color:#aaaaaa }
-
-.buttonGroup button.gtpb:first-child {
-  border-top-left-radius: 0.5em;
-  border-bottom-left-radius: 0.5em;
-}
-
-.buttonGroup button.gtpb:last-child {
-  border-top-right-radius: 0.5em;
-  border-bottom-right-radius: 0.5em;
-  border-right: 0px;
-}
