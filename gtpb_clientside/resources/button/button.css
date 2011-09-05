@@ -25,3 +25,13 @@ button.gtpb[disabled],
 button.gtpb[disabled]:hover,
 button.gtpb[disabled]:active,
 button.gtpb[disabled].selected { background:#f0f0f0; color:#aaaaaa }
+
+.buttonGroup .button:first-child {
+  border-top-left-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+}
+
+.buttonGroup .button:last-child {
+  border-top-right-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+}
