@@ -43,10 +43,11 @@ body {
 }
 
 #toolbarDiv div.buttonGroup {
-	padding-left: 20px;
+	margin-left: 20px;
 	/* formerly 30px */
 	display: inline;
 	float: left;
+	border-radius: 0.5em;
 }
 
 iframe#oViewPane {
