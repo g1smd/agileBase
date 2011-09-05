@@ -1,5 +1,6 @@
 button.gtpb {
   border:0;
+  border-right: 1px solid #dddddd;
   width:68px; /* formerly 70px */
   height:55px;
   text-decoration:none;
@@ -34,4 +35,5 @@ button.gtpb[disabled].selected { background:#f0f0f0; color:#aaaaaa }
 .buttonGroup button.gtpb:last-child {
   border-top-right-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
+  border-right: 0px;
 }
