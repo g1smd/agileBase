@@ -12,10 +12,14 @@ button.gtpb {
 }
 	 
 button.gtpb img { border:0; }
-
+/*
 button.gtpb:hover { background:transparent url('button/button_bg_over.png') no-repeat center center }		 
 button.gtpb:active { background-image:url('button/button_bg_down.png') }
 button.gtpb.selected { background:transparent url('button/button_bg_down.png') no-repeat center center }
+*/
+button.gtpb:hover { background-color: gray; color: white; }    
+button.gtpb:active { background-color: gray; color: white; }
+button.gtpb.selected { background-color: gray; color: white; }
 
 button.gtpb[disabled],
 button.gtpb[disabled]:hover,
