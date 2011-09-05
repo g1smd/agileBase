@@ -47,6 +47,7 @@ body {
 	/* formerly 30px */
 	display: inline;
 	float: left;
+	border: 1px solid #cecece;
 	border-radius: 0.5em;
 }
 
