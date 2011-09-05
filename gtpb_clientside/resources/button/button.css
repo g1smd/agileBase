@@ -17,9 +17,9 @@ button.gtpb:hover { background:transparent url('button/button_bg_over.png') no-r
 button.gtpb:active { background-image:url('button/button_bg_down.png') }
 button.gtpb.selected { background:transparent url('button/button_bg_down.png') no-repeat center center }
 */
-button.gtpb:hover { background-color: gray; color: white; }    
-button.gtpb:active { background-color: gray; color: white; }
-button.gtpb.selected { background-color: gray; color: white; }
+button.gtpb:hover { background-color: #dddddd }    
+button.gtpb:active { background-color: #cecece }
+button.gtpb.selected { background-color: #cecece }
 
 button.gtpb[disabled],
 button.gtpb[disabled]:hover,
