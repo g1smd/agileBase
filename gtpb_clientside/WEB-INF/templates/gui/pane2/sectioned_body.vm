@@ -46,10 +46,10 @@
           forcehighlight="true"
           class="h${headingLevel}">
           #if($headingLevel > 1) ## Indent level 1 headings
-            #set($colSpan = $numDetailFields + 2)
             <td class="leading">&nbsp;</td>
-          #else
             #set($colSpan = $numDetailFields)
+          #else
+            #set($colSpan = $numDetailFields + 2)
           #end
           <td colspan="$colSpan">
             #foreach($testCell in $thisValues)
