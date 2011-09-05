@@ -147,7 +147,8 @@ table#reportData tr.h1 td {
   border-bottom: 1px solid black;
   height: 3em;
   vertical-align: middle;
-  background-color: #f8f8f8;
+  background-color: gray;
+  color: white;
 }
 
 table#reportData tr.h1 td.leading {
