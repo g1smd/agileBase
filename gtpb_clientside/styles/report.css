@@ -42,6 +42,11 @@ table#reportData th {
   height: 10px;
 }
 
+.tab-item table#reportData th.record_link {
+  font-size: 8pt!important;
+  text-align: right;
+}
+
 table#reportData th[onclick]:hover {
   border-bottom-color:#FFD588!important;
   background-color:#F8F8F6!important;
