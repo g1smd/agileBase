@@ -113,7 +113,7 @@
           </a>
           #else
             #if($report.getReportStyle() == "SECTIONED")
-              #set($thisReportRowLimit = $reportRowLimit * 10)
+              #set($thisReportRowLimit = $reportRowLimit * 20)
             #else
               #set($thisReportRowLimit = $reportRowLimit)
             #end
