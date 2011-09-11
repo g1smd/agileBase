@@ -69,6 +69,7 @@ $viewTools.log("Heading calcs are $headingCalcs")
   #elseif($headingTables.contains($table))
     #set($fieldInHeading = true)
   #end
+  $viewTools.log("Field $reportField is in heading? $fieldInHeading")
   ## If field is a calc, check that it's not in the heading calcs
   ## If field is a normal table, check that it's not in the heading tables
   #if(!$fieldInHeading)
