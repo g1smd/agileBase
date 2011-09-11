@@ -2337,6 +2337,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 						+ " before removing the report field");
 			}
 		}
+		BaseReportInfo thisReport = reportField.getParentReport();
 		// check the field isn't referenced from any other reports
 		SortedSet<BaseReportInfo> reportsUsedIn = new TreeSet<BaseReportInfo>();
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
@@ -2344,6 +2345,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		for (TableInfo testTable : allTables) {
 			for (BaseReportInfo testReport : testTable.getReports()) {
 				if (testReport.equals(testReport.getParentTable().getDefaultReport())) {
+					continue;
+				}
+				if (testReport.equals(thisReport)) {
 					continue;
 				}
 				for (ReportFieldInfo testReportField : testReport.getReportFields()) {
