@@ -195,9 +195,9 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		#set($numRowsToDisplay = "<i>&gt;$numRowsToDisplay</i>")
 	#end
 	<div style="display:none" id="numrows">$numRowsToDisplay</div>##
-    #set($sessionReport = $sessionData.getReport())##
+  #set($sessionReport = $sessionData.getReport())##
 	<div style="display:none" id="pane1id">${sessionReport.getParentTable().getInternalTableName()}${sessionReport.getInternalReportName()}</div>##
-    <div style="display:none" id="pane3tab">#if(! $sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))$sessionData.getCustomString('report_tabindex')#end</div>
+  <div style="display:none" id="pane3tab">#if(! $sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))$sessionData.getCustomString('report_tabindex')#end</div>
   </td>
   #if($data.size() > 0)
     #set($firstRowCells = $data.get(0).get(0))
@@ -207,32 +207,6 @@ $viewTools.startTimer("gui/pane2/pane2_body")
   #end
   <td class=trailing>&nbsp;</td>
 </tr>
-## A row to see more data if the full dataset isn't displayed
-#set($totalRows = $sessionReport.getRowCount())
-#set($totalRowsIsEstimate = $sessionReport.isRowCountEstimate())
-#if(($numRows == $sessionData.getReportRowLimit()) && ($totalRows > $numRows))
-<tr class="seemorerows">
-  #set($numCols = $firstRowCells.size() + 2)
-  <td colspan="$numCols">
-    $numRows records out of #if($totalRowsIsEstimate)approximately#end $totalRows are displayed.<br>
-	view 
-	#set($viewMoreAmount = $sessionData.getReportRowLimit())
-	## workaround for not having a while loop in Velocity
-	#foreach($tmp in [1,2,3,4,5,6,7,8,9,10])
-		#set($viewMoreAmount = $viewMoreAmount * 10)
-		#if($viewMoreAmount * 3 > $totalRows)
-			#set($viewMoreAmount = $totalRows * 2)
-			<a href="?return=gui/reports_and_tables/report_data&set_report_row_limit=$viewMoreAmount">
-				all $totalRows records</a>&nbsp;
-		#else
-			<a href="?return=gui/reports_and_tables/report_data&set_report_row_limit=$viewMoreAmount">
-				$viewMoreAmount records</a>&nbsp;
-		#end
-		#if($viewMoreAmount > 6000) - could be slow#end&nbsp;&nbsp;
-		#if(($viewMoreAmount * 3) > $totalRows) #break #end
-	#end
-  </td>
-</tr>
-#end ## end if not table part only
-#end
+#parse("gui/pane2/see_more_rows.vm")
+#end ## if not table part only
 $viewTools.stopTimer("gui/pane2/pane2_body")
