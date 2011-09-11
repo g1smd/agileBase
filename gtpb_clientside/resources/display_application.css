@@ -46,8 +46,6 @@ body {
 	margin-left: 20px;
 	/* formerly 30px */
 	display: inline;
-	border: 1px solid #cecece;
-	border-radius: 0.5em;
 }
 
 iframe#oViewPane {

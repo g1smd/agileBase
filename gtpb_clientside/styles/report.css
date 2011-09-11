@@ -160,13 +160,20 @@ table#reportData tr.h1 td.trailing {
 }
 
 table#reportData tr.h2 td {
-	font-weight: bold;
+  font-weight: bold;
   border-bottom: 1px solid gray;
   height: 3em;
   vertical-align: middle;
   background-color: #f8f8f8;
 }
-					 
+           
+table#reportData tr.h3 td {
+  border-bottom: 1px solid gray;
+  height: 3em;
+  vertical-align: middle;
+  background-color: #f8f8f8;
+}
+           
 table#reportData tr.rowb td, 
 table#reportData tr.rowa td { 
   height:30px ;
