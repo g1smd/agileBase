@@ -64,6 +64,7 @@ $viewTools.log("Heading calcs are $headingCalcs")
   #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
     #if($headingCalcs.contains($reportField))
       #set($fieldInHeading = true)
+      $viewTools.log("Calc $reportField is in headingCalcs $headingCalcs")
     #end
   #elseif($headingTables.contains($table))
     #set($fieldInHeading = true)
