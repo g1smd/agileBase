@@ -55,6 +55,7 @@
 #end
 #set($headingTables = $headingMap.keySet())
 #set($headingCalcs = $headingCalcMap.keySet())
+$viewTools.log("Heading calcs are $headingCalcs")
 ## Any tables which aren't for the heading must be for the detail
 #set($numDetailFields = 0)
 #foreach($reportField in $sessionReport.getReportFields())
