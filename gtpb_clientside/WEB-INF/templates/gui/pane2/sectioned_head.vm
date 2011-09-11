@@ -30,14 +30,15 @@
       #end
       #foreach($reportField in $sessionReport.getReportFields())
         #set($field = $reportField.getBaseField())
+        #set($internalFieldName = $field.getInternalFieldName())
         #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
           #if($headingCalcMap.get($reportField) == $headingLevel)
-            $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
+            $field #parse("gui/pane2/filter_input.vm") &nbsp;&nbsp;&nbsp;
           #end
         #elseif(!$field.isPrimaryKey())
           #set($table = $field.getTableContainingField())
           #if($table.equals($headingTable))
-            $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
+            $field #parse("gui/pane2/filter_input.vm") &nbsp;&nbsp;&nbsp;
           #end
         #end
       #end
