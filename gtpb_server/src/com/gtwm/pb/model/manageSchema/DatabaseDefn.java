@@ -2389,9 +2389,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 				}
 			}
 		}
-		// check field isn't referenced from any calcs in the same reports
+		// check field isn't referenced from any calcs in the same report
 		for (ReportFieldInfo testReportField : reportField.getParentReport().getReportFields()) {
 			if (testReportField instanceof ReportCalcFieldInfo) {
+				if (reportField.isFieldFromReport()) {
+					// Field references calculation in another report, that's ok
+					continue;
+				}
 				ReportCalcFieldInfo testCalc = (ReportCalcFieldInfo) testReportField;
 				String calcSQL = testCalc.getCalculationSQL(false);
 				if (calcSQL.contains(reportField.getInternalFieldName())) {
