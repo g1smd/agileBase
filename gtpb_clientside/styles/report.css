@@ -141,6 +141,10 @@ table#reportData tr#currentRow td.colored {
 */
 }
 
+table#reportData tr.h1 {
+  page-break-before: always;
+}
+
 table#reportData tr.h1 td {
   font-size: 14pt;
   font-weight: bold;
