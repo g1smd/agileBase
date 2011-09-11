@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-## Return $headingMap, $detailMap, $headingCalcMap,
+## Return $headingMap, $headingCalcMap,
 ## $headingTables, $detailTables, $headingCalcs
 ##
 #set($detailStarted = false)
@@ -23,8 +23,8 @@
 #set($headingLevel = 1)
 #set($previousTable = "")
 #set($headingMap = {}) ## store heading level associated with each table
-#set($detailTables = {})  ## store tables that are for the detail section
-#set($detailTables = $detailTables.keySet())
+#set($detailTablesMap = {})  ## store tables that are for the detail section
+#set($detailTables = $detailTablesMap.keySet())
 #set($headingCalcMap = {}) ## Record which heading (if any) each calc is in
 #set($sessionReport = $sessionData.getReport())##
 #set($sessionTable = $sessionReport.getParentTable())
@@ -84,5 +84,4 @@ $viewTools.log("Heading calcs are $headingCalcs")
     #end
   #end
 #end
-#set($detailTables = $detailMap.keySet())
 $viewTools.log("Detail tables are $detailTables")
