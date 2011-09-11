@@ -67,10 +67,10 @@
               #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
                 #set($reportCalcField = $field.getReportCalcField())
                 #if($headingCalcMap.get($reportCalcField) == $headingLevel)
-                  <span style="float:right">&nbsp;&nbsp;&nbsp;&nbsp;$field = $testCell</span>
+                  <span style="float:right">&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-transform:capitalize">$field</span> = $testCell</span>
                 #end
               #elseif((!$field.isPrimaryKey()) && $field.getTableContainingField().equals($table))
-                $field: $testCell &nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="text-transform:capitalize">$field</span>: $testCell &nbsp;&nbsp;&nbsp;&nbsp;
               #end
             #end
           </td>
