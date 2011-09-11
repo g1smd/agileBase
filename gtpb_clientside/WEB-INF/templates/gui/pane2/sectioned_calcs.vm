@@ -67,3 +67,5 @@
   #end
 #end
 #set($detailTables = $detailMap.keySet())
+$viewTools.log("Heading tables $headingTables")
+$viewTools.log("Detail tables $detailTables")
