@@ -23,7 +23,7 @@
 #set($headingLevel = 1)
 #set($previousTable = "")
 #set($headingMap = {}) ## store heading level associated with each table
-#set($detailMap = {})  ## store tables that are for the detail section
+#set($detailTables = {}.keySet())  ## store tables that are for the detail section
 #set($headingCalcMap = {}) ## Record which heading (if any) each calc is in
 #set($sessionReport = $sessionData.getReport())##
 #set($sessionTable = $sessionReport.getParentTable())
@@ -74,7 +74,10 @@ $viewTools.log("Heading calcs are $headingCalcs")
   ## If field is a normal table, check that it's not in the heading tables
   #if(!$fieldInHeading)
     #if(!$reportField.getBaseField().isPrimaryKey())
-      #set($success = $detailMap.put($table, true))
+      #if(!$headingTables.contains($table))
+        ## Calc table may be a heading table, ignore these
+        #set($success = $detailTables.add($table))
+      #end
       #set($numDetailFields = $numDetailFields + 1)
       $viewTools.log("numDetailsField is now $numDetailFields")
     #end
