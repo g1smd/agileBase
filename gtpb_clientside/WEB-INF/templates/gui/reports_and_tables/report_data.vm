@@ -111,8 +111,8 @@
     #parse('gui/pane2/pane2_body.vm')
   #elseif($table_part_only)
     #parse('gui/pane2/pane2_table.vm')
-  #elseif($sectionedReport)
-    #parse('gui/pane2/sectioned_body.vm')##
+  ###elseif($sectionedReport)
+  ##  #parse('gui/pane2/sectioned_body.vm')##
   #else##
     #parse('gui/pane2/include_delete_checkboxes.vm')##
   #end##
