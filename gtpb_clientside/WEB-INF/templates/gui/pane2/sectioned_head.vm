@@ -37,10 +37,10 @@
         #elseif(!$field.isPrimaryKey())
           #if($reportField.isFieldFromReport())
             #set($table = $reportField.getReportFieldIsFrom().getParentTable())
-            Field $field is from a report based on table $table<br>
+            $viewTools.log("Field $field is from a report based on table $table")
           #else
             #set($table = $field.getTableContainingField())
-            Field $field is from table $table<br>
+            $viewTools.log("Field $field is from table $table")
           #end
           #if($table.equals($headingTable))
             $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;
