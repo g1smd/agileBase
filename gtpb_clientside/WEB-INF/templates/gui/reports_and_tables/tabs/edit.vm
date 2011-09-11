@@ -54,7 +54,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
               <th>Edit $sessionTable.getSingularName()</th>
             #else
             <th class="leading"></th>
-		        <th colspan="2" class="record_link"><a href="javascript:top.fLinks();">link...</a></th>
+		        <th colspan="2" class="record_link"><a href="javascript:top.fLinks();"><img src="resources/icons/applications/tango/actions/mail-closed.png" style="border:0" />link...</a></th>
 		        <th class="trailing"></th>
             #end
 		      </tr>
