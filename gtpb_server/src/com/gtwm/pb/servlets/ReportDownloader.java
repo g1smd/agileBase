@@ -145,7 +145,12 @@ public final class ReportDownloader extends HttpServlet {
 		// Replace any invalid characters : \ / ? * [ or ]
 		// http://support.microsoft.com/kb/215205
 		reportName = reportName.replaceAll("[\\/\\:\\\\\\?\\*\\[\\]]", "-");
-		HSSFSheet reportSheet = workbook.createSheet(reportName);
+		HSSFSheet reportSheet;
+		try {
+			reportSheet = workbook.createSheet(reportName);
+		} catch (IllegalArgumentException iaex) {
+			reportSheet = workbook.createSheet(reportName + " " + report.getInternalReportName());
+		}
 		int rowNum = 0;
 		HSSFRow row;
 		HSSFCell cell;

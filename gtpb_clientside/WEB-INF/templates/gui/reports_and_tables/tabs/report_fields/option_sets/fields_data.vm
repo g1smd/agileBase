@@ -135,7 +135,7 @@
 					          #end ## end if not primary key
           </td>
         		  <td class="trailing">
-        		  #if(!$field.getBaseField().isPrimaryKey())
+        		  #if(!$field.getBaseField().equals($report.getParentTable().getPrimaryKey()))
 				          <input type="button" value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_field_from_report=true gtpb_internalfieldname="$field.getBaseField().getInternalFieldName()">
 			         #end
 			         </td>
