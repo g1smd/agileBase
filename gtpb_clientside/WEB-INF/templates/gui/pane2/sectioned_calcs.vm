@@ -58,7 +58,11 @@
 ## Any tables which aren't for the heading must be for the detail
 #set($numDetailFields = 0)
 #foreach($reportField in $sessionReport.getReportFields())
-  #set($table = $reportField.getBaseField().getTableContainingField())
+  #if($reportField.isFieldFromReport())
+    #set($table = $reportField.getReportFieldIsFrom().getParentTable())
+  #else
+    #set($table = $reportField.getBaseField().getTableContainingField())
+  #end
   #if(!$headingTables.contains($table))
     #set($success = $detailMap.put($table, true))
     #if(($reportField.getClass().getSimpleName() != "ReportCalcFieldDefn") || ($headingCalcs.contains($reportField)))
