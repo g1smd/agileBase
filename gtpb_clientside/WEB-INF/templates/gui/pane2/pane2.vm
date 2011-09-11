@@ -114,7 +114,6 @@
          top.document.getElementById('button_import').removeAttribute('disabled');
    	     top.document.getElementById('button_export').removeAttribute('disabled');
    	     top.document.getElementById('button_print').removeAttribute('disabled');
-   	     top.document.getElementById('button_links').removeAttribute('disabled');
          top.document.getElementById('button_apps').removeAttribute('disabled');
          if (top.document.getElementById('button_forms')) {
            top.document.getElementById('button_forms').removeAttribute('disabled');
@@ -137,11 +136,9 @@
         	 #if($view.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
 	    	    top.document.getElementById('button_export').removeAttribute('disabled');
    	     		top.document.getElementById('button_print').removeAttribute('disabled');
-   	     		top.document.getElementById('button_links').removeAttribute('disabled');
         	 #else
         		top.document.getElementById('button_export').setAttribute('disabled','true');
         		top.document.getElementById('button_print').setAttribute('disabled','true');
-            top.document.getElementById('button_links').setAttribute('disabled','true');
            #end
       </script>
 	  #end
