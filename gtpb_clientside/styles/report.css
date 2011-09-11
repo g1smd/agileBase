@@ -45,6 +45,7 @@ table#reportData th {
 .tab-item table#reportData th.record_link {
   font-size: 8pt!important;
   text-align: right;
+  text-transform: none;
 }
 
 table#reportData th[onclick]:hover {
