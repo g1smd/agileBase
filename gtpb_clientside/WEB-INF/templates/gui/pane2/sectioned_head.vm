@@ -37,6 +37,7 @@
         #elseif(!$field.isPrimaryKey())
           #if($reportField.isFieldFromReport())
             #set($table = $reportField.getReportFieldIsFrom().getParentTable())
+            Field $field is from a report based on table $table<br>
           #else
             #set($table = $field.getTableContainingField())
           #end
