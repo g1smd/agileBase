@@ -17,7 +17,7 @@
 ##
 #set($headingLevel = 1)
 #set($numHeadingLevels = $headingTables.size())
-<div id="fieldFilters" #if(!$filtersShouldBeShown) style="display:none" #end>
+<div id="fieldFilters" #if(!$filtersShouldBeShown != 'true') style="display:none" #end>
   #foreach($headingLevel in [1..$numHeadingLevels])
     <div class="sectioned_filter_row">
       <span class="sectioned_filter_name">Header $headingLevel:</span>
