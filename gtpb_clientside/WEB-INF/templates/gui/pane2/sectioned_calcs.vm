@@ -60,15 +60,20 @@ $viewTools.log("Heading calcs are $headingCalcs")
 #set($numDetailFields = 0)
 #foreach($reportField in $sessionReport.getReportFields())
   #set($table = $reportField.getBaseField().getTableContainingField())
-  #if(!$headingTables.contains($table))
+  #set($fieldInHeading = false)
+  #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
+    #if($headingCalcs.contains($reportField))
+      #set($fieldInHeading = true)
+    #end
+  #elseif($headingTables.contains($table))
+    #set($fieldInHeading = true)
+  #end
+  ## If field is a calc, check that it's not in the heading calcs
+  ## If field is a normal table, check that it's not in the heading tables
+  #if(!$fieldInHeading)
     #set($success = $detailMap.put($table, true))
     #if(!$reportField.getBaseField().isPrimaryKey())
-      #if(!$headingCalcs.contains($reportField))
-        $viewTools.log("Detail field $reportField")
-        #set($numDetailFields = $numDetailFields + 1)
-      #else
-        $viewTools.log("Field $reportField is in headingCalcs $headingCalcs")
-      #end
+      #set($numDetailFields = $numDetailFields + 1)
     #end
   #end
 #end
