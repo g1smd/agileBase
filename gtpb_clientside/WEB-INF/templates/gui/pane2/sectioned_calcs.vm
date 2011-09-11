@@ -66,6 +66,8 @@ $viewTools.log("Heading calcs are $headingCalcs")
       #if(!$headingCalcs.contains($reportField))
         $viewTools.log("Detail field $reportField")
         #set($numDetailFields = $numDetailFields + 1)
+      #else
+        $viewTools.log("Field $reportField is in headingCalcs $headingCalcs")
       #end
     #end
   #end
