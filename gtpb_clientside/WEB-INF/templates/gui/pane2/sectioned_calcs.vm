@@ -61,7 +61,7 @@
   #set($table = $reportField.getBaseField().getTableContainingField())
   #if(!$headingTables.contains($table))
     #set($success = $detailMap.put($table, true))
-    #if(($reportField.getClass().getSimpleName() != "ReportCalcFieldDefn") || ($headingCalcs.contains($reportField)))
+    #if(($reportField.getClass().getSimpleName() != "ReportCalcFieldDefn") || (!$headingCalcs.contains($reportField)))
       $viewTools.log("Detail field $reportField")
       #set($numDetailFields = $numDetailFields + 1)
     #end
