@@ -229,7 +229,7 @@
         var oIframe=document.createElement('iframe');
         oIframe.setAttribute('id','wrapper');
         #if($report.getReportStyle() == "SECTIONED")
-          oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/pane2_printout');
+          oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/records');
         #else
           oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/record');
         #end
