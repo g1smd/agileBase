@@ -40,6 +40,7 @@
             Field $field is from a report based on table $table<br>
           #else
             #set($table = $field.getTableContainingField())
+            Field $field is from table $table<br>
           #end
           #if($table.equals($headingTable))
             $field <input type="text" name="$field.getInternalFieldName()" /> &nbsp;&nbsp;&nbsp;

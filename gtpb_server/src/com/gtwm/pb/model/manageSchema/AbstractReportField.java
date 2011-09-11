@@ -34,71 +34,69 @@ import com.gtwm.pb.util.CantDoThatException;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class AbstractReportField {
 
-    @Id
-    @GeneratedValue
-    /**
-     * Hibernate needs an ID for a persistent class - this isn't actually used by the app otherwise
-     */
-    protected long getId() {
-        return this.id;
-    }
-    
-    private void setId(long id) {
-        this.id = id;
-    }
+	@Id
+	@GeneratedValue
+	/**
+	 * Hibernate needs an ID for a persistent class - this isn't actually used by the app otherwise
+	 */
+	protected long getId() {
+		return this.id;
+	}
 
-    //Hibernate doesn't like abstract methods without an annotation
-    //public abstract BaseField getBaseField();
+	private void setId(long id) {
+		this.id = id;
+	}
 
-    @Transient
-    public BaseReportInfo getReportFieldIsFrom() throws CantDoThatException {
-        if (this.getReportFieldIsFromDirect() == null) {
-            throw new CantDoThatException("Field is from a table, not a report");
-        }
-        return this.getReportFieldIsFromDirect();
-    }
+	// Hibernate doesn't like abstract methods without an annotation
+	// public abstract BaseField getBaseField();
 
-    @ManyToOne(targetEntity = BaseReportDefn.class)
-    // Uni-directional many to one
-    private BaseReportInfo getReportFieldIsFromDirect() {
-        return this.reportFieldIsFrom;
-    }
+	@Transient
+	public BaseReportInfo getReportFieldIsFrom() throws CantDoThatException {
+		if (this.getReportFieldIsFromDirect() == null) {
+			throw new CantDoThatException("Field is from a table, not a report");
+		}
+		return this.getReportFieldIsFromDirect();
+	}
 
-    protected void setReportFieldIsFromDirect(BaseReportInfo reportFieldIsFrom) {
-        this.reportFieldIsFrom = reportFieldIsFrom;
-    }
+	@ManyToOne(targetEntity = BaseReportDefn.class)
+	// Uni-directional many to one
+	private BaseReportInfo getReportFieldIsFromDirect() {
+		return this.reportFieldIsFrom;
+	}
 
-    @ManyToOne(targetEntity = BaseReportDefn.class)
-    // Other side of report.getReportFields(). Note: Should entity be SimpleReportDefn.class?
-    public BaseReportInfo getParentReport() {
-        return this.parentReport;
-    }
+	protected void setReportFieldIsFromDirect(BaseReportInfo reportFieldIsFrom) {
+		this.reportFieldIsFrom = reportFieldIsFrom;
+	}
 
-    protected void setParentReport(BaseReportInfo parentReport) {
-        this.parentReport = parentReport;
-    }
+	@ManyToOne(targetEntity = BaseReportDefn.class)
+	// Other side of report.getReportFields(). Note: Should entity be
+	// SimpleReportDefn.class?
+	public BaseReportInfo getParentReport() {
+		return this.parentReport;
+	}
 
-    @Transient
-    public boolean isFieldFromReport() {
-        if (this.getReportFieldIsFromDirect() == null) {
-            return false;
-        }
-        return true;
-    }
+	protected void setParentReport(BaseReportInfo parentReport) {
+		this.parentReport = parentReport;
+	}
 
-    public void setFieldIndex(Integer fieldIndex) {
-        this.fieldIndex = fieldIndex;
-    }
+	@Transient
+	public boolean isFieldFromReport() {
+		return (this.getReportFieldIsFromDirect() != null);
+	}
 
-    public Integer getFieldIndex() {
-        return this.fieldIndex;
-    }
+	public void setFieldIndex(Integer fieldIndex) {
+		this.fieldIndex = fieldIndex;
+	}
 
-    private BaseReportInfo reportFieldIsFrom = null;
+	public Integer getFieldIndex() {
+		return this.fieldIndex;
+	}
 
-    private BaseReportInfo parentReport = null;
-    
-    private Integer fieldIndex = 0;
-    
-    private long id;
+	private BaseReportInfo reportFieldIsFrom = null;
+
+	private BaseReportInfo parentReport = null;
+
+	private Integer fieldIndex = 0;
+
+	private long id;
 }
