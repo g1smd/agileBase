@@ -40,6 +40,7 @@
 #end
 #if($data_part_only)
   #if($sessionReport.getReportStyle() == "SECTIONED")
+    #parse('gui/pane2/sectioned_calcs.vm')
     #parse('gui/pane2/sectioned_body.vm')
   #else
     #parse('gui/pane2/pane2_body.vm')
