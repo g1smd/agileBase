@@ -112,6 +112,10 @@
 	</div>
 	<br clear="all">
     <table id=reportData cellspacing="0">
+      #if($sessionReport.getReportStyle() == "SECTIONED")
+        #parse("gui/pane2/sectioned_calcs.vm")
+        #parse("gui/pane2/sectioned_body.vm")
+      #else
       <thead>
         <tr>
           <th class=leading>&nbsp;</th>
@@ -132,14 +136,15 @@
     			  #end
       		      </th>
             #end
-            <th class=trailing>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody name=reportBody id=reportBody>
-		  #set($printout = true)
+          <th class=trailing>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody name=reportBody id=reportBody>
+    		  #set($printout = true)
           #parse("gui/pane2/pane2_body.vm")
-		</tbody>
-      </table>
+      </tbody>
+      #end
+    </table>
 	  #set($summariesExist = false)
 	  #foreach($chart in $report.getSavedCharts())
           ## if a summary has been created
