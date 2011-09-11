@@ -48,6 +48,10 @@ table#reportData th {
   text-transform: none;
 }
 
+.record_link a {
+  text-decoration: none;
+}
+
 table#reportData th[onclick]:hover {
   border-bottom-color:#FFD588!important;
   background-color:#F8F8F6!important;
