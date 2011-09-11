@@ -35,7 +35,7 @@
     #set($table = $field.getTableContainingField())
     ## NOTE: hack on this line to check for a particular field for CH recipe printout
     ## TODO: something more generic, e.g. a calc. unique property
-    #if($headingTables.contains($table) && ($field.isPrimaryKey() || $field.getInternalFieldName() == "jyzbf3leq6ci2hnqr"))
+    #if( ($headingTables.contains($table) && $field.isPrimaryKey()) || ($field.getInternalFieldName() == "jyzbf3leq6ci2hnqr"))
       #if($cell != $lastValues.get($cellNumber))
         #set($headingLevel = $headingMap.get($table))
         <tr name="$thisUniqueId" 
