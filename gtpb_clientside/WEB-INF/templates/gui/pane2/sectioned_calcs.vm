@@ -81,3 +81,4 @@ $viewTools.log("Heading calcs are $headingCalcs")
   #end
 #end
 #set($detailTables = $detailMap.keySet())
+$viewTools.log("Detail tables are $detailTables")
