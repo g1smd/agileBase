@@ -152,7 +152,7 @@ table#reportData tr.h1 td {
   height: 3em;
   line-height: 1.5em;
   vertical-align: middle;
-  background-color: red;
+  background-color: gray;
   color: white!important;
 }
 
