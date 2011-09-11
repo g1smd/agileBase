@@ -73,8 +73,8 @@ $viewTools.log("Heading calcs are $headingCalcs")
   ## If field is a calc, check that it's not in the heading calcs
   ## If field is a normal table, check that it's not in the heading tables
   #if(!$fieldInHeading)
-    #set($success = $detailMap.put($table, true))
     #if(!$reportField.getBaseField().isPrimaryKey())
+      #set($success = $detailMap.put($table, true))
       #set($numDetailFields = $numDetailFields + 1)
       $viewTools.log("numDetailsField is now $numDetailFields")
     #end
