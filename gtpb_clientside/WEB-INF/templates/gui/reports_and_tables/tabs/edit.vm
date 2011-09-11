@@ -54,7 +54,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
               <th>Edit $sessionTable.getSingularName()</th>
             #else
             <th class="leading"></th>
-		        <th colspan="2"></th>
+		        <th colspan="2" style="text-align:right"><a href="javascript:top.fLinks();">link...</a></th>
 		        <th class="trailing"></th>
             #end
 		      </tr>
