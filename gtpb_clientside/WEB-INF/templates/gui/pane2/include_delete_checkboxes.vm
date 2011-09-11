@@ -21,6 +21,7 @@
 ## Don't show delete boxes for mobile devices either though, deleting will be via pane 3
 #if(!$sessionTable)
   #set($sessionTable = $sessionData.getTable())
+  #set($sessionReport = $sessionData.getReport())
 #end
 #if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
 #if(!$mobile_device)
@@ -38,7 +39,11 @@
 #end
 #end
 #if($data_part_only)
-  #parse('gui/pane2/pane2_body.vm')
+  #if($sessionReport.getReportStyle() == "SECTIONED")
+    #parse('gui/pane2/sectioned_body.vm')
+  #else
+    #parse('gui/pane2/pane2_body.vm')
+  #end
 #elseif($table_part_only)
   #parse('gui/pane2/pane2_table.vm')
 #else
