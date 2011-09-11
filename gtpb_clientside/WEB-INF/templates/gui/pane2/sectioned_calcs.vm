@@ -76,6 +76,7 @@ $viewTools.log("Heading calcs are $headingCalcs")
     #set($success = $detailMap.put($table, true))
     #if(!$reportField.getBaseField().isPrimaryKey())
       #set($numDetailFields = $numDetailFields + 1)
+      $viewTools.log("numDetailsField is now $numDetailFields")
     #end
   #end
 #end
