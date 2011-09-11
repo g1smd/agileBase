@@ -146,17 +146,10 @@ table#reportData tr.h1 td {
   font-weight: bold;
   border-bottom: 1px solid black;
   height: 3em;
+  line-height: 1.5em;
   vertical-align: middle;
   background-color: gray;
   color: white!important;
-}
-
-table#reportData tr.h1 td.leading {
-  background-color: gray;
-}
-
-table#reportData tr.h1 td.trailing {
-  background-color: gray;
 }
 
 table#reportData tr.h2 td {

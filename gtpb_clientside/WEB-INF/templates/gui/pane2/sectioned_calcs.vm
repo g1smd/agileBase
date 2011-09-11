@@ -62,10 +62,9 @@
   #if(!$headingTables.contains($table))
     #set($success = $detailMap.put($table, true))
     #if(($reportField.getClass().getSimpleName() != "ReportCalcFieldDefn") || ($headingCalcs.contains($reportField)))
+      $viewTools.log("Detail field $reportField")
       #set($numDetailFields = $numDetailFields + 1)
     #end
   #end
 #end
 #set($detailTables = $detailMap.keySet())
-$viewTools.log("Heading tables $headingTables")
-$viewTools.log("Detail tables $detailTables")
