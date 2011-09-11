@@ -23,7 +23,8 @@
 #set($headingLevel = 1)
 #set($previousTable = "")
 #set($headingMap = {}) ## store heading level associated with each table
-#set($detailTables = {}.keySet())  ## store tables that are for the detail section
+#set($detailTables = {})  ## store tables that are for the detail section
+#set($detailTables = $detailTables.keySet())
 #set($headingCalcMap = {}) ## Record which heading (if any) each calc is in
 #set($sessionReport = $sessionData.getReport())##
 #set($sessionTable = $sessionReport.getParentTable())
