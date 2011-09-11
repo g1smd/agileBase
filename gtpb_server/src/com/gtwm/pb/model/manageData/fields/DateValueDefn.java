@@ -257,7 +257,7 @@ public class DateValueDefn implements DateValue {
 		return (this.getValueDate() == null);
 	}
 
-	private Integer year = null;
+	private Integer year;
 
 	private Integer month = null;
 
