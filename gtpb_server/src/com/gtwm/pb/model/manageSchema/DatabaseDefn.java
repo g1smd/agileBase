@@ -2347,9 +2347,6 @@ public final class DatabaseDefn implements DatabaseInfo {
 				if (testReport.equals(testReport.getParentTable().getDefaultReport())) {
 					continue;
 				}
-				if (testReport.equals(thisReport)) {
-					continue;
-				}
 				for (ReportFieldInfo testReportField : testReport.getReportFields()) {
 					if (testReportField.isFieldFromReport()) {
 						BaseReportInfo reportFieldIsFrom = testReportField.getReportFieldIsFrom();
