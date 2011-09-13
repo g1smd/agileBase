@@ -2,7 +2,6 @@
 #set($numRows=$data.size())
 #set($totalRows = $sessionReport.getRowCount())
 #set($totalRowsIsEstimate = $sessionReport.isRowCountEstimate())
-#if(($numRows == $sessionData.getReportRowLimit()) && ($totalRows > $numRows))
 <tr class="seemorerows">
   #if($sessionReport.getReportStyle() == "SECTIONED")
     #set($numCols = $numDetailFields + 2)
@@ -10,23 +9,29 @@
     #set($numCols = $firstRowCells.size() + 2)
   #end
   <td colspan="$numCols">
-    $numRows records out of #if($totalRowsIsEstimate)approximately#end $totalRows are displayed.<br>
-  view 
-  #set($viewMoreAmount = $sessionData.getReportRowLimit())
-  ## workaround for not having a while loop in Velocity
-  #foreach($tmp in [1,2,3,4,5,6,7,8,9,10])
-    #set($viewMoreAmount = $viewMoreAmount * 10)
-    #if($viewMoreAmount * 3 > $totalRows)
-      #set($viewMoreAmount = $totalRows * 2)
-      <a href="?return=gui/reports_and_tables/report_data&set_report_row_limit=$viewMoreAmount">
-        all $totalRows records</a>&nbsp;
+    #if(($numRows == $sessionData.getReportRowLimit()) && ($totalRows > $numRows))
+      $numRows records out of #if($totalRowsIsEstimate)approximately#end $totalRows are displayed.<br>
+      view 
+      #set($viewMoreAmount = $sessionData.getReportRowLimit())
+      ## workaround for not having a while loop in Velocity
+      #foreach($tmp in [1,2,3,4,5,6,7,8,9,10])
+        #set($viewMoreAmount = $viewMoreAmount * 10)
+        #if($viewMoreAmount * 3 > $totalRows)
+          #set($viewMoreAmount = $totalRows * 2)
+          <a href="?return=gui/reports_and_tables/report_data&set_report_row_limit=$viewMoreAmount">
+            all $totalRows records</a>&nbsp;
+        #else
+          <a href="?return=gui/reports_and_tables/report_data&set_report_row_limit=$viewMoreAmount">
+            $viewMoreAmount records</a>&nbsp;
+        #end
+        #if($viewMoreAmount > 6000) - could be slow#end&nbsp;&nbsp;
+        #if(($viewMoreAmount * 3) > $totalRows) #break #end
+      #end
     #else
-      <a href="?return=gui/reports_and_tables/report_data&set_report_row_limit=$viewMoreAmount">
-        $viewMoreAmount records</a>&nbsp;
+      All $numRows records visible
     #end
-    #if($viewMoreAmount > 6000) - could be slow#end&nbsp;&nbsp;
-    #if(($viewMoreAmount * 3) > $totalRows) #break #end
-  #end
+    <div style="float:right">
+      <a href="javascript:top.fExport();"><img src="resources/icons/applications/tango/actions/go-last.png" style="border:0; vertical-align: middle">export...</a>
+    </div>
   </td>
 </tr>
-#end
