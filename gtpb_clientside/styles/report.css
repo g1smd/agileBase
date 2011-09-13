@@ -399,3 +399,18 @@ tr.separator + tr.separator {
 img.mini_icon {
 	vertical-align: middle;
 }
+
+.mini_action {
+  font-size: 8pt!important;
+  float: right;
+}
+
+.mini_action a {
+  color: #486F98;
+  text-decoration: none;
+}
+
+.mini_action img {
+  border: 0;
+  vertical-align: middle;
+}

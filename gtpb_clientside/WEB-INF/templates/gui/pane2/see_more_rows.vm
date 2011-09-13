@@ -30,8 +30,8 @@
     #else
       All $numRows records visible
     #end
-    <div style="float:right">
-      <a href="javascript:top.fExport();"><img src="resources/icons/applications/tango/actions/go-last.png" style="border:0; vertical-align: middle">export...</a>
+    <div class="mini_action">
+      <a href="javascript:top.fExport();"><img src="resources/icons/applications/tango/actions/go-last.png">export...</a>
     </div>
   </td>
 </tr>
