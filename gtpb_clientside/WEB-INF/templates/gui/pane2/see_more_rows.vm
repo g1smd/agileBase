@@ -34,7 +34,7 @@
       <a href="javascript:top.fExport();"><img src="resources/icons/applications/tango/actions/go-last.png">&nbsp;export...</a>
       #if($sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))
         <br>
-        <a href="javascript:top.fImport();"><img src="resources/icons/applications/tango/actions/go-last.png">&nbsp;import...</a>
+        <a href="javascript:top.fImport();"><img src="resources/icons/applications/tango/actions/go-first.png">&nbsp;import...</a>
       #end
     </div>
   </td>
