@@ -396,6 +396,10 @@ img.mini_icon {
   font-weight: normal;
 }
 
+table#reportData th div.mini_action {
+  width: auto; /* pane 3 override 100% width */
+}
+
 .mini_action a {
   color: #486F98;
   text-decoration: none;
