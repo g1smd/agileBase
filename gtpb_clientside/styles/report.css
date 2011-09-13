@@ -24,7 +24,7 @@ table#reportData th {
   font-weight:bold;
   border:1px solid #cecece;
   border-top: 0px;
-  padding:7px;
+  padding:5px;
   text-align:left;
   height:30px; 
   text-transform: capitalize;
@@ -392,8 +392,8 @@ img.mini_icon {
 .mini_action {
   font-size: 8pt!important;
   float: right;
-  padding: 0.2em;
   font-weight: normal;
+  text-transform: lowercase;
 }
 
 table#reportData th div.mini_action {
