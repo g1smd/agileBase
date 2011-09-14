@@ -26,16 +26,24 @@
         #end
         #if($viewMoreAmount > 6000) - could be slow#end&nbsp;&nbsp;
         #if(($viewMoreAmount * 3) > $totalRows) #break #end
+        <a href="javascript:top.fExport();">export all...</a>
+        #if($sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))
+          &nbsp;<a href="javascript:top.fImport();">import...</a>
+        #end
       #end
     #else
-      All $numRows records visible
-    #end
-    <div class="mini_action">
-      <a href="javascript:top.fExport();"><img src="resources/icons/applications/tango/actions/edit-redo.png">&nbsp;export...</a>
+      All $numRows records visible<br>
+      &nbsp;<a href="javascript:top.fExport();">export</a>
       #if($sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))
-        <br>
-        <a href="javascript:top.fImport();"><img src="resources/icons/applications/tango/actions/go-jump.png">&nbsp;import...</a>
+        &nbsp;<a href="javascript:top.fImport();">import...</a>
       #end
-    </div>
+    #end
+##    <div class="mini_action">
+##      <a href="javascript:top.fExport();"><img src="resources/icons/applications/tango/actions/edit-redo.png">&nbsp;export...</a>
+##      #if($sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))
+##        <br>
+##        <a href="javascript:top.fImport();"><img src="resources/icons/applications/tango/actions/go-jump.png">&nbsp;import...</a>
+##      #end
+##    </div>
   </td>
 </tr>
