@@ -27,16 +27,12 @@
         #if($viewMoreAmount > 6000) - could be slow#end&nbsp;&nbsp;
         #if(($viewMoreAmount * 3) > $totalRows) #break #end
       #end
-      <a href="javascript:top.fExport();">export all...</a>
-      #if($sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))
-        &nbsp;<a href="javascript:top.fImport();">import...</a>
-      #end
     #else
       All $numRows records visible<br>
-      &nbsp;<a href="javascript:top.fExport();">export</a>
-      #if($sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))
-        &nbsp;<a href="javascript:top.fImport();">import...</a>
-      #end
+    #end
+    <a href="javascript:top.fExport();">export all...</a>
+    #if($sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))
+      &nbsp;<a href="javascript:top.fImport();">import...</a>
     #end
 ##    <div class="mini_action">
 ##      <a href="javascript:top.fExport();"><img src="resources/icons/applications/tango/actions/edit-redo.png">&nbsp;export...</a>
