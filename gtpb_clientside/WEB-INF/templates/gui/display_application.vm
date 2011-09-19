@@ -173,7 +173,7 @@
 			        </div>
 			        ##<div class=buttonGroup> ## import/export
 			          ## #parse('gui/toolbar/buttons/links.vm')
-                #if($viewTools.loggedInUserAllowedTo("ADMINISTRATE"))
+                #if($view.loggedInUserAllowedTo("ADMINISTRATE"))
 			            #parse('gui/toolbar/buttons/import.vm')
 			            #parse('gui/toolbar/buttons/export.vm')
                 #end
