@@ -108,14 +108,15 @@
       #end
 	  #if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
   	    <script language=Javascript>
-   	     top.document.getElementById('button_new').removeAttribute('disabled');
-   	     top.document.getElementById('button_clone').removeAttribute('disabled');
-   	     top.document.getElementById('button_delete').removeAttribute('disabled');
-   	     top.document.getElementById('button_print').removeAttribute('disabled');
-         top.document.getElementById('button_apps').removeAttribute('disabled');
-         if (top.document.getElementById('button_forms')) {
-           top.document.getElementById('button_forms').removeAttribute('disabled');
-         }
+         var jqDoc = $(top.document);
+   	     jqDoc.find('#button_new').removeAttribute('disabled');
+   	     jqDoc.find('#button_clone').removeAttribute('disabled');
+   	     jqDoc.find('#button_delete').removeAttribute('disabled');
+         jqDoc.find('#button_import').removeAttribute('disabled');
+   	     jqDoc.find('#button_export').removeAttribute('disabled');
+   	     jqDoc.find('#button_print').removeAttribute('disabled');
+         jqDoc.find('#button_apps').removeAttribute('disabled');
+         jqDoc.find('#button_forms').removeAttribute('disabled');
         </script>
       #else
       <script language=Javascript>
@@ -126,19 +127,22 @@
    		     function fClone() {
    		       // do nothing
    		     }
-
-           top.document.getElementById('button_new').setAttribute('disabled','true');
-           top.document.getElementById('button_clone').setAttribute('disabled','true');
-           top.document.getElementById('button_delete').setAttribute('disabled','true');
+           var jqDoc = $(top.document);
+           jqDoc.find('#button_new').setAttribute('disabled','true');
+           jqDoc.find('#button_clone').setAttribute('disabled','true');
+           jqDoc.find('#button_delete').setAttribute('disabled','true');
+           jqDoc.find('#button_import').setAttribute('disabled','true');
         	 #if($view.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
-   	     		top.document.getElementById('button_print').removeAttribute('disabled');
+	    	    jqDoc.find('#button_export').removeAttribute('disabled');
+   	     		jqDoc.find('#button_print').removeAttribute('disabled');
         	 #else
-        		top.document.getElementById('button_print').setAttribute('disabled','true');
+        		jqDoc.find('#button_export').setAttribute('disabled','true');
+        		jqDoc.find('#button_print').setAttribute('disabled','true');
            #end
       </script>
 	  #end
     <script language=Javascript src="resources/$resource_folder/new_delete.js"></script>
-	<script src="resources/pane2_amalgam.js" type="text/javascript"></script>
+	  <script src="resources/pane2_amalgam.js" type="text/javascript"></script>
     <script language=Javascript>
         #set($numRows = $data.size())
         #set($reportRowLimit = $sessionData.getReportRowLimit())
@@ -152,19 +156,14 @@
             parent.pane_1.fSetCurrentOption('$pane1_id','$rowCount');##
           #end
         #end
+      var jqDoc = $(top.document);
     	#if(!$isNotTable)
-          top.document.getElementById('filter').removeAttribute('disabled');
+          jqDoc.find('#filter').removeAttribute('disabled');
     	#end
     	## Enable the dashboard if relevant
-      if (top.document.getElementById('button_dashboard')) {
-        top.document.getElementById('button_dashboard').removeAttribute('disabled');
-      }
-      if (top.document.getElementById('button_forms')) {
-        top.document.getElementById('button_forms').removeAttribute('disabled');
-      }
-      if (top.document.getElementById('button_calendar')) {
-        top.document.getElementById('button_calendar').removeAttribute('disabled');
-      }
+      jqDoc.find('#button_dashboard').removeAttribute('disabled');
+      jqDoc.find('#button_forms').removeAttribute('disabled');
+      jqDoc.find('#button_calendar').removeAttribute('disabled');
 		
 	  function loadPane3() {
 		  var url = 'AppController.servlet?return=$return';
