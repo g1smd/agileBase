@@ -171,13 +171,13 @@
                 #parse('gui/toolbar/buttons/filter.vm')
                 #parse('gui/toolbar/buttons/print.vm')
 			        </div>
-			        ##<div class=buttonGroup> ## import/export
+              #if($view.loggedInUserAllowedTo('ADMINISTRATE'))
+			          <div class=buttonGroup> ## import/export
 			          ## #parse('gui/toolbar/buttons/links.vm')
-                #if($view.loggedInUserAllowedTo("ADMINISTRATE"))
 			            #parse('gui/toolbar/buttons/import.vm')
 			            #parse('gui/toolbar/buttons/export.vm')
-                #end
-			        ##</div>
+			          </div>
+              #end
 			        <div class=buttonGroup> ## external applications, built in and customised
 			          ## #parse('gui/toolbar/buttons/wiki.vm')
 					  #set($userType = $appUser.getUserType())
