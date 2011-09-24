@@ -170,14 +170,12 @@
               <div class=buttonGroup> ## display preferences
                 #parse('gui/toolbar/buttons/filter.vm')
                 #parse('gui/toolbar/buttons/print.vm')
+                #parse('gui/toolbar/buttons/export.vm')
 			        </div>
-              #if($view.loggedInUserAllowedTo('ADMINISTRATE'))
-			          <div class=buttonGroup> ## import/export
-			          ## #parse('gui/toolbar/buttons/links.vm')
-			            #parse('gui/toolbar/buttons/import.vm')
-			            #parse('gui/toolbar/buttons/export.vm')
-			          </div>
-              #end
+##		          <div class=buttonGroup> ## import/export
+		            ## #parse('gui/toolbar/buttons/links.vm')
+		            ## #parse('gui/toolbar/buttons/import.vm')
+##		          </div>
 			        <div class=buttonGroup> ## external applications, built in and customised
 			          ## #parse('gui/toolbar/buttons/wiki.vm')
 					  #set($userType = $appUser.getUserType())
