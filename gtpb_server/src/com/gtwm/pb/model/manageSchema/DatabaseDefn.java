@@ -83,6 +83,7 @@ import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.manageData.fields.DurationValueDefn;
+import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.DashboardPopulator;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
@@ -177,7 +178,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
 				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
 		// one-off boot actions
-		this.addViewCountFields();
+		Set<TableInfo> allTables = new HashSet<TableInfo>();
+		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
+		// TODO: once this action has completed, set getCompanies back to protected
+		for (CompanyInfo company : authenticator.getCompanies()) {
+			allTables.addAll(company.getTables());
+		}
+		this.addViewCountFields(allTables);
 	}
 
 	public void cancelScheduledEvents() {
