@@ -189,7 +189,6 @@ public class TableData implements TableDataInfo {
 							+ " = ?";
 					PreparedStatement viewCountStatement = conn.prepareStatement(SQLCode);
 					viewCountStatement.setInt(1, rowId);
-					logger.debug(viewCountStatement.toString());
 					int rowsUpdated = viewCountStatement.executeUpdate();
 					if (rowsUpdated != 1) {
 						logger.error("Updating row count: " + rowsUpdated + " rows updated");
