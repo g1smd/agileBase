@@ -178,7 +178,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
 				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
 		// one-off boot actions
-		// this.addViewCountFields();
+		this.addViewCountFields();
 	}
 
 	public void cancelScheduledEvents() {
@@ -203,15 +203,16 @@ public final class DatabaseDefn implements DatabaseInfo {
 		Set<TableInfo> allTables = new HashSet<TableInfo>();
 		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
 		// TODO: once this action has completed, set getCompanies back to protected
-		//for (CompanyInfo company : authenticator.getCompanies()) {
-		//	allTables.addAll(company.getTables());
-		//}
+		for (CompanyInfo company : authenticator.getCompanies()) {
+			allTables.addAll(company.getTables());
+		}
+		logger.info("Adding view count fields");
 		for (TableInfo table : allTables) {
 			String viewCountFieldName = HiddenFields.VIEW_COUNT.getFieldName();
 			try {
 				BaseField viewCountField = table.getField(viewCountFieldName);
 			} catch (ObjectNotFoundException onex) {
-				logger.warn("View count field doesn't exist for table " + table + ", adding it");
+				logger.info("View count field doesn't exist for table " + table + ", adding it");
 				Connection conn = null;
 				try {
 					HibernateUtil.startHibernateTransaction();
