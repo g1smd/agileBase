@@ -21,7 +21,7 @@
   #set($report = $table.getReport($internalReportName))
   ## send the default report when requiring the fields of a table
   #foreach($reportField in $report.getReportFields())
-				    #if(! $reportField.getBaseField().getClass().getSimpleName().equals("RelationFieldDefn"))
+		#if(! $reportField.getBaseField().getClass().getSimpleName().equals("RelationFieldDefn"))
       <option>
         <display_value>$reportField.getFieldName()</display_value>
         <internal_value>$reportField.getInternalFieldName()</internal_value>

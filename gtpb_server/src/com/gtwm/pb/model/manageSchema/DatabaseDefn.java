@@ -178,13 +178,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
 				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
 		// one-off boot actions
-		Set<TableInfo> allTables = new HashSet<TableInfo>();
-		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
-		// TODO: once this action has completed, set getCompanies back to protected
-		for (CompanyInfo company : authenticator.getCompanies()) {
-			allTables.addAll(company.getTables());
-		}
-		this.addViewCountFields(allTables);
+		this.addViewCountFields();
 	}
 
 	public void cancelScheduledEvents() {
@@ -205,7 +199,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * Was only used once but is an example of how to add a new type of hidden
 	 * field so worth keeping around
 	 */
-	private void addViewCountFields(Set<TableInfo> allTables) throws SQLException {
+	private void addViewCountFields() throws SQLException {
+		Set<TableInfo> allTables = new HashSet<TableInfo>();
+		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
+		// TODO: once this action has completed, set getCompanies back to protected
+		for (CompanyInfo company : authenticator.getCompanies()) {
+			allTables.addAll(company.getTables());
+		}
 		for (TableInfo table : allTables) {
 			String viewCountFieldName = HiddenFields.VIEW_COUNT.getFieldName();
 			try {
@@ -342,6 +342,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				!IntegerField.NOT_NULL, !IntegerField.NOT_APPLICABLE, null, 0,
 				!IntegerField.USES_LOOKUP, !IntegerField.STORES_CURRENCY,
 				FieldPrintoutSetting.NO_PRINTOUT);
+		viewCountField.setHidden(true);
 		HibernateUtil.currentSession().save(viewCountField);
 		table.addField(viewCountField);
 		this.addFieldToRelationalDb(conn, table, viewCountField);
