@@ -93,7 +93,7 @@ public class TableData implements TableDataInfo {
 		}
 	}
 
-	public Map<BaseField, BaseValue> getTableDataRow(Connection conn, int rowId)
+	public Map<BaseField, BaseValue> getTableDataRow(Connection conn, int rowId, boolean logView)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		Map<BaseField, BaseValue> tableDataRow = new HashMap<BaseField, BaseValue>();
 		String internalTableName = this.table.getInternalTableName();

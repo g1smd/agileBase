@@ -246,7 +246,7 @@ public final class DataManagement implements DataManagementInfo {
 			CodingErrorException, InputRecordException, DisallowedException,
 			MissingParametersException {
 		// Get values to clone.
-		Map<BaseField, BaseValue> values = this.getTableDataRow(table, rowId);
+		Map<BaseField, BaseValue> values = this.getTableDataRow(table, rowId, false);
 		// Store in a linked hash map to maintain order as saveRecord needs
 		// values in an order which isn't going to change.
 		LinkedHashMap<BaseField, BaseValue> valuesToClone = new LinkedHashMap<BaseField, BaseValue>();
@@ -2398,7 +2398,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	public Map<BaseField, BaseValue> getTableDataRow(TableInfo table, int rowId)
+	public Map<BaseField, BaseValue> getTableDataRow(TableInfo table, int rowId, boolean logView)
 			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
 		Connection conn = null;
 		TableDataInfo tableData = new TableData(table);
@@ -2406,7 +2406,8 @@ public final class DataManagement implements DataManagementInfo {
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			tableDataRow = tableData.getTableDataRow(conn, rowId);
+			tableDataRow = tableData.getTableDataRow(conn, rowId, logView);
+			conn.commit();
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -2421,7 +2422,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	public String getTableDataRowJson(TableInfo table, int rowId) throws SQLException,
 			ObjectNotFoundException, CantDoThatException, CodingErrorException, JSONException {
-		Map<BaseField, BaseValue> tableDataRow = this.getTableDataRow(table, rowId);
+		Map<BaseField, BaseValue> tableDataRow = this.getTableDataRow(table, rowId, true);
 		JSONStringer js = new JSONStringer();
 		js.object();
 		for (Map.Entry<BaseField, BaseValue> rowEntry : tableDataRow.entrySet()) {

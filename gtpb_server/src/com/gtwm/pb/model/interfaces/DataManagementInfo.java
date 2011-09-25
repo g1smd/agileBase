@@ -195,7 +195,7 @@ public interface DataManagementInfo {
 	 *      int) See TableData.getTableDataRow for an explanation of the
 	 *      exceptions thrown
 	 */
-	public Map<BaseField, BaseValue> getTableDataRow(TableInfo table, int rowId)
+	public Map<BaseField, BaseValue> getTableDataRow(TableInfo table, int rowId, boolean logView)
 			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException;
 
 	public String getTableDataRowJson(TableInfo table, int rowId) throws SQLException,
