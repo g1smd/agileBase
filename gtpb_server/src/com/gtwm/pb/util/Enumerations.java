@@ -262,7 +262,8 @@ public class Enumerations {
 				"User who created the record"), LAST_MODIFIED("Last modified [Auto]",
 				"Date & time of last change to record"), MODIFIED_BY("Modified by [Auto]",
 				"User who made the last change"), LOCKED("Locked [Auto]",
-				"Whether record is locked for editing");
+				"Whether record is locked for editing"),
+				VIEW_COUNT("View count [Auto]", "Number of times the record has been viewed");
 
 		private String fieldName;
 

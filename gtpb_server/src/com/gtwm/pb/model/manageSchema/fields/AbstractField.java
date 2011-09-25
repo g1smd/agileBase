@@ -252,7 +252,7 @@ public abstract class AbstractField implements BaseField {
 	public String toString() {
 		return this.getFieldName();
 	}
-
+	
 	private String fieldName = "";
 
 	private String internalFieldName = null;

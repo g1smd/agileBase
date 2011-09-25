@@ -198,30 +198,30 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * Was only used once but is an example of how to add a new type of hidden
 	 * field so worth keeping around
 	 */
-	private void addLockableFields(Set<TableInfo> allTables) throws SQLException {
+	private void addViewCountFields(Set<TableInfo> allTables) throws SQLException {
 		for (TableInfo table : allTables) {
-			String lockableFieldName = HiddenFields.LOCKED.getFieldName();
+			String viewCountFieldName = HiddenFields.VIEW_COUNT.getFieldName();
 			try {
-				BaseField lockingField = table.getField(lockableFieldName);
+				BaseField viewCountField = table.getField(viewCountFieldName);
 			} catch (ObjectNotFoundException onex) {
-				logger.warn("Locking field doesn't exist for table " + table + ", adding it");
+				logger.warn("View count field doesn't exist for table " + table + ", adding it");
 				Connection conn = null;
 				try {
 					HibernateUtil.startHibernateTransaction();
 					conn = this.relationalDataSource.getConnection();
 					conn.setAutoCommit(false);
 					HibernateUtil.activateObject(table);
-					this.addRecordLockedFieldToTable(conn, table);
+					this.addViewCountFieldToTable(conn, table);
 					conn.commit();
 					HibernateUtil.currentSession().getTransaction().commit();
 				} catch (SQLException sqlex) {
-					logger.error("SQL error adding locking field: " + sqlex);
+					logger.error("SQL error adding view count field: " + sqlex);
 					rollbackConnections(conn);
 				} catch (HibernateException hex) {
-					logger.error("Hibernate error adding locking field: " + hex);
+					logger.error("Hibernate error adding view count field: " + hex);
 					rollbackConnections(conn);
 				} catch (AgileBaseException pbex) {
-					logger.error("PB error adding locking field: " + pbex);
+					logger.error("AB error adding view count field: " + pbex);
 					rollbackConnections(conn);
 				} finally {
 					if (conn != null) {
@@ -257,9 +257,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 			SQLException, ObjectNotFoundException, CodingErrorException {
 		TextField wikiPageField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.WIKI_PAGE.getFieldName(),
-				HiddenFields.WIKI_PAGE.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
-				TextFieldDefn.NOT_NULL_FALSE, null, TextFieldDefn.NOT_APPLICABLE_FALSE, null, null,
-				TextFieldDefn.HIDDEN_FALSE, true, FieldPrintoutSetting.NO_PRINTOUT);
+				HiddenFields.WIKI_PAGE.getFieldDescription(), !TextField.UNIQUE,
+				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null,
+				!TextField.HIDDEN, true, FieldPrintoutSetting.NO_PRINTOUT);
 		HibernateUtil.currentSession().save(wikiPageField);
 		table.addField(wikiPageField);
 		this.addFieldToRelationalDb(conn, table, wikiPageField);
@@ -269,23 +269,22 @@ public final class DatabaseDefn implements DatabaseInfo {
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		DateField dateCreatedField = new DateFieldDefn(table, null,
 				HiddenFields.DATE_CREATED.getFieldName(),
-				HiddenFields.DATE_CREATED.getFieldDescription(), DateFieldDefn.UNIQUE_FALSE,
-				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND,
+				HiddenFields.DATE_CREATED.getFieldDescription(), !DateField.UNIQUE,
+				!DateField.NOT_NULL, DateField.DEFAULT_TO_NOW, Calendar.SECOND,
 				FieldPrintoutSetting.NO_PRINTOUT);
-		dateCreatedField.setHidden(DateFieldDefn.HIDDEN_TRUE);
+		dateCreatedField.setHidden(DateFieldDefn.HIDDEN);
 		HibernateUtil.currentSession().save(dateCreatedField);
 		table.addField(dateCreatedField);
 		this.addFieldToRelationalDb(conn, table, dateCreatedField);
-		// Don't add the date created field to the default report
 	}
 
 	private void addCreatedByFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		TextField createdByField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.CREATED_BY.getFieldName(),
-				HiddenFields.CREATED_BY.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
-				TextFieldDefn.NOT_NULL_FALSE, null, TextFieldDefn.NOT_APPLICABLE_FALSE, null, null,
-				TextFieldDefn.HIDDEN_TRUE, true, FieldPrintoutSetting.NAME_AND_VALUE);
+				HiddenFields.CREATED_BY.getFieldDescription(), !TextField.UNIQUE,
+				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null, TextField.HIDDEN,
+				true, FieldPrintoutSetting.NAME_AND_VALUE);
 		HibernateUtil.currentSession().save(createdByField);
 		table.addField(createdByField);
 		this.addFieldToRelationalDb(conn, table, createdByField);
@@ -296,10 +295,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		DateField lastModifiedField = new DateFieldDefn(table, null,
 				HiddenFields.LAST_MODIFIED.getFieldName(),
-				HiddenFields.LAST_MODIFIED.getFieldDescription(), DateFieldDefn.UNIQUE_FALSE,
-				DateFieldDefn.NOT_NULL_FALSE, DateFieldDefn.DEFAULT_TO_NOW_TRUE, Calendar.SECOND,
+				HiddenFields.LAST_MODIFIED.getFieldDescription(), !DateField.UNIQUE,
+				!DateField.NOT_NULL, DateField.DEFAULT_TO_NOW, Calendar.SECOND,
 				FieldPrintoutSetting.NO_PRINTOUT);
-		lastModifiedField.setHidden(DateFieldDefn.HIDDEN_TRUE);
+		lastModifiedField.setHidden(DateFieldDefn.HIDDEN);
 		HibernateUtil.currentSession().save(lastModifiedField);
 		table.addField(lastModifiedField);
 		this.addFieldToRelationalDb(conn, table, lastModifiedField);
@@ -310,13 +309,12 @@ public final class DatabaseDefn implements DatabaseInfo {
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		TextField modifiedByField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.MODIFIED_BY.getFieldName(),
-				HiddenFields.MODIFIED_BY.getFieldDescription(), TextFieldDefn.UNIQUE_FALSE,
-				TextFieldDefn.NOT_NULL_FALSE, null, TextFieldDefn.NOT_APPLICABLE_FALSE, null, null,
-				TextFieldDefn.HIDDEN_TRUE, true, FieldPrintoutSetting.NO_PRINTOUT);
+				HiddenFields.MODIFIED_BY.getFieldDescription(), !TextField.UNIQUE,
+				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null, TextField.HIDDEN,
+				true, FieldPrintoutSetting.NO_PRINTOUT);
 		HibernateUtil.currentSession().save(modifiedByField);
 		table.addField(modifiedByField);
 		this.addFieldToRelationalDb(conn, table, modifiedByField);
-		// Don't add the modified by field to the default report
 	}
 
 	private void addRecordLockedFieldToTable(Connection conn, TableInfo table)
@@ -327,6 +325,19 @@ public final class DatabaseDefn implements DatabaseInfo {
 		HibernateUtil.currentSession().save(recordLockedField);
 		table.addField(recordLockedField);
 		this.addFieldToRelationalDb(conn, table, recordLockedField);
+	}
+
+	private void addViewCountFieldToTable(Connection conn, TableInfo table)
+			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
+		IntegerField viewCountField = new IntegerFieldDefn(this.relationalDataSource, table, null,
+				HiddenFields.VIEW_COUNT.getFieldName(),
+				HiddenFields.VIEW_COUNT.getFieldDescription(), !IntegerField.UNIQUE, 0,
+				!IntegerField.NOT_NULL, !IntegerField.NOT_APPLICABLE, null, 0,
+				!IntegerField.USES_LOOKUP, !IntegerField.STORES_CURRENCY,
+				FieldPrintoutSetting.NO_PRINTOUT);
+		HibernateUtil.currentSession().save(viewCountField);
+		table.addField(viewCountField);
+		this.addFieldToRelationalDb(conn, table, viewCountField);
 	}
 
 	public synchronized TableInfo addTable(SessionDataInfo sessionData, HttpServletRequest request,
@@ -373,6 +384,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			this.addLastModifiedFieldToTable(conn, newTable);
 			this.addModifiedByFieldToTable(conn, newTable);
 			this.addRecordLockedFieldToTable(conn, newTable);
+			this.addViewCountFieldToTable(conn, newTable);
 		} catch (SQLException sqlex) {
 			// Reformat the error message to be more user friendly.
 			// Use SQLState as an error identifier because it is standard across
@@ -383,7 +395,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				throw new SQLException("The internal table name '"
 						+ newTable.getInternalTableName() + "' already exists", errorCode);
 			} else if (errorCode.equals("42601")) {
-				throw new SQLException("Table couldn't be created");
+				throw new SQLException("Table couldn't be created", sqlex);
 			} else {
 				throw new SQLException(sqlex + ": error code " + errorCode, sqlex);
 			}
@@ -994,8 +1006,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
-			String newReportName, String newReportDesc, ModuleInfo newModule, ReportStyle newReportStyle)
-			throws DisallowedException, CantDoThatException, SQLException, ObjectNotFoundException {
+			String newReportName, String newReportDesc, ModuleInfo newModule,
+			ReportStyle newReportStyle) throws DisallowedException, CantDoThatException,
+			SQLException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),

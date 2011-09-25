@@ -21,7 +21,6 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
-import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
@@ -141,15 +140,18 @@ public interface BaseField extends Comparable<BaseField> {
 	
 	public void setPrintoutSetting(FieldPrintoutSetting printoutSetting);
 
-	public static Boolean NOT_NULL_TRUE = true;
+	public static final boolean NOT_NULL = true;
 
-	public static Boolean NOT_NULL_FALSE = false;
+	public static final boolean HIDDEN = true;
 
-	public static Boolean HIDDEN_TRUE = true;
+	public static final boolean UNIQUE = true;
+	
+	public static final boolean USES_LOOKUP = true;
+	
+	public static final boolean DEFAULT_TO_NOW = true;
+	
+	public static final boolean NOT_APPLICABLE = true;
+	
+	public static final boolean STORES_CURRENCY = true;
 
-	public static Boolean HIDDEN_FALSE = false;
-
-	public static Boolean UNIQUE_TRUE = true;
-
-	public static Boolean UNIQUE_FALSE = false;
 }

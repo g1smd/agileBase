@@ -191,7 +191,4 @@ public class DateFieldDefn extends AbstractField implements DateField {
 
 	private static final SimpleLogger logger = new SimpleLogger(DateFieldDefn.class);
 
-	public static final Boolean DEFAULT_TO_NOW_TRUE = true;
-
-	public static final Boolean DEFAULT_TO_NOW_FALSE = false;
 }

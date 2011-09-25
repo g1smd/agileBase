@@ -57,23 +57,27 @@ public class TableData implements TableDataInfo {
 	public TableData(TableInfo table) {
 		this.table = table;
 	}
-	
+
 	public boolean isRecordLocked(Connection conn, SessionDataInfo sessionData, int rowId)
 			throws ObjectNotFoundException, SQLException {
 		// Does the table support locking in the first place?
-		if (! this.table.getRecordsLockable()) {
+		if (!this.table.getRecordsLockable()) {
 			return false;
 		}
 		// Check if any possible lock is overridden
 		// If so, we don't have to do an SQL query
-		TableInfo recordLockOverrideTable = ((SessionData) sessionData).getRecordLockOverrideTable();
+		TableInfo recordLockOverrideTable = ((SessionData) sessionData)
+				.getRecordLockOverrideTable();
 		int recordLockOverrideRowId = ((SessionData) sessionData).getRecordLockOverrideRowId();
 		if (recordLockOverrideTable != null) {
 			if ((rowId == recordLockOverrideRowId) && (recordLockOverrideTable.equals(this.table))) {
 				return false;
 			}
 		}
-		String SQLCode = "SELECT " + this.table.getField(HiddenFields.LOCKED.getFieldName()).getInternalFieldName() + " FROM " + this.table.getInternalTableName() + " WHERE " + this.table.getPrimaryKey().getInternalFieldName() + " = " + rowId;
+		String SQLCode = "SELECT "
+				+ this.table.getField(HiddenFields.LOCKED.getFieldName()).getInternalFieldName()
+				+ " FROM " + this.table.getInternalTableName() + " WHERE "
+				+ this.table.getPrimaryKey().getInternalFieldName() + " = " + rowId;
 		Statement statement = conn.createStatement();
 		ResultSet results = statement.executeQuery(SQLCode);
 		if (results.next()) {
@@ -84,14 +88,16 @@ public class TableData implements TableDataInfo {
 		} else {
 			results.close();
 			statement.close();
-			throw new ObjectNotFoundException("Can't tell if row ID " + rowId + " from table " + table + " is locked or not as the row can't be found. SQL = " + SQLCode);
+			throw new ObjectNotFoundException("Can't tell if row ID " + rowId + " from table "
+					+ table + " is locked or not as the row can't be found. SQL = " + SQLCode);
 		}
 	}
 
 	public Map<BaseField, BaseValue> getTableDataRow(Connection conn, int rowId)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		Map<BaseField, BaseValue> tableDataRow = new HashMap<BaseField, BaseValue>();
-		String SQLCode = "SELECT * FROM " + this.table.getInternalTableName();
+		String internalTableName = this.table.getInternalTableName();
+		String SQLCode = "SELECT * FROM " + internalTableName;
 		if (rowId < 0) {
 			SQLCode += " LIMIT 1";
 		} else {
@@ -107,7 +113,8 @@ public class TableData implements TableDataInfo {
 			results = statement.executeQuery();
 			if (results.next()) {
 				FIELDSLOOP: for (BaseField tableField : this.table.getFields()) {
-					if (tableField instanceof SeparatorField || tableField instanceof ReferencedReportDataField) {
+					if (tableField instanceof SeparatorField
+							|| tableField instanceof ReferencedReportDataField) {
 						continue FIELDSLOOP;
 					}
 					String internalFieldName = tableField.getInternalFieldName();
@@ -128,8 +135,8 @@ public class TableData implements TableDataInfo {
 						}
 						fieldValue = new IntegerValueDefn(fieldValueInt);
 					} else if (dbType.equals(DatabaseFieldType.TIMESTAMP)) {
-						DateValue dateValue = new DateValueDefn(results
-								.getTimestamp(internalFieldName));
+						DateValue dateValue = new DateValueDefn(
+								results.getTimestamp(internalFieldName));
 						// Date from database may be null
 						// if (dateValue.get(Calendar.MONTH) != null) {
 						// dateValue.set(Calendar.MONTH,
@@ -170,6 +177,21 @@ public class TableData implements TableDataInfo {
 										+ field.getFieldName() + "' is of an unrecognised type");
 					}
 					tableDataRow.put(field, fieldValue);
+				}
+				// Log access to the row
+				PreparedStatement viewCountStatement = null;
+				if (rowId > 0) {
+					BaseField viewCountField = this.table.getField(HiddenFields.VIEW_COUNT
+							.getFieldName());
+					String internalFieldName = viewCountField.getInternalFieldName();
+					SQLCode = "UPDATE " + internalTableName + " SET " + internalFieldName + " = "
+							+ internalFieldName + " + 1";
+					SQLCode += " WHERE " + this.table.getPrimaryKey().getInternalFieldName()
+							+ " = ?";
+					viewCountStatement = conn.prepareStatement(SQLCode);
+					viewCountStatement.setInt(1, rowId);
+					viewCountStatement.executeUpdate();
+					viewCountStatement.close();
 				}
 			}
 		} finally {
