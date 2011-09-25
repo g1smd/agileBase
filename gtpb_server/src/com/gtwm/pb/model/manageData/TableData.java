@@ -179,7 +179,7 @@ public class TableData implements TableDataInfo {
 					tableDataRow.put(field, fieldValue);
 				} // end loop through fields
 				// Log access to the row
-				if (rowId > 0) {
+				if (logView && (rowId > 0)) {
 					BaseField viewCountField = this.table.getField(HiddenFields.VIEW_COUNT
 							.getFieldName());
 					String internalFieldName = viewCountField.getInternalFieldName();
