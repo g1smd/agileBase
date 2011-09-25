@@ -36,6 +36,8 @@ public interface TableDataInfo {
 	 * 
 	 * @param rowId
 	 *            Row identifier
+	 * @param logView
+	 *            Whether to log the access as a record view or not
 	 * @return A map of field => field value
 	 * @throws SQLException
 	 *             There shouln't be an SQLException but there may be
@@ -44,7 +46,7 @@ public interface TableDataInfo {
 	 *             the method - specifically, one of the table's fields is of a
 	 *             type the method doesn't recognise
 	 */
-	public Map<BaseField, BaseValue> getTableDataRow(Connection conn, int rowId)
+	public Map<BaseField, BaseValue> getTableDataRow(Connection conn, int rowId, boolean logView)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException;
 
 	/**
