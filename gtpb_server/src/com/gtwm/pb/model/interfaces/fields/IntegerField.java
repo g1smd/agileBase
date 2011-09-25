@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.util.CantDoThatException;
 
-public interface IntegerField {
+public interface IntegerField extends BaseField {
 	public void setDefault(Integer defaultValue) throws CantDoThatException;
 
 	/**

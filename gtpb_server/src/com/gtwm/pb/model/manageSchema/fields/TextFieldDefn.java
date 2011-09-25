@@ -509,16 +509,4 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	private transient DataSource dataSource = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(TextFieldDefn.class);
-
-	/**
-	 * Can pass this constant as an argument when constructing this object. Just
-	 * means arguments are more readable than (true, false, false, true, ...)
-	 */
-	public static final Boolean NOT_APPLICABLE_TRUE = true;
-
-	public static final Boolean NOT_APPLICABLE_FALSE = false;
-
-	public static final Boolean USES_LOOKUP_TRUE = true;
-
-	public static final Boolean USES_LOOKUP_FALSE = false;
 }
