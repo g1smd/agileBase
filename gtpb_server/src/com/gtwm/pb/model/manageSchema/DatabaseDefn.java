@@ -178,7 +178,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
 				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
 		// one-off boot actions
-		this.addViewCountFields();
+		// this.addViewCountFields();
 	}
 
 	public void cancelScheduledEvents() {

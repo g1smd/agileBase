@@ -177,9 +177,8 @@ public class TableData implements TableDataInfo {
 										+ field.getFieldName() + "' is of an unrecognised type");
 					}
 					tableDataRow.put(field, fieldValue);
-				}
+				} // end loop through fields
 				// Log access to the row
-				PreparedStatement viewCountStatement = null;
 				if (rowId > 0) {
 					BaseField viewCountField = this.table.getField(HiddenFields.VIEW_COUNT
 							.getFieldName());
@@ -188,9 +187,13 @@ public class TableData implements TableDataInfo {
 							+ internalFieldName + " + 1";
 					SQLCode += " WHERE " + this.table.getPrimaryKey().getInternalFieldName()
 							+ " = ?";
-					viewCountStatement = conn.prepareStatement(SQLCode);
+					PreparedStatement viewCountStatement = conn.prepareStatement(SQLCode);
 					viewCountStatement.setInt(1, rowId);
-					viewCountStatement.executeUpdate();
+					logger.debug(viewCountStatement.toString());
+					int rowsUpdated = viewCountStatement.executeUpdate();
+					if (rowsUpdated != 1) {
+						logger.error("Updating row count: " + rowsUpdated + " rows updated");
+					}
 					viewCountStatement.close();
 				}
 			}
