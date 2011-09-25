@@ -203,9 +203,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		Set<TableInfo> allTables = new HashSet<TableInfo>();
 		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
 		// TODO: once this action has completed, set getCompanies back to protected
-		for (CompanyInfo company : authenticator.getCompanies()) {
-			allTables.addAll(company.getTables());
-		}
+		//for (CompanyInfo company : authenticator.getCompanies()) {
+		//	allTables.addAll(company.getTables());
+		//}
 		for (TableInfo table : allTables) {
 			String viewCountFieldName = HiddenFields.VIEW_COUNT.getFieldName();
 			try {

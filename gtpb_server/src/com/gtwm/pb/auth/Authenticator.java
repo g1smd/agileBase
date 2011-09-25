@@ -81,7 +81,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	}
 
 	@Transient
-	public SortedSet<CompanyInfo> getCompanies() {
+	protected SortedSet<CompanyInfo> getCompanies() {
 		return Collections
 				.unmodifiableSortedSet(new TreeSet<CompanyInfo>(this.getCompaniesCollection()));
 	}
