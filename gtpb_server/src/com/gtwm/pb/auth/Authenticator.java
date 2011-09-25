@@ -36,17 +36,14 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.Enumerations.UserType;
-
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
-
 import javax.servlet.http.*;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -84,7 +81,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	}
 
 	@Transient
-	protected SortedSet<CompanyInfo> getCompanies() {
+	public SortedSet<CompanyInfo> getCompanies() {
 		return Collections
 				.unmodifiableSortedSet(new TreeSet<CompanyInfo>(this.getCompaniesCollection()));
 	}
