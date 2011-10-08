@@ -44,7 +44,7 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.RandomString;
-import com.gtwm.pb.util.Enumerations.UserType;
+import com.gtwm.pb.util.Enumerations.InitialView;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import org.grlea.log.SimpleLogger;
@@ -349,7 +349,7 @@ public final class AuthManager implements AuthManagerInfo {
 	}
 
 	public synchronized void updateUser(HttpServletRequest request, AppUserInfo appUser,
-			String userName, String surname, String forename, String password, UserType userType)
+			String userName, String surname, String forename, String password, InitialView userType)
 			throws DisallowedException, MissingParametersException, CantDoThatException, ObjectNotFoundException {
 		// Allow updating of any user if administrator or yourself if not
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || appUser

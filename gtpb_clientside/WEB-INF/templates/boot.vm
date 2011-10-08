@@ -18,11 +18,9 @@
 #set($appUser = $view.getLoggedInUser())
 #set($userType = $appUser.getUserType())
 #set($apps = $appUser.getCompany().getApps())
-#if($apps.contains("dashboard") && $userType == "EXECUTIVE")
+#if($apps.contains("dashboard") && $userType == "EXECUTIVE_DASHBOARD")
 	## Executives get the dashboard by default
 	#parse("gui/customisations/common/dashboard/dashboard.vm")
-#elseif($userType == "DATA_INPUT")
-  #parse("gui/edit_nav/edit_nav.vm")
 #else
   #parse("gui/display_application.vm")
 #end

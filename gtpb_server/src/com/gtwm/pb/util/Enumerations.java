@@ -354,11 +354,10 @@ public class Enumerations {
 	}
 
 	/**
-	 * Possible types of user who can log in to agileBase
+	 * Initial display a user sees
 	 */
-	public enum UserType {
-		EXTERNAL("sees limited interface on login"), DATA_INPUT("sees cards interface on login"), OPERATIONAL("sees standard interface on login"), MANAGERIAL(
-				"sees standard interface on login"), EXECUTIVE("sees dashboard on login");
+	public enum InitialView {
+		LIMITED("for external users outside the company"), REPORT("full height report view"), FULL("full three pane interface"), EXECUTIVE_DASHBOARD("executive dashboard");
 
 		public String getDescription() {
 			return this.description;
@@ -366,7 +365,7 @@ public class Enumerations {
 
 		private String description = "";
 
-		UserType(String description) {
+		InitialView(String description) {
 			this.description = description;
 		}
 	}

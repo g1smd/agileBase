@@ -20,7 +20,7 @@
 #set($user = $view.getLoggedInUser())
 #set($userType = $user.getUserType())
 #set($defaultReport = $user.getDefaultReport())
-#if($defaultReport && $userType != "EXECUTIVE" && $userType != "MANAGERIAL")
+#if($defaultReport && $userType != "EXECUTIVE_DASHBOARD")
   #parse("gui/mobile/pane2_selector.vm")
 #else
   #parse("gui/pane1.vm")
