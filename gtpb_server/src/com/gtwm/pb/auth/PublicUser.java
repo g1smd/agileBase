@@ -24,7 +24,7 @@ import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.util.CantDoThatException;
-import com.gtwm.pb.util.Enumerations.UserType;
+import com.gtwm.pb.util.Enumerations.InitialView;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
@@ -110,12 +110,12 @@ public class PublicUser implements AppUserInfo {
 		throw new CantDoThatException("This public user has no password");
 	}
 
-	public void setUserType(UserType userType) throws CantDoThatException {
+	public void setUserType(InitialView userType) throws CantDoThatException {
 		throw new CantDoThatException("The user type for the public user " + this + " cannot be set");
 	}
 
-	public UserType getUserType() {
-		return UserType.EXTERNAL;
+	public InitialView getUserType() {
+		return InitialView.LIMITED;
 	}
 
 	public Set<BaseReportInfo> getHiddenReports()  {

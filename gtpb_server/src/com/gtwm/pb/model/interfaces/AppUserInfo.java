@@ -21,7 +21,7 @@ import java.util.Set;
 
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.MissingParametersException;
-import com.gtwm.pb.util.Enumerations.UserType;
+import com.gtwm.pb.util.Enumerations.InitialView;
 
 /**
  * Represents an application user - someone who can log in to agileBase. Note
@@ -38,7 +38,7 @@ public interface AppUserInfo {
 
 	public static final String FORENAME = "forename";
 
-	public static final String USERTYPE = "usertype";
+	public static final String INITIALVIEW = "initialview";
 
 	public CompanyInfo getCompany();
 
@@ -67,9 +67,9 @@ public interface AppUserInfo {
 	 */
 	public String getPassword() throws CantDoThatException;
 
-	public void setUserType(UserType userType) throws CantDoThatException;
+	public void setUserType(InitialView userType) throws CantDoThatException;
 
-	public UserType getUserType();
+	public InitialView getUserType();
 
 	/**
 	 * A user can have some reports hidden from them, not for security reasons

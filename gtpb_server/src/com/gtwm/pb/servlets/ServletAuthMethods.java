@@ -44,7 +44,7 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.RandomString;
-import com.gtwm.pb.util.Enumerations.UserType;
+import com.gtwm.pb.util.Enumerations.InitialView;
 
 /**
  * Methods to do with setting up and using authentication (adding users,
@@ -208,17 +208,17 @@ public final class ServletAuthMethods {
 				throw new CantDoThatException("User update failed: error setting password");
 			}
 		}
-		String userTypeString = request.getParameter(AppUserInfo.USERTYPE.toLowerCase());
-		UserType userType = null;
+		String userTypeString = request.getParameter(AppUserInfo.INITIALVIEW.toLowerCase());
+		InitialView userType = null;
 		if (userTypeString != null) {
-			userType = UserType.valueOf(userTypeString.toUpperCase());
+			userType = InitialView.valueOf(userTypeString.toUpperCase());
 		}
 		// cache the old values for rollback
 		String oldUserName = appUser.getUserName();
 		String oldSurname = appUser.getSurname();
 		String oldForename = appUser.getForename();
 		String oldPassword = appUser.getPassword();
-		UserType oldUserType = appUser.getUserType();
+		InitialView oldUserType = appUser.getUserType();
 		// begin updating model and persisting changes
 		HibernateUtil.startHibernateTransaction();
 		try {

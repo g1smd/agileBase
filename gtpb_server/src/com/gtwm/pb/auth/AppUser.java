@@ -29,7 +29,7 @@ import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
-import com.gtwm.pb.util.Enumerations.UserType;
+import com.gtwm.pb.util.Enumerations.InitialView;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -75,7 +75,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		}
 		this.setPassword(password);
 		// Give them a default user type
-		this.setUserType(UserType.OPERATIONAL);
+		this.setUserType(InitialView.FULL);
 	}
 
 	@ManyToOne(targetEntity = Company.class)
@@ -141,12 +141,12 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 
 	@Enumerated(EnumType.STRING)
-	public UserType getUserType() {
-		return this.userType;
+	public InitialView getUserType() {
+		return this.initialView;
 	}
 
-	public void setUserType(UserType userType) {
-		this.userType = userType;
+	public void setUserType(InitialView userType) {
+		this.initialView = userType;
 	}
 
 	@Transient
@@ -298,7 +298,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 
 	private String forename = "";
 
-	private UserType userType = null;
+	private InitialView initialView = null;
 
 	private String password;
 
