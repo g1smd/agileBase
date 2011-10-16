@@ -207,6 +207,12 @@ function fDeleteObj(sAction, sRowIdentifier) {
 	fDeleteFirstItem();
 }
 
+function showPane3IfNecessary() {
+	var jqButt = $(top.document).find("#pane3butt")
+	if (!jqButt.hasClass("selected")) {
+		jqButt.click();
+	}
+}
 // numberOfTabsExpected parameter:
 // -1 will always force a complete reload of pane 3
 // null will always force a single tab refresh only
@@ -239,11 +245,6 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	$.post(replacedTemplateUrl, null, function(data) {
 		// Refresh frame 3
 		if (typeof (parent.pane_3) != "undefined") {
-			var jqButt = $(top.document).find("#pane3butt")
-			alert("title is " + jqButt.attr("title"));
-			if (!jqButt.hasClass("selected")) {
-				jqButt.click();
-			}
 			// If user is loading a new report, it may have
 			// different privileges to the last one.
 			// If so, reload the whole of pane 3 to refresh the tab
