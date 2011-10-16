@@ -152,7 +152,6 @@
         	  
         $(document).ready(function() {
           window.spawnWindow=fSpawnWindow;
-          document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows=fRowsVal();                       
         });
       </script>  
     </head>
