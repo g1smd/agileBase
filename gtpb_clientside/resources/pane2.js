@@ -239,7 +239,8 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	$.post(replacedTemplateUrl, null, function(data) {
 		// Refresh frame 3
 		if (typeof (parent.pane_3) != "undefined") {
-			var jqButt = $(parent.parent).find("#pane3butt")
+			var jqButt = $(top.document).find("#pane3butt")
+			alert("title is " + jqButt.attr("title"));
 			if (!jqButt.hasClass("selected")) {
 				jqButt.addClass("selected");
 				jqButt.attr("selected", "true");
