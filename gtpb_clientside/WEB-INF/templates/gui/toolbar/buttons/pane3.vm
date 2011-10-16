@@ -20,22 +20,22 @@
 	// ^=XOR
 	// if *only* one button is set then give priority to that, otherwise show both
 	function fRowsVal() {
-	     var oPane2Butt=top.document.getElementById('pane2butt');
-	     var oPane3Butt=top.document.getElementById('pane3butt');
-	     var bPane2=($(oPane2Butt).hasClass('selected'));
-	     var bPane3=($(oPane3Butt).hasClass('selected'));
-	     if (bPane2&&bPane3) return '*,*';				 // if both are switched on split equally
-	     if (bPane2^bPane3) return (bPane2?'*,0':'0,*'); // if one or the other show that one
+     var oPane2Butt=top.document.getElementById('pane2butt');
+     var oPane3Butt=top.document.getElementById('pane3butt');
+     var bPane2=($(oPane2Butt).hasClass('selected'));
+     var bPane3=($(oPane3Butt).hasClass('selected'));
+     if (bPane2&&bPane3) return '*,*';				 // if both are switched on split equally
+     if (bPane2^bPane3) return (bPane2?'*,0':'0,*'); // if one or the other show that one
 	 	 
 		 // if both are switched off, reset to show both
 		 oPane2Butt.click(); // set the buttons down.  We know that both are off so a click will switch them on
-	     oPane3Butt.click();
-	     return ('*,*');
+     oPane3Butt.click();
+     return ('*,*');
 	}
 	  
 
 	function fAnimateFrame(stepPercent, currentPercent, targetPercent, targetFrame) {
-	    var difference = (targetPercent - currentPercent);
+    var difference = (targetPercent - currentPercent);
 		var change = difference * (stepPercent / 100);
 		currentPercent = currentPercent + change;
 		var rowsVal;
@@ -50,25 +50,25 @@
 		  setTimeout('fAnimateFrame(' + stepPercent + ',' + currentPercent + ',' + targetPercent + ',' + targetFrame + ');', 1);
 		} else {
 		  // stop iterating, set them to the exact end states
-	      document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows=fRowsVal();					 						 
+      document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows=fRowsVal();					 						 
 		}
 	}
 	
 	function fFormatRHPanes(oButton) {
 	
 	  function fInitFrameAnimation() {
-		var currentRows = document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows;
-	    if (bPane2&&bPane3) {
-		  targetPercent = 50;
-		  if (currentRows.indexOf('*') == '0') {
-		    targetFrame = 3;
-		  }
-		} else {
-		  currentPercent = 50;
-		  if (bPane2) {
-		    targetFrame = 3;
-	      }
-		}
+  		var currentRows = document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows;
+      if (bPane2&&bPane3) {
+  		  targetPercent = 50;
+  		  if (currentRows.indexOf('*') == '0') {
+  		    targetFrame = 3;
+  		  }
+  		} else {
+  		  currentPercent = 50;
+  		  if (bPane2) {
+  		    targetFrame = 3;
+        }
+  		}
 	  }
 	  
 	  var oButton=oButton;
@@ -86,11 +86,10 @@
 	  var bPane3=($(oPane3Butt).hasClass('selected'));
 	  
 	  var targetPercent = 0;
-      var targetFrame = 2;
+    var targetFrame = 2;
 	  var currentPercent = 0;
 	  fInitFrameAnimation();
 	  fAnimateFrame(0.1, currentPercent, targetPercent, targetFrame);
-	  
 	}		
 </script>
 
@@ -98,7 +97,12 @@
 #set($click="fFormatRHPanes(this)")
 #set($id='pane3butt')
 #set($caption='Record')
-#set($params='selected=true toggleButton=true')
-#set($classes='selected toggleButton')
+#if($view.getLoggedInUser().getUserType() == "REPORT")
+  #set($params='toggleButton=true')
+  #set($classes='toggleButton')
+#else
+  #set($params='selected=true toggleButton=true')
+  #set($classes='selected toggleButton')
+#end
 #set($tooltip='Show/hide the individual record information')
 #parse('gui/resources/button.vm')
