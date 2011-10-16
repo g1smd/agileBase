@@ -242,8 +242,6 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 			var jqButt = $(top.document).find("#pane3butt")
 			alert("title is " + jqButt.attr("title"));
 			if (!jqButt.hasClass("selected")) {
-				jqButt.addClass("selected");
-				jqButt.attr("selected", "true");
 				jqButt.click();
 			}
 			// If user is loading a new report, it may have
