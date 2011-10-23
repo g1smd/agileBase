@@ -24,9 +24,16 @@ public class Comment implements CommentInfo {
 	}
 
 	public String getTimestampString() {
-		return String.format("%td %tb %tY %tH:%tM:%tS", this.timestamp);
+		if ((System.currentTimeMillis() - this.timestamp.getTimeInMillis()) > 1000 * 60 * 60 * 24
+				* 365) {
+			return String.format("%1$td %1$tb %1$tY", this.timestamp);
+		} else if ((this.timestamp.getTimeInMillis() - System.currentTimeMillis()) > 1000 * 60 * 60 * 24) {
+			return String.format("%1$td %1$tb", this.timestamp);
+		} else {
+			return String.format("%1$td %1$tb %1$tY %1$tH:%1$tM:%1$tS", this.timestamp);
+		}
 	}
-	
+
 	public String getAuthor() {
 		return this.author;
 	}
@@ -52,7 +59,7 @@ public class Comment implements CommentInfo {
 				&& (this.author.equals(otherComment.getAuthor())) && (this.timestamp
 				.equals(otherComment.getTimestamp())));
 	}
-	
+
 	public int hashCode() {
 		if (this.hashCode == 0) {
 			int hashCode = 17;
@@ -76,17 +83,18 @@ public class Comment implements CommentInfo {
 		if (rowIdCompare != 0) {
 			return rowIdCompare;
 		}
-		int internalFieldNameCompare = this.internalFieldName.compareTo(otherComment.getInternalFieldName());
+		int internalFieldNameCompare = this.internalFieldName.compareTo(otherComment
+				.getInternalFieldName());
 		if (internalFieldNameCompare != 0) {
 			return internalFieldNameCompare;
 		}
 		return this.author.compareTo(otherComment.getAuthor());
 	}
-	
+
 	public String toString() {
 		return this.text + " - " + this.author + ", " + this.getTimestampString();
 	}
-	
+
 	private final String author;
 
 	private final String text;
