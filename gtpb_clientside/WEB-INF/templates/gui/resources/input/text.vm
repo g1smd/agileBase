@@ -35,10 +35,10 @@
 	        #set($numRows = 5)##
 	      #end##
 	    #end##
-		#if($mobile_device)##
-		  #set($numCols=30)##
-		  #set($numRows = $numRows + 1)##
-		#end##
+  		#if($mobile_device)##
+  		  #set($numCols=30)##
+  		  #set($numRows = $numRows + 1)##
+  		#end##
 	    #if($globalEdit)##
 	      <textarea gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" cols="$numCols" rows="$numRows" name="$field.getInternalFieldName()" onkeyup="fResizeTextArea(this);" onclick="fResizeTextArea(this);" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">$fieldValue</textarea>##
 	    #else##
@@ -52,6 +52,11 @@
 		  #elseif($field.getNotNull() && (($fieldValue == "") || $customAction))
 			  <span class="mandated">* Mandatory field - please enter a value</span>
       #end##
+      ## Comments
+      <p>Add comment: <input type="text" class="comment_input" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()"/><p>
+      <div class="comments" id="comments_$field.getInternalFieldName()">
+        #parse("gui/resources/input/comments.vm")
+      </div>
 		#end##
 	  #else ## start of normal (not big text) field
 	    #if($field.usesLookup())##

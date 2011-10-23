@@ -43,6 +43,7 @@ import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.Calendar;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.io.File;
 import java.io.Reader;
 import java.io.InputStreamReader;
@@ -61,6 +62,7 @@ import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.CachedReportFeedInfo;
+import com.gtwm.pb.model.interfaces.CommentInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
@@ -166,6 +168,61 @@ public final class DataManagement implements DataManagementInfo {
 		this.authManager = authManager;
 	}
 
+	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment) throws SQLException {
+		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, comment) VALUES (?,?,?,?,?)";
+		Connection conn = null;
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
+			statement.setTimestamp(1, timestamp);
+			statement.setString(2, user.getForename() + " " + user.getSurname());
+			statement.setString(3, field.getInternalFieldName());
+			statement.setInt(4, rowId);
+			statement.setString(5, comment);
+			int rowsAffected = statement.executeUpdate();
+			if (rowsAffected != 1) {
+				logger.error("Error adding comment. " + rowsAffected + " rows inserted. SQL = " + statement);
+			}
+			statement.close();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+	
+	public SortedSet<CommentInfo> getComments(BaseField field, int rowId)  throws SQLException{
+		String sqlCode = "SELECT created, author, comment FROM dbint_comments WHERE internalfieldname=? AND rowid=?";
+		Connection conn = null;
+		SortedSet<CommentInfo> comments = new TreeSet<CommentInfo>();
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(sqlCode);
+			String internalFieldName = field.getInternalFieldName();
+			statement.setString(1, internalFieldName);
+			statement.setInt(2, rowId);
+			ResultSet results = statement.executeQuery();
+			while (results.next()) {
+				Timestamp createdTimestamp = results.getTimestamp(1);
+				Calendar created = Calendar.getInstance();
+				created.setTimeInMillis(createdTimestamp.getTime());
+				String author = results.getString(2);
+				String comment = results.getString(3);
+				comments.add(new Comment(internalFieldName, rowId, author, created, comment));
+			}
+			results.close();
+			statement.close();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return comments;
+	}
+	
 	public String getWebAppRoot() {
 		return this.webAppRoot;
 	}

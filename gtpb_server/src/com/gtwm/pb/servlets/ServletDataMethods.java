@@ -82,6 +82,21 @@ public final class ServletDataMethods {
 		return null;
 	}
 
+	public static void addComment(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, ObjectNotFoundException, SQLException, MissingParametersException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn, true);
+		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.EDIT_TABLE_DATA, table))) {
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.EDIT_TABLE_DATA, table);
+		}
+		String internalFieldName = request.getParameter("internalfieldname");
+		BaseField field = table.getField(internalFieldName);
+		int rowId = sessionData.getRowId(table);
+		AppUserInfo user = databaseDefn.getAuthManager().getLoggedInUser(request);
+		String comment = request.getParameter("comment");
+		databaseDefn.getDataManagement().addComment(field, rowId, user, comment);
+	}
+	
 	/**
 	 * Insert or update a database record. Fields passed in the request are
 	 * saved.
