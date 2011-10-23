@@ -975,3 +975,4 @@ pane3Scripts.functionList.push(fAssignButtonTableActions);
 pane3Scripts.functionList.push(fSexyUpload);
 pane3Scripts.functionList.push(fExpandContractSection);
 pane3Scripts.functionList.push(fTwitter);
+pane3Scripts.functionList.push(fComments);
