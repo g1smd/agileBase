@@ -1,7 +1,6 @@
 #if(!$field.getFieldCategory())
   #set($field = $sessionData.getCustomField("comment"))
 #end
-Field is $field
 #foreach($comment in $view.getComments($field))
   <div class="comment">
     <span class="comment_text">$comment.getText()</span> - $comment.getAuthor(), $comment.getTimestampString()

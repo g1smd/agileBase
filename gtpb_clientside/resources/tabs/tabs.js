@@ -927,6 +927,7 @@ function addComment(jqCommentInput) {
 			comment: text
 		}, function(data) {
 			$("#comments_" + internalFieldName).html(data);
+			jqCommentInput.val("");
 		});
 	}
 }
