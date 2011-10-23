@@ -169,7 +169,7 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment) throws SQLException {
-		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, comment) VALUES (?,?,?,?,?)";
+		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
@@ -194,7 +194,7 @@ public final class DataManagement implements DataManagementInfo {
 	}
 	
 	public SortedSet<CommentInfo> getComments(BaseField field, int rowId)  throws SQLException{
-		String sqlCode = "SELECT created, author, comment FROM dbint_comments WHERE internalfieldname=? AND rowid=?";
+		String sqlCode = "SELECT created, author, text FROM dbint_comments WHERE internalfieldname=? AND rowid=?";
 		Connection conn = null;
 		SortedSet<CommentInfo> comments = new TreeSet<CommentInfo>();
 		try {
