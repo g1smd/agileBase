@@ -933,6 +933,7 @@ function addComment(jqCommentInput) {
 
 function fComments() {
 	$("input.comment_input").keypress(function(event) {
+		console.log("keypress");
 		if (event.which == 13) {
 			addComment($(this));
 		}
