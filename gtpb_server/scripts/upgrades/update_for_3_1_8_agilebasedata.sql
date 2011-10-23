@@ -1,6 +1,6 @@
 CREATE TABLE dbint_comments(
   created timestamp,
-  comment varchar(100000),
+  text varchar(100000),
   author varchar(10000),
   internalfieldname varchar(1000),
   rowid integer
