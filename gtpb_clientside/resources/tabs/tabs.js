@@ -929,7 +929,7 @@ function addComment(jqCommentInput) {
 		}, function(data) {
 			$("#comments_" + internalFieldName).html(data);
 			jqCommentInput.val("");
-			jqCommentInput.attr("disabled", "false");
+			jqCommentInput.removeAttr("disabled");
 		});
 	}
 }
