@@ -1,4 +1,4 @@
-#if(!$field)
+#if(!$field.getFieldCategory())
   #set($field = $sessionData.getCustomField("comment"))
 #end
 Field is $field
