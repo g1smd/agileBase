@@ -186,6 +186,7 @@ public final class DataManagement implements DataManagementInfo {
 				logger.error("Error adding comment. " + rowsAffected + " rows inserted. SQL = " + statement);
 			}
 			statement.close();
+			conn.commit();
 		} finally {
 			if (conn != null) {
 				conn.close();
