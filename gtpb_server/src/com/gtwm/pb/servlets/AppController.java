@@ -335,6 +335,9 @@ public final class AppController extends VelocityViewServlet {
 				case EXPAND_SECTION:
 					ServletSchemaMethods.expandSection(sessionData, request, databaseDefn);
 					break;
+				case ADD_COMMENT:
+					ServletDataMethods.addComment(sessionData, request, databaseDefn);
+					break;
 				case ADD_USER:
 					ServletAuthMethods.addUser(sessionData, request, databaseDefn.getAuthManager());
 					break;

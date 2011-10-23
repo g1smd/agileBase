@@ -297,6 +297,11 @@ public interface ViewMethodsInfo {
 	public Exception getException();
 
 	/**
+	 * Get a set of comments that have been added to a particular field in the current record
+	 */
+	public SortedSet<CommentInfo> getComments(BaseField field) throws SQLException, DisallowedException, ObjectNotFoundException;
+	
+	/**
 	 * @return The list of field values for a particular record, so the record
 	 *         can be displayed or edited. The session will know what table and
 	 *         row id to return values for. If we are editing a record that

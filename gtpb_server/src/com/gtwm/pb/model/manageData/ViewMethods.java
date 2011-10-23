@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
+import com.gtwm.pb.model.interfaces.CommentInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
@@ -427,6 +428,20 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return unchosenRelationFields;
 	}
 
+	public SortedSet<CommentInfo> getComments(BaseField field) throws SQLException, DisallowedException, ObjectNotFoundException {
+		if (field == null) {
+			return new TreeSet<CommentInfo>();
+		}
+		TableInfo table = field.getTableContainingField();
+		if (!this.getAuthenticator().loggedInUserAllowedTo(this.request,
+				PrivilegeType.VIEW_TABLE_DATA, table)) {
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
+					table);
+		}
+		int rowId = this.sessionData.getRowId(table);
+		return this.databaseDefn.getDataManagement().getComments(field, rowId);
+	}
+	
 	public Map<BaseField, BaseValue> getTableDataRow() throws DisallowedException,
 			ObjectNotFoundException, SQLException, CantDoThatException, CodingErrorException {
 		return getTableDataRow(this.sessionData.getTable());

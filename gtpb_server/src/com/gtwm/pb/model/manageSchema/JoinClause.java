@@ -207,53 +207,49 @@ public class JoinClause implements JoinClauseInfo {
 		BaseField rightField = this.getRightTableFieldDirect();
 		ReportFieldInfo leftReportField = this.getLeftReportFieldDirect();
 		ReportFieldInfo rightReportField = this.getRightReportFieldDirect();
-		if (!(obj instanceof JoinClauseInfo)) {
+		JoinClause jc = (JoinClause) obj;
+		int L1 = (this.isLeftPartTable()) ? 1 : 0;
+		int R1 = (this.isRightPartTable()) ? 1 : 0;
+		int L2 = (jc.isLeftPartTable()) ? 1 : 0;
+		int R2 = (jc.isRightPartTable()) ? 1 : 0;
+		int LSum = L1 + R1;
+		int RSum = L2 + R2;
+		if (LSum != RSum) {
 			return false;
 		} else {
-			JoinClause jc = (JoinClause) obj;
-			int L1 = (this.isLeftPartTable()) ? 1 : 0;
-			int R1 = (this.isRightPartTable()) ? 1 : 0;
-			int L2 = (jc.isLeftPartTable()) ? 1 : 0;
-			int R2 = (jc.isRightPartTable()) ? 1 : 0;
-			int LSum = L1 + R1;
-			int RSum = L2 + R2;
-			if (LSum != RSum) {
-				return false;
-			} else {
-				try {
-					// compare to own join fields:
-					if ((L1 == 1) && (R1 == 1) && (L2 == 1) && (R2 == 1)) {
-						boolean regular = ((leftField.equals(jc.getLeftTableField())) && (rightField
-								.equals(jc.getRightTableField())));
-						boolean goofy = ((leftField.equals(jc.getRightTableField())) && (rightField
-								.equals(jc.getLeftTableField())));
-						return (regular || goofy);
-					} else if ((L1 == 1) && (R1 == 0) && (L2 == 0) && (R2 == 1)) {
-						return ((leftField.equals(jc.getRightTableField())) && (rightReportField
-								.equals(jc.getLeftReportField())));
-					} else if ((L1 == 0) && (R1 == 1) && (L2 == 1) && (R2 == 0)) {
-						return ((leftReportField.equals(jc.getRightReportField())) && (rightField
-								.equals(jc.getLeftTableField())));
-					} else if ((L1 == 1) && (R1 == 0) && (L2 == 1) && (R2 == 0)) {
-						return ((leftField.equals(jc.getLeftTableField())) && (rightReportField
-								.equals(jc.getRightReportField())));
-					} else if ((L1 == 0) && (R1 == 1) && (L2 == 0) && (R2 == 1)) {
-						return ((leftReportField.equals(jc.getLeftReportField())) && (rightField
-								.equals(jc.getRightTableField())));
-					} else if ((L1 == 0) && (R1 == 0) && (L2 == 0) && (R2 == 0)) {
-						boolean regular = ((leftReportField.equals(jc.getLeftReportField())) && (rightReportField
-								.equals(jc.getRightReportField())));
-						boolean goofy = ((leftReportField.equals(jc.getRightReportField())) && (rightReportField
-								.equals(jc.getLeftReportField())));
-						return (regular || goofy);
-					} else {
-						logger.error("JoinClause.equals() unhandled state!");
-						return false; // this line should never run!
-					}
-				} catch (CantDoThatException cdtex) {
-					logger.error("Call to get an incorrect join type: " + cdtex);
-					return false;
+			try {
+				// compare to own join fields:
+				if ((L1 == 1) && (R1 == 1) && (L2 == 1) && (R2 == 1)) {
+					boolean regular = ((leftField.equals(jc.getLeftTableField())) && (rightField
+							.equals(jc.getRightTableField())));
+					boolean goofy = ((leftField.equals(jc.getRightTableField())) && (rightField
+							.equals(jc.getLeftTableField())));
+					return (regular || goofy);
+				} else if ((L1 == 1) && (R1 == 0) && (L2 == 0) && (R2 == 1)) {
+					return ((leftField.equals(jc.getRightTableField())) && (rightReportField
+							.equals(jc.getLeftReportField())));
+				} else if ((L1 == 0) && (R1 == 1) && (L2 == 1) && (R2 == 0)) {
+					return ((leftReportField.equals(jc.getRightReportField())) && (rightField
+							.equals(jc.getLeftTableField())));
+				} else if ((L1 == 1) && (R1 == 0) && (L2 == 1) && (R2 == 0)) {
+					return ((leftField.equals(jc.getLeftTableField())) && (rightReportField
+							.equals(jc.getRightReportField())));
+				} else if ((L1 == 0) && (R1 == 1) && (L2 == 0) && (R2 == 1)) {
+					return ((leftReportField.equals(jc.getLeftReportField())) && (rightField
+							.equals(jc.getRightTableField())));
+				} else if ((L1 == 0) && (R1 == 0) && (L2 == 0) && (R2 == 0)) {
+					boolean regular = ((leftReportField.equals(jc.getLeftReportField())) && (rightReportField
+							.equals(jc.getRightReportField())));
+					boolean goofy = ((leftReportField.equals(jc.getRightReportField())) && (rightReportField
+							.equals(jc.getLeftReportField())));
+					return (regular || goofy);
+				} else {
+					logger.error("JoinClause.equals() unhandled state!");
+					return false; // this line should never run!
 				}
+			} catch (CantDoThatException cdtex) {
+				logger.error("Call to get an incorrect join type: " + cdtex);
+				return false;
 			}
 		}
 	}
@@ -262,19 +258,23 @@ public class JoinClause implements JoinClauseInfo {
 		boolean isLeftPartTable = this.isLeftPartTable();
 		boolean isRightPartTable = this.isRightPartTable();
 		if (isLeftPartTable && isRightPartTable) {
-			return Integer.valueOf(this.getLeftTableFieldDirect().hashCode()
-					+ this.getRightTableFieldDirect().hashCode()).hashCode();
+			return Integer.valueOf(
+					this.getLeftTableFieldDirect().hashCode()
+							+ this.getRightTableFieldDirect().hashCode()).hashCode();
 		} else if (!isLeftPartTable && !isRightPartTable) {
-			return Integer.valueOf(this.getLeftReportFieldDirect().hashCode()
-					+ this.getRightReportFieldDirect().hashCode()).hashCode();
+			return Integer.valueOf(
+					this.getLeftReportFieldDirect().hashCode()
+							+ this.getRightReportFieldDirect().hashCode()).hashCode();
 		} else if (isLeftPartTable && !isRightPartTable) {
 			// concat table+field+report+field
-			return Integer.valueOf(this.getLeftTableFieldDirect().hashCode()
-					+ this.getRightReportFieldDirect().hashCode()).hashCode();
+			return Integer.valueOf(
+					this.getLeftTableFieldDirect().hashCode()
+							+ this.getRightReportFieldDirect().hashCode()).hashCode();
 		} else { // if (!isLeftPartTable && isRightPartTable) {
 			// concat table+field+report+field
-			return Integer.valueOf(this.getRightTableFieldDirect().hashCode()
-					+ this.getLeftReportFieldDirect().hashCode()).hashCode();
+			return Integer.valueOf(
+					this.getRightTableFieldDirect().hashCode()
+							+ this.getLeftReportFieldDirect().hashCode()).hashCode();
 		}
 	}
 
@@ -284,6 +284,7 @@ public class JoinClause implements JoinClauseInfo {
 	public int compareTo(JoinClauseInfo otherJoin) {
 		Date thisCreationTimestamp = this.getCreationTimestamp();
 		return thisCreationTimestamp.compareTo(otherJoin.getCreationTimestamp());
+		//TODO: handle equal creation times
 	}
 
 	@Id
@@ -301,10 +302,11 @@ public class JoinClause implements JoinClauseInfo {
 
 	@Transient
 	public Date getCreationTimestamp() {
-		// Change from java.sql.Timestamp which hibernate (sometimes?) returns to a Java Data object
+		// Change from java.sql.Timestamp which hibernate (sometimes?) returns
+		// to a Java Data object
 		return new Date(this.getCreationTimestampDirect().getTime());
 	}
-	
+
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date getCreationTimestampDirect() {
 		return this.creationTimestamp;

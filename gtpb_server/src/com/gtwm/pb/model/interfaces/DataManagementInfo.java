@@ -23,9 +23,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Set;
+import java.util.SortedSet;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.stream.XMLStreamException;
-
 import org.apache.commons.fileupload.FileItem;
 import org.json.JSONException;
 import com.gtwm.pb.auth.DisallowedException;
@@ -35,7 +36,6 @@ import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageData.DataRow;
 import com.gtwm.pb.util.DataDependencyException;
-import com.gtwm.pb.util.Enumerations.DataFormat;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -48,7 +48,7 @@ import com.gtwm.pb.util.Enumerations.FieldContentType;
  * of this class will be constructed to deal with everything data-related
  */
 public interface DataManagementInfo {
-
+	
 	/**
 	 * @param company
 	 *            Needed for internal caching mechanism. Can be null, but if so,
@@ -151,6 +151,13 @@ public interface DataManagementInfo {
 	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report,
 			boolean updateCacheIfObsolete) throws SQLException;
 
+	/**
+	 * Get all comments attached to a particular field for a particular record
+	 */
+	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException;
+	
+	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment) throws SQLException;
+	
 	/**
 	 * Return true if the record with the given primary key is visible in the
 	 * report

@@ -911,6 +911,34 @@ function fEALoaded() {
 	$('#frame_calculationdefn').contents().find('.area_toolbar').hide();
 }
 
+function addComment(jqCommentInput) {
+	var internalFieldName = jqCommentInput.attr("internalfieldname");
+	var internalTableName = jqCommentInput.attr("internaltablename");
+	var text = jqCommentInput.val();
+	if (text.length > 0) {
+		$.post("AppController.servlet", {
+			"return": "gui/resources/input/comments",
+			set_custom_field: true,
+			fieldkey: "comment",
+			custominternaltablename: internalTableName,
+			custominternalfieldname: internalFieldName,
+			add_comment: true,
+			internalfieldname: internalFieldName,
+			comment: text
+		}, function(data) {
+			$("#comments_" + internalFieldName).html(data);
+		});
+	}
+}
+
+function fComments() {
+	$("input.comment_input").keypress(function(event) {
+		if (event.which == 13) {
+			addComment($(this));
+		}
+	});
+}
+
 /*
  * Summary tab functions
  */
