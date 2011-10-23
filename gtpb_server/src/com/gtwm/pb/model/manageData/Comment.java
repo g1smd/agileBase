@@ -24,7 +24,7 @@ public class Comment implements CommentInfo {
 	}
 
 	public String getTimestampString() {
-		return String.format("%d %b %Y %H:%M:%S", this.timestamp);
+		return String.format("%td %tb %tY %tH:%tM:%tS", this.timestamp);
 	}
 	
 	public String getAuthor() {
