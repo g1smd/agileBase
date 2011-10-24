@@ -443,6 +443,10 @@ img.cross_reference_image {
   background-color: rgb(131,214,27); /* match 'saved' tick icon */
 }
 
+div.relation_field {
+  float: left; /* allow comments to the right */
+}
+
     div.relation_field input {
       margin-right:10px;
     }
