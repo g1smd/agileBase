@@ -940,9 +940,9 @@ function fComments() {
 			addComment($(this));
 		}
 	});
-	$(".comment_toggle").click() {
+	$(".comment_toggle").click(function() {
 		$(this).next(".add_comment_row").show("normal");
-	}
+	});
 }
 
 /*
