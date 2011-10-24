@@ -940,6 +940,9 @@ function fComments() {
 			addComment($(this));
 		}
 	});
+	$(".comment_toggle").click() {
+		$(this).next(".add_comment_row").show("normal");
+	}
 }
 
 /*
