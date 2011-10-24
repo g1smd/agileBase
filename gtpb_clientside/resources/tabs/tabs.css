@@ -509,6 +509,7 @@ div.relation_field {
   opacity: 0;
   cursor: pointer;
   margin-left: 1em;
+  vertical-align: top;
   -moz-transition-delay: 1s;
   -moz-transition-duration: 2s;
   -webkit-transition-delay: 1s;
