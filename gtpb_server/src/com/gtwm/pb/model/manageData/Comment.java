@@ -30,7 +30,7 @@ public class Comment implements CommentInfo {
 		} else if (age > (1000 * 60 * 60 * 24)) {
 			return String.format("%1$td %1$tb", this.timestamp);
 		} else {
-			return String.format("%1$td %1$tb %1$tY %1$tH:%1$tM:%1$tS", this.timestamp);
+			return String.format("%1$td %1$tb %1$tY %1$tH:%1$tM", this.timestamp);
 		}
 	}
 
