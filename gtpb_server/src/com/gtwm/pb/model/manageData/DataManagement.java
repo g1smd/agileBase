@@ -168,7 +168,8 @@ public final class DataManagement implements DataManagementInfo {
 		this.authManager = authManager;
 	}
 
-	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment) throws SQLException {
+	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment)
+			throws SQLException {
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
 		Connection conn = null;
 		try {
@@ -183,7 +184,8 @@ public final class DataManagement implements DataManagementInfo {
 			statement.setString(5, comment);
 			int rowsAffected = statement.executeUpdate();
 			if (rowsAffected != 1) {
-				logger.error("Error adding comment. " + rowsAffected + " rows inserted. SQL = " + statement);
+				logger.error("Error adding comment. " + rowsAffected + " rows inserted. SQL = "
+						+ statement);
 			}
 			statement.close();
 			conn.commit();
@@ -194,12 +196,14 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 	}
-	
-	public SortedSet<CommentInfo> getComments(BaseField field, int rowId)  throws SQLException {
+
+	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException {
 		SortedSet<CommentInfo> comments = new TreeSet<CommentInfo>();
 		Boolean hasComments = this.commentedFields.get(field);
-		if (hasComments.equals(false)) {
-			return comments;
+		if (hasComments != null) {
+			if (hasComments.equals(false)) {
+				return comments;
+			}
 		}
 		String sqlCode = "SELECT created, author, text FROM dbint_comments WHERE internalfieldname=? AND rowid=?";
 		Connection conn = null;
@@ -233,7 +237,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		return comments;
 	}
-	
+
 	public String getWebAppRoot() {
 		return this.webAppRoot;
 	}
@@ -3099,9 +3103,10 @@ public final class DataManagement implements DataManagementInfo {
 	private AtomicInteger reportFeedCacheHits = new AtomicInteger();
 
 	private AtomicInteger reportFeedCacheMisses = new AtomicInteger();
-	
+
 	/**
-	 * Record which fields have at least one comment in the database, which don't and which are unknown (not in the map)
+	 * Record which fields have at least one comment in the database, which
+	 * don't and which are unknown (not in the map)
 	 */
 	private Map<BaseField, Boolean> commentedFields = new ConcurrentHashMap<BaseField, Boolean>();
 
