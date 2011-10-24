@@ -536,6 +536,10 @@ span.comment_text {
   display: inline-block;
   border-radius: 0.5em;
 }
+
+span.comment_attribution {
+  color: gray;
+}
 	
 /* Note: this is an example of how to make a character hang */
 .currency_symbol {
