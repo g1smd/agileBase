@@ -942,6 +942,7 @@ function fComments() {
 	});
 	$(".comment_toggle").click(function() {
 		$(this).next(".add_comment_row").show("normal");
+		$(this).next(".add_comment_row").find(".comment_input").focus();
 	});
 }
 
