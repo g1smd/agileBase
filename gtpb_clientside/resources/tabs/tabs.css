@@ -445,7 +445,15 @@ img.cross_reference_image {
 
 .comment_toggle {
   opacity: 0;
+  cursor: pointer;
   margin-left: 1em;
+  -moz-transition-delay: 1s;
+  -moz-transition-duration: 2s;
+  -webkit-transition-delay: 1s;
+  -webkit-transition-duration: 2s;
+  -ms-transition-delay: 1s;
+  -ms-transition-duration: 2s;
+  transition-delay: 1s;
   transition-duration: 2s;
 }
 
