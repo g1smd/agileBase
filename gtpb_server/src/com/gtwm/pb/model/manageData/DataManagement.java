@@ -205,7 +205,7 @@ public final class DataManagement implements DataManagementInfo {
 				return comments;
 			}
 		}
-		String sqlCode = "SELECT created, author, text FROM dbint_comments WHERE internalfieldname=? AND rowid=?";
+		String sqlCode = "SELECT created, author, text FROM dbint_comments WHERE internalfieldname=? AND rowid=? order by created desc limit 10";
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
