@@ -24,10 +24,10 @@ public class Comment implements CommentInfo {
 	}
 
 	public String getTimestampString() {
-		if ((System.currentTimeMillis() - this.timestamp.getTimeInMillis()) > 1000 * 60 * 60 * 24
-				* 365) {
+		long age = System.currentTimeMillis() - this.timestamp.getTimeInMillis();
+		if (age > (1000 * 60 * 60 * 24 * 365)) {
 			return String.format("%1$td %1$tb %1$tY", this.timestamp);
-		} else if ((this.timestamp.getTimeInMillis() - System.currentTimeMillis()) > 1000 * 60 * 60 * 24) {
+		} else if (age > (1000 * 60 * 60 * 24)) {
 			return String.format("%1$td %1$tb", this.timestamp);
 		} else {
 			return String.format("%1$td %1$tb %1$tY %1$tH:%1$tM:%1$tS", this.timestamp);
