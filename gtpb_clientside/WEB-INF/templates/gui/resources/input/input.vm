@@ -32,4 +32,12 @@
 #if(!$tabIndex) #set($tabIndex = 0) #end
 #set($tabIndex = $tabIndex + 1)
 #parse("gui/resources/input/${fieldCategory.toString().toLowerCase()}.vm")
+#if($userCanEdit && (!$globalEdit))
+  <img src="resources/icons/comment.png" class="comment_toggle" />
+  ## Comments
+  <div class="add_comment_row">Add comment: <input type="text" class="comment_input" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()"/></div>
+  <div class="comments" id="comments_$field.getInternalFieldName()">
+    #parse("gui/resources/input/comments.vm")
+  </div>
+#end
 &nbsp;

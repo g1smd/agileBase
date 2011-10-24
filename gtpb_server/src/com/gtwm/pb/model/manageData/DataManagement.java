@@ -187,6 +187,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			statement.close();
 			conn.commit();
+			this.commentedFields.put(field, true);
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -194,10 +195,14 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 	
-	public SortedSet<CommentInfo> getComments(BaseField field, int rowId)  throws SQLException{
+	public SortedSet<CommentInfo> getComments(BaseField field, int rowId)  throws SQLException {
+		SortedSet<CommentInfo> comments = new TreeSet<CommentInfo>();
+		Boolean hasComments = this.commentedFields.get(field);
+		if (hasComments.equals(false)) {
+			return comments;
+		}
 		String sqlCode = "SELECT created, author, text FROM dbint_comments WHERE internalfieldname=? AND rowid=?";
 		Connection conn = null;
-		SortedSet<CommentInfo> comments = new TreeSet<CommentInfo>();
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
@@ -216,6 +221,11 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			results.close();
 			statement.close();
+			if (comments.size() > 0) {
+				this.commentedFields.put(field, true);
+			} else {
+				this.commentedFields.put(field, false);
+			}
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -235,7 +245,7 @@ public final class DataManagement implements DataManagementInfo {
 			CodingErrorException, DisallowedException, CantDoThatException,
 			MissingParametersException {
 		// editing a single record, pass in one row id
-		Set<Integer> rowIds = new HashSet<Integer>();
+		Set<Integer> rowIds = new HashSet<Integer>(1);
 		rowIds.add(rowId);
 		this.saveRecord(request, table, dataToSave, newRecord, rowIds, sessionData, multipartItems);
 	}
@@ -3089,6 +3099,11 @@ public final class DataManagement implements DataManagementInfo {
 	private AtomicInteger reportFeedCacheHits = new AtomicInteger();
 
 	private AtomicInteger reportFeedCacheMisses = new AtomicInteger();
+	
+	/**
+	 * Record which fields have at least one comment in the database, which don't and which are unknown (not in the map)
+	 */
+	private Map<BaseField, Boolean> commentedFields = new ConcurrentHashMap<BaseField, Boolean>();
 
 	private float uploadSpeed = 50000; // Default to 50KB per second
 

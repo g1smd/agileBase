@@ -443,6 +443,18 @@ img.cross_reference_image {
   background-color: rgb(131,214,27); /* match 'saved' tick icon */
 }
 
+.comment_toggle {
+  opacity: 0;
+}
+
+tr:hover .comment_toggle {
+  opacity: 1;
+}
+
+.add_comment_row {
+	display: none;
+}
+
 /* Note: this is an example of how to make a character hang */
 .currency_symbol {
 	/*

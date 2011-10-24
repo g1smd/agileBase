@@ -52,11 +52,6 @@
 		  #elseif($field.getNotNull() && (($fieldValue == "") || $customAction))
 			  <span class="mandated">* Mandatory field - please enter a value</span>
       #end##
-      ## Comments
-      <p>Add comment: <input type="text" class="comment_input" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()"/><p>
-      <div class="comments" id="comments_$field.getInternalFieldName()">
-        #parse("gui/resources/input/comments.vm")
-      </div>
 		#end##
 	  #else ## start of normal (not big text) field
 	    #if($field.usesLookup())##
