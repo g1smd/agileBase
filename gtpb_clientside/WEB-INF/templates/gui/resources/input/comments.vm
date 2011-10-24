@@ -4,6 +4,6 @@
 #foreach($comment in $view.getComments($field))
   <div class="comment">
     #set($t = $foreach.count % 2)
-    <span class="comment_text" #if($t.equals(0)) style="text-align: right" #end>$comment.getText()</span> - $comment.getAuthor(), $comment.getTimestampString()
+    <span class="comment_text" #if($t == "0") style="text-align: right" #end>$comment.getText()</span> - $comment.getAuthor(), $comment.getTimestampString()
   </div>
 #end
