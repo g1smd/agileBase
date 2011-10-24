@@ -532,7 +532,9 @@ tr:hover .comment_toggle {
 span.comment_text {
   background-color: #f0f0f0;
   padding: 0.5em;
-  margin: 0.5em;
+  margin: 0.1em;
+  display: inline-block;
+  border-radius: 0.5em;
 }
 	
 /* Note: this is an example of how to make a character hang */
