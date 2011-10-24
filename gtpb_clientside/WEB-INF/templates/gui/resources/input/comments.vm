@@ -2,16 +2,7 @@
   #set($field = $sessionData.getCustomField("comment"))
 #end
 #foreach($comment in $view.getComments($field))
-  <div class="comment">
-    #set($t = $foreach.count % 2)
+  <div class="comment" #if($foreach.count % 2 == 0) style="text-align: right" #end>
     <span class="comment_text">$comment.getText()</span> - $comment.getAuthor(), $comment.getTimestampString()
-    #if($t == 0)
-Hello
-#end
   </div>
-#end
-
-
-#if($t == 0)
-Hello
 #end
