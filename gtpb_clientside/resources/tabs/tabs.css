@@ -443,6 +443,64 @@ img.cross_reference_image {
   background-color: rgb(131,214,27); /* match 'saved' tick icon */
 }
 
+    div.relation_field input {
+      margin-right:10px;
+    }
+  
+  div.relation_field span {
+    padding-right:10px;
+  }
+    
+    div.relation_field a {
+      font-size:8pt;
+      margin-right:15px;
+    }
+     
+    div.relation_picker {
+      display:inline;
+      background-color:white;
+      max-width:100%;
+      height:100%;
+      position:absolute;
+      top:0;
+      left:0;
+      padding-top:30px;
+    }
+    
+    div.relation_picker div#toolbar {
+      border-bottom:1px solid black;
+      background-color:#F1F2ED;
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:30px;
+      font-size:8pt;
+      padding:3px 10px;
+      z-index:999;
+    }
+    
+    div.relation_picker div#toolbar select {
+      margin:0;
+    }
+    
+    div.relation_picker div#toolbar a {
+      float:right;
+      color:black;
+      text-decoration:none;
+      margin-top:5px;
+    }
+    
+    div.relation_picker div#toolbar a:hover {
+      text-decoration:underline;
+    }
+    
+    div.relation_picker div#content {
+      position:relative;
+      height:100%;
+      overflow:scroll;
+    }
+   
 .comment_toggle {
   opacity: 0;
   cursor: pointer;
