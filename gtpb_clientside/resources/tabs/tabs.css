@@ -525,8 +525,16 @@ tr:hover .comment_toggle {
 
 .add_comment_row {
 	display: none;
+	padding: 1em;
+	color: gray;
 }
 
+span.comment_text {
+  background-color: #f0f0f0;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+	
 /* Note: this is an example of how to make a character hang */
 .currency_symbol {
 	/*
