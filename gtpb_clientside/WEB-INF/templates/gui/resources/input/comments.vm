@@ -5,10 +5,13 @@
   <div class="comment">
     #set($t = $foreach.count % 2)
     <span class="comment_text">$comment.getText()</span> - $comment.getAuthor(), $comment.getTimestampString()
+    #if($t == 0)
+Hello
+#end
   </div>
 #end
 
 
-#if(true)
-  Hello
+#if($t == 0)
+Hello
 #end
