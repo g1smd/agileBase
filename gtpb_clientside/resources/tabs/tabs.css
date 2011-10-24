@@ -445,6 +445,8 @@ img.cross_reference_image {
 
 .comment_toggle {
   opacity: 0;
+  margin-left: 1em;
+  transition-duration: 2s;
 }
 
 tr:hover .comment_toggle {
