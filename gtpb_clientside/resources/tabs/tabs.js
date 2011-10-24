@@ -930,6 +930,7 @@ function addComment(jqCommentInput) {
 			$("#comments_" + internalFieldName).html(data);
 			jqCommentInput.val("");
 			jqCommentInput.removeAttr("disabled");
+			$(".add_comment_row").hide("normal");
 		});
 	}
 }
