@@ -521,6 +521,10 @@ div.relation_field {
 }
 
 tr:hover .comment_toggle {
+  opacity: 0.5;
+}
+
+tr:hover .comment_toggle:hover {
   opacity: 1;
 }
 
