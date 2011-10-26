@@ -789,32 +789,38 @@ function fDatePickers() {
 }
 
 function fExpandContractSection() {
-	$("tr.separator").click(function() {
-		var jqSeparator = $(this);
-		var internalFieldName = jqSeparator.attr("internalfieldname");
-		// Work out if the section's currently expanded or not
-		var jqFirstField = jqSeparator.next("tr");
-		var sectionRows = jqSeparator.nextUntil("tr.separator");
-		var contracted = true;
-		if (jqFirstField.is(":visible")) {
-			contracted = false;
-		}
-		if (contracted) {
-			sectionRows.show(); // show immediately for speed, no animation
-			jqSeparator.removeClass("contracted");
-			$.post("AppController.servlet", {
-				internalfieldname : internalFieldName,
-				expand_section : true,
-				"return" : "blank"
+	$("tr.separator").each(function() {
+		if (!$(this).hasClass("clickRegistered")) {
+			$(this).click(function() {
+				var jqSeparator = $(this);
+				var internalFieldName = jqSeparator.attr("internalfieldname");
+				// Work out if the section's currently expanded or not
+				var jqFirstField = jqSeparator.next("tr");
+				var sectionRows = jqSeparator.nextUntil("tr.separator");
+				var contracted = true;
+				if (jqFirstField.is(":visible")) {
+					contracted = false;
+				}
+				if (contracted) {
+					sectionRows.show(); // show immediately for speed, no animation
+					jqSeparator.removeClass("contracted");
+					$.post("AppController.servlet", {
+						internalfieldname : internalFieldName,
+						expand_section : true,
+						"return" : "blank"
+					});
+				} else {
+					sectionRows.hide("fast"); // animate the hide
+					jqSeparator.addClass("contracted");
+					$.post("AppController.servlet", {
+						internalfieldname : internalFieldName,
+						contract_section : true,
+						"return" : "blank"
+					});
+				}
 			});
 		} else {
-			sectionRows.hide("fast"); // animate the hide
-			jqSeparator.addClass("contracted");
-			$.post("AppController.servlet", {
-				internalfieldname : internalFieldName,
-				contract_section : true,
-				"return" : "blank"
-			});
+			$(this).addClass("clickRegistered");
 		}
 	});
 }
@@ -936,11 +942,17 @@ function addComment(jqCommentInput) {
 }
 
 function fComments() {
-	$("input.comment_input").keypress(function(event) {
-		if (event.which == 13) {
-			addComment($(this));
+	$("input.comment_input").each(function() {
+		if (!$(this).hasClass("keypressRegistered")) {
+			$(this).keypress(function(event) {
+				if (event.which == 13) {
+					addComment($(this));
+				}
+			});
+		} else {
+			$(this).addClass("keypressRegistered");
 		}
-	});
+	})
 	$(".comment_toggle").click(function() {
 		$(this).next(".add_comment_row").show("normal");
 		$(this).next(".add_comment_row").find(".comment_input").focus();
