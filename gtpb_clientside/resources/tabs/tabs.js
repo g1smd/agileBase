@@ -819,7 +819,6 @@ function fExpandContractSection() {
 					});
 				}
 			});
-		} else {
 			$(this).addClass("clickRegistered");
 		}
 	});
@@ -949,7 +948,6 @@ function fComments() {
 					addComment($(this));
 				}
 			});
-		} else {
 			$(this).addClass("keypressRegistered");
 		}
 	})
