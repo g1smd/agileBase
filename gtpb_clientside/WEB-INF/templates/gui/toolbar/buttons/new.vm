@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($button_img='resources/toolbar/new.png')
-#set($click="fNew()")
+#set($click="fNew();showPane3IfNecessary();")
 #set($caption='New')
 #set($id='button_new')
 #set($params='disabled=true')
