@@ -948,6 +948,9 @@ function fComments() {
 					addComment($(this));
 				}
 			});
+			$(this).next("button").click(function() {
+				addComment($(this));
+			});
 			$(this).addClass("keypressRegistered");
 		}
 	})

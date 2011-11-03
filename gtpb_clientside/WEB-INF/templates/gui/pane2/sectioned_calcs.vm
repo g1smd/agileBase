@@ -64,12 +64,10 @@ $viewTools.log("Heading calcs are $headingCalcs")
   #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
     #if($headingCalcs.contains($reportField))
       #set($fieldInHeading = true)
-      $viewTools.log("Calc $reportField is in headingCalcs $headingCalcs")
     #end
   #elseif($headingTables.contains($table))
     #set($fieldInHeading = true)
   #end
-  $viewTools.log("Field $reportField is in heading? $fieldInHeading")
   ## If field is a calc, check that it's not in the heading calcs
   ## If field is a normal table, check that it's not in the heading tables
   #if(!$fieldInHeading)
@@ -79,9 +77,7 @@ $viewTools.log("Heading calcs are $headingCalcs")
         #set($success = $detailTablesMap.put($table, true))
       #end
       #set($numDetailFields = $numDetailFields + 1)
-      $viewTools.log("numDetailsField is now $numDetailFields")
     #end
   #end
 #end
 #set($detailTables = $detailTablesMap.keySet())
-$viewTools.log("Detail tables are $detailTables")
