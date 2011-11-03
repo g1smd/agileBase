@@ -49,6 +49,10 @@
 		        return true;
         	}
         	
+          function showPane3IfNecessary() {
+            document.getElementById('oViewPane').contentWindow.pane_2.showPane3IfNecessary();
+          }
+          
         	function fNew() {  
         	  document.getElementById('oViewPane').contentWindow.pane_2.fNew();
         	} 
