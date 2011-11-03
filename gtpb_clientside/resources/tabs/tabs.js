@@ -948,7 +948,7 @@ function fComments() {
 					addComment($(this));
 				}
 			});
-			$(this).next("button").click(function() {
+			$(this).next("input[type=button]").click(function() {
 				addComment($(this));
 			});
 			$(this).addClass("keypressRegistered");

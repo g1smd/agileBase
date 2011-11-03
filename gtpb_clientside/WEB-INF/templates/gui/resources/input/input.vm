@@ -35,7 +35,7 @@
 #if($userCanEdit && (!$globalEdit))
   <img src="resources/icons/comment.png" class="comment_toggle" title="add a comment" alt="add comment"/>
   ## Comments
-  <div class="add_comment_row">Add comment: <input type="text" class="comment_input" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()"/><input type="button">add</input></div>
+  <div class="add_comment_row">Add comment: <input type="text" class="comment_input" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()"/><input type="button" value="add" /></div>
   <div class="comments" id="comments_$field.getInternalFieldName()">
     #parse("gui/resources/input/comments.vm")
   </div>
