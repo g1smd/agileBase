@@ -13,7 +13,7 @@ body{
 		font-weight: bold;
 		font-style: italic;
 		margin-bottom: -3px;
-		background: white url(line.gif) repeat-x 0 50%;
+		background: white url(tree/line.gif) repeat-x 0 50%;
 		color: #888;
 		text-align: right;
 	}
@@ -27,7 +27,7 @@ body{
 		display: block;
 		margin-bottom: -3px;
 		padding: 8px 10px 5px 5px;
-		background: url(drop-shadow.gif) bottom repeat-x;
+		background: url(tree/drop-shadow.gif) bottom repeat-x;
 		cursor: hand;
 		cursor: pointer;
 		font-size: 13px;
@@ -44,11 +44,11 @@ body{
 		}
 	
 		.moduleexpanded h2 span{
-			background-image: url(collapse.png);
+			background-image: url(tree/collapse.png);
 		}
 	
 		.modulecollapsed h2 span{
-			background-image: url(expand.png);
+			background-image: url(etree/xpand.png);
 		}
 	
 		h2 img{
@@ -56,14 +56,14 @@ body{
 		}
 		
 		.expandable {
-			background: transparent url(collapse.gif) no-repeat 0 0.6em;
+			background: transparent url(tree/collapse.gif) no-repeat 0 0.6em;
 			margin-left: -5px;
 			padding-left: 20px;
 			height: 100%;
 		}
 		
 		.expandable.collapsed {
-			background-image: url(expand.gif)
+			background-image: url(tree/expand.gif)
 		}
 		
 	ol{
@@ -112,7 +112,7 @@ body{
 
 					ol li ul li ul li{
 						padding: 0 0 0 8px;
-						background: transparent url(line_hor.gif) no-repeat 0 0.55em;
+						background: transparent url(tree/line_hor.gif) no-repeat 0 0.55em;
 					}
 					
 						.module-tree-item-wrap {
@@ -182,7 +182,7 @@ body{
 	}	
 		
 	ul.moduleaction li {
-		background: transparent url(../icons/arrowRight.gif) no-repeat 3px 0.6em;
+		background: transparent url(icons/arrowRight.gif) no-repeat 3px 0.6em;
 	}
 	
 	#reportsearch {
