@@ -942,16 +942,17 @@ function addComment(jqCommentInput) {
 
 function fComments() {
 	$("input.comment_input").each(function() {
-		if (!$(this).hasClass("keypressRegistered")) {
-			$(this).keypress(function(event) {
+		var jqInput = $(this);
+		if (!jqInput.hasClass("keypressRegistered")) {
+			jqInput.keypress(function(event) {
 				if (event.which == 13) {
-					addComment($(this));
+					addComment(jqInput);
 				}
 			});
-			$(this).next("input[type=button]").click(function() {
-				addComment($(this));
+			jqInput.next("input[type=button]").click(function() {
+				addComment(jqInput);
 			});
-			$(this).addClass("keypressRegistered");
+			jqInput.addClass("keypressRegistered");
 		}
 	})
 	$(".comment_toggle").click(function() {
