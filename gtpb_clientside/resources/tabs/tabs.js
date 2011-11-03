@@ -921,6 +921,7 @@ function addComment(jqCommentInput) {
 	var internalTableName = jqCommentInput.attr("internaltablename");
 	var text = jqCommentInput.val();
 	jqCommentInput.attr("disabled", "true");
+	jqCommentInput.next("input[type=button]").attr("disabed", "true");
 	if (text.length > 0) {
 		$.post("AppController.servlet", {
 			"return": "gui/resources/input/comments",
@@ -935,6 +936,7 @@ function addComment(jqCommentInput) {
 			$("#comments_" + internalFieldName).html(data);
 			jqCommentInput.val("");
 			jqCommentInput.removeAttr("disabled");
+			jqCommentInput.next("input[type=button]").removeAttr("disabed");
 			$(".add_comment_row").hide();
 		});
 	}
