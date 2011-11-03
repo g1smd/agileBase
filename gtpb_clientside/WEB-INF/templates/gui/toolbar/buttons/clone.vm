@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($button_img='resources/toolbar/clone.png')
-#set($click="fClone()")
+#set($click="fClone();showPane3IfNecessary();")
 #set($caption='Clone')
 #set($id='button_clone')
 #set($params='disabled=true')

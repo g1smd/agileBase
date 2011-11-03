@@ -213,6 +213,7 @@ function showPane3IfNecessary() {
 		jqButt.click();
 	}
 }
+
 // numberOfTabsExpected parameter:
 // -1 will always force a complete reload of pane 3
 // null will always force a single tab refresh only
