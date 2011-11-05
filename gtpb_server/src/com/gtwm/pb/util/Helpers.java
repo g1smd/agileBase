@@ -103,7 +103,6 @@ public final class Helpers {
 		return false;
 	}
 
-
 	/**
 	 * Given a date resolution that is a Calendar value, e.g. Calendar.MONTH,
 	 * return a string that can be used by Java's String.format() method to

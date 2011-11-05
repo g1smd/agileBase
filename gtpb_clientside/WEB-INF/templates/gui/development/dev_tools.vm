@@ -49,7 +49,7 @@
     <a href="AppController.servlet?return=gui/development/export_schema&returntype=xml">View schema as XML</a><p>
     <a href="AppController.servlet?return=gui/development/script_gen">View script for DB creation</a><p>
     <a href="AppController.servlet?return=gui/development/php_script_gen">View PHP script for DB cloning</a><p>
-    <a href="AppController.servlet?return=gui/development/translator">Translate to internal names</a><p>
+    <a href="AppController.servlet?return=gui/development/translator">Translate to internal or external names</a><p>
     <!-- <a href="AppController.servlet?return=gui/development/import_tables">Import Tables</a><p> -->
     <a href="AppController.servlet?return=gui/development/send_requests">Send a sequence of preformatted post requests</a><p>
     <a href="AppController.servlet?return=gui/development/manage_tab_addresses">Manage tab addresses for $view.getLoggedInUser().getCompany()</a><p>
