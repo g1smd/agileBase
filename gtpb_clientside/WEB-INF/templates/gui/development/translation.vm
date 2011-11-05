@@ -17,6 +17,7 @@
 ##
 #set($sourceText = $sessionData.getCustomVariable("sourcetext"))
 #set($outputText = $view.toInternalNames($sourceText))
+#set($externalText = $view.toExternalNames($sourceText))
 ###set($outputText = $view.toExternalNames($sourceText))
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
 <html>
@@ -47,6 +48,7 @@
 			    		    <br />
   			    		  <input type="submit" value="translate another" />
 			      </form>
+            $externalText
 			  </td>
 			  </tr>
 			  </table>

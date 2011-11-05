@@ -1113,13 +1113,13 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	public String toExternalNames(String sourceText) throws ObjectNotFoundException {
 		for (TableInfo table : this.getTablesAllowedTo(PrivilegeType.VIEW_TABLE_DATA)) {
-			sourceText = sourceText.replaceAll(table.getInternalTableName(), table.getTableName());
+			sourceText = sourceText.replaceAll(table.getInternalTableName(), table.getTableName().toLowerCase().replaceAll("\\W", ""));
 			for (BaseReportInfo report : table.getReports()) {
 				sourceText = sourceText.replaceAll(report.getInternalReportName(),
-						report.getReportName());
+						report.getReportName().toLowerCase().replaceAll("\\W", ""));
 				for (BaseField field : report.getReportBaseFields()) {
 					sourceText = sourceText.replaceAll(field.getInternalFieldName(),
-							field.getFieldName());
+							field.getFieldName().toLowerCase().replaceAll("\\W", ""));
 				}
 			}
 		}
