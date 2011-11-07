@@ -754,8 +754,17 @@ public class ReportData implements ReportDataInfo {
 					report.setQueryPlanSelection(QueryPlanSelection.TRY_ALTERNATIVE_NEXT_TIME);
 					break;
 				case TRY_ALTERNATIVE_NEXT_TIME:
-					PreparedStatement explainStatement = conn.prepareStatement("EXPLAIN SELECT * FROM " + report.getInternalReportName());
-					explainStatement.execute();
+					PreparedStatement explainStatement = conn.prepareStatement("EXPLAIN SELECT * FROM " + report.getInternalReportName() + " LIMIT " + rowLimit);
+					ResultSet explainResults = explainStatement.executeQuery();
+					while (explainResults.next()) {
+						logger.debug("Explain results: " + explainResults.getString(1));
+					}
+					SQLWarning resultInfo = explainResults.getWarnings();
+					if (resultInfo != null) {
+						logger.debug("Got info: " + resultInfo.getMessage());
+					} else {
+						logger.debug("No result info");
+					}
 					SQLWarning statementInfo = explainStatement.getWarnings();
 					if (statementInfo != null) {
 						logger.debug("Got info: " + statementInfo.getMessage());
@@ -768,6 +777,7 @@ public class ReportData implements ReportDataInfo {
 					} else {
 						logger.debug("No connection info");
 					}
+					explainResults.close();
 					explainStatement.close();
 					break;
 				}
