@@ -754,7 +754,7 @@ public class ReportData implements ReportDataInfo {
 					report.setQueryPlanSelection(QueryPlanSelection.TRY_ALTERNATIVE_NEXT_TIME);
 					break;
 				case TRY_ALTERNATIVE_NEXT_TIME:
-					PreparedStatement explainStatement = conn.prepareStatement("EXPLAIN " + report.getInternalReportName());
+					PreparedStatement explainStatement = conn.prepareStatement("EXPLAIN SELECT * FROM " + report.getInternalReportName());
 					explainStatement.execute();
 					SQLWarning statementInfo = explainStatement.getWarnings();
 					if (statementInfo != null) {
