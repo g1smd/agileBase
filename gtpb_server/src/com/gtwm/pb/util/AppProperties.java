@@ -41,7 +41,8 @@ public class AppProperties {
 	/**
 	 * The number of seconds that is considered a long time for a SQL view
 	 * SELECT statement to run (i.e. before it starts having a noticeable effect
-	 * to users). Statements taking longer will be logged;
+	 * to users). Statements taking longer will be logged and automated
+	 * remediation may be tried
 	 */
 	public static final float longSqlTime = 0.2f;
 
@@ -100,10 +101,10 @@ public class AppProperties {
 	 * Number of tables a company must have before discounting kicks in
 	 */
 	public static final int numFullPriceTables = 20;
-	
+
 	/**
-	 * Setting this to true will prepare agileBase for testing	 
-	 * and also speed up agileBase reloading by only loading one company - GTwM
+	 * Setting this to true will prepare agileBase for testing and also speed up
+	 * agileBase reloading by only loading one company - GTwM
 	 * 
 	 * SET THIS TO false IN PRODUCTION
 	 */

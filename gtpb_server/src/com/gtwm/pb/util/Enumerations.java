@@ -430,6 +430,13 @@ public class Enumerations {
 	}
 	
 	/**
+	 * Used to flag whether we've tried overriding the default plan for a database query
+	 */
+	public enum QueryPlanSelection {
+		DEFAULT, TRY_ALTERNATIVE_NEXT_TIME, ALTERNATIVE_FASTER, ALTERNATIVE_NOT_FASTER;
+	}
+	
+	/**
 	 * Formats for exporting public data
 	 */
 	public enum DataFormat {

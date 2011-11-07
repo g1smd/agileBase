@@ -21,6 +21,7 @@ import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
+import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
 import com.gtwm.pb.util.Naming;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import java.util.Collections;
@@ -218,6 +219,22 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	public int hashCode() {
 		return this.getInternalReportName().hashCode();
 	}
+	
+	public float getQuerySeconds() {
+		return this.querySeconds;
+	}
+	
+	public void setQuerySeconds(float queryTime) {
+		this.querySeconds = queryTime;
+	}
+	
+	public QueryPlanSelection getQueryPlanSelection() {
+		return this.queryPlanSelection;
+	}
+	
+	public void setQueryPlanSelection(QueryPlanSelection queryPlanSelection) {
+		this.queryPlanSelection = queryPlanSelection;
+	}
 
 	private Set<ChartInfo> savedReportSummaries = new LinkedHashSet<ChartInfo>(1);
 
@@ -230,6 +247,10 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	private String internalReportName = "";
 
 	private TableInfo parentTable;
+	
+	private float querySeconds = 0f;
+	
+	private QueryPlanSelection queryPlanSelection = QueryPlanSelection.DEFAULT;
 
 	private ChartInfo reportSummary = null;
 

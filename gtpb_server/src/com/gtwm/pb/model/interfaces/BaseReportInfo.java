@@ -25,6 +25,7 @@ import java.util.SortedSet;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
 import com.gtwm.pb.util.Enumerations.ReportStyle;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
@@ -116,6 +117,17 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 
 	public void setRowCount(int rowCountEstimate);
 
+	/**
+	 * Return a rolling average of the number of seconds the report SQL query takes to run
+	 */
+	public float getQuerySeconds();
+	
+	public void setQuerySeconds(float querySeconds);
+	
+	public QueryPlanSelection getQueryPlanSelection();
+	
+	public void setQueryPlanSelection(QueryPlanSelection queryPlanSelection);
+	
 	public void setCalendarSyncable(Boolean calendarSyncable);
 
 	/**
