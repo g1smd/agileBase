@@ -220,6 +220,7 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		return this.getInternalReportName().hashCode();
 	}
 	
+	@Transient
 	public float getQuerySeconds() {
 		return this.querySeconds;
 	}
@@ -228,6 +229,7 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		this.querySeconds = queryTime;
 	}
 	
+	@Transient
 	public QueryPlanSelection getQueryPlanSelection() {
 		return this.queryPlanSelection;
 	}
