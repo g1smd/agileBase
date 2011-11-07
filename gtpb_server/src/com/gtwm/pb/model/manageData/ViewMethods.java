@@ -543,7 +543,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException {
-		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues();
+		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues(report);
 		return this.getReportDataRows(report, rowLimit, reportFilterValues, false);
 	}
 

@@ -105,6 +105,11 @@ public interface SessionDataInfo {
 	 * @return A read-only copy of the session's report filter values
 	 */
 	public Map<BaseField, String> getReportFilterValues();
+	
+	/**
+	 * Return the session's report filter values for fields that are in the given report
+	 */
+	public Map<BaseField, String> getReportFilterValues(BaseReportInfo report);
 
 	public String getGlobalFilterString(BaseReportInfo report);
 	

@@ -36,6 +36,7 @@ import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.manageData.ReportDataFieldStats;
 import com.gtwm.pb.model.manageData.ReportQuickFilter;
+import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
@@ -46,6 +47,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLWarning;
 import java.sql.Timestamp;
 import java.sql.Statement;
 import java.util.Date;
@@ -738,11 +740,30 @@ public class ReportData implements ReportDataInfo {
 		long executionStartTime = System.currentTimeMillis();
 		ResultSet results = statement.executeQuery();
 		float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
+		// Set report query seconds as a rolling average
+		report.setQuerySeconds((durationSecs + report.getQuerySeconds()) / 2);
 		if (durationSecs > AppProperties.longSqlTime) {
 			logger.debug("Long SELECT SQL execution time of " + durationSecs
 					+ " seconds for report " + this.report + ". Filters = " + filterValues
 					+ ", sorts = " + reportSorts + ", exact filters = " + exactFilters
 					+ ", statement = " + statement);
+			if (filterValues.size() == 0) {
+				switch(report.getQueryPlanSelection()) {
+				case DEFAULT:
+					logger.debug("Trying alternative next time");
+					report.setQueryPlanSelection(QueryPlanSelection.TRY_ALTERNATIVE_NEXT_TIME);
+					break;
+				case TRY_ALTERNATIVE_NEXT_TIME:
+					PreparedStatement explainStatement = conn.prepareStatement("EXPLAIN " + report.getInternalReportName());
+					statement.execute();
+					SQLWarning statementInfo = statement.getWarnings();
+					logger.debug("Got info: " + statementInfo.getMessage());
+					SQLWarning connectionInfo = conn.getWarnings();
+					logger.debug("Got connection info: " + connectionInfo);
+					explainStatement.close();
+					break;
+				}
+			}
 		}
 		// 2) parse the SQL resultset to generate a return value:
 		int initialCapacity = rowLimit;

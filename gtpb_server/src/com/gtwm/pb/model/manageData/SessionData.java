@@ -338,6 +338,17 @@ public final class SessionData implements SessionDataInfo {
 		return Collections.unmodifiableMap(new HashMap<BaseField, String>(this.reportFilterValues));
 	}
 	
+	public synchronized Map<BaseField, String> getReportFilterValues(BaseReportInfo report) {
+		Map<BaseField, String> reportFilterValues = new HashMap<BaseField, String>();
+		for (BaseField field : report.getReportBaseFields()) {
+			String value = this.reportFilterValues.get(field);
+			if (value != null) {
+				reportFilterValues.put(field, value);
+			}
+		}
+		return Collections.unmodifiableMap(reportFilterValues);
+	}
+	
 	public synchronized String getGlobalFilterString(BaseReportInfo report) {
 		return this.globalFilterStrings.get(report);
 	}
