@@ -755,8 +755,8 @@ public class ReportData implements ReportDataInfo {
 					break;
 				case TRY_ALTERNATIVE_NEXT_TIME:
 					PreparedStatement explainStatement = conn.prepareStatement("EXPLAIN " + report.getInternalReportName());
-					statement.execute();
-					SQLWarning statementInfo = statement.getWarnings();
+					explainStatement.execute();
+					SQLWarning statementInfo = explainStatement.getWarnings();
 					if (statementInfo != null) {
 						logger.debug("Got info: " + statementInfo.getMessage());
 					} else {
