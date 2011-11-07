@@ -735,13 +735,23 @@ public class ReportData implements ReportDataInfo {
 				displayLookups.put(relationField.getRelatedField(), displayLookup);
 			}
 		}
+		long executionStartTime = System.currentTimeMillis();
+		if (report.getQueryPlanSelection().equals(QueryPlanSelection.TRY_ALTERNATIVE_NEXT_TIME)) {
+			PreparedStatement unsetNestedLoopStatement = conn.prepareStatement("SET enable_nestloop=false");
+			unsetNestedLoopStatement.execute();
+			unsetNestedLoopStatement.close();
+		}
 		PreparedStatement statement = this.getReportSqlPreparedStatement(conn, filterValues,
 				exactFilters, reportSorts, rowLimit, null, filterType);
-		long executionStartTime = System.currentTimeMillis();
 		ResultSet results = statement.executeQuery();
+		if (report.getQueryPlanSelection().equals(QueryPlanSelection.TRY_ALTERNATIVE_NEXT_TIME)) {
+			PreparedStatement unsetNestedLoopStatement = conn.prepareStatement("SET enable_nestloop=true");
+			unsetNestedLoopStatement.execute();
+			unsetNestedLoopStatement.close();
+			float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
+			logger.debug("With no nested loop, executed in " + durationSecs + " seconds");
+		}
 		float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
-		// Set report query seconds as a rolling average
-		report.setQuerySeconds((durationSecs + report.getQuerySeconds()) / 2);
 		if (durationSecs > AppProperties.longSqlTime) {
 			logger.debug("Long SELECT SQL execution time of " + durationSecs
 					+ " seconds for report " + this.report + ". Filters = " + filterValues
@@ -750,39 +760,33 @@ public class ReportData implements ReportDataInfo {
 			if (filterValues.size() == 0) {
 				switch(report.getQueryPlanSelection()) {
 				case DEFAULT:
-					logger.debug("Trying alternative next time");
-					report.setQueryPlanSelection(QueryPlanSelection.TRY_ALTERNATIVE_NEXT_TIME);
-					break;
-				case TRY_ALTERNATIVE_NEXT_TIME:
+					logger.debug("Seeing whether we should try alternative next time");
+					boolean nestedLoop = false;
 					PreparedStatement explainStatement = conn.prepareStatement("EXPLAIN SELECT * FROM " + report.getInternalReportName() + " LIMIT " + rowLimit);
 					ResultSet explainResults = explainStatement.executeQuery();
-					while (explainResults.next()) {
-						logger.debug("Explain results: " + explainResults.getString(1));
-					}
-					SQLWarning resultInfo = explainResults.getWarnings();
-					if (resultInfo != null) {
-						logger.debug("Got info: " + resultInfo.getMessage());
-					} else {
-						logger.debug("No result info");
-					}
-					SQLWarning statementInfo = explainStatement.getWarnings();
-					if (statementInfo != null) {
-						logger.debug("Got info: " + statementInfo.getMessage());
-					} else {
-						logger.debug("No statement info");
-					}
-					SQLWarning connectionInfo = conn.getWarnings();
-					if (connectionInfo != null) {
-						logger.debug("Got connection info: " + connectionInfo);
-					} else {
-						logger.debug("No connection info");
+					EXPLAIN_LOOP: while (explainResults.next()) {
+						if(explainResults.getString(1).toLowerCase().contains("nested loop")) {
+							nestedLoop = true;
+							break EXPLAIN_LOOP;
+						}
 					}
 					explainResults.close();
 					explainStatement.close();
+					if (nestedLoop) {
+						report.setQueryPlanSelection(QueryPlanSelection.TRY_ALTERNATIVE_NEXT_TIME);
+					} else {
+						// We don't know an alternative
+						report.setQueryPlanSelection(QueryPlanSelection.ALTERNATIVE_NOT_FASTER);
+					}
+					break;
+				case TRY_ALTERNATIVE_NEXT_TIME:
+					logger.debug("Alternative is still slow");
 					break;
 				}
 			}
 		}
+		// Set report query seconds as a rolling average
+		report.setQuerySeconds((durationSecs + report.getQuerySeconds()) / 2);
 		// 2) parse the SQL resultset to generate a return value:
 		int initialCapacity = rowLimit;
 		if (initialCapacity > 10000 || initialCapacity < 0) {
