@@ -757,9 +757,17 @@ public class ReportData implements ReportDataInfo {
 					PreparedStatement explainStatement = conn.prepareStatement("EXPLAIN " + report.getInternalReportName());
 					statement.execute();
 					SQLWarning statementInfo = statement.getWarnings();
-					logger.debug("Got info: " + statementInfo.getMessage());
+					if (statementInfo != null) {
+						logger.debug("Got info: " + statementInfo.getMessage());
+					} else {
+						logger.debug("No statement info");
+					}
 					SQLWarning connectionInfo = conn.getWarnings();
-					logger.debug("Got connection info: " + connectionInfo);
+					if (connectionInfo != null) {
+						logger.debug("Got connection info: " + connectionInfo);
+					} else {
+						logger.debug("No connection info");
+					}
 					explainStatement.close();
 					break;
 				}
