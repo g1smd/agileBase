@@ -47,7 +47,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLWarning;
 import java.sql.Timestamp;
 import java.sql.Statement;
 import java.util.Date;
@@ -140,6 +139,9 @@ public class ReportData implements ReportDataInfo {
 				SQLCode += " WHERE " + pKeyInternalName + " % 10 = " + randomNumber;
 			}
 			try {
+				if (report.getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
+					enableNestloop(conn, false);
+				}
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				ResultSet results = statement.executeQuery();
 				// Save average and mean of each colourable report field to
@@ -168,12 +170,13 @@ public class ReportData implements ReportDataInfo {
 				}
 				results.close();
 				statement.close();
+				if (report.getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
+					enableNestloop(conn, true);
+				}
 			} catch (SQLException sqlex) {
 				logger.error("Error calculating field statistics for report " + report
 						+ " in module " + report.getModule() + " from table "
 						+ report.getParentTable() + ": " + sqlex);
-				// throw new SQLException("Error calculating field statistics: "
-				// + sqlex);
 			}
 			this.millisecsTakenToGenerateStats = System.currentTimeMillis() - startTime;
 			float durationSecs = this.millisecsTakenToGenerateStats / ((float) 1000);
