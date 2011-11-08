@@ -169,8 +169,11 @@ public class ReportData implements ReportDataInfo {
 				results.close();
 				statement.close();
 			} catch (SQLException sqlex) {
-				logger.error("Error calculating field statistics for report " + report + " in module " + report.getModule() + " from table " + report.getParentTable() + ": " + sqlex);
-				//throw new SQLException("Error calculating field statistics: " + sqlex);
+				logger.error("Error calculating field statistics for report " + report
+						+ " in module " + report.getModule() + " from table "
+						+ report.getParentTable() + ": " + sqlex);
+				// throw new SQLException("Error calculating field statistics: "
+				// + sqlex);
 			}
 			this.millisecsTakenToGenerateStats = System.currentTimeMillis() - startTime;
 			float durationSecs = this.millisecsTakenToGenerateStats / ((float) 1000);
@@ -342,7 +345,8 @@ public class ReportData implements ReportDataInfo {
 			return null;
 		} else if ((valueToParse.matches("^\\d+$")) && (valueToParse.length() > 8)
 				&& (valueToParse.length() < 11)) {
-			// Note: the regex above matches a string that *only* contains numbers
+			// Note: the regex above matches a string that *only* contains
+			// numbers
 			// Value is a unix 'epoch' timestamp
 			long epochTime = Long.valueOf(valueToParse);
 			// TODO: better calculation of end time, we just add an hour at the
@@ -422,8 +426,8 @@ public class ReportData implements ReportDataInfo {
 
 	public PreparedStatement getReportSqlPreparedStatement(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> reportSorts, int rowLimit, BaseField selectField, QuickFilterType filterType)
-			throws SQLException, CantDoThatException {
+			Map<BaseField, Boolean> reportSorts, int rowLimit, BaseField selectField,
+			QuickFilterType filterType) throws SQLException, CantDoThatException {
 		StringBuilder SQLCode;
 		if (selectField == null) {
 			SQLCode = new StringBuilder("SELECT ");
@@ -516,7 +520,7 @@ public class ReportData implements ReportDataInfo {
 		}
 		PreparedStatement statement = conn.prepareStatement(SQLCode.toString());
 		statement = this.fillInFilterValues(filtersUsed, statement);
-		//logger.debug("Prepared statement: " + statement);
+		// logger.debug("Prepared statement: " + statement);
 		return statement;
 	}
 
@@ -597,7 +601,8 @@ public class ReportData implements ReportDataInfo {
 	}
 
 	public Map<String, List<ReportQuickFilterInfo>> getWhereClause(
-			Map<BaseField, String> filterValues, boolean exactFilters, QuickFilterType filterType) throws CantDoThatException {
+			Map<BaseField, String> filterValues, boolean exactFilters, QuickFilterType filterType)
+			throws CantDoThatException {
 		if ((!filterType.equals(QuickFilterType.AND)) && (!filterType.equals(QuickFilterType.OR))) {
 			throw new CantDoThatException("Filter type " + filterType + " should be AND or OR");
 		}
@@ -680,7 +685,8 @@ public class ReportData implements ReportDataInfo {
 				filterStringForField = filterStringForField.substring(0,
 						filterStringForField.length() - charsToRemove);
 				filterStringForField = "(" + filterStringForField + ")";
-				// now join the whole field filter to the last one with an AND or an OR
+				// now join the whole field filter to the last one with an AND
+				// or an OR
 				filterArguments.append(filterStringForField + filterType.getSqlRepresentation());
 			}
 		}
@@ -689,7 +695,9 @@ public class ReportData implements ReportDataInfo {
 		if (filterArguments.length() > 0) {
 			// remove trailing AND or OR
 			if (filterArguments.toString().endsWith(filterType.getSqlRepresentation())) {
-				filterArgs = filterArguments.substring(0, filterArguments.length() - filterType.getSqlRepresentation().length()).trim();
+				filterArgs = filterArguments.substring(0,
+						filterArguments.length() - filterType.getSqlRepresentation().length())
+						.trim();
 			}
 		}
 		Map<String, List<ReportQuickFilterInfo>> whereClause = new HashMap<String, List<ReportQuickFilterInfo>>();
@@ -717,8 +725,8 @@ public class ReportData implements ReportDataInfo {
 
 	public List<DataRowInfo> getReportDataRows(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType) throws SQLException,
-			CodingErrorException, CantDoThatException {
+			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType)
+			throws SQLException, CodingErrorException, CantDoThatException {
 		List<DataRowInfo> reportData = null;
 		// 0) Obtain all display values taken from other sources:
 		Map<BaseField, Map<String, String>> displayLookups = new HashMap<BaseField, Map<String, String>>();
@@ -736,20 +744,32 @@ public class ReportData implements ReportDataInfo {
 			}
 		}
 		long executionStartTime = System.currentTimeMillis();
-		if (report.getQueryPlanSelection().equals(QueryPlanSelection.TRY_ALTERNATIVE_NEXT_TIME)) {
-			PreparedStatement unsetNestedLoopStatement = conn.prepareStatement("SET enable_nestloop=false");
-			unsetNestedLoopStatement.execute();
-			unsetNestedLoopStatement.close();
+		QueryPlanSelection qp = report.getQueryPlanSelection();
+		if (qp.equals(QueryPlanSelection.TRY_NO_NESTED_LOOPS)
+				|| qp.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
+			enableNestloop(conn, false);
 		}
 		PreparedStatement statement = this.getReportSqlPreparedStatement(conn, filterValues,
 				exactFilters, reportSorts, rowLimit, null, filterType);
 		ResultSet results = statement.executeQuery();
-		if (report.getQueryPlanSelection().equals(QueryPlanSelection.TRY_ALTERNATIVE_NEXT_TIME)) {
-			PreparedStatement unsetNestedLoopStatement = conn.prepareStatement("SET enable_nestloop=true");
-			unsetNestedLoopStatement.execute();
-			unsetNestedLoopStatement.close();
-			float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
-			logger.debug("With no nested loop, executed in " + durationSecs + " seconds");
+		if (qp.equals(QueryPlanSelection.TRY_NO_NESTED_LOOPS)
+				|| qp.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
+			enableNestloop(conn, true);
+			if (qp.equals(QueryPlanSelection.TRY_NO_NESTED_LOOPS)) {
+				// See if no nested loops was any better
+				float durationSecs = (System.currentTimeMillis() - executionStartTime)
+						/ ((float) 1000);
+				float speedup = report.getQuerySeconds() / durationSecs;
+				if (speedup > 2) {
+					report.setQueryPlanSelection(QueryPlanSelection.NO_NESTED_LOOPS);
+					logger.info("Report " + report
+							+ ": without nested loop joins, query speedup is " + speedup);
+				} else {
+					report.setQueryPlanSelection(QueryPlanSelection.ALTERNATIVE_NOT_FASTER);
+					logger.info("Report " + report + ": removing nested loop joins is " + speedup
+							+ " times faster, not going to use that technique");
+				}
+			}
 		}
 		float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
 		if (durationSecs > AppProperties.longSqlTime) {
@@ -758,14 +778,15 @@ public class ReportData implements ReportDataInfo {
 					+ ", sorts = " + reportSorts + ", exact filters = " + exactFilters
 					+ ", statement = " + statement);
 			if (filterValues.size() == 0) {
-				switch(report.getQueryPlanSelection()) {
+				switch (qp) {
 				case DEFAULT:
-					logger.debug("Seeing whether we should try alternative next time");
 					boolean nestedLoop = false;
-					PreparedStatement explainStatement = conn.prepareStatement("EXPLAIN SELECT * FROM " + report.getInternalReportName() + " LIMIT " + rowLimit);
+					PreparedStatement explainStatement = conn
+							.prepareStatement("EXPLAIN SELECT * FROM "
+									+ report.getInternalReportName() + " LIMIT " + rowLimit);
 					ResultSet explainResults = explainStatement.executeQuery();
 					EXPLAIN_LOOP: while (explainResults.next()) {
-						if(explainResults.getString(1).toLowerCase().contains("nested loop")) {
+						if (explainResults.getString(1).toLowerCase().contains("nested loop")) {
 							nestedLoop = true;
 							break EXPLAIN_LOOP;
 						}
@@ -773,14 +794,15 @@ public class ReportData implements ReportDataInfo {
 					explainResults.close();
 					explainStatement.close();
 					if (nestedLoop) {
-						report.setQueryPlanSelection(QueryPlanSelection.TRY_ALTERNATIVE_NEXT_TIME);
+						report.setQueryPlanSelection(QueryPlanSelection.TRY_NO_NESTED_LOOPS);
 					} else {
 						// We don't know an alternative
 						report.setQueryPlanSelection(QueryPlanSelection.ALTERNATIVE_NOT_FASTER);
 					}
 					break;
-				case TRY_ALTERNATIVE_NEXT_TIME:
-					logger.debug("Alternative is still slow");
+				case TRY_NO_NESTED_LOOPS:
+				case NO_NESTED_LOOPS:
+					logger.info("Report " + report + ": nested loops are faster but the query is still slow");
 					break;
 				}
 			}
@@ -965,13 +987,13 @@ public class ReportData implements ReportDataInfo {
 												.getNotApplicableDescription();
 									}
 								} else {
-									//int textFieldSize = fieldSchemaText.getContentSize() * 2;
-									//if (textFieldSize > 400) {
-									//	textFieldSize = 400; // max out
-									//}
+									// int textFieldSize =
+									// fieldSchemaText.getContentSize() * 2;
+									// if (textFieldSize > 400) {
+									// textFieldSize = 400; // max out
+									// }
 									if (keyValue.length() > 401) {
-										displayValue = keyValue.substring(0, 400)
-												+ "...";
+										displayValue = keyValue.substring(0, 400) + "...";
 									}
 								}
 							}
@@ -1061,6 +1083,16 @@ public class ReportData implements ReportDataInfo {
 
 	public Map<ReportFieldInfo, ReportDataFieldStatsInfo> getFieldStats() {
 		return this.cachedFieldStats;
+	}
+	
+	public static void enableNestloop(Connection conn, boolean enableNestLoop) throws SQLException {
+		Statement setNestedLoopStatement = conn.createStatement();
+		if (enableNestLoop) {
+			setNestedLoopStatement.execute("SET enable_nestloop=true");
+		} else {
+			setNestedLoopStatement.execute("SET enable_nestloop=false");
+		}
+		setNestedLoopStatement.close();
 	}
 
 	/**

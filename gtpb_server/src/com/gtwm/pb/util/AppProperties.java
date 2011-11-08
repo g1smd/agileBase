@@ -23,7 +23,7 @@ package com.gtwm.pb.util;
 public class AppProperties {
 	public static final String applicationName = "agileBase";
 
-	public static final String applicationVersion = "3.1.8";
+	public static final String applicationVersion = "3.1.9";
 
 	/**
 	 * Location of the Velocity template used to report template processing
@@ -44,7 +44,7 @@ public class AppProperties {
 	 * to users). Statements taking longer will be logged and automated
 	 * remediation may be tried
 	 */
-	public static final float longSqlTime = 0.2f;
+	public static final float longSqlTime = 0.3f;
 
 	/**
 	 * Enable startTimer and stopTimer in ViewTools. Useful for tracking down

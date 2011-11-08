@@ -44,6 +44,7 @@ import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOpti
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -397,6 +398,9 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			ReportDataInfo reportData = new ReportData(conn, report, false, false);
+			if (report.getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
+				ReportData.enableNestloop(conn, false);
+			}
 			// Generates a SELECT DISTINCT on this field including filterValues
 			// in the WHERE clause
 			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
@@ -415,6 +419,9 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			}
 			results.close();
 			statement.close();
+			if (report.getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
+				ReportData.enableNestloop(conn, true);
+			}
 		} catch (SQLException sqlex) {
 			// catch exception where field is not included
 			// within report and simply return an empty tree
