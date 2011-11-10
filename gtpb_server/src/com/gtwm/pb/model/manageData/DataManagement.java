@@ -232,6 +232,7 @@ public final class DataManagement implements DataManagementInfo {
 				// for any records
 				sqlCode = "SELECT count(*) from dbint_comments WHERE internalfieldname=?";
 				statement = conn.prepareStatement(sqlCode);
+				statement.setString(1, internalFieldName);
 				results = statement.executeQuery();
 				if (results.next()) {
 					int numComments = results.getInt(1);
