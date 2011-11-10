@@ -430,6 +430,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	public SortedSet<CommentInfo> getComments(BaseField field) throws SQLException, DisallowedException, ObjectNotFoundException {
 		if (field == null) {
+			logger.warn("ViewMethods.getComments called with null field");
 			return new TreeSet<CommentInfo>();
 		}
 		TableInfo table = field.getTableContainingField();
@@ -439,6 +440,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 					table);
 		}
 		int rowId = this.sessionData.getRowId(table);
+		logger.info("About to get comments for field " + field + ", row ID " + rowId);
 		return this.databaseDefn.getDataManagement().getComments(field, rowId);
 	}
 	
