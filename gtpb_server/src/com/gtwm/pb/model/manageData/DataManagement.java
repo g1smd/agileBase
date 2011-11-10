@@ -202,7 +202,10 @@ public final class DataManagement implements DataManagementInfo {
 		Boolean hasComments = this.commentedFields.get(field);
 		if (hasComments != null) {
 			if (hasComments.equals(false)) {
+				logger.info("Found that field " + field + " is marked as having no comments");
 				return comments;
+			} else {
+				logger.info("Found that field " + field + " is marked as having comments");
 			}
 		}
 		String sqlCode = "SELECT created, author, text FROM dbint_comments WHERE internalfieldname=? AND rowid=? order by created desc limit 10";
@@ -214,6 +217,7 @@ public final class DataManagement implements DataManagementInfo {
 			String internalFieldName = field.getInternalFieldName();
 			statement.setString(1, internalFieldName);
 			statement.setInt(2, rowId);
+			logger.info("Getting comments with statement " + statement);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				Timestamp createdTimestamp = results.getTimestamp(1);
@@ -223,13 +227,15 @@ public final class DataManagement implements DataManagementInfo {
 				String comment = results.getString(3);
 				comments.add(new Comment(internalFieldName, rowId, author, created, comment));
 			}
+			logger.info("Got comments " + comments);
 			results.close();
 			statement.close();
 			if (comments.size() > 0) {
+				logger.info("Marking field " + field + " as having comments");
 				this.commentedFields.put(field, true);
 			} else {
-				// Use putIfAbsent in case another threat e.g. running addComment has set this value to true.
-				// We don't want to overwrite that
+				logger.info("Marking field " + field + " as having no comments");
+				// Use putIfAbsent in case another threat e.g. running addComment has set this
 				this.commentedFields.putIfAbsent(field, false);
 			}
 		} finally {
