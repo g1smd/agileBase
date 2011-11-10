@@ -1577,7 +1577,8 @@ public final class DataManagement implements DataManagementInfo {
 				if (this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 						PrivilegeType.MANAGE_TABLE, dependentTable))
 					continue;
-				throw new CantDoThatException( // This should probably really
+				throw new CantDoThatException( 
+						// TODO: This should probably really
 						// be a DisallowedException
 						"Unable to delete record as you are not permitted to delete from the dependent table "
 								+ dependentTable);

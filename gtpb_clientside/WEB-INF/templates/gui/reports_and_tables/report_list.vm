@@ -56,9 +56,15 @@
   #parse('gui/resources/module_color_colors.vm')
   #set($hiddenReports = $user.getHiddenReports())
   #foreach($module in $moduleReports.keySet())
-	#set($visibleModuleReports = $moduleReports.get($module))
-	#set($temp = $visibleModuleReports.removeAll($hiddenReports))
-	#if($visibleModuleReports.size() > 0)
+	  #set($visibleModuleReports = $moduleReports.get($module))
+	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
+	  #if($visibleModuleReports.size() > 0)
+      #set($colourStyleName = '')
+      #foreach($colour in $colours)
+        #if($colour.get('colourName') == $module.getColour())
+          #set($colourStyleName = $colour.get('styleName'))
+        #end
+      #end
     	#set($section = $module.getSection())
     	#if($section == "")
     		#set($section = $previousSection)
@@ -69,18 +75,12 @@
     	#end
     	#if($section != $previousSection)
           #if($foreach.count > 1) </li></ul> #end
-    	  <li><h1><span>$section</span></h1>
+    	  <li class="$colourStyleName"><h1><span>$section</span></h1>
     	  <ul>
         #end
     	#set($previousSection = $section)
     	#set($internalModuleName = $module.getInternalModuleName())
     	
-    	#set($colourStyleName = '')
-    	#foreach($colour in $colours)
-        	#if($colour.get('colourName') == $module.getColour())
-        		#set($colourStyleName = $colour.get('styleName'))
-    		#end
-		#end
 		#set($moduleExpanded = false)
     	#if($mobile_device && $internalModuleName.equals($sessionReportModule.getInternalModuleName()))
 		  #set($moduleExpanded = true)

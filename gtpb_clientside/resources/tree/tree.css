@@ -13,13 +13,13 @@ body{
 		font-weight: bold;
 		font-style: italic;
 		margin-bottom: -3px;
-		background: white url(tree/line.gif) repeat-x 0 50%;
+		/* background: white url(tree/line.gif) repeat-x 0 50%; */
 		color: #888;
-		text-align: right;
+		/* text-align: right; */
 	}
 	
 	#tree h1 span {
-		background: #fff;
+		/* background: #fff; */
 		padding: 0 10px;
 	}
 	
@@ -27,13 +27,13 @@ body{
 		display: block;
 		margin-bottom: -3px;
 		padding: 8px 10px 5px 5px;
-		background: url(tree/drop-shadow.gif) bottom repeat-x;
+		/* background: url(tree/drop-shadow.gif) bottom repeat-x; */
 		cursor: hand;
 		cursor: pointer;
 		font-size: 13px;
 		font-weight: bold;
 		height: 23px;
-		border-top: #CECECE 1px solid;
+		/* border-top: #CECECE 1px solid; */
 	}
 	
 		h2 span{
