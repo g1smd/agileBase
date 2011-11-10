@@ -9,7 +9,7 @@ body{
 	h1{
 		position: relative; /* Fixes some obscure bug in IE */
 		padding: 5px 0 8px 10px;
-		background: #fff;
+		/* background: #fff; */
 		font-weight: bold;
 		font-style: italic;
 		margin-bottom: -3px;
