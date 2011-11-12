@@ -37,6 +37,7 @@ button.gtpb:hover { cursor: pointer; }
 button.gtpb:active { background-color: gray; }
 button.gtpb.selected {
 	background: -moz-linear-gradient(top, #cecece, #f4f4f4);
+	border: 1px solid #cecece;
 }
 
 button.gtpb[disabled],
