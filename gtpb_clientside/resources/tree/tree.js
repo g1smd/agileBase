@@ -15,30 +15,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-function fAnimatePane1(pane1ChangePercent, currentWidth, targetWidth) {
-    var difference = (targetWidth - currentWidth);
-	var change = difference * (pane1ChangePercent / 100);
-	currentWidth = currentWidth + change;
-    document.getElementById('oViewPane').contentWindow.document.getElementById('colsWrapper').cols=(Math.round(currentWidth) + ',*');
-	if (Math.abs(currentWidth - targetWidth) > 2) {
-	  pane1ChangePercent = pane1ChangePercent * 2;
-	  setTimeout('fAnimatePane1(' + pane1ChangePercent + ',' + currentWidth + ',' + targetWidth + ');');
-	} else {
-      document.getElementById('oViewPane').contentWindow.document.getElementById('colsWrapper').cols=(targetWidth + ',*');
-	}
-}
-
-function fTogglePane1(oButton) {
-  var currentWidth = 250;
-  var targetWidth = 0;
-  if($(oButton).hasClass('selected')) {
-  	currentWidth = 0;
-	targetWidth = 250;
-  }
-  fAnimatePane1(0.1, currentWidth, targetWidth);
-}
-
 function fClearCurrentOption() {
 	$("li.currentOption").removeClass("currentOption");
 }       
