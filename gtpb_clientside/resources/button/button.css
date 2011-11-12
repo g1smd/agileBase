@@ -1,7 +1,7 @@
 button.gtpb {
   border:0;
   width:68px; /* formerly 70px */
-  height:55px;
+  height:40px; /* 55 */
   text-decoration:none;
   text-align:center;
   color:black;
@@ -21,7 +21,7 @@ button.gtpb {
 button.gtpb img { border:0; }
 
 .buttonGroup.joined button.gtpb {
-  border: 1px solid #cecece;
+  border: 1px solid gray;
   border-right: none;
   -moz-border-radius:0;
   -webkit-border-radius:0;
@@ -31,7 +31,7 @@ button.gtpb img { border:0; }
 
 .buttonGroup.joined button.gtpb:last-child {
 	/* Four corners clockwise from top left */
-  border-right: 1px solid #cecece;
+  border-right: 1px solid gray;
   -moz-border-radius: 0 1em 1em 0;
   -webkit-border-radius: 0 1em 1em 0;
   -ms-border-radius: 0 1em 1em 0;
@@ -48,11 +48,11 @@ button.gtpb img { border:0; }
 button.gtpb:hover { cursor: pointer; }		 
 button.gtpb:active { background-color: gray; }
 button.gtpb.selected {
-  background: -moz-linear-gradient(top, gray, #f4f4f4);
-  background: -webkit-linear-gradient(top, #cecece, #f4f4f4);
-  background: -ms-linear-gradient(top, #cecece, #f4f4f4);
-  background: linear-gradient(top, #cecece, #f4f4f4);
-  border: 1px solid #cecece;
+  background: -moz-linear-gradient(top, gray, #cecece);
+  background: -webkit-linear-gradient(top, gray, #cecece);
+  background: -ms-linear-gradient(top, gray, #cecece);
+  background: linear-gradient(top, gray, #cecece);
+  border: 1px solid gray;
 }
 
 button.gtpb[disabled],
