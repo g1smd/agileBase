@@ -15,6 +15,10 @@ button.gtpb {
 	 
 button.gtpb img { border:0; }
 
+button.gtpb.joined {
+  border: 1px solid gray;
+}
+
 button.gtpb:hover { cursor: pointer; }		 
 button.gtpb:active { background-color: red; }
 button.gtpb.selected {
