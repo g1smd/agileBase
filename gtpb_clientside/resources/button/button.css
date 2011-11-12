@@ -26,6 +26,11 @@ button.gtpb img { border:0; }
   -moz-border-radius-bottomright: 1em;
 }
 
+.buttonGroup.joined button.gtpb:first-child {
+  -moz-border-radius-topleft: 1em;
+  -moz-border-radius-bottomleft: 1em;
+}
+
 button.gtpb:hover { cursor: pointer; }		 
 button.gtpb:active { background-color: gray; }
 button.gtpb.selected {
