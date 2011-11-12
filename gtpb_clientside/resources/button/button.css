@@ -29,7 +29,7 @@ button.gtpb img { border:0; }
 button.gtpb:hover { cursor: pointer; }		 
 button.gtpb:active { background-color: gray; }
 button.gtpb.selected {
-	background: -moz-linear-gradient(top, #f4f4f4, #cecece);
+	background: -moz-linear-gradient(top, #cecece, #f4f4f4);
 }
 
 button.gtpb[disabled],
