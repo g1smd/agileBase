@@ -48,6 +48,10 @@ li.moduleexpanded h2 {
   border-radius: 0;
 }
 
+li#setup h2 {
+	border-radius: 0;
+}
+
 h2 span {
 	padding-left: 20px;
 	background-position: left;
