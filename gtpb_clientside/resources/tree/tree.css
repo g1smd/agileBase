@@ -40,6 +40,10 @@ li:first-child h2 {
   border-radius: 1em 1em 0 0;
 }
 
+li:last-child h2 {
+  border-radius: 0 0 1em 1em;
+}
+
 h2 span {
 	padding-left: 20px;
 	background-position: left;
