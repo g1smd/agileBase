@@ -47,10 +47,14 @@ body {
 }
 
 #toolbarDiv div.buttonGroup {
-	margin-left: 2em;
+	margin-left: 3em;
 	/* formerly 30px */
 	display: inline;
 	float: left;
+}
+
+#toolbarDiv div.buttonGroup:first-child {
+  margin-left: 1em;
 }
 
 iframe#oViewPane {
