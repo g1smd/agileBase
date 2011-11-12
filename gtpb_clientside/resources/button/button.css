@@ -48,7 +48,7 @@ button.gtpb img { border:0; }
 button.gtpb:hover { cursor: pointer; }		 
 button.gtpb:active { background-color: gray; }
 button.gtpb.selected {
-  background: -moz-linear-gradient(top, #cecece, #f4f4f4);
+  background: -moz-linear-gradient(top, gray, #f4f4f4);
   background: -webkit-linear-gradient(top, #cecece, #f4f4f4);
   background: -ms-linear-gradient(top, #cecece, #f4f4f4);
   background: linear-gradient(top, #cecece, #f4f4f4);
