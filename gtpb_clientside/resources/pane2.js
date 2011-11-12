@@ -211,6 +211,7 @@ function showPane3IfNecessary() {
 	var jqButt = $(top.document).find("#pane3butt")
 	if (!jqButt.hasClass("selected")) {
 		jqButt.click();
+		$(top.document).find("#pane2butt").click();
 	}
 }
 
