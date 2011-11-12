@@ -30,6 +30,7 @@ button.gtpb img { border:0; }
 }
 
 .buttonGroup.joined button.gtpb:last-child {
+	/* Four corners clockwise from top left */
   border-right: 1px solid #cecece;
   -moz-border-radius: 0 1em 1em 0;
   -webkit-border-radius: 0 1em 1em 0;
