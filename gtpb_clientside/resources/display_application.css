@@ -50,6 +50,7 @@ body {
 	margin-left: 20px;
 	/* formerly 30px */
 	display: inline;
+	float: left;
 }
 
 iframe#oViewPane {
