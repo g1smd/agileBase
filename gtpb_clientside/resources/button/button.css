@@ -39,7 +39,6 @@ button.gtpb img { border:0; }
 }
 
 .buttonGroup.joined button.gtpb:first-child {
-  border-right: 1px solid #cecece;
   -moz-border-radius: 1em 0 0 1em;
   -webkit-border-radius: 1em 0 0 1em;
   -ms-border-radius: 1em 0 0 1em;
