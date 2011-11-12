@@ -22,6 +22,8 @@ button.gtpb img { border:0; }
 
 .buttonGroup.joined button.gtpb:last-child {
   border-right: 1px solid gray;
+  -moz-border-radius-topright: 1em;
+  -moz-border-radius-bottomright: 1em;
 }
 
 button.gtpb:hover { cursor: pointer; }		 
