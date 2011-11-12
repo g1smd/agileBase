@@ -16,12 +16,12 @@ button.gtpb {
 button.gtpb img { border:0; }
 
 .buttonGroup.joined button.gtpb {
-  border: 1px solid gray;
+  border: 1px solid #cecece;
   border-right: none;
 }
 
 .buttonGroup.joined button.gtpb:last-child {
-  border-right: 1px solid gray;
+  border-right: 1px solid #cecece;
   -moz-border-radius-topright: 1em;
   -moz-border-radius-bottomright: 1em;
 }
