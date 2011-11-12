@@ -15,7 +15,7 @@ button.gtpb {
 	 
 button.gtpb img { border:0; }
 
-button.gtpb.joined {
+.buttonGroup.joined button.gtpb {
   border: 1px solid gray;
 }
 
