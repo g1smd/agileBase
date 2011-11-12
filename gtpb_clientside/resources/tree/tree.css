@@ -44,7 +44,7 @@ li:last-child h2 {
   border-radius: 0 0 1em 1em;
 }
 
-li.moduleexpanded h2 {
+li:last-child.moduleexpanded h2 {
   border-radius: 0;
 }
 
