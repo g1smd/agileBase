@@ -31,25 +31,18 @@ button.gtpb img { border:0; }
 
 .buttonGroup.joined button.gtpb:last-child {
   border-right: 1px solid #cecece;
-  -moz-border-radius-topright: 1em;
-  -moz-border-radius-bottomright: 1em;
-  -webkit-border-radius-topright: 1em;
-  -webkit-border-radius-bottomright: 1em;
-  -ms-border-radius-topright: 1em;
-  -ms-border-radius-bottomright: 1em;
-  border-radius-topright: 1em;
-  border-radius-bottomright: 1em;
+  -moz-border-radius: 0 1em 1em 0;
+  -webkit-border-radius: 0 1em 1em 0;
+  -ms-border-radius: 0 1em 1em 0;
+  border-radius: 0 1em 1em 0;
 }
 
 .buttonGroup.joined button.gtpb:first-child {
-  -moz-border-radius-topleft: 1em;
-  -moz-border-radius-bottomleft: 1em;
-  -webkit-border-radius-topleft: 1em;
-  -webkit-border-radius-bottomleft: 1em;
-  -ms-border-radius-topleft: 1em;
-  -ms-border-radius-bottomleft: 1em;
-  border-radius-topleft: 1em;
-  border-radius-bottomleft: 1em;
+  border-right: 1px solid #cecece;
+  -moz-border-radius: 1em 0 0 1em;
+  -webkit-border-radius: 1em 0 0 1em;
+  -ms-border-radius: 1em 0 0 1em;
+  border-radius: 1em 0 0 1em;
 }
 
 button.gtpb:hover { cursor: pointer; }		 
