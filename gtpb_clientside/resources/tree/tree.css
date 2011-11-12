@@ -44,6 +44,10 @@ li:last-child h2 {
   border-radius: 0 0 1em 1em;
 }
 
+li.moduleexpanded h2 {
+  border-radius 0;
+}
+
 h2 span {
 	padding-left: 20px;
 	background-position: left;
