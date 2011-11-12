@@ -15,9 +15,11 @@ button.gtpb {
 	 
 button.gtpb img { border:0; }
 
-button.gtpb:hover { background:transparent url('/agileBase/resources/button/button_bg_over.png') no-repeat center center }		 
-button.gtpb:active { background-image:url('/agileBase/resources/button/button_bg_down.png') }
-button.gtpb.selected { background:transparent url('/agileBase/resources/button/button_bg_down.png') no-repeat center center }
+button.gtpb:hover { cursor: pointer; }		 
+button.gtpb:active { background-color: red; }
+button.gtpb.selected {
+	background: -moz-linear-gradient(top, white, #cecece);
+}
 
 button.gtpb[disabled],
 button.gtpb[disabled]:hover,

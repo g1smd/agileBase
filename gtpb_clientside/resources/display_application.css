@@ -47,7 +47,7 @@ body {
 }
 
 #toolbarDiv div.buttonGroup {
-	margin-left: 20px;
+	margin-left: 2em;
 	/* formerly 30px */
 	display: inline;
 	float: left;
