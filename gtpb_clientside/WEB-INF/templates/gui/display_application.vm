@@ -45,7 +45,8 @@
         });
       </script>  
     </head>
-	  <body #if($viewTools.isRunningLocally()) class="localhost" #end>	
+	  <body #if($viewTools.isRunningLocally()) class="localhost" #end>
+    #set($noCaption = true)
     <div id=toolbarDiv>
       <div class=buttonGroup> ## record actions
         #parse('gui/toolbar/buttons/new.vm')
