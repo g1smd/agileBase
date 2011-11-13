@@ -215,6 +215,14 @@ function showPane3IfNecessary() {
 	}
 }
 
+function hidePane3() {
+	var jqPane2Butt = $(top.document).find("#pane2butt");
+	if (!jqPane2Butt.hasClass("selected")) {
+		jqPane2Butt.click();
+	}
+	$(top.document).find("#pane3butt").click();
+}
+
 // numberOfTabsExpected parameter:
 // -1 will always force a complete reload of pane 3
 // null will always force a single tab refresh only

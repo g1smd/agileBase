@@ -90,6 +90,10 @@ function showPane3IfNecessary() {
   document.getElementById('oViewPane').contentWindow.pane_2.showPane3IfNecessary();
 }
 
+function hidePane3() {
+  document.getElementById('oViewPane').contentWindow.pane_2.hidePane3();
+}
+
 function fNew() {  
   document.getElementById('oViewPane').contentWindow.pane_2.fNew();
 } 
