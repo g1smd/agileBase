@@ -1,7 +1,7 @@
 button.gtpb {
   border:0;
   width:68px; /* formerly 70px */
-  height:40px; /* 55 */
+  height:40px;
   text-decoration:none;
   text-align:center;
   color:black;
@@ -16,6 +16,10 @@ button.gtpb {
   background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
   background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
   background: radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
+}
+
+button.gtpb.captioned {
+  height: 55px;
 }
 	 
 button.gtpb img { border:0; }
