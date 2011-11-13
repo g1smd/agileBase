@@ -19,13 +19,13 @@
 ##<STYLE>@import url("resources/button/button.css");</STYLE>
 ##<SCRIPT language=Javascript src="resources/button/button.js"></SCRIPT>
 #if(!$button_img)#set($button_img='resources/toolbar/blank.png')#end
-<button #if($noCaption) title="$caption" #elseif($tooltip) $tooltip #end class="gtpb #if($classes)$classes#end"
+<button #if($noCaption) title="$caption" #elseif($tooltip) $tooltip #end class="gtpb #if(!$noCaption) captioned #end #if($classes)$classes#end"
   #if($id)id="$id"#end
   #if($params)$params#end
   onclick="fButtonClick(this) #if($click); $click #end" 
   onmouseout="this.blur()">
-    <img src="$button_img">
-    #if(!$noCaption)<br>$caption#end
+  <img src="$button_img">
+  #if(!$noCaption)<br>$caption#end
 </button>
 
 ## clear all the variables in case subsequent calls don't use them
