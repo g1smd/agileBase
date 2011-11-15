@@ -1630,11 +1630,10 @@ public final class DataManagement implements DataManagementInfo {
 				// for (TableInfo dependentTable : tablesWithDependentRecords) {
 				// dependentTables += dependentTable.getTableName() + "\n";
 				// }
-				String warning = "Other data is dependent on this\n";
+				String warning = "";
 				for (Map.Entry<TableInfo, String> dependency : recordDependencies.entrySet()) {
 					warning += dependency.getKey().getSimpleName() + " - " + dependency.getValue() + "\n";
 				}
-				warning += "\nDelete all of this data?";
 				throw new DataDependencyException(warning);
 			}
 		}
