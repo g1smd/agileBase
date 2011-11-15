@@ -1509,17 +1509,20 @@ public final class DataManagement implements DataManagementInfo {
 	 * specified, i.e. data that would be deleted in a cascade if the record
 	 * were deleted
 	 * 
+	 * Along with each table, return a snippet of the contents of dependent record(s)
+	 * 
 	 * Also throw an exception immediately if any locked records are found as
 	 * this means the deletion should fail
 	 */
-	private static Set<TableInfo> getTablesWithDependentRecords(Connection conn,
+	private static Map<TableInfo, String> getRecordsDependencies(Connection conn,
 			HttpServletRequest request, SessionDataInfo sessionData, DatabaseInfo databaseDefn,
-			TableInfo table, int rowId, Set<TableInfo> tablesWithDependentRecords)
+			TableInfo table, int rowId, Map<TableInfo, String> recordDependencies)
 			throws SQLException, ObjectNotFoundException, CantDoThatException {
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 		Set<TableInfo> tables = company.getTables();
 		for (TableInfo otherTable : tables) {
-			for (BaseField field : otherTable.getFields()) {
+			Set<BaseField> otherTableFields = otherTable.getFields();
+			for (BaseField field : otherTableFields) {
 				if (!(field instanceof RelationField)) {
 					continue;
 				}
@@ -1532,14 +1535,37 @@ public final class DataManagement implements DataManagementInfo {
 				// We should check for any records that will be lost from
 				// 'otherTable' from cascade delete.
 				BaseField otherPrimaryKey = otherTable.getPrimaryKey();
-				String SQLCode = "SELECT " + otherPrimaryKey.getInternalFieldName() + " FROM "
+				Set<BaseField> textFields = new HashSet<BaseField>();
+				for (BaseField testField : otherTableFields) {
+					if (testField instanceof TextField) {
+						textFields.add(testField);
+					}
+				}
+				String SQLCode = "SELECT " + otherPrimaryKey.getInternalFieldName();
+				for (BaseField textField : textFields) {
+					SQLCode += ", " + textField.getInternalFieldName();
+				}
+				// Limit to 1 dependent record for now
+				SQLCode += " FROM "
 						+ otherTable.getInternalTableName() + " WHERE "
-						+ relationField.getInternalFieldName() + "=?";
+						+ relationField.getInternalFieldName() + "=? LIMIT 1";
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				statement.setInt(1, rowId);
 				ResultSet results = statement.executeQuery();
 				while (results.next()) {
 					int otherRowId = results.getInt(1);
+					String recordDescription = otherRowId + ": ";
+					for(BaseField textField : textFields) {
+						String fieldValue = results.getString(textField.getInternalFieldName());
+						if (fieldValue != null) {
+							if (!fieldValue.equals("")) {
+								recordDescription += fieldValue + ", ";
+							}
+						}
+					}
+					if (recordDescription.length() > 100) {
+						recordDescription = recordDescription.substring(0, 99) + "...";
+					}
 					TableData otherTableData = new TableData(otherTable);
 					if (otherTableData.isRecordLocked(conn, sessionData, otherRowId)) {
 						throw new CantDoThatException("Record " + otherRowId
@@ -1547,40 +1573,40 @@ public final class DataManagement implements DataManagementInfo {
 								+ " because it is locked");
 					}
 					// recurse
-					if (!tablesWithDependentRecords.contains(otherTable)) {
-						tablesWithDependentRecords.addAll(getTablesWithDependentRecords(conn,
+					if (!recordDependencies.keySet().contains(otherTable)) {
+						recordDependencies.putAll(getRecordsDependencies(conn,
 								request, sessionData, databaseDefn, otherTable, otherRowId,
-								tablesWithDependentRecords));
+								recordDependencies));
 					}
-					tablesWithDependentRecords.add(otherTable);
+					recordDependencies.put(otherTable, recordDescription);
 				}
 				results.close();
 				statement.close();
 			}
 		}
-		return tablesWithDependentRecords;
+		return recordDependencies;
 	}
 
 	public void removeRecord(HttpServletRequest request, SessionDataInfo sessionData,
 			DatabaseInfo databaseDefn, TableInfo table, int rowId, boolean cascade)
 			throws SQLException, ObjectNotFoundException, CodingErrorException,
 			CantDoThatException, DisallowedException, DataDependencyException {
-		Set<TableInfo> tablesWithDependentRecords = new LinkedHashSet<TableInfo>();
+		Map<TableInfo, String> recordDependencies = new LinkedHashMap<TableInfo, String>();
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			tablesWithDependentRecords = getTablesWithDependentRecords(conn, request, sessionData,
-					databaseDefn, table, rowId, tablesWithDependentRecords);
+			recordDependencies = getRecordsDependencies(conn, request, sessionData,
+					databaseDefn, table, rowId, recordDependencies);
 		} finally {
 			if (conn != null) {
 				conn.close();
 			}
 		}
 		// check for cascading deletes:
-		if (tablesWithDependentRecords.size() > 0) {
+		if (recordDependencies.size() > 0) {
 			// check if user has permissions on all dependent tables:
-			for (TableInfo dependentTable : tablesWithDependentRecords) {
+			for (TableInfo dependentTable : recordDependencies.keySet()) {
 				if (dependentTable.equals(table))
 					continue;
 				if (this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -1603,8 +1629,8 @@ public final class DataManagement implements DataManagementInfo {
 				// dependentTables += dependentTable.getTableName() + "\n";
 				// }
 				String warning = "Other data is dependent on this\n";
-				for (TableInfo dependentTable : tablesWithDependentRecords) {
-					warning += dependentTable.getSimpleName() + "\n";
+				for (Map.Entry<TableInfo, String> dependency : recordDependencies.entrySet()) {
+					warning += dependency.getKey().getSimpleName() + "- " + dependency.getValue() + "\n";
 				}
 				warning += "\nDelete all of this data?";
 				throw new DataDependencyException(warning);
