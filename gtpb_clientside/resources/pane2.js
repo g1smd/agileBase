@@ -107,7 +107,8 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		function fRetryDeletions() {
 			var sExceptionMessage = sResponseXML
 					.getElementsByTagName('exception')[0].firstChild.nodeValue;
-			if (!confirm('Some rows were not deleted because they are linked to data in other tables.\n\n'
+			if (!confirm('Some rows were not deleted because they are linked to data in other tables.\n'
+					+ 'DELETE ALL THIS?\n\n'
 					+ sExceptionMessage
 					+ '\n\nWould you like to delete these rows and the related data or CANCEL this operation?'))
 				return false;
