@@ -25,7 +25,7 @@ button.gtpb.captioned {
 button.gtpb img { border:0; }
 
 .buttonGroup.joined button.gtpb {
-  border: 1px solid gray;
+  border: 1px solid #b6b6b6;
   border-right: none;
   -moz-border-radius:0;
   -webkit-border-radius:0;
@@ -35,7 +35,7 @@ button.gtpb img { border:0; }
 
 .buttonGroup.joined button.gtpb:last-child {
 	/* Four corners clockwise from top left */
-  border-right: 1px solid gray;
+  border-right: 1px solid #b6b6b6;
   -moz-border-radius: 0 1em 1em 0;
   -webkit-border-radius: 0 1em 1em 0;
   -ms-border-radius: 0 1em 1em 0;
@@ -52,11 +52,11 @@ button.gtpb img { border:0; }
 button.gtpb:hover { cursor: pointer; }		 
 button.gtpb:active { background-color: gray; }
 button.gtpb.selected {
-  background: -moz-linear-gradient(top, gray, #cecece);
-  background: -webkit-linear-gradient(top, gray, #cecece);
-  background: -ms-linear-gradient(top, gray, #cecece);
-  background: linear-gradient(top, gray, #cecece);
-  border: 1px solid gray;
+  background: -moz-linear-gradient(top, #555555, #999999);
+  background: -webkit-linear-gradient(top, #555555, #999999);
+  background: -ms-linear-gradient(top, #555555, #999999);
+  background: linear-gradient(top, #555555, #999999);
+  border: 1px solid #b6b6b6; /* icon colour */
 }
 
 button.gtpb[disabled],
