@@ -1534,7 +1534,8 @@ public final class DataManagement implements DataManagementInfo {
 				// are deleting a record from.
 				// We should check for any records that will be lost from
 				// 'otherTable' from cascade delete.
-				BaseField otherIdField = otherTable.getPrimaryKey();
+				BaseField primaryKey = otherTable.getPrimaryKey();
+				BaseField otherUniqueKey = null;
 				Set<BaseField> textFields = new HashSet<BaseField>();
 				for (BaseField testField : otherTableFields) {
 					// Only report text fields
@@ -1544,28 +1545,32 @@ public final class DataManagement implements DataManagementInfo {
 						}
 					}
 					// If the table has a unique field, that will be more useful to the user than the internal ID
-					if (testField.getUnique()) {
-						otherIdField = testField;
+					if (testField.getUnique() && (!testField.equals(primaryKey))) {
+						otherUniqueKey = testField;
 					}
 				}
-				String SQLCode = "SELECT " + otherIdField.getInternalFieldName();
+				String SQLCode = "SELECT " + primaryKey.getInternalFieldName();
+				if (otherUniqueKey != null) {
+					SQLCode += ", " + otherUniqueKey.getInternalFieldName();
+				}
 				for (BaseField textField : textFields) {
 					SQLCode += ", " + textField.getInternalFieldName();
 				}
-				// Limit to 1 dependent record for now
+				// NB Don't put a LIMIT on this statement, we want to find all children in the tree
 				SQLCode += " FROM "
 						+ otherTable.getInternalTableName() + " WHERE "
-						+ relationField.getInternalFieldName() + "=? LIMIT 1";
+						+ relationField.getInternalFieldName() + "=?";
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				statement.setInt(1, rowId);
 				ResultSet results = statement.executeQuery();
 				while (results.next()) {
 					int otherRowId = results.getInt(1);
 					String recordDescription = "";
-					if (otherIdField.equals(otherTable.getPrimaryKey())) {
+					if (otherUniqueKey == null) {
 						recordDescription = "internal ID " + otherRowId + ": ";
 					} else {
-						recordDescription = otherIdField + " = " + otherRowId + ": ";
+						String otherId = results.getString(otherUniqueKey.getInternalFieldName());
+						recordDescription = otherUniqueKey + " = " + otherId + ": ";
 					}
 					for(BaseField textField : textFields) {
 						String fieldValue = results.getString(textField.getInternalFieldName());
