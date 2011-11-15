@@ -1534,16 +1534,21 @@ public final class DataManagement implements DataManagementInfo {
 				// are deleting a record from.
 				// We should check for any records that will be lost from
 				// 'otherTable' from cascade delete.
-				BaseField otherPrimaryKey = otherTable.getPrimaryKey();
+				BaseField otherIdField = otherTable.getPrimaryKey();
 				Set<BaseField> textFields = new HashSet<BaseField>();
 				for (BaseField testField : otherTableFields) {
+					// Only report text fields
 					if (testField instanceof TextField) {
 						if ((!testField.getHidden()) && (!((TextField) testField).usesLookup())) {
 							textFields.add(testField);
 						}
 					}
+					// If the table has a unique field, that will be more useful to the user than the internal ID
+					if (testField.getUnique()) {
+						otherIdField = testField;
+					}
 				}
-				String SQLCode = "SELECT " + otherPrimaryKey.getInternalFieldName();
+				String SQLCode = "SELECT " + otherIdField.getInternalFieldName();
 				for (BaseField textField : textFields) {
 					SQLCode += ", " + textField.getInternalFieldName();
 				}
@@ -1556,12 +1561,17 @@ public final class DataManagement implements DataManagementInfo {
 				ResultSet results = statement.executeQuery();
 				while (results.next()) {
 					int otherRowId = results.getInt(1);
-					String recordDescription = "ID " + otherRowId + ": ";
+					String recordDescription = "";
+					if (otherIdField.equals(otherTable.getPrimaryKey())) {
+						recordDescription = "internal ID " + otherRowId + ": ";
+					} else {
+						recordDescription = otherIdField + " = " + otherRowId + ": ";
+					}
 					for(BaseField textField : textFields) {
 						String fieldValue = results.getString(textField.getInternalFieldName());
 						if (fieldValue != null) {
 							if (!fieldValue.equals("")) {
-								recordDescription += fieldValue + ", ";
+								recordDescription += fieldValue.replaceAll("\\n", "... ") + ", ";
 							}
 						}
 					}
