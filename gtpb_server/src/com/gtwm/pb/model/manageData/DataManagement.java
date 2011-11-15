@@ -1538,7 +1538,9 @@ public final class DataManagement implements DataManagementInfo {
 				Set<BaseField> textFields = new HashSet<BaseField>();
 				for (BaseField testField : otherTableFields) {
 					if (testField instanceof TextField) {
-						textFields.add(testField);
+						if ((!testField.getHidden()) && (!((TextField) testField).usesLookup())) {
+							textFields.add(testField);
+						}
 					}
 				}
 				String SQLCode = "SELECT " + otherPrimaryKey.getInternalFieldName();
@@ -1554,7 +1556,7 @@ public final class DataManagement implements DataManagementInfo {
 				ResultSet results = statement.executeQuery();
 				while (results.next()) {
 					int otherRowId = results.getInt(1);
-					String recordDescription = otherRowId + ": ";
+					String recordDescription = "ID " + otherRowId + ": ";
 					for(BaseField textField : textFields) {
 						String fieldValue = results.getString(textField.getInternalFieldName());
 						if (fieldValue != null) {
@@ -1630,7 +1632,7 @@ public final class DataManagement implements DataManagementInfo {
 				// }
 				String warning = "Other data is dependent on this\n";
 				for (Map.Entry<TableInfo, String> dependency : recordDependencies.entrySet()) {
-					warning += dependency.getKey().getSimpleName() + "- " + dependency.getValue() + "\n";
+					warning += dependency.getKey().getSimpleName() + " - " + dependency.getValue() + "\n";
 				}
 				warning += "\nDelete all of this data?";
 				throw new DataDependencyException(warning);
