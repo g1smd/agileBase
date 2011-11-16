@@ -20,6 +20,7 @@
 
 // Oliver: see http://gist.github.com/434145, http://bugs.jquery.com/ticket/6446
 // Remove when iPad 4.2 comes out or bug 6446 resolved in jQuery
+/*
 if (/webkit.*mobile/i.test(navigator.userAgent)
 		&& "getBoundingClientRect" in document.documentElement
 		&& parseFloat(/OS (.*) like/ig.exec(navigator.userAgent)[1].replace('_', '.')) < 4.1) {
@@ -33,6 +34,7 @@ if (/webkit.*mobile/i.test(navigator.userAgent)
 		    };
 		})(jQuery);
 };
+*/
 
 (function($) {
 	
