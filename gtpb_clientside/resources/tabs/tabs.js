@@ -409,7 +409,8 @@ function fRelationPickers() {
 		jqElement.autocomplete("AppController.servlet", {
 			autoFill : true,
 			cacheLength : 1, /* 100 */
-			max : 50,
+			/* max : 50, */
+			minChars : 2,
 			extraParams : {
 				gtpb_return : "gui/resources/input/return_relation_values",
 				set_custom_field : true,
