@@ -1145,6 +1145,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	private Exception ex = null;
 
-	private static final SimpleLogger logger = new SimpleLogger(DataManagement.class);
+	private static final SimpleLogger logger = new SimpleLogger(ViewMethods.class);
 
 }

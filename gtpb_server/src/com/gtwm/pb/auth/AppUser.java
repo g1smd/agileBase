@@ -74,8 +74,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 			this.setForename(forename);
 		}
 		this.setPassword(password);
-		// Give them a default user type
-		this.setUserType(InitialView.FULL);
+		// Give them a default UI layout
+		this.setUserType(InitialView.REPORT);
 	}
 
 	@ManyToOne(targetEntity = Company.class)
