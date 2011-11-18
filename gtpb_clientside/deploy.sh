@@ -35,3 +35,4 @@ cat /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/wait/request_set
 find /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/ -name '*.js' -print0 | xargs -0 /usr/local/java/jdk1.6.0_24/bin/java -jar /usr/local/agileBase/yui_compressor/yuicompressor.jar -o '.js$:.js'
 find /usr/local/tomcat/apache-tomcat/webapps/agileBase/resources/ -name '*.css' -print0 | xargs -0 /usr/local/java/jdk1.6.0_24/bin/java -jar /usr/local/agileBase/yui_compressor/yuicompressor.jar -o '.css$:.css'
 find /usr/local/tomcat/apache-tomcat/webapps/agileBase/styles/ -name '*.css' -print0 | xargs -0 /usr/local/java/jdk1.6.0_24/bin/java -jar /usr/local/agileBase/yui_compressor/yuicompressor.jar -o '.css$:.css'
+
