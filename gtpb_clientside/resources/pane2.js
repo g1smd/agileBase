@@ -209,7 +209,6 @@ function fDeleteObj(sAction, sRowIdentifier) {
 }
 
 function showPane3IfNecessary(oEvent) {
-	alert("target is " + $(oEvent.target).attr("type"));
 	if ($(oEvent.target).attr("type") == "checkbox") {
 		return;
 	}
