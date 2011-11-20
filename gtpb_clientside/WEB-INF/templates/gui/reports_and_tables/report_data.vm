@@ -91,7 +91,7 @@
 	  #elseif($table_part_only)
       #set($click="loadIntoPanel('$sessionReport.getInternalReportName()', $datarow.getRowId())")##
     #else
-      #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()', $datarow.getRowId(), $numberOfTabs);showPane3IfNecessary();")##
+      #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()', $datarow.getRowId(), $numberOfTabs);showPane3IfNecessary(event);")##
 	  #end##
 	#end##
     #set($uniqueid=$datarow.getRowId())##

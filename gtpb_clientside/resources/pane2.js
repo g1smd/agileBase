@@ -208,7 +208,10 @@ function fDeleteObj(sAction, sRowIdentifier) {
 	fDeleteFirstItem();
 }
 
-function showPane3IfNecessary() {
+function showPane3IfNecessary(oEvent) {
+	if ($(oEvent.target).attr("type") == "checkbox") {
+		return;
+	}
 	var jqButt = $(top.document).find("#pane3butt")
 	if (!jqButt.hasClass("selected")) {
 		jqButt.click();
