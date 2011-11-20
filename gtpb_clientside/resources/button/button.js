@@ -86,8 +86,8 @@ function fSummaryPaneReady() {
   return true;
 }
 
-function showPane3IfNecessary() {
-  document.getElementById('oViewPane').contentWindow.pane_2.showPane3IfNecessary();
+function showPane3IfNecessary(oEvent) {
+  document.getElementById('oViewPane').contentWindow.pane_2.showPane3IfNecessary(oEvent);
 }
 
 function hidePane3() {
