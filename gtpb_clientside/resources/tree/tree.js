@@ -40,6 +40,11 @@ function fUpdateTitle(sName, sNewTitle) {
 
 $(document).ready(function(){
 	pane1Setup();
+	// If in a table (or admin section), show pane 3
+	var currentOption = $("li.currentOption");
+	if (currentOption.closest("#setup").length > 0) {
+		top.showPane3IfNecessary();
+	}
 });
 
 function pane1Setup() {

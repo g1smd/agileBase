@@ -17,6 +17,7 @@
 		<copy todir="${tomcat.dir}/webapps/${webapp}/website">
 			<fileset dir="website"/>
 		</copy>
+    <copy file="index.jsp" tofile="${tomcat.dir}/webapps/${webapp}/index.jsp"/>
 	</target>
 
 	<target name="run">

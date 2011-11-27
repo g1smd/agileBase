@@ -45,6 +45,12 @@ body {
 	margin-right: 7px;
 }
 
+#logo {
+  float: left;
+  margin-left: 20px;
+  width: 180px;
+}
+
 #toolbarDiv div.buttonGroup {
 	margin-left: 3em;
 	/* formerly 30px */

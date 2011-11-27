@@ -118,13 +118,15 @@ function fInitialiseDependencies() {
 	for ( var iSelect = 0; iSelect < aSelect.length; iSelect++) {
 		var selectName = aSelect[iSelect].name;
 		// see whether the child has been registered already, continue if it has
-		if (aSelect[iSelect].getAttribute('registered') == 'true')
+		if (aSelect[iSelect].getAttribute('registered') == 'true') {
 			continue;
+		}
 		// find its parents' name. If none, continue to next select element
 		var sParent = aSelect[iSelect].getAttribute('parent');
 		var sParentId = aSelect[iSelect].getAttribute('parentid');
-		if (!sParent)
+		if (!sParent) {
 			continue;
+		}
 		var oForm = aSelect[iSelect].form;
 
 		// only allow dependencies within the same form

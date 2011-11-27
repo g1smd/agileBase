@@ -12,6 +12,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
   live = true;
 } else if (requestURL.startsWith("http://gtwmbackup.dh.bytemark.co.uk")) {
   googleKey = "http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBQf1koDrgwv2nVopgtXyNJJGf3wPhSGxzvELTvIoGYjhEXJzrBbXQIbKw";
+} else if (requestURL.startsWith("http://mcc.hpl.hp.com:8080")) {
+	googleKey = "http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSc_vMwNn3P31Pbn-7BnVhZNCM03BSA2_dWIrkQNs5kAuiaHmwVTAjuYw";
 }
 %>
 
