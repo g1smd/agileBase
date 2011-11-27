@@ -17,5 +17,5 @@
 ##
 
 ## Set this to show a logo should be displayed in the toolbar
-#set($logo = "resources/logo.png")
-##set($logo = false)
+##set($logo = "resources/logo.png")
+#set($logo = false)
