@@ -160,7 +160,7 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 
 	var lastRenderIndex = 0;
 
-	// Update the row count in pane 1 and the summary view (if applicable) in pane 3
+	// Update the row count in pane 1 and the chart (if applicable) in pane 3
 	function fUpdateOtherPanes() {
 		var numRows = $('#numrows').html();
 		var pane1Id = $('#pane1id').text();

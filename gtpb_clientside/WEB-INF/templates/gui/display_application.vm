@@ -48,6 +48,12 @@
 	  <body #if($viewTools.isRunningLocally()) class="localhost" #end>
     #set($noCaption = true)
     <div id=toolbarDiv>
+      #parse("properties.vm") ## sets logo variable
+      #if($logo)
+        <div id="logo">
+          <a href="http://www.agilebase.co.uk" target="_blank"><img src="$logo" border="0" /></a>
+        </div>
+      #end
       <div class=buttonGroup> ## record actions
         #parse('gui/toolbar/buttons/new.vm')
         #parse('gui/toolbar/buttons/clone.vm')

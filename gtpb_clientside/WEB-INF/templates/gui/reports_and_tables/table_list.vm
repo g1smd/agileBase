@@ -82,7 +82,7 @@
 	#end
 		#if($view.loggedInUserAllowedTo('ADMINISTRATE'))
 		<li option="true">
-			<a href="AppController.servlet?return=gui/pane1&add_table&set_custom_string=true&key=table_tabindex&value=5">create a new table</a>
+			<a href="AppController.servlet?return=gui/pane1&add_table&set_custom_string=true&key=report_tabindex&value=6">create a new table</a>
 		</li>
 		#end	
 	</ul>
