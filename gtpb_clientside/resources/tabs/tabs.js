@@ -979,7 +979,7 @@ function fSetupCharts() {
 								.append(
 										"<div class='chart_remover'><a href='?return=gui/reports_and_tables/pane3&remove_chart=true&summaryid="
 												+ summaryId
-												+ "'><img border='0' src='resources/icons/cross-greyscale-round.png' /></a></div>");
+												+ "'><img border='0' src='resources/icons/edit.png' /></a></div>");
 						$(this).hover(function() {
 							$(this).find('.chart_remover').fadeIn("normal");
 						}, function() {
