@@ -32,7 +32,7 @@
     #navigation { position:absolute; 
                   height:100%;
                   width:120px;
-                  background-color:#f1f2ed;
+                  background-color:#f4f4f4;
                   border-top:2px solid #cccccc;
                   border-right:1px solid #cecece;
                   top:0;
@@ -52,7 +52,7 @@
     #options_wrapper div.options_set h1 { font-size:14pt;
                                           font-weight:normal;
                                           border-bottom:1px solid black }
-    #options_wrapper div.options_set tr:hover { background-color:#f1f2ed }  
+    #options_wrapper div.options_set tr:hover { background-color:#f4f4f4 }  
     #options_wrapper div.options_set th { text-transform:uppercase;
                                           border-bottom:1px solid #333333;
                                           color:#333333;

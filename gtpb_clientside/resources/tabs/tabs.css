@@ -47,7 +47,7 @@ td.trailing input[type=button] {
 	height: 2em;
 	margin: 0;
 	padding: 0 0 0 10px;
-	background: rgb(240, 240, 240); /* #F1F2ED; */
+	background: #f4f4f4;
   border-top:1px solid #cecece;	
 }
 
