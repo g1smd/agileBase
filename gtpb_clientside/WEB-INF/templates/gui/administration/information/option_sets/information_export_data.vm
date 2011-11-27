@@ -17,7 +17,7 @@
 ##
 <style>
 	#information_export {
-		background-color: #f1f2ed;
+		background-color: #f4f4f4;
 	}
 	
 	.dashboard_blob {
@@ -45,7 +45,7 @@ Please click a link below to download full detail for each graph.<p>
 
 <div class="dashboard_blob">
 <table border="0"><tr>
-<td style="border-right: 1em solid #f1f2ed">
+<td style="border-right: 1em solid #f4f4f4">
 <span class="sparkline_logins">...</span> 
 <a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">Logins</a>
 <br>
@@ -69,7 +69,7 @@ These 'sparkline' charts show trends in adoption and usage of agileBase over the
 
 <div class="dashboard_blob">
 <table border="0"><tr>
-<td style="border-right: 1em solid #f1f2ed">
+<td style="border-right: 1em solid #f4f4f4">
 <span class="sparkline_report_additions">...</span> <span style="color:blue">Report building</span><br>
 <span class="sparkline_report_removals">...</span> <span style="color:red">Demolishing</span><br>
 Report building includes report creation, field additions etc.<br>
@@ -84,7 +84,7 @@ These charts are a pointer to levels of analysis rather than pure data entry
 
 <div class="dashboard_blob">
 <table border="0"><tr>
-<td style="border-right: 1em solid #f1f2ed">
+<td style="border-right: 1em solid #f4f4f4">
 <span class="sparkline_table_additions">...</span> <span style="color:blue">Table building</span><br>
 <span class="sparkline_table_removals">...</span> <span style="color:red">Demolishing</span><br>
 Data includes table creations, field creations, table deletions and field deletions<br>
