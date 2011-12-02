@@ -226,30 +226,34 @@ public final class CalendarPublisher extends HttpServlet {
 					// if (dateResolution >= java.util.Calendar.HOUR_OF_DAY) {
 					// For some reason, whole day events need the GMT offset
 					// adding but timed events don't
-					eventEpochTime += timeZone.getOffset(eventEpochTime);
+					//eventEpochTime += timeZone.getOffset(eventEpochTime);
+					eventEpochTime += (1000 * 60 * 60);
 					// }
 					net.fortuna.ical4j.model.Date eventIcalDate = new net.fortuna.ical4j.model.Date(
 							eventEpochTime);
+					net.fortuna.ical4j.model.Date eventEndDate = new net.fortuna.ical4j.model.Date(
+							eventEpochTime + (1000 * 60 * 60 * 22));
 					if (eventEndField.equals(eventStartField)) {
-						rowEvent = new VEvent(eventIcalDate, eventTitle);
+						rowEvent = new VEvent(eventIcalDate, eventEndDate, eventTitle);
 					} else {
+						// Multi-day events
 						DataRowFieldInfo eventEndInfo = reportDataRow.getValue(eventEndField);
 						String endEpochString = eventEndInfo.getKeyValue();
-						if (endEpochString.equals("")) {
-							rowEvent = new VEvent(eventIcalDate, eventTitle);
-						} else {
+						//if (endEpochString.equals("")) {
+						//	rowEvent = new VEvent(eventIcalDate, eventTitle);
+						//} else {
 							Long endEpochTime = Long.valueOf(endEpochString);
 							endEpochTime += timeZone.getOffset(endEpochTime);
-							net.fortuna.ical4j.model.Date eventEndDate = new net.fortuna.ical4j.model.Date(
+							eventEndDate = new net.fortuna.ical4j.model.Date(
 									endEpochTime);
 							if (eventEndDate.after(eventIcalDate)) {
 								rowEvent = new VEvent(eventIcalDate, eventEndDate, eventTitle);
 							} else {
 								rowEvent = new VEvent(eventIcalDate, eventTitle);
 							}
-						}
+						//}
 					}
-				} else {
+				} else { // not a whole day
 					net.fortuna.ical4j.model.DateTime startTime = new net.fortuna.ical4j.model.DateTime(
 							eventEpochTime);
 					String endEpochString = "";
