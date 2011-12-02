@@ -16,7 +16,20 @@ body {
 }
 
 #tl_wrapper {
-	background:#1b3447 url('../images/bg-intro.jpg') repeat-x center 135px;
+	/* background:#1b3447 url('../images/bg-intro.jpg') repeat-x center 135px; */
+  background-image: linear-gradient(top, rgb(179,179,179) 0%, rgb(102,102,102) 40%, rgb(102,102,102) 100%);
+  background-image: -o-linear-gradient(top, rgb(179,179,179) 0%, rgb(102,102,102) 40%, rgb(102,102,102) 100%);
+  background-image: -moz-linear-gradient(top, rgb(179,179,179) 0%, rgb(102,102,102) 40%, rgb(102,102,102) 100%);
+  background-image: -webkit-linear-gradient(top, rgb(179,179,179) 0%, rgb(102,102,102) 40%, rgb(102,102,102) 100%);
+  background-image: -ms-linear-gradient(top, rgb(179,179,179) 0%, rgb(102,102,102) 40%, rgb(102,102,102) 100%);
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0, rgb(179,179,179)),
+    color-stop(0.4, rgb(102,102,102)),
+    color-stop(1, rgb(102,102,102))
+  );
 	position:relative;
 }
 
