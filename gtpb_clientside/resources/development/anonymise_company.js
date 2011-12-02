@@ -262,7 +262,7 @@ var gtwmJson = [{
 function anonymiseCompany(tableIndex) {
   	tableCommand = gtwmJson[tableIndex];
   	if (tableIndex == 0) {
-  	  $("#results").append("Anonymising...<br>");
+  	  $("#results").append("Anonymising... " + new Date() + "<br>");
   	}
   	$.post("AppController.servlet", tableCommand, function() {
   		$("#results").append("Table anonymised: " + tableCommand.table_description + "<br>");
@@ -270,7 +270,7 @@ function anonymiseCompany(tableIndex) {
   		if (newTableIndex < gtwmJson.length) {
   			anonymiseCompany(newTableIndex);
   		} else {
-  	  	$("#results").append("Finished.");
+  	  	$("#results").append("Finished at " + new Date());
   		}
   	});
 }

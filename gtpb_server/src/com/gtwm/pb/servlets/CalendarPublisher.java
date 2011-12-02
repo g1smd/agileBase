@@ -207,6 +207,7 @@ public final class CalendarPublisher extends HttpServlet {
 			calendar.getProperties().add(CalScale.GREGORIAN);
 			TimeZoneRegistry registry = TimeZoneRegistryFactory.getInstance().createRegistry();
 			VTimeZone tz = registry.getTimeZone("Europe/London").getVTimeZone();
+			TzId tzParam = new TzId(tz.getProperties().getProperty(Property.TZID).getValue());
 			calendar.getComponents().add(tz);
 			java.util.Calendar eventCalendar = java.util.Calendar.getInstance();
 			TimeZone timeZone = java.util.Calendar.getInstance().getTimeZone();
@@ -249,7 +250,7 @@ public final class CalendarPublisher extends HttpServlet {
 							if (eventEndDate.after(eventIcalDate)) {
 								rowEvent = new VEvent(eventIcalDate, eventEndDate, eventTitle);
 							} else {
-								rowEvent = new VEvent(eventIcalDate, eventTitle);
+								rowEvent = new VEvent(eventIcalDate, eventIcalDate, eventTitle);
 							}
 						//}
 					}
@@ -276,8 +277,8 @@ public final class CalendarPublisher extends HttpServlet {
 					rowEvent = new VEvent(startTime, endTime, eventTitle);
 				}
 				// add Timezone
-				TzId tzParam = new TzId(tz.getProperties().getProperty(Property.TZID).getValue());
 				rowEvent.getProperties().getProperty(Property.DTSTART).getParameters().add(tzParam);
+				rowEvent.getProperties().getProperty(Property.DTEND).getParameters().add(tzParam);
 				rowEvent.getProperties().add(ug.generateUid());
 				calendar.getComponents().add(rowEvent);
 			}
