@@ -27,11 +27,11 @@
 </head>
 <body>
 Running on $viewTools.getAppUrl()<p>
-#if(!$viewTools.getAppUrl().matches("gtwmbackup"))
+###if(!$viewTools.getAppUrl().matches("gtwmbackup"))
   <button value="Anonymise" id="anonymise" onclick="anonymiseCompany(0); this.disabled = true;">Anonymise</button>
   <div id="results"></div>
-#else
-  Anonymisation can only be run on the test/backup server
-#end
+###else
+##  Anonymisation can only be run on the test/backup server
+###end
 </body>
 </html>
