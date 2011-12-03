@@ -583,7 +583,7 @@ public final class ServletSessionMethods {
 					// .4 -> 0.4
 					// 4. -> 4.0
 					// . -> 0.0
-					// £46.50 -> 46.50 - from the error logs, users commonly input £ signs
+					// (pound sign)46.50 -> 46.50 - from the error logs, users commonly input pound signs
 					fieldValueString = fieldValueString.replace("\u00A3", "");
 					fieldValueString = fieldValueString.replace("$", "");
 					if (fieldValueString.startsWith(".")) {
