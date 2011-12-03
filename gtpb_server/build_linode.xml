@@ -38,9 +38,9 @@
 				<!--Unit testing framework -->
 				<pathelement location="WEB-INF/lib/junit.jar" />
 				<!--Apache tomcat jar -->
-				<pathelement location="${tomcat.dir}/lib/servlet-api.jar" />
+				<pathelement location="/usr/share/tomcat7/lib/servlet-api.jar" />
 				<!--Postgresql JDBC driver -->
-				<pathelement location="${tomcat.dir}/lib/postgresql-8.4-701.jdbc4.jar" />
+				<pathelement location="/usr/share/tomcat7/lib/postgresql.jar" />
 				<!--File uploads -->
 				<pathelement location="WEB-INF/lib/commons-fileupload-1.1.jar" />
 				<pathelement location="WEB-INF/lib/commons-io-2.0.jar" />
