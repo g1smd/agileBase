@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="deploy" name="agileBase">
+	<!-- server directories -->
+	<property name="tomcat.dir" location="/var/lib/tomcat7" />
+	<property name="webapp" value="agileBase" />
+
+	<target name="deploy">
+		<copy todir="${tomcat.dir}/webapps/${webapp}/WEB-INF">
+			<fileset dir="WEB-INF"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/styles">
+			<fileset dir="styles"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/resources">
+			<fileset dir="resources"/>
+		</copy>
+		<copy todir="${tomcat.dir}/webapps/${webapp}/website">
+			<fileset dir="website"/>
+		</copy>
+    <copy file="index.jsp" tofile="${tomcat.dir}/webapps/${webapp}/index.jsp"/>
+	</target>
+
+	<target name="run">
+		<echo>This is a web application and can't be run from the command line</echo>
+	</target>
+
+		<target name="all" depends="deploy" />
+</project>
