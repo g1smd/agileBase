@@ -523,7 +523,7 @@ public final class ServletSessionMethods {
 				|| databaseFieldType.equals(DatabaseFieldType.SERIAL)
 				|| databaseFieldType.equals(DatabaseFieldType.FLOAT)) {
 			if (fieldValueString != null) {
-				fieldValueString = fieldValueString.trim().replace(",", "").replace("£", "").replace("$", "");
+				fieldValueString = fieldValueString.trim().replace(",", "").replace("\u00A3", "").replace("$", ""); // 00A3 = pound sign
 				if (fieldValueString.endsWith("%")) {
 					fieldValueString = fieldValueString.substring(0, fieldValueString.length() - 1);
 				}
@@ -584,7 +584,7 @@ public final class ServletSessionMethods {
 					// 4. -> 4.0
 					// . -> 0.0
 					// £46.50 -> 46.50 - from the error logs, users commonly input £ signs
-					fieldValueString = fieldValueString.replace("£", "");
+					fieldValueString = fieldValueString.replace("\u00A3", "");
 					fieldValueString = fieldValueString.replace("$", "");
 					if (fieldValueString.startsWith(".")) {
 						fieldValueString = "0" + fieldValueString;
