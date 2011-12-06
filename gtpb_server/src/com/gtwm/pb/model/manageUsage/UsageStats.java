@@ -280,6 +280,7 @@ public class UsageStats implements UsageStatsInfo {
 			throw new CodingErrorException("StringWriter produced an IO exception: " + e);
 		}
 		BaseReportInfo report = null;
+		stringWriter.flush();
 		String JSONString = stringWriter.toString();
 		return JSONString;
 	}
