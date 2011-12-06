@@ -1867,6 +1867,7 @@ public final class DataManagement implements DataManagementInfo {
 				jg.writeEndObject();
 			}
 			jg.writeEndArray();
+			jg.flush();
 		} catch (IOException e) {
 			throw new CodingErrorException("StringWriter produced an IO exception!");
 		}
@@ -1939,6 +1940,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			jg.writeEndArray();
 			jg.writeEndObject();
+			jg.flush();
 		} catch (IOException e) {
 			throw new CodingErrorException("StringWriter produced an IO exception: " + e);
 		}
@@ -2060,6 +2062,7 @@ public final class DataManagement implements DataManagementInfo {
 				jg.writeEndObject();
 			}
 			jg.writeEndArray();
+			jg.flush();
 		} catch (IOException e) {
 			throw new CodingErrorException("StringWriter produced an IO exception: " + e);
 		}
@@ -2604,6 +2607,7 @@ public final class DataManagement implements DataManagementInfo {
 				}
 			}
 			jg.writeEndObject();
+			jg.flush();
 		} catch (IOException ioex) {
 			throw new CodingErrorException("JSON generation threw an IO exception: " + ioex);
 		}
