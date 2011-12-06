@@ -82,8 +82,9 @@ import com.gtwm.pb.util.Enumerations.ExtraAction;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
+
+import org.codehaus.jackson.JsonGenerationException;
 import org.grlea.log.SimpleLogger;
-import org.json.JSONException;
 import java.util.TreeSet;
 
 public final class ViewMethods implements ViewMethodsInfo {
@@ -599,8 +600,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public String getReportTimelineJSON() throws CodingErrorException, CantDoThatException,
-			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
-			JSONException {
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException, JsonGenerationException {
 		AppUserInfo user = this.getLoggedInUser();
 		SortedSet<BaseReportInfo> timelineReports = new TreeSet<BaseReportInfo>();
 		Set<BaseReportInfo> reports = user.getOperationalDashboardReports();
@@ -617,8 +617,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public String getReportCalendarJSON() throws CodingErrorException, CantDoThatException,
-			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
-			JSONException {
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException, JsonGenerationException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(this.sessionData,
 				this.request, this.databaseDefn, true);
 		// Check privileges for all tables from which data is displayed from,

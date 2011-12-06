@@ -38,6 +38,9 @@ import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.manageUsage.UsageLogger.LogType;
+
+import java.io.IOException;
+import java.io.StringWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,8 +57,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
-import org.json.JSONException;
-import org.json.JSONStringer;
+
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonGenerator;
 import org.grlea.log.SimpleLogger;
 
 public class UsageStats implements UsageStatsInfo {
@@ -107,7 +111,7 @@ public class UsageStats implements UsageStatsInfo {
 	}
 
 	public String getTreeMapJSON() throws ObjectNotFoundException, DisallowedException,
-			SQLException, JSONException, CodingErrorException {
+			SQLException, CodingErrorException {
 		Map<String, Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>> sectionTreeMaps = new HashMap<String, Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>>();
 		Map<ModuleInfo, Integer> moduleAreas = new HashMap<ModuleInfo, Integer>();
 		Map<String, Integer> sectionAreas = new HashMap<String, Integer>();
@@ -209,63 +213,74 @@ public class UsageStats implements UsageStatsInfo {
 			return "Not enough data has been gathered to display a map of utilisation. Please try again tomorrow";
 		}
 		// transfer the data into JSON
-		JSONStringer js = new JSONStringer();
-		BaseReportInfo report = null;
-		js.object();
-		js.key("id").value("root");
-		js.key("name").value("Treemap breakdown of report views");
-		js.key("data").object().key("$area").value(totalArea).endObject();
-		js.key("children").array();
-		// loop through sections
-		for (Map.Entry<String, Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>> sectionTreeMapsEntry : sectionTreeMaps
-				.entrySet()) {
-			String section = sectionTreeMapsEntry.getKey();
-			js.object(); // start section object
-			js.key("id").value("s_" + section);
-			js.key("name").value("<b>" + section.toUpperCase() + "</b>");
-			js.key("data").object().key("$area").value(sectionAreas.get(section)).endObject();
-			js.key("children").array();
-			// loop through modules
-			Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> sectionTreeMap = sectionTreeMapsEntry
-					.getValue();
-			for (Map.Entry<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> treeMapEntry : sectionTreeMap
+		JsonFactory jsonFactory = new JsonFactory();
+		StringWriter stringWriter = new StringWriter(1024);
+		JsonGenerator jg;
+		try {
+			jg = jsonFactory.createJsonGenerator(stringWriter);
+			jg.writeStartObject();
+			jg.writeStringField("id", "root");
+			jg.writeStringField("name", "Treemap breakdown of report views");
+			jg.writeObjectFieldStart("data");
+			jg.writeNumberField("$area", totalArea);
+			jg.writeEndObject();
+			jg.writeArrayFieldStart("children");
+			// loop through sections
+			for (Map.Entry<String, Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>>> sectionTreeMapsEntry : sectionTreeMaps
 					.entrySet()) {
-				ModuleInfo module = treeMapEntry.getKey();
-				Set<UsageStatsTreeMapNodeInfo> leaves = treeMapEntry.getValue();
-				js.object(); // start module object
-				js.key("id").value("m_" + module.getInternalModuleName());
-				js.key("name").value(module.getModuleName().toLowerCase());
-				js.key("data").object().key("$area").value(moduleAreas.get(module)).endObject();
-				js.key("children").array();
-				for (UsageStatsTreeMapNodeInfo leaf : leaves) {
-					js.object(); // start report object
-					report = leaf.getReport();
-					if (authManager.getAuthenticator().loggedInUserAllowedToViewReport(
-							this.request, report)) {
-						js.key("id").value("r_" + report.getInternalReportName());
-					} else {
-						js.key("id").value("nopriv_r_" + report.getInternalReportName());
+				String section = sectionTreeMapsEntry.getKey();
+				jg.writeStartObject();
+				jg.writeStringField("id", "s_" + section);
+				jg.writeStringField("name", "<b>" + section.toUpperCase() + "</b>");
+				jg.writeObjectFieldStart("data");
+				jg.writeNumberField("$area", sectionAreas.get(section));
+				jg.writeEndObject();
+				jg.writeArrayFieldStart("children");
+				// loop through modules
+				Map<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> sectionTreeMap = sectionTreeMapsEntry
+						.getValue();
+				for (Map.Entry<ModuleInfo, Set<UsageStatsTreeMapNodeInfo>> treeMapEntry : sectionTreeMap
+						.entrySet()) {
+					ModuleInfo module = treeMapEntry.getKey();
+					Set<UsageStatsTreeMapNodeInfo> leaves = treeMapEntry.getValue();
+					jg.writeStartObject(); // start module object
+					jg.writeStringField("id", "m_" + module.getInternalModuleName());
+					jg.writeStringField("name", module.getModuleName().toLowerCase());
+					jg.writeObjectFieldStart("data");
+					jg.writeNumberField("$area", moduleAreas.get(module));
+					jg.writeEndObject();
+					jg.writeArrayFieldStart("children");
+					for (UsageStatsTreeMapNodeInfo leaf : leaves) {
+						jg.writeStartObject();
+						BaseReportInfo report = leaf.getReport();
+						if (authManager.getAuthenticator().loggedInUserAllowedToViewReport(
+								this.request, report)) {
+							jg.writeStringField("id", "r_" + report.getInternalReportName());
+						} else {
+							jg.writeStringField("id", "nopriv_r_" + report.getInternalReportName());
+						}
+						jg.writeStringField("name", report.getReportName().toLowerCase());
+						jg.writeObjectFieldStart("data");
+						jg.writeNumberField("$area", leaf.getArea());
+						jg.writeNumberField("$color", leaf.getColour());
+						jg.writeEndObject();
+						jg.writeArrayFieldStart("children");
+						jg.writeEndArray(); // no children, empty
+						jg.writeEndObject(); // end report
 					}
-					js.key("name").value(report.getReportName().toLowerCase());
-					js.key("data");
-					js.object();
-					js.key("$area").value(leaf.getArea());
-					js.key("$color").value(leaf.getColour());
-					js.endObject(); // end data object
-					js.key("children").array().endArray(); // no children, empty
-					// array still
-					// necessary
-					js.endObject(); // end report
+					jg.writeEndArray(); // end children
+					jg.writeEndObject(); // end module
 				}
-				js.endArray(); // end children
-				js.endObject(); // end module
+				jg.writeEndArray(); // end children of section
+				jg.writeEndObject(); // end section object
 			}
-			js.endArray(); // end children of section
-			js.endObject(); // end section object
+			jg.writeEndArray(); // end children of root
+			jg.writeEndObject(); // end root
+		} catch (IOException e) {
+			throw new CodingErrorException("StringWriter produced an IO exception: " + e);
 		}
-		js.endArray(); // end children of root
-		js.endObject(); // end root
-		String JSONString = js.toString();
+		BaseReportInfo report = null;
+		String JSONString = stringWriter.toString();
 		return JSONString;
 	}
 

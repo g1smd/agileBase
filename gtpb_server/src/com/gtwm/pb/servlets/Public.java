@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.XMLStreamException;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.velocity.Template;
@@ -19,9 +18,8 @@ import org.apache.velocity.context.Context;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.view.VelocityViewServlet;
+import org.codehaus.jackson.JsonGenerationException;
 import org.grlea.log.SimpleLogger;
-import org.json.JSONException;
-
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
@@ -162,11 +160,6 @@ public class Public extends VelocityViewServlet {
 								"General error getting report JSON/RSS");
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, abex);
-					} catch (JSONException jsonex) {
-						ServletUtilMethods.logException(jsonex, request,
-								"General error getting report JSON/RSS");
-						return this.getUserInterfaceTemplate(request, response, templateName,
-								context, jsonex);
 					} catch (SQLException sqlex) {
 						ServletUtilMethods.logException(sqlex, request,
 								"General error getting report JSON/RSS");
@@ -177,6 +170,11 @@ public class Public extends VelocityViewServlet {
 								"General error getting report JSON/RSS");
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, xmlex);
+					} catch (JsonGenerationException jgex) {
+						ServletUtilMethods.logException(jgex, request,
+								"General error getting report JSON/RSS");
+						return this.getUserInterfaceTemplate(request, response, templateName,
+								context, jgex);
 					}
 					break;
 				case SHOW_FORM:
@@ -248,7 +246,8 @@ public class Public extends VelocityViewServlet {
 						}
 						dataManagement.saveRecord(request, table, fieldInputValues, newRecord,
 								rowId, sessionData, multipartItems);
-						String tableDataRowJson = dataManagement.getTableDataRowJson(table, sessionData.getRowId(table));
+						String tableDataRowJson = dataManagement.getTableDataRowJson(table,
+								sessionData.getRowId(table));
 						context.put("tableDataRowJson", tableDataRowJson);
 					} catch (AgileBaseException abex) {
 						ServletUtilMethods.logException(abex, request,
@@ -268,12 +267,6 @@ public class Public extends VelocityViewServlet {
 						templateName = templatePath + "form";
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, fuex);
-					} catch (JSONException jsonex) {
-						ServletUtilMethods.logException(jsonex, request,
-								"General error performing save from public");
-						templateName = templatePath + "form";
-						return this.getUserInterfaceTemplate(request, response, templateName,
-								context, jsonex);
 					}
 					break;
 				}

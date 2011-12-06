@@ -35,8 +35,7 @@ import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.auth.PrivilegeType;
 import java.io.IOException;
 import java.sql.SQLException;
-
-import org.json.JSONException;
+import org.codehaus.jackson.JsonGenerationException;
 
 /**
  * Methods that are used by the view component of the MVC application to pass
@@ -473,15 +472,13 @@ public interface ViewMethodsInfo {
 	 * 
 	 */
 	public String getReportCalendarJSON() throws CodingErrorException, CantDoThatException,
-			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
-			JSONException;
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException, JsonGenerationException;
 
 	/**
 	 * Get a timeline feed suitable for use with Simile Timeplot
 	 */
 	public String getReportTimelineJSON() throws CodingErrorException, CantDoThatException,
-			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
-			JSONException;
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException, JsonGenerationException;
 
 	/**
 	 * Returns true if the record identified by the session row ID is visible in

@@ -44,6 +44,7 @@ import java.util.SortedSet;
 import java.util.Calendar;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.Reader;
 import java.io.InputStreamReader;
@@ -139,11 +140,12 @@ import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.io.FileUtils;
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.JsonGenerator;
 import org.grlea.log.SimpleLogger;
 import org.glowacki.CalendarParser;
 import org.glowacki.CalendarParserException;
-import org.json.JSONException;
-import org.json.JSONStringer;
 import au.com.bytecode.opencsv.CSVReader;
 
 public final class DataManagement implements DataManagementInfo {
@@ -1690,7 +1692,7 @@ public final class DataManagement implements DataManagementInfo {
 	private String getReportDataAsFormat(DataFormat dataFormat, AppUserInfo user,
 			BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters,
 			long cacheSeconds) throws CodingErrorException, CantDoThatException, SQLException,
-			JSONException, XMLStreamException, ObjectNotFoundException {
+			XMLStreamException, ObjectNotFoundException, JsonGenerationException {
 		String id = dataFormat.toString() + report.getInternalReportName();
 		CachedReportFeedInfo cachedFeed = null;
 		if (filters.size() == 0) {
@@ -1742,16 +1744,20 @@ public final class DataManagement implements DataManagementInfo {
 
 	public String getReportRSS(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
-			throws SQLException, CodingErrorException, CantDoThatException, JSONException,
+			throws SQLException, CodingErrorException, CantDoThatException,
 			XMLStreamException, ObjectNotFoundException {
-		return this.getReportDataAsFormat(DataFormat.RSS, user, report, filters, exactFilters,
-				cacheSeconds);
+		try {
+			return this.getReportDataAsFormat(DataFormat.RSS, user, report, filters, exactFilters,
+					cacheSeconds);
+		} catch (JsonGenerationException jgex) {
+			throw new CodingErrorException("RSS generation threw a JSON exception: " + jgex);
+		}
 	}
 
 	public String getReportJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
-			throws JSONException, CodingErrorException, CantDoThatException, SQLException,
-			XMLStreamException, ObjectNotFoundException {
+			throws CodingErrorException, CantDoThatException, SQLException,
+			XMLStreamException, ObjectNotFoundException, JsonGenerationException {
 		return this.getReportDataAsFormat(DataFormat.JSON, user, report, filters, exactFilters,
 				cacheSeconds);
 	}
@@ -1830,40 +1836,46 @@ public final class DataManagement implements DataManagementInfo {
 		eventWriter.add(end);
 	}
 
-	private String generateJSON(BaseReportInfo report, List<DataRowInfo> reportDataRows)
-			throws JSONException {
-		JSONStringer js = new JSONStringer();
-		js.array();
-		for (DataRowInfo reportDataRow : reportDataRows) {
-			js.object();
-			js.key("rowId").value(reportDataRow.getRowId());
-			String valueString = null;
-			for (ReportFieldInfo reportField : report.getReportFields()) {
-				BaseField field = reportField.getBaseField();
-				DataRowFieldInfo value = reportDataRow.getValue(reportField);
-				boolean useKey = false;
-				if (field instanceof TextField) {
-					if (((TextField) field).getContentSize().equals(
-							TextContentSizes.FEW_PARAS.getNumChars())) {
-						useKey = true;
+	private String generateJSON(BaseReportInfo report, List<DataRowInfo> reportDataRows) throws CodingErrorException, JsonGenerationException {
+		JsonFactory jsonFactory = new JsonFactory();
+		StringWriter stringWriter = new StringWriter(1024);
+		JsonGenerator jg;
+		try {
+			jg = jsonFactory.createJsonGenerator(stringWriter);
+			jg.writeStartArray();
+			for (DataRowInfo reportDataRow : reportDataRows) {
+				jg.writeStartObject();
+				jg.writeNumberField("rowId", reportDataRow.getRowId());
+				String valueString = null;
+				for (ReportFieldInfo reportField : report.getReportFields()) {
+					BaseField field = reportField.getBaseField();
+					DataRowFieldInfo value = reportDataRow.getValue(reportField);
+					boolean useKey = false;
+					if (field instanceof TextField) {
+						if (((TextField) field).getContentSize().equals(
+								TextContentSizes.FEW_PARAS.getNumChars())) {
+							useKey = true;
+						}
 					}
+					if (useKey) {
+						valueString = value.getKeyValue();
+					} else {
+						valueString = value.getDisplayValue();
+					}
+					jg.writeStringField(reportField.getInternalFieldName(), valueString);
 				}
-				if (useKey) {
-					valueString = value.getKeyValue();
-				} else {
-					valueString = value.getDisplayValue();
-				}
-				js.key(reportField.getInternalFieldName()).value(valueString);
+				jg.writeEndObject();
 			}
-			js.endObject();
+			jg.writeEndArray();
+		} catch (IOException e) {
+			throw new CodingErrorException("StringWriter produced an IO exception!");
 		}
-		js.endArray();
-		return js.toString();
+		return stringWriter.toString();
 	}
 
 	public String getReportTimelineJSON(AppUserInfo user, Set<BaseReportInfo> reports,
-			Map<BaseField, String> filterValues) throws JSONException, CodingErrorException,
-			CantDoThatException, SQLException {
+			Map<BaseField, String> filterValues) throws CodingErrorException,
+			CantDoThatException, SQLException, JsonGenerationException {
 		String id = "";
 		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
 				filterValues);
@@ -1887,50 +1899,55 @@ public final class DataManagement implements DataManagementInfo {
 		// RFC 2822 date format used by Simile timeline
 		DateFormat dateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
-		JSONStringer js = new JSONStringer();
-		js.object();
-		js.key("events");
-		js.array();
-		for (BaseReportInfo report : reports) {
-			String className = "report_" + report.getInternalReportName();
-			ReportFieldInfo eventDateReportField = report.getCalendarStartField();
-			List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
-					filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
-					QuickFilterType.AND);
-			ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
-				DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
-				if (eventDateValue.getKeyValue().equals("")) {
-					continue ROWS_LOOP;
+		JsonFactory jsonFactory = new JsonFactory();
+		StringWriter stringWriter = new StringWriter(1024);
+		JsonGenerator jg;
+		try {
+			jg = jsonFactory.createJsonGenerator(stringWriter);
+			jg.writeStartObject();
+			jg.writeArrayFieldStart("events");
+			for (BaseReportInfo report : reports) {
+				String className = "report_" + report.getInternalReportName();
+				ReportFieldInfo eventDateReportField = report.getCalendarStartField();
+				List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
+						filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
+						QuickFilterType.AND);
+				ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
+					DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
+					if (eventDateValue.getKeyValue().equals("")) {
+						continue ROWS_LOOP;
+					}
+					jg.writeStartObject();
+					// timeline needs formatted dates
+					Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue());
+					// String formattedDate = dateFormatter.format(new
+					// Date(eventDateEpoch));
+					jg.writeStringField("start", "new Date(" + eventDateEpoch + ")");
+					String eventTitle = eventDateValue.getDisplayValue() + ": "
+							+ buildEventTitle(report, reportDataRow, false);
+					jg.writeStringField("caption", eventTitle);
+					jg.writeStringField("description", eventTitle);
+					// TODO: build short title from long title, don't rebuild from
+					// scratch. Just cut off everything after the 5th comma for
+					// example
+					String shortTitle = buildEventTitle(report, reportDataRow, true);
+					jg.writeStringField("classname", className);
+					jg.writeEndObject();
 				}
-				js.object();
-				// timeline needs formatted dates
-				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue());
-				JSONDate jsonDate = new JSONDate(eventDateEpoch);
-				// String formattedDate = dateFormatter.format(new
-				// Date(eventDateEpoch));
-				js.key("start").value(jsonDate);
-				String eventTitle = eventDateValue.getDisplayValue() + ": "
-						+ buildEventTitle(report, reportDataRow, false);
-				js.key("caption").value(eventTitle);
-				js.key("description").value(eventTitle);
-				// TODO: build short title from long title, don't rebuild from
-				// scratch. Just cut off everything after the 5th comma for
-				// example
-				String shortTitle = buildEventTitle(report, reportDataRow, true);
-				js.key("classname").value(className);
-				js.endObject();
+				usageLogger.logReportView(user, report, filterValues, 10000, "getTimelineJSON");
+				UsageLogger.startLoggingThread(usageLogger);
 			}
-			usageLogger.logReportView(user, report, filterValues, 10000, "getTimelineJSON");
-			UsageLogger.startLoggingThread(usageLogger);
+			jg.writeEndArray();
+			jg.writeEndObject();
+		} catch (IOException e) {
+			throw new CodingErrorException("StringWriter produced an IO exception: " + e);
 		}
-		js.endArray();
-		js.endObject();
-		String json = js.toString();
+		String json = stringWriter.toString();
 		cachedJSON = new CachedFeed(json);
 		this.cachedCalendarJSONs.put(id, cachedJSON);
 		int cacheMisses = this.calendarJsonCacheMisses.incrementAndGet();
 		if (cacheMisses > 100) {
-			logger.info("JSON cache hits: " + this.calendarJsonCacheHits + ", misses "
+			logger.info("Calendar JSON cache hits: " + this.calendarJsonCacheHits + ", misses "
 					+ cacheMisses);
 			this.calendarJsonCacheHits.set(0);
 			this.calendarJsonCacheMisses.set(0);
@@ -1940,7 +1957,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
-			throws CodingErrorException, CantDoThatException, SQLException, JSONException {
+			throws CodingErrorException, CantDoThatException, SQLException, JsonGenerationException {
 		ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
@@ -1976,73 +1993,80 @@ public final class DataManagement implements DataManagementInfo {
 		List<DataRowInfo> reportDataRows = this
 				.getReportDataRows(user.getCompany(), report, filterValues, false,
 						new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND);
-		JSONStringer js = new JSONStringer();
-		js.array();
-		String internalReportName = report.getInternalReportName();
-		String internalTableName = report.getParentTable().getInternalTableName();
-		ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
-			DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
-			if (eventDateValue.getKeyValue().equals("")) {
-				continue ROWS_LOOP;
-			}
-			js.object();
-			js.key("id").value(internalReportName + "_" + reportDataRow.getRowId());
-			js.key("internalTableName").value(internalTableName);
-			js.key("rowId").value(String.valueOf(reportDataRow.getRowId()));
-			boolean allDayEvent = allDayValues;
-			if (!allDayValues) {
-				String eventDateDisplayValue = eventDateValue.getDisplayValue();
-				// TODO: trim may not be necessary
-				if (eventDateDisplayValue.trim().endsWith("00:00")) {
-					allDayEvent = true;
+		JsonFactory jsonFactory = new JsonFactory();
+		StringWriter stringWriter = new StringWriter(1024);
+		JsonGenerator jg;
+		try {
+			jg = jsonFactory.createJsonGenerator(stringWriter);
+			jg.writeStartArray();
+			String internalReportName = report.getInternalReportName();
+			String internalTableName = report.getParentTable().getInternalTableName();
+			ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
+				DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
+				if (eventDateValue.getKeyValue().equals("")) {
+					continue ROWS_LOOP;
 				}
-			}
-			js.key("allDay").value(allDayEvent);
-			// fullcalendar needs the number of seconds since the epoch
-			Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
-			js.key("start").value(eventDateEpoch);
-			if (!allDayEvent) {
-				if (endDateReportField.equals(eventDateReportField)) {
-					js.key("end").value(eventDateEpoch + 3600);
-				} else {
+				jg.writeStartObject();
+				jg.writeStringField("id", internalReportName + "_" + reportDataRow.getRowId());
+				jg.writeStringField("internalTableName", internalTableName);
+				jg.writeNumberField("rowId", reportDataRow.getRowId());
+				boolean allDayEvent = allDayValues;
+				if (!allDayValues) {
+					String eventDateDisplayValue = eventDateValue.getDisplayValue();
+					// TODO: trim may not be necessary
+					if (eventDateDisplayValue.trim().endsWith("00:00")) {
+						allDayEvent = true;
+					}
+				}
+				jg.writeBooleanField("allDay", allDayEvent);
+				// fullcalendar needs the number of seconds since the epoch
+				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
+				jg.writeNumberField("start", eventDateEpoch);
+				if (!allDayEvent) {
+					if (endDateReportField.equals(eventDateReportField)) {
+						jg.writeNumberField("end", eventDateEpoch + 3600);
+					} else {
+						DataRowFieldInfo endDateValue = reportDataRow.getValue(endDateReportField);
+						String endDateEpochString = endDateValue.getKeyValue();
+						if (endDateEpochString.equals("")) {
+							// events last 1 hr by default
+							jg.writeNumberField("end", eventDateEpoch + 3600);
+						} else {
+							Long endDateEpoch = Long.parseLong(endDateValue.getKeyValue()) / 1000;
+							if (endDateEpoch > eventDateEpoch) {
+								jg.writeNumberField("end", endDateEpoch);
+							} else {
+								jg.writeNumberField("end", eventDateEpoch + 3600);
+							}
+						}
+					}
+				} else if (!endDateReportField.equals(eventDateReportField)) {
+					// all day event possibly spans multiple days
 					DataRowFieldInfo endDateValue = reportDataRow.getValue(endDateReportField);
 					String endDateEpochString = endDateValue.getKeyValue();
-					if (endDateEpochString.equals("")) {
-						// events last 1 hr by default
-						js.key("end").value(eventDateEpoch + 3600);
-					} else {
+					if (!endDateEpochString.equals("")) {
 						Long endDateEpoch = Long.parseLong(endDateValue.getKeyValue()) / 1000;
 						if (endDateEpoch > eventDateEpoch) {
-							js.key("end").value(endDateEpoch);
-						} else {
-							js.key("end").value(eventDateEpoch + 3600);
+							jg.writeNumberField("end", endDateEpoch);
 						}
 					}
 				}
-			} else if (!endDateReportField.equals(eventDateReportField)) {
-				// all day event possibly spans multiple days
-				DataRowFieldInfo endDateValue = reportDataRow.getValue(endDateReportField);
-				String endDateEpochString = endDateValue.getKeyValue();
-				if (!endDateEpochString.equals("")) {
-					Long endDateEpoch = Long.parseLong(endDateValue.getKeyValue()) / 1000;
-					if (endDateEpoch > eventDateEpoch) {
-						js.key("end").value(endDateEpoch);
-					}
-				}
+				jg.writeStringField("className", "report_" + internalReportName); // fullcalendar
+				// TODO: check if classname is used in UI, remove if not
+				jg.writeStringField("classname", "report_" + internalReportName);
+				jg.writeStringField("dateFieldInternalName", dateFieldInternalName);
+				String eventTitle = buildEventTitle(report, reportDataRow, false);
+				jg.writeStringField("title", eventTitle);
+				jg.writeEndObject();
 			}
-			js.key("className").value("report_" + internalReportName); // fullcalendar
-			// TODO: check if classname is used in UI, remove if not
-			js.key("classname").value("report_" + internalReportName);
-			js.key("dateFieldInternalName").value(dateFieldInternalName);
-			String eventTitle = buildEventTitle(report, reportDataRow, false);
-			js.key("title").value(eventTitle);
-			js.endObject();
+			jg.writeEndArray();
+		} catch (IOException e) {
+			throw new CodingErrorException("StringWriter produced an IO exception: " + e);
 		}
-		js.endArray();
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
 		usageLogger.logReportView(user, report, filterValues, 10000, "getCalendarJSON");
 		UsageLogger.startLoggingThread(usageLogger);
-		String json = js.toString();
+		String json = stringWriter.toString();
 		cachedJSON = new CachedFeed(json);
 		this.cachedCalendarJSONs.put(id, cachedJSON);
 		int cacheMisses = this.calendarJsonCacheMisses.incrementAndGet();
@@ -2556,29 +2580,34 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public String getTableDataRowJson(TableInfo table, int rowId) throws SQLException,
-			ObjectNotFoundException, CantDoThatException, CodingErrorException, JSONException {
+			ObjectNotFoundException, CantDoThatException, CodingErrorException {
 		Map<BaseField, BaseValue> tableDataRow = this.getTableDataRow(table, rowId, true);
-		JSONStringer js = new JSONStringer();
-		js.object();
-		for (Map.Entry<BaseField, BaseValue> rowEntry : tableDataRow.entrySet()) {
-			BaseField field = rowEntry.getKey();
-			BaseValue value = rowEntry.getValue();
-			if (field.equals(table.getPrimaryKey())) {
-				js.key("rowId").value(((IntegerValue) value).getValueInteger());
-			} else if (value instanceof IntegerValue) {
-				js.key(field.getInternalFieldName())
-						.value(((IntegerValue) value).getValueInteger());
-			} else if (value instanceof CheckboxValue) {
-				js.key(field.getInternalFieldName()).value(
-						((CheckboxValue) value).getValueBoolean());
-			} else if (value instanceof DecimalValue) {
-				js.key(field.getInternalFieldName()).value(((DecimalValue) value).getValueFloat());
-			} else {
-				js.key(field.getInternalFieldName()).value(value.toString());
+		JsonFactory jsonFactory = new JsonFactory();
+		StringWriter stringWriter = new StringWriter(512);
+		JsonGenerator jg;
+		try {
+			jg = jsonFactory.createJsonGenerator(stringWriter);
+			jg.writeStartObject();
+			for (Map.Entry<BaseField, BaseValue> rowEntry : tableDataRow.entrySet()) {
+				BaseField field = rowEntry.getKey();
+				BaseValue value = rowEntry.getValue();
+				if (field.equals(table.getPrimaryKey())) {
+					jg.writeNumberField("rowId", ((IntegerValue) value).getValueInteger());
+				} else if (value instanceof IntegerValue) {
+					jg.writeNumberField(field.getInternalFieldName(), ((IntegerValue) value).getValueInteger());
+				} else if (value instanceof CheckboxValue) {
+					jg.writeBooleanField(field.getInternalFieldName(), ((CheckboxValue) value).getValueBoolean());
+				} else if (value instanceof DecimalValue) {
+					jg.writeNumberField(field.getInternalFieldName(), ((DecimalValue) value).getValueFloat());
+				} else {
+					jg.writeStringField(field.getInternalFieldName(), value.toString());
+				}
 			}
+			jg.writeEndObject();
+		} catch (IOException ioex) {
+			throw new CodingErrorException("JSON generation threw an IO exception: " + ioex);
 		}
-		js.endObject();
-		return js.toString();
+		return stringWriter.toString();
 	}
 
 	public int getNextRowId(SessionDataInfo sessionData, BaseReportInfo report,

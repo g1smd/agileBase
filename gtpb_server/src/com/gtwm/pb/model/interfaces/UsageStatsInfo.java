@@ -20,7 +20,6 @@ package com.gtwm.pb.model.interfaces;
 import java.util.SortedSet;
 import java.util.List;
 import java.sql.SQLException;
-import org.json.JSONException;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.manageUsage.UsageLogger.LogType;
 import com.gtwm.pb.util.CodingErrorException;
@@ -52,7 +51,7 @@ public interface UsageStatsInfo {
 	 *         a plain String error message
 	 */
 	public String getTreeMapJSON() throws ObjectNotFoundException, DisallowedException,
-			SQLException, JSONException, CodingErrorException;
+			SQLException, CodingErrorException;
 
 	/**
 	 * Return module viewing stats, sorted by the total number of report views
