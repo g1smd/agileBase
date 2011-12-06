@@ -276,13 +276,11 @@ public class UsageStats implements UsageStatsInfo {
 			}
 			jg.writeEndArray(); // end children of root
 			jg.writeEndObject(); // end root
+			jg.flush();
 		} catch (IOException e) {
 			throw new CodingErrorException("StringWriter produced an IO exception: " + e);
 		}
-		BaseReportInfo report = null;
-		stringWriter.flush();
-		String JSONString = stringWriter.toString();
-		return JSONString;
+		return stringWriter.toString();
 	}
 
 	public SortedSet<ModuleUsageStatsInfo> getModuleStats() throws DisallowedException,
