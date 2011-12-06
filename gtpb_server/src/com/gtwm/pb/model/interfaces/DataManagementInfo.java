@@ -24,11 +24,11 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.SortedSet;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.stream.XMLStreamException;
 import org.apache.commons.fileupload.FileItem;
-import org.json.JSONException;
+import org.codehaus.jackson.JsonGenerationException;
+
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
@@ -107,11 +107,11 @@ public interface DataManagementInfo {
 	 */
 	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
-			throws CodingErrorException, CantDoThatException, SQLException, JSONException;
+			throws CodingErrorException, CantDoThatException, SQLException, JsonGenerationException;
 
 	public String getReportTimelineJSON(AppUserInfo user, Set<BaseReportInfo> reports,
-			Map<BaseField, String> filterValues) throws JSONException, CodingErrorException,
-			CantDoThatException, SQLException;
+			Map<BaseField, String> filterValues) throws CodingErrorException,
+			CantDoThatException, SQLException, JsonGenerationException;
 
 	/**
 	 * @param user
@@ -124,12 +124,12 @@ public interface DataManagementInfo {
 	 */
 	public String getReportJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
-			throws JSONException, CodingErrorException, CantDoThatException, SQLException,
-			XMLStreamException, ObjectNotFoundException;
+			throws CodingErrorException, CantDoThatException, SQLException,
+			XMLStreamException, ObjectNotFoundException, JsonGenerationException;
 
 	public String getReportRSS(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
-			throws SQLException, CodingErrorException, CantDoThatException, JSONException,
+			throws SQLException, CodingErrorException, CantDoThatException,
 			XMLStreamException, ObjectNotFoundException;
 
 	/**
@@ -206,7 +206,7 @@ public interface DataManagementInfo {
 			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException;
 
 	public String getTableDataRowJson(TableInfo table, int rowId) throws SQLException,
-			ObjectNotFoundException, CantDoThatException, CodingErrorException, JSONException;
+			ObjectNotFoundException, CantDoThatException, CodingErrorException;
 
 	/**
 	 * When passed a row ID and a report, finds rows in the report with the
