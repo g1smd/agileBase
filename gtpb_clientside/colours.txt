@@ -1,0 +1,13 @@
+agileBase colours:
+
+logo:
+dark blue:    #486f98
+orange:       #ff8040
+light blue:   #50add6
+
+light grey (module action): #F4F4F4
+mid gray (pane 2 headings, pane 3 heading): #F0F0F0
+dark gray (pane 2 selected):#CCCCCC
+darker grey (logout):       #CECECE
+
+green (boolean true):       #8CE18C
