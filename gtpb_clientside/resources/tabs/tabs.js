@@ -340,6 +340,7 @@ function fRelationPickers() {
 				}
 				jqHidden.attr("ab_setup_complete", "true");
 				oHidden.doUpdate = function(sValue) {
+					alert(sValue); //debug
 					var bIsGlobalEdit = false;
 					var bIsAutoUpdate = false;
 					if (jqHidden.attr("gtpb_global_edit")) {
@@ -406,9 +407,18 @@ function fRelationPickers() {
 	});
 
 	function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
+		var url = "AppController.servlet?gtpb_return=gui/resources/input/return_relation_json";
+		url += "&set_custom_field=true&fieldkey=relationField";
+		url += "&custominternaltablename=" + internalTableName;
+		url += "&custominternalfieldname=" + internalFieldName;
+		jqElement.jsonSuggest({url: url, highlightMatches: false, onSelect: jqElement[0].formEl.doUpdate});
+	}
+	
+	/*
+	function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
 		jqElement.autocomplete("AppController.servlet", {
 			autoFill : true,
-			cacheLength : 1, /* 100 */
+			cacheLength : 1, // 100
 			max : 99,
 			minChars : 2,
 			extraParams : {
@@ -428,7 +438,6 @@ function fRelationPickers() {
 				return formattedValue;
 			}
 		});
-
 		jqElement.result(function(event, data, formatted) {
 			if (data) {
 				jqElement[0].formEl.doUpdate(data[1]);
@@ -437,6 +446,7 @@ function fRelationPickers() {
 			}
 		});
 	}
+*/
 
 	$('.autocomplete').each(function(i) {
 		var jqThis = $(this);
