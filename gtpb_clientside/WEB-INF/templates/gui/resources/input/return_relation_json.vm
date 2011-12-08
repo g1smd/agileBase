@@ -32,8 +32,9 @@
     {"id":$displayValue,"text":"$item.getKey()"}
     #if($foreach.count < $numItems),#end
   #end
-  #if($items.size() < 50)
-    ,{"id":-2,"text":"add a new one..."}
+  #if($numItems < 50)
+    #if($numItems > 0),#end
+    {"id":-2,"text":"add a new one..."}
   #end
 #end
 ]
