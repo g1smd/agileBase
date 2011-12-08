@@ -152,18 +152,16 @@ public final class ReportDownloader extends HttpServlet {
 			reportSheet = workbook.createSheet(reportName + " " + report.getInternalReportName());
 		}
 		int rowNum = 0;
-		HSSFRow row;
-		HSSFCell cell;
 		// header
 		HSSFCellStyle boldCellStyle = workbook.createCellStyle();
 		HSSFFont font = workbook.createFont();
 		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		boldCellStyle.setFont(font);
-		row = reportSheet.createRow(rowNum);
+		HSSFRow row = reportSheet.createRow(rowNum);
 		int columnNum = 0;
 		Set<ReportFieldInfo> reportFields = report.getReportFields();
 		for (ReportFieldInfo reportField : reportFields) {
-			cell = row.createCell(columnNum);
+			HSSFCell cell = row.createCell(columnNum);
 			cell.setCellValue(new HSSFRichTextString(reportField.getFieldName()));
 			cell.setCellStyle(boldCellStyle);
 			columnNum++;
@@ -172,7 +170,8 @@ public final class ReportDownloader extends HttpServlet {
 		rowNum++;
 		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
 		List<DataRowInfo> reportDataRows = dataManagement.getReportDataRows(company, report,
-				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), -1, QuickFilterType.AND);
+				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), -1,
+				QuickFilterType.AND);
 		String fieldValue = "";
 		for (DataRowInfo dataRow : reportDataRows) {
 			Map<BaseField, DataRowFieldInfo> dataRowFieldMap = dataRow.getDataRowFields();
@@ -180,19 +179,32 @@ public final class ReportDownloader extends HttpServlet {
 			columnNum = 0;
 			for (ReportFieldInfo reportField : reportFields) {
 				BaseField field = reportField.getBaseField();
-				if (field instanceof TextField) {
-					fieldValue = dataRowFieldMap.get(field).getKeyValue();
-				} else {
-					fieldValue = dataRowFieldMap.get(field).getDisplayValue();
+				fieldValue = dataRowFieldMap.get(field).getKeyValue();
+				HSSFCell cell;
+				switch (field.getDbType()) {
+				case FLOAT:
+					cell = row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC);
+					try {
+						cell.setCellValue(Double.valueOf(fieldValue));
+					} catch (NumberFormatException nfex) {
+						// Fall back to a string representation
+						cell.setCellValue(fieldValue);
+					}
+					break;
+				case INTEGER:
+				case SERIAL:
+					cell = row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC);
+					try {
+						cell.setCellValue(Integer.valueOf(fieldValue));
+					} catch (NumberFormatException nfex) {
+						// Fall back to a string representation
+						cell.setCellValue(fieldValue);
+					}
+					break;
+				default:
+					cell = row.createCell(columnNum, HSSFCell.CELL_TYPE_STRING);
+					cell.setCellValue(fieldValue);
 				}
-				int cellType = HSSFCell.CELL_TYPE_STRING;
-				if (field.getDbType().equals(DatabaseFieldType.FLOAT)
-						|| field.getDbType().equals(DatabaseFieldType.INTEGER)
-						|| field.getDbType().equals(DatabaseFieldType.SERIAL)) {
-					cellType = HSSFCell.CELL_TYPE_NUMERIC;
-				}
-				row.createCell(columnNum, cellType)
-						.setCellValue(new HSSFRichTextString(fieldValue));
 				columnNum++;
 			}
 			rowNum++;
@@ -275,9 +287,8 @@ public final class ReportDownloader extends HttpServlet {
 	private void addSummaryWorksheet(CompanyInfo company, SessionDataInfo sessionData,
 			ChartInfo reportSummary, HSSFWorkbook workbook) throws SQLException,
 			CantDoThatException {
-		ChartDataInfo reportSummaryData = this.databaseDefn.getDataManagement()
-				.getChartData(company, reportSummary, sessionData.getReportFilterValues(),
-						false);
+		ChartDataInfo reportSummaryData = this.databaseDefn.getDataManagement().getChartData(
+				company, reportSummary, sessionData.getReportFilterValues(), false);
 		if (reportSummaryData == null) {
 			return;
 		}
@@ -332,8 +343,7 @@ public final class ReportDownloader extends HttpServlet {
 			cell.setCellStyle(boldCellStyle);
 			columnNum++;
 		}
-		List<ChartDataRowInfo> reportSummaryDataRows = reportSummaryData
-				.getChartDataRows();
+		List<ChartDataRowInfo> reportSummaryDataRows = reportSummaryData.getChartDataRows();
 		rowNum++;
 		for (ChartDataRowInfo summaryDataRow : reportSummaryDataRows) {
 			row = summarySheet.createRow(rowNum);
