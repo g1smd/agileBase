@@ -22,18 +22,18 @@
 #set($q = $requestParameters.get("search").get(0))
 #set($blank_value = "--blank value")
 #if(($blank_value.startsWith($q)) && ($q.length() > 1))
-  {'id':-1,'text':"$blank_value"}
+  {"id":-1,"text":"$blank_value"}
 #else
   #set($items = $relationField.getItems(true,$q,50))
   #set($itemsEntrySet = $items.entrySet())
   #set($numItems = $itemsEntrySet.size())
   #foreach($item in $itemsEntrySet)
     #set($displayValue = $item.getValue())
-    {'id':$displayValue,'text':"$item.getKey()"}
+    {"id":$displayValue,"text":"$item.getKey()"}
     #if($foreach.count < $numItems),#end
   #end
   #if($items.size() < 50)
-    ,{'id':-2,'text':'add a new one...'}
+    ,{"id":-2,"text":"add a new one..."}
   #end
 #end
 ]
