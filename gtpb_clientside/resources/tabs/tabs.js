@@ -341,6 +341,7 @@ function fRelationPickers() {
 				jqHidden.attr("ab_setup_complete", "true");
 				oHidden.doUpdate = function(selectedObject) {
 					var sValue = selectedObject.id
+					alert(sValue);
 					var bIsGlobalEdit = false;
 					var bIsAutoUpdate = false;
 					if (jqHidden.attr("gtpb_global_edit")) {
