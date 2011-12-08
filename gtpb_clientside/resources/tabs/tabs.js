@@ -407,7 +407,7 @@ function fRelationPickers() {
 	});
 
 	function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
-		var url = "AppController.servlet?gtpb_return=gui/resources/input/return_relation_json";
+		var url = "AppController.servlet?return=gui/resources/input/return_relation_json";
 		url += "&set_custom_field=true&fieldkey=relationField";
 		url += "&custominternaltablename=" + internalTableName;
 		url += "&custominternalfieldname=" + internalFieldName;
