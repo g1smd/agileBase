@@ -362,13 +362,14 @@ function fRelationPickers() {
 							|| (bIsGlobalEdit && !bIsAutoUpdate)) {
 						if ((!bIsGlobalEdit) && (sValue == "-2")) {
 							// create a new record to link to
-							relationNewRecord(this);
+							relationNewRecord(oHidden);
 						} else {
 							// a normal save
-							new fChange(this);
+							alert('about to run fChange');
+							new fChange(oHidden);
 							try {
 								// any additional actions to the save
-								relationChangeActions(this);
+								relationChangeActions(oHidden);
 							} catch (err) {
 								// relationChangeActions may not exist,
 								// it is only defined in some circumstances
