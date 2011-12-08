@@ -229,9 +229,9 @@
 				}
 				else if (settings.url && typeof settings.url === 'string') {
 					var text = this.value;
-					$(results).html('<li class="ui-menu-item ajaxSearching"><a class="ui-corner-all">Searching...</a></li>').
-						show().css('height', 'auto');
-					
+					//$(results).html('<li class="ui-menu-item ajaxSearching"><a class="ui-corner-all">Searching...</a></li>').
+					//	show().css('height', 'auto');
+					$(results).show().css('height', 'auto');
 					getJSONTimeout = window.clearTimeout(getJSONTimeout);
 					getJSONTimeout = window.setTimeout(function() {
 						$.getJSON(settings.url, {search: text}, function(data) {
