@@ -339,8 +339,8 @@ function fRelationPickers() {
 					return;
 				}
 				jqHidden.attr("ab_setup_complete", "true");
-				oHidden.doUpdate = function(sValue) {
-					alert(sValue); //debug
+				oHidden.doUpdate = function(selectedObject) {
+					var sValue = selectedObject.id
 					var bIsGlobalEdit = false;
 					var bIsAutoUpdate = false;
 					if (jqHidden.attr("gtpb_global_edit")) {
