@@ -179,13 +179,17 @@ public final class ReportDownloader extends HttpServlet {
 			columnNum = 0;
 			for (ReportFieldInfo reportField : reportFields) {
 				BaseField field = reportField.getBaseField();
-				fieldValue = dataRowFieldMap.get(field).getKeyValue();
+				if (field instanceof TextField) {
+					fieldValue = dataRowFieldMap.get(field).getKeyValue();
+				} else {
+					fieldValue = dataRowFieldMap.get(field).getDisplayValue();
+				}
 				HSSFCell cell;
 				switch (field.getDbType()) {
 				case FLOAT:
 					cell = row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC);
 					try {
-						cell.setCellValue(Double.valueOf(fieldValue));
+						cell.setCellValue(Double.valueOf(fieldValue.replace(",", "")));
 					} catch (NumberFormatException nfex) {
 						// Fall back to a string representation
 						cell.setCellValue(fieldValue);
@@ -195,15 +199,16 @@ public final class ReportDownloader extends HttpServlet {
 				case SERIAL:
 					cell = row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC);
 					try {
-						cell.setCellValue(Integer.valueOf(fieldValue));
+						cell.setCellValue(Integer.valueOf(fieldValue.replace(",", "")));
 					} catch (NumberFormatException nfex) {
 						// Fall back to a string representation
 						cell.setCellValue(fieldValue);
 					}
 					break;
-				default:
+				case VARCHAR: default:
 					cell = row.createCell(columnNum, HSSFCell.CELL_TYPE_STRING);
 					cell.setCellValue(fieldValue);
+					break;
 				}
 				columnNum++;
 			}
