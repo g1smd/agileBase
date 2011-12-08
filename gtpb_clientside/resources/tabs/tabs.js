@@ -364,7 +364,6 @@ function fRelationPickers() {
 							relationNewRecord(oHidden);
 						} else {
 							// a normal save
-							alert('about to run fChange with ' + jqHidden.val());
 							new fChange(oHidden);
 							try {
 								// any additional actions to the save
