@@ -29,7 +29,7 @@
   #set($numItems = $itemsEntrySet.size())
   #foreach($item in $itemsEntrySet)
     #set($displayValue = $item.getValue())
-    {'id':$item.getKey(),'text':"$displayValue"}
+    {'id':$displayValue,'text':"$item.getKey()"}
     #if($foreach.count < $numItems),#end
   #end
   #if($items.size() < 50)
