@@ -341,7 +341,6 @@ function fRelationPickers() {
 				jqHidden.attr("ab_setup_complete", "true");
 				oHidden.doUpdate = function(selectedObject) {
 					var sValue = selectedObject.id
-					alert(sValue);
 					var bIsGlobalEdit = false;
 					var bIsAutoUpdate = false;
 					if (jqHidden.attr("gtpb_global_edit")) {
@@ -350,7 +349,7 @@ function fRelationPickers() {
 					if (typeof jqHidden.attr("gtpb_set_row_id") != 'undefined') {
 						bIsAutoUpdate = true;
 					}
-					this.value = sValue;
+					jqHidden.val(sValue);
 					if ((!bIsGlobalEdit) && bIsAutoUpdate) {
 						jqHidden.attr("gtpb_set_row_id", sValue);
 					}
@@ -365,7 +364,7 @@ function fRelationPickers() {
 							relationNewRecord(oHidden);
 						} else {
 							// a normal save
-							alert('about to run fChange');
+							alert('about to run fChange with ' + jqHidden.val());
 							new fChange(oHidden);
 							try {
 								// any additional actions to the save
