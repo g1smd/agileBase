@@ -339,8 +339,7 @@ function fRelationPickers() {
 					return;
 				}
 				jqHidden.attr("ab_setup_complete", "true");
-				oHidden.doUpdate = function(selectedObject) {
-					var sValue = selectedObject.id
+				oHidden.doUpdate = function(sValue) {
 					var bIsGlobalEdit = false;
 					var bIsAutoUpdate = false;
 					if (jqHidden.attr("gtpb_global_edit")) {
@@ -374,8 +373,11 @@ function fRelationPickers() {
 							}
 						}
 					}
+					oHidden.label = jqHidden.next()[0];
 				};
-				oHidden.label = jqHidden.next()[0];
+				oHidden.doUpdateObj = function(oValue) {
+					oHidden.doUpdate(oValue.id);
+				};
 			});
 
 	$("a.clicker").each(function() {
@@ -411,7 +413,7 @@ function fRelationPickers() {
 		url += "&set_custom_field=true&fieldkey=relationField";
 		url += "&custominternaltablename=" + internalTableName;
 		url += "&custominternalfieldname=" + internalFieldName;
-		jqElement.jsonSuggest({url: url, highlightMatches: false, onSelect: jqElement[0].formEl.doUpdate});
+		jqElement.jsonSuggest({url: url, highlightMatches: false, onSelect: jqElement[0].formEl.doUpdateObj});
 	}
 	
 	/*
