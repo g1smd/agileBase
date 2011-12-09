@@ -295,8 +295,8 @@
 			$(results).addClass('jsonSuggest ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all').
 				attr('role', 'listbox').
 				css({
-					'top': (obj.position().top + obj.outerHeight()) + 'px',
-					'left': obj.position().left + 'px',
+					'top': (obj.offset().top + obj.outerHeight()) + 'px',
+					'left': obj.offset().left + 'px',
 					'width': settings.width || (obj.outerWidth() + 'px'),
 					'z-index': 999
 				}).hide();
