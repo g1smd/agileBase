@@ -180,7 +180,7 @@
 				
 				if ($('li', results).length > 0) {
 					currentSelection = undefined;
-					$(results).show().css({'height': 'auto', 'top': obj.position().top + obj.outerHeight()) + 'px'});
+					$(results).show().css({'height': 'auto', 'top': obj.position().top + obj.outerHeight() + 'px'});
 					
 					if ($(results).height() > settings.maxHeight) {
 						$(results).css({'overflow': 'auto', 'height': settings.maxHeight + 'px'});
