@@ -180,8 +180,7 @@
 				
 				if ($('li', results).length > 0) {
 					currentSelection = undefined;
-					$(results).show().css({'height': 'auto', 'top': '100px'});
-					alert('top is 100px');
+					$(results).show().css({'height': 'auto'});
 					
 					if ($(results).height() > settings.maxHeight) {
 						$(results).css({'overflow': 'auto', 'height': settings.maxHeight + 'px'});
@@ -230,6 +229,7 @@
 				}
 				else if (settings.url && typeof settings.url === 'string') {
 					var text = this.value;
+					//Oliver: don't show 'searching...'
 					//$(results).html('<li class="ui-menu-item ajaxSearching"><a class="ui-corner-all">Searching...</a></li>').
 					//	show().css('height', 'auto');
 					$(results).show().css('height', 'auto');
@@ -301,7 +301,7 @@
 					'width': settings.width || (obj.outerWidth() + 'px'),
 					'z-index': 999
 				}).hide();
-				
+				alert('top being set to ' + obj.position().top + obj.outerHeight());
 			obj.after(results).
 				keyup(keyListener).
 				keydown(function(e) {
