@@ -293,6 +293,7 @@
 			// Prepare the input box to show suggest results by adding in the events
 			// that will initiate the search and placing the element on the page
 			// that will show the results.
+			alert('top about to be set to ' + obj.position().top + obj.outerHeight());
 			$(results).addClass('jsonSuggest ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all').
 				attr('role', 'listbox').
 				css({
@@ -301,7 +302,6 @@
 					'width': settings.width || (obj.outerWidth() + 'px'),
 					'z-index': 999
 				}).hide();
-				alert('top being set to ' + obj.position().top + obj.outerHeight());
 			obj.after(results).
 				keyup(keyListener).
 				keydown(function(e) {
