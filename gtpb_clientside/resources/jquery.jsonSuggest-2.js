@@ -180,7 +180,7 @@
 				
 				if ($('li', results).length > 0) {
 					currentSelection = undefined;
-					$(results).show().css('height', 'auto');
+					$(results).show().css({'height': 'auto', 'top': obj.position().top + obj.outerHeight()) + 'px'});
 					
 					if ($(results).height() > settings.maxHeight) {
 						$(results).css({'overflow': 'auto', 'height': settings.maxHeight + 'px'});
@@ -292,12 +292,11 @@
 			// Prepare the input box to show suggest results by adding in the events
 			// that will initiate the search and placing the element on the page
 			// that will show the results.
-			alert("offset top is " + obj.offset().top);
 			$(results).addClass('jsonSuggest ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all').
 				attr('role', 'listbox').
 				css({
-					'top': (obj.offset().top + obj.outerHeight()) + 'px',
-					'left': obj.offset().left + 'px',
+					'top': (obj.position().top + obj.outerHeight()) + 'px',
+					'left': obj.position().left + 'px',
 					'width': settings.width || (obj.outerWidth() + 'px'),
 					'z-index': 999
 				}).hide();
