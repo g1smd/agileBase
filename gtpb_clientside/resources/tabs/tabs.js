@@ -407,7 +407,7 @@ function fRelationPickers() {
 		this.field = jqButton.siblings("input.relation_hidden")[0];
 		jqButton.click(fUpdateGlobalRelation);
 	});
-
+/*
 	function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
 		var url = "AppController.servlet?return=gui/resources/input/return_relation_json";
 		url += "&set_custom_field=true&fieldkey=relationField";
@@ -415,8 +415,8 @@ function fRelationPickers() {
 		url += "&custominternalfieldname=" + internalFieldName;
 		jqElement.jsonSuggest({url: url, highlightMatches: false, onSelect: jqElement[0].formEl.doUpdateObj});
 	}
+	*/
 	
-	/*
 	function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
 		jqElement.autocomplete("AppController.servlet", {
 			autoFill : true,
@@ -448,7 +448,6 @@ function fRelationPickers() {
 			}
 		});
 	}
-*/
 
 	$('.autocomplete').each(function(i) {
 		var jqThis = $(this);
