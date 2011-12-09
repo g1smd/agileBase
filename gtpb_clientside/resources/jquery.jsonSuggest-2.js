@@ -293,7 +293,6 @@
 			// Prepare the input box to show suggest results by adding in the events
 			// that will initiate the search and placing the element on the page
 			// that will show the results.
-			alert('obj top = ' + (obj.position().top obj.outerHeight()));
 			$(results).addClass('jsonSuggest ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all').
 				attr('role', 'listbox').
 				css({
