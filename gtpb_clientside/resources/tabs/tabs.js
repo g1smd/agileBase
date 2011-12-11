@@ -419,9 +419,9 @@ function fRelationPickers() {
 	
 	function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
 		jqElement.autocomplete("AppController.servlet", {
-			autoFill : true,
-			cacheLength : 1, // 100
-			max : 99,
+			autoFill : false,
+			cacheLength : 49, // 100
+			max : 50,
 			minChars : 2,
 			extraParams : {
 				gtpb_return : "gui/resources/input/return_relation_values",
