@@ -235,7 +235,7 @@ body {
 	width: 15em;
 	font-size: 13pt;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  -moz-border-radius: 2em;
+  border-radius: 2em;
   float: right;
   /* no webkit border radius, webkit styles search inputs anyway */
 }

@@ -351,8 +351,7 @@ tr.separator + tr.separator {
 }
 
 .warningmessage {
-		-webkit-border-radius: 1em;
-		-moz-border-radius: 1em;
+		border-radius: 1em;
 		border: 2px solid rgb(254,233,84);
 		text-align: center;
 		background: rgb(254,242,149);
@@ -381,8 +380,6 @@ tr.separator + tr.separator {
 	font-size: 9pt;
 	padding: 0.2em;
 	text-transform: none;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
 	border-radius: 5px;
 }
 

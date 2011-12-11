@@ -25,8 +25,7 @@ table.data tr.rowb td small { color:#f0f0f0 }
 table.data small { font-size:8pt; color:#cccccc }
 
 #errormessage {
-		-webkit-border-radius: 1em;
-		-moz-border-radius: 1em;
+		border-radius: 1em;
 		border: 2px solid #ff0000;
 		text-align: center;
 		background: rgb(233,204,201);
@@ -34,8 +33,7 @@ table.data small { font-size:8pt; color:#cccccc }
 }
 
 .warningmessage {
-		-webkit-border-radius: 1em;
-		-moz-border-radius: 1em;
+		border-radius: 1em;
 		border: 2px solid #ff0000;
 		text-align: center;
 		background: rgb(254,242,149);

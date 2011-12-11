@@ -260,8 +260,7 @@ ul.moduleaction li {
 
 #header #links .button {
 	border: 1px solid #909090;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+	border-radius: 5px;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
 	position: absolute;

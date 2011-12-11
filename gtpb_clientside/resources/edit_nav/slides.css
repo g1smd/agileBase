@@ -65,9 +65,6 @@
   -moz-transition: all 0.25s ease-in-out;
   -o-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
-  -moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -ms-border-radius: 20px;
   border-radius: 20px;
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -235,9 +232,6 @@ pre input[type="range"] {
   letter-spacing: 0;
   bottom: 10px;
   position: relative;
-  -moz-border-radius: 10px;
-  -khtml-border-radius: 10px;
-  -webkit-border-radius: 10px;
   border-radius: 10px;
   background: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;

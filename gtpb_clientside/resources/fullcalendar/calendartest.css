@@ -48,8 +48,6 @@ body {
 
 .legend_report {
   margin: 0.1em;
-  -moz-border-radius: 0.5em;
-  -webkit-border-radius: 0.5em;
   border-radius: 0.5em;
   padding: 0.2em;
 }

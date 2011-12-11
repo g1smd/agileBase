@@ -72,9 +72,6 @@ ul li {
 
 .legend_report {
   margin: 0.1em;
-  -moz-border-radius: 0.5em;
-  -webkit-border-radius: 0.5em;
-  -ms-border-radius: 0.5em;
   border-radius: 0.5em;
   padding: 0.2em;
 }
@@ -102,9 +99,6 @@ ul li {
   border: 5px solid white;
   padding: 5px;
   opacity: 0.9;
-  -moz-border-radius: 1em;
-  -webkit-border-radius: 1em;
-  -ms-border-radius: 1em;
   border-radius: 1em;
   -moz-box-shadow: 0 0 5px #cccccc;
   -webkit-box-shadow: 0 0 5px #cccccc;
