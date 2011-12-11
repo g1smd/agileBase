@@ -268,9 +268,6 @@ a[error] { font-size:8pt; }
   padding: 1em;
   margin: 5px;
   border: solid 1px #b4b4b4;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
   border-radius: 10px;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
@@ -368,11 +365,6 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
 
 #wordcloud {
   text-align: center;
-  /* border: 5px dotted #cccccc;
-  -moz-border-radius: 1em;
-  -webkit-border-radius: 1em;
-  border-radius: 1em;
-  margin: 0.5em; */
 }
 
 /* Match chart headings */
@@ -383,8 +375,6 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
   font-size: 16px;
   background-color: #f4f4f4;
   margin: 0px;
-  -moz-border-radius: 0.5em 0.5em 0 0;
-  -webkit-border-radius: 0.5em 0.5em 0 0;
   border-radius: 0.5em 0.5em 0 0;
   padding: 0.2em;
 }
@@ -613,8 +603,7 @@ span.comment_attribution {
     background-repeat:no-repeat;
     background-position:center right;
     border: #a4bdec solid 1px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+    border-radius: 10px;
   }
   
   .chart_controls .existing_element a:hover {

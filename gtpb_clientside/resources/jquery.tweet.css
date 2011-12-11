@@ -2,9 +2,6 @@
   /* font-family: Georgia, serif; */
   color: #085258; }
   .tweet .tweet_list, .query .tweet_list {
-    -webkit-border-radius: .5em;
-    -moz-border-radius: .5em;
-    -ms-border-radius: .5em;
     border-radius: .5em;
     list-style-type: none;
     margin: 0;
