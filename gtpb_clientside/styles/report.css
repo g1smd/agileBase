@@ -395,7 +395,7 @@ img.mini_icon {
 
 .mini_action {
   font-size: 8pt!important;
-  position: absolute;
+  position: fixed;
   padding: 0.5em;
   background-color: #f0f0f0;
   font-weight: normal;
