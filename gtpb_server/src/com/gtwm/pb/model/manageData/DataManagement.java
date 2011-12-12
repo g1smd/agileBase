@@ -615,7 +615,6 @@ public final class DataManagement implements DataManagementInfo {
 						+ "=?");
 			}
 		}
-		logger.debug("Add new record SQL is " + SQLCodeBuilder);
 		Connection conn = null;
 		int fieldNumber = 0;
 		// Will be set if we're inserting a record

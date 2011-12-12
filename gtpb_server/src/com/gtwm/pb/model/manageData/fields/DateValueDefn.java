@@ -79,7 +79,7 @@ public class DateValueDefn implements DateValue {
 			// and is indexed from 1 so that June=6
 			Integer months = calendar.get(Calendar.MONTH) + 1;
 			Integer days = calendar.get(Calendar.DAY_OF_MONTH);
-			Integer hours = calendar.get(Calendar.HOUR);
+			Integer hours = calendar.get(Calendar.HOUR_OF_DAY);
 			Integer minutes = calendar.get(Calendar.MINUTE);
 			Integer seconds = calendar.get(Calendar.SECOND);
 			this.setDateParts(years, months, days, hours, minutes, seconds);
