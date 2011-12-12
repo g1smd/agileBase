@@ -86,6 +86,7 @@ div#wrapper table#reportData #fieldFilters td {
 table#reportData thead tr#fieldFilters input { 
   width:100%;
   border-radius: 0.5em;
+  border: 1px solid #cecece;
 }
 					  
 table#reportData thead td { 
