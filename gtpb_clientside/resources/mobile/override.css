@@ -95,6 +95,7 @@ div.relation_field a {
 table#reportData thead tr#fieldFilters input { 
   font-size: 12pt;
   border-radius: 0.5em;
+  border: 1px solid #cecece;
 }
 
 table#reportData tr.rowb  { 
