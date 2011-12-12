@@ -159,7 +159,7 @@ function fPickItem(oRow) {
   	alert('found picker');
     with(inputElement) {
       value=oRow.getAttribute('keyValue');
-      if (inputElement.label) { // there should always be a label
+      //if (inputElement.label) { // there should always be a label
         // label.innerHTML=oRow.getAttribute('displayValue'); // no longer used
         // download the display value over XML - this can't be done directly from the template
         var aPostVars=new Array();
@@ -168,9 +168,9 @@ function fPickItem(oRow) {
         aPostVars['stringkey']='picker_value';
         aPostVars['customstringvalue']=oRow.getAttribute('displayValue'); // note that display_value will be the row_id of the related record
         var oReq=new fRequest('AppController.servlet',aPostVars,fShowFieldCaption,1); // run the request and show a wait window 
-      } else {
-      	alert('Error: label not found');
-      }
+      //} else {
+      //	alert('Error: label not found');
+      //}
       // oRow.name is the rowid for the row
       //setAttribute('gtpb_set_row_id',oRow.getAttribute('name'));
     }
