@@ -19,7 +19,7 @@ function fPicker(){
   function fLoadContent() {
     function fDisplayContent(sText,sXML) {
       with($(oElements.picker.content)) {
-    	empty();
+      	empty();
         append(sText);
       }
     }
@@ -156,6 +156,7 @@ function fPickItem(oRow) {
   
   var oPicker=fFindPicker();
   with (oPicker) {
+  	alert('found picker');
     with(inputElement) {
       value=oRow.getAttribute('keyValue');
       if (inputElement.label) { // there should always be a label
@@ -167,6 +168,8 @@ function fPickItem(oRow) {
         aPostVars['stringkey']='picker_value';
         aPostVars['customstringvalue']=oRow.getAttribute('displayValue'); // note that display_value will be the row_id of the related record
         var oReq=new fRequest('AppController.servlet',aPostVars,fShowFieldCaption,1); // run the request and show a wait window 
+      } else {
+      	alert('Error: label not found');
       }
       // oRow.name is the rowid for the row
       //setAttribute('gtpb_set_row_id',oRow.getAttribute('name'));
