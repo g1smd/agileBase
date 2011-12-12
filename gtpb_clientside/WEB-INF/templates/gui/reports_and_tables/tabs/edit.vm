@@ -47,8 +47,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
   #end
 	  <table cellspacing="0" cellpadding="0" border="0" id="reportData" #if($cloned_record) style="background:url('styles/cloned.png') no-repeat top right !important;" #end>
 			#if(!$mobile_device && !$edit_nav)
-        <div class="mini_action"><button id="hide_pane_3" onClick="top.hidePane3();">done</button></div>
-        <div class="mini_action" style="right:0"><a href="javascript:top.fLinks();"><img src="resources/icons/applications/tango/actions/mail-closed.png" />&nbsp;link...</a></div>
+        <div class="mini_action" style="border-bottom-right-radius:0.5em"><button id="hide_pane_3" onClick="top.hidePane3();">done</button></div>
+        <div class="mini_action" style="right:0; border-bottom-left-radius:0.5em"><a href="javascript:top.fLinks();"><img src="resources/icons/applications/tango/actions/mail-closed.png" />&nbsp;link...</a></div>
 			#end
 		    #set($tableDataRow=$view.getTableDataRow())
 		    #if ($tableDataRow.size() == 0)
