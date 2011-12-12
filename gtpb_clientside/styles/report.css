@@ -18,7 +18,7 @@ table#reportData {
 }
 
 table#reportData th {
-  background-color: #f0f0f0; /* #f1f2ed; */
+  background-color: white; /* #f1f2ed; */
   font-size:10pt; 
   color:black;
   font-weight:bold;
@@ -74,12 +74,12 @@ table#reportData th.waiting {
 	
 table#reportData thead tr#fieldFilters,
 table#reportData thead tr.wikiTitle { 
-  background-color:#dddddd;
+  background-color:white;
 }
 
 div#wrapper table#reportData #fieldFilters td {
   padding: 2px 3px;
-  border-right: 1px solid #dddddd;
+  /* border-right: 1px solid #dddddd; */
   height: 20px;
 }
 
