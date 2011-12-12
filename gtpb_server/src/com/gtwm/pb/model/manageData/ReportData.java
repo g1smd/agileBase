@@ -208,7 +208,7 @@ public class ReportData implements ReportDataInfo {
 		DatabaseFieldType dbType = filterField.getDbType();
 		// clean-up filter value:
 		filterValue = filterValue.replaceAll("\\*", "%");
-		if (filterType.equals(DatabaseFieldType.VARCHAR)) {
+		if (dbType.equals(DatabaseFieldType.VARCHAR)) {
 			if (filterValue.startsWith(":")) {
 				filterValue = filterValue.replaceFirst(":", "");
 			} else {
