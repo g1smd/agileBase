@@ -21,7 +21,7 @@ body {
 	height: 51px; /* 72 */
 	top: 0;
 	padding-top: 5px;
-	border-bottom: 1px solid #cecece; /* 5px solid #eaba72; */
+	/* border-bottom: 1px solid #cecece; /* 5px solid #eaba72; */
 	z-index: 1;
   background: -webkit-linear-gradient(top, white, #f0f0f0);
   background: -moz-linear-gradient(top, white, #f0f0f0);
