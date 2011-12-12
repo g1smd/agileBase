@@ -141,7 +141,7 @@ public class DateFieldDefn extends AbstractField implements DateField {
 	public Calendar getDefault() {
 		if (this.getDefaultToNow()) {
 			Calendar now = new GregorianCalendar();
-			now.setTime(new Date());
+			//now.setTime(new Date());
 			return now;
 		} else {
 			return null;
