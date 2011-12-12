@@ -250,6 +250,11 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 				+ " IS NOT NULL";
 		if (filterString != null) {
 			filterString = filterString.replace("*", "%").toLowerCase();
+			if (filterString.startsWith(":")) {
+				filterString = filterString.replaceFirst(":", "");
+			} else if(!filterString.startsWith("%")) {
+				filterString = "%" + filterString;
+			}
 			filterString += "%";
 			SQLCode += " AND lower(" + relatedTableInternalName + "." + displayFieldInternalName
 					+ "::text) LIKE ?";
