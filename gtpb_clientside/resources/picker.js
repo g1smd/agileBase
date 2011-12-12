@@ -148,7 +148,7 @@ function fPickItem(oRow) {
   
   function fShowFieldCaption(sResponseText,sResponseXML) {
     with(oPicker) {
-      //inputElement.label.update(sResponseText);
+      $(inputElement).siblings(".autocomplete").val(sResponseText);
       inputElement.doUpdate(inputElement.value);
       destroy();
     }
