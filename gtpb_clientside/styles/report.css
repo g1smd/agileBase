@@ -22,8 +22,8 @@ table#reportData th {
   font-size:10pt; 
   color:black;
   font-weight:bold;
-  /* border:1px solid #cecece;
-  border-top: 0px; */
+  border:1px solid white; /* #cecece */
+  border-top: 0px;
   padding:5px;
   text-align:left;
   height:30px; 
