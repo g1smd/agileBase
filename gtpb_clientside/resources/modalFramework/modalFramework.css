@@ -162,7 +162,7 @@ div#_md_blank div#_md_dialog div#_md_content table#reportData th {
   font-size:10pt; 
   color:black;
   font-weight:bold;
-  border:1px solid #cecece;
+  /* border:1px solid #cecece; */
   padding:7px;
   text-align:left;
   height:30px; 
