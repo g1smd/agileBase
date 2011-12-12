@@ -208,6 +208,13 @@ public class ReportData implements ReportDataInfo {
 		DatabaseFieldType dbType = filterField.getDbType();
 		// clean-up filter value:
 		filterValue = filterValue.replaceAll("\\*", "%");
+		if (filterType.equals(DatabaseFieldType.VARCHAR)) {
+			if (filterValue.startsWith(":")) {
+				filterValue = filterValue.replaceFirst(":", "");
+			} else {
+				filterValue = "%" + filterValue;
+			}
+		}
 		// when filtering decimal values...
 		if (filterValue.endsWith(".") && dbType.equals(DatabaseFieldType.FLOAT)) {
 			filterValue = filterValue.substring(0, filterValue.length() - 1);
