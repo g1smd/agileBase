@@ -184,6 +184,7 @@ div#_md_blank div#_md_dialog div#_md_content table#reportData thead tr#fieldFilt
 
 div#_md_blank div#_md_dialog div#_md_content table#reportData thead tr#fieldFilters input { 
   width:100%;
+  border-radius: 0.5em;
 }
 					  
 div#_md_blank div#_md_dialog div#_md_content table#reportData thead td { 
