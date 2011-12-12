@@ -156,7 +156,6 @@ function fPickItem(oRow) {
   
   var oPicker=fFindPicker();
   with (oPicker) {
-  	alert('found picker');
     with(inputElement) {
       value=oRow.getAttribute('keyValue');
       //if (inputElement.label) { // there should always be a label
