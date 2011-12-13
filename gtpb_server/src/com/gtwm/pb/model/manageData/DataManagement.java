@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -147,6 +146,8 @@ import org.glowacki.CalendarParser;
 import org.glowacki.CalendarParserException;
 import au.com.bytecode.opencsv.CSVReader;
 
+// TODO: There is only one instance of DataManagement in the app
+// Consider making all methods and properties static
 public final class DataManagement implements DataManagementInfo {
 
 	private DataManagement() {
@@ -796,6 +797,7 @@ public final class DataManagement implements DataManagementInfo {
 			sessionData.setRowId(table, newRowId);
 		}
 		this.logLastDataChangeTime(request);
+		logLastTableDataChangeTime(table);
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
 		AppUserInfo user = null;
 		if (request.getRemoteUser() == null) {
@@ -1326,6 +1328,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		this.logLastDataChangeTime(request);
+		logLastTableDataChangeTime(table);
 		UsageLogger usageLogger = new UsageLogger(this.dataSource);
 		String logMessage = "" + numImportedRecords;
 		if (updateExistingRecords) {
@@ -1684,6 +1687,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		this.logLastDataChangeTime(request);
+		logLastTableDataChangeTime(table);
 		UsageLogger usageLogger = new UsageLogger(dataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		usageLogger.logDataChange(user, table, AppAction.REMOVE_RECORD, rowId, "");
@@ -1702,7 +1706,7 @@ public final class DataManagement implements DataManagementInfo {
 			cachedFeed = this.cachedReportFeeds.get(id);
 			if (cachedFeed != null) {
 				long lastDataChangeAge = System.currentTimeMillis()
-						- this.getLastDataChangeTime(user.getCompany());
+						- getLastCompanyDataChangeTime(user.getCompany());
 				long cacheAge = cachedFeed.getCacheAge();
 				if ((cacheAge < lastDataChangeAge) || (cacheAge < (cacheSeconds * 1000))) {
 					this.reportFeedCacheHits.incrementAndGet();
@@ -1798,7 +1802,7 @@ public final class DataManagement implements DataManagementInfo {
 		this.createNode(eventWriter, "link", reportLink);
 		this.createNode(eventWriter, "description", "A live data feed from www.agilebase.co.uk");
 		DateFormat dateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
-		Date lastDataChangeDate = new Date(this.getLastDataChangeTime(user.getCompany()));
+		Date lastDataChangeDate = new Date(getLastCompanyDataChangeTime(user.getCompany()));
 		this.createNode(eventWriter, "pubdate", dateFormatter.format(lastDataChangeDate));
 		for (DataRowInfo reportDataRow : reportDataRows) {
 			eventWriter.add(eventFactory.createStartElement("", "", "item"));
@@ -2186,7 +2190,7 @@ public final class DataManagement implements DataManagementInfo {
 		if (this.cachedReportDatas.containsKey(reportDefn)) {
 			reportData = this.cachedReportDatas.get(reportDefn);
 			if (useCaching && updateCacheIfObsolete) {
-				Long companyDataLastChangedTime = this.getLastDataChangeTime(company);
+				Long companyDataLastChangedTime = getLastCompanyDataChangeTime(company);
 				boolean dataChangedAfterCached = (companyDataLastChangedTime > reportData
 						.getCacheCreationTime());
 				if (dataChangedAfterCached && reportData.exceededCacheTime()) {
@@ -2350,7 +2354,7 @@ public final class DataManagement implements DataManagementInfo {
 		} else if (alwaysUseCache) {
 			this.chartDataCacheHits.incrementAndGet();
 		} else {
-			long lastDataChangeTime = this.getLastDataChangeTime(company);
+			long lastDataChangeTime = getLastCompanyDataChangeTime(company);
 			long lastSchemaChangeTime = this.getLastSchemaChangeTime(company);
 			long cacheCreationTime = reportSummaryData.getCacheCreationTime();
 			if ((cacheCreationTime <= lastDataChangeTime)
@@ -3041,12 +3045,25 @@ public final class DataManagement implements DataManagementInfo {
 		return "DataManagement is a class for managing data (duh!)";
 	}
 
+	public static void logLastTableDataChangeTime(TableInfo table) {
+		lastTableDataChangeTimes.put(table, System.currentTimeMillis());
+	}
+	
+	public static long getLastTableDataChangeTime(TableInfo table) {
+		Long lastTime = lastTableDataChangeTimes.get(table);
+		if (lastTime == null) {
+			logLastTableDataChangeTime(table);
+			return lastTableDataChangeTimes.get(table);
+		}
+		return lastTime;
+	}
+	
 	public void logLastDataChangeTime(HttpServletRequest request) throws ObjectNotFoundException {
 		// Public user (not logged in) changes don't count
 		// TODO: think of something better
 		if (request.getRemoteUser() != null) {
 			CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
-			this.setLastDataChangeTime(company);
+			setLastCompanyDataChangeTime(company);
 		}
 	}
 
@@ -3055,11 +3072,11 @@ public final class DataManagement implements DataManagementInfo {
 		this.setLastSchemaChangeTime(company);
 	}
 
-	private Long getLastDataChangeTime(CompanyInfo company) {
-		Long lastTime = this.lastCompanyDataChangeTimes.get(company);
+	private static Long getLastCompanyDataChangeTime(CompanyInfo company) {
+		Long lastTime = lastCompanyDataChangeTimes.get(company);
 		if (lastTime == null) {
-			this.setLastDataChangeTime(company);
-			return this.lastCompanyDataChangeTimes.get(company);
+			setLastCompanyDataChangeTime(company);
+			return lastCompanyDataChangeTimes.get(company);
 		}
 		return lastTime;
 	}
@@ -3079,10 +3096,10 @@ public final class DataManagement implements DataManagementInfo {
 	 * 
 	 * @see #logLastDataChangeTime(HttpServletRequest)
 	 */
-	private void setLastDataChangeTime(CompanyInfo company) {
-		this.lastCompanyDataChangeTimes.put(company, System.currentTimeMillis());
+	private static void setLastCompanyDataChangeTime(CompanyInfo company) {
+		lastCompanyDataChangeTimes.put(company, System.currentTimeMillis());
 		// Note: clearing optional
-		this.cachedCalendarJSONs.clear();
+		cachedCalendarJSONs.clear();
 	}
 
 	private void setLastSchemaChangeTime(CompanyInfo company) {
@@ -3097,7 +3114,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	private Map<ChartInfo, ChartDataInfo> cachedChartDatas = new ConcurrentHashMap<ChartInfo, ChartDataInfo>();
 
-	private Map<String, CachedReportFeedInfo> cachedCalendarJSONs = new ConcurrentHashMap<String, CachedReportFeedInfo>();
+	private static Map<String, CachedReportFeedInfo> cachedCalendarJSONs = new ConcurrentHashMap<String, CachedReportFeedInfo>();
 
 	private Map<String, CachedReportFeedInfo> cachedReportFeeds = new ConcurrentHashMap<String, CachedReportFeedInfo>();
 
@@ -3111,8 +3128,10 @@ public final class DataManagement implements DataManagementInfo {
 	 * Keep a record of the last time any schema or data change occurred for
 	 * each company, to help inform caching
 	 */
-	private Map<CompanyInfo, Long> lastCompanyDataChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
+	private static Map<CompanyInfo, Long> lastCompanyDataChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
 
+	private static Map<TableInfo, Long> lastTableDataChangeTimes = new ConcurrentHashMap<TableInfo, Long>();
+	
 	private Map<CompanyInfo, Long> lastSchemaChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
 
 	private Map<AppUserInfo, BaseReportInfo> userMostPopularReportCache = new ConcurrentHashMap<AppUserInfo, BaseReportInfo>();

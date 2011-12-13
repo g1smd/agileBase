@@ -41,6 +41,7 @@ import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSet
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
+import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -52,6 +53,7 @@ import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.AppProperties;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -304,23 +306,23 @@ public class TextFieldDefn extends AbstractField implements TextField {
 					+ this.filteredItemsCacheHits + ", misses = " + this.filteredItemsCacheMisses);
 			this.filteredItemsCacheHits = 0;
 			this.filteredItemsCacheMisses = 0;
-			// clear memory once in a while as well
-			this.filteredItemsCache = new HashMap<String, SortedSet<String>>();
 		}
 	}
 
 	@Transient
-	// synchronized because it uses a cache
-	public synchronized SortedSet<String> getItems() throws SQLException, CantDoThatException,
+	public SortedSet<String> getItems() throws SQLException, CantDoThatException,
 			CodingErrorException {
-		if ((System.currentTimeMillis() - this.allItemsLastCacheTime) < AppProperties.lookupCacheTime) {
+		long cacheAge = System.currentTimeMillis() - this.allItemsLastCacheTime;
+		long lastChangeAge = System.currentTimeMillis() - DataManagement.getLastTableDataChangeTime(this.getTableContainingField());
+		if (cacheAge < (lastChangeAge + AppProperties.lookupCacheTime)) {
 			if (this.allItemsCache.size() > 0) {
 				this.allItemsCacheHits += 1;
 				this.logAllItemsCacheStats();
 				return this.allItemsCache;
 			}
+		} else {
+			this.allItemsCache.clear();
 		}
-		SortedSet<String> items = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 		TextCase textCase = this.getTextCase();
 		if (textCase == null) {
 			textCase = TextCase.ANY;
@@ -333,7 +335,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 				List<String> defaultItems = Arrays.asList(defaultText.split(","));
 				for (String defaultItem : defaultItems) {
 					if (!defaultItem.trim().equals("")) {
-						items.add(defaultItem.trim());
+						this.allItemsCache.add(defaultItem.trim());
 					}
 				}
 			}
@@ -350,7 +352,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			while (results.next()) {
 				String item = results.getString(1);
 				if (item != null) {
-					items.add(item.trim());
+					this.allItemsCache.add(item.trim());
 				}
 			}
 			results.close();
@@ -360,11 +362,10 @@ public class TextFieldDefn extends AbstractField implements TextField {
 				conn.close();
 			}
 		}
-		this.allItemsCache = items;
 		this.allItemsLastCacheTime = System.currentTimeMillis();
 		this.allItemsCacheMisses += 1;
 		this.logAllItemsCacheStats();
-		return items;
+		return this.allItemsCache;
 	}
 
 	public SortedSet<String> getItems(BaseReportInfo report, Map<BaseField, String> filterValues)
@@ -375,13 +376,17 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			filterId += filterValueEntry.getKey().getInternalFieldName();
 			filterId += filterValueEntry.getValue();
 		}
-		if ((System.currentTimeMillis() - this.filteredItemsLastCacheTime) < AppProperties.lookupCacheTime) {
+		long cacheAge = System.currentTimeMillis() - this.filteredItemsLastCacheTime;
+		long lastChangeAge = System.currentTimeMillis() - DataManagement.getLastTableDataChangeTime(report.getParentTable());
+		if (cacheAge < (lastChangeAge + AppProperties.lookupCacheTime)) {
 			SortedSet<String> filteredItems = this.filteredItemsCache.get(filterId);
 			if (filteredItems != null) {
 				this.filteredItemsCacheHits += 1;
 				this.logFilteredItemsCacheStats();
 				return filteredItems;
 			}
+		} else {
+			this.filteredItemsCache.clear();
 		}
 		Connection conn = null;
 		SortedSet<String> items = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
@@ -501,7 +506,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 
 	private Boolean usesLookup = false;
 
-	private SortedSet<String> allItemsCache = new TreeSet<String>();
+	private SortedSet<String> allItemsCache = Collections.synchronizedSortedSet(new TreeSet<String>(String.CASE_INSENSITIVE_ORDER));
 
 	private Map<String, SortedSet<String>> filteredItemsCache = new ConcurrentHashMap<String, SortedSet<String>>();
 

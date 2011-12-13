@@ -90,6 +90,14 @@
         <li>App monthly cost = $enabledApps.size() apps x 25 = <b>&pound;$appCost</b></li>
         <li>Total = <b>&pound;$totalCost</b></li>
       </ul>
+      <h2>Low Activity Tables</h2>
+      These tables have low activity and are <i>possibly</i> unused:<p>
+      <ul>
+      #set($unusedTables = $usageStats.getUnusedTables())
+      #foreach($table in $unusedTables)
+        <li>$table</li>
+      #end
+      </ul>
     </div>
     ]]>
   </htmlContent>
