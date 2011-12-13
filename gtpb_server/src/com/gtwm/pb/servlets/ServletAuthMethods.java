@@ -182,7 +182,6 @@ public final class ServletAuthMethods {
 			HibernateUtil.closeSession();
 		}
 		sessionData.setUser(null);
-		databaseDefn.getDataManagement().clearPopularTablesCache(appUser);
 	}
 
 	public synchronized static void updateUser(SessionDataInfo sessionData,
@@ -353,7 +352,6 @@ public final class ServletAuthMethods {
 		}
 		sessionData.setRole(null);
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
-		databaseDefn.getDataManagement().clearPopularTablesCacheForCompany(company);
 	}
 
 	/**
@@ -448,13 +446,11 @@ public final class ServletAuthMethods {
 				if (internalRoleName != null) {
 					AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
 					authManager.removeRolePrivilege(request, role, privilegeType, table);
-					databaseDefn.getDataManagement().clearPopularTablesCacheForCompany(company);
 				}
 				if (internalUserName != null) {
 					AppUserInfo appUser = authManager.getUserByInternalName(request,
 							internalUserName);
 					authManager.removeUserPrivilege(request, appUser, privilegeType, table);
-					databaseDefn.getDataManagement().clearPopularTablesCache(appUser);
 				}
 			} else {
 				// Remove a general privilege
@@ -554,7 +550,6 @@ public final class ServletAuthMethods {
 						}
 					}
 				}
-				databaseDefn.getDataManagement().clearPopularTablesCache(user);
 			} else if (assignTo.equals("role")) {
 				AppRoleInfo role = null;
 				if (internalRoleName == null) {
@@ -582,7 +577,6 @@ public final class ServletAuthMethods {
 										testPrivilegeType, role, table))) {
 							authManager
 									.removeRolePrivilege(request, role, testPrivilegeType, table);
-							databaseDefn.getDataManagement().clearPopularTablesCacheForCompany(company);
 						}
 					}
 				}
@@ -650,7 +644,6 @@ public final class ServletAuthMethods {
 						}
 					}	
 				}
-				databaseDefn.getDataManagement().clearPopularTablesCache(user);
 			} else {
 				// removing privilege from role
 				AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
@@ -680,7 +673,6 @@ public final class ServletAuthMethods {
 				}
 			}
 			CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
-			databaseDefn.getDataManagement().clearPopularTablesCacheForCompany(company);
 		} catch (AgileBaseException pbex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			throw new CantDoThatException("No privileges cleared: " + pbex.getMessage(), pbex);
@@ -754,7 +746,6 @@ public final class ServletAuthMethods {
 		} finally {
 			HibernateUtil.closeSession();
 		}
-		databaseDefn.getDataManagement().clearPopularTablesCache(user);
 	}
 
 	private static final SimpleLogger logger = new SimpleLogger(ServletAuthMethods.class);
