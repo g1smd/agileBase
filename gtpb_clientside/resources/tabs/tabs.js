@@ -420,7 +420,7 @@ function fRelationPickers() {
 	function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
 		jqElement.autocomplete("AppController.servlet", {
 			autoFill : false,
-			cacheLength : 49, // 100
+			cacheLength : 1, // 100
 			max : 50,
 			minChars : 2,
 			extraParams : {
