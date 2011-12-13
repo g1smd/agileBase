@@ -55,7 +55,7 @@
 		#end##
 	  #else ## start of normal (not big text) field
 	    #if($field.usesLookup())##
-			#parse("gui/resources/input/combo_component.vm")##
+        #parse("gui/resources/input/combo_component.vm")##
 	    #else##
 	      #if($globalEdit)##
         	<input type="text" gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" name="$field.getInternalFieldName()" value="$fieldValue" gtpbBasicTextField="true" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##

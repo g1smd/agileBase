@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A basic text field in a database table
@@ -293,6 +294,9 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		}
 	}
 
+	/**
+	 * Note: The cache seems to be about 2/5 or just under 1/2 effective
+	 */
 	private void logFilteredItemsCacheStats() {
 		int filteredItemsCacheViews = this.filteredItemsCacheHits + this.filteredItemsCacheMisses;
 		if (filteredItemsCacheViews % 500 == 0) {
@@ -499,7 +503,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 
 	private SortedSet<String> allItemsCache = new TreeSet<String>();
 
-	private Map<String, SortedSet<String>> filteredItemsCache = new HashMap<String, SortedSet<String>>();
+	private Map<String, SortedSet<String>> filteredItemsCache = new ConcurrentHashMap<String, SortedSet<String>>();
 
 	long allItemsLastCacheTime = 0;
 

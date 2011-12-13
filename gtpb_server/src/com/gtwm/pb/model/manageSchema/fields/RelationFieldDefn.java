@@ -155,7 +155,6 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			singular = "Woman";
 		} else if (lowerPlural.equals("criteria")) {
 			singular = "Criterion";
-
 		} else if ((lowerPlural.endsWith("ies"))
 				&& ("aeiou".indexOf(lowerPlural.charAt(lowerPlural.length() - 4)) == -1)) {
 			// plural uses "ies" if word ends with "y" preceeded by a non-vowel
@@ -260,6 +259,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 					+ "::text) LIKE ?";
 		}
 		// We don't need to order in SQL, results are put into a sorted set
+		// Actually since we're only selecting a subset, we should sort to be sure of getting all the early results
+		// but it isn't really important to us
 		if (maxResults > 0) {
 			SQLCode += " LIMIT " + maxResults;
 		}
