@@ -65,7 +65,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	 */
 	public RelationFieldDefn(DataSource dataSource, TableInfo tableContainingField,
 			String internalFieldName, TableInfo relatedTable, BaseField relatedField,
-			boolean notNull, boolean defaultToNull, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
+			boolean notNull, boolean defaultToNull, FieldPrintoutSetting printoutSetting)
+			throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
 			super.setInternalFieldName(RandomString.generate());
@@ -218,7 +219,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		String relatedTableInternalName = this.getRelatedTable().getInternalTableName();
 		String relatedFieldInternalName = this.getRelatedField().getInternalFieldName();
 		long cacheAge = System.currentTimeMillis() - this.itemsLastCacheTime;
-		long lastChangeAge = System.currentTimeMillis() - DataManagement.getLastTableDataChangeTime(this.getRelatedTable());
+		long lastChangeAge = System.currentTimeMillis()
+				- DataManagement.getLastTableDataChangeTime(this.getRelatedTable());
 		// "" because filterString may be null
 		String cacheKey = "" + filterString + "_" + maxResults + reverseKeyValue;
 		if (cacheAge < (lastChangeAge + AppProperties.lookupCacheTime)) {
@@ -269,7 +271,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			filterString = filterString.replace("*", "%").toLowerCase();
 			if (filterString.startsWith(":")) {
 				filterString = filterString.replaceFirst(":", "");
-			} else if(!filterString.startsWith("%")) {
+			} else if (!filterString.startsWith("%")) {
 				filterString = "%" + filterString;
 			}
 			filterString += "%";
@@ -277,7 +279,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 					+ "::text) LIKE ?";
 		}
 		// We don't need to order in SQL, results are put into a sorted set
-		// Actually since we're only selecting a subset, we should sort to be sure of getting all the early results
+		// Actually since we're only selecting a subset, we should sort to be
+		// sure of getting all the early results
 		// but it isn't really important to us
 		if (maxResults > 0) {
 			SQLCode += " LIMIT " + maxResults;
@@ -314,10 +317,12 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 						}
 					}
 				}
-				if (reverseKeyValue) {
-					items.put(displayValue, keyValue);
-				} else {
-					items.put(keyValue, displayValue);
+				if ((displayValue != null) && (keyValue != null)) {
+					if (reverseKeyValue) {
+						items.put(displayValue, keyValue);
+					} else {
+						items.put(keyValue, displayValue);
+					}
 				}
 			}
 			results.close();
@@ -337,8 +342,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	private void logItemsCacheStats() {
 		int allItemsCacheViews = this.itemsCacheHits + this.itemsCacheMisses;
 		if (allItemsCacheViews % 100 == 0) {
-			logger.info(this.toString() + " relation field items cache hits = " + this.itemsCacheHits
-					+ ", misses = " + this.itemsCacheMisses);
+			logger.info(this.toString() + " relation field items cache hits = "
+					+ this.itemsCacheHits + ", misses = " + this.itemsCacheMisses);
 			this.itemsCacheHits = 0;
 			this.itemsCacheMisses = 0;
 		}
@@ -523,7 +528,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException,
 			CodingErrorException {
 		try {
-			FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.RELATION);
+			FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(
+					FieldCategory.RELATION);
 			for (BaseField field : this.getRelatedTable().getFields()) {
 				fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.LISTVALUEFIELD,
 						field.getInternalFieldName(), field.getFieldName());
@@ -543,7 +549,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.DEFAULTTONULL,
 					this.getDefaultToNull());
 			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
-			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
+					printoutSetting.name());
 			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
@@ -643,15 +650,15 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	}
 
 	private transient DataSource dataSource = null;
-	
+
 	private Map<String, SortedMap<String, String>> itemsCache = new ConcurrentHashMap<String, SortedMap<String, String>>();
 
 	long itemsLastCacheTime = 0;
-	
+
 	int itemsCacheHits = 0;
-	
+
 	int itemsCacheMisses = 0;
-	
+
 	private TableInfo relatedTable;
 
 	private BaseField relatedField; // the field on which the relation is based
