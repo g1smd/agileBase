@@ -288,7 +288,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 
 	private void logAllItemsCacheStats() {
 		int allItemsCacheViews = this.allItemsCacheHits + this.allItemsCacheMisses;
-		if (allItemsCacheViews % 1000 == 0) {
+		if (allItemsCacheViews % 500 == 0) {
 			logger.info(this.toString() + " lookup items cache hits = " + this.allItemsCacheHits
 					+ ", misses = " + this.allItemsCacheMisses);
 			this.allItemsCacheHits = 0;
@@ -377,6 +377,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			filterId += filterValueEntry.getValue();
 		}
 		long cacheAge = System.currentTimeMillis() - this.filteredItemsLastCacheTime;
+		// TODO: report last change age should really depend on all tables referenced by the report, not just the parent table
 		long lastChangeAge = System.currentTimeMillis() - DataManagement.getLastTableDataChangeTime(report.getParentTable());
 		if (cacheAge < (lastChangeAge + AppProperties.lookupCacheTime)) {
 			SortedSet<String> filteredItems = this.filteredItemsCache.get(filterId);

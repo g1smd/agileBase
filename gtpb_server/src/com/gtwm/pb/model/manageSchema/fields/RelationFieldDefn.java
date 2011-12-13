@@ -22,8 +22,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -36,6 +38,7 @@ import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
+import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
@@ -43,6 +46,7 @@ import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSet
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.model.manageSchema.DatabaseDefn;
+import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -213,6 +217,20 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		String displayFieldInternalName = this.getDisplayField().getInternalFieldName();
 		String relatedTableInternalName = this.getRelatedTable().getInternalTableName();
 		String relatedFieldInternalName = this.getRelatedField().getInternalFieldName();
+		long cacheAge = System.currentTimeMillis() - this.itemsLastCacheTime;
+		long lastChangeAge = System.currentTimeMillis() - DataManagement.getLastTableDataChangeTime(this.getRelatedTable());
+		// "" because filterString may be null
+		String cacheKey = "" + filterString + "_" + maxResults + reverseKeyValue;
+		if (cacheAge < (lastChangeAge + AppProperties.lookupCacheTime)) {
+			items = this.itemsCache.get(cacheKey);
+			if (items != null) {
+				this.itemsCacheHits += 1;
+				this.logItemsCacheStats();
+				return items;
+			}
+		} else {
+			this.itemsCache.clear();
+		}
 		String secondaryFieldInternalName = null;
 		boolean requireJoin = false;
 		String SQLCode = "";
@@ -310,7 +328,20 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 				conn.close();
 			}
 		}
+		this.itemsCache.put(cacheKey, items);
+		this.itemsCacheMisses += 1;
+		this.itemsLastCacheTime = System.currentTimeMillis();
 		return items;
+	}
+
+	private void logItemsCacheStats() {
+		int allItemsCacheViews = this.itemsCacheHits + this.itemsCacheMisses;
+		if (allItemsCacheViews % 100 == 0) {
+			logger.info(this.toString() + " relation field items cache hits = " + this.itemsCacheHits
+					+ ", misses = " + this.itemsCacheMisses);
+			this.itemsCacheHits = 0;
+			this.itemsCacheMisses = 0;
+		}
 	}
 
 	/**
@@ -486,12 +517,6 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			return "";
 		}
 		return fieldDescription;
-		/*
-		 * if ((super.getFieldDescription() != null) &&
-		 * (!super.getFieldDescription().equals(""))) { return
-		 * super.getFieldDescription(); } else { return
-		 * this.getRelatedField().getFieldDescription(); }
-		 */
 	}
 
 	@Transient
@@ -618,7 +643,15 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	}
 
 	private transient DataSource dataSource = null;
+	
+	private Map<String, SortedMap<String, String>> itemsCache = new ConcurrentHashMap<String, SortedMap<String, String>>();
 
+	long itemsLastCacheTime = 0;
+	
+	int itemsCacheHits = 0;
+	
+	int itemsCacheMisses = 0;
+	
 	private TableInfo relatedTable;
 
 	private BaseField relatedField; // the field on which the relation is based
