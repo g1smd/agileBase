@@ -224,8 +224,9 @@ $.Autocompleter = function(input, options) {
 	}).bind("setOptions", function() {
 		$.extend(options, arguments[1]);
 		// if we've updated the data, repopulate
-		if ( "data" in arguments[1] )
-			cache.populate();
+		// Oliver: don't use cache
+		//if ( "data" in arguments[1] )
+		//	cache.populate();
 	}).bind("unautocomplete", function() {
 		select.unbind();
 		$input.unbind();
@@ -367,7 +368,9 @@ $.Autocompleter = function(input, options) {
 	function request(term, success, failure) {
 		if (!options.matchCase)
 			term = term.toLowerCase();
-		var data = cache.load(term);
+		//Oliver: don't use cache
+		//var data = cache.load(term);
+		var data
 		// receive the cached data
 		if (data && data.length) {
 			success(term, data);
