@@ -179,5 +179,4 @@ public interface TableInfo extends Comparable<TableInfo> {
 	 * Return true if new records can be created by non-logged-in users via a public form
 	 */
 	public boolean getTableFormPublic();
-
 }
