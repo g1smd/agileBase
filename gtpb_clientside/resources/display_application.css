@@ -23,10 +23,16 @@ body {
 	padding-top: 5px;
 	/* border-bottom: 1px solid #cecece; /* 5px solid #eaba72; */
 	z-index: 1;
+	/* Standard
   background: -webkit-linear-gradient(top, white, #f0f0f0);
   background: -moz-linear-gradient(top, white, #f0f0f0);
   background: -ms-linear-gradient(top, white, #f0f0f0);
   background: linear-gradient(top, white, #f0f0f0);
+  */
+  /* xmas */
+  background-image: url('../resources/toolbar/xmas.jpg');
+  background-repeat: repeat-x;
+  /* */
   position: absolute;
 	left: 0px;
 	width: 100%;
