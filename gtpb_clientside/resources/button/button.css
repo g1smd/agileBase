@@ -53,13 +53,13 @@ button.gtpb.selected {
   background: -webkit-linear-gradient(top, #555555, #999999);
   background: -ms-linear-gradient(top, #555555, #999999);
   background: linear-gradient(top, #555555, #999999);
-  /*
+  */
   /* xmas */
   background: -moz-linear-gradient(top, rgba(0,0,0,0.5), #999999);
   background: -webkit-linear-gradient(top, rgba(0,0,0,0.5), #999999);
   background: -ms-linear-gradient(top, rgba(0,0,0,0.5), #999999);
   background: linear-gradient(top, rgba(0,0,0,0.5), #999999);
-	/* *.
+	/* */
   border: 1px solid #b6b6b6; /* icon colour */
 }
 
