@@ -701,9 +701,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 				+ report.getSQLForDetail() + ")";
 		boolean createOrReplaceWorked = true;
 		Savepoint savepoint = null;
+		PreparedStatement statement = null;
 		try {
 			savepoint = conn.setSavepoint("createOrReplaceSavepoint");
-			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			statement = conn.prepareStatement(SQLCode);
 			statement.execute();
 			statement.close();
 		} catch (SQLException sqlex) {
@@ -718,7 +719,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				// + " would break view. Error = " + sqlex);
 				// logger.error("SQL = " + report.getSQLForDetail());
 				throw new SQLException("The requested change would cause an error in the report: "
-						+ sqlex.getMessage(), sqlex.getSQLState(), sqlex);
+						+ sqlex.getMessage() + ". SQL = " + statement, sqlex.getSQLState(), sqlex);
 			}
 		}
 		return createOrReplaceWorked;
@@ -791,6 +792,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			BaseReportInfo report, HttpServletRequest request) throws SQLException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		Savepoint savepoint = null;
+		PreparedStatement statement = null;
 		try {
 			savepoint = conn.setSavepoint("dropAndCreateDependenciesSavepoint");
 			Map<String, List<String>> reportDependencyMap = new HashMap<String, List<String>>();
@@ -826,14 +828,14 @@ public final class DatabaseDefn implements DatabaseInfo {
 				BaseReportInfo reportToRecreate = table.getReport(reportInternalName);
 				String CreateViewSQL = "CREATE VIEW " + reportInternalName + " AS ("
 						+ reportToRecreate.getSQLForDetail() + ")";
-				PreparedStatement statement = conn.prepareStatement(CreateViewSQL);
+				statement = conn.prepareStatement(CreateViewSQL);
 				statement.execute();
 				statement.close();
 			}
 		} catch (SQLException sqlex) {
 			conn.rollback(savepoint);
 			throw new SQLException("The requested change would cause an error in the report: "
-					+ sqlex.getMessage(), sqlex.getSQLState(), sqlex);
+					+ sqlex.getMessage() + ". SQL = " + statement, sqlex.getSQLState(), sqlex);
 		}
 	}
 
@@ -843,9 +845,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 */
 	private void throwExceptionIfDbViewIsBroken(Connection conn, BaseReportInfo report)
 			throws SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException {
+		PreparedStatement statement = null;
 		try {
 			String SQLCode = "SELECT * FROM " + report.getInternalReportName() + " LIMIT 10";
-			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			statement = conn.prepareStatement(SQLCode);
 			ResultSet testResults = statement.executeQuery();
 			ResultSetMetaData metaData = testResults.getMetaData();
 			int numColumns = metaData.getColumnCount();
@@ -863,7 +866,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			// + " would break view. Error = " + sqlex);
 			// logger.error("SQL = " + report.getSQLForDetail());
 			throw new SQLException("The requested change would cause an error in the report: "
-					+ sqlex.getMessage(), sqlex.getSQLState(), sqlex);
+					+ sqlex.getMessage() + ". SQL = " + statement, sqlex.getSQLState(), sqlex);
 		}
 	}
 
