@@ -214,7 +214,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 
 	private SortedMap<String, String> getItemsWork(boolean reverseKeyValue, String filterString,
 			int maxResults) throws SQLException, CodingErrorException {
-		SortedMap<String, String> items = null;
+		SortedMap<String, String> items = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
 		String displayFieldInternalName = this.getDisplayField().getInternalFieldName();
 		String relatedTableInternalName = this.getRelatedTable().getInternalTableName();
 		String relatedFieldInternalName = this.getRelatedField().getInternalFieldName();
@@ -224,13 +224,11 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		// "" because filterString may be null
 		String cacheKey = "" + filterString + "_" + maxResults + reverseKeyValue;
 		if (cacheAge < (lastChangeAge + AppProperties.lookupCacheTime)) {
-			items = this.itemsCache.get(cacheKey);
-			if (items != null) {
+			SortedMap<String, String> cachedItems = this.itemsCache.get(cacheKey);
+			if (cachedItems != null) {
 				this.itemsCacheHits += 1;
 				this.logItemsCacheStats();
-				return items;
-			} else {
-				items = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
+				return cachedItems;
 			}
 		} else {
 			this.itemsCache.clear();
