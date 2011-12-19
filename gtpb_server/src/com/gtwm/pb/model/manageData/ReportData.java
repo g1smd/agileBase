@@ -211,7 +211,7 @@ public class ReportData implements ReportDataInfo {
 		if (dbType.equals(DatabaseFieldType.VARCHAR)) {
 			if (filterValue.startsWith(":")) {
 				filterValue = filterValue.replaceFirst(":", "");
-			} else if(!filterValue.startsWith("%")) {
+			} else if((!filterValue.startsWith("%")) && filterType.equals(QuickFilterType.LIKE)) {
 				filterValue = "%" + filterValue;
 			}
 		}
