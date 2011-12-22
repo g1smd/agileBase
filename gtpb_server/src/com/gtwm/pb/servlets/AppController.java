@@ -928,8 +928,10 @@ public final class AppController extends VelocityViewServlet {
 					+ String.valueOf(secondsToHandleMerge) + " seconds for template "
 					+ template.getName());
 			ViewMethodsInfo viewMethods = (ViewMethodsInfo) context.get("view");
+			SessionDataInfo sessionData = (SessionDataInfo) context.get("sessionData");
 			try {
-				logger.warn("Logged in user: " + viewMethods.getLoggedInUser());
+				BaseReportInfo report = sessionData.getReport();
+				logger.warn("Logged in user: " + viewMethods.getLoggedInUser() + ", session report = " + report+ " filtered by " + sessionData.getReportFilterValues(report) + ", limit " + sessionData.getReportRowLimit());
 			} catch (DisallowedException dex) {
 				logger.warn("Not allowed to get logged in user: " + dex);
 			} catch (ObjectNotFoundException onfex) {

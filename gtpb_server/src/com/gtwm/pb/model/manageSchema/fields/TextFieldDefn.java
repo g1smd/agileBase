@@ -288,7 +288,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 
 	private void logAllItemsCacheStats() {
 		int allItemsCacheViews = this.allItemsCacheHits + this.allItemsCacheMisses;
-		if (allItemsCacheViews % 500 == 0) {
+		if (allItemsCacheViews > 500) {
 			logger.info(this.toString() + " lookup items cache hits = " + this.allItemsCacheHits
 					+ ", misses = " + this.allItemsCacheMisses);
 			this.allItemsCacheHits = 0;
@@ -301,7 +301,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	 */
 	private void logFilteredItemsCacheStats() {
 		int filteredItemsCacheViews = this.filteredItemsCacheHits + this.filteredItemsCacheMisses;
-		if (filteredItemsCacheViews % 500 == 0) {
+		if (filteredItemsCacheViews > 500) {
 			logger.info(this.toString() + " lookup filtered items cache hits = "
 					+ this.filteredItemsCacheHits + ", misses = " + this.filteredItemsCacheMisses);
 			this.filteredItemsCacheHits = 0;
