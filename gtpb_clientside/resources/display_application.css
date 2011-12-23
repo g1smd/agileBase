@@ -41,7 +41,7 @@ body {
 
 .localhost #toolbarDiv {
 	background: red;
-	background-image : url("resources/toolbar/localhost.png");
+	background-image : url("../resources/toolbar/backup.png");
 }
 
 #toolbarDiv img.divider {
