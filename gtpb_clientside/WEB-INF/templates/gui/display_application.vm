@@ -45,7 +45,7 @@
         });
       </script>  
     </head>
-	  <body #if($viewTools.isRunningLocally()) class="localhost" #end>
+	  <body #if($viewTools.getAppUrl().contains("gtwmbackup")) class="localhost" #end>
     #set($noCaption = true)
     <div id=toolbarDiv>
       #parse("properties.vm") ## sets logo variable
