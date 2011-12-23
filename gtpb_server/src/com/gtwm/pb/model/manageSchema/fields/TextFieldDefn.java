@@ -301,7 +301,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	 */
 	private void logFilteredItemsCacheStats() {
 		int filteredItemsCacheViews = this.filteredItemsCacheHits + this.filteredItemsCacheMisses;
-		if (filteredItemsCacheViews > 500) {
+		if (filteredItemsCacheViews > 500	) {
 			logger.info(this.toString() + " lookup filtered items cache hits = "
 					+ this.filteredItemsCacheHits + ", misses = " + this.filteredItemsCacheMisses);
 			this.filteredItemsCacheHits = 0;
