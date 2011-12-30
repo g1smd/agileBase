@@ -1069,15 +1069,6 @@ public final class ViewTools implements ViewToolsInfo {
 		return detectedVersion;
 	}
 
-	public boolean isRunningLocally() {
-		String remoteIP = this.request.getRemoteAddr();
-		if (remoteIP.equals("127.0.0.1")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public Map<BaseField, String> getNewBaseFieldStringMap() {
 		return this.getNewFilterMap();
 	}

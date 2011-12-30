@@ -44,6 +44,7 @@ table#reportData th {
 
 table#reportData th[onclick]:hover {
   border-bottom-color:#FFD588!important;
+  border-bottom-width: 2px!important;
   background-color:#F8F8F6!important;
 }
 
