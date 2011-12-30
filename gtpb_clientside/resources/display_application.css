@@ -39,12 +39,12 @@ body {
 	overflow: hidden;
 }
 
-/*
+
 .localhost #toolbarDiv {
 	background: red;
 	background-image : url("../resources/toolbar/backup.png");
 }
-*/
+
 #toolbarDiv img.divider {
 	height: 45px;
 	width: 1px;
