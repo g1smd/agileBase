@@ -230,12 +230,6 @@ public interface ViewToolsInfo {
 	public float getBrowserVersion();
 
 	/**
-	 * Returns true if the version of agileBase being accessed is running on
-	 * the local machine, false if on a remote server
-	 */
-	public boolean isRunningLocally();
-
-	/**
 	 * Return a random string, typically for use as an ID
 	 */
 	public String getRandomString();
