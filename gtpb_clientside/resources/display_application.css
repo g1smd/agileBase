@@ -23,13 +23,13 @@ body {
 	padding-top: 5px;
 	/* border-bottom: 1px solid #cecece; /* 5px solid #eaba72; */
 	z-index: 1;
-	/* Standard
+	/* Standard */
   background: -webkit-linear-gradient(top, white, #f0f0f0);
   background: -moz-linear-gradient(top, white, #f0f0f0);
   background: -ms-linear-gradient(top, white, #f0f0f0);
   background: linear-gradient(top, white, #f0f0f0);
   /* */
-  /* xmas */
+  /* xmas
   background-image: url('../resources/toolbar/xmas.jpg');
   background-repeat: repeat-x;
   /* */
@@ -39,11 +39,12 @@ body {
 	overflow: hidden;
 }
 
+/*
 .localhost #toolbarDiv {
 	background: red;
 	background-image : url("../resources/toolbar/backup.png");
 }
-
+*/
 #toolbarDiv img.divider {
 	height: 45px;
 	width: 1px;
