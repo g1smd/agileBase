@@ -23,6 +23,7 @@ table#reportData th {
   color:black;
   font-weight:bold;
   border:1px solid white; /* #f0f0f0 / #cecece */
+  border-bottom: 1px solid #f0f0f0;
   border-top: 0px;
   padding:5px;
   text-align:left;
