@@ -45,7 +45,10 @@ button.gtpb img { border:0; }
   border-radius: 1em 0 0 1em;
 }
 
-button.gtpb:hover { cursor: pointer; }		 
+button.gtpb:hover {
+	cursor: pointer;
+  background-color: #f0f0f0;
+}		 
 button.gtpb:active { background-color: gray; }
 button.gtpb.selected {
 	/* Standard */
