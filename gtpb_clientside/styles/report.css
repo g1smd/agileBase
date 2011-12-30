@@ -46,7 +46,8 @@ table#reportData th {
 table#reportData th[onclick]:hover {
   border-bottom-color:#FFD588!important;
   border-bottom-width: 2px!important;
-  background-color:#F8F8F6!important;
+  /* background-color:#F8F8F6!important; */
+  background: background: linear-gradient(top, #fafafa, #f8f8f8)!important;
 }
 
 table#reportData th#sortedColumn{
