@@ -179,4 +179,11 @@ public interface TableInfo extends Comparable<TableInfo> {
 	 * Return true if new records can be created by non-logged-in users via a public form
 	 */
 	public boolean getTableFormPublic();
+	
+	/**
+	 * Return the email address to send new records to, if there is a public form (see getTableFormPublic)
+	 */
+	public String getEmail();
+	
+	public void setEmail(String email);
 }
