@@ -341,7 +341,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 
 	private void logItemsCacheStats() {
 		int allItemsCacheViews = this.itemsCacheHits + this.itemsCacheMisses;
-		if (allItemsCacheViews > 100) {
+		if (allItemsCacheViews > 500) {
 			logger.info(this.toString() + " relation field items cache hits = "
 					+ this.itemsCacheHits + ", misses = " + this.itemsCacheMisses);
 			this.itemsCacheHits = 0;
