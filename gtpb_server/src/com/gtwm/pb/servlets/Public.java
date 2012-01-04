@@ -374,13 +374,15 @@ public class Public extends VelocityViewServlet {
 		emailContent += "Thank you for your request. Your information has been received as below.\n\n---------------\n\n";
 		for (Map.Entry<BaseField, BaseValue> entry : fieldInputValues.entrySet()) {
 			BaseField field = entry.getKey();
-			BaseValue value = entry.getValue();
-			emailContent += field + ": " + entry.getValue();
-			// Detect any email addresses entered and CC the form to them
-			if (value instanceof TextValue) {
-				if (((TextValue) value).isEmailAddress()) {
-					message.addRecipient(Message.RecipientType.CC,
-							new InternetAddress(value.toString()));
+			if (!field.getHidden()) {
+				BaseValue value = entry.getValue();
+				emailContent += field + ": " + entry.getValue() + "\n";
+				// Detect any email addresses entered and CC the form to them
+				if (value instanceof TextValue) {
+					if (((TextValue) value).isEmailAddress()) {
+						message.addRecipient(Message.RecipientType.CC,
+								new InternetAddress(value.toString()));
+					}
 				}
 			}
 		}
