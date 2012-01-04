@@ -308,7 +308,7 @@ public class Public extends VelocityViewServlet {
 	}
 
 	/**
-	 * Create an instance of ViewMethods to provide the UI with the necessary
+	 * Create an instance of ViewTools to provide the UI with the necessary
 	 * functionality, and return the requested template.
 	 * 
 	 * @param exceptionCaught

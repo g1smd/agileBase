@@ -1,7 +1,6 @@
 ## If field object not set
 #if(!$field.getFieldCategory())
   #set($field = $sessionData.getCustomField("comment"))
-  $viewTools.log("Getting field from sessionData: $field")
 #end
 #foreach($comment in $view.getComments($field))
   <div class="comment" #if($foreach.count % 2 == 0) style="margin-left: 2em" #end>
