@@ -433,6 +433,14 @@ public class TableDefn implements TableInfo {
 	public boolean getTableFormPublic() {
 		return this.tableFormPublic;
 	}
+	
+	public String getEmail() {
+		return this.email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public String toString() {
 		return this.getTableName();
@@ -455,6 +463,8 @@ public class TableDefn implements TableInfo {
 	private boolean lockable = false;
 
 	private boolean tableFormPublic = false;
+	
+	private String email = null;
 
 	private volatile String simpleName = null;
 

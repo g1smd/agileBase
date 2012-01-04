@@ -475,6 +475,7 @@ public final class ServletSchemaMethods {
 		// load parameters for request
 		String newTableName = request.getParameter("tablename");
 		String newTableDesc = request.getParameter("tabledesc");
+		String tableEmail = request.getParameter("tableemail");
 		Boolean lockable = null;
 		String lockableString = request.getParameter("lockable");
 		if (lockableString != null) {
@@ -486,9 +487,9 @@ public final class ServletSchemaMethods {
 			tableFormPublic = Helpers.valueRepresentsBooleanTrue(tableFormPublicString);
 		}
 		if (newTableName == null && newTableDesc == null && lockable == null
-				&& tableFormPublic == null) {
+				&& tableFormPublic == null && tableEmail == null) {
 			throw new MissingParametersException(
-					"tablename, tabledesc, tableformpublic or lockable parameter must be supplied to update a table with a new name or description");
+					"tablename, tabledesc, tableformpublic, tableemail or lockable parameter must be supplied to update a table with a new name or description");
 		}
 		// store current values that may be overwritten by
 		// DatabaseDefn.updateTable so they can be rolled back
@@ -496,6 +497,7 @@ public final class ServletSchemaMethods {
 		String oldTableDesc = table.getTableDescription();
 		boolean oldLockable = table.getRecordsLockable();
 		boolean oldTableFormPublic = table.getTableFormPublic();
+		String oldTableEmail = table.getEmail();
 		// begin updating model and persisting changes
 		Connection conn = null;
 		try {
@@ -504,7 +506,7 @@ public final class ServletSchemaMethods {
 			conn.setAutoCommit(false);
 			// update the table:
 			databaseDefn.updateTable(conn, request, table, newTableName, newTableDesc, lockable,
-					tableFormPublic);
+					tableFormPublic, tableEmail);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
@@ -514,6 +516,7 @@ public final class ServletSchemaMethods {
 			table.setTableDescription(oldTableDesc);
 			table.setRecordsLockable(oldLockable);
 			table.setTableFormPublic(oldTableFormPublic);
+			table.setEmail(oldTableEmail);
 			throw new CantDoThatException("Updating table failed", hex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(conn);
@@ -522,6 +525,7 @@ public final class ServletSchemaMethods {
 			table.setTableDescription(oldTableDesc);
 			table.setRecordsLockable(oldLockable);
 			table.setTableFormPublic(oldTableFormPublic);
+			table.setEmail(oldTableEmail);
 			throw new CantDoThatException("Updating table failed", sqlex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
@@ -530,6 +534,7 @@ public final class ServletSchemaMethods {
 			table.setTableDescription(oldTableDesc);
 			table.setRecordsLockable(oldLockable);
 			table.setTableFormPublic(oldTableFormPublic);
+			table.setEmail(oldTableEmail);
 			throw new CantDoThatException("Updating table failed", pex);
 		} finally {
 			HibernateUtil.closeSession();

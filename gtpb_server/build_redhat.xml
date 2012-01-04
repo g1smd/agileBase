@@ -73,6 +73,7 @@
 				<pathelement location="WEB-INF/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
 				<pathelement location="WEB-INF/lib/backport-util-concurrent.jar"/>
         <pathelement location="WEB-INF/lib/jackson-mini-1.9.2.jar"/>
+        <pathelement location="WEB-INF/lib/mail.jar"/>
 				<!-- CSV import/export -->
 		        <pathelement location="WEB-INF/lib/opencsv-1.5.jar"/>
 				<!-- Google client API -->
