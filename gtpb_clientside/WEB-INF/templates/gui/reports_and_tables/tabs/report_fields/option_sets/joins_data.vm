@@ -55,10 +55,10 @@
 	}
 </script>
 
-<form action="AppController.servlet" target="pane_2" method=post id=newjoin>
+<form action="AppController.servlet" target="pane_2" method="post" id="newjoin">
 <input type="hidden" name="return" value="gui/reports_and_tables/report_data" />
 <input type="hidden" name="add_join_to_report" value="true" />
-<table id=reportData cellspacing="0">
+<table id="reportData" cellspacing="0" class="interdependent">
 	<thead >
 		<tr>
 			<th class=leading>&nbsp;</th>
@@ -230,4 +230,4 @@
 		</tbody>
 	</table>
 </form>
-<script language=javascript src="resources/wait/interdependent_fields.js"></script>
+###<script language=javascript src="resources/wait/interdependent_fields.js"></script>

@@ -19,7 +19,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/field_option ($f
 ## Display input form for a single field option, used when creating a table field
 ## Called from table_field_creator.vm which sets $fieldOption etc. variables
 #set($formInputName = $fieldOption.getFormInputName())
-<div style="white-space:nowrap">
+<div style="white-space:nowrap" class="interdependent">
 #if($fieldOption.getClass().getSimpleName()=="BooleanFieldDescriptorOption")
   <input type="checkbox" name="$formInputName" value="1" id="${formInputName}1" />
   <label for="${formInputName}1">
@@ -94,7 +94,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/field_option ($f
     #end
   </select>
   $fieldOption.getOptionDescription()
-  <script language=javascript src="resources/wait/interdependent_fields.js"></script>
+  ###<script language=javascript src="resources/wait/interdependent_fields.js"></script>
 #elseif($fieldOption.getClass().getSimpleName()=="TextFieldDescriptorOption")
   <input name="$fieldOption.getFormInputName()" />
   <label for="$fieldOption.getFormInputName()">

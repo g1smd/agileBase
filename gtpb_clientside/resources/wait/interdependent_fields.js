@@ -106,14 +106,15 @@ function fInitialiseDependencies() {
 			return false; // the child is already stored as a dependent
 		oParent.dependents.push(oChild);
 		// add a listener. Duplicate listeners are discarded so this will only be
-		// triggered once event if it's added multiple times
+		// triggered once if it's added multiple times
 		$(oParent).change(fSelectChange);
 		return true;
 	}
 
 	var aInitialised = new Array();
 	var lastUsedParentNameIndexes = new Object();
-	var aSelect = document.getElementsByTagName('SELECT');
+	//var aSelect = document.getElementsByTagName('SELECT');
+	var aSelect = $.makeArray($('.interdependent select'));
 	// for every select
 	for ( var iSelect = 0; iSelect < aSelect.length; iSelect++) {
 		var selectName = aSelect[iSelect].name;

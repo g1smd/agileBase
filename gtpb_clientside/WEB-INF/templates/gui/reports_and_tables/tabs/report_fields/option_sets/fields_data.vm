@@ -52,12 +52,12 @@
 	  }
 </script>
 
-<form action="AppController.servlet" target="pane_2" method="post" id="newfield">
+<form action="AppController.servlet" target="pane_2" method="post" id="newfield" >
 
   ##defined in ../../report_fields.vm
   ##set($report = $sessionData.getReport())
   #set($sorts = $report.getSorts())
-  <table id="reportData" cellspacing="0" class="draggable">
+  <table id="reportData" cellspacing="0" class="draggable interdependent">
 	    <thead>
 		      <tr>
 			        <th class="leading">&nbsp;</th>
@@ -228,4 +228,4 @@ $('.draggable').tableDnD({
 });
 </script>
 
-<script language=javascript src="resources/wait/interdependent_fields.js"></script>
+###<script language=javascript src="resources/wait/interdependent_fields.js"></script>
