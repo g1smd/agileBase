@@ -281,8 +281,6 @@ function updateFieldnameDiv(fieldnameInput) {
 }
 
 </script>
-##<script language=javascript src="resources/wait/interdependent_fields.js"></script>
-
 
 #else  ## If editing a report rather than a table
   #parse("gui/reports_and_tables/tabs/report_fields.vm")
