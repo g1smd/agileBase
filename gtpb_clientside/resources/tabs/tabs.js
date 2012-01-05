@@ -1069,7 +1069,7 @@ function fInitialiseDependencies() {
 	var lastUsedParentNameIndexes = new Object();
 	//var aSelect = document.getElementsByTagName('SELECT');
 	var aSelect = $.makeArray($('.interdependent select'));
-	alert("No. selects: " + aSelect.length);
+	alert("No. selects now: " + aSelect.length);
 	// for every select
 	for ( var iSelect = 0; iSelect < aSelect.length; iSelect++) {
 		var selectName = aSelect[iSelect].name;
