@@ -15,4 +15,25 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-Thank you for your information
+<html>
+  <head>
+    <style>
+      #thanks {
+        font-size: 16pt;
+        color: gray;
+        padding: 3em;
+        width: 100%;
+        line-height: 2em;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="thanks">
+      Thank you for your information<p>
+      <button id="back" onclick="javascript:window.history.back();" value="Return" >Return</button>
+      </p>
+    </div>
+  </body>
+</html>
+
