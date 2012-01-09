@@ -21,7 +21,7 @@
 #set($table = $gtpbPublicTable) ## Set in Public servlet
 #set($company = $gtpbCompany)
 <style>
-  input { margin: 10px; }
+  input,select { margin: 10px; }
 </style>
 #if($gtpbCss)
   <link rel="stylesheet" type="text/css" href="$gtpbCss" />
