@@ -31,7 +31,7 @@
   <body>
     <div id="thanks">
       Thank you for your information<p>
-      <button id="back" onclick="javascript:window.history.back();" value="Return" >Return</button>
+      <button id="back" onclick="javascript:window.history.back();" value="Return">Return</button>
       </p>
     </div>
   </body>
