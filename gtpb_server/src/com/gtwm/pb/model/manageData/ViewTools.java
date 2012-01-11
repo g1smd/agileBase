@@ -1178,6 +1178,7 @@ public final class ViewTools implements ViewToolsInfo {
 		Set<File> files = null;
 		String absoluteFolderName = this.request.getSession().getServletContext().getRealPath(
 				"/" + folderName);
+		logger.debug("Reading files in folder " + absoluteFolderName);
 		File folder = new File(absoluteFolderName);
 		File[] filesArray = folder.listFiles();
 		if (filesArray != null) {

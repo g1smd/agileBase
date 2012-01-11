@@ -70,7 +70,7 @@
       </form>
       #set($company = $viewMethods.getCompanyForLoggedInUser())
       #set($internalCompanyName = $company.getInternalCompanyName())
-      #set($existingTemplates = $viewTools.listFiles("uploads/$internalCompanyName/$internalReportName"))
+      #set($existingTemplates = $viewTools.listFiles("WEB-INF/templates/uploads/$internalCompanyName/$internalReportName"))
       Existing templates are $existingTemplates<br>
       #foreach($template in $existingTemplates)
         Template <a href="uploads/$internalCompanyName/$internalReportName/$template.getName()" target="_blank">$template</a><br>
