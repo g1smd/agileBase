@@ -72,7 +72,7 @@
       #set($internalCompanyName = $company.getInternalCompanyName())
       #set($existingTemplates = $viewTools.listFiles("uploads/$internalCompanyName/$internalReportName"))
       #foreach($template in $existingTemplates)
-        $template<br>
+        <a href="uploads/$internalCompanyName/$internalReportName/$template.getName()" target="_blank">$template</a><br>
       #end
     </td>
   </tr>
