@@ -1174,15 +1174,16 @@ public final class ViewTools implements ViewToolsInfo {
 		return templateExists;
 	}
 
-	public List<File> listFiles(String folderName) {
+	public Set<File> listFiles(String folderName) {
+		Set<File> files = null;
 		String absoluteFolderName = this.request.getSession().getServletContext().getRealPath(
 				"/" + folderName);
 		File folder = new File(absoluteFolderName);
 		File[] filesArray = folder.listFiles();
-		List<File> files = new LinkedList<File>();
 		if (filesArray != null) {
-			files = Arrays.asList(filesArray);
-			Collections.sort(files);
+			files = new TreeSet<File>(Arrays.asList(filesArray));
+		} else {
+			files = new TreeSet<File>();
 		}
 		return files;
 	}

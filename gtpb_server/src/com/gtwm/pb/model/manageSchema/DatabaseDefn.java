@@ -178,7 +178,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
 				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
 		// one-off boot actions
-		//this.addViewCountFields();
+		// this.addViewCountFields();
 	}
 
 	public void cancelScheduledEvents() {
@@ -202,10 +202,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 	private void addViewCountFields() throws SQLException {
 		Set<TableInfo> allTables = new HashSet<TableInfo>();
 		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
-		// TODO: once this action has completed, set getCompanies back to protected
-		//for (CompanyInfo company : authenticator.getCompanies()) {
-		//	allTables.addAll(company.getTables());
-		//}
+		// TODO: once this action has completed, set getCompanies back to
+		// protected
+		// for (CompanyInfo company : authenticator.getCompanies()) {
+		// allTables.addAll(company.getTables());
+		// }
 		logger.info("Adding view count fields");
 		for (TableInfo table : allTables) {
 			String viewCountFieldName = HiddenFields.VIEW_COUNT.getFieldName();
@@ -495,8 +496,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public synchronized void updateTable(Connection conn, HttpServletRequest request,
 			TableInfo table, String newTableName, String newTableDesc, Boolean lockable,
-			Boolean tableFormPublic, String tableEmail) throws DisallowedException, CantDoThatException,
-			ObjectNotFoundException, SQLException {
+			Boolean tableFormPublic, String tableEmail) throws DisallowedException,
+			CantDoThatException, ObjectNotFoundException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -1005,7 +1006,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 				if (fileSize == 0) {
 					throw new CantDoThatException("An empty file was submitted, no upload done");
 				}
-				String filePath = uploadFolderName + "/" + rinsedFileName + ".vm";
+				String filePath = uploadFolderName + "/" + rinsedFileName;
+				if (!filePath.endsWith(".vm")) {
+					filePath += ".vm";
+				}
 				File selectedFile = new File(filePath);
 				try {
 					item.write(selectedFile);

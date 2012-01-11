@@ -372,7 +372,7 @@ public interface ViewToolsInfo {
 	 *            Folder name relative to agileBase root, e.g.
 	 *            "resources/icons/applications/tango"
 	 */
-	public List<File> listFiles(String folder);
+	public Set<File> listFiles(String folder);
 
 	/**
 	 * Causes an exception to be thrown for test purposes - intended for testing
