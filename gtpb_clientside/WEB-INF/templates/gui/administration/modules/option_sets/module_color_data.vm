@@ -131,37 +131,21 @@
 		    #set($currentColor=$module.getColour())
 		    #set($innerHTML='<table class="colorPickerTable" border="0" cellpadding="0" cellspacing="5"><tr>')
 		    #set($cellCount=0)
-		    
-		    // Get the list of colour files to choose from
-			##	#foreach($file in $viewTools.listFiles("resources/tree/heading_colors"))
-			##		#set($fileName = $file.getName())
-			##  	#if($fileName.endsWith("gif"))
-			##			#set($innerHTML=$innerHTML+'<td')
-			##		    #if($fileName == $currentColor)
-			##		    	#set($innerHTML = $innerHTML + ' id=color_selected')
-			##		    #end
-			##		    #set($innerHTML=$innerHTML+' colorName="'+$fileName+'"><div class="'+$fileName+'">&nbsp;</div><span style="font-size:8pt; color:#666666; padding:0 7px">'+$fileName.replaceAll('\.gif$','')+'</span></td>')        
-			##			#set($cellCount=$cellCount+1)
-			##		#end
-			##		#if($cellCount%10==0)
-			##			#set($innerHTML="$innerHTML </tr><tr>")
-			##		#end
-			##	#end
-			
-			// Get colours array
-			#parse('gui/resources/module_color_colors.vm')
-			
-			#foreach($colour in $colours)
-				#set($innerHTML=$innerHTML+'<td')
-				#if($colour.get('colourName') == $currentColor)
-					#set($innerHTML = $innerHTML + ' id=color_selected')
-				#end
-				#set($innerHTML=$innerHTML+' colorName="'+$colour.get('colourName')+'"><div class="colour-block '+$colour.get('styleName')+'">&nbsp;</div><span style="font-size:8pt; color:#666666; padding:0 7px">'+$colour.get('colourName')+'</span></td>')        
-				#set($cellCount=$cellCount+1)
-				#if($cellCount%10==0)
-					#set($innerHTML="$innerHTML </tr><tr>")
-				#end
-			#end			
+		    			
+  			// Get colours array
+  			#parse('gui/resources/module_color_colors.vm')
+  			
+  			#foreach($colour in $colours)
+  				#set($innerHTML=$innerHTML+'<td')
+  				#if($colour.get('colourName') == $currentColor)
+  					#set($innerHTML = $innerHTML + ' id=color_selected')
+  				#end
+  				#set($innerHTML=$innerHTML+' colorName="'+$colour.get('colourName')+'"><div class="colour-block '+$colour.get('styleName')+'">&nbsp;</div><span style="font-size:8pt; color:#666666; padding:0 7px">'+$colour.get('colourName')+'</span></td>')        
+  				#set($cellCount=$cellCount+1)
+  				#if($cellCount%10==0)
+  					#set($innerHTML="$innerHTML </tr><tr>")
+  				#end
+  			#end			
 			
 		    #set($innerHTML="$innerHTML </tr></table>")
 		    
