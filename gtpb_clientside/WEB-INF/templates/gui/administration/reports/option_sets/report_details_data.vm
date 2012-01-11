@@ -23,6 +23,7 @@
   }
 </script>
 #set($report = $sessionData.getReport())
+#set($internalReportName = $report.getInternalReportName())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr>
     <td>Name:</td>
@@ -68,7 +69,7 @@
           <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
         </div>
       </form>
-      #set($company = $viewMethods.getCompanyForLoggedInUser())
+      #set($company = $view.getLoggedInUser().getCompany())
       #set($internalCompanyName = $company.getInternalCompanyName())
       #set($existingTemplates = $viewTools.listFiles("WEB-INF/templates/uploads/$internalCompanyName/$internalReportName"))
       Existing templates are $existingTemplates<br>
