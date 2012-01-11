@@ -27,11 +27,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
 import com.gtwm.pb.auth.Company;
@@ -689,18 +686,19 @@ public final class ServletSchemaMethods {
 		BaseReportInfo report = sessionData.getReport();
 		String templateName = ServletUtilMethods.getParameter(request, "templatename", multipartItems);
 		try {
-			HibernateUtil.startHibernateTransaction();
 			databaseDefn.uploadCustomReportTemplate(request, report, templateName, multipartItems);
-			HibernateUtil.currentSession().getTransaction().commit();
-		} catch (HibernateException hex) {
-			rollbackConnections(null);
-			throw new CantDoThatException("template upload failed", hex);
 		} catch (FileUploadException fuex) {
-			rollbackConnections(null);
 			throw new CantDoThatException("template upload failed", fuex);
-		} finally {
-			HibernateUtil.closeSession();
 		}
+	}
+	
+	public synchronized static void removeCustomReportTemplate(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, DisallowedException, ObjectNotFoundException, CantDoThatException {
+		BaseReportInfo report = sessionData.getReport();
+		String templateName = request.getParameter("customtemplatename");
+		if (templateName == null) {
+			throw new MissingParametersException("customtemplatename must be provided to remove a template");
+		}
+		databaseDefn.removeCustomReportTemplate(request, report, templateName);
 	}
 
 	public synchronized static void updateReport(SessionDataInfo sessionData,

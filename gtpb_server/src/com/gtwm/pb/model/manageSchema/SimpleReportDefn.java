@@ -1240,14 +1240,6 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		return globalFilterValues;
 	}
 
-	public String getCustomTemplateName() {
-		return this.customTemplateName;
-	}
-	
-	public void setCustomTemplateName(String templateName) {
-		this.customTemplateName = templateName;
-	}
-	
 	/**
 	 * Fields in the report, i.e columns in the view from the DB's point of
 	 * view.
@@ -1271,8 +1263,6 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private boolean calendarSyncable = false;
 
 	private ReportFieldInfo wordCloudField = null;
-	
-	private String customTemplateName = null;
 	
 	private ReportStyle reportStyle = ReportStyle.SPREADSHEET;
 

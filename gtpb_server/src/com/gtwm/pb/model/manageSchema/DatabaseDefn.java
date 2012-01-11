@@ -1006,10 +1006,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				if (fileSize == 0) {
 					throw new CantDoThatException("An empty file was submitted, no upload done");
 				}
-				String filePath = uploadFolderName + "/" + rinsedFileName;
-				if (!filePath.endsWith(".vm")) {
-					filePath += ".vm";
-				}
+				String filePath = uploadFolderName + "/" + rinsedFileName + ".vm";
 				File selectedFile = new File(filePath);
 				try {
 					item.write(selectedFile);
@@ -1020,8 +1017,30 @@ public final class DatabaseDefn implements DatabaseInfo {
 				}
 			}
 		}
-		HibernateUtil.activateObject(report);
-		report.setCustomTemplateName(rinsedFileName);
+	}
+	
+	public void removeCustomReportTemplate(HttpServletRequest request, BaseReportInfo report, String templateName) throws DisallowedException, ObjectNotFoundException, CantDoThatException {
+		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+			throw new DisallowedException(this.authManager.getLoggedInUser(request),
+					PrivilegeType.MANAGE_TABLE, report.getParentTable());
+		}
+		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
+		// strip extension
+		String rinsedFileName = templateName.toLowerCase().replaceAll("\\..*$", "");
+		rinsedFileName = Helpers.rinseString(rinsedFileName).replace(" ", "_");
+		String uploadFolderName = this.getDataManagement().getWebAppRoot()
+				+ "WEB-INF/templates/uploads/" + company.getInternalCompanyName() + "/"
+				+ report.getInternalReportName();
+		File uploadFolder = new File(uploadFolderName);
+		if (!uploadFolder.exists()) {
+			throw new ObjectNotFoundException("The template folder " + uploadFolderName + " does not exist");
+		}
+		String filePath = uploadFolderName + "/" + rinsedFileName + ".vm";
+		File selectedFile = new File(filePath);
+		if (!selectedFile.delete()) {
+			throw new CantDoThatException("Delete of " + filePath + " failed");
+		}
 	}
 
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,

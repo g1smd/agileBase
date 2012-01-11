@@ -176,6 +176,8 @@ public interface DatabaseInfo {
 	public void uploadCustomReportTemplate(HttpServletRequest request, BaseReportInfo report,
 			String fileName, List<FileItem> multipartItems) throws DisallowedException, ObjectNotFoundException, CantDoThatException, FileUploadException;
 
+	public void removeCustomReportTemplate(HttpServletRequest request, BaseReportInfo report, String fileName) throws DisallowedException, ObjectNotFoundException, CantDoThatException;
+	
 	/**
 	 * 
 	 * @param sessionData
