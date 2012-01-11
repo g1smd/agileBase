@@ -165,14 +165,7 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	 * field1='*filter' or field2='*filter' or field3='*filter'
 	 */
 	public Map<BaseField, String> getGlobalFilterValues(String globalFilterString) throws CodingErrorException;
-	
-	/**
-	 * Return the name of a custom printout / output template that's been uploaded for this report
-	 */
-	public String getCustomTemplateName();
-	
-	public void setCustomTemplateName(String templateName);
-	
+		
 	public ReportStyle getReportStyle();
 	
 	public void setReportStyle(ReportStyle reportStyle);
