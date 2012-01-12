@@ -288,8 +288,10 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 		//var vCurrentValue = (fIsBooleanType(oObj) ? oFormObject.checked
 		//		: oFormObject.value);
 		var vCurrentValue = $(oFormObject).val();
-		if ((vCurrentValue != vValue) && (!keyupBug))
+		if ((vCurrentValue != vValue) && (!keyupBug)) {
+			$(oFormObject).css("color: red");
 			return; // the current value has changed since this request was sent
+		}
 		fLoadReport(sResponseText, oReportBody,null);
 		fEnableDisable('enable');
 		$(parent.pane_2).scrollTop(0);
@@ -372,12 +374,14 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 	var fReqCompleteToRun = fReqCompleteOverride ? fReqCompleteOverride : fReqComplete;
 	if (ajaxManager == null) {
 		ajaxManager = $.manageAjax( {
-			manageType :'queue',
-			maxReq :2,
-			blockSameRequest :true
+			// Old version options
+			//manageType :'queue',
+			//maxReq :2,
+			//blockSameRequest :true
+			queue: 'clear',
+			abortOld: true
 		});
 	}
-	;
 	if (fReqCompleteOverride) {
 		var oReq = new fRequest('AppController.servlet', aPostVars,
 				fReqCompleteToRun, -1);
