@@ -68,7 +68,7 @@
           <div class="upload_progress_bar"></div>
           <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
         </div>
-      </form><p>
+      </form>
       #set($company = $view.getLoggedInUser().getCompany())
       #set($internalCompanyName = $company.getInternalCompanyName())
       #set($existingTemplates = $viewTools.listFiles("WEB-INF/templates/uploads/$internalCompanyName/$internalReportName"))
@@ -76,7 +76,7 @@
         #set($filePath = $template.getName())
         #set($slashIndex = $filePath.lastIndexOf('/') + 1)
         #set($fileName = $filePath.substring($slashIndex))
-        $template <a href="?return=gui/reports_and_tables/pane3&remove_custom_template=true&customtemplatename=$fileName"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a><br>
+        $fileName <a href="?return=gui/reports_and_tables/pane3&remove_custom_template=true&customtemplatename=$fileName"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a><br>
       #end
     </td>
   </tr>
