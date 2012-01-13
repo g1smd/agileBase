@@ -37,6 +37,8 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.grlea.log.SimpleLogger;
+
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -64,6 +66,7 @@ import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
+import com.gtwm.pb.model.manageData.ViewMethods;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AgileBaseException;
@@ -108,6 +111,7 @@ public final class ReportDownloader extends HttpServlet {
 			BaseReportInfo report, String templateName) throws ServletException {
 		String rinsedTemplateName = templateName.replaceAll("\\..*$", "").replaceAll("\\W", "")
 				+ ".vm";
+		logger.debug("Rinsed template name is " + rinsedTemplateName);
 		try {
 			if (!this.databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE)) {
 				throw new DisallowedException(this.databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
@@ -117,6 +121,7 @@ public final class ReportDownloader extends HttpServlet {
 			String pathString = this.databaseDefn.getDataManagement().getWebAppRoot()
 					+ "WEB-INF/templates/uploads/" + company.getInternalCompanyName() + "/"
 					+ report.getInternalReportName() + "/" + rinsedTemplateName;
+			logger.debug("Path is " + pathString);
 			Path path = (new File(pathString)).toPath();
 			List<String> lines = Files.readAllLines(path, Charset.defaultCharset());
 			response.setHeader("Content-disposition", "attachment; filename=" + rinsedTemplateName);
@@ -127,6 +132,7 @@ public final class ReportDownloader extends HttpServlet {
 				sos.println(line);
 			}
 			sos.flush();
+			logger.debug("Flushed output");
 		} catch (AgileBaseException abex) {
 			throw new ServletException("Problem serving template: " + abex);
 		} catch (IOException ioex) {
@@ -415,4 +421,6 @@ public final class ReportDownloader extends HttpServlet {
 	}
 
 	private DatabaseInfo databaseDefn = null;
+
+	private static final SimpleLogger logger = new SimpleLogger(ReportDownloader.class);
 }
