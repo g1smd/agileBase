@@ -113,7 +113,7 @@ public final class ReportDownloader extends HttpServlet {
 				+ ".vm";
 		logger.debug("Rinsed template name is " + rinsedTemplateName);
 		try {
-			if (!this.databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE)) {
+			if (!this.databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, report.getParentTable())) {
 				logger.debug("Throwing disallowed exception");
 				throw new DisallowedException(this.databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 			}
@@ -136,8 +136,10 @@ public final class ReportDownloader extends HttpServlet {
 			sos.flush();
 			logger.debug("Flushed output");
 		} catch (AgileBaseException abex) {
+			logger.error("Problem serving template: " + abex);
 			throw new ServletException("Problem serving template: " + abex);
 		} catch (IOException ioex) {
+			logger.error("Problem serving template: " + ioex);
 			throw new ServletException("Problem serving template: " + ioex);
 		}
 	}
