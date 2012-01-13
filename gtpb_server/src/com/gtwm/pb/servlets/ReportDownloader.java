@@ -25,7 +25,11 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.ServletOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -40,6 +44,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import com.gtwm.pb.auth.DisallowedException;
+import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
@@ -58,7 +64,6 @@ import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
-import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AgileBaseException;
@@ -90,6 +95,47 @@ public final class ReportDownloader extends HttpServlet {
 		if (sessionData == null) {
 			throw new ServletException("No session found");
 		}
+		BaseReportInfo report = sessionData.getReport();
+		String templateName = request.getParameter("template");
+		if (templateName != null) {
+			this.serveTemplate(request, response, report, templateName);
+		} else {
+			this.serveSpreadsheet(request, response, sessionData, report);
+		}
+	}
+
+	private void serveTemplate(HttpServletRequest request, HttpServletResponse response,
+			BaseReportInfo report, String templateName) throws ServletException {
+		String rinsedTemplateName = templateName.replaceAll("\\..*$", "").replaceAll("\\W", "")
+				+ ".vm";
+		try {
+			if (!this.databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE)) {
+				throw new DisallowedException(this.databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			}
+			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
+					request);
+			String pathString = this.databaseDefn.getDataManagement().getWebAppRoot()
+					+ "WEB-INF/templates/uploads/" + company.getInternalCompanyName() + "/"
+					+ report.getInternalReportName() + "/" + rinsedTemplateName;
+			Path path = (new File(pathString)).toPath();
+			List<String> lines = Files.readAllLines(path, Charset.defaultCharset());
+			response.setHeader("Content-disposition", "attachment; filename=" + rinsedTemplateName);
+			response.setHeader("Cache-Control", "no-cache");
+			response.setContentType("text/html");
+			ServletOutputStream sos = response.getOutputStream();
+			for (String line : lines) {
+				sos.println(line);
+			}
+			sos.flush();
+		} catch (AgileBaseException abex) {
+			throw new ServletException("Problem serving template: " + abex);
+		} catch (IOException ioex) {
+			throw new ServletException("Problem serving template: " + ioex);
+		}
+	}
+
+	private void serveSpreadsheet(HttpServletRequest request, HttpServletResponse response,
+			SessionDataInfo sessionData, BaseReportInfo report) throws ServletException {
 		ByteArrayOutputStream spreadsheetOutputStream = null;
 		try {
 			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
@@ -100,7 +146,6 @@ public final class ReportDownloader extends HttpServlet {
 			response.setHeader("Cache-Control", "no-cache");
 			response.setContentType("application/vnd.ms-excel");
 			String filename = "";
-			BaseReportInfo report = sessionData.getReport();
 			if (report.equals(report.getParentTable().getDefaultReport())) {
 				filename = report.getParentTable().getTableName();
 			} else {
@@ -205,7 +250,8 @@ public final class ReportDownloader extends HttpServlet {
 						cell.setCellValue(fieldValue);
 					}
 					break;
-				case VARCHAR: default:
+				case VARCHAR:
+				default:
 					cell = row.createCell(columnNum, HSSFCell.CELL_TYPE_STRING);
 					cell.setCellValue(fieldValue);
 					break;
