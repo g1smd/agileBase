@@ -114,10 +114,12 @@ public final class ReportDownloader extends HttpServlet {
 		logger.debug("Rinsed template name is " + rinsedTemplateName);
 		try {
 			if (!this.databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE)) {
+				logger.debug("Throwing disallowed exception");
 				throw new DisallowedException(this.databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 			}
 			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 					request);
+			logger.debug("Company is " + company);
 			String pathString = this.databaseDefn.getDataManagement().getWebAppRoot()
 					+ "WEB-INF/templates/uploads/" + company.getInternalCompanyName() + "/"
 					+ report.getInternalReportName() + "/" + rinsedTemplateName;
