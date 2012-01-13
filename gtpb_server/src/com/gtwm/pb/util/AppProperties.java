@@ -108,9 +108,5 @@ public class AppProperties {
 	 * 
 	 * SET THIS TO false IN PRODUCTION
 	 */
-	public static final boolean testMode = false;
-	
-	public static final String linkedInKey = "mzwdof6kks1z";
-	
-	public static final String linkedInSecret = "dcl73pu0Ou4ELjGj";
+	public static final boolean testMode = true;
 }
