@@ -73,7 +73,10 @@
       #set($internalCompanyName = $company.getInternalCompanyName())
       #set($existingTemplates = $viewTools.listFiles("WEB-INF/templates/uploads/$internalCompanyName/$internalReportName"))
       #foreach($template in $existingTemplates)
-        $template <a href="?return=gui/reports_and_tables/pane3&remove_custom_template=true&customtemplatename=$template.getName()"><img src="resources/toolbar/delete.png" alt="delete $template" style="width:13px; height:13px"></a><br>
+        #set($filePath = $template.getName())
+        #set($slashIndex = $filePath.lastIndexOf('/') + 1)
+        #set($fileName = $filePath.substring($slashIndex))
+        $template <a href="?return=gui/reports_and_tables/pane3&remove_custom_template=true&customtemplatename=$fileName"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a><br>
       #end
     </td>
   </tr>
