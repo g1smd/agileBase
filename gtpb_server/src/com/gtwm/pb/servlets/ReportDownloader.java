@@ -24,12 +24,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.ServletOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
+// Java 7
+//import java.nio.charset.Charset;
+//import java.nio.file.Files;
+//import java.nio.file.Path;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -38,11 +40,11 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.grlea.log.SimpleLogger;
-
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -66,7 +68,6 @@ import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
-import com.gtwm.pb.model.manageData.ViewMethods;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AgileBaseException;
@@ -121,8 +122,18 @@ public final class ReportDownloader extends HttpServlet {
 			String pathString = this.databaseDefn.getDataManagement().getWebAppRoot()
 					+ "WEB-INF/templates/uploads/" + company.getInternalCompanyName() + "/"
 					+ report.getInternalReportName() + "/" + rinsedTemplateName;
-			Path path = (new File(pathString)).toPath();
-			List<String> lines = Files.readAllLines(path, Charset.defaultCharset());
+			// Java 7
+			//Path path = (new File(pathString)).toPath();
+			//List<String> lines = Files.readAllLines(path, Charset.defaultCharset());
+			// Java 6
+			FileReader fr = new FileReader(pathString); 
+			BufferedReader br = new BufferedReader(fr); 
+			List<String> lines = new LinkedList<String>();
+			String s;
+			while((s = br.readLine()) != null) { 
+				lines.add(s);
+			} 
+			fr.close(); 
 			response.setHeader("Content-disposition", "attachment; filename=" + rinsedTemplateName);
 			response.setHeader("Cache-Control", "no-cache");
 			response.setContentType("text/html");
