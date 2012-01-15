@@ -106,7 +106,7 @@
 		    jqIframe.attr('src','AppController.servlet?return=gui/printouts/record');
 		  } else if(printoutType == 'custom_template') {
         jqIframe.attr('src','AppController.servlet?return=gui/printouts/custom_record');
-      } else {
+      } else if(printoutType == 'report_rows') {
 		    jqIframe.attr('src','AppController.servlet?return=gui/printouts/records');
 		  }
 		}
@@ -178,6 +178,8 @@
 		
 		function fCreatePrintoutSelector(sCaption,fClick) {
       oToolbar.appendChild(document.createTextNode(sCaption + ' '));
+      
+      ## Pane 3 printout
 		  var oRadio = document.createElement('input');
 		  oRadio.setAttribute('type','radio');
 		  oRadio.setAttribute('name','printout_selector');
@@ -188,29 +190,36 @@
       $(oRadio).click(fClick);
 		  oToolbar.appendChild(oRadio);
 		  oToolbar.appendChild(document.createTextNode(' individual record '));
+      
+      ## Pane 2 printout
       oRadio = document.createElement('input');
       oRadio.setAttribute('type','radio');
       oRadio.setAttribute('name','printout_selector');
-      oRadio.setAttribute('value','custom_template');
-      #if($report.getCustomTemplateName())
-        $(oRadio).click(fClick);
-        oToolbar.appendChild(oRadio);
-        oToolbar.appendChild(document.createTextNode(' $report.getCustomTemplateName().replace("_"," ") '));
-      #else
-        oRadio.setAttribute('disabled', 'true');
-        oToolbar.appendChild(oRadio);
-        oToolbar.appendChild(document.createTextNode(' no custom printout available '));
-      #end
-		  oRadio = document.createElement('input');
-		  oRadio.setAttribute('type','radio');
-		  oRadio.setAttribute('name','printout_selector');
-		  oRadio.setAttribute('value','report_rows');
+      oRadio.setAttribute('value','report_rows');
       #if($report.getReportStyle() == "SECTIONED")
         oRadio.setAttribute('checked','true');
       #end
       $(oRadio).click(fClick);
-		  oToolbar.appendChild(oRadio);
-		  oToolbar.appendChild(document.createTextNode(' all report rows '));
+      oToolbar.appendChild(oRadio);
+      oToolbar.appendChild(document.createTextNode(' all report rows '));
+      
+      ## Custom printouts
+      #set($company = $view.getLoggedInUser().getCompany())
+      #set($internalCompanyName = $company.getInternalCompanyName())
+      #set($internalReportName = $report.getInternalReportName())
+      #foreach($template in $viewTools.listFiles("WEB-INF/templates/uploads/$internalCompanyName/$internalReportName"))
+        #set($filePath = $template.getName())
+        #set($slashIndex = $filePath.lastIndexOf('/') + 1)
+        #set($templateName = $filePath.substring($slashIndex))
+        #set($templateName = $templateName.replace(".vm",""))
+        oRadio = document.createElement('input');
+        oRadio.setAttribute('type','radio');
+        oRadio.setAttribute('name','printout_selector');
+        oRadio.setAttribute('value','$templateName');
+        $(oRadio).click(fClick);
+        oToolbar.appendChild(oRadio);
+        oToolbar.appendChild(document.createTextNode(' $templateName '));
+      #end
 		}
         
         var oToolbar=document.createElement('div');
