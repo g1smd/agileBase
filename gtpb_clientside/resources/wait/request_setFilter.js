@@ -373,7 +373,7 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 	var sPostString = fPostString(aPostVars);
 	var fReqCompleteToRun = fReqCompleteOverride ? fReqCompleteOverride : fReqComplete;
 	if (ajaxManager == null) {
-		ajaxManager = $.manageAjax( {
+		ajaxManager = $.manageAjax.create('aB', {
 			// Old version options
 			//manageType :'queue',
 			//maxReq :2,

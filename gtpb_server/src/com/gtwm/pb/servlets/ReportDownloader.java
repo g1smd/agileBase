@@ -111,7 +111,6 @@ public final class ReportDownloader extends HttpServlet {
 			BaseReportInfo report, String templateName) throws ServletException {
 		String rinsedTemplateName = templateName.replaceAll("\\..*$", "").replaceAll("\\W", "")
 				+ ".vm";
-		logger.debug("Rinsed template name is " + rinsedTemplateName);
 		try {
 			if (!this.databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, report.getParentTable())) {
 				logger.debug("Throwing disallowed exception");
@@ -119,11 +118,9 @@ public final class ReportDownloader extends HttpServlet {
 			}
 			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 					request);
-			logger.debug("Company is " + company);
 			String pathString = this.databaseDefn.getDataManagement().getWebAppRoot()
 					+ "WEB-INF/templates/uploads/" + company.getInternalCompanyName() + "/"
 					+ report.getInternalReportName() + "/" + rinsedTemplateName;
-			logger.debug("Path is " + pathString);
 			Path path = (new File(pathString)).toPath();
 			List<String> lines = Files.readAllLines(path, Charset.defaultCharset());
 			response.setHeader("Content-disposition", "attachment; filename=" + rinsedTemplateName);
@@ -134,7 +131,6 @@ public final class ReportDownloader extends HttpServlet {
 				sos.println(line);
 			}
 			sos.flush();
-			logger.debug("Flushed output");
 		} catch (AgileBaseException abex) {
 			logger.error("Problem serving template: " + abex);
 			throw new ServletException("Problem serving template: " + abex);
