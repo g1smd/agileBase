@@ -104,11 +104,11 @@
 		  var jqIframe = jQuery("iframe#wrapper");
 		  if(printoutType == 'individual_record') {
 		    jqIframe.attr('src','AppController.servlet?return=gui/printouts/record');
-		  } else if(printoutType == 'custom_template') {
-        jqIframe.attr('src','AppController.servlet?return=gui/printouts/custom_record');
       } else if(printoutType == 'report_rows') {
 		    jqIframe.attr('src','AppController.servlet?return=gui/printouts/records');
-		  }
+		  } else {
+        jqIframe.attr('src','AppController.servlet?return=' + printoutType);
+      }
 		}
 		
         function fPrint() {
@@ -215,7 +215,7 @@
         oRadio = document.createElement('input');
         oRadio.setAttribute('type','radio');
         oRadio.setAttribute('name','printout_selector');
-        oRadio.setAttribute('value','$templateName');
+        oRadio.setAttribute('value','uploads/$internalCompanyName/$internalReportName/$templateName');
         $(oRadio).click(fClick);
         oToolbar.appendChild(oRadio);
         oToolbar.appendChild(document.createTextNode(' $templateName '));
