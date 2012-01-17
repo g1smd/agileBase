@@ -123,7 +123,7 @@ public final class ReportDownloader extends HttpServlet {
 					+ "WEB-INF/templates/uploads/" + company.getInternalCompanyName() + "/"
 					+ report.getInternalReportName() + "/" + rinsedTemplateName;
 			// Java 7
-			//Path path = (new File(pathString)).toPath();
+			//Path path = Paths.get(pathString);
 			//List<String> lines = Files.readAllLines(path, Charset.defaultCharset());
 			// Java 6
 			FileReader fr = new FileReader(pathString); 
