@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#if($field_category == "SEPARATOR")
+#if($fieldCategory == "SEPARATOR")
   ## Start a section (block)
   #if($inBlock) </div> #end
   <div class="block"><h1>$field<h1>
