@@ -470,4 +470,8 @@ public class Enumerations {
 		
 		private String description = "";
 	}
+	
+	public enum TableStyle {
+		SINGLE_COLUMN, TWO_COLUMNS, COLUMNS_WITHIN_SECTION;
+	}
 }

@@ -64,3 +64,14 @@
 	</td>
   </tr>
 </table>
+<div id="layout_selector" style="width:100%; background-color:#f4f4f4">
+  <div id="1_column" style="float:left; width:33%; text-align:center">
+    <img src="resources/tabs/1_column.png"><br>one column
+  </div>
+  <div id="2_columns" style="float:left; width:33%; text-align:center">
+    <img src="resources/tabs/2_columns.png"><br>sections in two columns
+  </div>
+  <div id="2_columns_sectioned" style="float:left; width:33%; text-align:center">
+    <img src="resources/tabs/2_columns_sectioned.png"><br>two columns within a section
+  </div>
+</div>
