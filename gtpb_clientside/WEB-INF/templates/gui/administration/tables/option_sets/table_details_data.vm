@@ -65,16 +65,15 @@
   </tr>
 </table>
 #set($current_layout = $table.getFormStyle())
-$current_layout<br>
 <div id="layout_selector" style="width:100%; background-color:#f4f4f4; padding: 1em;">
 <h2>Choose a layout for the data entry form</h2>
   <div id="single_column" class="select_layout #if($current_layout == 'SINGLE_COLUMN') selected_layout #end">
     <img src="resources/tabs/1_column.png"><br>one column
   </div>
-  <div id="two_columns" class="select_layout #if($current_layout == 'SINGLE_COLUMN') selected_layout #end">
+  <div id="two_columns" class="select_layout #if($current_layout == 'TWO_COLUMNS') selected_layout #end">
     <img src="resources/tabs/2_columns.png"><br>sections in two columns
   </div>
-  <div id="two_columns_within_section" class="select_layout #if($current_layout == 'SINGLE_COLUMN') selected_layout #end">
+  <div id="two_columns_within_section" class="select_layout #if($current_layout == 'TWO_COLUMNS_WITHIN_SECTION') selected_layout #end">
     <img src="resources/tabs/2_columns_sectioned.png"><br>two columns within a section
   </div>
   <br style="clear:both" />
