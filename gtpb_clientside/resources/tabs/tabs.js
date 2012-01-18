@@ -1135,6 +1135,7 @@ function fSetupCharts() {
  */
 function fFormStyle() {
 	$(".select_layout").click(function() {
+		var clicked = $(this);
 		$(".select_layout").removeClass("selected_layout");
 		var formStyle = $(this).attr("id");
 		$.post("AppController.servlet", {
@@ -1142,7 +1143,7 @@ function fFormStyle() {
 			"update_table": true,
 			"formstyle": formStyle
 		}, function() {
-			$(this).addClass("selected_layout");
+			clicked.addClass("selected_layout");
 		});
 	});
 }
