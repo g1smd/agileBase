@@ -548,12 +548,17 @@ span.comment_attribution {
 }
 
 .select_layout {
-  float:left; width:33%; text-align:center; padding: 1em; margin: 1em;
+  float:left; width:30%; text-align:center; padding: 1em; margin: 1em;
   border-radius: 1em;
 }
 
+.select_layout:hover {
+  background-color: white;
+}
+
 .selected_layout {
-  border: 2px solid black;
+  border: 0.25em solid black;
+  background-color: white;
 }
 
 /* 3) Summary tab css */
