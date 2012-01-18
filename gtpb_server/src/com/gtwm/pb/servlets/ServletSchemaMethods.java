@@ -490,7 +490,7 @@ public final class ServletSchemaMethods {
 			formStyle = FormStyle.valueOf(formStyleString.toUpperCase());
 		}
 		if (newTableName == null && newTableDesc == null && lockable == null
-				&& tableFormPublic == null && tableEmail == null) {
+				&& tableFormPublic == null && tableEmail == null && formStyle == null) {
 			throw new MissingParametersException(
 					"tablename, tabledesc, tableformpublic, tableemail or lockable parameter must be supplied to update a table with a new name or description");
 		}
