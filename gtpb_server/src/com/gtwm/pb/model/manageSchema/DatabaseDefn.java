@@ -114,6 +114,7 @@ import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.FormStyle;
 import com.gtwm.pb.util.Enumerations.ReportStyle;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Enumerations.TextCase;
@@ -496,7 +497,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public synchronized void updateTable(Connection conn, HttpServletRequest request,
 			TableInfo table, String newTableName, String newTableDesc, Boolean lockable,
-			Boolean tableFormPublic, String tableEmail) throws DisallowedException,
+			Boolean tableFormPublic, String tableEmail, FormStyle formStyle) throws DisallowedException,
 			CantDoThatException, ObjectNotFoundException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
@@ -547,6 +548,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		if (tableEmail != null) {
 			table.setEmail(tableEmail);
+		}
+		if (formStyle != null) {
+			table.setFormStyle(formStyle);
 		}
 	}
 

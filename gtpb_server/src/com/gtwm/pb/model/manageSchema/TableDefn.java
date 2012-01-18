@@ -33,12 +33,15 @@ import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
 import com.gtwm.pb.model.interfaces.fields.SequenceField;
 import com.gtwm.pb.model.manageSchema.fields.AbstractField;
+import com.gtwm.pb.util.Enumerations.FormStyle;
 import com.gtwm.pb.util.Naming;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.CantDoThatException;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -442,6 +445,15 @@ public class TableDefn implements TableInfo {
 		this.email = email;
 	}
 
+	public void setFormStyle(FormStyle formStyle) {
+		this.formStyle = formStyle;
+	}
+	
+	@Enumerated(EnumType.STRING)
+	public FormStyle getFormStyle() {
+		return this.formStyle;
+	}
+	
 	public String toString() {
 		return this.getTableName();
 	}
@@ -465,6 +477,8 @@ public class TableDefn implements TableInfo {
 	private boolean tableFormPublic = false;
 	
 	private String email = null;
+	
+	private FormStyle formStyle = FormStyle.SINGLE_COLUMN;
 
 	private volatile String simpleName = null;
 

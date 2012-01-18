@@ -1130,6 +1130,23 @@ function fSetupCharts() {
 					});
 }
 
+/**
+ * Select a form style
+ */
+function fFormStyle() {
+	$("#layout_selector .select_layout").click(function() {
+		$("#layout_selector .select_layout").removeClass("selected_layout");
+		var formStyle = $(this).attr("id");
+		$.post("AppController.servlet", {
+			"return": "blank",
+			"update_table": true,
+			"formstyle": formStyle
+		}, success: function() {
+			$(this).addClass("selected_layout");
+		});
+	});
+}
+
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
 
@@ -1144,3 +1161,4 @@ pane3Scripts.functionList.push(fExpandContractSection);
 pane3Scripts.functionList.push(fTwitter);
 pane3Scripts.functionList.push(fComments);
 pane3Scripts.functionList.push(fInitialiseDependencies);
+pane3Scripts.functionList.push(fFormStyle);

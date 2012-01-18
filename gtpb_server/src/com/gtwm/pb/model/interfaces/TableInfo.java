@@ -18,6 +18,7 @@
 package com.gtwm.pb.model.interfaces;
 
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.util.Enumerations.FormStyle;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
 import com.gtwm.pb.model.interfaces.fields.SequenceField;
@@ -186,4 +187,8 @@ public interface TableInfo extends Comparable<TableInfo> {
 	public String getEmail();
 	
 	public void setEmail(String email);
+	
+	public FormStyle getFormStyle();
+	
+	public void setFormStyle(FormStyle formStyle);
 }

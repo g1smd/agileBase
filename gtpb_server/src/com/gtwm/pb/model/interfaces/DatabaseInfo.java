@@ -24,6 +24,7 @@ import java.util.SortedSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import com.gtwm.pb.util.Enumerations.FormStyle;
 import com.gtwm.pb.util.Enumerations.ReportStyle;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -90,7 +91,7 @@ public interface DatabaseInfo {
 	 *             of users
 	 */
 	public void updateTable(Connection conn, HttpServletRequest request, TableInfo table,
-			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic, String tableEmail)
+			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic, String tableEmail, FormStyle formStyle)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException;
 
 	/**
