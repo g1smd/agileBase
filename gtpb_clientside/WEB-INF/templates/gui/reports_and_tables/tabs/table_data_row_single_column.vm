@@ -1,0 +1,33 @@
+##
+##  Copyright 2012 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<tr title="$field.getFieldDescription()" #if($fieldCategory =='SEPARATOR') #set($rowCount=0) class="separator #if($contracted) contracted #end" internalfieldname="$internalFieldName" #elseif($rowCount%2!=0) class="rowb" #else class="rowa" #end #if(($fieldCategory !='SEPARATOR') && $contracted) style="display:none;" #end>
+  #if(!$edit_nav)<td class=leading>&nbsp;</td>#end
+      <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
+      <td class="capitalised printoutfieldnamecolumn" #if($fieldCategory =='SEPARATOR') colspan="2" #end>
+      <span class="saved" id="saved_$internalFieldName"><image src="resources/icons/tick.png" style="vertical-align: middle" /> </span>
+      #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+        <span class="fieldname">$field.getSimplifiedFieldName()</span>
+      #else
+        <span class="fieldname">$field</span>
+      #end
+      #if(!$viewOnly && $fieldCategory !='SEPARATOR')<br>#end
+        ##<i><span class="greytext">$field.getFieldDescription()</span></i>
+      </td>
+      #if($fieldCategory !='SEPARATOR')<td>#parse('gui/resources/input/input.vm')</td>#end
+      #if(!$edit_nav)<td class=trailing>&nbsp;</td>#end
+  </tr>
