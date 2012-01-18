@@ -25,8 +25,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #set($rowCount = 0)
 #set($tabCaption='edit')
 #set($sessionTable=$sessionData.getTable())
+#set($formStyle = $sessionTable.getFormStyle())
 #set($sessionReport=$sessionData.getReport())
 #set($sessionRowId=$sessionData.getRowId())
+#set($inBlock = false)
 #if($sessionRowId == -1)
 	<div class="warningmessage">
 		#set($lastAppAction = $sessionData.getLastAppAction())
@@ -45,110 +47,120 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
   #if(($lastAppAction == "CLONE_RECORD") && ($lastAppActionRowId == $sessionRowId))
     #set($cloned_record = true)
   #end
-	  <table cellspacing="0" cellpadding="0" border="0" id="reportData" #if($cloned_record) style="background:url('styles/cloned.png') no-repeat top right !important;" #end>
-			#if(!$mobile_device && !$edit_nav)
-        <div class="mini_action" style="border-bottom-right-radius:0.5em"><button id="hide_pane_3" onClick="top.hidePane3();">done</button></div>
-        <div class="mini_action" style="right:0; border-bottom-left-radius:0.5em"><a href="javascript:top.fLinks();"><img src="resources/icons/applications/tango/actions/mail-closed.png" />&nbsp;link...</a></div>
-			#end
-		    #set($tableDataRow=$view.getTableDataRow())
-		    #if ($tableDataRow.size() == 0)
-		      Please select a record to edit, or press the 'New' button in the toolbar to create one
-		    #else
-		      #set($viewOnly=false) ## $viewOnly used by resources/input/input.vm
-		      #set($fields = $sessionTable.getFields())
-			  #if($lastAppAction != "CLONE_RECORD" && $lastAppAction != "SAVE_NEW_RECORD")
-				## Check if any mandatory fields remain unfilled
-				#set($unfilledMandatories = false)
-				#foreach($field in $fields)
-					#if($field.getNotNull() && $tableDataRow.get($field) == "")
-						#set($unfilledMandatories = true)
-					#end
-				#end
-			  #end
-			  #if($unfilledMandatories)
-				  #set($rowCount = $rowCount + 1)
-				  <tr #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
-					#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
-					<td colspan="2"><div class="warningmessage">
-					The following fields are mandated and must be completed before continuing.<br>
-					This record will be highlighted in the dashboard as an exception until values are filled in.<br>
-					If the information necessary isn't available yet, other records can continue to be edited.
-					</div></td>
-					#if(!$edit_nav)<td class="trailing">&nbsp;</td>#end
-				  </tr>
-          #foreach($field in $fields)
-					  #if($field.getNotNull() && $tableDataRow.get($field) == "")
-						  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-					  #end
-          #end ## end loop through fields
-				  #set($rowCount = $rowCount + 1)
-				  <tr #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
-					#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
-					<td>&nbsp;</td>
-					<td><input type="button" value="Complete" alt="Complete the rest of the record" onclick="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';"></td>
-					#if(!$edit_nav)<td class="trailing">&nbsp;</td>#end
-				  </tr>
-			  #else
-          #foreach($field in $fields)
-            #if($field.getHidden() == false)
-              #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-            #end
-          #end ## end loop through fields
-			  #end ## end if no unfilled mandatories
-          #if($view.isWikiIntegrated() && (!$mobile_device))
-			        #parse("gui/reports_and_tables/tabs/wiki.vm")  
-              <tr class="trailing">
-			          #if(!$edit_nav)<td>&nbsp;</td>#end
-			          <td colspan="2">&nbsp;</td>
-			          #if(!$edit_nav)<td>&nbsp;</td>#end
-		        </tr> 
-		      #else
-              <tr class="trailing">
-			          #if(!$edit_nav)<td>&nbsp;</td>#end
-			          <td>&nbsp;</td>
-			          <td>&nbsp;</td>
-			          #if(!$edit_nav)<td>&nbsp;</td>#end
-		          </tr> 
-          #end
-		    #end 
-	  </table>
-	  ## See if there are any actions for this table
-	  #if(!$moduleActions)
-          #set($user = $view.getLoggedInUser())
-          #set($company = $user.getCompany())
-          #set($companyName = $viewTools.cleanString($company.getCompanyName()))
-          #set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
-          #if($viewTools.templateExists($customisationsTemplateLocation))
-            #parse($customisationsTemplateLocation)
-          #end
-	  #end
-      #set($tableActions = $view.getModuleActions($sessionTable.getInternalTableName()))
-	  #foreach($tableAction in $tableActions)
-	    <button class="tableaction" actiontemplate="$tableAction.getActionTemplate()" actionbuttons="$tableAction.getButtons()" callbackfunction="$tableAction.getCallbackFuncion()" actionname="$tableAction.getActionName()">&laquo; $tableAction &raquo;</button>
-	  #end
-	  #if($view.isRecordLocked())
-      <div id="recordBlank"></div>
-	  	#if($view.loggedInUserAllowedTo('MANAGE_TABLE',$sessionTable))
-	  		<div id="recordUnlock">
-	  		  <button id="recordUnlockButton">
-	  		  	<div>
-	  		  		<u>this record is locked</u>
-	  		  		<h1>unlock record</h1>
-	  		  		<small>once unlocked, the record will remain open until you unlock another record or log out</small>
-	  		  	</div>
-	  		  </button>
-	  		 </div>
+  #if($formStyle == "SINGLE_COLUMN")
+    #set($containerTag = "table")
+    #set($rowTag = "tr")
+    #set($cellTag = "td")
+  #else
+    #set($containerTag = "div")
+    #set($rowTag = "div")
+    #set($cellTag = "div")
+	#end
+  <$containerTag cellspacing="0" cellpadding="0" border="0" id="reportData" #if($cloned_record) style="background:url('styles/cloned.png') no-repeat top right !important;" #end>
+    #if(!$mobile_device && !$edit_nav)
+      <div class="mini_action" style="border-bottom-right-radius:0.5em"><button id="hide_pane_3" onClick="top.hidePane3();">done</button></div>
+      <div class="mini_action" style="right:0; border-bottom-left-radius:0.5em"><a href="javascript:top.fLinks();"><img src="resources/icons/applications/tango/actions/mail-closed.png" />&nbsp;link...</a></div>
+		#end
+	    #set($tableDataRow=$view.getTableDataRow())
+	    #if ($tableDataRow.size() == 0)
+	      Please select a record to edit, or press the 'New' button in the toolbar to create one
 	    #else
-	      <div id="recordUnlock">
-	        <div id="staticMessage">
-	          <h1>record is locked</h1>
-	          <small>
-	            This record has been locked and you don't have permission to edit it.  
-	            If you need to change it, an administrator will be able to do it for you.
-	          </small>
-	        </div>
-	      </div>
-	    #end
+	      #set($viewOnly=false) ## $viewOnly used by resources/input/input.vm
+	      #set($fields = $sessionTable.getFields())
+		  #if($lastAppAction != "CLONE_RECORD" && $lastAppAction != "SAVE_NEW_RECORD")
+			## Check if any mandatory fields remain unfilled
+			#set($unfilledMandatories = false)
+			#foreach($field in $fields)
+				#if($field.getNotNull() && $tableDataRow.get($field) == "")
+					#set($unfilledMandatories = true)
+				#end
+			#end
+		  #end
+		  #if($unfilledMandatories)
+			  #set($rowCount = $rowCount + 1)
+			  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
+				#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
+				<$cellTag colspan="2"><div class="warningmessage">
+				The following fields are mandated and must be completed before continuing.<br>
+				This record will be highlighted in the dashboard as an exception until values are filled in.<br>
+				If the information necessary isn't available yet, other records can continue to be edited.
+				</div></$cellTag>
+				#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
+			  </tr>
+        #foreach($field in $fields)
+				  #if($field.getNotNull() && $tableDataRow.get($field) == "")
+					  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+				  #end
+        #end ## end loop through fields
+			  #set($rowCount = $rowCount + 1)
+			  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
+				#if(!$edit_nav)<$cellTag class=leading>&nbsp;</$cellTag>#end
+				<$cellTag>&nbsp;</$cellTag>
+				<$cellTag><input type="button" value="Complete" alt="Complete the rest of the record" onclick="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';"></$cellTag>
+				#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
+			  </$rowTag>
+		  #else
+        #foreach($field in $fields)
+          #if($field.getHidden() == false)
+            #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+          #end
+        #end ## end loop through fields
+        #if($inBlock) </div> #end ## See table_data_row_two_columns.vm
+		  #end ## end if no unfilled mandatories
+      #if($view.isWikiIntegrated() && (!$mobile_device))
+        #parse("gui/reports_and_tables/tabs/wiki.vm")  
+        <tr class="trailing">
+          #if(!$edit_nav)<td>&nbsp;</td>#end
+          <td colspan="2">&nbsp;</td>
+          #if(!$edit_nav)<td>&nbsp;</td>#end
+        </tr> 
+      #elseif($formStyle == "SINGLE_COLUMN")
+        <tr class="trailing">
+          #if(!$edit_nav)<td>&nbsp;</td>#end
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          #if(!$edit_nav)<td>&nbsp;</td>#end
+        </tr> 
+      #end
+    #end 
+  </$containerTag>
+  ## See if there are any actions for this table
+  #if(!$moduleActions)
+        #set($user = $view.getLoggedInUser())
+        #set($company = $user.getCompany())
+        #set($companyName = $viewTools.cleanString($company.getCompanyName()))
+        #set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
+        #if($viewTools.templateExists($customisationsTemplateLocation))
+          #parse($customisationsTemplateLocation)
+        #end
+  #end
+    #set($tableActions = $view.getModuleActions($sessionTable.getInternalTableName()))
+  #foreach($tableAction in $tableActions)
+    <button class="tableaction" actiontemplate="$tableAction.getActionTemplate()" actionbuttons="$tableAction.getButtons()" callbackfunction="$tableAction.getCallbackFuncion()" actionname="$tableAction.getActionName()">&laquo; $tableAction &raquo;</button>
+  #end
+  #if($view.isRecordLocked())
+    <div id="recordBlank"></div>
+  	#if($view.loggedInUserAllowedTo('MANAGE_TABLE',$sessionTable))
+  		<div id="recordUnlock">
+  		  <button id="recordUnlockButton">
+  		  	<div>
+  		  		<u>this record is locked</u>
+  		  		<h1>unlock record</h1>
+  		  		<small>once unlocked, the record will remain open until you unlock another record or log out</small>
+  		  	</div>
+  		  </button>
+  		 </div>
+    #else
+      <div id="recordUnlock">
+        <div id="staticMessage">
+          <h1>record is locked</h1>
+          <small>
+            This record has been locked and you don't have permission to edit it.  
+            If you need to change it, an administrator will be able to do it for you.
+          </small>
+        </div>
+      </div>
+    #end
 	#end
 #end ## end of if session row_id is set
 $viewTools.stopTimer("gui/reports_and_tables/tabs/edit")

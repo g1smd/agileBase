@@ -68,22 +68,11 @@
           #set($contracted = true)
         #end
       #end
-    	<tr title="$field.getFieldDescription()" #if($fieldCategory =='SEPARATOR') #set($rowCount=0) class="separator #if($contracted) contracted #end" internalfieldname="$internalFieldName" #elseif($rowCount%2!=0) class="rowb" #else class="rowa" #end #if(($fieldCategory !='SEPARATOR') && $contracted) style="display:none;" #end>
-    		#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
-            <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
-            <td class="capitalised printoutfieldnamecolumn" #if($fieldCategory =='SEPARATOR') colspan="2" #end>
-            <span class="saved" id="saved_$internalFieldName"><image src="resources/icons/tick.png" style="vertical-align: middle" /> </span>
-            #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
-              <span class="fieldname">$field.getSimplifiedFieldName()</span>
-            #else
-              <span class="fieldname">$field</span>
-            #end
-            #if(!$viewOnly && $fieldCategory !='SEPARATOR')<br>#end
-              ##<i><span class="greytext">$field.getFieldDescription()</span></i>
-            </td>
-            #if($fieldCategory !='SEPARATOR')<td>#parse('gui/resources/input/input.vm')</td>#end
-            #if(!$edit_nav)<td class=trailing>&nbsp;</td>#end
-        </tr>
+      #if($formStyle == "SINGLE_COLUMN")
+        #parse('gui/reports_and_tables/tabs/table_data_row_single_column.vm')
+      #else
+        #parse('gui/reports_and_tables/tabs/table_data_row_two_columns.vm')
+      #end
 	  #end
 	#end
   #end ## end if not partOfAddress
