@@ -64,7 +64,7 @@
 	</td>
   </tr>
 </table>
-#set($current_layout = $table.getFormLayout())
+#set($current_layout = $table.getFormStyle())
 <div id="layout_selector" style="width:100%; background-color:#f4f4f4; padding: 1em;">
 <h2>Choose a layout for the data entry form</h2>
   <div id="single_column" class="select_layout #if($current_layout == 'SINGLE_COLUMN') selected_layout #end">
