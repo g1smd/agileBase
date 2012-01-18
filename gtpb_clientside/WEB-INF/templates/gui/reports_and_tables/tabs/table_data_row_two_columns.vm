@@ -18,7 +18,7 @@
 #if($fieldCategory == "SEPARATOR")
   ## Start a section (block)
   #if($inBlock) </div> #end
-  <div class="block"><h1>$field<h1>
+  <div class="block"><h1>$field</h1>
   #set($inBlock = true)
 #else
   #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
