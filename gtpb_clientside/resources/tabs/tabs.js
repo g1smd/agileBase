@@ -1134,8 +1134,8 @@ function fSetupCharts() {
  * Select a form style
  */
 function fFormStyle() {
-	$("#layout_selector .select_layout").click(function() {
-		$("#layout_selector .select_layout").removeClass("selected_layout");
+	$(".select_layout").click(function() {
+		$(".select_layout").removeClass("selected_layout");
 		var formStyle = $(this).attr("id");
 		$.post("AppController.servlet", {
 			"return": "blank",
