@@ -64,7 +64,7 @@
 	</td>
   </tr>
 </table>
-<h1>Choose a layout for the data entry form</h1>
+<h1 style="position: relative">Choose a layout for the data entry form</h1>
 <div id="layout_selector" style="width:100%; padding: 1em;">
   <div id="1_column" style="float:left; width:33%; text-align:center">
     <img src="resources/tabs/1_column.png"><br>one column
