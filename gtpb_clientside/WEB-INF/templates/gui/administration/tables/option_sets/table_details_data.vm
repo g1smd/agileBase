@@ -20,7 +20,7 @@
 #if($view.getWhetherExceptionOccurred())
   #parse("gui/error.vm")
 #end
-<table cellspacing=0 border=0 cellpadding=0>
+<table cellspacing=0 border=0 cellpadding=0 style="width:100%">
   <tr valign="top">
     <td class="table_details">
 	<b>Name:</b><br>
@@ -50,7 +50,7 @@
       </form>
       <p>
       #if($table.getReports().size() > 1)
-        A list of existing reports based on this table:<p>
+        Existing reports:<p>
         <ul>
         #foreach($tableReport in $table.getReports())
       	  #if(!$tableReport.equals($table.getDefaultReport()))
@@ -64,8 +64,8 @@
 	</td>
   </tr>
 </table>
+<div id="layout_selector" style="width:100%; padding: 1em; background-color:#f4f4f4">
 <h2>Choose a layout for the data entry form</h2>
-<div id="layout_selector" style="width:100%; padding: 1em;">
   <div id="1_column" style="float:left; width:33%; text-align:center">
     <img src="resources/tabs/1_column.png"><br>one column
   </div>
