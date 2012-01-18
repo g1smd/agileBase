@@ -471,7 +471,7 @@ public class Enumerations {
 		private String description = "";
 	}
 	
-	public enum TableStyle {
-		SINGLE_COLUMN, TWO_COLUMNS, COLUMNS_WITHIN_SECTION;
+	public enum FormStyle {
+		SINGLE_COLUMN, TWO_COLUMNS, TWO_COLUMNS_WITHIN_SECTION;
 	}
 }

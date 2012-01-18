@@ -67,6 +67,7 @@ import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.FormStyle;
 import com.gtwm.pb.util.Enumerations.ReportStyle;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Enumerations.TextCase;
@@ -483,6 +484,11 @@ public final class ServletSchemaMethods {
 		if (tableFormPublicString != null) {
 			tableFormPublic = Helpers.valueRepresentsBooleanTrue(tableFormPublicString);
 		}
+		FormStyle formStyle = null;
+		String formStyleString = request.getParameter("formstyle");
+		if (formStyleString != null) {
+			formStyle = FormStyle.valueOf(formStyleString.toUpperCase());
+		}
 		if (newTableName == null && newTableDesc == null && lockable == null
 				&& tableFormPublic == null && tableEmail == null) {
 			throw new MissingParametersException(
@@ -495,6 +501,7 @@ public final class ServletSchemaMethods {
 		boolean oldLockable = table.getRecordsLockable();
 		boolean oldTableFormPublic = table.getTableFormPublic();
 		String oldTableEmail = table.getEmail();
+		FormStyle oldFormStyle = table.getFormStyle();
 		// begin updating model and persisting changes
 		Connection conn = null;
 		try {
@@ -503,7 +510,7 @@ public final class ServletSchemaMethods {
 			conn.setAutoCommit(false);
 			// update the table:
 			databaseDefn.updateTable(conn, request, table, newTableName, newTableDesc, lockable,
-					tableFormPublic, tableEmail);
+					tableFormPublic, tableEmail, formStyle);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
@@ -514,6 +521,7 @@ public final class ServletSchemaMethods {
 			table.setRecordsLockable(oldLockable);
 			table.setTableFormPublic(oldTableFormPublic);
 			table.setEmail(oldTableEmail);
+			table.setFormStyle(oldFormStyle);
 			throw new CantDoThatException("Updating table failed", hex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(conn);
@@ -523,6 +531,7 @@ public final class ServletSchemaMethods {
 			table.setRecordsLockable(oldLockable);
 			table.setTableFormPublic(oldTableFormPublic);
 			table.setEmail(oldTableEmail);
+			table.setFormStyle(oldFormStyle);
 			throw new CantDoThatException("Updating table failed", sqlex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
@@ -532,6 +541,7 @@ public final class ServletSchemaMethods {
 			table.setRecordsLockable(oldLockable);
 			table.setTableFormPublic(oldTableFormPublic);
 			table.setEmail(oldTableEmail);
+			table.setFormStyle(oldFormStyle);
 			throw new CantDoThatException("Updating table failed", pex);
 		} finally {
 			HibernateUtil.closeSession();
