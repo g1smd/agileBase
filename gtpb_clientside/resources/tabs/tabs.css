@@ -548,7 +548,7 @@ span.comment_attribution {
 }
 
 .select_layout {
-  float:left; width:33%; text-align:center; padding: 1em;
+  float:left; width:33%; text-align:center; padding: 1em; margin: 1em;
   border-radius: 1em;
 }
 
