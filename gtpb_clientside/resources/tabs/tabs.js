@@ -1141,7 +1141,7 @@ function fFormStyle() {
 			"return": "blank",
 			"update_table": true,
 			"formstyle": formStyle
-		}, success: function() {
+		}, function() {
 			$(this).addClass("selected_layout");
 		});
 	});
