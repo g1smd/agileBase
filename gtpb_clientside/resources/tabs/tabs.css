@@ -547,6 +547,15 @@ span.comment_attribution {
   */
 }
 
+.select_layout {
+  float:left; width:33%; text-align:center; padding: 1em;
+  border-radius: 1em;
+}
+
+.selected_layout {
+  border: 2px solid black;
+}
+
 /* 3) Summary tab css */
 
 
