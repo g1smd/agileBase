@@ -27,7 +27,7 @@
   #end
   <div class="block"> <!-- start of section block -->
   ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
-  <table><tr><td style="column-break-inside: avoid;">
+  <table style="width:100%"><tr><td style="column-break-inside: avoid;">
   <h1>$field</h1>
 #else
   #if($field.equals($firstField))
