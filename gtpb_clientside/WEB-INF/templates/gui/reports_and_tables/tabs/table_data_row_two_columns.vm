@@ -29,9 +29,8 @@
   #if($field.equals($firstField))
     <div class="block two_cols" style="background-color:#f4f4f4">
   #end
-  #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
-    $field.getSimplifiedFieldName()
-  #else
+  #if(!$field.getClass().getSimpleName().equals("RelationFieldDefn"))
+    ## relation field name included in resources/input/relation.vm
     $field
   #end
   #parse('gui/resources/input/input.vm')
