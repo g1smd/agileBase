@@ -17,14 +17,18 @@
 ##
 #if($fieldCategory == "SEPARATOR")
   #if(!$field.equals($firstField))
-    </div> <!-- end of block -->
+    </td></tr></table>
+    </div> <!-- end of previous section block -->
   #end
   #if($firstSection)
     <div class="two_cols"> <!-- start of sections container -->
     #set($hasSections = true)
     #set($firstSection = false)
   #end
-  <div class="block"><h1>$field</h1>
+  <div class="block"> <!-- start of section block -->
+  ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
+  <table><tr><td style="column-break-inside: avoid;">
+  <h1>$field</h1>
 #else
   #if($field.equals($firstField))
     <div class="block two_cols non_section">
