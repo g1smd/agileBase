@@ -27,7 +27,7 @@
   <div class="block"><h1>$field</h1>
 #else
   #if($field.equals($firstField))
-    <div class="block two_cols" style="background-color:#f4f4f4">
+    <div class="block two_cols non_section">
   #end
   #if(!$field.getClass().getSimpleName().equals("RelationFieldDefn"))
     ## relation field name included in resources/input/relation.vm
