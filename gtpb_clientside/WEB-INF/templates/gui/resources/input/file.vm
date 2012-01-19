@@ -63,29 +63,29 @@
   	  #end ## !$userCanEdit
     #end ## if not image
   #end ## if !$fieldValueObject.isNull()
-  #if($userCanEdit && (!$mobile_device))
-	#if($ab_calendar_display)
-	  <input type="file" name="$field.getInternalFieldName()" >
-	#else
-    <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
-      <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
-      <input type="hidden" name="update_record" value="true" />
-      <input type="hidden" name="internaltablename" value="$sessionTable.getInternalTableName()" />
-      <input type="hidden" name="rowid" value="$sessionRowId" />
-      <input type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" class="submit-trigger" />
-      <div class="upload_progress_container">
-        <div class="upload_progress_bar"></div>
-        <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
-      </div>
-    </form>
-	#end
-  #end
   #if(!$fieldValueObject.isNull())
     #if($fieldValueObject.isImage())
-	  #if($userCanEdit)<br />#end
+    #if($userCanEdit)<br />#end
       <a href="$downloadUrl" target="_blank">
       <img border="0" src="$downloadUrl.500.$fieldValueObject.getExtension()" style="float:left; max-width: 100%"/>
       </a>
     #end
+  #end
+  #if($userCanEdit && (!$mobile_device))
+  	#if($ab_calendar_display)
+  	  <input type="file" name="$field.getInternalFieldName()" >
+  	#else
+      <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
+        <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+        <input type="hidden" name="update_record" value="true" />
+        <input type="hidden" name="internaltablename" value="$sessionTable.getInternalTableName()" />
+        <input type="hidden" name="rowid" value="$sessionRowId" />
+        <input type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" class="submit-trigger" />
+        <div class="upload_progress_container">
+          <div class="upload_progress_bar"></div>
+          <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
+        </div>
+      </form>
+  	#end
   #end
 #end ## if !$globalEdit
