@@ -32,48 +32,48 @@
 	#end
   #end
   #if($partOfAddress)
-	#if($firstLineOfAddress)
-		#set($rowCount = $rowCount + 1)
-		<tr #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
-			#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
-      <td class="capitalised">Address</td>
-			<td><table border="0"><tr><td width="100px" style="border-right:0"><div id="map" style="width:100px;height:100px"></div>
-			</td><td style="border-right:0">
+  	#if($firstLineOfAddress)
+  		#set($rowCount = $rowCount + 1)
+  		<tr #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
+  			#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
+        <td class="capitalised">Address</td>
+  			<td><table border="0"><tr><td width="100px" style="border-right:0"><div id="map" style="width:100px;height:100px"></div>
+  			</td><td style="border-right:0">
     #end
-	#parse('gui/resources/input/input.vm')<br>
-	#if($address.lastKey().equals($field))
-		<script langauge="JavaScript">
-		  loadMap("$tableDataRow.get($field).toString()");
-		</script>
-		    #set($partOfAddress = false)
-			</td></tr></table>
-			</td>
-			#if(!$edit_nav)<td class=trailing>&nbsp;</td>#end
-		</tr>
-	#end
+  	#parse('gui/resources/input/input.vm')<br>
+  	#if($address.lastKey().equals($field))
+  		<script langauge="JavaScript">
+  		  loadMap("$tableDataRow.get($field).toString()");
+  		</script>
+  		    #set($partOfAddress = false)
+  			</td></tr></table>
+  			</td>
+  			#if(!$edit_nav)<td class=trailing>&nbsp;</td>#end
+  		</tr>
+  	#end
   #else
-	#set($fieldCategory = $field.getFieldCategory())
-	#set($referencedData = "")
-	#if($fieldCategory == "REFERENCED_REPORT_DATA")
-	  ## Capture the output of the parsing into a variable. We want to know whether a value
-	  ## exists or not for this field so we can choose whether to display the row
-	  #set($referencedData = "#parse('gui/resources/input/referenced_report_data.vm')")
-	#end
-	#if(($fieldCategory != "REFERENCED_REPORT_DATA") || $referencedData.contains("span"))
-	  #if(($fieldCategory != "FILE") || (!$ab_calendar_display)) ## Don't show file fields in calendar editor for now
-    	#set($rowCount = $rowCount + 1)
-      #if($fieldCategory == 'SEPARATOR')
-        #set($contracted = false)
-        #if((!$edit_nav) && $contractedSections.contains($internalFieldName))
-          #set($contracted = true)
+  	#set($fieldCategory = $field.getFieldCategory())
+  	#set($referencedData = "")
+  	#if($fieldCategory == "REFERENCED_REPORT_DATA")
+  	  ## Capture the output of the parsing into a variable. We want to know whether a value
+  	  ## exists or not for this field so we can choose whether to display the row
+  	  #set($referencedData = "#parse('gui/resources/input/referenced_report_data.vm')")
+  	#end
+  	#if(($fieldCategory != "REFERENCED_REPORT_DATA") || $referencedData.contains("span"))
+  	  #if(($fieldCategory != "FILE") || (!$ab_calendar_display)) ## Don't show file fields in calendar editor for now
+      	#set($rowCount = $rowCount + 1)
+        #if($fieldCategory == 'SEPARATOR')
+          #set($contracted = false)
+          #if((!$edit_nav) && $contractedSections.contains($internalFieldName))
+            #set($contracted = true)
+          #end
         #end
-      #end
-      #if($formStyle == "SINGLE_COLUMN")
-        #parse('gui/reports_and_tables/tabs/table_data_row_single_column.vm')
-      #else
-        #parse('gui/reports_and_tables/tabs/table_data_row_two_columns.vm')
-      #end
-	  #end
-	#end
+        #if($formStyle == "SINGLE_COLUMN")
+          #parse('gui/reports_and_tables/tabs/table_data_row_single_column.vm')
+        #else
+          #parse('gui/reports_and_tables/tabs/table_data_row_two_columns.vm')
+        #end
+  	  #end
+  	#end
   #end ## end if not partOfAddress
 #end ## remove to show primary key field
