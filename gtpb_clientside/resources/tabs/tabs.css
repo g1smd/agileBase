@@ -438,7 +438,7 @@ div.relation_field {
 }
 
     div.relation_field input {
-      margin-right:10px;
+      /* margin-right:10px; */
     }
   
   div.relation_field span {
