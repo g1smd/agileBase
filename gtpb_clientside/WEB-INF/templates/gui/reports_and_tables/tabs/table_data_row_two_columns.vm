@@ -16,15 +16,29 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #if($fieldCategory == "SEPARATOR")
-  ## Start a section (block)
-  #if($inBlock) </div> #end
+  #if(!$field.equals($firstField))
+    </div> <!-- end of block -->
+  #end
+  #if($firstSection)
+    <div class="two_cols"> <!-- start of sections container -->
+    #set($hasSections = true)
+    #set($firstSection = false)
+  #end
   <div class="block"><h1>$field</h1>
-  #set($inBlock = true)
 #else
+  #if($field.equals($firstField))
+    <div class="block two_cols">
+  #end
   #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
     $field.getSimplifiedFieldName()
   #else
     $field
   #end<br>
   #parse('gui/resources/input/input.vm')
+#end
+#if($field.equals($lastField))
+  </div> <!-- end of last block -->
+  #if($hasSections)
+    </div> <!-- end of two sections container -->
+  #end
 #end
