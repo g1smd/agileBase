@@ -587,8 +587,12 @@ div#reportData {
 	margin-right: 1em;
 }
 
-#reportData .block input[type=text] {
+#reportData .block input {
   float: right;
+}
+
+#reportData .block input[type=checkbox] {
+  float: left;
 }
 
 /* 3) Summary tab css */
