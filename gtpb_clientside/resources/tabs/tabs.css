@@ -592,6 +592,11 @@ div#reportData {
   break-inside: avoid-column;
 }
 
+#reportData .block h1 {
+  margin: 0;
+  font-size: 100%;
+}
+
 #reportData .block img {
 	margin-right: 1em;
 }
