@@ -26,7 +26,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #set($tabCaption='edit')
 #set($sessionTable=$sessionData.getTable())
 #set($fields = $sessionTable.getFields())
-#set($firstField = $fields.first())
 #set($lastField = $fields.last())
 #set($formStyle = $sessionTable.getFormStyle())
 #set($sessionReport=$sessionData.getReport())
@@ -109,10 +108,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 		  #else
         #foreach($field in $fields)
           #if($field.getHidden() == false)
+            #if(!$firstField)
+              #set($firstField = $field)
+            #end
             #parse("gui/reports_and_tables/tabs/table_data_row.vm")
           #end
         #end ## end loop through fields
-        #if($inBlock) </div> #end ## See table_data_row_two_columns.vm
 		  #end ## end if no unfilled mandatories
       #if($view.isWikiIntegrated() && (!$mobile_device))
         #parse("gui/reports_and_tables/tabs/wiki.vm")  
