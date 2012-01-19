@@ -569,6 +569,15 @@ span.comment_attribution {
   -moz-column-gap: 0;
   -webkit-column-gap: 0;
   -ms-column-gap: 0;
+  column-gap: 0;
+}
+
+.two_cols.non_section {
+  background-color:#f4f4f4;
+  -moz-column-gap: 1em;
+  -webkit-column-gap: 1em;
+  -ms-column-gap: 1em;
+  column-gap: 1em;
 }
   
 div#reportData {
