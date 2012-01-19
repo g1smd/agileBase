@@ -578,6 +578,7 @@ span.comment_attribution {
   -webkit-column-gap: 1em;
   -ms-column-gap: 1em;
   column-gap: 1em;
+  background-color: #f4f4f4;
 }
   
 div#reportData {
