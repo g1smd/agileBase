@@ -587,6 +587,10 @@ div#reportData {
 	margin-right: 1em;
 }
 
+#reportData .block input[type=text] {
+  float: right;
+}
+
 /* 3) Summary tab css */
 
 
