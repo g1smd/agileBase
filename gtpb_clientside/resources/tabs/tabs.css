@@ -561,6 +561,17 @@ span.comment_attribution {
   background-color: white;
 }
 
+div#reportData {
+  background-color: #f4f4f4;
+}
+
+#reportData .block {
+  background-color: white;
+  margin: 0.5em;
+  padding: 0.5em;
+  border-radius: 0.5em;
+}
+
 /* 3) Summary tab css */
 
 
