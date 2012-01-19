@@ -589,10 +589,12 @@ div#reportData {
 
 #reportData .block input {
   float: right;
+  width: 60%;
 }
 
 #reportData .block input[type=checkbox] {
   float: left;
+  width: auto;
 }
 
 /* 3) Summary tab css */
