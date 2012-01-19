@@ -110,6 +110,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
           #if($field.getHidden() == false)
             #if(!$firstField)
               #set($firstField = $field)
+              First field is $firstField<br>
             #end
             #parse("gui/reports_and_tables/tabs/table_data_row.vm")
           #end
