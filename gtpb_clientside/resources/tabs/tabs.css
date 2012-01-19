@@ -587,7 +587,7 @@ div#reportData {
 	margin-right: 1em;
 }
 
-#reportData .block input {
+#reportData .block input,select {
   float: right;
   width: 60%;
 }
