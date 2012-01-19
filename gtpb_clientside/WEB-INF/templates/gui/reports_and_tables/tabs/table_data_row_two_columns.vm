@@ -31,7 +31,11 @@
   #end
   #if(!$field.getClass().getSimpleName().equals("RelationFieldDefn"))
     ## relation field name included in resources/input/relation.vm
-    $field
+    #set($fieldValueObject = $tableDataRow.get($field))
+    ## Don't print field names next to images, ususally obvious what the field is
+    #if(!$fieldValueObject.isImage() || $fieldValueObject.isNull())
+      $field
+    #end
   #end
   #parse('gui/resources/input/input.vm')
 #end
