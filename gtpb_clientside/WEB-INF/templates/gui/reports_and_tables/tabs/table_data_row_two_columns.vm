@@ -33,7 +33,7 @@
     $field.getSimplifiedFieldName()
   #else
     $field
-  #end<br>
+  #end
   #parse('gui/resources/input/input.vm')
 #end
 #if($field.equals($lastField))
