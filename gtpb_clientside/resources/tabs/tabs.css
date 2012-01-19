@@ -434,7 +434,7 @@ img.cross_reference_image {
 }
 
 div.relation_field {
-  float: left; /* allow comments to the right */
+  /* float: left; /* allow comments to the right */
 }
 
     div.relation_field input {
