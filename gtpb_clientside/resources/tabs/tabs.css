@@ -561,6 +561,16 @@ span.comment_attribution {
   background-color: white;
 }
 
+.two_cols {
+  -moz-column-count: 2;
+  -webkit-column-count: 2; /* There seems to be a webkit bug that causes a mis-render */
+  -ms-column-count: 0;
+  column-count: 2;
+  -moz-column-gap: 0;
+  -webkit-column-gap: 0;
+  -ms-column-gap: 0;
+}
+  
 div#reportData {
   background-color: #f4f4f4;
 }
@@ -568,8 +578,9 @@ div#reportData {
 #reportData .block {
   background-color: white;
   margin: 0.5em;
-  padding: 0.5em;
+  padding: 1em;
   border-radius: 0.5em;
+  break-inside: avoid-column;
 }
 
 /* 3) Summary tab css */
@@ -636,12 +647,6 @@ div#reportData {
   	background-color: #bbcef1;
     border: #6d95e0 solid 1px;
     background-image: url('remove-dark.png');
-  }
-  
-  .two_cols {
-  	-moz-column-count: 2;
-  	-webkit-column-count: 2; /* There seems to be a webkit bug that causes a mis-render */
-  	column-count: 2;
   }
   
   .summary_chart {

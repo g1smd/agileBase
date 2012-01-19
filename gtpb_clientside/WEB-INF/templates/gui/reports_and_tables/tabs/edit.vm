@@ -25,10 +25,11 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #set($rowCount = 0)
 #set($tabCaption='edit')
 #set($sessionTable=$sessionData.getTable())
+#set($fields = $sessionTable.getFields())
 #set($formStyle = $sessionTable.getFormStyle())
 #set($sessionReport=$sessionData.getReport())
 #set($sessionRowId=$sessionData.getRowId())
-#set($inBlock = false)
+#set($firstSection = true)
 #if($sessionRowId == -1)
 	<div class="warningmessage">
 		#set($lastAppAction = $sessionData.getLastAppAction())
@@ -56,7 +57,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
     #set($rowTag = "div")
     #set($cellTag = "div")
 	#end
-  <$containerTag #if($containerTag=="table") cellspacing="0" cellpadding="0" border="0" #elseif($formStyle=="TWO_COLUMNS") class="two_cols" #end id="reportData" #if($cloned_record) style="background:url('styles/cloned.png') no-repeat top right !important;" #end>
+  <$containerTag
+    #if($formStyle == "SINGLE_COLUMN")
+      cellspacing="0" cellpadding="0" border="0"
+    #end
+    id="reportData"
+    #if($cloned_record) style="background:url('styles/cloned.png') no-repeat top right !important;" #end>
     #if(!$mobile_device && !$edit_nav)
       <div class="mini_action" style="border-bottom-right-radius:0.5em"><button id="hide_pane_3" onClick="top.hidePane3();">done</button></div>
       <div class="mini_action" style="right:0; border-bottom-left-radius:0.5em"><a href="javascript:top.fLinks();"><img src="resources/icons/applications/tango/actions/mail-closed.png" />&nbsp;link...</a></div>
@@ -66,15 +72,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 	      Please select a record to edit, or press the 'New' button in the toolbar to create one
 	    #else
 	      #set($viewOnly=false) ## $viewOnly used by resources/input/input.vm
-	      #set($fields = $sessionTable.getFields())
-		  #if($lastAppAction != "CLONE_RECORD" && $lastAppAction != "SAVE_NEW_RECORD")
-			## Check if any mandatory fields remain unfilled
-			#set($unfilledMandatories = false)
-			#foreach($field in $fields)
-				#if($field.getNotNull() && $tableDataRow.get($field) == "")
-					#set($unfilledMandatories = true)
-				#end
-			#end
+  		  #if($lastAppAction != "CLONE_RECORD" && $lastAppAction != "SAVE_NEW_RECORD")
+  			## Check if any mandatory fields remain unfilled
+  			#set($unfilledMandatories = false)
+  			#foreach($field in $fields)
+  				#if($field.getNotNull() && $tableDataRow.get($field) == "")
+  					#set($unfilledMandatories = true)
+  				#end
+  			#end
 		  #end
 		  #if($unfilledMandatories)
 			  #set($rowCount = $rowCount + 1)
@@ -86,7 +91,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 				If the information necessary isn't available yet, other records can continue to be edited.
 				</div></$cellTag>
 				#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
-			  </tr>
+			  </$rowTag>
         #foreach($field in $fields)
 				  #if($field.getNotNull() && $tableDataRow.get($field) == "")
 					  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
