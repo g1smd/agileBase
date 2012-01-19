@@ -592,7 +592,12 @@ div#reportData {
   width: 60%;
 }
 
-#reportData .block input[type!=text] {
+#reportData .block input[type=checkbox] {
+  float: left;
+  width: auto;
+}
+
+#reportData .block input[type=file] {
   float: left;
   width: auto;
 }
