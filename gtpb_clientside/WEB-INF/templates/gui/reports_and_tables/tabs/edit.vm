@@ -26,6 +26,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #set($tabCaption='edit')
 #set($sessionTable=$sessionData.getTable())
 #set($fields = $sessionTable.getFields())
+#set($primaryKey = $sessionTable.getPrimaryKey())
 #set($lastField = $fields.last())
 #set($formStyle = $sessionTable.getFormStyle())
 #set($sessionReport=$sessionData.getReport())
@@ -108,7 +109,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 		  #else
         #foreach($field in $fields)
           #if($field.getHidden() == false)
-            #if(!$firstField)
+            #if(!$firstField && !$field.equals($primaryKey))
               #set($firstField = $field)
               First field is $firstField<br>
             #end
