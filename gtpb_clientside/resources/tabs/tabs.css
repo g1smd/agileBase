@@ -583,6 +583,10 @@ div#reportData {
   break-inside: avoid-column;
 }
 
+#reportData .block img {
+	margin-right: 1em;
+}
+
 /* 3) Summary tab css */
 
 
