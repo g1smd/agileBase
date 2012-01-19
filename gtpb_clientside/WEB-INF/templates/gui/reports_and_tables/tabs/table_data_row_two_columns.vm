@@ -27,7 +27,9 @@
   <div class="block"><h1>$field</h1>
 #else
   #if($field.equals($firstField))
-    <div class="block two_cols">
+    <div class="block two_cols">FIRST FIELD.
+  #else
+    NOT FIRST FIELD.
   #end
   #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
     $field.getSimplifiedFieldName()
