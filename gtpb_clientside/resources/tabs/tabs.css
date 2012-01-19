@@ -594,7 +594,8 @@ div#reportData {
 
 #reportData .block h1 {
   margin: 0;
-  font-size: 100%;
+  margin-bottom: 1em;
+  font-size: 120%;
 }
 
 #reportData .block img {
