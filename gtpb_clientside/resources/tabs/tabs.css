@@ -574,10 +574,10 @@ span.comment_attribution {
 
 #reportData .block.two_cols.non_section {
   background-color: #f4f4f4;
-  -moz-column-gap: 1em;
-  -webkit-column-gap: 1em;
-  -ms-column-gap: 1em;
-  column-gap: 1em;
+  -moz-column-gap: 3em;
+  -webkit-column-gap: 3em;
+  -ms-column-gap: 3em;
+  column-gap: 3em;
 }
   
 div#reportData {
