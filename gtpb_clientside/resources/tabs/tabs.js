@@ -68,7 +68,7 @@ var TabInterfaceObject = function(containerElem) {
 
 		var currentElem = jqLinkElem;
 
-		var jqTabContainer = $("<div class='tab-item'></div>");
+		var jqTabContainer = $("<div class='tab-item _" + tabNumber + "'></div>");
 
 		var tabLoaded = false;
 
