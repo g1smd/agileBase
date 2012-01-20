@@ -660,6 +660,11 @@ div#reportData {
   top: 0;
 }
 
+#reportData .block input[type=button] {
+  float: none;
+  width: auto;
+}
+
 /* 3) Summary tab css */
 
 
