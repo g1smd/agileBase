@@ -518,11 +518,11 @@ div.relation_field {
   float: right;
 }
 
-tr:hover .comment_toggle {
+.row:hover .comment_toggle {
   opacity: 0.5;
 }
 
-tr:hover .comment_toggle:hover {
+.row:hover .comment_toggle:hover {
   opacity: 1;
 }
 

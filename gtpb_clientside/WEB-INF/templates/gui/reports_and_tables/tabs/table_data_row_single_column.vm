@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-<tr title="$field.getFieldDescription()" #if($fieldCategory =='SEPARATOR') #set($rowCount=0) class="separator #if($contracted) contracted #end" internalfieldname="$internalFieldName" #elseif($rowCount%2!=0) class="rowb" #else class="rowa" #end #if(($fieldCategory !='SEPARATOR') && $contracted) style="display:none;" #end>
+<tr title="$field.getFieldDescription()" #if($fieldCategory =='SEPARATOR') #set($rowCount=0) class="separator #if($contracted) contracted #end" internalfieldname="$internalFieldName" #elseif($rowCount%2!=0) class="row rowb" #else class="row rowa" #end #if(($fieldCategory !='SEPARATOR') && $contracted) style="display:none;" #end>
   #if(!$edit_nav)<td class=leading>&nbsp;</td>#end
       <!-- class printoutfieldnamecolumn is only defined when printing - see detail.vm -->
       <td class="capitalised printoutfieldnamecolumn" #if($fieldCategory =='SEPARATOR') colspan="2" #end>
