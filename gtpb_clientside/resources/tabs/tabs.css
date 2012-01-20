@@ -586,7 +586,7 @@ span.comment_attribution {
   background-color: #f4f4f4;
   border: 1px solid #f4f4f4;
 }
-  
+
 div#reportData {
   background-color: #f4f4f4;
 }
@@ -621,11 +621,11 @@ div#reportData {
 }
 
 #reportData .block input:hover {
-  border: 1px solid #cccccc;
+  border: 1px solid #cccccc!important;
 }
 
 #reportData .block input:focus {
-  border: 1px solid #cccccc;
+  border: 1px solid #cccccc!important;
 }
 
 #reportData .block input[type=checkbox] {
