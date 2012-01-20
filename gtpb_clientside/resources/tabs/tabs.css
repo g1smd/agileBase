@@ -624,6 +624,10 @@ div#reportData {
   top: -0.5em;
 }
 
+#reportData .block.non_section h1 {
+	text-align: left;
+}
+
 #reportData .block img {
 	margin-right: 1em;
 }
