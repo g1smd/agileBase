@@ -667,7 +667,7 @@ div#reportData {
   float: right;
 }
 
-#reportDate .block.non_section .date {
+#reportData .block.non_section .date {
   float: none;
   margin-left: 1em;
 }
