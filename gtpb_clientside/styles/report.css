@@ -313,16 +313,16 @@ td.calculations {
   margin-bottom:-3px;
   position:relative;
 }
-
+/*
 .separator td.leading:before {
-  content: "\2013"; /* a dash - entity &endash; */
+  content: "\2013";
   color: gray;
   position: relative;
   top: 1px;
   border: 1px solid #d0d0d0;
   cursor: pointer;
 }
-
+*/
 .separator.contracted td.leading:before {
   content: "+";
 }	
