@@ -644,6 +644,11 @@ div#reportData {
   -moz-appearance: none;
 }
 
+#reportData .block select:hover {
+  -webkit-appearance: default;
+  -moz-appearance: default;
+}
+
 #reportData .block textarea {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif;
