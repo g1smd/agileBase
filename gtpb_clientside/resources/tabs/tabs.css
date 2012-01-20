@@ -581,18 +581,18 @@ span.comment_attribution {
 }
 
 #reportData .block.two_cols.non_section {
-  background-color: #f4f4f4;
+  /* background-color: #f4f4f4; */
   -moz-column-gap: 3em;
   -webkit-column-gap: 3em;
   -ms-column-gap: 3em;
   column-gap: 3em;
 }
- 
+/*
 #reportData .block.two_cols.non_section input, #reportData .block.two_cols.non_section select {
   background-color: #f4f4f4;
   border: 1px solid #f4f4f4;
 }
-
+*/
 div#reportData {
   background-color: #f4f4f4;
 }
@@ -608,10 +608,11 @@ div#reportData {
 
 #reportData .block h1 {
   margin: 0;
-  margin-bottom: 1em;
   font-size: 120%;
   font-weight: normal;
   text-align: center;
+  position: relative;
+  top: -0.5em;
 }
 
 #reportData .block img {
