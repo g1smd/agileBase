@@ -618,6 +618,7 @@ div#reportData {
   text-align: center;
   position: relative;
   top: -0.5em;
+  color: #999999;
 }
 
 #reportData .block img {
