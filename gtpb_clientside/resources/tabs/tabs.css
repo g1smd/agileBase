@@ -663,11 +663,14 @@ div#reportData {
 #reportData .block input[type=button] {
   float: none;
   width: auto;
+  top: 0;
 }
 
 #reportData .block input.comment_input {
 	float: none;
 	width: auto;
+	top: 0;
+	border: 1px solid #cecece;
 }
 
 /* 3) Summary tab css */
