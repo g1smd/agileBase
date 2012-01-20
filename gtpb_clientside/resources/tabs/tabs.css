@@ -163,6 +163,7 @@ table#reportData td input {
   border: 1px solid #cecece;
   border-radius: 0.5em;
   padding: 0.3em;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 table#reportData td input[type='text'] {
@@ -182,6 +183,7 @@ table#reportData td select {
   border-radius: 0.5em;
   border: 1px solid #cecece;
   padding: 0.3em;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 table#reportData td .date select {
