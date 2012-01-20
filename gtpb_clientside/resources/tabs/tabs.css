@@ -635,10 +635,12 @@ div#reportData {
   position: relative;
   top: -0.4em;
   border-radius: 0.5em;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #reportData .block textarea {
   width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #reportData .block .date {
