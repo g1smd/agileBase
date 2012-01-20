@@ -32,7 +32,7 @@
     ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
     <table style="width:100%"><tr><td style="column-break-inside: avoid;">
   #else
-    <div class="block two_cols">
+    <div class="block two_cols non_section">
   #end
   <h1>$field</h1>
   #set($sectionHasImage=false)
