@@ -608,6 +608,7 @@ div#reportData {
   padding: 1em;
   border-radius: 0.5em;
   break-inside: avoid-column;
+  color: #555555;
 }
 
 #reportData .block h1 {
@@ -617,7 +618,6 @@ div#reportData {
   text-align: center;
   position: relative;
   top: -0.5em;
-  color: #999999;
 }
 
 #reportData .block img {
