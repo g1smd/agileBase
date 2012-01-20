@@ -515,6 +515,7 @@ div.relation_field {
 .block comment_toggle {
   margin-left:0em;
   margin-right:0em;
+  float: right;
 }
 
 tr:hover .comment_toggle {
