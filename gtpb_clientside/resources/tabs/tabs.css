@@ -610,6 +610,7 @@ div#reportData {
   padding: 1em;
   border-radius: 0.5em;
   break-inside: avoid-column;
+  -webkit-column-break-inside: avoid;
   color: #555555;
 }
 
