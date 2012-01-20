@@ -665,6 +665,11 @@ div#reportData {
   width: auto;
 }
 
+#reportData .block input.comment_input {
+	float: none;
+	width: auto;
+}
+
 /* 3) Summary tab css */
 
 
