@@ -597,9 +597,14 @@ div#reportData {
   background-color: #f4f4f4;
 }
 
+.tab-item._1 div#reportData {
+  margin-right: 0.5em;
+}
+
 #reportData .block {
   background-color: white;
   margin: 0.5em;
+  margin-right: 0;
   padding: 1em;
   border-radius: 0.5em;
   break-inside: avoid-column;
@@ -624,6 +629,7 @@ div#reportData {
   width: 60%;
   border: 1px solid white;
   font-size: 10pt;
+  padding: 0.2em;
 }
 
 #reportData .block input:hover {
