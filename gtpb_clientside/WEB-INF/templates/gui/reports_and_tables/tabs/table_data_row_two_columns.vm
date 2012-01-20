@@ -17,17 +17,23 @@
 ##
 #if($fieldCategory == "SEPARATOR")
   #if(!$field.equals($firstField))
-    </td></tr></table>
+    #if($formStyle == 'TWO_COLUMNS')
+      </td></tr></table>
+    #end
     </div> <!-- end of previous section block -->
   #end
   #if($firstSection)
-    <div class="two_cols"> <!-- start of sections container -->
+    <div #if($formStyle == "TWO_COLUMNS") class="two_cols" #end> <!-- start of sections container -->
     #set($hasSections = true)
     #set($firstSection = false)
   #end
-  <div class="block"> <!-- start of section block -->
-  ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
-  <table style="width:100%"><tr><td style="column-break-inside: avoid;">
+  #if($formStyle == 'TWO_COLUMNS')
+    <div class="block"> <!-- start of section block -->
+    ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
+    <table style="width:100%"><tr><td style="column-break-inside: avoid;">
+  #else
+    <div class="block two_cols">
+  #end
   <h1>$field</h1>
   #set($sectionHasImage=false)
 #else
