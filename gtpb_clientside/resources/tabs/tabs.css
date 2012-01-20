@@ -613,7 +613,7 @@ div#reportData {
 }
 
 #reportData .block input:hover {
-  border: auto;
+  border: 1px solid black;
 }
 
 #reportData .block input[type=checkbox] {
