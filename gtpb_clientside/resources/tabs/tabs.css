@@ -584,6 +584,7 @@ span.comment_attribution {
  
 #reportData .block.two_cols.non_section input,select {
   background-color: #f4f4f4;
+  border: 1px solid #f4f4f4;
 }
   
 div#reportData {
