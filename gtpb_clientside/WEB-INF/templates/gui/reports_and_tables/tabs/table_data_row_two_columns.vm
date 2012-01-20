@@ -29,6 +29,7 @@
   ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
   <table style="width:100%"><tr><td style="column-break-inside: avoid;">
   <h1>$field</h1>
+  #set($sectionHasImage=false)
 #else
   #if($field.equals($firstField))
     <div class="block two_cols non_section">
@@ -36,7 +37,7 @@
   #set($fieldClass = $field.getClass().getSimpleName())
   #if(!$fieldClass.equals("RelationFieldDefn") && ($fieldCategory != "FILE"))
     ## relation and file field names included in resources/input/relation.vm
-    $field
+    $field #if($sectionHasImage) <br> #end
     ##<table style="width:100%; text-align:right"><tr><td style="width:40%">$field</td><td style="width:60%">
   #end
   #parse('gui/resources/input/input.vm')

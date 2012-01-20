@@ -69,6 +69,7 @@
       <a href="$downloadUrl" target="_blank">
       <img border="0" src="$downloadUrl.500.$fieldValueObject.getExtension()" style="float:left; max-width: 100%; border-radius: 0.5em"/>
       </a>
+      #set($sectionHasImage = true)
     #end
   #end
   #if($userCanEdit && (!$mobile_device))
