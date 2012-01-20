@@ -587,12 +587,12 @@ span.comment_attribution {
   -ms-column-gap: 3em;
   column-gap: 3em;
 }
-/*
+
 #reportData .block.two_cols.non_section input, #reportData .block.two_cols.non_section select {
-  background-color: #f4f4f4;
-  border: 1px solid #f4f4f4;
+  float: none;
+  top: 0;
 }
-*/
+
 div#reportData {
   background-color: #f4f4f4;
 }
