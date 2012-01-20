@@ -611,6 +611,7 @@ div#reportData {
   width: 60%;
   border: 0;
   font-size: 10pt;
+  -moz-box-sizing: border-box;
 }
 
 #reportData .block input:hover,input:focus {
