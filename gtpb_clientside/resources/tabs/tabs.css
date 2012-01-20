@@ -609,6 +609,11 @@ div#reportData {
 #reportData .block input,select {
   float: right;
   width: 60%;
+  border: 0;
+}
+
+#reportData .block input:hover {
+  border: auto;
 }
 
 #reportData .block input[type=checkbox] {
@@ -616,13 +621,12 @@ div#reportData {
   width: auto;
   margin-right: 1em;
   margin-top: 0;
+  
 }
-/*
 #reportData .block input[type=file] {
-  float: left;
-  width: auto;
+  border: auto;
 }
-*/
+
 /* 3) Summary tab css */
 
 
