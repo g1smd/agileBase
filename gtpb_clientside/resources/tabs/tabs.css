@@ -667,6 +667,11 @@ div#reportData {
   float: right;
 }
 
+#reportDate .block.non_section .date {
+  float: none;
+  margin-left: 1em;
+}
+
 .date select, .date input {
   width: auto!important;
   float: none!important;
