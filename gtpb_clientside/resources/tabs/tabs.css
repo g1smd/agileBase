@@ -635,6 +635,11 @@ div#reportData {
   border-radius: 0.5em;
 }
 
+.date_wrapper select, .date_wrapper input {
+  width: auto!important;
+  float: none!important;
+}
+	
 .block input.ac_input {
   width:50%;
 }
