@@ -625,11 +625,15 @@ div#reportData {
 }
 
 #reportData .block input, #reportData .block select {
-  /*float: right; */
-  /* width: 100%; */
+  float: right;
+  width: 50%;
   border: 1px solid white;
   font-size: 10pt;
   padding: 0.2em;
+}
+
+.block input.ac_input {
+  width:50%;
 }
 
 #reportData .block input:hover {
