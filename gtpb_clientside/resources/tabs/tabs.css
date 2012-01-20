@@ -512,6 +512,11 @@ div.relation_field {
   transition-duration: 2s;
 }
 
+.block comment_toggle {
+  margin-left:0em;
+  margin-right:0em;
+}
+
 tr:hover .comment_toggle {
   opacity: 0.5;
 }
@@ -616,8 +621,6 @@ div#reportData {
   width: 60%;
   border: 1px solid white;
   font-size: 10pt;
-  position: relative;
-  top:-0.5em;
 }
 
 #reportData .block input:hover {
