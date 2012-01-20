@@ -654,6 +654,7 @@ div#reportData {
 #reportData .block input[type=file] {
   border: auto;
   top: 0;
+  height:1em;
 }
 
 /* 3) Summary tab css */
