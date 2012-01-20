@@ -70,7 +70,7 @@
 #else
   #if($userCanEdit)
   <div class="relation_field">##
-    $field.getSimplifiedFieldName()
+    #if($formStyle != "SINGLE_COLUMN") $field.getSimplifiedFieldName() #end
     <input name="$internalFieldName" ##
   	type="hidden" class="relation_hidden" ##
   	value="$fieldValue" ##
