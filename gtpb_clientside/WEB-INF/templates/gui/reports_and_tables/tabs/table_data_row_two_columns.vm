@@ -41,6 +41,7 @@
   #parse('gui/resources/input/input.vm')
   #if(!$fieldClass.equals("RelationFieldDefn") && ($fieldCategory != "FILE"))
     </td></tr></table>
+  #end
 #end
 #if($field.equals($lastField))
   </div> <!-- end of last block -->
