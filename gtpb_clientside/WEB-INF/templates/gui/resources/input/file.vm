@@ -78,7 +78,7 @@
   	#else
       <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
         #set($showFieldName = false)
-        #if($fieldValueObject.isNull() || (!$fieldValueObject.isImage()))
+        #if(($formStyle != "SINGLE_COLUMN") && $fieldValueObject.isNull() || (!$fieldValueObject.isImage()))
           $field
           #set($showFieldName = true)
         #end

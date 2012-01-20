@@ -61,7 +61,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 	#end
   <$containerTag
     #if($formStyle == "SINGLE_COLUMN")
-      cellspacing="0" cellpadding="0" border="0"
+      cellspacing="0" cellpadding="0" border="0" style="background-color: white"
     #end
     id="reportData"
     #if($cloned_record) style="background:url('styles/cloned.png') no-repeat top right !important;" #end>
