@@ -36,7 +36,7 @@
   #set($fieldClass = $field.getClass().getSimpleName())
   #if(!$fieldClass.equals("RelationFieldDefn") && ($fieldCategory != "FILE"))
     ## relation and file field names included in resources/input/relation.vm
-    $field
+    <span>$field</span>
     ##<table style="width:100%; text-align:right"><tr><td style="width:40%">$field</td><td style="width:60%">
   #end
   #parse('gui/resources/input/input.vm')
