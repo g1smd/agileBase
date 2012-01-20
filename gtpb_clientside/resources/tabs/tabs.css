@@ -630,6 +630,8 @@ div#reportData {
   border: 1px solid white;
   font-size: 10pt;
   padding: 0.2em;
+  position: relative;
+  top: -0.5em;
 }
 
 #reportData .block input:hover {
