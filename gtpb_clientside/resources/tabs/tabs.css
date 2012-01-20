@@ -645,8 +645,8 @@ div#reportData {
 }
 
 #reportData .block select:hover {
-  -webkit-appearance: default;
-  -moz-appearance: default;
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
 }
 
 #reportData .block textarea {
