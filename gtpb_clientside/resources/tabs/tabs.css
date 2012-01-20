@@ -613,7 +613,11 @@ div#reportData {
   font-size: 10pt;
 }
 
-#reportData .block input:hover,input:focus {
+#reportData .block input:hover {
+  border: 1px solid #cccccc;
+}
+
+#reportData .block input:focus {
   border: 1px solid #cccccc;
 }
 
