@@ -617,7 +617,7 @@ div#reportData {
   border: 1px solid white;
   font-size: 10pt;
   position: relative;
-  top:0.5em;
+  top:-0.5em;
 }
 
 #reportData .block input:hover {
