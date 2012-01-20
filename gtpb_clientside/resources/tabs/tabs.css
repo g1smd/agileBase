@@ -438,6 +438,7 @@ img.cross_reference_image {
 }
 
 div.relation_field {
+	display: inline; /* allow comments to the right */
   /* float: left; /* allow comments to the right */
 }
 
