@@ -47,6 +47,6 @@
   </div>
 #end
 #if($formStyle != "SINGLE_COLUMN")
-  <br clear="both">
+  <br clear="right">
 #end
 ##&nbsp; ## Todo: check in single column
