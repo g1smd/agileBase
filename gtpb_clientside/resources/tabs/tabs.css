@@ -651,10 +651,10 @@ div#reportData {
   margin-top: 0;
   top: 0;  
 }
+
 #reportData .block input[type=file] {
-  border: auto;
+  border: 0;
   top: 0;
-  height:1em;
 }
 
 /* 3) Summary tab css */
