@@ -616,6 +616,8 @@ div#reportData {
   width: 60%;
   border: 1px solid white;
   font-size: 10pt;
+  position: relative;
+  top:0.5em;
 }
 
 #reportData .block input:hover {
@@ -631,10 +633,11 @@ div#reportData {
   width: auto;
   margin-right: 1em;
   margin-top: 0;
-  
+  top: 0;  
 }
 #reportData .block input[type=file] {
   border: auto;
+  top: 0;
 }
 
 /* 3) Summary tab css */
