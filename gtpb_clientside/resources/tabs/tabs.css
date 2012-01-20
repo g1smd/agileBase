@@ -609,9 +609,8 @@ div#reportData {
 #reportData .block input,select {
   float: right;
   width: 60%;
-  border: 0;
+  border: 1px solid white;
   font-size: 10pt;
-  -moz-box-sizing: border-box;
 }
 
 #reportData .block input:hover,input:focus {
