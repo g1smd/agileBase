@@ -46,7 +46,7 @@
     #parse("gui/resources/input/comments.vm")
   </div>
 #end
-#if($formStyle != "SINGLE_COLUMN")
+#if($formStyle == "TWO_COLUMNS")
   <br clear="right">
 #end
 ##&nbsp; ## Todo: check in single column
