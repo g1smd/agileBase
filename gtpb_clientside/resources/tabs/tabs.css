@@ -588,6 +588,7 @@ span.comment_attribution {
   -webkit-column-gap: 3em;
   -ms-column-gap: 3em;
   column-gap: 3em;
+  line-height: 1em;
 }
 
 #reportData .block.two_cols.non_section input, #reportData .block.two_cols.non_section select {
@@ -612,7 +613,7 @@ div#reportData {
   border-radius: 0.5em;
   break-inside: avoid-column;
   -webkit-column-break-inside: avoid;
-  color: #555555;
+  color: #777777;
 }
 
 #reportData .block h1 {
