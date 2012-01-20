@@ -100,15 +100,15 @@ td.trailing input[type=button] {
   font-size:9pt; 
   color:black;
 }	
-
+/*
 .tab-interface .tab-content .tab-item {
-	/*
 	overflow:auto;
-	
 	height:100%;
-	*/
  }
-
+*/
+.tab-interface .tab-content .tab-item._1 {
+  margin-top: 1em;
+}
 .tab-interface .tab-content div.content { 
   width:100%;
   height:100%;
