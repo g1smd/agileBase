@@ -512,7 +512,7 @@ div.relation_field {
   transition-duration: 2s;
 }
 
-.block .comment_toggle {
+#reportData .block .comment_toggle {
   margin-left:0em;
   margin-right:0em;
   float: right;
