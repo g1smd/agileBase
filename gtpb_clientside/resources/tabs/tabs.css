@@ -608,7 +608,6 @@ div#reportData {
   padding: 1em;
   border-radius: 0.5em;
   break-inside: avoid-column;
-  line-height: 2em;
 }
 
 #reportData .block h1 {
