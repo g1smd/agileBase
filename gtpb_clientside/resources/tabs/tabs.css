@@ -638,6 +638,7 @@ div#reportData {
 .date select, .date input {
   width: auto!important;
   float: none!important;
+  border: 1px solid #cecece!important;
 }
 	
 .block input.ac_input {
