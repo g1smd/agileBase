@@ -635,6 +635,15 @@ div#reportData {
   border-radius: 0.5em;
 }
 
+#reportData .block textarea {
+  width: 100%;
+}
+
+#reportData .block .date {
+  width: 50%;
+  float: right;
+}
+
 .date select, .date input {
   width: auto!important;
   float: none!important;
