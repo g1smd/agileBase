@@ -33,13 +33,10 @@
   #if($field.equals($firstField))
     <div class="block two_cols non_section">
   #end
-  #if(!$field.getClass().getSimpleName().equals("RelationFieldDefn"))
-    ## relation field name included in resources/input/relation.vm
-    #set($fieldValueObject = $tableDataRow.get($field))
-    ## Don't print field names next to images, ususally obvious what the field is
-    #if(!$fieldValueObject.isImage() || $fieldValueObject.isNull())
-      $field
-    #end
+  #set($fieldClass = $field.getClass().getSimpleName())
+  #if(!$fieldClass.equals("RelationFieldDefn") && (!$fieldCategory == "FILE"))
+    ## relation and file field names included in resources/input/relation.vm
+    $field
   #end
   #parse('gui/resources/input/input.vm')
 #end
