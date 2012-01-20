@@ -36,11 +36,11 @@
   #set($fieldClass = $field.getClass().getSimpleName())
   #if(!$fieldClass.equals("RelationFieldDefn") && ($fieldCategory != "FILE"))
     ## relation and file field names included in resources/input/relation.vm
-    <table style="width:100%; text-align:right"><tr><td style="width:40%">$field</td><td style="width:60%">
+    ##<table style="width:100%; text-align:right"><tr><td style="width:40%">$field</td><td style="width:60%">
   #end
   #parse('gui/resources/input/input.vm')
   #if(!$fieldClass.equals("RelationFieldDefn") && ($fieldCategory != "FILE"))
-    </td></tr></table>
+    ##</td></tr></table>
   #end
 #end
 #if($field.equals($lastField))
