@@ -582,7 +582,7 @@ span.comment_attribution {
   column-gap: 3em;
 }
  
-#reportData .block.two_cols.non_section input,select {
+#reportData .block.two_cols.non_section input, #reportData .block.two_cols.non_section select {
   background-color: #f4f4f4;
   border: 1px solid #f4f4f4;
 }
@@ -611,7 +611,7 @@ div#reportData {
 	margin-right: 1em;
 }
 
-#reportData .block input,select {
+#reportData .block input, #reportData .blockselect {
   float: right;
   width: 60%;
   border: 1px solid white;
