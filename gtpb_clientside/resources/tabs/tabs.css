@@ -610,7 +610,7 @@ div#reportData {
   float: right;
   width: 60%;
   border: 0;
-  padding: 0.5em;
+  font-size: 10pt;
 }
 
 #reportData .block input:hover,input:focus {
