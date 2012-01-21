@@ -35,12 +35,13 @@
 #if($userCanEdit && (!$globalEdit) && (!$gtpbPublicTable))
   #set($activateComments = true)
 #end
-#if($activateComments && ($formStyle != "SINGLE_COLUMN"))
+#set($singleColumn = ($formStyle == "SINGLE_COLUMN") || $mobile_device)
+#if($activateComments && (!$singleColumn))
   <img src="resources/icons/comment.png" class="comment_toggle" title="add a comment" alt="add comment"/>
 #end
 #parse("gui/resources/input/${fieldCategory.toString().toLowerCase()}.vm")
 #if($activateComments)
-  #if($formStyle == "SINGLE_COLUMN")
+  #if($singleColumn)
     <img src="resources/icons/comment.png" class="comment_toggle" title="add a comment" alt="add comment"/>
   #end
   <div class="add_comment_row">Add comment: <input type="text" class="comment_input" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()"/><input type="button" value="add" /></div>
@@ -48,7 +49,7 @@
     #parse("gui/resources/input/comments.vm")
   </div>
 #end
-#if($formStyle != "SINGLE_COLUMN")
+#if(!$singleColumn)
   <br clear="right">
 #end
 ##&nbsp; ## Todo: check in single column

@@ -50,7 +50,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
   #if(($lastAppAction == "CLONE_RECORD") && ($lastAppActionRowId == $sessionRowId))
     #set($cloned_record = true)
   #end
-  #if($formStyle == "SINGLE_COLUMN")
+  #set($singleColumn = ($formStyle == "SINGLE_COLUMN") || $mobile_device)
+  #if($singleColumn)
     #set($containerTag = "table")
     #set($rowTag = "tr")
     #set($cellTag = "td")
@@ -60,7 +61,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
     #set($cellTag = "div")
 	#end
   <$containerTag
-    #if($formStyle == "SINGLE_COLUMN")
+    #if($singleColumn)
       cellspacing="0" cellpadding="0" border="0" style="background-color: white"
     #end
     id="reportData"
@@ -123,7 +124,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
           <td colspan="2">&nbsp;</td>
           #if(!$edit_nav)<td>&nbsp;</td>#end
         </tr> 
-      #elseif($formStyle == "SINGLE_COLUMN")
+      #elseif(($formStyle == "SINGLE_COLUMN") || $mobile_device)
         <tr class="trailing">
           #if(!$edit_nav)<td>&nbsp;</td>#end
           <td>&nbsp;</td>
