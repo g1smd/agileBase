@@ -105,6 +105,7 @@ table#reportData tr.rowb  {
 #mobile_header button {
   vertical-align: middle;
   font-size: 12pt;
+  margin-bottom: 0.5em;
 }
 
 #mobile_footer {
