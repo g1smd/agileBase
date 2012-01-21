@@ -78,7 +78,8 @@
   	#else
       <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
         #set($showFieldName = false)
-        #if((!$formStyle.name().equals("SINGLE_COLUMN")) && ($fieldValueObject.isNull() || (!$fieldValueObject.isImage())))
+        #set($singleColumn = (($formStyle == "SINGLE_COLUMN") || $mobile_device))
+        #if((!$singleColumn) && ($fieldValueObject.isNull() || (!$fieldValueObject.isImage())))
           $field
           #set($showFieldName = true)
         #end
