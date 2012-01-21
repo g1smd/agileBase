@@ -231,7 +231,7 @@ textarea {
 }
 
 #reportData .input_saved {
-  background-color: green;
+  background-color: #DDEFE0;
 }
 
 *[error] { color:red; }
