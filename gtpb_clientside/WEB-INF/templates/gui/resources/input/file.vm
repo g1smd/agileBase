@@ -79,7 +79,7 @@
       <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
         #set($showFieldName = false)
         #if(($formStyle != "SINGLE_COLUMN") && $fieldValueObject.isNull() || (!$fieldValueObject.isImage()))
-          $field
+          Field name $field
           #set($showFieldName = true)
         #end
         <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
