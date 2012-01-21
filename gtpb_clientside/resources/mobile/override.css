@@ -1,6 +1,6 @@
 #mobile_header {
   position: relative;
-  height: 40px;
+  min-height: 40px;
   width: 100%;
   font-size: 16pt;
   font-weight: bold;
