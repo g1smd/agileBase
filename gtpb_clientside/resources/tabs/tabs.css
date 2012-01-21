@@ -230,6 +230,10 @@ textarea {
 	display: none;
 }
 
+#reportData .input_saved {
+  background-color: green;
+}
+
 *[error] { color:red; }
 a[error] { font-size:8pt; }
 
