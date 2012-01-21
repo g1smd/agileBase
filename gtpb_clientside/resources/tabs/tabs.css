@@ -617,6 +617,11 @@ div#reportData {
   color: #777777;
 }
 
+#reportData .block.non_section .row {
+  break-inside: avoid-column;
+  -webkit-column-break-inside: avoid;
+}
+
 #reportData .block h1 {
   margin: 0;
   font-size: 120%;
@@ -629,7 +634,7 @@ div#reportData {
 #reportData .block.non_section h1 {
 	text-align: left;
 	margin-bottom: 0.8em;
-	margin-top: 0.5em;
+	margin-top: 0.5em; /* Chrome fix */
 }
 
 #reportData .block img {
