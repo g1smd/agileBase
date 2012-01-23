@@ -413,12 +413,13 @@ img.cross_reference_image {
 }
 
 .upload_progress_container {
-  width: 90%;
+  width: 100%;
   float: left;
   position: relative;
   min-height: 10px;
   padding: 2px;
   border: 1px dashed #777777;
+  display: none;
 }
 
 .upload_progress_bar {
@@ -429,7 +430,6 @@ img.cross_reference_image {
   width: 0px;
   background-color: #486f98;
   padding: 2px;
-  display: none;
   overflow: hidden;
   color: white;
   -webkit-transition-property: background-color, width;

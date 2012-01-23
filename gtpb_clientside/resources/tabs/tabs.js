@@ -573,7 +573,7 @@ function fSexyUpload() {
 		var jqUploadInfo = jqForm.find(".upload_info");
 		jqForm.sexyPost({
 			start : function(event) {
-				jqProgressBar.show();
+				jqProgressBar.parent().show();
 				jqProgressBar.html(jqUploadInfo.html());
 				jqProgressBar.removeClass("upload_complete");
 				jqProgressBar.css("width", "0%");
