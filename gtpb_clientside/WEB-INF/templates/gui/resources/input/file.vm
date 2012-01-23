@@ -80,7 +80,7 @@
         #set($showFieldName = false)
         #set($singleColumn = (($formStyle == "SINGLE_COLUMN") || $mobile_device))
         #if((!$singleColumn) && ($fieldValueObject.isNull() || (!$fieldValueObject.isImage())))
-          $field
+          <span class="fieldname">$field</span>
           #set($showFieldName = true)
         #end
         <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
