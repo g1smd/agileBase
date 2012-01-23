@@ -730,6 +730,10 @@ div#reportData {
 	position: static; /* Workaround https://bugs.webkit.org/show_bug.cgi?id=76834 */
 }
 
+#reportData .block .add_comment_row input[type=button] {
+  position: static;
+}
+
 /* 3) Summary tab css */
 
 
