@@ -438,6 +438,7 @@ img.cross_reference_image {
   -moz-transition-duration: 2s;
   transition-property: background-color, width;
   transition-duration: 2s;
+  border-radius: 0.5em;
 }
 
 .upload_progress_bar.upload_complete {

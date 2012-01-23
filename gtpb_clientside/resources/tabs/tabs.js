@@ -194,7 +194,6 @@ var TabInterfaceObject = function(containerElem) {
 	TabInterfaceObjectPub.refresh = function(rowId) {
 		TabInterfaceObjectPub.invalidate();
 		currentRowId = rowId;
-
 		currentTab.queueTab();
 	}
 
@@ -585,6 +584,7 @@ function fSexyUpload() {
 				jqProgressBar.text("Upload complete");
 				jqProgressBar.addClass("upload_complete");
 				jqProgressBar.css("width", "100%");
+				document.location = "?return=gui/reports_and_tables/pane3";
 			},
 			error : function(event) {
 				jqProgressBar.text("Error, file upload incomplete");
