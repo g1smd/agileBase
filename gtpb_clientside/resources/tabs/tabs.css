@@ -230,7 +230,7 @@ textarea {
 	display: none;
 }
 
-#reportData .input_saved {
+#reportData .block .input_saved {
   background-color: #DDEFE0; /* green */
 }
 
@@ -599,6 +599,7 @@ span.comment_attribution {
 #reportData .block.two_cols.non_section input, #reportData .block.two_cols.non_section select {
   float: none;
   top: 0;
+  height: 3em;
 }
 
 div#reportData {
