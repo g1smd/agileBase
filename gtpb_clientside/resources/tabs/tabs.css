@@ -109,6 +109,7 @@ td.trailing input[type=button] {
 .tab-interface .tab-content .tab-item._1 {
   padding-top: 1em;
   background-color: #f4f4f4;
+  height: 100%;
 }
 
 .tab-interface .tab-content div.content { 
@@ -417,6 +418,7 @@ img.cross_reference_image {
   position: relative;
   min-height: 10px;
   padding: 2px;
+  border: 1px dashed #777777;
 }
 
 .upload_progress_bar {
