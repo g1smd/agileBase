@@ -648,7 +648,6 @@ div#reportData {
 }
 
 #reportData .block input, #reportData .block select {
-	/*
   float: right;
   width: 50%;
   border: 1px solid white;
@@ -658,7 +657,6 @@ div#reportData {
   top: -0.4em;
   border-radius: 0.5em;
   font-family: Arial, Helvetica, sans-serif;
-  */
 }
 
 #reportData .block select {
@@ -702,9 +700,7 @@ div#reportData {
 }
 
 #reportData .block input:focus {
-	/*
   border: 1px solid #cecece!important;
-  */
 }
 
 #reportData .block input[type=checkbox] {
@@ -731,6 +727,7 @@ div#reportData {
 	width: 200px;
 	top: 0;
 	border: 1px solid #cecece;
+	position: static; /* Workaround https://bugs.webkit.org/show_bug.cgi?id=76834 */
 }
 
 /* 3) Summary tab css */
