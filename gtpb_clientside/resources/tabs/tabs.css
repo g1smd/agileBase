@@ -412,7 +412,8 @@ img.cross_reference_image {
 }
 
 .upload_progress_container {
-  width: 100%;
+  width: 90%;
+  float: left;
   position: relative;
   min-height: 10px;
   padding: 2px;
