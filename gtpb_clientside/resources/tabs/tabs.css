@@ -624,6 +624,7 @@ div#reportData {
 #reportData .block.non_section .row {
   break-inside: avoid-column;
   -webkit-column-break-inside: avoid;
+  min-height: 2em;
 }
 
 #reportData .block h1 {
