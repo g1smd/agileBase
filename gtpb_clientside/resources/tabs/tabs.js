@@ -961,8 +961,10 @@ function fComments() {
 		}
 	})
 	$(".comment_toggle").click(function() {
-		$(this).nextUntil(".add_comment_row").next().last().children().andSelf().show("normal");
-		$(this).nextUntil(".add_comment_row").next().last().find(".comment_input").focus();
+		var jqCommentRow = $(this).nextUntil(".add_comment_row").next().last();
+		jqCommentRow.show("normal");
+		jqCommentRow.find(".comment_input").focus();
+		jqCommentRow.css("overflow","visible");
 	});
 }
 
