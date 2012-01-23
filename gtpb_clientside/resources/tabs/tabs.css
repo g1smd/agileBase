@@ -599,7 +599,6 @@ span.comment_attribution {
 #reportData .block.two_cols.non_section input, #reportData .block.two_cols.non_section select {
   float: none;
   top: 0;
-  height: 3em;
 }
 
 div#reportData {
@@ -662,6 +661,7 @@ div#reportData {
 #reportData .block select {
   -webkit-appearance: none;
   -moz-appearance: none;
+  height: 1.7em;
 }
 
 #reportData .block select:hover {
