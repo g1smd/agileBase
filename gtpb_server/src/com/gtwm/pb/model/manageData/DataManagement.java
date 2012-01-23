@@ -108,6 +108,7 @@ import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.servlets.ServletUtilMethods;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.DataDependencyException;
+import com.gtwm.pb.util.Enumerations.AttachmentType;
 import com.gtwm.pb.util.Enumerations.DataFormat;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
@@ -1477,13 +1478,17 @@ public final class DataManagement implements DataManagementInfo {
 					String thumb500Path = filePath + "." + 500 + "." + extension;
 					File thumb40File = new File(thumb40Path);
 					File thumb500File = new File(thumb500Path);
+					int midSize = 500;
+					if (field.getAttachmentType().equals(AttachmentType.PROFILE_PHOTO)) {
+						midSize = 250;
+					}
 					try {
 						BufferedImage originalImage = ImageIO.read(selectedFile);
 						int height = originalImage.getHeight();
 						int width = originalImage.getWidth();
 						// Conditional resize
-						if ((height > 500) || (width > 500)) {
-							Thumbnails.of(selectedFile).size(500, 500).toFile(thumb500File);
+						if ((height > midSize) || (width > midSize)) {
+							Thumbnails.of(selectedFile).size(midSize, midSize).toFile(thumb500File);
 						} else {
 							FileUtils.copyFile(selectedFile, thumb500File);
 						}
