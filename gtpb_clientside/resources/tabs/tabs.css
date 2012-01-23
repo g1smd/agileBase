@@ -623,6 +623,10 @@ div#reportData {
   color: #777777;
 }
 
+#reportData .block .row {
+  vertical-align: bottom;
+}
+
 #reportData .block.non_section .row {
   break-inside: avoid-column;
   -webkit-column-break-inside: avoid;
