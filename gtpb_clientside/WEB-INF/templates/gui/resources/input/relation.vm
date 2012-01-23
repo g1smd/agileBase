@@ -70,7 +70,7 @@
 #else
   #if($userCanEdit)
   <div class="relation_field">##
-    #if(!$singleColumn) $field.getSimplifiedFieldName() #end ## $singleColumn: see input.vm
+    #if(!$singleColumn) <span class="fieldname">$field.getSimplifiedFieldName()</span> #end ## $singleColumn: see input.vm
     <input name="$internalFieldName" ##
   	type="hidden" class="relation_hidden" ##
   	value="$fieldValue" ##

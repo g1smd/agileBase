@@ -718,8 +718,9 @@ div#reportData {
 #reportData .block input[type=checkbox] {
   float: left!important;
   width: auto;
-  margin-right: 1em;
-  margin-top: 0;
+  margin-right: 0.5em;
+  margin-left: 0;
+  margin-top: 0.4em;
   top: 0;  
 }
 
