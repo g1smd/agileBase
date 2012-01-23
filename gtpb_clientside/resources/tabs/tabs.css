@@ -648,6 +648,7 @@ div#reportData {
 }
 
 #reportData .block input, #reportData .block select {
+	/*
   float: right;
   width: 50%;
   border: 1px solid white;
@@ -657,6 +658,7 @@ div#reportData {
   top: -0.4em;
   border-radius: 0.5em;
   font-family: Arial, Helvetica, sans-serif;
+  */
 }
 
 #reportData .block select {
@@ -700,7 +702,9 @@ div#reportData {
 }
 
 #reportData .block input:focus {
+	/*
   border: 1px solid #cecece!important;
+  */
 }
 
 #reportData .block input[type=checkbox] {
