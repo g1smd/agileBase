@@ -963,7 +963,8 @@ function fComments() {
 	$(".comment_toggle").click(function() {
 		var jqCommentRow = $(this).nextUntil(".add_comment_row").next().last();
 		jqCommentRow.show("normal");
-		jqCommentRow.find(".comment_input").focus();
+		//jqCommentRow.find(".comment_input").focus();
+		// Google Chrome issue: input box doesn't appear unless you do this
 		jqCommentRow.css("overflow","visible");
 	});
 }
