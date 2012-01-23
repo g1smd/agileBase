@@ -538,6 +538,7 @@ div.relation_field {
 	display: none;
 	padding: 1em;
 	color: gray;
+	width: 100%;
 }
 
 span.comment_text {
