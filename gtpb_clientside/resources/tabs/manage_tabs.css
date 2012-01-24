@@ -82,7 +82,6 @@ table#reportData tbody tr button.globalEdit {
                                          
    .options_wrapper div.options_set td:first-child:first-line { 
      font-size:10pt;
-     font-weight:bold;
      color:black;
      /* vertical-align:top;*/ /* this mucked up the module editing screens - doesn't seem to affect anything else */
   padding-top:13px;
@@ -92,7 +91,6 @@ table#reportData tbody tr button.globalEdit {
 
 .options_wrapper div.options_set td:first-child:first-line { 
  font-size:10pt;
- font-weight:bold;
  color:black;
  /* vertical-align:top;*/ /* this mucked up the module editing screens - doesn't seem to affect anything else */
   padding-top:13px;
