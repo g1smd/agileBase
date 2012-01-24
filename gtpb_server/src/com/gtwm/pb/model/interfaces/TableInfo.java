@@ -191,4 +191,10 @@ public interface TableInfo extends Comparable<TableInfo> {
 	public FormStyle getFormStyle();
 	
 	public void setFormStyle(FormStyle formStyle);
+	
+	public SortedSet<FormTabInfo> getFormTabs();
+	
+	public void removeFormTab(FormTabInfo formTab);
+	
+	public void addFormTab(FormTabInfo formTab);
 }

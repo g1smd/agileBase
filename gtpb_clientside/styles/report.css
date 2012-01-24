@@ -14,7 +14,6 @@ table#reportData {
   padding-left: 3px;
   padding-right: 3px;
   padding-top: 6px;
-  /* font-family: "Arial Narrow", Arial, sans-serif; */
 }
 
 table#reportData th {
@@ -134,8 +133,6 @@ table#reportData tr#currentRow td {
   background-color: #3875d7!important; /* #ffd588; */
   color: white!important;
   border-right: none;
-  /*background-image: url(styles/selected_row_fine_angled.png);*/
-  /*font-family:"Arial Bold";*/
 }				
 
 table#reportData tr#currentRow td.leading,

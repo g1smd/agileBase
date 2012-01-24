@@ -279,13 +279,14 @@ div#area_search_replace  #area_search_msg{
 }
 
 .area_toolbar select{
-    font-family: 'MS Sans Serif',sans-serif,Verdana,Arial;
-    font-size: 7pt;
-    font-weight: normal;
-    margin: 2px 0 0 0 ;
-    padding: 0;
-    vertical-align: top;
-    background-color: #F0F0EE;
+  font-family: Verdana,Arial,sans-serif;
+  font-size-adjust: 0.58;
+  font-size: 7pt;
+  font-weight: normal;
+  margin: 2px 0 0 0 ;
+  padding: 0;
+  vertical-align: top;
+  background-color: #F0F0EE;
 }
 
 table.statusbar{
