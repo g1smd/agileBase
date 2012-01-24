@@ -92,7 +92,7 @@
           <div class="upload_progress_bar"></div>
           <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
         </div>
-      </form><br #if($fieldValueObject.isImage() && ($field.getAttachmentType() == "IMAGE")) style="clear:left" #end />
+      </form>Attach: $field.getAttachmentType(), Image: $fieldValueObject.isImage()<br #if($fieldValueObject.isImage() && ($field.getAttachmentType() == "IMAGE")) style="clear:left" #end />
   	#end
   #end
 #end ## if !$globalEdit
