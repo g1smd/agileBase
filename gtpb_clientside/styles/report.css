@@ -1,6 +1,6 @@
-* {
-  font-face: Verdana, Arial, sans-serif;
-  font-face-adjust: 0.58;
+body {
+  font-family: Verdana, Arial, sans-serif;
+  font-size-adjust: 0.58;
 }
 
 table#reportData { 
