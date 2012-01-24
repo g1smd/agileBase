@@ -25,6 +25,8 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
+
+import com.gtwm.pb.model.interfaces.FormTabInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
@@ -479,6 +481,8 @@ public class TableDefn implements TableInfo {
 	private String email = null;
 	
 	private FormStyle formStyle = FormStyle.SINGLE_COLUMN;
+	
+	private SortedSet<FormTabInfo> formTabs = new TreeSet<FormTabInfo>();
 
 	private volatile String simpleName = null;
 

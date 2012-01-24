@@ -2,7 +2,11 @@
 @media screen, print { 
     
 /* Added by GTWM */
-	html, body { font-family: "Arial", sans-serif; color: black; font-size: 11pt; }
+html, body {
+	font-family: Verdana,Arial,sans-serif;
+  font-size-adjust: 0.58;
+  color: black; font-size: 11pt;
+}
 	
 	ul.mktree  img { border:0 }
 	ul.mktree  a { text-decoration:none; color:#000000 }

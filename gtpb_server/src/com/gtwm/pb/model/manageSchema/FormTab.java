@@ -16,16 +16,35 @@
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.gtwm.pb.model.manageSchema;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.FormTabInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 
+@Entity
 public class FormTab implements FormTabInfo {
 
 	public FormTab(TableInfo table) {
 		this.table = table;
 	}
 	
+	@Id
+	@GeneratedValue
+	/**
+	 * Hibernate needs an ID for a persistent class - this isn't actually used
+	 * by the app otherwise
+	 */
+	protected long getId() {
+		return this.id;
+	}
+
+	private void setId(long id) {
+		this.id = id;
+	}
+
 	public TableInfo getTable() {
 		return this.table;
 	}
@@ -85,5 +104,7 @@ public class FormTab implements FormTabInfo {
 	private BaseReportInfo selectorReport;
 	
 	private int index = 0;
+	
+	private long id;
 
 }

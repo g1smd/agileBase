@@ -45,7 +45,8 @@ div#_md_blank div#_md_dialog div#_md_title {
   color:white;
   font-weight:bold;
   text-transform:uppercase;
-  font-family:"Trebuchet MS" "Verdana" Arial _sans-serif;
+  font-family: Verdana,Arial,sans-serif;
+  font-size-adjust: 0.58;
 }
 
 div#_md_blank div#_md_dialog div#_md_toolbar {
