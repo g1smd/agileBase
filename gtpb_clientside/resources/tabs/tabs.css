@@ -628,6 +628,7 @@ div#reportData {
   break-inside: avoid-column;
   -webkit-column-break-inside: avoid;
   color: #777777;
+  line-height: 1.2em;
 }
 
 #reportData .block .row {
