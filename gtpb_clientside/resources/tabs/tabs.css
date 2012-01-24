@@ -677,7 +677,7 @@ div#reportData {
 #reportData .block select {
   -webkit-appearance: none;
   -moz-appearance: none;
-  height: 1.7em;
+  height: 2em /* 1.7em; */
 }
 
 #reportData .block select:hover {
