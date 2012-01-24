@@ -730,8 +730,7 @@ div#reportData {
   width: auto;
   margin-right: 0.5em;
   margin-left: 0;
-  position: relative;
-  top: -0.3em;  
+  top: 0;
 }
 
 #reportData .two_cols .block input[type=checkbox] {
