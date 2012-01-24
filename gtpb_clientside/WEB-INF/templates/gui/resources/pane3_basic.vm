@@ -42,7 +42,7 @@
 									 
 			body { padding-bottom:0;
 					 	 position:absolute;
-					 	 font-family:sans-serif,Arial;
+					 	 /* font-family:sans-serif,Arial; */
     	       font-size:10pt;
 						 }
 						 

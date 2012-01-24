@@ -39,7 +39,7 @@
 
       	  body { padding-bottom:25px;
            	position:absolute;
-			font-family:sans-serif,Arial;
+			/* font-family:sans-serif,Arial; */
       	    font-size:10pt;
 		  }
  

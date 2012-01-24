@@ -20,7 +20,8 @@
 <style>
 @import url("styles/report.css");
 	
-		html, body { font-family: "Arial", sans-serif; 
+		html, body {
+    /* font-family: "Arial", sans-serif;  */
     			 color: black; 
     			 font-size: 11pt; 
     			 margin:0; 
