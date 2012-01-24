@@ -5,7 +5,7 @@
 html, body {
 	font-family: Verdana,Arial,sans-serif;
   font-size-adjust: 0.58;
-  color: black; font-size: 11pt;
+  color: black; font-size: 10pt;
 }
 	
 	ul.mktree  img { border:0 }
@@ -34,9 +34,6 @@ html, body {
 	ul.mktree  li.liClosed  ul { display: none; }
 	
 /* Format menu items differently depending on what level of the tree they are in */
-	ul.mktree  li { font-size: 10pt; }
+	ul.mktree  li { font-size: 9pt; }
 	ul.mktree  li ul li a { color:#282828 }
-/*	ul.mktree  li ul li { font-size: 10pt; }
-	ul.mktree  li ul li ul li { font-size: 8pt; }
-	ul.mktree  li ul li ul li ul li { font-size: 6pt; }  */
 }

@@ -15,7 +15,7 @@ body {
   background-color:#f0f0f0; 
   font-family: Verdana,Arial,sans-serif;
   font-size-adjust: 0.58;
-  font-size:10pt;
+  font-size:9pt;
   margin: 0;
   overflow: hidden;
 }
@@ -145,7 +145,6 @@ label:hover {
                                           
 div.tab_content td:first-child:first-line { 
   font-size:10pt;
-  font-weight:bold;
   color:black;
   vertical-align:top;
   padding-top:13px; 
@@ -212,7 +211,7 @@ textarea {
   padding: 0.3em;
   font-family: Verdana,Arial,sans-serif;
   font-size-adjust: 0.58;
-  font-size: 10pt;
+  font-size: 9pt;
 }
 
 .draggingRow {
@@ -665,7 +664,7 @@ div#reportData {
   float: right;
   width: 50%;
   border: 1px solid white;
-  font-size: 10pt;
+  font-size: 9pt;
   padding: 0.2em;
   /* 
   position: relative;
@@ -799,7 +798,7 @@ div#reportData {
   	width:100%;
   	background-color: #f4f4f4;
   	padding: 0.5em;
-  	font-size: 10pt;
+  	font-size: 9pt;
   }
   
   .chart_controls td {
