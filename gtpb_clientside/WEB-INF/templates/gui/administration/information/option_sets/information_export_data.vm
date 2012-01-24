@@ -33,11 +33,6 @@
 		font-size: 10pt!important;
 		width:50%;
 	}
-	
-	/* override report admin tab CSS in manage_tabs.css */
-	.options_wrapper div.options_set td:first-child:first-line {
-		font-weight: normal;
-	}
 </style>
 
 $viewTools.startTimer("gui/administration/information/option_sets/information_export_data.vm")

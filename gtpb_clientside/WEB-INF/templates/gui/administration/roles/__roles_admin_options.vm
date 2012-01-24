@@ -65,7 +65,6 @@
                                           color:#666666;
                                           padding-left:10px }
     #options_wrapper div.options_set td:first-child:first-line { font-size:10pt;
-                                                      font-weight:bold;
                                                       color:black;
                                                       vertical-align:top;
                                                       padding-top:13px }                                         
