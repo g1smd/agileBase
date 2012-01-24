@@ -23,7 +23,7 @@ table#reportData {
 
 table#reportData th {
   background-color: white; /* #f1f2ed; */
-  font-size:9pt; 
+  font-size:8.5pt; 
   color:black;
   font-weight:bold;
   border:1px solid white; /* #f0f0f0 / #cecece */
@@ -118,7 +118,7 @@ table#reportData td {
   vertical-align:top;
   border-right:1px solid #f2f2f2;
   padding:3px 7px 3px 7px;
-  font-size:9pt;
+  font-size:8.5pt;
   cursor:default;
   height:30px;
   min-width:2em;
@@ -240,7 +240,7 @@ table#reportData tr.excludedRecord td {
 .sectioned_filter_row {
   background-color: #dddddd;
   border-bottom: 1px solid #cecece;
-  font-size: 9pt;
+  font-size: 8.5pt;
   line-height: 2em;
 }
 
