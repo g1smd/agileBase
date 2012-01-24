@@ -3,7 +3,7 @@ body{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
 
 /* Menu styles */
 body{
-	font: 9pt/1.5 Verdana,Arial,sans-serif;
+	font: 9pt/1.6 Verdana,Arial,sans-serif;
   font-size-adjust: 0.58;
 }
 
@@ -31,7 +31,6 @@ h2 {
 	/* background: url(tree/drop-shadow.gif) bottom repeat-x; */
 	cursor: hand;
 	cursor: pointer;
-	font-size: 10pt;
 	height: 23px;
 	/* border-top: #CECECE 1px solid; */
 }
