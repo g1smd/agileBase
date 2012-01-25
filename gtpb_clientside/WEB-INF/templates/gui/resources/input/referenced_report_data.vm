@@ -19,8 +19,9 @@
   #if($viewOnly)
 	  <p>$referencedData</p>
   #else
-    #if(!$singleColumn) <br /> #end
-    $referencedData
+    #if(!$singleColumn) <p>$referencedData</p>
+    #else $referencedData
+    #end
   #end  
 #else
 	#set($referencedData = false)
