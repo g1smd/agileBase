@@ -961,8 +961,12 @@ function fComments() {
 		}
 	})
 	$(".comment_toggle").click(function() {
+		// Two col. method
 		var jqCommentRow = $(this).nextUntil(".add_comment_row").next().last();
-		alert("We have " + jqCommentRow.length + " comment inputs");
+		if (jqCommentRow.length == 0) {
+			// For comments in one col. layout
+			jqCommentRow = $(this).next(".add_comment_row");
+		}
 		jqCommentRow.show("normal");
 		jqCommentRow.find(".comment_input").focus();
 	});
