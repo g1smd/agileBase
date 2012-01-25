@@ -962,6 +962,7 @@ function fComments() {
 	})
 	$(".comment_toggle").click(function() {
 		var jqCommentRow = $(this).nextUntil(".add_comment_row").next().last();
+		alert("We have " + jqCommentRow.length + " comment inputs");
 		jqCommentRow.show("normal");
 		jqCommentRow.find(".comment_input").focus();
 	});
