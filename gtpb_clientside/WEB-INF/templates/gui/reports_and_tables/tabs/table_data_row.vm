@@ -68,7 +68,8 @@
             #set($contracted = true)
           #end
         #end
-        #if(($formStyle == "SINGLE_COLUMN") || $mobile_device)
+        #set($singleColumn = ($formStyle == "SINGLE_COLUMN") || $mobile_device)
+        #if($singleColumn)
           #parse('gui/reports_and_tables/tabs/table_data_row_single_column.vm')
         #else
           #parse('gui/reports_and_tables/tabs/table_data_row_two_columns.vm')

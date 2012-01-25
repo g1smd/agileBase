@@ -19,6 +19,7 @@
   #if($viewOnly)
 	  <p>$referencedData</p>
   #else
+    #if(!$singleColumn) <br /> #end
     $referencedData
   #end  
 #else
