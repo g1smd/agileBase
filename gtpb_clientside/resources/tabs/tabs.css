@@ -639,6 +639,7 @@ div#reportData {
 #reportData .block.non_section .row {
   break-inside: avoid-column;
   -webkit-column-break-inside: avoid;
+  display: inline-block; /* Seems to avoid column breaks in Firefox, use until https://bugzilla.mozilla.org/show_bug.cgi?id=549114 is fixed */
   min-height: 2em;
 }
 
@@ -655,6 +656,7 @@ div#reportData {
 	text-align: left;
 	margin-bottom: 0.8em;
 	margin-top: 0.5em; /* Chrome fix */
+	color: black;
 }
 
 #reportData .block img {
