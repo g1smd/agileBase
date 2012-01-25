@@ -41,12 +41,13 @@
     <div class="block two_cols non_section">
   #end
   #set($fieldClass = $field.getClass().getSimpleName())
-  <div class="row">
-  #if(!$fieldClass.equals("RelationFieldDefn") && ($fieldCategory != "FILE"))
-    ## relation and file field names included in resources/input/relation.vm
-    <span class="fieldname">$field</span>
-  #end
-  #parse('gui/resources/input/input.vm')
+  ## inline-block workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
+  <div class="row" #if(($field.getContentSize() > 50) || ($fieldValue.length() > 100)) style="display:inline-block" #end>
+    #if(!$fieldClass.equals("RelationFieldDefn") && ($fieldCategory != "FILE"))
+      ## relation and file field names included in resources/input/relation.vm
+      <span class="fieldname">$field</span>
+    #end
+    #parse('gui/resources/input/input.vm')
   </div>
 #end
 #if($field.equals($lastField))

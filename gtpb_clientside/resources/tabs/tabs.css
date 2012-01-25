@@ -639,7 +639,6 @@ div#reportData {
 #reportData .block.non_section .row {
   break-inside: avoid-column;
   -webkit-column-break-inside: avoid;
-  display: inline-block; /* Seems to avoid column breaks in Firefox, use until https://bugzilla.mozilla.org/show_bug.cgi?id=549114 is fixed */
   min-height: 2em;
 }
 
