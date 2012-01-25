@@ -709,7 +709,7 @@ div#reportData {
   top: 0.4em;
 }
 
-.two_cols .block.non_section .fieldname {
+.block.non_section .fieldname {
   width: 10em;
   text-align: right;
 }
