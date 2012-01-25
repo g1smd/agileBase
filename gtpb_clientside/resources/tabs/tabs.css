@@ -709,6 +709,11 @@ div#reportData {
   top: 0.4em;
 }
 
+.two_cols .block.non_section .fieldname {
+  width: 10em;
+  text-align: right;
+}
+
 .date select, .date input {
   width: auto!important;
   float: none!important;
