@@ -19,9 +19,7 @@
   #if($viewOnly)
 	  <p>$referencedData</p>
   #else
-    #if(!$singleColumn) <p>$referencedData</p>
-    #else $referencedData
-    #end
+    <p style="line-height:1.5em">$referencedData</p>
   #end  
 #else
 	#set($referencedData = false)
