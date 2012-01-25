@@ -19,7 +19,7 @@
   #if($viewOnly)
 	  <p>$referencedData</p>
   #else
-    <p style="line-height:1.5em">$referencedData</p>
+    <p style="line-height:1.5em; color: black">$referencedData</p>
   #end  
 #else
 	#set($referencedData = false)
