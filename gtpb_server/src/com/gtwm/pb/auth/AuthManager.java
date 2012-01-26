@@ -95,7 +95,6 @@ public final class AuthManager implements AuthManagerInfo {
 					logger.info("" + company + " roles: " + company.getRoles());
 					logger.info("" + company + " users: " + company.getUsers());
 					logger.info("" + company + " modules: " + company.getModules());
-					logger.info("" + company + " tabs: " + company.getTabAddresses());
 					// Company identifiers:
 					// GTwM = aeaa2e59ef1798629
 					// CH = aa1d402725710a94d
@@ -183,6 +182,7 @@ public final class AuthManager implements AuthManagerInfo {
 		// (indirectly)
 		logger.info("Loading table " + table);
 		logger.info("...Table Fields: " + table.getFields());
+		logger.info("...Table form tabs: " + table.getFormTabs());
 		for (BaseReportInfo report : table.getReports()) {
 			logger.info("...Report " + table + "." + report);
 			if (report instanceof SimpleReportInfo) {
