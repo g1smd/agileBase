@@ -52,7 +52,6 @@
     <a href="AppController.servlet?return=gui/development/translator">Translate to internal or external names</a><p>
     <!-- <a href="AppController.servlet?return=gui/development/import_tables">Import Tables</a><p> -->
     <a href="AppController.servlet?return=gui/development/send_requests">Send a sequence of preformatted post requests</a><p>
-    <a href="AppController.servlet?return=gui/development/manage_tab_addresses">Manage tab addresses for $view.getLoggedInUser().getCompany()</a><p>
   </div>
   </div>
   </div>
