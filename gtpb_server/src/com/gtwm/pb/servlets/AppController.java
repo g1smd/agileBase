@@ -512,14 +512,6 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.updateModule(request, sessionData,
 							databaseDefn.getAuthManager());
 					break;
-				case ADD_TAB_ADDRESS:
-					ServletSchemaMethods.addTabAddress(request, databaseDefn.getAuthManager(),
-							databaseDefn);
-					break;
-				case REMOVE_TAB_ADDRESS:
-					ServletSchemaMethods.removeTabAddress(request, databaseDefn.getAuthManager(),
-							databaseDefn);
-					break;
 				case HIDE_REPORT:
 					ServletSchemaMethods.hideReportFromUser(sessionData, request, databaseDefn);
 					break;

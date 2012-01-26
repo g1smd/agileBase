@@ -31,7 +31,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Collections;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
@@ -150,21 +149,6 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		this.modules = modulesCollection;
 	}
 
-	@Transient
-	public Set<String> getTabAddresses() {
-		return Collections.unmodifiableSet(new LinkedHashSet<String>(this
-				.getTabAddressesCollection()));
-	}
-
-	@ElementCollection(fetch = FetchType.EAGER)
-	private synchronized Set<String> getTabAddressesCollection() {
-		return this.tabAddresses;
-	}
-
-	private synchronized void setTabAddressesCollection(Set<String> tabAddressesCollection) {
-		this.tabAddresses = tabAddressesCollection;
-	}
-
 	public synchronized void addUser(AppUserInfo user) {
 		this.getUsersCollection().add(user);
 	}
@@ -177,10 +161,6 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		this.getModulesCollection().add(module);
 	}
 
-	public synchronized void addTabAddress(String tabAddress) {
-		this.getTabAddressesCollection().add(tabAddress);
-	}
-
 	public synchronized void removeUser(AppUserInfo user) {
 		this.getUsersCollection().remove(user);
 	}
@@ -191,10 +171,6 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 
 	public synchronized void removeModule(ModuleInfo module) {
 		this.getModulesCollection().remove(module);
-	}
-
-	public synchronized void removeTabAddress(String tabAddress) {
-		this.getTabAddressesCollection().remove(tabAddress);
 	}
 
 	public synchronized void setCachedSparkline(LogType logType, int options,
@@ -335,8 +311,6 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	private Set<TableInfo> tables = new HashSet<TableInfo>();
 
 	private Set<ModuleInfo> modules = new HashSet<ModuleInfo>();
-
-	private Set<String> tabAddresses = new LinkedHashSet<String>();
 
 	private String companyName = "";
 

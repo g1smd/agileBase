@@ -17,7 +17,6 @@
  */
 package com.gtwm.pb.model.interfaces;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -51,11 +50,6 @@ public interface CompanyInfo {
 
 	public SortedSet<TableInfo> getTables();
 
-	/**
-	 * URLs for tabs that are loaded when agileBase starts
-	 */
-	public Set<String> getTabAddresses();
-
 	public ModuleInfo getModuleByInternalName(String internalModuleName)
 			throws ObjectNotFoundException;
 
@@ -65,15 +59,11 @@ public interface CompanyInfo {
 
 	public void addModule(ModuleInfo module);
 
-	public void addTabAddress(String tabAddress);
-
 	public void removeUser(AppUserInfo user);
 
 	public void removeRole(AppRoleInfo role);
 
 	public void removeModule(ModuleInfo module);
-
-	public void removeTabAddress(String tabAddress);
 
 	/**
 	 * Notify the company that a table belongs to it. Note, the definitive owner

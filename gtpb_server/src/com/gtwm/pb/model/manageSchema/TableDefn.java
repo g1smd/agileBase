@@ -456,6 +456,23 @@ public class TableDefn implements TableInfo {
 		return this.formStyle;
 	}
 	
+	public SortedSet<FormTabInfo> getFormTabs() {
+		return Collections.unmodifiableSortedSet(new TreeSet<FormTabInfo>(this.getFormTabsDirect()));
+	}
+	
+	@OneToMany(targetEntity = FormTab.class, cascade = CascadeType.ALL)
+	private Set<FormTabInfo> getFormTabsDirect() {
+		return this.formTabs;
+	}
+	
+	public void addFormTab(FormTabInfo formTab) {
+		this.getFormTabsDirect().add(formTab);
+	}
+	
+	public void removeFormTab(FormTabInfo formTab) {
+		this.getFormTabsDirect().remove(formTab);
+	}
+	
 	public String toString() {
 		return this.getTableName();
 	}
