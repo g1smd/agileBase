@@ -35,6 +35,7 @@ import com.gtwm.pb.auth.Company;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
+import com.gtwm.pb.model.interfaces.FormTabInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
@@ -56,6 +57,7 @@ import com.gtwm.pb.model.interfaces.fields.DecimalField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.IntegerField;
+import com.gtwm.pb.model.manageSchema.FormTab;
 import com.gtwm.pb.model.manageSchema.JoinClause;
 import com.gtwm.pb.model.manageSchema.JoinType;
 import com.gtwm.pb.model.manageSchema.ReportCalcFieldDefn;
@@ -365,6 +367,56 @@ public final class ServletSchemaMethods {
 		}
 		if (newTable != null) {
 			sessionData.setTable(newTable);
+		}
+	}
+	
+	public synchronized static void addFormTab(HttpServletRequest request, SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn, true);
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table)) {
+			throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
+		}
+		String tabTableId = request.getParameter("tabtable");
+		if (tabTableId == null) {
+			throw new MissingParametersException("tabtable must be supplied to add a form tab to a table");
+		}
+		TableInfo tabTable = databaseDefn.getTable(request, tabTableId);
+		FormTabInfo maxFormTab = table.getFormTabs().last();
+		int newIndex = maxFormTab.getIndex() + 1;
+		FormTabInfo formTab = new FormTab(tabTable, newIndex);
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(table);
+			table.addFormTab(formTab);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
+	public synchronized static void removeFormTab(HttpServletRequest request, SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn, true);
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table)) {
+			throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
+		}
+		String tabTableId = request.getParameter("tabtable");
+		TableInfo tabTable = databaseDefn.getTable(request, tabTableId);
+		FormTabInfo formTab = null;
+		TABS_LOOP: for (FormTabInfo testFormTab : table.getFormTabs()) {
+			if (testFormTab.getTable().equals(tabTable)) {
+				formTab = testFormTab;
+				break TABS_LOOP;
+			}
+		}
+		if (formTab == null) {
+			throw new ObjectNotFoundException("A tab for table " + tabTableId + " was not found in table " + table);
+		}
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(table);
+			table.removeFormTab(formTab);
+		} finally {
+			HibernateUtil.closeSession();
 		}
 	}
 
