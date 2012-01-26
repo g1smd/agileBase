@@ -27,8 +27,9 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 @Entity
 public class FormTab implements FormTabInfo {
 
-	public FormTab(TableInfo table) {
+	public FormTab(TableInfo table, int index) {
 		this.table = table;
+		this.setIndex(index);
 	}
 	
 	@Id

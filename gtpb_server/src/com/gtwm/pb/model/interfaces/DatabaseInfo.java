@@ -91,8 +91,9 @@ public interface DatabaseInfo {
 	 *             of users
 	 */
 	public void updateTable(Connection conn, HttpServletRequest request, TableInfo table,
-			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic, String tableEmail, FormStyle formStyle)
-			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException;
+			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic,
+			String tableEmail, FormStyle formStyle) throws DisallowedException,
+			CantDoThatException, ObjectNotFoundException, SQLException;
 
 	/**
 	 * Remove table tableToRemove provided no dependencies exist; otherwise
@@ -168,17 +169,21 @@ public interface DatabaseInfo {
 	 *             If a report with the specified name already exists
 	 */
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
-			String newReportName, String newReportDesc, ModuleInfo newModule, ReportStyle reportStyle)
-			throws DisallowedException, CantDoThatException, SQLException, ObjectNotFoundException;
+			String newReportName, String newReportDesc, ModuleInfo newModule,
+			ReportStyle reportStyle) throws DisallowedException, CantDoThatException, SQLException,
+			ObjectNotFoundException;
 
 	/**
 	 * Attach a custom template to a report for printout / outputs
 	 */
 	public void uploadCustomReportTemplate(HttpServletRequest request, BaseReportInfo report,
-			String fileName, List<FileItem> multipartItems) throws DisallowedException, ObjectNotFoundException, CantDoThatException, FileUploadException;
+			String fileName, List<FileItem> multipartItems) throws DisallowedException,
+			ObjectNotFoundException, CantDoThatException, FileUploadException;
 
-	public void removeCustomReportTemplate(HttpServletRequest request, BaseReportInfo report, String fileName) throws DisallowedException, ObjectNotFoundException, CantDoThatException;
-	
+	public void removeCustomReportTemplate(HttpServletRequest request, BaseReportInfo report,
+			String fileName) throws DisallowedException, ObjectNotFoundException,
+			CantDoThatException;
+
 	/**
 	 * 
 	 * @param sessionData
@@ -477,8 +482,9 @@ public interface DatabaseInfo {
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException;
 
 	/**
-	 * Returns the TableInfo object that has the required internal name
-	 * identifier
+	 * Returns the TableInfo object that has the required ID identifier. If no
+	 * table is found with that internal name, fall back to searching for one
+	 * with a user facing name of that ID
 	 * 
 	 * @param internalTableName
 	 *            the identifier of the table we're looking for
@@ -490,7 +496,7 @@ public interface DatabaseInfo {
 	 *             on that table, or be an administrator of the company the
 	 *             table is in
 	 */
-	public TableInfo getTable(HttpServletRequest request, String internalTableName)
+	public TableInfo getTable(HttpServletRequest request, String tableId)
 			throws ObjectNotFoundException, DisallowedException;
 
 	/**
