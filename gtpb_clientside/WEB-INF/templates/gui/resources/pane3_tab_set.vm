@@ -222,9 +222,9 @@
   #parse('gui/resources/google_maps_api_key.vm')
 	#if($google_maps_api_key)
     #if($viewTools.getAppUrl().startsWith("https"))
-      <script src="https://maps.googleapis.com/maps/api/js?key=$google_maps_api_key&sensor=false" type="text/javascript"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?v=3.6&key=$google_maps_api_key&sensor=false" type="text/javascript"></script>
     #else
-      <script src="http://maps.googleapis.com/maps/api/js?key=$google_maps_api_key&sensor=false" type="text/javascript"></script>
+      <script src="http://maps.googleapis.com/maps/api/js?v=3.6&key=$google_maps_api_key&sensor=false" type="text/javascript"></script>
     #end
   #end
   </head>

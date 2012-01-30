@@ -1157,6 +1157,7 @@ function fFormStyle() {
 function fMap() {
 	if($("#map_canvas").is(":visible")) {
 	  var myOptions = {
+	  	zoom: 8,
 	    mapTypeId: google.maps.MapTypeId.ROADMAP
 	  };
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
