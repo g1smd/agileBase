@@ -18,11 +18,28 @@
 package com.gtwm.pb.model.manageSchema;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportMapInfo;
 
 @Entity
 public class ReportMap implements ReportMapInfo {
+
+	@Id
+	@GeneratedValue
+	/**
+	 * Hibernate needs an ID for a persistent class - this isn't actually used
+	 * by the app otherwise
+	 */
+	protected long getId() {
+		return this.id;
+	}
+
+	private void setId(long id) {
+		this.id = id;
+	}
 
 	public ReportFieldInfo getPostcodeField() {
 		return this.postcodeField;
@@ -53,5 +70,7 @@ public class ReportMap implements ReportMapInfo {
 	private ReportFieldInfo colourField;
 	
 	private ReportFieldInfo categoryField;
+	
+	private long id;
 
 }
