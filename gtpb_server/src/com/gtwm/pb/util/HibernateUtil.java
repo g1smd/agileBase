@@ -32,6 +32,7 @@ import com.gtwm.pb.auth.RoleGeneralPrivilege;
 import com.gtwm.pb.auth.UserTablePrivilege;
 import com.gtwm.pb.auth.RoleTablePrivilege;
 import com.gtwm.pb.model.manageSchema.Module;
+import com.gtwm.pb.model.manageSchema.ReportMap;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.model.manageSchema.SimpleReportDefn;
@@ -87,6 +88,7 @@ public final class HibernateUtil {
 			cfg.addAnnotatedClass(ReportFilterDefn.class);
 			cfg.addAnnotatedClass(ChartAggregateDefn.class);
 			cfg.addAnnotatedClass(ChartDefn.class);
+			cfg.addAnnotatedClass(ReportMap.class);
 			cfg.addAnnotatedClass(SimpleReportDefn.class);
 			cfg.addAnnotatedClass(ReportSort.class);
 			cfg.addAnnotatedClass(ChartGrouping.class);
