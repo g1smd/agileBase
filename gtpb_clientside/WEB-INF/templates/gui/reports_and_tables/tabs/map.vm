@@ -10,6 +10,8 @@
     #end
   #end
 #end
+#set($colourField = $map.getColourField())
+#set($categoryField = $map.getCategoryField())
 <div id="mapcontrol">
   Map setup:
   <form method="POST" action="AppController.servlet">
@@ -22,7 +24,35 @@
           <select name="postcodefieldinternalname">
             <option value="">Please choose a field...</option>
             #foreach($reportField in $reportFields)
-              <option value="$reportField.getInternalFieldName()" #if($reportField.equals($postcodeField)) selected #end>$reportField</option>
+              #if($reportField.getBaseField().getFieldCategory() != "RELATION")
+                <option value="$reportField.getInternalFieldName()" #if($reportField.equals($postcodeField)) selected #end>$reportField</option>
+              #end
+            #end
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Colour by:</td>
+        <td>
+          <select name="colourfieldinternalname">
+            <option value="">Please choose a field...</option>
+            #foreach($reportField in $reportFields)
+              #if($reportField.getBaseField().getFieldCategory() != "RELATION")
+                <option value="$reportField.getInternalFieldName()" #if($reportField.equals($colourField)) selected #end>$reportField</option>
+              #end
+            #end
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Categorise by:</td>
+        <td>
+          <select name="categoryfieldinternalname">
+            <option value="">Please choose a field...</option>
+            #foreach($reportField in $reportFields)
+              #if($reportField.getBaseField().getFieldCategory() != "RELATION")
+                <option value="$reportField.getInternalFieldName()" #if($reportField.equals($categoryField)) selected #end>$reportField</option>
+              #end
             #end
           </select>
         </td>
