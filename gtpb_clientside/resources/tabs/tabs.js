@@ -1158,7 +1158,7 @@ function fMap() {
 	if($("#map_canvas").is(":visible")) {
 	  var myOptions = {
 	  	zoom: 8,
-	  	center: new google.maps.LatLng(2,54),
+	  	center: new google.maps.LatLng(54,2),
 	    mapTypeId: google.maps.MapTypeId.ROADMAP
 	  };
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
