@@ -16,14 +16,12 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 $viewTools.startTimer("gui/reports_and_tables/pane3")
-
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
-
 #if ($sessionData.getTable().getDefaultReport().equals($sessionData.getReport()))
 	## if the current report is the default report, edit the table
 	#parse('gui/reports_and_tables/default_pane3.vm')
 #else
 	## otherwise edit the report
-    #parse('gui/reports_and_tables/report_pane3.vm')
+  #parse('gui/reports_and_tables/report_pane3.vm')
 #end
 $viewTools.stopTimer("gui/reports_and_tables/pane3")
