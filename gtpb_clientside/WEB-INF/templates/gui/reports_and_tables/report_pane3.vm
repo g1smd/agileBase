@@ -18,7 +18,8 @@
 ## pane3 for a report
 #set($tabs=[])
 #set($styles=[])
-#set($success=$tabs.add({'tabName':'view', 'tabSource':'gui/reports_and_tables/tabs/view'}))
+#set($success=$tabs.add({'tabName':'view', 'tabSource':'gui/reports_and_tables/tabs/map'}))
+###set($success=$tabs.add({'tabName':'view', 'tabSource':'gui/reports_and_tables/tabs/view'}))
 #if($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionData.getTable()))
 	#set($success=$tabs.add({'tabName':'edit', 'tabSource':'gui/reports_and_tables/tabs/edit'}))
 #end

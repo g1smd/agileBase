@@ -19,6 +19,7 @@ package com.gtwm.pb.model.manageSchema;
 
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.ReportFilterInfo;
+import com.gtwm.pb.model.interfaces.ReportMapInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
@@ -1107,6 +1108,28 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	public void setReportStyle(ReportStyle reportStyle) {
 		this.reportStyle = reportStyle;
 	}
+	
+	@Transient
+	public ReportMapInfo getMap() {
+		ReportMapInfo map = this.getMapDirect();
+		if (map == null) {
+			map = new ReportMap();
+		}
+		return map;
+	}
+	
+	public void setMap(ReportMapInfo reportMap) {
+		this.setMapDirect(reportMap);
+	}
+	
+	@OneToOne(targetEntity = ReportMap.class)
+	private ReportMapInfo getMapDirect() {
+		return this.reportMap;
+	}
+	
+	private void setMapDirect(ReportMapInfo reportMap) {
+		this.reportMap = reportMap;
+	}
 
 	@Transient
 	public ReportFieldInfo getCalendarStartField() throws CodingErrorException {
@@ -1265,6 +1288,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private ReportFieldInfo wordCloudField = null;
 	
 	private ReportStyle reportStyle = ReportStyle.SPREADSHEET;
+	
+	private ReportMapInfo reportMap = null; 
 
 	private static final SimpleLogger logger = new SimpleLogger(SimpleReportDefn.class);
 }

@@ -369,16 +369,22 @@ public final class ServletSchemaMethods {
 			sessionData.setTable(newTable);
 		}
 	}
-	
-	public synchronized static void addFormTab(HttpServletRequest request, SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException {
-		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn, true);
+
+	public synchronized static void addFormTab(HttpServletRequest request,
+			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException,
+			MissingParametersException, ObjectNotFoundException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
+				true);
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table)) {
-			throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, table)) {
+			throw new DisallowedException(authManager.getLoggedInUser(request),
+					PrivilegeType.MANAGE_TABLE, table);
 		}
 		String tabTableId = request.getParameter("tabtable");
 		if (tabTableId == null) {
-			throw new MissingParametersException("tabtable must be supplied to add a form tab to a table");
+			throw new MissingParametersException(
+					"tabtable must be supplied to add a form tab to a table");
 		}
 		TableInfo tabTable = databaseDefn.getTable(request, tabTableId);
 		FormTabInfo maxFormTab = table.getFormTabs().last();
@@ -392,12 +398,17 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
-	public synchronized static void removeFormTab(HttpServletRequest request, SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException {
-		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn, true);
+
+	public synchronized static void removeFormTab(HttpServletRequest request,
+			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException,
+			MissingParametersException, ObjectNotFoundException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
+				true);
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table)) {
-			throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, table)) {
+			throw new DisallowedException(authManager.getLoggedInUser(request),
+					PrivilegeType.MANAGE_TABLE, table);
 		}
 		String tabTableId = request.getParameter("tabtable");
 		TableInfo tabTable = databaseDefn.getTable(request, tabTableId);
@@ -409,7 +420,8 @@ public final class ServletSchemaMethods {
 			}
 		}
 		if (formTab == null) {
-			throw new ObjectNotFoundException("A tab for table " + tabTableId + " was not found in table " + table);
+			throw new ObjectNotFoundException("A tab for table " + tabTableId
+					+ " was not found in table " + table);
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
@@ -676,23 +688,33 @@ public final class ServletSchemaMethods {
 		sessionData.setReport(newReport);
 	}
 
-	//TODO: this upload could take significant time, think whether it's possible to un-synchronize
-	public synchronized static void uploadCustomReportTemplate(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn, List<FileItem> multipartItems) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
-		// TODO: use ServletUtilMethods.getReportForRequest but updating it for multi-part form data
+	// TODO: this upload could take significant time, think whether it's
+	// possible to un-synchronize
+	public synchronized static void uploadCustomReportTemplate(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn, List<FileItem> multipartItems)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
+		// TODO: use ServletUtilMethods.getReportForRequest but updating it for
+		// multi-part form data
 		BaseReportInfo report = sessionData.getReport();
-		String templateName = ServletUtilMethods.getParameter(request, "templatename", multipartItems);
+		String templateName = ServletUtilMethods.getParameter(request, "templatename",
+				multipartItems);
 		try {
 			databaseDefn.uploadCustomReportTemplate(request, report, templateName, multipartItems);
 		} catch (FileUploadException fuex) {
 			throw new CantDoThatException("template upload failed", fuex);
 		}
 	}
-	
-	public synchronized static void removeCustomReportTemplate(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, DisallowedException, ObjectNotFoundException, CantDoThatException {
+
+	public synchronized static void removeCustomReportTemplate(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, DisallowedException, ObjectNotFoundException,
+			CantDoThatException {
 		BaseReportInfo report = sessionData.getReport();
 		String templateName = request.getParameter("customtemplatename");
 		if (templateName == null) {
-			throw new MissingParametersException("customtemplatename must be provided to remove a template");
+			throw new MissingParametersException(
+					"customtemplatename must be provided to remove a template");
 		}
 		databaseDefn.removeCustomReportTemplate(request, report, templateName);
 	}
@@ -708,7 +730,8 @@ public final class ServletSchemaMethods {
 		String newReportDesc = request.getParameter("reportdesc");
 		String internalModuleName = request.getParameter("internalmodulename");
 		String reportStyleName = request.getParameter("reportstyle");
-		if (newReportName == null && newReportDesc == null && internalModuleName == null && reportStyleName == null) {
+		if (newReportName == null && newReportDesc == null && internalModuleName == null
+				&& reportStyleName == null) {
 			throw new MissingParametersException(
 					"A reportname, reportdesc, reportstyle or internalmodulename parameter must be supplied to update a report with a new name or description");
 		}
@@ -737,7 +760,8 @@ public final class ServletSchemaMethods {
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
 			// update the report:
-			databaseDefn.updateReport(conn, request, report, newReportName, newReportDesc, module, reportStyle);
+			databaseDefn.updateReport(conn, request, report, newReportName, newReportDesc, module,
+					reportStyle);
 			HibernateUtil.currentSession().getTransaction().commit();
 			conn.commit();
 		} catch (SQLException sqlex) {
@@ -2106,7 +2130,9 @@ public final class ServletSchemaMethods {
 			rollbackConnections(conn);
 			// return report join to memory
 			report.addJoin(join);
-			throw new CantDoThatException("Removing this join would cause an error as the joined data is still in use in the report", sqlex);
+			throw new CantDoThatException(
+					"Removing this join would cause an error as the joined data is still in use in the report",
+					sqlex);
 		} catch (HibernateException hex) {
 			rollbackConnections(conn);
 			// return report join to memory
@@ -2554,8 +2580,12 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void addFormTable(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
-		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn, ServletUtilMethods.USE_SESSION);
+	public synchronized static void addFormTable(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
+				ServletUtilMethods.USE_SESSION);
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request,
 				request.getRemoteUser());
 		try {
@@ -2565,15 +2595,19 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("adding table " + table
-					+ " to forms for user " + appUser + " failed", hex);
+			throw new CantDoThatException("adding table " + table + " to forms for user " + appUser
+					+ " failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 	}
-	
-	public synchronized static void removeFormTable(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
-		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn, ServletUtilMethods.USE_SESSION);
+
+	public synchronized static void removeFormTable(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
+				ServletUtilMethods.USE_SESSION);
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request,
 				request.getRemoteUser());
 		try {
@@ -2583,13 +2617,13 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("removing table " + table
-					+ " from forms for user " + appUser + " failed", hex);
+			throw new CantDoThatException("removing table " + table + " from forms for user "
+					+ appUser + " failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 	}
-	
+
 	public synchronized static void addOperationalDashboardReport(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
@@ -2688,6 +2722,41 @@ public final class ServletSchemaMethods {
 		}
 	}
 
+	public synchronized static void updateMap(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, true);
+		String postcodeFieldInternalName = request.getParameter("postcodefieldinternalname");
+		String colourFieldInternalName = request.getParameter("colourfieldinternalname");
+		String categoryFieldInternalName = request.getParameter("categoryfieldinternalname");
+		if ((postcodeFieldInternalName == null) && (colourFieldInternalName == null)
+				&& (categoryFieldInternalName == null)) {
+			throw new MissingParametersException(
+					"postcodefieldinternalname, colourfieldinternalname or categoryfieldinternalname are needed to update a map");
+		}
+		ReportFieldInfo postcodeField = null;
+		ReportFieldInfo colourField = null;
+		ReportFieldInfo categoryField = null;
+		if (postcodeFieldInternalName != null) {
+			postcodeField = report.getReportField(postcodeFieldInternalName);
+		}
+		if (colourFieldInternalName != null) {
+			colourField = report.getReportField(colourFieldInternalName);
+		}
+		if (categoryFieldInternalName != null) {
+			categoryField = report.getReportField(categoryFieldInternalName);
+		}
+		try {
+			HibernateUtil.startHibernateTransaction();
+			databaseDefn.updateMap(request, report, postcodeField, colourField, categoryField);
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+
 	public synchronized static void setUserDefaultReport(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
@@ -2723,6 +2792,7 @@ public final class ServletSchemaMethods {
 		}
 	}
 
+	@Deprecated
 	public synchronized static void contractSection(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
@@ -2750,6 +2820,7 @@ public final class ServletSchemaMethods {
 		}
 	}
 
+	@Deprecated
 	public synchronized static void expandSection(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException,

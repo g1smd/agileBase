@@ -481,6 +481,8 @@ public interface DatabaseInfo {
 	public void removeChart(HttpServletRequest request, ChartInfo reportSummary)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException;
 
+	public void updateMap(HttpServletRequest request, BaseReportInfo report, ReportFieldInfo postcodeField, ReportFieldInfo colourField, ReportFieldInfo categoryField) throws DisallowedException, ObjectNotFoundException;
+	
 	/**
 	 * Returns the TableInfo object that has the required ID identifier. If no
 	 * table is found with that internal name, fall back to searching for one
