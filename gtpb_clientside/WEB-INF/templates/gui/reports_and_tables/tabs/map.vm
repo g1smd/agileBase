@@ -57,6 +57,12 @@
           </select>
         </td>
       </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
+          <input type="submit" name="submit">Update map</input>
+        </td>
+      </tr>
     </table>
   </form>
 </div>
