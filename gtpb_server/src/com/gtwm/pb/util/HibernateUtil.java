@@ -31,6 +31,7 @@ import com.gtwm.pb.auth.UserGeneralPrivilege;
 import com.gtwm.pb.auth.RoleGeneralPrivilege;
 import com.gtwm.pb.auth.UserTablePrivilege;
 import com.gtwm.pb.auth.RoleTablePrivilege;
+import com.gtwm.pb.model.manageSchema.FormTab;
 import com.gtwm.pb.model.manageSchema.Module;
 import com.gtwm.pb.model.manageSchema.ReportMap;
 import com.gtwm.pb.model.manageSchema.TableDefn;
@@ -93,6 +94,7 @@ public final class HibernateUtil {
 			cfg.addAnnotatedClass(ReportSort.class);
 			cfg.addAnnotatedClass(ChartGrouping.class);
 			cfg.addAnnotatedClass(JoinClause.class);
+			cfg.addAnnotatedClass(FormTab.class);
 			cfg.addPackage("com.gtwm.pb.model.manageSchema.fields");
 			cfg.addAnnotatedClass(AbstractField.class);
 			cfg.addAnnotatedClass(BigTextFieldDefn.class);
