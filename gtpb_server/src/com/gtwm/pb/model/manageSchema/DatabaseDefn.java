@@ -563,6 +563,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		ReportMapInfo map = report.getMap();
+		if (map == null) {
+			map = new ReportMap();
+			HibernateUtil.currentSession().save(map);
+			report.setMap(map);
+		}
 		if (postcodeField != null) {
 			map.setPostcodeField(postcodeField);
 		}
@@ -572,7 +577,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		if (categoryField != null) {
 			map.setCategoryField(categoryField);
 		}
-		HibernateUtil.currentSession().save(map);
+		logger.debug("Map updated: " + map);
 	}
 
 	public void removeTable(SessionDataInfo sessionData, HttpServletRequest request,

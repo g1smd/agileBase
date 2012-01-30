@@ -1111,11 +1111,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	
 	@Transient
 	public ReportMapInfo getMap() {
-		ReportMapInfo map = this.getMapDirect();
-		if (map == null) {
-			map = new ReportMap();
-		}
-		return map;
+		return this.getMapDirect();
 	}
 	
 	public void setMap(ReportMapInfo reportMap) {
