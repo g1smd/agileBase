@@ -456,6 +456,7 @@ public class TableDefn implements TableInfo {
 		return this.formStyle;
 	}
 	
+	@Transient
 	public SortedSet<FormTabInfo> getFormTabs() {
 		return Collections.unmodifiableSortedSet(new TreeSet<FormTabInfo>(this.getFormTabsDirect()));
 	}
