@@ -14,14 +14,14 @@
 #set($categoryField = $map.getCategoryField())
 <div id="mapcontrol">
   Map setup:
-  <form method="POST" action="AppController.servlet">
-    <input type="hidden" name="return" value="gui/reports_and_tables/tabs/map" />
-    <input type="hidden" name="update_map" value="true" />
-    <table style="border:0">
-      <tr>
-        <td>Postcode field:</td>
-        <td>
-          <select name="postcodefieldinternalname">
+  <table style="border:0">
+    <tr>
+      <td>Postcode field:</td>
+      <td>
+        <form method="POST" action="AppController.servlet">
+          <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+          <input type="hidden" name="update_map" value="true" />
+          <select name="postcodefieldinternalname" onchange="form.submit();">
             <option value="">Please choose a field...</option>
             #foreach($reportField in $reportFields)
               #if($reportField.getBaseField().getFieldCategory() != "RELATION")
@@ -29,12 +29,16 @@
               #end
             #end
           </select>
-        </td>
-      </tr>
-      <tr>
-        <td>Colour by:</td>
-        <td>
-          <select name="colourfieldinternalname">
+        </form>
+      </td>
+    </tr>
+    <tr>
+      <td>Colour by:</td>
+      <td>
+        <form method="POST" action="AppController.servlet">
+          <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+          <input type="hidden" name="update_map" value="true" />
+          <select name="colourfieldinternalname" onchange="form.submit();">
             <option value="">Please choose a field...</option>
             #foreach($reportField in $reportFields)
               #if($reportField.getBaseField().getFieldCategory() != "RELATION")
@@ -42,12 +46,16 @@
               #end
             #end
           </select>
-        </td>
-      </tr>
-      <tr>
-        <td>Categorise by:</td>
-        <td>
-          <select name="categoryfieldinternalname">
+        </form>
+      </td>
+    </tr>
+    <tr>
+      <td>Categorise by:</td>
+      <td>
+        <form method="POST" action="AppController.servlet">
+          <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+          <input type="hidden" name="update_map" value="true" />
+          <select name="categoryfieldinternalname" onchange="form.submit();">
             <option value="">Please choose a field...</option>
             #foreach($reportField in $reportFields)
               #if($reportField.getBaseField().getFieldCategory() != "RELATION")
@@ -55,14 +63,14 @@
               #end
             #end
           </select>
-        </td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-        <td>
-          <input type="submit" name="submit" value="Update map" />
-        </td>
-      </tr>
-    </table>
-  </form>
+        </form>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>
+        <input type="submit" name="submit" value="Update map" />
+      </td>
+    </tr>
+  </table>
 </div>
