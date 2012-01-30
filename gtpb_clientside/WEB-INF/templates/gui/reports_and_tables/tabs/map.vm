@@ -12,6 +12,7 @@
 ###end
 #set($colourField = $map.getColourField())
 #set($categoryField = $map.getCategoryField())
+<div id="map_canvas"></div>
 <div id="mapcontrol">
   Map setup:
   <table style="border:0">
@@ -68,4 +69,3 @@
     </tr>
   </table>
 </div>
-<div id="map_canvas"></div>
