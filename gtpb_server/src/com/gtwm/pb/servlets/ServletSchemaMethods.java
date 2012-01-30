@@ -2739,13 +2739,19 @@ public final class ServletSchemaMethods {
 		ReportFieldInfo colourField = null;
 		ReportFieldInfo categoryField = null;
 		if (postcodeFieldInternalName != null) {
-			postcodeField = report.getReportField(postcodeFieldInternalName);
+			if (!postcodeFieldInternalName.equals("")) {
+				postcodeField = report.getReportField(postcodeFieldInternalName);
+			}
 		}
 		if (colourFieldInternalName != null) {
-			colourField = report.getReportField(colourFieldInternalName);
+			if (!colourFieldInternalName.equals("")) {
+				colourField = report.getReportField(colourFieldInternalName);
+			}
 		}
 		if (categoryFieldInternalName != null) {
-			categoryField = report.getReportField(categoryFieldInternalName);
+			if (!categoryFieldInternalName.equals("")) {
+				categoryField = report.getReportField(categoryFieldInternalName);
+			}
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
