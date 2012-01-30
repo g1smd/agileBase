@@ -20,6 +20,7 @@ package com.gtwm.pb.model.manageSchema;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportMapInfo;
@@ -41,6 +42,7 @@ public class ReportMap implements ReportMapInfo {
 		this.id = id;
 	}
 
+	@ManyToOne(targetEntity = AbstractReportField.class)
 	public ReportFieldInfo getPostcodeField() {
 		return this.postcodeField;
 	}
@@ -49,6 +51,7 @@ public class ReportMap implements ReportMapInfo {
 		this.postcodeField = postcodeField;
 	}
 
+	@ManyToOne(targetEntity = AbstractReportField.class)
 	public ReportFieldInfo getColourField() {
 		return this.colourField;
 	}
@@ -57,6 +60,7 @@ public class ReportMap implements ReportMapInfo {
 		this.colourField = colourField;
 	}
 
+	@ManyToOne(targetEntity = AbstractReportField.class)
 	public ReportFieldInfo getCategoryField() {
 		return this.categoryField;
 	}
