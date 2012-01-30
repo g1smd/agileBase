@@ -50,6 +50,7 @@ import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
+import com.gtwm.pb.model.interfaces.ReportMapInfo;
 import com.gtwm.pb.model.interfaces.ReportSortInfo;
 import com.gtwm.pb.model.interfaces.BaseFieldDescriptorOptionInfo;
 import com.gtwm.pb.model.interfaces.TextFieldDescriptorOptionInfo;
@@ -262,6 +263,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		logger.error("hibernate successfully rolled back");
 	}
 
+	@Deprecated
 	private void addWikiFieldToTable(Connection conn, TableInfo table) throws CantDoThatException,
 			SQLException, ObjectNotFoundException, CodingErrorException {
 		TextField wikiPageField = new TextFieldDefn(this.relationalDataSource, table, null,
@@ -350,7 +352,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.addFieldToRelationalDb(conn, table, viewCountField);
 	}
 
-	public synchronized TableInfo addTable(SessionDataInfo sessionData, HttpServletRequest request,
+	public TableInfo addTable(SessionDataInfo sessionData, HttpServletRequest request,
 			Connection conn, String internalTableName, String internalDefaultReportName,
 			String tableName, String internalPrimaryKeyName, String tableDesc) throws SQLException,
 			DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException {
@@ -420,7 +422,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// this.dataManagement.logLastSchemaChangeTime(request);
 	}
 
-	public synchronized void setDefaultTablePrivileges(HttpServletRequest request,
+	public void setDefaultTablePrivileges(HttpServletRequest request,
 			TableInfo newTable) throws DisallowedException, CantDoThatException {
 		// Set table privileges
 		HibernateUtil.activateObject(this.authManager.getAuthenticator());
@@ -494,7 +496,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return dependentTables;
 	}
 
-	public synchronized void updateTable(Connection conn, HttpServletRequest request,
+	public void updateTable(Connection conn, HttpServletRequest request,
 			TableInfo table, String newTableName, String newTableDesc, Boolean lockable,
 			Boolean tableFormPublic, String tableEmail, FormStyle formStyle) throws DisallowedException,
 			CantDoThatException, ObjectNotFoundException, SQLException {
@@ -552,8 +554,28 @@ public final class DatabaseDefn implements DatabaseInfo {
 			table.setFormStyle(formStyle);
 		}
 	}
+	
+	public void updateMap(HttpServletRequest request, BaseReportInfo report, ReportFieldInfo postcodeField, ReportFieldInfo colourField, ReportFieldInfo categoryField) throws DisallowedException, ObjectNotFoundException {
+		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+			throw new DisallowedException(this.authManager.getLoggedInUser(request),
+					PrivilegeType.MANAGE_TABLE, report.getParentTable());
+		}
+		HibernateUtil.activateObject(report);
+		ReportMapInfo map = report.getMap();
+		if (postcodeField != null) {
+			map.setPostcodeField(postcodeField);
+		}
+		if (colourField != null) {
+			map.setColourField(colourField);
+		}
+		if (categoryField != null) {
+			map.setCategoryField(categoryField);
+		}
+		HibernateUtil.currentSession().save(map);
+	}
 
-	public synchronized void removeTable(SessionDataInfo sessionData, HttpServletRequest request,
+	public void removeTable(SessionDataInfo sessionData, HttpServletRequest request,
 			TableInfo tableToRemove, Connection conn) throws SQLException, DisallowedException,
 			CantDoThatException, TableDependencyException, CodingErrorException,
 			ObjectNotFoundException {
@@ -619,7 +641,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized BaseReportInfo addReport(SessionDataInfo sessionData,
+	public BaseReportInfo addReport(SessionDataInfo sessionData,
 			HttpServletRequest request, Connection conn, TableInfo table,
 			String internalReportName, String reportName, String reportDesc, boolean populateReport)
 			throws SQLException, DisallowedException, CantDoThatException, CodingErrorException,
@@ -932,7 +954,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * report, for example if we're removing a table all reports need to be
 	 * removed. This method is there for private use in these situations
 	 */
-	private synchronized void removeReportWithoutChecks(SessionDataInfo sessionData,
+	private void removeReportWithoutChecks(SessionDataInfo sessionData,
 			HttpServletRequest request, BaseReportInfo reportToRemove, Connection conn)
 			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException,
 			ObjectNotFoundException {
@@ -1592,7 +1614,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public synchronized void setFieldIndex(TableInfo table, BaseField field, int newindex)
+	public void setFieldIndex(TableInfo table, BaseField field, int newindex)
 			throws ObjectNotFoundException, CantDoThatException {
 		HibernateUtil.activateObject(table);
 		table.setFieldIndex(newindex, field);
@@ -1601,7 +1623,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Adds field to relational database, object database and memory.
 	 */
-	private synchronized void addField(Connection conn, TableInfo tableToAddTo,
+	private void addField(Connection conn, TableInfo tableToAddTo,
 			BaseField fieldToAdd, HttpServletRequest request) throws SQLException,
 			CantDoThatException, ObjectNotFoundException, CodingErrorException {
 		HibernateUtil.activateObject(tableToAddTo);
@@ -1756,7 +1778,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * @see addField(String, String, String, String, Map<String, String>)
 	 * Equivalent to addField but for relation fields, not normal fields
 	 */
-	public synchronized RelationField addRelation(HttpServletRequest request, Connection conn,
+	public RelationField addRelation(HttpServletRequest request, Connection conn,
 			TableInfo tableToAddTo, String internalFieldName, String fieldName, String fieldDesc,
 			TableInfo relatedTable, BaseField relatedField) throws SQLException,
 			DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException {
@@ -1818,7 +1840,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 *             Thrown if the field shouldn't be removed from it's parent
 	 *             table, with a message explaining why not
 	 */
-	private synchronized void removeFieldChecks(BaseField field, HttpServletRequest request)
+	private void removeFieldChecks(BaseField field, HttpServletRequest request)
 			throws CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		// Don't allow deletion of the primary key
 		if (field.equals(field.getTableContainingField().getPrimaryKey())) {
@@ -1931,7 +1953,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public synchronized void removeField(HttpServletRequest request, Connection conn,
+	public void removeField(HttpServletRequest request, Connection conn,
 			BaseField field) throws SQLException, DisallowedException, CantDoThatException,
 			CodingErrorException, ObjectNotFoundException {
 		TableInfo table = field.getTableContainingField();
@@ -1980,7 +2002,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized ReportFieldInfo addFieldToReport(HttpServletRequest request,
+	public ReportFieldInfo addFieldToReport(HttpServletRequest request,
 			Connection conn, SimpleReportInfo report, SimpleReportInfo sourceReport, BaseField field)
 			throws SQLException, DisallowedException, InconsistentStateException,
 			CantDoThatException, CodingErrorException, ObjectNotFoundException {
@@ -2007,7 +2029,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return newReportField;
 	}
 
-	public synchronized void setReportFieldIndex(Connection conn, SimpleReportInfo report,
+	public void setReportFieldIndex(Connection conn, SimpleReportInfo report,
 			ReportFieldInfo field, int newindex, HttpServletRequest request) throws SQLException,
 			CodingErrorException, ObjectNotFoundException, CantDoThatException {
 		HibernateUtil.activateObject(report);
@@ -2015,7 +2037,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.updateViewDbAction(conn, report, request);
 	}
 
-	public synchronized void addJoinToReport(HttpServletRequest request, Connection conn,
+	public void addJoinToReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, JoinClauseInfo join) throws DisallowedException, SQLException,
 			CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2034,7 +2056,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void removeJoinFromReport(HttpServletRequest request, Connection conn,
+	public void removeJoinFromReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, JoinClauseInfo join) throws DisallowedException, SQLException,
 			CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2054,7 +2076,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void addSortToReport(HttpServletRequest request, Connection conn,
+	public void addSortToReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportFieldInfo reportField, boolean ascending)
 			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException,
 			ObjectNotFoundException {
@@ -2069,7 +2091,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// this.dataManagement.logLastSchemaChangeTime(request);
 	}
 
-	public synchronized void updateSortFromReport(HttpServletRequest request, Connection conn,
+	public void updateSortFromReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportFieldInfo reportField, boolean ascending)
 			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException,
 			ObjectNotFoundException {
@@ -2084,7 +2106,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// this.dataManagement.logLastSchemaChangeTime(request);
 	}
 
-	public synchronized void removeSortFromReport(HttpServletRequest request, Connection conn,
+	public void removeSortFromReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportFieldInfo reportField) throws DisallowedException,
 			CantDoThatException, SQLException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2101,7 +2123,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// this.dataManagement.logLastSchemaChangeTime(request);
 	}
 
-	public synchronized void addFilterToReport(HttpServletRequest request, Connection conn,
+	public void addFilterToReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportFilterInfo filter) throws SQLException,
 			DisallowedException, CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2120,7 +2142,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized ModuleInfo addModule(HttpServletRequest request)
+	public ModuleInfo addModule(HttpServletRequest request)
 			throws ObjectNotFoundException, DisallowedException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		// Make sure module name is unique
@@ -2186,7 +2208,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return Collections.unmodifiableMap(availableDataStores);
 	}
 
-	public synchronized void removeFilterFromReport(HttpServletRequest request, Connection conn,
+	public void removeFilterFromReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportFilterInfo filter) throws DisallowedException,
 			ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2268,7 +2290,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return reportsUsedIn;
 	}
 
-	public synchronized void addCalculationToReport(HttpServletRequest request, Connection conn,
+	public void addCalculationToReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportCalcFieldInfo calculationField) throws SQLException,
 			DisallowedException, InconsistentStateException, CantDoThatException,
 			CodingErrorException, ObjectNotFoundException {
@@ -2301,7 +2323,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void updateCalculationInReport(HttpServletRequest request, Connection conn,
+	public void updateCalculationInReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportCalcFieldInfo calculationField, String calculationName,
 			String calculationDefn, DatabaseFieldType dbFieldType) throws DisallowedException,
 			SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
@@ -2342,7 +2364,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void returnCalculationInReportToMemory(HttpServletRequest request,
+	public void returnCalculationInReportToMemory(HttpServletRequest request,
 			Connection conn, SimpleReportInfo report, ReportCalcFieldInfo calculationField,
 			String oldCalculationName, String oldCalculationDefn, DatabaseFieldType oldDbFieldType)
 			throws DisallowedException, CodingErrorException, CantDoThatException,
@@ -2359,7 +2381,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		((ReportCalcFieldDefn) calculationField).setBaseFieldName(oldCalculationName);
 	}
 
-	private synchronized void removeFieldFromReportChecks(ReportFieldInfo reportField,
+	private void removeFieldFromReportChecks(ReportFieldInfo reportField,
 			HttpServletRequest request) throws CantDoThatException, CodingErrorException,
 			ObjectNotFoundException {
 		// check the field isn't used in one of the report's own charts
@@ -2478,7 +2500,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public synchronized void removeFieldFromReport(HttpServletRequest request, Connection conn,
+	public void removeFieldFromReport(HttpServletRequest request, Connection conn,
 			ReportFieldInfo reportField) throws SQLException, DisallowedException,
 			CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		SimpleReportInfo report = (SimpleReportInfo) reportField.getParentReport();
@@ -2502,7 +2524,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void setChartFilter(HttpServletRequest request, BaseReportInfo report,
+	public void setChartFilter(HttpServletRequest request, BaseReportInfo report,
 			SummaryFilter chartFilter) throws SQLException, DisallowedException,
 			ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2526,7 +2548,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void setChartFilterField(HttpServletRequest request, BaseReportInfo report,
+	public void setChartFilterField(HttpServletRequest request, BaseReportInfo report,
 			ReportFieldInfo reportField) throws SQLException, DisallowedException,
 			ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2550,7 +2572,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void setChartRange(HttpServletRequest request, BaseReportInfo report,
+	public void setChartRange(HttpServletRequest request, BaseReportInfo report,
 			int rangePercent, boolean rangeDirection) throws SQLException, DisallowedException,
 			ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2583,7 +2605,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void addGroupingToChart(HttpServletRequest request,
+	public void addGroupingToChart(HttpServletRequest request,
 			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException {
 		HibernateUtil.activateObject(groupingReportField);
@@ -2609,7 +2631,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void removeGroupingFromChart(HttpServletRequest request,
+	public void removeGroupingFromChart(HttpServletRequest request,
 			ReportFieldInfo groupingReportField) throws DisallowedException,
 			ObjectNotFoundException, SQLException, CantDoThatException {
 		BaseReportInfo report = groupingReportField.getParentReport();
@@ -2634,7 +2656,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void addFunctionToChart(HttpServletRequest request,
+	public void addFunctionToChart(HttpServletRequest request,
 			ChartAggregateInfo addedAggFn) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException, SQLException {
 		BaseReportInfo report = addedAggFn.getReportField().getParentReport();
@@ -2659,7 +2681,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				report.getChart(), blankFilterValues, false);
 	}
 
-	public synchronized void removeFunctionFromChart(HttpServletRequest request,
+	public void removeFunctionFromChart(HttpServletRequest request,
 			BaseReportInfo report, String internalAggregateName) throws DisallowedException,
 			CantDoThatException, ObjectNotFoundException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2684,7 +2706,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void saveChart(HttpServletRequest request, BaseReportInfo report,
+	public void saveChart(HttpServletRequest request, BaseReportInfo report,
 			String summaryTitle) throws DisallowedException, CantDoThatException,
 			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2736,7 +2758,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public synchronized void removeChart(HttpServletRequest request, ChartInfo reportSummary)
+	public void removeChart(HttpServletRequest request, ChartInfo reportSummary)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, reportSummary.getReport().getParentTable()))) {
@@ -2963,10 +2985,12 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return this.relationalDataSource;
 	}
 
+	@Deprecated
 	public synchronized WikiManagementInfo getWikiManagement(CompanyInfo company) {
 		return this.wikiManagements.get(company);
 	}
 
+	@Deprecated
 	public synchronized void addWikiManagement(CompanyInfo company,
 			WikiManagementInfo wikiManagement) {
 		this.wikiManagements.put(company, wikiManagement);

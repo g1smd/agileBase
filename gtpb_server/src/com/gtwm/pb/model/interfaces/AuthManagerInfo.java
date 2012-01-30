@@ -19,7 +19,6 @@ package com.gtwm.pb.model.interfaces;
 
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.EnumSet;
 import javax.servlet.http.HttpServletRequest;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;

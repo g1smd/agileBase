@@ -158,6 +158,11 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	 * relevant fields in the report joined together will be used
 	 */
 	public ReportFieldInfo getWordCloudField();
+	
+	/**
+	 * Return an object to represent map data. If no object exists, create one
+	 */
+	public ReportMapInfo getMap();
 
 	/**
 	 * Transform a string such as 'filter' into a full-text-like filter on the whole report, or at least all relevant fields, e.g.
