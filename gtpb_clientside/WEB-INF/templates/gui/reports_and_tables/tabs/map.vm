@@ -1,4 +1,15 @@
 #set($report = $sessionData.getReport())
+#set($reportFields = $report.getReportFields())
+#set($map = $report.getMap())
+#set($postcodeField = $map.getPostcodeField())
+#if(!$postcodeField)
+  #foreach($reportField in $reportFields)
+    #set($cleanName = $viewTools.cleanString($reportField.getFieldName()))
+    #if($cleanName == "postcode")
+      #set($postcodeField = $reportField)
+    #end
+  #end
+#end
 <div id="mapcontrol">
   Map setup:
   <form method="POST" action="AppController.servlet">
@@ -10,8 +21,8 @@
         <td>
           <select name="postcodefieldinternalname">
             <option value="">Please choose a field...</option>
-            #foreach($reportField in $report.getReportFields())
-              <option value="$reportField.getInternalFieldName()">$reportField</option>
+            #foreach($reportField in $reportFields)
+              <option value="$reportField.getInternalFieldName()" #if($reportField.equals($postcodeField)) selected #end>$reportField</option>
             #end
           </select>
         </td>
