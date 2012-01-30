@@ -483,6 +483,7 @@ public final class AppController extends VelocityViewServlet {
 					break;
 				case UPDATE_MAP:
 					ServletSchemaMethods.updateMap(sessionData, request, databaseDefn);
+					break;
 				case SET_DASHBOARD_CHART_STATE:
 					ServletDashboardMethods.setDashboardSummaryState(sessionData, request,
 							databaseDefn);
