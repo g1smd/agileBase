@@ -20,6 +20,7 @@ package com.gtwm.pb.model.manageSchema;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.FormTabInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
@@ -28,7 +29,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 public class FormTab implements FormTabInfo {
 
 	public FormTab(TableInfo table, int index) {
-		this.table = table;
+		this.setTable(table);
 		this.setIndex(index);
 	}
 	
@@ -46,10 +47,16 @@ public class FormTab implements FormTabInfo {
 		this.id = id;
 	}
 
+	@ManyToOne(targetEntity = TableDefn.class)
 	public TableInfo getTable() {
 		return this.table;
 	}
+	
+	private void setTable(TableInfo table) {
+		this.table = table;
+	}
 
+	@ManyToOne(targetEntity = BaseReportDefn.class)
 	public BaseReportInfo getSelectorReport() {
 		return this.selectorReport;
 	}
@@ -100,7 +107,7 @@ public class FormTab implements FormTabInfo {
 		return this.table.hashCode();
 	}
 	
-	private final TableInfo table;
+	private TableInfo table;
 	
 	private BaseReportInfo selectorReport;
 	
