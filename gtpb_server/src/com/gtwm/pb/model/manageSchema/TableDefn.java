@@ -466,6 +466,10 @@ public class TableDefn implements TableInfo {
 		return this.formTabs;
 	}
 	
+	private void setFormTabsDirect(Set<FormTabInfo> formTabs) {
+		this.formTabs = formTabs;
+	}
+	
 	public void addFormTab(FormTabInfo formTab) {
 		this.getFormTabsDirect().add(formTab);
 	}
@@ -500,7 +504,7 @@ public class TableDefn implements TableInfo {
 	
 	private FormStyle formStyle = FormStyle.SINGLE_COLUMN;
 	
-	private SortedSet<FormTabInfo> formTabs = new TreeSet<FormTabInfo>();
+	private Set<FormTabInfo> formTabs = new HashSet<FormTabInfo>();
 
 	private volatile String simpleName = null;
 
