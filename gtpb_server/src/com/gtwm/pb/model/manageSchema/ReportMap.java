@@ -69,6 +69,10 @@ public class ReportMap implements ReportMapInfo {
 		this.categoryField = categoryField;
 	}
 	
+	public String toString() {
+		return "Map for postcode field " + this.postcodeField + ", coloured by " + colourField + ", categorised by " + categoryField;
+	}
+	
 	private ReportFieldInfo postcodeField;
 	
 	private ReportFieldInfo colourField;

@@ -163,6 +163,8 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	 * Return an object to represent map data. If no object exists, create one
 	 */
 	public ReportMapInfo getMap();
+	
+	public void setMap(ReportMapInfo map);
 
 	/**
 	 * Transform a string such as 'filter' into a full-text-like filter on the whole report, or at least all relevant fields, e.g.
