@@ -32,8 +32,6 @@
 	  #set($success=$tabs.add({'tabName':'manage', 'tabSource':'gui/reports_and_tables/tabs/report_administration'}))
 	  #set($success=$styles.add('resources/tabs/manage_tabs.css'))
 #end
-
 #set($pane2_id=$sessionData.getRowId())
 #set($tabset_id='report')
-
 #parse('gui/resources/pane3_tab_set.vm')

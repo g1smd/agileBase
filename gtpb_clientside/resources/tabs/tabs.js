@@ -1154,6 +1154,15 @@ function fFormStyle() {
 	});
 }
 
+function fMap() {
+	if($("#map_canvas").is(":visible")) {
+	  var myOptions = {
+	    mapTypeId: google.maps.MapTypeId.ROADMAP
+	  };
+	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
+	}
+}
+
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
 
@@ -1167,5 +1176,6 @@ pane3Scripts.functionList.push(fSexyUpload);
 /* pane3Scripts.functionList.push(fExpandContractSection); */
 pane3Scripts.functionList.push(fTwitter);
 pane3Scripts.functionList.push(fComments);
+pane3Scripts.functionList.push(fMap);
 pane3Scripts.functionList.push(fInitialiseDependencies);
 pane3Scripts.functionList.push(fFormStyle);
