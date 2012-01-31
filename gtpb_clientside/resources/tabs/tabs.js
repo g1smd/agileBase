@@ -1174,6 +1174,7 @@ function fMap() {
 	    panControl: false
 	  };
 	  var markers = [];
+	  var colourValues = [];
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
 	  var mapBounds = new google.maps.LatLngBounds();
 	  var popup = new google.maps.InfoWindow({
@@ -1187,6 +1188,8 @@ function fMap() {
 	  		var colour = "FFFFFF";
 	  		if (row.colourValue) {
 	  			colour = hsl2hex(row.hue, 80, 60);
+	  			colourValues[row.colourValue] = row.colourValue;
+	  			colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=A|" + colour + "|000000";
 	  		}
 	  		//mapBounds.extend(latLng);
 	  		markers[i] = new google.maps.Marker({
@@ -1200,6 +1203,9 @@ function fMap() {
 	  			popup.setContent(this.html);
 	  		  popup.open(map,this);
 	  		});
+	  	}
+	  	for (var colourValue in colourValues) {
+	  		$("#map_legend").append("<div><img src='" + colourIcons[colourValue] + "' />" + colourValue + "</div>");
 	  	}
 	  });
 	}

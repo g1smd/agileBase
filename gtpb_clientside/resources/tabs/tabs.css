@@ -854,9 +854,10 @@ div#reportData {
     top: 0;
   }
   
-  #mapcontrol {
+  #map_control {
     position: absolute;
     width: 200px;
     right: 0;
     top: 0;
+    padding: 1em;
   }
