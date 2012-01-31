@@ -1178,7 +1178,7 @@ function fMap() {
 	  		popups[i] = new google.maps.InfoWindow({
 	  	    content: row.title
 	  		});
-	  		google.maps.event.addListener(marker, 'click', function() {
+	  		google.maps.event.addListener(markers[i], 'click', function() {
 	  		  popups[i].open(map,markers[i]);
 	  		});
 	  	}
