@@ -1224,6 +1224,7 @@ function hsl2hex(h, s, l) {
 		g = HueToRgb(m1, m2, hue);
 		b = HueToRgb(m1, m2, hue - 1/3);
 	}
+	console.log("r: " + r + ", g: " + g + ", b: " + b);
 	var r16 = r.toString(16);
   var g16 = g.toString(16);
   var b16 = b.toString(16);
