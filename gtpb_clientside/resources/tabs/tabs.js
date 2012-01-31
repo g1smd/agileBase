@@ -1188,7 +1188,7 @@ function fMap() {
 	  		var latLng = new google.maps.LatLng(row.latitude,row.longitude);
 	  		var colour = "FFFFFF";
 	  		if (row.colourValue) {
-	  			colour = hsl2hex(row.hue, 80, 60);
+	  			colour = hsl2hex(row.hue, row.saturation, 60);
 	  			colourValues[row.colourValue] = row.colourValue;
 	  			colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=A|" + colour + "|000000";
 	  		}
@@ -1233,7 +1233,6 @@ function hsl2hex(h, s, l) {
 	var r16 = r.toString(16).substr(0,2).replace(".","");
   var g16 = g.toString(16).substr(0,2).replace(".","");
   var b16 = b.toString(16).substr(0,2).replace(".","");
-	console.log("r: " + r16 + ", g: " + g16 + ", b: " + b16);
   return (r16.length == 2 ? r16 : '0' + r16)
 	  + (g16.length == 2 ? g16 : '0' + g16)
 	  + (b16.length == 2 ? b16 : '0' + b16);
