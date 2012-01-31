@@ -1163,7 +1163,7 @@ function fMap() {
 	    panControl: false
 	  };
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
-	  var mapJSON = $.getJSON("AppController.servlet?return=gui/reports_and_tables/map_json", function(data) {
+	  var mapJSON = $.getJSON("AppController.servlet?return=gui/reports_and_tables/tabs/map_json", function(data) {
 	  	var len = data.length;
 	  	for(var i=0; i<len; i++) {
 	  		var row = data[i];
