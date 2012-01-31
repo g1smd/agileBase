@@ -847,8 +847,16 @@ div#reportData {
   }  
 
   #map_canvas {
-    width: 95%;
     height: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    position: absolute;
+    right: 200px;
+    left: 0;
+    top: 0;
+  }
+  
+  #mapcontrol {
+    position: absolute;
+    width: 200px;
+    right: 0;
+    top: 0;
   }
