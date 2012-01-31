@@ -1162,6 +1162,7 @@ function fMap() {
 	    mapTypeId: google.maps.MapTypeId.ROADMAP,
 	    panControl: false
 	  };
+	  var popups = [];
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
 	  var mapJSON = $.getJSON("AppController.servlet?return=gui/reports_and_tables/tabs/map_json", function(data) {
 	  	var len = data.length;
@@ -1173,11 +1174,11 @@ function fMap() {
 	        map: map,
 	        title: row.postcode
 	  		});
-	  		var infowindow = new google.maps.InfoWindow({
+	  		popups[i] = new google.maps.InfoWindow({
 	  	    content: row.title
 	  		});
 	  		google.maps.event.addListener(marker, 'click', function() {
-	  		  infowindow.open(map,marker);
+	  		  popups[i].open(map,marker);
 	  		});
 	  	}
 	  });
