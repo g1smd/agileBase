@@ -1879,8 +1879,10 @@ public final class DataManagement implements DataManagementInfo {
 				if (colourField != null) {
 					DataRowFieldInfo colourValue = reportDataRow.getValue(colourField);
 					jg.writeStringField("colourValue", colourValue.getDisplayValue());
-					int hue = colourValue.getDisplayValue().hashCode() % 360;
+					int hue = colourValue.getDisplayValue().toUpperCase().hashCode() % 360;
+					int saturation = 20 + Math.abs(colourValue.getDisplayValue().toLowerCase().hashCode() % 80);
 					jg.writeNumberField("hue", hue);
+					jg.writeNumberField("saturation", saturation);
 				}
 				if (categoryField != null) {
 					DataRowFieldInfo categoryValue = reportDataRow.getValue(categoryField);
