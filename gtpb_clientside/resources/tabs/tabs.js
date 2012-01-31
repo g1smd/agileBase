@@ -1163,13 +1163,14 @@ function fMap() {
 	    panControl: false
 	  };
 	  var popups = [];
+	  var markers = [];
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
 	  var mapJSON = $.getJSON("AppController.servlet?return=gui/reports_and_tables/tabs/map_json", function(data) {
 	  	var len = data.length;
 	  	for(var i=0; i<len; i++) {
 	  		var row = data[i];
 	  		var latLng = new google.maps.LatLng(row.latitude,row.longitude);
-	  		var marker = new google.maps.Marker({
+	  		markers[i] = new google.maps.Marker({
 	        position: latLng,
 	        map: map,
 	        title: row.postcode
@@ -1178,7 +1179,7 @@ function fMap() {
 	  	    content: row.title
 	  		});
 	  		google.maps.event.addListener(marker, 'click', function() {
-	  		  popups[i].open(map,marker);
+	  		  popups[i].open(map,markers[i]);
 	  		});
 	  	}
 	  });
