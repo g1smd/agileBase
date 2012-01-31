@@ -1199,7 +1199,7 @@ function fMap() {
 	        position: latLng,
 	        map: map,
 	        title: row.postcode,
-	        icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + firstLetter + " + colour + "|000000",
+	        icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + firstLetter + "|" + colour + "|000000",
 	        html: row.title /* our own property */
 	  		});
 	  		google.maps.event.addListener(markers[i], 'click', function() {
