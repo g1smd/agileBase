@@ -1187,6 +1187,7 @@ function fMap() {
 	  		});
 	  	}
 	  });
+	  map.fitBounds(mapBounds);
 	}
 }
 
