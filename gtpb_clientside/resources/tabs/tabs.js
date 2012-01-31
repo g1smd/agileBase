@@ -1180,7 +1180,7 @@ function fMap() {
 	        title: row.postcode
 	  		});
 	  		var popup = new google.maps.InfoWindow({
-	  	  	content: row.title;
+	  	  	content: row.title
 	  	  });
 	  		google.maps.event.addListener(markers[i], 'click', function() {
 	  			//popup.setContent(row.title);
