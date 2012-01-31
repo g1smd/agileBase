@@ -1175,6 +1175,7 @@ function fMap() {
 	  };
 	  var markers = [];
 	  var colourValues = [];
+	  var colourIcons = [];
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
 	  var mapBounds = new google.maps.LatLngBounds();
 	  var popup = new google.maps.InfoWindow({
