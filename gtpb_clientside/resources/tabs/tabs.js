@@ -1154,6 +1154,17 @@ function fFormStyle() {
 	});
 }
 
+function hashCode(string) {
+  var hash = 0;
+  if (string.length == 0) return hash;
+  for (i = 0; i < string.length; i++) {
+    char = string.charCodeAt(i);
+    hash = ((hash<<5)-hash)+char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return hash;
+}
+
 function fMap() {
 	if($("#map_canvas").is(":visible")) {
 	  var myOptions = {
@@ -1173,12 +1184,16 @@ function fMap() {
 	  	for(var i=0; i<len; i++) {
 	  		var row = data[i];
 	  		var latLng = new google.maps.LatLng(row.latitude,row.longitude);
-	  		mapBounds.extend(latLng);
+	  		var colour = "FFFFFF";
+	  		if (row.colourValue) {
+	  			colour = hsl2hex(row.hue, 80, 60);
+	  		}
+	  		//mapBounds.extend(latLng);
 	  		markers[i] = new google.maps.Marker({
 	        position: latLng,
 	        map: map,
 	        title: row.postcode,
-	        icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=A|FF0000|000000",
+	        icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=A|" + colour + "|000000",
 	        html: row.title /* our own property */
 	  		});
 	  		google.maps.event.addListener(markers[i], 'click', function() {
@@ -1188,6 +1203,50 @@ function fMap() {
 	  	}
 	  });
 	}
+}
+
+function hsl2hex(h, s, l) {
+	var m1, m2, hue;
+	var r, g, b
+	s /= 100;
+	l /= 100;
+	if (s == 0)
+		r = g = b = (l * 255);
+	else {
+		if (l <= 0.5)
+			m2 = l * (s + 1);
+		else
+			m2 = l + s - l * s;
+		m1 = l * 2 - m2;
+		hue = h / 360;
+		r = HueToRgb(m1, m2, hue + 1/3);
+		g = HueToRgb(m1, m2, hue);
+		b = HueToRgb(m1, m2, hue - 1/3);
+	}
+	var r16 = r.toString(16);
+  var g16 = g.toString(16);
+  var b16 = b.toString(16);
+  return 
+	  (r16.length == 2 ? r16 : '0' + r16)
+	  + (g16.length == 2 ? g16 : '0' + g16)
+	  + (b16.length == 2 ? b16 : '0' + b16);
+}
+
+function HueToRgb(m1, m2, hue) {
+	var v;
+	if (hue < 0)
+		hue += 1;
+	else if (hue > 1)
+		hue -= 1;
+	if (6 * hue < 1)
+		v = m1 + (m2 - m1) * hue * 6;
+	else if (2 * hue < 1)
+		v = m2;
+	else if (3 * hue < 2)
+		v = m1 + (m2 - m1) * (2/3 - hue) * 6;
+	else
+		v = m1;
+	return 255 * v;
 }
 
 /* ---------- Add functions to the callFunctions list ---------- */

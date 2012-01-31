@@ -1857,6 +1857,8 @@ public final class DataManagement implements DataManagementInfo {
 		if (postcodeField == null) {
 			throw new CantDoThatException("Report map has no postcode field identified");
 		}
+		ReportFieldInfo colourField = map.getColourField();
+		ReportFieldInfo categoryField = map.getCategoryField();
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(company, report,
 				filters, false, new HashMap<BaseField, Boolean>(0), 10000,
 				QuickFilterType.AND, true);
@@ -1874,6 +1876,16 @@ public final class DataManagement implements DataManagementInfo {
 				jg.writeNumberField("latitude", postcodeDataRowField.getLatitude());
 				jg.writeNumberField("longitude", postcodeDataRowField.getLongitude());
 				jg.writeStringField("title", buildEventTitle(report, reportDataRow, true));
+				if (colourField != null) {
+					DataRowFieldInfo colourValue = reportDataRow.getValue(colourField);
+					jg.writeStringField("colourValue", colourValue.getDisplayValue());
+					int hue = colourValue.getDisplayValue().hashCode() % 360;
+					jg.writeNumberField("hue", hue);
+				}
+				if (categoryField != null) {
+					DataRowFieldInfo categoryValue = reportDataRow.getValue(categoryField);
+					jg.writeStringField("categoryValue", categoryValue.getDisplayValue());
+				}
 				jg.writeEndObject();
 			}
 			jg.writeEndArray();
