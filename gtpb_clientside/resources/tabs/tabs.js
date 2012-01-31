@@ -1171,8 +1171,13 @@ function fMap() {
 	  		var marker = new google.maps.Marker({
 	        position: latLng,
 	        map: map,
-	        title: row.postcode,
-	        animation: google.maps.Animation.DROP
+	        title: row.postcode
+	  		});
+	  		var infowindow = new google.maps.InfoWindow({
+	  	    content: row.title
+	  		});
+	  		google.maps.event.addListener(marker, 'click', function() {
+	  		  infowindow.open(map,marker);
 	  		});
 	  	}
 	  });
