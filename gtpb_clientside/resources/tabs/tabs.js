@@ -1169,7 +1169,7 @@ function fMap() {
 	  		var row = data[i];
 	  		var latLng = new google.maps.LatLng(row.latitude,row.longitude);
 	  		var marker = new google.maps.Marker({
-	        position: myLatlng,
+	        position: latLng,
 	        map: map,
 	        title: row.postcode
 	  		});
