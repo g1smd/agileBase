@@ -1187,6 +1187,7 @@ function fMap() {
 	  		var colour = "FFFFFF";
 	  		if (row.colourValue) {
 	  			colour = hsl2hex(row.hue, 80, 60);
+	  			console.log("hue: " + row.hue + " -> " + colour);
 	  		}
 	  		//mapBounds.extend(latLng);
 	  		markers[i] = new google.maps.Marker({
