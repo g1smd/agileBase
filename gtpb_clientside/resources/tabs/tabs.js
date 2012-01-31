@@ -1163,6 +1163,7 @@ function fMap() {
 	    panControl: false
 	  };
 	  var markers = [];
+	  var popupContents = [];
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
 	  var mapBounds = new google.maps.LatLngBounds();
 	  var popup = new google.maps.InfoWindow({
@@ -1179,11 +1180,9 @@ function fMap() {
 	        map: map,
 	        title: row.postcode
 	  		});
-	  		var popup = new google.maps.InfoWindow({
-	  	  	content: row.title
-	  	  });
+	  		popupContents[markers[i]] = row.title;
 	  		google.maps.event.addListener(markers[i], 'click', function() {
-	  			//popup.setContent(row.title);
+	  			popup.setContent(popupContents[this]);
 	  		  popup.open(map,this);
 	  		});
 	  	}
