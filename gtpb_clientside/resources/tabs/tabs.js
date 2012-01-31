@@ -1179,8 +1179,11 @@ function fMap() {
 	        map: map,
 	        title: row.postcode
 	  		});
+	  		var popup = new google.maps.InfoWindow({
+	  	  	content: row.title;
+	  	  });
 	  		google.maps.event.addListener(markers[i], 'click', function() {
-	  			popup.setContent(row.title);
+	  			//popup.setContent(row.title);
 	  		  popup.open(map,this);
 	  		});
 	  	}
