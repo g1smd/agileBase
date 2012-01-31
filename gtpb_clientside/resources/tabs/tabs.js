@@ -1175,11 +1175,11 @@ function fMap() {
 	        map: map,
 	        title: row.postcode
 	  		});
-	  		popups[i] = new google.maps.InfoWindow({
+	  		popups[row.postcode] = new google.maps.InfoWindow({
 	  	    content: row.title
 	  		});
 	  		google.maps.event.addListener(markers[i], 'click', function() {
-	  		  popups[i].open(map,markers[i]);
+	  		  popups[markers[i].title].open(map,markers[i]);
 	  		});
 	  	}
 	  });
