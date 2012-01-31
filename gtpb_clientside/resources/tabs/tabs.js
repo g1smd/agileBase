@@ -1162,24 +1162,26 @@ function fMap() {
 	    mapTypeId: google.maps.MapTypeId.ROADMAP,
 	    panControl: false
 	  };
-	  var popups = [];
 	  var markers = [];
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
+	  var mapBounds = new google.maps.LatLngBounds();
+	  var popup = new google.maps.InfoWindow({
+	  	content: "holding..."
+	  });
 	  var mapJSON = $.getJSON("AppController.servlet?return=gui/reports_and_tables/tabs/map_json", function(data) {
 	  	var len = data.length;
 	  	for(var i=0; i<len; i++) {
 	  		var row = data[i];
 	  		var latLng = new google.maps.LatLng(row.latitude,row.longitude);
-	  		var marker = new google.maps.Marker({
+	  		mapBounds.extend(latLng);
+	  		markers[i] = new google.maps.Marker({
 	        position: latLng,
 	        map: map,
 	        title: row.postcode
 	  		});
-	  		google.maps.event.addListener(marker, 'click', function() {
-	  			var popup = new google.maps.InfoWindow({
-		  	    content: row.title
-		  		});
-	  		  popup.open(map,marker);
+	  		google.maps.event.addListener(markers[i], 'click', function() {
+	  			popup.setContent(this.title);
+	  		  popup.open(map,this);
 	  		});
 	  	}
 	  });
