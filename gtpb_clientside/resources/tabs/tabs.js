@@ -1167,7 +1167,12 @@ function fMap() {
 	  	var len = data.length;
 	  	for(var i=0; i<len; i++) {
 	  		var row = data[i];
-	  		console.log(row.postcode);
+	  		var latLng = new google.maps.LatLng(row.latitude,row.longitude);
+	  		var marker = new google.maps.Marker({
+	        position: myLatlng,
+	        map: map,
+	        title: row.postcode
+	  		});
 	  	}
 	  });
 	}
