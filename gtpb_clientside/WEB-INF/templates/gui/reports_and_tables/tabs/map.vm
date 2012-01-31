@@ -13,44 +13,46 @@
 #set($colourField = $map.getColourField())
 #set($categoryField = $map.getCategoryField())
 <div id="map_canvas"></div>
-<div id="mapcontrol">
-      Postcode field:
-        <form method="POST" action="AppController.servlet">
-          <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
-          <input type="hidden" name="update_map" value="true" />
-          <select name="postcodefieldinternalname" onchange="form.submit();">
-            <option value="">Please choose a field...</option>
-            #foreach($reportField in $reportFields)
-              #if($reportField.getBaseField().getFieldCategory() != "RELATION")
-                <option value="$reportField.getInternalFieldName()" #if($reportField.equals($postcodeField)) selected #end>$reportField</option>
-              #end
-            #end
-          </select>
-        </form>
-      Group (colour) by:
-        <form method="POST" action="AppController.servlet">
-          <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
-          <input type="hidden" name="update_map" value="true" />
-          <select name="colourfieldinternalname" onchange="form.submit();">
-            <option value="">Please choose a field...</option>
-            #foreach($reportField in $reportFields)
-              #if($reportField.getBaseField().getFieldCategory() != "RELATION")
-                <option value="$reportField.getInternalFieldName()" #if($reportField.equals($colourField)) selected #end>$reportField</option>
-              #end
-            #end
-          </select>
-        </form>
-      Categorise by:
-        <form method="POST" action="AppController.servlet">
-          <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
-          <input type="hidden" name="update_map" value="true" />
-          <select name="categoryfieldinternalname" onchange="form.submit();">
-            <option value="">Please choose a field...</option>
-            #foreach($reportField in $reportFields)
-              #if($reportField.getBaseField().getFieldCategory() != "RELATION")
-                <option value="$reportField.getInternalFieldName()" #if($reportField.equals($categoryField)) selected #end>$reportField</option>
-              #end
-            #end
-          </select>
-        </form>
+<div id="map_control">
+  Postcode field:
+  <form method="POST" action="AppController.servlet">
+    <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+    <input type="hidden" name="update_map" value="true" />
+    <select name="postcodefieldinternalname" onchange="form.submit();">
+      <option value="">Please choose a field...</option>
+      #foreach($reportField in $reportFields)
+        #if($reportField.getBaseField().getFieldCategory() != "RELATION")
+          <option value="$reportField.getInternalFieldName()" #if($reportField.equals($postcodeField)) selected #end>$reportField</option>
+        #end
+      #end
+    </select>
+  </form>
+  Group (colour) by:
+  <form method="POST" action="AppController.servlet">
+    <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+    <input type="hidden" name="update_map" value="true" />
+    <select name="colourfieldinternalname" onchange="form.submit();">
+      <option value="">Please choose a field...</option>
+      #foreach($reportField in $reportFields)
+        #if($reportField.getBaseField().getFieldCategory() != "RELATION")
+          <option value="$reportField.getInternalFieldName()" #if($reportField.equals($colourField)) selected #end>$reportField</option>
+        #end
+      #end
+    </select>
+  </form>
+  Categorise by:
+  <form method="POST" action="AppController.servlet">
+    <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+    <input type="hidden" name="update_map" value="true" />
+    <select name="categoryfieldinternalname" onchange="form.submit();">
+      <option value="">Please choose a field...</option>
+      #foreach($reportField in $reportFields)
+        #if($reportField.getBaseField().getFieldCategory() != "RELATION")
+          <option value="$reportField.getInternalFieldName()" #if($reportField.equals($categoryField)) selected #end>$reportField</option>
+        #end
+      #end
+    </select>
+  </form>
+  <div id="map_legend">
+  </div>
 </div>
