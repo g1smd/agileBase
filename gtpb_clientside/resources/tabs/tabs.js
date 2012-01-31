@@ -1189,6 +1189,7 @@ function fMap() {
 	  		var colour = "FFFFFF";
 	  		if (row.colourValue) {
 	  			colour = hsl2hex(row.hue, row.saturation, 60);
+	  			console.log("Sat " + row.saturation);
 	  			colourValues[row.colourValue] = row.colourValue;
 	  			colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=A|" + colour + "|000000";
 	  		}
