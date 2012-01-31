@@ -1230,9 +1230,9 @@ function hsl2hex(h, s, l) {
 		g = HueToRgb(m1, m2, hue);
 		b = HueToRgb(m1, m2, hue - 1/3);
 	}
-	var r16 = r.toString(16).substr(0,2);
-  var g16 = g.toString(16).substr(0,2);
-  var b16 = b.toString(16).substr(0,2);
+	var r16 = r.toString(16).substr(0,2).replace(".","");
+  var g16 = g.toString(16).substr(0,2).replace(".","");
+  var b16 = b.toString(16).substr(0,2).replace(".","");
 	console.log("r: " + r16 + ", g: " + g16 + ", b: " + b16);
   return (r16.length == 2 ? r16 : '0' + r16)
 	  + (g16.length == 2 ? g16 : '0' + g16)
