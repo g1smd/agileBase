@@ -1163,7 +1163,6 @@ function fMap() {
 	    panControl: false
 	  };
 	  var markers = [];
-	  var popupContents = [];
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
 	  var mapBounds = new google.maps.LatLngBounds();
 	  var popup = new google.maps.InfoWindow({
@@ -1178,16 +1177,15 @@ function fMap() {
 	  		markers[i] = new google.maps.Marker({
 	        position: latLng,
 	        map: map,
-	        title: row.postcode
+	        title: row.postcode,
+	        html: row.title
 	  		});
-	  		markers[i].html = row.title;
 	  		google.maps.event.addListener(markers[i], 'click', function() {
 	  			popup.setContent(this.html);
 	  		  popup.open(map,this);
 	  		});
 	  	}
 	  });
-	  map.fitBounds(mapBounds);
 	}
 }
 
