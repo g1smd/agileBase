@@ -1189,13 +1189,13 @@ function fMap() {
 	  		var colour = "FFFFFF";
 	  		var firstLetter = ".";
 	  		var pinStyle = "d_map_pin_letter";
-	  		if ((firstLetter >= '0') && (firstLetter <= '9')) {
-	  			pinStyle = "d_map_xpin_letter";
-	  		}
 	  		if (row.colourValue) {
 	  			colour = hsl2hex(row.hue, row.saturation, 60);
 	  			colourValues[row.colourValue] = row.colourValue;
 	  			firstLetter = row.colourValue.charAt(0);
+		  		if ((firstLetter >= '0') && (firstLetter <= '9')) {
+		  			pinStyle = "d_map_xpin_letter";
+		  		}
 	  			colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst=" + pinStyle + "&chld=" + firstLetter + "|" + colour + "|000000";
 	  		}
 	  		//mapBounds.extend(latLng);
