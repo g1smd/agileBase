@@ -1187,18 +1187,19 @@ function fMap() {
 	  		var row = data[i];
 	  		var latLng = new google.maps.LatLng(row.latitude,row.longitude);
 	  		var colour = "FFFFFF";
+	  		var firstLetter = ".";
 	  		if (row.colourValue) {
 	  			colour = hsl2hex(row.hue, row.saturation, 60);
-	  			console.log("Sat " + row.saturation);
 	  			colourValues[row.colourValue] = row.colourValue;
-	  			colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=A|" + colour + "|000000";
+	  			firstLetter = row.colourValue.charAt(0);
+	  			colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + firstLetter + "|" + colour + "|000000";
 	  		}
 	  		//mapBounds.extend(latLng);
 	  		markers[i] = new google.maps.Marker({
 	        position: latLng,
 	        map: map,
 	        title: row.postcode,
-	        icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=A|" + colour + "|000000",
+	        icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + firstLetter + " + colour + "|000000",
 	        html: row.title /* our own property */
 	  		});
 	  		google.maps.event.addListener(markers[i], 'click', function() {
