@@ -1170,16 +1170,16 @@ function fMap() {
 	  	for(var i=0; i<len; i++) {
 	  		var row = data[i];
 	  		var latLng = new google.maps.LatLng(row.latitude,row.longitude);
-	  		markers[i] = new google.maps.Marker({
+	  		var marker = new google.maps.Marker({
 	        position: latLng,
 	        map: map,
 	        title: row.postcode
 	  		});
-	  		popups[row.postcode] = new google.maps.InfoWindow({
-	  	    content: row.title
-	  		});
-	  		google.maps.event.addListener(markers[i], 'click', function() {
-	  		  popups[markers[i].title].open(map,markers[i]);
+	  		google.maps.event.addListener(marker, 'click', function() {
+	  			var popup = new google.maps.InfoWindow({
+		  	    content: row.title
+		  		});
+	  		  popup.open(map,marker);
 	  		});
 	  	}
 	  });
