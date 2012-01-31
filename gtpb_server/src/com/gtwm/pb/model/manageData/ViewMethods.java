@@ -569,7 +569,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		int rowLimit = 100;
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
 				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
-				QuickFilterType.OR);
+				QuickFilterType.OR, false);
 		UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
 		usageLogger.logReportView(user, report, reportFilterValues, rowLimit, "global search");
 		UsageLogger.startLoggingThread(usageLogger);
@@ -592,13 +592,21 @@ public final class ViewMethods implements ViewMethodsInfo {
 		CompanyInfo company = user.getCompany();
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
 				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
-				QuickFilterType.AND);
+				QuickFilterType.AND, false);
 		UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
 		usageLogger.logReportView(user, report, reportFilterValues, rowLimit, null);
 		UsageLogger.startLoggingThread(usageLogger);
 		return reportDataRows;
 	}
 
+	public String getReportMapJSON() throws ObjectNotFoundException, CodingErrorException, CantDoThatException, SQLException {
+		BaseReportInfo report = this.sessionData.getReport();
+		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues(report);
+		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
+				this.request);
+		return this.databaseDefn.getDataManagement().getReportMapJson(company, report, reportFilterValues);
+	}
+	
 	public String getReportTimelineJSON() throws CodingErrorException, CantDoThatException,
 			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException, JsonGenerationException {
 		AppUserInfo user = this.getLoggedInUser();

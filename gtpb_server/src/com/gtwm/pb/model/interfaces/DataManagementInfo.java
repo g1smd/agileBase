@@ -48,7 +48,7 @@ import com.gtwm.pb.util.Enumerations.FieldContentType;
  * of this class will be constructed to deal with everything data-related
  */
 public interface DataManagementInfo {
-	
+
 	/**
 	 * @param company
 	 *            Needed for internal caching mechanism. Can be null, but if so,
@@ -70,12 +70,16 @@ public interface DataManagementInfo {
 	 *            The maximum number of rows to return, -1 means no limit
 	 * @param quickFilterType
 	 *            Whether to treat field filters as joined by AND or OR
+	 * @param lookupPostcodeLatLong
+	 *            Whether to look up latitudes and longitudes for every row
+	 *            containing a postcode and include them in results
 	 * @return report data as a list of rows
 	 */
 	public List<DataRowInfo> getReportDataRows(CompanyInfo company, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType)
-			throws SQLException, CodingErrorException, CantDoThatException;
+			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType,
+			boolean lookupPostcodeLatLong) throws SQLException, CodingErrorException,
+			CantDoThatException;
 
 	/**
 	 * Return all the text from the specified fields in the report as one big
@@ -109,9 +113,13 @@ public interface DataManagementInfo {
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
 			throws CodingErrorException, CantDoThatException, SQLException, JsonGenerationException;
 
+	public String getReportMapJson(CompanyInfo company, BaseReportInfo report,
+			Map<BaseField, String> filters) throws CodingErrorException, CantDoThatException,
+			SQLException;
+
 	public String getReportTimelineJSON(AppUserInfo user, Set<BaseReportInfo> reports,
-			Map<BaseField, String> filterValues) throws CodingErrorException,
-			CantDoThatException, SQLException, JsonGenerationException;
+			Map<BaseField, String> filterValues) throws CodingErrorException, CantDoThatException,
+			SQLException, JsonGenerationException;
 
 	/**
 	 * @param user
@@ -124,13 +132,13 @@ public interface DataManagementInfo {
 	 */
 	public String getReportJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
-			throws CodingErrorException, CantDoThatException, SQLException,
-			XMLStreamException, ObjectNotFoundException, JsonGenerationException;
+			throws CodingErrorException, CantDoThatException, SQLException, XMLStreamException,
+			ObjectNotFoundException, JsonGenerationException;
 
 	public String getReportRSS(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
-			throws SQLException, CodingErrorException, CantDoThatException,
-			XMLStreamException, ObjectNotFoundException;
+			throws SQLException, CodingErrorException, CantDoThatException, XMLStreamException,
+			ObjectNotFoundException;
 
 	/**
 	 * Return a report data object that contains metadata about the report data.
@@ -155,9 +163,10 @@ public interface DataManagementInfo {
 	 * Get all comments attached to a particular field for a particular record
 	 */
 	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException;
-	
-	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment) throws SQLException;
-	
+
+	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment)
+			throws SQLException;
+
 	/**
 	 * Return true if the record with the given primary key is visible in the
 	 * report

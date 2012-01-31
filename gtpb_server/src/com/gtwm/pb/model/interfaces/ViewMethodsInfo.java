@@ -480,6 +480,8 @@ public interface ViewMethodsInfo {
 	public String getReportTimelineJSON() throws CodingErrorException, CantDoThatException,
 			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException, JsonGenerationException;
 
+	public String getReportMapJSON() throws ObjectNotFoundException, CodingErrorException, CantDoThatException, SQLException;
+	
 	/**
 	 * Returns true if the record identified by the session row ID is visible in
 	 * the session report

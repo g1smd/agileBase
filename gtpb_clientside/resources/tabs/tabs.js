@@ -1159,9 +1159,17 @@ function fMap() {
 	  var myOptions = {
 	  	zoom: 6,
 	  	center: new google.maps.LatLng(54,2),
-	    mapTypeId: google.maps.MapTypeId.ROADMAP
+	    mapTypeId: google.maps.MapTypeId.ROADMAP,
+	    panControl: false
 	  };
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
+	  var mapJSON = $.getJSON("AppController.servlet?return=gui/reports_and_tables/map_json", function(data) {
+	  	var len = data.length;
+	  	for(var i=0; i<len; i++) {
+	  		var row = data[i];
+	  		console.log(row.postcode);
+	  	}
+	  });
 	}
 }
 
