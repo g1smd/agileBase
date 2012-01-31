@@ -1178,7 +1178,8 @@ function fMap() {
 	        position: latLng,
 	        map: map,
 	        title: row.postcode,
-	        html: row.title
+	        icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=A|FF0000|000000",
+	        html: row.title /* our own property */
 	  		});
 	  		google.maps.event.addListener(markers[i], 'click', function() {
 	  			popup.setContent(this.html);
