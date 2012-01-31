@@ -1188,18 +1188,22 @@ function fMap() {
 	  		var latLng = new google.maps.LatLng(row.latitude,row.longitude);
 	  		var colour = "FFFFFF";
 	  		var firstLetter = ".";
+	  		var pinStyle = "d_map_pin_letter";
+	  		if ((firstLetter >= '0') && (firstLetter <= '9')) {
+	  			pinStyle = "d_map_xpin_letter";
+	  		}
 	  		if (row.colourValue) {
 	  			colour = hsl2hex(row.hue, row.saturation, 60);
 	  			colourValues[row.colourValue] = row.colourValue;
 	  			firstLetter = row.colourValue.charAt(0);
-	  			colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + firstLetter + "|" + colour + "|000000";
+	  			colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst=" + pinStyle + "&chld=" + firstLetter + "|" + colour + "|000000";
 	  		}
 	  		//mapBounds.extend(latLng);
 	  		markers[i] = new google.maps.Marker({
 	        position: latLng,
 	        map: map,
 	        title: row.postcode,
-	        icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + firstLetter + "|" + colour + "|000000",
+	        icon: "https://chart.googleapis.com/chart?chst=" + pinStyle + "&chld=" + firstLetter + "|" + colour + "|000000",
 	        html: row.title /* our own property */
 	  		});
 	  		google.maps.event.addListener(markers[i], 'click', function() {
