@@ -1189,21 +1189,25 @@ function fMap() {
 	  		var colour = "FFFFFF";
 	  		var firstLetter = ".";
 	  		var pinStyle = "d_map_pin_letter";
+	  		var pinStyle2 = "";
+	  		var pinStarFill = "";
 	  		if (row.colourValue) {
 	  			colour = hsl2hex(row.hue, row.saturation, 60);
 	  			colourValues[row.colourValue] = row.colourValue;
 	  			firstLetter = row.colourValue.charAt(0);
 		  		if ((firstLetter >= '0') && (firstLetter <= '9')) {
 		  			pinStyle = "d_map_xpin_letter";
+		  			pinStyle2 = "pin_star|";
+		  			pinStarFill = "|FFFF00";
 		  		}
-	  			colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst=" + pinStyle + "&chld=" + firstLetter + "|" + colour + "|000000";
+	  			colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst=" + pinStyle + "&chld=" + pinStyle2 + firstLetter + "|" + colour + "|000000" + pinStarFill;
 	  		}
 	  		//mapBounds.extend(latLng);
 	  		markers[i] = new google.maps.Marker({
 	        position: latLng,
 	        map: map,
 	        title: row.postcode,
-	        icon: "https://chart.googleapis.com/chart?chst=" + pinStyle + "&chld=" + firstLetter + "|" + colour + "|000000",
+	        icon: "https://chart.googleapis.com/chart?chst=" + pinStyle + "&chld=" + pinStyle2 + firstLetter + "|" + colour + "|000000" + pinStarFill,
 	        html: row.title /* our own property */
 	  		});
 	  		google.maps.event.addListener(markers[i], 'click', function() {
