@@ -861,3 +861,7 @@ div#reportData {
     top: 0;
     padding: 1em;
   }
+  
+  #map_legend img {
+    vertical-align: middle;
+  }

@@ -1206,7 +1206,7 @@ function fMap() {
 	  		});
 	  	}
 	  	for (var colourValue in colourValues) {
-	  		$("#map_legend").append("<div><img src='" + colourIcons[colourValue] + "' />" + colourValue + "</div>");
+	  		$("#map_legend").append("<div><img src='" + colourIcons[colourValue] + "' />&nbsp;" + colourValue + "</div>");
 	  	}
 	  });
 	}
