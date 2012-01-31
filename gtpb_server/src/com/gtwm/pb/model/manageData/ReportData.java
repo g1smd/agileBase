@@ -18,6 +18,7 @@
 package com.gtwm.pb.model.manageData;
 
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
+import com.gtwm.pb.model.interfaces.ReportMapInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -211,7 +212,7 @@ public class ReportData implements ReportDataInfo {
 		if (dbType.equals(DatabaseFieldType.VARCHAR) && (!exactFilters)) {
 			if (filterValue.startsWith(":")) {
 				filterValue = filterValue.replaceFirst(":", "");
-			} else if((!filterValue.startsWith("%")) && filterType.equals(QuickFilterType.LIKE)) {
+			} else if ((!filterValue.startsWith("%")) && filterType.equals(QuickFilterType.LIKE)) {
 				filterValue = "%" + filterValue;
 			}
 		}
@@ -437,8 +438,14 @@ public class ReportData implements ReportDataInfo {
 	public PreparedStatement getReportSqlPreparedStatement(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> reportSorts, int rowLimit, BaseField selectField,
-			QuickFilterType filterType) throws SQLException, CantDoThatException {
+			QuickFilterType filterType, boolean lookupPostcodeLatLong) throws SQLException,
+			CantDoThatException {
 		StringBuilder SQLCode;
+		ReportFieldInfo postcodeField = null;
+		if (lookupPostcodeLatLong) {
+			ReportMapInfo map = report.getMap();
+			postcodeField = map.getPostcodeField();
+		}
 		if (selectField == null) {
 			SQLCode = new StringBuilder("SELECT ");
 			Set<ReportFieldInfo> reportFields = this.report.getReportFields();
@@ -467,6 +474,11 @@ public class ReportData implements ReportDataInfo {
 							.append(relationField.getInternalFieldName());
 					SQLCode.append(") AS ").append(relationField.getInternalFieldName())
 							.append("_display, ");
+				} else if (reportField.equals(postcodeField)) {
+					SQLCode.append("dbint_postcodes.latitude AS ").append(
+							internalFieldName + "_latitude, ");
+					SQLCode.append("dbint_postcodes.longitude AS ").append(
+							internalFieldName + "_longitude, ");
 				}
 			}
 			// remove trailing comma
@@ -477,6 +489,11 @@ public class ReportData implements ReportDataInfo {
 					+ " FROM ");
 		}
 		SQLCode.append(this.report.getInternalReportName());
+		if (postcodeField != null) {
+			SQLCode.append(" LEFT OUTER JOIN dbint_postcodes ON ");
+			SQLCode.append("upper(trim(" + this.report.getInternalReportName() + "."
+					+ postcodeField.getInternalFieldName() + ")) = dbint_postcodes.postcode");
+		}
 		// Apply filters if there are any
 		Map<String, List<ReportQuickFilterInfo>> whereClauseMap = this.getWhereClause(filterValues,
 				exactFilters, filterType);
@@ -530,7 +547,7 @@ public class ReportData implements ReportDataInfo {
 		}
 		PreparedStatement statement = conn.prepareStatement(SQLCode.toString());
 		statement = this.fillInFilterValues(filtersUsed, statement);
-		// logger.debug("Prepared statement: " + statement);
+		logger.debug("Prepared statement: " + statement);
 		return statement;
 	}
 
@@ -735,32 +752,43 @@ public class ReportData implements ReportDataInfo {
 
 	public List<DataRowInfo> getReportDataRows(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType)
-			throws SQLException, CodingErrorException, CantDoThatException {
+			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType,
+			boolean lookupPostcodeLatLong) throws SQLException, CodingErrorException,
+			CantDoThatException {
 		List<DataRowInfo> reportData = null;
 		// 0) Obtain all display values taken from other sources:
-		Map<BaseField, Map<String, String>> displayLookups = new HashMap<BaseField, Map<String, String>>();
-		for (ReportFieldInfo reportField : this.report.getReportFields()) {
-			BaseField fieldSchema = reportField.getBaseField();
-			if (fieldSchema instanceof RelationField) {
-				// Buffer the set of display values for this field:
-				RelationField relationField = (RelationField) fieldSchema;
-				String relatedKey = relationField.getRelatedField().getInternalFieldName();
-				String relatedDisplay = relationField.getDisplayField().getInternalFieldName();
-				String relatedSource = relationField.getRelatedTable().getInternalTableName();
-				Map<String, String> displayLookup = getKeyToDisplayMapping(conn, relatedSource,
-						relatedKey, relatedDisplay);
-				displayLookups.put(relationField.getRelatedField(), displayLookup);
+		/*
+		 * Map<BaseField, Map<String, String>> displayLookups = new
+		 * HashMap<BaseField, Map<String, String>>(); for (ReportFieldInfo
+		 * reportField : this.report.getReportFields()) { BaseField fieldSchema
+		 * = reportField.getBaseField(); if (fieldSchema instanceof
+		 * RelationField) { // Buffer the set of display values for this field:
+		 * RelationField relationField = (RelationField) fieldSchema; String
+		 * relatedKey = relationField.getRelatedField().getInternalFieldName();
+		 * String relatedDisplay =
+		 * relationField.getDisplayField().getInternalFieldName(); String
+		 * relatedSource =
+		 * relationField.getRelatedTable().getInternalTableName(); Map<String,
+		 * String> displayLookup = getKeyToDisplayMapping(conn, relatedSource,
+		 * relatedKey, relatedDisplay);
+		 * displayLookups.put(relationField.getRelatedField(), displayLookup); }
+		 * }
+		 */
+		long executionStartTime = System.currentTimeMillis();
+		ReportFieldInfo postcodeField = null;
+		if (lookupPostcodeLatLong) {
+			ReportMapInfo map = report.getMap();
+			if (map != null) {
+				postcodeField = map.getPostcodeField();
 			}
 		}
-		long executionStartTime = System.currentTimeMillis();
 		QueryPlanSelection qp = report.getQueryPlanSelection();
 		if (qp.equals(QueryPlanSelection.TRY_NO_NESTED_LOOPS)
 				|| qp.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
 			enableNestloop(conn, false);
 		}
 		PreparedStatement statement = this.getReportSqlPreparedStatement(conn, filterValues,
-				exactFilters, reportSorts, rowLimit, null, filterType);
+				exactFilters, reportSorts, rowLimit, null, filterType, lookupPostcodeLatLong);
 		ResultSet results = statement.executeQuery();
 		if (qp.equals(QueryPlanSelection.TRY_NO_NESTED_LOOPS)
 				|| qp.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
@@ -812,7 +840,8 @@ public class ReportData implements ReportDataInfo {
 					break;
 				case TRY_NO_NESTED_LOOPS:
 				case NO_NESTED_LOOPS:
-					logger.info("Report " + report + ": nested loops are faster but the query is still slow");
+					logger.info("Report " + report
+							+ ": nested loops are faster but the query is still slow");
 					break;
 				}
 			}
@@ -826,7 +855,7 @@ public class ReportData implements ReportDataInfo {
 		}
 		reportData = new ArrayList<DataRowInfo>(initialCapacity);
 		DataRow reportDataRow;
-		DataRowField reportDataRowField;
+		DataRowFieldInfo reportDataRowField;
 		TableInfo parentTable = this.report.getParentTable();
 		BaseField primaryKeyField = parentTable.getPrimaryKey();
 		Map<BaseField, DataRowFieldInfo> row;
@@ -843,7 +872,8 @@ public class ReportData implements ReportDataInfo {
 				String displayValue = null;
 				// If cell should be coloured, calculate colour hex string
 				boolean fieldShouldBeColoured = this.cachedFieldStats.containsKey(reportField);
-				String colourableFieldInternalName = reportField.getInternalFieldName();
+				String internalFieldName = reportField.getInternalFieldName();
+				String colourableFieldInternalName = internalFieldName;
 				if (fieldShouldBeColoured
 						&& fieldSchema.getDbType().equals(DatabaseFieldType.TIMESTAMP)) {
 					// _ms: see getReportSqlPreparedStatement
@@ -911,8 +941,11 @@ public class ReportData implements ReportDataInfo {
 						RelationField relationField = (RelationField) fieldSchema;
 						keyValue = results.getString(relationField.getInternalFieldName());
 						if (keyValue != null) {
-							displayValue = displayLookups.get(relationField.getRelatedField()).get(
-									keyValue);
+							// displayValue =
+							// displayLookups.get(relationField.getRelatedField()).get(
+							// keyValue);
+							displayValue = results.getString(relationField.getInternalFieldName()
+									+ "_display");
 						} else {
 							keyValue = "";
 						}
@@ -1023,7 +1056,13 @@ public class ReportData implements ReportDataInfo {
 							colourRepresentation);
 				} else {
 					// no colour
-					reportDataRowField = new DataRowField(keyValue, displayValue);
+					if (reportField.equals(postcodeField)) {
+						Double latitude = results.getDouble(internalFieldName + "_latitude");
+						Double longitude = results.getDouble(internalFieldName + "_longitude");
+						reportDataRowField = new LocationDataRowField(keyValue, latitude, longitude);
+					} else {
+						reportDataRowField = new DataRowField(keyValue, displayValue);
+					}
 				}
 				row.put(fieldSchema, reportDataRowField);
 			}
@@ -1094,7 +1133,7 @@ public class ReportData implements ReportDataInfo {
 	public Map<ReportFieldInfo, ReportDataFieldStatsInfo> getFieldStats() {
 		return this.cachedFieldStats;
 	}
-	
+
 	public static void enableNestloop(Connection conn, boolean enableNestLoop) throws SQLException {
 		Statement setNestedLoopStatement = conn.createStatement();
 		if (enableNestLoop) {

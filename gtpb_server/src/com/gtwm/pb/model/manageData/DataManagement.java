@@ -64,7 +64,9 @@ import com.gtwm.pb.model.interfaces.CachedReportFeedInfo;
 import com.gtwm.pb.model.interfaces.CommentInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
+import com.gtwm.pb.model.interfaces.LocationDataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
+import com.gtwm.pb.model.interfaces.ReportMapInfo;
 import com.gtwm.pb.model.interfaces.ReportQuickFilterInfo;
 import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
@@ -309,7 +311,7 @@ public final class DataManagement implements DataManagementInfo {
 			Map<BaseField, String> filterValues = sessionData.getReportFilterValues();
 
 			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
-					filterValues, false, emptySorts, -1, primaryKey, QuickFilterType.AND);
+					filterValues, false, emptySorts, -1, primaryKey, QuickFilterType.AND, false);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				Integer item = results.getInt(1);
@@ -405,7 +407,7 @@ public final class DataManagement implements DataManagementInfo {
 		Map<BaseField, String> filters = sessionData.getReportFilterValues();
 		Map<BaseField, Boolean> sorts = new HashMap<BaseField, Boolean>();
 		List<DataRowInfo> dataRows = this.getReportDataRows(company, report, filters, false, sorts,
-				-1, QuickFilterType.AND);
+				-1, QuickFilterType.AND, false);
 		String lockFieldInternalName = table.getField(HiddenFields.LOCKED.getFieldName())
 				.getInternalFieldName();
 		String SQLCode = "UPDATE " + table.getInternalTableName() + " SET " + lockFieldInternalName
@@ -1725,7 +1727,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
 				filters, exactFilters, new HashMap<BaseField, Boolean>(0), numRows,
-				QuickFilterType.AND);
+				QuickFilterType.AND, false);
 		String dataFeedString = null;
 		if (dataFormat.equals(DataFormat.JSON)) {
 			dataFeedString = this.generateJSON(report, reportDataRows);
@@ -1846,6 +1848,42 @@ public final class DataManagement implements DataManagementInfo {
 		eventWriter.add(end);
 	}
 
+	public String getReportMapJson(CompanyInfo company, BaseReportInfo report, Map<BaseField, String> filters) throws CodingErrorException, CantDoThatException, SQLException {
+		ReportMapInfo map = report.getMap();
+		if (map == null) {
+			throw new CantDoThatException("Report has no map configured");
+		}
+		ReportFieldInfo postcodeField = map.getPostcodeField();
+		if (postcodeField == null) {
+			throw new CantDoThatException("Report map has no postcode field identified");
+		}
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(company, report,
+				filters, false, new HashMap<BaseField, Boolean>(0), 10000,
+				QuickFilterType.AND, true);
+		JsonFactory jsonFactory = new JsonFactory();
+		StringWriter stringWriter = new StringWriter(1024);
+		JsonGenerator jg;
+		try {
+			jg = jsonFactory.createJsonGenerator(stringWriter);
+			jg.writeStartArray();
+			for (DataRowInfo reportDataRow : reportDataRows) {
+				jg.writeStartObject();
+				jg.writeNumberField("rowId", reportDataRow.getRowId());
+				LocationDataRowFieldInfo postcodeDataRowField = (LocationDataRowFieldInfo) reportDataRow.getValue(postcodeField);
+				jg.writeStringField("postcode", postcodeDataRowField.getKeyValue());
+				jg.writeNumberField("latitude", postcodeDataRowField.getLatitude());
+				jg.writeNumberField("longitude", postcodeDataRowField.getLongitude());
+				jg.writeStringField("title", buildEventTitle(report, reportDataRow, true));
+				jg.writeEndObject();
+			}
+			jg.writeEndArray();
+			jg.flush();
+		} catch (IOException ioex) {
+			throw new CodingErrorException("JSON generation produced IO Exception: " + ioex, ioex);
+		}
+		return stringWriter.toString();
+	}
+	
 	private String generateJSON(BaseReportInfo report, List<DataRowInfo> reportDataRows) throws CodingErrorException, JsonGenerationException {
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
@@ -1922,7 +1960,7 @@ public final class DataManagement implements DataManagementInfo {
 				ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 				List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
 						filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
-						QuickFilterType.AND);
+						QuickFilterType.AND, false);
 				ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
 					DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
 					if (eventDateValue.getKeyValue().equals("")) {
@@ -2004,7 +2042,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		List<DataRowInfo> reportDataRows = this
 				.getReportDataRows(user.getCompany(), report, filterValues, false,
-						new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND);
+						new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false);
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
@@ -2152,7 +2190,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	public List<DataRowInfo> getReportDataRows(CompanyInfo company, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType)
+			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType, boolean lookupPostcodeLatLong)
 			throws SQLException, CodingErrorException, CantDoThatException {
 		Connection conn = null;
 		List<DataRowInfo> reportDataRows = null;
@@ -2161,7 +2199,7 @@ public final class DataManagement implements DataManagementInfo {
 			conn.setAutoCommit(false);
 			ReportDataInfo reportData = this.getReportData(company, reportDefn, conn, true);
 			reportDataRows = reportData.getReportDataRows(conn, filterValues, exactFilters,
-					sessionSorts, rowLimit, filterType);
+					sessionSorts, rowLimit, filterType, lookupPostcodeLatLong);
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -2733,7 +2771,7 @@ public final class DataManagement implements DataManagementInfo {
 		// Get data we're going to anonymise
 		List<DataRowInfo> dataRows = this.getReportDataRows(null, table.getDefaultReport(),
 				new HashMap<BaseField, String>(), false, new HashMap<BaseField, Boolean>(0), -1,
-				QuickFilterType.AND);
+				QuickFilterType.AND, false);
 		// Build up list of names
 		List<String> forenames = new LinkedList<String>();
 		List<String> surnames = new LinkedList<String>();

@@ -50,7 +50,7 @@ public interface ReportDataInfo {
 	 */
 	public List<DataRowInfo> getReportDataRows(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType)
+			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType, boolean lookupPostcodeLatLong)
 			throws SQLException, CodingErrorException, CantDoThatException;
 
 	/**
@@ -75,7 +75,7 @@ public interface ReportDataInfo {
 	public PreparedStatement getReportSqlPreparedStatement(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> reportSorts, int rowLimit, BaseField selectField,
-			QuickFilterType filterType) throws SQLException, CantDoThatException;
+			QuickFilterType filterType, boolean lookupPostcodeLatLong) throws SQLException, CantDoThatException;
 
 	/**
 	 * Generate a SQL WHERE clause that will work on a report given a map of

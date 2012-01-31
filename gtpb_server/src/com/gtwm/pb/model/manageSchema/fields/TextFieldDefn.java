@@ -415,7 +415,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			// in the WHERE clause
 			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
 			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
-					filterValues, false, emptySorts, -1, this, QuickFilterType.AND);
+					filterValues, false, emptySorts, -1, this, QuickFilterType.AND, false);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				String item = results.getString(1);

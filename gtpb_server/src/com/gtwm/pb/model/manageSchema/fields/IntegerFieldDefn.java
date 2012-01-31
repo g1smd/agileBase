@@ -259,7 +259,7 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 			// in the WHERE clause
 			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
 			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
-					filterValues, false, emptySorts, -1, this, QuickFilterType.AND);
+					filterValues, false, emptySorts, -1, this, QuickFilterType.AND, false);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				items.add(results.getInt(1));

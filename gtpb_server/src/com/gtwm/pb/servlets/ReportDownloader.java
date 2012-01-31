@@ -233,7 +233,7 @@ public final class ReportDownloader extends HttpServlet {
 		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
 		List<DataRowInfo> reportDataRows = dataManagement.getReportDataRows(company, report,
 				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), -1,
-				QuickFilterType.AND);
+				QuickFilterType.AND, false);
 		String fieldValue = "";
 		for (DataRowInfo dataRow : reportDataRows) {
 			Map<BaseField, DataRowFieldInfo> dataRowFieldMap = dataRow.getDataRowFields();
