@@ -1187,7 +1187,6 @@ function fMap() {
 	  		var colour = "FFFFFF";
 	  		if (row.colourValue) {
 	  			colour = hsl2hex(row.hue, 80, 60);
-	  			console.log("hue: " + row.hue + " -> " + colour);
 	  		}
 	  		//mapBounds.extend(latLng);
 	  		markers[i] = new google.maps.Marker({
@@ -1224,10 +1223,10 @@ function hsl2hex(h, s, l) {
 		g = HueToRgb(m1, m2, hue);
 		b = HueToRgb(m1, m2, hue - 1/3);
 	}
-	console.log("r: " + r + ", g: " + g + ", b: " + b);
 	var r16 = r.toString(16);
   var g16 = g.toString(16);
   var b16 = b.toString(16);
+	console.log("r: " + r16 + ", g: " + g16 + ", b: " + b16);
   return 
 	  (r16.length == 2 ? r16 : '0' + r16)
 	  + (g16.length == 2 ? g16 : '0' + g16)
