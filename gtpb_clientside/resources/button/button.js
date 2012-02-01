@@ -127,7 +127,7 @@ function fLinks() {
 }
 
 function fPrint() {
-	$("#rowsWrapper")[0].mozRequestFullScreen();
+	document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').mozRequestFullScreen();
   //var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/printouts/pane2_printout_wrapper','print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')	
 }
 
