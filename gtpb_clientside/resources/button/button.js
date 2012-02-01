@@ -128,9 +128,9 @@ function fLinks() {
 
 function fPrint() {
 	alert('rowsWrapper');
-	var jqViewPane = $("#oViewPane");
-	var jqRowsWrapper = jqViewPane.find("#rowsWrapper");
-	jqRowsWrapper[0].mozRequestFullScreen();
+	var jqPane2 = $(document.getElementById('oViewPane').contentWindow.pane_2);
+	var rowsWrapper = jqPane2.parent()[0];
+	rowsWrapper.mozRequestFullScreen();
   //var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/printouts/pane2_printout_wrapper','print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')	
 }
 
