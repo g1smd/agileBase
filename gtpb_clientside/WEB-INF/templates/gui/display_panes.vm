@@ -55,7 +55,7 @@
       #else
         #set($rows = "*,*") ## panes 2 and 3 both displayed
       #end
-    	<frameset id="rowsWrapper" mozallowfullscreen="true" rows="$rows" border="5" frameborder="yes" framespacing="5">
+    	<frameset id="rowsWrapper" rows="$rows" border="5" frameborder="yes" framespacing="5">
     	  <!-- pane 2 and 3 loads will cascade from pane 1 -->
     	  <frame name="pane_2" id="pane_2" scrolling="auto" src=""> ##AppController.servlet?return=gui/resources/nothing
     	  <frame name="pane_3" id="pane_3" scrolling="no" src="">
