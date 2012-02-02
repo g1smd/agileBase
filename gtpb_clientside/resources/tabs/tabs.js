@@ -1171,7 +1171,9 @@ function fMap() {
 	  	zoom: 6,
 	  	center: new google.maps.LatLng(54,2),
 	    mapTypeId: google.maps.MapTypeId.ROADMAP,
-	    panControl: false
+	    panControl: false,
+	    scrollwheel: false,
+	    mapTypeControl: false
 	  };
 	  var markers = [];
 	  var colourValues = [];
