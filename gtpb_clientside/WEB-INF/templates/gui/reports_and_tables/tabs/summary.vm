@@ -137,6 +137,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
       Map by postcode field 
       <select name="postcodefieldinternalname" onchange="form.submit();">
         <option value="">Please choose a field...</option>
+        #set($reportFields = $report.getReportFields())
         #foreach($reportField in $reportFields)
           #if($reportField.getBaseField().getFieldCategory() == "TEXT")
             <option value="$reportField.getInternalFieldName()" #if($reportField.equals($postcodeField)) selected #end>$reportField</option>
