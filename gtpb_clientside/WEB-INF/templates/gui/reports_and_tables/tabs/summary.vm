@@ -41,7 +41,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 ## Map
 #set($map = $report.getMap())
 #set($postcodeField = $map.getPostcodeField())
+Postcode field is $postcodeField
 #if($postcodeField)
+  Including map:
   #parse("gui/reports_and_tables/tabs/map.vm")
 #end
 ## Saved charts
