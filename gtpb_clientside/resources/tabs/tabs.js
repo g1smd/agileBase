@@ -1181,7 +1181,7 @@ function fMap() {
 	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
 	  var mapBounds = new google.maps.LatLngBounds();
 	  var popup = new google.maps.InfoWindow({
-	  	content: "holding..."
+	  	"content": "holding..."
 	  });
 	  var mapJSON = $.getJSON("AppController.servlet?return=gui/reports_and_tables/tabs/map_json", function(data) {
 	  	var len = data.length;
@@ -1207,10 +1207,10 @@ function fMap() {
 	  		//mapBounds.extend(latLng);
 	  		markers[i] = new google.maps.Marker({
 	        position: latLng,
-	        map: map,
+	        "map": map,
 	        title: row.postcode,
 	        icon: "https://chart.googleapis.com/chart?chst=" + pinStyle + "&chld=" + pinStyle2 + firstLetter + "|" + colour + "|000000" + pinStarFill,
-	        html: row.title /* our own property */
+	        "html": row.title /* our own property */
 	  		});
 	  		google.maps.event.addListener(markers[i], 'click', function() {
 	  			popup.setContent(this.html);
