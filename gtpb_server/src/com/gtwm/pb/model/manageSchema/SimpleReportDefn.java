@@ -1110,24 +1110,6 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	}
 	
 	@Transient
-	public ReportMapInfo getMap() {
-		return this.getMapDirect();
-	}
-	
-	public void setMap(ReportMapInfo reportMap) {
-		this.setMapDirect(reportMap);
-	}
-	
-	@OneToOne(targetEntity = ReportMap.class)
-	private ReportMapInfo getMapDirect() {
-		return this.reportMap;
-	}
-	
-	private void setMapDirect(ReportMapInfo reportMap) {
-		this.reportMap = reportMap;
-	}
-
-	@Transient
 	public ReportFieldInfo getCalendarStartField() throws CodingErrorException {
 		List<ReportFieldInfo> dateFields = this.getDateFields();
 		if (dateFields.size() == 0) {
@@ -1285,7 +1267,5 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	
 	private ReportStyle reportStyle = ReportStyle.SPREADSHEET;
 	
-	private ReportMapInfo reportMap = null; 
-
 	private static final SimpleLogger logger = new SimpleLogger(SimpleReportDefn.class);
 }

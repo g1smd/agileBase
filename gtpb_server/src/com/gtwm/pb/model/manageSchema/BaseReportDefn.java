@@ -19,6 +19,7 @@ package com.gtwm.pb.model.manageSchema;
 
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.ChartInfo;
+import com.gtwm.pb.model.interfaces.ReportMapInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
@@ -148,6 +149,24 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	}
 
 	@Transient
+	public ReportMapInfo getMap() {
+		return this.getMapDirect();
+	}
+	
+	public void setMap(ReportMapInfo reportMap) {
+		this.setMapDirect(reportMap);
+	}
+	
+	@OneToOne(targetEntity = ReportMap.class, cascade = CascadeType.ALL)
+	private ReportMapInfo getMapDirect() {
+		return this.reportMap;
+	}
+	
+	private void setMapDirect(ReportMapInfo reportMap) {
+		this.reportMap = reportMap;
+	}
+
+	@Transient
 	public int getRowCount() {
 		return this.rowCount;
 	}
@@ -255,6 +274,8 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	private QueryPlanSelection queryPlanSelection = QueryPlanSelection.DEFAULT;
 
 	private ChartInfo reportSummary = null;
+
+	private ReportMapInfo reportMap = null; 
 
 	private int rowCount = 0;
 
