@@ -401,6 +401,7 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
 
 #wordcloud_controls {
   float: right;
+  clear: right;
 }
 
 #map_adder {
