@@ -11,7 +11,7 @@
     <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
     <input type="hidden" name="update_map" value="true" />
     <select name="postcodefieldinternalname" onchange="form.submit();">
-      <option value="">Please choose a field...</option>
+      <option value="">--please select a field--</option>
       #foreach($reportField in $reportFields)
         #if($reportField.getBaseField().getFieldCategory() == "TEXT")
           <option value="$reportField.getInternalFieldName()" #if($reportField.equals($postcodeField)) selected #end>$reportField</option>
@@ -24,7 +24,7 @@
     <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
     <input type="hidden" name="update_map" value="true" />
     <select name="colourfieldinternalname" onchange="form.submit();">
-      <option value="">Please choose a field...</option>
+      <option value="">--please select a field--</option>
       #foreach($reportField in $reportFields)
         #if($reportField.getBaseField().getFieldCategory() != "RELATION")
           <option value="$reportField.getInternalFieldName()" #if($reportField.equals($colourField)) selected #end>$reportField</option>
@@ -36,7 +36,7 @@
 ##  <form method="POST" action="AppController.servlet">
 ##    <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
 ##    <input type="hidden" name="update_map" value="true" />
-##      <option value="">Please choose a field...</option>
+##      <option value="">--please select a field--</option>
 ##    <select name="categoryfieldinternalname" onchange="form.submit();">
 ##      #foreach($reportField in $reportFields)
 ##        #if($reportField.getBaseField().getFieldCategory() != "RELATION")
