@@ -403,6 +403,11 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
   float: right;
 }
 
+#chart_adder {
+  float: right;
+  clear: right;
+}
+
 img.cross_reference_image {
 	max-width: 300px;
 }

@@ -1,17 +1,9 @@
-#set($report = $sessionData.getReport())
 #set($reportFields = $report.getReportFields())
 #set($map = $report.getMap())
 #set($postcodeField = $map.getPostcodeField())
-###if(!$postcodeField)
-##  #foreach($reportField in $reportFields)
-##    #set($cleanName = $viewTools.cleanString($reportField.getFieldName()))
-##    #if($cleanName == "postcode")
-##      #set($postcodeField = $reportField)
-##    #end
-##  #end
-###end
 #set($colourField = $map.getColourField())
 #set($categoryField = $map.getCategoryField())
+<div id="map">
 <div id="map_canvas"></div>
 <div id="map_control">
   Postcode field:
@@ -21,7 +13,7 @@
     <select name="postcodefieldinternalname" onchange="form.submit();">
       <option value="">Please choose a field...</option>
       #foreach($reportField in $reportFields)
-        #if($reportField.getBaseField().getFieldCategory() != "RELATION")
+        #if($reportField.getBaseField().getFieldCategory() == "TEXT")
           <option value="$reportField.getInternalFieldName()" #if($reportField.equals($postcodeField)) selected #end>$reportField</option>
         #end
       #end
@@ -55,4 +47,5 @@
   </form>
   <div id="map_legend">
   </div>
+</div>
 </div>
