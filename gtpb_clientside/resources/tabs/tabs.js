@@ -1195,6 +1195,7 @@ function fMap() {
 	  		var pinStarFill = "";
 	  		if (row.colourValue) {
 	  			colour = hsl2hex(row.h, row.s, row.l);
+	  			console.log("hsl: " + h + "," + s + "," + l);
 	  			colourValues[row.colourValue] = row.colourValue;
 	  			firstLetter = row.colourValue.charAt(0);
 		  		if ((firstLetter >= '0') && (firstLetter <= '9')) {
