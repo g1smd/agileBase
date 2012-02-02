@@ -567,6 +567,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			map = new ReportMap();
 			HibernateUtil.currentSession().save(map);
 			report.setMap(map);
+			HibernateUtil.currentSession().saveOrUpdate(report);
 		}
 		if (postcodeField != null) {
 			map.setPostcodeField(postcodeField);

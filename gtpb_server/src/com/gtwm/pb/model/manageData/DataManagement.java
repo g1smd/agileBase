@@ -54,6 +54,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.coobird.thumbnailator.Thumbnails;
+
+import org.apache.commons.lang.WordUtils;
 import org.apache.commons.math.util.MathUtils;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -1877,12 +1879,14 @@ public final class DataManagement implements DataManagementInfo {
 				jg.writeNumberField("longitude", postcodeDataRowField.getLongitude());
 				jg.writeStringField("title", buildEventTitle(report, reportDataRow, true));
 				if (colourField != null) {
-					DataRowFieldInfo colourValue = reportDataRow.getValue(colourField);
-					jg.writeStringField("colourValue", colourValue.getDisplayValue());
-					int hue = colourValue.getDisplayValue().toUpperCase().hashCode() % 360;
-					int saturation = 20 + (Math.abs(colourValue.getDisplayValue().toLowerCase().hashCode()) % 80);
-					jg.writeNumberField("hue", hue);
-					jg.writeNumberField("saturation", saturation);
+					String colourValue = reportDataRow.getValue(colourField).getKeyValue();
+					jg.writeStringField("colourValue", colourValue);
+					int hue = Math.abs(colourValue.toUpperCase().hashCode()) % 360;
+					int saturation = 20 + (Math.abs(colourValue.toLowerCase().hashCode()) % 80);
+					int lightness = 50 + (Math.abs(WordUtils.capitalizeFully(colourValue).hashCode()) % 40);
+					jg.writeNumberField("h", hue);
+					jg.writeNumberField("s", saturation);
+					jg.writeNumberField("l", lightness);
 				}
 				if (categoryField != null) {
 					DataRowFieldInfo categoryValue = reportDataRow.getValue(categoryField);
