@@ -2756,6 +2756,7 @@ public final class ServletSchemaMethods {
 		try {
 			HibernateUtil.startHibernateTransaction();
 			databaseDefn.updateMap(request, report, postcodeField, colourField, categoryField);
+			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
 		} finally {
