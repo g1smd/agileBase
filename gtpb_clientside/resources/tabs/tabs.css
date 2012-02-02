@@ -855,7 +855,6 @@ div#reportData {
   #map_canvas {
     height: 600px;
     position: relative;
-    margin: 1em;
     width: 100%;
   }
   
@@ -866,7 +865,7 @@ div#reportData {
     top: 0;
     padding: 1em;
     margin: 1em;
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255,255,255,0.8;
   }
   
   #map_legend img {
