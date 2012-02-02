@@ -854,10 +854,9 @@ div#reportData {
 
   #map_canvas {
     height: 600px;
-    position: absolute;
-    right: 200px;
-    left: 0;
-    top: 0;
+    position: relative;
+    margin: 1em;
+    width: 100%;
   }
   
   #map_control {
@@ -866,6 +865,8 @@ div#reportData {
     right: 0;
     top: 0;
     padding: 1em;
+    margin: 1em;
+    background-color: rgba(255,255,255,0.7);
   }
   
   #map_legend img {
