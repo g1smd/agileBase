@@ -387,8 +387,11 @@ public final class ServletSchemaMethods {
 					"tabtable must be supplied to add a form tab to a table");
 		}
 		TableInfo tabTable = databaseDefn.getTable(request, tabTableId);
-		FormTabInfo maxFormTab = table.getFormTabs().last();
-		int newIndex = maxFormTab.getIndex() + 1;
+		SortedSet<FormTabInfo> formTabs = table.getFormTabs();
+		int newIndex = 0;
+		if (formTabs.size() > 0) {
+			newIndex = formTabs.last().getIndex() + 1;
+		}
 		FormTabInfo formTab = new FormTab(tabTable, newIndex);
 		try {
 			HibernateUtil.startHibernateTransaction();
