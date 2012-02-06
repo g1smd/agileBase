@@ -85,7 +85,7 @@
     <input type="hidden" name="return" value="gui/tabs/pane3" />
     <select name-"tabtable" onchange="form.submit();">
       <option value="">--select a table to include--</option>
-      #set($dependentTables = $view.getDependentTables()) ## child tables
+      #set($dependentTables = $view.getDirectlyDependentTables()) ## child tables
       #foreach($dependentTable in $dependentTables)
         <option value="$dependentTable.getInternalTableName()">$dependentTable</option>
       #end
