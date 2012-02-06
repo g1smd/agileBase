@@ -535,6 +535,12 @@ public final class AppController extends VelocityViewServlet {
 				case REMOVE_FORM_TABLE:
 					ServletSchemaMethods.removeFormTable(sessionData, request, databaseDefn);
 					break;
+				case ADD_FORM_TAB:
+					ServletSchemaMethods.addFormTab(request, sessionData, databaseDefn);
+					break;
+				case REMOVE_FORM_TAB:
+					ServletSchemaMethods.removeFormTab(request, sessionData, databaseDefn);
+					break;
 				case SET_USER_DEFAULT_REPORT:
 					ServletSchemaMethods.setUserDefaultReport(sessionData, request, databaseDefn);
 					break;
