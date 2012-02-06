@@ -82,7 +82,7 @@
   <h2>Choose child tabs for the form</h2>
   <form method="post" action="AppController.servlet">
     <input type="hidden" name="add_form_table" value="true" />
-    <input type="hidden" name="return" value="gui/tabs/pane3" />
+    <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
     <select name-"tabtable" onchange="form.submit();">
       <option value="">--select a table to include--</option>
       #set($dependentTables = $view.getDirectlyDependentTables($table)) ## child tables
