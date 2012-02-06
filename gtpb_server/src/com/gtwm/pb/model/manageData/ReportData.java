@@ -460,15 +460,15 @@ public class ReportData implements ReportDataInfo {
 							+ internalFieldName + "_ms, ");
 				} else if (reportField.getBaseField() instanceof RelationField) {
 					RelationField relationField = (RelationField) reportField.getBaseField();
-					String relatedTableString = relationField.getRelatedTable()
+					String relatedTableInternalName = relationField.getRelatedTable()
 							.getInternalTableName();
 					String relatedValueFieldString = relationField.getRelatedField()
 							.getInternalFieldName();
 					String relatedDisplayFieldString = relationField.getDisplayField()
 							.getInternalFieldName();
-					SQLCode.append("(SELECT ").append(relatedTableString).append(".")
+					SQLCode.append("(SELECT ").append(relatedTableInternalName).append(".")
 							.append(relatedDisplayFieldString);
-					SQLCode.append(" FROM ").append(relatedTableString);
+					SQLCode.append(" FROM ").append(relatedTableInternalName);
 					SQLCode.append(" WHERE ").append(relatedValueFieldString).append(" = ")
 							.append(this.report.getInternalReportName()).append(".")
 							.append(relationField.getInternalFieldName());
