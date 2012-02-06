@@ -19,7 +19,6 @@ package com.gtwm.pb.model.manageSchema;
 
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.ReportFilterInfo;
-import com.gtwm.pb.model.interfaces.ReportMapInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
@@ -45,7 +44,6 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.HibernateUtil;
 import com.ibm.icu.util.Calendar;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -545,9 +543,34 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 			// FROM clause
 			StringBuffer joinSQLBuffer = null;
 			for (JoinClauseInfo jc : joins) {
-				// Do inner and outer joins, leave the NONE type for later.
-				// See JoinType JavaDoc for an explanation of what it is
-				if (!jc.getJoinType().equals(JoinType.NONE)) {
+				if (jc.getJoinType().equals(JoinType.NONE)) {
+					// Cross product joins
+					String rightFieldOwner;
+					if (jc.isRightPartTable()) {
+						rightFieldOwner = jc.getRightTableField().getTableContainingField()
+								.getInternalTableName();
+					} else {
+						rightFieldOwner = jc.getRightReportField().getParentReport()
+								.getInternalReportName();
+					}
+					if (joinSQLBuffer == null) {
+						// if no FROM join text yet created
+						String leftFieldOwner;
+						if (jc.isLeftPartTable()) {
+							leftFieldOwner = jc.getLeftTableField().getTableContainingField()
+									.getInternalTableName();
+						} else {
+							leftFieldOwner = jc.getLeftReportField().getParentReport()
+									.getInternalReportName();
+						}
+						joinSQLBuffer = new StringBuffer(leftFieldOwner).append(" CROSS JOIN ")
+								.append(rightFieldOwner);
+					} else {
+						// if adding additional joins
+						joinSQLBuffer = new StringBuffer("(").append(joinSQLBuffer).append(") ")
+								.append(" CROSS JOIN ").append(rightFieldOwner);
+					}
+				} else { // normal joins
 					String leftFieldOwner;
 					String leftField;
 					String rightFieldOwner;
@@ -638,9 +661,10 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 						joinSQLBuffer = joinSQLBuffer.append(" = ").append(rightFieldOwner)
 								.append(".").append(rightField);
 					}
-				}
+				} // end of normal joins (non-cross joins)
 			}
 			// now add the rest of the tables that aren't in a proper join
+			/*
 			for (JoinClauseInfo jc : joins) {
 				if (jc.getJoinType().equals(JoinType.NONE)) {
 					String rightFieldOwner;
@@ -654,6 +678,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 					joinSQLBuffer = joinSQLBuffer.append(", ").append(rightFieldOwner);
 				}
 			}
+			*/
 			fromArguments = joinSQLBuffer.toString();
 		}
 		String sortArguments = "";
@@ -866,7 +891,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 						}
 					}
 				}
-				// Note: skipped table checks, they were too fragile. Rely on SQL to report an error
+				// Note: skipped table checks, they were too fragile. Rely on
+				// SQL to report an error
 			}
 		}
 		this.getJoinsDirect().remove(join);
@@ -1099,16 +1125,16 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	public Boolean getCalendarSyncable() {
 		return this.calendarSyncable;
 	}
-	
+
 	@Enumerated(EnumType.STRING)
 	public ReportStyle getReportStyle() {
 		return this.reportStyle;
 	}
-	
+
 	public void setReportStyle(ReportStyle reportStyle) {
 		this.reportStyle = reportStyle;
 	}
-	
+
 	@Transient
 	public ReportFieldInfo getCalendarStartField() throws CodingErrorException {
 		List<ReportFieldInfo> dateFields = this.getDateFields();
@@ -1121,7 +1147,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		// there is more than one date field, return the penultimate
 		return dateFields.get(dateFields.size() - 2);
 	}
-	
+
 	@Transient
 	public ReportFieldInfo getCalendarEndField() throws CodingErrorException {
 		List<ReportFieldInfo> dateFields = this.getDateFields();
@@ -1148,8 +1174,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 					try {
 						dateResolution = ((ReportCalcFieldInfo) reportField).getDateResolution();
 					} catch (CantDoThatException cdtex) {
-						throw new CodingErrorException(
-								"Field " + this + " -> " + reportField + " is a date calculation yet we can't get the date resolution",
+						throw new CodingErrorException("Field " + this + " -> " + reportField
+								+ " is a date calculation yet we can't get the date resolution",
 								cdtex);
 					}
 				} else {
@@ -1215,7 +1241,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	}
 
 	@Transient
-	public Map<BaseField, String> getGlobalFilterValues(String globalFilterString) throws CodingErrorException {
+	public Map<BaseField, String> getGlobalFilterValues(String globalFilterString)
+			throws CodingErrorException {
 		Map<BaseField, String> globalFilterValues = new HashMap<BaseField, String>();
 		if (globalFilterString == null) {
 			return globalFilterValues;
@@ -1226,7 +1253,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		String filterString = '*' + globalFilterString.trim();
 		FIELD_LOOP: for (ReportFieldInfo reportField : this.getReportFieldsDirect()) {
 			BaseField field = reportField.getBaseField();
-			if (field.getDbType().equals(DatabaseFieldType.VARCHAR) || field.getFieldCategory().equals(FieldCategory.RELATION)) {
+			if (field.getDbType().equals(DatabaseFieldType.VARCHAR)
+					|| field.getFieldCategory().equals(FieldCategory.RELATION)) {
 				if (field instanceof FileField) {
 					continue FIELD_LOOP;
 				}
@@ -1264,8 +1292,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private boolean calendarSyncable = false;
 
 	private ReportFieldInfo wordCloudField = null;
-	
+
 	private ReportStyle reportStyle = ReportStyle.SPREADSHEET;
-	
+
 	private static final SimpleLogger logger = new SimpleLogger(SimpleReportDefn.class);
 }

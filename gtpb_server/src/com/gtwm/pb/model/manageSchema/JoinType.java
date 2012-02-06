@@ -22,7 +22,7 @@ package com.gtwm.pb.model.manageSchema;
  * 
  * NONE means don't do 'table 1 join table 2 on condition', but just 'table 1, table 2'. This has the effect
  * of including data in each row of table 2 for every row of table 1. e.g. if table 1 has 10 rows and table 2
- * 2, the join will result in 20 rows. This type of join is useful to use when table 2 has only one row. You
+ * 2, the join will result in 20 rows. This 'cross product' type of join is useful to use when table 2 has only one row. You
  * can include constants in calculations without having to hard code them. For example, table 2 could contain
  * a pay rate to be changed annually.
  * 
