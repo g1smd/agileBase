@@ -475,7 +475,8 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 				}
 			}
 		}
-		// You never know, there may be a reference to a not directly joined table
+		// You never know, there may be a reference to a not directly joined
+		// table
 		for (TableInfo table : parentReport.getJoinReferencedTables()) {
 			for (BaseField field : table.getFields()) {
 				if (this.calculationSQL.contains(field.getInternalFieldName())) {
@@ -590,35 +591,48 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 	 * used in the calc.
 	 */
 	private void setDateResolution() throws CodingErrorException {
-		boolean datesFound = false;
+		boolean dateResolutionFound = false;
 		this.setDateResolutionDirect(Calendar.YEAR);
-		for (BaseField field : this.getFieldsUsed()) {
-			if (field instanceof DateField) {
-				int resolution = ((DateField) field).getDateResolution();
-				if (resolution > this.getDateResolutionDirect()) {
-					this.setDateResolutionDirect(resolution);
-				}
-				datesFound = true;
-			} else if (field instanceof CalculationField) {
-				ReportCalcFieldInfo reportCalcField = ((CalculationField) field)
-						.getReportCalcField();
-				if (reportCalcField.getDbType().equals(DatabaseFieldType.TIMESTAMP)) {
-					try {
-						int resolution = reportCalcField.getDateResolution();
-						if (resolution > this.getDateResolutionDirect()) {
-							this.setDateResolutionDirect(resolution);
-						}
-					} catch (CantDoThatException cdtex) {
-						throw new CodingErrorException(
-								"Unable to get the date resolution for a date calculation", cdtex);
+		String calcSQL = this.getCalculationSQL(false).toLowerCase().replace(" ", "");
+		if (calcSQL.contains("date_trunc('year'")) {
+			dateResolutionFound = true;
+		} else if (calcSQL.contains("date_trunc('month'")) {
+			this.setDateResolutionDirect(Calendar.MONTH);
+			dateResolutionFound = true;
+		} else if (calcSQL.contains("date_trunc('day'")) {
+			this.setDateResolutionDirect(Calendar.DAY_OF_MONTH);
+			dateResolutionFound = true;
+		}
+		if (!dateResolutionFound) {
+			for (BaseField field : this.getFieldsUsed()) {
+				if (field instanceof DateField) {
+					int resolution = ((DateField) field).getDateResolution();
+					if (resolution > this.getDateResolutionDirect()) {
+						this.setDateResolutionDirect(resolution);
 					}
-					datesFound = true;
+					dateResolutionFound = true;
+				} else if (field instanceof CalculationField) {
+					ReportCalcFieldInfo reportCalcField = ((CalculationField) field)
+							.getReportCalcField();
+					if (reportCalcField.getDbType().equals(DatabaseFieldType.TIMESTAMP)) {
+						try {
+							int resolution = reportCalcField.getDateResolution();
+							if (resolution > this.getDateResolutionDirect()) {
+								this.setDateResolutionDirect(resolution);
+							}
+						} catch (CantDoThatException cdtex) {
+							throw new CodingErrorException(
+									"Unable to get the date resolution for a date calculation",
+									cdtex);
+						}
+						dateResolutionFound = true;
+					}
 				}
 			}
-		}
-		// use default if no date fields found
-		if (!datesFound) {
-			this.setDateResolutionDirect(Calendar.SECOND);
+			// use default if no date fields found
+			if (!dateResolutionFound) {
+				this.setDateResolutionDirect(Calendar.SECOND);
+			}
 		}
 		try {
 			this.setJavaDateFormatString(Helpers.generateJavaDateFormat(this
