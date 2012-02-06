@@ -665,13 +665,11 @@ public final class DataManagement implements DataManagementInfo {
 								((DecimalValue) fieldValue).getValueFloat());
 					} else if (fieldValue instanceof DateValue) {
 						if (((DateValue) fieldValue).getValueDate() != null) {
-							logger.debug("Getting date " + (DateValue) fieldValue);
 							java.util.Date javaDateValue = ((DateValue) fieldValue).getValueDate()
 									.getTime();
 							java.sql.Timestamp sqlTimestampValue = new java.sql.Timestamp(
 									javaDateValue.getTime());
 							statement.setTimestamp(fieldNumber, sqlTimestampValue);
-							logger.debug("Set date to " + sqlTimestampValue);
 						} else {
 							statement.setTimestamp(fieldNumber, null);
 						}
