@@ -93,7 +93,8 @@
     </td>
   </tr>
   <tr class="advanced">
-    <td>Select any fields you want to set to DISTINCT in this report
+    <td>Distinct fields:<br>
+      <span class='greytext'><i>Select any fields you want to set to DISTINCT in this report. Only one row per unique value will be displayed.</span>
     </td>
     <td>
     </td>
