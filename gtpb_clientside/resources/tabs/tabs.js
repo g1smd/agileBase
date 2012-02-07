@@ -1156,6 +1156,7 @@ function fFormStyle() {
 
 function showAdvanced() {
 	$("tr.advanced").show("normal");
+	$("tr#showAdvanced").hide();
 }
 
 function fMap() {
