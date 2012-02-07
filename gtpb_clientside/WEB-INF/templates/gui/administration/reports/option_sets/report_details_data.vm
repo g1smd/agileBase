@@ -94,7 +94,7 @@
   </tr>
   <tr class="advanced">
     <td>Distinct fields:<br>
-      <span class='greytext'><i>Select any fields you want to set to DISTINCT in this report. Only one row per unique value will be displayed.</span>
+      <span class='greytext'><i>Select any fields you want to set to DISTINCT in this report. Only one row per unique value will be displayed. The report will be sorted by these fields first.</span>
     </td>
     <td>
       #set($distinctFields = $report.getDistinctFields())
