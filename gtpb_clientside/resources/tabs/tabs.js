@@ -1154,6 +1154,10 @@ function fFormStyle() {
 	});
 }
 
+function showAdvanced() {
+	$("tr.advanced").show("normal");
+}
+
 function fMap() {
 	if($("#map_canvas").is(":visible")) {
 	  var myOptions = {

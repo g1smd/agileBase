@@ -115,9 +115,9 @@
       #end
     </td>
   </tr>
-  <tr id="showadvanced">
+  <tr>
     <td >&nbsp;</td>
-    <td><a href="javascript:$('.advanced').show('normal');">advanced options</a></td>
+    <td><a href="javascript:showAdvanced();">advanced options</a></td>
   </tr>
   <tr>
     <td>&nbsp;</td>
