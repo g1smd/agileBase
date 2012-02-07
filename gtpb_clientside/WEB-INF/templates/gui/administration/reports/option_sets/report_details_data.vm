@@ -97,6 +97,10 @@
       <span class='greytext'><i>Select any fields you want to set to DISTINCT in this report. Only one row per unique value will be displayed.</span>
     </td>
     <td>
+      #set($distinctFields = $report.getDistinctFields())
+      #foreach($distinctField in $distinctFields)
+        <a href="AppController.servlet?return=gui/reports_and_tables/pane3&remove_report_distinct=true&distinctinternalfieldname=$distinctField.getInternalFieldName()"><img src="resources/toolbar/delete.png" style="width:13px; height:13px" /></a>$distinctField<br>
+      #end
     </td>
   </tr>
   <tr>
