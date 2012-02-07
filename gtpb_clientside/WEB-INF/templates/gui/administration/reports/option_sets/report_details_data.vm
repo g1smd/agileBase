@@ -57,7 +57,7 @@
 	      </select>
     </td>
   </tr>
-  <tr>
+  <tr class="advanced">
     <td>Custom templates:<br><span class="greytext"><i>Upload custom printouts or output templates in HTML format (optional, will be available in addition to the standard record printout)</i></span></td>
     <td>
       <form class="fileUploader" method="POST" action="AppController.servlet">
@@ -80,7 +80,7 @@
       #end
     </td>
   </tr>
-  <tr>
+  <tr class="advanced">
     #set($reportStyle = $report.getReportStyle())
     <td>
       Style:<br><span class='greytext'><i>Please select a visual style for the report (only applicable in certain cases)</i></span>
