@@ -1,5 +1,5 @@
 ﻿(function($) {
-    $.fn.oembed = function(url, options) {		
+	$.fn.oembed = function(url, options) {		
 	
 		options = $.extend({}, $.fn.oembed.defaults, options);
 		

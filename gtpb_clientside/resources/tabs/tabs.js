@@ -408,6 +408,10 @@ function fRelationPickers() {
 	});
 	
 	function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
+		if (!jqElement.autocomplete) {
+			console.log("autocomplete called on " + jqElement[0].tagName);
+			return;
+		}
 		jqElement.autocomplete("AppController.servlet", {
 			autoFill : false,
 			cacheLength : 1, // 100
