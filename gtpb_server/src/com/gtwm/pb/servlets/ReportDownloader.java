@@ -130,9 +130,9 @@ public final class ReportDownloader extends HttpServlet {
 			BufferedReader br = new BufferedReader(fr); 
 			List<String> lines = new LinkedList<String>();
 			String s;
-			while((s = br.readLine()) != null) { 
+			while((s = br.readLine()) != null) {
 				lines.add(s);
-			} 
+			}
 			fr.close(); 
 			response.setHeader("Content-disposition", "attachment; filename=" + rinsedTemplateName);
 			response.setHeader("Cache-Control", "no-cache");
