@@ -115,6 +115,10 @@
       #end
     </td>
   </tr>
+  <tr id="showadvanced">
+    <td >&nbsp;</td>
+    <td><a href="javascript:$('.advanced').show('normal');">advanced options</a></td>
+  </tr>
   <tr>
     <td>&nbsp;</td>
     <td>

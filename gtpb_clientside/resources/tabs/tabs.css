@@ -872,3 +872,7 @@ div#reportData {
   #map_legend img {
     vertical-align: middle;
   }
+  
+  .advanced {
+    display: none;
+  }
