@@ -134,9 +134,6 @@ public class CalculationFieldDefn implements CalculationField {
 	}
 
 	public Boolean getHidden() {
-		// not relevant as calculations can't be hidden
-		// logger.warn("Call to irrelevant calculation method getHidden from calculation "
-		// + this);
 		return false;
 	}
 

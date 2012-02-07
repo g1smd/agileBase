@@ -2034,6 +2034,40 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return newReportField;
 	}
 
+	public void addDistinctToReport(HttpServletRequest request, Connection conn,
+			SimpleReportInfo report, BaseField distinctField) throws DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException {
+		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+			throw new DisallowedException(this.authManager.getLoggedInUser(request),
+					PrivilegeType.MANAGE_TABLE, report.getParentTable());
+		}
+		HibernateUtil.activateObject(report);
+		report.addDistinctField(distinctField);
+		this.updateViewDbAction(conn, report, request);
+		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
+		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		usageLogger.logReportSchemaChange(user, report, AppAction.ADD_REPORT_DISTINCT, "field: "
+				+ distinctField);
+		UsageLogger.startLoggingThread(usageLogger);
+	}
+	
+	public void removeDistinctFromReport(HttpServletRequest request, Connection conn,
+			SimpleReportInfo report, BaseField distinctField) throws DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException {
+		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+			throw new DisallowedException(this.authManager.getLoggedInUser(request),
+					PrivilegeType.MANAGE_TABLE, report.getParentTable());
+		}
+		HibernateUtil.activateObject(report);
+		report.removeDistinctField(distinctField);
+		this.updateViewDbAction(conn, report, request);
+		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
+		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		usageLogger.logReportSchemaChange(user, report, AppAction.REMOVE_REPORT_DISTINCT, "field: "
+				+ distinctField);
+		UsageLogger.startLoggingThread(usageLogger);
+	}
+
 	public void setReportFieldIndex(Connection conn, SimpleReportInfo report,
 			ReportFieldInfo field, int newindex, HttpServletRequest request) throws SQLException,
 			CodingErrorException, ObjectNotFoundException, CantDoThatException {
@@ -2519,6 +2553,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 		report.removeField(reportField);
 		if (reportField.equals(report.getWordCloudField())) {
 			report.setWordCloudField(null);
+		}
+		ReportMapInfo map = report.getMap();
+		if (map != null) {
+			if (reportField.equals(map.getPostcodeField())) {
+				map.setPostcodeField(null);
+			}
+			if (reportField.equals(map.getColourField())) {
+				map.setColourField(null);
+			}
 		}
 		this.updateViewDbAction(conn, report, request);
 		HibernateUtil.currentSession().delete(reportField);

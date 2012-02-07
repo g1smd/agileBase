@@ -722,6 +722,54 @@ public final class ServletSchemaMethods {
 		databaseDefn.removeCustomReportTemplate(request, report, templateName);
 	}
 
+	public synchronized static void addDistinctToReport(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException, SQLException, CantDoThatException, CodingErrorException {
+		SimpleReportInfo report = (SimpleReportInfo) ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, true);
+		String internalFieldName = request.getParameter("distinctinternalfieldname");
+		if (internalFieldName == null) {
+			throw new MissingParametersException("distinctinternalfieldname must be provided to add a report DISTINCT clause");
+		}
+		BaseField distinctField = report.getReportField(internalFieldName).getBaseField();
+		Connection conn = null;
+		try {
+			HibernateUtil.startHibernateTransaction();
+			conn = databaseDefn.getDataSource().getConnection();
+			conn.setAutoCommit(false);
+			// update the report:
+			databaseDefn.addDistinctToReport(request, conn, report, distinctField);
+			HibernateUtil.currentSession().getTransaction().commit();
+			conn.commit();
+		} finally {
+			if (conn != null) {
+				conn.close();
+				HibernateUtil.closeSession();
+			}
+		}
+	}
+	
+	public synchronized static void removeDistinctFromReport(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException, SQLException, CantDoThatException, CodingErrorException {
+		SimpleReportInfo report = (SimpleReportInfo) ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, true);
+		String internalFieldName = request.getParameter("distinctinternalfieldname");
+		if (internalFieldName == null) {
+			throw new MissingParametersException("distinctinternalfieldname must be provided to remove a report DISTINCT clause");
+		}
+		BaseField distinctField = report.getReportField(internalFieldName).getBaseField();
+		Connection conn = null;
+		try {
+			HibernateUtil.startHibernateTransaction();
+			conn = databaseDefn.getDataSource().getConnection();
+			conn.setAutoCommit(false);
+			// update the report:
+			databaseDefn.removeDistinctFromReport(request, conn, report, distinctField);
+			HibernateUtil.currentSession().getTransaction().commit();
+			conn.commit();
+		} finally {
+			if (conn != null) {
+				conn.close();
+				HibernateUtil.closeSession();
+			}
+		}
+	}
+	
 	public synchronized static void updateReport(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws CantDoThatException,
 			MissingParametersException, ObjectNotFoundException, DisallowedException, SQLException {

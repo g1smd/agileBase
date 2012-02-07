@@ -308,6 +308,12 @@ public interface DatabaseInfo {
 			throws SQLException, DisallowedException, InconsistentStateException,
 			CantDoThatException, CodingErrorException, ObjectNotFoundException;
 
+	public void addDistinctToReport(HttpServletRequest request, Connection conn,
+			SimpleReportInfo report, BaseField distinctField) throws DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException;
+	
+	public void removeDistinctFromReport(HttpServletRequest request, Connection conn,
+			SimpleReportInfo report, BaseField distinctField) throws DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException;
+
 	public void addSortToReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportFieldInfo reportField, boolean ascending)
 			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException,
@@ -481,8 +487,10 @@ public interface DatabaseInfo {
 	public void removeChart(HttpServletRequest request, ChartInfo reportSummary)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException;
 
-	public void updateMap(HttpServletRequest request, BaseReportInfo report, ReportFieldInfo postcodeField, ReportFieldInfo colourField, ReportFieldInfo categoryField) throws DisallowedException, ObjectNotFoundException;
-	
+	public void updateMap(HttpServletRequest request, BaseReportInfo report,
+			ReportFieldInfo postcodeField, ReportFieldInfo colourField,
+			ReportFieldInfo categoryField) throws DisallowedException, ObjectNotFoundException;
+
 	/**
 	 * Returns the TableInfo object that has the required ID identifier. If no
 	 * table is found with that internal name, fall back to searching for one

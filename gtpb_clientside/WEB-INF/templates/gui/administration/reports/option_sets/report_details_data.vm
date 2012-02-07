@@ -57,7 +57,7 @@
 	      </select>
     </td>
   </tr>
-  <tr>
+  <tr class="advanced">
     <td>Custom templates:<br><span class="greytext"><i>Upload custom printouts or output templates in HTML format (optional, will be available in addition to the standard record printout)</i></span></td>
     <td>
       <form class="fileUploader" method="POST" action="AppController.servlet">
@@ -80,18 +80,41 @@
       #end
     </td>
   </tr>
-  <tr>
+  <tr class="advanced">
     #set($reportStyle = $report.getReportStyle())
     <td>
       Style:<br><span class='greytext'><i>Please select a visual style for the report (only applicable in certain cases)</i></span>
     </td>
     <td>
-        <select name="reportstyle" id="reportstyle" gtpb_update_report onchange="new fChange(this); parent.pane_1.document.location = 'AppController.servlet?return=gui/pane1';" identifier="$internalReportName">
-            <option value="SPREADSHEET" #if($reportStyle == "SPREADSHEET") selected #end>Spreadsheet - standard output in rows</option>
-            <option value="SECTIONED" #if($reportStyle == "SECTIONED") selected #end>Sectioned - rows split into sections, with headings</option>
-        </select>
+      <select name="reportstyle" id="reportstyle" gtpb_update_report onchange="new fChange(this); parent.pane_1.document.location = 'AppController.servlet?return=gui/pane1';" identifier="$internalReportName">
+          <option value="SPREADSHEET" #if($reportStyle == "SPREADSHEET") selected #end>Spreadsheet - standard output in rows</option>
+          <option value="SECTIONED" #if($reportStyle == "SECTIONED") selected #end>Sectioned - rows split into sections, with headings</option>
+      </select>
     </td>
   </tr>
+  <tr class="advanced">
+    <td>Select any fields you want to set to DISTINCT in this report.<br>
+        This means that only one row per unique value will be displayed. 
+        In SQL terms, a DISTINCT clause is added to the SELECT.
+    </td>
+    <td>
+      #set($distinctFields = $report.getDistinctFields())
+      <form method="post" action="AppController.servlet">
+        <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+        <input type="hidden" name="add_report_distinct" value="true" />
+        <select name="distinctinternalfieldname" onchange="form.submit();">
+          <option value="">--please choose a distinct field--</option>
+          #foreach($field in $report.getReportBaseFields())
+            #if( (!$field.equals($report.getParentTable().getPrimaryKey())) && (!$distinctFields.contains($field)) )
+              <option value="$field.getInternalFieldName()">$field</option>
+            #end
+          #end
+        </select>
+      </form>
+      #foreach($distinctField in $distinctFields)
+        <a href="AppController.servlet?return=gui/reports_and_tables/pane3&remove_report_distinct=true&distinctinternalfieldname=$distinctField.getInternalFieldName()"><img src="resources/toolbar/delete.png" style="width:13px; height:13px" /></a>$distinctField<br>
+      #end
+    </td>
   <tr>
     <td>&nbsp;</td>
     <td>
