@@ -191,6 +191,7 @@ public final class AuthManager implements AuthManagerInfo {
 				logger.info("......Report filters: " + simpleReport.getFilters());
 				logger.info("......Report joins: " + simpleReport.getJoins());
 				logger.info("......Report sorts: " + simpleReport.getSorts());
+				logger.info("......Report distinct fields: " + simpleReport.getDistinctFields());
 			}
 			ChartInfo reportSummary = report.getChart();
 			logger.info("......Report summary: " + reportSummary);
