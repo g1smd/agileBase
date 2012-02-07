@@ -552,6 +552,12 @@ public final class AppController extends VelocityViewServlet {
 				case ENABLE_DISABLE_APP:
 					ServletSchemaMethods.enableDisableApp(request, databaseDefn);
 					break;
+				case ADD_REPORT_DISTINCT:
+					ServletSchemaMethods.addDistinctToReport(sessionData, request, databaseDefn);
+					break;
+				case REMOVE_REPORT_DISTINCT:
+					ServletSchemaMethods.removeDistinctFromReport(sessionData, request, databaseDefn);
+					break;
 				}
 			}
 		}
