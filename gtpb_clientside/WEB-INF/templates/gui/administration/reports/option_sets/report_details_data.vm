@@ -115,6 +115,10 @@
         <a href="AppController.servlet?return=gui/reports_and_tables/pane3&remove_report_distinct=true&distinctinternalfieldname=$distinctField.getInternalFieldName()"><img src="resources/toolbar/delete.png" style="width:13px; height:13px" /></a>$distinctField<br>
       #end
     </td>
+  <tr id="showadvanced">
+    <td >&nbsp;</td>
+    <td><a href="javascript:$('.advanced').show();">advanced options</a></td>
+  </tr>
   <tr>
     <td>&nbsp;</td>
     <td>
