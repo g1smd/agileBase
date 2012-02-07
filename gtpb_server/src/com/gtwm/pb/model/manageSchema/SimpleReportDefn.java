@@ -1082,7 +1082,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	}
 
 	public synchronized void addDistinctField(BaseField field) throws ObjectNotFoundException {
-		if (!this.getReportFieldsDirect().contains(field)) {
+		if (!this.getReportBaseFields().contains(field)) {
 			throw new ObjectNotFoundException("Unable to find field '" + field.getFieldName()
 					+ "' in report " + this.getReportName()
 					+ " so cannot add to distinct fields set");
