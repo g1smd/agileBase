@@ -663,32 +663,25 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 					}
 				} // end of normal joins (non-cross joins)
 			}
-			// now add the rest of the tables that aren't in a proper join
-			/*
-			for (JoinClauseInfo jc : joins) {
-				if (jc.getJoinType().equals(JoinType.NONE)) {
-					String rightFieldOwner;
-					if (jc.isRightPartTable()) {
-						rightFieldOwner = jc.getRightTableField().getTableContainingField()
-								.getInternalTableName();
-					} else {
-						rightFieldOwner = jc.getRightReportField().getParentReport()
-								.getInternalReportName();
-					}
-					joinSQLBuffer = joinSQLBuffer.append(", ").append(rightFieldOwner);
-				}
-			}
-			*/
 			fromArguments = joinSQLBuffer.toString();
 		}
 		String sortArguments = "";
+		// Must sort by DISTINCT fields first, otherwise we get
+		// ERROR: SELECT DISTINCT ON expressions must match initial ORDER BY
+		// expressions
+		Set<BaseField> distinctFields = this.getDistinctFields();
+		for (BaseField distinctField : distinctFields) {
+			sortArguments += distinctField.getInternalFieldName() + " ASC, ";
+		}
 		for (ReportSortInfo reportSort : this.getSorts()) {
 			ReportFieldInfo reportField = reportSort.getSortReportField();
-			sortArguments += reportField.getInternalFieldName();
-			if (!reportSort.getSortDirection()) {
-				sortArguments += " DESC";
+			if (!distinctFields.contains(reportField.getBaseField())) {
+				sortArguments += reportField.getInternalFieldName();
+				if (!reportSort.getSortDirection()) {
+					sortArguments += " DESC";
+				}
+				sortArguments += ", ";
 			}
-			sortArguments += ", ";
 		}
 		if (!sortArguments.equals("")) {
 			sortArguments = sortArguments.substring(0, sortArguments.length() - 2);
