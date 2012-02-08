@@ -39,7 +39,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
       or ask an administrator to create a new report
     #end
   </div>
-#else ## rest of file - standard vis. tab
+#end
 
 #set($chart = $report.getChart())
 #set($defaultChart = $chart)
@@ -362,7 +362,5 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #parse('gui/reports_and_tables/tabs/summary_chart.vm')
 #if($mobile_device)<p>
 	#parse("gui/mobile/pane2_footer.vm")
-#end
-
 #end
 $viewTools.stopTimer("gui/reports_and_tables/tabs/summary")
