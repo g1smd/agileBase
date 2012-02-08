@@ -594,14 +594,14 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		boolean dateResolutionFound = false;
 		this.setDateResolutionDirect(Calendar.YEAR);
 		String calcSQL = this.getCalculationSQL(false).toLowerCase().replace(" ", "");
-		if (calcSQL.contains("date_trunc('year'") || calcSQL.matches("generate_series('.*'1 year'::interval)")) {
+		if (calcSQL.contains("date_trunc('year'") || calcSQL.matches(".*generate_series\\('.*'1year'::interval\\).*")) {
 			logger.debug("Year matched");
 			dateResolutionFound = true;
-		} else if (calcSQL.contains("date_trunc('month'") || calcSQL.matches("generate_series('.*'1 month'::interval)")) {
+		} else if (calcSQL.contains("date_trunc('month'") || calcSQL.matches(".*generate_series\\('.*'1month'::interval\\).*")) {
 			logger.debug("Month matched");
 			this.setDateResolutionDirect(Calendar.MONTH);
 			dateResolutionFound = true;
-		} else if (calcSQL.contains("date_trunc('day'") || calcSQL.matches("generate_series('.*'1 day'::interval)")) {
+		} else if (calcSQL.contains("date_trunc('day'") || calcSQL.matches(".*generate_series\\('.*'1day'::interval\\).*")) {
 			logger.debug("Day matched");
 			this.setDateResolutionDirect(Calendar.DAY_OF_MONTH);
 			dateResolutionFound = true;
