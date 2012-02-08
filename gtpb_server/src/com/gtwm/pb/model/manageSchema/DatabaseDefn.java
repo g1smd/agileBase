@@ -669,19 +669,24 @@ public final class DatabaseDefn implements DatabaseInfo {
 			for (BaseField field : table.getFields()) {
 				if (!(field instanceof SeparatorField || field instanceof ReferencedReportDataField)) {
 					if (field instanceof RelationField) {
-						// add a join to allow related field to be added to the
-						// report
-						RelationField relationField = ((RelationField) field);
-						TableInfo relatedTable = relationField.getRelatedTable();
-						if (!relatedTables.contains(relatedTable)) {
-							relatedTables.add(relatedTable);
-							JoinClauseInfo join = ServletSchemaMethods.generateJoinObject(request,
-									table.getInternalTableName(), "", field.getInternalFieldName(),
-									JoinType.LEFT_OUTER, relatedTable.getInternalTableName(), "",
-									relatedTable.getPrimaryKey().getInternalFieldName(), this);
-							report.addJoin(join);
+						// Workaround for bug: creating more than one relation at a time fails with a Hibernate Exception
+						if (relatedTables.size() == 0) {
+							// add a join to allow related field to be added to
+							// the
+							// report
+							RelationField relationField = ((RelationField) field);
+							TableInfo relatedTable = relationField.getRelatedTable();
+							if (!relatedTables.contains(relatedTable)) {
+								relatedTables.add(relatedTable);
+								JoinClauseInfo join = ServletSchemaMethods.generateJoinObject(
+										request, table.getInternalTableName(), "", field
+												.getInternalFieldName(), JoinType.LEFT_OUTER,
+										relatedTable.getInternalTableName(), "", relatedTable
+												.getPrimaryKey().getInternalFieldName(), this);
+								report.addJoin(join);
+							}
+							report.addTableField(relationField.getDisplayField());
 						}
-						report.addTableField(relationField.getDisplayField());
 					} else if (!(field.equals(table.getPrimaryKey()) || field.getHidden())) {
 						report.addTableField(field);
 					}
