@@ -1074,11 +1074,15 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		this.sorts = sorts;
 	}
 
-	public synchronized void addDistinctField(BaseField field) throws ObjectNotFoundException {
+	public synchronized void addDistinctField(BaseField field) throws ObjectNotFoundException, CantDoThatException {
 		if (!this.getReportBaseFields().contains(field)) {
 			throw new ObjectNotFoundException("Unable to find field '" + field.getFieldName()
 					+ "' in report " + this.getReportName()
 					+ " so cannot add to distinct fields set");
+		}
+		if (field instanceof CalculationField) {
+			// Can't add calc. fields because they can't be persisted. Perhaps if DISTINCTs worked on report fields, that would work
+			throw new CantDoThatException("Can't add a DISTINCT clause on a calculation field");
 		}
 		this.getDistinctFieldsDirect().add(field);
 	}

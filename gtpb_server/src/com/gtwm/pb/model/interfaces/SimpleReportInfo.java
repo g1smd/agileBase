@@ -152,7 +152,7 @@ public interface SimpleReportInfo extends BaseReportInfo {
 	 * @param field -
 	 *            a field of the report
 	 */
-	public void addDistinctField(BaseField field) throws ObjectNotFoundException;
+	public void addDistinctField(BaseField field) throws ObjectNotFoundException, CantDoThatException;
 
 	/**
 	 * Remove a field from the set of fields defining a distinct record
