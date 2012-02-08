@@ -65,7 +65,7 @@
                   <td><textarea name="calculationdefn" cols="60" rows="4">$reportField.getCalculationDefinition()</textarea></td>
               </tr>
               <tr>
-                  <td>Hide calculation in report</td>
+                  <td>Hide calculation in report: $reportField.isReportHidden()</td>
                   <td><input type="checkbox" name="isreporthidden" value="true" #if($reportField.isReportHidden()) selected #end /></td>
               </tr>
             	<tr>

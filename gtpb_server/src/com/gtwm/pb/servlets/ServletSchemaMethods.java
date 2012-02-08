@@ -1777,7 +1777,7 @@ public final class ServletSchemaMethods {
 		String isReportHiddenString = request.getParameter("isreporthidden");
 		boolean isReportHidden = Helpers.valueRepresentsBooleanTrue(isReportHiddenString);
 		if (internalCalculationName == null || calculationName == null || calculationDefn == null
-				|| dbType == null || isReportHiddenString == null) {
+				|| dbType == null) {
 			throw new MissingParametersException(
 					"'internalcalculationname', 'calculationname', 'calculationdefn' and 'databasetype' (optionally 'isReportHidden') parameters needed in request to update a calculation");
 		}
