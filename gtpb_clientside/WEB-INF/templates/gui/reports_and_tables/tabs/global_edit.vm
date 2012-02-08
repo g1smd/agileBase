@@ -27,6 +27,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
 		The report contains no data to edit ## Unless there are any circumstances in which the session row ID can be unselected
 	</div>
 #else
+  #set($singleColumn = true)
   ## show the interface to edit the record
 	  <table cellspacing="0" cellpadding="0" border="0" id="reportData">
 		    <thead>
