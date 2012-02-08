@@ -24,7 +24,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #end
 #set($table = $report.getParentTable())
 #if($report.equals($table.getDefaultReport()))
-  <div class="warning">
+  <div class="warningmessage">
     Please use a report rather than a table to see charts and visualisations.<p>
     #set($tableReports = $view.getViewableReport($table))
     #if($tableReports.size() > 0)
