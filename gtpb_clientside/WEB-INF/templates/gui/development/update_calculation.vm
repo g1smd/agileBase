@@ -66,7 +66,7 @@
               </tr>
               <tr>
                   <td>Hide calculation in report: $reportField.isReportHidden()</td>
-                  <td><input type="checkbox" name="isreporthidden" value="true" #if($reportField.isReportHidden()) selected #end /></td>
+                  <td><input type="checkbox" name="isreporthidden" value="true" #if($reportField.isReportHidden()) checked #end /></td>
               </tr>
             	<tr>
         		      <td>&nbsp;</td>
