@@ -344,13 +344,13 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
         <input type="number" name="rangepercent" value="$rangePercent"> % of results
         <input type="submit" name="submit" value="Set limit">
       </form><br>
-      <form name="savechart">
-      	Choose title: 
+      <form name="savechart" id="savechart">
+      	Choose a title: 
       	#set($title = $defaultChart.getTitle())
       	<input type="text" name="summarytitle" #if($title && $title != "") value="$title" #end />
       	<input type="hidden" name="return" value="$return_template" />
       	<input type="hidden" name="save_chart" value="true" />
-      	<input type="submit" value="save chart" />
+        and <input type="submit" value="save the chart" />
       </form>
     #end ## end advanced options display
   </div> ## End chart_adder

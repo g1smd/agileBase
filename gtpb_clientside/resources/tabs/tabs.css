@@ -850,7 +850,12 @@ div#reportData {
     left: 1em;
     top: 1em;
     z-index: 100; /* on top of the chart */
-  }  
+  }
+  
+  form#savechart {
+    text-align: center;
+    font-weight: bold;
+  }
 
   #map_canvas {
     height: 600px;
