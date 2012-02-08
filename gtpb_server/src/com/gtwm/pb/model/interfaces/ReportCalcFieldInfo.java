@@ -124,6 +124,13 @@ public interface ReportCalcFieldInfo extends ReportFieldInfo {
 	 * rather than a direct calc definition
 	 */
 	public boolean referencesCalcFromOtherReport();
+	
+	/**
+	 * Returns true if this field should not be displayed in the report, unless in sysadmin context
+	 */
+	public boolean isReportHidden();
+	
+	public void setReportHidden(boolean isReportHidden);
     
     /**
      * <b>Only to be used internally by CalculationFielDefn</b>

@@ -1774,16 +1774,19 @@ public final class ServletSchemaMethods {
 		String calculationName = request.getParameter("calculationname");
 		String calculationDefn = request.getParameter("calculationdefn");
 		String dbType = request.getParameter("databasetype");
+		String isReportHiddenString = request.getParameter("isreporthidden");
+		boolean isReportHidden = Helpers.valueRepresentsBooleanTrue(isReportHiddenString);
 		if (internalCalculationName == null || calculationName == null || calculationDefn == null
-				|| dbType == null) {
+				|| dbType == null || isReportHiddenString == null) {
 			throw new MissingParametersException(
-					"'internalcalculationname', 'calculationname', 'calculationdefn' and 'databasetype' parameters needed in request to update a calculation");
+					"'internalcalculationname', 'calculationname', 'calculationdefn' and 'databasetype' (optionally 'isReportHidden') parameters needed in request to update a calculation");
 		}
 		// begin updating model and persisting changes
 		ReportCalcFieldInfo calculationField = (ReportCalcFieldInfo) report
 				.getReportField(internalCalculationName);
 		String oldCalculationName = calculationField.getBaseFieldName();
 		String oldCalculationDefn = calculationField.getCalculationDefinition();
+		boolean oldIsReportHidden = calculationField.isReportHidden();
 		DatabaseFieldType oldDbFieldType = calculationField.getDbType();
 		Connection conn = null;
 		try {
@@ -1794,7 +1797,7 @@ public final class ServletSchemaMethods {
 			DatabaseFieldType databaseType = DatabaseFieldType.valueOf(dbType
 					.toUpperCase(Locale.UK));
 			databaseDefn.updateCalculationInReport(request, conn, report, calculationField,
-					calculationName, calculationDefn, databaseType);
+					calculationName, calculationDefn, databaseType, isReportHidden);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (SQLException sqlex) {

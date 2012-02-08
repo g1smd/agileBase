@@ -734,6 +734,14 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 	public void setAggregateFunction(boolean isAggregateFunction) {
 		this.isAggregateFunction = isAggregateFunction;
 	}
+	
+	public boolean isReportHidden() {
+		return this.isReportHidden;
+	}
+	
+	public void setReportHidden(boolean isReportHidden) {
+		this.isReportHidden = isReportHidden;
+	}
 
 	public boolean referencesCalcFromOtherReport() {
 		return (this.getReferencedCalc() != null);
@@ -857,6 +865,8 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 	private ReportCalcFieldInfo referencedCalc = null;
 
 	private boolean isAggregateFunction = false;
+	
+	private boolean isReportHidden = false;
 
 	private static final SimpleLogger logger = new SimpleLogger(ReportCalcFieldDefn.class);
 }

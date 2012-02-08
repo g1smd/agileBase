@@ -357,7 +357,7 @@ public interface DatabaseInfo {
 
 	public void updateCalculationInReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportCalcFieldInfo calculationField, String calculationName,
-			String calculationDefn, DatabaseFieldType dbFieldType) throws DisallowedException,
+			String calculationDefn, DatabaseFieldType dbFieldType, boolean isReportHidden) throws DisallowedException,
 			SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException;
 
 	public void returnCalculationInReportToMemory(HttpServletRequest request, Connection conn,

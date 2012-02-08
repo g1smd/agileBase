@@ -422,8 +422,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// this.dataManagement.logLastSchemaChangeTime(request);
 	}
 
-	public void setDefaultTablePrivileges(HttpServletRequest request,
-			TableInfo newTable) throws DisallowedException, CantDoThatException {
+	public void setDefaultTablePrivileges(HttpServletRequest request, TableInfo newTable)
+			throws DisallowedException, CantDoThatException {
 		// Set table privileges
 		HibernateUtil.activateObject(this.authManager.getAuthenticator());
 		// ...give the user who created the table all privileges on it
@@ -496,9 +496,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return dependentTables;
 	}
 
-	public void updateTable(Connection conn, HttpServletRequest request,
-			TableInfo table, String newTableName, String newTableDesc, Boolean lockable,
-			Boolean tableFormPublic, String tableEmail, FormStyle formStyle) throws DisallowedException,
+	public void updateTable(Connection conn, HttpServletRequest request, TableInfo table,
+			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic,
+			String tableEmail, FormStyle formStyle) throws DisallowedException,
 			CantDoThatException, ObjectNotFoundException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
@@ -554,8 +554,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 			table.setFormStyle(formStyle);
 		}
 	}
-	
-	public void updateMap(HttpServletRequest request, BaseReportInfo report, ReportFieldInfo postcodeField, ReportFieldInfo colourField, ReportFieldInfo categoryField) throws DisallowedException, ObjectNotFoundException {
+
+	public void updateMap(HttpServletRequest request, BaseReportInfo report,
+			ReportFieldInfo postcodeField, ReportFieldInfo colourField,
+			ReportFieldInfo categoryField) throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -646,12 +648,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public BaseReportInfo addReport(SessionDataInfo sessionData,
-			HttpServletRequest request, Connection conn, TableInfo table,
-			String internalReportName, String reportName, String reportDesc, boolean populateReport)
-			throws SQLException, DisallowedException, CantDoThatException, CodingErrorException,
-			ObjectNotFoundException, ObjectNotFoundException, ObjectNotFoundException,
-			MissingParametersException {
+	public BaseReportInfo addReport(SessionDataInfo sessionData, HttpServletRequest request,
+			Connection conn, TableInfo table, String internalReportName, String reportName,
+			String reportDesc, boolean populateReport) throws SQLException, DisallowedException,
+			CantDoThatException, CodingErrorException, ObjectNotFoundException,
+			ObjectNotFoundException, ObjectNotFoundException, MissingParametersException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -959,10 +960,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * report, for example if we're removing a table all reports need to be
 	 * removed. This method is there for private use in these situations
 	 */
-	private void removeReportWithoutChecks(SessionDataInfo sessionData,
-			HttpServletRequest request, BaseReportInfo reportToRemove, Connection conn)
-			throws DisallowedException, SQLException, CodingErrorException, CantDoThatException,
-			ObjectNotFoundException {
+	private void removeReportWithoutChecks(SessionDataInfo sessionData, HttpServletRequest request,
+			BaseReportInfo reportToRemove, Connection conn) throws DisallowedException,
+			SQLException, CodingErrorException, CantDoThatException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, reportToRemove.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -1048,8 +1048,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 			}
 		}
 	}
-	
-	public void removeCustomReportTemplate(HttpServletRequest request, BaseReportInfo report, String templateName) throws DisallowedException, ObjectNotFoundException, CantDoThatException {
+
+	public void removeCustomReportTemplate(HttpServletRequest request, BaseReportInfo report,
+			String templateName) throws DisallowedException, ObjectNotFoundException,
+			CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -1064,7 +1066,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				+ report.getInternalReportName();
 		File uploadFolder = new File(uploadFolderName);
 		if (!uploadFolder.exists()) {
-			throw new ObjectNotFoundException("The template folder " + uploadFolderName + " does not exist");
+			throw new ObjectNotFoundException("The template folder " + uploadFolderName
+					+ " does not exist");
 		}
 		String filePath = uploadFolderName + "/" + rinsedFileName + ".vm";
 		File selectedFile = new File(filePath);
@@ -1628,9 +1631,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Adds field to relational database, object database and memory.
 	 */
-	private void addField(Connection conn, TableInfo tableToAddTo,
-			BaseField fieldToAdd, HttpServletRequest request) throws SQLException,
-			CantDoThatException, ObjectNotFoundException, CodingErrorException {
+	private void addField(Connection conn, TableInfo tableToAddTo, BaseField fieldToAdd,
+			HttpServletRequest request) throws SQLException, CantDoThatException,
+			ObjectNotFoundException, CodingErrorException {
 		HibernateUtil.activateObject(tableToAddTo);
 		HibernateUtil.currentSession().save(fieldToAdd);
 		tableToAddTo.addField(fieldToAdd);
@@ -1958,9 +1961,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public void removeField(HttpServletRequest request, Connection conn,
-			BaseField field) throws SQLException, DisallowedException, CantDoThatException,
-			CodingErrorException, ObjectNotFoundException {
+	public void removeField(HttpServletRequest request, Connection conn, BaseField field)
+			throws SQLException, DisallowedException, CantDoThatException, CodingErrorException,
+			ObjectNotFoundException {
 		TableInfo table = field.getTableContainingField();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
@@ -2007,8 +2010,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public ReportFieldInfo addFieldToReport(HttpServletRequest request,
-			Connection conn, SimpleReportInfo report, SimpleReportInfo sourceReport, BaseField field)
+	public ReportFieldInfo addFieldToReport(HttpServletRequest request, Connection conn,
+			SimpleReportInfo report, SimpleReportInfo sourceReport, BaseField field)
 			throws SQLException, DisallowedException, InconsistentStateException,
 			CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2035,7 +2038,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void addDistinctToReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, BaseField distinctField) throws DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException {
+			SimpleReportInfo report, BaseField distinctField) throws DisallowedException,
+			ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2050,9 +2054,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 				+ distinctField);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
-	
+
 	public void removeDistinctFromReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, BaseField distinctField) throws DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException {
+			SimpleReportInfo report, BaseField distinctField) throws DisallowedException,
+			ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2181,8 +2186,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public ModuleInfo addModule(HttpServletRequest request)
-			throws ObjectNotFoundException, DisallowedException {
+	public ModuleInfo addModule(HttpServletRequest request) throws ObjectNotFoundException,
+			DisallowedException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		// Make sure module name is unique
 		String baseModuleName = "New Module";
@@ -2364,8 +2369,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public void updateCalculationInReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportCalcFieldInfo calculationField, String calculationName,
-			String calculationDefn, DatabaseFieldType dbFieldType) throws DisallowedException,
-			SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
+			String calculationDefn, DatabaseFieldType dbFieldType, boolean isReportHidden)
+			throws DisallowedException, SQLException, ObjectNotFoundException, CantDoThatException,
+			CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2373,27 +2379,32 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(report);
 		Savepoint savepoint = null;
+		boolean definitionUpdate = false;
 		if (!(calculationDefn.toLowerCase().equals(calculationField.getCalculationDefinition()))
 				|| !(dbFieldType.equals(calculationField.getDbType()))) {
 			Map<TableInfo, Set<BaseReportInfo>> availableDataStores = this
 					.getViewableDataStores(request);
 			((ReportCalcFieldDefn) calculationField).updateCalculationDefinition(calculationDefn,
 					dbFieldType, availableDataStores);
+			definitionUpdate = true;
 		} else {
 			((ReportCalcFieldDefn) calculationField).setBaseFieldName(calculationName);
+			calculationField.setReportHidden(isReportHidden);
 		}
-		savepoint = conn.setSavepoint("updateCalculationSavepoint");
-		try {
-			this.updateViewDbAction(conn, report, request);
-		} catch (SQLException sqlex) {
-			// detect aggregate functions
-			if (sqlex.getMessage().contains("must appear in the GROUP BY clause")
-					|| sqlex.getMessage().contains("aggregates not allowed in GROUP BY clause")) {
-				conn.rollback(savepoint);
-				calculationField.setAggregateFunction(true);
+		if (definitionUpdate) {
+			savepoint = conn.setSavepoint("updateCalculationSavepoint");
+			try {
 				this.updateViewDbAction(conn, report, request);
-			} else {
-				throw sqlex;
+			} catch (SQLException sqlex) {
+				// detect aggregate functions
+				if (sqlex.getMessage().contains("must appear in the GROUP BY clause")
+						|| sqlex.getMessage().contains("aggregates not allowed in GROUP BY clause")) {
+					conn.rollback(savepoint);
+					calculationField.setAggregateFunction(true);
+					this.updateViewDbAction(conn, report, request);
+				} else {
+					throw sqlex;
+				}
 			}
 		}
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
@@ -2403,8 +2414,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public void returnCalculationInReportToMemory(HttpServletRequest request,
-			Connection conn, SimpleReportInfo report, ReportCalcFieldInfo calculationField,
+	public void returnCalculationInReportToMemory(HttpServletRequest request, Connection conn,
+			SimpleReportInfo report, ReportCalcFieldInfo calculationField,
 			String oldCalculationName, String oldCalculationDefn, DatabaseFieldType oldDbFieldType)
 			throws DisallowedException, CodingErrorException, CantDoThatException,
 			ObjectNotFoundException {
@@ -2420,9 +2431,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		((ReportCalcFieldDefn) calculationField).setBaseFieldName(oldCalculationName);
 	}
 
-	private void removeFieldFromReportChecks(ReportFieldInfo reportField,
-			HttpServletRequest request) throws CantDoThatException, CodingErrorException,
-			ObjectNotFoundException {
+	private void removeFieldFromReportChecks(ReportFieldInfo reportField, HttpServletRequest request)
+			throws CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		// check the field isn't used in one of the report's own charts
 		for (ChartInfo chart : reportField.getParentReport().getSavedCharts()) {
 			Set<ChartAggregateInfo> aggFns = chart.getAggregateFunctions();
@@ -2620,8 +2630,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public void setChartRange(HttpServletRequest request, BaseReportInfo report,
-			int rangePercent, boolean rangeDirection) throws SQLException, DisallowedException,
+	public void setChartRange(HttpServletRequest request, BaseReportInfo report, int rangePercent,
+			boolean rangeDirection) throws SQLException, DisallowedException,
 			ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
@@ -2653,9 +2663,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public void addGroupingToChart(HttpServletRequest request,
-			ReportFieldInfo groupingReportField, SummaryGroupingModifier groupingModifer)
-			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException {
+	public void addGroupingToChart(HttpServletRequest request, ReportFieldInfo groupingReportField,
+			SummaryGroupingModifier groupingModifer) throws DisallowedException,
+			CantDoThatException, ObjectNotFoundException, SQLException {
 		HibernateUtil.activateObject(groupingReportField);
 		BaseReportInfo report = groupingReportField.getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2704,9 +2714,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public void addFunctionToChart(HttpServletRequest request,
-			ChartAggregateInfo addedAggFn) throws DisallowedException, CantDoThatException,
-			ObjectNotFoundException, SQLException {
+	public void addFunctionToChart(HttpServletRequest request, ChartAggregateInfo addedAggFn)
+			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException {
 		BaseReportInfo report = addedAggFn.getReportField().getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
@@ -2729,9 +2738,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 				report.getChart(), blankFilterValues, false);
 	}
 
-	public void removeFunctionFromChart(HttpServletRequest request,
-			BaseReportInfo report, String internalAggregateName) throws DisallowedException,
-			CantDoThatException, ObjectNotFoundException, SQLException {
+	public void removeFunctionFromChart(HttpServletRequest request, BaseReportInfo report,
+			String internalAggregateName) throws DisallowedException, CantDoThatException,
+			ObjectNotFoundException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2754,9 +2763,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public void saveChart(HttpServletRequest request, BaseReportInfo report,
-			String summaryTitle) throws DisallowedException, CantDoThatException,
-			ObjectNotFoundException {
+	public void saveChart(HttpServletRequest request, BaseReportInfo report, String summaryTitle)
+			throws DisallowedException, CantDoThatException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),

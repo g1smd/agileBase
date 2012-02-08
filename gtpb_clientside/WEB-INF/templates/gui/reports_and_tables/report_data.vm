@@ -40,7 +40,7 @@
   #set($fields=[])##
   #set($reportBaseFields = $sessionReport.getReportBaseFields())##
   #foreach ($field in $reportBaseFields)##
-    #if( (!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN") || $sectionedReport)##
+    #if( (!$field.isPrimaryKey()) || (!$field.getReportCalcField().isReportHidden()) || ($sessionContext == "SYSADMIN") || $sectionedReport)##
 	  #set($success=$fields.add([$field.getInternalFieldName(),$field]))##
 	#end ## added to show display field name for relation fields
   #end##
