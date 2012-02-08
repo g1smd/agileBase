@@ -26,7 +26,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #if($report.equals($table.getDefaultReport()))
   <div class="warning">
     Please use a report rather than a table to see charts and visualisations.<p>
-    #set($tableReports = $view.getViewableReport($table)
+    #set($tableReports = $view.getViewableReport($table))
     #if($tableReports.size() > 0)
       See<br>
       #foreach($tableReport in $tableReports)
@@ -39,7 +39,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
       or ask an administrator to create a new report
     #end
   </div>
-#end
+#else
 
 #set($chart = $report.getChart())
 #set($defaultChart = $chart)
@@ -362,5 +362,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
 #parse('gui/reports_and_tables/tabs/summary_chart.vm')
 #if($mobile_device)<p>
 	#parse("gui/mobile/pane2_footer.vm")
+#end
+
 #end
 $viewTools.stopTimer("gui/reports_and_tables/tabs/summary")
