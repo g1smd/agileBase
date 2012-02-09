@@ -1083,7 +1083,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
 			String newReportName, String newReportDesc, ModuleInfo newModule,
-			ReportStyle newReportStyle) throws DisallowedException, CantDoThatException,
+			ReportStyle newReportStyle, boolean allowExport) throws DisallowedException, CantDoThatException,
 			SQLException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
@@ -1118,6 +1118,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		if (newReportStyle != null) {
 			report.setReportStyle(newReportStyle);
 		}
+		report.setAllowExport(allowExport);
 	}
 
 	private BaseField generateFieldObject(HttpServletRequest request, TableInfo table,

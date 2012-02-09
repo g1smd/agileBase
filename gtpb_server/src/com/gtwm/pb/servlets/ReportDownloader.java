@@ -51,6 +51,7 @@ import java.util.Map;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
+import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
@@ -113,9 +114,9 @@ public final class ReportDownloader extends HttpServlet {
 		String rinsedTemplateName = templateName.replaceAll("\\..*$", "").replaceAll("\\W", "")
 				+ ".vm";
 		try {
-			if (!this.databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, report.getParentTable())) {
-				logger.debug("Throwing disallowed exception");
-				throw new DisallowedException(this.databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
+			if (!report.getAllowExport() && (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+				throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 			}
 			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 					request);
@@ -155,9 +156,10 @@ public final class ReportDownloader extends HttpServlet {
 			SessionDataInfo sessionData, BaseReportInfo report) throws ServletException {
 		ByteArrayOutputStream spreadsheetOutputStream = null;
 		try {
-			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
+			AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
+			CompanyInfo company = authManager.getCompanyForLoggedInUser(
 					request);
-			AppUserInfo user = this.databaseDefn.getAuthManager().getUserByUserName(request,
+			AppUserInfo user = authManager.getUserByUserName(request,
 					request.getRemoteUser());
 			spreadsheetOutputStream = this.getSessionReportAsExcel(company, user, sessionData);
 			response.setHeader("Cache-Control", "no-cache");

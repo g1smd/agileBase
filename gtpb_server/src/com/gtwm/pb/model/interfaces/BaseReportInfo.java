@@ -178,6 +178,13 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	public void setReportStyle(ReportStyle reportStyle);
 	
 	/**
+	 * If true, report allows exporting of data even if the logged in user doesn't have MANAGE privileges on the parent table
+	 */
+	public boolean getAllowExport();
+	
+	public void setAllowExport(boolean allowExport);
+	
+	/**
 	 * Return whether the row count is definitive or an estimate based on a
 	 * sample of data
 	 */

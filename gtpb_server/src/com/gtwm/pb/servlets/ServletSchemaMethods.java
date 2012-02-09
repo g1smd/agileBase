@@ -781,8 +781,10 @@ public final class ServletSchemaMethods {
 		String newReportDesc = request.getParameter("reportdesc");
 		String internalModuleName = request.getParameter("internalmodulename");
 		String reportStyleName = request.getParameter("reportstyle");
+		String allowExportString = request.getParameter("allowexport");
+		boolean allowExport = Helpers.valueRepresentsBooleanTrue(allowExportString);
 		if (newReportName == null && newReportDesc == null && internalModuleName == null
-				&& reportStyleName == null) {
+				&& reportStyleName == null && allowExportString == null) {
 			throw new MissingParametersException(
 					"A reportname, reportdesc, reportstyle or internalmodulename parameter must be supplied to update a report with a new name or description");
 		}
@@ -796,7 +798,6 @@ public final class ServletSchemaMethods {
 		ReportStyle reportStyle = null;
 		if (reportStyleName != null) {
 			reportStyle = ReportStyle.valueOf(reportStyleName.toUpperCase());
-			logger.debug("Report style is going to be " + reportStyle);
 		}
 		// store current values that may be overwritten by
 		// DatabaseDefn.updateReport so they can be rolled back
@@ -804,6 +805,7 @@ public final class ServletSchemaMethods {
 		String oldReportDesc = report.getReportDescription();
 		ModuleInfo oldModule = report.getModule();
 		ReportStyle oldReportStyle = report.getReportStyle();
+		boolean oldAllowExport = report.getAllowExport();
 		// begin updating model and persisting changes
 		Connection conn = null;
 		try {
@@ -812,7 +814,7 @@ public final class ServletSchemaMethods {
 			conn.setAutoCommit(false);
 			// update the report:
 			databaseDefn.updateReport(conn, request, report, newReportName, newReportDesc, module,
-					reportStyle);
+					reportStyle, allowExport);
 			HibernateUtil.currentSession().getTransaction().commit();
 			conn.commit();
 		} catch (SQLException sqlex) {
@@ -822,6 +824,7 @@ public final class ServletSchemaMethods {
 			report.setReportDescription(oldReportDesc);
 			report.setModule(oldModule);
 			report.setReportStyle(oldReportStyle);
+			report.setAllowExport(oldAllowExport);
 			throw new CantDoThatException("Updating report failed", sqlex);
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
@@ -830,6 +833,7 @@ public final class ServletSchemaMethods {
 			report.setReportDescription(oldReportDesc);
 			report.setModule(oldModule);
 			report.setReportStyle(oldReportStyle);
+			report.setAllowExport(oldAllowExport);
 			throw new CantDoThatException("Updating report failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
@@ -838,6 +842,7 @@ public final class ServletSchemaMethods {
 			report.setReportDescription(oldReportDesc);
 			report.setModule(oldModule);
 			report.setReportStyle(oldReportStyle);
+			report.setAllowExport(oldAllowExport);
 			throw new CantDoThatException("Updating report failed", pex);
 		} finally {
 			conn.close();

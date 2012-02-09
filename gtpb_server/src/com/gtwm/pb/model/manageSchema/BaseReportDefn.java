@@ -165,6 +165,14 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	private void setMapDirect(ReportMapInfo reportMap) {
 		this.reportMap = reportMap;
 	}
+	
+	public boolean getAllowExport() {
+		return this.allowExport;
+	}
+	
+	public void setAllowExport(boolean allowExport) {
+		this.allowExport = allowExport;
+	}
 
 	@Transient
 	public int getRowCount() {
@@ -280,4 +288,6 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	private int rowCount = 0;
 
 	private boolean rowCountIsEstimate = false;
+	
+	private boolean allowExport = false;
 }

@@ -81,6 +81,12 @@
     </td>
   </tr>
   <tr class="advanced">
+    <td>Exporting:</td>
+    <td>
+      <input type="checkbox" name="allowexport" value="true" identifier="$internalReportName" gtpb_update_report onchange="new fChange(this);" #if($report.getAllowExport()) checked #end /> Allow even users who have no manage privileges to export from this report
+    </td>
+  </tr>
+  <tr class="advanced">
     #set($reportStyle = $report.getReportStyle())
     <td>
       Style:<br><span class='greytext'><i>Please select a visual style for the report (only applicable in certain cases)</i></span>
