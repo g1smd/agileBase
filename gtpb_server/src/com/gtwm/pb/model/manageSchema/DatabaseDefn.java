@@ -155,7 +155,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 *             If more than one Authenticator was found in the database
 	 */
 	public DatabaseDefn(DataSource relationalDataSource, String webAppRoot) throws SQLException,
-			ObjectNotFoundException, CantDoThatException, MissingParametersException {
+			ObjectNotFoundException, CantDoThatException, MissingParametersException, CodingErrorException {
 		this.relationalDataSource = relationalDataSource;
 		// Load table schema objects
 		Session hibernateSession = HibernateUtil.currentSession();

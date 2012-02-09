@@ -82,6 +82,14 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		this.setCalculationDefinitionDirect(calculationDefn);
 		this.setDbTypeDirect(dbFieldType);
 		this.setCalculationSQL(availableDataStores);
+		this.setNonPersistentProperties();
+	}
+	
+	/**
+	 * Not in interface because only for use during bootup
+	 */
+	public void setNonPersistentProperties() throws CodingErrorException {
+		DatabaseFieldType dbFieldType = this.getDbType();
 		if (dbFieldType.equals(DatabaseFieldType.TIMESTAMP)) {
 			this.setDateResolution();
 		} else if (dbFieldType.equals(DatabaseFieldType.FLOAT)) {

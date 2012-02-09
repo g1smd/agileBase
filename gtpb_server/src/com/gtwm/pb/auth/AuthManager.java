@@ -26,6 +26,7 @@ import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
 import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
 import com.gtwm.pb.model.interfaces.ChartInfo;
+import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.RoleTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
@@ -33,6 +34,7 @@ import com.gtwm.pb.model.interfaces.UserGeneralPrivilegeInfo;
 import com.gtwm.pb.model.interfaces.RoleGeneralPrivilegeInfo;
 import com.gtwm.pb.model.interfaces.UserTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.manageSchema.ReportCalcFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.DecimalFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
@@ -78,7 +80,7 @@ public final class AuthManager implements AuthManagerInfo {
 	 *             that's in the DatabaseDefn constructor that calls this
 	 */
 	public AuthManager(DataSource relationalDataSource) throws ObjectNotFoundException,
-			CantDoThatException, MissingParametersException {
+			CantDoThatException, MissingParametersException, CodingErrorException {
 		logger.info("Loading schema and authentication objects into memory...");
 		try {
 			Session hibernateSession = HibernateUtil.currentSession();
@@ -177,7 +179,7 @@ public final class AuthManager implements AuthManagerInfo {
 	 * we're inside a hibernate transaction
 	 */
 	private static void populateTableFromHibernate(TableInfo table, DataSource relationalDataSource)
-			throws CantDoThatException {
+			throws CantDoThatException, CodingErrorException {
 		// Make sure all child objects are activated by calling toString()
 		// (indirectly)
 		logger.info("Loading table " + table);
@@ -187,7 +189,13 @@ public final class AuthManager implements AuthManagerInfo {
 			logger.info("...Report " + table + "." + report);
 			if (report instanceof SimpleReportInfo) {
 				SimpleReportInfo simpleReport = (SimpleReportInfo) report;
-				logger.info("......Report fields: " + simpleReport.getReportFields());
+				Set<ReportFieldInfo> reportFields = simpleReport.getReportFields();
+				logger.info("......Report fields: " + reportFields);
+				for (ReportFieldInfo reportField : reportFields) {
+					if (reportField instanceof ReportCalcFieldDefn) {
+						((ReportCalcFieldDefn) reportField).setNonPersistentProperties();
+					}
+				}
 				logger.info("......Report filters: " + simpleReport.getFilters());
 				logger.info("......Report joins: " + simpleReport.getJoins());
 				logger.info("......Report sorts: " + simpleReport.getSorts());
