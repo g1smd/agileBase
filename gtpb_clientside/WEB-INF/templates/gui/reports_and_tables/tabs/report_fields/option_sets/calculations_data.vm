@@ -61,7 +61,12 @@
       </tr>
 	  <tr>
 	    <td style="vertical-align:top">Definition<br>(SQL)</td>
-		<td><textarea name="calculationdefn" id="calculationdefn" cols="80" rows="5"></textarea></td>
+		<td>
+      <textarea name="calculationdefn" id="calculationdefn" cols="100" rows="5"></textarea><br />
+      <span class="greytext">In calculations, enclose field names in curly brackets, e.g. {field 1} + {field 2}<br>
+        For fields in a different table/report, use e.g. {table name.field name}
+      </span>
+    </td>
 	  </tr>
 	  <tr>
 		<td>&nbsp;</td>

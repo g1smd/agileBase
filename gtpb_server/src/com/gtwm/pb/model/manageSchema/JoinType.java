@@ -30,9 +30,9 @@ package com.gtwm.pb.model.manageSchema;
  * data is the right report or table
  */
 public enum JoinType {
-    LEFT_OUTER, INNER, RIGHT_OUTER, FULL_OUTER, NONE;
+    LEFT_OUTER, INNER, RIGHT_OUTER, FULL_OUTER, CROSS;
 
     public String toString() {
-        return super.toString().replaceAll("_", " ");
+        return super.toString().replaceAll("_", " ").toLowerCase();
     }
 }

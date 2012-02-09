@@ -62,7 +62,7 @@
             </tr>
               <tr>
                   <td>Calculation definition (SQL)</td>
-                  <td><textarea name="calculationdefn" cols="60" rows="4">$reportField.getCalculationDefinition()</textarea></td>
+                  <td><textarea name="calculationdefn" cols="100" rows="4">$reportField.getCalculationDefinition()</textarea></td>
               </tr>
               <tr>
                   <td>Hide calculation in report</td>

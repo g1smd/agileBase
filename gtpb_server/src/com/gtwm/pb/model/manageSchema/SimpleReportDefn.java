@@ -516,7 +516,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		// whether the report contains any inner or outer joins
 		boolean containsProperJoin = false;
 		for (JoinClauseInfo join : joins) {
-			if (!(join.getJoinType().equals(JoinType.NONE))) {
+			if (!(join.getJoinType().equals(JoinType.CROSS))) {
 				containsProperJoin = true;
 				break;
 			}
@@ -543,7 +543,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 			// FROM clause
 			StringBuffer joinSQLBuffer = null;
 			for (JoinClauseInfo jc : joins) {
-				if (jc.getJoinType().equals(JoinType.NONE)) {
+				if (jc.getJoinType().equals(JoinType.CROSS)) {
 					// Cross product joins
 					String rightFieldOwner;
 					if (jc.isRightPartTable()) {
