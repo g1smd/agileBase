@@ -115,7 +115,7 @@ public final class ReportDownloader extends HttpServlet {
 				+ ".vm";
 		try {
 			AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-			if (!report.getAllowExport() && (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+			if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, report.getParentTable())) {
 				throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
 			}
 			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
@@ -157,6 +157,9 @@ public final class ReportDownloader extends HttpServlet {
 		ByteArrayOutputStream spreadsheetOutputStream = null;
 		try {
 			AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
+			if (!report.getAllowExport() && (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+				throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			}
 			CompanyInfo company = authManager.getCompanyForLoggedInUser(
 					request);
 			AppUserInfo user = authManager.getUserByUserName(request,
