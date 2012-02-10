@@ -1,6 +1,6 @@
 <div id="form_tabber">
   <div class="tab_choice">$sessionTable.getSimpleName()</div>
   #foreach($formTab in $formTabs)
-    <div class="tab_choics">$formTab</div>
+    <div class="tab_choice">$formTab</div>
   #end
 </div>

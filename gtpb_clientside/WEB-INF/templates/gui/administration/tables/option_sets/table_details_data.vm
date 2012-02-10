@@ -91,10 +91,8 @@
       #end
     </select>
   </form>
-  Existing tabs:
-  <ul>
-    #foreach($formTab in $table.getFormTabs())
-      <li>$formTab</li>
-    #end
-  </ul>
+  Existing tabs:<br />
+  #foreach($formTab in $table.getFormTabs())
+    <a href="?return=gui/reports_and_tables/pane3&remove_form_tab=true&tabtable=$formTab.getTable().getInternalTableName()"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a> $formTab<br />
+  #end
 </div>

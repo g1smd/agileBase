@@ -23,7 +23,6 @@
     </div> <!-- end of previous section block -->
   #end
   #if($firstSection)
-    #set($formTabs = $sessionTable.getFormTabs())
     #if($formTabs.size() > 0)
       #parse("gui/reports_and_tables/tabs/form_tabber.vm")
     #end

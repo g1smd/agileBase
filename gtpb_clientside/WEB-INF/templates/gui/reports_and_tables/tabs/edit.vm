@@ -108,6 +108,38 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 				#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
 			  </$rowTag>
 		  #else
+        ## Work out if we need the form tabber at the top. It shouldn't be at the top if
+        ## a) the layout is single column (for now)
+        ## b) there are no tabs to show
+        ## c) there are sections in the form but fields before the first section
+        #set($formTabberFirst = true)
+        #set($separatorFound = false)
+        #if($formStyle == "SINGLE_COLUMN")
+          #set($formTabberFirst = false)
+        #else
+          #set($formTabs = $sessionTable.getFormTabs())
+          #if($formTabs.size() == 0)
+            #set($formTabs = false)
+          #else
+            #foreach($field in $fields)
+              #set($fieldCategory = $field.getFieldCategory())
+              #if($fieldCategory == "SEPARATOR")
+                #set($separatorFound = true)
+              #end
+              #if($field.getHidden() == false)
+                #if(!$firstField && !$field.equals($primaryKey))
+                  #set($firstField = $field)
+                #end
+              #end
+            #end
+            #if(!($separatorFound && ($firstField.getFieldCategory() != "SEPARATOR")))
+              #set($formTabberFirst = true)
+            #end
+          #end
+        #end
+        #if($formTabberFirst)
+          #parse("gui/reports_and_tables/tabs/form_tabber.vm")
+        #end
         #foreach($field in $fields)
           #if($field.getHidden() == false)
             #if(!$firstField && !$field.equals($primaryKey))
