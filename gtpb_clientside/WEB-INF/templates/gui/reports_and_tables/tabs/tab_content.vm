@@ -1,0 +1,25 @@
+#set($sessionTable = $sessionData.getTable("tabTable"))
+#set($parentTable = $sessionData.getTable())
+## Get the tab object associated with the tab table
+#foreach($testFormTab in $parentTable.getFormTabs())
+  #if($testFormTab.getTable().equals($sessionTable))
+    #set($formTab = $testFormTab)
+  #end
+#end
+#if(!$formTab)
+  <div class="warningmessage">Form not found for $sessionTable, child of $parentTable. The only form tabs are $parentTable.getFormTabs()</div>
+#else
+  #set($parentRowId = $sessionData.getRowId($parentTable))
+  #set($selectorReport = $formTab.getSelectorReport())
+  #if($selectorReport)
+    #set($filter = $viewTools.getNewFilterMap())
+    #set($success = $filter.put($parentTable.getPrimaryKey(), $parentRowId))
+    #set($reportDataRows = $view.getReportDataRows($selectorReport, 10, $filter, true))
+    Debug: Child rows found: $reportDataRows
+  #end
+  #set($fields = $sessionTable.getFields())
+  #set($primaryKey = $sessionTable.getPrimaryKey())
+  #set($lastField = $fields.last())
+  #set($formStyle = $sessionTable.getFormStyle())
+  #parse("gui/reports_and_tables/tabs/edit_content.vm")
+#end
