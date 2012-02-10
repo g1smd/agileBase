@@ -793,11 +793,12 @@ div#reportData {
   -moz-transition-duration: 1s;
   transition-property: background-color, color;
   transition-duration: 1s;
+  background-color: #EEF3F9;
 }
 
 #form_tabber .tab_choice.active {
   color: black;
-  background-color: #EEF3F9;
+  background-color: white;
 }
 
 #form_tabber .tab_choice:hover {
