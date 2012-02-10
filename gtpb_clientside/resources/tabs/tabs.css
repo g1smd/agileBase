@@ -797,7 +797,7 @@ div#reportData {
 
 .form_tabber .tab_choice.active {
   color: black;
-  background-color: white;
+  background-color: white!important;
 }
 
 .form_tabber .tab_choice:hover {
