@@ -112,33 +112,11 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
       ## a) the layout is single column (for now)
       ## b) there are no tabs to show
       ## c) there are sections in the form but fields before the first section
-      #set($formTabberFirst = true)
-      #set($separatorFound = false)
-      #if($formStyle == "SINGLE_COLUMN")
-        #set($formTabberFirst = false)
-      #else
-        #set($formTabs = $sessionTable.getFormTabs())
-        #if($formTabs.size() == 0)
-          #set($formTabberFirst = false)
-        #else
-          #foreach($field in $fields)
-            #set($fieldCategory = $field.getFieldCategory())
-            #if($fieldCategory == "SEPARATOR")
-              #set($separatorFound = true)
-            #end
-            #if($field.getHidden() == false)
-              #if(!$firstField && !$field.equals($primaryKey))
-                #set($firstField = $field)
-              #end
-            #end
-          #end
-          #if($separatorFound && ($firstField.getFieldCategory() != "SEPARATOR"))
-            #set($formTabberFirst = false)
-          #end
+      #set($hasSeparators = false)
+      #foreach($field in $fields)
+        #if($field.getFieldCategory() == "SEPARATOR")
+          #set($hasSeparators = true)
         #end
-      #end
-      #if($formTabberFirst)
-        #parse("gui/reports_and_tables/tabs/form_tabber.vm")
       #end
       #foreach($field in $fields)
         #if($field.getHidden() == false)

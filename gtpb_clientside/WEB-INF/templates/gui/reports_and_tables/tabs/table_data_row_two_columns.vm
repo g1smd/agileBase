@@ -41,7 +41,12 @@
   #set($sectionHasImage=false)
 #else
   #if($field.equals($firstField))
-    <div class="block two_cols non_section">
+    #if((!$hasSections) && ($formTabs.size() > 0))
+      #parse("gui/reports_and_tables/tabs/form_tabber.vm")
+      <div class="block two_cols non_section" id="form_tabs_$table.getInternalTableName()">
+    #else
+      <div class="block two_cols non_section">
+    #end
   #end
   #set($fieldClass = $field.getClass().getSimpleName())
   ## inline-block workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
