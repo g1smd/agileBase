@@ -779,6 +779,10 @@ div#reportData {
   border-radius: 0.5em;
   text-transform: uppercase;
   font-size: 9pt;
+  display: inline-block;
+  margin: 0.5em;
+  padding: 0.5em;
+  text-align: center;
 }
 
 /* 3) Summary tab css */
