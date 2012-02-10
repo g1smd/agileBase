@@ -109,14 +109,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
 		  </$rowTag>
 	  #else
-      ## Work out if we need the form tabber at the top. It shouldn't be at the top if
-      ## a) the layout is single column (for now)
-      ## b) there are no tabs to show
-      ## c) there are sections in the form but fields before the first section
-      #set($hasSeparators = false)
+      #set($hasSections = false)
       #foreach($field in $fields)
         #if($field.getFieldCategory() == "SEPARATOR")
-          #set($hasSeparators = true)
+          #set($hasSections = true)
         #end
       #end
       #foreach($field in $fields)

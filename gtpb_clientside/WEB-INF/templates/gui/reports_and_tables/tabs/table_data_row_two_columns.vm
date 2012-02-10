@@ -27,7 +27,6 @@
       #parse("gui/reports_and_tables/tabs/form_tabber.vm")
     #end
     <div #if($formStyle == "TWO_COLUMNS") class="two_cols" id="form_tabs_$sessionTable.getInternalTableName()" #end> <!-- start of sections container -->
-    #set($hasSections = true)
     #set($firstSection = false)
   #end
   #if($formStyle == 'TWO_COLUMNS')
