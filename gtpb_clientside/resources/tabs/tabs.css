@@ -794,6 +794,10 @@ div#reportData {
   transition-property: background-color, color;
   transition-duration: 1s;
   background-color: #EEF3F9;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#EEF3F9)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #EEF3F9); /* for firefox 3.6+ */
+  background: -ms-linear-gradient(top,  #fff,  #EEF3F9);
+  background: linear-gradient(top,  #fff,  #EEF3F9);
 }
 
 #form_tabber .tab_choice.active {
