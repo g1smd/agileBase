@@ -1167,6 +1167,7 @@ function fFormStyle() {
 		var selectedTabContent = abFormCache[tabInternalTableName];
 		if (selectedTabContent) {
 			tabContainer.html(selectedTabContent);
+			jqTab.addClass("active");
 		} else {
 			tabContainer.load("AppController.servlet",
 				{
