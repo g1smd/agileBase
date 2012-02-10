@@ -1161,12 +1161,12 @@ function fFormStyle() {
 		// Cache the current tab content before loading a new tab
 		var previousTab = jqTab.closest(".form_tabber").find(".tab_choice.active");
 		var previousTabInternalTableName = previousTab.attr("data-internaltablename");
-		abFormCache[previousTabInternalTableName] = tabContainer.html();
+		abFormCache[previousTabInternalTableName] = tabContainer[0];
 		$(".tab_choice").removeClass("active");
 		// See if the new tab is in the cache
 		var selectedTabContent = abFormCache[tabInternalTableName];
 		if (selectedTabContent) {
-			tabContainer.html(selectedTabContent);
+			tabContainer.replaceWith(selectedTabContent);
 			jqTab.addClass("active");
 		} else {
 			tabContainer.load("AppController.servlet",
