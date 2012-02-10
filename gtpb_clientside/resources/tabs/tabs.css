@@ -768,6 +768,19 @@ div#reportData {
   position: static;
 }
 
+.form_tabber {
+  background-color: #cccccc;
+  margin: 0.5em;
+  border-radius: 0.5em;
+}
+
+.form_tabber .tab_choice {
+  background-color: white;
+  border-radius: 0.5em;
+  text-transform: uppercase;
+  font-size: 9pt;
+}
+
 /* 3) Summary tab css */
 
 
