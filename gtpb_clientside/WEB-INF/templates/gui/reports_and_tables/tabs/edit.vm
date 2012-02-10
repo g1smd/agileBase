@@ -119,16 +119,18 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
         #else
           #set($formTabs = $sessionTable.getFormTabs())
           #if($formTabs.size() == 0)
-            #set($formTabs = false)
+            #set($formTabberFirst = false)
           #else
             #foreach($field in $fields)
               #set($fieldCategory = $field.getFieldCategory())
               #if($fieldCategory == "SEPARATOR")
                 #set($separatorFound = true)
+                Separator found<br>
               #end
               #if($field.getHidden() == false)
                 #if(!$firstField && !$field.equals($primaryKey))
                   #set($firstField = $field)
+                  First field is $firstField<br>
                 #end
               #end
             #end
