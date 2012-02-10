@@ -1158,6 +1158,7 @@ function fFormStyle() {
 		var tabInternalTableName = $(this).attr("data-internaltablename");
 		var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
 		var tabContainer = $("#form_tabs_" + parentInternalTableName);
+		alert("Got tab container, ID " + tabContainer.attr("id") + " by looking up " + parentInternalTableName);
 		tabContainer.load("AppController.servlet",
 			{
 			  "return": "gui/reports_and_tables/tabs/tab_content",
