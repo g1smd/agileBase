@@ -1139,6 +1139,7 @@ function fSetupCharts() {
 /**
  * Select a form style
  */
+var abFormCache;
 function fFormStyle() {
 	$(".select_layout").click(function() {
 		var clicked = $(this);
@@ -1154,21 +1155,30 @@ function fFormStyle() {
 	});
 	$(".tab_choice").click(function() {
 		var jqTab = $(this);
-		jqTab.addClass("active");
 		var tabInternalTableName = $(this).attr("data-internaltablename");
 		var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
 		var tabContainer = $("#form_tabs_" + parentInternalTableName);
-		tabContainer.load("AppController.servlet",
-			{
-			  "return": "gui/reports_and_tables/tabs/tab_content",
-			  set_custom_table: true,
-			  tablekey: "tabTable",
-			  custominternaltablename: tabInternalTableName
-			},
-			function() {
-				$(".tab_choice").removeClass("active");
-				jqTab.addClass("active");
-			});
+		// Cache the current tab content before loading a new tab
+		var previousTab = jqTab.closest(".form_tabber").find(".tab_choice.active");
+		var previousTabInternalTableName = previousTab.attr("data-internaltablename");
+		abFormCache[previousTabInternalTableName] = tabContainer.html();
+		$(".tab_choice").removeClass("active");
+		// See if the new tab is in the cache
+		var selectedTabContent = abFormCache[tabInternalTableName];
+		if (selectedTabContent) {
+			tabContainer.html(selectedTabContent);
+		} else {
+			tabContainer.load("AppController.servlet",
+				{
+				  "return": "gui/reports_and_tables/tabs/tab_content",
+				  set_custom_table: true,
+				  tablekey: "tabTable",
+				  custominternaltablename: tabInternalTableName
+				},
+				function() {
+					jqTab.addClass("active");
+				});
+		}
 	});
 }
 
