@@ -776,7 +776,6 @@ div#reportData {
 }
 
 #form_tabber .tab_choice {
-  background-color: white;
   color: black; /* #777777 */
   border-radius: 0.5em;
   text-transform: uppercase;
