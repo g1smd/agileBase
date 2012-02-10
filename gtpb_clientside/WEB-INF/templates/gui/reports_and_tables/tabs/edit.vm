@@ -32,6 +32,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #set($sessionReport=$sessionData.getReport())
 #set($sessionRowId=$sessionData.getRowId())
 #set($firstSection = true)
+#set($formTabs = $sessionTable.getFormTabs())
 #if($sessionRowId == -1)
 	<div class="warningmessage">
 		#set($lastAppAction = $sessionData.getLastAppAction())
