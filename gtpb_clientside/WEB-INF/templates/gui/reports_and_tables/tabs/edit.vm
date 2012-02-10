@@ -112,7 +112,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
         ## a) the layout is single column (for now)
         ## b) there are no tabs to show
         ## c) there are sections in the form but fields before the first section
-        #set($formTabberFirst = true)
+        #set($formTabberFirst = )
         #set($separatorFound = false)
         #if($formStyle == "SINGLE_COLUMN")
           #set($formTabberFirst = false)
@@ -133,7 +133,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
               #end
             #end
             #if(!($separatorFound && ($firstField.getFieldCategory() != "SEPARATOR")))
-              #set($formTabberFirst = true)
+              #set($formTabberFirst = false)
             #end
           #end
         #end
