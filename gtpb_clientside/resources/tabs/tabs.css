@@ -787,12 +787,16 @@ div#reportData {
   padding: 0.5em;
   text-align: center;
   width: 13em;
-  -webkit-transition-property: background-color;
+  -webkit-transition-property: background-color, color;
   -webkit-transition-duration: 1s;
-  -moz-transition-property: background-color;
+  -moz-transition-property: background-color, color;
   -moz-transition-duration: 1s;
-  transition-property: background-color;
+  transition-property: background-color, color;
   transition-duration: 1s;
+}
+
+#form_tabber .tab_choice.active {
+  color: black;
 }
 
 #form_tabber .tab_choice:hover {
