@@ -1139,7 +1139,7 @@ function fSetupCharts() {
 /**
  * Select a form style
  */
-var abFormCache;
+var abFormCache = [];
 function fFormStyle() {
 	$(".select_layout").click(function() {
 		var clicked = $(this);
