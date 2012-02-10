@@ -768,14 +768,14 @@ div#reportData {
   position: static;
 }
 
-#form_tabber {
+.form_tabber {
   background-color: #cccccc;
   margin: 0.5em;
   border-radius: 0.5em;
   margin-right: 0;
 }
 
-#form_tabber .tab_choice {
+.form_tabber .tab_choice {
   color: black; /* #777777 */
   border-radius: 0.5em;
   text-transform: uppercase;
@@ -795,12 +795,12 @@ div#reportData {
   background-color: none; /* #f4f4f4 */
 }
 
-#form_tabber .tab_choice.active {
+.form_tabber .tab_choice.active {
   color: black;
   background-color: white;
 }
 
-#form_tabber .tab_choice:hover {
+.form_tabber .tab_choice:hover {
   cursor: pointer;
   background-color: #EEF3F9;
 }
