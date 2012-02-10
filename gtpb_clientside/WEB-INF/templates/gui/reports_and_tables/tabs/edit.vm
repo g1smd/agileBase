@@ -109,20 +109,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
 		  </$rowTag>
 	  #else
-      #set($hasSections = false)
-      #foreach($field in $fields)
-        #if($field.getFieldCategory() == "SEPARATOR")
-          #set($hasSections = true)
-        #end
-      #end
-      #foreach($field in $fields)
-        #if($field.getHidden() == false)
-          #if(!$firstField && !$field.equals($primaryKey))
-            #set($firstField = $field)
-          #end
-          #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-        #end
-      #end ## end loop through fields
+      #parse("gui/reports_and_tables/tabs/edit_content.vm")
 	  #end ## end if no unfilled mandatories
     #if($view.isWikiIntegrated() && (!$mobile_device))
       #parse("gui/reports_and_tables/tabs/wiki.vm")  

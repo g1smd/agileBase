@@ -1152,6 +1152,23 @@ function fFormStyle() {
 			clicked.addClass("selected_layout");
 		});
 	});
+	$(".tab_choice").click(function() {
+		var jqTab = $(this);
+		$(".tab_choice").removeClass("active");
+		var tabInternalTableName = $(this).attr("data-internaltablename");
+		var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
+		var tabContainer = $("#form_tabs_" + parentInternalTableName);
+		tabContainer.load("AppController.servlet",
+			{
+			  "return": "gui/reports_and_tables/tabs/tab_content",
+			  set_custom_table: true,
+			  tablekey: "tabTable",
+			  custominternaltablename: tabInternalTableName
+			},
+			function() {
+				jqTab.addClass("active");
+			});
+	});
 }
 
 function showAdvanced() {
