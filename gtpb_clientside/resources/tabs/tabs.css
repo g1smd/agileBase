@@ -783,6 +783,7 @@ div#reportData {
   margin: 0.5em;
   padding: 0.5em;
   text-align: center;
+  width: 13em;
 }
 
 /* 3) Summary tab css */
