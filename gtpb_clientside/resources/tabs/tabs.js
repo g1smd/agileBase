@@ -1154,7 +1154,7 @@ function fFormStyle() {
 	});
 	$(".tab_choice").click(function() {
 		var jqTab = $(this);
-		$(".tab_choice").removeClass("active");
+		jqTab.addClass("active");
 		var tabInternalTableName = $(this).attr("data-internaltablename");
 		var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
 		var tabContainer = $("#form_tabs_" + parentInternalTableName);
@@ -1166,6 +1166,7 @@ function fFormStyle() {
 			  custominternaltablename: tabInternalTableName
 			},
 			function() {
+				$(".tab_choice").removeClass("active");
 				jqTab.addClass("active");
 			});
 	});
