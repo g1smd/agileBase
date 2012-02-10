@@ -772,10 +772,12 @@ div#reportData {
   background-color: #cccccc;
   margin: 0.5em;
   border-radius: 0.5em;
+  margin-right: 0;
 }
 
 #form_tabber .tab_choice {
   background-color: white;
+  color: #777777;
   border-radius: 0.5em;
   text-transform: uppercase;
   font-size: 9pt;
