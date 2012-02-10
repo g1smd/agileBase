@@ -70,113 +70,113 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
       <div class="mini_action" style="border-bottom-right-radius:0.5em"><button id="hide_pane_3" onClick="top.hidePane3();">done</button></div>
       <div class="mini_action" style="right:0; border-bottom-left-radius:0.5em"><a href="javascript:top.fLinks();"><img src="resources/icons/applications/tango/actions/mail-closed.png" />&nbsp;link...</a></div>
 		#end
-	    #set($tableDataRow=$view.getTableDataRow())
-	    #if ($tableDataRow.size() == 0)
-	      Please select a record to edit, or press the 'New' button in the toolbar to create one
-	    #else
-	      #set($viewOnly=false) ## $viewOnly used by resources/input/input.vm
-  		  #if($lastAppAction != "CLONE_RECORD" && $lastAppAction != "SAVE_NEW_RECORD")
-  			## Check if any mandatory fields remain unfilled
-  			#set($unfilledMandatories = false)
-  			#foreach($field in $fields)
-  				#if($field.getNotNull() && $tableDataRow.get($field) == "")
-  					#set($unfilledMandatories = true)
-  				#end
-  			#end
-		  #end
-		  #if($unfilledMandatories)
-			  #set($rowCount = $rowCount + 1)
-			  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
-				#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
-				<$cellTag colspan="2"><div class="warningmessage">
-				The following fields are mandated and must be completed before continuing.<br>
-				This record will be highlighted in the dashboard as an exception until values are filled in.<br>
-				If the information necessary isn't available yet, other records can continue to be edited.
-				</div></$cellTag>
-				#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
-			  </$rowTag>
-        #foreach($field in $fields)
-				  #if($field.getNotNull() && $tableDataRow.get($field) == "")
-					  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-				  #end
-        #end ## end loop through fields
-			  #set($rowCount = $rowCount + 1)
-			  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
-				#if(!$edit_nav)<$cellTag class=leading>&nbsp;</$cellTag>#end
-				<$cellTag>&nbsp;</$cellTag>
-				<$cellTag><input type="button" value="Complete" alt="Complete the rest of the record" onclick="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';"></$cellTag>
-				#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
-			  </$rowTag>
-		  #else
-        ## Work out if we need the form tabber at the top. It shouldn't be at the top if
-        ## a) the layout is single column (for now)
-        ## b) there are no tabs to show
-        ## c) there are sections in the form but fields before the first section
-        #set($formTabberFirst = true)
-        #set($separatorFound = false)
-        #if($formStyle == "SINGLE_COLUMN")
+    #set($tableDataRow=$view.getTableDataRow())
+    #if($tableDataRow.size() == 0)
+      Please select a record to edit, or press the 'New' button in the toolbar to create one
+    #else
+      #set($viewOnly=false) ## $viewOnly used by resources/input/input.vm
+		  #if($lastAppAction != "CLONE_RECORD" && $lastAppAction != "SAVE_NEW_RECORD")
+			## Check if any mandatory fields remain unfilled
+			#set($unfilledMandatories = false)
+			#foreach($field in $fields)
+				#if($field.getNotNull() && $tableDataRow.get($field) == "")
+					#set($unfilledMandatories = true)
+				#end
+			#end
+	  #end
+	  #if($unfilledMandatories)
+		  #set($rowCount = $rowCount + 1)
+		  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
+			#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
+			<$cellTag colspan="2"><div class="warningmessage">
+			The following fields are mandated and must be completed before continuing.<br>
+			This record will be highlighted in the dashboard as an exception until values are filled in.<br>
+			If the information necessary isn't available yet, other records can continue to be edited.
+			</div></$cellTag>
+			#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
+		  </$rowTag>
+      #foreach($field in $fields)
+			  #if($field.getNotNull() && $tableDataRow.get($field) == "")
+				  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+			  #end
+      #end ## end loop through fields
+		  #set($rowCount = $rowCount + 1)
+		  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
+			#if(!$edit_nav)<$cellTag class=leading>&nbsp;</$cellTag>#end
+			<$cellTag>&nbsp;</$cellTag>
+			<$cellTag><input type="button" value="Complete" alt="Complete the rest of the record" onclick="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';"></$cellTag>
+			#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
+		  </$rowTag>
+	  #else
+      ## Work out if we need the form tabber at the top. It shouldn't be at the top if
+      ## a) the layout is single column (for now)
+      ## b) there are no tabs to show
+      ## c) there are sections in the form but fields before the first section
+      #set($formTabberFirst = true)
+      #set($separatorFound = false)
+      #if($formStyle == "SINGLE_COLUMN")
+        #set($formTabberFirst = false)
+      #else
+        #set($formTabs = $sessionTable.getFormTabs())
+        #if($formTabs.size() == 0)
           #set($formTabberFirst = false)
         #else
-          #set($formTabs = $sessionTable.getFormTabs())
-          #if($formTabs.size() == 0)
+          #foreach($field in $fields)
+            #set($fieldCategory = $field.getFieldCategory())
+            #if($fieldCategory == "SEPARATOR")
+              #set($separatorFound = true)
+            #end
+            #if($field.getHidden() == false)
+              #if(!$firstField && !$field.equals($primaryKey))
+                #set($firstField = $field)
+              #end
+            #end
+          #end
+          #if($separatorFound && ($firstField.getFieldCategory() != "SEPARATOR"))
             #set($formTabberFirst = false)
-          #else
-            #foreach($field in $fields)
-              #set($fieldCategory = $field.getFieldCategory())
-              #if($fieldCategory == "SEPARATOR")
-                #set($separatorFound = true)
-              #end
-              #if($field.getHidden() == false)
-                #if(!$firstField && !$field.equals($primaryKey))
-                  #set($firstField = $field)
-                #end
-              #end
-            #end
-            #if($separatorFound && ($firstField.getFieldCategory() != "SEPARATOR"))
-              #set($formTabberFirst = false)
-            #end
           #end
         #end
-        #if($formTabberFirst)
-          #parse("gui/reports_and_tables/tabs/form_tabber.vm")
-        #end
-        #foreach($field in $fields)
-          #if($field.getHidden() == false)
-            #if(!$firstField && !$field.equals($primaryKey))
-              #set($firstField = $field)
-            #end
-            #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-          #end
-        #end ## end loop through fields
-		  #end ## end if no unfilled mandatories
-      #if($view.isWikiIntegrated() && (!$mobile_device))
-        #parse("gui/reports_and_tables/tabs/wiki.vm")  
-        <tr class="trailing">
-          #if(!$edit_nav)<td>&nbsp;</td>#end
-          <td colspan="2">&nbsp;</td>
-          #if(!$edit_nav)<td>&nbsp;</td>#end
-        </tr> 
-      #elseif(($formStyle == "SINGLE_COLUMN") || $mobile_device)
-        <tr class="trailing">
-          #if(!$edit_nav)<td>&nbsp;</td>#end
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          #if(!$edit_nav)<td>&nbsp;</td>#end
-        </tr> 
       #end
-    #end 
+      #if($formTabberFirst)
+        #parse("gui/reports_and_tables/tabs/form_tabber.vm")
+      #end
+      #foreach($field in $fields)
+        #if($field.getHidden() == false)
+          #if(!$firstField && !$field.equals($primaryKey))
+            #set($firstField = $field)
+          #end
+          #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+        #end
+      #end ## end loop through fields
+	  #end ## end if no unfilled mandatories
+    #if($view.isWikiIntegrated() && (!$mobile_device))
+      #parse("gui/reports_and_tables/tabs/wiki.vm")  
+      <tr class="trailing">
+        #if(!$edit_nav)<td>&nbsp;</td>#end
+        <td colspan="2">&nbsp;</td>
+        #if(!$edit_nav)<td>&nbsp;</td>#end
+      </tr> 
+    #elseif(($formStyle == "SINGLE_COLUMN") || $mobile_device)
+      <tr class="trailing">
+        #if(!$edit_nav)<td>&nbsp;</td>#end
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        #if(!$edit_nav)<td>&nbsp;</td>#end
+      </tr> 
+    #end
+  #end 
   </$containerTag>
   ## See if there are any actions for this table
   #if(!$moduleActions)
-        #set($user = $view.getLoggedInUser())
-        #set($company = $user.getCompany())
-        #set($companyName = $viewTools.cleanString($company.getCompanyName()))
-        #set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
-        #if($viewTools.templateExists($customisationsTemplateLocation))
-          #parse($customisationsTemplateLocation)
-        #end
+    #set($user = $view.getLoggedInUser())
+    #set($company = $user.getCompany())
+    #set($companyName = $viewTools.cleanString($company.getCompanyName()))
+    #set($customisationsTemplateLocation = "gui/customisations/$companyName/applications.vm")
+    #if($viewTools.templateExists($customisationsTemplateLocation))
+      #parse($customisationsTemplateLocation)
+    #end
   #end
-    #set($tableActions = $view.getModuleActions($sessionTable.getInternalTableName()))
+  #set($tableActions = $view.getModuleActions($sessionTable.getInternalTableName()))
   #foreach($tableAction in $tableActions)
     <button class="tableaction" actiontemplate="$tableAction.getActionTemplate()" actionbuttons="$tableAction.getButtons()" callbackfunction="$tableAction.getCallbackFuncion()" actionname="$tableAction.getActionName()">&laquo; $tableAction &raquo;</button>
   #end
