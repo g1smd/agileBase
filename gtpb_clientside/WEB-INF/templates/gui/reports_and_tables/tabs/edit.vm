@@ -134,7 +134,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
                 #end
               #end
             #end
-            #if(!($separatorFound && ($firstField.getFieldCategory() != "SEPARATOR")))
+            #if($separatorFound && ($firstField.getFieldCategory() != "SEPARATOR"))
               #set($formTabberFirst = false)
             #end
           #end
