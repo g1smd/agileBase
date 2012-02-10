@@ -793,7 +793,7 @@ div#reportData {
   -moz-transition-duration: 1s;
   transition-property: background-color, color;
   transition-duration: 1s;
-  background-color: #EEF3F9;
+  background-color: #f4f4f4;
 }
 
 #form_tabber .tab_choice.active {
@@ -803,7 +803,7 @@ div#reportData {
 
 #form_tabber .tab_choice:hover {
   cursor: pointer;
-  background-color: #f4f4f4;
+  background-color: #EEF3F9;
 }
 
 /* 3) Summary tab css */
