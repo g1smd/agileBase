@@ -22,7 +22,7 @@
   #set($lastField = $fields.last())
   #set($formStyle = $sessionTable.getFormStyle())
   #if($formStyle == "SINGLE_COLUMN")
-    <table cellspacing="0" cellpadding="0" border="0" >
+    <table id="reportData" cellspacing="0" cellpadding="0" border="0" >
   #end
   #parse("gui/reports_and_tables/tabs/edit_content.vm")
   #if($formStyle == "SINGLE_COLUMN")
