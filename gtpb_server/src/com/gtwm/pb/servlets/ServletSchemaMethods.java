@@ -395,8 +395,10 @@ public final class ServletSchemaMethods {
 		FormTabInfo formTab = new FormTab(table, tabTable, newIndex);
 		try {
 			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.currentSession().save(formTab);
 			HibernateUtil.activateObject(table);
 			table.addFormTab(formTab);
+			HibernateUtil.currentSession().getTransaction().commit();
 		} finally {
 			HibernateUtil.closeSession();
 		}
@@ -430,6 +432,8 @@ public final class ServletSchemaMethods {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(table);
 			table.removeFormTab(formTab);
+			HibernateUtil.currentSession().delete(formTab);
+			HibernateUtil.currentSession().getTransaction().commit();
 		} finally {
 			HibernateUtil.closeSession();
 		}
