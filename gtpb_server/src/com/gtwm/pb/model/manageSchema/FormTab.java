@@ -90,16 +90,16 @@ public class FormTab implements FormTabInfo {
 		return this.table.getSimpleName();
 	}
 
-	/**
-	 * Compare by index
-	 */
 	public int compareTo(FormTabInfo formTab) {
-		int indexCompare = Integer.valueOf(index).compareTo(formTab.getIndex());
+		int parentTableCompare = this.getParentTable().compareTo(((FormTab) formTab).getParentTable());
+		if (parentTableCompare != 0) {
+			return parentTableCompare;
+		}
+		int indexCompare = Integer.valueOf(this.getIndex()).compareTo(formTab.getIndex());
 		if (indexCompare != 0) {
 			return indexCompare;
 		}
-		// Fall back to comparing by table, as per equals
-		return this.table.compareTo(formTab.getTable());
+		return this.getTable().compareTo(formTab.getTable());
 	}
 
 	/**
