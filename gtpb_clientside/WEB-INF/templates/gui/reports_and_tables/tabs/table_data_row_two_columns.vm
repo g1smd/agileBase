@@ -58,13 +58,14 @@
   </div>
 #end
 #if($field.equals($lastField))
+  We're at the last field $lastField
   </div> <!-- end of last block -->
   #if($hasSections)
+    End of sections
     </div> <!-- end of two sections container -->
   #end
   #foreach($formTab in $formTabs)
     <div style="display:none" id="form_tabs_$sessionTable.getInternalTableName()_$formTab.getTable().getInternalTableName()">
     </div>
   #end
-  This is the end
 #end
