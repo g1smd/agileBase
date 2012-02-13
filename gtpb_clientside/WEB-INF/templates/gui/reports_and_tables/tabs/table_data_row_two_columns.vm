@@ -59,6 +59,9 @@
 #end
 #if($field.equals($lastField))
   We're at the last field $lastField
+  #if($formStyle == 'TWO_COLUMNS')
+    </td></tr></table>
+  #end
   </div> <!-- end of last block -->
   #if($hasSections)
     End of sections
