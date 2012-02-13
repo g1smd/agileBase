@@ -1172,6 +1172,8 @@ function fFormStyle() {
 			}, function() {
 				jqTab.addClass("active");
 			});
+		} else {
+			jqTab.addClass("active");
 		}
 	});
 }
