@@ -51,6 +51,11 @@ public class FormTab implements FormTabInfo {
 		this.id = id;
 	}
 
+	/**
+	 * We don't actually need to get the parent table in calling code, but
+	 * storing it makes debugging easier. Also bidirectional many to one
+	 * relations are better supported than uni-directional in Hibernate
+	 */
 	@ManyToOne(targetEntity = TableDefn.class)
 	private TableInfo getParentTable() {
 		return this.parentTable;
@@ -91,7 +96,8 @@ public class FormTab implements FormTabInfo {
 	}
 
 	public int compareTo(FormTabInfo formTab) {
-		int parentTableCompare = this.getParentTable().compareTo(((FormTab) formTab).getParentTable());
+		int parentTableCompare = this.getParentTable().compareTo(
+				((FormTab) formTab).getParentTable());
 		if (parentTableCompare != 0) {
 			return parentTableCompare;
 		}
