@@ -1160,17 +1160,19 @@ function fFormStyle() {
 		var previousTabInternalTableName = previousTab.attr("data-internaltablename");
 		var previousContainer = $("#form_tabs_" + parentInternalTableName + "_" + previousTabInternalTableName);
 		$(".tab_choice").removeClass("active");
-		previousContainer.hide();
+		previousContainer.fadeOut();
 		var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
-		tabContainer.show();
-		tabContainer.load("AppController.servlet", {
-		  "return": "gui/reports_and_tables/tabs/tab_content",
-		  set_custom_table: true,
-		  tablekey: "tabTable",
-		  custominternaltablename: tabInternalTableName
-		}, function() {
-			jqTab.addClass("active");
-		});
+		tabContainer.fadeIn();
+		if (tabContainer.children().size() == 0) {
+			tabContainer.load("AppController.servlet", {
+			  "return": "gui/reports_and_tables/tabs/tab_content",
+			  set_custom_table: true,
+			  tablekey: "tabTable",
+			  custominternaltablename: tabInternalTableName
+			}, function() {
+				jqTab.addClass("active");
+			});
+		}
 	});
 }
 
