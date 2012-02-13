@@ -228,7 +228,7 @@
 			#if($dateAxis)
         #if($scatter)
           defaultSeriesType: 'scatter',
-        #elseif($timeline)
+        #elseif($timeline || ($aggregateFunctions.size() > 1))
           defaultSeriesType: 'line',
         #else
           defaultSeriesType: 'area',

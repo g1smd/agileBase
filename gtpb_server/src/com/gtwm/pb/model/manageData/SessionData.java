@@ -82,13 +82,17 @@ public final class SessionData implements SessionDataInfo {
 				request.getRemoteUser());
 		UsageLogger usageLogger = new UsageLogger(relationalDataSource);
 		String userAgent = request.getHeader("User-Agent").toLowerCase();
-		String browserName = "Unknown browser: " + userAgent;
+		String browserName = "";
 		EnumSet<Browsers> browsersMatched = EnumSet.noneOf(Browsers.class);
-		BROWSER_LOOP: for (Browsers browser : EnumSet.allOf(Browsers.class)) {
+		for (Browsers browser : EnumSet.allOf(Browsers.class)) {
 			if (userAgent.contains(browser.getUserAgentString())) {
-				browserName = browser.getBrowserName();
-				break BROWSER_LOOP;
+				browserName += browser.getBrowserName() + " ";
 			}
+		}
+		if (browserName.equals("")) {
+			browserName = "Unknown browser: " + userAgent;
+		} else {
+			browserName = browserName.substring(0, browserName.length() - 1);
 		}
 		usageLogger.logLogin(user, request.getRemoteAddr(), browserName);
 		UsageLogger.startLoggingThread(usageLogger);
