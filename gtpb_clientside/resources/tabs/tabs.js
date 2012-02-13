@@ -1160,10 +1160,10 @@ function fFormStyle() {
 		var previousTabInternalTableName = previousTab.attr("data-internaltablename");
 		var previousContainer = $("#form_tabs_" + parentInternalTableName + "_" + previousTabInternalTableName);
 		$(".tab_choice").removeClass("active");
-		previousContainer.fadeOut();
 		var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
-		tabContainer.fadeIn();
 		if (tabContainer.children().size() == 0) {
+			previousContainer.fadeOut();
+			tabContainer.fadeIn();
 			tabContainer.load("AppController.servlet", {
 			  "return": "gui/reports_and_tables/tabs/tab_content",
 			  set_custom_table: true,
@@ -1173,6 +1173,8 @@ function fFormStyle() {
 				jqTab.addClass("active");
 			});
 		} else {
+			previousContainer.hide();
+			tabContainer.show();
 			jqTab.addClass("active");
 		}
 	});
