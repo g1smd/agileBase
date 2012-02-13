@@ -710,10 +710,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	/**
 	 * Find out if the view already exists
-	 * 
-	 * NOTE: Uses some postgres specific code, not database independent
 	 */
-	private boolean viewExistsInPostgres(Connection conn, BaseReportInfo report)
+	private boolean viewExists(Connection conn, BaseReportInfo report)
 			throws SQLException {
 		PreparedStatement viewExistsStatement = conn
 				.prepareStatement("select count(*) from information_schema.views where table_name=?");
@@ -918,7 +916,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	private void updateViewDbAction(Connection conn, BaseReportInfo report,
 			HttpServletRequest request) throws SQLException, CantDoThatException,
 			CodingErrorException, ObjectNotFoundException {
-		boolean viewExists = viewExistsInPostgres(conn, report);
+		boolean viewExists = viewExists(conn, report);
 		logger.debug("View " + report + "(" + report.getInternalReportName() + ") already exists: " + viewExists);
 		boolean createOrReplaceWorked = updateViewDbActionWithCreateOrReplace(conn, report,
 				viewExists);
