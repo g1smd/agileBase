@@ -783,6 +783,7 @@ div#reportData {
   display: inline-block;
   margin: 0.5em;
   margin-right: 0;
+  margin-left: 0;
   padding: 0.5em;
   text-align: center;
   width: 13em;
@@ -793,6 +794,10 @@ div#reportData {
   transition-property: background-color, color;
   transition-duration: 1s;
   background-color: none; /* #f4f4f4 */
+}
+
+.form_tabber .tab_choice:first-child {
+  margin-left: 0.5em;
 }
 
 .form_tabber .tab_choice.active {
