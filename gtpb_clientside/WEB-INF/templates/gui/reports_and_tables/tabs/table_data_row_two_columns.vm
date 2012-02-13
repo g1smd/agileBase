@@ -66,4 +66,5 @@
     <div style="display:none" id="form_tabs_$sessionTable.getInternalTableName()_$formTab.getTable().getInternalTableName()">
     </div>
   #end
+  This is the end
 #end
