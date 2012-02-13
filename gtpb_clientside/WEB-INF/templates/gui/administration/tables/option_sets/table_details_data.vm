@@ -78,6 +78,7 @@
   </div>
   <br style="clear:both" />
 </div>
+#set($formTabs = $table.getFormTabs())
 <div id="tabs_selector" style="width:100%; background-color:#f4f4f4; padding: 1em;">
   <h2>Choose child tabs for the form</h2>
   <form method="post" action="AppController.servlet">
@@ -86,14 +87,18 @@
     <select name="tabtable" onchange="form.submit();">
       <option value="">--select a table to include--</option>
       #set($dependentTables = $view.getDirectlyDependentTables($table)) ## child tables
+      #set($formTables = [])
+      #foreach($formTab in $formTabs)
+        #set($success = $formTables.add($formTab.getTable()))
+      #end
       #foreach($dependentTable in $dependentTables)
-        <option value="$dependentTable.getInternalTableName()">$dependentTable</option>
+        #if(!$formTables.contains($dependentTable))
+          <option value="$dependentTable.getInternalTableName()">$dependentTable</option>
+        #end
       #end
     </select>
   </form>
-  Existing tabs:<br />
-  Form tabs are $table.getFormTabs()<br>
-  #foreach($formTab in $table.getFormTabs())
+  #foreach($formTab in $formTabs)
     <a href="?return=gui/reports_and_tables/pane3&remove_form_tab=true&tabtable=$formTab.getTable().getInternalTableName()"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a> $formTab<br />
   #end
 </div>
