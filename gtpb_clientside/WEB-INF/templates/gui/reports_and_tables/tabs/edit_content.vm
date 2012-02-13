@@ -19,6 +19,8 @@
 #foreach($field in $fields)
   #if($field.getFieldCategory() == "SEPARATOR")
     #set($hasSections = true)
+  #elseif(!$field.getHidden())
+    #set($lastField = $field)
   #end
 #end
 #foreach($field in $fields)
@@ -28,4 +30,4 @@
     #end
     #parse("gui/reports_and_tables/tabs/table_data_row.vm")
   #end
-#end ## end loop through fields
+#end
