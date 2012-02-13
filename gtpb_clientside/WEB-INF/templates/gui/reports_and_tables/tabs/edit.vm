@@ -28,6 +28,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #set($fields = $sessionTable.getFields())
 #set($primaryKey = $sessionTable.getPrimaryKey())
 #set($lastField = $fields.last())
+Last field is $lastField
 #set($formStyle = $sessionTable.getFormStyle())
 #set($sessionReport=$sessionData.getReport())
 #set($sessionRowId=$sessionData.getRowId())
