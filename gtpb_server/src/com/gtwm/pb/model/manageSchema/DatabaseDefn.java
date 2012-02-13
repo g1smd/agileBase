@@ -716,7 +716,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	private boolean viewExistsInPostgres(Connection conn, BaseReportInfo report)
 			throws SQLException {
 		PreparedStatement viewExistsStatement = conn
-				.prepareStatement("SELECT count(*) FROM (SELECT relname FROM pg_catalog.pg_class WHERE relname=?) AS relname");
+				.prepareStatement("select count(*) from information_schema.views where table_name=?");
 		viewExistsStatement.setString(1, report.getInternalReportName());
 		ResultSet viewExistsResults = viewExistsStatement.executeQuery();
 		boolean viewExists = false;
@@ -748,6 +748,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			statement.execute();
 			statement.close();
 		} catch (SQLException sqlex) {
+			logger.debug("Initial attempt at CREATE OR REPLACE VIEW failed");
 			if (viewExists) {
 				createOrReplaceWorked = false;
 				conn.rollback(savepoint);
@@ -837,6 +838,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			savepoint = conn.setSavepoint("dropAndCreateDependenciesSavepoint");
 			Map<String, List<String>> reportDependencyMap = new HashMap<String, List<String>>();
 			this.fillReportDependencyMap(conn, report.getInternalReportName(), reportDependencyMap);
+			logger.debug("Report dependency map is " + reportDependencyMap);
 			// Remove reports...
 			List<String> deletedReports = new ArrayList<String>();
 			while (deletedReports.size() < reportDependencyMap.size()) {
@@ -917,10 +919,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 			HttpServletRequest request) throws SQLException, CantDoThatException,
 			CodingErrorException, ObjectNotFoundException {
 		boolean viewExists = viewExistsInPostgres(conn, report);
+		logger.debug("View " + report + "(" + report.getInternalReportName() + ") already exists: " + viewExists);
 		boolean createOrReplaceWorked = updateViewDbActionWithCreateOrReplace(conn, report,
 				viewExists);
+		logger.debug("createOrReplaceWorked: " + createOrReplaceWorked);
 		if (viewExists && !createOrReplaceWorked) {
 			boolean dropAndCreateWorked = updateViewDbActionWithDropAndCreate(conn, report);
+			logger.debug("dropAndCreateWorked: " + dropAndCreateWorked);
 			if (!dropAndCreateWorked) {
 				updateViewDbActionWithDropAndCreateDependencies(conn, report, request);
 			}
