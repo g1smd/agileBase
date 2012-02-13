@@ -31,11 +31,12 @@ public class FormTab implements FormTabInfo {
 	private FormTab() {
 	}
 
-	public FormTab(TableInfo table, int index) {
+	public FormTab(TableInfo parentTable, TableInfo table, int index) {
+		this.setParentTable(parentTable);
 		this.setTable(table);
 		this.setIndex(index);
 	}
-	
+
 	@Id
 	@GeneratedValue
 	/**
@@ -51,10 +52,19 @@ public class FormTab implements FormTabInfo {
 	}
 
 	@ManyToOne(targetEntity = TableDefn.class)
+	private TableInfo getParentTable() {
+		return this.parentTable;
+	}
+
+	private void setParentTable(TableInfo parentTable) {
+		this.parentTable = parentTable;
+	}
+
+	@ManyToOne(targetEntity = TableDefn.class)
 	public TableInfo getTable() {
 		return this.table;
 	}
-	
+
 	private void setTable(TableInfo table) {
 		this.table = table;
 	}
@@ -75,11 +85,11 @@ public class FormTab implements FormTabInfo {
 	public void setIndex(int index) {
 		this.index = index;
 	}
-	
+
 	public String toString() {
 		return this.table.getSimpleName();
 	}
-	
+
 	/**
 	 * Compare by index
 	 */
@@ -93,7 +103,7 @@ public class FormTab implements FormTabInfo {
 	}
 
 	/**
-	 * There will only be one tab per table in a form, and collections will only be of tabs in one form
+	 * There will only be one tab per table in a form (parent table)
 	 */
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -103,19 +113,25 @@ public class FormTab implements FormTabInfo {
 			return false;
 		}
 		FormTab otherFormTab = (FormTab) obj;
-		return this.table.equals(otherFormTab.getTable());
+		return (this.getTable().equals(otherFormTab.getTable()) && this.getParentTable().equals(
+				otherFormTab.getParentTable()));
 	}
 
 	public int hashCode() {
-		return this.table.hashCode();
+		int hashCode = 17;
+		hashCode = 37 * hashCode + this.getTable().hashCode();
+		hashCode = 37 * hashCode + this.getParentTable().hashCode();
+		return hashCode;
 	}
-	
+
 	private TableInfo table;
-	
+
+	private TableInfo parentTable;
+
 	private BaseReportInfo selectorReport;
-	
+
 	private int index = 0;
-	
+
 	private long id;
 
 }

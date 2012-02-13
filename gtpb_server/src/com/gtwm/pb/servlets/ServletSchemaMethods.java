@@ -392,7 +392,7 @@ public final class ServletSchemaMethods {
 		if (formTabs.size() > 0) {
 			newIndex = formTabs.last().getIndex() + 1;
 		}
-		FormTabInfo formTab = new FormTab(tabTable, newIndex);
+		FormTabInfo formTab = new FormTab(table, tabTable, newIndex);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(table);

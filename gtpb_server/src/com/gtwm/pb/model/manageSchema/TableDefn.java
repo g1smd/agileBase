@@ -461,7 +461,7 @@ public class TableDefn implements TableInfo {
 		return Collections.unmodifiableSortedSet(new TreeSet<FormTabInfo>(this.getFormTabsDirect()));
 	}
 	
-	@OneToMany(targetEntity = FormTab.class, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="parentTable", targetEntity = FormTab.class, cascade = CascadeType.ALL)
 	private Set<FormTabInfo> getFormTabsDirect() {
 		return this.formTabs;
 	}
