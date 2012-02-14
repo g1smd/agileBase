@@ -15,7 +15,7 @@
     #set($filter = $viewTools.getNewFilterMap())
     #set($success = $filter.put($parentTable.getPrimaryKey(), $parentRowId))
     Getting data rows for $selectorReport with filter $filter<br>
-    #set($reportDataRows = $view.getReportDataRows($selectorReport,50,$filter,true))
+    #set($reportDataRows = $view.getReportDataRows($selectorReport,"50",$filter,true))
     Debug: Child rows found: $reportDataRows
   #end
   #set($fields = $sessionTable.getFields())
