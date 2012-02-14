@@ -80,12 +80,12 @@
 </div>
 #set($formTabs = $table.getFormTabs())
 <div id="tabs_selector" style="width:100%; background-color:#f4f4f4; padding: 1em;">
-  <h2>Choose child tabs for the form</h2>
+  <h2>Choose child tabs for the form (optional)</h2>
   <form method="post" action="AppController.servlet">
     <input type="hidden" name="add_form_tab" value="true" />
     <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
-    <select name="tabtable" onchange="form.submit();">
-      <option value="">--select a table to include--</option>
+    Add a tab: <select name="tabtable" onchange="form.submit();">
+      <option value="">--select a table--</option>
       #set($dependentTables = $view.getDirectlyDependentTables($table)) ## child tables
       #set($formTables = [])
       #foreach($formTab in $formTabs)
