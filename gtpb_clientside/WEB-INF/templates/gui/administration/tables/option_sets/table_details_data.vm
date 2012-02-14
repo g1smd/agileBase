@@ -105,7 +105,7 @@
       <option value="">$formTab - show only one record</option>
       #set($tabPkey = $tabTable.getPrimaryKey())
       #foreach($prospectiveReport in $tabTable.getReports())
-        #if($prospectiveReport.getReportBaseFields().contains($tabPkey))
+        #if(($prospectiveReport.getReportBaseFields().contains($tabPkey)) && (!$prospectiveReport.equals($tabTable.getDefaultReport())))
           <option value="$prospectiveReport.getInternalReportName()" #if($prospectiveReport.equals($formTab.getSelectorReport())) selected #end>$prospectiveReport.getModule() - $prospectiveReport</option>
         #end
       #end
