@@ -393,6 +393,14 @@ public final class ServletSchemaMethods {
 			newIndex = formTabs.last().getIndex() + 1;
 		}
 		FormTabInfo formTab = new FormTab(table, tabTable, newIndex);
+		// Choose an initial selector report for the tab
+		BaseField parentPkey = table.getPrimaryKey();
+		REPORT_LOOP: for(BaseReportInfo testReport : tabTable.getReports()) {
+			if (testReport.getReportBaseFields().contains(parentPkey)) {
+				formTab.setSelectorReport(testReport);
+				break REPORT_LOOP;
+			}
+		}
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.currentSession().save(formTab);
@@ -447,7 +455,7 @@ public final class ServletSchemaMethods {
 				logger.error("sql successfully rolled back");
 			}
 		} catch (SQLException sqlex) {
-			logger.error("oh no! another sql exception was thrown");
+			logger.error("oh no! another sql exception was thrown: " + sqlex);
 			sqlex.printStackTrace();
 			// don't rethrow, may just be because no SQL has been sent since
 			// transaction start
@@ -457,6 +465,46 @@ public final class ServletSchemaMethods {
 		logger.error("hibernate successfully rolled back");
 	}
 
+	public synchronized static void updateFormTab(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
+				ServletUtilMethods.USE_SESSION);
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table)) {
+			throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
+		}
+		String tabInternalTableName = request.getParameter("tabinternaltablename");
+		TableInfo tabTable = databaseDefn.getTable(request, tabInternalTableName);
+		FormTabInfo formTab = null;
+		TABS_LOOP: for (FormTabInfo testFormTab : table.getFormTabs()) {
+			if (testFormTab.getTable().equals(tabTable)) {
+				formTab = testFormTab;
+				break TABS_LOOP;
+			}
+		}
+		if (formTab == null) {
+			throw new ObjectNotFoundException("Table " + table + " doesn't contain a tab for " + tabTable);
+		}
+		String tabInternalReportName = request.getParameter("tabinternalreportname");
+		if (tabInternalReportName == null) {
+			throw new MissingParametersException("tabinternalreportname is necessary to update a form tab");
+		}
+		BaseReportInfo selectorReport = null;
+		if (!tabInternalReportName.equals("")) {
+			selectorReport = tabTable.getReport(tabInternalReportName);
+		}
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(formTab);
+			formTab.setSelectorReport(selectorReport);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("Problem updating form tab: " + hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
 	/**
 	 * @throws CantDoThatException
 	 *             If a table already exists with the table name you're trying
