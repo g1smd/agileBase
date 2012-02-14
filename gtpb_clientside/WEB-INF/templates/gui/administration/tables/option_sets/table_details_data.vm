@@ -99,11 +99,12 @@
     </select>
   </form>
   #foreach($formTab in $formTabs)
-    <a href="?return=gui/reports_and_tables/pane3&remove_form_tab=true&tabtable=$formTab.getTable().getInternalTableName()"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a>
-    <select name="tabinternalreportname" onchange="new fChange(this);" gtpb_update_form_tab=true>
+    #set($tabTable = $formTab.getTable())
+    <a href="?return=gui/reports_and_tables/pane3&remove_form_tab=true&tabtable=$tabTable.getInternalTableName()"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a>
+    <select name="tabinternalreportname" onchange="new fChange(this);" gtpb_update_form_tab=true gtpb_tabinternaltablename="$tabTable.getInternalTableName()">
       <option value="">$formTab - show only one record</option>
-      #set($tabPkey = $formTab.getTable().getPrimaryKey())
-      #foreach($prospectiveReport in $formTab.getTable().getReports())
+      #set($tabPkey = $tabTable.getPrimaryKey())
+      #foreach($prospectiveReport in $tabTable.getReports())
         #if($prospectiveReport.getReportBaseFields().contains($tabPkey))
           <option value="$prospectiveReport.getInternalReportName()" #if($prospectiveReport.equals($formTab.getSelectorReport())) selected #end>$prospectiveReport.getModule() - $prospectiveReport</option>
         #end
