@@ -395,8 +395,10 @@ public final class ServletSchemaMethods {
 		FormTabInfo formTab = new FormTab(table, tabTable, newIndex);
 		// Choose an initial selector report for the tab
 		BaseField parentPkey = table.getPrimaryKey();
-		REPORT_LOOP: for(BaseReportInfo testReport : tabTable.getReports()) {
-			if (testReport.getReportBaseFields().contains(parentPkey)) {
+		REPORT_LOOP: for (BaseReportInfo testReport : tabTable.getReports()) {
+			if ((testReport.getReportBaseFields().contains(parentPkey))
+					&& (!testReport.getReportName().startsWith("dbvcalc"))
+					&& (!testReport.getReportName().startsWith("dbvcrit"))) {
 				formTab.setSelectorReport(testReport);
 				break REPORT_LOOP;
 			}
@@ -465,12 +467,17 @@ public final class ServletSchemaMethods {
 		logger.error("hibernate successfully rolled back");
 	}
 
-	public synchronized static void updateFormTab(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException, CantDoThatException {
+	public synchronized static void updateFormTab(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
+			CantDoThatException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				ServletUtilMethods.USE_SESSION);
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table)) {
-			throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, table)) {
+			throw new DisallowedException(authManager.getLoggedInUser(request),
+					PrivilegeType.MANAGE_TABLE, table);
 		}
 		String tabInternalTableName = request.getParameter("tabinternaltablename");
 		TableInfo tabTable = databaseDefn.getTable(request, tabInternalTableName);
@@ -482,11 +489,13 @@ public final class ServletSchemaMethods {
 			}
 		}
 		if (formTab == null) {
-			throw new ObjectNotFoundException("Table " + table + " doesn't contain a tab for " + tabTable);
+			throw new ObjectNotFoundException("Table " + table + " doesn't contain a tab for "
+					+ tabTable);
 		}
 		String tabInternalReportName = request.getParameter("tabinternalreportname");
 		if (tabInternalReportName == null) {
-			throw new MissingParametersException("tabinternalreportname is necessary to update a form tab");
+			throw new MissingParametersException(
+					"tabinternalreportname is necessary to update a form tab");
 		}
 		BaseReportInfo selectorReport = null;
 		if (!tabInternalReportName.equals("")) {
@@ -504,7 +513,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
+
 	/**
 	 * @throws CantDoThatException
 	 *             If a table already exists with the table name you're trying
@@ -774,11 +783,16 @@ public final class ServletSchemaMethods {
 		databaseDefn.removeCustomReportTemplate(request, report, templateName);
 	}
 
-	public synchronized static void addDistinctToReport(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException, SQLException, CantDoThatException, CodingErrorException {
-		SimpleReportInfo report = (SimpleReportInfo) ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, true);
+	public synchronized static void addDistinctToReport(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
+			MissingParametersException, ObjectNotFoundException, SQLException, CantDoThatException,
+			CodingErrorException {
+		SimpleReportInfo report = (SimpleReportInfo) ServletUtilMethods.getReportForRequest(
+				sessionData, request, databaseDefn, true);
 		String internalFieldName = request.getParameter("distinctinternalfieldname");
 		if (internalFieldName == null) {
-			throw new MissingParametersException("distinctinternalfieldname must be provided to add a report DISTINCT clause");
+			throw new MissingParametersException(
+					"distinctinternalfieldname must be provided to add a report DISTINCT clause");
 		}
 		BaseField distinctField = report.getReportField(internalFieldName).getBaseField();
 		Connection conn = null;
@@ -797,12 +811,17 @@ public final class ServletSchemaMethods {
 			}
 		}
 	}
-	
-	public synchronized static void removeDistinctFromReport(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException, SQLException, CantDoThatException, CodingErrorException {
-		SimpleReportInfo report = (SimpleReportInfo) ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, true);
+
+	public synchronized static void removeDistinctFromReport(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
+			MissingParametersException, ObjectNotFoundException, SQLException, CantDoThatException,
+			CodingErrorException {
+		SimpleReportInfo report = (SimpleReportInfo) ServletUtilMethods.getReportForRequest(
+				sessionData, request, databaseDefn, true);
 		String internalFieldName = request.getParameter("distinctinternalfieldname");
 		if (internalFieldName == null) {
-			throw new MissingParametersException("distinctinternalfieldname must be provided to remove a report DISTINCT clause");
+			throw new MissingParametersException(
+					"distinctinternalfieldname must be provided to remove a report DISTINCT clause");
 		}
 		BaseField distinctField = report.getReportField(internalFieldName).getBaseField();
 		Connection conn = null;
@@ -821,7 +840,7 @@ public final class ServletSchemaMethods {
 			}
 		}
 	}
-	
+
 	public synchronized static void updateReport(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws CantDoThatException,
 			MissingParametersException, ObjectNotFoundException, DisallowedException, SQLException {
