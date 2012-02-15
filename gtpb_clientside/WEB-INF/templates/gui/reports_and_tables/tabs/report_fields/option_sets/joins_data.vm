@@ -196,7 +196,7 @@
 		    <option value="LEFT_OUTER" selected>left outer</option>
 		    <option value="RIGHT_OUTER">right outer</option>
 		    <option value="FULL_OUTER">full outer</option>
-		    <option value="NONE">cross</option>
+		    <option value="CROSS">cross</option>
 		  </select>
 	</td>
 			
