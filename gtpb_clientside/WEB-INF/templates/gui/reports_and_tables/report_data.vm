@@ -40,9 +40,10 @@
   #set($fields=[])##
   #set($reportBaseFields = $sessionReport.getReportBaseFields())##
   #foreach ($field in $reportBaseFields)##
-    #if( ((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN") || $sectionedReport)##
-	  #set($success=$fields.add([$field.getInternalFieldName(),$field]))##
-	#end ## added to show display field name for relation fields
+    #if(((!$field.isPrimaryKey()) && 
+         (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN") || $sectionedReport)##
+	    #set($success=$fields.add($field))##
+	  #end ## added to show display field name for relation fields
   #end##
   #if($sessionTable.getDefaultReport().equals($sessionReport))##
 	#set($numberOfTabs = '-1')##
@@ -71,16 +72,14 @@
 	  #set($success = $row.ensureCapacity($colsCapacity))##
 	  #set($success = $colours.ensureCapacity($colsCapacity))##
     #set($dataRowFields = $datarow.getDataRowFields())##
-    #foreach($field in $reportBaseFields)##
-    #if( ((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN") || $sectionedReport)##
-        #set($dataRowField = $dataRowFields.get($field))##
-        #if($printout && ($field.getContentSize() > 500))##
-          #set($success=$row.add($dataRowField.getKeyValue()))##
-        #else##
-          #set($success=$row.add($dataRowField.getDisplayValue()))##
-        #end##
-        #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
-	  #end##
+    #foreach($field in $fields)##
+      #set($dataRowField = $dataRowFields.get($field))##
+      #if($printout && ($field.getContentSize() > 500))##
+        #set($success=$row.add($dataRowField.getKeyValue()))##
+      #else##
+        #set($success=$row.add($dataRowField.getDisplayValue()))##
+      #end##
+      #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
     #end##
     #set($success=$colours.add("")) ## needs an extra one for some reason
     #if($printout)##

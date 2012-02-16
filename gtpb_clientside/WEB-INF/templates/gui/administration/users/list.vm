@@ -22,7 +22,8 @@
 ##test to see whether a record has previously been selected and is stored in the session
 #set($selection=$sessionData.getUser())
 
-#set($fields=[['username','username'],['forename','forename'],['surname','surname'],['type','type']])
+###set($fields=[['username','username'],['forename','forename'],['surname','surname'],['type','type']])
+#set($fields=['username','forename','surname','type'])
 #set($data=[])
 #foreach($user in $view.adminGetUsers())
  #set($row=[$user.getUserName(),$user.getForename(),$user.getSurname(),$user.getUserType().toString().toLowerCase()])

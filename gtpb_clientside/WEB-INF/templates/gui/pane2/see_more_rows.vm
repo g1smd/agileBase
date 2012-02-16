@@ -1,3 +1,20 @@
+##
+##  Copyright 2012 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
 ## A row to see more data if the full dataset isn't displayed
 #set($numRows=$data.size())
 #set($totalRows = $sessionReport.getRowCount())
@@ -33,12 +50,5 @@
     #if($sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))
       &nbsp;<a href="javascript:top.fImport();">import data...</a>
     #end
-##    <div class="mini_action">
-##      <a href="javascript:top.fExport();"><img src="resources/icons/applications/tango/actions/edit-redo.png">&nbsp;export...</a>
-##      #if($sessionReport.equals($sessionReport.getParentTable().getDefaultReport()))
-##        <br>
-##        <a href="javascript:top.fImport();"><img src="resources/icons/applications/tango/actions/go-jump.png">&nbsp;import...</a>
-##      #end
-##    </div>
   </td>
 </tr>

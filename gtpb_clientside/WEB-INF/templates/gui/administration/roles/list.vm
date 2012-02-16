@@ -22,7 +22,7 @@
 ##test to see whether a record has previously been selected and is stored in the session
 #set($selection=$sessionData.getRole())
 
-#set($fields=[['rolename','Role name']])
+#set($fields=['Role name'])
 #set($data=[])
 #foreach($role in $view.adminGetRoles())
   ## item to display on screen for this role - the row array is only one item long because we're only displaying one thing - role name

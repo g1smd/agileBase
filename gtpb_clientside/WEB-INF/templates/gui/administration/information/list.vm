@@ -24,7 +24,7 @@ $viewTools.startTimer("gui/administration/information/list.vm")
 #set($selection=$sessionData.getModule())
 
 ## No data in pane 2
-#set($fields=[['','']])
+#set($fields=[''])
 #set($data=[])
 
 #parse('gui/pane2/include_delete_checkboxes.vm')

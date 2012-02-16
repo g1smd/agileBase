@@ -15,14 +15,16 @@
     #set($filter = $viewTools.getNewFilterMap())
     #set($success = $filter.put($parentTable.getPrimaryKey(), "$parentRowId"))
     #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
-    #set($sessionReport = $selectorReport)
-    #set($table_part_only = true)
-    #set($data_part_only = true)
-    <div class="selectorReport">
-      <table id=reportData cellspacing="0"><tbody name=reportBody id=reportBody class="selectable">
-        #parse("gui/reports_and_tables/report_data.vm")
-      </tbody></table>
-    </div>
+    #if($datarows.size() > 1)
+      #set($sessionReport = $selectorReport)
+      #set($table_part_only = true)
+      #set($data_part_only = true)
+      <div class="selectorReport">
+        <table id=reportData cellspacing="0"><tbody name=reportBody id=reportBody class="selectable">
+          #parse("gui/reports_and_tables/report_data.vm")
+        </tbody></table>
+      </div>
+    #end
   #end
   #set($formStyle = $parentTable.getFormStyle()) ## Inherit form style from the parent
   #if($formStyle == "TWO_COLUMNS")

@@ -22,7 +22,8 @@
 ##test to see whether a record has previously been selected and is stored in the session
 #set($selection=$sessionData.getModule())
 
-#set($fields=[['index','index'],['modulename','module name'],['iconpath','icon'],['colour','colour']])
+###set($fields=[['index','index'],['modulename','module name'],['iconpath','icon'],['colour','colour']])
+#set($fields=['index','module name','icon','colour'])
 #set($data=[])
 #set($modules = $view.getLoggedInUser().getCompany().getModules())
 

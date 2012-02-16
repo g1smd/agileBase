@@ -33,7 +33,7 @@
   #foreach($cell in $thisValues)
     #set($headingLevel = 0)
     #set($cellNumber = $foreach.count - 1)
-    #set($field = $fields.get($cellNumber).get(1))
+    #set($field = $fields.get($cellNumber))
     #set($table = $field.getTableContainingField())
     #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
       #if($field.getReportCalcField().isFieldFromReport())
@@ -63,7 +63,7 @@
           <td colspan="$colSpan">
             #foreach($testCell in $thisValues)
               #set($testCellNumber = $foreach.count - 1)
-              #set($field = $fields.get($testCellNumber).get(1))
+              #set($field = $fields.get($testCellNumber))
               #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
                 #set($reportCalcField = $field.getReportCalcField())
                 #if($headingCalcMap.get($reportCalcField) == $headingLevel)

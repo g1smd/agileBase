@@ -27,7 +27,7 @@
   <td class="leading">&nbsp;</td>
   #foreach($cell in $thisValues)
     #set($cellNumber = $foreach.count - 1)
-    #set($field = $fields.get($cellNumber).get(1))
+    #set($field = $fields.get($cellNumber))
     #set($detailCalc = false)
     #set($isCalc = $field.getClass().getSimpleName() == "CalculationFieldDefn")
     #if($isCalc)
@@ -35,7 +35,7 @@
         #set($detailCalc = true)
       #end
     #end
-    #if((($detailTables.contains($field.getTableContainingField()) && !$isCalc) || ($detailCalc)) && (!$field.isPrimaryKey()))
+    #if((($detailTables.contains($field.getTableContainingField()) && !$isCalc) || ($detailCalc)) ) ##&& (!$field.isPrimaryKey())
       #set($rightAlign = false)
       #set($fieldCategory = $field.getFieldCategory().toString())
       #if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
