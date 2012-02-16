@@ -769,7 +769,7 @@ div#reportData {
 }
 
 .form_tabber {
-  background-color: #DDE6EF; /*cccccc*/
+  background-color: #cccccc;
   margin: 0.5em;
   border-radius: 0.5em;
   margin-right: 0;
@@ -817,7 +817,7 @@ div#reportData {
 }
 
 .selectorReport table#reportData {
-  background-color: #EEF3F9;
+  /* background-color: #EEF3F9; */
 }
 	
 /* 3) Summary tab css */
