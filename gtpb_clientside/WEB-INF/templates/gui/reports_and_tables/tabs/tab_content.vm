@@ -14,7 +14,7 @@
   #if($selectorReport)
     #set($filter = $viewTools.getNewFilterMap())
     #set($success = $filter.put($parentTable.getPrimaryKey(), "$parentRowId"))
-    #set($reportDataRows = $view.getReportDataRows($selectorReport,10,$filter,true))
+    #set($datarows = $view.getReportDataRows($selectorReport,10,$filter,true))
     #set($sessionReport = $selectorReport)
     #parse("gui/reports_and_tables/report_data.vm")
   #end

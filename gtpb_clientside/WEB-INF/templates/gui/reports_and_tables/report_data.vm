@@ -54,10 +54,12 @@
 	  #set($numberOfTabs = '3')##
 	#end##
   #end##
-  #if($rowLimit)
-    #set($datarows = $view.getReportDataRows($sessionReport, $rowLimit))##
-  #else
-    #set($datarows = $view.getReportDataRows())##
+  #if(!$datarows)
+    #if($rowLimit)
+      #set($datarows = $view.getReportDataRows($sessionReport, $rowLimit))##
+    #else
+      #set($datarows = $view.getReportDataRows())##
+    #end
   #end
   #set($data=[])##
   #set($dataCapacity = $datarows.size() + 1)##
