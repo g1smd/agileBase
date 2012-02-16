@@ -87,7 +87,7 @@
             #set($success=$row.add("not $field.getFieldName().toLowerCase()"))##
           #end##
         #elseif($field.getDbType() == "TIMESTAMP")
-          #set($success=$row.add("$field $dataRowField.getDisplayValue()"))##
+          #set($success=$row.add("$field.getFieldName().replace(' [Auto]','') $dataRowField.getDisplayValue()"))##
         #else
           #set($success=$row.add($dataRowField.getDisplayValue()))##
         #end
