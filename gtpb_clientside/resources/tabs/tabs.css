@@ -771,6 +771,7 @@ div#reportData {
 .form_tabber {
   background-color: #cccccc;
   margin: 0.5em;
+  margin-bottom: 0;
   border-radius: 0.5em;
   margin-right: 0;
 }
