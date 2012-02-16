@@ -28,7 +28,6 @@
   #set($primaryKey = $sessionTable.getPrimaryKey())
   #set($lastField = $fields.last())
   #set($formStyle = $parentTable.getFormStyle()) ## Inherit form style from the parent
-  Form style fir $parentTable is $formStyle
   #if($formStyle == "SINGLE_COLUMN")
     <table id="reportData" cellspacing="0" cellpadding="0" border="0" >
   #end
