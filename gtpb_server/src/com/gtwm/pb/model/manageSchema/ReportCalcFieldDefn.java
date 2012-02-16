@@ -433,7 +433,6 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		// set alias
 		calculationSQL = "(" + calculationSQL + ")::" + this.getDbType().toString() + " AS "
 				+ this.getInternalFieldName();
-		logger.debug("Calculation SQL is " + calculationSQL);
 		this.setCalculationSQLDirect(calculationSQL);
 	}
 

@@ -80,13 +80,13 @@
       #if($printout && ($field.getContentSize() > 500))##
         #set($success=$row.add($dataRowField.getKeyValue()))##
       #elseif($parentTable && ($field.getDbType() == "BOOLEAN"))##
-        #if($dataRowField.getKeyValue() == "true")
-          #set($success=$row.add($field.getFieldName()))
-        #else
-          #set($success=$row.add("not $field"))
-        #end
-      #else
-        #set($success=$row.add("$field.getDbType() $dataRowField.getDisplayValue()"))##
+        #if($dataRowField.getKeyValue() == "true")##
+          #set($success=$row.add($field.getFieldName()))##
+        #else##
+          #set($success=$row.add("not $field"))##
+        #end##
+      #else##
+        #set($success=$row.add($dataRowField.getDisplayValue()))##
       #end##
       #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
     #end##
