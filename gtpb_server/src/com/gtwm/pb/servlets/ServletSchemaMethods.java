@@ -397,8 +397,8 @@ public final class ServletSchemaMethods {
 		BaseField parentPkey = table.getPrimaryKey();
 		REPORT_LOOP: for (BaseReportInfo testReport : tabTable.getReports()) {
 			if ((testReport.getReportBaseFields().contains(parentPkey))
-					&& (!testReport.getReportName().startsWith("dbvcalc"))
-					&& (!testReport.getReportName().startsWith("dbvcrit"))) {
+					&& (!testReport.getReportName().contains("dbvcalc"))
+					&& (!testReport.getReportName().contains("dbvcrit"))) {
 				formTab.setSelectorReport(testReport);
 				break REPORT_LOOP;
 			}
