@@ -814,9 +814,12 @@ div#reportData {
   max-height: 15em;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: #EEF3F9;
 }
 
+.selectorReport table#reportData {
+  background-color: #EEF3F9;
+}
+	
 /* 3) Summary tab css */
 
 
