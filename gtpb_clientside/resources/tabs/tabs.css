@@ -810,6 +810,13 @@ div#reportData {
   background-color: #EEF3F9;
 }
 
+.selectorReport {
+  max-height: 15em;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  background-color: #EEF3F9;
+}
+
 /* 3) Summary tab css */
 
 

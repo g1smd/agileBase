@@ -14,12 +14,12 @@
   #if($selectorReport)
     #set($filter = $viewTools.getNewFilterMap())
     #set($success = $filter.put($parentTable.getPrimaryKey(), "$parentRowId"))
-    #set($datarows = $view.getReportDataRows($selectorReport,10,$filter,true))
+    #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
     #set($sessionReport = $selectorReport)
     #set($table_part_only = true)
     #set($data_part_only = true)
-    <div class="selectorReport" style="max-height:15em;overflow:scroll">
-      <table id=reportData cellspacing="0" style="background-color:#EEF3F9"><tbody name=reportBody id=reportBody class="selectable">
+    <div class="selectorReport">
+      <table id=reportData cellspacing="0"><tbody name=reportBody id=reportBody class="selectable">
         #parse("gui/reports_and_tables/report_data.vm")
       </tbody></table>
     </div>
