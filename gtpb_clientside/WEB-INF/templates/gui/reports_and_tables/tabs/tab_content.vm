@@ -16,7 +16,11 @@
     #set($success = $filter.put($parentTable.getPrimaryKey(), "$parentRowId"))
     #set($datarows = $view.getReportDataRows($selectorReport,10,$filter,true))
     #set($sessionReport = $selectorReport)
-    #parse("gui/reports_and_tables/report_data.vm")
+    #set($table_part_only = true)
+    #set($data_part_only = true)
+    <table id=reportData cellspacing="0" ><tbody name=reportBody id=reportBody class="selectable">
+      #parse("gui/reports_and_tables/report_data.vm")
+    </tbody></table>
   #end
   #set($fields = $sessionTable.getFields())
   #set($primaryKey = $sessionTable.getPrimaryKey())
