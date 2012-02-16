@@ -40,9 +40,12 @@
   #set($fields=[])##
   #set($reportBaseFields = $sessionReport.getReportBaseFields())##
   #foreach ($field in $reportBaseFields)##
-    #if(((!$field.isPrimaryKey()) && 
-         (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN") || $sectionedReport)##
-	    #set($success=$fields.add($field))##
+    #if(((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || 
+         ($sessionContext == "SYSADMIN") || $sectionedReport)##
+      ## parentTable will only be defined if we're in a tab
+      #if(!$field.getTableContainingField().equals($parentTable))##
+	      #set($success=$fields.add($field))##
+      #end
 	  #end ## added to show display field name for relation fields
   #end##
   #if($sessionTable.getDefaultReport().equals($sessionReport))##

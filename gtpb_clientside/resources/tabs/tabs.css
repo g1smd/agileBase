@@ -782,11 +782,11 @@ div#reportData {
   font-size: 9pt;
   display: inline-block;
   margin: 0.5em;
-  margin-right: 0;
+  margin-right: 2em;
   margin-left: 0;
   padding: 0.5em;
   text-align: center;
-  width: 13em;
+  /* width: 13em; */
   -webkit-transition-property: background-color, color;
   -webkit-transition-duration: 1s;
   -moz-transition-property: background-color, color;
@@ -814,6 +814,9 @@ div#reportData {
   max-height: 15em;
   overflow-x: hidden;
   overflow-y: scroll;
+  margin: 0.5em;
+  margin-right: 0;
+  margin-top: 0;
 }
 
 .selectorReport table#reportData {
