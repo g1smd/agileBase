@@ -24,15 +24,20 @@
       </tbody></table>
     </div>
   #end
+  #set($formStyle = $parentTable.getFormStyle()) ## Inherit form style from the parent
+  #if($formStyle == "TWO_COLUMNS")
+    <div class="two_cols">
+  #end
   #set($fields = $sessionTable.getFields())
   #set($primaryKey = $sessionTable.getPrimaryKey())
   #set($lastField = $fields.last())
-  #set($formStyle = $parentTable.getFormStyle()) ## Inherit form style from the parent
   #if($formStyle == "SINGLE_COLUMN")
     <table id="reportData" cellspacing="0" cellpadding="0" border="0" >
   #end
   #parse("gui/reports_and_tables/tabs/edit_content.vm")
   #if($formStyle == "SINGLE_COLUMN")
     </table>
+  #elseif($formStyle == "TWO_COLUMNS")
+    </div>
   #end
 #end
