@@ -778,7 +778,7 @@ div#reportData {
 
 .form_tabber .tab_choice {
   color: black; /* #777777 */
-  border-radius: 0.5em;
+  border-radius: 0.5em 0.5em 0 0;
   text-transform: uppercase;
   font-size: 9pt;
   display: inline-block;
@@ -818,6 +818,8 @@ div#reportData {
   margin: 0.5em;
   margin-right: 0;
   margin-top: 0;
+  border: 1em solid #cccccc;
+  border-top: 0;
 }
 
 .selectorReport table#reportData {
