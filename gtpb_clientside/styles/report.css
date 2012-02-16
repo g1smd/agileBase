@@ -8,7 +8,6 @@ table#reportData {
   height:100%;
   border-collapse:collapse;
   border:0;
-  background-color: white;
 }												
 
 #wrapper table#reportData td {
