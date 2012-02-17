@@ -79,15 +79,18 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		var oRows = document.getElementById('reportBody').rows;
 		for ( var i = 0; i < oRows.length; i++) {
 			var jqCheckbox = $(oRows[i]).find("input:checkbox");
-			if (jqCheckbox.size() == 0) {
+			alert("Got checkbox: " + jqCheckbox.length);
+			if (jqCheckbox.length == 0) {
 				continue;
 			}
 			if (bDisable)
 				jqCheckbox.attr('disabled', 'true');
 			else
 				jqCheckbox.removeAttr('disabled');
-			if (jqCheckbox.is(":checked"))
+			if (jqCheckbox.is(":checked")) {
 				aCheckedRows.push(oRows[i]);
+				alert("Added row " + i);
+			}
 		}
 
 		return aCheckedRows;
