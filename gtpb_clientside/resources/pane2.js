@@ -329,31 +329,6 @@ function fSelectAll(oCheckbox) {
 	*/
 }
 
-// TODO: simplify with jQuery
-function fLocateDeleteMarkers(oCheckbox) {
-	// lets the delete object know what column the delete checkboxes are in
-	// cell could be a TD or a TH
-	function fParentCell() {
-		var oObject = oCheckbox;
-		// find the TD or the TH
-		while ((oObject.parentNode) && (oObject.parentNode.tagName != 'TR'))
-			oObject = oObject.parentNode;
-		// was it found?
-		if ((oObject.parentNode) && (oObject.parentNode.tagName == 'TR')) {
-			// cache the cell found
-			oCheckbox.parentCell = oObject;
-			return oObject;
-		}
-		return null;
-	}
-	// find the parent cell, if one has not been cached, find it
-	var oCell = oCheckbox.parentCell ? oCheckbox.parentCell : fParentCell();
-	// if there is a cell
-	if (oCell) {
-		iDeleteCellIndex = oCell.cellIndex;
-	}
-}
-
 var abTooltipTimeout;
 function showTooltip() {
 	// First, hide any other tooltips visible
