@@ -2240,7 +2240,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	private ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo reportDefn,
 			Connection conn, boolean updateCacheIfObsolete) throws SQLException {
-		// If company specified: use the cache to look up report data. If the
+		// If company specified: use the cache to look up report metadata. If the
 		// report data isn't cached, cache it now
 		// Additionally, if updateCacheIfObsolete specified, update the cache if
 		// it gets out of date

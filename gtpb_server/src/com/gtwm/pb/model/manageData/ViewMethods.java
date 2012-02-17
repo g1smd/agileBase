@@ -589,7 +589,12 @@ public final class ViewMethods implements ViewMethodsInfo {
 		Map<BaseField, Boolean> sessionReportSorts = this.sessionData.getReportSorts();
 		AppUserInfo user = this.databaseDefn.getAuthManager().getUserByUserName(this.request,
 				this.request.getRemoteUser());
-		CompanyInfo company = user.getCompany();
+		CompanyInfo company = null;
+		if (!exactFilters) {
+			// If using exact filters, we probably don't need colour information
+			// therefore leave company = null to disable colour generation
+			company = user.getCompany();
+		}
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
 				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
 				QuickFilterType.AND, false);
