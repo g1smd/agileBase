@@ -595,6 +595,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			// therefore leave company = null to disable colour generation
 			company = user.getCompany();
 		}
+		logger.debug("With exactFilters = " + exactFilters + ", using company " + company);
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
 				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
 				QuickFilterType.AND, false);
