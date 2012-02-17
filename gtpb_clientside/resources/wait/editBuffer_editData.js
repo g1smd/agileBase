@@ -87,8 +87,9 @@ function fBuffer() {
 		return iElementIndex;
 	}
 
-	function fWriteBuffer(oElementToBuffer) {
-		alert(window.event.keyCode);
+	function fWriteBuffer(e) {
+		oElementToBuffer = e.target;
+		alert("key = " + e.keyCode + ", element = " + oElementToBuffer.nodeName);
 		// locate the index of the calling DOM element within the buffer array
 		function fElementIndex() {
 			for ( var i = 0; i < aQueueBuffer.length; i++) {
