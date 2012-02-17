@@ -1168,7 +1168,7 @@ function fFormStyle() {
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
 			if (tabContainer.children().size() == 0) {
 				previousContainer.fadeOut();
-				tabContainer.addClass("load-spinner");
+				tabContainer.addClass("load-spinner").css("position","relative");
 				tabContainer.fadeIn();
 				tabContainer.load("AppController.servlet", {
 				  "return": "gui/reports_and_tables/tabs/tab_content",
@@ -1176,7 +1176,7 @@ function fFormStyle() {
 				  tablekey: "tabTable",
 				  custominternaltablename: tabInternalTableName
 				}, function() {
-					//tabContainer.removeClass("load-spinner");
+					tabContainer.removeClass("load-spinner");
 					jqTab.addClass("active");
 				});
 			} else {
