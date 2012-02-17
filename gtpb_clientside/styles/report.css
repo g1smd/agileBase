@@ -408,6 +408,7 @@ img.mini_icon {
   position: fixed;
   padding: 0.5em;
   background-color: #cccccc; /* f4f4f4 */
+  min-height: 1.95em;
   font-weight: normal;
   text-transform: lowercase;
   top: 0;
