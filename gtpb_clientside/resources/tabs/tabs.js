@@ -1176,7 +1176,7 @@ function fFormStyle() {
 				  tablekey: "tabTable",
 				  custominternaltablename: tabInternalTableName
 				}, function() {
-					tabContainer.removeClass("load-spinner");
+					//tabContainer.removeClass("load-spinner");
 					jqTab.addClass("active");
 				});
 			} else {
