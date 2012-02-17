@@ -599,7 +599,7 @@ function fSexyUpload() {
 }
 
 /* for date fields */
-function fKeyUpEvent(inputElement) {
+function fKeyUpEvent(inputElement, e) {
 	// update the relevant value in the wrapper
 	var jqWrapper = $(inputElement).closest("div");
 	var sAttribute = $(inputElement).attr('wrapperAttribute');
@@ -621,7 +621,7 @@ function fKeyUpEvent(inputElement) {
 	}
 	;
 	if (!globalEdit && updateAsType) {
-		top.oBuffer.writeBuffer(jqWrapper[0]);
+		top.oBuffer.writeBuffer(jqWrapper[0], e);
 	}
 }
 
