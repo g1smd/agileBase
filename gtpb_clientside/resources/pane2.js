@@ -65,31 +65,28 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		var aCheckedRows = new Array();
 
 		// set the header checkbox
-		var oCheckbox = document.getElementById('reportData').rows[0].cells[iDeleteCellIndex]
-				.getElementsByTagName('INPUT')[0]
-		if (oCheckbox) {
+		var jqCheckbox = $(document.getElementById('reportData').rows[0]).find("input:checkbox");
+		if (jqCheckbox.length > 0) {
 			if (bDisable)
-				oCheckbox.setAttribute('disabled', 'true');
+				jqCheckbox.attr('disabled', 'true');
 			else {
-				oCheckbox.removeAttribute('disabled');
-				oCheckbox.checked = false;
+				jqCheckbox.removeAttr('disabled');
+				jqCheckbox.attr('checked','false');
 			}
 		}
 
 		// set the row checkboxes
 		var oRows = document.getElementById('reportBody').rows;
 		for ( var i = 0; i < oRows.length; i++) {
-			if (!oRows[i].cells[iDeleteCellIndex])
+			var jqCheckbox = $(oRows[i]).find("input:checkbox");
+			if (jqCheckbox.size() == 0) {
 				continue;
-			var oCheckbox = oRows[i].cells[iDeleteCellIndex]
-					.getElementsByTagName('INPUT')[0];
-			if (!oCheckbox)
-				continue;
+			}
 			if (bDisable)
-				oCheckbox.setAttribute('disabled', 'true');
+				jqCheckbox.attr('disabled', 'true');
 			else
-				oCheckbox.removeAttribute('disabled');
-			if (oCheckbox.checked)
+				jqCheckbox.removeAttr('disabled');
+			if (jqCheckbox.is(":checked"))
 				aCheckedRows.push(oRows[i]);
 		}
 
