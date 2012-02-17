@@ -91,12 +91,12 @@ function fBuffer() {
 		// Don't do anything unless an actual character is typed
 		if (typeof e !== "undefined") {
 			var k = e.keyCode;
-			alert("key " + k);
+			//alert("key " + k);
 			// < 49 = arrow keys, shift, ctrl etc.
 			// 32 = space, 8 = backspace, 49 = delete
-			// 91 = Windows key, 224 = Mac cmd key
+			// 91 = Windows key/Mac left cmd on Safari, 224 = Mac cmd key, 93 = Mac Safari right cmd
 			// 112 to 123 = F1 to F11
-			if ((k < 49 && k != 32 && k != 8) || k == 91 || k == 224 || (k > 111 && k < 124)) {
+			if ((k < 49 && k != 32 && k != 8) || k == 91 || k == 93 || k == 224 || (k > 111 && k < 124)) {
 				return;
 			}
 		}
