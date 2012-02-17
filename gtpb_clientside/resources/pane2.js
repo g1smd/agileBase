@@ -166,7 +166,6 @@ function fDeleteObj(sAction, sRowIdentifier) {
 	}
 
 	function fDeleteFirstItem() {
-		alert("fDeleteFirstItem");
 		if (aCheckedRows.length < 1)
 			return false;
 		oCurrentRow = aCheckedRows.shift();
