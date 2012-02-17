@@ -91,11 +91,12 @@
         #else
           #set($success=$row.add($dataRowField.getDisplayValue()))##
         #end
-      #else##
+        #set($success=$colours.add(""))## don't colour selector reports in tabs
+      #else## not parent table
         #set($success=$row.add($dataRowField.getDisplayValue()))##
+        #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
       #end##
-      #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
-    #end##
+    #end## foreach field
     #set($success=$colours.add("")) ## needs an extra one for some reason
     #if($printout)##
       #set($click='')##

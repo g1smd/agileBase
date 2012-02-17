@@ -591,17 +591,19 @@ public final class ViewMethods implements ViewMethodsInfo {
 				this.request.getRemoteUser());
 		CompanyInfo company = null;
 		if (!exactFilters) {
-			// If using exact filters, we probably don't need colour information
+			// If using exact filters, we probably don't need colour information - not a pane 2 report
 			// therefore leave company = null to disable colour generation
 			company = user.getCompany();
 		}
-		logger.debug("Report " + report + ", row limit " + rowLimit + ", filters " + reportFilterValues + " with exactFilters = " + exactFilters + ", using company " + company);
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
 				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
 				QuickFilterType.AND, false);
-		UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
-		usageLogger.logReportView(user, report, reportFilterValues, rowLimit, null);
-		UsageLogger.startLoggingThread(usageLogger);
+		if (!exactFilters) {
+			// Also only log user requested (pane 2) reports
+			UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
+			usageLogger.logReportView(user, report, reportFilterValues, rowLimit, null);
+			UsageLogger.startLoggingThread(usageLogger);
+		}
 		return reportDataRows;
 	}
 
