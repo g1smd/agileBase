@@ -28,7 +28,7 @@
     #end
     ## row0 contains the internal field name
     ## row1 contains the display field
-    <th #if(($fieldObject.getClass().getSimpleName() == "TextFieldDefn") || ($fieldObject.getClass().getSimpleName() == "BigTextFieldDefn")) maxTextLength="$fieldObject.getContentSize()" #end #if($internalFieldName!="")internalName="$internalFieldName" onclick="fSetSort(this)"#end>
+    <th #if(($fieldObject.getClass().getSimpleName() == "TextFieldDefn") || ($fieldObject.getClass().getSimpleName() == "BigTextFieldDefn")) maxTextLength="$fieldObject.getContentSize()" #end #if($internalFieldName && $internalFieldName!="")internalName="$internalFieldName" onclick="fSetSort(this)"#end>
     #if($fieldObject)
       #if($internalFieldName && $internalFieldName!="")
         <div class="ab_field_title">$fieldName</div>
