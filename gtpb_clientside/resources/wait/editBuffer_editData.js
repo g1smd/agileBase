@@ -95,8 +95,7 @@ function fBuffer() {
 			// 32 = space, 8 = backspace, 49 = delete
 			// 91 = Windows key, 224 = Mac cmd key
 			// 112 to 123 = F1 to F11
-			if ((k < 49 && k != 32 && k != 8 && k != 49) || k == 91 || k == 224 || (k > 111 && k < 124)) {
-				alert("key = " + e.keyCode + ", element = " + oElementToBuffer.nodeName);
+			if ((k < 49 && k != 32 && k != 8) || k == 91 || k == 224 || (k > 111 && k < 124)) {
 				return;
 			}
 		}
