@@ -62,6 +62,7 @@ function fSetRowSelection(sName) {
 
 function fDeleteObj(sAction, sRowIdentifier) {
 	function fControlCheckboxes(bDisable) {
+		alert("fControlCheckboxes");
 		var aCheckedRows = new Array();
 
 		// set the header checkbox
@@ -168,6 +169,7 @@ function fDeleteObj(sAction, sRowIdentifier) {
 	}
 
 	function fDeleteFirstItem() {
+		alert("fDeleteFirstItem");
 		if (aCheckedRows.length < 1)
 			return false;
 		oCurrentRow = aCheckedRows.shift();
@@ -188,12 +190,14 @@ function fDeleteObj(sAction, sRowIdentifier) {
 	}
 
 	// nothing has been selected for deletion
+	/*
 	try {
 		if (!iDeleteCellIndex)
 			return;
 	} catch (e) {
 		return;
 	}
+	*/
 
 	var sAction = sAction;
 	var sRowIdentifier = sRowIdentifier;
@@ -205,7 +209,9 @@ function fDeleteObj(sAction, sRowIdentifier) {
 	var oCurrentRow;
 	var oReq;
 	var aCheckedRows = fControlCheckboxes(true);
-	fDeleteFirstItem();
+	if (aCheckedRows.length > 0) {
+	  fDeleteFirstItem();
+	}
 }
 
 function showPane3IfNecessary(oEvent) {
