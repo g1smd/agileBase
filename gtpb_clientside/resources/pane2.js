@@ -62,7 +62,6 @@ function fSetRowSelection(sName) {
 
 function fDeleteObj(sAction, sRowIdentifier) {
 	function fControlCheckboxes(bDisable) {
-		alert("fControlCheckboxes");
 		var aCheckedRows = new Array();
 
 		// set the header checkbox
@@ -80,7 +79,6 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		var oRows = document.getElementById('reportBody').rows;
 		for ( var i = 0; i < oRows.length; i++) {
 			var jqCheckbox = $(oRows[i]).find("input:checkbox");
-			alert("Got checkbox: " + jqCheckbox.length);
 			if (jqCheckbox.length == 0) {
 				continue;
 			}
@@ -90,7 +88,6 @@ function fDeleteObj(sAction, sRowIdentifier) {
 				jqCheckbox.removeAttr('disabled');
 			if (jqCheckbox.is(":checked")) {
 				aCheckedRows.push(oRows[i]);
-				alert("Added row " + i);
 			}
 		}
 
