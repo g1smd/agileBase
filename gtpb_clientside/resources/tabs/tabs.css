@@ -685,7 +685,7 @@ div#reportData {
 
 #reportData .block select {
   -webkit-appearance: none;
-  -moz-appearance: none;
+  -moz-appearance: window; /* should be none: see https://bugzilla.mozilla.org/show_bug.cgi?id=649849 */
   height: 2em /* 1.7em; */
 }
 
