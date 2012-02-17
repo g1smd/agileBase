@@ -307,7 +307,11 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
  * to be deleted
  */
 function fSelectAll(oCheckbox) {
-	var iCellIndex = jQuery(oCheckbox).closest('th').attr('cellIndex');
+	//var iCellIndex = jQuery(oCheckbox).closest('th').attr('cellIndex');
+	$("#reportBody").find("input:checkbox").each(function() {
+		this.checked = oCheckbox.checked;
+	});
+	/*
 	var oRows = document.getElementById('reportBody').rows;
 	for ( var i = 0; i < oRows.length; i++) {
 		try {
@@ -320,6 +324,7 @@ function fSelectAll(oCheckbox) {
 			// don't do anything
 		}
 	}
+	*/
 }
 
 // TODO: simplify with jQuery
