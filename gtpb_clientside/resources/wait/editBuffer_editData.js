@@ -91,6 +91,7 @@ function fBuffer() {
 		// Don't do anything unless an actual character is typed
 		if (typeof e !== "undefined") {
 			var k = e.keyCode;
+			alert("key " + k);
 			// < 49 = arrow keys, shift, ctrl etc.
 			// 32 = space, 8 = backspace, 49 = delete
 			// 91 = Windows key, 224 = Mac cmd key
