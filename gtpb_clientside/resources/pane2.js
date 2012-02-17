@@ -62,7 +62,6 @@ function fSetRowSelection(sName) {
 
 function fDeleteObj(sAction, sRowIdentifier) {
 	function fControlCheckboxes(bDisable) {
-		alert("Disabling: " + bDisable);
 		var aCheckedRows = new Array();
 
 		// set the header checkbox
@@ -272,9 +271,8 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 						parent.pane_3.pane3TabInterface
 								.refresh(rowId);
 					} catch (err) {
-						// alert("Fast refresh failed, falling
-						// back to
-						// slow - don't worry about this");
+						// Fast refresh failed, falling back to
+						// slow - don't worry about this
 						parent.pane_3.document.location = url;
 					}
 				} else {
@@ -300,24 +298,9 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
  * to be deleted
  */
 function fSelectAll(oCheckbox) {
-	//var iCellIndex = jQuery(oCheckbox).closest('th').attr('cellIndex');
 	$("#reportBody").find("input:checkbox").each(function() {
 		this.checked = oCheckbox.checked;
 	});
-	/*
-	var oRows = document.getElementById('reportBody').rows;
-	for ( var i = 0; i < oRows.length; i++) {
-		try {
-			var theCheckbox = oRows[i].cells[iCellIndex]
-					.getElementsByTagName('INPUT')[0];
-			if (jQuery(theCheckbox).is(":visible")) {
-				theCheckbox.checked = oCheckbox.checked;
-			}
-		} catch (e) {
-			// don't do anything
-		}
-	}
-	*/
 }
 
 var abTooltipTimeout;
