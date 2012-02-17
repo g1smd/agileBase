@@ -1157,7 +1157,6 @@ function fFormStyle() {
 		if (jqTab.hasClass("tabActionRegistered")) {
 			return;
 		}
-		alert("tab choice");
 		jqTab.addClass("tabActionRegistered");
 		var tabInternalTableName = $(this).attr("data-internaltablename");
 		var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
@@ -1168,6 +1167,7 @@ function fFormStyle() {
 		var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
 		if (tabContainer.children().size() == 0) {
 			previousContainer.fadeOut();
+			tabContainer.addClass("load-spinner");
 			tabContainer.fadeIn();
 			tabContainer.load("AppController.servlet", {
 			  "return": "gui/reports_and_tables/tabs/tab_content",
@@ -1175,6 +1175,7 @@ function fFormStyle() {
 			  tablekey: "tabTable",
 			  custominternaltablename: tabInternalTableName
 			}, function() {
+				tabContainer.removeClass("load-spinner");
 				jqTab.addClass("active");
 			});
 		} else {
