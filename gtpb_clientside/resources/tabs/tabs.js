@@ -1152,37 +1152,39 @@ function fFormStyle() {
 			clicked.addClass("selected_layout");
 		});
 	});
-	$(".tab_choice").click(function() {
+	$(".tab_choice").each(function() {
 		var jqTab = $(this);
 		if (jqTab.hasClass("tabActionRegistered")) {
 			return;
 		}
 		jqTab.addClass("tabActionRegistered");
-		var tabInternalTableName = $(this).attr("data-internaltablename");
-		var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
-		var previousTab = jqTab.closest(".form_tabber").find(".tab_choice.active");
-		var previousTabInternalTableName = previousTab.attr("data-internaltablename");
-		var previousContainer = $("#form_tabs_" + parentInternalTableName + "_" + previousTabInternalTableName);
-		$(".tab_choice").removeClass("active");
-		var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
-		if (tabContainer.children().size() == 0) {
-			previousContainer.fadeOut();
-			tabContainer.addClass("load-spinner");
-			tabContainer.fadeIn();
-			tabContainer.load("AppController.servlet", {
-			  "return": "gui/reports_and_tables/tabs/tab_content",
-			  set_custom_table: true,
-			  tablekey: "tabTable",
-			  custominternaltablename: tabInternalTableName
-			}, function() {
-				tabContainer.removeClass("load-spinner");
+		jqTab.click(function() {
+			var tabInternalTableName = $(this).attr("data-internaltablename");
+			var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
+			var previousTab = jqTab.closest(".form_tabber").find(".tab_choice.active");
+			var previousTabInternalTableName = previousTab.attr("data-internaltablename");
+			var previousContainer = $("#form_tabs_" + parentInternalTableName + "_" + previousTabInternalTableName);
+			$(".tab_choice").removeClass("active");
+			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
+			if (tabContainer.children().size() == 0) {
+				previousContainer.fadeOut();
+				tabContainer.addClass("load-spinner");
+				tabContainer.fadeIn();
+				tabContainer.load("AppController.servlet", {
+				  "return": "gui/reports_and_tables/tabs/tab_content",
+				  set_custom_table: true,
+				  tablekey: "tabTable",
+				  custominternaltablename: tabInternalTableName
+				}, function() {
+					tabContainer.removeClass("load-spinner");
+					jqTab.addClass("active");
+				});
+			} else {
+				previousContainer.hide();
+				tabContainer.show();
 				jqTab.addClass("active");
-			});
-		} else {
-			previousContainer.hide();
-			tabContainer.show();
-			jqTab.addClass("active");
-		}
+			}
+		});
 	});
 }
 
