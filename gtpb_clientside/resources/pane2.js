@@ -62,6 +62,7 @@ function fSetRowSelection(sName) {
 
 function fDeleteObj(sAction, sRowIdentifier) {
 	function fControlCheckboxes(bDisable) {
+		alert("Disabling: " + bDisable);
 		var aCheckedRows = new Array();
 
 		// set the header checkbox
@@ -184,16 +185,6 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		oReq = new fRequest('AppController.servlet', aPostVars, fReqComplete, 1);
 		return true;
 	}
-
-	// nothing has been selected for deletion
-	/*
-	try {
-		if (!iDeleteCellIndex)
-			return;
-	} catch (e) {
-		return;
-	}
-	*/
 
 	var sAction = sAction;
 	var sRowIdentifier = sRowIdentifier;
