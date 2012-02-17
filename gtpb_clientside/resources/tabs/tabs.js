@@ -1157,6 +1157,7 @@ function fFormStyle() {
 		if (jqTab.hasClass("tabActionRegistered")) {
 			return;
 		}
+		alert("tab choice");
 		jqTab.addClass("tabActionRegistered");
 		var tabInternalTableName = $(this).attr("data-internaltablename");
 		var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
