@@ -1154,6 +1154,10 @@ function fFormStyle() {
 	});
 	$(".tab_choice").click(function() {
 		var jqTab = $(this);
+		if (jqTab.hasClass("tabActionRegistered")) {
+			return;
+		}
+		jqTab.addClass("tabActionRegistered");
 		var tabInternalTableName = $(this).attr("data-internaltablename");
 		var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
 		var previousTab = jqTab.closest(".form_tabber").find(".tab_choice.active");
