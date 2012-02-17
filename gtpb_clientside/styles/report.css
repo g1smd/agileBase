@@ -407,7 +407,7 @@ img.mini_icon {
   font-size: 8pt!important;
   position: fixed;
   padding: 0.5em;
-  background-color: #f4f4f4;
+  background-color: #cccccc; /* f4f4f4 */
   font-weight: normal;
   text-transform: lowercase;
   top: 0;
