@@ -51,7 +51,9 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	#set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_row_id=$selection'")
     <tr title="The record currently being edited is not in the report data on this page"
       name="$selection" class="rowa excludedRecord" onclick="$click" forcehighlight="true">
-      <td class="leading">&nbsp;</td>
+      #if(!$parentTable)
+        <td class="leading">&nbsp;</td>
+      #end
       #foreach($field in $reportBaseFields)
 	    #if ( ((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN"))##
 		  <td nowrap="true"><div class="in_cell" style="max-width:500px">
@@ -69,7 +71,9 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	    #end
 	  #end
 	  <td>&nbsp;</td>		##TODO: should there be an 'if edit privileges' check around this td?
-	  <td class="trailing">&nbsp;</td>
+    #if(!$parentTable)
+	    <td class="trailing">&nbsp;</td>
+    #end
     </tr>
   #end
 #end  ## end additional row if selected record not in dataset on screen
