@@ -84,7 +84,7 @@
   #end
 	value="$fieldValue" 
 	#if((!$globalEdit) && ($updateAsType)) 
-		onkeyup="top.oBuffer.writeBuffer(this)" 
+		onkeyup="top.oBuffer.writeBuffer(this, event)" 
 		gtpb_update_record="true"
     gtpb_internaltablename="$field.getTableContainingField().getInternalTableName()" gtpb_rowid="$sessionRowId"
 	#end

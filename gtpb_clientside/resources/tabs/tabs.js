@@ -1178,6 +1178,7 @@ function fFormStyle() {
 				}, function() {
 					tabContainer.removeClass("load-spinner");
 					jqTab.addClass("active");
+					fComboComponents();
 				});
 			} else {
 				previousContainer.hide();
