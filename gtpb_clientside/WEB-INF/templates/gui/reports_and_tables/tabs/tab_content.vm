@@ -1,3 +1,20 @@
+##
+##  Copyright 2012 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
 #set($sessionTable = $sessionData.getCustomTable("tabTable"))
 #set($parentTable = $sessionData.getTable())
 ## Get the tab object associated with the tab table
@@ -24,8 +41,23 @@
           #parse("gui/reports_and_tables/report_data.vm")
         </tbody></table>
       </div>
-    #end
-  #end
+      ## Work out which record should be displayed
+      #set($sessionRowId = $sessionData.getRowId($sessionTable))
+      #set($sessionRowFound = false)
+      #if($sessionRowId)
+        #foreach($datarow in $datarows)
+          #if($datarow.getRowId() == $sessionRowId)
+            #set($sessionRowFound = true)
+          #end
+        #end
+      #end
+      #if(!$sessionRowFound)
+        ## Revert to the first item in the list
+        #set($sessionRowId = $datarows.get(0).getRowId())
+      #end
+      #set($tableDataRow = $view.getTableDataRow($sessionTable, $sessionRowId))
+    #end ## end if datarows.size > 0
+  #end ## if selectorReport
   #set($formStyle = $parentTable.getFormStyle()) ## Inherit form style from the parent
   #if($formStyle == "TWO_COLUMNS")
     <div class="two_cols">

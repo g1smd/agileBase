@@ -114,6 +114,7 @@ import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.DataDependencyException;
 import com.gtwm.pb.util.Enumerations.AttachmentType;
 import com.gtwm.pb.util.Enumerations.DataFormat;
+import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
@@ -2476,7 +2477,13 @@ public final class DataManagement implements DataManagementInfo {
 			Map<ReportFieldInfo, Date> previousDateValues = new HashMap<ReportFieldInfo, Date>();
 			Calendar calendar = Calendar.getInstance();
 			// Get database data
+			if(chart.getReport().getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
+				ReportData.enableNestloop(conn, false);
+			}
 			statement = chart.getChartSqlPreparedStatement(conn, reportFilterValues, false);
+			if(chart.getReport().getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
+				ReportData.enableNestloop(conn, true);
+			}
 			long startTime = System.currentTimeMillis();
 			ResultSet summaryResults = statement.executeQuery();
 			while (summaryResults.next()) {
