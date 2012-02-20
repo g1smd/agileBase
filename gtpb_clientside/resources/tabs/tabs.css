@@ -823,6 +823,12 @@ div#reportData {
   border-radius: 0 0 0.5em 0.5em;
 }
 
+.tab_new_record {
+  width: 100%;
+  padding: 1em;
+  text-align: center;
+}
+
 .selectorReport table#reportData {
   /* background-color: #EEF3F9; */
 }

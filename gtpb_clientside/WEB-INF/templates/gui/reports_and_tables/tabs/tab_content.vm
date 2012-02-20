@@ -40,7 +40,7 @@
       ## Work out which record should be displayed
       #set($sessionRowId = $sessionData.getRowId($sessionTable))
       #set($sessionRowFound = false)
-      #if($sessionRowId)
+      #if($sessionRowId > -1)
         #foreach($datarow in $datarows)
           #if($datarow.getRowId() == $sessionRowId)
             #set($sessionRowFound = true)
@@ -56,23 +56,27 @@
           #parse("gui/reports_and_tables/report_data.vm")
         </tbody></table>
       </div>
-      #set($tableDataRow = $view.getTableDataRow($sessionTable, $sessionRowId))
     #end ## end if datarows.size > 0
   #end ## if selectorReport
-  #set($formStyle = $parentTable.getFormStyle()) ## Inherit form style from the parent
-  #if($formStyle == "TWO_COLUMNS")
-    <div class="two_cols">
-  #end
-  #set($fields = $sessionTable.getFields())
-  #set($primaryKey = $sessionTable.getPrimaryKey())
-  #set($lastField = $fields.last())
-  #if($formStyle == "SINGLE_COLUMN")
-    <table id="reportData" cellspacing="0" cellpadding="0" border="0" >
-  #end
-  #parse("gui/reports_and_tables/tabs/edit_content.vm")
-  #if($formStyle == "SINGLE_COLUMN")
-    </table>
-  #elseif($formStyle == "TWO_COLUMNS")
-    </div>
-  #end
+  #if($sessionRowId > -1)
+    #set($tableDataRow = $view.getTableDataRow($sessionTable, $sessionRowId))
+    #set($formStyle = $parentTable.getFormStyle()) ## Inherit form style from the parent
+    #if($formStyle == "TWO_COLUMNS")
+      <div class="two_cols">
+    #end
+    #set($fields = $sessionTable.getFields())
+    #set($primaryKey = $sessionTable.getPrimaryKey())
+    #set($lastField = $fields.last())
+    #if($formStyle == "SINGLE_COLUMN")
+      <table id="reportData" cellspacing="0" cellpadding="0" border="0" >
+    #end
+    #parse("gui/reports_and_tables/tabs/edit_content.vm")
+    #if($formStyle == "SINGLE_COLUMN")
+      </table>
+    #elseif($formStyle == "TWO_COLUMNS")
+      </div>
+    #end
+  #else
+    <div class="tab_new_record"><img src="resources/toolbar/new.png">New $sessionTable.getSingularName()</div>
+  #end 
 #end

@@ -104,9 +104,16 @@
     <select name="tabinternalreportname" onchange="new fChange(this);" gtpb_update_form_tab=true gtpb_tabinternaltablename="$tabTable.getInternalTableName()">
       <option value="">$formTab - show only one record</option>
       #set($tabPkey = $tabTable.getPrimaryKey())
+      #set($defaultReport = $tabTable.getDefaultReport())
       #foreach($prospectiveReport in $tabTable.getReports())
-        #if(($prospectiveReport.getReportBaseFields().contains($tabPkey)) && (!$prospectiveReport.equals($tabTable.getDefaultReport())))
-          <option value="$prospectiveReport.getInternalReportName()" #if($prospectiveReport.equals($formTab.getSelectorReport())) selected #end>$prospectiveReport.getModule() - $prospectiveReport</option>
+        #if($prospectiveReport.getReportBaseFields().contains($tabPkey))
+          <option value="$prospectiveReport.getInternalReportName()" #if($prospectiveReport.equals($formTab.getSelectorReport())) selected #end>
+          #if($prospectiveReport.equals($defaultReport))
+            $tabTable.getSimpleName() - all data
+          #else
+            $prospectiveReport.getModule() - $prospectiveReport
+          #end
+          </option>
         #end
       #end
     </select><br />
