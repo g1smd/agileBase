@@ -84,7 +84,8 @@
   #end
   <input type="text" #if(!$updateAsType) name="$field.getInternalFieldName()_years" #end maxlength="4" size="4" maxKeyCount="4" value="$years" wrapperAttribute="gtpb_$field.getInternalFieldName()_years" onkeyup="fKeyUpEvent(this, event)" #if($globalEdit) global_edit="true" #end>
   #if($dateResolution >= $CONST_HOUR_OF_DAY)
-	time 
+	#if(($formStyle == "TWO_COLUMNS") || ($formStyle == "TWO_COLUMNS_WITHIN_SECTION"))<br />#end
+  Time 
     <input type="text" #if(!$updateAsType) name="$field.getInternalFieldName()_hours" #end maxlength="2" size="2" maxKeyCount="2" value="$hours" wrapperAttribute="gtpb_$field.getInternalFieldName()_hours" onkeyup="fKeyUpEvent(this, event)" #if($globalEdit) global_edit="true" #end>
   #end
   #if($dateResolution >= $CONST_MINUTE) 
