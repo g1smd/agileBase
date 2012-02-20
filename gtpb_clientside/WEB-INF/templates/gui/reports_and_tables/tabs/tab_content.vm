@@ -77,6 +77,6 @@
       </div>
     #end
   #else
-    <div class="tab_new_record"><img src="resources/toolbar/new.png">New $sessionTable.getSingularName()</div>
+    <div class="tab_new_record"><img style="vertical-align:middle;" src="resources/toolbar/new.png">New $sessionTable.getSingularName()</div>
   #end 
 #end
