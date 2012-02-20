@@ -37,11 +37,6 @@
       #set($sessionReport = $selectorReport)
       #set($table_part_only = true)
       #set($data_part_only = true)
-      <div class="selectorReport">
-        <table id=reportData cellspacing="0"><tbody name=reportBody id=reportBody class="selectable">
-          #parse("gui/reports_and_tables/report_data.vm")
-        </tbody></table>
-      </div>
       ## Work out which record should be displayed
       #set($sessionRowId = $sessionData.getRowId($sessionTable))
       #set($sessionRowFound = false)
@@ -56,6 +51,11 @@
         ## Revert to the first item in the list
         #set($sessionRowId = $datarows.get(0).getRowId())
       #end
+      <div class="selectorReport">
+        <table id=reportData cellspacing="0"><tbody name=reportBody id=reportBody class="selectable">
+          #parse("gui/reports_and_tables/report_data.vm")
+        </tbody></table>
+      </div>
       #set($tableDataRow = $view.getTableDataRow($sessionTable, $sessionRowId))
     #end ## end if datarows.size > 0
   #end ## if selectorReport

@@ -22,7 +22,9 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 #if(!$sessionTable)
   #set($sessionTable = $sessionData.getTable())
 #end
-#set($sessionRowId= $sessionData.getRowId($sessionTable))
+#if(!$sessionRowId)
+  #set($sessionRowId= $sessionData.getRowId($sessionTable))
+#end
 ## Make an extra blank row for the record being edited if it's not already in the dataset on screen
 ## #if((!$selectionFound) && ($numRows > 0) && ($filtersShouldBeShown != 'true') && (!$isNotTable))
 #if((!$selectionFound) && (!$picker) && ($numRows > 0) && (!$mobile_device) && ($sessionRowId > -1) && (!$printout) && (!$isNotTable) && (!$table_part_only))
