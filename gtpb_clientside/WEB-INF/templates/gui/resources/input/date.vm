@@ -40,9 +40,18 @@
   #set($days=$fieldValue.get($CONST_DAY_OF_MONTH))##
   #set($months=$fieldValue.get($CONST_MONTH)+1)##
   #set($years=$fieldValue.get($CONST_YEAR))##
-  #set($hours=$fieldValue.get($CONST_HOUR_OF_DAY))##
-  #set($minutes=$fieldValue.get($CONST_MINUTE))##
-  #set($seconds=$fieldValue.get($CONST_SECOND))##
+  #set($hours="$fieldValue.get($CONST_HOUR_OF_DAY)")##
+  #set($minutes="$fieldValue.get($CONST_MINUTE)")##
+  #set($seconds="$fieldValue.get($CONST_SECOND)")##
+  #if($hours.length() == 1)
+    #set($hours = "0$hours")
+  #end
+  #if($minutes.length() == 1)
+    #set($minutes = "0$minutes")
+  #end
+  #if($seconds.length() == 1)
+    #set($seconds = "0$seconds")
+  #end
 #end##
 #set($dateResolution = $field.getDateResolution())##
 
