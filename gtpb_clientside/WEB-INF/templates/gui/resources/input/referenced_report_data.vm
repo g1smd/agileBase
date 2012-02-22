@@ -40,6 +40,7 @@ Referenced field $field:
   #set($success = $filter.put($primaryKey, "$rrd_rowId"))
   Getting report data for $referencedReport with filter $filter<br>
   #set($rrd_reportDataRows = $view.getReportDataRows($referencedReport, 10, $filter, true)) ## return 10 records max.
+  Got rows $rrd_reportDataRows<br>
   #foreach($rrd_reportDataRow in $rrd_reportDataRows)
     #set($rowContainsData = false)
     #set($linked = false)
