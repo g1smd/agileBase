@@ -24,6 +24,7 @@
   #end
 #end
 #foreach($field in $fields)
+  Field $field<br>
   #if($field.getHidden() == false)
     #if(!$firstField && !$field.equals($primaryKey))
       #set($firstField = $field)
