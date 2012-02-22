@@ -15,7 +15,6 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-Referenced field $field:
 #if($referencedData.contains("span")) ## If there's any referenced data predefined
   #if($viewOnly)
 	  <p>$referencedData</p>
@@ -23,24 +22,21 @@ Referenced field $field:
     <p style="line-height:1.5em; color: black">Predefined: $referencedData</p>
   #end  
 #else
-  Not predefined.
 	#set($referencedData = false)
-    #set($fieldTable = $field.getTableContainingField())
-    #set($primaryKey = $fieldTable.getPrimaryKey())
-    #set($referencedReport = $field.getReferencedReport())
-    #set($reportBaseFields = $referencedReport.getReportBaseFields())
-    #if(!$reportBaseFields.contains($primaryKey))
-	  $viewTools.log("Error in report $sessionData.getReport(): ID field for table $field.getTableContainingField() not found in referenced report $referencedReport")
-      <div class="errormessage">Error: ID field for table $field.getTableContainingField() not found in referenced report $referencedReport</div>
+  #set($fieldTable = $field.getTableContainingField())
+  #set($primaryKey = $fieldTable.getPrimaryKey())
+  #set($referencedReport = $field.getReferencedReport())
+  #set($reportBaseFields = $referencedReport.getReportBaseFields())
+  #if(!$reportBaseFields.contains($primaryKey))
+    $viewTools.log("Error in report $sessionData.getReport(): ID field for table $field.getTableContainingField() not found in referenced report $referencedReport")
+    <div class="errormessage">Error: ID field for table $field.getTableContainingField() not found in referenced report $referencedReport</div>
 	#end
 	#if(!$rrd_rowId)
 	  #set($rrd_rowId = $sessionData.getRowId())
 	#end
   #set($filter = $viewTools.getNewFilterMap())
   #set($success = $filter.put($primaryKey, "$rrd_rowId"))
-  Getting report data for $referencedReport with filter $filter<br>
   #set($rrd_reportDataRows = $view.getReportDataRows($referencedReport, 10, $filter, true)) ## return 10 records max.
-  Got rows $rrd_reportDataRows<br>
   #foreach($rrd_reportDataRow in $rrd_reportDataRows)
     #set($rowContainsData = false)
     #set($linked = false)
@@ -99,20 +95,20 @@ Referenced field $field:
         #if(($printoutSetting == "NAME_AND_VALUE") || ($printoutSetting == "NAME_VALUE_LINEBREAK"))
           <span class="greytext">$reportBaseField:</span>
         #end
-        $rrd_displayValue<br>
+        <span>$rrd_displayValue</span><br>
         #if($edit_nav && !$linked)</a> #set($linked = true) #end
 		  #end
 		#elseif($partFieldCategory == "FILE")
-      	  #set($rrd_displayValue = $rrd_reportDataRow.getValue($reportBaseField).getDisplayValue())
-      	  #if($rrd_displayValue != "")
-      #set($fileValue = $viewTools.getFileValueTool($rrd_displayValue))
-			#if($fileValue.isImage())
+      #set($rrd_displayValue = $rrd_reportDataRow.getValue($reportBaseField).getDisplayValue())
+      #if($rrd_displayValue != "")
+        #set($fileValue = $viewTools.getFileValueTool($rrd_displayValue))
+			  #if($fileValue.isImage())
 		      #set($downloadBase = "uploads/$reportBaseField.getTableContainingField().getInternalTableName()/$reportBaseField.getInternalFieldName()/$rrd_reportDataRow.getRowId()/")
 		      #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fileValue"))
 		      #if(!$edit_nav)<a href="$downloadUrl" target="_blank">#end
-			    <img border="0" src="$downloadUrl.40.$fileValue.getExtension()" class="cross_reference_image" />
+			    <span><img border="0" src="$downloadUrl.40.$fileValue.getExtension()" class="cross_reference_image" /></span>
 		      #if(!$edit_nav)</a>#end
-			#end
+			  #end
 		  #end
 	    #end
   	#end
