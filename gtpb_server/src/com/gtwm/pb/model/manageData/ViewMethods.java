@@ -471,7 +471,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		// If there was no error submitting the data
 		if (this.ex == null) {
 			// then we can get the values from the database
-			return this.databaseDefn.getDataManagement().getTableDataRow(table, rowId, true);
+			return this.databaseDefn.getDataManagement().getTableDataRow(this.sessionData, table, rowId, true);
 		} else {
 			// otherwise return the last values passed
 			return this.sessionData.getFieldInputValues();

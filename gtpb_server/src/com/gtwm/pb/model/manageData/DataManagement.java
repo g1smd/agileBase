@@ -236,7 +236,8 @@ public final class DataManagement implements DataManagementInfo {
 			if (comments.size() > 0) {
 				this.commentedFields.put(field, true);
 			} else {
-				// We've seen there are no comments for this particular record, check if there are any at all
+				// We've seen there are no comments for this particular record,
+				// check if there are any at all
 				// for any records
 				sqlCode = "SELECT count(*) from dbint_comments WHERE internalfieldname=?";
 				statement = conn.prepareStatement(sqlCode);
@@ -247,7 +248,8 @@ public final class DataManagement implements DataManagementInfo {
 					if (numComments > 0) {
 						this.commentedFields.put(field, true);
 					} else {
-						// Use putIfAbsent in case another thread e.g. running addComment has set this to true.
+						// Use putIfAbsent in case another thread e.g. running
+						// addComment has set this to true.
 						// We don't want to overwrite that
 						this.commentedFields.putIfAbsent(field, false);
 					}
@@ -345,7 +347,7 @@ public final class DataManagement implements DataManagementInfo {
 			CodingErrorException, InputRecordException, DisallowedException,
 			MissingParametersException {
 		// Get values to clone.
-		Map<BaseField, BaseValue> values = this.getTableDataRow(table, rowId, false);
+		Map<BaseField, BaseValue> values = this.getTableDataRow(sessionData, table, rowId, false);
 		// Store in a linked hash map to maintain order as saveRecord needs
 		// values in an order which isn't going to change.
 		LinkedHashMap<BaseField, BaseValue> valuesToClone = new LinkedHashMap<BaseField, BaseValue>();
@@ -1523,7 +1525,8 @@ public final class DataManagement implements DataManagementInfo {
 	 * specified, i.e. data that would be deleted in a cascade if the record
 	 * were deleted
 	 * 
-	 * Along with each table, return a snippet of the contents of dependent record(s)
+	 * Along with each table, return a snippet of the contents of dependent
+	 * record(s)
 	 * 
 	 * Also throw an exception immediately if any locked records are found as
 	 * this means the deletion should fail
@@ -1558,7 +1561,8 @@ public final class DataManagement implements DataManagementInfo {
 							textFields.add(testField);
 						}
 					}
-					// If the table has a unique field, that will be more useful to the user than the internal ID
+					// If the table has a unique field, that will be more useful
+					// to the user than the internal ID
 					if (testField.getUnique() && (!testField.equals(primaryKey))) {
 						otherUniqueKey = testField;
 					}
@@ -1570,9 +1574,9 @@ public final class DataManagement implements DataManagementInfo {
 				for (BaseField textField : textFields) {
 					SQLCode += ", " + textField.getInternalFieldName();
 				}
-				// NB Don't put a LIMIT on this statement, we want to find all children in the tree
-				SQLCode += " FROM "
-						+ otherTable.getInternalTableName() + " WHERE "
+				// NB Don't put a LIMIT on this statement, we want to find all
+				// children in the tree
+				SQLCode += " FROM " + otherTable.getInternalTableName() + " WHERE "
 						+ relationField.getInternalFieldName() + "=?";
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				statement.setInt(1, rowId);
@@ -1586,7 +1590,7 @@ public final class DataManagement implements DataManagementInfo {
 						String otherId = results.getString(otherUniqueKey.getInternalFieldName());
 						recordDescription = otherUniqueKey + " = " + otherId + ": ";
 					}
-					for(BaseField textField : textFields) {
+					for (BaseField textField : textFields) {
 						String fieldValue = results.getString(textField.getInternalFieldName());
 						if (fieldValue != null) {
 							if (!fieldValue.equals("")) {
@@ -1605,8 +1609,8 @@ public final class DataManagement implements DataManagementInfo {
 					}
 					// recurse
 					if (!recordDependencies.keySet().contains(otherTable)) {
-						recordDependencies.putAll(getRecordsDependencies(conn,
-								request, sessionData, databaseDefn, otherTable, otherRowId,
+						recordDependencies.putAll(getRecordsDependencies(conn, request,
+								sessionData, databaseDefn, otherTable, otherRowId,
 								recordDependencies));
 					}
 					recordDependencies.put(otherTable, recordDescription);
@@ -1627,8 +1631,8 @@ public final class DataManagement implements DataManagementInfo {
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			recordDependencies = getRecordsDependencies(conn, request, sessionData,
-					databaseDefn, table, rowId, recordDependencies);
+			recordDependencies = getRecordsDependencies(conn, request, sessionData, databaseDefn,
+					table, rowId, recordDependencies);
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -1646,9 +1650,9 @@ public final class DataManagement implements DataManagementInfo {
 				if (this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 						PrivilegeType.MANAGE_TABLE, dependentTable))
 					continue;
-				throw new CantDoThatException( 
-						// TODO: This should probably really
-						// be a DisallowedException
+				throw new CantDoThatException(
+				// TODO: This should probably really
+				// be a DisallowedException
 						"Unable to delete record as you are not permitted to delete from the dependent table "
 								+ dependentTable);
 			}
@@ -1661,7 +1665,8 @@ public final class DataManagement implements DataManagementInfo {
 				// }
 				String warning = "";
 				for (Map.Entry<TableInfo, String> dependency : recordDependencies.entrySet()) {
-					warning += dependency.getKey().getSimpleName() + " - " + dependency.getValue() + "\n";
+					warning += dependency.getKey().getSimpleName() + " - " + dependency.getValue()
+							+ "\n";
 				}
 				throw new DataDependencyException(warning);
 			}
@@ -1757,8 +1762,8 @@ public final class DataManagement implements DataManagementInfo {
 
 	public String getReportRSS(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
-			throws SQLException, CodingErrorException, CantDoThatException,
-			XMLStreamException, ObjectNotFoundException {
+			throws SQLException, CodingErrorException, CantDoThatException, XMLStreamException,
+			ObjectNotFoundException {
 		try {
 			return this.getReportDataAsFormat(DataFormat.RSS, user, report, filters, exactFilters,
 					cacheSeconds);
@@ -1769,8 +1774,8 @@ public final class DataManagement implements DataManagementInfo {
 
 	public String getReportJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
-			throws CodingErrorException, CantDoThatException, SQLException,
-			XMLStreamException, ObjectNotFoundException, JsonGenerationException {
+			throws CodingErrorException, CantDoThatException, SQLException, XMLStreamException,
+			ObjectNotFoundException, JsonGenerationException {
 		return this.getReportDataAsFormat(DataFormat.JSON, user, report, filters, exactFilters,
 				cacheSeconds);
 	}
@@ -1849,7 +1854,9 @@ public final class DataManagement implements DataManagementInfo {
 		eventWriter.add(end);
 	}
 
-	public String getReportMapJson(CompanyInfo company, BaseReportInfo report, Map<BaseField, String> filters) throws CodingErrorException, CantDoThatException, SQLException {
+	public String getReportMapJson(CompanyInfo company, BaseReportInfo report,
+			Map<BaseField, String> filters) throws CodingErrorException, CantDoThatException,
+			SQLException {
 		ReportMapInfo map = report.getMap();
 		if (map == null) {
 			throw new CantDoThatException("Report has no map configured");
@@ -1860,9 +1867,8 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		ReportFieldInfo colourField = map.getColourField();
 		ReportFieldInfo categoryField = map.getCategoryField();
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(company, report,
-				filters, false, new HashMap<BaseField, Boolean>(0), 10000,
-				QuickFilterType.AND, true);
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(company, report, filters, false,
+				new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, true);
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
@@ -1872,7 +1878,8 @@ public final class DataManagement implements DataManagementInfo {
 			for (DataRowInfo reportDataRow : reportDataRows) {
 				jg.writeStartObject();
 				jg.writeNumberField("rowId", reportDataRow.getRowId());
-				LocationDataRowFieldInfo postcodeDataRowField = (LocationDataRowFieldInfo) reportDataRow.getValue(postcodeField);
+				LocationDataRowFieldInfo postcodeDataRowField = (LocationDataRowFieldInfo) reportDataRow
+						.getValue(postcodeField);
 				jg.writeStringField("postcode", postcodeDataRowField.getKeyValue());
 				jg.writeNumberField("latitude", postcodeDataRowField.getLatitude());
 				jg.writeNumberField("longitude", postcodeDataRowField.getLongitude());
@@ -1882,7 +1889,8 @@ public final class DataManagement implements DataManagementInfo {
 					jg.writeStringField("colourValue", colourValue);
 					int hue = Math.abs(colourValue.toUpperCase().hashCode()) % 360;
 					int saturation = 20 + (Math.abs(colourValue.toLowerCase().hashCode()) % 80);
-					int lightness = 50 + (Math.abs(WordUtils.capitalizeFully(colourValue).hashCode()) % 40);
+					int lightness = 50 + (Math.abs(WordUtils.capitalizeFully(colourValue)
+							.hashCode()) % 40);
 					jg.writeNumberField("h", hue);
 					jg.writeNumberField("s", saturation);
 					jg.writeNumberField("l", lightness);
@@ -1900,8 +1908,9 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		return stringWriter.toString();
 	}
-	
-	private String generateJSON(BaseReportInfo report, List<DataRowInfo> reportDataRows) throws CodingErrorException, JsonGenerationException {
+
+	private String generateJSON(BaseReportInfo report, List<DataRowInfo> reportDataRows)
+			throws CodingErrorException, JsonGenerationException {
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
@@ -1940,8 +1949,8 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public String getReportTimelineJSON(AppUserInfo user, Set<BaseReportInfo> reports,
-			Map<BaseField, String> filterValues) throws CodingErrorException,
-			CantDoThatException, SQLException, JsonGenerationException {
+			Map<BaseField, String> filterValues) throws CodingErrorException, CantDoThatException,
+			SQLException, JsonGenerationException {
 		String id = "";
 		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
 				filterValues);
@@ -1975,8 +1984,8 @@ public final class DataManagement implements DataManagementInfo {
 			for (BaseReportInfo report : reports) {
 				String className = "report_" + report.getInternalReportName();
 				ReportFieldInfo eventDateReportField = report.getCalendarStartField();
-				List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
-						filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
+				List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(),
+						report, filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
 						QuickFilterType.AND, false);
 				ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
 					DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
@@ -1993,7 +2002,8 @@ public final class DataManagement implements DataManagementInfo {
 							+ buildEventTitle(report, reportDataRow, false);
 					jg.writeStringField("caption", eventTitle);
 					jg.writeStringField("description", eventTitle);
-					// TODO: build short title from long title, don't rebuild from
+					// TODO: build short title from long title, don't rebuild
+					// from
 					// scratch. Just cut off everything after the 5th comma for
 					// example
 					String shortTitle = buildEventTitle(report, reportDataRow, true);
@@ -2057,9 +2067,9 @@ public final class DataManagement implements DataManagementInfo {
 		if (dateResolution > Calendar.DAY_OF_MONTH) {
 			allDayValues = false;
 		}
-		List<DataRowInfo> reportDataRows = this
-				.getReportDataRows(user.getCompany(), report, filterValues, false,
-						new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false);
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
+				filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
+				QuickFilterType.AND, false);
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
@@ -2207,8 +2217,9 @@ public final class DataManagement implements DataManagementInfo {
 
 	public List<DataRowInfo> getReportDataRows(CompanyInfo company, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType, boolean lookupPostcodeLatLong)
-			throws SQLException, CodingErrorException, CantDoThatException {
+			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType,
+			boolean lookupPostcodeLatLong) throws SQLException, CodingErrorException,
+			CantDoThatException {
 		Connection conn = null;
 		List<DataRowInfo> reportDataRows = null;
 		try {
@@ -2221,6 +2232,10 @@ public final class DataManagement implements DataManagementInfo {
 			if (conn != null) {
 				conn.close();
 			}
+		}
+		if ((reportDataRows.size() > 0) && (filterValues.size() == 0)) {
+			DataRowInfo firstRow = reportDataRows.get(0);
+			this.topRecords.put(reportDefn, firstRow.getRowId());
 		}
 		return reportDataRows;
 	}
@@ -2241,7 +2256,8 @@ public final class DataManagement implements DataManagementInfo {
 
 	private ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo reportDefn,
 			Connection conn, boolean updateCacheIfObsolete) throws SQLException {
-		// If company specified: use the cache to look up report metadata. If the
+		// If company specified: use the cache to look up report metadata. If
+		// the
 		// report data isn't cached, cache it now
 		// Additionally, if updateCacheIfObsolete specified, update the cache if
 		// it gets out of date
@@ -2477,11 +2493,13 @@ public final class DataManagement implements DataManagementInfo {
 			Map<ReportFieldInfo, Date> previousDateValues = new HashMap<ReportFieldInfo, Date>();
 			Calendar calendar = Calendar.getInstance();
 			// Get database data
-			if(chart.getReport().getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
+			if (chart.getReport().getQueryPlanSelection()
+					.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
 				ReportData.enableNestloop(conn, false);
 			}
 			statement = chart.getChartSqlPreparedStatement(conn, reportFilterValues, false);
-			if(chart.getReport().getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
+			if (chart.getReport().getQueryPlanSelection()
+					.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
 				ReportData.enableNestloop(conn, true);
 			}
 			long startTime = System.currentTimeMillis();
@@ -2631,15 +2649,28 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	public Map<BaseField, BaseValue> getTableDataRow(TableInfo table, int rowId, boolean logView)
+	public Map<BaseField, BaseValue> getTableDataRow(SessionDataInfo sessionData, TableInfo table, int rowId, boolean logView)
 			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
 		Connection conn = null;
 		TableDataInfo tableData = new TableData(table);
 		Map<BaseField, BaseValue> tableDataRow = null;
+		// Only log the view if we're not looking at the top (default) record in a report
+		boolean logTheView = logView;
+		if (logTheView) {
+			BaseReportInfo sessionReport = sessionData.getReport();
+			if (table.getReports().contains(sessionReport)) {
+				Integer topRowId = topRecords.get(sessionReport);
+				if (topRowId != null) {
+					if (topRowId.equals(rowId)) {
+						logTheView = false;
+					}
+				}
+			}
+		}
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			tableDataRow = tableData.getTableDataRow(conn, rowId, logView);
+			tableDataRow = tableData.getTableDataRow(conn, rowId, logTheView);
 			conn.commit();
 		} finally {
 			if (conn != null) {
@@ -2655,7 +2686,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	public String getTableDataRowJson(TableInfo table, int rowId) throws SQLException,
 			ObjectNotFoundException, CantDoThatException, CodingErrorException {
-		Map<BaseField, BaseValue> tableDataRow = this.getTableDataRow(table, rowId, true);
+		Map<BaseField, BaseValue> tableDataRow = this.getTableDataRow(null, table, rowId, false);
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(512);
 		JsonGenerator jg;
@@ -2668,11 +2699,14 @@ public final class DataManagement implements DataManagementInfo {
 				if (field.equals(table.getPrimaryKey())) {
 					jg.writeNumberField("rowId", ((IntegerValue) value).getValueInteger());
 				} else if (value instanceof IntegerValue) {
-					jg.writeNumberField(field.getInternalFieldName(), ((IntegerValue) value).getValueInteger());
+					jg.writeNumberField(field.getInternalFieldName(),
+							((IntegerValue) value).getValueInteger());
 				} else if (value instanceof CheckboxValue) {
-					jg.writeBooleanField(field.getInternalFieldName(), ((CheckboxValue) value).getValueBoolean());
+					jg.writeBooleanField(field.getInternalFieldName(),
+							((CheckboxValue) value).getValueBoolean());
 				} else if (value instanceof DecimalValue) {
-					jg.writeNumberField(field.getInternalFieldName(), ((DecimalValue) value).getValueFloat());
+					jg.writeNumberField(field.getInternalFieldName(),
+							((DecimalValue) value).getValueFloat());
 				} else {
 					jg.writeStringField(field.getInternalFieldName(), value.toString());
 				}
@@ -2784,10 +2818,10 @@ public final class DataManagement implements DataManagementInfo {
 			List<FileItem> multipartItems) throws SQLException, CodingErrorException,
 			CantDoThatException, InputRecordException, ObjectNotFoundException,
 			DisallowedException, MissingParametersException {
-		//if (!request.getServerName().contains("gtwmbackup")) {
-		//	throw new CantDoThatException(
-		//			"For safety, anonymisation can only run on a test/backup server");
-		//}
+		// if (!request.getServerName().contains("gtwmbackup")) {
+		// throw new CantDoThatException(
+		// "For safety, anonymisation can only run on a test/backup server");
+		// }
 		Random randomGenerator = new Random();
 		String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
 				"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -3114,7 +3148,7 @@ public final class DataManagement implements DataManagementInfo {
 	public static void logLastTableDataChangeTime(TableInfo table) {
 		lastTableDataChangeTimes.put(table, System.currentTimeMillis());
 	}
-	
+
 	public static long getLastTableDataChangeTime(TableInfo table) {
 		Long lastTime = lastTableDataChangeTimes.get(table);
 		if (lastTime == null) {
@@ -3123,7 +3157,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		return lastTime;
 	}
-	
+
 	public void logLastDataChangeTime(HttpServletRequest request) throws ObjectNotFoundException {
 		// Public user (not logged in) changes don't count
 		// TODO: think of something better
@@ -3197,7 +3231,7 @@ public final class DataManagement implements DataManagementInfo {
 	private static Map<CompanyInfo, Long> lastCompanyDataChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
 
 	private static Map<TableInfo, Long> lastTableDataChangeTimes = new ConcurrentHashMap<TableInfo, Long>();
-	
+
 	private Map<CompanyInfo, Long> lastSchemaChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
 
 	private Map<AppUserInfo, BaseReportInfo> userMostPopularReportCache = new ConcurrentHashMap<AppUserInfo, BaseReportInfo>();
@@ -3223,6 +3257,13 @@ public final class DataManagement implements DataManagementInfo {
 	 * don't and which are unknown (not in the map)
 	 */
 	private ConcurrentHashMap<BaseField, Boolean> commentedFields = new ConcurrentHashMap<BaseField, Boolean>();
+
+	/**
+	 * Store the first record ID from each report, for use when logging record
+	 * accesses (don't log if the current record is the top record, it's
+	 * probably just been loaded as the defauls)
+	 */
+	private Map<BaseReportInfo, Integer> topRecords = new ConcurrentHashMap<BaseReportInfo, Integer>();
 
 	private float uploadSpeed = 50000; // Default to 50KB per second
 

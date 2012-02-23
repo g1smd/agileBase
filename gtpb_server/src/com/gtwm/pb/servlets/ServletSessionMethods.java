@@ -789,7 +789,7 @@ public final class ServletSessionMethods {
 				} else {
 					TableInfo table = relatedField.getTableContainingField();
 					Map<BaseField, BaseValue> tableRow = databaseDefn.getDataManagement()
-							.getTableDataRow(table, -1, false);
+							.getTableDataRow(sessionData, table, -1, false);
 					for (Map.Entry<BaseField, BaseValue> fieldValueEntry : tableRow.entrySet()) {
 						if (fieldValueEntry.getKey().equals(relatedField)) {
 							fieldValue = fieldValueEntry.getValue();

@@ -210,9 +210,14 @@ public interface DataManagementInfo {
 	 * @see com.gtwm.pb.model.interfaces.TableDataInfo#getTableDataRow(java.sql.Connection,
 	 *      int) See TableData.getTableDataRow for an explanation of the
 	 *      exceptions thrown
+	 * @param logView
+	 *            If true, increment the view count hidden field of the row returned
+	 * @param sessionData
+	 *            Only necessary if logView is true, otherwise can be null
 	 */
-	public Map<BaseField, BaseValue> getTableDataRow(TableInfo table, int rowId, boolean logView)
-			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException;
+	public Map<BaseField, BaseValue> getTableDataRow(SessionDataInfo sessionData, TableInfo table,
+			int rowId, boolean logView) throws SQLException, ObjectNotFoundException,
+			CantDoThatException, CodingErrorException;
 
 	public String getTableDataRowJson(TableInfo table, int rowId) throws SQLException,
 			ObjectNotFoundException, CantDoThatException, CodingErrorException;
