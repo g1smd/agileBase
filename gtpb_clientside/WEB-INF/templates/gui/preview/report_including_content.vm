@@ -1,25 +1,31 @@
+<!DOCTYPE HTML>
+#set($user = $view.getLoggedInUser())
+#set($company=$user.getCompany())
 #if(!$report)
   #set($report = $sessionData.getReport())
 #end
-<div class="breadcrumb_title">$report</div>
-#set($filterString = $sessionData.getGlobalFilterString($report))
-<div id="navrow">
-  #set($placeholder = $report.getReportName().replaceAll(" - .*",""))
-  <input id="searchbox" class="searchbox" name="searchbox" type="search" placeholder="search $placeholder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
-##  <div id="jumpto">
-##  <span class="jump_label">Jump to: </span>
-##  #foreach($table in $view.getPopularTables($view.getLoggedInUser()))
-##    #set($tableReports = $table.getReports())
-##    #foreach($tableReport in $tableReports)
-##      #if((!$tableReport.equals($table.getDefaultReport())) && ($view.loggedInUserAllowedToViewReport($tableReport)) && (!$tableReport.getReportName().contains("dbvcalc")) && (!$tableReport.getReportName().contains("dbvcrit")))
-##        #set($firstReport = $tableReport)
-##      #end
-##      #break
-##    #end
-##    <a class="jumpto_table #if($table.equals($report.getParentTable())) current #end" href="AppController.servlet?return=gui/edit_nav/report&set_table=$table.getInternalTableName()&set_report=$firstReport.getInternalReportName()" title="$firstReport.getModule() - $firstReport">$table.getSimpleName()</a>
-##  #end
-##  </div>
-</div>
-<div class="reportDataView" id="homeContent">
-  #parse("gui/edit_nav/report_content.vm")
-</div>
+<html>
+<head>
+  <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+  <title>$report.getModule() $report</title>
+  <link type="text/css" href="resources/pane1_amalgam.css" rel="stylesheet" />
+  <link type="text/css" href="resources/pane3_amalgam.css" rel="stylesheet" />
+  <link type="text/css" href="resources/edit_nav/edit_nav.css" rel="stylesheet" />
+  <link type="text/css" href="resources/edit_nav/slides.css" rel="stylesheet" />
+  <script src="resources/jquery.js" language="Javascript"></script>
+  <script src="resources/pane1_amalgam.js" language="Javascript"></script>
+  <script src="resources/pane3_amalgam.js" language="Javascript"></script>
+  <script src="resources/edit_nav/edit_nav.js" language="Javascript"></script>
+  <script src="resources/edit_nav/slides.js" language="Javascript"></script>
+</head>
+<body style="overflow: hidden"> ## override tabs.css
+  #set($filterString = $sessionData.getGlobalFilterString($report))
+  <div id="navrow">
+    #set($placeholder = $report.getReportName().replaceAll(" - .*",""))
+    <input id="searchbox" class="searchbox" name="searchbox" type="search" placeholder="search $placeholder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
+  </div>
+  <div class="reportDataView" id="homeContent">
+    #parse("gui/preview/report_content.vm")
+  </div>
+</body>
+</html>
