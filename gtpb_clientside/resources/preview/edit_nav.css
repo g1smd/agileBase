@@ -51,6 +51,16 @@ body {
   vertical-align: middle;
 }
 
+.block img.profile_photo {
+  float: left;
+  max-width: 50%;
+}
+
+.block img.image {
+  float: left;
+  max-width: 100%;
+}
+
 .reportDataView .block.centrebox {
    /* flexbox, por favor */
   display: -webkit-box;
