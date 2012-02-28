@@ -51,6 +51,13 @@ body {
   vertical-align: middle;
 }
 
+.block img {
+  padding: 0;
+  position: relative;
+  top: -1em;
+  left: -1em;
+}
+
 .block img.profile_photo {
   float: left;
   max-width: 50%;
@@ -58,7 +65,9 @@ body {
 
 .block img.image {
   float: left;
-  max-width: 100%;
+  top: -1em;
+  left: -1em;
+  right: -1em;
 }
 
 .reportDataView .block.centrebox {
