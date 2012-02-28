@@ -52,7 +52,7 @@ body {
 }
 
 .block img {
-  padding: 0;
+  padding: 0!important;
   position: relative;
   top: -1em;
   left: -1em;
