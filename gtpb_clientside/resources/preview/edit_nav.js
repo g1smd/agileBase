@@ -51,7 +51,7 @@ $(document).ready(
 								var internalReportName = $("#searchbox").attr(
 										"internalreportname");
 								$.get(
-										"AppController.servlet?return=gui/edit_nav/report_content&set_report="
+										"AppController.servlet?return=gui/preview/report_content&set_report="
 												+ internalReportName
 												+ "&set_global_report_filter_string=true&filterstring="
 												+ filterString, function(data) {
