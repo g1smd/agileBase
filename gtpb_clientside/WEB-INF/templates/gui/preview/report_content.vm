@@ -1,0 +1,75 @@
+#if(!$report)
+  #set($report = $sessionData.getReport())
+#end
+#set($table = $report.getParentTable())
+#set($internalTableName = $table.getInternalTableName())
+#set($reportBaseFields = $report.getReportBaseFields())##
+#set($reportRowLimit = 100) ## hard code for now
+#if(!$reportDataRows)
+  #if(!$filters)
+    #set($reportDataRows = $view.getGloballyFilteredReportDataRows($report))
+  #else
+    #set($reportDataRows = $view.getReportDataRows($report, $reportRowLimit, $filters, true))##
+  #end
+#end
+#set($numRows = $reportDataRows.size())
+#if($numRows < $reportRowLimit)
+  #set($rowCount = $numRows)
+#else
+  #set($rowCount = $report.getRowCount())
+  #if($report.isRowCountEstimate())
+    #set($rowCount = "<i title='$rowCount is the approximate number of records in total'>$rowCount</i>")
+  #end
+#end
+<div class="row_count">$rowCount</div>
+<div class="pane1_id">$table.getInternalTableName()$report.getInternalReportName()</div>
+#set($thisUniqueId = false)
+#foreach($row in $reportDataRows)
+  #set($dataRowFields = $row.getDataRowFields())
+  #set($lastUniqueId = $thisUniqueId)
+  #set($thisUniqueId = $row.getRowId())
+  #set($emboldened = false)
+  #if($thisUniqueId != $lastUniqueId)
+    #set($goToTable = $report.getParentTable())
+    #set($goToRowId = $thisUniqueId)
+    ##onclick is workaround for iOS bug http://blog.alanszlosek.com/post/4369588562/jquerys-live-click-handler-on-mobile-safari
+    <div class="related block current" href="AppController.servlet?return=gui/display_application&set_table=$goToTable.getInternalTableName()&set_row_id=$goToRowId" onclick=""> 
+      #foreach($field in $reportBaseFields)##
+        #if(!$field.isPrimaryKey())
+          #set($dataRowField = $dataRowFields.get($field))
+          #set($cell = $dataRowField.getDisplayValue())
+          #set($colour = $dataRowField.getStandardDevHexColour())
+          #set($fieldCategory = $field.getFieldCategory().toString())
+          #set($image = false)
+          #if($fieldCategory == "FILE")
+            #set($fileValue = $viewTools.getFileValueTool($cell))
+            #if($fileValue.isImage())
+              #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
+              <img src="$srcUrl" style="float:left"/>
+              #set($image = true)
+            #end
+          #end
+          #set($style="")
+          #set($class="")
+          #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
+          #if($cell && (!$image) && ($cell != ""))
+            #set($printoutSetting = $field.getPrintoutSetting())
+            #if($fieldCategory == "CHECKBOX")
+              #if($cell == "true")
+                <span style="$style" class="cell $class">$field</span>
+              #end
+            #elseif($printoutSetting == "NAME_AND_VALUE")
+              <span class="fieldname">$field</span>: <span style="$style" class="cell $class">$cell</span><br>
+            #else
+              #if(!$emboldened)
+                #set($style = "$style font-weight: bold; ")
+              #end
+              <span style="$style" class="cell $class">$cell</span>,
+              #set($emboldened = true)
+            #end
+          #end
+        #end
+      #end
+    </div>
+  #end
+#end
