@@ -671,7 +671,7 @@ div#reportData {
 #reportData .block input, #reportData .block select {
   float: right;
   width: 50%;
-  border: 1px solid white;
+  border: 1px solid #dddddd;
   font-size: 9pt;
   padding: 0.2em;
   /* 
