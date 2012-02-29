@@ -1168,16 +1168,17 @@ function fFormStyle() {
 			$(".tab_choice").removeClass("active");
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
 			if (tabContainer.children().size() == 0) {
-				alert("tab has no children");
 				previousContainer.fadeOut();
 				tabContainer.addClass("load-spinner").css("position","relative");
 				tabContainer.fadeIn();
+				alert("tab has no children, about to load");
 				tabContainer.load("AppController.servlet", {
 				  "return": "gui/reports_and_tables/tabs/tab_content",
 				  set_custom_table: true,
 				  tablekey: "tabTable",
 				  custominternaltablename: tabInternalTableName
 				}, function() {
+					alert("loaded");
 					tabContainer.removeClass("load-spinner");
 					jqTab.addClass("active");
 					fComboComponents();
