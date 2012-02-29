@@ -45,7 +45,7 @@
             #set($fileValue = $viewTools.getFileValueTool($cell))
             #if($fileValue.isImage())
               #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
-              <img src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #end/>
+              <img src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" onclick="bigImage(this);" #end/>
               #set($image = true)
             #end
           #end
