@@ -156,8 +156,9 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		// if we've removed the session set a new one as the first row
 		if (bRemovedSessionItem) {
 			if (document.getElementById('reportBody').rows.length > 1) {
-				eval(document.getElementById('reportBody').rows[0]
-						.getAttribute('onclick'));
+				var onClick = document.getElementById('reportBody').rows[0].getAttribute('onclick');
+				alert("onClick: " + onClick);
+				eval(onClick);
 			} else {
 				parent.pane_3.document.location = 'AppController.servlet?return=gui/reports_and_tables/pane3';
 			}
