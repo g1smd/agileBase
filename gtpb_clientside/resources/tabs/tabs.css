@@ -750,6 +750,7 @@ div#reportData {
 #reportData .block input[type=file] {
   border: 0;
   top: 0;
+  height: 2em;
 }
 
 #reportData .block input[type=button] {

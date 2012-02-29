@@ -617,7 +617,6 @@ function bigImage(oImg) {
 	block.css('height','300px');
 }
 
-
 /**
  * Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=660699
  */
