@@ -52,16 +52,13 @@ body {
   vertical-align: middle;
 }
 
-.block img {
+.block img.profile_photo {
+  float: left;
+  max-width: 50%;
   margin: 0;
   position: relative;
   top: -1em;
   left: -1em;
-}
-
-.block img.profile_photo {
-  float: left;
-  max-width: 50%;
 }
 
 .block img.image {
