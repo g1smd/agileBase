@@ -1171,7 +1171,7 @@ function fFormStyle() {
 				previousContainer.fadeOut();
 				tabContainer.addClass("load-spinner").css("position","relative");
 				tabContainer.fadeIn();
-				alert("tab has no children, about to load");
+				alert("tab #form_tabs_" + parentInternalTableName + "_" + tabInternalTableName + " has no children, about to load");
 				tabContainer.load("AppController.servlet", {
 				  "return": "gui/reports_and_tables/tabs/tab_content",
 				  set_custom_table: true,
