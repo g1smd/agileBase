@@ -57,19 +57,4 @@
     #parse('gui/resources/input/input.vm')
   </div>
 #end
-$viewTools.log("Testing field $field == $lastField: $field.equals($lastField)")
-#if($field.equals($lastField))
-  This is the last field
-  #if($formStyle == 'TWO_COLUMNS')
-    </td></tr></table>
-  #end
-  </div> <!-- end of last block -->
-  #if($hasSections)
-    </div> <!-- end of two sections container -->
-  #end
-  #foreach($formTab in $formTabs)
-    Tab for $formTab<br/>
-    <div style="display:none; min-height:15em" id="form_tabs_$sessionTable.getInternalTableName()_$formTab.getTable().getInternalTableName()">
-    </div>
-  #end
-#end
+## Divs / tables are closed in edit_content.vm
