@@ -57,6 +57,7 @@
     #parse('gui/resources/input/input.vm')
   </div>
 #end
+$viewTools.log("Testing field $field == $lastField: $field.equals($lastField)")
 #if($field.equals($lastField))
   This is the last field
   #if($formStyle == 'TWO_COLUMNS')
