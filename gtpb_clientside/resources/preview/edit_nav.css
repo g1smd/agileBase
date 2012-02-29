@@ -65,10 +65,9 @@ body {
 }
 
 .block img.image {
-  float: left;
-  top: -1em;
-  left: -1em;
-  right: -1em;
+  top: 0;
+  left: 0;
+  width: 100%;
   position: absolute;
 }
 
