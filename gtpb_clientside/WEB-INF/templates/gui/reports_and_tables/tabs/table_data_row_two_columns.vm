@@ -58,6 +58,7 @@
   </div>
 #end
 #if($field.equals($lastField))
+  This is the last field
   #if($formStyle == 'TWO_COLUMNS')
     </td></tr></table>
   #end
