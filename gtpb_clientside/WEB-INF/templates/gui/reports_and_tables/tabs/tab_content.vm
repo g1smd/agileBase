@@ -29,6 +29,7 @@
 #else
   #set($parentRowId = $sessionData.getRowId($parentTable))
   #set($selectorReport = $formTab.getSelectorReport())
+  #set($sessionRowId = $sessionData.getRowId($sessionTable))
   #if($selectorReport)
     #set($filter = $viewTools.getNewFilterMap())
     #set($success = $filter.put($parentTable.getPrimaryKey(), "$parentRowId"))
@@ -38,7 +39,6 @@
       #set($table_part_only = true)
       #set($data_part_only = true)
       ## Work out which record should be displayed
-      #set($sessionRowId = $sessionData.getRowId($sessionTable))
       #set($sessionRowFound = false)
       #if($sessionRowId > -1)
         #foreach($datarow in $datarows)
@@ -56,6 +56,8 @@
           #parse("gui/reports_and_tables/report_data.vm")
         </tbody></table>
       </div>
+    #elseif(($datarows.size() == 1) && ($sessionRowId == -1))
+      #set($sessionRowId = $datarows.get(0).getRowId())
     #end ## end if datarows.size > 0
   #end ## if selectorReport
   #if($sessionRowId > -1)
