@@ -1159,6 +1159,7 @@ function fFormStyle() {
 		}
 		jqTab.addClass("tabActionRegistered");
 		jqTab.click(function() {
+			alert('clicked tab');
 			var tabInternalTableName = $(this).attr("data-internaltablename");
 			var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
 			var previousTab = jqTab.closest(".form_tabber").find(".tab_choice.active");
@@ -1167,6 +1168,7 @@ function fFormStyle() {
 			$(".tab_choice").removeClass("active");
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
 			if (tabContainer.children().size() == 0) {
+				alert("tab has no children");
 				previousContainer.fadeOut();
 				tabContainer.addClass("load-spinner").css("position","relative");
 				tabContainer.fadeIn();
@@ -1183,6 +1185,7 @@ function fFormStyle() {
 					fComments();
 				});
 			} else {
+				alert("tab has no children");
 				previousContainer.hide();
 				tabContainer.show();
 				jqTab.addClass("active");
