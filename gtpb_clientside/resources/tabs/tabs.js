@@ -1159,7 +1159,6 @@ function fFormStyle() {
 		}
 		jqTab.addClass("tabActionRegistered");
 		jqTab.click(function() {
-			alert('clicked tab');
 			var tabInternalTableName = $(this).attr("data-internaltablename");
 			var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
 			var previousTab = jqTab.closest(".form_tabber").find(".tab_choice.active");
@@ -1171,14 +1170,12 @@ function fFormStyle() {
 				previousContainer.fadeOut();
 				tabContainer.addClass("load-spinner").css("position","relative");
 				tabContainer.fadeIn();
-				alert("tab #form_tabs_" + parentInternalTableName + "_" + tabInternalTableName + " has no children, about to load");
 				tabContainer.load("AppController.servlet", {
 				  "return": "gui/reports_and_tables/tabs/tab_content",
 				  set_custom_table: true,
 				  tablekey: "tabTable",
 				  custominternaltablename: tabInternalTableName
 				}, function() {
-					alert("loaded");
 					tabContainer.removeClass("load-spinner");
 					jqTab.addClass("active");
 					fComboComponents();

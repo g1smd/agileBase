@@ -62,7 +62,6 @@ function fSetRowSelection(sName) {
 
 function fDeleteObj(sAction, sRowIdentifier) {
 	function fControlCheckboxes(bDisable) {
-		alert('checkbox enable: ' + !bDisable);
 		var aCheckedRows = new Array();
 
 		// set the header checkbox
@@ -72,7 +71,7 @@ function fDeleteObj(sAction, sRowIdentifier) {
 				jqCheckbox.attr('disabled', 'true');
 			else {
 				jqCheckbox.removeAttr('disabled');
-				jqCheckbox.attr('checked','false');
+				jqCheckbox.attr('checked','false'); // TODO: doesn't seem to be working
 			}
 		}
 

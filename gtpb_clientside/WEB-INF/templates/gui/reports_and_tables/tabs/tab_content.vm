@@ -56,7 +56,7 @@
           #parse("gui/reports_and_tables/report_data.vm")
         </tbody></table>
       </div>
-    #elseif(($datarows.size() == 1) && ($sessionRowId == -1))
+    #elseif($datarows.size() == 1)
       #set($sessionRowId = $datarows.get(0).getRowId())
     #end ## end if datarows.size > 0
   #end ## if selectorReport
