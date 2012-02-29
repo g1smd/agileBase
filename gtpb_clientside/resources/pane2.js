@@ -157,8 +157,10 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		if (bRemovedSessionItem) {
 			if (document.getElementById('reportBody').rows.length > 1) {
 				var onClick = document.getElementById('reportBody').rows[0].getAttribute('onclick');
-				alert("onClick: " + onClick);
-				eval(onClick);
+				try {
+				  eval(onClick);
+				} catch(err) {
+				}
 			} else {
 				parent.pane_3.document.location = 'AppController.servlet?return=gui/reports_and_tables/pane3';
 			}
