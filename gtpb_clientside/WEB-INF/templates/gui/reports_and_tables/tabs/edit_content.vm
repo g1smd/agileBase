@@ -41,7 +41,6 @@
     </div> <!-- end of two sections container -->
   #end
   #foreach($formTab in $formTabs)
-    Tab for $formTab<br/>
     <div style="display:none; min-height:15em" id="form_tabs_$sessionTable.getInternalTableName()_$formTab.getTable().getInternalTableName()">
     </div>
   #end

@@ -62,6 +62,7 @@ function fSetRowSelection(sName) {
 
 function fDeleteObj(sAction, sRowIdentifier) {
 	function fControlCheckboxes(bDisable) {
+		alert('checkbox enable: ' + !bDisable);
 		var aCheckedRows = new Array();
 
 		// set the header checkbox
