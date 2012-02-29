@@ -1183,7 +1183,6 @@ function fFormStyle() {
 					fComments();
 				});
 			} else {
-				alert("tab has no children");
 				previousContainer.hide();
 				tabContainer.show();
 				jqTab.addClass("active");
