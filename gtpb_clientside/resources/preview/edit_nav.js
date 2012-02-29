@@ -613,7 +613,7 @@ function bigImage(oImg) {
 	src = src.replace(/\.500\.(jpg|png)/,'');
 	jqImg.attr("src", src);
 	var block = jqImg.closest(".block");
-	block.css('width','500px';
+	block.css('width','500px');
 	block.css('height','300px');
 }
 
