@@ -683,8 +683,13 @@ div#reportData {
   font-size-adjust: 0.58;
 }
 
+#reportData .block textarea {
+  border: 1px solid #dddddd;
+}
+
 #reportData .block select {
   -webkit-appearance: none;
+  border: 1px solid #dddddd;
   -moz-appearance: window; /* should be none: see https://bugzilla.mozilla.org/show_bug.cgi?id=649849 */
   height: 2em /* 1.7em; */
 }
