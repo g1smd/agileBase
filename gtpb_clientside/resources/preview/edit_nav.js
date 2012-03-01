@@ -28,7 +28,7 @@ function loadFromPreview(oBlock) {
 	var jqBlock = $(oBlock);
 	var rowId = jqBlock.attr("data-rowid");
 	// Find the row in pane 2, click it
-	var jqPane2 = $(document.getElementById('oViewPane').contentWindow.pane_2);
+	var jqPane2 = $("#pane_2");
 	alert("pane 2 " + jqPane2.attr("id"));
 	var jqRow = jqPane2.find("tr[name=" + rowId + "]");
 	alert("row " + jqRow.attr("name"));
