@@ -11,12 +11,10 @@
   <link type="text/css" href="resources/pane1_amalgam.css" rel="stylesheet" />
   <link type="text/css" href="resources/pane3_amalgam.css" rel="stylesheet" />
   <link type="text/css" href="resources/preview/edit_nav.css" rel="stylesheet" />
-  <link type="text/css" href="resources/preview/slides.css" rel="stylesheet" />
   <script src="resources/jquery.js" language="Javascript"></script>
   <script src="resources/pane1_amalgam.js" language="Javascript"></script>
   <script src="resources/pane3_amalgam.js" language="Javascript"></script>
   <script src="resources/preview/edit_nav.js" language="Javascript"></script>
-  <script src="resources/preview/slides.js" language="Javascript"></script>
 </head>
 <body style="overflow: scroll"> ## override tabs.css
   #set($filterString = $sessionData.getGlobalFilterString($report))

@@ -148,6 +148,11 @@ function fCalendar() {
   document.location = 'AppController.servlet?return=gui/calendar/calendar';
 }
 
+function fFullScreen() {
+	var previewDiv = $("preview");
+	$("preview").show().load("AppController.servlet?return=gui/preview/report_including_content");
+}
+
 function fAppStore() {
   document.getElementById('oViewPane').contentWindow.pane_2.fAppStore();
 }
