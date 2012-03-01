@@ -37,6 +37,8 @@ body {
   overflow: hidden;
   color: black;
   position: relative;
+  -webkit-transition: all 10s ease-in-out;
+  -moz-transition: all 10s ease-in-out;
   /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
 }
 
@@ -52,7 +54,7 @@ body {
   vertical-align: middle;
 }
 
-.block img.profile_photo {
+.reportDataView .block img.profile_photo {
   float: left;
   max-width: 50%;
   margin: 0;
@@ -61,7 +63,7 @@ body {
   left: -1em;
 }
 
-.block img.image {
+.reportDataView .block img.image {
   top: 0;
   left: 0;
   width: 100%;
@@ -102,6 +104,7 @@ body {
 
 .reportDataView .block:hover {
   cursor: pointer;
+  transform: scale(1.5);
   border-color: #50add6; /* ab light blue */
   box-shadow: 0 1px 3px rgba(80, 173, 214, 0.5); /* RGB ab light blue */
   /* box-shadow: 0 1px 3px rgba(72, 111, 152, 0.3); /* RGB ab dark blue */

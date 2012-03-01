@@ -222,6 +222,13 @@ function hidePane3() {
 	$(top.document).find("#pane3butt").click();
 }
 
+/**
+ * Load a record when clicking on a picker in a tab
+ */
+function loadIntoTab(url, targetElement) {
+	
+}
+
 // numberOfTabsExpected parameter:
 // -1 will always force a complete reload of pane 3
 // null will always force a single tab refresh only
