@@ -66,5 +66,5 @@ function fLoadFromPreview(oBlock) {
 	var rowId = jqBlock.attr("data-rowid");
 	// Find the row in pane 2, click it
 	var jqRow = $(document).find("tr[name=" + rowId + "]");
-	alert("row " + jqRow.attr("name"));
+  jqRow.click();
 }
