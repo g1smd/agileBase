@@ -149,7 +149,6 @@ function fCalendar() {
 }
 
 function fFullScreen() {
-	alert("Full Screen");
 	var previewDiv = $("#preview");
 	previewDiv.show().load("AppController.servlet?return=gui/preview/report_including_content");
 }

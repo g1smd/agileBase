@@ -1,22 +1,8 @@
-<!DOCTYPE HTML>
 #set($user = $view.getLoggedInUser())
 #set($company=$user.getCompany())
 #if(!$report)
   #set($report = $sessionData.getReport())
 #end
-<html>
-<head>
-  <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-  <title>$report.getModule() $report</title>
-  <link type="text/css" href="resources/pane1_amalgam.css" rel="stylesheet" />
-  <link type="text/css" href="resources/pane3_amalgam.css" rel="stylesheet" />
-  <link type="text/css" href="resources/preview/edit_nav.css" rel="stylesheet" />
-  <script src="resources/jquery.js" language="Javascript"></script>
-  <script src="resources/pane1_amalgam.js" language="Javascript"></script>
-  <script src="resources/pane3_amalgam.js" language="Javascript"></script>
-  <script src="resources/preview/edit_nav.js" language="Javascript"></script>
-</head>
-<body style="overflow: scroll"> ## override tabs.css
   #set($filterString = $sessionData.getGlobalFilterString($report))
   <div id="navrow">
     #set($placeholder = $report.getReportName().replaceAll(" - .*",""))
@@ -25,5 +11,3 @@
   <div class="reportDataView" id="homeContent">
     #parse("gui/preview/report_content.vm")
   </div>
-</body>
-</html>
