@@ -37,8 +37,8 @@ body {
   overflow: hidden;
   color: black;
   position: relative;
-  -webkit-transition: all 5s ease-in-out;
-  -moz-transition: all 5s ease-in-out;
+  -webkit-transition: all 10s ease-out;
+  -moz-transition: all 10s ease-out;
   /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
 }
 
@@ -109,8 +109,8 @@ body {
   transform: scale(1.5);
   z-index: 99;
   box-shadow: 0 1px 3px rgba(80, 173, 214, 0.5); /* RGB ab light blue */
-  -webkit-transition-duration: 1s;
-  -moz-transition-duration: 1s;
+  -webkit-transition: all 5s ease-in-out;
+  -moz-transition: all 5s ease-in-out;
   /* box-shadow: 0 1px 3px rgba(72, 111, 152, 0.3); /* RGB ab dark blue */
 }
 
