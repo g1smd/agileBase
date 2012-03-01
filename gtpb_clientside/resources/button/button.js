@@ -149,8 +149,9 @@ function fCalendar() {
 }
 
 function fFullScreen() {
-	var previewDiv = $("preview");
-	$("preview").show().load("AppController.servlet?return=gui/preview/report_including_content");
+	alert("Full Screen");
+	var previewDiv = $("#preview");
+	previewDiv.show().load("AppController.servlet?return=gui/preview/report_including_content");
 }
 
 function fAppStore() {
