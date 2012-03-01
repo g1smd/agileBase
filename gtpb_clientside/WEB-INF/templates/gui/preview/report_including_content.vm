@@ -5,6 +5,7 @@
 #end
   #set($filterString = $sessionData.getGlobalFilterString($report))
   <div id="navrow">
+    <button id="close_preview" onclick="closePreview();">close</button>
     #set($placeholder = $report.getReportName().replaceAll(" - .*",""))
     <input id="searchbox" class="searchbox" name="searchbox" type="search" placeholder="search $placeholder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
   </div>

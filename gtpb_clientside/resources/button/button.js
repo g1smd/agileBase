@@ -150,7 +150,11 @@ function fCalendar() {
 
 function fFullScreen() {
 	var previewDiv = $("#preview");
-	previewDiv.show().load("AppController.servlet?return=gui/preview/report_including_content");
+	previewDiv.fadeIn().load("AppController.servlet?return=gui/preview/report_including_content");
+}
+
+function closePreview() {
+	$("#preview").fadeOut();
 }
 
 function fAppStore() {
