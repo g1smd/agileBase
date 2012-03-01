@@ -37,6 +37,10 @@
   height: 150px;
 }
 
+.reportDataView .block.portrait {
+  height: 300px;
+}
+
 .reportDataView .block.big {
   height: 300px;
   width: 500px;
