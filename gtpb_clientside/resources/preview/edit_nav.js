@@ -28,8 +28,8 @@ function loadFromPreview(oBlock) {
 	var jqBlock = $(oBlock);
 	var rowId = jqBlock.attr("data-rowid");
 	// Find the row in pane 2, click it
-	var jqPane2 = $("#oViewPane").find("pane_2");
-	alert("pane 2 " + jqPane2.attr("id"));
+	var jqPane2 = $("#oViewPane")[0].contentWindow.pane_2;
+	alert("pane 2 " + $(jqPane2).attr("id"));
 	var jqRow = jqPane2.find("tr[name=" + rowId + "]");
 	alert("row " + jqRow.attr("name"));
 }
