@@ -6,7 +6,6 @@
 #set($internalTableName = $table.getInternalTableName())
 #set($reportBaseFields = $report.getReportBaseFields())##
 #foreach($reportBaseField in $reportBaseFields)
-  $reportBaseField is $reportBaseField.getAttachmentType()<br>
   #if($reportBaseField.getAttachmentType() == "IMAGE")
     #set($ratio = "portrait")
   #end
