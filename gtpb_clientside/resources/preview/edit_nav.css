@@ -9,6 +9,20 @@
   display: none;
 }
 
+.reportDataView .block {
+  margin: 2em;
+  float: left;
+  width: 250px;
+  height: 300px;
+  width: 500px;
+  overflow: hidden;
+  color: black;
+  position: relative;
+  -webkit-transition: all 10s ease-in-out;
+  -moz-transition: all 10s ease-in-out;
+  /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
+}
+
 .reportDataView .block.landscape {
   height: 150px;
 }
