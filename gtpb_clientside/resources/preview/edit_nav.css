@@ -14,13 +14,20 @@
   float: left;
   width: 250px;
   height: 300px;
-  width: 500px;
   overflow: hidden;
   color: black;
   position: relative;
   -webkit-transition: all 10s ease-in-out;
   -moz-transition: all 10s ease-in-out;
   /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
+  padding: 1em;
+  border: solid 1px #b4b4b4;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+  -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+  word-wrap: break-word;
 }
 
 .reportDataView .block.landscape {
