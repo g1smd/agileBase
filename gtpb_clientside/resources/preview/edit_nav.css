@@ -39,6 +39,8 @@ body {
   position: relative;
   -webkit-transition: all 10s ease-in-out;
   -moz-transition: all 10s ease-in-out;
+  -webkit-filter: grayscale(1);
+  -moz-filter: grayscale(1);
   /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
 }
 
@@ -121,6 +123,8 @@ body {
   -webkit-transition-duration: 3s;
   -moz-transition-duration: 3s;
   /* box-shadow: 0 1px 3px rgba(72, 111, 152, 0.3); /* RGB ab dark blue */
+  -webkit-filter: grayscale(0);
+  -moz-filter: grayscale(0);
 }
 
 .slide.reportDataView .related {
