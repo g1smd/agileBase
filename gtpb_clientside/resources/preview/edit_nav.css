@@ -10,7 +10,7 @@
   z-index: 2; /* above toolbar */
 }
 
-#pane1_id { display: none; }
+.pane1_id { display: none; }
 
 .reportDataView .block {
   margin: 2em;
