@@ -107,6 +107,7 @@ body {
   -moz-transform: scale(1.5);
   -webkit-transform: scale(1.5);
   transform: scale(1.5);
+  z-index: 99;
   border-color: #50add6; /* ab light blue */
   box-shadow: 0 1px 3px rgba(80, 173, 214, 0.5); /* RGB ab light blue */
   /* box-shadow: 0 1px 3px rgba(72, 111, 152, 0.3); /* RGB ab dark blue */
