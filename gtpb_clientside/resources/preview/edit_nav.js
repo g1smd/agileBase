@@ -25,6 +25,8 @@ $(document).ready(function() {
 });
 
 function loadFromPreview(oBlock) {
+	document.getElementById('oViewPane').contentWindow.pane_2.fExport();
+	return;
 	var jqBlock = $(oBlock);
 	var rowId = jqBlock.attr("data-rowid");
 	// Find the row in pane 2, click it
