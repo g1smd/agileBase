@@ -68,6 +68,6 @@ function fLoadFromPreview(oBlock, event) {
 	var jqRow = $(document).find("tr[name=" + rowId + "]");
   jqRow.click();
   if (event.target.nodeName != "IMG") {
-  	$("#preview").fadeOut();
+  	jqBlock.closest("#preview").fadeOut();
   }
 }
