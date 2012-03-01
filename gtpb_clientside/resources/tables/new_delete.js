@@ -62,10 +62,12 @@ function fLinks()
 }
 
 function fLoadFromPreview(oBlock, event) {
-	alert(event.target.nodeName);
 	var jqBlock = $(oBlock);
 	var rowId = jqBlock.attr("data-rowid");
 	// Find the row in pane 2, click it
 	var jqRow = $(document).find("tr[name=" + rowId + "]");
   jqRow.click();
+  if (event.target.nodeName != "IMG") {
+  	$("#preview").fadeOut();
+  }
 }
