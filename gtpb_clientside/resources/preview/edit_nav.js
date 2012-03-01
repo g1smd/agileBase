@@ -23,7 +23,3 @@ $(document).ready(function() {
 			});
 		});
 });
-
-function loadFromPreview(oBlock) {
-	document.getElementById('oViewPane').contentWindow.pane_2.fLoadFromPreview(oBlock);
-}

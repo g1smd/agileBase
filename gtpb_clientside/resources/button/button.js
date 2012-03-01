@@ -126,6 +126,10 @@ function fLinks() {
   document.getElementById('oViewPane').contentWindow.pane_2.fLinks();
 }
 
+function loadFromPreview(oBlock) {
+	document.getElementById('oViewPane').contentWindow.pane_2.fLoadFromPreview(oBlock);
+}
+
 function fPrint() {
 	// Test FF full screen
 	//document.getElementById('oViewPane').contentWindow.document.getElementById('colsWrapper').mozRequestFullScreen();
