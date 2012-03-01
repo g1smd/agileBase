@@ -126,8 +126,8 @@ function fLinks() {
   document.getElementById('oViewPane').contentWindow.pane_2.fLinks();
 }
 
-function fLoadFromPreview(oBlock) {
-	document.getElementById('oViewPane').contentWindow.pane_2.fLoadFromPreview(oBlock);
+function fLoadFromPreview(oBlock, event) {
+	document.getElementById('oViewPane').contentWindow.pane_2.fLoadFromPreview(oBlock, event);
 }
 
 function fPrint() {
