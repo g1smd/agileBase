@@ -126,7 +126,7 @@ function fLinks() {
   document.getElementById('oViewPane').contentWindow.pane_2.fLinks();
 }
 
-function loadFromPreview(oBlock) {
+function fLoadFromPreview(oBlock) {
 	document.getElementById('oViewPane').contentWindow.pane_2.fLoadFromPreview(oBlock);
 }
 
