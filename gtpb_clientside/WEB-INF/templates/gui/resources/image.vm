@@ -1,0 +1,8 @@
+#set($imgSrc = $sessionData.getCustomString("img_src"))
+<html>
+  <head></head>
+  <body>
+    <img style="width:100%" src="$imgSrc" />
+  </body>
+</html>
+    
