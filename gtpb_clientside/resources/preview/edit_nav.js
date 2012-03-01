@@ -25,13 +25,5 @@ $(document).ready(function() {
 });
 
 function loadFromPreview(oBlock) {
-	document.getElementById('oViewPane').contentWindow.pane_2.fExport();
-	return;
-	var jqBlock = $(oBlock);
-	var rowId = jqBlock.attr("data-rowid");
-	// Find the row in pane 2, click it
-	var jqPane2 = $("#oViewPane")[0].frames[0];
-	alert("pane 2 " + jqPane2.tagName);
-	var jqRow = jqPane2.find("tr[name=" + rowId + "]");
-	alert("row " + jqRow.attr("name"));
+	document.getElementById('oViewPane').contentWindow.pane_2.fLoadFromPreview(oBlock);
 }
