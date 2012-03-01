@@ -115,6 +115,7 @@
          jqDoc.find('#button_import').removeAttr('disabled');
    	     jqDoc.find('#button_export').removeAttr('disabled');
    	     jqDoc.find('#button_print').removeAttr('disabled');
+         jqDoc.find('#button_fullscreen').removeAttr('disabled');
          jqDoc.find('#button_apps').removeAttr('disabled');
          jqDoc.find('#button_forms').removeAttr('disabled');
         </script>
