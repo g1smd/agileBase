@@ -109,8 +109,8 @@ body {
   transform: scale(1.5);
   z-index: 99;
   box-shadow: 0 1px 3px rgba(80, 173, 214, 0.5); /* RGB ab light blue */
-  -webkit-transition-duration: 5s;
-  -moz-transition-duration: 5s;
+  -webkit-transition-duration: 3s;
+  -moz-transition-duration: 3s;
   /* box-shadow: 0 1px 3px rgba(72, 111, 152, 0.3); /* RGB ab dark blue */
 }
 
