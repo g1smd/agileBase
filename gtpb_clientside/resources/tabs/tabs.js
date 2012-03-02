@@ -1116,6 +1116,7 @@ function fInitialiseDependencies() {
  * Used when clicking on a selector report in a tab
  */
 function loadIntoTabTable(oRow, internalTableName, rowId) {
+	alert("Loading into tab table");
 	var jqSelector = $(oRow).closest("selectorReport");
 	var targetDiv = jqSelector.next("div");
 	targetDiv.load("AppController.servlet", {
