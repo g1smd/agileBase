@@ -1112,6 +1112,21 @@ function fInitialiseDependencies() {
 	}
 }
 
+/**
+ * Used when clicking on a selector report in a tab
+ */
+function loadIntoTabTable(oRow, internalTableName, rowId) {
+	var jqSelector = $(oRow).closest("selectorReport");
+	var targetDiv = jqSelector.next("div");
+	targetDiv.load("AppController.servlet", {
+		set_row_id: rowId,
+		rowidinternaltablename: internalTableName,
+		"return": "gui/reports_and_tables/tabs/tab_content_table"
+	}, function() {
+		alert('loaded');
+	});
+}
+
 /*
  * Summary tab functions
  */
