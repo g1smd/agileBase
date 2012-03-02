@@ -1118,12 +1118,18 @@ function fInitialiseDependencies() {
 function loadIntoTabTable(oRow, internalTableName, rowId) {
 	var jqSelector = $(oRow).closest(".selectorReport");
 	var targetDiv = jqSelector.next("div");
+	targetDiv.fadeOut();
 	targetDiv.load("AppController.servlet", {
 		set_row_id: rowId,
 		rowidinternaltablename: internalTableName,
 		"return": "gui/reports_and_tables/tabs/tab_content_table"
 	}, function() {
-		alert('loaded');
+		targetDiv.fadeIn();
+		fComboComponents();
+		fRelationPickers();
+		fComments();
+		fDatePickers();
+		fSexyUpload();
 	});
 }
 
@@ -1196,6 +1202,8 @@ function fFormStyle() {
 					fComboComponents();
 					fRelationPickers();
 					fComments();
+					fDatePickers();
+					fSexyUpload();
 				});
 			} else {
 				previousContainer.hide();
