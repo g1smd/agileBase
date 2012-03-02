@@ -5,7 +5,7 @@
 #end
 #set($filterString = $sessionData.getGlobalFilterString($report))
 <div id="navrow">
-  <div class="mini_action" style="border-bottom-right-radius: 0.5em; z-index: 100">
+  <div class="mini_action" style="border-bottom-right-radius: 0.5em;">
     <button id="close_preview" onclick="closePreview();">close</button>
   </div>
   #set($placeholder = $report.getReportName().replaceAll(" - .*",""))
