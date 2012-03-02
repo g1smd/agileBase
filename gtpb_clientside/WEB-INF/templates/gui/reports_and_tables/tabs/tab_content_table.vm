@@ -9,7 +9,7 @@
 #end
 #set($tableDataRow = $view.getTableDataRow($sessionTable, $sessionRowId))
 #set($formStyle = $parentTable.getFormStyle()) ## Inherit form style from the parent
-#if($formStyle == "TWO_COLUMNS")
+#if(($formStyle == "TWO_COLUMNS") && (!$component))
   <div class="two_cols">
 #end
 #set($fields = $sessionTable.getFields())
@@ -22,6 +22,6 @@
 #parse("gui/reports_and_tables/tabs/edit_content.vm")
 #if($formStyle == "SINGLE_COLUMN")
   </table>
-#elseif($formStyle == "TWO_COLUMNS")
+#elseif(($formStyle == "TWO_COLUMNS") && (!$component))
   </div>
 #end
