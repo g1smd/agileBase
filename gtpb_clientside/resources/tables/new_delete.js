@@ -68,7 +68,7 @@ function fLoadFromPreview(oBlock, event) {
 	// Find the row in pane 2, click it
 	//var jqRow = $(document).find("tr[name=" + rowId + "]");
   //jqRow.click();
-  loadIntoPane3('AppController.servlet?return=gui/reports_and_tables/pane3&set_row_id=' + rowId + '&set_custom_string=1&key=report_tabindex&value=2', rowId, 6);
+	parent.pane_2.loadIntoPane3('AppController.servlet?return=gui/reports_and_tables/pane3&set_row_id=' + rowId + '&set_custom_string=1&key=report_tabindex&value=2', rowId, 6);
   showPane3IfNecessary(event);
   if (event.target.nodeName != "IMG") {
   	jqBlock.closest("#preview").fadeOut();
