@@ -1124,6 +1124,8 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 		rowidinternaltablename: internalTableName,
 		"return": "gui/reports_and_tables/tabs/tab_content_table"
 	}, function() {
+		jqSelector.find("tr#currentRow").removeAttr("id");
+		$(oRow).attr("id","currentRow");
 		targetDiv.fadeIn();
 		fComboComponents();
 		fRelationPickers();
