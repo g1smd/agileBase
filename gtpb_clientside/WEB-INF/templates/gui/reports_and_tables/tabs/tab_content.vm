@@ -60,7 +60,7 @@
     #end ## end if datarows.size > 0
   #end ## if selectorReport
   #if($sessionRowId > -1)
-    #parse("gui/reports_and_tables/tab_content_table.vm")
+    #parse("gui/reports_and_tables/tabs/tab_content_table.vm")
   #else
     <div class="tab_new_record"><img style="vertical-align:middle;" src="resources/toolbar/new.png">&nbsp;new $sessionTable.getSingularName()</div>
   #end 
