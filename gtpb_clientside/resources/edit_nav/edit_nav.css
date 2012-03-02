@@ -232,6 +232,7 @@ body {
 #searchbox {
   margin-left: 2em;
   margin-top: 0.5em;
+  padding-left: 0.5em;
 	width: 15em;
 	font-size: 13pt;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

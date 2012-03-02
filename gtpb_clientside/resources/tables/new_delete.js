@@ -61,12 +61,15 @@ function fLinks()
 	);
 }
 
+//loadIntoPane3('AppController.servlet?return=gui/reports_and_tables/pane3&set_row_id=1911&set_custom_string=1&key=report_tabindex&value=2', 1911, 6);showPane3IfNecessary(event);
 function fLoadFromPreview(oBlock, event) {
 	var jqBlock = $(oBlock);
 	var rowId = jqBlock.attr("data-rowid");
 	// Find the row in pane 2, click it
-	var jqRow = $(document).find("tr[name=" + rowId + "]");
-  jqRow.click();
+	//var jqRow = $(document).find("tr[name=" + rowId + "]");
+  //jqRow.click();
+  loadIntoPane3('AppController.servlet?return=gui/reports_and_tables/pane3&set_row_id=' + rowId + '&set_custom_string=1&key=report_tabindex&value=2', rowId, 6);
+  showPane3IfNecessary(event);
   if (event.target.nodeName != "IMG") {
   	jqBlock.closest("#preview").fadeOut();
   }
