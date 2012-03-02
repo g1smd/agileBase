@@ -1,8 +1,42 @@
-#set($imgSrc = $sessionData.getCustomString("img_src"))
 <html>
-  <head></head>
-  <body>
-    <img style="width:100%" src="$imgSrc" />
-  </body>
+<head>
+<script src="resources/jquery.js" language="Javascript"></script>
+<script language="JavaScript">
+var zoomPercent = 100;
+
+function zoom(zoomIn) {
+  if(zoomIn) {
+    zoomPercent += 10;
+  } else {
+    zoomPercent -= 10;
+  }
+  if (zoomPercent < 1) { zoomPercent = 1;}
+  if (zoomPercent > 1000) { zoomPercent = 1000;}
+  $("#image").css("width",zoomPercent + "%");
+}
+</script>
+<style>
+#zoom {
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: rgba(196,196,196,0.5);
+  padding: 1em;
+  border-bottom-left-radius: 0.5em;
+}
+
+#image {
+  width: 100%;
+}
+</style>
+</head>
+<body>
+  <div id="zoom">
+    <img src="resources/preview/zoom_in_48.png" onclick="zoom(true);"><br/>
+    <img src="resources/preview/zoom_out_48.png" onclick="zoom(false);">
+  </div>
+  #set($imgSrc = $sessionData.getCustomString("img_src"))
+  <img id="image" src="$imgSrc"/>
+</body>
 </html>
     
