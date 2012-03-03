@@ -14,8 +14,7 @@ xhr.onload=function(event){if(config.autoclear&&(xhr.status>=200)&&(xhr.status<=
 xhr.onerror=function(event){form.trigger("sexyPost.error");}
 xhr.onabort=function(event){form.trigger("sexyPost.abort");}
 // Added by Oliver for IE9: http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
-xhr.onprogress = function(event) {}
-xhr.upload["onprogress"]=function(event){var completed=event.loaded/event.total;form.trigger("sexyPost.progress",[completed,event.loaded,event.total]);}
+xhr.upload.onprogress=function(event){var completed=event.loaded/event.total;form.trigger("sexyPost.progress",[completed,event.loaded,event.total]);}
 function clearFields(form){$(":input",form).not(":button, :submit, :reset, :hidden").removeAttr("checked").removeAttr("selected").val("");}
 function send(form,action,method,async){var data=new FormData();var fields=$(form).serializeArray();$.each(fields,function(index,field){data.append(field.name,field.value)});$("input:file",form).each(function(){var files=this.files;for(i=0;i<files.length;i++)data.append($(this).prop("name"),files[i]);});xhr.open(method,action,async);if(config.requestHeader){for(var key in config.requestHeader){xhr.setRequestHeader(key,config.requestHeader[key]);}}
 xhr.setRequestHeader("Cache-Control","no-cache");xhr.setRequestHeader("X-Requested-With","XMLHttpRequest");xhr.send(data);}});return this;}})(jQuery);
