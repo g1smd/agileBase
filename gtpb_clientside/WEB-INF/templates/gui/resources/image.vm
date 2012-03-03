@@ -27,6 +27,9 @@ function zoom(zoomIn) {
 
 #image {
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
   -moz-transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
