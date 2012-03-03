@@ -13,7 +13,7 @@ var form=$(this);form.submit(function(){var action=$(this).attr("action");var me
 xhr.onload=function(event){if(config.autoclear&&(xhr.status>=200)&&(xhr.status<=204))clearFields(form);form.trigger("sexyPost.complete",[xhr.responseText]);}
 xhr.onerror=function(event){form.trigger("sexyPost.error");}
 xhr.onabort=function(event){form.trigger("sexyPost.abort");}
-if (xhr.upload.onprogress !== undefined) {
+if (xhr.upload) {
 xhr.upload["onprogress"]=function(event){var completed=event.loaded/event.total;form.trigger("sexyPost.progress",[completed,event.loaded,event.total]);}
 }
 function clearFields(form){$(":input",form).not(":button, :submit, :reset, :hidden").removeAttr("checked").removeAttr("selected").val("");}
