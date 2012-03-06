@@ -37,6 +37,7 @@ import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.manageData.ReportDataFieldStats;
 import com.gtwm.pb.model.manageData.ReportQuickFilter;
+import com.gtwm.pb.util.Enumerations.FilterType;
 import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
@@ -263,9 +264,16 @@ public class ReportData implements ReportDataInfo {
 	}
 
 	private static String getFilterTypeSqlRepresentation(BaseField filterField,
-			QuickFilterType filterType) {
-		String filterTypeSqlRepresentation = filterType.getSqlRepresentation();
-		if (filterType.equals(QuickFilterType.EMPTY)) {
+			QuickFilterType quickFilterType, boolean exactFilter) {
+		DatabaseFieldType dbType = filterField.getDbType();
+		if (exactFilter
+				&& quickFilterType.equals(QuickFilterType.LIKE)
+				&& ((dbType.equals(DatabaseFieldType.INTEGER) || (dbType
+						.equals(DatabaseFieldType.SERIAL))))) {
+			return "=";
+		}
+		String filterTypeSqlRepresentation = quickFilterType.getSqlRepresentation();
+		if (quickFilterType.equals(QuickFilterType.EMPTY)) {
 			filterTypeSqlRepresentation = filterTypeSqlRepresentation.replaceAll(
 					"gtpb_field_placeholder", filterField.getInternalFieldName() + "::text");
 		}
@@ -322,7 +330,8 @@ public class ReportData implements ReportDataInfo {
 					.getReportCalcField().getDateResolution());
 		}
 		String filterFieldInternalName = filterField.getInternalFieldName();
-		String filterTypeSqlRepresentation = getFilterTypeSqlRepresentation(filterField, filterType);
+		String filterTypeSqlRepresentation = getFilterTypeSqlRepresentation(filterField,
+				filterType, false);
 		sqlFilterString = "lower(to_char(" + filterFieldInternalName + ", '" + dateFormat + "'))";
 		sqlFilterString += " " + filterTypeSqlRepresentation + " ? ";
 		return sqlFilterString;
@@ -423,10 +432,19 @@ public class ReportData implements ReportDataInfo {
 					filterStringForField.append(filterFieldInternalName + "::text");
 				}
 			} else {
-				filterStringForField.append(filterFieldInternalName + "::text");
+				if (exactFilters
+						&& (dbType.equals(DatabaseFieldType.INTEGER) || dbType
+								.equals(DatabaseFieldType.SERIAL))) {
+					// When exact filtering is on, treat integers as numbers
+					// rather than casting to text
+					// Allows indexes etc. to work
+					filterStringForField.append(filterFieldInternalName);
+				} else {
+					filterStringForField.append(filterFieldInternalName + "::text");
+				}
 			}
 			String filterTypeSqlRepresentation = getFilterTypeSqlRepresentation(filterField,
-					filterType);
+					filterType, exactFilters);
 			filterStringForField.append(" " + filterTypeSqlRepresentation + " ? ");
 		}
 		// save the filter for use when running SQL
@@ -546,41 +564,40 @@ public class ReportData implements ReportDataInfo {
 			SQLCode.append(" LIMIT ").append(rowLimit);
 		}
 		PreparedStatement statement = conn.prepareStatement(SQLCode.toString());
-		statement = this.fillInFilterValues(filtersUsed, statement);
+		statement = this.fillInFilterValues(filtersUsed, statement, exactFilters);
 		logger.debug("Prepared statement: " + statement);
 		return statement;
 	}
 
 	public PreparedStatement fillInFilterValues(List<ReportQuickFilterInfo> filtersUsed,
-			PreparedStatement statement) throws SQLException {
+			PreparedStatement statement, boolean exactFiltering) throws SQLException {
 		int i = 0;
 		// Fill in filters
 		for (ReportQuickFilterInfo filter : filtersUsed) {
 			i++;
-			// filter numbers as text, unless we're doing a > or < comparison
+			// filter numbers as text, unless we're doing a > or < comparison,
+			// or exact filtering is on
 			// This is so part filters will match as you type
 			QuickFilterType filterType = filter.getFilterType();
 			DatabaseFieldType dbFieldType = filter.getFilterField().getDbType();
+			String value = filter.getFilterValue();
 			if (filterType.equals(QuickFilterType.GREATER_THAN)
 					|| filterType.equals(QuickFilterType.LESS_THAN)) {
 				if (dbFieldType.equals(DatabaseFieldType.FLOAT)) {
-					String value = filter.getFilterValue();
 					statement.setDouble(i, Double.valueOf(value));
 				} else if (dbFieldType.equals(DatabaseFieldType.INTEGER)
 						|| dbFieldType.equals(DatabaseFieldType.SERIAL)) {
-					String value = filter.getFilterValue();
 					statement.setInt(i, Integer.valueOf(value));
 				} else if (dbFieldType.equals(DatabaseFieldType.TIMESTAMP)) {
 					// By this time, a date/time filter such as 'today' will
 					// have been turned into two filters using > and <, see
 					// preprocessDateFilter, so will always be processed here
-					String filterValue = filter.getFilterValue();
-					if (filterValue.endsWith("%")) {
-						filterValue = filterValue.substring(0, filterValue.length() - 1);
+					if (value.endsWith("%")) {
+						value = value.substring(0, value.length() - 1);
 					}
-					Span timespan = parseTimestamp(filterValue);
+					Span timespan = parseTimestamp(value);
 					if (timespan == null) {
-						statement.setString(i, filter.getFilterValue());
+						statement.setString(i, value);
 					} else {
 						Timestamp timestamp;
 						if (filterType.equals(QuickFilterType.LESS_THAN)) {
@@ -591,12 +608,17 @@ public class ReportData implements ReportDataInfo {
 						statement.setTimestamp(i, timestamp);
 					}
 				} else {
-					statement.setString(i, filter.getFilterValue());
+					statement.setString(i, value);
 				}
+			} else if (exactFiltering
+					&& filterType.equals(QuickFilterType.LIKE)
+					&& (dbFieldType.equals(DatabaseFieldType.INTEGER) || dbFieldType
+							.equals(DatabaseFieldType.SERIAL))) {
+				statement.setInt(i, Integer.valueOf(value));
 			} else if (filterType.equals(QuickFilterType.EMPTY)) {
 				statement.setString(i, "");
 			} else {
-				statement.setString(i, filter.getFilterValue());
+				statement.setString(i, value);
 			}
 		}
 		return statement;

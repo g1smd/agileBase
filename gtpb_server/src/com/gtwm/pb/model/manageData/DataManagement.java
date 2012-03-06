@@ -2333,7 +2333,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			SQLCode += " LIMIT " + rowLimit;
 			PreparedStatement statement = conn.prepareStatement(SQLCode);
-			statement = reportData.fillInFilterValues(filtersUsed, statement);
+			statement = reportData.fillInFilterValues(filtersUsed, statement, false);
 			ResultSet results = statement.executeQuery();
 			int colNum = 0;
 			int numCols = textFields.size();
@@ -2758,7 +2758,7 @@ public final class DataManagement implements DataManagementInfo {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement statement = conn.prepareStatement(SQLCode);
-			statement = reportData.fillInFilterValues(filtersUsed, statement);
+			statement = reportData.fillInFilterValues(filtersUsed, statement, false);
 			ResultSet results = statement.executeQuery();
 			if (results.next()) {
 				nextRowId = results.getInt(1);

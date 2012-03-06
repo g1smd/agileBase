@@ -101,7 +101,7 @@ public interface ReportDataInfo {
 	 * This method is public so that it can be used by summary reports as well
 	 */
 	public PreparedStatement fillInFilterValues(List<ReportQuickFilterInfo> filtersUsed,
-			PreparedStatement statement) throws SQLException;
+			PreparedStatement statement, boolean exactFiltering) throws SQLException;
 
 	/**
 	 * @return Whether the object has exceeded the time it's worth keeping in
