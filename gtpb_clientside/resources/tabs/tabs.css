@@ -814,6 +814,15 @@ div#reportData {
   background-color: #EEF3F9;
 }
 
+.form_tabber img {
+  height: 18px;
+  display: none;
+}
+
+.form_tabber .tab_choice.active img {
+  display: block;
+}
+
 .selectorReport {
   max-height: 15em;
   overflow-x: hidden;
