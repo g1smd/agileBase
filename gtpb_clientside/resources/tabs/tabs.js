@@ -1215,7 +1215,7 @@ function fFormStyle() {
 			tabContainer.load("AppController.servlet", {
 			  "return": "gui/reports_and_tables/tabs/tab_content",
 			  save_new_record: true,
-			  internalTableName: tabInternalTableName,
+			  internaltablename: tabInternalTableName,
 			  gtpb_override_relation_default_to_null: true
 			}, function() {
 				tabContainer.fadeIn();
