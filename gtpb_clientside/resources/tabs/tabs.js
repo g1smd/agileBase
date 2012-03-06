@@ -1219,6 +1219,7 @@ function fFormStyle() {
 			  gtpb_override_relation_default_to_null: true
 			}, function() {
 				tabContainer.fadeIn();
+				editTabFunctions();
 			});
 		});
 	}); // end of .tab_choice.each
