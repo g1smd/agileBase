@@ -1122,7 +1122,10 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 	targetDiv.load("AppController.servlet", {
 		set_row_id: rowId,
 		rowidinternaltablename: internalTableName,
-		"return": "gui/reports_and_tables/tabs/tab_content_table"
+		"return": "gui/reports_and_tables/tabs/tab_content_table",
+		set_custom_table: true,
+		tablekey: "tabTable",
+		custominternaltablename: internalTableName
 	}, function() {
 		jqSelector.find("tr#currentRow").removeAttr("id");
 		$(oRow).attr("id","currentRow");
