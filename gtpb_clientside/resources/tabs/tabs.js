@@ -1130,11 +1130,7 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 		jqSelector.find("tr#currentRow").removeAttr("id");
 		$(oRow).attr("id","currentRow");
 		targetDiv.fadeIn();
-		fComboComponents();
-		fRelationPickers();
-		fComments();
-		fDatePickers();
-		fSexyUpload();
+		editTabFunctions();
 	});
 }
 
@@ -1184,9 +1180,9 @@ function fFormStyle() {
 			return;
 		}
 		jqTab.addClass("tabActionRegistered");
+		var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
 		jqTab.click(function() {
 			var tabInternalTableName = $(this).attr("data-internaltablename");
-			var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
 			var previousTab = jqTab.closest(".form_tabber").find(".tab_choice.active");
 			var previousTabInternalTableName = previousTab.attr("data-internaltablename");
 			var previousContainer = $("#form_tabs_" + parentInternalTableName + "_" + previousTabInternalTableName);
@@ -1204,19 +1200,28 @@ function fFormStyle() {
 				}, function() {
 					tabContainer.removeClass("load-spinner");
 					jqTab.addClass("active");
-					fComboComponents();
-					fRelationPickers();
-					fComments();
-					fDatePickers();
-					fSexyUpload();
+					editTabFunctions();
 				});
 			} else {
 				previousContainer.hide();
 				tabContainer.show();
 				jqTab.addClass("active");
 			}
+		}); // end of jqTab.click()
+		jqTab.find("img.new").click(function() {
+			var tabInternalTableName = jqTab.attr("data-internaltablename");
+			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
+			tabContainer.fadeOut();
+			tabContainer.load("AppController.servlet", {
+			  "return": "gui/reports_and_tables/tabs/tab_content",
+			  save_new_record: true,
+			  internalTableName: tabInternalTableName,
+			  gtpb_override_relation_default_to_null: true
+			}, function() {
+				tabContainer.fadeIn();
+			});
 		});
-	});
+	}); // end of .tab_choice.each
 }
 
 function showAdvanced() {
@@ -1342,3 +1347,11 @@ pane3Scripts.functionList.push(fComments);
 pane3Scripts.functionList.push(fMap);
 pane3Scripts.functionList.push(fInitialiseDependencies);
 pane3Scripts.functionList.push(fFormStyle);
+
+function editTabFunctions() {
+	fComboComponents();
+	fRelationPickers();
+	fComments();
+	fDatePickers();
+	fSexyUpload();	
+}
