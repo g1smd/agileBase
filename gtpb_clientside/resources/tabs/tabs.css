@@ -821,7 +821,7 @@ div#reportData {
 }
 
 .form_tabber .tab_choice.active img {
-  display: block;
+  display: inline;
 }
 
 .selectorReport {
