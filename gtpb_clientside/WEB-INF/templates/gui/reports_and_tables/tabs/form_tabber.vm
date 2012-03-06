@@ -3,7 +3,7 @@
   #foreach($formTab in $formTabs)
     #set($formTable = $formTab.getTable())
     #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA",$formTable))
-      <div class="tab_choice" data-internaltablename="$formTable.getInternalTableName()">$formTab&nbsp;<img style="vertical-align:middle" src="resources/toolbar/new.png" /></div>
+      <div class="tab_choice" data-internaltablename="$formTable.getInternalTableName()">$formTab&nbsp;<img src="resources/toolbar/new.png" /></div>
     #end
   #end
 </div>

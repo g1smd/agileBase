@@ -814,9 +814,10 @@ div#reportData {
   background-color: #EEF3F9;
 }
 
-.form_tabber img {
+.form_tabber .tab_choice img {
   height: 18px;
   display: none;
+  vertical-align: middle;
 }
 
 .form_tabber .tab_choice.active img {
