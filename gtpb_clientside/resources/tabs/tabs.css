@@ -824,6 +824,10 @@ div#reportData {
   display: inline;
 }
 
+.form_tabber .tab_choice.active img:hover {
+  background-color: #f0f0f0;
+}
+
 .selectorReport {
   max-height: 15em;
   overflow-x: hidden;
