@@ -70,6 +70,8 @@
             #else
               #if(!$emboldened)
                 #set($style = "$style font-weight: bold; ")
+							#elseif($field.getContentSize() > 100)
+								#set($style = "$style color:gray; ")
               #end
               <span style="$style" class="cell $class">$cell</span>,
               #set($emboldened = true)

@@ -815,9 +815,9 @@ div#reportData {
 }
 
 .form_tabber .tab_choice img {
-  height: 18px;
+  height: 1.3em;
   display: none;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 .form_tabber .tab_choice.active img {
