@@ -217,3 +217,9 @@ div#_md_blank.window_disable h1 {
 	top: 700px;
 	position: absolute;
 }
+
+input[type=search] {
+  border: 1px solid #cccccc;
+  border-radius: 1em;
+  margin-top: 10px;
+}
