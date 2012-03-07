@@ -222,4 +222,5 @@ input[type=search] {
   border: 1px solid #cccccc;
   border-radius: 1em;
   margin-top: 10px;
+  padding-left: 1em;
 }
