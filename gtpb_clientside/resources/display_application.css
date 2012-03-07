@@ -34,7 +34,7 @@ body {
   background-image: url('../resources/toolbar/xmas.jpg');
   background-repeat: repeat-x;
   /* */
-  position: absolute;
+  position: static; /* absolute */
 	left: 0px;
 	width: 100%;
 	overflow: hidden;
