@@ -21,4 +21,7 @@ $(document).ready(function() {
 	$(".searchbox").focus(function() {
 		fFullScreen();
 	});
+	$(".searchbox").blur(function() {
+		closePreview();
+	});
 });
