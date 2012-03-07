@@ -1,6 +1,7 @@
 #preview {
   background-color: rgba(219,219,219,0.9); /* #dbdbdb; 777788, bdbdbd */
   position: absolute;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;

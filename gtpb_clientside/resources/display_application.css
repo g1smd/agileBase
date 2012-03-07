@@ -222,8 +222,8 @@ div#_md_blank.window_disable h1 {
   border: 1px solid #cccccc;
   border-radius: 1em;
   margin-top: 10px;
-  padding-left: 1em;
+  padding-left: 0.5em;
   z-index: 101;
   position: relative;
-  font-size: 11pt;
+  font-size: 10pt;
 }
