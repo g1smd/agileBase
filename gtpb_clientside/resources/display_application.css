@@ -227,3 +227,7 @@ div#_md_blank.window_disable h1 {
   position: relative;
   font-size: 10pt;
 }
+
+.searchbox:focus {
+  box-shadow: 0 0 1em 1em white;
+}
