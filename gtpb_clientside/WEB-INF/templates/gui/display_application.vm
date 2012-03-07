@@ -69,6 +69,7 @@
         #parse('gui/toolbar/buttons/filter.vm')
         #parse('gui/toolbar/buttons/print.vm')
         #parse('gui/toolbar/buttons/export.vm')
+				<input type="search" />
       </div>
       <div class="buttonGroup" style="float:right; margin-left:0; margin-right: 90px"> ## external applications, built in and customised
         ## #parse('gui/toolbar/buttons/wiki.vm')
@@ -79,7 +80,7 @@
       #if($apps.contains("dashboard"))
 		    #parse('gui/toolbar/buttons/dashboard.vm')
       #end
-      #parse('gui/toolbar/buttons/fullscreen.vm')
+      ##parse('gui/toolbar/buttons/fullscreen.vm')
       #parse('gui/toolbar/buttons/apps.vm')
       #set($sessionContext = $sessionData.getContext().toString())
       #if($sessionContext == "SYSADMIN")
