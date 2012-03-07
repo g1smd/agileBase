@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	$(".searchbox").keyup(function() {
-		alert("search");
 		var jqSearchBox = $(this);
 		jqSearchBox.addClass("changed");
 		var filterString = jqSearchBox.val();

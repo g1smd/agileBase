@@ -218,9 +218,10 @@ div#_md_blank.window_disable h1 {
 	position: absolute;
 }
 
-input[type=search] {
+.searchbox {
   border: 1px solid #cccccc;
   border-radius: 1em;
   margin-top: 10px;
   padding-left: 1em;
+  z-index: 101;
 }
