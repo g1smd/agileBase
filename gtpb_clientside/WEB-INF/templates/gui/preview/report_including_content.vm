@@ -8,8 +8,8 @@
   <div class="mini_action" style="border-bottom-right-radius: 0.5em;">
     <button id="close_preview" onclick="closePreview();">close</button>
   </div>
-  #set($placeholder = $report.getReportName().replaceAll(" - .*",""))
-  <input id="searchbox" class="searchbox" name="searchbox" type="search" placeholder="search $placeholder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
+  ###set($placeholder = $report.getReportName().replaceAll(" - .*",""))
+  ##<input id="searchbox" class="searchbox" name="searchbox" type="search" placeholder="search $placeholder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
 </div>
 <div class="reportDataView" id="homeContent">
   #parse("gui/preview/report_content.vm")

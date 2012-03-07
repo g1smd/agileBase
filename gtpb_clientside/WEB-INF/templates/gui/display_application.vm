@@ -69,7 +69,7 @@
         #parse('gui/toolbar/buttons/filter.vm')
         #parse('gui/toolbar/buttons/print.vm')
         #parse('gui/toolbar/buttons/export.vm')
-				<input type="search" placeholder="fullscreen search"/>
+				<input type="search" class="searchbox" placeholder="fullscreen search"/>
       </div>
       <div class="buttonGroup" style="float:right; margin-left:0; margin-right: 90px"> ## external applications, built in and customised
         ## #parse('gui/toolbar/buttons/wiki.vm')
