@@ -22,4 +22,7 @@ $(document).ready(function() {
 					jqSearchBox.removeClass("changed");
 			});
 		});
+	$("input[type=search]").focus(function() {
+		fFullScreen();
+	});
 });
