@@ -1,6 +1,7 @@
 #if(!$report)
   #set($report = $sessionData.getReport())
 #end
+#set($filterString = $sessionData.getGlobalFilterString($report).toLowerCase())
 #set($ratio = "landscape")
 #set($table = $report.getParentTable())
 #set($internalTableName = $table.getInternalTableName())
@@ -59,6 +60,9 @@
           #set($style="")
           #set($class="")
           #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
+					#if($cell.toLowerCase().startsWith($filterString))
+						#set($class = "$class goodMatch ")
+					#end
           #if($cell && (!$image) && ($cell != ""))
             #set($printoutSetting = $field.getPrintoutSetting())
             #if($fieldCategory == "CHECKBOX")

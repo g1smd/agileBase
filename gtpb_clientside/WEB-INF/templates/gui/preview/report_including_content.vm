@@ -3,7 +3,6 @@
 #if(!$report)
   #set($report = $sessionData.getReport())
 #end
-#set($filterString = $sessionData.getGlobalFilterString($report))
 ##<div id="navrow">
 ##  <div class="mini_action" style="border-bottom-right-radius: 0.5em;">
 ##    <button id="close_preview" onclick="closePreview();">close</button>

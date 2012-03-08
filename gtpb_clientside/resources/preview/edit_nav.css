@@ -169,3 +169,7 @@
   opacity: 0.9;
   z-index: 100;
 }
+
+.goodMatch {
+  font-weight: bold;
+}
