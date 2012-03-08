@@ -102,6 +102,13 @@ public interface TextField extends BaseField {
 			CodingErrorException;
 
 	/**
+	 * Like getItems but only use the cache, don't fall back to a database call.
+	 * Will return a zero length set if getItems has never been called since
+	 * application startup
+	 */
+	public SortedSet<String> getItemsCached() throws CantDoThatException;
+
+	/**
 	 * Similar to getItems() but instead of returning values from the field's
 	 * parent table, returns them from the report passed in, filtered by the
 	 * supplied filter map. An empty map can be used for no filtering.

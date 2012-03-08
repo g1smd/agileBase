@@ -310,6 +310,11 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	}
 
 	@Transient
+	public SortedSet<String> getItemsCached() throws CantDoThatException {
+		return allItemsCache;
+	}
+	
+	@Transient
 	public SortedSet<String> getItems() throws SQLException, CantDoThatException,
 			CodingErrorException {
 		long cacheAge = System.currentTimeMillis() - this.allItemsLastCacheTime;

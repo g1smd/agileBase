@@ -1074,14 +1074,16 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		this.sorts = sorts;
 	}
 
-	public synchronized void addDistinctField(BaseField field) throws ObjectNotFoundException, CantDoThatException {
+	public synchronized void addDistinctField(BaseField field) throws ObjectNotFoundException,
+			CantDoThatException {
 		if (!this.getReportBaseFields().contains(field)) {
 			throw new ObjectNotFoundException("Unable to find field '" + field.getFieldName()
 					+ "' in report " + this.getReportName()
 					+ " so cannot add to distinct fields set");
 		}
 		if (field instanceof CalculationField) {
-			// Can't add calc. fields because they can't be persisted. Perhaps if DISTINCTs worked on report fields, that would work
+			// Can't add calc. fields because they can't be persisted. Perhaps
+			// if DISTINCTs worked on report fields, that would work
 			throw new CantDoThatException("Can't add a DISTINCT clause on a calculation field");
 		}
 		this.getDistinctFieldsDirect().add(field);
@@ -1256,8 +1258,21 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 					continue FIELD_LOOP;
 				}
 				if (field instanceof TextField) {
-					if (((TextField) field).usesLookup()) {
-						continue FIELD_LOOP;
+					TextField textField = (TextField) field;
+					if (textField.usesLookup()) {
+						try {
+							int numItems = textField.getItemsCached().size();
+							if (numItems > 0 && numItems < 10) {
+								// Allow filtering on lookups if there are
+								// enough distinct values (or 0 which means the
+								// cache hasn't ben filled yet)
+								continue FIELD_LOOP;
+							}
+						} catch (CantDoThatException cdtex) {
+							throw new CodingErrorException(
+									"Looks like there's a lookup on a big text field: "
+											+ field.getTableContainingField() + "." + field, cdtex);
+						}
 					}
 				}
 				globalFilterValues.put(field, filterString);

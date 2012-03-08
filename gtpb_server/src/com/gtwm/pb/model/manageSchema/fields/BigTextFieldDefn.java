@@ -167,6 +167,13 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
 	}
 
 	@Transient
+	
+	public SortedSet<String> getItemsCached() throws CantDoThatException {
+		throw new CantDoThatException("" + this.getClass().getSimpleName()
+				+ " can't use getItems()");
+	}
+
+	@Transient
 	public SortedSet<String> getItems() throws SQLException, CantDoThatException {
 		throw new CantDoThatException("" + this.getClass().getSimpleName()
 				+ " can't use getItems()");
