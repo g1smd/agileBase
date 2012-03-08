@@ -95,7 +95,8 @@
   #end
 #end ## end of reportDataRows
 #if($reportDataRows.size() < 5)
-<div class="warningmessage">
+<div class="infomessage">
+	<h1>Reports in other areas that match</h1>
 	<ul>
 	#set($reports = $view.getAllViewableReports())
 	#foreach($report in $reports)
