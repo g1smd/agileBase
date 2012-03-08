@@ -33,6 +33,6 @@ $(document).ready(function() {
 		fFullScreen();
 	});
 	$(".searchbox").blur(function() {
-		//closePreview();
+		closePreview();
 	});
 });
