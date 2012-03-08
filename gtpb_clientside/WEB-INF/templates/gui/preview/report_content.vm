@@ -72,8 +72,8 @@
           #if($cell && (!$image) && ($cell != ""))
 						#set($fieldNum = $fieldNum + 1)
 						#if($fieldNum == 4)
-							###set($details = true)
-							###<div class="details">
+							#set($details = true)
+							<div class="details">
 						#end
             #set($printoutSetting = $field.getPrintoutSetting())
             #if($fieldCategory == "CHECKBOX")
@@ -94,7 +94,7 @@
             #end
           #end
         #end ## end of not primary key
-				###if($details) </div> #end
+				#if($details) </div> #end
 				#if($captionNecessary)
 					<div class="imageCaption">$cellsHtml</div>
 				#end
