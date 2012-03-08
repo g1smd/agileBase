@@ -1,5 +1,9 @@
 $(document).ready(function() {
-	$(".searchbox").keyup(function() {
+	$(".searchbox").keyup(function(event) {
+		if (event.keyCode == 27) {
+			closePreview();
+			return;
+		}
 		var jqSearchBox = $(this);
 		jqSearchBox.addClass("changed");
 		var filterString = jqSearchBox.val();
