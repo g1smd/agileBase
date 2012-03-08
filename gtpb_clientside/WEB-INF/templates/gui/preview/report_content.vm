@@ -105,7 +105,7 @@
 		#set($reportDescription = $report.getReportDescription().toLowerCase())
 		#if(!$reportName.contains("dbvcalc") && !$reportName.contains("dbvcrit"))
   		#if($reportName.contains($filterString) || $moduleName.contains($filterString) || $reportDescription.contains($filterString))
-  			<li>$moduleName - $reportName <span style="color:gray">$reportDescription</span></li>
+  			<li><img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $module.getIcon$moduleName - $reportName <span style="color:gray">$reportDescription</span></li>
 			#end
 		#end
 	#end
