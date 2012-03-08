@@ -2,6 +2,7 @@ $(document).ready(function() {
 	$(".searchbox").keyup(function(event) {
 		if (event.keyCode == 27) {
 			closePreview();
+			$(".searchbox").blur();
 			return;
 		}
 		var jqSearchBox = $(this);
