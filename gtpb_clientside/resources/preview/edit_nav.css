@@ -174,7 +174,7 @@
   font-weight: bold;
 }
 
-.goodMatchBlock {
+.reportDataView .block.goodMatchBlock {
   box-shadow: 0 0 1em 1em white;
 }
 
