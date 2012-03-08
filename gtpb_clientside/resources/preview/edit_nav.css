@@ -208,3 +208,7 @@
   font-size: 12pt;
 	text-align: center;
 }
+
+.infomessage ul {
+  list-style-type: none;
+}
