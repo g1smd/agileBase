@@ -66,7 +66,7 @@
   #if(!$fieldValueObject.isNull())
     #if($fieldValueObject.isImage())
     ## #if($userCanEdit)<br />#end
-      <a href="$downloadUrl" target="_blank">
+      <a href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
       <img border="0" src="$downloadUrl.500.$fieldValueObject.getExtension()" style="float:left; max-width: 100%; border-radius: 0.5em"/>
       </a>
       #set($sectionHasImage = true)
