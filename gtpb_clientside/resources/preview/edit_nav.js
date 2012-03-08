@@ -16,7 +16,8 @@ $(document).ready(function() {
 				}
 				$("#homeContent").html(data);
 				jqSearchBox.removeClass("changed");
-				$(".goodMatch").closest(".block").addClass("goodMatchBlock");
+				var goodMatches = $(".goodMatch").closest(".block").detach();
+				$("#homeContent").prepend(goodMatches);
 		});
 	});
 	$(".searchbox").focus(function() {
