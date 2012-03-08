@@ -238,3 +238,12 @@ div#_md_blank.window_disable h1 {
   position: relative;
   z-index: 101;
 }
+
+#searchTitle {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  font-size: 12;
+  color: #cccccc;
+  font-weight: bold;
+}

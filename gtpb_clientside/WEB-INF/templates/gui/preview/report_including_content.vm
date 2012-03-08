@@ -11,6 +11,7 @@
 ##  ###set($placeholder = $report.getReportName().replaceAll(" - .*",""))
 ##  ##<input id="searchbox" class="searchbox" name="searchbox" type="search" placeholder="search $placeholder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
 ##</div>
+<span id="searchTitle">$report.getModule() - $report</span>
 <div class="reportDataView" id="homeContent">
   #parse("gui/preview/report_content.vm")
 </div>
