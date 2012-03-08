@@ -166,7 +166,7 @@ function fFullScreen() {
 function closePreview() {
 	$("#preview").fadeOut();
 	$("#doneSearch").fadeOut();
-	#(".searchbox").val("");
+	$(".searchbox").val("");
 }
 
 function fAppStore() {
