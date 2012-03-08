@@ -102,7 +102,7 @@
 	#foreach($report in $reports)
 		#set($reportName = $report.getReportName().toLowerCase())
 		#set($moduleName = $report.getModule().getModuleName())
-		#set($reportDescription = $report.getDescription().toLowerCase())
+		#set($reportDescription = $report.getReportDescription().toLowerCase())
 		#if($reportName.contains($filterString) || $moduleName.contains($filterString) || $reportDescription.contains($filterString))
 			<li>$moduleName - $reportName <span style="color:gray">$reportDescription</span></li>
 		#end
