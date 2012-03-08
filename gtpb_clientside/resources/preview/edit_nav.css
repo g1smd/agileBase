@@ -194,3 +194,11 @@
 	border-bottom-right-radius: 1em;
 }
 
+.warningmessage {
+		border-radius: 1em;
+		border: 2px solid #ff0000;
+		text-align: center;
+		background: rgb(254,242,149);
+		margin: 10px;
+		padding: 10px;
+}
