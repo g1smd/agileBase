@@ -173,3 +173,8 @@
 .goodMatch {
   font-weight: bold;
 }
+
+.goodMatchBlock {
+  box-shadow: 0 0 1em 1em white;
+}
+
