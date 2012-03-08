@@ -118,6 +118,11 @@
   -moz-filter: grayscale(0);
 }
 
+.block .details {
+	font-size: 9pt;
+	background-color: #f0f0f0;
+}
+
 .slide.reportDataView .related {
   box-shadow: none;
   text-shadow: none;
@@ -216,4 +221,12 @@
 
 .infomessage ul li {
   cursor: pointer;
+  -moz-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.infomessage ul li:hover {
+  background-color: #cccccc;
 }
