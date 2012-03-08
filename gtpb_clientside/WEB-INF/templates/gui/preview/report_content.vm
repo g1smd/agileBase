@@ -94,11 +94,11 @@
             #end
           #end
         #end ## end of not primary key
-				#if($details) </div> #end
-				#if($captionNecessary)
-					<div class="imageCaption">$cellsHtml</div>
-				#end
-      #end
+      #end ## end fields loop
+			#if($details) </div> #end
+			#if($captionNecessary)
+				<div class="imageCaption">$cellsHtml</div>
+			#end
     </div> ## end of block
   #end
 #end ## end of reportDataRows
