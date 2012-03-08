@@ -29,9 +29,8 @@ $(document).ready(function() {
 				goodMatches.addClass("goodMatchBlock");
 				$(".infomessage ul li").click(function() {
 					var id=$(this).attr("data-id");
-					var a = $(top.oViewPane.pane_1.document).find("#" + id).find("a");
-					alert(a.attr("href"));
-					a.click();
+					var href = $(top.oViewPane.pane_1.document).find("#" + id).find("a").attr("href");
+					$(top.oViewPane.pane_2.document.href = href;
 				});
 		});
 	});
