@@ -155,10 +155,12 @@ function fCalendar() {
 function fFullScreen() {
 	var previewDiv = $("#preview");
 	previewDiv.fadeIn().load("AppController.servlet?return=gui/preview/report_including_content");
+	$("#doneSearch").fadeIn();
 }
 
 function closePreview() {
 	$("#preview").fadeOut();
+	$("#doneSearch").fadeOut();
 }
 
 function fAppStore() {

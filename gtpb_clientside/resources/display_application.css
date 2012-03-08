@@ -231,3 +231,9 @@ div#_md_blank.window_disable h1 {
 .searchbox:focus {
   box-shadow: 0 0 1em 1em white;
 }
+
+#doneSearch {
+  display: none;
+  margin-top: 10px;
+  position: relative;
+}
