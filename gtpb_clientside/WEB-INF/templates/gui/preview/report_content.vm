@@ -60,9 +60,11 @@
           #set($style="")
           #set($class="")
           #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
-					#if($cell.toLowerCase().startsWith($filterString))
-						#set($class = "$class goodMatch ")
-					#end
+					#if($cell)
+  					#if($cell.toLowerCase().startsWith($filterString))
+  						#set($class = "$class goodMatch ")
+  					#end
+			    #end
           #if($cell && (!$image) && ($cell != ""))
             #set($printoutSetting = $field.getPrintoutSetting())
             #if($fieldCategory == "CHECKBOX")
