@@ -30,7 +30,7 @@ $(document).ready(function() {
 				$(".infomessage ul li").click(function() {
 					var id=$(this).attr("data-id");
 					var href = $(top.oViewPane.pane_1.document).find("#" + id).find("a").attr("href");
-					$(top.oViewPane.pane_2.document.href = href;
+					top.oViewPane.pane_2.document.location = href;
 				});
 		});
 	});
