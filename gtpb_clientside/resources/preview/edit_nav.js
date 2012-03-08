@@ -27,6 +27,10 @@ $(document).ready(function() {
 				var goodMatches = $(".goodMatch").closest(".block").detach();
 				$("#homeContent").prepend(goodMatches);
 				goodMatches.addClass("goodMatchBlock");
+				$(".infomessage ul li").click(function() {
+					var id=$(this).attr("data-id");
+					$(parent.pane_1.document).find("#" + id).click();
+				});
 		});
 	});
 	$(".searchbox").focus(function() {

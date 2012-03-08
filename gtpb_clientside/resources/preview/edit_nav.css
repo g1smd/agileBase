@@ -213,3 +213,7 @@
 .infomessage ul {
   list-style-type: none;
 }
+
+.infomessage ul li {
+  cursor: pointer;
+}
