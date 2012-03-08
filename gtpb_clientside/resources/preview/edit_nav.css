@@ -59,7 +59,7 @@
   position: relative;
   top: -1em;
   left: -1em;
-  -moz
+  border-top-left-radius: 1em;
 }
 
 .reportDataView .block img.image {
@@ -67,6 +67,7 @@
   left: 0;
   width: 100%;
   position: absolute;
+  border-radius: 1em;
 }
 
 .reportDataView .block.centrebox {
