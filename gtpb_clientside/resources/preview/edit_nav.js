@@ -8,6 +8,9 @@ $(document).ready(function() {
 		var jqSearchBox = $(this);
 		jqSearchBox.addClass("changed");
 		var filterString = jqSearchBox.val();
+		if (filterString.length == 1) {
+			return;
+		}
 		//var internalReportName = $("#searchbox").attr("internalreportname");
 		$.get(
 			"AppController.servlet?return=gui/preview/report_content"
