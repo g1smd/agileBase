@@ -36,6 +36,8 @@
   #set($lastUniqueId = $thisUniqueId)
   #set($thisUniqueId = $row.getRowId())
   #set($emboldened = false)
+	#set($captionNecessary = false)
+	#set($cellsHtml = "")
   #if($thisUniqueId != $lastUniqueId)
     #set($goToTable = $report.getParentTable())
     #set($goToRowId = $thisUniqueId)
@@ -53,7 +55,7 @@
             #if($fileValue.isImage())
               #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
               #set($targetUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
-              <a target = "_blank" href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$targetUrl"><img src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #end/></a>
+              <a target = "_blank" href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$targetUrl"><img src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #set($captionNecessary = true) #end/></a>
               #set($image = true)
             #end
           #end
@@ -81,10 +83,14 @@
               #end
               <span style="$style" class="cell $class">$cell</span>,
               #set($emboldened = true)
+							#set($cellsHtml = "$cellsHtml <span style='$style' class='cell $class'>$cell</span>")
             #end
           #end
-        #end
-      #end
+        #end ## end of not primary key
+				#if($captionNecessary)
+					<div class="imageCaption">$cellsHtml</div>
+				#end
+      #end ## end of block
     </div>
   #end
 #end
