@@ -93,4 +93,19 @@
       #end ## end of block
     </div>
   #end
+#end ## end of reportDataRows
+#if($reportDataRows.size() < 5)
+<div class="warningmessage">
+	<ul>
+	#set($reports = $view.getAllViewableReports())
+	#foreach($report in $reports)
+		#set($reportName = $report.getReportName().toLowerCase())
+		#set($moduleName = $report.getModule().getModuleName())
+		#set($reportDescription = $report.getDescription().toLowerCase())
+		#if($reportName.contains($filterString) || $moduleName.contains($filterString) || $reportDescription.contains($filterString))
+			<li>$moduleName - $reportName <span style="color:gray">$reportDescription</span></li>
+		#end
+	#end
+	</ul>
+</div>
 #end
