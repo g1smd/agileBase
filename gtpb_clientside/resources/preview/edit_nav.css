@@ -202,6 +202,7 @@
 	padding: 10px;
 	position: relative;
 	margin-top: 2em;
+	clear: left;
 }
 
 .infomessage h1 {
