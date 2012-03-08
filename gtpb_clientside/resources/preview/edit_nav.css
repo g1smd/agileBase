@@ -190,5 +190,7 @@
   font-size: 8pt;
 	text-shadow: white 0 0 1px;
 	color: gray;
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
 }
 
