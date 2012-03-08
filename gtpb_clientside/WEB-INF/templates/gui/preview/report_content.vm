@@ -94,7 +94,7 @@
     </div>
   #end
 #end ## end of reportDataRows
-#if($reportDataRows.size() < 5)
+#if($reportDataRows.size() < 13)
 <div class="infomessage">
 	<h1>Reports from other areas</h1>
 	<ul>
