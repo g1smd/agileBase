@@ -236,4 +236,5 @@ div#_md_blank.window_disable h1 {
   display: none;
   margin-top: 10px;
   position: relative;
+  z-index: 101;
 }
