@@ -71,7 +71,7 @@
 			    #end
           #if($cell && (!$image) && ($cell != ""))
 						#set($fieldNum = $fieldNum + 1)
-						#if($fieldNum == 4)
+						#if($fieldNum == 5)
 							#set($details = true)
 							<div class="details">
 						#end
