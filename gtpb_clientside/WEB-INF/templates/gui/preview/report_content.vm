@@ -60,7 +60,7 @@
           #set($style="")
           #set($class="")
           #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
-					#if($cell)
+					#if($cell && $filterString) ## avoid NullPointerException
   					#if($cell.toLowerCase().startsWith($filterString))
   						#set($class = "$class goodMatch ")
   					#end
