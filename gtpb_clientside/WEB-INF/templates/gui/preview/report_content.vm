@@ -94,12 +94,12 @@
             #end
           #end
         #end ## end of not primary key
+				#if($details) </div> #end
 				#if($captionNecessary)
 					<div class="imageCaption">$cellsHtml</div>
 				#end
-				#if($details) </div> #end
-      #end ## end of block
-    </div>
+      #end
+    </div> ## end of block
   #end
 #end ## end of reportDataRows
 #if($reportDataRows.size() < 13)
