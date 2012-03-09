@@ -1516,7 +1516,8 @@ public final class DataManagement implements DataManagementInfo {
 					op.size(500);
 					op.addImage(); // Placeholder for output PNG
 					try {
-						convert.run(op, new Object[]{filePath, filePath + "." + 500 + ".png"});
+						// [0] means convert only first page
+						convert.run(op, new Object[]{filePath + "[0]", filePath + "." + 500 + ".png"});
 					} catch (IOException ioex) {
 						throw new CantDoThatException("IO error while converting PDF to PNG: " + ioex);
 					} catch (InterruptedException iex) {
