@@ -11,7 +11,7 @@
 ##  ##<input id="searchbox" class="searchbox" name="searchbox" type="search" placeholder="search $placeholder" internalreportname="$report.getInternalReportName()" #if($filterString) value="$filterString" #end>
 ##</div>
 #set($searchTitle = "$report.getModule() - $report")
-#if($searchTitle.length() > 20)
+#if($searchTitle.length() > 25)
 	#set($searchTitle = "$report")
 #end
 <span id="searchTitle">$searchTitle</span>

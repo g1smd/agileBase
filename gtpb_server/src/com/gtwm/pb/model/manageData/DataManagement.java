@@ -150,6 +150,10 @@ import org.codehaus.jackson.JsonGenerator;
 import org.grlea.log.SimpleLogger;
 import org.glowacki.CalendarParser;
 import org.glowacki.CalendarParserException;
+import org.im4java.core.ConvertCmd;
+import org.im4java.core.IM4JavaException;
+import org.im4java.core.IMOperation;
+
 import au.com.bytecode.opencsv.CSVReader;
 
 // TODO: There is only one instance of DataManagement in the app
@@ -1497,13 +1501,28 @@ public final class DataManagement implements DataManagementInfo {
 						} else {
 							FileUtils.copyFile(selectedFile, thumb500File);
 						}
-						/*
-						 * allow files that are up to 60 px tall as long as the
-						 * width is no > 40 px
-						 */Thumbnails.of(selectedFile).size(40, 60).toFile(thumb40File);
+						// Allow files that are up to 60 px tall as long as the
+						// width is no > 40 px
+						Thumbnails.of(selectedFile).size(40, 60).toFile(thumb40File);
 					} catch (IOException ioex) {
 						throw new FileUploadException("Error generating thumbnail: "
 								+ ioex.getMessage());
+					}
+				} else if (extension.equals("pdf")) {
+					// Convert first page to PNG with imagemagick
+					ConvertCmd convert = new ConvertCmd();
+					IMOperation op = new IMOperation();
+					op.addImage(); // Placeholder for input PDF
+					op.size(500);
+					op.addImage(); // Placeholder for output PNG
+					try {
+						convert.run(op, new Object[]{filePath, filePath + "." + 500 + ".png"});
+					} catch (IOException ioex) {
+						throw new CantDoThatException("IO error while converting PDF to PNG: " + ioex);
+					} catch (InterruptedException iex) {
+						throw new CantDoThatException("Interrupted while converting PDF to PNG: " + iex);
+					} catch (IM4JavaException im4jex) {
+						throw new CantDoThatException("Problem converting PDF to PNG: " + im4jex);
 					}
 				}
 			}
