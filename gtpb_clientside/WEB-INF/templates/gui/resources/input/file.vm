@@ -40,8 +40,15 @@
       #if(!$userCanEdit) <br style="clear: left"> #end
       <img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/> $fieldValue
       ## Users were frequently having problems with browsers caching old document versions
-      #set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
+			#set($pdf = false)
+			#if($downloadUrl.endsWith("pdf")) #set($pdf = true) #end
+      #set($previewUrl = "$downloadUrl.500.png")
+			#set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
       <a href="$downloadUrl">download</a>
+			#if($pdf && !$sectionHasImage)
+				<br clear="left" />
+			  <a href="$downloadUrl"><img style="float:left; max-width: 100%; border-radius: 0.5em" src="$previewUrl"></a>
+			#end
   	  #if(!$userCanEdit)
   	    #set($previousFileVersions = $field.getPreviousFileVersions($viewTools.getWebAppRoot(), $sessionRowId, $fieldValue))
   	    #if($previousFileVersions.size() > 0)
