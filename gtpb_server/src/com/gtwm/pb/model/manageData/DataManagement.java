@@ -1513,7 +1513,7 @@ public final class DataManagement implements DataManagementInfo {
 					ConvertCmd convert = new ConvertCmd();
 					IMOperation op = new IMOperation();
 					op.addImage(); // Placeholder for input PDF
-					op.size(500);
+					op.resize(500, 500);
 					op.addImage(); // Placeholder for output PNG
 					try {
 						// [0] means convert only first page
