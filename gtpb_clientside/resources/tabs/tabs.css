@@ -616,6 +616,10 @@ span.comment_attribution {
   top: 0;
 }
 
+.block.two_cols.non_section .fieldname {
+  min-width: 10em;
+}
+
 div#reportData {
   background-color: #f4f4f4;
 }
