@@ -15,7 +15,7 @@ function zoom(zoomIn) {
   $("#image").css("width",zoomPercent + "%");
 }
 
-$("document").keypress(function(event) {
+$(document).keypress(function(event) {
   if(event.which == "-") {
 	  zoom(false);
 	} else if (event.which == "+") {
