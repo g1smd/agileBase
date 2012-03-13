@@ -217,37 +217,3 @@ div#_md_blank.window_disable h1 {
 	top: 700px;
 	position: absolute;
 }
-
-.searchbox {
-  border: 1px solid #cccccc;
-  border-radius: 1em;
-  margin-top: 9px;
-  padding-left: 0.5em;
-  z-index: 101;
-  position: relative;
-}
-
-.searchbox:focus {
-  box-shadow: 0 0 1em 1em white;
-}
-
-#doneSearch {
-  display: none;
-  margin-top: 9px;
-  position: relative;
-  z-index: 101;
-}
-
-#searchTitle {
-  position: fixed;
-  top: 0;
-  left: 1em;
-  font-size: 24pt;
-  color: #f0f0f0;
-  font-weight: bold;
-  text-transform: lowercase;
-  /* box-shadow: 0 0 1em 1em #dbdbdb; */
-  background-color: #dbdbdb;
-  padding: 1em;
-  padding-top: 0;
-}
