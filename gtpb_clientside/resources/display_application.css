@@ -221,11 +221,10 @@ div#_md_blank.window_disable h1 {
 .searchbox {
   border: 1px solid #cccccc;
   border-radius: 1em;
-  margin-top: 10px;
+  margin-top: 9px;
   padding-left: 0.5em;
   z-index: 101;
   position: relative;
-  font-size: 10pt;
 }
 
 .searchbox:focus {
@@ -234,7 +233,7 @@ div#_md_blank.window_disable h1 {
 
 #doneSearch {
   display: none;
-  margin-top: 10px;
+  margin-top: 9px;
   position: relative;
   z-index: 101;
 }
