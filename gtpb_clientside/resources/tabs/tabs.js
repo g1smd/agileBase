@@ -1162,7 +1162,10 @@ function fShowAddGroup() {
   $("#addGroup").show();
   $("#addGroupLink").hide();
   var oViewPane = top.document.getElementById('oViewPane');
-  alert($(oViewPane).attr("id"));
+  $(oViewPane).css("height", "0");
+  setTimeout(1000, function() {
+    $(oViewPane).css("height", "100%");
+  });
 }
 
 function fShowAddAgg() {
