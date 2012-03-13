@@ -1158,17 +1158,24 @@ function fSetupCharts() {
 					});
 }
 
+function fWebkitGlitch() {
+	if ($.browser.webkit) {
+	  var oViewPane = top.document.getElementById('oViewPane');
+	  $(oViewPane).css("height", "0");
+	  setTimeout("$(top.document.getElementById('oViewPane')).css('height', '100%')",500);
+	}
+}
+
 function fShowAddGroup() {
   $("#addGroup").show();
   $("#addGroupLink").hide();
-  var oViewPane = top.document.getElementById('oViewPane');
-  $(oViewPane).css("height", "0");
-  setTimeout("$(top.document.getElementById('oViewPane')).css('height', '100%')",1000);
+  fWebkitGlitch();
 }
 
 function fShowAddAgg() {
   $("#addAgg").show();
   $("#addAggLink").hide();
+  fWebkitGlitch();
 }
 
 function fSubmitGroup() {

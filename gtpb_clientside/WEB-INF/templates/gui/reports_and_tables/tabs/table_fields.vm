@@ -130,7 +130,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 	                #end	
 				 #end
 				 #if($options.size() > 0)
-				  <a href="#" onclick="$('#editoptions_$internalFieldName').slideDown('normal'); $('#viewoptions_$internalFieldName').hide('fast');" >more/change</a>	
+				  <a href="#" onclick="$('#editoptions_$internalFieldName').slideDown('normal'); $('#viewoptions_$internalFieldName').hide('fast'); fWebkitGlitch();" >more/change</a>	
 				 #end
 				</div>
 				<div id="editoptions_$internalFieldName" style="display:none">
