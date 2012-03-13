@@ -34,7 +34,7 @@ body {
   background-image: url('../resources/toolbar/xmas.jpg');
   background-repeat: repeat-x;
   /* */
-  position: absolute; /* absolute */
+  position: static; /* absolute */
 	left: 0px;
 	width: 100%;
 	overflow: hidden;
@@ -75,8 +75,8 @@ iframe#oViewPane {
 	height: 100%;
 	z-index: 0;
 	padding-bottom: 51px;
-	position: absolute;
-	top: 51px;
+	/* position: absolute;
+	top: 51px; */
 }
 
 div#_md_blank.window_disable h1 {

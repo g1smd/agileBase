@@ -46,7 +46,7 @@
       </script>  
     </head>
 	  <body #if($viewTools.getAppUrl().contains("gtwmbackup")) class="localhost" #end>
-    ##<div id="preview"></div>
+    <div id="preview"></div>
     #set($noCaption = true)
     <div id="toolbarDiv">
       #parse("properties.vm") ## sets logo variable
