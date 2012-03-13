@@ -46,7 +46,7 @@
       </script>  
     </head>
 	  <body #if($viewTools.getAppUrl().contains("gtwmbackup")) class="localhost" #end>
-    <div id="preview"></div>
+    ##<div id="preview"></div>
     #set($noCaption = true)
     <div id="toolbarDiv">
       #parse("properties.vm") ## sets logo variable
@@ -69,8 +69,8 @@
         #parse('gui/toolbar/buttons/filter.vm')
         #parse('gui/toolbar/buttons/print.vm')
         #parse('gui/toolbar/buttons/export.vm')
-				##<input type="search" class="searchbox" id="searchbox" placeholder="quick search"/>
-				##<button id="doneSearch" />done</button>
+				<input type="search" class="searchbox" id="searchbox" placeholder="quick search"/>
+				<button id="doneSearch" />done</button>
       </div>
       <div class="buttonGroup" style="float:right; margin-left:0; margin-right: 90px"> ## external applications, built in and customised
         ## #parse('gui/toolbar/buttons/wiki.vm')
