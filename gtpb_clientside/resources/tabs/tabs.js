@@ -1158,6 +1158,36 @@ function fSetupCharts() {
 					});
 }
 
+function fShowAddGroup() {
+  $("#addGroup").show();
+  $("#addGroupLink").hide();
+  $("#oViewPane").css("height", "auto");
+  $("#oViewPane").css("height", "100%");
+}
+
+function fShowAddAgg() {
+  $("#addAgg").show();
+  $("#addAggLink").hide();
+}
+
+function fSubmitGroup() {
+  if ($("#groupselect").val() != "") {
+    document.addgrouping.submit();
+  }
+}
+
+function fSubmitWordCloud() {
+  document.wordcloud.submit();
+}
+
+function fSubmitFunction() {
+  var aggregateFunction = jQuery("#aggregatefunction").val();
+  var aggregateFunctionField = jQuery("#aggregatefunctionfield").val();
+  if (aggregateFunction != "" && aggregateFunctionField != "") {
+    document.addaggregate.submit();
+  }
+}
+
 /**
  * Select a form style
  */

@@ -200,36 +200,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     #else
       Groupings:
     #end
-    <script language="JavaScript">
-    function fShowAddGroup() {
-      jQuery("#addGroup").show();
-      jQuery("#addGroupLink").hide();
-    }
-    
-    function fShowAddAgg() {
-      jQuery("#addAgg").show();
-      jQuery("#addAggLink").hide();
-    }
-    
-    function fSubmitGroup() {
-      if (jQuery("#groupselect").val() != "") {
-        document.addgrouping.submit();
-      }
-    }
-    
-    function fSubmitWordCloud() {
-      document.wordcloud.submit();
-    }
-    
-    function fSubmitFunction() {
-      var aggregateFunction = jQuery("#aggregatefunction").val();
-      var aggregateFunctionField = jQuery("#aggregatefunctionfield").val();
-      if (aggregateFunction != "" && aggregateFunctionField != "") {
-        document.addaggregate.submit();
-      }
-    }
-     
-    </script>
     <a href="#" onclick="fShowAddGroup();" id="addGroupLink">add...</a>
     <div id="addGroup" style="display:none"><br>
       <input type="hidden" name="return" value="$return_template" />
