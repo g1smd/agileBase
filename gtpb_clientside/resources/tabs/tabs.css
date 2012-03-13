@@ -618,6 +618,7 @@ span.comment_attribution {
 
 .block.two_cols.non_section .fieldname {
   min-width: 10em;
+  display: inline-block;
 }
 
 div#reportData {
