@@ -1161,7 +1161,8 @@ function fSetupCharts() {
 function fShowAddGroup() {
   $("#addGroup").show();
   $("#addGroupLink").hide();
-  alert("found: " + $(top).find("#oViewPane").size());
+  var oViewPane = top.document.getElementById('oViewPane');
+  alert($(oViewPane).attr("id"));
 }
 
 function fShowAddAgg() {
