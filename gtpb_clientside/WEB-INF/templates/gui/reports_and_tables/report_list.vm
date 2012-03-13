@@ -44,13 +44,6 @@
 #parse("gui/resources/calc_module_reports.vm")
 ## only show the grouped reports section if it isn't empty!
 #if($moduleReports.size() > 0)
-  ## search box
-  #if($reports.size() > 5000)
-  <div id="reportsearch">
-    <img src="resources/icons/applications/tango/actions/system-search.png" style="float:left"/>&nbsp;
-	<input type="text" size="15" name="reportsearch" id="reportsearchbox"/>
-  </div>
-  #end ## search box
   #set($previousSection = "")
   ## Get colours array
   #parse('gui/resources/module_color_colors.vm')

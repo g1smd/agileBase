@@ -69,7 +69,7 @@
         #parse('gui/toolbar/buttons/filter.vm')
         #parse('gui/toolbar/buttons/print.vm')
         #parse('gui/toolbar/buttons/export.vm')
-				<input type="search" class="searchbox" placeholder="quick search"/>
+				<input type="search" class="searchbox" id="searchbox" placeholder="quick search"/>
 				<button id="doneSearch" />done</button>
       </div>
       <div class="buttonGroup" style="float:right; margin-left:0; margin-right: 90px"> ## external applications, built in and customised

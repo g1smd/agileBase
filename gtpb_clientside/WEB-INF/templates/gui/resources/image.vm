@@ -14,6 +14,14 @@ function zoom(zoomIn) {
   if (zoomPercent > 1000) { zoomPercent = 1000;}
   $("#image").css("width",zoomPercent + "%");
 }
+
+$("document").keypress(function(event) {
+  if(event.which == "-") {
+	  zoom(false);
+	} else if (event.which == "+") {
+	  zoom(true);
+	}
+});
 </script>
 <style>
 #zoom {

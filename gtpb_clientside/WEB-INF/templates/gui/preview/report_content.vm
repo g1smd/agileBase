@@ -106,8 +106,8 @@
     </div> ## end of block
   #end
 #end ## end of reportDataRows
-#if($reportDataRows.size() < 13)
-<div class="infomessage">
+#if($reportDataRows.size() < 15)
+<div class="infomessage" id="schemaResults">
 	<h1>Reports from other areas</h1>
 	<ul>
 	#set($reports = $view.getAllViewableReports())
@@ -118,7 +118,7 @@
 		#set($reportDescription = $report.getReportDescription().toLowerCase())
 		#if(!$reportName.contains("dbvcalc") && !$reportName.contains("dbvcrit"))
   		#if($reportName.contains($filterString) || $moduleName.contains($filterString) || $reportDescription.contains($filterString))
-  			<li data-id="$report.getParentTable().getInternalTableName()$report.getInternalReportName()"><img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $moduleName - $reportName <span style="color:gray">$reportDescription</span></li>
+  			<li data-internaltablename="$report.getParentTable().getInternalTableName()" data=internalreportname="$report.getInternalReportName()"><img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $moduleName - $reportName <span style="color:gray">$reportDescription</span></li>
 			#end
 		#end
 	#end

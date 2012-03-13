@@ -1519,11 +1519,11 @@ public final class DataManagement implements DataManagementInfo {
 						// [0] means convert only first page
 						convert.run(op, new Object[]{filePath + "[0]", filePath + "." + 500 + ".png"});
 					} catch (IOException ioex) {
-						throw new CantDoThatException("IO error while converting PDF to PNG: " + ioex);
+						throw new FileUploadException("IO error while converting PDF to PNG: " + ioex);
 					} catch (InterruptedException iex) {
-						throw new CantDoThatException("Interrupted while converting PDF to PNG: " + iex);
+						throw new FileUploadException("Interrupted while converting PDF to PNG: " + iex);
 					} catch (IM4JavaException im4jex) {
-						throw new CantDoThatException("Problem converting PDF to PNG: " + im4jex);
+						throw new FileUploadException("Problem converting PDF to PNG: " + im4jex);
 					}
 				}
 			}
