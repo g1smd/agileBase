@@ -61,6 +61,7 @@ function loadPreviewResults(filterString, internalReportName) {
 				var href = $(top.oViewPane.pane_1.document).find("#" + id).find("a").attr("href");
 				loadPreviewResults("", internalReportName);
 				top.oViewPane.pane_2.document.location = href;
+				$("#searchTitle").text(jqLi.attr("data-searchtitle"));
 			});
 			if($("#schemaResults ul li").size() == 0) {
 				$("#schemaResults").hide();

@@ -119,7 +119,11 @@
 		#set($reportDescription = $report.getReportDescription().toLowerCase())
 		#if(!$reportName.contains("dbvcalc") && !$reportName.contains("dbvcrit"))
   		#if($reportName.contains($filterString) || $moduleName.contains($filterString) || $reportDescription.contains($filterString))
-  			<li data-internaltablename="$report.getParentTable().getInternalTableName()" data-internalreportname="$report.getInternalReportName()"><img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $moduleName - $reportName <span style="color:gray">$reportDescription</span></li>
+        #set($searchTitle = "$moduleName - $reportName")
+        #if($searchTitle.length() > 25)
+        	#set($searchTitle = "$reportName")
+        #end
+  			<li data-searchtitle="$searchTitle" data-internaltablename="$report.getParentTable().getInternalTableName()" data-internalreportname="$report.getInternalReportName()"><img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $moduleName - $reportName <span style="color:gray">$reportDescription</span></li>
 			#end
 		#end
 	#end
