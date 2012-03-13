@@ -836,7 +836,7 @@ div#reportData {
 .selectorReport {
   max-height: 15em;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: 0.5em;
   margin-right: 0;
   margin-top: 0;

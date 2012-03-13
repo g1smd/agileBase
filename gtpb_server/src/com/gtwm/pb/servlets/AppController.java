@@ -43,6 +43,7 @@ import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
+import com.gtwm.pb.model.interfaces.FormTabInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
@@ -878,8 +879,9 @@ public final class AppController extends VelocityViewServlet {
 		TableInfo table = sessionData.getTable();
 		Map<BaseField, String> filters = new HashMap<BaseField, String>();
 		filters.put(table.getPrimaryKey(), String.valueOf(rowId));
+		// First report data
 		List<DataRowInfo> reportDataRows = view.getReportDataRows(report, 1, filters, true);
-		// There will be only one
+		// There will be only one row
 		for (DataRowInfo dataRow : reportDataRows) {
 			for (ReportFieldInfo reportField : report.getReportFields()) {
 				BaseField field = reportField.getBaseField();
@@ -895,6 +897,7 @@ public final class AppController extends VelocityViewServlet {
 				}
 			}
 		}
+		// Then table data
 		Map<BaseField, BaseValue> tableData = view.getTableDataRow();
 		for (Map.Entry<BaseField, BaseValue> tableRow : tableData.entrySet()) {
 			BaseField field = tableRow.getKey();
@@ -903,6 +906,27 @@ public final class AppController extends VelocityViewServlet {
 					.replace(" ", "_");
 			context.put(rinsedFieldName, value);
 			context.put(field.getInternalFieldName(), value);
+		}
+		// Then data from related form tabs
+		for (FormTabInfo formTab : table.getFormTabs()) {
+			BaseReportInfo selectorReport = formTab.getSelectorReport();
+			Map<BaseField, String> filter = new HashMap<BaseField, String>();
+			filter.put(table.getPrimaryKey(), String.valueOf(rowId));
+			List<DataRowInfo> selectorRows = view.getReportDataRows(selectorReport, 50, filter, true);
+			String tabName = formTab.toString().toLowerCase().replace(" ", "_");
+			context.put(tabName + "_rows", selectorRows);
+			StringBuilder selectorRowsHtml = new StringBuilder("<table>\\n");
+			for(DataRowInfo selectorRow: selectorRows) {
+				selectorRowsHtml.append("  <tr>");
+				for (BaseField selectorField : selectorReport.getReportBaseFields()) {
+					if (!selectorField.equals(selectorField.getTableContainingField().getPrimaryKey())) {
+						selectorRowsHtml.append("<td>" + selectorRow.getValue(selectorField) + "</td>");
+					}
+				}
+				selectorRowsHtml.append("</tr>\\n");
+			}
+			selectorRowsHtml.append("</table>");
+			context.put(tabName + " _table", selectorRowsHtml);
 		}
 	}
 
