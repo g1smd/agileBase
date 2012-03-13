@@ -1257,6 +1257,9 @@ function fFormStyle() {
 			  "return": "gui/reports_and_tables/tabs/tab_content",
 			  save_new_record: true,
 			  internaltablename: tabInternalTableName,
+			  set_custom_table: true,
+			  tablekey: 'tabTable',
+			  custominternaltablename: tabInternalTableName,
 			  gtpb_override_relation_default_to_null: true
 			}, function() {
 				tabContainer.fadeIn();
