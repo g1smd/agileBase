@@ -18,6 +18,9 @@ $(document).ready(function() {
 			return;
 		}
 	});
+	$("#doneSearch").click(function() {
+		closePreview();
+	});
 	//$(".searchbox").blur(function() {
 	//	closePreview();
 	//});
