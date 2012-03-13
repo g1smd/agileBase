@@ -1163,9 +1163,7 @@ function fShowAddGroup() {
   $("#addGroupLink").hide();
   var oViewPane = top.document.getElementById('oViewPane');
   $(oViewPane).css("height", "0");
-  setTimeout(1000, function() {
-    $(oViewPane).css("height", "100%");
-  });
+  setTimeout("$(oViewPane).css('height', '100%')",1000);
 }
 
 function fShowAddAgg() {
