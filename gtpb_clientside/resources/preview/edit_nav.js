@@ -31,7 +31,6 @@ $(document).ready(function() {
  *   Optional parameter to set the session report along with sending the request
  */
 function loadPreviewResults(filterString, internalReportName) {
-	console.log("loadPreviewResults " + filterString + ", " + internalReportName);
 	var jqSearchBox = $("#searchbox");
 	var request = "AppController.servlet?return=gui/preview/report_content"
 		+ "&set_global_report_filter_string=true&filterstring="
