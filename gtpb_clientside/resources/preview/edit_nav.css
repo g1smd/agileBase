@@ -175,6 +175,7 @@
   padding-left: 0.5em;
   z-index: 101;
   position: relative;
+  font-size: 10pt;
   /* no webkit border radius, webkit styles search inputs anyway */
 }
 
