@@ -76,6 +76,7 @@ iframe#oViewPane {
 	z-index: 0;
 	padding-bottom: 51px;
 	display: block;
+	position: absolute;
 }
 
 div#_md_blank.window_disable h1 {
