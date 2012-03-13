@@ -202,12 +202,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     #end
     <script language="JavaScript">
     function fShowAddGroup() {
-      jQuery("#addGroup").show("normal");
+      jQuery("#addGroup").show();
       jQuery("#addGroupLink").hide();
     }
     
     function fShowAddAgg() {
-      jQuery("#addAgg").show("normal");
+      jQuery("#addAgg").show();
       jQuery("#addAggLink").hide();
     }
     
