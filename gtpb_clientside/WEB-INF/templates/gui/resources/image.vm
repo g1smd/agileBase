@@ -17,9 +17,9 @@ function zoom(zoomIn) {
 
 $(document).keypress(function(event) {
   alert("keypress: " + event.which);
-  if(event.which == "-") {
+  if(event.which == 45) {
 	  zoom(false);
-	} else if (event.which == "+") {
+	} else if (event.which == 43) {
 	  zoom(true);
 	}
 });
