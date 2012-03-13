@@ -1159,11 +1159,9 @@ function fSetupCharts() {
 }
 
 function fShowAddGroup() {
-	alert('showing groups');
   $("#addGroup").show();
   $("#addGroupLink").hide();
-  $("#oViewPane").css("height", "auto");
-  $("#oViewPane").css("height", "100%");
+  alert($("#oViewPane").size());
 }
 
 function fShowAddAgg() {
