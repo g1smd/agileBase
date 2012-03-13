@@ -75,6 +75,7 @@ iframe#oViewPane {
 	height: 100%;
 	z-index: 0;
 	padding-bottom: 51px;
+	display: block;
 }
 
 div#_md_blank.window_disable h1 {
