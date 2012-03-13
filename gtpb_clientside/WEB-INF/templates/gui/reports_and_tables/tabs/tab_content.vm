@@ -57,6 +57,8 @@
       </div>
     #elseif($datarows.size() == 1)
       #set($sessionRowId = $datarows.get(0).getRowId())
+		#else
+			#set($sessionRowId = -1)
     #end ## end if datarows.size > 0
   #end ## if selectorReport
   #if($sessionRowId > -1)

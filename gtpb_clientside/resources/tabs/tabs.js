@@ -1158,6 +1158,10 @@ function fSetupCharts() {
 					});
 }
 
+/**
+ * When you $.show() a pane 3 element, the toolbar vanishes in webkit
+ * Have to reset the oViewPane height property to get it back
+ */
 function fWebkitGlitch() {
 	if ($.browser.webkit) {
 	  setTimeout("$(top.document.getElementById('oViewPane')).css('height', '0')",1000);
