@@ -1160,9 +1160,8 @@ function fSetupCharts() {
 
 function fWebkitGlitch() {
 	if ($.browser.webkit) {
-	  var oViewPane = top.document.getElementById('oViewPane');
-	  $(oViewPane).css("height", "0");
-	  setTimeout("$(top.document.getElementById('oViewPane')).css('height', '100%')",500);
+	  setTimeout("$(top.document.getElementById('oViewPane')).css('height', '0')",1000);
+	  setTimeout("$(top.document.getElementById('oViewPane')).css('height', '100%')",1500);
 	}
 }
 
