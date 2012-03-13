@@ -56,11 +56,12 @@
             #set($fileValue = $viewTools.getFileValueTool($cell))
             #set($targetUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
             #if($fileValue.isImage())
-              #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
+              #set($srcUrl = $viewTools.escapeForUrl("/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()"))
               <a target = "_blank" href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$targetUrl"><img src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #set($captionNecessary = true) #end/></a>
               #set($image = true)
 						#elseif($cell.endsWith("pdf"))
-							<img src="$targetUrl.500.png" class="image" />
+							#set($srcUrl = $viewTools.escapeForURL("$targetUrl.500.png"))
+							<img src="$srcUrl" class="image" />
 							#set($captionNecessary = true)
               #set($image = true)
 						#end
