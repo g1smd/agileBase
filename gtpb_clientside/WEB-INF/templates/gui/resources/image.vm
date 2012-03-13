@@ -16,7 +16,7 @@ function zoom(zoomIn) {
 }
 
 $(document).keypress(function(event) {
-  alert("keypress");
+  alert("keypress: " + event.which);
   if(event.which == "-") {
 	  zoom(false);
 	} else if (event.which == "+") {
