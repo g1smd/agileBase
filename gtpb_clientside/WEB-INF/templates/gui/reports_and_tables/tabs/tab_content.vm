@@ -60,9 +60,9 @@
 		#else
 			#set($sessionRowId = -1)
     #end ## end if datarows.size > 0
+    #if($sessionRowId > -1)
+      #set($component = true)
+      #parse("gui/reports_and_tables/tabs/tab_content_table.vm")
+    #end 
   #end ## if selectorReport
-  #if($sessionRowId > -1)
-    #set($component = true)
-    #parse("gui/reports_and_tables/tabs/tab_content_table.vm")
-  #end 
 #end
