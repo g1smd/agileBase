@@ -55,7 +55,7 @@ public final class Naming {
 	 * organisations' and return the simple form - 'organisations'
 	 */
 	public static String getSimpleName(String complexName) {
-		return complexName.replaceFirst("^.*\\)","");
+		return complexName.replaceFirst("^.*\\)","").trim();
 	}
 
 	/**
