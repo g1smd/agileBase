@@ -204,16 +204,23 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 
 	public SortedMap<String, String> getItems(boolean reverseKeyValue) throws SQLException,
 			CodingErrorException {
-		return this.getItemsWork(reverseKeyValue, null, -1);
+		return this.getItemsWork(reverseKeyValue, null, -1, true);
 	}
 
 	public SortedMap<String, String> getItems(boolean reverseKeyValue, String filterString,
 			int maxResults) throws SQLException, CodingErrorException {
-		return this.getItemsWork(reverseKeyValue, filterString, maxResults);
+		return this.getItemsWork(reverseKeyValue, filterString, maxResults, true);
+	}
+	
+	/**
+	 * Not in interface, only used from DataManagement#importCSV
+	 */
+	public SortedMap<String, String> getItems(boolean reverseKeyValue, boolean allowSecondaryField) throws CodingErrorException, SQLException {
+		return this.getItemsWork(reverseKeyValue, null, -1, allowSecondaryField);
 	}
 
 	private SortedMap<String, String> getItemsWork(boolean reverseKeyValue, String filterString,
-			int maxResults) throws SQLException, CodingErrorException {
+			int maxResults, boolean allowSecondaryField) throws SQLException, CodingErrorException {
 		SortedMap<String, String> items = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
 		String displayFieldInternalName = this.getDisplayField().getInternalFieldName();
 		String relatedTableInternalName = this.getRelatedTable().getInternalTableName();
@@ -237,7 +244,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		boolean requireJoin = false;
 		String SQLCode = "";
 		boolean useSecondaryField = false;
-		if (this.getSecondaryDisplayField() != null) {
+		if ((this.getSecondaryDisplayField() != null) && allowSecondaryField) {
 			secondaryFieldInternalName = this.getSecondaryDisplayField().getInternalFieldName();
 			useSecondaryField = true;
 			if (this.getSecondaryDisplayField() instanceof RelationField) {

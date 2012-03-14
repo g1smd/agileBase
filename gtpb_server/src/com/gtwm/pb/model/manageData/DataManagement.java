@@ -54,7 +54,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.coobird.thumbnailator.Thumbnails;
-
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.math.util.MathUtils;
 import com.gtwm.pb.auth.PrivilegeType;
@@ -108,6 +107,7 @@ import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageData.fields.IntegerValueDefn;
 import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes;
+import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.servlets.ServletUtilMethods;
 import com.gtwm.pb.util.AppProperties;
@@ -890,7 +890,7 @@ public final class DataManagement implements DataManagementInfo {
 			// Also, if importing relations by display value, look up
 			// display/internal value mappings
 			if (useRelationDisplayValues && field instanceof RelationField) {
-				Map<String, String> displayToInternalValue = ((RelationField) field).getItems(true);
+				Map<String, String> displayToInternalValue = ((RelationFieldDefn) field).getItems(true, false);
 				relationLookups.put((RelationField) field, displayToInternalValue);
 			}
 		}
