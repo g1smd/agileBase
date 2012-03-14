@@ -27,10 +27,10 @@ public class Comment implements CommentInfo {
 		long age = System.currentTimeMillis() - this.timestamp.getTimeInMillis();
 		if (age > (1000 * 60 * 60 * 24 * 365)) {
 			return String.format("%1$td %1$tb %1$tY", this.timestamp);
-		} else if (age > (1000 * 60 * 60 * 24)) {
-			return String.format("%1$td %1$tb", this.timestamp);
+//		} else if (age > (1000 * 60 * 60 * 24 * 7)) {
+//			return String.format("%1$td %1$tb", this.timestamp);
 		} else {
-			return String.format("%1$td %1$tb %1$tY %1$tH:%1$tM", this.timestamp);
+			return String.format("%1$td %1$tb at %1$tH:%1$tM", this.timestamp);
 		}
 	}
 

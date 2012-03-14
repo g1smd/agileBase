@@ -926,6 +926,7 @@ public final class AppController extends VelocityViewServlet {
 				selectorRowsHtml.append("</tr>\\n");
 			}
 			selectorRowsHtml.append("</table>");
+			logger.debug("Adding " + tabName + "_table" + ": " + selectorRowsHtml);
 			context.put(tabName + " _table", selectorRowsHtml);
 		}
 	}
