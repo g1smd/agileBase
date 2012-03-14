@@ -29,10 +29,12 @@
   #set($parentRowId = $sessionData.getRowId($parentTable))
   #set($selectorReport = $formTab.getSelectorReport())
   #set($sessionRowId = $sessionData.getRowId($sessionTable))
+	Session row id is $sessionRowId<br>
   #if($selectorReport)
     #set($filter = $viewTools.getNewFilterMap())
     #set($success = $filter.put($parentTable.getPrimaryKey(), "$parentRowId"))
     #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
+		Data rows are $datarows<br>
     #if($datarows.size() > 1)
       #set($sessionReport = $selectorReport)
       #set($table_part_only = true)
@@ -45,7 +47,8 @@
             #set($sessionRowFound = true)
           #end
         #end
-      #end
+			#end
+			Session row ID found: $sessionRowFound<br>
       #if(!$sessionRowFound)
         ## Revert to the first item in the list
         #set($sessionRowId = $datarows.get(0).getRowId())
