@@ -336,6 +336,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		this.itemsCache.put(cacheKey, items);
 		this.itemsCacheMisses += 1;
 		this.itemsLastCacheTime = System.currentTimeMillis();
+		logger.debug("Items cached for  " + this + " are " + items);
 		return items;
 	}
 
