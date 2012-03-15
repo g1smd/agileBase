@@ -103,7 +103,7 @@
   </head>
   <body isDraft="true" style="background-color: white; overflow: visible"> ## err on the side of caution and mark as a draft by default.  This will be changed when the doc loads if it's not a draft
     <h1 class="draftMarker">DRAFT ONLY</h1>
-    <h2 style="float:right;">$module - $report</h2>
+    <b style="float:right;">$module - $report</b>
 		<img src="resources/logo_small.png" style="vertical-align:middle; width:16px;" />&nbsp; agilebase.co.uk
 	  <br clear="all">
     <div id="wrapper"><table id=reportData cellspacing="0">
