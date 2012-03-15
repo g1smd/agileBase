@@ -134,6 +134,10 @@ ol{
 					.module-tree-item-wrap {
 						padding: 2px 15px 2px 7px;
 						text-transform: lowercase;
+						-moz-transition: background-color 0.5s;
+						-webkit-transition: background-color 0.5s;
+						-ms-transition: background-color 0.5s;
+						transition: background-color 0.5s;
 					}
 					
 					.currentOption .module-tree-item-wrap {
