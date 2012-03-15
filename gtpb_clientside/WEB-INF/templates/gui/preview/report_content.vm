@@ -110,7 +110,7 @@
     </div> ## end of block
   #end
 #end ## end of reportDataRows
-#if($reportDataRows.size() < 15)
+#if(($reportDataRows.size() < 15) && ($filterString != ""))
 <div class="infomessage" id="schemaResults">
 	<h1>Reports from other areas</h1>
 	<ul>
