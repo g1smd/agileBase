@@ -925,8 +925,9 @@ public final class AppController extends VelocityViewServlet {
 			for(DataRowInfo selectorRow: selectorRows) {
 				selectorRowsHtml.append("  <tr>");
 				for (BaseField selectorField : selectorReport.getReportBaseFields()) {
-					if (!selectorField.equals(selectorField.getTableContainingField().getPrimaryKey())) {
-						selectorRowsHtml.append("<td class='" + selectorField.getDbType() + "'>" + selectorRow.getValue(selectorField) + "</td>");
+					TableInfo parentTable = selectorField.getTableContainingField();
+					if (!selectorField.equals(parentTable.getPrimaryKey())) {
+						selectorRowsHtml.append("<td class='" + selectorField.getDbType().toString().toLowerCase() + " table_" + parentTable.getInternalTableName() + "'>" + selectorRow.getValue(selectorField) + "</td>");
 					}
 				}
 				selectorRowsHtml.append("</tr>\n");

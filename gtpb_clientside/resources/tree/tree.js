@@ -31,6 +31,7 @@ function fSetCurrentOption(sName, sRecordCount){
 		parentElem.removeClass('modulecollapsed');
 		parentElem.addClass('moduleexpanded');
 	}
+	$(".module-tree-item-wrap").removeClass("loading");
 }
 
 function fUpdateTitle(sName, sNewTitle) {
@@ -64,6 +65,9 @@ function pane1Setup() {
 			parentElem.removeClass('moduleexpanded');
 			parentElem.addClass('modulecollapsed');			
 		}
+	});
+	$('#tree a.report_tooltip').click(function() {
+		$(this).closest(".module-tree-item-wrap").addClass('loading');
 	});
 	
 	// Initial expand?

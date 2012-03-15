@@ -148,6 +148,10 @@ ol{
 					.currentOption .tree-item-wrap {
 						background-color: #CCCCCC;
 					}
+					
+					.loading {
+					  background-color: #f0f0f0;
+					}
 				
 						/* links to tables, reports and admin functions */
 						ol li ul li ul li div a {
