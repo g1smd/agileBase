@@ -836,7 +836,7 @@ public final class AppController extends VelocityViewServlet {
 			if (templateName != null) {
 				if (templateName.startsWith("uploads/")) {
 					try {
-						addCurrentDataToContext(context, sessionData, request, viewMethods);
+						addCurrentDataToContext(context, sessionData, viewMethods);
 					} catch (AgileBaseException abex) {
 						logger.error("Error preparing uploaded custom template variables: " + abex);
 						viewMethods.setException(abex);
@@ -872,7 +872,7 @@ public final class AppController extends VelocityViewServlet {
 	 * current report (values from the current report row) and current table
 	 */
 	private static void addCurrentDataToContext(Context context, SessionDataInfo sessionData,
-			HttpServletRequest request, ViewMethodsInfo view) throws DisallowedException,
+ ViewMethodsInfo view) throws DisallowedException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException, SQLException {
 		BaseReportInfo report = sessionData.getReport();
 		int rowId = sessionData.getRowId();
@@ -915,7 +915,7 @@ public final class AppController extends VelocityViewServlet {
 			List<DataRowInfo> selectorRows = view.getReportDataRows(selectorReport, 50, filter, true);
 			String tabName = formTab.toString().toLowerCase().replace(" ", "_");
 			context.put(tabName + "_rows", selectorRows);
-			StringBuilder selectorRowsHtml = new StringBuilder("<table>\\n");
+			StringBuilder selectorRowsHtml = new StringBuilder("<table>\n");
 			for(DataRowInfo selectorRow: selectorRows) {
 				selectorRowsHtml.append("  <tr>");
 				for (BaseField selectorField : selectorReport.getReportBaseFields()) {
@@ -923,11 +923,11 @@ public final class AppController extends VelocityViewServlet {
 						selectorRowsHtml.append("<td>" + selectorRow.getValue(selectorField) + "</td>");
 					}
 				}
-				selectorRowsHtml.append("</tr>\\n");
+				selectorRowsHtml.append("</tr>\n");
 			}
 			selectorRowsHtml.append("</table>");
 			logger.debug("Adding " + tabName + "_table" + ": " + selectorRowsHtml);
-			context.put(tabName + " _table", selectorRowsHtml);
+			context.put(tabName + "_table", selectorRowsHtml);
 		}
 	}
 
