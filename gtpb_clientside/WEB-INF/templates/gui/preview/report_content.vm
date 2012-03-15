@@ -2,6 +2,9 @@
   #set($report = $sessionData.getReport())
 #end
 #set($filterString = $sessionData.getGlobalFilterString($report).toLowerCase())
+#if(!$filterString)
+	#set($filterString = "")
+#end
 #set($ratio = "landscape")
 #set($table = $report.getParentTable())
 #set($internalTableName = $table.getInternalTableName())
