@@ -915,12 +915,18 @@ public final class AppController extends VelocityViewServlet {
 			List<DataRowInfo> selectorRows = view.getReportDataRows(selectorReport, 50, filter, true);
 			String tabName = formTab.toString().toLowerCase().replace(" ", "_");
 			context.put(tabName + "_rows", selectorRows);
-			StringBuilder selectorRowsHtml = new StringBuilder("<table>\n");
+			StringBuilder selectorRowsHtml = new StringBuilder("<table class='childData'><tr>\n");
+			for (BaseField sField : selectorReport.getReportBaseFields()) {
+				if (!sField.equals(sField.getTableContainingField().getPrimaryKey())) {
+					selectorRowsHtml.append("<th>" + sField + "</th>");
+				}
+			}
+			selectorRowsHtml.append("</tr>\n");
 			for(DataRowInfo selectorRow: selectorRows) {
 				selectorRowsHtml.append("  <tr>");
 				for (BaseField selectorField : selectorReport.getReportBaseFields()) {
 					if (!selectorField.equals(selectorField.getTableContainingField().getPrimaryKey())) {
-						selectorRowsHtml.append("<td>" + selectorRow.getValue(selectorField) + "</td>");
+						selectorRowsHtml.append("<td class='" + selectorField.getDbType() + "'>" + selectorRow.getValue(selectorField) + "</td>");
 					}
 				}
 				selectorRowsHtml.append("</tr>\n");
