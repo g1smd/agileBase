@@ -19,7 +19,7 @@
 #set($outputText = $view.toInternalNames($sourceText))
 #set($externalText = $view.toExternalNames($sourceText))
 ###set($outputText = $view.toExternalNames($sourceText))
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<!DOCTYPE html>
 <html>
   <head>
     <title>

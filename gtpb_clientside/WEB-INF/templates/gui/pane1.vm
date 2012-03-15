@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<!DOCTYPE html>
 <html>
 <head>
     #parse('gui/display_error.vm')

@@ -18,7 +18,7 @@
 ## a pane 3 wrapper with no tab set to show only the data 
 ## located in the velocity template $resource
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<!DOCTYPE html>
 
 #set($pane2_id=$sessionData.getRowId())
 <html>
