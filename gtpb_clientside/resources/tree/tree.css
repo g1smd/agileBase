@@ -86,116 +86,116 @@ ol{
 	
 }
 
-	ol li{
-		
-	}
+ol li{
 	
-		ol li ul{
-			
-		}
-			
-			ol li ul li ul{
-				margin: 2px 10px 0 10px;
-				padding-bottom: 2px;
-				border-left: 1px dotted #CCC;
-			}
+}
+
+ol li ul{
+	
+}
 		
-			/* reports */
-			ol li ul li ul li.expanded div ul {
-				display: block;
-			}
-			
-			ol li ul li ul li.collapsed div ul {
-				display: none;
-			}
+ol li ul li ul{
+	margin: 2px 10px 0 10px;
+	padding-bottom: 2px;
+	border-left: 1px dotted #CCC;
+}
+	
+/* reports */
+ol li ul li ul li.expanded div ul {
+	display: block;
+}
+
+ol li ul li ul li.collapsed div ul {
+	display: none;
+}
+
+ol li ul li.moduleexpanded ul{
+	display: block;
+}
+
+ol li ul li.modulecollapsed ul{
+	display: none;
+}
+
+/* tables */
+ol li ul li.expanded ul{
+	display: block;
+}
+
+ol li ul li.collapsed ul{
+	display: none;
+}
+
+ol li ul li ul li{
+	padding: 0 0 0 8px;
+	background: transparent url(tree/line_hor.gif) no-repeat 0 0.55em;
+}
+	
+.module-tree-item-wrap {
+	padding: 2px 15px 2px 7px;
+	text-transform: lowercase;
+	-moz-transition: background-color 0.5s;
+	-webkit-transition: background-color 0.5s;
+	-ms-transition: background-color 0.5s;
+	transition: background-color 0.5s;
+}
 		
-			ol li ul li.moduleexpanded ul{
-				display: block;
-			}
-			
-			ol li ul li.modulecollapsed ul{
-				display: none;
-			}
+.currentOption .module-tree-item-wrap {
+	background-color: #CCCCCC;
+}
 
-			/* tables */
-			ol li ul li.expanded ul{
-				display: block;
-			}
-			
-			ol li ul li.collapsed ul{
-				display: none;
-			}
+.tree-item-wrap {
+	padding: 2px 15px 2px 7px;
+	text-transform: lowercase;
+}
 
-				ol li ul li ul li{
-					padding: 0 0 0 8px;
-					background: transparent url(tree/line_hor.gif) no-repeat 0 0.55em;
-				}
-				
-					.module-tree-item-wrap {
-						padding: 2px 15px 2px 7px;
-						text-transform: lowercase;
-						-moz-transition: background-color 0.5s;
-						-webkit-transition: background-color 0.5s;
-						-ms-transition: background-color 0.5s;
-						transition: background-color 0.5s;
-					}
-					
-					.currentOption .module-tree-item-wrap {
-						background-color: #CCCCCC;
-					}
-				
-					.tree-item-wrap {
-						padding: 2px 15px 2px 7px;
-						text-transform: lowercase;
-					}
-					
-					.currentOption .tree-item-wrap {
-						background-color: #CCCCCC;
-					}
-					
-					.loading {
-					  background-color: #f0f0f0;
-					}
-				
-						/* links to tables, reports and admin functions */
-						ol li ul li ul li div a {
-							color: #000;
-							text-decoration: none;
-						}
+.currentOption .tree-item-wrap {
+	background-color: #CCCCCC;
+}
 
-							ol li ul li ul li ul {
-								background: none;
-							}
+.loading {
+  background-color: #f0f0f0;
+}
+	
+/* links to tables, reports and admin functions */
+ol li ul li ul li div a {
+	color: #000;
+	text-decoration: none;
+}
 
-							ol li ul li ul li li {
-								background: none;
-							}
+ol li ul li ul li ul {
+	background: none;
+}
+
+ol li ul li ul li li {
+	background: none;
+}
+
+ol li ul li ul li li a {
+	color: #00e;
+	text-decoration: underline;
+}				
+	
+ol li ul li ul li li a:hover {
+	text-decoration: none;
+}																		
+
+.recordcount {
+	display: none;
+}
+
+.currentOption .recordcount {
+	display: inline;
+}
 						
-							ol li ul li ul li li a {
-								color: #00e;
-								text-decoration: underline;
-							}				
-							
-							ol li ul li ul li li a:hover {
-								text-decoration: none;
-							}																		
+.recordcount a {
+	color: #00F;
+	text-decoration: underline;
+}
 						
-						.recordcount {
-							display: none;
-						}
-						
-						.currentOption .recordcount {
-							display: inline;
-						}
-						
-						.recordcount a {
-							color: #00F;
-							text-decoration: underline;
-						}
-						
-						.recordcount a:hover {
-							text-decoration: none;
-						}
+.recordcount a:hover {
+	text-decoration: none;
+}
 	
 ul.moduleaction {
 	border-style: dotted;
@@ -291,6 +291,4 @@ ul.moduleaction li {
 	text-decoration: none;
 	color: #486f98;
 }
-
-
-						
+				

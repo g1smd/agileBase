@@ -33,6 +33,10 @@ $(document).keypress(function(event) {
   border-bottom-left-radius: 0.5em;
 }
 
+#zoom img {
+	cursor: pointer;
+}
+
 #image {
   width: 100%;
   margin-left: auto;
