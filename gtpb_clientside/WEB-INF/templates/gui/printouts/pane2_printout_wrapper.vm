@@ -184,7 +184,8 @@
 		  oRadio.setAttribute('type','radio');
 		  oRadio.setAttribute('name','printout_selector');
 		  oRadio.setAttribute('value','individual_record');
-      #if($report.getReportStyle() != "SECTIONED")
+			#set($reportStyle = $report.getReportStyle())
+      #if(($reportStyle != "SECTIONED") && ($reportStyle != "ONE_SECTION"))
 		    oRadio.setAttribute('checked','true');
       #end
       $(oRadio).click(fClick);
@@ -196,7 +197,7 @@
       oRadio.setAttribute('type','radio');
       oRadio.setAttribute('name','printout_selector');
       oRadio.setAttribute('value','report_rows');
-      #if($report.getReportStyle() == "SECTIONED")
+      #if(($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION"))
         oRadio.setAttribute('checked','true');
       #end
       $(oRadio).click(fClick);
@@ -237,7 +238,7 @@
       function fCreateIframe() {
         var oIframe=document.createElement('iframe');
         oIframe.setAttribute('id','wrapper');
-        #if($report.getReportStyle() == "SECTIONED")
+      	#if(($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION"))
           oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/records');
         #else
           oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/record');

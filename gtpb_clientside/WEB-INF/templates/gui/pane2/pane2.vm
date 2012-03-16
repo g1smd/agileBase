@@ -56,7 +56,8 @@
 	      }
 	#if($browser != "Internet Explorer" && !$mobile_device)
 	/* for fixed (frozen) table header */
-    #if($sessionReport.getReportStyle() != "SECTIONED")
+	  #set($reportStyle = $sessionReport.getReportStyle())
+    #if(($reportStyle != "SECTIONED") && ($reportStyle != "ONE_SECTION"))
   		div#wrapper table#reportData {
   		margin-top: 30px;
   		}

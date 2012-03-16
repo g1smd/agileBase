@@ -105,8 +105,11 @@
             $report
           </a>
           #else
-            #if($report.getReportStyle() == "SECTIONED")
+						#set($reportStyle = $report.getReportStyle())
+            #if($reportStyle == "SECTIONED")
               #set($thisReportRowLimit = $reportRowLimit * 10)
+						#elseif($reportStyle == "ONE_SECTION")
+							#set($thisReportRowLimit = $reportRowLimit * 5)
             #else
               #set($thisReportRowLimit = $reportRowLimit)
             #end
