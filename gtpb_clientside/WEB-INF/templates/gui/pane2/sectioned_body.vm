@@ -71,7 +71,7 @@
                   <span style="float:right" #if($cellNumber > 2) class="smaller" #end>&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-transform:capitalize">$field</span> = $testCell</span>
                 #end
               #elseif((!$field.isPrimaryKey()) && $field.getTableContainingField().equals($table))
-                <span #if($cellNumber > 2) class="smaller" #end><span style="text-transform:capitalize">$field</span>: $testCell &nbsp;&nbsp;&nbsp;&nbsp;<span>
+                <span #if($cellNumber > 2) class="smaller" #end><span style="text-transform:capitalize">$field</span>: $testCell &nbsp;&nbsp;&nbsp;&nbsp;</span>
               #end
             #end
           </td>
