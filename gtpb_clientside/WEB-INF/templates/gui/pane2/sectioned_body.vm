@@ -73,7 +73,7 @@
                 #end
               #elseif((!$field.isPrimaryKey()) && $field.getTableContainingField().equals($table))
 								#if($testCellNumber == 3) <br style="clear:both" /> #end
-                <span #if($testCellNumber > 4) class="smaller" #end><span style="text-transform:capitalize">$field</span>: $testCell &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span #if($testCellNumber > 4) class="smaller" #end><span style="text-transform:capitalize">$field $testCellNumber</span>: $testCell &nbsp;&nbsp;&nbsp;&nbsp;</span>
               #end
             #end
           </td>
