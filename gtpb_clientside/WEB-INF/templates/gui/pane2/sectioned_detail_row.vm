@@ -35,7 +35,7 @@
         #set($detailCalc = true)
       #end
     #end
-    #if((($detailTables.contains($field.getTableContainingField()) && !$isCalc) || ($detailCalc)) ) ##&& (!$field.isPrimaryKey())
+    #if( ( (($detailTables.contains($field.getTableContainingField()) && !$isCalc) || $detailCalc) ) && (!$field.isPrimaryKey()) )
       #set($rightAlign = false)
       #set($fieldCategory = $field.getFieldCategory().toString())
       #if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
