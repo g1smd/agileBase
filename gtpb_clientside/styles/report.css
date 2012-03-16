@@ -182,7 +182,11 @@ table#reportData tr.h3 td {
   vertical-align: middle;
   background-color: #f8f8f8;
 }
-           
+
+table#reportData tr.h1 td .smaller {
+  font-size: 11pt;
+}
+	
 table#reportData tr.rowb td, 
 table#reportData tr.rowa td { 
   height:30px ;
