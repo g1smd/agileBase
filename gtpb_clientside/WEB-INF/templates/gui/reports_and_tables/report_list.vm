@@ -109,7 +109,7 @@
             #if($reportStyle == "SECTIONED")
               #set($thisReportRowLimit = $reportRowLimit * 10)
 						#elseif($reportStyle == "ONE_SECTION")
-							#set($thisReportRowLimit = $reportRowLimit * 5)
+							#set($thisReportRowLimit = $reportRowLimit * 2)
             #else
               #set($thisReportRowLimit = $reportRowLimit)
             #end
