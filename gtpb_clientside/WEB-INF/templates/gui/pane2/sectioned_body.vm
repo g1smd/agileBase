@@ -18,6 +18,7 @@
 ## A report style similar to CrystalReports / JasperReports
 ##
 #set($rowCount = 0)
+$viewTools.log("Heading tables $headingTables")
 #foreach($row in $data)
   ## row[0] contains the data to display in each field
   ## row[1] contains the click event parameters for the row
@@ -43,6 +44,7 @@
     #end
     ## NOTE: awful hack on this line to check for a particular field for CH recipe printout
     ## TODO: something more generic, e.g. a calc. unique property
+		$viewTools.log("Test: $headingTables contains $table && $field is primary key")
     #if( ($headingTables.contains($table) && $field.isPrimaryKey()) || (($field.getInternalFieldName() == "sfmak3xhc4p2mczux") && ($rowCount > 2)))
       #if($cell != $lastValues.get($cellNumber))
         #set($headingLevel = $headingMap.get($table))
