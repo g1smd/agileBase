@@ -458,7 +458,7 @@ public class Enumerations {
 	}
 	
 	public enum ReportStyle {
-		SPREADSHEET("Standard spreadsheet-like rows"), SECTIONED("Data broken up into sections with headings");
+		SPREADSHEET("Standard spreadsheet-like rows"), SECTIONED("Data broken up into sections with headings"), ONE_SECTION("One heading then detail");
 		
 		public String getDescription() {
 			return this.description;

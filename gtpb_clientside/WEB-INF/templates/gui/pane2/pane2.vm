@@ -255,7 +255,8 @@
 		  #parse("gui/mobile/pane2_header.vm")
 	  #end
 	  <table id=reportData cellspacing="0" #if($filtersShouldBeShown == 'true') class='lowered' #end>
-      #if($sessionReport.getReportStyle() == "SECTIONED")
+    	#set($reportStyle = $sessionReport.getReportStyle())
+      #if($reportStyle && ($reportStyle != "SPREADSHEET"))
         ## First work out heading levels
         #parse("gui/pane2/sectioned_calcs.vm")
         #parse("gui/pane2/sectioned_head.vm")

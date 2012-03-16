@@ -27,6 +27,7 @@
 #set($headingCalcMap = {}) ## Record which heading (if any) each calc is in
 #set($sessionReport = $sessionData.getReport())##
 #set($sessionTable = $sessionReport.getParentTable())
+#set($reportStyle = $sessionReport.getReportStyle)
 #foreach($reportField in $sessionReport.getReportFields())
   #set($field = $reportField.getBaseField())
   #set($table = $field.getTableContainingField())
@@ -39,6 +40,9 @@
           #set($success = $headingMap.put($table, $headingLevel))
           #set($headingLevel = $headingLevel + 1)
           #set($previousTable = $table)
+					#if($reportStyle == "ONE_SECTION")
+						#set($detailStartsNext = true)
+					#end
         #end
       #end
       #if($table.equals($sessionTable))

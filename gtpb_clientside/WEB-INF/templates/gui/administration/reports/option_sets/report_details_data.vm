@@ -94,7 +94,8 @@
     <td>
         <select name="reportstyle" id="reportstyle" gtpb_update_report onchange="new fChange(this); parent.pane_1.document.location = 'AppController.servlet?return=gui/pane1';" identifier="$internalReportName">
             <option value="SPREADSHEET" #if($reportStyle == "SPREADSHEET") selected #end>Spreadsheet - standard output in rows</option>
-            <option value="SECTIONED" #if($reportStyle == "SECTIONED") selected #end>Sectioned - rows split into sections, with headings</option>
+            <option value="SECTIONED" #if($reportStyle == "SECTIONED") selected #end>Heading, subheadings and rows</option>
+            <option value="ONE_SECTION" #if($reportStyle == "ONE_SECTION") selected #end>Heading and rows</option>
         </select>
     </td>
   </tr>

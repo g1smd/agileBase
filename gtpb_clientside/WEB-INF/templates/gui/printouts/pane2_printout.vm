@@ -107,7 +107,8 @@
 		<img src="resources/logo_small.png" style="vertical-align:middle; width:16px;" />&nbsp; agilebase.co.uk
 	  <br clear="all">
     <div id="wrapper"><table id=reportData cellspacing="0">
-      #if($sessionReport.getReportStyle() == "SECTIONED")
+    	#set($reportStyle = $sessionReport.getReportStyle())
+      #if($reportStyle && ($reportStyle != "SPREADSHEET"))
         #parse("gui/pane2/sectioned_calcs.vm")
         #parse("gui/pane2/sectioned_body.vm")
       #else
