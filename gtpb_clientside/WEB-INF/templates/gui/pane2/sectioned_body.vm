@@ -65,15 +65,14 @@
             #foreach($testCell in $thisValues)
               #set($testCellNumber = $foreach.count - 1)
               #set($field = $fields.get($testCellNumber))
+							#if($testCellNumber == 3) <br style="clear:both" /> #end
               #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
                 #set($reportCalcField = $field.getReportCalcField())
                 #if($headingCalcMap.get($reportCalcField) == $headingLevel)
-									#if($testCellNumber == 3) <br style="clear:both" /> #end
                   <span style="float:right" #if($testCellNumber > 3) class="smaller" #end>&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-transform:capitalize">$field</span> = $testCell</span>
                 #end
               #elseif((!$field.isPrimaryKey()) && $field.getTableContainingField().equals($table))
-								#if($testCellNumber == 3) <br style="clear:both" /> #end
-                <span #if($testCellNumber > 4) class="smaller" #end><span style="text-transform:capitalize">$field $testCellNumber</span>: $testCell &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span #if($testCellNumber > 3) class="smaller" #end><span style="text-transform:capitalize">$field $testCellNumber</span>: $testCell &nbsp;&nbsp;&nbsp;&nbsp;</span>
               #end
             #end
           </td>
