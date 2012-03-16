@@ -29,6 +29,7 @@
   #set($thisValues = $row.get(0))
   #set($thisUniqueId = $row.get(2))
   #set($rowCount = $rowCount + 1)
+	$viewTools.log("row $thisUniqueId")
   ## See if we're due any headings
   #foreach($cell in $thisValues)
     #set($headingLevel = 0)
@@ -45,6 +46,7 @@
     #if( ($headingTables.contains($table) && $field.isPrimaryKey()) || (($field.getInternalFieldName() == "sfmak3xhc4p2mczux") && ($rowCount > 2)))
       #if($cell != $lastValues.get($cellNumber))
         #set($headingLevel = $headingMap.get($table))
+				$viewTools.log("Heading level $headingLevel for table $table")
         <tr name="$thisUniqueId" 
           #if($row.size()>=6 && $row.get(5))
             #foreach($expando in $row.get(5))
