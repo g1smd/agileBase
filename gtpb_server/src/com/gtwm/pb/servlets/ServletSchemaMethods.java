@@ -1855,7 +1855,7 @@ public final class ServletSchemaMethods {
 		if (internalCalculationName == null || calculationName == null || calculationDefn == null
 				|| dbType == null) {
 			throw new MissingParametersException(
-					"'internalcalculationname', 'calculationname', 'calculationdefn' and 'databasetype' (optionally 'isReportHidden') parameters needed in request to update a calculation");
+					"'internalcalculationname', 'calculationname', 'calculationdefn' and 'databasetype' (optionally 'isreporthidden') parameters needed in request to update a calculation");
 		}
 		// begin updating model and persisting changes
 		ReportCalcFieldInfo calculationField = (ReportCalcFieldInfo) report

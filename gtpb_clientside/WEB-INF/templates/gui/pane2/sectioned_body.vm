@@ -65,7 +65,7 @@
             #foreach($testCell in $thisValues)
               #set($testCellNumber = $foreach.count - 1)
               #set($field = $fields.get($testCellNumber))
-							#if($testCellNumber == 3) <br style="clear:both" /> #end
+							#if($testCellNumber == 4) <br style="clear:both" /> #end
               #if($field.getClass().getSimpleName() == "CalculationFieldDefn")
                 #set($reportCalcField = $field.getReportCalcField())
                 #if($headingCalcMap.get($reportCalcField) == $headingLevel)
