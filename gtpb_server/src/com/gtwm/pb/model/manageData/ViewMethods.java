@@ -32,6 +32,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -39,6 +40,7 @@ import com.gtwm.pb.model.interfaces.CommentInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
+import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
@@ -429,7 +431,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return unchosenRelationFields;
 	}
 
-	public SortedSet<CommentInfo> getComments(BaseField field) throws SQLException, DisallowedException, ObjectNotFoundException {
+	public SortedSet<CommentInfo> getComments(BaseField field) throws SQLException,
+			DisallowedException, ObjectNotFoundException {
 		if (field == null) {
 			logger.warn("ViewMethods.getComments called with null field");
 			return new TreeSet<CommentInfo>();
@@ -443,7 +446,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		int rowId = this.sessionData.getRowId(table);
 		return this.databaseDefn.getDataManagement().getComments(field, rowId);
 	}
-	
+
 	public Map<BaseField, BaseValue> getTableDataRow() throws DisallowedException,
 			ObjectNotFoundException, SQLException, CantDoThatException, CodingErrorException {
 		return getTableDataRow(this.sessionData.getTable());
@@ -471,11 +474,22 @@ public final class ViewMethods implements ViewMethodsInfo {
 		// If there was no error submitting the data
 		if (this.ex == null) {
 			// then we can get the values from the database
-			return this.databaseDefn.getDataManagement().getTableDataRow(this.sessionData, table, rowId, true);
+			return this.databaseDefn.getDataManagement().getTableDataRow(this.sessionData, table,
+					rowId, true);
 		} else {
 			// otherwise return the last values passed
 			return this.sessionData.getFieldInputValues();
 		}
+	}
+
+	public boolean childDataRowsExist(TableInfo childTable) throws SQLException, DisallowedException, ObjectNotFoundException {
+		if (!this.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, childTable)) {
+			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
+					childTable);
+		}
+		TableInfo parentTable = this.sessionData.getTable();
+		int parentRowId = this.sessionData.getRowId();
+		return this.databaseDefn.getDataManagement().childDataRowsExist(parentTable, parentRowId, childTable);
 	}
 
 	public Set<Integer> getRelatedRowIds(int masterRowId, TableInfo relatedTable)
@@ -591,7 +605,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 				this.request.getRemoteUser());
 		CompanyInfo company = null;
 		if (!exactFilters) {
-			// If using exact filters, we probably don't need colour information - not a pane 2 report
+			// If using exact filters, we probably don't need colour information
+			// - not a pane 2 report
 			// therefore leave company = null to disable colour generation
 			company = user.getCompany();
 		}
@@ -607,16 +622,19 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return reportDataRows;
 	}
 
-	public String getReportMapJSON() throws ObjectNotFoundException, CodingErrorException, CantDoThatException, SQLException {
+	public String getReportMapJSON() throws ObjectNotFoundException, CodingErrorException,
+			CantDoThatException, SQLException {
 		BaseReportInfo report = this.sessionData.getReport();
 		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues(report);
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
-		return this.databaseDefn.getDataManagement().getReportMapJson(company, report, reportFilterValues);
+		return this.databaseDefn.getDataManagement().getReportMapJson(company, report,
+				reportFilterValues);
 	}
-	
+
 	public String getReportTimelineJSON() throws CodingErrorException, CantDoThatException,
-			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException, JsonGenerationException {
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
+			JsonGenerationException {
 		AppUserInfo user = this.getLoggedInUser();
 		SortedSet<BaseReportInfo> timelineReports = new TreeSet<BaseReportInfo>();
 		Set<BaseReportInfo> reports = user.getOperationalDashboardReports();
@@ -633,7 +651,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public String getReportCalendarJSON() throws CodingErrorException, CantDoThatException,
-			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException, JsonGenerationException {
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
+			JsonGenerationException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(this.sessionData,
 				this.request, this.databaseDefn, true);
 		// Check privileges for all tables from which data is displayed from,
@@ -1124,13 +1143,14 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	public String toExternalNames(String sourceText) throws ObjectNotFoundException {
 		for (TableInfo table : this.getTablesAllowedTo(PrivilegeType.VIEW_TABLE_DATA)) {
-			sourceText = sourceText.replaceAll(table.getInternalTableName(), table.getTableName().toLowerCase().replaceAll("\\W", ""));
+			sourceText = sourceText.replaceAll(table.getInternalTableName(), table.getTableName()
+					.toLowerCase().replaceAll("\\W", ""));
 			for (BaseReportInfo report : table.getReports()) {
-				sourceText = sourceText.replaceAll(report.getInternalReportName(),
-						report.getReportName().toLowerCase().replaceAll("\\W", ""));
+				sourceText = sourceText.replaceAll(report.getInternalReportName(), report
+						.getReportName().toLowerCase().replaceAll("\\W", ""));
 				for (BaseField field : report.getReportBaseFields()) {
-					sourceText = sourceText.replaceAll(field.getInternalFieldName(),
-							field.getFieldName().toLowerCase().replaceAll("\\W", ""));
+					sourceText = sourceText.replaceAll(field.getInternalFieldName(), field
+							.getFieldName().toLowerCase().replaceAll("\\W", ""));
 				}
 			}
 		}

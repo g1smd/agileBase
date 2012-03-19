@@ -2797,6 +2797,22 @@ public final class DataManagement implements DataManagementInfo {
 		return nextRowId;
 	}
 
+	public boolean childDataRowsExist(TableInfo parentTable, int parentRowId, TableInfo childTable) throws SQLException {
+		Connection conn = null;
+		boolean exists = false;
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			DataRowInfo dataRow = new DataRow(parentTable, parentRowId, new HashMap<BaseField, DataRowFieldInfo>());
+			exists = dataRow.childDataRowsExist(conn, childTable);
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return exists;
+	}
+	
 	public Set<Integer> getRelatedRowIds(BaseReportInfo masterReport, int masterRowId,
 			TableInfo relatedTable) throws CantDoThatException, SQLException {
 		if (!masterReport.getReportBaseFields().contains(relatedTable.getPrimaryKey())) {

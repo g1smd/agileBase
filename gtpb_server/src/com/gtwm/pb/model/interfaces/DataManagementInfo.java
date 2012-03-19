@@ -239,6 +239,11 @@ public interface DataManagementInfo {
 			TableInfo relatedTable) throws CantDoThatException, SQLException;
 
 	/**
+	 * @see DataRowInfo#childDataRowsExist
+	 */
+	public boolean childDataRowsExist(TableInfo parentTable, int parentRowId, TableInfo childTable) throws SQLException;
+	
+	/**
 	 * Save a new record or update an existing one in a database table. Also
 	 * save the field input values in the session for later retrieval
 	 * 

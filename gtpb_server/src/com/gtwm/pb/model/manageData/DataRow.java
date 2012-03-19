@@ -203,6 +203,34 @@ public class DataRow implements DataRowInfo {
 				+ "' not found in data row " + this.row);
 	}
 
+	public boolean childDataRowsExist(Connection conn, TableInfo childTable) throws SQLException {
+		// Find the relation field in child table that relates to parent
+		boolean exists = false;
+		for (BaseField field : childTable.getFields()) {
+			if (field instanceof RelationField) {
+				RelationField relationField = (RelationField) field;
+				TableInfo relatedTable = relationField.getRelatedTable();
+				if (relatedTable.equals(this.table)) {
+					String SQLCode = "SELECT " + childTable.getPrimaryKey().getInternalFieldName();
+					SQLCode += " FROM " + childTable.getInternalTableName();
+					SQLCode += " WHERE " + relationField.getInternalFieldName() + " = " + this.rowid;
+					SQLCode += " LIMIT 1";
+					PreparedStatement statement = conn.prepareStatement(SQLCode);
+					ResultSet results = statement.executeQuery();
+					if (results.next()) {
+						exists = true;
+					}
+					results.close();
+					statement.close();
+					if (exists) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
 	public Map<RelationField, List<DataRow>> getChildDataRows(DatabaseInfo databaseDefn,
 			Connection conn, HttpServletRequest request) throws SQLException,
 			ObjectNotFoundException, CodingErrorException {

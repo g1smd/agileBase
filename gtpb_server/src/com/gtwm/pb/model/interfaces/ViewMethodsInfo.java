@@ -34,6 +34,7 @@ import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.auth.PrivilegeType;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import org.codehaus.jackson.JsonGenerationException;
 
@@ -334,6 +335,11 @@ public interface ViewMethodsInfo {
 			throws DisallowedException, ObjectNotFoundException, SQLException, CantDoThatException,
 			CodingErrorException;
 
+	/**
+	 * @see DataRowInfo#childDataRowsExist()
+	 */
+	public boolean childDataRowsExist(TableInfo childTable) throws SQLException, DisallowedException, ObjectNotFoundException;
+	
 	/**
 	 * When passed a row ID, finds rows in the session report with the parent
 	 * table's row ID set to that ID. For each row found, if relatedTable's

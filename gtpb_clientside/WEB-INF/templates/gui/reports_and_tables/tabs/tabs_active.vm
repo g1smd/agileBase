@@ -1,22 +1,14 @@
 ## For each child tab of the table of the current record, 
-## return a count of how many child records there are
+## show whether related data exists.
+## Output JSON
 #set($table = $sessionData.getTable())
 #set($formTabs = $table.getFormTabs())
-#set($rowId = $sessionData.getRowId())
+[ ## Start JSON array
 #foreach($formTab in $formTabs)
 	## Really we should use tab report, but the table is likely to be a lot faster in some cases
 	#set($tabTable = $formTab.getTable())
-	#set($tabReport = $tabTable.getDefaultReport())
-	## Find the relation field that links to the parent table
-	#foreach($field in $tabTable.getFields())
-		#if($field.getRelatedTable().equals($table))
-			#set($filters = $viewTools.getNewFilterMap())
-			#set($success = $filters.put($field, "$rowId"))
-			## use a report row limit of 1, we are only checking for the existence of any rows
-			#set($rows = $view.getReportDataRows($tabReport, 1, $filters, true))
-			#if($rows.size() > 0)
-			  $tabTable.getInternalTableName()<br/>
-			#end
-		#end
+	#if($view.childDataRowsExist($tabTable))
+	  "$tabTable.getInternalTableName()",
 	#end
 #end
+""] ## End JSON array
