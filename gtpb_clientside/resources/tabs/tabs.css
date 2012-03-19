@@ -805,6 +805,10 @@ div#reportData {
   background-color: none; /* #f4f4f4 */
 }
 
+.form_tabber .tab_choice.no_records {
+  color: white;
+}
+
 .form_tabber .tab_choice:first-child {
   margin-left: 0.5em;
 }
