@@ -1142,7 +1142,11 @@ function fMarkInactiveTabs() {
 	if ($(".form_tabber").size() == 0) {
 		return;
 	}
-	$.get("AppController.servlet?return=gui/tabs..");
+	$.getJSON("AppController.servlet?return=gui/reports_and_tables/tabs/tabs_inactive", function(data) {
+		for(i=0; i<data.length; i++) {
+			$("#tab_choice_" + data[i]).addClass("no_records");
+		}
+	});
 }
 
 /*
