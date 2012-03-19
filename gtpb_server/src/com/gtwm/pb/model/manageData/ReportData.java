@@ -296,8 +296,13 @@ public class ReportData implements ReportDataInfo {
 		sqlFilterString.append(relatedFieldInternalName).append(" FROM ");
 		sqlFilterString.append(relatedTableInternalName).append(" WHERE ");
 		String filterTypeSqlRepresentation = filterType.getSqlRepresentation();
-		filterTypeSqlRepresentation = filterTypeSqlRepresentation.replaceAll(
-				"gtpb_field_placeholder", displayFieldInternalName + "::text");
+		if (relationField.getDisplayField().getDbType().equals(DatabaseFieldType.VARCHAR)) {
+			filterTypeSqlRepresentation = filterTypeSqlRepresentation.replaceAll(
+					"gtpb_field_placeholder", displayFieldInternalName);
+		} else {
+			filterTypeSqlRepresentation = filterTypeSqlRepresentation.replaceAll(
+					"gtpb_field_placeholder", displayFieldInternalName + "::text");
+		}
 		// TODO: We should really check for > or < filtering on numbers here, as
 		// in generateFilterStringForField(BaseField, String,
 		// List<ReportQuickFilterInfo>, boolean)
@@ -419,7 +424,11 @@ public class ReportData implements ReportDataInfo {
 			// filter on the stored value:
 			String filterFieldInternalName = filterField.getInternalFieldName();
 			if (dbType.equals(DatabaseFieldType.VARCHAR)) {
-				filterStringForField.append("lower(" + filterFieldInternalName + ")");
+				if (filterType.equals(QuickFilterType.EMPTY)) {
+					filterStringForField.append(filterFieldInternalName);
+				} else {
+					filterStringForField.append("lower(" + filterFieldInternalName + ")");
+				}
 			} else if (filterType.equals(QuickFilterType.GREATER_THAN)
 					|| filterType.equals(QuickFilterType.LESS_THAN)) {
 				if (dbType.equals(DatabaseFieldType.FLOAT)
@@ -431,12 +440,15 @@ public class ReportData implements ReportDataInfo {
 					filterStringForField.append(filterFieldInternalName + "::text");
 				}
 			} else {
-				if (exactFilters && filterType.equals(QuickFilterType.LIKE)
+				if (exactFilters
+						&& filterType.equals(QuickFilterType.LIKE)
 						&& (dbType.equals(DatabaseFieldType.INTEGER) || dbType
 								.equals(DatabaseFieldType.SERIAL))) {
 					// When exact filtering is on, treat integers as numbers
 					// rather than casting to text
 					// Allows indexes etc. to work
+					filterStringForField.append(filterFieldInternalName);
+				} else if (dbType.equals(DatabaseFieldType.VARCHAR)) {
 					filterStringForField.append(filterFieldInternalName);
 				} else {
 					filterStringForField.append(filterFieldInternalName + "::text");

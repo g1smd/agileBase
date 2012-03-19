@@ -746,7 +746,6 @@ public final class DatabaseDefn implements DatabaseInfo {
 			statement.execute();
 			statement.close();
 		} catch (SQLException sqlex) {
-			logger.debug("Initial attempt at CREATE OR REPLACE VIEW failed");
 			if (viewExists) {
 				createOrReplaceWorked = false;
 				conn.rollback(savepoint);
@@ -917,13 +916,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 			HttpServletRequest request) throws SQLException, CantDoThatException,
 			CodingErrorException, ObjectNotFoundException {
 		boolean viewExists = viewExists(conn, report);
-		logger.debug("View " + report + "(" + report.getInternalReportName() + ") already exists: " + viewExists);
 		boolean createOrReplaceWorked = updateViewDbActionWithCreateOrReplace(conn, report,
 				viewExists);
-		logger.debug("createOrReplaceWorked: " + createOrReplaceWorked);
 		if (viewExists && !createOrReplaceWorked) {
 			boolean dropAndCreateWorked = updateViewDbActionWithDropAndCreate(conn, report);
-			logger.debug("dropAndCreateWorked: " + dropAndCreateWorked);
 			if (!dropAndCreateWorked) {
 				updateViewDbActionWithDropAndCreateDependencies(conn, report, request);
 			}
