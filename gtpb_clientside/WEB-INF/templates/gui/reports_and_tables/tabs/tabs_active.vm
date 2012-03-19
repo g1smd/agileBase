@@ -11,7 +11,7 @@
 	#foreach($field in $tabTable.getFields())
 		#if($field.getRelatedTable().equals($table))
 			#set($filters = $viewTools.getNewFilterMap())
-			#set($success = $filters.put($field, $rowId))
+			#set($success = $filters.put($field, "$rowId"))
 			## use a report row limit of 1, we are only checking for the existence of any rows
 			#set($rows = $view.getReportDataRows($tabReport, 1, $filters, true))
 			#if($rows.size() > 0)
