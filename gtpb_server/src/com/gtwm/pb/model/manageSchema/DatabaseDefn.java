@@ -155,7 +155,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 *             If more than one Authenticator was found in the database
 	 */
 	public DatabaseDefn(DataSource relationalDataSource, String webAppRoot) throws SQLException,
-			ObjectNotFoundException, CantDoThatException, MissingParametersException, CodingErrorException {
+			ObjectNotFoundException, CantDoThatException, MissingParametersException,
+			CodingErrorException {
 		this.relationalDataSource = relationalDataSource;
 		// Load table schema objects
 		Session hibernateSession = HibernateUtil.currentSession();
@@ -669,7 +670,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 			for (BaseField field : table.getFields()) {
 				if (!(field instanceof SeparatorField || field instanceof ReferencedReportDataField)) {
 					if (field instanceof RelationField) {
-						// Workaround for bug: creating more than one relation at a time fails with a Hibernate Exception
+						// Workaround for bug: creating more than one relation
+						// at a time fails with a Hibernate Exception
 						if (relatedTables.size() == 0) {
 							// add a join to allow related field to be added to
 							// the
@@ -711,8 +713,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Find out if the view already exists
 	 */
-	private boolean viewExists(Connection conn, BaseReportInfo report)
-			throws SQLException {
+	private boolean viewExists(Connection conn, BaseReportInfo report) throws SQLException {
 		PreparedStatement viewExistsStatement = conn
 				.prepareStatement("select count(*) from information_schema.views where table_name=?");
 		viewExistsStatement.setString(1, report.getInternalReportName());
@@ -795,21 +796,23 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * dependent upon the report identified by internalReportName. The keySet
 	 * also contains internalReportName. Each key maps to a list of view names
 	 * identifying views directly dependent upon the view identified by the key.
-	 * 
-	 * NOTE: Uses some postgres specific code, not database independent
 	 */
 	private void fillReportDependencyMap(Connection conn, String internalReportName,
 			Map<String, List<String>> reportDependencyMap) throws SQLException {
-		String SQLCode = "SELECT viewname FROM pg_views WHERE schemaname='public' AND definition ILIKE '%"
-				+ internalReportName + "%'";
+
+		String SQLCode = "SELECT table_name FROM information_schema.views WHERE view_definition ILIKE ?";
+		// String SQLCode =
+		// "SELECT viewname FROM pg_views WHERE schemaname='public' AND definition ILIKE '%"
+		// + internalReportName + "%'";
 		PreparedStatement statement = conn.prepareStatement(SQLCode);
+		statement.setString(1, "%" + internalReportName + "%");
 		ResultSet results = statement.executeQuery();
 		List<String> dependentReportInternalNames = new ArrayList<String>();
-		// add the empty list for now so the key is present to prevent infinite
-		// recursion
+		// add the empty list for now so the key is present to prevent
+		// infinite recursion
 		reportDependencyMap.put(internalReportName, dependentReportInternalNames);
 		while (results.next()) {
-			String dependentReportInternalName = results.getString("viewname");
+			String dependentReportInternalName = results.getString(1);
 			dependentReportInternalNames.add(dependentReportInternalName);
 			if (!reportDependencyMap.keySet().contains(dependentReportInternalName)) {
 				fillReportDependencyMap(conn, dependentReportInternalName, reportDependencyMap);
@@ -835,7 +838,6 @@ public final class DatabaseDefn implements DatabaseInfo {
 			savepoint = conn.setSavepoint("dropAndCreateDependenciesSavepoint");
 			Map<String, List<String>> reportDependencyMap = new HashMap<String, List<String>>();
 			this.fillReportDependencyMap(conn, report.getInternalReportName(), reportDependencyMap);
-			logger.debug("Report dependency map is " + reportDependencyMap);
 			// Remove reports...
 			List<String> deletedReports = new ArrayList<String>();
 			while (deletedReports.size() < reportDependencyMap.size()) {
@@ -1082,8 +1084,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
 			String newReportName, String newReportDesc, ModuleInfo newModule,
-			ReportStyle newReportStyle, boolean allowExport) throws DisallowedException, CantDoThatException,
-			SQLException, ObjectNotFoundException {
+			ReportStyle newReportStyle, boolean allowExport) throws DisallowedException,
+			CantDoThatException, SQLException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),

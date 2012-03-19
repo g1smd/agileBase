@@ -1134,6 +1134,17 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 	});
 }
 
+/**
+ * Mark tabs which have no content in them
+ * Use the server to look up whether there's content or not
+ */
+function fMarkInactiveTabs() {
+	if ($(".form_tabber").size() == 0) {
+		return;
+	}
+	$.get("AppController.servlet?return=gui/tabs..");
+}
+
 /*
  * Summary tab functions
  */
@@ -1398,5 +1409,6 @@ function editTabFunctions() {
 	fRelationPickers();
 	fComments();
 	fDatePickers();
-	fSexyUpload();	
+	fSexyUpload();
+	fMarkInactiveTabs();
 }

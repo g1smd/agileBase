@@ -139,7 +139,7 @@
 					<a target="pane_2" href="?return=gui/reports_and_tables/report_data&add_join_to_report=true&leftinternaltablename=$leftField.getTableContainingField().getInternalTableName()&leftinternalfieldname=$leftField.getInternalFieldName()&rightinternaltablename=$rightField.getTableContainingField().getInternalTableName()&rightinternalfieldname=$rightField.getInternalFieldName()&jointype=$candidateJoin.getJoinType().name()">Join $leftField.getTableContainingField() to $rightField.getTableContainingField()</a><br>
 				#end
         #if($downwardCandidateJoins.size() > 0)
-          <a title="Add a join down to a child table, or a manual join" href="#" onclick="$('#addDownwardJoin').show();">Add joins down to child tables</a>
+          <a title="Add a join down to a child table, or a manual join" href="#" onclick="$('#addDownwardJoin').show(); fWebkitGlitch();">Add joins down to child tables</a>
         #else
           <a title="add a more complex join, e.g. to a report or a calculated field" href="#" onclick="$('#addNewJoin').show();">Add a complex join manually</a>
         #end
