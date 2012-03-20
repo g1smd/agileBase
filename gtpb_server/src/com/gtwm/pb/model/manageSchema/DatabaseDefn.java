@@ -178,7 +178,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
 				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
 		// one-off boot actions
-		// this.addViewCountFields();
+		this.addCommentsFeedFields();
 	}
 
 	public void cancelScheduledEvents() {
@@ -199,7 +199,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * Was only used once but is an example of how to add a new type of hidden
 	 * field so worth keeping around
 	 */
-	private void addViewCountFields() throws SQLException {
+	private void addCommentsFeedFields() throws SQLException {
 		Set<TableInfo> allTables = new HashSet<TableInfo>();
 		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
 		// TODO: once this action has completed, set getCompanies back to
@@ -207,30 +207,33 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// for (CompanyInfo company : authenticator.getCompanies()) {
 		// allTables.addAll(company.getTables());
 		// }
-		logger.info("Adding view count fields");
+		logger.info("Adding comments feed fields");
 		for (TableInfo table : allTables) {
-			String viewCountFieldName = HiddenFields.VIEW_COUNT.getFieldName();
+			String commentsFeedFieldName = HiddenFields.COMMENTS_FEED.getFieldName();
 			try {
-				BaseField viewCountField = table.getField(viewCountFieldName);
+				BaseField commentsFeedField = table.getField(commentsFeedFieldName);
 			} catch (ObjectNotFoundException onex) {
-				logger.info("View count field doesn't exist for table " + table + ", adding it");
+				logger.info("Comments feed field doesn't exist for table " + table + ", adding it");
 				Connection conn = null;
 				try {
 					HibernateUtil.startHibernateTransaction();
 					conn = this.relationalDataSource.getConnection();
 					conn.setAutoCommit(false);
 					HibernateUtil.activateObject(table);
-					this.addViewCountFieldToTable(conn, table);
+					this.addCommentsFeedFieldToTable(conn, table);
+					// Also remove the old obsolete wiki page field
+					BaseField wikiField = table.getField(HiddenFields.WIKI_PAGE.getFieldName());
+					this.removeFieldWithoutChecks(null, conn, wikiField, table);
 					conn.commit();
 					HibernateUtil.currentSession().getTransaction().commit();
 				} catch (SQLException sqlex) {
-					logger.error("SQL error adding view count field: " + sqlex);
+					logger.error("SQL error adding comments feed field: " + sqlex);
 					rollbackConnections(conn);
 				} catch (HibernateException hex) {
-					logger.error("Hibernate error adding view count field: " + hex);
+					logger.error("Hibernate error adding comments feed field: " + hex);
 					rollbackConnections(conn);
 				} catch (AgileBaseException pbex) {
-					logger.error("AB error adding view count field: " + pbex);
+					logger.error("AB error adding comments feed field: " + pbex);
 					rollbackConnections(conn);
 				} finally {
 					if (conn != null) {
@@ -262,7 +265,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		logger.error("hibernate successfully rolled back");
 	}
 
-	private void addCommentFeedFieldToTable(Connection conn, TableInfo table)
+	private void addCommentsFeedFieldToTable(Connection conn, TableInfo table)
 	throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		TextField commentFeedField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.COMMENTS_FEED.getFieldName(),
@@ -394,7 +397,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			this.addModifiedByFieldToTable(conn, newTable);
 			this.addRecordLockedFieldToTable(conn, newTable);
 			this.addViewCountFieldToTable(conn, newTable);
-			this.addCommentFeedFieldToTable(conn, newTable);
+			this.addCommentsFeedFieldToTable(conn, newTable);
 		} catch (SQLException sqlex) {
 			// Reformat the error message to be more user friendly.
 			// Use SQLState as an error identifier because it is standard across
@@ -1975,12 +1978,18 @@ public final class DatabaseDefn implements DatabaseInfo {
 					PrivilegeType.MANAGE_TABLE, table);
 		}
 		this.removeFieldChecks(field, request);
-		// Don't allow deletion of the primary key
-		if (field.equals(field.getTableContainingField().getPrimaryKey())) {
-			throw new CantDoThatException("Can't delete the primary key field");
-		}
-		ReportFieldInfo removedReportField = null;
+		this.removeFieldWithoutChecks(request, conn, field, table);
+		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
+		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
+		usageLogger.logTableSchemaChange(user, table, AppAction.REMOVE_FIELD, "field: " + field);
+		UsageLogger.startLoggingThread(usageLogger);
+	}
+
+	private void removeFieldWithoutChecks(HttpServletRequest request, Connection conn,
+			BaseField field, TableInfo table) throws CantDoThatException, ObjectNotFoundException,
+			SQLException, CodingErrorException {
 		HibernateUtil.activateObject(table);
+		ReportFieldInfo removedReportField = null;
 		// remove from default report
 		SimpleReportInfo defaultReport = table.getDefaultReport();
 		Set<ReportFieldInfo> reportFields = defaultReport.getReportFields();
@@ -2008,10 +2017,6 @@ public final class DatabaseDefn implements DatabaseInfo {
 			HibernateUtil.currentSession().delete(removedReportField);
 		}
 		HibernateUtil.currentSession().delete(field);
-		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
-		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logTableSchemaChange(user, table, AppAction.REMOVE_FIELD, "field: " + field);
-		UsageLogger.startLoggingThread(usageLogger);
 	}
 
 	public ReportFieldInfo addFieldToReport(HttpServletRequest request, Connection conn,
