@@ -34,7 +34,6 @@ import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.auth.PrivilegeType;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import org.codehaus.jackson.JsonGenerationException;
 
@@ -72,14 +71,6 @@ public interface ViewMethodsInfo {
 			String attributes, String actionTemplate, String buttons, String callbackFunction);
 
 	/**
-	 * Returns true if a wiki is running on this computer and integrated into
-	 * agileBase via the servlet container's server.xml
-	 * 
-	 * Returns false if no wiki functionality will be integrated into agileBase
-	 */
-	public boolean isWikiIntegrated() throws ObjectNotFoundException, DisallowedException;
-
-	/**
 	 * Returns true if the current session record is locked for editing, taking
 	 * into account any override
 	 */
@@ -87,37 +78,6 @@ public interface ViewMethodsInfo {
 
 	public boolean isRecordLocked(TableInfo table, int rowId) throws SQLException,
 			ObjectNotFoundException;
-
-	/**
-	 * Return the first part of the text of a corresponding wiki page, formatted
-	 * as HTML for display, or an empty string if no page exists with the given
-	 * name
-	 * 
-	 * The results of this method can therefore also be used to check if a wiki
-	 * page exists
-	 * 
-	 * @param wikiPageName
-	 *            The title of the wiki page to get content out of
-	 * @param numChars
-	 *            The number of characters to return from the start of the
-	 *            content
-	 * 
-	 * @throws CantDoThatException
-	 *             If no wiki is integrated
-	 * @throws SQLException
-	 *             if there was an internal error getting the content
-	 */
-	public String getWikiPageSnippet(String wikiPageName, int numChars) throws CantDoThatException,
-			SQLException, DisallowedException, ObjectNotFoundException;
-
-	/**
-	 * Return the URL of a wiki page, given it's name
-	 * 
-	 * @param edit
-	 *            If true, return the URL to edit the page, if false, to view it
-	 */
-	public String getWikiPageUrl(String wikiPageName, boolean edit) throws ObjectNotFoundException,
-			DisallowedException;
 
 	/**
 	 * Acts on the session table
@@ -493,14 +453,6 @@ public interface ViewMethodsInfo {
 	 * the session report
 	 */
 	public boolean isRowIdInReport() throws SQLException;
-
-	/**
-	 * @see WikiManagementInfo#getWikiRecordDataRows(CompanyInfo, String,
-	 *      String)
-	 */
-	public List<WikiRecordDataRowInfo> getWikiRecordDataRows(String pageNameFilter,
-			String pageContentFilter) throws CantDoThatException, SQLException,
-			DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @return Report summary data for the default summary in the session report

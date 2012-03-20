@@ -18,7 +18,6 @@
 package com.gtwm.pb.model.manageSchema;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -129,7 +128,6 @@ import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.Helpers;
-import com.gtwm.pb.model.interfaces.WikiManagementInfo;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadException;
@@ -264,19 +262,18 @@ public final class DatabaseDefn implements DatabaseInfo {
 		logger.error("hibernate successfully rolled back");
 	}
 
-	@Deprecated
-	private void addWikiFieldToTable(Connection conn, TableInfo table) throws CantDoThatException,
-			SQLException, ObjectNotFoundException, CodingErrorException {
-		TextField wikiPageField = new TextFieldDefn(this.relationalDataSource, table, null,
-				HiddenFields.WIKI_PAGE.getFieldName(),
-				HiddenFields.WIKI_PAGE.getFieldDescription(), !TextField.UNIQUE,
-				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null,
-				!TextField.HIDDEN, true, FieldPrintoutSetting.NO_PRINTOUT);
-		HibernateUtil.currentSession().save(wikiPageField);
-		table.addField(wikiPageField);
-		this.addFieldToRelationalDb(conn, table, wikiPageField);
+	private void addCommentFeedFieldToTable(Connection conn, TableInfo table)
+	throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
+		TextField commentFeedField = new TextFieldDefn(this.relationalDataSource, table, null,
+				HiddenFields.COMMENTS_FEED.getFieldName(),
+				HiddenFields.COMMENTS_FEED.getFieldDescription(), !TextField.UNIQUE,
+				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null, TextField.HIDDEN,
+				true, FieldPrintoutSetting.NAME_AND_VALUE);
+		HibernateUtil.currentSession().save(commentFeedField);
+		table.addField(commentFeedField);
+		this.addFieldToRelationalDb(conn, table, commentFeedField);
 	}
-
+	
 	private void addDateCreatedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		DateField dateCreatedField = new DateFieldDefn(table, null,
@@ -391,13 +388,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 			// Save default report definition to the database
 			this.updateViewDbAction(conn, defaultReport, request);
 			// Add hidden table fields
-			this.addWikiFieldToTable(conn, newTable);
 			this.addDateCreatedFieldToTable(conn, newTable);
 			this.addCreatedByFieldToTable(conn, newTable);
 			this.addLastModifiedFieldToTable(conn, newTable);
 			this.addModifiedByFieldToTable(conn, newTable);
 			this.addRecordLockedFieldToTable(conn, newTable);
 			this.addViewCountFieldToTable(conn, newTable);
+			this.addCommentFeedFieldToTable(conn, newTable);
 		} catch (SQLException sqlex) {
 			// Reformat the error message to be more user friendly.
 			// Use SQLState as an error identifier because it is standard across
@@ -3048,17 +3045,6 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return this.relationalDataSource;
 	}
 
-	@Deprecated
-	public synchronized WikiManagementInfo getWikiManagement(CompanyInfo company) {
-		return this.wikiManagements.get(company);
-	}
-
-	@Deprecated
-	public synchronized void addWikiManagement(CompanyInfo company,
-			WikiManagementInfo wikiManagement) {
-		this.wikiManagements.put(company, wikiManagement);
-	}
-
 	public String toString() {
 		return "DatabaseDefn: Core agileBase methods";
 	}
@@ -3303,8 +3289,6 @@ public final class DatabaseDefn implements DatabaseInfo {
 	private DataSource relationalDataSource = null;
 
 	private DataManagementInfo dataManagement = null;
-
-	private Map<CompanyInfo, WikiManagementInfo> wikiManagements = new HashMap<CompanyInfo, WikiManagementInfo>();
 
 	private AuthManagerInfo authManager = null;
 

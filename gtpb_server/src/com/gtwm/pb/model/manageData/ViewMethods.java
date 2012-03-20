@@ -32,7 +32,6 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -40,7 +39,6 @@ import com.gtwm.pb.model.interfaces.CommentInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
-import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.ReportDataInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
@@ -62,7 +60,6 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
-import com.gtwm.pb.model.interfaces.WikiRecordDataRowInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.manageSchema.JoinType;
 import com.gtwm.pb.model.manageSchema.JoinClause;
@@ -84,7 +81,6 @@ import com.gtwm.pb.util.Enumerations.ExtraAction;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
-
 import org.codehaus.jackson.JsonGenerationException;
 import org.grlea.log.SimpleLogger;
 import java.util.TreeSet;
@@ -258,27 +254,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 			return new LinkedList<ModuleActionInfo>();
 		}
 		return moduleActions;
-	}
-
-	public boolean isWikiIntegrated() throws ObjectNotFoundException, DisallowedException {
-		AppUserInfo loggedInUser = this.getLoggedInUser();
-		CompanyInfo company = loggedInUser.getCompany();
-		return this.databaseDefn.getWikiManagement(company).isWikiIntegrated();
-	}
-
-	public String getWikiPageSnippet(String wikiPageName, int numChars) throws CantDoThatException,
-			SQLException, DisallowedException, ObjectNotFoundException {
-		AppUserInfo loggedInUser = this.getLoggedInUser();
-		CompanyInfo company = loggedInUser.getCompany();
-		return this.databaseDefn.getWikiManagement(company).getWikiPageSnippet(wikiPageName,
-				numChars);
-	}
-
-	public String getWikiPageUrl(String wikiPageName, boolean edit) throws ObjectNotFoundException,
-			DisallowedException {
-		AppUserInfo loggedInUser = this.getLoggedInUser();
-		CompanyInfo company = loggedInUser.getCompany();
-		return this.databaseDefn.getWikiManagement(company).getWikiUrl(wikiPageName, edit);
 	}
 
 	public boolean usesToolbarPlugin() {
@@ -684,20 +659,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 		AppUserInfo user = this.getLoggedInUser();
 		return this.databaseDefn.getDataManagement().getReportCalendarJSON(user, report,
 				filterValues, startEpoch, endEpoch);
-	}
-
-	/**
-	 * @see WikiManagementInfo#getWikiRecordDataRows(CompanyInfo, String,
-	 *      String)
-	 */
-	public List<WikiRecordDataRowInfo> getWikiRecordDataRows(String pageNameFilter,
-			String pageContentFilter) throws CantDoThatException, SQLException,
-			DisallowedException, ObjectNotFoundException {
-		AppUserInfo user = this.databaseDefn.getAuthManager().getUserByUserName(this.request,
-				this.request.getRemoteUser());
-		CompanyInfo company = user.getCompany();
-		return this.databaseDefn.getWikiManagement(company).getWikiRecordDataRows(pageNameFilter,
-				pageContentFilter);
 	}
 
 	/**

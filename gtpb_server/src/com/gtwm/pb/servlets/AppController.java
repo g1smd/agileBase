@@ -37,7 +37,6 @@ import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.view.VelocityViewServlet;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.exception.ParseErrorException;
-import com.gtwm.pb.integration.MediaWikiManagement;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
@@ -49,7 +48,6 @@ import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ViewMethodsInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
-import com.gtwm.pb.model.interfaces.WikiManagementInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.interfaces.fields.TextField;
@@ -111,7 +109,6 @@ public final class AppController extends VelocityViewServlet {
 		// application logic
 		// and schema information. The relational database is also gotten
 		DataSource relationalDataSource = null;
-		DataSource wikiDataSource = null;
 		InitialContext initialContext = null;
 		try {
 			// Get a data source for the relational database to pass to the
@@ -641,31 +638,6 @@ public final class AppController extends VelocityViewServlet {
 			// response.setHeader("Set-Cookie",
 			// String.format("JSESSIONID=%s;Expires=%s;Path=/agileBase", id,
 			// expireDate));
-			// set up the wiki if the user is the first user logging in from a
-			// particular company
-			CompanyInfo company = null;
-			try {
-				company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
-			} catch (ObjectNotFoundException onfex) {
-				ServletUtilMethods.logException(onfex, request, "Company not found for user "
-						+ request.getRemoteUser());
-			}
-
-			WikiManagementInfo wikiManagement = this.databaseDefn.getWikiManagement(company);
-			if (wikiManagement == null) {
-				InitialContext initialContext = null;
-				DataSource wikiDataSource = null;
-				try {
-					initialContext = new InitialContext();
-					String dataSourceUrl = "java:comp/env/jdbc/wiki"
-							+ company.getCompanyName().toLowerCase().replaceAll("\\W", "");
-					wikiDataSource = (DataSource) initialContext.lookup(dataSourceUrl);
-				} catch (NamingException nex) {
-					wikiDataSource = null;
-				}
-				wikiManagement = new MediaWikiManagement(company, wikiDataSource);
-				this.databaseDefn.addWikiManagement(company, wikiManagement);
-			}
 		}
 		String templateName = ServletUtilMethods.getParameter(request, "return", multipartItems);
 		try {

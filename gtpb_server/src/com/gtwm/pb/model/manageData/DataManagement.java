@@ -874,8 +874,7 @@ public final class DataManagement implements DataManagementInfo {
 					&& (!importSequenceValues)) {
 				fields.remove(field);
 			} else if (field.getHidden()) {
-				if (field.getFieldName().equals(HiddenFields.WIKI_PAGE.getFieldName())
-						|| field.getFieldName().equals(HiddenFields.VIEW_COUNT.getFieldName())) {
+				if (field.getFieldName().equals(HiddenFields.VIEW_COUNT.getFieldName())) {
 					fields.remove(field);
 				} else if (updateExistingRecords) {
 					if (field.getFieldName().equals(HiddenFields.DATE_CREATED.getFieldName())
@@ -3135,7 +3134,7 @@ public final class DataManagement implements DataManagementInfo {
 		if (mostPopularReport != null) {
 			return mostPopularReport;
 		}
-		String SQLCode = "SELECT report FROM dbint_log_report_view WHERE app_user=? AND app_timestamp > (now() - '4 months'::interval) GROUP BY report ORDER BY count(*) DESC";
+		String SQLCode = "SELECT report FROM dbint_log_report_view WHERE app_user=? AND app_timestamp > (now() - '2 months'::interval) GROUP BY report ORDER BY count(*) DESC LIMIT 50";
 		Connection conn = null;
 		AuthenticatorInfo authenticator = this.authManager.getAuthenticator();
 		try {

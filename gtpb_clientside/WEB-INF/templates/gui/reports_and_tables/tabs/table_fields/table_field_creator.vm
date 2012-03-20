@@ -48,7 +48,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/table_field_crea
             #end
           #end
   		        ## Second loop - advanced options
-  			        <a href="#" onClick="document.getElementById('advancedFieldOptionSet${fieldType}').style.display='block'">advanced options</a><br>
+  			        <a href="#" onClick="document.getElementById('advancedFieldOptionSet${fieldType}').style.display='block'; fWebkitGlitch();">advanced options</a><br>
   			        <div id="advancedFieldOptionSet$fieldType" style="display:none">
   			          #foreach($fieldOption in $fieldType.getOptions())
   			            #if($fieldOption.isAdvancedOption())

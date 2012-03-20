@@ -560,13 +560,6 @@ public interface DatabaseInfo {
 	public DataSource getDataSource();
 
 	/**
-	 * Return a reference to the object that allows integration with the wiki
-	 */
-	public WikiManagementInfo getWikiManagement(CompanyInfo company);
-
-	public void addWikiManagement(CompanyInfo company, WikiManagementInfo wikiManagement);
-
-	/**
 	 * @return A reference to the object that manages access control and
 	 *         privileges for the application
 	 */

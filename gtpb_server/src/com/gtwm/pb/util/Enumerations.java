@@ -263,7 +263,8 @@ public class Enumerations {
 				"Date & time of last change to record"), MODIFIED_BY("Modified by [Auto]",
 				"User who made the last change"), LOCKED("Locked [Auto]",
 				"Whether record is locked for editing"),
-				VIEW_COUNT("View count [Auto]", "Number of times the record has been viewed");
+				VIEW_COUNT("View count [Auto]", "Number of times the record has been viewed"),
+				COMMENTS_FEED("Comments feed [Auto]","Conglomoration of all comments on the record");
 
 		private String fieldName;
 
