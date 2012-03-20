@@ -202,11 +202,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 	private void addCommentsFeedFields() throws SQLException {
 		Set<TableInfo> allTables = new HashSet<TableInfo>();
 		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
-		// TODO: once this action has completed, set getCompanies back to
+		//TODO: once this action has completed, set getCompanies back to
 		// protected
-		// for (CompanyInfo company : authenticator.getCompanies()) {
-		// allTables.addAll(company.getTables());
-		// }
+		for (CompanyInfo company : authenticator.getCompanies()) {
+		  allTables.addAll(company.getTables());
+		}
 		logger.info("Adding comments feed fields");
 		for (TableInfo table : allTables) {
 			String commentsFeedFieldName = HiddenFields.COMMENTS_FEED.getFieldName();
