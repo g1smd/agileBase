@@ -222,6 +222,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 					HibernateUtil.activateObject(table);
 					this.addCommentsFeedFieldToTable(conn, table);
 					// Also remove the old obsolete wiki page field
+					// For some reason we need to recreate some of the default reports as due to some previous bug
+					// they contain the wiki page field
+					this.updateViewDbActionWithDropAndCreate(conn, table.getDefaultReport());
 					BaseField wikiField = table.getField(HiddenFields.WIKI_PAGE.getFieldName());
 					this.removeFieldWithoutChecks(null, conn, wikiField, table);
 					conn.commit();
