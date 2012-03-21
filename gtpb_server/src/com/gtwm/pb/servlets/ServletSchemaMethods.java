@@ -1813,8 +1813,15 @@ public final class ServletSchemaMethods {
 			if (newCalculationField != null) {
 				report.removeField(newCalculationField);
 			}
+			String message = sqlex.getMessage();
+			int openBrackets = message.split("\\(").length;
+			int closeBrackets = message.split("\\)").length;
+			if (openBrackets != closeBrackets) {
+				message = "It looks like brackets may not match - there are " + openBrackets
+						+ " opening brackets and " + closeBrackets + " closing brackets";
+			}
 			throw new CantDoThatException("Calculation addition failed. "
-					+ Helpers.replaceInternalNames(sqlex.getMessage(), report), sqlex);
+					+ Helpers.replaceInternalNames(message, report), sqlex);
 		} catch (HibernateException hex) {
 			rollbackConnections(conn);
 			// remove calculation from memory
