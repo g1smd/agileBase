@@ -802,13 +802,24 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 */
 	private void fillReportDependencyMap(Connection conn, String internalReportName,
 			Map<String, List<String>> reportDependencyMap) throws SQLException {
-
-		String SQLCode = "SELECT table_name FROM information_schema.views WHERE view_definition ILIKE ?";
+		// 1) Standard compliant and simple but slow
+		//String SQLCode = "SELECT table_name FROM information_schema.views WHERE view_definition ILIKE ?";
+		// 2) Old way, equally slow
 		// String SQLCode =
 		// "SELECT viewname FROM pg_views WHERE schemaname='public' AND definition ILIKE '%"
 		// + internalReportName + "%'";
+		// 3) Complicated but fast
+		// See http://forums.postgresql.com.au/viewtopic.php?f=30&t=104965&start=0
+		String SQLCode = "SELECT distinct dependent.relname";
+		SQLCode += " FROM pg_depend";
+		SQLCode += " JOIN pg_rewrite ON pg_depend.objid = pg_rewrite.oid";
+		SQLCode += " JOIN pg_class as dependent ON pg_rewrite.ev_class = dependent.oid";
+		SQLCode += " JOIN pg_class as dependee ON pg_depend.refobjid = dependee.oid";
+		SQLCode += " WHERE dependee.relname = ?";
+		SQLCode += " AND dependent.relname != ?";
 		PreparedStatement statement = conn.prepareStatement(SQLCode);
-		statement.setString(1, "%" + internalReportName + "%");
+		statement.setString(1, internalReportName);
+		statement.setString(2, internalReportName);
 		ResultSet results = statement.executeQuery();
 		List<String> dependentReportInternalNames = new ArrayList<String>();
 		// add the empty list for now so the key is present to prevent
