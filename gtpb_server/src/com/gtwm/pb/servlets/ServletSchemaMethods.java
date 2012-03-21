@@ -1816,6 +1816,7 @@ public final class ServletSchemaMethods {
 			String message = sqlex.getMessage();
 			int openBrackets = message.split("\\(").length;
 			int closeBrackets = message.split("\\)").length;
+			logger.debug("In " + message + ", open brackets = " + openBrackets + ", close brackets are " + closeBrackets);
 			if (openBrackets != closeBrackets) {
 				message = "It looks like brackets may not match - there are " + openBrackets
 						+ " opening brackets and " + closeBrackets + " closing brackets";
