@@ -804,11 +804,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 			Map<String, List<String>> reportDependencyMap) throws SQLException {
 		// 1) Standard compliant and simple but slow
 		//String SQLCode = "SELECT table_name FROM information_schema.views WHERE view_definition ILIKE ?";
-		// 2) Old way, equally slow
+		// 2) Old Postgres way, equally slow
 		// String SQLCode =
 		// "SELECT viewname FROM pg_views WHERE schemaname='public' AND definition ILIKE '%"
 		// + internalReportName + "%'";
-		// 3) Complicated but fast
+		// 3) Low level Postgres way, complicated but fast
 		// See http://forums.postgresql.com.au/viewtopic.php?f=30&t=104965&start=0
 		String SQLCode = "SELECT distinct dependent.relname";
 		SQLCode += " FROM pg_depend";

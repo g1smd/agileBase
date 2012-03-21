@@ -56,7 +56,7 @@
         #set ($dbType = $field.getDbType())
         <td>
           #if($field.get(0)!='')
-            <input type="text" name="$field.get(0)" is_filter="true" gtpb_internalfieldname="$field.get(0)" gtpb_customfilterset="picker" onkeyup="new fSetFilter(this)" #if($browser_cannot_detect_keyup) keyup_bug="true"#end gtpb_return="gui/resources/picker/report_body" value="$!filters.get($field.get(1))">
+            <input type="text" name="$field.get(0)" is_filter="true" gtpb_internalfieldname="$field.get(0)" gtpb_customfilterset="picker" onkeyup="new fSetFilter(event, this)" #if($browser_cannot_detect_keyup) keyup_bug="true"#end gtpb_return="gui/resources/picker/report_body" value="$!filters.get($field.get(1))">
           #end
         </td>
 		      #end

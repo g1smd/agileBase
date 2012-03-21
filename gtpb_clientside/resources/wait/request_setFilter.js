@@ -211,9 +211,9 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 
 /*
  * ---------------------------------------------------- Set filter function
- * ----------------------------------------------------
+ * ---------------------------------------------------- e = event, oObj = filter input element
  */
-function fSetFilter(oObj, fReqCompleteOverride) {
+function fSetFilter(e, oObj, fReqCompleteOverride) {
 	/*
 	 * object to handle changing a filter element and update the db immediately
 	 * over XMLHTTP.
@@ -349,6 +349,15 @@ function fSetFilter(oObj, fReqCompleteOverride) {
 		return sPostString.slice(0, -1);
 	}
 
+	// Firstly, just return if an arrow key was pressed
+	if (typeof e !== "undefined") {
+		var k = e.keyCode;
+		// < 49 = arrow keys, shift, ctrl etc.
+		// 32 = space, 8 = backspace, 49 = delete
+		if (k < 49 && k != 32 && k != 8) {
+			return;
+		}
+	}
 	/*
 	 * snapshot the state of the object now so that we can check if it's the
 	 * same when the server returns. The state we store depends on the type of

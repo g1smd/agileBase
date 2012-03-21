@@ -30,10 +30,10 @@
     <tr name="fieldFilters" id="fieldFilters" on="true">
       <td class="leading">&nbsp;</td>
         <td>
-          <input type="text" name="page_title" is_filter="true" onkeyup="new fSetFilter(this)" gtpb_return="gui/resources/picker/picker_body" value="">
+          <input type="text" name="page_title" is_filter="true" onkeyup="new fSetFilter(event, this)" gtpb_return="gui/resources/picker/picker_body" value="">
         </td>
         <td>
-          <input type="text" name="page_content" is_filter="true" onkeyup="new fSetFilter(this)" gtpb_return="gui/resources/picker/picker_body" value="">
+          <input type="text" name="page_content" is_filter="true" onkeyup="new fSetFilter(event, this)" gtpb_return="gui/resources/picker/picker_body" value="">
         </td>
 		      <td class="trailing">&nbsp;</td>      
     </tr>

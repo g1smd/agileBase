@@ -2,6 +2,6 @@
   #if($viewingTable && $fieldObject.getFieldCategory() == "RELATION")
     <input type="text" disabled value="To filter, please use a report" title="To filter, please use a report" />
   #else
-    <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" #if($table_part_only) gtpb_return="gui/reports_and_tables/report_data_only_include" gtpb_set_table="$sessionTable.getInternalTableName()" gtpb_set_report="$sessionReport.getInternalReportName()" #else gtpb_return="gui/reports_and_tables/report_data_only" #end onkeyup="new fSetFilter(this);" #if($filters.get($fieldObject)) value="$filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(this)"#end>
+    <input type=text name="$internalFieldName" is_filter="true" gtpb_internalfieldname="$internalFieldName" #if($table_part_only) gtpb_return="gui/reports_and_tables/report_data_only_include" gtpb_set_table="$sessionTable.getInternalTableName()" gtpb_set_report="$sessionReport.getInternalReportName()" #else gtpb_return="gui/reports_and_tables/report_data_only" #end onkeyup="new fSetFilter(event, this);" #if($filters.get($fieldObject)) value="$filters.get($fieldObject)" #end #if($browser_cannot_detect_keyup) keyup_bug="true" onblur="new fSetFilter(event, this)"#end>
   #end
 #end
