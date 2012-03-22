@@ -207,4 +207,3 @@ function fSpawnWindow(sURL,sName,sParams) {
   var sInterval=setInterval(fEnableApp,2000); // if the print window is refreshed, it won't re-enable the app.  Use the timeout to check that the window is still open
   return oNewWin;
 } // End of fSpawnWindow
-  
