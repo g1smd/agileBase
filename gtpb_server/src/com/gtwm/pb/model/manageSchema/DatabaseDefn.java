@@ -800,10 +800,30 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * also contains internalReportName. Each key maps to a list of view names
 	 * identifying views directly dependent upon the view identified by the key.
 	 */
-	private void fillReportDependencyMap(Connection conn, String internalReportName,
-			Map<String, List<String>> reportDependencyMap) throws SQLException {
+	private void fillViewDependencyMap(Connection conn, String internalReportName,
+			Map<String, List<String>> reportDependencyMap, boolean recurse) throws SQLException {
+		String SQLCode = this.viewDependencySQL();
+		PreparedStatement statement = conn.prepareStatement(SQLCode);
+		statement.setString(1, internalReportName);
+		ResultSet results = statement.executeQuery();
+		List<String> dependentReportInternalNames = new ArrayList<String>();
+		// add the empty list for now so the key is present to prevent
+		// infinite recursion
+		reportDependencyMap.put(internalReportName, dependentReportInternalNames);
+		while (results.next()) {
+			String dependentReportInternalName = results.getString(1);
+			dependentReportInternalNames.add(dependentReportInternalName);
+			if (!reportDependencyMap.keySet().contains(dependentReportInternalName) && recurse) {
+				fillViewDependencyMap(conn, dependentReportInternalName, reportDependencyMap, recurse);
+			}
+		}
+		results.close();
+		statement.close();
+	}
+	
+	private String viewDependencySQL() {
 		// 1) Standard compliant and simple but slow
-		//String SQLCode = "SELECT table_name FROM information_schema.views WHERE view_definition ILIKE ?";
+		// String SQLCode = "SELECT table_name FROM information_schema.views WHERE view_definition ILIKE ?";
 		// 2) Old Postgres way, equally slow
 		// String SQLCode =
 		// "SELECT viewname FROM pg_views WHERE schemaname='public' AND definition ILIKE '%"
@@ -816,24 +836,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		SQLCode += " JOIN pg_class as dependent ON pg_rewrite.ev_class = dependent.oid";
 		SQLCode += " JOIN pg_class as dependee ON pg_depend.refobjid = dependee.oid";
 		SQLCode += " WHERE dependee.relname = ?";
-		SQLCode += " AND dependent.relname != ?";
-		PreparedStatement statement = conn.prepareStatement(SQLCode);
-		statement.setString(1, internalReportName);
-		statement.setString(2, internalReportName);
-		ResultSet results = statement.executeQuery();
-		List<String> dependentReportInternalNames = new ArrayList<String>();
-		// add the empty list for now so the key is present to prevent
-		// infinite recursion
-		reportDependencyMap.put(internalReportName, dependentReportInternalNames);
-		while (results.next()) {
-			String dependentReportInternalName = results.getString(1);
-			dependentReportInternalNames.add(dependentReportInternalName);
-			if (!reportDependencyMap.keySet().contains(dependentReportInternalName)) {
-				fillReportDependencyMap(conn, dependentReportInternalName, reportDependencyMap);
-			}
-		}
-		results.close();
-		statement.close();
+		SQLCode += " AND dependent.oid != dependee.oid";
+		return SQLCode;
 	}
 
 	/**
@@ -851,7 +855,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		try {
 			savepoint = conn.setSavepoint("dropAndCreateDependenciesSavepoint");
 			Map<String, List<String>> reportDependencyMap = new HashMap<String, List<String>>();
-			this.fillReportDependencyMap(conn, report.getInternalReportName(), reportDependencyMap);
+			this.fillViewDependencyMap(conn, report.getInternalReportName(), reportDependencyMap, true);
 			// Remove reports...
 			List<String> deletedReports = new ArrayList<String>();
 			while (deletedReports.size() < reportDependencyMap.size()) {
