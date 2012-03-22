@@ -258,7 +258,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		// {table.field} => internaltablename.internalfieldname
 		for (TableInfo table : availableDataStores.keySet()) {
 			FIELDSLOOP: for (BaseField field : table.getFields()) {
-				if (field instanceof SeparatorField || field instanceof ReferencedReportDataField) {
+				if (!field.getFieldCategory().savesData()) {
 					continue FIELDSLOOP;
 				}
 				// table name and field name may have characters in them that
@@ -395,8 +395,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		if (calculationSQL.contains("{")) {
 			for (TableInfo table : ((SimpleReportInfo) this.getParentReport()).getJoinedTables()) {
 				FIELDSLOOP: for (BaseField field : table.getFields()) {
-					if (field instanceof SeparatorField
-							|| field instanceof ReferencedReportDataField) {
+					if (!field.getFieldCategory().savesData()) {
 						continue FIELDSLOOP;
 					}
 					String fieldName = field.getFieldName().toLowerCase(Locale.UK);

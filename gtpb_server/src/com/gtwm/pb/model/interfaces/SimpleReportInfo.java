@@ -104,7 +104,7 @@ public interface SimpleReportInfo extends BaseReportInfo {
 	 *             If the filter field filterToAdd.getFilterField() is not in
 	 *             any of the tables contained in the report
 	 */
-	public void addFilter(ReportFilterInfo filterToAdd) throws CantDoThatException;
+	public void addFilter(ReportFilterInfo filterToAdd) throws CantDoThatException, CodingErrorException;
 
 	public void removeFilter(ReportFilterInfo filter);
 

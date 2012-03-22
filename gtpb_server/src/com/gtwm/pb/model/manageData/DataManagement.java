@@ -86,6 +86,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.interfaces.fields.CheckboxValue;
+import com.gtwm.pb.model.interfaces.fields.CommentFeedField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.IntegerField;
 import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
@@ -361,7 +362,7 @@ public final class DataManagement implements DataManagementInfo {
 		SortedSet<BaseField> fields = table.getFields();
 		// Ignore un-clonable fields
 		for (BaseField field : fields) {
-			if (!(field instanceof FileField) && !(field instanceof SeparatorField)
+			if (!(field instanceof FileField) && !(field instanceof SeparatorField) && !(field instanceof CommentFeedField)
 					&& !(field instanceof ReferencedReportDataField) && !(field.getUnique())) { // &&
 				// !(field.getHidden()))
 				// {
@@ -882,8 +883,7 @@ public final class DataManagement implements DataManagementInfo {
 						fields.remove(field);
 					}
 				}
-			} else if (field instanceof SeparatorField
-					|| field instanceof ReferencedReportDataField) {
+			} else if (!field.getFieldCategory().savesData()) {
 				fields.remove(field);
 			}
 			// Also, if importing relations by display value, look up

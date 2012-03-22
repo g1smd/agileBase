@@ -894,11 +894,11 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	/*
 	 * TODO: get checking code to work and put checks back in!
 	 */
-	public synchronized void addFilter(ReportFilterInfo filterToAdd) throws CantDoThatException {
+	public synchronized void addFilter(ReportFilterInfo filterToAdd) throws CantDoThatException, CodingErrorException {
 		Set<BaseField> visibleFields = new HashSet<BaseField>();
 		// allow filtering on any field in the parent table:
 		for (BaseField visibleField : this.getParentTable().getFields()) {
-			if (!(visibleField instanceof SeparatorField || visibleField instanceof ReferencedReportDataField)) {
+			if (visibleField.getFieldCategory().savesData()) {
 				visibleFields.add(visibleField);
 			}
 		}
@@ -913,7 +913,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 			if (join.isLeftPartTable()) {
 				for (BaseField visibleField : join.getLeftTableField().getTableContainingField()
 						.getFields()) {
-					if (!(visibleField instanceof SeparatorField)) {
+					if (visibleField.getFieldCategory().savesData()) { // !(visibleField instanceof SeparatorField)
 						visibleFields.add(visibleField);
 					}
 				}
@@ -926,7 +926,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 			if (join.isRightPartTable()) {
 				for (BaseField visibleField : join.getRightTableField().getTableContainingField()
 						.getFields()) {
-					if (!(visibleField instanceof SeparatorField || visibleField instanceof ReferencedReportDataField)) {
+					if (visibleField.getFieldCategory().savesData()) {
 						visibleFields.add(visibleField);
 					}
 				}

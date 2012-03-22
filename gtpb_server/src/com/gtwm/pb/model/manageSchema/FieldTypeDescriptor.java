@@ -51,13 +51,15 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.TEXTCASE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			// Defaults for new fields
-			this.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, FieldPrintoutSetting.VALUE_ONLY.name());
+			this.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
+					FieldPrintoutSetting.VALUE_ONLY.name());
 			break;
 		case NUMBER:
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.UNIQUE));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.USELOOKUP));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
-			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.STORECURRENCY));
+			this.options
+					.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.STORECURRENCY));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.NUMBERPRECISION));
 			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.DEFAULTVALUE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
@@ -77,9 +79,11 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTVALUEFIELD));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTSECONDARYFIELD));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
-			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.DEFAULTTONULL));
+			this.options
+					.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.DEFAULTTONULL));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
-			this.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, FieldPrintoutSetting.VALUE_ONLY.name());
+			this.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
+					FieldPrintoutSetting.VALUE_ONLY.name());
 			break;
 		case CHECKBOX:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.CHECKBOXDEFAULT));
@@ -91,14 +95,16 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 		case FILE:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.ATTACHMENTTYPE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
-			this.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, FieldPrintoutSetting.VALUE_ONLY.name());
+			this.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
+					FieldPrintoutSetting.VALUE_ONLY.name());
 			break;
 		case REFERENCED_REPORT_DATA:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTTABLE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTREPORT));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			break;
-		case SEPARATOR: case COMMENT_FEED:
+		case SEPARATOR:
+		case COMMENT_FEED:
 			// No options for these types
 			break;
 		}
@@ -190,15 +196,18 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 		return this.fieldCategory.hashCode();
 	}
 
-	//TODO: Should be in util.Enumerations with the other enumerations
+	// TODO: Should be in util.Enumerations with the other enumerations
 	public enum FieldCategory {
-		TEXT("Text", true), NUMBER("Number", true), DATE("Date", true), DURATION("Time duration",
-				false), SEQUENCE("Auto-generated number sequence", true), RELATION("Relation", true), CHECKBOX(
-				"Checkbox", true), FILE("File", true), SEPARATOR("Separator", true), REFERENCED_REPORT_DATA("Cross referenced data", true), COMMENT_FEED("Comment feed", true);
+		TEXT("Text", true, true), NUMBER("Number", true, true), DATE("Date", true, true), DURATION(
+				"Time duration", false, true), SEQUENCE("Auto-generated number sequence", true,
+				true), RELATION("Relation", true, true), CHECKBOX("Checkbox", true, true), FILE(
+				"File", true, true), SEPARATOR("Separator", true, false), REFERENCED_REPORT_DATA(
+				"Cross referenced data", true, false), COMMENT_FEED("Comment feed", true, false);
 
-		FieldCategory(String typeDescription, boolean enabled) {
+		FieldCategory(String typeDescription, boolean enabled, boolean savesData) {
 			this.description = typeDescription;
 			this.enabled = enabled;
+			this.savesData = savesData;
 		}
 
 		/**
@@ -216,6 +225,10 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 		public boolean isEnabled() {
 			return this.enabled;
 		}
+		
+		public boolean savesData() {
+			return this.savesData;
+		}
 
 		/**
 		 * Returns the value of the 'fieldtype' parameter that must be submitted
@@ -228,6 +241,12 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 		private String description;
 
 		private boolean enabled = true;
+
+		/**
+		 * True if this field type saves user input data, false if it's for
+		 * another purpose
+		 */
+		private boolean savesData;
 	}
 
 	public String toString() {

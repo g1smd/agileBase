@@ -440,7 +440,7 @@ public final class ServletSessionMethods {
 		Exception caughtException = null;
 		BaseField fieldWithException = null;
 		FIELDSLOOP: for (BaseField field : fields) {
-			if (field instanceof SeparatorField || field instanceof ReferencedReportDataField) {
+			if (!field.getFieldCategory().savesData()) {
 				continue FIELDSLOOP;
 			}
 			try {

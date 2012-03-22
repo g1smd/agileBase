@@ -674,7 +674,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			// based on
 			Set<TableInfo> relatedTables = new TreeSet<TableInfo>();
 			for (BaseField field : table.getFields()) {
-				if (!(field instanceof SeparatorField || field instanceof ReferencedReportDataField)) {
+				if (field.getFieldCategory().savesData()) {
 					if (field instanceof RelationField) {
 						// Workaround for bug: creating more than one relation
 						// at a time fails with a Hibernate Exception
@@ -1672,8 +1672,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		HibernateUtil.activateObject(tableToAddTo);
 		HibernateUtil.currentSession().save(fieldToAdd);
 		tableToAddTo.addField(fieldToAdd);
-		if (!(fieldToAdd instanceof SeparatorField
-				|| fieldToAdd instanceof ReferencedReportDataField || fieldToAdd instanceof CommentFeedField)) {
+		if (fieldToAdd.getFieldCategory().savesData()) {
 			SimpleReportInfo defaultReport = tableToAddTo.getDefaultReport();
 			defaultReport.addTableField(fieldToAdd);
 			// Do SQL
@@ -2033,7 +2032,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			}
 		}
 		table.removeField(field);
-		if (!(field instanceof SeparatorField || field instanceof ReferencedReportDataField)) {
+		if (field.getFieldCategory().savesData()) {
 			// Now try to remove the field from the table:
 			PreparedStatement statement = conn
 					.prepareStatement("ALTER TABLE " + table.getInternalTableName()

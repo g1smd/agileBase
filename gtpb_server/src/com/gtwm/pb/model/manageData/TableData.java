@@ -114,8 +114,7 @@ public class TableData implements TableDataInfo {
 			results = statement.executeQuery();
 			if (results.next()) {
 				FIELDSLOOP: for (BaseField tableField : this.table.getFields()) {
-					if (tableField instanceof SeparatorField || tableField instanceof CommentFeedField
-							|| tableField instanceof ReferencedReportDataField) {
+					if (!tableField.getFieldCategory().savesData()) {
 						continue FIELDSLOOP;
 					}
 					String internalFieldName = tableField.getInternalFieldName();

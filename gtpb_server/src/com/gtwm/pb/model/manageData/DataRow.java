@@ -150,9 +150,8 @@ public class DataRow implements DataRowInfo {
 						keyValue = keyValueDateValue.toString();
 						displayValue = keyValue;
 					}
-				} else if (field instanceof SeparatorField
-						|| field instanceof ReferencedReportDataField) {
-					// no data for separator fields
+				} else if (!field.getFieldCategory().savesData()) {
+					// no data for these fields
 				} else {
 					keyValue = results.getString(field.getInternalFieldName());
 					displayValue = keyValue;
