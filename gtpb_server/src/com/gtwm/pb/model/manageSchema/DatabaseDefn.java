@@ -70,6 +70,7 @@ import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
 import com.gtwm.pb.model.interfaces.DataManagementInfo;
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.CommentFeedField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.CheckboxField;
 import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
@@ -203,10 +204,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 	private void addCommentsFeedFields() throws SQLException {
 		Set<TableInfo> allTables = new HashSet<TableInfo>();
 		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
-		//TODO: once this action has completed, set getCompanies back to
+		// TODO: once this action has completed, set getCompanies back to
 		// protected
 		for (CompanyInfo company : authenticator.getCompanies()) {
-		  allTables.addAll(company.getTables());
+			allTables.addAll(company.getTables());
 		}
 		logger.info("Adding comments feed fields");
 		for (TableInfo table : allTables) {
@@ -223,7 +224,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 					HibernateUtil.activateObject(table);
 					this.addCommentsFeedFieldToTable(conn, table);
 					// Also remove the old obsolete wiki page field
-					// For some reason we need to recreate some of the default reports as due to some previous bug
+					// For some reason we need to recreate some of the default
+					// reports as due to some previous bug
 					// they contain the wiki page field
 					this.updateViewDbActionWithDropAndCreate(conn, table.getDefaultReport());
 					BaseField wikiField = table.getField(HiddenFields.WIKI_PAGE.getFieldName());
@@ -270,7 +272,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private void addCommentsFeedFieldToTable(Connection conn, TableInfo table)
-	throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
+			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		TextField commentFeedField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.COMMENTS_FEED.getFieldName(),
 				HiddenFields.COMMENTS_FEED.getFieldDescription(), !TextField.UNIQUE,
@@ -280,7 +282,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		table.addField(commentFeedField);
 		this.addFieldToRelationalDb(conn, table, commentFeedField);
 	}
-	
+
 	private void addDateCreatedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		DateField dateCreatedField = new DateFieldDefn(table, null,
@@ -815,22 +817,25 @@ public final class DatabaseDefn implements DatabaseInfo {
 			String dependentReportInternalName = results.getString(1);
 			dependentReportInternalNames.add(dependentReportInternalName);
 			if (!reportDependencyMap.keySet().contains(dependentReportInternalName) && recurse) {
-				fillViewDependencyMap(conn, dependentReportInternalName, reportDependencyMap, recurse);
+				fillViewDependencyMap(conn, dependentReportInternalName, reportDependencyMap,
+						recurse);
 			}
 		}
 		results.close();
 		statement.close();
 	}
-	
+
 	private String viewDependencySQL() {
 		// 1) Standard compliant and simple but slow
-		// String SQLCode = "SELECT table_name FROM information_schema.views WHERE view_definition ILIKE ?";
+		// String SQLCode =
+		// "SELECT table_name FROM information_schema.views WHERE view_definition ILIKE ?";
 		// 2) Old Postgres way, equally slow
 		// String SQLCode =
 		// "SELECT viewname FROM pg_views WHERE schemaname='public' AND definition ILIKE '%"
 		// + internalReportName + "%'";
 		// 3) Low level Postgres way, complicated but fast
-		// See http://forums.postgresql.com.au/viewtopic.php?f=30&t=104965&start=0
+		// See
+		// http://forums.postgresql.com.au/viewtopic.php?f=30&t=104965&start=0
 		String SQLCode = "SELECT distinct dependent.relname";
 		SQLCode += " FROM pg_depend";
 		SQLCode += " JOIN pg_rewrite ON pg_depend.objid = pg_rewrite.oid";
@@ -856,7 +861,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		try {
 			savepoint = conn.setSavepoint("dropAndCreateDependenciesSavepoint");
 			Map<String, List<String>> reportDependencyMap = new HashMap<String, List<String>>();
-			this.fillViewDependencyMap(conn, report.getInternalReportName(), reportDependencyMap, true);
+			this.fillViewDependencyMap(conn, report.getInternalReportName(), reportDependencyMap,
+					true);
 			// Remove reports...
 			List<String> deletedReports = new ArrayList<String>();
 			while (deletedReports.size() < reportDependencyMap.size()) {
@@ -1666,7 +1672,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		HibernateUtil.activateObject(tableToAddTo);
 		HibernateUtil.currentSession().save(fieldToAdd);
 		tableToAddTo.addField(fieldToAdd);
-		if (!(fieldToAdd instanceof SeparatorField || fieldToAdd instanceof ReferencedReportDataField)) {
+		if (!(fieldToAdd instanceof SeparatorField
+				|| fieldToAdd instanceof ReferencedReportDataField || fieldToAdd instanceof CommentFeedField)) {
 			SimpleReportInfo defaultReport = tableToAddTo.getDefaultReport();
 			defaultReport.addTableField(fieldToAdd);
 			// Do SQL
@@ -2328,7 +2335,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * Return a set of all reports that would have to be modified before
 	 * dropping the given report, i.e. those that join to this one
 	 * 
-	 * TODO: some overlap between this and 
+	 * TODO: some overlap between this and
 	 */
 	private SortedSet<BaseReportInfo> getDependentReports(SimpleReportInfo report,
 			HttpServletRequest request) throws CantDoThatException, ObjectNotFoundException {
