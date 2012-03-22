@@ -90,7 +90,6 @@ function fBuffer() {
 	function fWriteBuffer(oElementToBuffer, e) {
 		// Don't do anything unless an actual character is typed
 		if (typeof e !== "undefined") {
-			alert("key " + k);
 			// < 46 = arrow keys, shift, ctrl etc.
 			// 0 seems to be sent when shift is down for some chars, e.g. colon
 			// 32 = space, 8 = backspace, 46 = delete
