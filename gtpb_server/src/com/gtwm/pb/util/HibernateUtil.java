@@ -49,6 +49,7 @@ import com.gtwm.pb.model.manageSchema.ChartGrouping;
 import com.gtwm.pb.model.manageSchema.fields.AbstractField;
 import com.gtwm.pb.model.manageSchema.fields.BigTextFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.CheckboxFieldDefn;
+import com.gtwm.pb.model.manageSchema.fields.CommentFeedFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.DateFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.DecimalFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.FileFieldDefn;
@@ -108,6 +109,7 @@ public final class HibernateUtil {
 			cfg.addAnnotatedClass(TextFieldDefn.class);
 			cfg.addAnnotatedClass(SeparatorFieldDefn.class);
 			cfg.addAnnotatedClass(ReferencedReportDataFieldDefn.class);
+			cfg.addAnnotatedClass(CommentFeedFieldDefn.class);
 			// TODO: not sure if this is necessary or not, check next time we
 			// have a schema update
 			// NB automatic schema updates don't work for adding non null (e.g.
