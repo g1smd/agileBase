@@ -100,6 +100,7 @@ import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOpti
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
 import com.gtwm.pb.model.manageSchema.fields.CheckboxFieldDefn;
+import com.gtwm.pb.model.manageSchema.fields.CommentFeedFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.DateFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.DecimalFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.DurationFieldDefn;
@@ -1241,7 +1242,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			field = new SeparatorFieldDefn(table, internalFieldName, fieldName, fieldDesc);
 			break;
 		case COMMENT_FEED:
-			field = new SeparatorFieldDefn(table, internalFieldName, fieldName, fieldDesc);
+			field = new CommentFeedFieldDefn(table, internalFieldName, fieldName, fieldDesc);
 			break;
 		case REFERENCED_REPORT_DATA:
 			String internalTableName = HttpRequestUtil.getStringValue(request,
