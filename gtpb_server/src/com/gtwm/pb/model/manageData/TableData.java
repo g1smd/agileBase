@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.CommentFeedField;
 import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
@@ -113,7 +114,7 @@ public class TableData implements TableDataInfo {
 			results = statement.executeQuery();
 			if (results.next()) {
 				FIELDSLOOP: for (BaseField tableField : this.table.getFields()) {
-					if (tableField instanceof SeparatorField
+					if (tableField instanceof SeparatorField || tableField instanceof CommentFeedField
 							|| tableField instanceof ReferencedReportDataField) {
 						continue FIELDSLOOP;
 					}
