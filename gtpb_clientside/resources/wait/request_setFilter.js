@@ -352,9 +352,11 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 	// Firstly, just return if an arrow key was pressed
 	if (typeof e !== "undefined") {
 		var k = e.keyCode;
-		// < 49 = arrow keys, shift, ctrl etc.
+		// < 48 = arrow keys, shift, ctrl etc.
 		// 32 = space, 8 = backspace, 49 = delete
-		if (k < 49 && k != 32 && k != 8) {
+		alert('keycode ' + k)
+		if (k < 48 && k != 32 && k != 8) {
+			alert('returning');
 			return;
 		}
 	}

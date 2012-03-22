@@ -93,13 +93,13 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
 			this.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, FieldPrintoutSetting.VALUE_ONLY.name());
 			break;
-		case SEPARATOR:
-			// No options for separators
-			break;
 		case REFERENCED_REPORT_DATA:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTTABLE));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.LISTREPORT));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
+			break;
+		case SEPARATOR: case COMMENT_FEED:
+			// No options for these types
 			break;
 		}
 	}
@@ -194,7 +194,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 	public enum FieldCategory {
 		TEXT("Text", true), NUMBER("Number", true), DATE("Date", true), DURATION("Time duration",
 				false), SEQUENCE("Auto-generated number sequence", true), RELATION("Relation", true), CHECKBOX(
-				"Checkbox", true), FILE("File", true), SEPARATOR("Separator", true), REFERENCED_REPORT_DATA("Cross referenced data", true);
+				"Checkbox", true), FILE("File", true), SEPARATOR("Separator", true), REFERENCED_REPORT_DATA("Cross referenced data", true), COMMENT_FEED("Comment feed", true);
 
 		FieldCategory(String typeDescription, boolean enabled) {
 			this.description = typeDescription;

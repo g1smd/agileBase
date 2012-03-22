@@ -1236,6 +1236,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		case SEPARATOR:
 			field = new SeparatorFieldDefn(table, internalFieldName, fieldName, fieldDesc);
 			break;
+		case COMMENT_FEED:
+			field = new SeparatorFieldDefn(table, internalFieldName, fieldName, fieldDesc);
+			break;
 		case REFERENCED_REPORT_DATA:
 			String internalTableName = HttpRequestUtil.getStringValue(request,
 					PossibleListOptions.LISTTABLE.getFormInputName());
@@ -2319,6 +2322,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Return a set of all reports that would have to be modified before
 	 * dropping the given report, i.e. those that join to this one
+	 * 
+	 * TODO: some overlap between this and 
 	 */
 	private SortedSet<BaseReportInfo> getDependentReports(SimpleReportInfo report,
 			HttpServletRequest request) throws CantDoThatException, ObjectNotFoundException {

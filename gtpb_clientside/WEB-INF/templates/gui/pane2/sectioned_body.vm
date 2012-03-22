@@ -29,7 +29,6 @@
   #set($thisValues = $row.get(0))
   #set($thisUniqueId = $row.get(2))
   #set($rowCount = $rowCount + 1)
-	$viewTools.log("row $thisUniqueId")
   ## See if we're due any headings
   #foreach($cell in $thisValues)
     #set($headingLevel = 0)

@@ -69,7 +69,6 @@ public class SeparatorFieldDefn extends AbstractField implements SeparatorField 
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
 					+ " field descriptor", onfex);
-
 		}
 	}
 
