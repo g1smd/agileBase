@@ -22,14 +22,14 @@
 #set($internalFieldName = $field.getInternalFieldName())
 #if (!$field.isPrimaryKey()) ## remove to show primary key field
   #if($address)
-	#if($address.size() > 0)
-	  #if($address.firstKey().equals($field)) #set($partOfAddress = true) #end
-      #if($partOfAddress && $address.firstKey().equals($field))
-	    #set($firstLineOfAddress = true)
-	  #else
-	    #set($firstLineOfAddress = false)
-	  #end
-	#end
+  	#if($address.size() > 0)
+  	  #if($address.firstKey().equals($field)) #set($partOfAddress = true) #end
+        #if($partOfAddress && $address.firstKey().equals($field))
+  	    #set($firstLineOfAddress = true)
+  	  #else
+  	    #set($firstLineOfAddress = false)
+  	  #end
+  	#end
   #end
   #if($partOfAddress)
   	#if($firstLineOfAddress)

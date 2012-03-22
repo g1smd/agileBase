@@ -36,12 +36,12 @@
   #set($activateComments = true)
 #end
 #set($singleColumn = ($formStyle == "SINGLE_COLUMN") || $mobile_device)
-#if($activateComments && (!$singleColumn))
+#if($activateComments && (!$singleColumn) && ($fieldCategory != "COMMENT_FEED"))
   <img src="resources/icons/comment.png" class="comment_toggle" title="add a comment" alt="add comment"/>
 #end
 #parse("gui/resources/input/${fieldCategory.toString().toLowerCase()}.vm")
 #if($activateComments)
-  #if($singleColumn)
+  #if($singleColumn && ($fieldCategory != "COMMENT_FEED"))
     <img src="resources/icons/comment.png" class="comment_toggle" title="add a comment" alt="add comment"/>
   #end
   <div class="add_comment_row"><input type="text" class="comment_input" placeholder="Add message" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()"/><input type="button" value="add" /></div>

@@ -776,6 +776,10 @@ div#reportData {
   position: static;
 }
 
+#reportData .block .comment_feed input[type=button] {
+  position: static;
+}
+
 .form_tabber {
   background-color: #cccccc;
   margin: 0.5em;
