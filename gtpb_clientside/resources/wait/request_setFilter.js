@@ -354,7 +354,7 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 		var k = e.keyCode;
 		// < 46 = arrow keys, shift, ctrl etc.
 		// 32 = space, 8 = backspace, 46 = delete
-		if (k < 46 && k != 32 && k != 8) {
+		if (k < 46 && k != 32 && k != 8 && k > 0) {
 			return;
 		}
 	}

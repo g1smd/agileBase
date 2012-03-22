@@ -90,13 +90,13 @@ function fBuffer() {
 	function fWriteBuffer(oElementToBuffer, e) {
 		// Don't do anything unless an actual character is typed
 		if (typeof e !== "undefined") {
-			var k = e.keyCode;
 			alert("key " + k);
 			// < 46 = arrow keys, shift, ctrl etc.
+			// 0 seems to be sent when shift is down for some chars, e.g. colon
 			// 32 = space, 8 = backspace, 46 = delete
 			// 91 = Windows key/Mac left cmd on Safari, 224 = Mac cmd key, 93 = Mac Safari right cmd
 			// 112 to 123 = F1 to F11
-			if ((k < 46 && k != 32 && k != 8) || k == 91 || k == 93 || k == 224 || (k > 111 && k < 124)) {
+			if ((k < 46 && k != 32 && k != 8 && k > 0) || k == 91 || k == 93 || k == 224 || (k > 111 && k < 124)) {
 				return;
 			}
 		}
