@@ -81,6 +81,10 @@ public final class ViewTools implements ViewToolsInfo {
 		return this.webAppRoot;
 	}
 
+	public boolean isNull(Object o) {
+		return (o == null);
+	}
+	
 	public String spelloutDecimal(double number) {
 		RuleBasedNumberFormat rbnf = new RuleBasedNumberFormat(RuleBasedNumberFormat.SPELLOUT);
 		return rbnf.format(number);

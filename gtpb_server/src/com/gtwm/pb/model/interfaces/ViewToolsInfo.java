@@ -40,6 +40,8 @@ import org.apache.velocity.tools.generic.MathTool;
  */
 public interface ViewToolsInfo {
 
+	public boolean isNull(Object o);
+	
 	/**
 	 * Turn a number such as 1023.54 into text such as one thousand and twenty
 	 * three point five four, using the ICU tools

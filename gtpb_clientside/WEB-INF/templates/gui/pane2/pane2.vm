@@ -110,7 +110,7 @@
 	  #if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
 			#set($sessionFilterString = $sessionData.getCustomString('filtering_on'))
 			#set($filtersShouldBeShown = ($sessionFilterString=='true'))
-			#if(($sessionFilterString == null) && ($view.getLoggedInUser().getUserType() == "REPORT"))
+			#if($viewTools.isNull($sessionFilterString) && ($view.getLoggedInUser().getUserType() == "REPORT"))
 				#set($filtersShouldBeShown = true)
 			#end
 	    <script language=Javascript>
