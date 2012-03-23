@@ -23,6 +23,7 @@ import java.util.Locale;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.io.IOException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -39,6 +40,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.exception.ParseErrorException;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
+import com.gtwm.pb.model.interfaces.CommentInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
@@ -855,8 +857,7 @@ public final class AppController extends VelocityViewServlet {
 		List<DataRowInfo> reportDataRows = view.getReportDataRows(report, 1, filters, true);
 		// There will be only one row
 		for (DataRowInfo dataRow : reportDataRows) {
-			for (ReportFieldInfo reportField : report.getReportFields()) {
-				BaseField field = reportField.getBaseField();
+			for (BaseField field : report.getReportBaseFields()) {
 				String rinsedFieldName = Helpers.rinseString(
 						field.getFieldName().toLowerCase()).replace(" ", "_");
 				DataRowFieldInfo value = dataRow.getValue(field);
@@ -874,6 +875,14 @@ public final class AppController extends VelocityViewServlet {
 		for (Map.Entry<BaseField, BaseValue> tableRow : tableData.entrySet()) {
 			BaseField field = tableRow.getKey();
 			String value = tableRow.getValue().toString();
+			// Append comments
+			for (CommentInfo comment : view.getComments(field)) {
+				// TODO: I know, hard coding HTML but what else can we do?
+				value += "<div class='comment'>";
+				value += "<span class='comment_text'>" + comment.getText() + "</span> ";
+				value += "<span class='comment_attribution'>- " + comment.getAuthor() + ", " + comment.getTimestampString() + "</span>";
+				value += "</div>";
+			}
 			String rinsedFieldName = Helpers.rinseString(field.getFieldName().toLowerCase())
 					.replace(" ", "_");
 			context.put(rinsedFieldName, value);
