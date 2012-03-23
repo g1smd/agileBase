@@ -32,20 +32,22 @@
 #if(!$tabIndex) #set($tabIndex = 0) #end
 #set($tabIndex = $tabIndex + 1)
 #set($activateComments = false)
-#if($userCanEdit && (!$globalEdit) && (!$gtpbPublicTable))
+#if((!$globalEdit) && (!$gtpbPublicTable))
   #set($activateComments = true)
 #end
 #set($singleColumn = ($formStyle == "SINGLE_COLUMN") || $mobile_device)
-#if($activateComments && (!$singleColumn) && ($fieldCategory != "COMMENT_FEED"))
+#if($activateComments && $userCanEdit && (!$singleColumn) && ($fieldCategory != "COMMENT_FEED"))
   <img src="resources/icons/comment.png" class="comment_toggle" title="add a comment" alt="add comment"/>
 #end
 #parse("gui/resources/input/${fieldCategory.toString().toLowerCase()}.vm")
 #if($activateComments)
-  #if($singleColumn && ($fieldCategory != "COMMENT_FEED"))
-    <img src="resources/icons/comment.png" class="comment_toggle" title="add a comment" alt="add comment"/>
+	#if($userCanEdit)
+    #if($singleColumn && ($fieldCategory != "COMMENT_FEED"))
+      <img src="resources/icons/comment.png" class="comment_toggle" title="add a comment" alt="add comment"/>
+    #end
+    <div class="add_comment_row"><input type="text" class="comment_input" placeholder="Add message" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()"/><input type="button" value="add" /></div>
   #end
-  <div class="add_comment_row"><input type="text" class="comment_input" placeholder="Add message" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()"/><input type="button" value="add" /></div>
-  <div class="comments" id="comments_$field.getInternalFieldName()">
+	<div class="comments" id="comments_$field.getInternalFieldName()">
     #parse("gui/resources/input/comments.vm")
   </div>
 #end

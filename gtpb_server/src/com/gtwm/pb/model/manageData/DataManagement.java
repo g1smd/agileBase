@@ -210,7 +210,6 @@ public final class DataManagement implements DataManagementInfo {
 			statement = conn.prepareStatement(SQLCode);
 			statement.setString(1, comment + "\n---\n");
 			statement.setInt(2, rowId);
-			logger.debug("Concat.: " + statement);
 			rowsAffected = statement.executeUpdate();
 			if (rowsAffected != 1) {
 				logger.error("Error concatenating new comment with old. " + rowsAffected + " rows updated. SQL = "
