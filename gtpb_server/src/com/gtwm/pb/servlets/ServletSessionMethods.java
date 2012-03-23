@@ -140,16 +140,16 @@ public final class ServletSessionMethods {
 	 *             If the user doesn't have manage privileges on the session
 	 *             table
 	 */
-	public static void setLockOverride(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
-			DisallowedException {
+	public static void setLockOverride(SessionDataInfo sessionData, HttpServletRequest request,
+			DatabaseInfo databaseDefn) throws ObjectNotFoundException, DisallowedException {
 		TableInfo table = sessionData.getTable();
 		if (table == null) {
 			throw new ObjectNotFoundException("No table found in the session");
 		}
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request), PrivilegeType.EDIT_TABLE_DATA, table);
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.EDIT_TABLE_DATA, table);
 		}
 		((SessionData) sessionData).setRecordLockOverride();
 	}
@@ -226,8 +226,8 @@ public final class ServletSessionMethods {
 	 * @see SessionDataInfo#getCustomString(String) See
 	 *      SessionDataInfo.getCustomString(stringkey) to retrieve the value
 	 */
-	public static void setCustomString(SessionDataInfo sessionData,
-			HttpServletRequest request) throws MissingParametersException {
+	public static void setCustomString(SessionDataInfo sessionData, HttpServletRequest request)
+			throws MissingParametersException {
 		String key = request.getParameter("stringkey");
 		// backwards compatibility
 		if (key == null) {
@@ -256,8 +256,8 @@ public final class ServletSessionMethods {
 	 * @see SessionDataInfo#getCustomInteger(String) See
 	 *      SessionDataInfo.getCustomInteger(stringkey) to retrieve the value
 	 */
-	public static void setCustomInteger(SessionDataInfo sessionData,
-			HttpServletRequest request) throws MissingParametersException {
+	public static void setCustomInteger(SessionDataInfo sessionData, HttpServletRequest request)
+			throws MissingParametersException {
 		String key = request.getParameter("integerkey");
 		String valueString = request.getParameter("customintegervalue");
 		if (key == null || valueString == null) {
@@ -290,8 +290,8 @@ public final class ServletSessionMethods {
 		sessionData.setCustomLong(key, Long.valueOf(valueString));
 	}
 
-	public static void setCustomBoolean(SessionDataInfo sessionData,
-			HttpServletRequest request) throws MissingParametersException {
+	public static void setCustomBoolean(SessionDataInfo sessionData, HttpServletRequest request)
+			throws MissingParametersException {
 		String key = request.getParameter("booleankey");
 		String valueString = request.getParameter("custombooleanvalue");
 		if (key == null || valueString == null) {
@@ -301,9 +301,9 @@ public final class ServletSessionMethods {
 		sessionData.setCustomBoolean(key, Helpers.valueRepresentsBooleanTrue(valueString));
 	}
 
-	public static void setCustomTable(SessionDataInfo sessionData,
-			HttpServletRequest request, boolean beforeAppActions, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
+	public static void setCustomTable(SessionDataInfo sessionData, HttpServletRequest request,
+			boolean beforeAppActions, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException {
 		String postActionPrefix = "";
 		if (!beforeAppActions) {
 			postActionPrefix = "post";
@@ -325,7 +325,8 @@ public final class ServletSessionMethods {
 		sessionData.setCustomTable(key, table);
 	}
 
-	public static void removeCustomReport(SessionDataInfo sessionData, HttpServletRequest request, boolean beforeAppActions) {
+	public static void removeCustomReport(SessionDataInfo sessionData, HttpServletRequest request,
+			boolean beforeAppActions) {
 		String postActionPrefix = "";
 		if (!beforeAppActions) {
 			postActionPrefix = "post";
@@ -333,10 +334,10 @@ public final class ServletSessionMethods {
 		String key = request.getParameter(postActionPrefix + "reportkey");
 		sessionData.removeCustomReport(key);
 	}
-	
-	public static void setCustomReport(SessionDataInfo sessionData,
-			HttpServletRequest request, boolean beforeAppActions, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
+
+	public static void setCustomReport(SessionDataInfo sessionData, HttpServletRequest request,
+			boolean beforeAppActions, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException {
 		String postActionPrefix = "";
 		if (!beforeAppActions) {
 			postActionPrefix = "post";
@@ -374,9 +375,9 @@ public final class ServletSessionMethods {
 		sessionData.setCustomReport(key, report);
 	}
 
-	public static void setCustomField(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
+	public static void setCustomField(SessionDataInfo sessionData, HttpServletRequest request,
+			DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException,
+			DisallowedException {
 		String key = request.getParameter("fieldkey");
 		// identify the parent table
 		String internalTableName = request.getParameter("custominternaltablename");
@@ -426,11 +427,11 @@ public final class ServletSessionMethods {
 	 * @throws CantDoThatException
 	 *             If getFieldValue fails
 	 */
-	public static void setFieldInputValues(SessionDataInfo sessionData,
-			HttpServletRequest request, boolean newRecord, DatabaseInfo databaseDefn,
-			TableInfo table, List<FileItem> multipartItems) throws ObjectNotFoundException,
-			DisallowedException, SQLException, CantDoThatException, CodingErrorException,
-			FileUploadException, InputRecordException {
+	public static void setFieldInputValues(SessionDataInfo sessionData, HttpServletRequest request,
+			boolean newRecord, DatabaseInfo databaseDefn, TableInfo table,
+			List<FileItem> multipartItems) throws ObjectNotFoundException, DisallowedException,
+			SQLException, CantDoThatException, CodingErrorException, FileUploadException,
+			InputRecordException {
 		Map<BaseField, BaseValue> fieldInputValues = new HashMap<BaseField, BaseValue>();
 		// get the list of fields in the current session table
 		Set<BaseField> fields = table.getFields();
@@ -444,8 +445,8 @@ public final class ServletSessionMethods {
 				continue FIELDSLOOP;
 			}
 			try {
-				BaseValue fieldValue = getFieldValue(request, field, newRecord,
-						databaseDefn, multipartItems);
+				BaseValue fieldValue = getFieldValue(request, field, newRecord, databaseDefn,
+						multipartItems);
 				// The following logic is:
 				// If we have a new record, and the field wasn't submitted, or
 				// it was submitted as empty, look up the default value.
@@ -460,9 +461,6 @@ public final class ServletSessionMethods {
 						BaseValue defaultValue = getDefaultFieldValue(sessionData, request, field,
 								databaseDefn);
 						if (defaultValue != null) {
-							// TODO: why can't this be fieldValue = defaultValue
-							//fieldValue = getDefaultFieldValue(sessionData, request, field,
-							//		databaseDefn);
 							fieldValue = defaultValue;
 						}
 					}
@@ -482,7 +480,8 @@ public final class ServletSessionMethods {
 				// If already an input record exception, just rethrow
 				throw (InputRecordException) caughtException;
 			} else {
-				throw new InputRecordException(caughtException.getMessage(), fieldWithException, caughtException);
+				throw new InputRecordException(caughtException.getMessage(), fieldWithException,
+						caughtException);
 			}
 		}
 	}
@@ -508,10 +507,10 @@ public final class ServletSessionMethods {
 	 *      boolean, DatabaseInfo, TableInfo, List) Called by
 	 *      setSessionFieldInputValues
 	 */
-	private static BaseValue getFieldValue(HttpServletRequest request,
-			BaseField field, boolean newRecord, DatabaseInfo databaseDefn,
-			List<FileItem> multipartItems) throws SQLException, ObjectNotFoundException,
-			CantDoThatException, CodingErrorException, FileUploadException, InputRecordException {
+	private static BaseValue getFieldValue(HttpServletRequest request, BaseField field,
+			boolean newRecord, DatabaseInfo databaseDefn, List<FileItem> multipartItems)
+			throws SQLException, ObjectNotFoundException, CantDoThatException,
+			CodingErrorException, FileUploadException, InputRecordException {
 		BaseValue fieldValue = null;
 		String internalFieldName = field.getInternalFieldName();
 		String fieldValueString = ServletUtilMethods.getParameter(request, internalFieldName,
@@ -523,7 +522,8 @@ public final class ServletSessionMethods {
 				|| databaseFieldType.equals(DatabaseFieldType.SERIAL)
 				|| databaseFieldType.equals(DatabaseFieldType.FLOAT)) {
 			if (fieldValueString != null) {
-				fieldValueString = fieldValueString.trim().replace(",", "").replace("\u00A3", "").replace("$", ""); // 00A3 = pound sign
+				fieldValueString = fieldValueString.trim().replace(",", "").replace("\u00A3", "")
+						.replace("$", ""); // 00A3 = pound sign
 				if (fieldValueString.endsWith("%")) {
 					fieldValueString = fieldValueString.substring(0, fieldValueString.length() - 1);
 				}
@@ -543,7 +543,8 @@ public final class ServletSessionMethods {
 						fieldValue = new IntegerValueDefn(Integer.valueOf(fieldValueString));
 					} catch (NumberFormatException nfex) {
 						throw new InputRecordException("Value " + fieldValueString
-								+ " not allowed because a whole number needs to be entered", field, nfex);
+								+ " not allowed because a whole number needs to be entered", field,
+								nfex);
 					}
 				}
 			}
@@ -551,20 +552,26 @@ public final class ServletSessionMethods {
 			// For error reporting
 			String partGotTo = "year";
 			try {
-				Integer years = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_years");
+				Integer years = ServletDataMethods.getIntegerParameterValue(request,
+						internalFieldName + "_years");
 				if ((years > 0) && (years < 99)) {
 					years += 2000;
 				}
 				partGotTo = "month";
-				Integer months = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_months");
+				Integer months = ServletDataMethods.getIntegerParameterValue(request,
+						internalFieldName + "_months");
 				partGotTo = "day";
-				Integer days = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_days");
+				Integer days = ServletDataMethods.getIntegerParameterValue(request,
+						internalFieldName + "_days");
 				partGotTo = "hour";
-				Integer hours = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_hours");
+				Integer hours = ServletDataMethods.getIntegerParameterValue(request,
+						internalFieldName + "_hours");
 				partGotTo = "minute";
-				Integer minutes = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_minutes");
+				Integer minutes = ServletDataMethods.getIntegerParameterValue(request,
+						internalFieldName + "_minutes");
 				partGotTo = "second";
-				Integer seconds = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_seconds");
+				Integer seconds = ServletDataMethods.getIntegerParameterValue(request,
+						internalFieldName + "_seconds");
 				if (years != null && months != null && days != null && hours != null
 						&& minutes != null && seconds != null) {
 					fieldValue = new DurationValueDefn(years, months, days, hours, minutes, seconds);
@@ -583,7 +590,8 @@ public final class ServletSessionMethods {
 					// .4 -> 0.4
 					// 4. -> 4.0
 					// . -> 0.0
-					// (pound sign)46.50 -> 46.50 - from the error logs, users commonly input pound signs
+					// (pound sign)46.50 -> 46.50 - from the error logs, users
+					// commonly input pound signs
 					fieldValueString = fieldValueString.replace("\u00A3", "");
 					fieldValueString = fieldValueString.replace("$", "");
 					if (fieldValueString.startsWith(".")) {
@@ -617,17 +625,23 @@ public final class ServletSessionMethods {
 				Integer minutes = null;
 				Integer seconds = null;
 				try {
-					years = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_years");
+					years = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
+							+ "_years");
 					partGotTo = "month";
-					months = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_months");
+					months = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
+							+ "_months");
 					partGotTo = "day";
-					days = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_days");
+					days = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
+							+ "_days");
 					partGotTo = "hour";
-					hours = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_hours");
+					hours = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
+							+ "_hours");
 					partGotTo = "minute";
-					minutes = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_minutes");
+					minutes = ServletDataMethods.getIntegerParameterValue(request,
+							internalFieldName + "_minutes");
 					partGotTo = "second";
-					seconds = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_seconds");
+					seconds = ServletDataMethods.getIntegerParameterValue(request,
+							internalFieldName + "_seconds");
 					if (years != null) {
 						dateFieldValue.set(Calendar.YEAR, years);
 					}
@@ -646,12 +660,15 @@ public final class ServletSessionMethods {
 					if (seconds != null) {
 						dateFieldValue.set(Calendar.SECOND, seconds);
 					}
-					// Additionally, allow delta values to be submitted (add more on an as-needed basis)
-					Integer days_delta = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_days_delta");
+					// Additionally, allow delta values to be submitted (add
+					// more on an as-needed basis)
+					Integer days_delta = ServletDataMethods.getIntegerParameterValue(request,
+							internalFieldName + "_days_delta");
 					if (days_delta != null) {
 						dateFieldValue.add(Calendar.DAY_OF_MONTH, days_delta);
 					}
-					Integer minutes_delta = ServletDataMethods.getIntegerParameterValue(request, internalFieldName + "_minutes_delta");
+					Integer minutes_delta = ServletDataMethods.getIntegerParameterValue(request,
+							internalFieldName + "_minutes_delta");
 					if (minutes_delta != null) {
 						dateFieldValue.add(Calendar.MINUTE, minutes_delta);
 					}
@@ -713,11 +730,19 @@ public final class ServletSessionMethods {
 						if (textCase != null) {
 							fieldValueString = textCase.transform(fieldValueString);
 						}
-						// Format phone numbers to include a space so that when they're exported to CSV, spreadsheets recognise them as text rather than numbers
+						// Format phone numbers to include a space so that when
+						// they're exported to CSV, spreadsheets recognise them
+						// as text rather than numbers
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
 							if (!fieldValueString.matches("\\D")) {
-								fieldValueString = fieldValueString.substring(0, 5) + " " + fieldValueString.substring(5);
+								fieldValueString = fieldValueString.substring(0, 5) + " "
+										+ fieldValueString.substring(5);
 							}
+						} else {
+							// Replace smart quotes with normal quotes
+							fieldValueString = fieldValueString.replace("\u2018", "'")
+									.replace("'\u2019", "'").replace("\u201C", "\"")
+									.replace("\u201D", "\"");
 						}
 						fieldValue = new TextValueDefn(fieldValueString);
 					}
@@ -827,15 +852,18 @@ public final class ServletSessionMethods {
 		sessionData.setModule(module);
 	}
 
-	public static void setReportGlobalFilterString(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException, DisallowedException {
-		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, true);
+	public static void setReportGlobalFilterString(SessionDataInfo sessionData,
+			HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
+		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+				databaseDefn, true);
 		String filterString = request.getParameter("filterstring");
 		if (filterString == null) {
 			throw new MissingParametersException("'filterstring' parameter needed");
 		}
 		sessionData.setGlobalFilterString(report, filterString);
 	}
-	
+
 	/**
 	 * Set a 'quick filter' value
 	 * 
@@ -884,9 +912,9 @@ public final class ServletSessionMethods {
 		sessionData.clearAllReportFilterValues();
 	}
 
-	public static void setReportSort(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, CantDoThatException {
+	public static void setReportSort(SessionDataInfo sessionData, HttpServletRequest request,
+			DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException,
+			CantDoThatException {
 		String internalFieldName = request.getParameter("internalfieldname");
 		String fieldName = request.getParameter("fieldname");
 		internalFieldName = internalFieldName != null ? internalFieldName : "";
@@ -919,9 +947,8 @@ public final class ServletSessionMethods {
 		sessionData.setReportSort(sortField, sortAscending);
 	}
 
-	public static void clearReportSort(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException {
+	public static void clearReportSort(SessionDataInfo sessionData, HttpServletRequest request,
+			DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException {
 		String internalFieldName = request.getParameter("internalfieldname");
 		String fieldName = request.getParameter("fieldname");
 		internalFieldName = internalFieldName != null ? internalFieldName : "";
