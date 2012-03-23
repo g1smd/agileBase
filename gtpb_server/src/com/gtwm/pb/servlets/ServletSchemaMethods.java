@@ -29,6 +29,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.lang.StringUtils;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
 import com.gtwm.pb.auth.Company;
@@ -1814,8 +1815,8 @@ public final class ServletSchemaMethods {
 				report.removeField(newCalculationField);
 			}
 			String message = sqlex.getMessage();
-			int openBrackets = message.split("\\(").length;
-			int closeBrackets = message.split("\\)").length;
+			int openBrackets = StringUtils.countMatches(message, "(");
+			int closeBrackets = StringUtils.countMatches(message, ")");
 			logger.debug("In " + message + ", open brackets = " + openBrackets + ", close brackets are " + closeBrackets);
 			if (openBrackets != closeBrackets) {
 				message = "It looks like brackets may not match - there are " + openBrackets
