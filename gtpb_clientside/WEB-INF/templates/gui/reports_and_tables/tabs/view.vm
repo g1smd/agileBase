@@ -96,8 +96,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
                 #foreach($field in $fields)
               	  #set($tableDataValue = $tableDataRow.get($field))
       					  #set($fieldCategory = $field.getFieldCategory())
-            		  ## don't display hidden or blank fields
-            		  #if($fieldCategory=="REFERENCED_REPORT_DATA" || $fieldCategory=="SEPARATOR" || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
+									#set($comments = $view.getComments($field))
+									#set($hasComments = ($comments.size() > 0))
+            		  ## don't display hidden or blank fields. Do display fields that may have comments
+            		  #if($hasComments || (!$fieldCategory.savesData()) || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
                     ## don't display checkbox values that are false
                     #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
                       #if($fieldCategory == "RELATION")

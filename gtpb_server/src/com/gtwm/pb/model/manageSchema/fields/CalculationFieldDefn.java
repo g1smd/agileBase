@@ -204,6 +204,14 @@ public class CalculationFieldDefn implements CalculationField {
 				+ this);
 	}
 
+	public Boolean hasComments() {
+		return false;
+	}
+
+	public void setHasComments(boolean hasComments) throws CantDoThatException {
+		throw new CantDoThatException("A calculation field can't have comments: " + this);
+	}
+
 	/**
 	 * equals is based on internal field name
 	 */
@@ -251,4 +259,5 @@ public class CalculationFieldDefn implements CalculationField {
 	private ReportCalcFieldInfo reportCalcField = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(CalculationFieldDefn.class);
+
 }

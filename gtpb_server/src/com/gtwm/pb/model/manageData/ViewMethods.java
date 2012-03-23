@@ -407,7 +407,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public SortedSet<CommentInfo> getComments(BaseField field) throws SQLException,
-			DisallowedException, ObjectNotFoundException {
+			DisallowedException, ObjectNotFoundException, CantDoThatException {
 		if (field == null) {
 			logger.warn("ViewMethods.getComments called with null field");
 			return new TreeSet<CommentInfo>();

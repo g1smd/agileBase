@@ -162,10 +162,10 @@ public interface DataManagementInfo {
 	/**
 	 * Get all comments attached to a particular field for a particular record
 	 */
-	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException;
+	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException, CantDoThatException;
 
 	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment)
-			throws SQLException, ObjectNotFoundException;
+			throws SQLException, ObjectNotFoundException, CantDoThatException;
 
 	/**
 	 * Return true if the record with the given primary key is visible in the

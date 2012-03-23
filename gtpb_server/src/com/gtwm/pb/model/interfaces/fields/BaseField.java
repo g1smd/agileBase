@@ -94,6 +94,17 @@ public interface BaseField extends Comparable<BaseField> {
 	public boolean hasDefault();
 
 	/**
+	 * Record whether any record in the table has comments attached to this
+	 * field
+	 * 
+	 * @return true if at least one record does have comments attached, false if
+	 *         none have, null if unknown (the initial state)
+	 */
+	public Boolean hasComments();
+	
+	public void setHasComments(boolean hasComments) throws CantDoThatException;
+
+	/**
 	 * Defines whether the database table allows duplicate values in this field
 	 * 
 	 * @throws CantDoThatException
@@ -135,9 +146,9 @@ public interface BaseField extends Comparable<BaseField> {
 	 */
 	public FieldTypeDescriptorInfo getFieldDescriptor() throws CantDoThatException,
 			CodingErrorException;
-	
+
 	public FieldPrintoutSetting getPrintoutSetting();
-	
+
 	public void setPrintoutSetting(FieldPrintoutSetting printoutSetting);
 
 	public static final boolean NOT_NULL = true;
@@ -145,13 +156,13 @@ public interface BaseField extends Comparable<BaseField> {
 	public static final boolean HIDDEN = true;
 
 	public static final boolean UNIQUE = true;
-	
+
 	public static final boolean USES_LOOKUP = true;
-	
+
 	public static final boolean DEFAULT_TO_NOW = true;
-	
+
 	public static final boolean NOT_APPLICABLE = true;
-	
+
 	public static final boolean STORES_CURRENCY = true;
 
 }

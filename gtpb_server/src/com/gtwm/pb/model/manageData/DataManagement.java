@@ -182,7 +182,7 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment)
-			throws SQLException, ObjectNotFoundException {
+			throws SQLException, ObjectNotFoundException, CantDoThatException {
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
 		Connection conn = null;
 		try {
@@ -201,10 +201,13 @@ public final class DataManagement implements DataManagementInfo {
 						+ statement);
 			}
 			statement.close();
-			// Concatenate all comments into the hidden comments field (for searching)
+			// Concatenate all comments into the hidden comments field (for
+			// searching)
 			TableInfo table = field.getTableContainingField();
-			BaseField concatenationField = table.getField(HiddenFields.COMMENTS_FEED.getFieldName());
-			SQLCode = "UPDATE " + table.getInternalTableName() + " SET " + concatenationField.getInternalFieldName();
+			BaseField concatenationField = table
+					.getField(HiddenFields.COMMENTS_FEED.getFieldName());
+			SQLCode = "UPDATE " + table.getInternalTableName() + " SET "
+					+ concatenationField.getInternalFieldName();
 			SQLCode += " = (? || coalesce(" + concatenationField.getInternalFieldName() + ", ''))";
 			SQLCode += " WHERE " + table.getPrimaryKey().getInternalFieldName() + "=?";
 			statement = conn.prepareStatement(SQLCode);
@@ -212,12 +215,12 @@ public final class DataManagement implements DataManagementInfo {
 			statement.setInt(2, rowId);
 			rowsAffected = statement.executeUpdate();
 			if (rowsAffected != 1) {
-				logger.error("Error concatenating new comment with old. " + rowsAffected + " rows updated. SQL = "
-						+ statement);
+				logger.error("Error concatenating new comment with old. " + rowsAffected
+						+ " rows updated. SQL = " + statement);
 			}
 			statement.close();
 			conn.commit();
-			this.commentedFields.put(field, true);
+			field.setHasComments(true);
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -225,9 +228,10 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException {
+	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException,
+			CantDoThatException {
 		SortedSet<CommentInfo> comments = new TreeSet<CommentInfo>();
-		Boolean hasComments = this.commentedFields.get(field);
+		Boolean hasComments = field.hasComments();
 		if (hasComments != null) {
 			if (hasComments.equals(false)) {
 				return comments;
@@ -254,11 +258,11 @@ public final class DataManagement implements DataManagementInfo {
 			results.close();
 			statement.close();
 			if (comments.size() > 0) {
-				this.commentedFields.put(field, true);
-			} else {
-				// We've seen there are no comments for this particular record,
-				// check if there are any at all
-				// for any records
+				field.setHasComments(true);
+			} else if (hasComments == null) {
+				// We've seen there are no comments for this particular record
+				// but we don't know if there are any for the field in other
+				// records. Check.
 				sqlCode = "SELECT count(*) from dbint_comments WHERE internalfieldname=?";
 				statement = conn.prepareStatement(sqlCode);
 				statement.setString(1, internalFieldName);
@@ -266,12 +270,15 @@ public final class DataManagement implements DataManagementInfo {
 				if (results.next()) {
 					int numComments = results.getInt(1);
 					if (numComments > 0) {
-						this.commentedFields.put(field, true);
+						field.setHasComments(true);
 					} else {
-						// Use putIfAbsent in case another thread e.g. running
+						// Another check in case another thread e.g. running
 						// addComment has set this to true.
 						// We don't want to overwrite that
-						this.commentedFields.putIfAbsent(field, false);
+						// TODO: Really, this should be atomic
+						if (field.hasComments() == null) {
+							field.setHasComments(false);
+						}
 					}
 				} else {
 					logger.error("Unable to see if comments exist with query " + statement);
@@ -377,7 +384,8 @@ public final class DataManagement implements DataManagementInfo {
 		SortedSet<BaseField> fields = table.getFields();
 		// Ignore un-clonable fields
 		for (BaseField field : fields) {
-			if (!(field instanceof FileField) && !(field instanceof SeparatorField) && !(field instanceof CommentFeedField)
+			if (!(field instanceof FileField) && !(field instanceof SeparatorField)
+					&& !(field instanceof CommentFeedField)
 					&& !(field instanceof ReferencedReportDataField) && !(field.getUnique())) { // &&
 				// !(field.getHidden()))
 				// {
@@ -904,7 +912,8 @@ public final class DataManagement implements DataManagementInfo {
 			// Also, if importing relations by display value, look up
 			// display/internal value mappings
 			if (useRelationDisplayValues && field instanceof RelationField) {
-				Map<String, String> displayToInternalValue = ((RelationFieldDefn) field).getItems(true, false);
+				Map<String, String> displayToInternalValue = ((RelationFieldDefn) field).getItems(
+						true, false);
 				relationLookups.put((RelationField) field, displayToInternalValue);
 			}
 		}
@@ -1531,11 +1540,14 @@ public final class DataManagement implements DataManagementInfo {
 					op.addImage(); // Placeholder for output PNG
 					try {
 						// [0] means convert only first page
-						convert.run(op, new Object[]{filePath + "[0]", filePath + "." + 500 + ".png"});
+						convert.run(op, new Object[] { filePath + "[0]",
+								filePath + "." + 500 + ".png" });
 					} catch (IOException ioex) {
-						throw new FileUploadException("IO error while converting PDF to PNG: " + ioex);
+						throw new FileUploadException("IO error while converting PDF to PNG: "
+								+ ioex);
 					} catch (InterruptedException iex) {
-						throw new FileUploadException("Interrupted while converting PDF to PNG: " + iex);
+						throw new FileUploadException("Interrupted while converting PDF to PNG: "
+								+ iex);
 					} catch (IM4JavaException im4jex) {
 						throw new FileUploadException("Problem converting PDF to PNG: " + im4jex);
 					}
@@ -2683,12 +2695,14 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	public Map<BaseField, BaseValue> getTableDataRow(SessionDataInfo sessionData, TableInfo table, int rowId, boolean logView)
-			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
+	public Map<BaseField, BaseValue> getTableDataRow(SessionDataInfo sessionData, TableInfo table,
+			int rowId, boolean logView) throws SQLException, ObjectNotFoundException,
+			CantDoThatException, CodingErrorException {
 		Connection conn = null;
 		TableDataInfo tableData = new TableData(table);
 		Map<BaseField, BaseValue> tableDataRow = null;
-		// Only log the view if we're not looking at the top (default) record in a report
+		// Only log the view if we're not looking at the top (default) record in
+		// a report
 		boolean logTheView = logView;
 		if (logTheView) {
 			BaseReportInfo sessionReport = sessionData.getReport();
@@ -2811,13 +2825,15 @@ public final class DataManagement implements DataManagementInfo {
 		return nextRowId;
 	}
 
-	public boolean childDataRowsExist(TableInfo parentTable, int parentRowId, TableInfo childTable) throws SQLException {
+	public boolean childDataRowsExist(TableInfo parentTable, int parentRowId, TableInfo childTable)
+			throws SQLException {
 		Connection conn = null;
 		boolean exists = false;
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			DataRowInfo dataRow = new DataRow(parentTable, parentRowId, new HashMap<BaseField, DataRowFieldInfo>());
+			DataRowInfo dataRow = new DataRow(parentTable, parentRowId,
+					new HashMap<BaseField, DataRowFieldInfo>());
 			exists = dataRow.childDataRowsExist(conn, childTable);
 		} finally {
 			if (conn != null) {
@@ -2826,7 +2842,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		return exists;
 	}
-	
+
 	public Set<Integer> getRelatedRowIds(BaseReportInfo masterReport, int masterRowId,
 			TableInfo relatedTable) throws CantDoThatException, SQLException {
 		if (!masterReport.getReportBaseFields().contains(relatedTable.getPrimaryKey())) {
@@ -3301,12 +3317,6 @@ public final class DataManagement implements DataManagementInfo {
 	private AtomicInteger reportFeedCacheHits = new AtomicInteger();
 
 	private AtomicInteger reportFeedCacheMisses = new AtomicInteger();
-
-	/**
-	 * Record which fields have at least one comment in the database, which
-	 * don't and which are unknown (not in the map)
-	 */
-	private ConcurrentHashMap<BaseField, Boolean> commentedFields = new ConcurrentHashMap<BaseField, Boolean>();
 
 	/**
 	 * Store the first record ID from each report, for use when logging record

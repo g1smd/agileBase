@@ -228,6 +228,15 @@ public abstract class AbstractField implements BaseField {
 	public boolean hasDefault() {
 		return this.getDefaultDefined();
 	}
+	
+	@Transient
+	public Boolean hasComments() {
+		return this.hasComments;
+	}
+	
+	public void setHasComments(boolean hasComments) {
+		this.hasComments = hasComments;
+	}
 
 	private Boolean getDefaultDefined() {
 		return this.defaultDefined;
@@ -272,6 +281,8 @@ public abstract class AbstractField implements BaseField {
 	private Integer fieldIndex = 0;
 	
 	private FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.NAME_AND_VALUE;
+	
+	private Boolean hasComments = null;
 
 	private volatile int hashCode = 0;
 

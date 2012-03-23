@@ -82,7 +82,7 @@ public final class ServletDataMethods {
 		return null;
 	}
 
-	public static void addComment(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, ObjectNotFoundException, SQLException, MissingParametersException {
+	public static void addComment(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, ObjectNotFoundException, SQLException, MissingParametersException, CantDoThatException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn, true);
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
