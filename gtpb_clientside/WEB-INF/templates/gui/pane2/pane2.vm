@@ -108,26 +108,30 @@
       </script>
       #end
 	  #if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
-			#set($filtersShouldBeShown = ($sessionData.getCustomString('filtering_on')=='true'))
-  	    <script language=Javascript>
-         var jqDoc = $(top.document);
-   	     jqDoc.find('#button_new').removeAttr('disabled');
-   	     jqDoc.find('#button_clone').removeAttr('disabled');
-   	     jqDoc.find('#button_delete').removeAttr('disabled');
-         jqDoc.find('#button_import').removeAttr('disabled');
-   	     jqDoc.find('#button_export').removeAttr('disabled');
-   	     jqDoc.find('#button_print').removeAttr('disabled');
-         jqDoc.find('#button_fullscreen').removeAttr('disabled');
-         jqDoc.find('#button_apps').removeAttr('disabled');
-         jqDoc.find('#button_forms').removeAttr('disabled');
-				 #if($filtersShouldBeShown)
-				   var jqFilter = jqDoc.find('#filter');
-					 if (!jqFilter.hasClass('selected')) {
-					   jqFilter.click();
-					 }
-				 #end
-        </script>
-      #else
+			#set($sessionFilterString = $sessionData.getCustomString('filtering_on'))
+			#set($filtersShouldBeShown = ($sessionFilterString=='true'))
+			#if(($sessionFilterString == null) && ($view.getLoggedInUser().getUserType() == "REPORT"))
+				#set($filtersShouldBeShown = true)
+			#end
+	    <script language=Javascript>
+       var jqDoc = $(top.document);
+ 	     jqDoc.find('#button_new').removeAttr('disabled');
+ 	     jqDoc.find('#button_clone').removeAttr('disabled');
+ 	     jqDoc.find('#button_delete').removeAttr('disabled');
+       jqDoc.find('#button_import').removeAttr('disabled');
+ 	     jqDoc.find('#button_export').removeAttr('disabled');
+ 	     jqDoc.find('#button_print').removeAttr('disabled');
+       jqDoc.find('#button_fullscreen').removeAttr('disabled');
+       jqDoc.find('#button_apps').removeAttr('disabled');
+       jqDoc.find('#button_forms').removeAttr('disabled');
+			 #if($filtersShouldBeShown)
+			   var jqFilter = jqDoc.find('#filter');
+				 if (!jqFilter.hasClass('selected')) {
+				   jqFilter.click();
+				 }
+			 #end
+      </script>
+    #else
       <script language=Javascript>
         	 function fNew() {
         		  // do nothing
