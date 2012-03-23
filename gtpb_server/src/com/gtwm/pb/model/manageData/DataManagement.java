@@ -743,12 +743,12 @@ public final class DataManagement implements DataManagementInfo {
 			int numRowsAffected = statement.executeUpdate();
 			logger.debug("" + numRowsAffected + " rows affected with " + statement);
 			statement.close();
-			if (numRowsAffected != 1) {
-				if ((numRowsAffected > 1) && (!globalEdit)) {
+			if ((numRowsAffected != 1) && (!globalEdit)) {
+			//	if (numRowsAffected > 1) {
 					conn.rollback();
 					throw new ObjectNotFoundException(String.valueOf(numRowsAffected)
 							+ " records altered during a single record save");
-				}
+			//	}
 			}
 			if (newRecord) {
 				// Find the newly inserted Row ID
