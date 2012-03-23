@@ -1815,12 +1815,22 @@ public final class ServletSchemaMethods {
 				report.removeField(newCalculationField);
 			}
 			String message = sqlex.getMessage();
-			int openBrackets = StringUtils.countMatches(message, "(");
-			int closeBrackets = StringUtils.countMatches(message, ")");
-			logger.debug("In " + message + ", open brackets = " + openBrackets + ", close brackets are " + closeBrackets);
-			if (openBrackets != closeBrackets) {
-				message = "It looks like brackets may not match - there are " + openBrackets
-						+ " opening brackets and " + closeBrackets + " closing brackets";
+			int bracketDifference = StringUtils.countMatches(message, "(")
+					- StringUtils.countMatches(message, ")");
+			if (bracketDifference != 0) {
+				String word;
+				if (Math.abs(bracketDifference) == 1) {
+					word = "is ";
+				} else {
+					word = "are ";
+				}
+				if (bracketDifference > 0) {
+					message = "It looks like brackets may not match - there " + word
+							+ bracketDifference + " closing bracket(s) missing";
+				} else {
+					message = "It looks like brackets may not match - there " + word
+							+ bracketDifference + " more closing bracket(s) than opening brackets";
+				}
 			}
 			throw new CantDoThatException("Calculation addition failed. "
 					+ Helpers.replaceInternalNames(message, report), sqlex);
