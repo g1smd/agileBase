@@ -182,7 +182,7 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment)
-			throws SQLException {
+			throws SQLException, ObjectNotFoundException {
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
 		Connection conn = null;
 		try {
@@ -198,6 +198,21 @@ public final class DataManagement implements DataManagementInfo {
 			int rowsAffected = statement.executeUpdate();
 			if (rowsAffected != 1) {
 				logger.error("Error adding comment. " + rowsAffected + " rows inserted. SQL = "
+						+ statement);
+			}
+			statement.close();
+			// Concatenate all comments into the hidden comments field (for searching)
+			TableInfo table = field.getTableContainingField();
+			BaseField concatenationField = table.getField(HiddenFields.COMMENTS_FEED.getFieldName());
+			SQLCode = "UPDATE " + table.getInternalTableName() + " SET " + concatenationField.getInternalFieldName();
+			SQLCode += " = (? || " + concatenationField.getInternalFieldName() + ")";
+			SQLCode += " WHERE " + table.getPrimaryKey().getInternalFieldName() + "=?";
+			statement = conn.prepareStatement(SQLCode);
+			statement.setString(1, comment + "\n---\n");
+			statement.setInt(2, rowId);
+			rowsAffected = statement.executeUpdate();
+			if (rowsAffected != 1) {
+				logger.error("Error concatenating new comment with old. " + rowsAffected + " rows updated. SQL = "
 						+ statement);
 			}
 			statement.close();

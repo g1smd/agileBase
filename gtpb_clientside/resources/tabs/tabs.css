@@ -780,6 +780,11 @@ div#reportData {
   position: static;
 }
 
+.comment_feed {
+  padding-bottom: 0.5em;
+  display: block;
+}
+
 .form_tabber {
   background-color: #cccccc;
   margin: 0.5em;
