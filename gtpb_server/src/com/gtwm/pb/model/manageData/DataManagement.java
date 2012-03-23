@@ -741,6 +741,7 @@ public final class DataManagement implements DataManagementInfo {
 				}
 			}
 			int numRowsAffected = statement.executeUpdate();
+			logger.debug("" + numRowsAffected + " rows affected with " + statement);
 			statement.close();
 			if (numRowsAffected != 1) {
 				if ((numRowsAffected > 1) && (!globalEdit)) {

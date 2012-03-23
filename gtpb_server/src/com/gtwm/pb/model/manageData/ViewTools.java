@@ -1158,10 +1158,7 @@ public final class ViewTools implements ViewToolsInfo {
 	}
 	
 	public String unencodeHtml(String string) {
-		String unencoded = string.replace("&amp;", "&");
-		unencoded = unencoded.replace("&lt;", "<");
-		unencoded = unencoded.replace("&gt;", ">" );
-		return unencoded;
+		return Helpers.unencodeHtml(string);
 	}
 
 	public synchronized boolean templateExists(String templateFilename) {

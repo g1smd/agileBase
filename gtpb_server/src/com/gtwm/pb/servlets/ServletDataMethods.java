@@ -153,26 +153,13 @@ public final class ServletDataMethods {
 				rowId = Integer.parseInt(stringRowId);
 			}
 		}
-
-		// Gather data to save, store it in the session
-		// if (newRecord) {
-		// clear the previously cached record data:
 		sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
-		// }
-		// try {
 		ServletSessionMethods.setFieldInputValues(sessionData, request, newRecord, databaseDefn, table,
 				multipartItems);
-		// then pass to DataManagement.saveRecord
 		databaseDefn.getDataManagement().saveRecord(request, table,
 				new LinkedHashMap<BaseField, BaseValue>(sessionData.getFieldInputValues()),
 				newRecord, rowId, sessionData, multipartItems);
 		sessionData.setLastAppActionRowId(rowId);
-		// } finally {
-		// clear the cached record data... this might need to be handled
-		// elsewhere
-		// or within a try-catch block to ensure cached data is dropped
-		// sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
-		// }
 	}
 
 	/**

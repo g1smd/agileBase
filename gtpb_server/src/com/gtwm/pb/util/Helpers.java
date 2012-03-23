@@ -326,6 +326,21 @@ public final class Helpers {
 		}
 		return resultString;
 	}
+	
+	/**
+	 * Replace HTML entities with plain versions
+	 * @param string
+	 * @return
+	 */
+	public static String unencodeHtml(String string) {
+		if (string == null) {
+			return "";
+		}
+		String unencoded = string.replace("&amp;", "&");
+		unencoded = unencoded.replace("&lt;", "<");
+		unencoded = unencoded.replace("&gt;", ">" );
+		return unencoded;
+	}
 
 	private static final SimpleLogger logger = new SimpleLogger(Helpers.class);
 }

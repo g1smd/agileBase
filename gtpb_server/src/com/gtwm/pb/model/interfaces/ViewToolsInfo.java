@@ -353,7 +353,7 @@ public interface ViewToolsInfo {
 	public String lineBreaksToParas(String stringToConvert);
 
 	/**
-	 * Replace &lt; and &gt; with < and > to allow HTML tags to work.
+	 * Replace &amp; with &, &lt; and &gt; with < and > to allow HTML tags to work.
 	 * 
 	 * AgileBase replaces < and > with the two equivalents when saving data
 	 */

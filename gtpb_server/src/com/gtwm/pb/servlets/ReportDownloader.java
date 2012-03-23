@@ -72,6 +72,7 @@ import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AgileBaseException;
+import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
 public final class ReportDownloader extends HttpServlet {
@@ -275,7 +276,7 @@ public final class ReportDownloader extends HttpServlet {
 				case VARCHAR:
 				default:
 					cell = row.createCell(columnNum, HSSFCell.CELL_TYPE_STRING);
-					cell.setCellValue(fieldValue);
+					cell.setCellValue(Helpers.unencodeHtml(fieldValue));
 					break;
 				}
 				columnNum++;
@@ -427,9 +428,8 @@ public final class ReportDownloader extends HttpServlet {
 				columnNum++;
 			}
 			for (ChartAggregateInfo aggregateFunction : aggregateFunctions) {
-				fieldValue = summaryDataRow.getAggregateValue(aggregateFunction).toString();
-				row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC).setCellValue(
-						new HSSFRichTextString(fieldValue));
+				Double number = summaryDataRow.getAggregateValue(aggregateFunction).doubleValue();
+				row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC).setCellValue(number);
 				columnNum++;
 			}
 			rowNum++;
