@@ -47,6 +47,7 @@ import javax.sql.DataSource;
 import com.gtwm.pb.auth.AuthManager;
 import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
+import com.gtwm.pb.model.interfaces.FormTabInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.ReportMapInfo;
@@ -976,6 +977,17 @@ public final class DatabaseDefn implements DatabaseInfo {
 		if (tablesReferencingReport.size() > 0) {
 			throw new CantDoThatException("Tables " + tablesReferencingReport
 					+ " reference data in this report");
+		}
+		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
+		for (TableInfo table : company.getTables()) {
+			for (FormTabInfo formTab : table.getFormTabs()) {
+				BaseReportInfo selectorReport = formTab.getSelectorReport();
+				if (selectorReport != null) {
+					if (selectorReport.equals(reportToRemove)) {
+						throw new CantDoThatException("The table " + table + " has a tab that uses this report");
+					}
+				}
+			}
 		}
 		parentTable.removeReport(reportToRemove);
 		this.removeReportWithoutChecks(sessionData, request, reportToRemove, conn);

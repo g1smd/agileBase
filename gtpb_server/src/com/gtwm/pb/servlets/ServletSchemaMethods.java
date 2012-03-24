@@ -673,7 +673,7 @@ public final class ServletSchemaMethods {
 	}
 
 	private synchronized static String generateNewTableReportName(TableInfo table) {
-		String baseReportName = table.getTableName();
+		String baseReportName = table.getSimpleName();
 		String reportName = baseReportName;
 		// Ensure report name is unique
 		SortedSet<BaseReportInfo> reports = table.getReports();
