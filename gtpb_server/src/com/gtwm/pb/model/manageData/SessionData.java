@@ -175,7 +175,7 @@ public final class SessionData implements SessionDataInfo {
 	private void autoSetRowId() throws SQLException {
 		if (this.currentTableRowIds.get(this.table) == null) {
 			String SQLCode = "SELECT " + this.table.getPrimaryKey().getInternalFieldName()
-					+ " FROM " + getReport().getInternalReportName() + " LIMIT 1";
+					+ " FROM " + this.getReport().getInternalReportName() + " LIMIT 1";
 			Connection conn = null;
 			try {
 				if (this.relationalDataSource == null) {
@@ -193,7 +193,7 @@ public final class SessionData implements SessionDataInfo {
 				resultSet.close();
 				statement.close();
 			} catch (SQLException sqlex) {
-				logger.warn("SQL error auto setting row ID. The session report may have an error. "
+				logger.warn("SQL error auto setting row ID. The session report " + this.getReport() + " may have an error. "
 						+ sqlex);
 			} finally {
 				if (conn != null) {

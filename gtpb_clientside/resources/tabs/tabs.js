@@ -1266,6 +1266,8 @@ function fFormStyle() {
 		}); // end of jqTab.click()
 		jqTab.find("img.new").click(function() {
 			var tabInternalTableName = jqTab.attr("data-internaltablename");
+			var relationFieldInternalName = jqTab.attr("data-relationfield");
+			var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
 			tabContainer.fadeOut();
 			tabContainer.load("AppController.servlet", {
@@ -1275,7 +1277,8 @@ function fFormStyle() {
 			  set_custom_table: true,
 			  tablekey: 'tabTable',
 			  custominternaltablename: tabInternalTableName,
-			  gtpb_override_relation_default_to_null: true
+			  relationFieldInternalName: parentRowId
+			  //gtpb_override_relation_default_to_null: true
 			}, function() {
 				tabContainer.fadeIn();
 				editTabFunctions();

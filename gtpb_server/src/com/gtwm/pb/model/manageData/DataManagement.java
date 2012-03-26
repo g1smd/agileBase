@@ -275,7 +275,9 @@ public final class DataManagement implements DataManagementInfo {
 						// Another check in case another thread e.g. running
 						// addComment has set this to true.
 						// We don't want to overwrite that
-						// TODO: Really, this should be atomic
+						// TODO: Really, this should be atomic but it takes such
+						// a small amount of time compared to the SQL it's
+						// probably fine
 						if (field.hasComments() == null) {
 							field.setHasComments(false);
 						}
@@ -2547,10 +2549,6 @@ public final class DataManagement implements DataManagementInfo {
 				ReportData.enableNestloop(conn, false);
 			}
 			statement = chart.getChartSqlPreparedStatement(conn, reportFilterValues, false);
-			if (chart.getReport().getQueryPlanSelection()
-					.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
-				ReportData.enableNestloop(conn, true);
-			}
 			long startTime = System.currentTimeMillis();
 			ResultSet summaryResults = statement.executeQuery();
 			while (summaryResults.next()) {
@@ -2682,6 +2680,10 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			summaryResults.close();
 			statement.close();
+			if (chart.getReport().getQueryPlanSelection()
+					.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
+				ReportData.enableNestloop(conn, true);
+			}
 			float durationSecs = (System.currentTimeMillis() - startTime) / ((float) 1000);
 			if (durationSecs > AppProperties.longSqlTime) {
 				logger.debug("Long SELECT SQL execution time of " + durationSecs

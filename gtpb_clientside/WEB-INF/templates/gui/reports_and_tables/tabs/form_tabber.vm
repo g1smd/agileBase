@@ -1,10 +1,16 @@
-<div class="form_tabber" data-internaltablename="$sessionTable.getInternalTableName()">
+<div class="form_tabber" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionData.getRowId($sessionTable)">
   <div class="tab_choice active" data-internaltablename="$sessionTable.getInternalTableName()">$sessionTable.getSingularName()</div>
   #foreach($formTab in $formTabs)
     #set($formTable = $formTab.getTable())
     #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA",$formTable))
 			#set($formInternalTableName = $formTable.getInternalTableName())
-      <div class="tab_choice" id="tab_choice_$formInternalTableName" data-internaltablename="$formInternalTableName">$formTab&nbsp;<img class="new" src="resources/toolbar/new.png" title="add new $formTable.getSingularName()"/></div>
+			## Find the relation field that relates to the parent table
+			#foreach($formField in $formTable.getFields())
+				#if($formField.getRelatedTable().equals($sessionTable))
+					#set($relationField = $formField)
+				#end
+			#end
+      <div class="tab_choice" id="tab_choice_$formInternalTableName" data-internaltablename="$formInternalTableName" data-relationfield="$relationField.getInternalFieldName()">$formTab&nbsp;<img class="new" src="resources/toolbar/new.png" title="add new $formTable.getSingularName()"/></div>
     #end
   #end
 </div>

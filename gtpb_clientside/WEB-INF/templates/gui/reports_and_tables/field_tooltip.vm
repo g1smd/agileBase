@@ -9,8 +9,8 @@ $reportField
   #set($displayDetails = false)
 #end
 #if($displayDetails)
-    #set($chartData = $view.getFieldSummaryData($reportField))
-    #set($chartDataRows = $chartData.getChartDataRows())
+  #set($chartData = $view.getFieldSummaryData($reportField))
+  #set($chartDataRows = $chartData.getChartDataRows())
 	#if($chartDataRows.size() > 0)
         #set($groupingValues = $chartDataRows.get(0).getGroupingValues())
         #if($groupingValues.size() == 0)
