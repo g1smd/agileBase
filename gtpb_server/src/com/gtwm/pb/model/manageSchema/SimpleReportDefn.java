@@ -1098,8 +1098,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 				.getDistinctFieldsDirect()));
 	}
 
-	@ManyToMany(targetEntity = AbstractField.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
-		CascadeType.REFRESH })
+	@ManyToMany(targetEntity = AbstractField.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+		CascadeType.REFRESH})
 	private synchronized Set<BaseField> getDistinctFieldsDirect() {
 		return this.distinctFields;
 	}
