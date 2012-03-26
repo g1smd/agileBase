@@ -1270,16 +1270,17 @@ function fFormStyle() {
 			var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
 			tabContainer.fadeOut();
-			tabContainer.load("AppController.servlet", {
-			  "return": "gui/reports_and_tables/tabs/tab_content",
-			  save_new_record: true,
-			  internaltablename: tabInternalTableName,
-			  set_custom_table: true,
-			  tablekey: 'tabTable',
-			  custominternaltablename: tabInternalTableName,
-			  relationFieldInternalName: parentRowId
-			  //gtpb_override_relation_default_to_null: true
-			}, function() {
+			var options = {
+				  "return": "gui/reports_and_tables/tabs/tab_content",
+				  save_new_record: true,
+				  internaltablename: tabInternalTableName,
+				  set_custom_table: true,
+				  tablekey: 'tabTable',
+				  custominternaltablename: tabInternalTableName
+			}
+			// Set this one like this as relationFieldInternalName is a variable
+			options[relationFieldInternalName] = parentRowId;
+			tabContainer.load("AppController.servlet", options, function() {
 				tabContainer.fadeIn();
 				editTabFunctions();
 			});
