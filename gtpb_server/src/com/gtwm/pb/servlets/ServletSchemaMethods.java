@@ -672,7 +672,7 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	private synchronized static String generateNewTableReportName(TableInfo table) {
+	private synchronized static String generateNewReportName(TableInfo table) {
 		String baseReportName = table.getSimpleName();
 		String reportName = baseReportName;
 		// Ensure report name is unique
@@ -698,7 +698,7 @@ public final class ServletSchemaMethods {
 		String baseInternalReportName = request.getParameter("internalreportname");
 		String reportName = request.getParameter("reportname");
 		if (reportName == null) {
-			reportName = generateNewTableReportName(table);
+			reportName = generateNewReportName(table);
 		}
 		String reportDesc = request.getParameter("reportdesc");
 		if (reportDesc == null) {

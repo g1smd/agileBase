@@ -25,10 +25,8 @@ import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.FileField;
-import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.CalculationField;
-import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
@@ -60,6 +58,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -1099,7 +1098,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 				.getDistinctFieldsDirect()));
 	}
 
-	@OneToMany(targetEntity = AbstractField.class)
+	@ManyToMany(targetEntity = AbstractField.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+		CascadeType.REFRESH })
 	private synchronized Set<BaseField> getDistinctFieldsDirect() {
 		return this.distinctFields;
 	}
