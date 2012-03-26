@@ -1,7 +1,7 @@
 #set($internalReportFieldName = $sessionData.getCustomString("tooltip_internalfieldname"))
 #set($reportField = $sessionData.getReport().getReportField($internalReportFieldName))
 $reportField
-#if($reportField.getFieldDescription() && $reportField.getFieldDescription() != "")
+#if($reportField.getFieldDescription() && ($reportField.getFieldDescription() != "") && ($reportField.getClass().getSimpleName() != "ReportCalcFieldDefn"))
 	- $reportField.getFieldDescription()
 #end
 #set($displayDetails = true)
