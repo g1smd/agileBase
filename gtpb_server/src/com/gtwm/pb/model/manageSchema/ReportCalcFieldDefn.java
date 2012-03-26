@@ -34,8 +34,6 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.DecimalField;
-import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
-import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
@@ -267,9 +265,13 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 				String tableName = table.getTableName().toLowerCase(Locale.UK);
 				String fieldName = field.getFieldName().toLowerCase(Locale.UK);
 				identifierToMatch = "{" + tableName + "." + fieldName + "}";
+				String simpleTableName = table.getSimpleName().toLowerCase();
+				String simpleIdentifierToMatch = "{" + simpleTableName + "." + fieldName + "}";
 				tableName = tableName.replaceAll("(\\W)", "\\\\$1");
+				simpleTableName = simpleTableName.replaceAll("(\\W)", "\\\\$1");
 				fieldName = fieldName.replaceAll("(\\W)", "\\\\$1");
 				identifierToReplace = "\\{" + tableName + "." + fieldName + "\\}";
+				String simpleIdentifierToReplace = "\\{" + simpleTableName + "." + fieldName + "\\}";
 				replacement = table.getInternalTableName() + "." + field.getInternalFieldName();
 				// if this is a floating pt. calc., cast all numeric fields to
 				// 'numeric' so that postgres calcs can work
@@ -283,6 +285,10 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 					calculationSQL = calculationSQL.replaceAll(identifierToReplace, replacement);
 					this.fieldsUsed.add(field);
 				}
+				if (calculationSQL.contains(simpleIdentifierToMatch)) {
+					calculationSQL = calculationSQL.replaceAll(simpleIdentifierToReplace, replacement);
+					this.fieldsUsed.add(field);
+				}
 			}
 		}
 		// If anything left to replace, try
@@ -292,15 +298,20 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 				for (BaseReportInfo report : table.getReports()) {
 					for (BaseField field : report.getReportBaseFields()) {
 						String tableName = table.getTableName().toLowerCase(Locale.UK);
+						String simpleTableName = table.getSimpleName().toLowerCase();
 						String reportName = report.getReportName().toLowerCase(Locale.UK);
 						String fieldName = field.getFieldName().toLowerCase(Locale.UK);
 						identifierToMatch = "{" + tableName + "." + reportName + "." + fieldName
 								+ "}";
+						String simpleIdentifierToMatch = "{" + simpleTableName + "." + fieldName + "}";
 						tableName = tableName.replaceAll("(\\W)", "\\\\$1");
+						simpleTableName = simpleTableName.replaceAll("(\\W)", "\\\\$1");
 						reportName = reportName.replaceAll("(\\W)", "\\\\$1");
 						fieldName = fieldName.replaceAll("(\\W)", "\\\\$1");
 						identifierToReplace = "\\{" + tableName + "." + reportName + "."
 								+ fieldName + "\\}";
+						String simpleIdentifierToReplace = "\\{" + simpleTableName + "." + reportName + "."
+						+ fieldName + "\\}";
 						if (report.equals(this.getParentReport())
 								&& (field instanceof CalculationFieldDefn)) {
 							replacement = "("
@@ -318,6 +329,11 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 						}
 						if (calculationSQL.contains(identifierToMatch)) {
 							calculationSQL = calculationSQL.replaceAll(identifierToReplace,
+									replacement);
+							this.fieldsUsed.add(field);
+						}
+						if (calculationSQL.contains(simpleIdentifierToMatch)) {
+							calculationSQL = calculationSQL.replaceAll(simpleIdentifierToReplace,
 									replacement);
 							this.fieldsUsed.add(field);
 						}
