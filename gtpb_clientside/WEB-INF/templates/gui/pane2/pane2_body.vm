@@ -183,7 +183,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #end            
 			#end
 		#if($parentTable)
-      <td><img src="resources/toolbar/delete.png" style="height: 1.3em" /></td>
+      <td class="deleter"><img src="resources/toolbar/delete.png" /></td>
 		#else
       <td class="trailing">&nbsp;</td>
 		#end

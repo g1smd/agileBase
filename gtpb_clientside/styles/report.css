@@ -144,7 +144,20 @@ table#reportData tr#currentRow td {
 table#reportData tr#currentRow td.leading,
 table#reportData tr#currentRow td.trailing {
   background-color: #3875d7; /* #FFBA3B; */
-}	  
+}
+
+table#reportData tr td.deleter {
+  width: 1.3em;
+}
+
+table#reportData tr td.deleter img {
+  visibility: hidden;
+  height: 1.3em;
+}
+
+table#reportData tr#currentRow td.deleter img {
+  visibility: visible;
+}
 
 table#reportData tr#currentRow td.colored {
 /*
