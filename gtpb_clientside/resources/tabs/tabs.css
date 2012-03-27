@@ -107,7 +107,7 @@ td.trailing input[type=button] {
  }
 */
 .tab-interface .tab-content .tab-item._1 {
-  padding-top: 2.6em;
+  padding-top: 0.5em; /* 2.6em */
   background-color: #f4f4f4;
   height: 100%;
 }

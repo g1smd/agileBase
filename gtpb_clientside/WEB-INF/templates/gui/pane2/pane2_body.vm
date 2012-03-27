@@ -38,14 +38,14 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	## this is the best we can do
 	#set($relatedDataMap = {})
 	#foreach($field in $tableDataRow.keySet())
-	    #set($tableContainingField = $field.getTableContainingField())
-        #if($field.isPrimaryKey() && (!$tableContainingField.equals($sessionTable)))
+	  #set($tableContainingField = $field.getTableContainingField())
+    #if($field.isPrimaryKey() && (!$tableContainingField.equals($sessionTable)))
 		  #set($value = $tableDataRow.get($field))
 		  #if($value != "")
 		    #set($relatedRowId = $mathTool.toInteger($value))
 	        #set($relatedTableDataRows = $view.getTableDataRow($tableContainingField, $relatedRowId))
 		    #set($temp = $relatedDataMap.put($tableContainingField, $relatedTableDataRows))
-	      #end
+	    #end
 		#end
 	#end
 
@@ -181,8 +181,12 @@ $viewTools.startTimer("gui/pane2/pane2_body")
             </div>
           </td>
         #end            
-      #end
-    #if(!$parentTable) <td class="trailing">&nbsp;</td> #end
+			#end
+		#if($parentTable)
+      <td><img src="resources/toolbar/delete.png" style="height: 1.3em" /></td>
+		#else
+      <td class="trailing">&nbsp;</td>
+		#end
   </tr>
 
 #end ## end loop through report data rows
