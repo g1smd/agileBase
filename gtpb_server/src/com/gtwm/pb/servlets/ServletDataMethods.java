@@ -285,7 +285,7 @@ public final class ServletDataMethods {
 				+ rowId + " from " + table.getTableName() + " (" + table.getInternalTableName()
 				+ ")");
 		// Un-set the session record
-		sessionData.setRowId(-1);
+		sessionData.setRowId(table, -1);
 		sessionData.setLastAppActionRowId(iRowId);
 	}
 
