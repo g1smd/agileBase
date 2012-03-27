@@ -1153,7 +1153,8 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 	$.post("AppController.servlet", options, function(sResponseXML) {
 		var sResponse = sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
 		if (sResponse == 'ok') {
-			alert("deleted");
+			var parentRowId = $(".form_tabber").attr("data-rowid");
+			pane3TabInterface.refresh(parentRowId);
 		} else {
 			sException = sResponseXML.getElementsByTagName('exception')[0].getAttribute('type');
 			var sExceptionMessage = sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue;

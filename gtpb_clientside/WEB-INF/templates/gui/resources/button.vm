@@ -28,7 +28,7 @@
   #if(!$noCaption)<br>$caption#end
 </button>
 
-## clear all the variables in case subsequent calls don't use them
+## clear all the variables for subsequent calls
 #set($id=false)
 #set($params=false)
 #set($classes=false)
