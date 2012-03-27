@@ -1291,6 +1291,13 @@ function fFormStyle() {
 				previousContainer.hide();
 				tabContainer.show();
 				jqTab.addClass("active");
+				// Fire off a post to set the session tab - don't need any results
+				$.post("AppController.servlet", {
+					"return": "blank",
+				  set_custom_table: true,
+				  tablekey: "tabTable",
+				  custominternaltablename: tabInternalTableName
+				});
 			}
 		}); // end of jqTab.click()
 		jqTab.find("img.new").click(function() {
@@ -1300,12 +1307,12 @@ function fFormStyle() {
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
 			tabContainer.fadeOut();
 			var options = {
-				  "return": "gui/reports_and_tables/tabs/tab_content",
-				  save_new_record: true,
-				  internaltablename: tabInternalTableName,
-				  set_custom_table: true,
-				  tablekey: 'tabTable',
-				  custominternaltablename: tabInternalTableName
+			  "return": "gui/reports_and_tables/tabs/tab_content",
+			  save_new_record: true,
+			  internaltablename: tabInternalTableName,
+			  set_custom_table: true,
+			  tablekey: 'tabTable',
+			  custominternaltablename: tabInternalTableName
 			}
 			// Set relationFieldInternalName like this as it is a variable property name
 			options[relationFieldInternalName] = parentRowId;
