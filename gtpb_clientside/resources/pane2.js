@@ -71,7 +71,7 @@ function fDeleteObj(sAction, sRowIdentifier) {
 				jqCheckbox.attr('disabled', 'true');
 			else {
 				jqCheckbox.removeAttr('disabled');
-				jqCheckbox.attr('checked','false'); // TODO: doesn't seem to be working
+				jqCheckbox.removeAttr('checked');
 			}
 		}
 

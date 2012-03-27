@@ -1137,6 +1137,31 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 	});
 }
 
+function deleteTabRecord(oElement, deleteRelatedData) {
+	var rowId = $(oElement).closest("tr").attr("name");
+	var internalTableName = $(oElement).closest(".selectorReport").attr("data-internaltablename");
+	var options = {
+		remove_record: true,
+		internaltablename: internalTableName,
+		rowid: rowId,
+		"return": "gui/administration/xmlreturn_fieldchange",
+		returntype: "xml"
+	}
+	if (deleteRelatedData) {
+		options["cascadedelete"] = true;
+	}
+	$.post("AppController.servlet", options, function(data)) {
+		var sResponse = sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
+		if (sResponse == 'ok') {
+			alert("deleted");
+		} else {
+			sException = sResponseXML.getElementsByTagName('exception')[0].getAttribute('type');
+			var sExceptionMessage = sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue;
+			alert(sException + ": " + sExceptionMessage);
+		}
+	}, dataType: "xml");
+}
+
 /**
  * Mark tabs which have no content in them
  * Use the server to look up whether there's content or not

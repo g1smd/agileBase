@@ -183,7 +183,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #end            
 			#end
 		#if($parentTable)
-      <td class="deleter"><img src="resources/toolbar/delete.png" /></td>
+      <td class="deleter"><img title="Delete this $formTab.getTable().getSingularName()" src="resources/toolbar/delete.png" onclick="deleteTabRecord(this, false);" /></td>
 		#else
       <td class="trailing">&nbsp;</td>
 		#end

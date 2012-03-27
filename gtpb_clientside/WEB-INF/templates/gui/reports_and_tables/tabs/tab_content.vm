@@ -50,7 +50,7 @@
         ## Revert to the first item in the list
         #set($sessionRowId = $datarows.get(0).getRowId())
       #end
-      <div class="selectorReport">
+      <div class="selectorReport" data-internaltablename="$selectorReport.getParentTable()">
         <table id=reportData cellspacing="0"><tbody name=reportBody id=reportBody class="selectable">
           #parse("gui/reports_and_tables/report_data.vm")
         </tbody></table>

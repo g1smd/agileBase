@@ -157,6 +157,7 @@ table#reportData tr td.deleter img {
 
 table#reportData tr#currentRow td.deleter img {
   visibility: visible;
+  cursor: pointer;
 }
 
 table#reportData tr#currentRow td.colored {
