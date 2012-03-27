@@ -1150,7 +1150,7 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 	if (deleteRelatedData) {
 		options["cascadedelete"] = true;
 	}
-	$.post("AppController.servlet", options, function(data)) {
+	$.post("AppController.servlet", options, function(sResponseXML) {
 		var sResponse = sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
 		if (sResponse == 'ok') {
 			alert("deleted");
