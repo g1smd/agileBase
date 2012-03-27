@@ -1,3 +1,21 @@
+##
+##  Copyright 2012 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($sessionTabTable = $sessionData.getCustomTable("tabTable"))
 <div class="form_tabber" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionData.getRowId($sessionTable)">
   <div class="tab_choice active" data-internaltablename="$sessionTable.getInternalTableName()">$sessionTable.getSingularName()</div>
   #foreach($formTab in $formTabs)
@@ -10,7 +28,7 @@
 					#set($relationField = $formField)
 				#end
 			#end
-      <div class="tab_choice" id="tab_choice_$formInternalTableName" data-internaltablename="$formInternalTableName" data-relationfield="$relationField.getInternalFieldName()">$formTab&nbsp;<img class="new" src="resources/toolbar/new.png" title="add new $formTable.getSingularName()"/></div>
+      <div class="tab_choice #if($formTable.equals($sessionTabTable)) session_tab #end" id="tab_choice_$formInternalTableName" data-internaltablename="$formInternalTableName" data-relationfield="$relationField.getInternalFieldName()">$formTab&nbsp;<img class="new" src="resources/toolbar/new.png" title="add new $formTable.getSingularName()"/></div>
     #end
   #end
 </div>

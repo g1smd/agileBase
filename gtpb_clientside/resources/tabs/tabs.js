@@ -1244,7 +1244,7 @@ function fSubmitFunction() {
 }
 
 /**
- * Select a form style
+ * Select a form style and set up tabs
  */
 function fFormStyle() {
 	$(".select_layout").click(function() {
@@ -1314,6 +1314,10 @@ function fFormStyle() {
 				editTabFunctions();
 			});
 		});
+		// Initialise to session tab on load
+		if (jqTab.hasClass("session_tab")) {
+			jqTab.click();
+		}
 	}); // end of .tab_choice.each
 }
 
