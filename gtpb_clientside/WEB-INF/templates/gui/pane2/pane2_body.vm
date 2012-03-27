@@ -116,7 +116,11 @@ $viewTools.startTimer("gui/pane2/pane2_body")
       #end 
       onclick="$row.get(1)" 
       forcehighlight="true">
-    #if(!$parentTable) <td class="leading">&nbsp;</td> #end
+		#if($parentTable)
+			<td class="deleter"><img title="Delete this $formTab.getTable().getSingularName()" src="resources/toolbar/delete.png" onclick="deleteTabRecord(this, false);" /></td>
+		#else
+      <td class="leading">&nbsp;</td>
+		#end
       ##If colour information present
       #if($row.size() > 3)
         #set($rowColours = $row.get(3))
@@ -182,9 +186,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           </td>
         #end            
 			#end
-		#if($parentTable)
-      <td class="deleter"><img title="Delete this $formTab.getTable().getSingularName()" src="resources/toolbar/delete.png" onclick="deleteTabRecord(this, false);" /></td>
-		#else
+		#if(!$parentTable)
       <td class="trailing">&nbsp;</td>
 		#end
   </tr>
