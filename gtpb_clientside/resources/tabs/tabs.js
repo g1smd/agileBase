@@ -1159,7 +1159,7 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 			var sExceptionMessage = sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue;
 			alert(sException + ": " + sExceptionMessage);
 		}
-	}, dataType: "xml");
+	}, "xml");
 }
 
 /**
