@@ -736,59 +736,62 @@ function fSetValueAtt(oWrapperDiv) {
 }
 
 function fDatePickers() {
-	$('.dp-choose-date').each(
-			function() {
-				if (this.tagName == "A") {
-					// The links to launch the picker also have the dp-choose-date class
-					return;
-				}
-				var jqDateSelector = $(this);
-				var internalFieldName = jqDateSelector.attr("id").replace(
-						"date_picker_", "");
-				var year = $(
-						'input[wrapperAttribute="gtpb_' + internalFieldName + '_years'
-								+ '"]').val();
-				var month = $(
-						'select[wrapperAttribute="gtpb_' + internalFieldName + '_months'
-								+ '"]').val();
-				var day = $(
-						'select[wrapperAttribute="gtpb_' + internalFieldName + '_days'
-								+ '"]').val();
-				var currentDate = new Date(year, month - 1, day);
-				var inlineAttr = jqDateSelector.attr('inline');
-				if (inlineAttr == "true") {
-					inlineAttr = true;
-				} else {
-					inlineAttr = false;
-				}
-				jqDateSelector.datePicker({
-					startDate : '01/01/1901',
-					inline : inlineAttr
-				}).bind(
-						'dateSelected',
-						function(e, selectedDate, $td, status) {
-							var day = selectedDate.getDate();
-							var month = selectedDate.getMonth();
-							var year = selectedDate.getFullYear();
-							var jqDay = $('select[wrapperAttribute="gtpb_'
-									+ internalFieldName + '_days' + '"]');
-							jqDay.val(day);
-							jqDay.change();
-							var jqMonth = $('select[wrapperAttribute="gtpb_'
-									+ internalFieldName + '_months' + '"]');
-							jqMonth.val(month + 1);
-							jqMonth.change();
-							var jqYear = $('input[wrapperAttribute="gtpb_'
-									+ internalFieldName + '_years' + '"]');
-							jqYear.val(year);
-							jqYear.keyup();
-						});
-				if (month != '') {
-					// Setting current date doesn't seem to work
-					// jqDateSelector.dpSetSelected(currentDate.toString()).change();
-					jqDateSelector.dpSetDisplayedMonth(month - 1, year);
-				}
-			});
+	$('.dp-choose-date').each(function() {
+		if (this.tagName == "A") {
+			// The links to launch the picker also have the dp-choose-date class
+			return;
+		}
+		var jqDateSelector = $(this);
+		if (jqDateSelector.hasClass("tabActionRegistered")) {
+			return;
+		}
+		jqDateSelector.addClass("tabActionRegistered");
+		var internalFieldName = jqDateSelector.attr("id").replace(
+				"date_picker_", "");
+		var year = $(
+				'input[wrapperAttribute="gtpb_' + internalFieldName + '_years'
+						+ '"]').val();
+		var month = $(
+				'select[wrapperAttribute="gtpb_' + internalFieldName + '_months'
+						+ '"]').val();
+		var day = $(
+				'select[wrapperAttribute="gtpb_' + internalFieldName + '_days'
+						+ '"]').val();
+		var currentDate = new Date(year, month - 1, day);
+		var inlineAttr = jqDateSelector.attr('inline');
+		if (inlineAttr == "true") {
+			inlineAttr = true;
+		} else {
+			inlineAttr = false;
+		}
+		jqDateSelector.datePicker({
+			startDate : '01/01/1901',
+			inline : inlineAttr
+		}).bind(
+				'dateSelected',
+				function(e, selectedDate, $td, status) {
+					var day = selectedDate.getDate();
+					var month = selectedDate.getMonth();
+					var year = selectedDate.getFullYear();
+					var jqDay = $('select[wrapperAttribute="gtpb_'
+							+ internalFieldName + '_days' + '"]');
+					jqDay.val(day);
+					jqDay.change();
+					var jqMonth = $('select[wrapperAttribute="gtpb_'
+							+ internalFieldName + '_months' + '"]');
+					jqMonth.val(month + 1);
+					jqMonth.change();
+					var jqYear = $('input[wrapperAttribute="gtpb_'
+							+ internalFieldName + '_years' + '"]');
+					jqYear.val(year);
+					jqYear.keyup();
+				});
+		if (month != '') {
+			// Setting current date doesn't seem to work
+			// jqDateSelector.dpSetSelected(currentDate.toString()).change();
+			jqDateSelector.dpSetDisplayedMonth(month - 1, year);
+		}
+	});
 }
 
 function fExpandContractSection() {
@@ -1278,7 +1281,7 @@ function fFormStyle() {
 				  tablekey: 'tabTable',
 				  custominternaltablename: tabInternalTableName
 			}
-			// Set this one like this as relationFieldInternalName is a variable
+			// Set relationFieldInternalName like this as it is a variable property name
 			options[relationFieldInternalName] = parentRowId;
 			tabContainer.load("AppController.servlet", options, function() {
 				tabContainer.fadeIn();
