@@ -842,7 +842,7 @@ div#reportData {
 .form_tabber #tab_deleter img {
 	height: 1.3em;
 	vertical-align: top;
-	cursot: pointer;
+	cursor: pointer;
 }
 
 .form_tabber .tab_choice.active img {
