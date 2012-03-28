@@ -1298,7 +1298,7 @@ function fFormStyle() {
 					// If only one child record, show delete button in tabs bar
 					if ((tabContainer.find(".selectorReport").size() == 0) && jqTab.attr("data-singular")) {
 						var singularName = jqTab.attr("data-singular");
-						$("#deleter_text").text(singularName);
+						$("#tab_deleter").find("img").attr("title","delete this " + singularName);
 						$("#tab_deleter").fadeIn();
 					}
 				});
