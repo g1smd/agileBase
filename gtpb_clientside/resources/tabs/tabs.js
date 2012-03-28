@@ -1312,7 +1312,7 @@ function fFormStyle() {
 			if ((!tabContainer.contains(".selectorReport")) && (jqTab.hasAttr("data-singular"))) {
 				var singularName = jqTab.attr("data=singular");
 				$("#deleter_text").text(singularName);
-				$("#tab_deleter".fadeIn();
+				$("#tab_deleter").fadeIn();
 			}
 		}); // end of jqTab.click()
 		jqTab.find("img.new").click(function() {
