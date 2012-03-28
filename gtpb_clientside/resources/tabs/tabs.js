@@ -1281,6 +1281,7 @@ function fFormStyle() {
 			var previousContainer = $("#form_tabs_" + parentInternalTableName + "_" + previousTabInternalTableName);
 			$(".tab_choice").removeClass("active");
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
+			$("#tab_deleter").fadeOut();
 			if (tabContainer.children().size() == 0) {
 				previousContainer.fadeOut();
 				tabContainer.addClass("load-spinner").css("position","relative");
@@ -1294,6 +1295,13 @@ function fFormStyle() {
 					tabContainer.removeClass("load-spinner");
 					jqTab.addClass("active");
 					editTabFunctions();
+					// If only one child record, show delete button in tabs bar
+					if ((tabContainer.find(".selectorReport").size() == 0) && jqTab.attr("data-singular")) {
+						alert("Only one tab record")
+						var singularName = jqTab.attr("data=singular");
+						$("#deleter_text").text(singularName);
+						$("#tab_deleter").fadeIn();
+					}
 				});
 			} else {
 				previousContainer.hide();
@@ -1306,13 +1314,13 @@ function fFormStyle() {
 				  tablekey: "tabTable",
 				  custominternaltablename: tabInternalTableName
 				});
-			}
-			$("#tab_deleter").fadeOut();
-			// If only one child record, show delete button in tabs bar
-			if ((tabContainer.find(".selectorReport").size() == 0) && jqTab.attr("data-singular")) {
-				var singularName = jqTab.attr("data=singular");
-				$("#deleter_text").text(singularName);
-				$("#tab_deleter").fadeIn();
+				// If only one child record, show delete button in tabs bar
+				if ((tabContainer.find(".selectorReport").size() == 0) && jqTab.attr("data-singular")) {
+					alert("Only one tab record")
+					var singularName = jqTab.attr("data=singular");
+					$("#deleter_text").text(singularName);
+					$("#tab_deleter").fadeIn();
+				}
 			}
 		}); // end of jqTab.click()
 		jqTab.find("img.new").click(function() {
