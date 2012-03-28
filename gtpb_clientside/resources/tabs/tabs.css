@@ -838,12 +838,21 @@ div#reportData {
   vertical-align: top;
 }
 
+.form_tabber #tab_deleter img {
+	height: 1.3em;
+	vertical-align: top;
+}
+
 .form_tabber .tab_choice.active img {
   display: inline;
 }
 
 .form_tabber .tab_choice.active img:hover {
   background-color: #f0f0f0;
+}
+
+.form_tabber #tab_deleter {
+  display: none;
 }
 
 .selectorReport {

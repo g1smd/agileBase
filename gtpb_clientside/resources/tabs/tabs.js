@@ -1138,8 +1138,16 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 }
 
 function deleteTabRecord(oElement, deleteRelatedData) {
-	var rowId = $(oElement).closest("tr").attr("name");
-	var internalTableName = $(oElement).closest(".selectorReport").attr("data-internaltablename");
+	var jqElement = $(oElement);
+	var internalTableName;
+	var rowId;
+	if (jqElement.hasClass("tab_choice")) {
+		internalTableName = jqElement.attr("data-internaltablename");
+		rowId = $("#rowid_" + internalTableName).attr("data-rowid");
+	} else {
+	  rowId = jqElement.closest("tr").attr("name");
+	  internalTableName = jqElement.closest(".selectorReport").attr("data-internaltablename");
+	}
 	var options = {
 		remove_record: true,
 		internaltablename: internalTableName,
@@ -1298,6 +1306,13 @@ function fFormStyle() {
 				  tablekey: "tabTable",
 				  custominternaltablename: tabInternalTableName
 				});
+			}
+			$("#tab_deleter").fadeOut();
+			// If only one child record, show delete button in tabs bar
+			if ((!tabContainer.contains(".selectorReport")) && (jqTab.hasAttr("data-singular"))) {
+				var singularName = jqTab.attr("data=singular");
+				$("#deleter_text").text(singularName);
+				$("#tab_deleter".fadeIn();
 			}
 		}); // end of jqTab.click()
 		jqTab.find("img.new").click(function() {

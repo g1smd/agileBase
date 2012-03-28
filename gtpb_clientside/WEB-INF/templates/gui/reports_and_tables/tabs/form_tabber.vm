@@ -17,7 +17,7 @@
 ##
 #set($sessionTabTable = $sessionData.getCustomTable("tabTable"))
 <div class="form_tabber" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionData.getRowId($sessionTable)">
-  <div class="tab_choice active" data-internaltablename="$sessionTable.getInternalTableName()">$sessionTable.getSingularName()</div>
+  <div class="tab_choice active main" data-internaltablename="$sessionTable.getInternalTableName()">$sessionTable.getSingularName()</div>
   #foreach($formTab in $formTabs)
     #set($formTable = $formTab.getTable())
     #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA",$formTable))
@@ -28,7 +28,8 @@
 					#set($relationField = $formField)
 				#end
 			#end
-      <div class="tab_choice #if($formTable.equals($sessionTabTable)) session_tab #end" id="tab_choice_$formInternalTableName" data-internaltablename="$formInternalTableName" data-relationfield="$relationField.getInternalFieldName()">$formTab&nbsp;<img class="new" src="resources/toolbar/new.png" title="add new $formTable.getSingularName()"/></div>
+      <div data-singular="$formTable.getSingularName()" class="tab_choice #if($formTable.equals($sessionTabTable)) session_tab #end" id="tab_choice_$formInternalTableName" data-internaltablename="$formInternalTableName" data-relationfield="$relationField.getInternalFieldName()">$formTab&nbsp;<img class="new" src="resources/toolbar/new.png" title="add new $formTable.getSingularName()"/></div>
     #end
-  #end
+	#end
+	<div id="tab_deleter"><span id="deleter_text"></span><img src="resources/toolbar/delete.png" onclick="deleteTabRecord(this, false);"/></div>
 </div>

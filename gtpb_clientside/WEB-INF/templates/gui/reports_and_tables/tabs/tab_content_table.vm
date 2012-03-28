@@ -10,7 +10,7 @@
 #set($tableDataRow = $view.getTableDataRow($sessionTable, $sessionRowId))
 #set($formStyle = $parentTable.getFormStyle()) ## Inherit form style from the parent
 #if(($formStyle == "TWO_COLUMNS") && ($component))
-  <div class="two_cols">
+  <div class="two_cols" id="rowid_$sessionTable.getInternalTableName()" data-rowid="$sessionRowId">
 #end
 #set($fields = $sessionTable.getFields())
 #set($primaryKey = $sessionTable.getPrimaryKey())
