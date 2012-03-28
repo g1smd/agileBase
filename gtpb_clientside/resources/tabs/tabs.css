@@ -853,6 +853,7 @@ div#reportData {
 
 .form_tabber #tab_deleter {
   display: none;
+  float: right;
 }
 
 .selectorReport {
