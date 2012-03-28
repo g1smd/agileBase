@@ -1309,7 +1309,7 @@ function fFormStyle() {
 			}
 			$("#tab_deleter").fadeOut();
 			// If only one child record, show delete button in tabs bar
-			if ((!tabContainer.contains(".selectorReport")) && (jqTab.hasAttr("data-singular"))) {
+			if ((tabContainer.find(".selectorReport").size() == 0) && (jqTab.hasAttr("data-singular"))) {
 				var singularName = jqTab.attr("data=singular");
 				$("#deleter_text").text(singularName);
 				$("#tab_deleter").fadeIn();
