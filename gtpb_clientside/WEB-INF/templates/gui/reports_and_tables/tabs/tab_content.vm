@@ -34,28 +34,8 @@
     #set($success = $filter.put($parentTable.getPrimaryKey(), "$parentRowId"))
     #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
     #if($datarows.size() > 1)
-      #set($sessionReport = $selectorReport)
-      #set($table_part_only = true)
-      #set($data_part_only = true)
-      ## Work out which record should be displayed
-      #set($sessionRowFound = false)
-      #if($sessionRowId > -1)
-        #foreach($datarow in $datarows)
-          #if($datarow.getRowId() == $sessionRowId)
-            #set($sessionRowFound = true)
-          #end
-        #end
-			#end
-      #if(!$sessionRowFound)
-        ## Revert to the first item in the list
-        #set($sessionRowId = $datarows.get(0).getRowId())
-      #end
-      <div class="selectorReport" data-internaltablename="$selectorReport.getParentTable().getInternalTableName()">
-        <table id=reportData cellspacing="0"><tbody name=reportBody id=reportBody class="selectable">
-          #parse("gui/reports_and_tables/report_data.vm")
-        </tbody></table>
-      </div>
-    #elseif($datarows.size() == 1)
+			#parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
+		#elseif($datarows.size() == 1)
       #set($sessionRowId = $datarows.get(0).getRowId())
 		#else
 			#set($sessionRowId = -1)

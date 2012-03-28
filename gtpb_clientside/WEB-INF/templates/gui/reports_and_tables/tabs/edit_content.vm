@@ -39,6 +39,9 @@
     </td></tr></table>
   #end
   </div> <!-- end of last block -->
+	#if($parentTable)
+		#parse("gui/reports_and_tables/tabs/tab_grandchild_blocks.vm")
+	#end
   #if($hasSections)
     </div> <!-- end of two sections container -->
   #end

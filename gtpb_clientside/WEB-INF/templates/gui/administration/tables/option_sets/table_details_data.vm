@@ -84,6 +84,11 @@
   <form method="post" action="AppController.servlet">
     <input type="hidden" name="add_form_tab" value="true" />
     <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+		#if($current_layout != 'TWO_COLUMNS')
+			## Tabs work with the two column layout, set this if not already set
+		  <input type="hidden" name="update_table" value="true" />
+		  <input type="hidden" name="formstyle" value="TWO_COLUMNS" />
+		#end
     Add a tab: <select name="tabtable" onchange="form.submit();">
       <option value="">--select a table--</option>
       #set($dependentTables = $view.getDirectlyDependentTables($table)) ## child tables

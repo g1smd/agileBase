@@ -1,0 +1,38 @@
+##
+##  Copyright 2012 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($sessionReport = $selectorReport)
+#set($table_part_only = true)
+#set($data_part_only = true)
+## Work out which record should be displayed
+#set($sessionRowFound = false)
+#if($sessionRowId > -1)
+  #foreach($datarow in $datarows)
+    #if($datarow.getRowId() == $sessionRowId)
+      #set($sessionRowFound = true)
+    #end
+  #end
+#end
+#if(!$sessionRowFound)
+  ## Revert to the first item in the list
+  #set($sessionRowId = $datarows.get(0).getRowId())
+#end
+<div class="selectorReport" data-internaltablename="$selectorReport.getParentTable().getInternalTableName()">
+  <table id=reportData cellspacing="0"><tbody name=reportBody id=reportBody class="selectable">
+    #parse("gui/reports_and_tables/report_data.vm")
+  </tbody></table>
+</div>			
