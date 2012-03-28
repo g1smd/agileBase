@@ -786,7 +786,8 @@ div#reportData {
 }
 
 .form_tabber {
-  background-color: #cccccc;
+	position: relative;
+	background-color: #cccccc;
   margin: 0.5em;
   margin-bottom: 0;
   border-radius: 0.5em 0.5em 0 0;
@@ -859,7 +860,6 @@ div#reportData {
 }
 
 .selectorReport {
-	position: relative;
   max-height: 15em;
   overflow-x: hidden;
   overflow-y: auto;
