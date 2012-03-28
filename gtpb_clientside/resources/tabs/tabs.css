@@ -853,10 +853,13 @@ div#reportData {
 
 .form_tabber #tab_deleter {
   display: none;
-  float: right;
+  position: absolute;
+  bottom: 0;
+  right: 0.5em;
 }
 
 .selectorReport {
+	position: relative;
   max-height: 15em;
   overflow-x: hidden;
   overflow-y: auto;
