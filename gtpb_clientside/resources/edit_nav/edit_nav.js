@@ -6,202 +6,194 @@ var homeUrl = "AppController.servlet?return=gui/edit_nav/report";
 
 var dataChanged = false;
 
-$(document).ready(
-				function() {
-					$("#breadcrumb a").live('click', function(event) {
-						event.preventDefault();
-						var href = $(this).attr("href");
-						var level = $(this).attr("level");
-						if (currentLevel > level) {
-							moveUpTo(href, false);
-						} else {
-							moveDownTo(href);
-						}
-					});
-					$(".block").live('click', function() {
-						var href = $(this).attr("href");
-						moveUpTo(href, true); // move up only if level already exists above,
-						// otherwise move down
-					});
-					$("a.reference_link").live('click', function(event) {
-						event.preventDefault();
-						var href = $(this).attr("href");
-						moveUpTo(href, true); // move up only if level already exists above,
-						// otherwise move down
-					});
-					$("a.report_tooltip").live('click', function(event) {
-						event.preventDefault();
-						var jqLink = $(this);
-						var href = jqLink.attr("href");
-						var id = jqLink.closest("li").attr("id");
-						var jqReportIncludingContent = $(".report_including_content");
-						jqReportIncludingContent.addClass("transparent");
-						jqReportIncludingContent.load(href, function() {
-							var rowCount = $(".row_count").html();
-							fSetCurrentOption(id, rowCount);
-							jqReportIncludingContent.removeClass("transparent");
+$(document).ready(function() {
+	$("#breadcrumb a").live('click', function(event) {
+		event.preventDefault();
+		var href = $(this).attr("href");
+		var level = $(this).attr("level");
+		if (currentLevel > level) {
+			moveUpTo(href, false);
+		} else {
+			moveDownTo(href);
+		}
+	});
+	$(".block").live('click', function() {
+		var href = $(this).attr("href");
+		moveUpTo(href, true); // move up only if level already exists above,
+		// otherwise move down
+	});
+	$("a.reference_link").live('click', function(event) {
+		event.preventDefault();
+		var href = $(this).attr("href");
+		moveUpTo(href, true); // move up only if level already exists above,
+		// otherwise move down
+	});
+	$("a.report_tooltip").live('click', function(event) {
+		event.preventDefault();
+		var jqLink = $(this);
+		var href = jqLink.attr("href");
+		var id = jqLink.closest("li").attr("id");
+		var jqReportIncludingContent = $(".report_including_content");
+		jqReportIncludingContent.addClass("transparent");
+		jqReportIncludingContent.load(href, function() {
+			var rowCount = $(".row_count").html();
+			fSetCurrentOption(id, rowCount);
+			jqReportIncludingContent.removeClass("transparent");
+		});
+	});
+	$(".searchbox").live(
+			'keyup',
+			function() {
+				var jqSearchBox = $(this);
+				jqSearchBox.addClass("changed");
+				var filterString = jqSearchBox.val();
+				var internalReportName = $("#searchbox").attr(
+						"internalreportname");
+				$.get(
+						"AppController.servlet?return=gui/edit_nav/report_content&set_report="
+								+ internalReportName
+								+ "&set_global_report_filter_string=true&filterstring="
+								+ filterString, function(data) {
+							// response has come back from the
+							// server, check it isn't out of
+							// date
+							if (jqSearchBox.val() != filterString) {
+								return;
+							}
+							$("#homeContent").html(data);
+							jqSearchBox.removeClass("changed");
 						});
-					});
-					$(".searchbox").live(
-							'keyup',
-							function() {
-								var jqSearchBox = $(this);
-								jqSearchBox.addClass("changed");
-								var filterString = jqSearchBox.val();
-								var internalReportName = $("#searchbox").attr(
-										"internalreportname");
-								$.get(
-										"AppController.servlet?return=gui/edit_nav/report_content&set_report="
-												+ internalReportName
-												+ "&set_global_report_filter_string=true&filterstring="
-												+ filterString, function(data) {
-											// response has come back from the
-											// server, check it isn't out of
-											// date
-											if (jqSearchBox.val() != filterString) {
-												return;
-											}
-											$("#homeContent").html(data);
-											jqSearchBox.removeClass("changed");
-										});
-							});
+			});
 
-					// TODO: refactor new and clone into a single function
-					$("button#control_new")
-							.live(
-									'click',
-									function(event) {
-										var internalTableName = $(this).attr("internaltablename");
-										$
-												.post(
-														"AppController.servlet",
-														{
-															"return" : "gui/resources/xmlreturn_rowid",
-															set_table : internalTableName,
-															save_new_record : true
-														},
-														function(xml) {
-															var jqXml = $(xml);
-															if (jqXml.find("response").text() == "ok") {
-																var rowId = jqXml.find("rowid").text();
-																var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
-																		+ internalTableName
-																		+ "&set_row_id="
-																		+ rowId;
-																moveOverTo(levelUrl);
-															} else {
-																var errorMessage = jqXml.find("exception")
-																		.text();
-																alert("Unable to add record: " + errorMessage);
-															}
-														});
-									});
-					$("button#control_clone")
-							.live(
-									'click',
-									function(event) {
-										var internalTableName = $(this).attr("internaltablename");
-										var rowId = $(this).attr("rowid");
-										$
-												.post(
-														"AppController.servlet",
-														{
-															"return" : "gui/resources/xmlreturn_rowid",
-															set_table : internalTableName,
-															set_row_id : rowId,
-															clone_record : true
-														},
-														function(xml) {
-															var jqXml = $(xml);
-															if (jqXml.find("response").text() == "ok") {
-																rowId = jqXml.find("rowid").text();
-																var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
-																		+ internalTableName
-																		+ "&set_row_id="
-																		+ rowId;
-																moveOverTo(levelUrl);
-															} else {
-																var errorMessage = jqXml.find("exception")
-																		.text();
-																alert("Unable to clone: " + errorMessage);
-															}
-														});
-									});
-					$("button#control_delete")
-							.live(
-									'click',
-									function(event) {
-										var internalTableName = $(this).attr("internaltablename");
-										var rowId = $(this).attr("rowid");
-										if (confirm("Delete this record?")) {
-											$
-													.post(
-															"AppController.servlet",
-															{
-																"return" : "gui/administration/xmlreturn_fieldchange",
-																remove_record : true,
-																returntype : "xml",
-																set_table : internalTableName,
-																rowid : rowId
-															},
-															function(xml) {
-																var jqXml = $(xml);
-																if (jqXml.find("response").text() == 'ok') {
-																	dataChanged = true; // mark level up for
-																	// reload
-																	moveUp();
-																} else {
-																	var prompt = jqXml.find("exception").text()
-																			+ '.\n\nDelete all of this?';
-																	if (confirm(prompt)) {
-																		$
-																				.post(
-																						"AppController.servlet",
-																						{
-																							"return" : "gui/administration/xmlreturn_fieldchange",
-																							remove_record : true,
-																							returntype : "xml",
-																							set_table : internalTableName,
-																							rowid : rowId,
-																							cascadedelete : true
-																						},
-																						function(xml) {
-																							jqXml = $(xml);
-																							if (jqXml.find("response").text() == 'ok') {
-																								dataChanged = true;
-																								moveUp();
-																							} else {
-																								var message = jqXml.find(
-																										"exception").text();
-																								alert('Deletion failed.\n\n'
-																										+ message);
-																							}
-																						});
-																	}
-																}
-															});
-										}
-									});
-					$("button#control_print")
-							.live(
-									'click',
-									function() {
-										var internalTableName = $(this).attr("internaltablename");
-										var rowId = $(this).attr("rowid");
-										var oPrintWin = window
-												.open(
-														'AppController.servlet?return=gui/printouts/pane2_printout_wrapper&set_table='
-																+ internalTableName + '&set_row_id=' + rowId,
-														'print_window',
-														'toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes');
-									});
-					// Initialise home screen for user
-					createLevel(homeUrl);
-					initialiseHeight();
-					$(window).resize(function() {
-						initialiseHeight();
+	// TODO: refactor new and clone into a single function
+	$("button#control_new")
+			.live(
+					'click',
+					function(event) {
+						var internalTableName = $(this).attr("internaltablename");
+						$
+								.post(
+										"AppController.servlet",
+										{
+											"return" : "gui/resources/xmlreturn_rowid",
+											set_table : internalTableName,
+											save_new_record : true
+										},
+										function(xml) {
+											var jqXml = $(xml);
+											if (jqXml.find("response").text() == "ok") {
+												var rowId = jqXml.find("rowid").text();
+												var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
+														+ internalTableName
+														+ "&set_row_id="
+														+ rowId;
+												moveOverTo(levelUrl);
+											} else {
+												var errorMessage = jqXml.find("exception")
+														.text();
+												alert("Unable to add record: " + errorMessage);
+											}
+										});
 					});
+	$("button#control_clone")
+			.live(
+					'click',
+					function(event) {
+						var internalTableName = $(this).attr("internaltablename");
+						var rowId = $(this).attr("rowid");
+						$
+								.post(
+										"AppController.servlet",
+										{
+											"return" : "gui/resources/xmlreturn_rowid",
+											set_table : internalTableName,
+											set_row_id : rowId,
+											clone_record : true
+										},
+										function(xml) {
+											var jqXml = $(xml);
+											if (jqXml.find("response").text() == "ok") {
+												rowId = jqXml.find("rowid").text();
+												var levelUrl = "AppController.servlet?return=gui/edit_nav/edit&set_table="
+														+ internalTableName
+														+ "&set_row_id="
+														+ rowId;
+												moveOverTo(levelUrl);
+											} else {
+												var errorMessage = jqXml.find("exception")
+														.text();
+												alert("Unable to clone: " + errorMessage);
+											}
+										});
+					});
+	$("button#control_delete").live(
+		'click',
+		function(event) {
+			var internalTableName = $(this).attr("internaltablename");
+			var rowId = $(this).attr("rowid");
+			if (confirm("Delete this record?")) {
+				$.post("AppController.servlet",
+				{
+					"return" : "gui/administration/xmlreturn_fieldchange",
+					remove_record : true,
+					returntype : "xml",
+					set_table : internalTableName,
+					rowid : rowId
+				},
+				function(xml) {
+					var jqXml = $(xml);
+					if (jqXml.find("response").text() == 'ok') {
+						dataChanged = true; // mark level up for
+						// reload
+						moveUp();
+					} else {
+						var prompt = jqXml.find("exception").text()
+								+ '.\n\nDelete all of this?';
+						if (confirm(prompt)) {
+							$.post(
+								"AppController.servlet",
+								{
+									"return" : "gui/administration/xmlreturn_fieldchange",
+									remove_record : true,
+									returntype : "xml",
+									set_table : internalTableName,
+									rowid : rowId,
+									cascadedelete : true
+								},
+								function(xml) {
+									jqXml = $(xml);
+									if (jqXml.find("response").text() == 'ok') {
+										dataChanged = true;
+										moveUp();
+									} else {
+										var message = jqXml.find(
+												"exception").text();
+										alert('Deletion failed.\n\n'
+												+ message);
+									}
+								});
+						}
+					}
 				});
+			}
+		});
+	$("button#control_print").live('click', function() {
+		var internalTableName = $(this).attr("internaltablename");
+		var rowId = $(this).attr("rowid");
+		var oPrintWin = window
+				.open(
+						'AppController.servlet?return=gui/printouts/pane2_printout_wrapper&set_table='
+								+ internalTableName + '&set_row_id=' + rowId,
+						'print_window',
+						'toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes');
+	});
+	// Initialise home screen for user
+	createLevel(homeUrl);
+	initialiseHeight();
+	$(window).resize(function() {
+		initialiseHeight();
+	});
+});
 
 // Nasty JS height, can't we get some pure CSS to work?
 function initialiseHeight() {

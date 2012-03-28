@@ -1166,7 +1166,16 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 		} else {
 			sException = sResponseXML.getElementsByTagName('exception')[0].getAttribute('type');
 			var sExceptionMessage = sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue;
-			alert(sException + ": " + sExceptionMessage);
+			if (deleteRelatedData) {
+				alert('Record was not deleted because it is linked to data in other tables that you do not have permission to change.\n\n'
+						+ sExceptionMessage);
+			} else if (confirm('Record was not deleted because it is linked to data in other tables.\n'
+						+ 'DELETE ALL THIS?\n\n'
+						+ sExceptionMessage
+						+ '\n\nWould you like to delete this row and all related data or CANCEL this operation?')) {
+				// recurse, but set it to delete related data
+				deleteTabRecord(oElement, true);
+			}
 		}
 	}, "xml");
 }
@@ -1192,22 +1201,21 @@ function fMarkInactiveTabs() {
 
 /* Charts in pane 3 need some behaviours added */
 function fSetupCharts() {
-	$('.summary_chart')
-			.each(
-					function(i) {
-						var summaryDivName = $(this).attr('id');
-						var summaryId = summaryDivName.replace('chart_', '');
-						$(this)
-								.append(
-										"<div class='chart_remover'><a href='?return=gui/reports_and_tables/pane3&remove_chart=true&summaryid="
-												+ summaryId
-												+ "'><img border='0' src='resources/icons/edit.png' /></a></div>");
-						$(this).hover(function() {
-							$(this).find('.chart_remover').fadeIn("normal");
-						}, function() {
-							$(this).find('.chart_remover').fadeOut("normal");
-						});
-					});
+	$('.summary_chart').each(
+		function(i) {
+			var summaryDivName = $(this).attr('id');
+			var summaryId = summaryDivName.replace('chart_', '');
+			$(this)
+					.append(
+							"<div class='chart_remover'><a href='?return=gui/reports_and_tables/pane3&remove_chart=true&summaryid="
+									+ summaryId
+									+ "'><img border='0' src='resources/icons/edit.png' /></a></div>");
+			$(this).hover(function() {
+				$(this).find('.chart_remover').fadeIn("normal");
+			}, function() {
+				$(this).find('.chart_remover').fadeOut("normal");
+			});
+		});
 }
 
 /**
