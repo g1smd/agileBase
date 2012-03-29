@@ -67,11 +67,7 @@
   		  if (bPane2) {
   		    targetFrame = 3;
         }
-			  if(jqThisButton.hasClass("REPORT")) {
-				  currentPercent = 100; targetPercent = 0;
-				} else {
-    		  currentPercent = 50;
-				}
+    		currentPercent = 50;
   		}
 	  }
 	  
@@ -106,7 +102,11 @@
     var targetFrame = 2;
 	  var currentPercent = 0;
 	  fInitFrameAnimation();
-	  fAnimateFrame(0.1, currentPercent, targetPercent, targetFrame);
+		if (jqThisButton.hasClass("REPORT") {
+		  document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows=fRowsVal();					 						 
+    } else {
+	    fAnimateFrame(0.1, currentPercent, targetPercent, targetFrame);
+		}
 	}		
 </script>
 
