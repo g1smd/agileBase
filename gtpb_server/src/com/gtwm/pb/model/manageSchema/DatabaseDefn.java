@@ -71,7 +71,6 @@ import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
 import com.gtwm.pb.model.interfaces.DataManagementInfo;
 import com.gtwm.pb.model.interfaces.JoinClauseInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
-import com.gtwm.pb.model.interfaces.fields.CommentFeedField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.CheckboxField;
 import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
@@ -81,7 +80,6 @@ import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.DecimalField;
 import com.gtwm.pb.model.interfaces.fields.IntegerField;
 import com.gtwm.pb.model.interfaces.fields.FileField;
-import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.manageData.fields.DurationValueDefn;
@@ -181,7 +179,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
 				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
 		// one-off boot actions
-		this.addCommentsFeedFields();
+		//this.addCommentsFeedFields();
 	}
 
 	public void cancelScheduledEvents() {
