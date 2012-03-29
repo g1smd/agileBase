@@ -85,7 +85,21 @@
 	  var bPane2=($(oPane2Butt).hasClass('selected'));
 	  var bPane3=($(oPane3Butt).hasClass('selected'));
 		
-		if ($(oButton).hasClass("REPORT")) {
+		var jqThisButton = $(oButton);
+		var jqOtherButton;
+		if (jqThisButton.attr("id") == "pane2butt") {
+		  jqOtherButton = $(oPane3Butt);
+		} else {
+		  jqOtherButton = $(oPane2Butt);
+		}
+		if (jqThisButton.hasClass("REPORT")) {
+		  if(jqThisButton.hasClass("selected")) {
+			  jqOtherButton.addClass("selected");
+				jqThisButton.removeClass("selected");
+			} else {
+			  jqOtherButton.removeClass("selected");
+			  jqThisButton.addClass("selected");
+			}
 		  // Full height: either pane 2 or 3, not both
 		  $(oPane2Butt).removeClass('selected');
 			$(oPane3Butt).removeClass('selected');
