@@ -44,7 +44,8 @@
     #if(((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || 
          ($sessionContext == "SYSADMIN") || $sectionedReport)##
       ## parentTable will only be defined if we're in a tab
-      #if(!$field.getTableContainingField().equals($parentTable))##
+			#set($tableContainingField = $field.getTableContainingField())
+      #if(!($tableContainingField.equals($parentTable) || ($grandchild && $tableContainingField.equals($sessionTable))))##
 	      #set($success=$fields.add($field))##
       #end
 	  #end ## added to show display field name for relation fields
