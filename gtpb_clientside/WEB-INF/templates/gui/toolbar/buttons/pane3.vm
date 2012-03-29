@@ -64,14 +64,14 @@
   		    targetFrame = 3;
   		  }
   		} else {
-			  if(jqThisButton.hasClass("REPORT")) {
-				  currentPercent = 100;
-				} else {
-    		  currentPercent = 50;
-				}
   		  if (bPane2) {
   		    targetFrame = 3;
         }
+			  if(jqThisButton.hasClass("REPORT")) {
+				  if(targetFrame == 3) { currentPercent = 100;} else { currentPercent = 0;}
+				} else {
+    		  currentPercent = 50;
+				}
   		}
 	  }
 	  
