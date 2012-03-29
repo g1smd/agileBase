@@ -23,7 +23,7 @@
 	#set($selectorReport = $gcFormTab.getSelectorReport())
   #set($sessionRowId = -1) ## $sessionData.getRowId($gcFormTab.getTable()))
   #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
-  #if($datarows.size() > 1)
+  #if($datarows.size() > 0)
 		<div class="block grandchildren">
 			<h1>$gcFormTab</h1>
       ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
