@@ -96,10 +96,6 @@
 		  if(!jqThisButton.hasClass("selected") && jqOtherButton.hasClass("selected")) {
 			  jqOtherButton.click();
 			}
-		  // Full height: either pane 2 or 3, not both
-		  $(oPane2Butt).removeClass('selected');
-			$(oPane3Butt).removeClass('selected');
-			$(oButton).addClass('selected');
 		}
 	  
 	  var targetPercent = 0;
