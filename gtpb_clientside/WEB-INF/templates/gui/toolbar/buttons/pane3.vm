@@ -102,7 +102,7 @@
     var targetFrame = 2;
 	  var currentPercent = 0;
 	  fInitFrameAnimation();
-		if (jqThisButton.hasClass("REPORT") {
+		if (jqThisButton.hasClass("REPORT")) {
 		  document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows=fRowsVal();					 						 
     } else {
 	    fAnimateFrame(0.1, currentPercent, targetPercent, targetFrame);
