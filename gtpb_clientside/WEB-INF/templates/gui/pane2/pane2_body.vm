@@ -120,9 +120,9 @@ $viewTools.startTimer("gui/pane2/pane2_body")
       #end 
       onclick="$row.get(1)" 
       forcehighlight="true">
-		#if($parentTable)
+		#if($parentTable && (!$grandchild))
 			<td class="deleter"><img title="Delete this $formTab.getTable().getSingularName()" src="resources/toolbar/delete.png" onclick="deleteTabRecord(this, false);" /></td>
-		#else
+		#elseif(!$grandchild)
       <td class="leading">&nbsp;</td>
 		#end
       ##If colour information present

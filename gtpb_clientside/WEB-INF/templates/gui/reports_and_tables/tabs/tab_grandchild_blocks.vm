@@ -25,7 +25,7 @@
   #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
   #if($datarows.size() > 1)
     ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
-		<div class="block"><table style="width:100%"><tr><td style="column-break-inside: avoid;">
+		<div class="block grandchildren"><table style="width:100%"><tr><td style="column-break-inside: avoid;">
 			<h1>$gcFormTab</h1>
 			#parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
 		</td></tr></table></div>
