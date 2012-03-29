@@ -21,7 +21,7 @@
 #set($success = $filter.put($sessionTable.getPrimaryKey(), "$sessionRowId"))
 #foreach($gcFormTab in $sessionTable.getFormTabs())
 	#set($selectorReport = $gcFormTab.getSelectorReport())
-  #set($sessionRowId = $sessionData.getRowId($gcFormTab.getTable()))
+  #set($sessionRowId = -1) ## $sessionData.getRowId($gcFormTab.getTable()))
   #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
   #if($datarows.size() > 1)
     ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114

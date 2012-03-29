@@ -136,14 +136,14 @@ table#reportData td:last-child {
 }
 
 table#reportData tr#currentRow td { 
-  background-color: #3875d7!important; /* #ffd588; */
+  background-color: #dde63f!important; /* #3875d7!important; /* #ffd588; */
   color: white!important;
   border-right: none;
 }				
 
 table#reportData tr#currentRow td.leading,
 table#reportData tr#currentRow td.trailing {
-  background-color: #3875d7; /* #FFBA3B; */
+  background-color: #dde63f; /* #FFBA3B; */
 }
 
 table#reportData tr td.deleter {
@@ -227,7 +227,7 @@ table#reportData tr.rowa td {
 }
 
 #currentRow .in_cell:hover {
-  text-shadow: 0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7,0px 0px 1em #3875d7;
+  text-shadow: 0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef;
   color: white;
 }
 

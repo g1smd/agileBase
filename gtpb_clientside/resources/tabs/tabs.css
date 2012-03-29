@@ -643,6 +643,10 @@ div#reportData {
   line-height: 1.2em;
 }
 
+#reportData .block h1 {
+  text-transform: capitalize;
+}
+
 #reportData .block .row {
   vertical-align: bottom;
 }
