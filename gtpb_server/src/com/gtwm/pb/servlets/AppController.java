@@ -200,7 +200,7 @@ public final class AppController extends VelocityViewServlet {
 				switch (sessionAction) {
 				case PRESET_ROW_ID:
 					ServletSessionMethods.setRowId(sessionData, request, sessionActionParam,
-							databaseDefn);
+							databaseDefn, sessionAction);
 					break;
 				case SET_TABLE:
 					ServletSessionMethods.setTable(sessionData, request, sessionActionParam,
@@ -212,7 +212,7 @@ public final class AppController extends VelocityViewServlet {
 					break;
 				case SET_ROW_ID:
 					ServletSessionMethods.setRowId(sessionData, request, sessionActionParam,
-							databaseDefn);
+							databaseDefn, sessionAction);
 					break;
 				case SET_REPORT_ROW_LIMIT:
 					sessionData.setReportRowLimit(Integer.parseInt(sessionActionParam));

@@ -1128,11 +1128,13 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 		var activeTab = $(".tab_choice.active");
 		var tabTableInternalName = activeTab.attr("data-internaltablename");
 		var tabReportInternalName = activeTab.attr("data-internalreportname");
+		var tabRowId = $("#rowid_" + tabTableInternalName).attr("data-rowid");
 		parent.pane_2.document.location = "AppController.servlet?return=gui/reports_and_tables/report_data&set_table="
 				+ tabTableInternalName
 				+ "&set_report="
 				+ tabReportInternalName
 				+ "&set_row_id=" + rowId + "&rowidinternaltablename=" + internalTableName
+				+ "&preset_row_id=" + tabRowId + "&preset_rowidinternaltablename=" + tabTableInternalName
 				+ "&set_custom_table=true&tablekey=tabTable&custominternaltablename=" + internalTableName
 				+ "&cachebust=" + (new Date()).getTime();
 	} else {

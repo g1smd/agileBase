@@ -56,6 +56,7 @@ import com.gtwm.pb.model.interfaces.fields.FileField;
 import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.SessionAction;
 import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
@@ -97,9 +98,20 @@ public final class ServletSessionMethods {
 	 *             table
 	 */
 	public static void setRowId(SessionDataInfo sessionData, HttpServletRequest request,
-			String rowIdString, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
+			String rowIdString, DatabaseInfo databaseDefn, SessionAction sessionAction) throws ObjectNotFoundException,
 			DisallowedException, CantDoThatException, SQLException {
-		String internalTableName = request.getParameter("rowidinternaltablename");
+		String internalTableName = null;
+		switch(sessionAction) {
+		case SET_ROW_ID:
+			internalTableName = request.getParameter("rowidinternaltablename");
+			break;
+		case PRESET_ROW_ID:
+			internalTableName = request.getParameter("preset_rowidinternaltablename");
+			break;
+		default:
+			internalTableName = request.getParameter("rowidinternaltablename");
+			logger.error("Unknown session action when setting row ID: " + sessionAction);
+		}
 		if (internalTableName == null) {
 			int rowId = -1;
 			if (rowIdString.toLowerCase().equals("next")) {
