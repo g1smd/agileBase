@@ -16,6 +16,10 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 $viewTools.startTimer("gui/pane2/pane2_body")
+#set($cellLengthThreshold = 20)
+#if($selectorReport)
+  #set($cellLengthThreshold = 10)
+#end
 #set($numRows=$data.size())
 #set($uniqueIdCount = 0)
 #set($thisUniqueId = -1)
@@ -162,7 +166,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		  #if($colour && $colour !="") #set($style="background-color:$colour; ") #set($class="colored") #end
 		  #if($rightAlign) #set($style = "$style text-align:right; ") #end
           <td #if($cellContentLength<=10)nowrap="true"#end #if($style != "")style="$style"#end #if($class != "")class="$class"#end>
-            <div style="min-width:${cellContentLength}px" #if($cellContentLength > 20 || $image) class="in_cell" #end>
+            <div style="min-width:${cellContentLength}px" #if(($cellContentLength > $cellLengthThreshold) || $image) class="in_cell" #end>
               #if(!(($thisUniqueId == $lastUniqueId) && ($cell == $lastValues.get($cellNumber))))$cell#else<span class="greytext">$cell</span>#end
             </div>
           </td>
@@ -180,7 +184,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #set($cellContentLength = 500)
       #end
           <td #if($cellContentLength<=10)nowrap="true" #end>
-            <div style="min-width:${cellContentLength}px" #if($cellContentLength > 20 || $image) class="in_cell" #end>
+            <div style="min-width:${cellContentLength}px" #if(($cellContentLength > $cellLengthThreshold) || $image) class="in_cell" #end>
               #if(!(($thisUniqueId == $lastUniqueId) && ($cell == $lastValues.get($cellNumber))))$cell#end
             </div>
           </td>
