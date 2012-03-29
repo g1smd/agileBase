@@ -93,7 +93,7 @@
 		  jqOtherButton = $(oPane2Butt);
 		}
 		if (jqThisButton.hasClass("REPORT")) {
-		  if(jqThisButton.hasClass("selected") && jqOtherButton.hasClass("selected") {
+		  if(jqThisButton.hasClass("selected") && jqOtherButton.hasClass("selected")) {
 			  jqOtherButton.click();
 			}
 		  // Full height: either pane 2 or 3, not both
