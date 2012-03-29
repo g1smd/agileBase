@@ -77,13 +77,20 @@
 	  var oPane2Butt=top.document.getElementById('pane2butt');
 	  var oPane3Butt=top.document.getElementById('pane3butt');
 	  
-	  
+	  //TODO: jQueryise this properly and move to tabs.js
 	  // the match property returns the match if it exists (or array of matches ?) or null if no match
 	  // convert this to a boolean for comparision operations below
 	  // var bPane2=(oPane2Butt.getAttribute('selected')=='true');
 	  // var bPane3=(oPane3Butt.getAttribute('selected')=='true');
 	  var bPane2=($(oPane2Butt).hasClass('selected'));
 	  var bPane3=($(oPane3Butt).hasClass('selected'));
+		
+		if ($(oButton).hasClass("REPORT")) {
+		  // Full height: either pane 2 or 3, not both
+		  $(oPane2Butt).removeClass('selected');
+			$(oPane3Butt).removeClass('selected');
+			$(oButton).addClass('selected');
+		}
 	  
 	  var targetPercent = 0;
     var targetFrame = 2;

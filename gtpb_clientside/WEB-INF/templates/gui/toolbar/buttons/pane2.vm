@@ -21,6 +21,6 @@
 #set($id='pane2butt')
 #set($caption='Report')
 #set($params='selected=true toggleButton=true')
-#set($classes='selected toggleButton')
+#set($classes='selected toggleButton $view.getLoggedInUser().getUserType().toString().toLowerCase()')
 #set($tooltip='Show/hide the report rows')
 #parse('gui/resources/button.vm')
