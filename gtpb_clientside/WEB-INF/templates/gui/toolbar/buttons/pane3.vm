@@ -94,11 +94,11 @@
 		}
 		if (jqThisButton.hasClass("REPORT")) {
 		  if(jqThisButton.hasClass("selected")) {
-			  jqOtherButton.addClass("selected");
-				jqThisButton.removeClass("selected");
-			} else {
 			  jqOtherButton.removeClass("selected");
-			  jqThisButton.addClass("selected");
+				jqThisButton.addClass("selected");
+			} else {
+			  jqOtherButton.addClass("selected");
+			  jqThisButton.removeClass("selected");
 			}
 		  // Full height: either pane 2 or 3, not both
 		  $(oPane2Butt).removeClass('selected');
