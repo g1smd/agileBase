@@ -446,3 +446,8 @@ table#reportData th div.mini_action {
   border: 0;
   vertical-align: middle;
 }
+
+.favicon {
+	float:left;
+	height:16px;
+}
