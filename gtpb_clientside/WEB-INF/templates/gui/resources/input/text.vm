@@ -74,7 +74,7 @@
         #if($fieldValueObject.isImage()) ## remote image
           <p><a href="$url" target="_blank"><img src="$url" style="max-width: 100%" /></a></p>
         #else
-          <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /></a>##
+          <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url" /></a>##
         #end
       #elseif ($fieldValueObject.isTwitterName())##      
         <a href="http://www.twitter.com/$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
