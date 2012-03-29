@@ -450,6 +450,6 @@ table#reportData th div.mini_action {
 .favicon {
 	float:left;
 	height:16px;
-	filter: url(resources/filters.svg#grayscale);
+	filter: url(filters.svg#grayscale);
   -webkit-filter: grayscale(100%);
 }
