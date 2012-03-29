@@ -643,6 +643,10 @@ div#reportData {
   line-height: 1.2em;
 }
 
+#reportData .block.grandchildren {
+  overflow-x: hidden;
+}
+
 #reportData .block h1 {
   text-transform: capitalize;
 }
@@ -874,6 +878,11 @@ div#reportData {
   border: 0.75em solid #cccccc;
   border-top: 0;
   border-radius: 0 0 0.5em 0.5em;
+}
+
+.grandchildren .selectorReport {
+  max-height: 45em;
+  border: 0;
 }
 
 .selectorReport table#reportData td {
