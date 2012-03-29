@@ -1123,6 +1123,7 @@ function fInitialiseDependencies() {
  * Used when clicking on a selector report in a tab
  */
 function loadIntoTabTable(oRow, internalTableName, rowId) {
+	alert("Loading " + rowId);
 	var jqSelector = $(oRow).closest(".selectorReport");
 	if (jqSelector.closest(".block").hasClass("grandchildren")) {
 		alert("gc");
