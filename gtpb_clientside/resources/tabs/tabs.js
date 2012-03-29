@@ -1123,10 +1123,8 @@ function fInitialiseDependencies() {
  * Used when clicking on a selector report in a tab
  */
 function loadIntoTabTable(oRow, internalTableName, rowId) {
-	alert("Loading " + rowId);
 	var jqSelector = $(oRow).closest(".selectorReport");
 	if (jqSelector.closest(".block").hasClass("grandchildren")) {
-		alert("gc");
 		var activeTab = $(".tab_choice.active");
 		var tabTableInternalName = activeTab.attr("data-internaltablename");
 		var tabReportInternalName = activeTab.attr("data-internalreportname");
@@ -1537,7 +1535,4 @@ function editTabFunctions() {
 	fComments();
 	fDatePickers();
 	fSexyUpload();
-	$(".block.grandchildren .selectorReport td").click(function() {
-		$(this).closest("tr").click();
-	})
 }
