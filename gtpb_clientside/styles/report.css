@@ -228,7 +228,6 @@ table#reportData tr.rowa td {
 
 #currentRow .in_cell:hover {
   text-shadow: 0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef;
-  color: white;
 }
 
 table#reportData tr.rowb  { 
