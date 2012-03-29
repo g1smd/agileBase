@@ -28,7 +28,7 @@
 					#set($relationField = $formField)
 				#end
 			#end
-      <div data-singular="$formTable.getSingularName()" class="tab_choice #if($formTable.equals($sessionTabTable)) session_tab #end" id="tab_choice_$formInternalTableName" data-internaltablename="$formInternalTableName" data-relationfield="$relationField.getInternalFieldName()">$formTab&nbsp;<img class="new" src="resources/toolbar/new.png" title="add new $formTable.getSingularName()"/></div>
+      <div data-singular="$formTable.getSingularName()" class="tab_choice #if($formTable.equals($sessionTabTable)) session_tab #end" id="tab_choice_$formInternalTableName" data-internaltablename="$formInternalTableName" data-internalreportname="$formTab.getSelectorReport().getInternalReportName()" data-relationfield="$relationField.getInternalFieldName()">$formTab&nbsp;<img class="new" src="resources/toolbar/new.png" title="add new $formTable.getSingularName()"/></div>
     #end
 	#end
 	<div id="tab_deleter"><span id="deleter_text"></span><img src="resources/toolbar/delete.png" onclick="deleteTabRecord(this, false);"/></div>

@@ -406,7 +406,7 @@ function fRelationPickers() {
 		this.field = jqButton.siblings("input.relation_hidden")[0];
 		jqButton.click(fUpdateGlobalRelation);
 	});
-	
+
 	function bindAutoComplete(jqElement, internalTableName, internalFieldName) {
 		jqElement.autocomplete("AppController.servlet", {
 			autoFill : false,
@@ -479,12 +479,14 @@ function fRelationPickers() {
 			jqHidden.val(newRowId);
 			jqHidden.attr("gtpb_set_row_id", newRowId);
 			jqHidden.next("input").val(newValue);
-			jqHidden.next("input").addClass("new_relation_value"); // bit of a hack - see jquery.autocomplete.js
+			jqHidden.next("input").addClass("new_relation_value"); // bit of a hack -
+																															// see
+																															// jquery.autocomplete.js
 			// relationChangeActions = any additional actions after the save
 			if (typeof relationChangeActions == 'function') {
-			  new fChange(jqHidden[0], relationChangeActions);
+				new fChange(jqHidden[0], relationChangeActions);
 			} else {
-			  new fChange(jqHidden[0], null);
+				new fChange(jqHidden[0], null);
 			}
 		});
 	}
@@ -736,62 +738,63 @@ function fSetValueAtt(oWrapperDiv) {
 }
 
 function fDatePickers() {
-	$('.dp-choose-date').each(function() {
-		if (this.tagName == "A") {
-			// The links to launch the picker also have the dp-choose-date class
-			return;
-		}
-		var jqDateSelector = $(this);
-		if (jqDateSelector.hasClass("tabActionRegistered")) {
-			return;
-		}
-		jqDateSelector.addClass("tabActionRegistered");
-		var internalFieldName = jqDateSelector.attr("id").replace(
-				"date_picker_", "");
-		var year = $(
-				'input[wrapperAttribute="gtpb_' + internalFieldName + '_years'
-						+ '"]').val();
-		var month = $(
-				'select[wrapperAttribute="gtpb_' + internalFieldName + '_months'
-						+ '"]').val();
-		var day = $(
-				'select[wrapperAttribute="gtpb_' + internalFieldName + '_days'
-						+ '"]').val();
-		var currentDate = new Date(year, month - 1, day);
-		var inlineAttr = jqDateSelector.attr('inline');
-		if (inlineAttr == "true") {
-			inlineAttr = true;
-		} else {
-			inlineAttr = false;
-		}
-		jqDateSelector.datePicker({
-			startDate : '01/01/1901',
-			inline : inlineAttr
-		}).bind(
-				'dateSelected',
-				function(e, selectedDate, $td, status) {
-					var day = selectedDate.getDate();
-					var month = selectedDate.getMonth();
-					var year = selectedDate.getFullYear();
-					var jqDay = $('select[wrapperAttribute="gtpb_'
-							+ internalFieldName + '_days' + '"]');
-					jqDay.val(day);
-					jqDay.change();
-					var jqMonth = $('select[wrapperAttribute="gtpb_'
-							+ internalFieldName + '_months' + '"]');
-					jqMonth.val(month + 1);
-					jqMonth.change();
-					var jqYear = $('input[wrapperAttribute="gtpb_'
-							+ internalFieldName + '_years' + '"]');
-					jqYear.val(year);
-					jqYear.keyup();
-				});
-		if (month != '') {
-			// Setting current date doesn't seem to work
-			// jqDateSelector.dpSetSelected(currentDate.toString()).change();
-			jqDateSelector.dpSetDisplayedMonth(month - 1, year);
-		}
-	});
+	$('.dp-choose-date').each(
+			function() {
+				if (this.tagName == "A") {
+					// The links to launch the picker also have the dp-choose-date class
+					return;
+				}
+				var jqDateSelector = $(this);
+				if (jqDateSelector.hasClass("tabActionRegistered")) {
+					return;
+				}
+				jqDateSelector.addClass("tabActionRegistered");
+				var internalFieldName = jqDateSelector.attr("id").replace(
+						"date_picker_", "");
+				var year = $(
+						'input[wrapperAttribute="gtpb_' + internalFieldName + '_years'
+								+ '"]').val();
+				var month = $(
+						'select[wrapperAttribute="gtpb_' + internalFieldName + '_months'
+								+ '"]').val();
+				var day = $(
+						'select[wrapperAttribute="gtpb_' + internalFieldName + '_days'
+								+ '"]').val();
+				var currentDate = new Date(year, month - 1, day);
+				var inlineAttr = jqDateSelector.attr('inline');
+				if (inlineAttr == "true") {
+					inlineAttr = true;
+				} else {
+					inlineAttr = false;
+				}
+				jqDateSelector.datePicker({
+					startDate : '01/01/1901',
+					inline : inlineAttr
+				}).bind(
+						'dateSelected',
+						function(e, selectedDate, $td, status) {
+							var day = selectedDate.getDate();
+							var month = selectedDate.getMonth();
+							var year = selectedDate.getFullYear();
+							var jqDay = $('select[wrapperAttribute="gtpb_'
+									+ internalFieldName + '_days' + '"]');
+							jqDay.val(day);
+							jqDay.change();
+							var jqMonth = $('select[wrapperAttribute="gtpb_'
+									+ internalFieldName + '_months' + '"]');
+							jqMonth.val(month + 1);
+							jqMonth.change();
+							var jqYear = $('input[wrapperAttribute="gtpb_'
+									+ internalFieldName + '_years' + '"]');
+							jqYear.val(year);
+							jqYear.keyup();
+						});
+				if (month != '') {
+					// Setting current date doesn't seem to work
+					// jqDateSelector.dpSetSelected(currentDate.toString()).change();
+					jqDateSelector.dpSetDisplayedMonth(month - 1, year);
+				}
+			});
 }
 
 function fExpandContractSection() {
@@ -930,14 +933,14 @@ function addComment(jqCommentInput) {
 	jqCommentInput.next("input[type=button]").attr("disabed", "true");
 	if (text.length > 0) {
 		$.post("AppController.servlet", {
-			"return": "gui/resources/input/comments",
-			set_custom_field: true,
-			fieldkey: "comment",
-			custominternaltablename: internalTableName,
-			custominternalfieldname: internalFieldName,
-			add_comment: true,
-			internalfieldname: internalFieldName,
-			comment: text
+			"return" : "gui/resources/input/comments",
+			set_custom_field : true,
+			fieldkey : "comment",
+			custominternaltablename : internalTableName,
+			custominternalfieldname : internalFieldName,
+			add_comment : true,
+			internalfieldname : internalFieldName,
+			comment : text
 		}, function(data) {
 			$("#comments_" + internalFieldName).html(data);
 			jqCommentInput.val("");
@@ -1064,7 +1067,7 @@ function fInitialiseDependencies() {
 		if (!oParent.dependents)
 			oParent.dependents = new Array;
 		else // no need to do this if the dependents list is being created for the
-					// first time
+		// first time
 		if (fArrayContains(oParent.dependents, oChild))
 			return false; // the child is already stored as a dependent
 		oParent.dependents.push(oChild);
@@ -1076,7 +1079,7 @@ function fInitialiseDependencies() {
 
 	var aInitialised = new Array();
 	var lastUsedParentNameIndexes = new Object();
-	//var aSelect = document.getElementsByTagName('SELECT');
+	// var aSelect = document.getElementsByTagName('SELECT');
 	var aSelect = $.makeArray($('.interdependent select'));
 	// for every select
 	for ( var iSelect = 0; iSelect < aSelect.length; iSelect++) {
@@ -1099,18 +1102,19 @@ function fInitialiseDependencies() {
 		// with this name a collection will be returned
 		var oParent = $(oForm).find("#" + sParentId)[0];
 		if (!oParent.form) { // if the parent doesn't have an associated form, it's
-													// not a form element
+			// not a form element
 			if (aSelect[iSelect].getAttribute('uselastordinal')) {
 				oParent = oParent[oParent.length - 1]; // if option set to use last
-																								// ordinal element, use the last
-																								// element in the array
+				// ordinal element, use the last
+				// element in the array
 			} else {
 				continue;
 			}
 		}
 
-		if (fRegisterDependent(aSelect[iSelect], oParent))
+		if (fRegisterDependent(aSelect[iSelect], oParent)) {
 			aSelect[iSelect].setAttribute('registered', 'true');
+		}
 		var oChange = new fDoSelectChange(oParent);
 	}
 }
@@ -1120,21 +1124,34 @@ function fInitialiseDependencies() {
  */
 function loadIntoTabTable(oRow, internalTableName, rowId) {
 	var jqSelector = $(oRow).closest(".selectorReport");
-	var targetDiv = jqSelector.next("div");
-	targetDiv.fadeOut();
-	targetDiv.load("AppController.servlet", {
-		set_row_id: rowId,
-		rowidinternaltablename: internalTableName,
-		"return": "gui/reports_and_tables/tabs/tab_content_table",
-		set_custom_table: true,
-		tablekey: "tabTable",
-		custominternaltablename: internalTableName
-	}, function() {
-		jqSelector.find("tr#currentRow").removeAttr("id");
-		$(oRow).attr("id","currentRow");
-		targetDiv.fadeIn();
-		editTabFunctions();
-	});
+	if (jqSelector.closest(".block").hasClass("grandchildren")) {
+		var activeTab = $(".tab_choice.active");
+		var tabTableInternalName = activeTab.attr("data-internaltablename");
+		var tabReportInternalName = activeTab.attr("data-internalreportname");
+		parent.pane_2.document.location = "AppController.servlet?return=gui/reports_and_tables/report_data&set_table="
+				+ tabTableInternalName
+				+ "&set_report="
+				+ tabReportInternalName
+				+ "&set_row_id=" + rowId + "&rowidinternaltablename=" + internalTableName
+				+ "&set_custom_table=true&tablekey=tabTable&custominternaltablename=" + internalTableName
+				+ "&cachebust=" + (new Date()).getTime();
+	} else {
+		var targetDiv = jqSelector.next("div");
+		targetDiv.fadeOut();
+		targetDiv.load("AppController.servlet", {
+			set_row_id : rowId,
+			rowidinternaltablename : internalTableName,
+			"return" : "gui/reports_and_tables/tabs/tab_content_table",
+			set_custom_table : true,
+			tablekey : "tabTable",
+			custominternaltablename : internalTableName
+		}, function() {
+			jqSelector.find("tr#currentRow").removeAttr("id");
+			$(oRow).attr("id", "currentRow");
+			targetDiv.fadeIn();
+			editTabFunctions();
+		});
+	}
 }
 
 function deleteTabRecord(oElement, deleteRelatedData) {
@@ -1145,54 +1162,63 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 		internalTableName = jqElement.attr("data-internaltablename");
 		rowId = $("#rowid_" + internalTableName).attr("data-rowid");
 	} else {
-	  rowId = jqElement.closest("tr").attr("name");
-	  internalTableName = jqElement.closest(".selectorReport").attr("data-internaltablename");
+		rowId = jqElement.closest("tr").attr("name");
+		internalTableName = jqElement.closest(".selectorReport").attr(
+				"data-internaltablename");
 	}
 	var options = {
-		remove_record: true,
-		internaltablename: internalTableName,
-		rowid: rowId,
-		"return": "gui/administration/xmlreturn_fieldchange",
-		returntype: "xml"
+		remove_record : true,
+		internaltablename : internalTableName,
+		rowid : rowId,
+		"return" : "gui/administration/xmlreturn_fieldchange",
+		returntype : "xml"
 	}
 	if (deleteRelatedData) {
 		options["cascadedelete"] = true;
 	}
-	$.post("AppController.servlet", options, function(sResponseXML) {
-		var sResponse = sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
-		if (sResponse == 'ok') {
-			var parentRowId = $(".form_tabber").attr("data-rowid");
-			pane3TabInterface.refresh(parentRowId);
-		} else {
-			sException = sResponseXML.getElementsByTagName('exception')[0].getAttribute('type');
-			var sExceptionMessage = sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue;
-			if (deleteRelatedData) {
-				alert('Record was not deleted because it is linked to data in other tables that you do not have permission to change.\n\n'
-						+ sExceptionMessage);
-			} else if (confirm('Record was not deleted because it is linked to data in other tables.\n'
-						+ 'DELETE ALL THIS?\n\n'
-						+ sExceptionMessage
-						+ '\n\nWould you like to delete this row and all related data or CANCEL this operation?')) {
-				// recurse, but set it to delete related data
-				deleteTabRecord(oElement, true);
-			}
-		}
-	}, "xml");
+	$
+			.post(
+					"AppController.servlet",
+					options,
+					function(sResponseXML) {
+						var sResponse = sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
+						if (sResponse == 'ok') {
+							var parentRowId = $(".form_tabber").attr("data-rowid");
+							pane3TabInterface.refresh(parentRowId);
+						} else {
+							sException = sResponseXML.getElementsByTagName('exception')[0]
+									.getAttribute('type');
+							var sExceptionMessage = sResponseXML
+									.getElementsByTagName('exception')[0].firstChild.nodeValue;
+							if (deleteRelatedData) {
+								alert('Record was not deleted because it is linked to data in other tables that you do not have permission to change.\n\n'
+										+ sExceptionMessage);
+							} else if (confirm('Record was not deleted because it is linked to data in other tables.\n'
+									+ 'DELETE ALL THIS?\n\n'
+									+ sExceptionMessage
+									+ '\n\nWould you like to delete this row and all related data or CANCEL this operation?')) {
+								// recurse, but set it to delete related data
+								deleteTabRecord(oElement, true);
+							}
+						}
+					}, "xml");
 }
 
 /**
- * Mark tabs which have no content in them
- * Use the server to look up whether there's content or not
+ * Mark tabs which have no content in them Use the server to look up whether
+ * there's content or not
  */
 function fMarkInactiveTabs() {
 	if ($(".form_tabber").size() == 0) {
 		return;
 	}
-	$.getJSON("AppController.servlet?return=gui/reports_and_tables/tabs/tabs_inactive", function(data) {
-		for(i=0; i<data.length; i++) {
-			$("#tab_choice_" + data[i]).addClass("no_records");
-		}
-	});
+	$.getJSON(
+			"AppController.servlet?return=gui/reports_and_tables/tabs/tabs_inactive",
+			function(data) {
+				for (i = 0; i < data.length; i++) {
+					$("#tab_choice_" + data[i]).addClass("no_records");
+				}
+			});
 }
 
 /*
@@ -1201,62 +1227,66 @@ function fMarkInactiveTabs() {
 
 /* Charts in pane 3 need some behaviours added */
 function fSetupCharts() {
-	$('.summary_chart').each(
-		function(i) {
-			var summaryDivName = $(this).attr('id');
-			var summaryId = summaryDivName.replace('chart_', '');
-			$(this)
-					.append(
-							"<div class='chart_remover'><a href='?return=gui/reports_and_tables/pane3&remove_chart=true&summaryid="
-									+ summaryId
-									+ "'><img border='0' src='resources/icons/edit.png' /></a></div>");
-			$(this).hover(function() {
-				$(this).find('.chart_remover').fadeIn("normal");
-			}, function() {
-				$(this).find('.chart_remover').fadeOut("normal");
-			});
-		});
+	$('.summary_chart')
+			.each(
+					function(i) {
+						var summaryDivName = $(this).attr('id');
+						var summaryId = summaryDivName.replace('chart_', '');
+						$(this)
+								.append(
+										"<div class='chart_remover'><a href='?return=gui/reports_and_tables/pane3&remove_chart=true&summaryid="
+												+ summaryId
+												+ "'><img border='0' src='resources/icons/edit.png' /></a></div>");
+						$(this).hover(function() {
+							$(this).find('.chart_remover').fadeIn("normal");
+						}, function() {
+							$(this).find('.chart_remover').fadeOut("normal");
+						});
+					});
 }
 
 /**
- * When you $.show() a pane 3 element, the toolbar vanishes in webkit
- * Have to reset the oViewPane height property to get it back
+ * When you $.show() a pane 3 element, the toolbar vanishes in webkit Have to
+ * reset the oViewPane height property to get it back
  */
 function fWebkitGlitch() {
 	if ($.browser.webkit) {
-	  setTimeout("$(top.document.getElementById('oViewPane')).css('height', '0')",1000);
-	  setTimeout("$(top.document.getElementById('oViewPane')).css('height', '100%')",1500);
+		setTimeout(
+				"$(top.document.getElementById('oViewPane')).css('height', '0')", 1000);
+		setTimeout(
+				"$(top.document.getElementById('oViewPane')).css('height', '100%')",
+				1500);
 	}
 }
 
 function fShowAddGroup() {
-  $("#addGroup").show();
-  $("#addGroupLink").hide();
-  fWebkitGlitch();
+	$("#addGroup").show();
+	$("#addGroupLink").hide();
+	fWebkitGlitch();
 }
 
 function fShowAddAgg() {
-  $("#addAgg").show();
-  $("#addAggLink").hide();
-  fWebkitGlitch();
+	$("#addAgg").show();
+	$("#addAggLink").hide();
+	fWebkitGlitch();
 }
 
 function fSubmitGroup() {
-  if ($("#groupselect").val() != "") {
-    document.addgrouping.submit();
-  }
+	if ($("#groupselect").val() != "") {
+		document.addgrouping.submit();
+	}
 }
 
 function fSubmitWordCloud() {
-  document.wordcloud.submit();
+	document.wordcloud.submit();
 }
 
 function fSubmitFunction() {
-  var aggregateFunction = jQuery("#aggregatefunction").val();
-  var aggregateFunctionField = jQuery("#aggregatefunctionfield").val();
-  if (aggregateFunction != "" && aggregateFunctionField != "") {
-    document.addaggregate.submit();
-  }
+	var aggregateFunction = jQuery("#aggregatefunction").val();
+	var aggregateFunctionField = jQuery("#aggregatefunctionfield").val();
+	if (aggregateFunction != "" && aggregateFunctionField != "") {
+		document.addaggregate.submit();
+	}
 }
 
 /**
@@ -1268,93 +1298,106 @@ function fFormStyle() {
 		$(".select_layout").removeClass("selected_layout");
 		var formStyle = $(this).attr("id");
 		$.post("AppController.servlet", {
-			"return": "blank",
-			"update_table": true,
-			"formstyle": formStyle
+			"return" : "blank",
+			"update_table" : true,
+			"formstyle" : formStyle
 		}, function() {
 			clicked.addClass("selected_layout");
 		});
 	});
-	$(".tab_choice").each(function() {
-		var jqTab = $(this);
-		if (jqTab.hasClass("tabActionRegistered")) {
-			return;
-		}
-		jqTab.addClass("tabActionRegistered");
-		var parentInternalTableName = jqTab.closest(".form_tabber").attr("data-internaltablename");
-		jqTab.click(function() {
-			var tabInternalTableName = $(this).attr("data-internaltablename");
-			var previousTab = jqTab.closest(".form_tabber").find(".tab_choice.active");
-			var previousTabInternalTableName = previousTab.attr("data-internaltablename");
-			var previousContainer = $("#form_tabs_" + parentInternalTableName + "_" + previousTabInternalTableName);
-			$(".tab_choice").removeClass("active");
-			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
-			$("#tab_deleter").fadeOut();
-			if (tabContainer.children().size() == 0) {
-				previousContainer.fadeOut();
-				tabContainer.addClass("load-spinner").css("position","relative");
-				tabContainer.fadeIn();
-				tabContainer.load("AppController.servlet", {
-				  "return": "gui/reports_and_tables/tabs/tab_content",
-				  set_custom_table: true,
-				  tablekey: "tabTable",
-				  custominternaltablename: tabInternalTableName
-				}, function() {
-					tabContainer.removeClass("load-spinner");
-					jqTab.addClass("active");
-					editTabFunctions();
-					// If only one child record, show delete button in tabs bar
-					if ((tabContainer.find(".selectorReport").size() == 0) && jqTab.attr("data-singular")) {
-						var singularName = jqTab.attr("data-singular");
-						$("#tab_deleter").find("img").attr("title","delete this " + singularName);
-						$("#tab_deleter").fadeIn();
-					}
-				});
-			} else {
-				previousContainer.hide();
-				tabContainer.show();
-				jqTab.addClass("active");
-				// Fire off a post to set the session tab - don't need any results
-				$.post("AppController.servlet", {
-					"return": "blank",
-				  set_custom_table: true,
-				  tablekey: "tabTable",
-				  custominternaltablename: tabInternalTableName
-				});
-				// If only one child record, show delete button in tabs bar
-				if ((tabContainer.find(".selectorReport").size() == 0) && jqTab.attr("data-singular")) {
-					var singularName = jqTab.attr("data=singular");
-					$("#deleter_text").text(singularName);
-					$("#tab_deleter").fadeIn();
+	$(".tab_choice").each(
+			function() {
+				var jqTab = $(this);
+				if (jqTab.hasClass("tabActionRegistered")) {
+					return;
 				}
-			}
-		}); // end of jqTab.click()
-		jqTab.find("img.new").click(function() {
-			var tabInternalTableName = jqTab.attr("data-internaltablename");
-			var relationFieldInternalName = jqTab.attr("data-relationfield");
-			var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
-			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_" + tabInternalTableName);
-			tabContainer.fadeOut();
-			var options = {
-			  "return": "gui/reports_and_tables/tabs/tab_content",
-			  save_new_record: true,
-			  internaltablename: tabInternalTableName,
-			  set_custom_table: true,
-			  tablekey: 'tabTable',
-			  custominternaltablename: tabInternalTableName
-			}
-			// Set relationFieldInternalName like this as it is a variable property name
-			options[relationFieldInternalName] = parentRowId;
-			tabContainer.load("AppController.servlet", options, function() {
-				tabContainer.fadeIn();
-				editTabFunctions();
-			});
-		});
-		// Initialise to session tab on load (if not already the active tab)
-		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active"))) {
-			jqTab.click();
-		}
-	}); // end of .tab_choice.each
+				jqTab.addClass("tabActionRegistered");
+				var parentInternalTableName = jqTab.closest(".form_tabber").attr(
+						"data-internaltablename");
+				jqTab.click(function() {
+					var tabInternalTableName = $(this).attr("data-internaltablename");
+					var previousTab = jqTab.closest(".form_tabber").find(
+							".tab_choice.active");
+					var previousTabInternalTableName = previousTab
+							.attr("data-internaltablename");
+					var previousContainer = $("#form_tabs_" + parentInternalTableName
+							+ "_" + previousTabInternalTableName);
+					$(".tab_choice").removeClass("active");
+					var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
+							+ tabInternalTableName);
+					$("#tab_deleter").fadeOut();
+					if (tabContainer.children().size() == 0) {
+						previousContainer.fadeOut();
+						tabContainer.addClass("load-spinner").css("position", "relative");
+						tabContainer.fadeIn();
+						tabContainer.load("AppController.servlet", {
+							"return" : "gui/reports_and_tables/tabs/tab_content",
+							set_custom_table : true,
+							tablekey : "tabTable",
+							custominternaltablename : tabInternalTableName
+						}, function() {
+							tabContainer.removeClass("load-spinner");
+							jqTab.addClass("active");
+							editTabFunctions();
+							// If only one child record, show delete button in tabs bar
+							if ((tabContainer.find(".selectorReport").size() == 0)
+									&& jqTab.attr("data-singular")) {
+								var singularName = jqTab.attr("data-singular");
+								$("#tab_deleter").find("img").attr("title",
+										"delete this " + singularName);
+								$("#tab_deleter").fadeIn();
+							}
+						});
+					} else {
+						previousContainer.hide();
+						tabContainer.show();
+						jqTab.addClass("active");
+						// Fire off a post to set the session tab - don't need any results
+						$.post("AppController.servlet", {
+							"return" : "blank",
+							set_custom_table : true,
+							tablekey : "tabTable",
+							custominternaltablename : tabInternalTableName
+						});
+						// If only one child record, show delete button in tabs bar
+						if ((tabContainer.find(".selectorReport").size() == 0)
+								&& jqTab.attr("data-singular")) {
+							var singularName = jqTab.attr("data=singular");
+							$("#deleter_text").text(singularName);
+							$("#tab_deleter").fadeIn();
+						}
+					}
+				}); // end of jqTab.click()
+				jqTab.find("img.new").click(
+						function() {
+							var tabInternalTableName = jqTab.attr("data-internaltablename");
+							var relationFieldInternalName = jqTab.attr("data-relationfield");
+							var parentRowId = jqTab.closest(".form_tabber")
+									.attr("data-rowid");
+							var tabContainer = $("#form_tabs_" + parentInternalTableName
+									+ "_" + tabInternalTableName);
+							tabContainer.fadeOut();
+							var options = {
+								"return" : "gui/reports_and_tables/tabs/tab_content",
+								save_new_record : true,
+								internaltablename : tabInternalTableName,
+								set_custom_table : true,
+								tablekey : 'tabTable',
+								custominternaltablename : tabInternalTableName
+							}
+							// Set relationFieldInternalName like this as it is a variable
+							// property name
+							options[relationFieldInternalName] = parentRowId;
+							tabContainer.load("AppController.servlet", options, function() {
+								tabContainer.fadeIn();
+								editTabFunctions();
+							});
+						});
+				// Initialise to session tab on load (if not already the active tab)
+				if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active"))) {
+					jqTab.click();
+				}
+			}); // end of .tab_choice.each
 }
 
 function showAdvanced() {
@@ -1363,61 +1406,75 @@ function showAdvanced() {
 }
 
 function fMap() {
-	if($("#map_canvas").is(":visible")) {
-	  var myOptions = {
-	  	zoom: 6,
-	  	center: new google.maps.LatLng(54,2),
-	    mapTypeId: google.maps.MapTypeId.ROADMAP,
-	    panControl: false,
-	    scrollwheel: false,
-	    mapTypeControl: false
-	  };
-	  var markers = [];
-	  var colourValues = [];
-	  var colourIcons = [];
-	  var map = new google.maps.Map($("#map_canvas")[0], myOptions);
-	  var mapBounds = new google.maps.LatLngBounds();
-	  var popup = new google.maps.InfoWindow({
-	  	content: "holding..."
-	  });
-	  var mapJSON = $.getJSON("AppController.servlet?return=gui/reports_and_tables/tabs/map_json", function(data) {
-	  	var len = data.length;
-	  	for(var i=0; i<len; i++) {
-	  		var row = data[i];
-	  		var latLng = new google.maps.LatLng(row.latitude,row.longitude);
-	  		var colour = "FFFFFF";
-	  		var firstLetter = ".";
-	  		var pinStyle = "d_map_pin_letter";
-	  		var pinStyle2 = "";
-	  		var pinStarFill = "";
-	  		if (row.colourValue) {
-	  			colour = hsl2hex(row.h, row.s, row.l);
-	  			colourValues[row.colourValue] = row.colourValue;
-	  			firstLetter = row.colourValue.charAt(0);
-		  		if ((firstLetter >= '0') && (firstLetter <= '9')) {
-		  			pinStyle = "d_map_xpin_letter";
-		  			pinStyle2 = "pin_star|";
-		  			pinStarFill = "|FFFF00";
-		  		}
-	  			colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst=" + pinStyle + "&chld=" + pinStyle2 + firstLetter + "|" + colour + "|000000" + pinStarFill;
-	  		}
-	  		//mapBounds.extend(latLng);
-	  		markers[i] = new google.maps.Marker({
-	        position: latLng,
-	        map: map,
-	        title: row.postcode,
-	        icon: "https://chart.googleapis.com/chart?chst=" + pinStyle + "&chld=" + pinStyle2 + firstLetter + "|" + colour + "|000000" + pinStarFill,
-	        html: row.title /* our own property */
-	  		});
-	  		google.maps.event.addListener(markers[i], 'click', function() {
-	  			popup.setContent(this.html);
-	  		  popup.open(map,this);
-	  		});
-	  	}
-	  	for (var colourValue in colourValues) {
-	  		$("#map_legend").append("<div><img src='" + colourIcons[colourValue] + "' />&nbsp;" + colourValue + "</div>");
-	  	}
-	  });
+	if ($("#map_canvas").is(":visible")) {
+		var myOptions = {
+			zoom : 6,
+			center : new google.maps.LatLng(54, 2),
+			mapTypeId : google.maps.MapTypeId.ROADMAP,
+			panControl : false,
+			scrollwheel : false,
+			mapTypeControl : false
+		};
+		var markers = [];
+		var colourValues = [];
+		var colourIcons = [];
+		var map = new google.maps.Map($("#map_canvas")[0], myOptions);
+		var mapBounds = new google.maps.LatLngBounds();
+		var popup = new google.maps.InfoWindow({
+			content : "holding..."
+		});
+		var mapJSON = $
+				.getJSON(
+						"AppController.servlet?return=gui/reports_and_tables/tabs/map_json",
+						function(data) {
+							var len = data.length;
+							for ( var i = 0; i < len; i++) {
+								var row = data[i];
+								var latLng = new google.maps.LatLng(row.latitude, row.longitude);
+								var colour = "FFFFFF";
+								var firstLetter = ".";
+								var pinStyle = "d_map_pin_letter";
+								var pinStyle2 = "";
+								var pinStarFill = "";
+								if (row.colourValue) {
+									colour = hsl2hex(row.h, row.s, row.l);
+									colourValues[row.colourValue] = row.colourValue;
+									firstLetter = row.colourValue.charAt(0);
+									if ((firstLetter >= '0') && (firstLetter <= '9')) {
+										pinStyle = "d_map_xpin_letter";
+										pinStyle2 = "pin_star|";
+										pinStarFill = "|FFFF00";
+									}
+									colourIcons[row.colourValue] = "https://chart.googleapis.com/chart?chst="
+											+ pinStyle
+											+ "&chld="
+											+ pinStyle2
+											+ firstLetter
+											+ "|"
+											+ colour + "|000000" + pinStarFill;
+								}
+								// mapBounds.extend(latLng);
+								markers[i] = new google.maps.Marker({
+									position : latLng,
+									map : map,
+									title : row.postcode,
+									icon : "https://chart.googleapis.com/chart?chst=" + pinStyle
+											+ "&chld=" + pinStyle2 + firstLetter + "|" + colour
+											+ "|000000" + pinStarFill,
+									html : row.title
+								/* our own property */
+								});
+								google.maps.event.addListener(markers[i], 'click', function() {
+									popup.setContent(this.html);
+									popup.open(map, this);
+								});
+							}
+							for ( var colourValue in colourValues) {
+								$("#map_legend").append(
+										"<div><img src='" + colourIcons[colourValue] + "' />&nbsp;"
+												+ colourValue + "</div>");
+							}
+						});
 	}
 }
 
@@ -1435,16 +1492,16 @@ function hsl2hex(h, s, l) {
 			m2 = l + s - l * s;
 		m1 = l * 2 - m2;
 		hue = h / 360;
-		r = HueToRgb(m1, m2, hue + 1/3);
+		r = HueToRgb(m1, m2, hue + 1 / 3);
 		g = HueToRgb(m1, m2, hue);
-		b = HueToRgb(m1, m2, hue - 1/3);
+		b = HueToRgb(m1, m2, hue - 1 / 3);
 	}
-	var r16 = r.toString(16).substr(0,2).replace(".","");
-  var g16 = g.toString(16).substr(0,2).replace(".","");
-  var b16 = b.toString(16).substr(0,2).replace(".","");
-  return (r16.length == 2 ? r16 : '0' + r16)
-	  + (g16.length == 2 ? g16 : '0' + g16)
-	  + (b16.length == 2 ? b16 : '0' + b16);
+	var r16 = r.toString(16).substr(0, 2).replace(".", "");
+	var g16 = g.toString(16).substr(0, 2).replace(".", "");
+	var b16 = b.toString(16).substr(0, 2).replace(".", "");
+	return (r16.length == 2 ? r16 : '0' + r16)
+			+ (g16.length == 2 ? g16 : '0' + g16)
+			+ (b16.length == 2 ? b16 : '0' + b16);
 }
 
 function HueToRgb(m1, m2, hue) {
@@ -1458,7 +1515,7 @@ function HueToRgb(m1, m2, hue) {
 	else if (2 * hue < 1)
 		v = m2;
 	else if (3 * hue < 2)
-		v = m1 + (m2 - m1) * (2/3 - hue) * 6;
+		v = m1 + (m2 - m1) * (2 / 3 - hue) * 6;
 	else
 		v = m1;
 	return 255 * v;
