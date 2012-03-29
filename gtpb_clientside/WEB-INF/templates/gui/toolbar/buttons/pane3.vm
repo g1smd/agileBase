@@ -112,7 +112,7 @@
 #set($caption='Record')
 #if($view.getLoggedInUser().getUserType() == "REPORT")
   #set($params='toggleButton=true')
-  #set($classes='toggleButton')
+  #set($classes='toggleButton REPORT')
 #else
   #set($params='selected=true toggleButton=true')
   #set($classes='selected toggleButton')
