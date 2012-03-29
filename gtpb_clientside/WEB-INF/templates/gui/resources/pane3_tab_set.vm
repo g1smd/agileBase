@@ -211,14 +211,14 @@
 		  #set($currentTab = "1")
     #end
 	#end		
-	#if(($pane2_id) && (!$mobile_device))
-	  <script language=Javascript>
-  	  var rowFound = parent.pane_2.fSetRowSelection('$pane2_id');
-  	  if ((!rowFound) && ($currentTab < 3)) {
-  		  jQuery.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
-  	  }
-	  </script>
-	#end
+##	#if(($pane2_id) && (!$mobile_device))
+##	  <script language=Javascript>
+##  	  var rowFound = parent.pane_2.fSetRowSelection('$pane2_id');
+##  	  if ((!rowFound) && ($currentTab < 3)) {
+##  		  jQuery.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
+##  	  }
+##	  </script>
+##	#end
   #parse('gui/resources/google_maps_api_key.vm')
 	#if($google_maps_api_key)
     #if($viewTools.getAppUrl().startsWith("https"))
