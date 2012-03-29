@@ -898,6 +898,12 @@ div#reportData {
 .selectorReport table#reportData {
   /* background-color: #EEF3F9; */
 }
+
+.gtpb_url {
+	float: right;
+	position: relative;
+	top: 0.2em;
+}
 	
 /* 3) Summary tab css */
 
