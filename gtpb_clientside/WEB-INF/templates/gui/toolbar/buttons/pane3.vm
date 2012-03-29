@@ -68,7 +68,7 @@
   		    targetFrame = 3;
         }
 			  if(jqThisButton.hasClass("REPORT")) {
-				  if(targetFrame == 3) { currentPercent = 100;} else { currentPercent = 0;}
+				  if(targetFrame == 3) { currentPercent = 0; targetPercent = 100;} else { currentPercent = 100;}
 				} else {
     		  currentPercent = 50;
 				}
