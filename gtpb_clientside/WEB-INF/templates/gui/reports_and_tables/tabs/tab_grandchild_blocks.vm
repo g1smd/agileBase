@@ -26,7 +26,7 @@
   #if($datarows.size() > 0)
 		<div class="block grandchildren">
 			#set($gcFormTabTableInternalName = $gcFormTab.getTable().getInternalTableName())
-			<h1>$gcFormTab <a href="AppController.servlet?return=gui/reports_and_tables/report_data&set_table=$sessionTable.getInternalTableName()&set_report=$formTab.getSelectorReport().getInternalReportName()&save_new_record=true&internaltablename=$gcFormTabTableInternalName&set_custom_table=true&tablekey=tabTable&custominternaltablename=$gcFormTabTableInternalName&cachebust=$viewTools.getRandomString()" target="parent.pane_2"><img src="resources/toolbar/new.png" style="height: 1.3em;"/></a></h1>
+			<h1>$gcFormTab <a href="AppController.servlet?return=gui/reports_and_tables/report_data&set_table=$sessionTable.getInternalTableName()&set_report=$formTab.getSelectorReport().getInternalReportName()&save_new_record=true&internaltablename=$gcFormTabTableInternalName&set_custom_table=true&tablekey=tabTable&custominternaltablename=$gcFormTabTableInternalName&cachebust=$viewTools.getRandomString()" target="pane_2"><img src="resources/toolbar/new.png" style="height: 1.3em;"/></a></h1>
       ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
 			<table style="width:100%"><tr><td style="column-break-inside: avoid;"> 
 			  #parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
