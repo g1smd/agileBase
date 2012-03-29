@@ -157,8 +157,8 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           #set($cellContentLength=$cell.length() * 2)
   		  #else
           #set($cellContentLength=$cell.length() / 2)
-					#set($textValue = $viewTools.getTextValueTool("$cell"))
-					$viewTools.log("$cell: $textValue.isUrl()")
+					#set($textValue = $viewTools.getTextValueTool($cell))
+					$viewTools.log("$cell: $textValue.isURL()")
 		    #end
         #if($cellContentLength > 500)
           #set($cellContentLength = 500)
@@ -170,7 +170,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		  #if($rightAlign) #set($style = "$style text-align:right; ") #end
           <td #if($cellContentLength<=10)nowrap="true"#end #if($style != "")style="$style"#end #if($class != "")class="$class"#end>
             <div style="min-width:${cellContentLength}px" #if(($cellContentLength > $cellLengthThreshold) || $image) class="in_cell" #end>
-							#if($textValue.isUrl()) <img src="http://g.etfv.co/$textValue.getFormattedUrl($cell)" />#end ##
+							#if($textValue.isURL()) <img src="http://g.etfv.co/$textValue.getFormattedUrl($cell)" />#end ##
               #if(!(($thisUniqueId == $lastUniqueId) && ($cell == $lastValues.get($cellNumber))))$cell#else<span class="greytext">$cell</span>#end
             </div>
           </td>
