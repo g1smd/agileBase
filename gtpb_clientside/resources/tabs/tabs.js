@@ -1178,32 +1178,28 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 	if (deleteRelatedData) {
 		options["cascadedelete"] = true;
 	}
-	$
-			.post(
-					"AppController.servlet",
-					options,
-					function(sResponseXML) {
-						var sResponse = sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
-						if (sResponse == 'ok') {
-							var parentRowId = $(".form_tabber").attr("data-rowid");
-							pane3TabInterface.refresh(parentRowId);
-						} else {
-							sException = sResponseXML.getElementsByTagName('exception')[0]
-									.getAttribute('type');
-							var sExceptionMessage = sResponseXML
-									.getElementsByTagName('exception')[0].firstChild.nodeValue;
-							if (deleteRelatedData) {
-								alert('Record was not deleted because it is linked to data in other tables that you do not have permission to change.\n\n'
-										+ sExceptionMessage);
-							} else if (confirm('Record was not deleted because it is linked to data in other tables.\n'
-									+ 'DELETE ALL THIS?\n\n'
-									+ sExceptionMessage
-									+ '\n\nWould you like to delete this row and all related data or CANCEL this operation?')) {
-								// recurse, but set it to delete related data
-								deleteTabRecord(oElement, true);
-							}
-						}
-					}, "xml");
+	$.post("AppController.servlet", options, function(sResponseXML) {
+		var sResponse = sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
+		if (sResponse == 'ok') {
+			var parentRowId = $(".form_tabber").attr("data-rowid");
+			pane3TabInterface.refresh(parentRowId);
+		} else {
+			sException = sResponseXML.getElementsByTagName('exception')[0]
+					.getAttribute('type');
+			var sExceptionMessage = sResponseXML
+					.getElementsByTagName('exception')[0].firstChild.nodeValue;
+			if (deleteRelatedData) {
+				alert('Record was not deleted because it is linked to data in other tables that you do not have permission to change.\n\n'
+						+ sExceptionMessage);
+			} else if (confirm('Record was not deleted because it is linked to data in other tables.\n'
+					+ 'DELETE ALL THIS?\n\n'
+					+ sExceptionMessage
+					+ '\n\nWould you like to delete this row and all related data or CANCEL this operation?')) {
+				// recurse, but set it to delete related data
+				deleteTabRecord(oElement, true);
+			}
+		}
+	}, "xml");
 }
 
 /**
@@ -1525,18 +1521,12 @@ function HueToRgb(m1, m2, hue) {
 
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
-
+pane3Scripts.functionList.push(editTabFunctions);
 pane3Scripts.functionList.push(fUnlockButton);
-pane3Scripts.functionList.push(fComboComponents);
-pane3Scripts.functionList.push(fRelationPickers);
-pane3Scripts.functionList.push(fDatePickers);
 pane3Scripts.functionList.push(fSetupCharts);
 pane3Scripts.functionList.push(fAssignButtonTableActions);
-pane3Scripts.functionList.push(fSexyUpload);
 pane3Scripts.functionList.push(fMarkInactiveTabs);
-/* pane3Scripts.functionList.push(fExpandContractSection); */
 pane3Scripts.functionList.push(fTwitter);
-pane3Scripts.functionList.push(fComments);
 pane3Scripts.functionList.push(fMap);
 pane3Scripts.functionList.push(fInitialiseDependencies);
 pane3Scripts.functionList.push(fFormStyle);
@@ -1547,4 +1537,7 @@ function editTabFunctions() {
 	fComments();
 	fDatePickers();
 	fSexyUpload();
+	$(".block.grandchildren .selectorReport td").click(function() {
+		$(this).closest("tr").click();
+	})
 }
