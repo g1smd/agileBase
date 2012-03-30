@@ -111,6 +111,7 @@ public class TableData implements TableDataInfo {
 			if (rowId >= 0) {
 				statement.setInt(1, rowId);
 			}
+			logger.debug("About to get results of " + statement);
 			results = statement.executeQuery();
 			if (results.next()) {
 				FIELDSLOOP: for (BaseField tableField : this.table.getFields()) {
@@ -204,6 +205,7 @@ public class TableData implements TableDataInfo {
 				statement.close();
 			}
 		}
+		logger.debug("Returning " + tableDataRow);
 		return tableDataRow;
 	}
 
