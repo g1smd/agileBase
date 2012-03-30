@@ -104,9 +104,9 @@ public class AppProperties {
 
 	/**
 	 * Setting this to true will prepare agileBase for testing and also speed up
-	 * agileBase reloading by only loading one company - GTwM
+	 * agileBase reloading by only loading one company - see AuthManager constructor
 	 * 
 	 * SET THIS TO false IN PRODUCTION
 	 */
-	public static final boolean testMode = true;
+	public static final boolean testMode = false;
 }
