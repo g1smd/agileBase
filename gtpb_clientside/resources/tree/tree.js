@@ -72,7 +72,7 @@ function pane1Setup() {
 		// If pane 2 not visible, show
 		var pane2Butt = $(top.document.getElementById("pane2butt"));
 		if (!pane2Butt.hasClass("selected")) {
-			setTimeout(pane2Butt.click, 500);
+			setTimeout(pane2Butt.click(), 500);
 		}
 	});
 	
