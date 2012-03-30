@@ -50,8 +50,8 @@
   #set($fieldClass = $field.getClass().getSimpleName())
   ## inline-block workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
   <div title="$field.getFieldDescription()" class="row" #if(($field.getContentSize() > 50) || ($fieldValue.length() > 100)) style="display:inline-block; width:100%" #end>
-    #if(!$fieldClass.equals("RelationFieldDefn") && ($fieldCategory != "FILE"))
-      ## relation and file field names included in resources/input/relation.vm
+    #if(!$fieldClass.equals("RelationFieldDefn") && ($fieldCategory != "FILE") && ($fieldCategory != "COMMENT_FEED"))
+      ## These field names included in resources/input/relation.vm etc.
       <span class="fieldname">$field</span>
     #end
     #parse('gui/resources/input/input.vm')
