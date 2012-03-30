@@ -31,7 +31,13 @@ function fSetCurrentOption(sName, sRecordCount){
 		parentElem.removeClass('modulecollapsed');
 		parentElem.addClass('moduleexpanded');
 	}
-	$(".module-tree-item-wrap").removeClass("loading");
+	var mtiw = $(".module-tree-item-wrap");
+	mtiw.removeClass("loading");
+	if (mtiw.hasClass("needs_pane2_click")) {
+		$(top.document.getElementById("pane2butt")).click();
+		mtiw.removeClass("needs_pane2_click");
+	}
+	
 }
 
 function fUpdateTitle(sName, sNewTitle) {
@@ -70,13 +76,9 @@ function pane1Setup() {
 		var mtiw = $(this).closest(".module-tree-item-wrap");
 		mtiw.addClass('loading');
 		// If pane 2 not visible, show
-		var oViewPane = $(top.document.getElementById('oViewPane'));
-		var pane2 = oViewPane.find("#pane_2");
-		alert(pane2.attr("id"));
-		//$(top.document.getElementById('oViewPane').contentWindow.pane_2).css("opacity: 0.4");
 		var pane2Butt = $(top.document.getElementById("pane2butt"));
 		if (!pane2Butt.hasClass("selected")) {
-			pane2Butt.click();
+			mtiw.addClass("needs_pane2_click");
 		}
 	});
 	
