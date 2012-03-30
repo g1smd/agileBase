@@ -70,9 +70,10 @@ function pane1Setup() {
 		var mtiw = $(this).closest(".module-tree-item-wrap");
 		mtiw.addClass('loading');
 		// If pane 2 not visible, show
+		$(pane_2).css("opacity: 0.4");
 		var pane2Butt = $(top.document.getElementById("pane2butt"));
 		if (!pane2Butt.hasClass("selected")) {
-			setTimeout(pane2Butt.click(), 3000);
+			pane2Butt.click();
 		}
 	});
 	
