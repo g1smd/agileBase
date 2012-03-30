@@ -68,8 +68,11 @@ function pane1Setup() {
 	});
 	$('#tree a.report_tooltip').click(function() {
 		$(this).closest(".module-tree-item-wrap").addClass('loading');
+		// If pane 2 not visible, show
 		var pane2Butt = $(top.document.getElementById("pane2butt"));
-		alert(pane2Butt.attr("title"));
+		if (!pane2Butt.hasClass("selected")) {
+			pane2Butt.click();
+		}
 	});
 	
 	// Initial expand?
