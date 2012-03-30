@@ -2724,7 +2724,6 @@ public final class DataManagement implements DataManagementInfo {
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			logger.debug("About to get table data with " + tableData);
 			tableDataRow = tableData.getTableDataRow(conn, rowId, logTheView);
 			conn.commit();
 		} finally {

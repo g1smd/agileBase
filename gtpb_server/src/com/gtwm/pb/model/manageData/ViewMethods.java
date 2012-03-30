@@ -449,7 +449,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 		// If there was no error submitting the data
 		if (this.ex == null) {
 			// then we can get the values from the database
-			logger.debug("No error, about to get table data row for " + table + ", rowID " + rowId);
 			return this.databaseDefn.getDataManagement().getTableDataRow(this.sessionData, table,
 					rowId, true);
 		} else {
