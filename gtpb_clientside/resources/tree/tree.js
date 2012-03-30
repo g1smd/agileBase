@@ -67,11 +67,12 @@ function pane1Setup() {
 		}
 	});
 	$('#tree a.report_tooltip').click(function() {
-		$(this).closest(".module-tree-item-wrap").addClass('loading');
+		var mtiw = $(this).closest(".module-tree-item-wrap");
+		mtiw.addClass('loading');
 		// If pane 2 not visible, show
 		var pane2Butt = $(top.document.getElementById("pane2butt"));
 		if (!pane2Butt.hasClass("selected")) {
-			pane2Butt.click();
+			setTimeout(pane2Butt.click, 500);
 		}
 	});
 	
