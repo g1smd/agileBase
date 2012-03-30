@@ -647,10 +647,6 @@ div#reportData {
   overflow-x: hidden;
 }
 
-#reportData .block h1 {
-  text-transform: capitalize;
-}
-
 #reportData .block .row {
   vertical-align: bottom;
 }
@@ -662,12 +658,12 @@ div#reportData {
 }
 
 #reportData .block h1 {
-  margin: 0;
+  text-transform: capitalize;
+	margin: 0;
+	margin-bottom: 1em;
   font-size: 120%;
   font-weight: normal;
   text-align: center;
-  position: relative;
-  top: -0.5em;
 }
 
 #reportData .block.non_section h1 {
