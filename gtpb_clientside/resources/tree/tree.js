@@ -68,7 +68,7 @@ function pane1Setup() {
 	});
 	$('#tree a.report_tooltip').click(function() {
 		$(this).closest(".module-tree-item-wrap").addClass('loading');
-		var pane2Butt = $(top.getElementById("pane2butt"));
+		var pane2Butt = $(top.document.getElementById("pane2butt"));
 		alert(pane2Butt.attr("title"));
 	});
 	
