@@ -784,6 +784,10 @@ div#reportData {
   position: static;
 }
 
+#reportData .block .comment_feed input.comment_input {
+  width: 90%;
+}
+
 .comment_feed {
   padding-bottom: 0.5em;
   display: block;
