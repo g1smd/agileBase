@@ -46,7 +46,7 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
 	      if(oElements.picker.reportsList.options.length<1) return;
 	      
 	      var aPostVars=new Array();
-          aPostVars['return']='gui/resources/modalFramework/report';
+        aPostVars['return']='gui/resources/modalFramework/report';
 	      aPostVars['set_custom_report']='true';
 	      aPostVars['reportkey']='picker_report';
 	      aPostVars['custominternalreportname']=oElements.picker.reportsList.options[oElements.picker.reportsList.selectedIndex].value;
