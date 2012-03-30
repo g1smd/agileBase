@@ -101,7 +101,7 @@ public final class AuthManager implements AuthManagerInfo {
 					// GTwM = aeaa2e59ef1798629
 					// CH = aa1d402725710a94d
 					// TD = dg1mzrcv443adjnpg
-					if (company.getInternalCompanyName().equals("aeaa2e59ef1798629")) {
+					if (company.getInternalCompanyName().equals("dg1mzrcv443adjnpg")) {
 						singleCompany = company;
 					}
 				}
