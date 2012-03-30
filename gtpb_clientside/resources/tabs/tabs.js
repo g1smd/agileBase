@@ -940,6 +940,7 @@ function addComment(jqCommentInput) {
 			custominternalfieldname : internalFieldName,
 			add_comment : true,
 			internalfieldname : internalFieldName,
+			internaltablename: internalTableName,
 			comment : text
 		}, function(data) {
 			$("#comments_" + internalFieldName).html(data);
