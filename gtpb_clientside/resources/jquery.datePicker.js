@@ -242,7 +242,6 @@
 									'click',
 									function()
 									{
-										alert('click'); // Oliver
 										$this.dpDisplay(this);
 										this.blur();
 										return false;
