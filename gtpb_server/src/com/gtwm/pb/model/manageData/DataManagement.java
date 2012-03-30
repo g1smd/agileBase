@@ -903,7 +903,8 @@ public final class DataManagement implements DataManagementInfo {
 					&& (!importSequenceValues)) {
 				fields.remove(field);
 			} else if (field.getHidden()) {
-				if (field.getFieldName().equals(HiddenFields.VIEW_COUNT.getFieldName())) {
+				if (field.getFieldName().equals(HiddenFields.VIEW_COUNT.getFieldName())
+						|| field.getFieldName().equals(HiddenFields.COMMENTS_FEED.getFieldName())) {
 					fields.remove(field);
 				} else if (updateExistingRecords) {
 					if (field.getFieldName().equals(HiddenFields.DATE_CREATED.getFieldName())
