@@ -20,7 +20,10 @@
   #set($field = $sessionData.getCustomField("comment"))
 #end
 #if(!$comments)
-	#set($comments = $view.getComments($field))
+  #if(!$sessionRowId)
+    #set($sessionRowId = $sessionData.getRowId($field.getTableContainingField()))
+  #end
+  #set($comments = $view.getComments($field, $sessionRowId))
 #end
 #foreach($comment in $comments)
   <div class="comment">

@@ -257,9 +257,9 @@ public interface ViewMethodsInfo {
 	public Exception getException();
 
 	/**
-	 * Get a set of comments that have been added to a particular field in the current record
+	 * Get a set of comments that have been added to a particular field in the record specified
 	 */
-	public SortedSet<CommentInfo> getComments(BaseField field) throws SQLException, DisallowedException, ObjectNotFoundException, CantDoThatException;
+	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException, DisallowedException, ObjectNotFoundException, CantDoThatException;
 	
 	/**
 	 * @return The list of field values for a particular record, so the record

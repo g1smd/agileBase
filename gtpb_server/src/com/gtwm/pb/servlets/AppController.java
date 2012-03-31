@@ -873,7 +873,7 @@ public final class AppController extends VelocityViewServlet {
 			BaseField field = tableRow.getKey();
 			String value = tableRow.getValue().toString();
 			// Append comments
-			for (CommentInfo comment : view.getComments(field)) {
+			for (CommentInfo comment : view.getComments(field, rowId)) {
 				// TODO: I know, hard coding HTML but what else can we do?
 				value += "<div class='comment'>";
 				value += "<span class='comment_text'>" + comment.getText() + "</span> ";

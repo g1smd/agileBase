@@ -183,9 +183,6 @@ public final class DataManagement implements DataManagementInfo {
 
 	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment)
 			throws SQLException, ObjectNotFoundException, CantDoThatException {
-		if (rowId == -1) {
-			throw new ObjectNotFoundException("Row ID -1 passed: row to attach comment to hasn't been specified");
-		}
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
 		Connection conn = null;
 		try {
@@ -200,7 +197,7 @@ public final class DataManagement implements DataManagementInfo {
 			statement.setString(5, comment);
 			int rowsAffected = statement.executeUpdate();
 			if (rowsAffected != 1) {
-				logger.error("Error adding comment. " + rowsAffected + " rows inserted. SQL = "
+				throw new ObjectNotFoundException("Error adding comment. " + rowsAffected + " rows inserted. SQL = "
 						+ statement);
 			}
 			statement.close();
@@ -218,7 +215,7 @@ public final class DataManagement implements DataManagementInfo {
 			statement.setInt(2, rowId);
 			rowsAffected = statement.executeUpdate();
 			if (rowsAffected != 1) {
-				logger.error("Error concatenating new comment with old. " + rowsAffected
+				throw new ObjectNotFoundException("Error concatenating new comment with old. " + rowsAffected
 						+ " rows updated. SQL = " + statement);
 			}
 			statement.close();

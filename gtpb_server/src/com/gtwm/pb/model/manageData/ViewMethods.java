@@ -406,7 +406,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return unchosenRelationFields;
 	}
 
-	public SortedSet<CommentInfo> getComments(BaseField field) throws SQLException,
+	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException,
 			DisallowedException, ObjectNotFoundException, CantDoThatException {
 		if (field == null) {
 			logger.warn("ViewMethods.getComments called with null field");
@@ -418,7 +418,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
 					table);
 		}
-		int rowId = this.sessionData.getRowId(table);
 		return this.databaseDefn.getDataManagement().getComments(field, rowId);
 	}
 

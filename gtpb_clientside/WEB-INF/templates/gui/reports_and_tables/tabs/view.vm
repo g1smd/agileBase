@@ -96,7 +96,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
                 #foreach($field in $fields)
               	  #set($tableDataValue = $tableDataRow.get($field))
       					  #set($fieldCategory = $field.getFieldCategory())
-									#set($comments = $view.getComments($field))
+									#set($comments = $view.getComments($field$, $relatedRowId))
 									#set($hasComments = ($comments.size() > 0))
             		  ## don't display hidden or blank fields. Do display fields that may have comments
             		  #if($hasComments || (!$fieldCategory.savesData()) || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
