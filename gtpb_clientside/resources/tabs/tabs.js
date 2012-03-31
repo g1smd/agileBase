@@ -942,6 +942,7 @@ function addComment(jqCommentInput) {
 			add_comment : true,
 			internalfieldname : internalFieldName,
 			internaltablename: internalTableName,
+			rowid: rowId,
 			comment : text
 		}, function(data) {
 			$("#comments_" + internalFieldName).html(data);
