@@ -183,6 +183,9 @@ public final class DataManagement implements DataManagementInfo {
 
 	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment)
 			throws SQLException, ObjectNotFoundException, CantDoThatException {
+		if (rowId == -1) {
+			throw new ObjectNotFoundException("Row ID -1 passed: row to attach comment to hasn't been specified");
+		}
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
 		Connection conn = null;
 		try {

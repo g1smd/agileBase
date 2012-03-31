@@ -928,6 +928,7 @@ function fEALoaded() {
 function addComment(jqCommentInput) {
 	var internalFieldName = jqCommentInput.attr("internalfieldname");
 	var internalTableName = jqCommentInput.attr("internaltablename");
+	var rowId = jqCommentInput.attr("rowid");
 	var text = jqCommentInput.val();
 	jqCommentInput.attr("disabled", "true");
 	jqCommentInput.next("input[type=button]").attr("disabed", "true");

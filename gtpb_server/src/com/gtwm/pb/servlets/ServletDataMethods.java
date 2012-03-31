@@ -53,8 +53,9 @@ import org.grlea.log.SimpleLogger;
  * describes the HTTP requests that must be sent to use the methods.
  * 
  * Part of a set of four interfaces, ServletSchemaMethods to manage setting up
- * the database schema, ServletDataMethods to manage data editing, ServletSessionMethods and
- * ServletAuthMethods to do with users, roles and privileges
+ * the database schema, ServletDataMethods to manage data editing,
+ * ServletSessionMethods and ServletAuthMethods to do with users, roles and
+ * privileges
  * 
  * @see ServletSchemaMethods
  * @see ServletAuthMethods
@@ -82,8 +83,11 @@ public final class ServletDataMethods {
 		return null;
 	}
 
-	public static void addComment(SessionDataInfo sessionData, HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException, ObjectNotFoundException, SQLException, MissingParametersException, CantDoThatException {
-		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn, true);
+	public static void addComment(SessionDataInfo sessionData, HttpServletRequest request,
+			DatabaseInfo databaseDefn) throws DisallowedException, ObjectNotFoundException,
+			SQLException, MissingParametersException, CantDoThatException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
+				true);
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.EDIT_TABLE_DATA, table))) {
 			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
@@ -91,12 +95,18 @@ public final class ServletDataMethods {
 		}
 		String internalFieldName = request.getParameter("internalfieldname");
 		BaseField field = table.getField(internalFieldName);
-		int rowId = sessionData.getRowId(table);
+		String rowIdString = request.getParameter("rowid");
+		int rowId = -1;
+		if (rowIdString != null) {
+			rowId = Integer.valueOf(rowIdString);
+		} else {
+			rowId = sessionData.getRowId(table);
+		}
 		AppUserInfo user = databaseDefn.getAuthManager().getLoggedInUser(request);
 		String comment = request.getParameter("comment");
 		databaseDefn.getDataManagement().addComment(field, rowId, user, comment);
 	}
-	
+
 	/**
 	 * Insert or update a database record. Fields passed in the request are
 	 * saved.
@@ -154,8 +164,8 @@ public final class ServletDataMethods {
 			}
 		}
 		sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
-		ServletSessionMethods.setFieldInputValues(sessionData, request, newRecord, databaseDefn, table,
-				multipartItems);
+		ServletSessionMethods.setFieldInputValues(sessionData, request, newRecord, databaseDefn,
+				table, multipartItems);
 		databaseDefn.getDataManagement().saveRecord(request, table,
 				new LinkedHashMap<BaseField, BaseValue>(sessionData.getFieldInputValues()),
 				newRecord, rowId, sessionData, multipartItems);
@@ -222,8 +232,8 @@ public final class ServletDataMethods {
 		sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
 		// false means we're editing existing records, not adding a new one
 		// so only values for specified fields will be set, not all table fields
-		ServletSessionMethods.setFieldInputValues(sessionData, request, false, databaseDefn,
-				table, multipartItems);
+		ServletSessionMethods.setFieldInputValues(sessionData, request, false, databaseDefn, table,
+				multipartItems);
 		int affectedRecords = databaseDefn.getDataManagement().globalEdit(request, table,
 				new LinkedHashMap<BaseField, BaseValue>(sessionData.getFieldInputValues()),
 				sessionData, multipartItems);
