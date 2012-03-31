@@ -18,6 +18,7 @@
 ## If field object not set
 #if(!$field.getFieldCategory())
   #set($field = $sessionData.getCustomField("comment"))
+  #set($sessionRowId = $sessionData.getCustomInteger("comment_rowid"))
 #end
 #if(!$comments)
   #if(!$sessionRowId)
