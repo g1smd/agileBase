@@ -101,24 +101,21 @@
       loadCharts();
 	  });	  
 	  </script>
+	  #set($filtersShouldBeShown = true)
 	#else
 	  #if($isNotTable)
       <script type="text/javascript">
         jqDoc.find('#filter').attr('disabled','true');
       </script>
-		#end
-	#if($mobile_device)
-	  #set($filtersShouldBeShown = true)
-	#else
+	  #end
       #set($filtersShouldBeShown = false)
 	  #if(($resource_folder!='user') && ($resource_folder!='roles'))
-	  #set($sessionFilterString = $sessionData.getCustomString('filtering_on'))
-	  #set($filtersShouldBeShown = ($sessionFilterString=='true'))
-	  #if($viewTools.isNull($sessionFilterString) && ($view.getLoggedInUser().getUserType() == "REPORT"))
-		#set($filtersShouldBeShown = true)
+		  #set($sessionFilterString = $sessionData.getCustomString('filtering_on'))
+		  #set($filtersShouldBeShown = ($sessionFilterString=='true'))
+		  #if($viewTools.isNull($sessionFilterString) && ($view.getLoggedInUser().getUserType() == "REPORT"))
+			#set($filtersShouldBeShown = true)
+		  #end
 	  #end
-	  #end
-	#end
 	#if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
 	    <script language=Javascript>
        var jqDoc = $(top.document);
