@@ -29,7 +29,8 @@
   #if(!$headingRow)
     #foreach($field in $fields)
       #set($isCalc = $field.getClass().getSimpleName() == "CalculationFieldDefn")
-      #if($detailTables.contains($field.getTableContainingField()) && !$isCalc)
+      #set($fieldTable = $field.getTableContainingField())
+      #if($fieldTable.equals($sessionTable) && $detailTables.contains($fieldTable) && (!$isCalc))
         $viewTools.log("Using delete checkboxes due to $field")
         #set($useDeleteCheckboxes = true)
       #end
