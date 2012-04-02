@@ -88,7 +88,7 @@
 		##}
 	#end
 	</style>
-  	<script src="resources/jquery.js" language="Javascript"> </script>
+  	<script src="resources/jquery.js" language="Javascript"></script>
 	#set($sessionReport = $sessionData.getReport())
 	#set($sessionTable = $sessionData.getTable())
     <title>$sessionReport.getModule() - $sessionReport</title>
