@@ -41,6 +41,7 @@
 #if($data_part_only)
 	#set($reportStyle = $sessionReport.getReportStyle())
   #if($reportStyle && ($reportStyle != "SPREADSHEET"))
+    $viewTools.log("Including delete checkboxes")
     #parse('gui/pane2/sectioned_calcs.vm')
     #parse('gui/pane2/sectioned_body.vm')
   #else

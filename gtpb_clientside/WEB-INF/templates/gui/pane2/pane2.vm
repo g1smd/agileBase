@@ -269,7 +269,7 @@
         #parse("gui/pane2/sectioned_head.vm")
         <tbody name=reportBody id=reportBody class="selectable">
           #parse("gui/pane2/sectioned_body.vm")
-  		  </tbody>
+  		</tbody>
       #else
         <thead>
           #parse("gui/pane2/pane2_head.vm")
