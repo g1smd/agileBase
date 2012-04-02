@@ -60,5 +60,7 @@
       <td #if($style != "")style="$style"#end>#if($headingRow) $field #else $cell #end</td>
     #end
   #end
-  <td class="trailing">&nbsp;</td>
+  #if(!$useDeleteCheckboxes)
+    <td class="trailing">&nbsp;</td>
+  #end
 </tr>
