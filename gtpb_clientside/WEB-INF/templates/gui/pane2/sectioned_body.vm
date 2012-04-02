@@ -18,6 +18,14 @@
 ## A report style similar to CrystalReports / JasperReports
 ##
 #set($rowCount = 0)
+#set($useDeleteCheckboxes = false)
+#foreach($field in $fields)
+  #set($isCalc = $field.getClass().getSimpleName() == "CalculationFieldDefn")
+  #set($fieldTable = $field.getTableContainingField())
+  #if($fieldTable.equals($sessionTable) && $detailTables.contains($fieldTable) && (!$isCalc))
+    #set($useDeleteCheckboxes = true)
+  #end
+#end
 #foreach($row in $data)
   ## row[0] contains the data to display in each field
   ## row[1] contains the click event parameters for the row

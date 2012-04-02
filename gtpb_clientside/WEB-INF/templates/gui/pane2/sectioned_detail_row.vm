@@ -25,17 +25,6 @@
   onclick="$row.get(1)" 
   forcehighlight="true">
   <td class="leading">&nbsp;</td>
-  #set($useDeleteCheckboxes = false)
-  #if(!$headingRow)
-    #foreach($field in $fields)
-      #set($isCalc = $field.getClass().getSimpleName() == "CalculationFieldDefn")
-      #set($fieldTable = $field.getTableContainingField())
-      #if($fieldTable.equals($sessionTable) && $detailTables.contains($fieldTable) && (!$isCalc))
-        $viewTools.log("Using delete checkboxes due to $field")
-        #set($useDeleteCheckboxes = true)
-      #end
-    #end
-  #end
   #set($numCells = $thisValues.size())
   #foreach($cell in $thisValues)
     #set($cellNumber = $foreach.count - 1)
@@ -48,8 +37,9 @@
       #end
     #end
     ## If a non-primary key detail field
-    #set($nonPkeyDetailField =  ( (($detailTables.contains($field.getTableContainingField()) && !$isCalc) || $detailCalc) ) && (!$field.isPrimaryKey())) 
-    #if(($useDeleteCheckboxes && (($cellNumber+1) == $numCells)) || $nonPkeyDetailField)
+    #set($nonPkeyDetailField =  ( (($detailTables.contains($field.getTableContainingField()) && !$isCalc) || $detailCalc) ) && (!$field.isPrimaryKey()))
+    #set($showDelete = ((!$headingRow) && $useDeleteCheckboxes && (($cellNumber+1) == $numCells)))
+    #if($showDelete || $nonPkeyDetailField)
       #set($rightAlign = false)
       #set($fieldCategory = $field.getFieldCategory().toString())
       #if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
