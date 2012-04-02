@@ -195,13 +195,13 @@ public interface DataManagementInfo {
 	 *            Report to show summary for
 	 * @param company
 	 *            Used to inform per-company caching
-	 * @param alwaysUseCache
-	 *            If true, always use the cached data if any's available
+	 * @param aggressiveCache
+	 *            If true, always use the cached data if any's available for the past 48 hrs
 	 * @return The report summary data, or null if the summary isn't valid, e.g.
 	 *         doesn't contain an aggregate function
 	 */
 	public ChartDataInfo getChartData(CompanyInfo company, ChartInfo reportSummaryDefn,
-			Map<BaseField, String> reportFilterValues, boolean alwaysUseCache) throws SQLException,
+			Map<BaseField, String> reportFilterValues, boolean aggressiveCache) throws SQLException,
 			CantDoThatException;
 
 	/**

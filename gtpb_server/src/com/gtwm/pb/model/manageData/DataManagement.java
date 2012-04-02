@@ -2462,7 +2462,7 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public ChartDataInfo getChartData(CompanyInfo company, ChartInfo reportSummary,
-			Map<BaseField, String> reportFilterValues, boolean alwaysUseCache) throws SQLException,
+			Map<BaseField, String> reportFilterValues, boolean aggressiveCache) throws SQLException,
 			CantDoThatException {
 		boolean needSummary = (reportSummary.getAggregateFunctions().size() > 0);
 		if (!needSummary) {
@@ -2481,14 +2481,16 @@ public final class DataManagement implements DataManagementInfo {
 			reportSummaryData = this.fetchChartData(reportSummary, reportFilterValues);
 			this.cachedChartDatas.put(reportSummary, reportSummaryData);
 			this.chartDataCacheMisses.incrementAndGet();
-		} else if (alwaysUseCache) {
-			this.chartDataCacheHits.incrementAndGet();
 		} else {
+			long cacheCreationTime = reportSummaryData.getCacheCreationTime();
 			long lastDataChangeTime = getLastCompanyDataChangeTime(company);
 			long lastSchemaChangeTime = this.getLastSchemaChangeTime(company);
-			long cacheCreationTime = reportSummaryData.getCacheCreationTime();
-			if ((cacheCreationTime <= lastDataChangeTime)
-					|| (cacheCreationTime <= lastSchemaChangeTime)) {
+			long interval = 0;
+			if (aggressiveCache) {
+				interval = 48*60*60*1000;
+			}
+			if (((cacheCreationTime - interval) <= lastDataChangeTime)
+					|| ((cacheCreationTime - interval) <= lastSchemaChangeTime)) {
 				reportSummaryData = this.fetchChartData(reportSummary, reportFilterValues);
 				this.cachedChartDatas.put(reportSummary, reportSummaryData);
 				this.chartDataCacheMisses.incrementAndGet();
