@@ -206,9 +206,11 @@ public final class DataManagement implements DataManagementInfo {
 			TableInfo table = field.getTableContainingField();
 			BaseField concatenationField = table
 					.getField(HiddenFields.COMMENTS_FEED.getFieldName());
+			BaseField lastModifiedField = table.getField(HiddenFields.LAST_MODIFIED.getFieldName());
 			SQLCode = "UPDATE " + table.getInternalTableName() + " SET "
 					+ concatenationField.getInternalFieldName();
-			SQLCode += " = (? || coalesce(" + concatenationField.getInternalFieldName() + ", ''))";
+			SQLCode += " = (? || coalesce(" + concatenationField.getInternalFieldName() + ", '')), ";
+			SQLCode += lastModifiedField.getInternalFieldName() + " = now()";
 			SQLCode += " WHERE " + table.getPrimaryKey().getInternalFieldName() + "=?";
 			statement = conn.prepareStatement(SQLCode);
 			statement.setString(1, comment + "\n---\n");
