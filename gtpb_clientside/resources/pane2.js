@@ -96,10 +96,10 @@ function fDeleteObj(sAction, sRowIdentifier) {
 
 	function fReqComplete(sResponseText, sResponseXML) {
 		function fReformatTable() {
-			$('#reportBody tr:even').not('.trailing').not('.seemorerows')
-					.removeClass().addClass('rowa');
-			$('#reportBody tr:odd').not('.trailing').not('.seemorerows')
-					.removeClass().addClass('rowb');
+			$('#reportBody tr:even').not('.trailing').not('.seemorerows').not('.h1').not('.h2').not('.h3')
+					.removeClass('rowa').removeClass('rowb').addClass('rowa');
+			$('#reportBody tr:odd').not('.trailing').not('.seemorerows').not('.h1').not('.h2').not('.h3')
+					.removeClass('rowa').removeClass('rowb').addClass('rowb');
 		}
 
 		function fRetryDeletions() {
