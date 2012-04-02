@@ -39,15 +39,19 @@
 #end
 #end
 #if($data_part_only)
-	#set($reportStyle = $sessionReport.getReportStyle())
+  #set($reportStyle = $sessionReport.getReportStyle())
   #if($reportStyle && ($reportStyle != "SPREADSHEET"))
+    $viewTools.log("Report style $reportStyle")
     #parse('gui/pane2/sectioned_calcs.vm')
     #parse('gui/pane2/sectioned_body.vm')
   #else
+    $viewTools.log("gui/pane2/pane2_body.vm")
     #parse('gui/pane2/pane2_body.vm')
   #end
 #elseif($table_part_only)
+  $viewTools.log("gui/pane2/pane2_table.vm")
   #parse('gui/pane2/pane2_table.vm')
 #else
+  $viewTools.log("gui/pane2/pane2.vm")
   #parse('gui/pane2/pane2.vm')
 #end
