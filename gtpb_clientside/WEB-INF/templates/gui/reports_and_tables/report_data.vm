@@ -127,12 +127,16 @@
   #end##
   #if($noOutput)
   #elseif($printout)##
+    $viewTools.log("gui/printouts/pane2_printout.vm")
     #parse('gui/printouts/pane2_printout.vm')##
   #elseif($table_part_only && $data_part_only) ## a panel
+    $viewTools.log("gui/pane2/pane2_body.vm")
     #parse('gui/pane2/pane2_body.vm')
   #elseif($table_part_only)
+    $viewTools.log("gui/pane2/pane2_table.vm")
     #parse('gui/pane2/pane2_table.vm')
   #else##
+    $viewTools.log("gui/pane2/include_delete_checkboxes.vm")
     #parse('gui/pane2/include_delete_checkboxes.vm')##
   #end##
 #else ##if there's no report in the session
