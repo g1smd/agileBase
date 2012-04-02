@@ -30,6 +30,7 @@
     #foreach($field in $fields)
       #set($isCalc = $field.getClass().getSimpleName() == "CalculationFieldDefn")
       #if($detailTables.contains($field.getTableContainingField()) && !$isCalc)
+        $viewTools.log("Using delete checkboxes due to $field")
         #set($useDeleteCheckboxes = true)
       #end
     #end
