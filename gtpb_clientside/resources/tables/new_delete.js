@@ -71,6 +71,7 @@ function fLoadFromPreview(oBlock, event) {
 	parent.pane_2.loadIntoPane3('AppController.servlet?return=gui/reports_and_tables/pane3&set_row_id=' + rowId + '&set_custom_string=1&key=report_tabindex&value=2', rowId, 6);
   showPane3IfNecessary(event);
   if (event.target.nodeName != "IMG") {
-  	jqBlock.closest("#preview").fadeOut();
+  	//jqBlock.closest("#preview").fadeOut();
+  	closePreview();
   }
 }
