@@ -47,7 +47,7 @@
     #end
     ## If a non-primary key detail field
     #set($nonPkeyDetailField =  ( (($detailTables.contains($field.getTableContainingField()) && !$isCalc) || $detailCalc) ) && (!$field.isPrimaryKey())) 
-    #if((($cellNumber+1) == $numCells) || $nonPkeyDetailField)
+    #if(($useDeleteCheckboxes && (($cellNumber+1) == $numCells)) || $nonPkeyDetailField)
       #set($rightAlign = false)
       #set($fieldCategory = $field.getFieldCategory().toString())
       #if(($fieldCategory == "NUMBER") || ($fieldCategory == "SEQUENCE"))
