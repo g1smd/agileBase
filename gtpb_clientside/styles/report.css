@@ -95,8 +95,13 @@ div#wrapper table#reportData #fieldFilters td {
   height: 20px;
 }
 
-#fieldFilters input { 
+table#reportData thead tr#fieldFilters input { 
   width:100%;
+  border-radius: 0.5em;
+  border: 1px solid #cecece;
+}
+
+div#fieldFilters input {
   border-radius: 0.5em;
   border: 1px solid #cecece;
 }
