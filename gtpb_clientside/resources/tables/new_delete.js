@@ -72,6 +72,7 @@ function fLoadFromPreview(oBlock, event) {
   showPane3IfNecessary(event);
   if (event.target.nodeName != "IMG") {
   	//jqBlock.closest("#preview").fadeOut();
-  	closePreview();
+  	top.closePreview();
+  	//TODO: also clear quick search string in session
   }
 }
