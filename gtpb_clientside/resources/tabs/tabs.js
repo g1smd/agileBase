@@ -1225,7 +1225,12 @@ function fMarkInactiveTabs() {
 			"AppController.servlet?return=gui/reports_and_tables/tabs/tabs_inactive",
 			function(data) {
 				for (i = 0; i < data.length; i++) {
-					$("#tab_choice_" + data[i]).addClass("no_records");
+					var jqTab = $("#tab_choice_" + data[i]);
+					jqTab.addClass("no_records");
+					if (jqTab.hasClass("active")) {
+						// Hide the deleter if the active tab has no record(s)
+						$("#tab_deleter").fadeOut();
+					}
 				}
 			});
 }
