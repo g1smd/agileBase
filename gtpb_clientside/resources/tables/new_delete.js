@@ -56,7 +56,7 @@ function fLinks()
 {
 	$.get('AppController.servlet?return=gui/links',
 	  function(mailtoUrl) {
-		document.location.href=mailtoUrl;
+		  document.location.href=mailtoUrl;
 	  }
 	);
 }

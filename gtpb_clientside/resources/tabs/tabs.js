@@ -1166,8 +1166,13 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 	var jqElement = $(oElement);
 	var internalTableName;
 	var rowId;
-	if (jqElement.hasClass("tab_choice")) {
-		internalTableName = jqElement.attr("data-internaltablename");
+	if (jqElement.closest("#tab_deleter").size() > 0) {
+		var jqTab = jqElement.closest(".form_tabber").find(".tab_choice");
+		if (jqTab.size() == 0) {
+			alert("Coding error: active tab not found");
+			return;
+		}
+		internalTableName = jqTab.attr("data-internaltablename");
 		rowId = $("#rowid_" + internalTableName).attr("data-rowid");
 	} else {
 		rowId = jqElement.closest("tr").attr("name");
