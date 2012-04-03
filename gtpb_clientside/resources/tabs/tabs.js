@@ -1355,7 +1355,7 @@ function fFormStyle() {
 							editTabFunctions();
 							// If only one child record, show delete button in tabs bar
 							if ((tabContainer.find(".selectorReport").size() == 0)
-									&& jqTab.attr("data-singular")) {
+									&& jqTab.attr("data-singular") && (!jqTab.hasClass("no_records"))) {
 								var singularName = jqTab.attr("data-singular");
 								$("#tab_deleter").find("img").attr("title",
 										"delete this " + singularName);
