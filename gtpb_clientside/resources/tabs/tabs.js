@@ -1167,6 +1167,7 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 	var internalTableName;
 	var rowId;
 	if (jqElement.closest("#tab_deleter").size() > 0) {
+		alert("Single");
 		var jqTab = jqElement.closest(".form_tabber").find(".tab_choice");
 		if (jqTab.size() == 0) {
 			alert("Coding error: active tab not found");
@@ -1175,6 +1176,7 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 		internalTableName = jqTab.attr("data-internaltablename");
 		rowId = $("#rowid_" + internalTableName).attr("data-rowid");
 	} else {
+		alert("One of many");
 		rowId = jqElement.closest("tr").attr("name");
 		internalTableName = jqElement.closest(".selectorReport").attr(
 				"data-internaltablename");
