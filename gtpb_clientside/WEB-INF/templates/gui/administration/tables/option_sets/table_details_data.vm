@@ -36,7 +36,18 @@
     <input name="tableemail" gtpb_update_table #if($table.getEmail()) value="$table.getEmail()" #end onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" identifier="$internalTableName" gtpb_internaltablename="$internalTableName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/>
     <p>
       <!-- table deletion button -->
-	<input type=button value="Delete Table" #if($view.loggedInUserAllowedTo('ADMINISTRATE')) onclick="top.location='AppController.servlet?return=gui/display_application&remove_table=true&internaltablename=$internalTableName'" #else disabled=true #end>
+      #set($tableDeleteEnabled = true)
+      #if(!$view.loggedInUserAllowedTo('ADMINISTRATE'))
+        #set($tableDeleteEnabled = false)
+        #set($reason = "Only administrators can delete tables")
+      #elseif($table.getReports().size() > 1)
+        #set($tableDeleteEnabled = false)
+        #set($reason = "All reports based on this table must be removed before deleting the table")
+      #elseif($table.getFields().size() > 1)
+        #set($tableDeleteEnabled = false)
+        #set($reason = "Please remove all table fields before deleting the table")
+      #end
+	<input type=button value="Delete Table" #if($tableDeleteEnabled) onclick="top.location='AppController.servlet?return=gui/display_application&remove_table=true&internaltablename=$internalTableName'" #else disabled=true title="$reason" #end>
     </td>
 	<td class="table_details" style="background-color:#f4f4f4">
       <form method="POST" action="AppController.servlet" target="pane_1">
