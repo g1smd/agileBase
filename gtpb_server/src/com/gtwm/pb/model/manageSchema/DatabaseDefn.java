@@ -675,15 +675,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 			for (BaseField field : table.getFields()) {
 				if (field.getFieldCategory().savesData()) {
 					if (field instanceof RelationField) {
-						logger.debug("Came across relation field " + field);
+						RelationField relationField = ((RelationField) field);
 						// Workaround for bug: creating more than one relation
 						// at a time fails with a Hibernate Exception
-						if (relatedTables.size() == 0) {
+						// Also relation fields which have a display field which is also a relation field are complex
+						if ((relatedTables.size() == 0) && !(relationField.getDisplayField() instanceof RelationField)) {
 							logger.debug("No related tables yet, adding");
 							// add a join to allow related field to be added to
 							// the
 							// report
-							RelationField relationField = ((RelationField) field);
 							TableInfo relatedTable = relationField.getRelatedTable();
 							if (!relatedTables.contains(relatedTable)) {
 								logger.debug("Related tables " + relatedTables + " doesn't yet contain " + relatedTable);
