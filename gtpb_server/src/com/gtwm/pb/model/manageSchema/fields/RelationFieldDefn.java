@@ -36,6 +36,7 @@ import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageData.DataManagement;
@@ -211,20 +212,23 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			int maxResults) throws SQLException, CodingErrorException {
 		return this.getItemsWork(reverseKeyValue, filterString, maxResults, true);
 	}
-	
+
 	/**
 	 * Not in interface, only used from DataManagement#importCSV
 	 */
-	public SortedMap<String, String> getItems(boolean reverseKeyValue, boolean allowSecondaryField) throws CodingErrorException, SQLException {
+	public SortedMap<String, String> getItems(boolean reverseKeyValue, boolean allowSecondaryField)
+			throws CodingErrorException, SQLException {
 		return this.getItemsWork(reverseKeyValue, null, -1, allowSecondaryField);
 	}
 
 	private SortedMap<String, String> getItemsWork(boolean reverseKeyValue, String filterString,
 			int maxResults, boolean allowSecondaryField) throws SQLException, CodingErrorException {
 		SortedMap<String, String> items = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
-		String displayFieldInternalName = this.getDisplayField().getInternalFieldName();
+		BaseField displayField = this.getDisplayField();
+		String displayFieldInternalName = displayField.getInternalFieldName();
 		String relatedTableInternalName = this.getRelatedTable().getInternalTableName();
-		String relatedFieldInternalName = this.getRelatedField().getInternalFieldName();
+		BaseField relatedField = this.getRelatedField();
+		String relatedFieldInternalName = relatedField.getInternalFieldName();
 		long cacheAge = System.currentTimeMillis() - this.itemsLastCacheTime;
 		long lastChangeAge = System.currentTimeMillis()
 				- DataManagement.getLastTableDataChangeTime(this.getRelatedTable());
@@ -241,17 +245,55 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			this.itemsCache.clear();
 		}
 		String secondaryFieldInternalName = null;
-		boolean requireJoin = false;
-		String SQLCode = "";
+		boolean secondaryFieldRequiresJoin = false;
+		boolean primaryFieldRequiresJoin = false;
 		boolean useSecondaryField = false;
 		if ((this.getSecondaryDisplayField() != null) && allowSecondaryField) {
 			secondaryFieldInternalName = this.getSecondaryDisplayField().getInternalFieldName();
 			useSecondaryField = true;
 			if (this.getSecondaryDisplayField() instanceof RelationField) {
-				requireJoin = true;
+				secondaryFieldRequiresJoin = true;
 			}
 		}
-		if (requireJoin) {
+		if (displayField instanceof RelationField) {
+			primaryFieldRequiresJoin = true;
+		}
+		if (filterString != null) {
+			filterString = filterString.replace("*", "%").toLowerCase();
+			if (filterString.startsWith(":")) {
+				filterString = filterString.replaceFirst(":", "");
+			} else if (!filterString.startsWith("%")) {
+				filterString = "%" + filterString;
+			}
+			filterString += "%";
+		}
+		String SQLCode = "";
+		if (primaryFieldRequiresJoin) {
+			// TODO: refactor primaryFieldRequiresJoin and secondaryFieldRequiresJoin.
+			// Basically the same query
+			SQLCode = "SELECT " + relatedTableInternalName + "." + relatedFieldInternalName;
+			RelationField displayRelationField = (RelationField) displayField;
+			TableInfo tier3Table = displayRelationField.getRelatedTable();
+			String tier3TableInternalName = tier3Table.getInternalTableName();
+			SQLCode += ", " + tier3TableInternalName + "."
+					+ displayRelationField.getDisplayField().getInternalFieldName();
+			if (useSecondaryField) {
+				SQLCode += ", " + relatedTableInternalName + "." + secondaryFieldInternalName;
+			}
+			SQLCode += " FROM " + relatedTableInternalName + " LEFT OUTER JOIN "
+					+ tier3TableInternalName;
+			SQLCode += " ON " + relatedTableInternalName + "." + displayFieldInternalName;
+			SQLCode += " = " + tier3TableInternalName + "."
+					+ displayRelationField.getRelatedField().getInternalFieldName();
+			SQLCode += " WHERE " + tier3TableInternalName + "."
+					+ displayRelationField.getRelatedField().getInternalFieldName()
+					+ " IS NOT NULL";
+			if (filterString != null) {
+				SQLCode += " AND lower(" + tier3TableInternalName + "."
+						+ displayRelationField.getRelatedField().getInternalFieldName()
+						+ "::text) LIKE ?";
+			}
+		} else if (secondaryFieldRequiresJoin) {
 			SQLCode = "SELECT " + relatedTableInternalName + "." + relatedFieldInternalName;
 			SQLCode += ", " + relatedTableInternalName + "." + displayFieldInternalName;
 			RelationField secondaryDisplayField = ((RelationField) this.getSecondaryDisplayField());
@@ -264,26 +306,25 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			SQLCode += " ON " + relatedTableInternalName + "." + secondaryFieldInternalName;
 			SQLCode += "  = " + tier3TableInternalName + "."
 					+ secondaryDisplayField.getRelatedField().getInternalFieldName();
+			// Discard any items with nothing in the display field
+			SQLCode += " WHERE " + relatedTableInternalName + "." + displayFieldInternalName
+					+ " IS NOT NULL";
 		} else {
 			SQLCode = "SELECT " + relatedFieldInternalName + ", " + displayFieldInternalName;
 			if (useSecondaryField) {
 				SQLCode += ", " + secondaryFieldInternalName;
 			}
 			SQLCode += " FROM " + relatedTableInternalName;
+			// Discard any items with nothing in the display field
+			SQLCode += " WHERE " + relatedTableInternalName + "." + displayFieldInternalName
+					+ " IS NOT NULL";
 		}
-		// Discard any items with nothing in the display field
-		SQLCode += " WHERE " + relatedTableInternalName + "." + displayFieldInternalName
-				+ " IS NOT NULL";
-		if (filterString != null) {
-			filterString = filterString.replace("*", "%").toLowerCase();
-			if (filterString.startsWith(":")) {
-				filterString = filterString.replaceFirst(":", "");
-			} else if (!filterString.startsWith("%")) {
-				filterString = "%" + filterString;
+		if ((!primaryFieldRequiresJoin) && (filterString != null)) {
+			SQLCode += " AND lower(" + relatedTableInternalName + "." + displayFieldInternalName;
+			if (!(displayField instanceof TextField)) {
+				SQLCode += "::text";
 			}
-			filterString += "%";
-			SQLCode += " AND lower(" + relatedTableInternalName + "." + displayFieldInternalName
-					+ "::text) LIKE ?";
+			SQLCode += ") LIKE ?";
 		}
 		// We don't need to order in SQL, results are put into a sorted set
 		// Actually since we're only selecting a subset, we should sort to be

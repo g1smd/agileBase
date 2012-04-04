@@ -680,13 +680,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 						// at a time fails with a Hibernate Exception
 						// Also relation fields which have a display field which is also a relation field are complex
 						if ((relatedTables.size() == 0) && !(relationField.getDisplayField() instanceof RelationField)) {
-							logger.debug("No related tables yet, adding");
 							// add a join to allow related field to be added to
-							// the
-							// report
+							// the report
 							TableInfo relatedTable = relationField.getRelatedTable();
 							if (!relatedTables.contains(relatedTable)) {
-								logger.debug("Related tables " + relatedTables + " doesn't yet contain " + relatedTable);
 								relatedTables.add(relatedTable);
 								JoinClauseInfo join = ServletSchemaMethods.generateJoinObject(
 										request, table.getInternalTableName(), "", field
