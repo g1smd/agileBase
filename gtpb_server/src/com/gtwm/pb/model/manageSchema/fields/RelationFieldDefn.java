@@ -269,6 +269,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		}
 		String SQLCode = "";
 		if (primaryFieldRequiresJoin) {
+			logger.debug("Primary field requires join");
 			// TODO: refactor primaryFieldRequiresJoin and secondaryFieldRequiresJoin.
 			// Basically the same query
 			SQLCode = "SELECT " + relatedTableInternalName + "." + relatedFieldInternalName;
@@ -290,7 +291,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 					+ " IS NOT NULL";
 			if (filterString != null) {
 				SQLCode += " AND lower(" + tier3TableInternalName + "."
-						+ displayRelationField.getRelatedField().getInternalFieldName()
+						+ displayRelationField.getDisplayField().getInternalFieldName()
 						+ "::text) LIKE ?";
 			}
 		} else if (secondaryFieldRequiresJoin) {
@@ -333,6 +334,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		if (maxResults > 0) {
 			SQLCode += " LIMIT " + maxResults;
 		}
+		logger.debug(SQLCode);
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
