@@ -32,19 +32,21 @@
   #if($selectorReport)
     #set($filter = $viewTools.getNewFilterMap())
     #set($pKey = $parentTable.getPrimaryKey())
-    #set($success = false)
+    #set($found = false)
     #if($selectorReport.getReportBaseFields().contains($pKey))
       ## Standard reports
       #set($success = $filter.put($pKey, "$parentRowId"))
+      #set($found = true)
     #else
       ## Our report may be the tab table's default report
       #foreach($testField in $selectorReport.getReportBaseFields())
         #if($testField.getRelatedField().equals($pKey))
           #set($success = $filter.put($testField, "$parentRowId"))
+          #set($found = true)
         #end
       #end
     #end
-    #if($success)
+    #if($found)
 	  #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
 	  #if($datarows.size() > 1)
 	    #parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
