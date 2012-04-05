@@ -114,6 +114,7 @@
       #end
     </select>
   </form>
+  #set($parentPkey = $table.getPrimaryKey())
   #foreach($formTab in $formTabs)
     #set($tabTable = $formTab.getTable())    
     <a href="?return=gui/reports_and_tables/pane3&remove_form_tab=true&tabtable=$tabTable.getInternalTableName()"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a>
@@ -121,7 +122,7 @@
       #set($tabPkey = $tabTable.getPrimaryKey())
       #set($defaultReport = $tabTable.getDefaultReport())
       #foreach($prospectiveReport in $tabTable.getReports())
-        #if($prospectiveReport.getReportBaseFields().contains($tabPkey))
+        #if($prospectiveReport.getReportBaseFields().contains($parentPkey) || ($prospectiveReport.equals($tabTable.getDefaultReport())))
           <option value="$prospectiveReport.getInternalReportName()" #if($prospectiveReport.equals($formTab.getSelectorReport())) selected #end>
           #if($prospectiveReport.equals($defaultReport))
             $tabTable.getSimpleName() - all data

@@ -24,6 +24,7 @@ import javax.persistence.ManyToOne;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.FormTabInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
+import com.gtwm.pb.model.interfaces.fields.BaseField;
 
 @Entity
 public class FormTab implements FormTabInfo {
@@ -35,6 +36,21 @@ public class FormTab implements FormTabInfo {
 		this.setParentTable(parentTable);
 		this.setTable(table);
 		this.setIndex(index);
+		// Choose an initial selector report for the tab
+		BaseField parentPkey = table.getPrimaryKey();
+		boolean found = false;
+		REPORT_LOOP: for (BaseReportInfo testReport : table.getReports()) {
+			if ((testReport.getReportBaseFields().contains(parentPkey))
+					&& (!testReport.getReportName().contains("dbvcalc"))
+					&& (!testReport.getReportName().contains("dbvcrit"))) {
+				this.setSelectorReport(testReport);
+				found = true;
+				break REPORT_LOOP;
+			}
+		}
+		if (!found) {
+			this.setSelectorReport(table.getDefaultReport());
+		}
 	}
 
 	@Id

@@ -394,16 +394,6 @@ public final class ServletSchemaMethods {
 			newIndex = formTabs.last().getIndex() + 1;
 		}
 		FormTabInfo formTab = new FormTab(table, tabTable, newIndex);
-		// Choose an initial selector report for the tab
-		BaseField parentPkey = table.getPrimaryKey();
-		REPORT_LOOP: for (BaseReportInfo testReport : tabTable.getReports()) {
-			if ((testReport.getReportBaseFields().contains(parentPkey))
-					&& (!testReport.getReportName().contains("dbvcalc"))
-					&& (!testReport.getReportName().contains("dbvcrit"))) {
-				formTab.setSelectorReport(testReport);
-				break REPORT_LOOP;
-			}
-		}
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.currentSession().save(formTab);
