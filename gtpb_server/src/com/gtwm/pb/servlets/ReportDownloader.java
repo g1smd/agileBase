@@ -263,6 +263,7 @@ public final class ReportDownloader extends HttpServlet {
 						cell.setCellValue(Double.valueOf(fieldValue.replace(",", "")));
 					} catch (NumberFormatException nfex) {
 						// Fall back to a string representation
+						cell.setCellType(Cell.CELL_TYPE_STRING);
 						cell.setCellValue(fieldValue);
 					}
 					break;
@@ -273,6 +274,7 @@ public final class ReportDownloader extends HttpServlet {
 						cell.setCellValue(Integer.valueOf(fieldValue.replace(",", "")));
 					} catch (NumberFormatException nfex) {
 						// Fall back to a string representation
+						cell.setCellType(Cell.CELL_TYPE_STRING);
 						cell.setCellValue(fieldValue);
 					}
 					break;
