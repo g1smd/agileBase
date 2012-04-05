@@ -86,7 +86,8 @@
 				<pathelement location="WEB-INF/lib/simple-log.jar"/>
 				<pathelement location="WEB-INF/lib/simple-log-rollover.jar"/>
 				<!-- Excel spreadsheets -->
-				<pathelement location="WEB-INF/lib/poi-3.6-20091214.jar"/>
+				<pathelement location="WEB-INF/lib/poi-3.8.jar"/>
+				<pathelement location="WEB-INF/lib/poi-ooxml-3.8.jar"/>
 				<!-- date/time parsing -->
 				<pathelement location="WEB-INF/lib/ERChronic.jar"/>
 				<!-- iCal generation -->

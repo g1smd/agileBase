@@ -32,13 +32,13 @@ import java.io.IOException;
 //import java.nio.charset.Charset;
 //import java.nio.file.Files;
 //import java.nio.file.Path;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.grlea.log.SimpleLogger;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -66,6 +66,7 @@ import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.DataManagementInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
+import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
@@ -157,20 +158,22 @@ public final class ReportDownloader extends HttpServlet {
 			SessionDataInfo sessionData, BaseReportInfo report) throws ServletException {
 		ByteArrayOutputStream spreadsheetOutputStream = null;
 		try {
+			TableInfo table = report.getParentTable();
 			AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-			if (!report.getAllowExport() && (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
-				throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			if (!report.getAllowExport() && (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table))) {
+				throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
 			}
 			CompanyInfo company = authManager.getCompanyForLoggedInUser(
 					request);
 			AppUserInfo user = authManager.getUserByUserName(request,
 					request.getRemoteUser());
+			logger.info("User " + user + " exporting report " + report + " from table " + table);
 			spreadsheetOutputStream = this.getSessionReportAsExcel(company, user, sessionData);
 			response.setHeader("Cache-Control", "no-cache");
 			response.setContentType("application/vnd.ms-excel");
 			String filename = "";
-			if (report.equals(report.getParentTable().getDefaultReport())) {
-				filename = report.getParentTable().getTableName();
+			if (report.equals(table.getDefaultReport())) {
+				filename = table.getTableName();
 			} else {
 				filename = sessionData.getReport().getReportName();
 			}
@@ -207,13 +210,13 @@ public final class ReportDownloader extends HttpServlet {
 			throw new ObjectNotFoundException("No report found in the session");
 		}
 		// create Excel spreadsheet
-		HSSFWorkbook workbook = new HSSFWorkbook();
+		Workbook workbook = new SXSSFWorkbook();
 		// the pane 2 report
 		String reportName = report.getReportName();
 		// Replace any invalid characters : \ / ? * [ or ]
 		// http://support.microsoft.com/kb/215205
 		reportName = reportName.replaceAll("[\\/\\:\\\\\\?\\*\\[\\]]", "-");
-		HSSFSheet reportSheet;
+		Sheet reportSheet;
 		try {
 			reportSheet = workbook.createSheet(reportName);
 		} catch (IllegalArgumentException iaex) {
@@ -221,16 +224,16 @@ public final class ReportDownloader extends HttpServlet {
 		}
 		int rowNum = 0;
 		// header
-		HSSFCellStyle boldCellStyle = workbook.createCellStyle();
-		HSSFFont font = workbook.createFont();
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		CellStyle boldCellStyle = workbook.createCellStyle();
+		Font font = workbook.createFont();
+		font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		boldCellStyle.setFont(font);
-		HSSFRow row = reportSheet.createRow(rowNum);
+		Row row = reportSheet.createRow(rowNum);
 		int columnNum = 0;
 		Set<ReportFieldInfo> reportFields = report.getReportFields();
 		for (ReportFieldInfo reportField : reportFields) {
-			HSSFCell cell = row.createCell(columnNum);
-			cell.setCellValue(new HSSFRichTextString(reportField.getFieldName()));
+			Cell cell = row.createCell(columnNum);
+			cell.setCellValue(reportField.getFieldName());
 			cell.setCellStyle(boldCellStyle);
 			columnNum++;
 		}
@@ -252,10 +255,10 @@ public final class ReportDownloader extends HttpServlet {
 				} else {
 					fieldValue = dataRowFieldMap.get(field).getDisplayValue();
 				}
-				HSSFCell cell;
+				Cell cell;
 				switch (field.getDbType()) {
 				case FLOAT:
-					cell = row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC);
+					cell = row.createCell(columnNum, Cell.CELL_TYPE_NUMERIC);
 					try {
 						cell.setCellValue(Double.valueOf(fieldValue.replace(",", "")));
 					} catch (NumberFormatException nfex) {
@@ -265,7 +268,7 @@ public final class ReportDownloader extends HttpServlet {
 					break;
 				case INTEGER:
 				case SERIAL:
-					cell = row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC);
+					cell = row.createCell(columnNum, Cell.CELL_TYPE_NUMERIC);
 					try {
 						cell.setCellValue(Integer.valueOf(fieldValue.replace(",", "")));
 					} catch (NumberFormatException nfex) {
@@ -275,7 +278,7 @@ public final class ReportDownloader extends HttpServlet {
 					break;
 				case VARCHAR:
 				default:
-					cell = row.createCell(columnNum, HSSFCell.CELL_TYPE_STRING);
+					cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
 					cell.setCellValue(Helpers.unencodeHtml(fieldValue));
 					break;
 				}
@@ -306,9 +309,9 @@ public final class ReportDownloader extends HttpServlet {
 	 * Add a sheet with export information to the workbook
 	 */
 	private static void addReportMetaDataWorksheet(CompanyInfo company, AppUserInfo user,
-			SessionDataInfo sessionData, BaseReportInfo report, HSSFWorkbook workbook) {
+			SessionDataInfo sessionData, BaseReportInfo report, Workbook workbook) {
 		String title = "Export information";
-		HSSFSheet infoSheet;
+		Sheet infoSheet;
 		try {
 			infoSheet = workbook.createSheet(title);
 		} catch (IllegalArgumentException iaex) {
@@ -317,49 +320,49 @@ public final class ReportDownloader extends HttpServlet {
 			// The sheet name must be unique
 			infoSheet = workbook.createSheet(title + " " + report.getInternalReportName());
 		}
-		HSSFRow row = infoSheet.createRow(0);
-		HSSFCell cell = row.createCell(1);
-		cell.setCellValue(new HSSFRichTextString("Export from www.agilebase.co.uk"));
+		Row row = infoSheet.createRow(0);
+		Cell cell = row.createCell(1);
+		cell.setCellValue("Export from www.agilebase.co.uk");
 		row = infoSheet.createRow(2);
 		cell = row.createCell(0);
-		cell.setCellValue(new HSSFRichTextString("Company"));
+		cell.setCellValue("Company");
 		cell = row.createCell(1);
-		cell.setCellValue(new HSSFRichTextString(company.getCompanyName()));
+		cell.setCellValue(company.getCompanyName());
 		row = infoSheet.createRow(3);
 		cell = row.createCell(0);
-		cell.setCellValue(new HSSFRichTextString("Module"));
+		cell.setCellValue("Module");
 		cell = row.createCell(1);
 		ModuleInfo module = report.getModule();
 		if (module != null) {
-			cell.setCellValue(new HSSFRichTextString(report.getModule().getModuleName()));
+			cell.setCellValue(report.getModule().getModuleName());
 		} else {
-			cell.setCellValue(new HSSFRichTextString(""));
+			cell.setCellValue("");
 		}
 		row = infoSheet.createRow(4);
 		cell = row.createCell(0);
-		cell.setCellValue(new HSSFRichTextString("Report"));
+		cell.setCellValue("Report");
 		cell = row.createCell(1);
-		cell.setCellValue(new HSSFRichTextString(report.getReportName()));
+		cell.setCellValue(report.getReportName());
 		row = infoSheet.createRow(5);
 		cell = row.createCell(0);
-		cell.setCellValue(new HSSFRichTextString("Exported by"));
+		cell.setCellValue("Exported by");
 		cell = row.createCell(1);
-		cell.setCellValue(new HSSFRichTextString(user.getForename() + " " + user.getSurname()));
+		cell.setCellValue(user.getForename() + " " + user.getSurname());
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date date = new Date();
 		String now = dateFormat.format(date);
 		row = infoSheet.createRow(6);
 		cell = row.createCell(0);
-		cell.setCellValue(new HSSFRichTextString("Export time"));
+		cell.setCellValue("Export time");
 		cell = row.createCell(1);
-		cell.setCellValue(new HSSFRichTextString(now));
+		cell.setCellValue(now);
 	}
 
 	/**
 	 * Add a worksheet to the report for the specified workbook
 	 */
 	private void addSummaryWorksheet(CompanyInfo company, SessionDataInfo sessionData,
-			ChartInfo reportSummary, HSSFWorkbook workbook) throws SQLException,
+			ChartInfo reportSummary, Workbook workbook) throws SQLException,
 			CantDoThatException {
 		ChartDataInfo reportSummaryData = this.databaseDefn.getDataManagement().getChartData(
 				company, reportSummary, sessionData.getReportFilterValues(), false);
@@ -367,11 +370,11 @@ public final class ReportDownloader extends HttpServlet {
 			return;
 		}
 		int rowNum;
-		HSSFRow row;
-		HSSFCell cell;
+		Row row;
+		Cell cell;
 		int columnNum;
 		String fieldValue;
-		HSSFSheet summarySheet;
+		Sheet summarySheet;
 		String summaryTitle = reportSummary.getTitle();
 		if (summaryTitle == null) {
 			summaryTitle = "Summary";
@@ -391,9 +394,9 @@ public final class ReportDownloader extends HttpServlet {
 		rowNum = 0;
 		row = summarySheet.createRow(rowNum);
 		columnNum = 0;
-		HSSFCellStyle boldCellStyle = workbook.createCellStyle();
-		HSSFFont font = workbook.createFont();
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		CellStyle boldCellStyle = workbook.createCellStyle();
+		Font font = workbook.createFont();
+		font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		boldCellStyle.setFont(font);
 		Set<ChartAggregateInfo> aggregateFunctions = reportSummary.getAggregateFunctions();
 		Set<ChartGroupingInfo> groupings = reportSummary.getGroupings();
@@ -406,14 +409,14 @@ public final class ReportDownloader extends HttpServlet {
 				fieldValue = groupingBaseField.getFieldName();
 			}
 			cell = row.createCell(columnNum);
-			cell.setCellValue(new HSSFRichTextString(fieldValue));
+			cell.setCellValue(fieldValue);
 			cell.setCellStyle(boldCellStyle);
 			columnNum++;
 		}
 		for (ChartAggregateInfo aggregateFunction : aggregateFunctions) {
 			fieldValue = aggregateFunction.toString();
 			cell = row.createCell(columnNum);
-			cell.setCellValue(new HSSFRichTextString(fieldValue));
+			cell.setCellValue(fieldValue);
 			cell.setCellStyle(boldCellStyle);
 			columnNum++;
 		}
@@ -424,12 +427,12 @@ public final class ReportDownloader extends HttpServlet {
 			columnNum = 0;
 			for (ChartGroupingInfo grouping : groupings) {
 				fieldValue = summaryDataRow.getGroupingValue(grouping);
-				row.createCell(columnNum).setCellValue(new HSSFRichTextString(fieldValue));
+				row.createCell(columnNum).setCellValue(fieldValue);
 				columnNum++;
 			}
 			for (ChartAggregateInfo aggregateFunction : aggregateFunctions) {
 				Double number = summaryDataRow.getAggregateValue(aggregateFunction).doubleValue();
-				row.createCell(columnNum, HSSFCell.CELL_TYPE_NUMERIC).setCellValue(number);
+				row.createCell(columnNum, Cell.CELL_TYPE_NUMERIC).setCellValue(number);
 				columnNum++;
 			}
 			rowNum++;
