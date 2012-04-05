@@ -31,18 +31,34 @@
   #set($sessionRowId = $sessionData.getRowId($sessionTable))
   #if($selectorReport)
     #set($filter = $viewTools.getNewFilterMap())
-    #set($success = $filter.put($parentTable.getPrimaryKey(), "$parentRowId"))
-    #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
-    #if($datarows.size() > 1)
-			#parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
-		#elseif($datarows.size() == 1)
-      #set($sessionRowId = $datarows.get(0).getRowId())
-		#else
-			#set($sessionRowId = -1)
-    #end ## end if datarows.size > 0
-    #if($sessionRowId > -1)
-      #set($component = true)
-      #parse("gui/reports_and_tables/tabs/tab_content_table.vm")
-    #end 
+    #set($pKey = $parentTable.getPrimaryKey())
+    #set($success = false)
+    #if($selectorReport.getReportBaseFields().contains($pKey))
+      ## Standard reports
+      #set($success = $filter.put($pKey, "$parentRowId"))
+    #else
+      ## Our report may be the tab table's default report
+      #foreach($testField in $selectorReport.getReportBaseFields())
+        #if($testField.getRelatedField().equals($pKey))
+          #set($success = $filter.put($testField, "$parentRowId"))
+        #end
+      #end
+    #end
+    #if($success)
+	  #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
+	  #if($datarows.size() > 1)
+	    #parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
+	  #elseif($datarows.size() == 1)
+	    #set($sessionRowId = $datarows.get(0).getRowId())
+	  #else
+	    #set($sessionRowId = -1)
+	  #end ## end if datarows.size > 1
+	  #if($sessionRowId > -1)
+	    #set($component = true)
+	    #parse("gui/reports_and_tables/tabs/tab_content_table.vm")
+	  #end 
+    #else
+      <div class="warningmessage">The report $selectorReport is not suitable for use in a form tab</div>
+    #end
   #end ## if selectorReport
 #end
