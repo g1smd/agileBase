@@ -410,11 +410,17 @@ public class ReportData implements ReportDataInfo {
 				timespanCanBeParsed = false;
 			}
 		}
+		/*
 		if (filterField instanceof RelationField) {
 			sqlFilterString = generateSqlFilterStringForRelation((RelationField) filterField,
 					filterType);
 			filterStringForField.append(sqlFilterString);
-		} else if (dbType.equals(DatabaseFieldType.TIMESTAMP) && !timespanCanBeParsed) {
+		} else 
+		*/
+		if (filterField instanceof RelationField) {
+			logger.warn("Relation field filter: " + filterField.getTableContainingField() + "." + filterField + " = " + filterValue);
+		}
+		if (dbType.equals(DatabaseFieldType.TIMESTAMP) && !timespanCanBeParsed) {
 			sqlFilterString = generateSqlFilterStringForDateAsText(filterField, filterType);
 			filterStringForField.append(sqlFilterString);
 		} else if (dbType.equals(DatabaseFieldType.BOOLEAN)) {
