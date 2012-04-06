@@ -182,7 +182,7 @@ public final class ReportDownloader extends HttpServlet {
 				filename = sessionData.getReport().getReportName();
 			}
 			filename = filename.replaceAll("\\W+", "_");
-			filename = filename + ".xls";
+			filename += ".xlsx";
 			response.setHeader("Content-disposition", "attachment; filename=" + filename);
 			response.setContentLength(spreadsheetOutputStream.size());
 			ServletOutputStream sos = response.getOutputStream();
