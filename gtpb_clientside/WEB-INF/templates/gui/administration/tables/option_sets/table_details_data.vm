@@ -43,9 +43,14 @@
       #elseif($table.getReports().size() > 1)
         #set($tableDeleteEnabled = false)
         #set($reason = "All reports based on this table must be removed before deleting the table")
-      #elseif($table.getFields().size() > 1)
-        #set($tableDeleteEnabled = false)
-        #set($reason = "Please remove all table fields before deleting the table")
+      #else
+        #set($tableFields = $table.getFields())
+        #foreach($tableField in $tableFields)
+          #if((!$tableField.getHidden()) && (!$tableField.equals($pKey)))
+            #set($tableDeleteEnabled = false)
+            #set($reason = "Please remove all table fields before deleting the table")
+          #end
+        #end
       #end
 	<input type=button value="Delete Table" #if($tableDeleteEnabled) onclick="top.location='AppController.servlet?return=gui/display_application&remove_table=true&internaltablename=$internalTableName'" #else disabled=true title="$reason" #end>
     </td>
