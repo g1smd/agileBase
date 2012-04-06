@@ -49,7 +49,6 @@
         #foreach($tableField in $tableFields)
           #if((!$tableField.getHidden()) && (!$tableField.equals($pKey)))
             #set($tableDeleteEnabled = false)
-            Field $tableField stops table deletion<p>
             #set($reason = "Please remove all table fields before deleting the table")
           #end
         #end
