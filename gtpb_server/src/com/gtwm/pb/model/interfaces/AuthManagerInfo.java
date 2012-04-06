@@ -155,7 +155,7 @@ public interface AuthManagerInfo {
 	 *             company, users and roles of that company must also be deleted
 	 */
 	public void removeRole(HttpServletRequest request, AppRoleInfo role)
-			throws DisallowedException, ObjectNotFoundException, CodingErrorException;
+			throws DisallowedException, ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
 	/**
 	 * 

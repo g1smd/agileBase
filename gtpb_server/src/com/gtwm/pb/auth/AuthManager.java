@@ -315,7 +315,7 @@ public final class AuthManager implements AuthManagerInfo {
 			}
 			for (AppRoleInfo role : company.getRoles()) {
 				logger.info("removing " + role);
-				this.removeRole(request, role);
+				this.removeRoleWithoutChecks(request, role);
 			}
 		} catch (ObjectNotFoundException onfex) {
 			throw new CodingErrorException("User or role in company " + company
@@ -490,8 +490,20 @@ public final class AuthManager implements AuthManagerInfo {
 		((Authenticator) this.authenticator).updateRole(role, newRoleName);
 	}
 
-	public synchronized void removeRole(HttpServletRequest request, AppRoleInfo role)
-			throws DisallowedException, ObjectNotFoundException, CodingErrorException {
+	public void removeRole(HttpServletRequest request, AppRoleInfo role)
+			throws DisallowedException, ObjectNotFoundException, CodingErrorException, CantDoThatException {
+		// agileBase has one role with admin privileges, check we're not removing that one
+		Set<RoleGeneralPrivilegeInfo> rolePrivileges = this.getPrivilegesForRole(request, role);
+		for (RoleGeneralPrivilegeInfo rolePrivilege : rolePrivileges) {
+			if (rolePrivilege.getPrivilegeType().equals(PrivilegeType.ADMINISTRATE)) {
+				throw new CantDoThatException("Can't remove role '" + role + "' because it has administrator privileges");
+			}
+		}
+		removeRoleWithoutChecks(request, role);
+	}
+
+	private synchronized void removeRoleWithoutChecks(HttpServletRequest request, AppRoleInfo role)
+			throws ObjectNotFoundException, DisallowedException, CodingErrorException {
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || this.authenticator
 				.loggedInUserAllowedTo(request, PrivilegeType.MASTER))) {
 			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
