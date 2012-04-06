@@ -117,8 +117,10 @@ public final class ReportDownloader extends HttpServlet {
 				+ ".vm";
 		try {
 			AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-			if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, report.getParentTable())) {
-				throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, report.getParentTable());
+			if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+					PrivilegeType.MANAGE_TABLE, report.getParentTable())) {
+				throw new DisallowedException(authManager.getLoggedInUser(request),
+						PrivilegeType.MANAGE_TABLE, report.getParentTable());
 			}
 			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 					request);
@@ -126,17 +128,18 @@ public final class ReportDownloader extends HttpServlet {
 					+ "WEB-INF/templates/uploads/" + company.getInternalCompanyName() + "/"
 					+ report.getInternalReportName() + "/" + rinsedTemplateName;
 			// Java 7
-			//Path path = Paths.get(pathString);
-			//List<String> lines = Files.readAllLines(path, Charset.defaultCharset());
+			// Path path = Paths.get(pathString);
+			// List<String> lines = Files.readAllLines(path,
+			// Charset.defaultCharset());
 			// Java 6
-			FileReader fr = new FileReader(pathString); 
-			BufferedReader br = new BufferedReader(fr); 
+			FileReader fr = new FileReader(pathString);
+			BufferedReader br = new BufferedReader(fr);
 			List<String> lines = new LinkedList<String>();
 			String s;
-			while((s = br.readLine()) != null) {
+			while ((s = br.readLine()) != null) {
 				lines.add(s);
 			}
-			fr.close(); 
+			fr.close();
 			response.setHeader("Content-disposition", "attachment; filename=" + rinsedTemplateName);
 			response.setHeader("Cache-Control", "no-cache");
 			response.setContentType("text/html");
@@ -160,13 +163,14 @@ public final class ReportDownloader extends HttpServlet {
 		try {
 			TableInfo table = report.getParentTable();
 			AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-			if (!report.getAllowExport() && (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table))) {
-				throw new DisallowedException(authManager.getLoggedInUser(request), PrivilegeType.MANAGE_TABLE, table);
+			if (!report.getAllowExport()
+					&& (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+							PrivilegeType.MANAGE_TABLE, table))) {
+				throw new DisallowedException(authManager.getLoggedInUser(request),
+						PrivilegeType.MANAGE_TABLE, table);
 			}
-			CompanyInfo company = authManager.getCompanyForLoggedInUser(
-					request);
-			AppUserInfo user = authManager.getUserByUserName(request,
-					request.getRemoteUser());
+			CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
+			AppUserInfo user = authManager.getUserByUserName(request, request.getRemoteUser());
 			logger.info("User " + user + " exporting report " + report + " from table " + table);
 			spreadsheetOutputStream = this.getSessionReportAsExcel(company, user, sessionData);
 			response.setHeader("Cache-Control", "no-cache");
@@ -255,35 +259,37 @@ public final class ReportDownloader extends HttpServlet {
 				} else {
 					fieldValue = dataRowFieldMap.get(field).getDisplayValue();
 				}
-				Cell cell;
-				switch (field.getDbType()) {
-				case FLOAT:
-					cell = row.createCell(columnNum, Cell.CELL_TYPE_NUMERIC);
-					try {
-						cell.setCellValue(Double.valueOf(fieldValue.replace(",", "")));
-					} catch (NumberFormatException nfex) {
-						// Fall back to a string representation
-						cell.setCellType(Cell.CELL_TYPE_STRING);
-						cell.setCellValue(fieldValue);
+				if (!fieldValue.equals("")) {
+					Cell cell;
+					switch (field.getDbType()) {
+					case FLOAT:
+						cell = row.createCell(columnNum, Cell.CELL_TYPE_NUMERIC);
+						try {
+							cell.setCellValue(Double.valueOf(fieldValue.replace(",", "")));
+						} catch (NumberFormatException nfex) {
+							// Fall back to a string representation
+							cell.setCellType(Cell.CELL_TYPE_STRING);
+							cell.setCellValue(fieldValue);
+						}
+						break;
+					case INTEGER:
+					case SERIAL:
+						cell = row.createCell(columnNum, Cell.CELL_TYPE_NUMERIC);
+						try {
+							cell.setCellValue(Integer.valueOf(fieldValue.replace(",", "")));
+						} catch (NumberFormatException nfex) {
+							logger.debug(nfex.toString() + ": value " + fieldValue.replace(",", ""));
+							// Fall back to a string representation
+							cell.setCellType(Cell.CELL_TYPE_STRING);
+							cell.setCellValue(fieldValue);
+						}
+						break;
+					case VARCHAR:
+					default:
+						cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
+						cell.setCellValue(Helpers.unencodeHtml(fieldValue));
+						break;
 					}
-					break;
-				case INTEGER:
-				case SERIAL:
-					cell = row.createCell(columnNum, Cell.CELL_TYPE_NUMERIC);
-					try {
-						cell.setCellValue(Integer.valueOf(fieldValue.replace(",", "")));
-					} catch (NumberFormatException nfex) {
-						logger.debug(nfex.toString() + ": value " + fieldValue.replace(",", ""));
-						// Fall back to a string representation
-						cell.setCellType(Cell.CELL_TYPE_STRING);
-						cell.setCellValue(fieldValue);
-					}
-					break;
-				case VARCHAR:
-				default:
-					cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
-					cell.setCellValue(Helpers.unencodeHtml(fieldValue));
-					break;
 				}
 				columnNum++;
 			}
@@ -365,8 +371,7 @@ public final class ReportDownloader extends HttpServlet {
 	 * Add a worksheet to the report for the specified workbook
 	 */
 	private void addSummaryWorksheet(CompanyInfo company, SessionDataInfo sessionData,
-			ChartInfo reportSummary, Workbook workbook) throws SQLException,
-			CantDoThatException {
+			ChartInfo reportSummary, Workbook workbook) throws SQLException, CantDoThatException {
 		ChartDataInfo reportSummaryData = this.databaseDefn.getDataManagement().getChartData(
 				company, reportSummary, sessionData.getReportFilterValues(), false);
 		if (reportSummaryData == null) {
