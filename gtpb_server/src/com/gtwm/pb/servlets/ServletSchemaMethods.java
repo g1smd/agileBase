@@ -116,7 +116,7 @@ public final class ServletSchemaMethods {
 	 *             privileges
 	 */
 	public synchronized static void addCompany(HttpServletRequest request,
-			AuthManagerInfo authManager) throws DisallowedException, MissingParametersException,
+			DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException,
 			CantDoThatException, CodingErrorException, SQLException {
 		String companyName = request.getParameter("companyname");
 		if (companyName == null) {
@@ -126,6 +126,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.startHibernateTransaction();
 			CompanyInfo company = new Company(companyName);
 			HibernateUtil.currentSession().save(company);
+			AuthManagerInfo authManager = databaseDefn.getAuthManager();
 			authManager.addCompany(request, company);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (Exception ex) {

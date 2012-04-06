@@ -824,7 +824,7 @@ div#reportData {
 }
 
 .form_tabber .tab_choice.no_records {
-  color: white;
+  color: #777777;
 }
 
 .form_tabber .tab_choice:first-child {

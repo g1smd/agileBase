@@ -278,8 +278,7 @@ public final class AuthManager implements AuthManagerInfo {
 				adminPassword);
 		String adminRolename = adminUsername;
 		AppRoleInfo adminRole = new AppRole(company, null, adminRolename);
-		// no mapping from role to authenticator so we have to explicitly save
-		// it
+		// no mapping from role to authenticator so we have to explicitly save it
 		HibernateUtil.currentSession().save(adminRole);
 		try {
 			this.addUser(request, adminUser);

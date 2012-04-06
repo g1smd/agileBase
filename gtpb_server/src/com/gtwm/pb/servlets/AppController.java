@@ -493,7 +493,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletDataMethods.lockRecords(sessionData, request, databaseDefn);
 					break;
 				case ADD_COMPANY:
-					ServletSchemaMethods.addCompany(request, databaseDefn.getAuthManager());
+					ServletSchemaMethods.addCompany(request, databaseDefn);
 					break;
 				case REMOVE_COMPANY:
 					ServletSchemaMethods.removeCompany(request, databaseDefn.getAuthManager());
