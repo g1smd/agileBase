@@ -45,6 +45,7 @@
         #set($reason = "All reports based on this table must be removed before deleting the table")
       #else
         #set($tableFields = $table.getFields())
+        #set($pKey = $table.getPrimaryKey())
         #foreach($tableField in $tableFields)
           #if((!$tableField.getHidden()) && (!$tableField.equals($pKey)))
             #set($tableDeleteEnabled = false)
