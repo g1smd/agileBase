@@ -128,6 +128,8 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().save(company);
 			AuthManagerInfo authManager = databaseDefn.getAuthManager();
 			authManager.addCompany(request, company);
+			// Create an initial module
+			ModuleInfo module = databaseDefn.addModule(request);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (Exception ex) {
 			HibernateUtil.rollbackHibernateTransaction();

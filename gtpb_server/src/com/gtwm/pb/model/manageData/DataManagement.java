@@ -199,8 +199,8 @@ public final class DataManagement implements DataManagementInfo {
 			statement.setString(5, comment);
 			int rowsAffected = statement.executeUpdate();
 			if (rowsAffected != 1) {
-				throw new ObjectNotFoundException("Error adding comment. " + rowsAffected + " rows inserted. SQL = "
-						+ statement);
+				throw new ObjectNotFoundException("Error adding comment. " + rowsAffected
+						+ " rows inserted. SQL = " + statement);
 			}
 			statement.close();
 			// Concatenate all comments into the hidden comments field (for
@@ -211,7 +211,8 @@ public final class DataManagement implements DataManagementInfo {
 			BaseField lastModifiedField = table.getField(HiddenFields.LAST_MODIFIED.getFieldName());
 			SQLCode = "UPDATE " + table.getInternalTableName() + " SET "
 					+ concatenationField.getInternalFieldName();
-			SQLCode += " = (? || coalesce(" + concatenationField.getInternalFieldName() + ", '')), ";
+			SQLCode += " = (? || coalesce(" + concatenationField.getInternalFieldName()
+					+ ", '')), ";
 			SQLCode += lastModifiedField.getInternalFieldName() + " = now()";
 			SQLCode += " WHERE " + table.getPrimaryKey().getInternalFieldName() + "=?";
 			statement = conn.prepareStatement(SQLCode);
@@ -219,8 +220,8 @@ public final class DataManagement implements DataManagementInfo {
 			statement.setInt(2, rowId);
 			rowsAffected = statement.executeUpdate();
 			if (rowsAffected != 1) {
-				throw new ObjectNotFoundException("Error concatenating new comment with old. " + rowsAffected
-						+ " rows updated. SQL = " + statement);
+				throw new ObjectNotFoundException("Error concatenating new comment with old. "
+						+ rowsAffected + " rows updated. SQL = " + statement);
 			}
 			statement.close();
 			conn.commit();
@@ -1715,10 +1716,6 @@ public final class DataManagement implements DataManagementInfo {
 			// user has permissions on all dependent data. however, deletion
 			// should only continue if the user has opted to cascade deletion
 			if (!cascade) {
-				// String dependentTables = "";
-				// for (TableInfo dependentTable : tablesWithDependentRecords) {
-				// dependentTables += dependentTable.getTableName() + "\n";
-				// }
 				String warning = "";
 				for (Map.Entry<TableInfo, String> dependency : recordDependencies.entrySet()) {
 					warning += dependency.getKey().getSimpleName() + " - " + dependency.getValue()
@@ -1727,7 +1724,6 @@ public final class DataManagement implements DataManagementInfo {
 				throw new DataDependencyException(warning);
 			}
 		}
-
 		String SQLCode = "DELETE FROM " + table.getInternalTableName() + " WHERE "
 				+ table.getPrimaryKey().getInternalFieldName() + "=?";
 		try {
@@ -1750,17 +1746,19 @@ public final class DataManagement implements DataManagementInfo {
 			} else {
 				// Delete comments for the record
 				Set<String> internalFieldNamesSet = new HashSet<String>();
-				for(BaseField field : table.getFields()) {
-					internalFieldNamesSet.add("'" + field.getInternalFieldName() + "'");
+				for (BaseField field : table.getFields()) {
+					if (!field.getHidden()) {
+						internalFieldNamesSet.add("'" + field.getInternalFieldName() + "'");
+					}
 				}
-				String internalFieldNamesCsv =  StringUtils.join(internalFieldNamesSet, ",");
-				SQLCode = "DELETE FROM dbint_comments WHERE rowid=? AND internalfieldname IN (" + internalFieldNamesCsv + ")";
+				String internalFieldNamesCsv = StringUtils.join(internalFieldNamesSet, ",");
+				SQLCode = "DELETE FROM dbint_comments WHERE rowid=? AND internalfieldname IN ("
+						+ internalFieldNamesCsv + ")";
 				statement = conn.prepareStatement(SQLCode);
 				statement.setInt(1, rowId);
-				logger.debug("Comment deletion statement: " + statement);
 				int numCommentsDeleted = statement.executeUpdate();
 				if (numCommentsDeleted > 0) {
-					logger.info("" + numCommentsDeleted + " comments deleted with " + statement);
+					logger.info("" + numCommentsDeleted + " comments deleted when deleting " + table + " record " + rowId);
 				}
 				statement.close();
 				conn.commit();
@@ -2479,8 +2477,8 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public ChartDataInfo getChartData(CompanyInfo company, ChartInfo reportSummary,
-			Map<BaseField, String> reportFilterValues, boolean aggressiveCache) throws SQLException,
-			CantDoThatException {
+			Map<BaseField, String> reportFilterValues, boolean aggressiveCache)
+			throws SQLException, CantDoThatException {
 		boolean needSummary = (reportSummary.getAggregateFunctions().size() > 0);
 		if (!needSummary) {
 			return null;
@@ -2504,7 +2502,7 @@ public final class DataManagement implements DataManagementInfo {
 			long lastSchemaChangeTime = this.getLastSchemaChangeTime(company);
 			long interval = 0;
 			if (aggressiveCache) {
-				interval = 48*60*60*1000;
+				interval = 48 * 60 * 60 * 1000;
 			}
 			if (((cacheCreationTime - interval) <= lastDataChangeTime)
 					|| ((cacheCreationTime - interval) <= lastSchemaChangeTime)) {
