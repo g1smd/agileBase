@@ -1751,12 +1751,13 @@ public final class DataManagement implements DataManagementInfo {
 				// Delete comments for the record
 				Set<String> internalFieldNamesSet = new HashSet<String>();
 				for(BaseField field : table.getFields()) {
-					internalFieldNamesSet.add(field.getInternalFieldName());
+					internalFieldNamesSet.add("'" + field.getInternalFieldName() + "'");
 				}
 				String internalFieldNamesCsv =  StringUtils.join(internalFieldNamesSet, ",");
 				SQLCode = "DELETE FROM dbint_comments WHERE rowid=? AND internalfieldname IN (" + internalFieldNamesCsv + ")";
 				statement = conn.prepareStatement(SQLCode);
 				statement.setInt(1, rowId);
+				logger.debug("Comment deletion statement: " + statement);
 				int numCommentsDeleted = statement.executeUpdate();
 				if (numCommentsDeleted > 0) {
 					logger.info("" + numCommentsDeleted + " comments deleted with " + statement);
