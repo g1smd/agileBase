@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%
 String requestURL = request.getRequestURL().toString();
 boolean live = false;
@@ -43,4 +44,4 @@ if (requestURL.contains("appserver.")) {
 			</form>
 		</div>
     </body>
-</html> <!-- end of mobile version -->
+</html>
