@@ -16,7 +16,7 @@
 </script>
     </head>
     <body style="text-align: center">
-      <img src="absolutelypc.png" />
+      <img src="website/partner/absolutelypc.png" />
 			<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
 			username<br />
 			<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/><br>
