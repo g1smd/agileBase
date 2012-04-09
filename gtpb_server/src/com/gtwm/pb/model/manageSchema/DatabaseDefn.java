@@ -2050,6 +2050,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 			statement.execute();
 			statement.close();
 		}
+		// Also delete any comments linked to the field
+		PreparedStatement statement = conn.prepareStatement("DELETE FROM dbint_comments WHERE internalfieldname=" + field.getInternalFieldName());
+		statement.execute();
+		statement.close();
 		// Persist change
 		if (removedReportField != null) {
 			HibernateUtil.currentSession().delete(removedReportField);

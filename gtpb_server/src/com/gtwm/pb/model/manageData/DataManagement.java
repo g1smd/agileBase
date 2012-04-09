@@ -54,6 +54,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.coobird.thumbnailator.Thumbnails;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.math.util.MathUtils;
 import com.gtwm.pb.auth.PrivilegeType;
@@ -1746,6 +1748,20 @@ public final class DataManagement implements DataManagementInfo {
 				throw new ObjectNotFoundException(String.valueOf(numRowsDeleted)
 						+ " records deleted for row id " + String.valueOf(rowId));
 			} else {
+				// Delete comments for the record
+				Set<String> internalFieldNamesSet = new HashSet<String>();
+				for(BaseField field : table.getFields()) {
+					internalFieldNamesSet.add(field.getInternalFieldName());
+				}
+				String internalFieldNamesCsv =  StringUtils.join(internalFieldNamesSet, ",");
+				SQLCode = "DELETE FROM dbint_comments WHERE rowid=? AND internalfieldname IN (" + internalFieldNamesCsv + ")";
+				statement = conn.prepareStatement(SQLCode);
+				statement.setInt(1, rowId);
+				int numCommentsDeleted = statement.executeUpdate();
+				if (numCommentsDeleted > 0) {
+					logger.info("" + numCommentsDeleted + " comments deleted with " + statement);
+				}
+				statement.close();
 				conn.commit();
 			}
 		} finally {
@@ -2017,7 +2033,7 @@ public final class DataManagement implements DataManagementInfo {
 			id += report.getInternalReportName();
 		}
 		id += sortedFilterValues.toString();
-		CachedReportFeedInfo cachedJSON = this.cachedCalendarJSONs.get(id);
+		CachedReportFeedInfo cachedJSON = cachedCalendarJSONs.get(id);
 		if (cachedJSON != null) {
 			this.calendarJsonCacheHits.incrementAndGet();
 			// Note: if we choose not to invalidate the cache on every data
@@ -2075,7 +2091,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		String json = stringWriter.toString();
 		cachedJSON = new CachedFeed(json);
-		this.cachedCalendarJSONs.put(id, cachedJSON);
+		cachedCalendarJSONs.put(id, cachedJSON);
 		int cacheMisses = this.calendarJsonCacheMisses.incrementAndGet();
 		if (cacheMisses > 100) {
 			logger.info("Calendar JSON cache hits: " + this.calendarJsonCacheHits + ", misses "
@@ -2100,7 +2116,7 @@ public final class DataManagement implements DataManagementInfo {
 		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
 				filterValues);
 		String id = report.getInternalReportName() + sortedFilterValues.toString();
-		CachedReportFeedInfo cachedJSON = this.cachedCalendarJSONs.get(id);
+		CachedReportFeedInfo cachedJSON = cachedCalendarJSONs.get(id);
 		if (cachedJSON != null) {
 			this.calendarJsonCacheHits.incrementAndGet();
 			// Note: if we choose not to invalidate the cache on every data
@@ -2200,7 +2216,7 @@ public final class DataManagement implements DataManagementInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 		String json = stringWriter.toString();
 		cachedJSON = new CachedFeed(json);
-		this.cachedCalendarJSONs.put(id, cachedJSON);
+		cachedCalendarJSONs.put(id, cachedJSON);
 		int cacheMisses = this.calendarJsonCacheMisses.incrementAndGet();
 		if (cacheMisses > 100) {
 			logger.info("JSON cache hits: " + this.calendarJsonCacheHits + ", misses "
@@ -3290,6 +3306,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	private Map<ChartInfo, ChartDataInfo> cachedChartDatas = new ConcurrentHashMap<ChartInfo, ChartDataInfo>();
 
+	// Static because used in static methods
 	private static Map<String, CachedReportFeedInfo> cachedCalendarJSONs = new ConcurrentHashMap<String, CachedReportFeedInfo>();
 
 	private Map<String, CachedReportFeedInfo> cachedReportFeeds = new ConcurrentHashMap<String, CachedReportFeedInfo>();
