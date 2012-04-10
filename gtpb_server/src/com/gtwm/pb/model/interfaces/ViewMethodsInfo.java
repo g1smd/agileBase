@@ -546,7 +546,7 @@ public interface ViewMethodsInfo {
 	 * the specified report
 	 */
 	public Set<TableInfo> getTablesNecessaryToViewReport(BaseReportInfo report)
-			throws CodingErrorException, ObjectNotFoundException;
+			throws CodingErrorException;
 
 	/**
 	 * @param tableID

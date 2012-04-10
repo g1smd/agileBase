@@ -346,7 +346,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 
 	public Set<TableInfo> getTablesNecessaryToViewReport(BaseReportInfo report)
-			throws CodingErrorException, ObjectNotFoundException {
+			throws CodingErrorException {
 		return this.getAuthenticator().getTablesNecessaryToViewReport(this.request, report);
 	}
 	

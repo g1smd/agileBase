@@ -67,5 +67,5 @@ public interface AuthenticatorInfo {
 	 * 
 	 * @see Similar to #loggedInUserAllowedToViewReport
 	 */
-	public Set<TableInfo> getTablesNecessaryToViewReport(HttpServletRequest request, BaseReportInfo report) throws CodingErrorException, ObjectNotFoundException;
+	public Set<TableInfo> getTablesNecessaryToViewReport(HttpServletRequest request, BaseReportInfo report) throws CodingErrorException;
 }
