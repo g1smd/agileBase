@@ -17,6 +17,8 @@
  */
 package com.gtwm.pb.model.interfaces;
 
+import java.util.Set;
+
 import javax.servlet.http.*;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.util.CodingErrorException;
@@ -59,4 +61,11 @@ public interface AuthenticatorInfo {
 	 * tables and recursively all joined reports
 	 */
 	public boolean loggedInUserAllowedToViewReport(HttpServletRequest request, BaseReportInfo report) throws CodingErrorException;
+	
+	/**
+	 * Returns all the tables that the logged in user needs view privileges on in order to view the report.
+	 * 
+	 * @see Similar to #loggedInUserAllowedToViewReport
+	 */
+	public Set<TableInfo> getTablesNecessaryToViewReport(HttpServletRequest request, BaseReportInfo report) throws CodingErrorException, ObjectNotFoundException;
 }

@@ -450,6 +450,28 @@ public final class Authenticator implements AuthenticatorInfo {
 		}
 		return this.specifiedUserAllowedToViewReport(appUser, report, new HashSet<BaseReportInfo>());
 	}
+	
+	public Set<TableInfo> getTablesNecessaryToViewReport(HttpServletRequest request, BaseReportInfo report) throws CodingErrorException, ObjectNotFoundException {
+		AppUserInfo user = this.getUserByUserName(request.getRemoteUser());
+		return this.tablesNecessaryToViewReport(user, report, new TreeSet<TableInfo>());
+	}
+	
+	/**
+	 * Recursive method
+	 */
+	private Set<TableInfo> tablesNecessaryToViewReport(AppUserInfo user, BaseReportInfo report, Set<TableInfo> necessaryTables) throws CodingErrorException {
+		// First include the report's parent table
+		necessaryTables.add(report.getParentTable());
+		// check any joined tables
+		SimpleReportInfo simpleReport = (SimpleReportInfo) report;
+		necessaryTables.addAll(simpleReport.getJoinedTables());
+		// recursively check any joined reports
+		Set<BaseReportInfo> joinedReports = simpleReport.getJoinedReports();
+		for (BaseReportInfo joinedReport : joinedReports) {
+			necessaryTables.addAll(this.tablesNecessaryToViewReport(user, joinedReport, necessaryTables));
+		}
+		return necessaryTables;
+	}
 
 	/**
 	 * Recursive method

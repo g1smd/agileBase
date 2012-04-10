@@ -257,10 +257,12 @@ public interface ViewMethodsInfo {
 	public Exception getException();
 
 	/**
-	 * Get a set of comments that have been added to a particular field in the record specified
+	 * Get a set of comments that have been added to a particular field in the
+	 * record specified
 	 */
-	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException, DisallowedException, ObjectNotFoundException, CantDoThatException;
-	
+	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException,
+			DisallowedException, ObjectNotFoundException, CantDoThatException;
+
 	/**
 	 * @return The list of field values for a particular record, so the record
 	 *         can be displayed or edited. The session will know what table and
@@ -298,8 +300,9 @@ public interface ViewMethodsInfo {
 	/**
 	 * @see DataRowInfo#childDataRowsExist()
 	 */
-	public boolean childDataRowsExist(TableInfo childTable) throws SQLException, DisallowedException, ObjectNotFoundException;
-	
+	public boolean childDataRowsExist(TableInfo childTable) throws SQLException,
+			DisallowedException, ObjectNotFoundException;
+
 	/**
 	 * When passed a row ID, finds rows in the session report with the parent
 	 * table's row ID set to that ID. For each row found, if relatedTable's
@@ -438,16 +441,19 @@ public interface ViewMethodsInfo {
 	 * 
 	 */
 	public String getReportCalendarJSON() throws CodingErrorException, CantDoThatException,
-			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException, JsonGenerationException;
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
+			JsonGenerationException;
 
 	/**
 	 * Get a timeline feed suitable for use with Simile Timeplot
 	 */
 	public String getReportTimelineJSON() throws CodingErrorException, CantDoThatException,
-			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException, JsonGenerationException;
+			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
+			JsonGenerationException;
 
-	public String getReportMapJSON() throws ObjectNotFoundException, CodingErrorException, CantDoThatException, SQLException;
-	
+	public String getReportMapJSON() throws ObjectNotFoundException, CodingErrorException,
+			CantDoThatException, SQLException;
+
 	/**
 	 * Returns true if the record identified by the session row ID is visible in
 	 * the session report
@@ -534,6 +540,13 @@ public interface ViewMethodsInfo {
 	 */
 	public SortedSet<BaseReportInfo> adminGetAllViewableReports(AppUserInfo user)
 			throws ObjectNotFoundException, DisallowedException, CodingErrorException;
+
+	/**
+	 * Returns all tables the user will need view privileges on in order to see
+	 * the specified report
+	 */
+	public Set<TableInfo> getTablesNecessaryToViewReport(BaseReportInfo report)
+			throws CodingErrorException, ObjectNotFoundException;
 
 	/**
 	 * @param tableID

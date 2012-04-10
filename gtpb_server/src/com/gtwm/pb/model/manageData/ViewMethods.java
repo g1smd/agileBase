@@ -302,6 +302,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		return viewableReports;
 	}
+	
+	
 
 	/**
 	 * Returns all the reports from a table that the specified user is able to
@@ -343,6 +345,11 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return reports;
 	}
 
+	public Set<TableInfo> getTablesNecessaryToViewReport(BaseReportInfo report)
+			throws CodingErrorException, ObjectNotFoundException {
+		return this.getAuthenticator().getTablesNecessaryToViewReport(this.request, report);
+	}
+	
 	public TableInfo getTable(String tableID) throws ObjectNotFoundException, DisallowedException {
 		return this.databaseDefn.getTable(this.request, tableID);
 	}

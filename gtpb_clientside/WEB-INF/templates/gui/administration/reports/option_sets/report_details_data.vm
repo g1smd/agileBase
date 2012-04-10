@@ -57,6 +57,14 @@
 	      </select>
     </td>
   </tr>
+  <tr>
+    <td>
+      Privileges:<br><span class='greytext'><i>In order to view this report, users need access to the following tables:</i></span>
+    </td>
+    <td>
+      $view.getTablesNecessaryToViewReport($report)
+    </td>
+  </tr>
   <tr class="advanced">
     <td>Custom templates:<br><span class="greytext"><i>Upload custom printouts or output templates in HTML format (optional, will be available in addition to the standard record printout)</i></span></td>
     <td>
