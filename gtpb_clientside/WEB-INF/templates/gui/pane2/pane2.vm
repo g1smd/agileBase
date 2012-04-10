@@ -98,7 +98,7 @@
 	  <script type="text/javascript">
 	  $(document).ready(function() {
 	    assignButtonModuleActions();
-      loadCharts();
+        loadCharts();
 	  });	  
 	  </script>
 	  #set($filtersShouldBeShown = true)
@@ -264,7 +264,7 @@
 	  #end
 	  <table id=reportData cellspacing="0" #if($filtersShouldBeShown) class='lowered' #end>
     	#set($reportStyle = $sessionReport.getReportStyle())
-      #if($reportStyle && ($reportStyle != "SPREADSHEET"))
+      #if((!$isNotTable) && $reportStyle && ($reportStyle != "SPREADSHEET"))
         ## First work out heading levels
         #parse("gui/pane2/sectioned_calcs.vm")
         #parse("gui/pane2/sectioned_head.vm")
