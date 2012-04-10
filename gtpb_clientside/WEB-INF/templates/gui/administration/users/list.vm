@@ -15,7 +15,6 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-$viewTools.log("Parsing user list")
 #set($resource_folder='user')
 #set($return='gui/administration/users/options')
 #set($pane1_id='administrationusers')

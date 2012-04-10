@@ -20,8 +20,8 @@
 #set($totalRows = $sessionReport.getRowCount())
 #set($totalRowsIsEstimate = $sessionReport.isRowCountEstimate())
 <tr class="seemorerows">
-	#set($reportStyle = $sessionReport.getReportStyle())
-  #if(($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION"))
+  #set($reportStyle = $sessionReport.getReportStyle())
+  #if((!$isNotTable) && (($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION")))
     #set($numCols = $numDetailFields + 2)
   #else
     #set($numCols = $firstRowCells.size() + 2)
