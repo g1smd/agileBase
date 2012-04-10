@@ -19,6 +19,7 @@
 ## if we're not listing tables then the user must have delete privileges
 ## otherwise, check that the user has delete privileges
 ## Don't show delete boxes for mobile devices either though, deleting will be via pane 3
+$viewTools.log("Parsing delete checkboxes")
 #if(!$sessionTable)
   #set($sessionTable = $sessionData.getTable())
   #set($sessionReport = $sessionData.getReport())

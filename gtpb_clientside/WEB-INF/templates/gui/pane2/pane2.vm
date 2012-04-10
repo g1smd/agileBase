@@ -15,6 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+$viewTools.log("Parsing pane 2")
 #set($browser = $viewTools.getBrowser())
 <!DOCTYPE html>
 <html>
@@ -286,5 +287,4 @@
 	  #end
     </div>
   </body>
-  $viewTools.log("Parsed pane 2")
 </html>
