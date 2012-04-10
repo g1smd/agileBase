@@ -286,4 +286,5 @@
 	  #end
     </div>
   </body>
+  $viewTools.log("Parsed pane 2")
 </html>
