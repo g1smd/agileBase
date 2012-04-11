@@ -151,7 +151,7 @@
            jqDoc.find('#button_delete').setAttribute('disabled','true');
            jqDoc.find('#button_import').setAttribute('disabled','true');
         	 #if($view.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
-        	   $viewTools.log("User allowed to view $sessionTable")
+        	   alert(jqDoc.find('#button_export').attr('disabled'));
 	    	    jqDoc.find('#button_export').removeAttr('disabled');
    	     		jqDoc.find('#button_print').removeAttr('disabled');
         	 #else
