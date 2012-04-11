@@ -146,18 +146,18 @@
    		       // do nothing
    		     }
            var jqDoc = $(top.document);
-           jqDoc.find('#button_new').setAttribute('disabled','true');
-           jqDoc.find('#button_clone').setAttribute('disabled','true');
-           jqDoc.find('#button_delete').setAttribute('disabled','true');
-           jqDoc.find('#button_import').setAttribute('disabled','true');
+           ##jqDoc.find('#button_new').setAttribute('disabled','true');
+           ##jqDoc.find('#button_clone').setAttribute('disabled','true');
+           ##jqDoc.find('#button_delete').setAttribute('disabled','true');
+           ##jqDoc.find('#button_import').setAttribute('disabled','true');
         	 #if($view.loggedInUserAllowedTo('VIEW_TABLE_DATA',$sessionTable))
         	   alert(jqDoc.find('#button_export').attr('disabled'));
 	    	    jqDoc.find('#button_export').removeAttr('disabled');
    	     		jqDoc.find('#button_print').removeAttr('disabled');
         	 #else
         	   $viewTools.log("Not allowed to view $sessionTable")
-        		jqDoc.find('#button_export').setAttribute('disabled','true');
-        		jqDoc.find('#button_print').setAttribute('disabled','true');
+        		##jqDoc.find('#button_export').setAttribute('disabled','true');
+        		##jqDoc.find('#button_print').setAttribute('disabled','true');
            #end
       </script>
 	  #end
