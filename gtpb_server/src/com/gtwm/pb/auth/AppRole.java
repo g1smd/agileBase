@@ -110,7 +110,7 @@ public class AppRole implements AppRoleInfo, Comparable<AppRoleInfo> {
 			return 0;
 		}
 		// For performance, compare first on item most likely to differ
-		int comparison = this.getRoleName().compareTo(anotherAppRole.getRoleName());
+		int comparison = this.getRoleName().toLowerCase().compareTo(anotherAppRole.getRoleName().toLowerCase());
 		if (comparison != 0) {
 			return comparison;
 		}
