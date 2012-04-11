@@ -117,6 +117,7 @@
 		  #end
 	  #end
 	#if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
+	  $viewTools.log("Edit")
 	    <script language=Javascript>
        var jqDoc = $(top.document);
  	     jqDoc.find('#button_new').removeAttr('disabled');
@@ -136,6 +137,7 @@
 		 #end
       </script>
     #else
+      $viewTools.log("Possibly view")
       <script language=Javascript>
         	 function fNew() {
         		  // do nothing
@@ -159,7 +161,7 @@
       </script>
 	  #end
     <script language=Javascript src="resources/$resource_folder/new_delete.js"></script>
-	  <script src="resources/pane2_amalgam.js" type="text/javascript"></script>
+	<script src="resources/pane2_amalgam.js" type="text/javascript"></script>
     <script language=Javascript>
         #set($numRows = $data.size())
         #set($reportRowLimit = $sessionData.getReportRowLimit())

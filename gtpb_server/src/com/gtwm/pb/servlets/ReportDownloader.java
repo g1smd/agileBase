@@ -174,7 +174,7 @@ public final class ReportDownloader extends HttpServlet {
 			logger.info("User " + user + " exporting report " + report + " from table " + table);
 			spreadsheetOutputStream = this.getSessionReportAsExcel(company, user, sessionData);
 			response.setHeader("Cache-Control", "no-cache");
-			response.setContentType("application/vnd.ms-excel");
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 			String filename = "";
 			if (report.equals(table.getDefaultReport())) {
 				filename = table.getTableName();
