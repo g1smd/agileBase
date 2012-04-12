@@ -226,7 +226,8 @@ table#reportData tr.rowa td {
 
 .in_cell:hover {
 	overflow:visible;
-  text-shadow: 0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white;
+	font-weight: bold;
+  /* text-shadow: 0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white; /*
   position: relative;
   z-index: 999;
 }
@@ -236,7 +237,8 @@ table#reportData tr.rowa td {
 }
 
 #currentRow .in_cell:hover {
-  text-shadow: 0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef;
+  font-weight: bold;
+/*  text-shadow: 0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef; */
 }
 
 table#reportData tr.rowb  { 
