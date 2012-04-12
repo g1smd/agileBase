@@ -222,6 +222,8 @@ table#reportData tr.rowa td {
 .in_cell {
   max-height: 43px;
   overflow: hidden;
+  background: red;
+  background-repeat: repeat;
 }
 
 .in_cell:hover {
