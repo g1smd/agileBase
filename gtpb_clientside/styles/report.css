@@ -232,7 +232,7 @@ table#reportData tr.rowa td {
   text-shadow: 0px 1px 2px white, 0px 1px 2px white;
   position: relative;
   z-index: 999;
-  background-color: white;
+  background-color: red;
 }
 
 .p_photo {
