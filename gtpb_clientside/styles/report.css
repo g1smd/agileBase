@@ -231,6 +231,10 @@ table#reportData tr.rowa td {
   z-index: 999;
 }
 
+.p_photo {
+  width: 44px;
+}
+
 #currentRow .in_cell:hover {
   text-shadow: 0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef,0px 0px 1em #dde6ef;
 }
