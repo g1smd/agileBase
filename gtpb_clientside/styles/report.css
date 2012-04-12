@@ -222,16 +222,13 @@ table#reportData tr.rowa td {
 .in_cell {
   max-height: 43px;
   overflow: hidden;
-  color: gray;
 }
 
 .in_cell:hover {
 	overflow:visible;
-  /* text-shadow: 0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white; */
-  text-shadow: 0px 0px 1px white,0px 0px 2px white,0px 0px 3px white,0px 0px 4px white;
+  text-shadow: 0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white,0px 0px 1em white;
   position: relative;
   z-index: 999;
-  color: black;
 }
 
 .p_photo {
