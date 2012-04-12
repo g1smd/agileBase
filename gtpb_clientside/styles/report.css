@@ -222,6 +222,7 @@ table#reportData tr.rowa td {
 .in_cell {
   max-height: 43px;
   overflow: hidden;
+  color: gray;
 }
 
 .in_cell:hover {
@@ -231,6 +232,7 @@ table#reportData tr.rowa td {
   text-shadow: 0px 1px 1px white,0px 0px 0.1em white;
   position: relative;
   z-index: 999;
+  color: black;
 }
 
 .p_photo {
