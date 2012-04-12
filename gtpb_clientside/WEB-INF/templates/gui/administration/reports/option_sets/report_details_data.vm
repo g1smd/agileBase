@@ -119,7 +119,7 @@
         <select name="distinctinternalfieldname" onchange="form.submit();">
           <option value="">--please choose a distinct field--</option>
           #foreach($field in $report.getReportBaseFields())
-            #if( (!$field.equals($report.getParentTable().getPrimaryKey())) && (!$distinctFields.contains($field)) )
+            #if(!$distinctFields.contains($field))
               #if($field.getClass().getSimpleName() != "CalculationFieldDefn")
                 <option value="$field.getInternalFieldName()">$field</option>
               #end
