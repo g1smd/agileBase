@@ -264,7 +264,10 @@ public final class ReportDownloader extends HttpServlet {
 				if (!fieldValue.equals("")) {
 					Cell cell;
 					DatabaseFieldType dbFieldType = field.getDbType();
-					switch (field.getDbType()) {
+					if (field instanceof RelationField) {
+						dbFieldType = ((RelationField) field).getDisplayField().getDbType();
+					}
+					switch (dbFieldType) {
 					case FLOAT:
 						cell = row.createCell(columnNum, Cell.CELL_TYPE_NUMERIC);
 						try {
@@ -283,16 +286,9 @@ public final class ReportDownloader extends HttpServlet {
 						} catch (NumberFormatException nfex) {
 							logger.debug(nfex.toString() + ": value " + fieldValue.replace(",", ""));
 							// Fall back to a string representation
-							try {
-								cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
-								cell.setCellValue(fieldValue);
-								logger.debug("Successfully set string instead");
-							} catch (IllegalStateException isex) {
-								logger.debug(isex.toString() + ": value "
-										+ fieldValue.replace(",", ""));
-								isex.printStackTrace();
-								throw new CodingErrorException("Something's wrong: " + isex, isex);
-							}
+							cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
+							cell.setCellValue(fieldValue);
+							logger.debug("Successfully set string instead");
 						}
 						break;
 					case VARCHAR:
