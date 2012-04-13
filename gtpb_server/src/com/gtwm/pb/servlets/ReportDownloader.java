@@ -282,14 +282,18 @@ public final class ReportDownloader extends HttpServlet {
 						} catch (NumberFormatException nfex) {
 							logger.debug(nfex.toString() + ": value " + fieldValue.replace(",", ""));
 							// Fall back to a string representation
-							cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
-							cell.setCellValue(fieldValue);
-							logger.debug("Successfully set string instead");
-						} catch (IllegalStateException isex) {
-							logger.debug(isex.toString() + ": value " + fieldValue.replace(",", ""));
-							// Fall back to a string representation
-							cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
-							cell.setCellValue(fieldValue);
+							try {
+								cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
+								cell.setCellValue(fieldValue);
+								logger.debug("Successfully set string instead");
+							} catch (IllegalStateException isex) {
+								logger.debug(isex.toString() + ": value "
+										+ fieldValue.replace(",", ""));
+								isex.printStackTrace();
+								// Fall back to a string representation
+								cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
+								cell.setCellValue(fieldValue);
+							}
 						}
 						break;
 					case VARCHAR:
