@@ -70,6 +70,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.CantDoThatException;
@@ -290,9 +291,7 @@ public final class ReportDownloader extends HttpServlet {
 								logger.debug(isex.toString() + ": value "
 										+ fieldValue.replace(",", ""));
 								isex.printStackTrace();
-								// Fall back to a string representation
-								cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
-								cell.setCellValue(fieldValue);
+								throw new CodingErrorException("Something's wrong: " + isex, isex);
 							}
 						}
 						break;
