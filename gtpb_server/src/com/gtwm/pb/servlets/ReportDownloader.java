@@ -195,8 +195,6 @@ public final class ReportDownloader extends HttpServlet {
 			throw new ServletException("Problem generating spreadsheet: " + pbex);
 		} catch (SQLException sqlex) {
 			throw new ServletException("Database exception generating spreadsheet: " + sqlex);
-		} catch (Exception ex) {
-			throw new ServletException("Debug: caught exception " + ex);
 		} finally {
 			if (spreadsheetOutputStream != null) {
 				spreadsheetOutputStream.reset();
@@ -265,9 +263,6 @@ public final class ReportDownloader extends HttpServlet {
 				if (!fieldValue.equals("")) {
 					Cell cell;
 					DatabaseFieldType dbFieldType = field.getDbType();
-					if (field instanceof RelationField) {
-						dbFieldType = ((RelationField) field).getDisplayField().getDbType();
-					}
 					switch (field.getDbType()) {
 					case FLOAT:
 						cell = row.createCell(columnNum, Cell.CELL_TYPE_NUMERIC);
@@ -287,7 +282,12 @@ public final class ReportDownloader extends HttpServlet {
 						} catch (NumberFormatException nfex) {
 							logger.debug(nfex.toString() + ": value " + fieldValue.replace(",", ""));
 							// Fall back to a string representation
-							cell.setCellType(Cell.CELL_TYPE_STRING);
+							cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
+							cell.setCellValue(fieldValue);
+						} catch (IllegalStateException isex) {
+							logger.debug(isex.toString() + ": value " + fieldValue.replace(",", ""));
+							// Fall back to a string representation
+							cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
 							cell.setCellValue(fieldValue);
 						}
 						break;
