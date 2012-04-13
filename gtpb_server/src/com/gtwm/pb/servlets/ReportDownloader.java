@@ -70,6 +70,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
+import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AgileBaseException;
@@ -194,6 +195,8 @@ public final class ReportDownloader extends HttpServlet {
 			throw new ServletException("Problem generating spreadsheet: " + pbex);
 		} catch (SQLException sqlex) {
 			throw new ServletException("Database exception generating spreadsheet: " + sqlex);
+		} catch (Exception ex) {
+			throw new ServletException("Debug: caught exception " + ex);
 		} finally {
 			if (spreadsheetOutputStream != null) {
 				spreadsheetOutputStream.reset();
@@ -261,6 +264,10 @@ public final class ReportDownloader extends HttpServlet {
 				}
 				if (!fieldValue.equals("")) {
 					Cell cell;
+					DatabaseFieldType dbFieldType = field.getDbType();
+					if (field instanceof RelationField) {
+						dbFieldType = ((RelationField) field).getDisplayField().getDbType();
+					}
 					switch (field.getDbType()) {
 					case FLOAT:
 						cell = row.createCell(columnNum, Cell.CELL_TYPE_NUMERIC);
