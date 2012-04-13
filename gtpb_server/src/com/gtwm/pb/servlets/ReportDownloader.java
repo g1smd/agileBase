@@ -284,6 +284,7 @@ public final class ReportDownloader extends HttpServlet {
 							// Fall back to a string representation
 							cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
 							cell.setCellValue(fieldValue);
+							logger.debug("Successfully set string instead");
 						} catch (IllegalStateException isex) {
 							logger.debug(isex.toString() + ": value " + fieldValue.replace(",", ""));
 							// Fall back to a string representation
