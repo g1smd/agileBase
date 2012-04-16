@@ -1049,9 +1049,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 			String templateName, List<FileItem> multipartItems) throws DisallowedException,
 			ObjectNotFoundException, CantDoThatException, FileUploadException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+				PrivilegeType.VIEW_TABLE_DATA, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
-					PrivilegeType.MANAGE_TABLE, report.getParentTable());
+					PrivilegeType.VIEW_TABLE_DATA, report.getParentTable());
 		}
 		if (!FileUpload.isMultipartContent(new ServletRequestContext(request))) {
 			throw new CantDoThatException(
@@ -1082,7 +1082,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				try {
 					item.write(selectedFile);
 				} catch (Exception ex) {
-					// Catching a general exception?! This is because the
+					// Catching a general exception?! This is because the third party
 					// library throws a raw exception. Not very good
 					throw new FileUploadException("Error writing file: " + ex.getMessage());
 				}
@@ -1094,9 +1094,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 			String templateName) throws DisallowedException, ObjectNotFoundException,
 			CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
+				PrivilegeType.VIEW_TABLE_DATA, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
-					PrivilegeType.MANAGE_TABLE, report.getParentTable());
+					PrivilegeType.VIEW_TABLE_DATA, report.getParentTable());
 		}
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		// strip extension
