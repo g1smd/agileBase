@@ -23,6 +23,22 @@
   <script language="JavaScript" src="resources/pane3_amalgam.js"></script>
 </head>
 <body>
+  #set($company = $view.getLoggedInUser().getCompany())
+  #set($internalCompanyName = $company.getInternalCompanyName())
+  #set($report = $sessionData.getReport())
+  #set($internalReportName = $report.getInternalReportName())
+  #set($existingTemplates = $viewTools.listFiles("WEB-INF/templates/uploads/$internalCompanyName/$internalReportName"))
+  #if($existingTemplates.size() > 0)
+      Existing templates:<p>
+	  #foreach($template in $existingTemplates)
+	    #set($filePath = $template.getName())
+	    #set($slashIndex = $filePath.lastIndexOf('/') + 1)
+	    #set($fileName = $filePath.substring($slashIndex))
+	    <a href="ReportDownloader.servlet?template=$fileName">$fileName</a> <a href="?return=gui/reports_and_tables/pane3&remove_custom_template=true&customtemplatename=$fileName"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a><br>
+	  #end
+	  <p>
+  #end
+Upload a new template for $report: 
 <form class="fileUploader" method="POST" action="AppController.servlet">
 <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
 <input type="hidden" name="upload_custom_template" value="true" />
@@ -30,16 +46,7 @@
 <div class="upload_progress_container">
   <div class="upload_progress_bar"></div>
   <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
-    </div>
-  </form>
-  #set($company = $view.getLoggedInUser().getCompany())
-  #set($internalCompanyName = $company.getInternalCompanyName())
-  #set($existingTemplates = $viewTools.listFiles("WEB-INF/templates/uploads/$internalCompanyName/$internalReportName"))
-  #foreach($template in $existingTemplates)
-    #set($filePath = $template.getName())
-    #set($slashIndex = $filePath.lastIndexOf('/') + 1)
-    #set($fileName = $filePath.substring($slashIndex))
-    <a href="ReportDownloader.servlet?template=$fileName">$fileName</a> <a href="?return=gui/reports_and_tables/pane3&remove_custom_template=true&customtemplatename=$fileName"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a><br>
-  #end
+</div>
+</form>
 </body>
 </html>
