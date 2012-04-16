@@ -232,7 +232,7 @@
         
         ## First button will be at the right end of the toolbar, successive moving left
         fCreateButton('Close','resources/toolbar/delete_only.png','Close the print preview',fClose);
-        fCreateButton('Manage','resources/toolbar/spanner.png','Upload and delete custom templates',fManage);
+        fCreateButton('Manage','resources/toolbar/spanner_only.png','Upload and delete custom templates',fManage);
         fCreateButton('Print','resources/toolbar/print_only.png','Print this content',fPrint);
         fCreateButton('Email','resources/toolbar/email_only.png','Email this content',fEmail);
         fCreatePrintoutSelector('Print out:',fSelectPrintoutType);
