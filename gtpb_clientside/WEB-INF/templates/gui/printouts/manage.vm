@@ -22,8 +22,21 @@
   <script language="JavaScript" src="resources/jquery.js"></script>
   <script language="JavaScript" src="resources/pane3_amalgam.js"></script>
   <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />   
+  <style>
+  .infomessage {
+	border-radius: 1em;
+	border: 2px solid #DDE6EF;
+	background: #eef3f9;
+	margin: 10px;
+	padding: 10px;
+	position: relative;
+	margin-top: 2em;
+	clear: left;
+  }
+  </style>
 </head>
 <body>
+<div class="infomessage">
   #set($company = $view.getLoggedInUser().getCompany())
   #set($internalCompanyName = $company.getInternalCompanyName())
   #set($report = $sessionData.getReport())
@@ -49,5 +62,6 @@ Upload a new template for $report:
   <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
 </div>
 </form>
+</div>
 </body>
 </html>
