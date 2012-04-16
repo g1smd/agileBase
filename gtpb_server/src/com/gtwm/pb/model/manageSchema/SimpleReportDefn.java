@@ -815,7 +815,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 				}
 			}
 		}
-		if (lastLeftReference || lastRightReference) {
+		// INFO: Changed from || to && April 2012
+		if (lastLeftReference && lastRightReference) {
 			// check join isn't used in any report fields
 			for (ReportFieldInfo reportField : this.getReportFields()) {
 				if (reportField instanceof ReportCalcFieldInfo) {

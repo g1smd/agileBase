@@ -250,6 +250,7 @@ public final class ReportDownloader extends HttpServlet {
 				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), -1,
 				QuickFilterType.AND, false);
 		String fieldValue = "";
+		boolean defaultReport = (report.equals(report.getParentTable().getDefaultReport()));
 		for (DataRowInfo dataRow : reportDataRows) {
 			Map<BaseField, DataRowFieldInfo> dataRowFieldMap = dataRow.getDataRowFields();
 			row = reportSheet.createRow(rowNum);
@@ -264,7 +265,7 @@ public final class ReportDownloader extends HttpServlet {
 				if (!fieldValue.equals("")) {
 					Cell cell;
 					DatabaseFieldType dbFieldType = field.getDbType();
-					if (field instanceof RelationField) {
+					if ((defaultReport) && (field instanceof RelationField)) {
 						dbFieldType = ((RelationField) field).getDisplayField().getDbType();
 					}
 					switch (dbFieldType) {
@@ -274,7 +275,7 @@ public final class ReportDownloader extends HttpServlet {
 							cell.setCellValue(Double.valueOf(fieldValue.replace(",", "")));
 						} catch (NumberFormatException nfex) {
 							// Fall back to a string representation
-							cell.setCellType(Cell.CELL_TYPE_STRING);
+							cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
 							cell.setCellValue(fieldValue);
 						}
 						break;
