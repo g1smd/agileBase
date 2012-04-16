@@ -220,10 +220,10 @@
         oRadio = document.createElement('input');
         oRadio.setAttribute('type','radio');
         oRadio.setAttribute('name','printout_selector');
-        oRadio.setAttribute('value','uploads/$internalCompanyName/$internalReportName/$templateName');
+        oRadio.setAttribute('value','uploads/$internalCompanyName/$internalReportName/$templateName&cachebust=$viewTools.getRandomString()');
         $(oRadio).click(fClick);
         oToolbar.appendChild(oRadio);
-        oToolbar.appendChild(document.createTextNode(' $templateName '));
+        oToolbar.appendChild(document.createTextNode(" $templateName.replace('_',' ') "));
       #end
 		}
         
