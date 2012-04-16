@@ -586,7 +586,8 @@ function fSexyUpload() {
 				jqProgressBar.text("Upload complete");
 				jqProgressBar.addClass("upload_complete");
 				jqProgressBar.css("width", "100%");
-				document.location = "?return=gui/reports_and_tables/pane3";
+				var returnTemplate = jqForm.find("input[name=return]").value();
+				document.location = "?return=" + returnTemplate;
 			},
 			error : function(event) {
 				jqProgressBar.text("Error, file upload incomplete");
