@@ -21,6 +21,7 @@
   <title>Manage templates</title>
   <script language="JavaScript" src="resources/jquery.js"></script>
   <script language="JavaScript" src="resources/pane3_amalgam.js"></script>
+  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />   
 </head>
 <body>
   #set($company = $view.getLoggedInUser().getCompany())
