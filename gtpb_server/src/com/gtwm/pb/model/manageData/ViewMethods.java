@@ -639,8 +639,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		// Check privileges for all tables from which data is displayed from,
 		// throw DisallowedException if privileges not sufficient
 		this.checkReportViewPrivileges(report);
-		Map<BaseField, String> filterValues = new HashMap<BaseField, String>(
-				this.sessionData.getReportFilterValues());
+		Map<BaseField, String> filterValues = new HashMap<BaseField, String>();
 		// Add start and end time filters
 		ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 		if (eventDateReportField == null) {
