@@ -29,57 +29,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 #if(!$sessionRowId)
   #set($sessionRowId= $sessionData.getRowId($sessionTable))
 #end
-## Make an extra blank row for the record being edited if it's not already in the dataset on screen
-## #if((!$selectionFound) && ($numRows > 0) && ($filtersShouldBeShown != 'true') && (!$isNotTable))
-#if((!$selectionFound) && (!$picker) && ($numRows > 0) && (!$mobile_device) && ($sessionRowId > -1) && (!$printout) && (!$isNotTable) && (!$table_part_only))
-  #set($tableDataRow = $view.getTableDataRow())
-  #set($mathTool = $viewTools.getMathTool())
-  #if($tableDataRow.size() > 0)
-	## Get data for all related tables
-	## Not perfect because we can't get calc. values
-	## or values for any data related more than one table away.
-	## These could only come from the reprt but since the record may not be in the report
-	## this is the best we can do
-	#set($relatedDataMap = {})
-	#foreach($field in $tableDataRow.keySet())
-	  #set($tableContainingField = $field.getTableContainingField())
-    #if($field.isPrimaryKey() && (!$tableContainingField.equals($sessionTable)))
-		  #set($value = $tableDataRow.get($field))
-		  #if($value != "")
-		    #set($relatedRowId = $mathTool.toInteger($value))
-	        #set($relatedTableDataRows = $view.getTableDataRow($tableContainingField, $relatedRowId))
-		    #set($temp = $relatedDataMap.put($tableContainingField, $relatedTableDataRows))
-	    #end
-		#end
-	#end
-
-	## For value of $return, see reports_and_tables/report_data.vm
-	#set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_row_id=$selection'")
-    <tr title="The record currently being edited is not in the report data on this page"
-      name="$selection" class="rowa excludedRecord" onclick="$click" forcehighlight="true">
-      <td class="leading">&nbsp;</td>
-      #foreach($field in $reportBaseFields)
-	    #if ( ((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN"))##
-		  <td nowrap="true"><div class="in_cell" style="max-width:500px">
-		    #if($tableDataRow.get($field))
-              $tableDataRow.get($field)
-		    #else
-			  #set($relatedValue = false)
-			  #foreach($relatedTable in $relatedDataMap.keySet())
-				#set($relatedDataRow = $relatedDataMap.get($relatedTable))
-				#set($relatedValue = $relatedDataRow.get($field))
-				#if($relatedValue) $relatedValue #break #end
-			  #end
-		    #end
-      </div></td>
-	    #end
-	  #end
-	  <td>&nbsp;</td>		##TODO: should there be an 'if edit privileges' check around this td?
-	  <td class="trailing">&nbsp;</td>
-    </tr>
-  #end
-#end  ## end additional row if selected record not in dataset on screen
-## An single empty row if no data
+## A single empty row if no data
 #if($data.size() == 0)
   <tr class="rowa">
 	<td class="leading">&nbsp;</td>

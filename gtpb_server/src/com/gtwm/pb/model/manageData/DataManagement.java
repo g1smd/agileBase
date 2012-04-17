@@ -1758,7 +1758,8 @@ public final class DataManagement implements DataManagementInfo {
 				statement.setInt(1, rowId);
 				int numCommentsDeleted = statement.executeUpdate();
 				if (numCommentsDeleted > 0) {
-					logger.info("" + numCommentsDeleted + " comments deleted when deleting " + table + " record " + rowId);
+					logger.info("" + numCommentsDeleted + " comments deleted when deleting "
+							+ table + " record " + rowId);
 				}
 				statement.close();
 				conn.commit();
@@ -2279,7 +2280,10 @@ public final class DataManagement implements DataManagementInfo {
 				break REPORT_FIELD_LOOP;
 			}
 		}
-		eventTitleBuilder.delete(eventTitleBuilder.length() - 2, eventTitleBuilder.length());
+		int titleLength = eventTitleBuilder.length();
+		if (titleLength > 1) {
+			eventTitleBuilder.delete(eventTitleBuilder.length() - 2, eventTitleBuilder.length());
+		}
 		String eventTitle = eventTitleBuilder.toString();
 		return eventTitle;
 	}
