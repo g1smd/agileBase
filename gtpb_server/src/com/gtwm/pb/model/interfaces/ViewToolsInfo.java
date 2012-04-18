@@ -272,6 +272,8 @@ public interface ViewToolsInfo {
 	 * Return an empty set of strings
 	 */
 	public Set<String> getNewStringSet();
+	
+	public Set<TableInfo> getNewTableSet();
 
 	/**
 	 * Return the list having been reordered into reverse order

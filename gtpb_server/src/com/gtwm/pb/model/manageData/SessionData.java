@@ -410,6 +410,7 @@ public final class SessionData implements SessionDataInfo {
 	public synchronized void clearCustomVariable(String key) {
 		this.customStrings.remove(key);
 		this.customIntegers.remove(key);
+		this.customLongs.remove(key);
 		this.customBooleans.remove(key);
 		this.customTables.remove(key);
 		this.customReports.remove(key);

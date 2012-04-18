@@ -39,6 +39,7 @@ import java.math.MathContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
+import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ViewToolsInfo;
 import com.gtwm.pb.model.interfaces.FilterTypeDescriptorInfo;
 import com.gtwm.pb.model.manageSchema.FilterTypeDescriptor;
@@ -1094,6 +1095,10 @@ public final class ViewTools implements ViewToolsInfo {
 
 	public Set<String> getNewStringSet() {
 		return new TreeSet<String>();
+	}
+	
+	public Set<TableInfo> getNewTableSet() {
+		return new TreeSet<TableInfo>();
 	}
 
 	public void reverseList(List list) {

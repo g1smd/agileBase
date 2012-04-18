@@ -42,7 +42,7 @@ public interface TableInfo extends Comparable<TableInfo> {
 	public String getTableName();
 
 	public String getInternalTableName();
-	
+
 	/**
 	 * Return the table name with any prefixes removed, e.g.
 	 * 
@@ -51,11 +51,12 @@ public interface TableInfo extends Comparable<TableInfo> {
 	 * This can be useful for displaying in the end user UI
 	 */
 	public String getSimpleName();
-	
+
 	/**
 	 * First get the simple name, then return the singular version of that.
 	 * 
-	 * For example, given a table name 'a1) organisations', return 'organisation'
+	 * For example, given a table name 'a1) organisations', return
+	 * 'organisation'
 	 */
 	public String getSingularName();
 
@@ -106,7 +107,8 @@ public interface TableInfo extends Comparable<TableInfo> {
 	public void setDefaultReport(SimpleReportInfo report);
 
 	/**
-	 * Return a simple report containing all fields in the table and no joins, filters or calculations
+	 * Return a simple report containing all fields in the table and no joins,
+	 * filters or calculations
 	 */
 	public SimpleReportInfo getDefaultReport();
 
@@ -173,28 +175,40 @@ public interface TableInfo extends Comparable<TableInfo> {
 	public void setRecordsLockable(Boolean lockable);
 
 	public Boolean getRecordsLockable();
-	
+
 	public void setTableFormPublic(boolean tableFormPublic);
-	
+
 	/**
-	 * Return true if new records can be created by non-logged-in users via a public form
+	 * Return true if new records can be created by non-logged-in users via a
+	 * public form
 	 */
 	public boolean getTableFormPublic();
-	
+
 	/**
-	 * Return the email address to send new records to, if there is a public form (see getTableFormPublic)
+	 * Return the email address to send new records to, if there is a public
+	 * form (see getTableFormPublic)
 	 */
 	public String getEmail();
-	
+
 	public void setEmail(String email);
-	
+
 	public FormStyle getFormStyle();
-	
+
 	public void setFormStyle(FormStyle formStyle);
-	
+
 	public SortedSet<FormTabInfo> getFormTabs();
-	
+
 	public void removeFormTab(FormTabInfo formTab);
-	
+
 	public void addFormTab(FormTabInfo formTab);
+
+	/**
+	 * Usually a table will use itself as the input form (naturally) however in
+	 * some cases another table that has this one as a form tab may be chosen.
+	 * In this case, records will open using the 'parent' table selected but
+	 * with the tab for this table open.
+	 */
+	public void setFormTable(TableInfo table);
+
+	public TableInfo getFormTable();
 }

@@ -45,6 +45,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -351,43 +352,6 @@ public class TableDefn implements TableInfo {
 		return false;
 	}
 
-	/**
-	 * Provide a natural sort order by table name case insensitively
-	 */
-	public int compareTo(TableInfo otherTable) {
-		if (this == otherTable) {
-			return 0;
-		}
-		// For performance, compare first on item most likely to differ
-		int comparison = this.getTableName().toLowerCase()
-				.compareTo(otherTable.getTableName().toLowerCase());
-		if (comparison != 0) {
-			return comparison;
-		}
-		return this.getInternalTableName().compareTo(otherTable.getInternalTableName());
-	}
-
-	/**
-	 * Define equals() based on internal table name
-	 */
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if ((obj == null) || (obj.getClass() != this.getClass())) {
-			return false;
-		}
-		TableDefn otherTable = (TableDefn) obj;
-		return this.getInternalTableName().equals(otherTable.getInternalTableName());
-	}
-
-	/**
-	 * Hash code consistent with equals
-	 */
-	public int hashCode() {
-		return this.getInternalTableName().hashCode();
-	}
-
 	public synchronized void setPrimaryKey(SequenceField primaryKeyField)
 			throws CantDoThatException {
 		if (primaryKeyField.getTableContainingField().equals(this)) {
@@ -478,6 +442,52 @@ public class TableDefn implements TableInfo {
 		this.getFormTabsDirect().remove(formTab);
 	}
 	
+	@ManyToMany(targetEntity=TableDefn.class)
+	public TableInfo getFormTable() {
+		return this.formTable;
+	}
+	
+	public void setFormTable(TableInfo formTable) {
+		this.formTable = formTable;
+	}
+	
+	/**
+	 * Provide a natural sort order by table name case insensitively
+	 */
+	public int compareTo(TableInfo otherTable) {
+		if (this == otherTable) {
+			return 0;
+		}
+		// For performance, compare first on item most likely to differ
+		int comparison = this.getTableName().toLowerCase()
+				.compareTo(otherTable.getTableName().toLowerCase());
+		if (comparison != 0) {
+			return comparison;
+		}
+		return this.getInternalTableName().compareTo(otherTable.getInternalTableName());
+	}
+
+	/**
+	 * Define equals() based on internal table name
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if ((obj == null) || (obj.getClass() != this.getClass())) {
+			return false;
+		}
+		TableDefn otherTable = (TableDefn) obj;
+		return this.getInternalTableName().equals(otherTable.getInternalTableName());
+	}
+
+	/**
+	 * Hash code consistent with equals
+	 */
+	public int hashCode() {
+		return this.getInternalTableName().hashCode();
+	}
+
 	public String toString() {
 		return this.getTableName();
 	}
@@ -505,6 +515,8 @@ public class TableDefn implements TableInfo {
 	private FormStyle formStyle = FormStyle.SINGLE_COLUMN;
 	
 	private Set<FormTabInfo> formTabs = new HashSet<FormTabInfo>();
+	
+	private TableInfo formTable = null;
 
 	private volatile String simpleName = null;
 

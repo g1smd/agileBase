@@ -16,6 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($table = $sessionData.getTable())
+#set($company = $view.getLoggedInUser().getCompany())
 #set($internalTableName = $table.getInternalTableName())
 #if($view.getWhetherExceptionOccurred())
   #parse("gui/error.vm")
@@ -32,7 +33,7 @@
 	  <span class="greytext" style="font-size:8pt">Allow custom actions (such as 'print invoice') to lock records against future editing</span><p>
       <input type="checkbox" name="tableformpublic" gtpb_update_table #if($table.getTableFormPublic()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$internalTableName" gtpb_internaltablename="$internalTableName">
 	  Public data entry<br>
-	  <span class="greytext" style="font-size:8pt">Publish a <a href="Public.ab?show_form=true&c=$view.getLoggedInUser().getCompany().getInternalCompanyName()&t=$internalTableName" target="_blank">form</a> which the general public can use to enter data.<br>Send notifications of new items to:</span><br>
+	  <span class="greytext" style="font-size:8pt">Publish a <a href="Public.ab?show_form=true&c=$company.getInternalCompanyName()&t=$internalTableName" target="_blank">form</a> which the general public can use to enter data.<br>Send notifications of new items to:</span><br>
     <input name="tableemail" gtpb_update_table #if($table.getEmail()) value="$table.getEmail()" #end onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" identifier="$internalTableName" gtpb_internaltablename="$internalTableName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/>
     <p>
       <!-- table deletion button -->
@@ -95,8 +96,22 @@
   </div>
   <br style="clear:both" />
 </div>
+<div style="width:100%; background-color:#f4f4f4; padding: 1em;">
+## Find tables which could be used as forms, i.e. those that contain a tab for *this* table
+#set($potentialtableForms = $viewTools.getNewTableSet())
+#foreach($testTable in $company.getTables())
+  #foreach($formTab in $testTable.getFormTabs())
+    #if($table.equals($formTab.getTable()))
+      #set($success = $potentialtableForms.add($formTab.getTable()))
+    #end
+  #end
+#end
+<div id="form_selector" style="float:right">
+  <h2>Choose a form for this table (optional)</h2>
+  $potentialtableForms
+</div>
 #set($formTabs = $table.getFormTabs())
-<div id="tabs_selector" style="width:100%; background-color:#f4f4f4; padding: 1em;">
+<div id="tabs_selector" style="float:left">
   <h2>Choose child tabs for the form (optional)</h2>
   <form method="post" action="AppController.servlet">
     <input type="hidden" name="add_form_tab" value="true" />
@@ -140,4 +155,5 @@
       #end
     </select><br />
   #end
+</div>
 </div>

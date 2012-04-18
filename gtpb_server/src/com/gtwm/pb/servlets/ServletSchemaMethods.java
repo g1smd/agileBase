@@ -374,6 +374,27 @@ public final class ServletSchemaMethods {
 		}
 	}
 
+	public synchronized static void setTableForm(HttpServletRequest request, SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
+				true);
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, table)) {
+			throw new DisallowedException(authManager.getLoggedInUser(request),
+					PrivilegeType.MANAGE_TABLE, table);
+		}
+		String formInternalTableName = request.getParameter("forminternaltablename");
+		TableInfo formTable = databaseDefn.getTable(request, formInternalTableName);
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(table);
+			table.setFormTable(formTable);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+	
 	public synchronized static void addFormTab(HttpServletRequest request,
 			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException {
