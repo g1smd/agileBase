@@ -102,7 +102,7 @@
 #foreach($testTable in $company.getTables())
   #foreach($formTab in $testTable.getFormTabs())
     #if($table.equals($formTab.getTable()))
-      #set($success = $potentialtableForms.add($formTab.getTable()))
+      #set($success = $potentialtableForms.add($testTable))
     #end
   #end
 #end
