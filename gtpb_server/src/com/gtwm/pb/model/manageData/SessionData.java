@@ -476,10 +476,6 @@ public final class SessionData implements SessionDataInfo {
 		this.customReports.put(key, value);
 	}
 	
-	public synchronized void removeCustomReport(String key) {
-		this.customReports.remove(key);
-	}
-
 	public synchronized void setCustomField(String key, BaseField value) {
 		this.customFields.put(key, value);
 	}

@@ -181,11 +181,6 @@ public interface SessionDataInfo {
 
 	public void setCustomReport(String key, BaseReportInfo value);
 
-	/**
-	 * Remove a mapping set by setCustomReport
-	 */
-	public void removeCustomReport(String key);
-
 	public void setCustomField(String key, BaseField value);
 
 	/**

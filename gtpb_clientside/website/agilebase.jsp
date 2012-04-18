@@ -132,7 +132,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				</div>   <!-- end of wrapper -->
 				<div class="wrapper">
 					<div class="content" id="footer">
-						&copy; 2011 GT webMarque Ltd. Furze Bank, 34 Hanover Street, SWANSEA. Contact: Bristol office +44(0)845 456 1810
+						&copy; 2012 GT webMarque Ltd. Company number 03851934. Contact: Bristol office +44(0)845 456 1810, oliver@gtwm.co.uk. Swansea office cliff@gtwm.co.uk
 					</div>
 				</div>	<!-- end of wrapper -->				
 			</div>  <!-- end of tl_wrapper -->
