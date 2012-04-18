@@ -384,6 +384,9 @@ public final class ServletSchemaMethods {
 					PrivilegeType.MANAGE_TABLE, table);
 		}
 		String formInternalTableName = request.getParameter("forminternaltablename");
+		if (formInternalTableName == null) {
+			throw new MissingParametersException("forminternaltablename is required to set a table form");
+		}
 		TableInfo formTable = databaseDefn.getTable(request, formInternalTableName);
 		try {
 			HibernateUtil.startHibernateTransaction();
