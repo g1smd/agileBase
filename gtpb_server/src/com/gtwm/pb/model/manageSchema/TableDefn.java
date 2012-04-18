@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.gtwm.pb.auth.Company;
 import com.gtwm.pb.model.interfaces.FormTabInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -46,6 +47,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -442,7 +444,6 @@ public class TableDefn implements TableInfo {
 		this.getFormTabsDirect().remove(formTab);
 	}
 	
-	@ManyToMany(targetEntity=TableDefn.class)
 	public TableInfo getFormTable() {
 		return this.formTable;
 	}
