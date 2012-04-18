@@ -108,6 +108,7 @@
 #end
 #if($potentialtableForms.size() > 0)
 <div id="form_selector" style="float:right; width:50%">
+  #set($currentTableForm = $table.getFormTable())
   <h2>Choose a form for this table (optional)</h2>
   <form method="post" action="AppController.servlet">
     <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
@@ -115,7 +116,7 @@
     <select name="forminternaltablename" onchange="form.submit();">
       <option value="">$table.getSimpleName()</option>
       #foreach($potentialtableForm in $potentialtableForms)
-        <option value="$potentialtableForm.getInternalTableName()">$potentialtableForm.getSimpleName()</option>
+        <option value="$potentialtableForm.getInternalTableName()" #if($potentialtableForm.equals($currentTableForm)) selected #end>$potentialtableForm.getSimpleName()</option>
       #end
     </select>
   </form>
