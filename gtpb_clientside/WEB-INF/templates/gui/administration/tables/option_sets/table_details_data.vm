@@ -106,12 +106,12 @@
     #end
   #end
 #end
-<div id="form_selector" style="float:right">
+<div id="form_selector" style="float:right; width:50%">
   <h2>Choose a form for this table (optional)</h2>
   $potentialtableForms
 </div>
 #set($formTabs = $table.getFormTabs())
-<div id="tabs_selector" style="float:left">
+<div id="tabs_selector" style="float:left; width: 50%">
   <h2>Choose child tabs for the form (optional)</h2>
   <form method="post" action="AppController.servlet">
     <input type="hidden" name="add_form_tab" value="true" />
