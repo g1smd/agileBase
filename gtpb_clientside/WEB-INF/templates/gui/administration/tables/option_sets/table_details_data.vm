@@ -106,10 +106,21 @@
     #end
   #end
 #end
+#if($potentialtableForms.size() > 0)
 <div id="form_selector" style="float:right; width:50%">
   <h2>Choose a form for this table (optional)</h2>
+  <form method="post" action="AppController.servlet">
+    <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+    <select name="set_table_form" onchange="form.submit();">
+      <option value="">$table.getSimpleName()</option>
+      #foreach($potentialtableForm in $potentialtableForms)
+        <option value="$potentialtableForm.getInternalTableName()">$potentialtableForm.getSimpleName()</option>
+      #end
+    </select>
+  </form>
   $potentialtableForms
 </div>
+#end
 #set($formTabs = $table.getFormTabs())
 <div id="tabs_selector" style="float:left; width: 50%">
   <h2>Choose child tabs for the form (optional)</h2>
