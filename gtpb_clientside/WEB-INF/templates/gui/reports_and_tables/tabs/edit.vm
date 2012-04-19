@@ -30,14 +30,25 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 ## If set to use a table different to the current one as a form
 #if($formTable)
   #if(!$formTable.equals($sessionTable)) 
+    #set($originalTable = $sessionTable)
     #set($sessionTable = $formTable)
+    ## Find the record that is the original table records' parent
+    #set($originalTableDataRow = $view.getTableDataRow($originalTable))
+    #foreach($field in $originalTable.getFields())
+      #if($sessionTable.equals($field.getRelatedTable()))
+        #set($sessionRowId = $originalTableDataRow.get($field).getValueInteger())
+        Row id of parent is $sessionRowId<p>
+      #end
+    #end
   #end
+#end
+#if(!$sessionRowId)
+  #set($sessionRowId=$sessionData.getRowId($sessionTable))
 #end
 #set($fields = $sessionTable.getFields())
 #set($primaryKey = $sessionTable.getPrimaryKey())
 #set($formStyle = $sessionTable.getFormStyle())
-#set($sessionReport=$sessionData.getReport())
-#set($sessionRowId=$sessionData.getRowId())
+#set($sessionReport=$sessionData.getReport($sessionTable))
 #set($firstSection = true)
 #set($formTabs = $sessionTable.getFormTabs())
 #if($sessionRowId == -1)
@@ -78,7 +89,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
       ##<div class="mini_action" style="border-bottom-right-radius:0.5em"><button id="hide_pane_3" onClick="top.hidePane3();">done</button></div>
       <div class="mini_action" style="right:0; border-bottom-left-radius:0.5em"><a href="javascript:top.fLinks();"><img src="resources/icons/applications/tango/actions/mail-closed.png" />&nbsp;link...</a></div>
 		#end
-    #set($tableDataRow=$view.getTableDataRow())
+    #set($tableDataRow=$view.getTableDataRow($sessionTable))
     #if($tableDataRow.size() == 0)
       Please select a record to edit, or press the 'New' button in the toolbar to create one
     #else
