@@ -39,6 +39,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
         #set($sessionRowId = $originalTableDataRow.get($field).getValueInteger())
         $originalTableDataRow<p>
         Relation to parent $field.getRelatedTable() is $field<p>
+        Value is $originalTableDataRow.get($field)<p>
       #end
     #end
   #end
