@@ -120,7 +120,6 @@
       #end
     </select>
   </form>
-  $potentialtableForms
 </div>
 #end
 #set($formTabs = $table.getFormTabs())
