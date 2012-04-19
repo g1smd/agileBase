@@ -424,8 +424,7 @@ function fRelationPickers() {
 			selectFirst : true,
 			width : 296,
 			formatItem : function(rawValue, i, optionsDataLength) {
-				var formattedValue = rawValue[0].replace("{",
-						" <span class='secondary'>");
+				var formattedValue = rawValue[0].replace("{", " <span class='secondary'>");
 				formattedValue = formattedValue.replace("}", "</span>");
 				return formattedValue;
 			}

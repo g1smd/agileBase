@@ -88,7 +88,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
       ##<div class="mini_action" style="border-bottom-right-radius:0.5em"><button id="hide_pane_3" onClick="top.hidePane3();">done</button></div>
       <div class="mini_action" style="right:0; border-bottom-left-radius:0.5em"><a href="javascript:top.fLinks();"><img src="resources/icons/applications/tango/actions/mail-closed.png" />&nbsp;link...</a></div>
 		#end
-    #set($tableDataRow=$view.getTableDataRow($sessionTable))
+    #set($tableDataRow=$view.getTableDataRow($sessionTable, $sessionRowId))
     #if($tableDataRow.size() == 0)
       Please select a record to edit, or press the 'New' button in the toolbar to create one
     #else
