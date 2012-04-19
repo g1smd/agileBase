@@ -37,7 +37,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
     #foreach($field in $originalTable.getFields())
       #if($sessionTable.equals($field.getRelatedTable()))
         #set($sessionRowId = $originalTableDataRow.get($field).getValueInteger())
-        Row id of parent is $sessionRowId<p>
+        $originalTableDataRow<p>
       #end
     #end
   #end
