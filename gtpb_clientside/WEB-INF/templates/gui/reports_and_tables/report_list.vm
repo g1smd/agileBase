@@ -115,7 +115,7 @@
             #end
             #set($formTable = $table.getFormTable())
             #if($formTable)
-              #set($setTab = "set_custom_table=true&tablekey=tabTable&custominternaltablename=$formTable.getInternalTableName()")
+              #set($setTab = "set_custom_table=true&tablekey=tabTable&custominternaltablename=$table.getInternalTableName()")
 			#else
 			  #set($setTab = "clear_custom_variable=tabTable")
             #end
