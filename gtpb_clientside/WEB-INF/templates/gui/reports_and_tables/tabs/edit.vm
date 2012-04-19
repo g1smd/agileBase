@@ -24,7 +24,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #end
 #set($rowCount = 0)
 #set($tabCaption='edit')
-
 #set($sessionTable=$sessionData.getTable())
 #set($formTable = $sessionTable.getFormTable())
 ## If set to use a table different to the current one as a form
