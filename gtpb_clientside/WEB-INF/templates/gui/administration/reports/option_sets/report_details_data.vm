@@ -97,9 +97,9 @@
           <option value="">--please choose a distinct field--</option>
           #foreach($field in $report.getReportBaseFields())
             #if(!$distinctFields.contains($field))
-              #if($field.getClass().getSimpleName() != "CalculationFieldDefn")
+              ###if($field.getClass().getSimpleName() != "CalculationFieldDefn")
                 <option value="$field.getInternalFieldName()">$field</option>
-              #end
+              ###end
             #end
           #end
         </select>
