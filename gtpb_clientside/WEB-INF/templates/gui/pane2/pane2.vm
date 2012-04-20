@@ -54,7 +54,7 @@
 	      input[type=text][changed=true] { 
 	        text-decoration:underline 
 	      }
-	#if($browser != "Internet Explorer" && !$mobile_device)
+	#if(!$mobile_device) ## $browser != "Internet Explorer" && 
 	/* for fixed (frozen) table header */
 	  #set($reportStyle = $sessionReport.getReportStyle())
     #if(($reportStyle != "SECTIONED") && ($reportStyle != "ONE_SECTION"))
@@ -198,7 +198,7 @@
 		  loadIntoPane3(url,rowId,$numberOfTabs);
 	  }
 
-	#if($browser != "Internet Explorer")
+	###if($browser != "Internet Explorer")
 	function alignTableHeaderCells() {
 		var jqFirstRowCells = $("tbody#reportBody tr:first").children("td");
 		var jqHeaderCells = $("#reportData thead tr:first").children("th");
@@ -218,7 +218,7 @@
 		  i++;
 		});
 	}
-	#end
+	###end
 	
 	$(document).ready(function() {
 	  var hoverIntentConfig = {    
@@ -228,7 +228,7 @@
 	  };
 	  $("#filterhelp").hoverIntent(hoverIntentConfig);
 	  $(".ab_field_title").hoverIntent(hoverIntentConfig);
-	  #if($browser != "Internet Explorer")
+	  ###if($browser != "Internet Explorer")
 	    alignTableHeaderCells();
 	    setInterval("alignTableHeaderCells()", 2000);
 	  
@@ -236,7 +236,7 @@
 	      var left = document.body.scrollLeft || window.pageXOffset;
 	      $("thead").css("left", -1 * left);
 	    });
-	  #end
+	  ###end
 	});
 	</script>
     #end ## end if not mobile device
