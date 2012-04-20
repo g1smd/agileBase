@@ -1299,6 +1299,8 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private Set<JoinClauseInfo> joins = new HashSet<JoinClauseInfo>();
 
 	private Set<BaseField> distinctFields = new LinkedHashSet<BaseField>();
+	
+	private Set<ReportFieldInfo> distinctReportFields = new LinkedHashSet<ReportFieldInfo>();
 
 	private Set<ReportSortInfo> sorts = new HashSet<ReportSortInfo>();
 

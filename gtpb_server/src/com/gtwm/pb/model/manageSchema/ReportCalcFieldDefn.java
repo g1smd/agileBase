@@ -377,6 +377,33 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 				}
 			}
 		}
+		// {field} => internaltablename.internalfieldname
+		// where field is in one of the report tables
+		if (calculationSQL.contains("{")) {
+			for (TableInfo table : ((SimpleReportInfo) this.getParentReport()).getJoinedTables()) {
+				FIELDSLOOP: for (BaseField field : table.getFields()) {
+					if (!field.getFieldCategory().savesData()) {
+						continue FIELDSLOOP;
+					}
+					String fieldName = field.getFieldName().toLowerCase(Locale.UK);
+					identifierToMatch = "{" + fieldName + "}";
+					fieldName = fieldName.replaceAll("(\\W)", "\\\\$1");
+					identifierToReplace = "\\{" + fieldName + "\\}";
+					replacement = table.getInternalTableName() + "." + field.getInternalFieldName();
+					DatabaseFieldType fieldDbType = field.getDbType();
+					if (this.getDbType().equals(DatabaseFieldType.FLOAT)
+							&& (fieldDbType.equals(DatabaseFieldType.FLOAT) || fieldDbType
+									.equals(DatabaseFieldType.INTEGER))) {
+						replacement += "::double precision";
+					}
+					if (calculationSQL.contains(identifierToMatch)) {
+						calculationSQL = calculationSQL
+								.replaceAll(identifierToReplace, replacement);
+						this.fieldsUsed.add(field);
+					}
+				}
+			}
+		}
 		// Just
 		// {field} => internalfieldname
 		// where field is in this report itself
@@ -402,34 +429,6 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 				if (calculationSQL.contains(identifierToMatch)) {
 					calculationSQL = calculationSQL.replaceAll(identifierToReplace, replacement);
 					this.fieldsUsed.add(field);
-				}
-			}
-		}
-		// Finally
-		// {field} => internaltablename.internalfieldname
-		// where field is in one of the report tables
-		if (calculationSQL.contains("{")) {
-			for (TableInfo table : ((SimpleReportInfo) this.getParentReport()).getJoinedTables()) {
-				FIELDSLOOP: for (BaseField field : table.getFields()) {
-					if (!field.getFieldCategory().savesData()) {
-						continue FIELDSLOOP;
-					}
-					String fieldName = field.getFieldName().toLowerCase(Locale.UK);
-					identifierToMatch = "{" + fieldName + "}";
-					fieldName = fieldName.replaceAll("(\\W)", "\\\\$1");
-					identifierToReplace = "\\{" + fieldName + "\\}";
-					replacement = table.getInternalTableName() + "." + field.getInternalFieldName();
-					DatabaseFieldType fieldDbType = field.getDbType();
-					if (this.getDbType().equals(DatabaseFieldType.FLOAT)
-							&& (fieldDbType.equals(DatabaseFieldType.FLOAT) || fieldDbType
-									.equals(DatabaseFieldType.INTEGER))) {
-						replacement += "::double precision";
-					}
-					if (calculationSQL.contains(identifierToMatch)) {
-						calculationSQL = calculationSQL
-								.replaceAll(identifierToReplace, replacement);
-						this.fieldsUsed.add(field);
-					}
 				}
 			}
 		}
