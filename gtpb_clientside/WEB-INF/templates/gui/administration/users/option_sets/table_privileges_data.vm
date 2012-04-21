@@ -50,25 +50,29 @@
           #set($highestTablePrivilege = "VIEW_TABLE_DATA")          
 		#end
 		## Find the highest privilege any of the user's roles has
-		#set($highestRolePrivilege = 0)
+		#set($highestRolePrivilegeNum = 0)
 		#foreach($role in $view.adminGetRolesForUser($user))
-			#if(($highestRolePrivilege < 3) && ($view.roleHasPrivilege($role, "MANAGE_TABLE", $table)))
-				#set($highestRolePrivilege = 3)
-			#elseif(($highestRolePrivilege < 2) && ($view.roleHasPrivilege($role, "EDIT_TABLE_DATA", $table)))
-				#set($highestRolePrivilege = 2)
-			#elseif(($highestRolePrivilege < 1) && ($view.roleHasPrivilege($role, "VIEW_TABLE_DATA", $table)))
-				#set($highestRolePrivilege = 1)
+			#if(($highestRolePrivilegeNum < 3) && ($view.roleHasPrivilege($role, "MANAGE_TABLE", $table)))
+				#set($highestRolePrivilegeNum = 3)
+			#elseif(($highestRolePrivilegeNum < 2) && ($view.roleHasPrivilege($role, "EDIT_TABLE_DATA", $table)))
+				#set($highestRolePrivilegeNum = 2)
+			#elseif(($highestRolePrivilegeNum < 1) && ($view.roleHasPrivilege($role, "VIEW_TABLE_DATA", $table)))
+				#set($highestRolePrivilegeNum = 1)
 			#end
-			#if($highestRolePrivilege == 3)
+			#if($highestRolePrivilegeNum == 3)
 				#break
 			#end
 		#end
         <tr>
           <td>$table.getTableName()<br>$table.getTableDescription()</td>
-          <td class="rolehasprivilege">#radio_user('none' '' 'gtpb_clear_all_table_privileges')</td>
-          <td #if($highestRolePrivilege >= 1) class="rolehasprivilege" #end>#radio_user('read' 'VIEW_TABLE_DATA' 'gtpb_set_max_table_privilege')</td>
-          <td #if($highestRolePrivilege >= 2) class="rolehasprivilege" #end>#radio_user('edit' 'EDIT_TABLE_DATA' 'gtpb_set_max_table_privilege')</td>
-          <td #if($highestRolePrivilege == 3) class="rolehasprivilege" #end>#radio_user('manage' 'MANAGE_TABLE' 'gtpb_set_max_table_privilege')</td>
+##          <td class="rolehasprivilege">#radio_user('none' '' 'gtpb_clear_all_table_privileges')</td>
+##          <td #if($highestRolePrivilegeNum >= 1) class="rolehasprivilege" #end>#radio_user('read' 'VIEW_TABLE_DATA' 'gtpb_set_max_table_privilege')</td>
+##          <td #if($highestRolePrivilegeNum >= 2) class="rolehasprivilege" #end>#radio_user('edit' 'EDIT_TABLE_DATA' 'gtpb_set_max_table_privilege')</td>
+##          <td #if($highestRolePrivilegeNum == 3) class="rolehasprivilege" #end>#radio_user('manage' 'MANAGE_TABLE' 'gtpb_set_max_table_privilege')</td>
+          <td class="rolehasprivilege">#if($highestRolePrivilegeNum == 0) #radio_user('none' '' 'gtpb_clear_all_table_privileges') #end</td>
+          <td #if($highestRolePrivilegeNum >= 1) class="rolehasprivilege" #end>#if($highestRolePrivilegeNum == 1) #radio_user('read' 'VIEW_TABLE_DATA' 'gtpb_set_max_table_privilege') #end</td>
+          <td #if($highestRolePrivilegeNum >= 2) class="rolehasprivilege" #end>#if($highestRolePrivilegeNum == 2) #radio_user('edit' 'EDIT_TABLE_DATA' 'gtpb_set_max_table_privilege') #end</td>
+          <td #if($highestRolePrivilegeNum == 3) class="rolehasprivilege" #end>#if($highestRolePrivilegeNum == 3) #radio_user('manage' 'MANAGE_TABLE' 'gtpb_set_max_table_privilege') #end</td>
         </tr>
       #end
 </table>
