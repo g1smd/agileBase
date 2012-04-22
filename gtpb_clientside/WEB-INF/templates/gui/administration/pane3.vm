@@ -112,6 +112,9 @@
 	.rolehasprivilege {
 	  background-color: #bddfed;
 	}
+	.userhasprivilege {
+	  background-color: #ddefe0;
+	}
   </STYLE>
   <script src="resources/jquery.js" language="Javascript"> </script>
   <script src="resources/jquery.sparkline.js" language="Javascript"> </script>
