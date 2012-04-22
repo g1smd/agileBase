@@ -19,5 +19,4 @@
 #set($option_set_title='table privileges')
 #set($option_set_subtitle="<span class='rolehasprivilege'>blue background</span>: $sessionUser.getForename() is a member of a role that has that privilege.")
 #set($option_set_data_path='gui/administration/users/option_sets/table_privileges_data.vm')
-
 #parse('gui/administration/option_set.vm')

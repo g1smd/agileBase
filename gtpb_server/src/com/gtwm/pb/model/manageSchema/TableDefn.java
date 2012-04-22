@@ -348,6 +348,9 @@ public class TableDefn implements TableInfo {
 				}
 			}
 		}
+		if (this.equals(table.getFormTable())) {
+			return true;
+		}
 		return false;
 	}
 
