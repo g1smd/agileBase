@@ -20,7 +20,7 @@
 				  overflow:auto;
                 }
 				
-	#navigation button { margin:5px }
+  #navigation button { margin:5px; margin-left:24px }
                 
     .options_wrapper { padding-left:120px; 
     		           height:100%;
