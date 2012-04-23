@@ -1094,6 +1094,7 @@ function fInitialiseDependencies() {
 function loadIntoTabTable(oRow, internalTableName, rowId) {
 	var jqSelector = $(oRow).closest(".selectorReport");
 	if (jqSelector.closest(".block").hasClass("grandchildren")) {
+		alert('gc');
 		var activeTab = $(".tab_choice.active");
 		var tabTableInternalName = activeTab.attr("data-internaltablename");
 		var tabReportInternalName = activeTab.attr("data-internalreportname");
@@ -1109,8 +1110,10 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 	} else {
 		var targetDiv = jqSelector.next("div");
 		targetDiv.fadeOut();
+		// Parent ID in case we're using a different table as a form
 		var parentRowId = $(".form_tabber").attr("data-rowid");
 		var parentTableInternalName = $(".form_tabber").attr("data-internaltablename");
+		alert("Setting " + parentTableInternalName + " to " + parentRowId);
 		targetDiv.load("AppController.servlet", {
 			set_row_id : rowId,
 			rowidinternaltablename : internalTableName,
