@@ -1292,7 +1292,7 @@ function fFormStyle() {
 				jqTab.addClass("tabActionRegistered");
 				var parentInternalTableName = jqTab.closest(".form_tabber").attr(
 						"data-internaltablename");
-				vat parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
+				var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
 				jqTab.click(function() {
 					var tabInternalTableName = $(this).attr("data-internaltablename");
 					var previousTab = jqTab.closest(".form_tabber").find(
