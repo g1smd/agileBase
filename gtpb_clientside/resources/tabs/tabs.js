@@ -1296,16 +1296,12 @@ function fFormStyle() {
 				var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
 				jqTab.click(function() {
 					var tabInternalTableName = $(this).attr("data-internaltablename");
-					var previousTab = jqTab.closest(".form_tabber").find(".tab_choice.active");
-					var previousTabInternalTableName = previousTab.attr("data-internaltablename");
-					var previousContainer = $("#form_tabs_" + parentInternalTableName
-							+ "_" + previousTabInternalTableName);
 					$(".tab_choice").removeClass("active");
 					var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
 							+ tabInternalTableName);
 					$("#tab_deleter").fadeOut();
 					if (tabContainer.children().size() == 0) {
-						previousContainer.fadeOut();
+						$(".tab_container").fadeOut();
 						tabContainer.addClass("load-spinner").css("position", "relative");
 						tabContainer.fadeIn();
 						tabContainer.load("AppController.servlet", {
@@ -1329,7 +1325,7 @@ function fFormStyle() {
 							}
 						});
 					} else {
-						previousContainer.hide();
+						$(".tab_container").hide();
 						tabContainer.show();
 						jqTab.addClass("active");
 						// Fire off a post to set the session tab - don't need any results
