@@ -20,7 +20,7 @@
   #set($sessionRowId=$sessionData.getRowId($sessionTable))
 #end
 <div class="form_tabber" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionRowId">
-  <div class="tab_choice active main" data-internaltablename="$sessionTable.getInternalTableName()">$sessionTable.getSingularName()</div>
+  <div class="tab_choice #if(!($formTable && (!$formTable.equals($sessionTable)))) active #end main" data-internaltablename="$sessionTable.getInternalTableName()">$sessionTable.getSingularName()</div>
   #foreach($formTab in $formTabs)
     #set($formTable = $formTab.getTable())
     #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA",$formTable))
