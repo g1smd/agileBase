@@ -112,7 +112,7 @@
 			#else
 			  #set($setTab = "clear_custom_variable=tabTable")
             #end
-      		<a href="AppController.servlet?return=$pane2_template&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()&set_report_row_limit=$thisReportRowLimit&clear_all_report_sorts=true&$setTab&set_module=$module.getInternalModuleName()&cachebust=$viewTools.getRandomString()" #if(!$mobile_device)target="pane_2" class="report_tooltip" rel="AppController.servlet?return=gui/reports_and_tables/report_tooltip&set_custom_report=true&reportkey=tooltip_report&custominternalreportname=$report.getInternalReportName()"#end >
+      		<a href="AppController.servlet?return=$pane2_template&set_table=$table.getInternalTableName()&set_report=$report.getInternalReportName()&set_report_row_limit=$thisReportRowLimit&clear_all_report_sorts=true&$setTab&set_custom_boolean=true&booleankey=overrideTableForm&custombooleanvalue=false&set_module=$module.getInternalModuleName()&cachebust=$viewTools.getRandomString()" #if(!$mobile_device)target="pane_2" class="report_tooltip" rel="AppController.servlet?return=gui/reports_and_tables/report_tooltip&set_custom_report=true&reportkey=tooltip_report&custominternalreportname=$report.getInternalReportName()"#end >
       			$report
       		</a>
           #end

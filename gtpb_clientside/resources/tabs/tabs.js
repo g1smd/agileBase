@@ -1105,6 +1105,7 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 				+ "&set_row_id=" + rowId + "&rowidinternaltablename=" + internalTableName
 				+ "&preset_row_id=" + tabRowId + "&preset_rowidinternaltablename=" + tabTableInternalName
 				+ "&set_custom_table=true&tablekey=tabTable&custominternaltablename=" + internalTableName
+				+ "&set_custom_boolean=true&booleankey=overrideTableForm&custombooleanvalue=true"
 				+ "&cachebust=" + (new Date()).getTime();
 	} else {
 		var targetDiv = jqSelector.next("div");
