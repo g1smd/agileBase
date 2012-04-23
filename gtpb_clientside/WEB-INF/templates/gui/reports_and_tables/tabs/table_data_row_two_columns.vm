@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-Form table is $formTable<p>
+#set($theFormTable = $sessionTable.getFormTable())
 #if($fieldCategory == "SEPARATOR")
   #if(!$field.equals($firstField))
     #if($formStyle == 'TWO_COLUMNS')
@@ -27,7 +27,7 @@ Form table is $formTable<p>
     #if($formTabs.size() > 0)
       #parse("gui/reports_and_tables/tabs/form_tabber.vm")
     #end
-    <div #if(($formStyle == "TWO_COLUMNS") && !$parentTable) class="two_cols" #end #if($formTable && (!$formTable.equals($sessionTable))) style="display:none" data-formtable="$formTable" #end id="form_tabs_$sessionTable.getInternalTableName()_$sessionTable.getInternalTableName()"> <!-- start of sections container -->
+    <div #if(($formStyle == "TWO_COLUMNS") && !$parentTable) class="two_cols" #end #if($theFormTable && (!$theFormTable.equals($sessionTable))) style="display:none" data-formtable="$formTable" #end id="form_tabs_$sessionTable.getInternalTableName()_$sessionTable.getInternalTableName()"> <!-- start of sections container -->
     #set($firstSection = false)
   #end
   #if($formStyle == 'TWO_COLUMNS')
@@ -43,7 +43,7 @@ Form table is $formTable<p>
   #if($field.equals($firstField))
     #if((!$hasSections) && ($formTabs.size() > 0))
       #parse("gui/reports_and_tables/tabs/form_tabber.vm")
-      <div class="block #if(!$parentTable) two_cols non_section #end" #if($formTable && (!$formTable.equals($sessionTable))) style="display:none" data-formtable="$formTable" #end id="form_tabs_$sessionTable.getInternalTableName()_$sessionTable.getInternalTableName()">
+      <div class="block #if(!$parentTable) two_cols non_section #end" #if($theFormTable && (!$theFormTable.equals($sessionTable))) style="display:none" data-formtable="$formTable" #end id="form_tabs_$sessionTable.getInternalTableName()_$sessionTable.getInternalTableName()">
     #else
       <div class="block #if(!$parentTable) two_cols non_section #end">
     #end
