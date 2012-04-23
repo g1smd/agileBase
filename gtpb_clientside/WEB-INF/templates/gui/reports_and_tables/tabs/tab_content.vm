@@ -54,9 +54,9 @@
 	  #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
 	  #if($datarows.size() > 1)
 	    #parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
-	  #elseif($datarows.size() == 1)
+	  #elseif(!$formTab && ($datarows.size() == 1))
 	    #set($sessionRowId = $datarows.get(0).getRowId())
-	  #else
+	  #elseif(!$formTab)
 	    #set($sessionRowId = -1)
 	  #end ## end if datarows.size > 1
 	  #if($sessionRowId > -1)
