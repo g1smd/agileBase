@@ -15,6 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+Form table is $formTable<p>
 #if($fieldCategory == "SEPARATOR")
   #if(!$field.equals($firstField))
     #if($formStyle == 'TWO_COLUMNS')
