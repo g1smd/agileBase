@@ -28,7 +28,7 @@
   #end
 #end
 
-#if((!$sessionRowFound) && (!$grandchild))
+#if((!$sessionRowFound) && (!$grandchild) && (!$formTable))
   ## Revert to the first item in the list
   #set($sessionRowId = $datarows.get(0).getRowId())
 #end

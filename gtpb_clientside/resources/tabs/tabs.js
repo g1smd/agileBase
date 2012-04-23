@@ -24,7 +24,7 @@ var pane3Scripts = function() {
 	pane3ScriptsPub.functionList = new Array();
 	pane3ScriptsPub.update = function() {
 		var len = pane3ScriptsPub.functionList.length;
-		for ( var i = 0; i < len; i++) {
+		for (var i = 0; i < len; i++) {
 			pane3ScriptsPub.functionList[i]();
 		}
 	}
@@ -797,59 +797,22 @@ function fDatePickers() {
 			});
 }
 
-function fExpandContractSection() {
-	$("tr.separator").each(function() {
-		if (!$(this).hasClass("clickRegistered")) {
-			$(this).click(function() {
-				var jqSeparator = $(this);
-				var internalFieldName = jqSeparator.attr("internalfieldname");
-				// Work out if the section's currently expanded or not
-				var jqFirstField = jqSeparator.next("tr");
-				var sectionRows = jqSeparator.nextUntil("tr.separator");
-				var contracted = true;
-				if (jqFirstField.is(":visible")) {
-					contracted = false;
-				}
-				if (contracted) {
-					sectionRows.show(); // show immediately for speed, no animation
-					jqSeparator.removeClass("contracted");
-					$.post("AppController.servlet", {
-						internalfieldname : internalFieldName,
-						expand_section : true,
-						"return" : "blank"
-					});
-				} else {
-					sectionRows.hide("fast"); // animate the hide
-					jqSeparator.addClass("contracted");
-					$.post("AppController.servlet", {
-						internalfieldname : internalFieldName,
-						contract_section : true,
-						"return" : "blank"
-					});
-				}
-			});
-			$(this).addClass("clickRegistered");
-		}
-	});
-}
-
 function fAssignButtonTableActions() {
-	$('button.tableaction')
-			.click(
-					function() {
-						var actionName = $(this).attr('actionname');
-						if (self == top) { // if mobile un-framed version
-							document.location = "?return=gui/mobile/module_action&set_custom_string=true&key=actionname&value="
-									+ actionName;
-						} else {
-							var actionTemplate = $(this).attr('actiontemplate');
-							var actionButtons = $(this).attr('actionbuttons');
-							var callbackFunction = $(this).attr('callbackfunction');
-							top.fShowModalDialog(actionTemplate, actionName,
-									callbackFunction, actionButtons, 'width=800px; height=600px');
-						}
-						return false;
-					});
+	$('button.tableaction').click(
+		function() {
+			var actionName = $(this).attr('actionname');
+			if (self == top) { // if mobile un-framed version
+				document.location = "?return=gui/mobile/module_action&set_custom_string=true&key=actionname&value="
+						+ actionName;
+			} else {
+				var actionTemplate = $(this).attr('actiontemplate');
+				var actionButtons = $(this).attr('actionbuttons');
+				var callbackFunction = $(this).attr('callbackfunction');
+				top.fShowModalDialog(actionTemplate, actionName,
+						callbackFunction, actionButtons, 'width=800px; height=600px');
+			}
+			return false;
+		});
 }
 
 /** http://tweet.seaofclouds.com/ */
@@ -1146,9 +1109,13 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 	} else {
 		var targetDiv = jqSelector.next("div");
 		targetDiv.fadeOut();
+		var parentRowId = $(".form_tabber").attr("data-rowid");
+		var parentTableInternalName = $(".form_tabber").attr("data-internaltablename");
 		targetDiv.load("AppController.servlet", {
 			set_row_id : rowId,
 			rowidinternaltablename : internalTableName,
+			preset_row_id: parentRowId,
+			preset_rowidinternaltablename: parentTableInternalName,
 			"return" : "gui/reports_and_tables/tabs/tab_content_table",
 			set_custom_table : true,
 			tablekey : "tabTable",
