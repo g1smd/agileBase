@@ -17,8 +17,9 @@
 ##
 #set($sessionTable = $sessionData.getCustomTable("tabTable"))
 #set($parentTable = $sessionData.getTable())
-#if($parentTable.getFormTable())
-  #set($parentTable = $parentTable.getFormTable())
+#set($formTable = $parentTable.getFormTable())
+#if($formTable)
+  #set($parentTable = $formTable)
 #end
 ## Get the tab object associated with the tab table
 #foreach($testFormTab in $parentTable.getFormTabs())
