@@ -17,7 +17,9 @@
 ##
 #set($sessionTable = $sessionData.getCustomTable("tabTable"))
 #set($parentTable = $sessionData.getTable())
-#set($formTable = $parentTable.getFormTable())
+#if(!$sessionData.getCustomBoolean("overrideTableForm"))
+  #set($formTable = $parentTable.getFormTable())
+#end
 #if($formTable)
   #set($parentTable = $formTable)
 #end
