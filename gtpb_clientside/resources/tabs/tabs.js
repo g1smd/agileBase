@@ -1110,7 +1110,6 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 	} else {
 		var targetDiv = jqSelector.next("div");
 		targetDiv.fadeOut();
-		alert("Setting " + parentTableInternalName + " to " + parentRowId);
 		targetDiv.load("AppController.servlet", {
 			set_row_id : rowId,
 			rowidinternaltablename : internalTableName,

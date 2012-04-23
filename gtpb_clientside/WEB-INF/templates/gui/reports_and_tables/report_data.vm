@@ -71,6 +71,12 @@
   #set($dataCapacity = $datarows.size() + 1)##
   #set($success = $data.ensureCapacity($dataCapacity))##
   #set($colsCapacity = $reportBaseFields.size() + 2)##
+	#set($formTable = $sessionTable.getFormTable())
+	#if($formTable)
+	  #set($setTab = "set_custom_table=true&tablekey=tabTable&custominternaltablename=$sessionTable.getInternalTableName()")
+	#else
+	  #set($setTab = "clear_custom_variable=tabTable")
+	#end
   #foreach($datarow in $datarows)##
     #set($row=[])##
     #set($colours=[])##
@@ -112,7 +118,7 @@
     #elseif($table_part_only)
       #set($click="loadIntoPanel('$sessionReport.getInternalReportName()', $datarow.getRowId());")##
     #else
-      #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()&set_custom_string=1&key=report_tabindex&value=2&clear_custom_variable=overrideTableForm', $datarow.getRowId(), $numberOfTabs);showPane3IfNecessary(event);")##
+      #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()&set_custom_string=1&key=report_tabindex&value=2&clear_custom_variable=overrideTableForm&$setTab', $datarow.getRowId(), $numberOfTabs);showPane3IfNecessary(event);")##
 	  #end##
 	#end##
     #set($uniqueid=$datarow.getRowId())##
