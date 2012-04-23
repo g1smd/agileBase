@@ -112,7 +112,7 @@
     #elseif($table_part_only)
       #set($click="loadIntoPanel('$sessionReport.getInternalReportName()', $datarow.getRowId());")##
     #else
-      #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()&set_custom_string=1&key=report_tabindex&value=2', $datarow.getRowId(), $numberOfTabs);showPane3IfNecessary(event);")##
+      #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()&set_custom_string=1&key=report_tabindex&value=2&clear_custom_variable=overrideTableForm', $datarow.getRowId(), $numberOfTabs);showPane3IfNecessary(event);")##
 	  #end##
 	#end##
     #set($uniqueid=$datarow.getRowId())##
