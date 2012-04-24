@@ -463,13 +463,11 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 	}
 
-	public boolean childDataRowsExist(TableInfo childTable) throws SQLException, DisallowedException, ObjectNotFoundException {
+	public boolean childDataRowsExist(TableInfo parentTable, int parentRowId, TableInfo childTable) throws SQLException, DisallowedException, ObjectNotFoundException {
 		if (!this.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, childTable)) {
 			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
 					childTable);
 		}
-		TableInfo parentTable = this.sessionData.getTable();
-		int parentRowId = this.sessionData.getRowId();
 		return this.databaseDefn.getDataManagement().childDataRowsExist(parentTable, parentRowId, childTable);
 	}
 

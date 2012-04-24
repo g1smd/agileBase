@@ -300,7 +300,7 @@ public interface ViewMethodsInfo {
 	/**
 	 * @see DataRowInfo#childDataRowsExist()
 	 */
-	public boolean childDataRowsExist(TableInfo childTable) throws SQLException,
+	public boolean childDataRowsExist(TableInfo parentTable, int parentRowId, TableInfo childTable) throws SQLException,
 			DisallowedException, ObjectNotFoundException;
 
 	/**

@@ -2,15 +2,17 @@
 ## show whether related data exists.
 ## Output JSON
 #set($table = $sessionData.getTable())
+#set($rowId = $sessionData.getRowId($table))
 #if($table.getFormTable())
   #set($table = $table.getFormTable())
 #end
+#set($rowId = $sessionData.getRowId($table))
 #set($formTabs = $table.getFormTabs())
 [ ## Start JSON array
 #foreach($formTab in $formTabs)
 	## Really we should use tab report, but the table is likely to be a lot faster in some cases
 	#set($tabTable = $formTab.getTable())
-	#if(!$view.childDataRowsExist($tabTable))
+	#if(!$view.childDataRowsExist($table, $rowId, $tabTable))
 	  "$tabTable.getInternalTableName()",
 	#end
 #end
