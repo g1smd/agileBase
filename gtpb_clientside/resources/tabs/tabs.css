@@ -593,13 +593,19 @@ span.comment_attribution {
 
 .two_cols {
   -moz-column-count: 2;
-  -webkit-column-count: 2; /* There seems to be a webkit bug that causes a mis-render */
-  -ms-column-count: 0;
+  -webkit-column-count: 2;
+  -ms-column-count: 2;
   column-count: 2;
   -moz-column-gap: 0;
   -webkit-column-gap: 0;
   -ms-column-gap: 0;
   column-gap: 0;
+}
+
+#saved_charts {
+  /* Issue https://github.com/highslide-software/highcharts.com/issues/913 */
+  /* There seems to be a webkit bug that causes a mis-render charts in .two_cols, override */
+  -webkit-column-count: 0;
 }
 
 #reportData .block.two_cols.non_section {
@@ -770,7 +776,7 @@ div#reportData {
 
 #reportData .block input.comment_input {
 	float: none;
-	width: 200px;
+	width: 90%;
 	top: 0;
 	border: 1px solid #cecece;
 	position: static; /* Workaround https://bugs.webkit.org/show_bug.cgi?id=76834 */
@@ -782,10 +788,6 @@ div#reportData {
 
 #reportData .block .comment_feed input[type=button] {
   position: static;
-}
-
-#reportData .block .comment_feed input.comment_input {
-  width: 90%;
 }
 
 .comment_feed {
