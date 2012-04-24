@@ -21,6 +21,7 @@
 #set($success = $filter.put($sessionTable.getPrimaryKey(), "$sessionRowId"))
 #set($gcFormTabs = $sessionTable.getFormTabs())
 #set($gcParentTable = $sessionTable)
+#set($lookupRowId = true) ## Used by tab_selector_report
 #foreach($gcFormTab in $gcFormTabs)
 	#set($selectorReport = $gcFormTab.getSelectorReport())
   #set($sessionRowId = -1) ## $sessionData.getRowId($gcFormTab.getTable()))
