@@ -25,7 +25,8 @@
 
 #foreach($gcFormTab in $gcFormTabs)
   #set($selectorReport = $gcFormTab.getSelectorReport())
-  #set($sessionRowId = -1) ## $sessionData.getRowId($gcFormTab.getTable()))
+  ## Stop a particular record from being highlighted
+  ###set($sessionRowId = -1) ## $sessionData.getRowId($gcFormTab.getTable()))
   #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
 	<div class="block grandchildren">
 		#set($gcFormTabTableInternalName = $gcFormTab.getTable().getInternalTableName())
