@@ -53,6 +53,7 @@
       #end
     #end
     #if($found)
+      Form tab is $formTab<p>
 	  #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
 	  #if($datarows.size() > 1)
 	    #parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
