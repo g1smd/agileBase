@@ -53,12 +53,17 @@
       #end
     #end
     #if($found)
+      #set($lookupRowId = true)
+      ## Don't overwrite row ID if we're using a form table and the tab is the session table
+      #if($formTable && $sessionTable.equals($sessionData.getTable()))
+        #set($lookupRowId = false)
+      #end
 	  #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
 	  #if($datarows.size() > 1)
 	    #parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
-	  #elseif(!$formTable && ($datarows.size() == 1))
+	  #elseif($lookupRowId && ($datarows.size() == 1))
 	    #set($sessionRowId = $datarows.get(0).getRowId())
-	  #elseif(!$formTable)
+	  #elseif($lookupRowId)
 	    #set($sessionRowId = -1)
 	  #end ## end if datarows.size > 1
 	  #if($sessionRowId > -1)
