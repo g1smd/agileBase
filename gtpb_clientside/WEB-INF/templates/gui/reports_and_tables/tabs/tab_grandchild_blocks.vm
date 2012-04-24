@@ -16,19 +16,19 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($grandchild = true)
-#set($parentRowId = $sessionData.getRowId($sessionTable))
 #set($filter = $viewTools.getNewFilterMap())
 #set($success = $filter.put($sessionTable.getPrimaryKey(), "$sessionRowId"))
 #set($gcFormTabs = $sessionTable.getFormTabs())
 #set($gcParentTable = $sessionTable)
 #set($lookupRowId = true) ## Used by tab_selector_report
 #foreach($gcFormTab in $gcFormTabs)
-	#set($selectorReport = $gcFormTab.getSelectorReport())
+  #set($selectorReport = $gcFormTab.getSelectorReport())
   #set($sessionRowId = -1) ## $sessionData.getRowId($gcFormTab.getTable()))
   #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
 	<div class="block grandchildren">
 		#set($gcFormTabTableInternalName = $gcFormTab.getTable().getInternalTableName())
-		<h1>$gcFormTab <a href="AppController.servlet?return=gui/reports_and_tables/report_data&set_table=$sessionTable.getInternalTableName()&set_report=$formTab.getSelectorReport().getInternalReportName()&save_new_record=true&internaltablename=$gcFormTabTableInternalName&set_custom_table=true&tablekey=tabTable&custominternaltablename=$gcFormTabTableInternalName&cachebust=$viewTools.getRandomString()" target="pane_2"><img src="resources/toolbar/new.png" style="height: 1.3em; font-size: 9pt; vertical-align: top;"/></a></h1>
+		Row ID used for $sessionTable is $sessionRowId. ID in the session = $sessionData.getRowId($sessionTable)<p>
+		<h1>$gcFormTab <a href="AppController.servlet?return=gui/reports_and_tables/report_data&set_table=$sessionTable.getInternalTableName()&set_report=$formTab.getSelectorReport().getInternalReportName()&set_row_id&save_new_record=true&internaltablename=$gcFormTabTableInternalName&set_custom_table=true&tablekey=tabTable&custominternaltablename=$gcFormTabTableInternalName&cachebust=$viewTools.getRandomString()" target="pane_2"><img src="resources/toolbar/new.png" style="height: 1.3em; font-size: 9pt; vertical-align: top;"/></a></h1>
 		#if($datarows.size() > 0)
       ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
 			<table style="width:100%"><tr><td style="column-break-inside: avoid;"> 
