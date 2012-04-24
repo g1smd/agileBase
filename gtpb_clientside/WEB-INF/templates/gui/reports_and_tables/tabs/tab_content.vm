@@ -60,6 +60,7 @@
         #set($lookupRowId = false)
       #end
 	  #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
+	  Datarows are $datarows, from filter $filter<p>
 	  #if($datarows.size() > 1)
 	    #parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
 	  #elseif($lookupRowId && ($datarows.size() == 1))
