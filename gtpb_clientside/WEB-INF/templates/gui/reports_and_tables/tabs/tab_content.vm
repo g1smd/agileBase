@@ -56,6 +56,7 @@
       #set($lookupRowId = true)
       ## Don't overwrite row ID if we're using a form table and the tab is the session table
       #if($formTable && $sessionTable.equals($sessionData.getTable()))
+        Setting lookup to false, $sessionTable = $sessionData.getTable()<p>
         #set($lookupRowId = false)
       #end
 	  #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
