@@ -2,6 +2,9 @@
 ## show whether related data exists.
 ## Output JSON
 #set($table = $sessionData.getTable())
+#if($table.getFormTable())
+  #set($table = $table.getFormTable())
+#end
 #set($formTabs = $table.getFormTabs())
 [ ## Start JSON array
 #foreach($formTab in $formTabs)
