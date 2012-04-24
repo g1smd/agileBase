@@ -53,13 +53,13 @@
       #end
     #end
     #if($found)
-      Form tab is $formTab<p>
+      Form table is $formTable<p>
 	  #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
 	  #if($datarows.size() > 1)
 	    #parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
-	  #elseif(!$formTab && ($datarows.size() == 1))
+	  #elseif(!$formTable && ($datarows.size() == 1))
 	    #set($sessionRowId = $datarows.get(0).getRowId())
-	  #elseif(!$formTab)
+	  #elseif(!$formTable)
 	    #set($sessionRowId = -1)
 	  #end ## end if datarows.size > 1
 	  #if($sessionRowId > -1)
