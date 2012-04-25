@@ -37,9 +37,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
     #set($originalTableDataRow = $view.getTableDataRow($originalTable))
     #foreach($field in $originalTable.getFields())
       #if($sessionTable.equals($field.getRelatedTable()))
-        Original table: $originalTable<br>
-        Original table data row: $originalTableDataRow<br>
-        Session Table: $sessionTable<p>
+        $viewTools.log("Original table: $originalTable")
+        $viewTools.log("Original table data row: $originalTableDataRow")
+        $viewTools.log("Session Table: $sessionTable")
         #set($sessionRowId = $originalTableDataRow.get($sessionTable.getPrimaryKey()).getValueInteger())
       #end
     #end
