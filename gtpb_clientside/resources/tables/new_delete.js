@@ -21,6 +21,7 @@ function fNew() {
 	  var pane_3_doc = parent.pane_3.document;
 	  var sessionTab = $(pane_3_doc).find(".tab_choice.session_tab");
 	  if (sessionTab.size() > 0) {
+	  	alert("session tab found");
 	  	sessionTab.find(".new").click();
 	  	return;
 	  }
