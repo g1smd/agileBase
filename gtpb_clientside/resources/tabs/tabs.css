@@ -429,15 +429,12 @@ img.cross_reference_image {
   max-width: 100%;
 }
 
-.twitter {
+.twitter.tweet, twitter.query {
+  background-color: auto;
   display: inline-block;
 }
 
-.twitter .tweet, twitter .query {
-  background-color: auto;
-}
-
-.twitter .tweet .tweet_list, .twitter .query .tweet_list {
+.twitter.tweet .tweet_list, .twitter.query .tweet_list {
   background-color: none;
 }
 
