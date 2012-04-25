@@ -233,8 +233,6 @@ public final class ReportDownloader extends HttpServlet {
 		Font font = workbook.createFont();
 		font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		boldCellStyle.setFont(font);
-		CellStyle hiddenCellStyle = workbook.createCellStyle();
-		hiddenCellStyle.setHidden(true);
 		Row row = reportSheet.createRow(rowNum);
 		int columnNum = 0;
 		Set<ReportFieldInfo> reportFields = report.getReportFields();
@@ -244,7 +242,7 @@ public final class ReportDownloader extends HttpServlet {
 			cell.setCellStyle(boldCellStyle);
 			BaseField field = reportField.getBaseField();
 			if (field.equals(field.getTableContainingField().getPrimaryKey())) {
-				cell.setCellStyle(hiddenCellStyle);
+				reportSheet.setColumnHidden(columnNum, true);
 			}
 			columnNum++;
 		}
@@ -302,9 +300,6 @@ public final class ReportDownloader extends HttpServlet {
 						cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
 						cell.setCellValue(Helpers.unencodeHtml(fieldValue));
 						break;
-					}
-					if (field.equals(field.getTableContainingField().getPrimaryKey())) {
-						cell.setCellStyle(hiddenCellStyle);
 					}
 				}
 				columnNum++;
