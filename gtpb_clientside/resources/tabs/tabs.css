@@ -425,8 +425,20 @@ img.cross_reference_image {
 	padding-top:10px;
 }
 
-.gtob_youtube object,embed {
+.gtpb_youtube object,embed {
   max-width: 100%;
+}
+
+.twitter {
+  display: inline-block;
+}
+
+.twitter .tweet, twitter .query {
+  background-color: auto;
+}
+
+.twitter .tweet .tweet_list, .twitter .query .tweet_list {
+  background-color: none;
 }
 
 .upload_progress_container {
