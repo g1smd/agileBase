@@ -76,8 +76,9 @@
         #else
           <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /></a>##
         #end
-      #elseif ($fieldValueObject.isTwitterName())##      
-        <a href="http://www.twitter.com/$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
+      #elseif ($fieldValueObject.isTwitterName())##
+        <div class="twitter tweet query" username="$fieldValueObject"></div>
+        ##<a href="http://www.twitter.com/$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
        #elseif ($fieldValueObject.isTwitterHashTag())##      
         <a href="http://twitter.com/#!/search?q=$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
       #elseif ($fieldValueObject.isPostcode())##
