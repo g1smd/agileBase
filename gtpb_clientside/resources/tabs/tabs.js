@@ -820,7 +820,6 @@ function fTwitter() {
 	// Fetch 20 tweets, but filter out @replies, and display only 1:
 	$(".twitter").each(function() {
 		var username = $(this).attr("username");
-		alert(username);
 		$(this).tweet({
 			avatar_size : 32,
 			count : 1,
@@ -1516,4 +1515,5 @@ function editTabFunctions() {
 	fComments();
 	fDatePickers();
 	fSexyUpload();
+	fTwitter();
 }
