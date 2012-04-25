@@ -16,13 +16,21 @@
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
 //Create a new record and activate the edit tab
-function fNew()
-{	location='AppController.servlet?return=gui/reports_and_tables/report_data&save_new_record&set_custom_string=true&key=report_tabindex&value=2';
+function fNew() {
+	try {
+	  var pane_3_doc = parent.pane_3.document;
+	  var sessionTab = $(pane_3_doc).find(".tab_choice.session_tab");
+	  if (sessionTab.size() > 0) {
+	  	sessionTab.find(".new").click();
+	  	return;
+	  }
+	}
+	document.location='AppController.servlet?return=gui/reports_and_tables/report_data&save_new_record&set_custom_string=true&key=report_tabindex&value=2';
 }
 
 //Clone a record and activate the edit tab
 function fClone()
-{   location='AppController.servlet?return=gui/reports_and_tables/report_data&clone_record&set_custom_string=true&key=report_tabindex&value=2';
+{   document.location='AppController.servlet?return=gui/reports_and_tables/report_data&clone_record&set_custom_string=true&key=report_tabindex&value=2';
 }
 
 function fDelete()
