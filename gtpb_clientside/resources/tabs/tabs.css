@@ -430,12 +430,12 @@ img.cross_reference_image {
 }
 
 .twitter.tweet, twitter.query {
-  background-color: auto;
+  background-color: transparent;
   display: inline-block;
 }
 
 .twitter.tweet .tweet_list, .twitter.query .tweet_list {
-  background-color: none;
+  background-color: transparent;
 }
 
 .upload_progress_container {
