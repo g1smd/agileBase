@@ -413,6 +413,14 @@ img.cross_reference_image {
 	max-width: 300px;
 }
 
+.tab_container img {
+  max-width: 100%;
+}
+
+.tab_container img.profile_photo {
+  max-width: 15em;
+}
+
 .gtpb_youtube {
 	padding-top:10px;
 }
