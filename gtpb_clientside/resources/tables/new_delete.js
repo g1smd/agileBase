@@ -17,6 +17,7 @@
  */
 //Create a new record and activate the edit tab
 function fNew() {
+	// Try because we may be in the mobile version with no panes
 	try {
 	  var pane_3_doc = parent.pane_3.document;
 	  var sessionTab = $(pane_3_doc).find(".tab_choice.session_tab");
@@ -25,6 +26,7 @@ function fNew() {
 	  	sessionTab.find(".new").click();
 	  	return;
 	  }
+	} catch(err) {
 	}
 	document.location='AppController.servlet?return=gui/reports_and_tables/report_data&save_new_record&set_custom_string=true&key=report_tabindex&value=2';
 }
