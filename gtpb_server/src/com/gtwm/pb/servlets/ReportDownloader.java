@@ -70,7 +70,6 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
-import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.CantDoThatException;
@@ -234,6 +233,8 @@ public final class ReportDownloader extends HttpServlet {
 		Font font = workbook.createFont();
 		font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		boldCellStyle.setFont(font);
+		CellStyle hiddenCellStyle = workbook.createCellStyle();
+		hiddenCellStyle.setHidden(true);
 		Row row = reportSheet.createRow(rowNum);
 		int columnNum = 0;
 		Set<ReportFieldInfo> reportFields = report.getReportFields();
@@ -241,6 +242,10 @@ public final class ReportDownloader extends HttpServlet {
 			Cell cell = row.createCell(columnNum);
 			cell.setCellValue(reportField.getFieldName());
 			cell.setCellStyle(boldCellStyle);
+			BaseField field = reportField.getBaseField();
+			if (field.equals(field.getTableContainingField().getPrimaryKey())) {
+				cell.setCellStyle(hiddenCellStyle);
+			}
 			columnNum++;
 		}
 		// data
@@ -297,6 +302,9 @@ public final class ReportDownloader extends HttpServlet {
 						cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
 						cell.setCellValue(Helpers.unencodeHtml(fieldValue));
 						break;
+					}
+					if (field.equals(field.getTableContainingField().getPrimaryKey())) {
+						cell.setCellStyle(hiddenCellStyle);
 					}
 				}
 				columnNum++;
