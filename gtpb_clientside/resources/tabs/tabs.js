@@ -1504,7 +1504,6 @@ pane3Scripts.functionList.push(fUnlockButton);
 pane3Scripts.functionList.push(fSetupCharts);
 pane3Scripts.functionList.push(fAssignButtonTableActions);
 pane3Scripts.functionList.push(fMarkInactiveTabs);
-pane3Scripts.functionList.push(fTwitter);
 pane3Scripts.functionList.push(fMap);
 pane3Scripts.functionList.push(fInitialiseDependencies);
 pane3Scripts.functionList.push(fFormStyle);
