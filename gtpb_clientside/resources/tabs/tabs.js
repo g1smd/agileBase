@@ -893,6 +893,11 @@ function fEALoaded() {
 	$('#frame_calculationdefn').contents().find('.area_toolbar').hide();
 }
 
+function showEditCalc(internalFieldName) {
+	$(".calculation_form").slideUp();
+	$("#editcalc_" + internalFieldName).slideDown();
+}
+
 function addComment(jqCommentInput) {
 	var internalFieldName = jqCommentInput.attr("internalfieldname");
 	var internalTableName = jqCommentInput.attr("internaltablename");

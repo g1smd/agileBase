@@ -75,48 +75,50 @@
   </table>
 </form>
 </div>
-    #foreach($reportField in $report.getReportFields())
-      #set($reportFieldClass = $reportField.getClass().getSimpleName())
-      #if($reportFieldClass.equals("ReportCalcFieldDefn"))
-        #if(!$reportField.referencesCalcFromOtherReport())
-        <h2>Update $reportField.getFieldName()</h2><br />
-        <FORM action="AppController.servlet" target="pane_2" method="post">
-          		<input type=hidden name=return value="gui/reports_and_tables/report_data" />
-          		<input type=hidden name=update_calculation_in_report value=true>
-          		<input type=hidden name=internalcalculationname value="$reportField.getInternalFieldName()">
-          <table>
-            <tr>
-              <td>Calculation name</td>
-              <td><input name="calculationname" value="$reportField.getFieldName()" /></td>
-            </tr>
-            <tr>
-              <td>Return type</td>
-              <td>
-                #set($databaseType = $reportField.getDbType().toString())
-            	    	<select name="databasetype">
-            		      <option value="VARCHAR" #if ($databaseType.equals("VARCHAR")) selected="selected" #end>Text</option>
-            		      <option value="INTEGER" #if ($databaseType.equals("INTEGER")) selected="selected" #end>Whole number</option>
-            		      <option value="FLOAT" #if ($databaseType.equals("FLOAT")) selected="selected" #end>Decimal number</option>
-                      <option value="TIMESTAMP" #if ($databaseType.equals("TIMESTAMP")) selected="selected" #end>Date/time</option>
-                      <option value="BOOLEAN" #if ($databaseType.equals("BOOLEAN")) selected="selected" #end>Boolean</option>
-            		    </select>
-        	      </td>
-            </tr>
-              <tr>
-                  <td>Calculation definition (SQL)</td>
-                  <td><textarea name="calculationdefn" cols="100" rows="4">$reportField.getCalculationDefinition()</textarea></td>
-              </tr>
-              <tr>
-                  <td>Hide calculation in report</td>
-                  <td><input type="checkbox" name="isreporthidden" value="true" #if($reportField.isReportHidden()) checked #end /></td>
-              </tr>
-            	<tr>
-        		      <td>&nbsp;</td>
-        		      <td><input type="submit" value="Update Calculation" /></td>
-      	      </tr>
-          </table>
-        </FORM>
-        #end
-      #end
+#foreach($reportField in $report.getReportFields())
+  #set($reportFieldClass = $reportField.getClass().getSimpleName())
+  #if($reportFieldClass.equals("ReportCalcFieldDefn"))
+    #if(!$reportField.referencesCalcFromOtherReport())
+    <a href="javascript:showEditCalc('$reportField.getInternalFieldName');">edit $reportField</a><br />
+    <div class="calculation_form" style="display:none" id="editcalc_$reportField.getInternalFieldName()">
+    <FORM action="AppController.servlet" target="pane_2" method="post">
+      		<input type=hidden name=return value="gui/reports_and_tables/report_data" />
+      		<input type=hidden name=update_calculation_in_report value=true>
+      		<input type=hidden name=internalcalculationname value="$reportField.getInternalFieldName()">
+      <table>
+        <tr>
+          <td>Calculation name</td>
+          <td><input name="calculationname" value="$reportField.getFieldName()" /></td>
+        </tr>
+        <tr>
+          <td>Return type</td>
+          <td>
+            #set($databaseType = $reportField.getDbType().toString())
+        	    	<select name="databasetype">
+        		      <option value="VARCHAR" #if ($databaseType.equals("VARCHAR")) selected="selected" #end>Text</option>
+        		      <option value="INTEGER" #if ($databaseType.equals("INTEGER")) selected="selected" #end>Whole number</option>
+        		      <option value="FLOAT" #if ($databaseType.equals("FLOAT")) selected="selected" #end>Decimal number</option>
+                  <option value="TIMESTAMP" #if ($databaseType.equals("TIMESTAMP")) selected="selected" #end>Date/time</option>
+                  <option value="BOOLEAN" #if ($databaseType.equals("BOOLEAN")) selected="selected" #end>Boolean</option>
+        		    </select>
+    	      </td>
+        </tr>
+          <tr>
+              <td>Calculation definition (SQL)</td>
+              <td><textarea name="calculationdefn" cols="100" rows="4">$reportField.getCalculationDefinition()</textarea></td>
+          </tr>
+          <tr>
+              <td>Hide calculation in report</td>
+              <td><input type="checkbox" name="isreporthidden" value="true" #if($reportField.isReportHidden()) checked #end /></td>
+          </tr>
+        	<tr>
+    		      <td>&nbsp;</td>
+    		      <td><input type="submit" value="Update Calculation" /></td>
+  	      </tr>
+      </table>
+    </FORM>
+    </div>
     #end
+  #end
+#end
 
