@@ -819,6 +819,11 @@ function fAssignButtonTableActions() {
 function fTwitter() {
 	// Fetch 20 tweets, but filter out @replies, and display only 1:
 	$(".twitter").each(function() {
+		if $(this).hasClass("tweetRegistered") {
+			return;
+		} else {
+			$(this).addClass("tweetRegistered");
+		}
 		var username = $(this).attr("username");
 		$(this).tweet({
 			avatar_size : 32,

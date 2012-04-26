@@ -141,8 +141,7 @@
       <a href="mailto:$fieldValue">$fieldValue</a>##
 	  #elseif ($fieldValueObject.isURL())##
   	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>##
-    #elseif ($fieldValueObject.isTwitterName())##      
-      <a href="http://www.twitter.com/$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
+    #elseif ($fieldValueObject.isTwitterName())##
       <div class="twitter tweet query" username="$fieldValueObject"></div>
     #elseif ($fieldValueObject.isTwitterHashTag())##      
       <a href="http://twitter.com/#!/search?q=$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
@@ -154,8 +153,8 @@
       $fieldValue#if($isPhoneNumber) <i>$viewTools.getAreaForPhoneNumber($fieldValue)</i>,#else,#end##
     #end##
   #elseif ($fieldValueObject.isURL())
-	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>,##
-	#else
+	<a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>,##
+  #else
     $viewTools.lineBreaksToParas($fieldValue)<br>##
   #end##
 #end
