@@ -891,6 +891,7 @@ function fEnableCalcSyntaxHighlight() {
 
 function fEALoaded() {
 	$('#frame_calculationdefn').contents().find('.area_toolbar').hide();
+	fWebkitGlitch();
 }
 
 function showEditCalc(internalFieldName) {
