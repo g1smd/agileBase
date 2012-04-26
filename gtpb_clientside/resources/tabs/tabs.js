@@ -833,7 +833,7 @@ function fTwitter() {
 				return !/^@\w+/.test(t["tweet_raw_text"]);
 			},
 			username : username
-		}).bind("loaded",function(){$(this).find("a").attr("target","_blank");
+		}).bind("loaded",function(){$(this).find("a").attr("target","_blank");});
 	});
 }
 
