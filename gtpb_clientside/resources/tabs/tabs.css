@@ -315,6 +315,11 @@ div#recordBlank {
 	filter: alpha(opacity = 30);
 }
 
+#calculations a {
+  margin: 0.5em;
+  text-transform: lowercase;
+}
+
 div#recordUnlock {
 	position: absolute;
 	top: 0;
