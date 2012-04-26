@@ -41,7 +41,8 @@
 		    return false;
 	  }
 	</script>
-<div class="calculation_form">
+<a href="javascript:showEditCalc('new');">create a new calculation</a><br />
+<div class="calculation_form" id="editcalc_new">
 <form action="AppController.servlet" target="pane_2" method="post" id="newcalculation" onsubmit="editAreaLoader.delete_instance('calculationdefn');">
   <input type=hidden name=return value="gui/reports_and_tables/report_data" />
 		  <input type=hidden name=add_calculation_to_report value=true>
@@ -79,7 +80,7 @@
   #set($reportFieldClass = $reportField.getClass().getSimpleName())
   #if($reportFieldClass.equals("ReportCalcFieldDefn"))
     #if(!$reportField.referencesCalcFromOtherReport())
-    <a href="javascript:showEditCalc('$reportField.getInternalFieldName()');">edit $reportField calculation</a><br />
+    <a href="javascript:showEditCalc('$reportField.getInternalFieldName()');">edit the $reportField calculation</a><br />
     <div class="calculation_form" style="display:none" id="editcalc_$reportField.getInternalFieldName()">
     <FORM action="AppController.servlet" target="pane_2" method="post">
       		<input type=hidden name=return value="gui/reports_and_tables/report_data" />
