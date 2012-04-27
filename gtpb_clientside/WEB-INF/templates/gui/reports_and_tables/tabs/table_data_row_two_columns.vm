@@ -49,13 +49,15 @@
     #end
   #end
   #set($fieldClass = $field.getClass().getSimpleName())
-  ## inline-block workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
-  <div title="$field.getFieldDescription()" class="row" #if(($field.getContentSize() > 50) || ($fieldValue.length() > 100)) style="display:inline-block; width:100%" #end>
-    #if(!$fieldClass.equals("RelationFieldDefn") && ($fieldCategory != "FILE") && ($fieldCategory != "COMMENT_FEED"))
-      ## These field names included in resources/input/relation.vm etc.
-      <span class="fieldname">$field</span>
-    #end
-    #parse('gui/resources/input/input.vm')
-  </div>
+  #if(!$parentChooserRequired)
+	  ## inline-block workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
+	  <div title="$field.getFieldDescription()" class="row" #if(($field.getContentSize() > 50) || ($fieldValue.length() > 100)) style="display:inline-block; width:100%" #end>
+	    #if(!$fieldClass.equals("RelationFieldDefn") && ($fieldCategory != "FILE") && ($fieldCategory != "COMMENT_FEED"))
+	      ## These field names included in resources/input/relation.vm etc.
+	      <span class="fieldname">$field</span>
+	    #end
+	    #parse('gui/resources/input/input.vm')
+	  </div>
+  #end
 #end
 ## Divs / tables are closed in edit_content.vm

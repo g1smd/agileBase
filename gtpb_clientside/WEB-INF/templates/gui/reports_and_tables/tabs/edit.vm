@@ -37,10 +37,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
     #set($originalTableDataRow = $view.getTableDataRow($originalTable))
     #foreach($field in $originalTable.getFields())
       #if($sessionTable.equals($field.getRelatedTable()))
-        $viewTools.log("Original table: $originalTable")
-        $viewTools.log("Original table data row: $originalTableDataRow")
-        $viewTools.log("Session Table: $sessionTable")
-        #set($sessionRowId = $originalTableDataRow.get($sessionTable.getPrimaryKey()).getValueInteger())
+        #set($rowIdValue = $originalTableDataRow.get($sessionTable.getPrimaryKey()))
+        #if($rowIdValue.isNull())
+          #set($parentChooserRequired = true)
+        #else
+          #set($sessionRowId = $rowIdValue.getValueInteger())
+        #end
       #end
     #end
   #end
@@ -81,7 +83,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
     #set($containerTag = "div")
     #set($rowTag = "div")
     #set($cellTag = "div")
-	#end
+  #end
   <$containerTag
     #if($singleColumn)
       cellspacing="0" cellpadding="0" border="0" style="background-color: white"

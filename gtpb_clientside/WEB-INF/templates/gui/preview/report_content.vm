@@ -32,7 +32,7 @@
   #end
 #end
 <div class="row_count">$rowCount</div>
-<div class="pane1_id">$table.getInternalTableName()$report.getInternalReportName()</div>
+<div class="pane1_id">$internalTableName$report.getInternalReportName()</div>
 #set($thisUniqueId = false)
 #foreach($row in $reportDataRows)
   #set($dataRowFields = $row.getDataRowFields())
@@ -57,9 +57,9 @@
           #set($image = false)
           #if($fieldCategory == "FILE")
             #set($fileValue = $viewTools.getFileValueTool($cell))
-            #set($targetUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
+            #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
             #if($fileValue.isImage())
-              #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
+              #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
               <a target = "_blank" href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$targetUrl"><img src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #set($captionNecessary = true) #end/></a>
               #set($image = true)
 						#elseif($cell.endsWith("pdf") && !$captionNecessary)

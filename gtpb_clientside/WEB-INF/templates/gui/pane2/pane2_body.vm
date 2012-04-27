@@ -95,7 +95,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #set($attachmentType = $field.getAttachmentType().name())
         #if($fileValue.isImage())
           #set($image = true)
-          #set($srcUrl = "/agileBase/uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
+          #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
           #set($cell = "<img src='$srcUrl' />")
           #set($cellContentLength=40)
         #else
@@ -123,7 +123,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		  #if($rightAlign) #set($style = "$style text-align:right; ") #end
           <td #if($cellContentLength<=10)nowrap="true"#end #if($style != "")style="$style"#end #if($class != "")class="$class"#end>
             <div style="min-width:${cellContentLength}px" #if(($cellContentLength > $cellLengthThreshold) || $image) class="in_cell #if($attachmentType == 'PROFILE_PHOTO')p_photo #end" #end>
-							#if($textValue.isURL())<img class="favicon" src="https://getfavicon.appspot.com/$textValue.getFormattedURL()?defaulticon=lightpng" />&nbsp;#end##
+			  #if($textValue.isURL())<img class="favicon" src="https://getfavicon.appspot.com/$textValue.getFormattedURL()?defaulticon=lightpng" />&nbsp;#end##
               #if(!(($thisUniqueId == $lastUniqueId) && ($cell == $lastValues.get($cellNumber))))$cell#else<span class="greytext">$cell</span>#end
             </div>
           </td>
