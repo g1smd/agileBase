@@ -41,6 +41,15 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	<td class="trailing">&nbsp;</td>
   </tr>
 #end
+## Record which col. nos. store which primary keys, for reference by any included images
+#set($fieldNum = 0)
+#set($pKeyFieldNums = {})
+#foreach($field in $fields)
+  #if($field.equals($field.getTableContainingField().getPrimaryKey()))
+    #set($success = $pKeyFieldNums.put($field.getTableContainingField(),$fieldNum))
+  #end
+  #set($fieldNum = $fieldNum + 1)
+#end
 #foreach($row in $data)
   ## row[0] contains the data to display in each field
   ## row[1] contains the click event parameters for the row
@@ -95,7 +104,12 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #set($attachmentType = $field.getAttachmentType().name())
         #if($fileValue.isImage())
           #set($image = true)
-          #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
+          #if($field.getTableContainingField().equals($sessionTable))
+            #set($fieldId = $thisUniqueId)
+          #else
+            #set($fieldId = $thisValues.get($pKeyFieldNums.get($field.getTableContainingField())))
+          #end
+          #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.40.$fileValue.getExtension()")
           #set($cell = "<img src='$srcUrl' />")
           #set($cellContentLength=40)
         #else
