@@ -107,6 +107,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           #if($field.getTableContainingField().equals($sessionTable))
             #set($fieldId = $thisUniqueId)
           #else
+            $viewTools.log("Table $field.getTableContainingField() is at value $pKeyFieldNums.get($field.getTableContainingField()), from $pKeyFieldNums")
             #set($fieldId = $thisValues.get($pKeyFieldNums.get($field.getTableContainingField())))
           #end
           #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.40.$fileValue.getExtension()")
