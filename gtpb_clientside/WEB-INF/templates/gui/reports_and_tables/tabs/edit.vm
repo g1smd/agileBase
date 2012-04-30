@@ -40,6 +40,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
         #set($rowIdValue = $originalTableDataRow.get($sessionTable.getPrimaryKey()))
         #if($rowIdValue.isNull())
           #set($parentChooserRequired = true)
+          #set($parentChooserField = $field)
         #else
           #set($sessionRowId = $rowIdValue.getValueInteger())
         #end

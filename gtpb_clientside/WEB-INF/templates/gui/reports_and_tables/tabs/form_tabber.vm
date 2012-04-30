@@ -19,6 +19,11 @@
 #if(!$sessionRowId)
   #set($sessionRowId=$sessionData.getRowId($sessionTable))
 #end
+#if($parentChooserRequired)
+  ## See edit.vm  
+  #set($field = $parentChooserField)
+  #parse("gui/resources/input/input.vm")
+#end
 <div class="form_tabber" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionRowId">
   <div class="tab_choice #if(!$formTable) active #end main" data-internaltablename="$sessionTable.getInternalTableName()">$sessionTable.getSingularName()</div>
   #foreach($formTab in $formTabs)
