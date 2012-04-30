@@ -16,6 +16,8 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($theFormTable = $sessionTable.getFormTable())
+Session table is $sessionTable<br>
+Form table is $theFormTable<p>
 #if($fieldCategory == "SEPARATOR")
   #if(!$field.equals($firstField))
     #if($formStyle == 'TWO_COLUMNS')
