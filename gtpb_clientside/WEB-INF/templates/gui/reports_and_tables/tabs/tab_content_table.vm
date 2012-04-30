@@ -24,6 +24,7 @@
 #if(!$parentTable)
   #set($parentTable = $sessionData.getTable())
 #end
+Table data row is $tableDataRow<p>
 #if(!$tableDataRow)
   #set($tableDataRow = $view.getTableDataRow($sessionTable, $sessionRowId))
 #end
