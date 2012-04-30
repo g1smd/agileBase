@@ -25,7 +25,7 @@
   ## Temporarily set session ID to that of the tab
   #set($parentRowId = $sessionRowId)
   #set($sessionRowId = $sessionData.getRowId($field.getTableContainingField()))
-  <div class="block">
+  <div class="block parent_chooser">
     #parse("gui/resources/input/input.vm")
   </div>
   #set($sessionRowId = $parentRowId)
