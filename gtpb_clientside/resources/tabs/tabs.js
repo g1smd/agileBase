@@ -193,7 +193,9 @@ var TabInterfaceObject = function(containerElem) {
 
 	TabInterfaceObjectPub.refresh = function(rowId) {
 		TabInterfaceObjectPub.invalidate();
-		currentRowId = rowId;
+		if (typeof rowId != "undefined") {
+		  currentRowId = rowId;
+		}
 		currentTab.queueTab();
 	}
 
@@ -364,7 +366,7 @@ function fRelationPickers() {
 							// a normal save
 							if(jqHidden.attr("gtpb_refresh_after") == "true") {
 							  new fChange(oHidden, function() {
-							  	alert('refresh');
+							  	pane3TabInterface.refresh();
 							  });
 							} else {
 							  new fChange(oHidden);
