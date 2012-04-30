@@ -332,8 +332,7 @@ function fUpdateGlobalRelation() {
 }
 
 function fRelationPickers() {
-	$("input.relation_hidden").each(
-			function() {
+	$("input.relation_hidden").each(function() {
 				var oHidden = this;
 				var jqHidden = $(oHidden);
 				if (jqHidden.attr("ab_setup_complete") == "true") {
@@ -363,6 +362,7 @@ function fRelationPickers() {
 							// create a new record to link to
 							relationNewRecord(oHidden);
 						} else {
+							alert("saving");
 							// a normal save
 							if(jqHidden.attr("gtpb_refresh_after") == "true") {
 							  new fChange(oHidden, function() {
@@ -1392,7 +1392,6 @@ function fFormStyle() {
 		// Initialise to session tab on load (if not already the active tab)
 		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active")) && (!jqTab.hasClass("tabLoading"))) {
 			jqTab.click();
-			alert(jqTab.text());
 		}
 	}); // end of .tab_choice.each
 }
