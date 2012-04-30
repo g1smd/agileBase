@@ -1302,97 +1302,97 @@ function fFormStyle() {
 			clicked.addClass("selected_layout");
 		});
 	});
-	$(".tab_choice").each(
-			function() {
-				var jqTab = $(this);
-				if (jqTab.hasClass("tabActionRegistered")) {
-					return;
-				}
-				jqTab.addClass("tabActionRegistered");
-				var parentInternalTableName = jqTab.closest(".form_tabber").attr(
-						"data-internaltablename");
-				// Set parent row ID for use if we're using a form table
-				var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
-				jqTab.click(function() {
-					var tabInternalTableName = $(this).attr("data-internaltablename");
-					$(".tab_choice").removeClass("active");
-					var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
-							+ tabInternalTableName);
-					$("#tab_deleter").fadeOut();
-					if (tabContainer.children().size() == 0) {
-						$(".tab_container").fadeOut();
-						tabContainer.addClass("load-spinner").css("position", "relative");
-						tabContainer.fadeIn();
-						tabContainer.load("AppController.servlet", {
-							"return" : "gui/reports_and_tables/tabs/tab_content",
-							set_custom_table : true,
-							tablekey : "tabTable",
-							custominternaltablename : tabInternalTableName,
-							set_row_id: parentRowId,
-							rowidinternaltablename: parentInternalTableName
-						}, function() {
-							tabContainer.removeClass("load-spinner");
-							jqTab.addClass("active");
-							editTabFunctions();
-							// If only one child record, show delete button in tabs bar
-							if ((tabContainer.find(".selectorReport").size() == 0)
-									&& jqTab.attr("data-singular") && (!jqTab.hasClass("no_records"))) {
-								var singularName = jqTab.attr("data-singular");
-								$("#tab_deleter").find("img").attr("title",
-										"delete this " + singularName);
-								$("#tab_deleter").fadeIn();
-							}
-						});
-					} else {
-						$(".tab_container").hide();
-						tabContainer.show();
-						jqTab.addClass("active");
-						// Fire off a post to set the session tab - don't need any results
-						$.post("AppController.servlet", {
-							"return" : "blank",
-							set_custom_table : true,
-							tablekey : "tabTable",
-							custominternaltablename : tabInternalTableName
-						});
-						// If only one child record, show delete button in tabs bar
-						if ((tabContainer.find(".selectorReport").size() == 0)
-								&& jqTab.attr("data-singular")) {
-							var singularName = jqTab.attr("data=singular");
-							$("#deleter_text").text(singularName);
-							$("#tab_deleter").fadeIn();
-						}
+	$(".tab_choice").each(function() {
+		var jqTab = $(this);
+		if (jqTab.hasClass("tabActionRegistered")) {
+			return;
+		}
+		jqTab.addClass("tabActionRegistered");
+		var parentInternalTableName = jqTab.closest(".form_tabber").attr(
+				"data-internaltablename");
+		// Set parent row ID for use if we're using a form table
+		var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
+		jqTab.click(function() {
+			var tabInternalTableName = $(this).attr("data-internaltablename");
+			$(".tab_choice").removeClass("active");
+			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
+					+ tabInternalTableName);
+			$("#tab_deleter").fadeOut();
+			if (tabContainer.children().size() == 0) {
+				$(".tab_container").fadeOut();
+				tabContainer.addClass("load-spinner").css("position", "relative");
+				tabContainer.fadeIn();
+				tabContainer.load("AppController.servlet", {
+					"return" : "gui/reports_and_tables/tabs/tab_content",
+					set_custom_table : true,
+					tablekey : "tabTable",
+					custominternaltablename : tabInternalTableName,
+					set_row_id: parentRowId,
+					rowidinternaltablename: parentInternalTableName
+				}, function() {
+					tabContainer.removeClass("load-spinner");
+					jqTab.addClass("active");
+					editTabFunctions();
+					// If only one child record, show delete button in tabs bar
+					if ((tabContainer.find(".selectorReport").size() == 0)
+							&& jqTab.attr("data-singular") && (!jqTab.hasClass("no_records"))) {
+						var singularName = jqTab.attr("data-singular");
+						$("#tab_deleter").find("img").attr("title",
+								"delete this " + singularName);
+						$("#tab_deleter").fadeIn();
 					}
-				}); // end of jqTab.click()
-				jqTab.find("img.new").click(
-						function() {
-							var tabInternalTableName = jqTab.attr("data-internaltablename");
-							var relationFieldInternalName = jqTab.attr("data-relationfield");
-							var parentRowId = jqTab.closest(".form_tabber")
-									.attr("data-rowid");
-							var tabContainer = $("#form_tabs_" + parentInternalTableName
-									+ "_" + tabInternalTableName);
-							tabContainer.fadeOut();
-							var options = {
-								"return" : "gui/reports_and_tables/tabs/tab_content",
-								save_new_record : true,
-								internaltablename : tabInternalTableName,
-								set_custom_table : true,
-								tablekey : 'tabTable',
-								custominternaltablename : tabInternalTableName
-							}
-							// Set relationFieldInternalName like this as it is a variable
-							// property name
-							options[relationFieldInternalName] = parentRowId;
-							tabContainer.load("AppController.servlet", options, function() {
-								tabContainer.fadeIn();
-								editTabFunctions();
-							});
-						});
-				// Initialise to session tab on load (if not already the active tab)
-				if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active"))) {
-					jqTab.click();
+				});
+			} else {
+				$(".tab_container").hide();
+				tabContainer.show();
+				jqTab.addClass("active");
+				// Fire off a post to set the session tab - don't need any results
+				$.post("AppController.servlet", {
+					"return" : "blank",
+					set_custom_table : true,
+					tablekey : "tabTable",
+					custominternaltablename : tabInternalTableName
+				});
+				// If only one child record, show delete button in tabs bar
+				if ((tabContainer.find(".selectorReport").size() == 0)
+						&& jqTab.attr("data-singular")) {
+					var singularName = jqTab.attr("data=singular");
+					$("#deleter_text").text(singularName);
+					$("#tab_deleter").fadeIn();
 				}
-			}); // end of .tab_choice.each
+			}
+		}); // end of jqTab.click()
+		jqTab.find("img.new").click(
+				function() {
+					var tabInternalTableName = jqTab.attr("data-internaltablename");
+					var relationFieldInternalName = jqTab.attr("data-relationfield");
+					var parentRowId = jqTab.closest(".form_tabber")
+							.attr("data-rowid");
+					var tabContainer = $("#form_tabs_" + parentInternalTableName
+							+ "_" + tabInternalTableName);
+					tabContainer.fadeOut();
+					var options = {
+						"return" : "gui/reports_and_tables/tabs/tab_content",
+						save_new_record : true,
+						internaltablename : tabInternalTableName,
+						set_custom_table : true,
+						tablekey : 'tabTable',
+						custominternaltablename : tabInternalTableName
+					}
+					// Set relationFieldInternalName like this as it is a variable
+					// property name
+					options[relationFieldInternalName] = parentRowId;
+					tabContainer.load("AppController.servlet", options, function() {
+						tabContainer.fadeIn();
+						editTabFunctions();
+					});
+				});
+		// Initialise to session tab on load (if not already the active tab)
+		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active"))) {
+			alert(jqTab.text());
+			jqTab.click();
+		}
+	}); // end of .tab_choice.each
 }
 
 function showAdvanced() {
