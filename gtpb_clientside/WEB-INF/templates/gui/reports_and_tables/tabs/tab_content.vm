@@ -33,6 +33,7 @@
   <div class="warningmessage">Form not found for $sessionTable, child of $parentTable. The only form tabs are $parentTable.getFormTabs()</div>
 #else
   #set($parentRowId = $sessionData.getRowId($parentTable))
+  Parent Row ID is $parentRowId<p>
   #set($selectorReport = $formTab.getSelectorReport())
   #set($sessionRowId = $sessionData.getRowId($sessionTable))
   #if($selectorReport)
