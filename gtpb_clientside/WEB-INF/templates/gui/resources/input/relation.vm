@@ -20,7 +20,11 @@
 #set($relatedField=$field.getRelatedField())##
 #set($relatedTable = $relatedField.getTableContainingField())
 ##
-#set($fieldValue=$tableDataRow.get($relatedField).toString())##
+#if($field.equals($parentChooserField))
+  #set($fieldValue = "")
+#else
+  #set($fieldValue=$tableDataRow.get($relatedField).toString())##
+#end
 #set($fieldDisplayValue = $field.getDisplayValue($fieldValue))##
 #set($useSecondaryDisplayValue = false)
 #if($field.getSecondaryDisplayField())
