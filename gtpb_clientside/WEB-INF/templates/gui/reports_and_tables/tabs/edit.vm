@@ -57,7 +57,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #set($sessionReport=$sessionData.getReport())
 #set($firstSection = true)
 #set($formTabs = $sessionTable.getFormTabs())
-#if( (($sessionRowId == -1) && (!$formTable)) || ($formTable && ($sessionData.getRowId($sessionTable) == -1)) )
+#if( (($sessionRowId == -1) && (!$formTable)) || ($formTable && ($sessionData.getRowId($originalTable) == -1)) )
 	<div class="warningmessage">
 		#set($lastAppAction = $sessionData.getLastAppAction())
 		#if($lastAppAction == "REMOVE_RECORD") 
