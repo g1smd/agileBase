@@ -716,7 +716,7 @@ div#reportData {
   font-size-adjust: 0.58;
 }
 
-#reportData .block.parent_chooser select {
+#reportData .block.parent_chooser input {
   float: none;
 }
 
