@@ -25,7 +25,9 @@
   ## Temporarily set session ID to that of the tab
   #set($parentRowId = $sessionRowId)
   #set($sessionRowId = $sessionData.getRowId($field.getTableContainingField()))
-  #parse("gui/resources/input/input.vm")
+  <div class="block">
+    #parse("gui/resources/input/input.vm")
+  </div>
   #set($sessionRowId = $parentRowId)
 #end
 <div class="form_tabber" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionRowId">
