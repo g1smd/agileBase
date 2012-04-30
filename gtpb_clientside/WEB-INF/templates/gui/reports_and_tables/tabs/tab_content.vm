@@ -33,7 +33,6 @@
   <div class="warningmessage">Form not found for $sessionTable, child of $parentTable. The only form tabs are $parentTable.getFormTabs()</div>
 #else
   #set($parentRowId = $sessionData.getRowId($parentTable))
-  Parent Row ID is $parentRowId<p>
   #set($selectorReport = $formTab.getSelectorReport())
   #set($sessionRowId = $sessionData.getRowId($sessionTable))
   #if($selectorReport)
@@ -79,11 +78,11 @@
 		  #elseif($lookupRowId)
 		    #set($sessionRowId = -1)
 		  #end ## end if datarows.size > 1
-		  #if($sessionRowId > -1)
-		    #set($component = true)
-		    #parse("gui/reports_and_tables/tabs/tab_content_table.vm")
-		  #end 
 	  #end
+	  #if($sessionRowId > -1)
+	    #set($component = true)
+	    #parse("gui/reports_and_tables/tabs/tab_content_table.vm")
+	  #end 
     #else
       <div class="warningmessage">The report $selectorReport is not suitable for use in a form tab</div>
     #end
