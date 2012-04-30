@@ -24,7 +24,9 @@
 #if(!$parentTable)
   #set($parentTable = $sessionData.getTable())
 #end
-#set($tableDataRow = $view.getTableDataRow($sessionTable, $sessionRowId))
+#if(!$tableDataRow)
+  #set($tableDataRow = $view.getTableDataRow($sessionTable, $sessionRowId))
+#end
 #set($formStyle = $parentTable.getFormStyle()) ## Inherit form style from the parent
 #if(($formStyle == "TWO_COLUMNS") && ($component))
   <div class="two_cols" id="rowid_$sessionTable.getInternalTableName()" data-rowid="$sessionRowId">

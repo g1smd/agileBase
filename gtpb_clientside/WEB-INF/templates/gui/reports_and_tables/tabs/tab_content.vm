@@ -55,22 +55,35 @@
     #end
     #if($found)
       #set($lookupRowId = true)
+	  #set($parentChooserRequired = false)
       ## Don't overwrite row ID if we're using a form table and the tab is the session table
       #if($formTable && $sessionTable.equals($sessionData.getTable()))
         #set($lookupRowId = false)
-      #end
-	  #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
-	  #if($datarows.size() > 1)
-	    #parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
-	  #elseif($lookupRowId && ($datarows.size() == 1))
-	    #set($sessionRowId = $datarows.get(0).getRowId())
-	  #elseif($lookupRowId)
-	    #set($sessionRowId = -1)
-	  #end ## end if datarows.size > 1
-	  #if($sessionRowId > -1)
-	    #set($component = true)
-	    #parse("gui/reports_and_tables/tabs/tab_content_table.vm")
-	  #end 
+        ## Check if there is a parent
+        #set($tableDataRow = $view.getTableDataRow($sessionTable, $sessionRowId))
+	    #foreach($field in $sessionTable.getFields())
+	      #if($formTable.equals($field.getRelatedTable()))
+	        #set($rowIdValue = $tableDataRow.get($formTable.getPrimaryKey()))
+	        #if($rowIdValue.isNull())
+	          #set($parentChooserRequired = true)
+	        #end
+	      #end
+	    #end
+      #end ## end found
+      #if(!$parentChooserRequired)
+		  #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
+		  #if($datarows.size() > 1)
+		    #parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
+		  #elseif($lookupRowId && ($datarows.size() == 1))
+		    #set($sessionRowId = $datarows.get(0).getRowId())
+		  #elseif($lookupRowId)
+		    #set($sessionRowId = -1)
+		  #end ## end if datarows.size > 1
+		  #if($sessionRowId > -1)
+		    #set($component = true)
+		    #parse("gui/reports_and_tables/tabs/tab_content_table.vm")
+		  #end 
+	  #end
     #else
       <div class="warningmessage">The report $selectorReport is not suitable for use in a form tab</div>
     #end
