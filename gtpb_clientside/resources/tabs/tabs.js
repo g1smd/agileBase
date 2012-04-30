@@ -1391,8 +1391,8 @@ function fFormStyle() {
 				});
 		// Initialise to session tab on load (if not already the active tab)
 		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active")) && (!jqTab.hasClass("tabLoading"))) {
-			alert(jqTab.text());
 			jqTab.click();
+			alert(jqTab.text());
 		}
 	}); // end of .tab_choice.each
 }
