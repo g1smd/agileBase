@@ -1313,6 +1313,7 @@ function fFormStyle() {
 		// Set parent row ID for use if we're using a form table
 		var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
 		jqTab.click(function() {
+			jqTab.addClass("tabLoading");
 			var tabInternalTableName = $(this).attr("data-internaltablename");
 			$(".tab_choice").removeClass("active");
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
@@ -1332,6 +1333,7 @@ function fFormStyle() {
 				}, function() {
 					tabContainer.removeClass("load-spinner");
 					jqTab.addClass("active");
+					jqTab.removeClass("tabLoading");
 					editTabFunctions();
 					// If only one child record, show delete button in tabs bar
 					if ((tabContainer.find(".selectorReport").size() == 0)
@@ -1388,7 +1390,7 @@ function fFormStyle() {
 					});
 				});
 		// Initialise to session tab on load (if not already the active tab)
-		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active"))) {
+		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active")) && (!jqTab.hasClass("tabLoading"))) {
 			alert(jqTab.text());
 			jqTab.click();
 		}
