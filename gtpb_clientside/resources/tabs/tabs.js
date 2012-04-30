@@ -362,7 +362,13 @@ function fRelationPickers() {
 							relationNewRecord(oHidden);
 						} else {
 							// a normal save
-							new fChange(oHidden);
+							if(jqHidden.attr("gtpb_refresh_after") == "true") {
+							  new fChange(oHidden, function() {
+							  	alert('refresh');
+							  });
+							} else {
+							  new fChange(oHidden);
+							}
 							try {
 								// any additional actions to the save
 								relationChangeActions(oHidden);

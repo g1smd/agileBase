@@ -62,12 +62,12 @@
               #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
               <a target = "_blank" href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$targetUrl"><img src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #set($captionNecessary = true) #end/></a>
               #set($image = true)
-						#elseif($cell.endsWith("pdf") && !$captionNecessary)
-							#set($srcUrl = "$targetUrl.500.png")
-							<img src="$srcUrl" class="image" />
-							#set($captionNecessary = true)
+			#elseif($cell.endsWith("pdf") && !$captionNecessary)
+				#set($srcUrl = "$targetUrl.500.png")
+				<img src="$srcUrl" class="image" />
+				#set($captionNecessary = true)
               #set($image = true)
-						#end
+		    #end
           #end
           #set($style="")
           #set($class="")
