@@ -339,6 +339,7 @@ function fRelationPickers() {
 					return;
 				}
 				jqHidden.attr("ab_setup_complete", "true");
+				alert("setting up " + jqHidden.attr("displayfieldname"));
 				oHidden.doUpdate = function(sValue) {
 					var bIsGlobalEdit = false;
 					var bIsAutoUpdate = false;
@@ -362,7 +363,6 @@ function fRelationPickers() {
 							// create a new record to link to
 							relationNewRecord(oHidden);
 						} else {
-							alert("saving");
 							// a normal save
 							if(jqHidden.attr("gtpb_refresh_after") == "true") {
 							  new fChange(oHidden, function() {
