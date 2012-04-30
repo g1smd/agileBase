@@ -15,9 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($theFormTable = $sessionTable.getFormTable())
-Session table is $sessionTable<br>
-Form table is $theFormTable<p>
+#set($theFormTable = $sessionData.getTable().getFormTable())
 #if($fieldCategory == "SEPARATOR")
   #if(!$field.equals($firstField))
     #if($formStyle == 'TWO_COLUMNS')
@@ -29,7 +27,7 @@ Form table is $theFormTable<p>
     #if($formTabs.size() > 0)
       #parse("gui/reports_and_tables/tabs/form_tabber.vm")
     #end
-    <div class="tab_container #if(($formStyle == "TWO_COLUMNS") && !$parentTable) two_cols #end" #if($theFormTable && (!$theFormTable.equals($sessionTable))) style="display:none" #end id="form_tabs_$sessionTable.getInternalTableName()_$sessionTable.getInternalTableName()"> <!-- start of sections container -->
+    <div class="tab_container #if(($formStyle == "TWO_COLUMNS") && !$parentTable) two_cols #end" #if($theFormTable && (!$theFormTable.equals($sessionDate.getTable()))) style="display:none" #end id="form_tabs_$sessionTable.getInternalTableName()_$sessionTable.getInternalTableName()"> <!-- start of sections container -->
     #set($firstSection = false)
   #end
   #if($formStyle == 'TWO_COLUMNS')
@@ -45,7 +43,7 @@ Form table is $theFormTable<p>
   #if($field.equals($firstField))
     #if((!$hasSections) && ($formTabs.size() > 0))
       #parse("gui/reports_and_tables/tabs/form_tabber.vm")
-      <div class="block tab_container #if(!$parentTable) two_cols non_section #end" #if($theFormTable && (!$theFormTable.equals($sessionTable))) style="display:none" #end id="form_tabs_$sessionTable.getInternalTableName()_$sessionTable.getInternalTableName()">
+      <div class="block tab_container #if(!$parentTable) two_cols non_section #end" #if($theFormTable && (!$theFormTable.equals($sessionData.getTable()))) style="display:none" #end id="form_tabs_$sessionTable.getInternalTableName()_$sessionTable.getInternalTableName()">
     #else
       <div class="block #if(!$parentTable) two_cols non_section #end">
     #end
