@@ -26,12 +26,13 @@
 #set($singleColumn = true) ## will be modified by table_data_row.vm
 #foreach($field in $fields)
   #if($field.getHidden() == false)
-		#if(!$parentTable || (!$field.getRelatedTable().equals($parentTable)))
+	#if(!$parentTable || (!$field.getRelatedTable().equals($parentTable)))
       #if(!$firstField && !$field.equals($primaryKey))
         #set($firstField = $field)
       #end
+      Table data row<br>
       #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-		#end
+	#end
   #end
 #end
 #if(!$singleColumn)
