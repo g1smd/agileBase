@@ -1314,7 +1314,6 @@ function fFormStyle() {
 				// Set parent row ID for use if we're using a form table
 				var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
 				jqTab.click(function() {
-					return;
 					var tabInternalTableName = $(this).attr("data-internaltablename");
 					$(".tab_choice").removeClass("active");
 					var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
