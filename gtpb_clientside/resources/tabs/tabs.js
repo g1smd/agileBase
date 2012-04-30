@@ -339,7 +339,6 @@ function fRelationPickers() {
 					return;
 				}
 				jqHidden.attr("ab_setup_complete", "true");
-				alert("setting up " + jqHidden.attr("displayfieldname"));
 				oHidden.doUpdate = function(sValue) {
 					var bIsGlobalEdit = false;
 					var bIsAutoUpdate = false;
@@ -448,6 +447,10 @@ function fRelationPickers() {
 
 	$('.autocomplete').each(function(i) {
 		var jqThis = $(this);
+		if (jqThis.hasClass("ab_setup_complete")) {
+			return;
+		}
+		jqThis.addClass("ab_setup_complete");
 		this.update = function(sValue) {
 			this.value = sValue;
 		};
@@ -1391,6 +1394,7 @@ function fFormStyle() {
 				});
 		// Initialise to session tab on load (if not already the active tab)
 		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active")) && (!jqTab.hasClass("tabLoading"))) {
+			alert(tqTab.text());
 			jqTab.click();
 		}
 	}); // end of .tab_choice.each
