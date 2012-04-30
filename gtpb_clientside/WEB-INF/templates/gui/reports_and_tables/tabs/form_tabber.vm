@@ -22,7 +22,11 @@
 #if($parentChooserRequired)
   ## See edit.vm  
   #set($field = $parentChooserField)
+  ## Temporarily set session ID to that of the tab
+  #set($parentRowId = $sessionRowId)
+  #set($sessionRowId = $sessionData.getRowId($field.getTableContainingField()))
   #parse("gui/resources/input/input.vm")
+  #set($sessionRowId = $parentRowId)
 #end
 <div class="form_tabber" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionRowId">
   <div class="tab_choice #if(!$formTable) active #end main" data-internaltablename="$sessionTable.getInternalTableName()">$sessionTable.getSingularName()</div>
