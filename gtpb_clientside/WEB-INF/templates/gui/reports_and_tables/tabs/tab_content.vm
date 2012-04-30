@@ -54,7 +54,7 @@
     #end
     #if($found)
       #set($lookupRowId = true)
-	  #set($parentChooserRequired = false)
+	  #set($parentNull = false)
       ## Don't overwrite row ID if we're using a form table and the tab is the session table
       #if($formTable && $sessionTable.equals($sessionData.getTable()))
         #set($lookupRowId = false)
@@ -64,12 +64,12 @@
 	      #if($formTable.equals($field.getRelatedTable()))
 	        #set($rowIdValue = $tableDataRow.get($formTable.getPrimaryKey()))
 	        #if($rowIdValue.isNull())
-	          #set($parentChooserRequired = true)
+	          #set($parentNull = true)
 	        #end
 	      #end
 	    #end
       #end ## end found
-      #if(!$parentChooserRequired)
+      #if(!$parentNull)
 		  #set($datarows = $view.getReportDataRows($selectorReport,50,$filter,true))
 		  #if($datarows.size() > 1)
 		    #parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
