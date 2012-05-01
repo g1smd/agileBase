@@ -807,6 +807,14 @@ div#reportData {
   top: 0;
 }
 
+.comments {
+  width:90%;
+}
+
+.comment {
+  padding-bottom: 0.5em;
+}
+
 #reportData .block input.comment_input {
 	float: none;
 	width: 90%;
