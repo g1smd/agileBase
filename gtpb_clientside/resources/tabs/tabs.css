@@ -656,7 +656,7 @@ span.comment_attribution {
 }
 
 .block.two_cols.non_section .fieldname {
-  min-width: 10em;
+  min-width: 40%;
   display: inline-block;
 }
 
@@ -731,10 +731,6 @@ div#reportData {
   float: none;
 }
 
-#reportData .block textarea {
-  border: 1px solid #dddddd;
-}
-
 #reportData .block select {
   /* height: 2em /* 1.7em; */
 }
@@ -745,9 +741,14 @@ div#reportData {
 }
 
 #reportData .block textarea {
+  border: 1px solid #dddddd;
   width: 100%;
   font-family: Verdana,Arial,sans-serif;
   font-size-adjust: 0.58;
+}
+
+#reportData .block.non_section textarea {
+  width: 90%;
 }
 
 #reportData .block .date {
