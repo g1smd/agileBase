@@ -426,6 +426,17 @@ img.cross_reference_image {
   max-width: 15em;
 }
 
+/* File field images in the edit tab */
+img.edit_image {
+  float:left;
+  border-radius: 0.5em;
+}
+
+img.file_preview {
+  max-width: 100%;
+  border: 1px solid #dddddd;
+}
+
 .gtpb_youtube {
 	padding-top:10px;
 }

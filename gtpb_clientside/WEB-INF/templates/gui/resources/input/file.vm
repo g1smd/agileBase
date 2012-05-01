@@ -47,7 +47,7 @@
       <a href="$downloadUrl">download</a>
 			#if($pdf && !$sectionHasImage)
 				<br clear="left" />
-			  <a href="$downloadUrl"><img style="float:left; max-width: 100%; border-radius: 0.5em" src="$previewUrl"></a>
+			  <a href="$downloadUrl"><img class="edit_image file_preview" src="$previewUrl"></a>
 			#end
   	  #if(!$userCanEdit)
   	    #set($previousFileVersions = $field.getPreviousFileVersions($viewTools.getWebAppRoot(), $sessionRowId, $fieldValue))
@@ -74,7 +74,7 @@
     #if($fieldValueObject.isImage())
     ## #if($userCanEdit)<br />#end
       <a href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
-      <img border="0" src="$downloadUrl.500.$fieldValueObject.getExtension()" class="$field.getAttachmentType().name().toLowerCase()" style="float:left; border-radius: 0.5em"/>
+      <img border="0" src="$downloadUrl.500.$fieldValueObject.getExtension()" class="$field.getAttachmentType().name().toLowerCase() edit_image" />
       </a>
       #set($sectionHasImage = true)
     #end
