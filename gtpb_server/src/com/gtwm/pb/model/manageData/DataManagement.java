@@ -264,7 +264,7 @@ public final class DataManagement implements DataManagementInfo {
 			SQLException {
 		String body = user.getForename() + " " + user.getSurname() + " added the comment\n\n";
 		body += comment + "\n\n";
-		body += " to " + field.getTableContainingField().getSingularName() + " record: ";
+		body += " to " + field.getTableContainingField().getSingularName() + " ";
 		TableInfo table = field.getTableContainingField();
 		BaseReportInfo report = table.getDefaultReport();
 		BaseField pKey = table.getPrimaryKey();
