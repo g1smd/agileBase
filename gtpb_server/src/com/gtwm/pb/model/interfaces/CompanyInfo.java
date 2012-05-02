@@ -49,7 +49,7 @@ public interface CompanyInfo {
 	public SortedSet<ModuleInfo> getModules();
 
 	public SortedSet<TableInfo> getTables();
-
+	
 	public ModuleInfo getModuleByInternalName(String internalModuleName)
 			throws ObjectNotFoundException;
 

@@ -39,6 +39,8 @@ public interface AppUserInfo {
 	public static final String FORENAME = "forename";
 
 	public static final String INITIALVIEW = "initialview";
+	
+	public static final String EMAIL = "email";
 
 	public CompanyInfo getCompany();
 
@@ -57,6 +59,10 @@ public interface AppUserInfo {
 	public String getForename();
 
 	public void setPassword(String password) throws MissingParametersException, CantDoThatException;
+	
+	public String getEmail();
+	
+	public void setEmail(String email) throws CantDoThatException;
 
 	/**
 	 * Note: It is up to the UI to decide whether it wants to retrieve

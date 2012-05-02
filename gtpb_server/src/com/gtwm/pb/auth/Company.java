@@ -32,6 +32,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.HashSet;
 import java.util.Collections;
+import java.util.concurrent.CopyOnWriteArraySet;
+
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -92,7 +94,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return Collections
 				.unmodifiableSortedSet(new TreeSet<AppUserInfo>(this.getUsersCollection()));
 	}
-
+	
 	@OneToMany(mappedBy = "company", targetEntity = AppUser.class, cascade = CascadeType.ALL)
 	// Bi-directional OneToMany
 	protected synchronized Set<AppUserInfo> getUsersCollection() {
@@ -311,7 +313,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	private Set<TableInfo> tables = new HashSet<TableInfo>();
 
 	private Set<ModuleInfo> modules = new HashSet<ModuleInfo>();
-
+	
 	private String companyName = "";
 
 	private String internalCompanyName = null;

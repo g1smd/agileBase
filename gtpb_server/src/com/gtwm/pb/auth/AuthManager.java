@@ -357,7 +357,7 @@ public final class AuthManager implements AuthManagerInfo {
 	}
 
 	public synchronized void updateUser(HttpServletRequest request, AppUserInfo appUser,
-			String userName, String surname, String forename, String password, InitialView userType)
+			String userName, String surname, String forename, String password, String email, InitialView userType)
 			throws DisallowedException, MissingParametersException, CantDoThatException, ObjectNotFoundException {
 		// Allow updating of any user if administrator or yourself if not
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || appUser
@@ -398,13 +398,16 @@ public final class AuthManager implements AuthManagerInfo {
 		if (forename == null) {
 			forename = appUser.getForename();
 		}
+		if (email == null) {
+			email = appUser.getEmail();
+		}
 		if (userType == null) {
 			userType = appUser.getUserType();
 		}
 		// Update user in memory:
 		HibernateUtil.activateObject(appUser);
 		((Authenticator) this.authenticator).updateUser(appUser, userName, surname, forename,
-				password, userType);
+				password, email, userType);
 	}
 
 	public synchronized void removeUser(HttpServletRequest request, AppUserInfo appUser)

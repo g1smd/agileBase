@@ -15,37 +15,44 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+#set($username = $sessionUser.getInternalUserName())
 <table cellspacing=0 border=0 cellpadding=0>
   <tr>
     <td>Name:</td>
     <td>
-      <input type="text" name="forename" gtpb_internalusername="$sessionUser.getInternalUserName()" gtpb_update_user value="$sessionUser.getForename()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
+      <input type="text" name="forename" gtpb_internalusername="$username" gtpb_update_user value="$sessionUser.getForename()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
       <br />forename(s)
     </td>
     <td>
-      <input type="text" name="surname" gtpb_internalusername="$sessionUser.getInternalUserName()" gtpb_update_user value="$sessionUser.getSurname()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
+      <input type="text" name="surname" gtpb_internalusername="$username" gtpb_update_user value="$sessionUser.getSurname()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
       <br />surname
     </td>
   </tr>
   <tr>
     <td>Login:</td>
     <td>
-      <input type="text" name="username" gtpb_internalusername="$sessionUser.getInternalUserName()" gtpb_update_user value="$sessionUser.getUserName()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
+      <input type="text" name="username" gtpb_internalusername="$username" gtpb_update_user value="$sessionUser.getUserName()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
       <br />username
     </td>
     <td>
-      <input type="password" name="password" gtpb_internalusername="$sessionUser.getInternalUserName()" gtpb_update_user #*value="$sessionUser.getPassword()"*# onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" #*onfocus="this.setAttribute('type','text')" onblur="this.setAttribute('type','password')*#">
+      <input type="password" name="password" gtpb_internalusername="$username" gtpb_update_user #*value="$sessionUser.getPassword()"*# onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" #*onfocus="this.setAttribute('type','text')" onblur="this.setAttribute('type','password')*#">
       <br />type new password to reset
     </td>
   </tr>
   <tr>
+    <td>Email:</td>
+    <td colspan="2">
+      <input type="text" name="email" gtpb_internalusername="$username" gtpb_update_user value="$sessionUser.getEmail()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
+      <br />only enter this if you want the user to receive notifications of *all comments* added throughout agileBase
+    </td>
+  <tr>
 	<td>Initial view:<br>What the user will see on logging in</td>
-	<td>
+	<td colspan="2">
 	  #set($sessionUserType = $sessionUser.getUserType())
 	  <select name="initialview" gtpb_internalusername="$sessionUser.getInternalUserName()" gtpb_update_user value="$sessionUserType" onchange="top.oBuffer.writeBuffer(this);">
 		<option value="LIMITED" #if($sessionUserType == "LIMITED") selected #end>Limited - for external users outside the company</option>
-    <option value="REPORT" #if($sessionUserType == "REPORT") selected #end>Full height report view</option>
-    <option value="FULL" #if($sessionUserType == "FULL") selected #end>Full three pane interface</option>
+        <option value="REPORT" #if($sessionUserType == "REPORT") selected #end>Full height report view</option>
+        <option value="FULL" #if($sessionUserType == "FULL") selected #end>Full three pane interface</option>
 		<option value="EXECUTIVE_DASHBOARD" #if($sessionUserType == "EXECUTIVE_DASHBOARD") selected #end>Executive dashboard</option>
 	  </select>
 	</td>

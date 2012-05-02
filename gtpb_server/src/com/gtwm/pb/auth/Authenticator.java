@@ -109,7 +109,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	}
 
 	protected synchronized void updateUser(AppUserInfo appUser, String userName, String surname,
-			String forename, String password, InitialView userType)
+			String forename, String password, String email, InitialView userType)
 			throws MissingParametersException, CantDoThatException {
 		// need to remove and add user to all sorted collections it's in because
 		// we may be changing a property (userName) that compareTo depends on
@@ -119,6 +119,7 @@ public final class Authenticator implements AuthenticatorInfo {
 		appUser.setPassword(password);
 		appUser.setSurname(surname);
 		appUser.setForename(forename);
+		appUser.setEmail(email);
 		appUser.setUserType(userType);
 		((Company) appUser.getCompany()).getUsersCollection().add(appUser);
 		this.getUsersDirect().add(appUser);

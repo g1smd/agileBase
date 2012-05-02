@@ -202,6 +202,7 @@ public final class ServletAuthMethods {
 		String surname = request.getParameter(AppUserInfo.SURNAME.toLowerCase());
 		String forename = request.getParameter(AppUserInfo.FORENAME.toLowerCase());
 		String password = request.getParameter(AppUserInfo.PASSWORD.toLowerCase());
+		String email = request.getParameter(AppUserInfo.EMAIL.toLowerCase());
 		if (password != null) {
 			if (password.equals("false")) {
 				throw new CantDoThatException("User update failed: error setting password");
@@ -217,24 +218,25 @@ public final class ServletAuthMethods {
 		String oldSurname = appUser.getSurname();
 		String oldForename = appUser.getForename();
 		String oldPassword = appUser.getPassword();
+		String oldEmail = appUser.getEmail();
 		InitialView oldUserType = appUser.getUserType();
 		// begin updating model and persisting changes
 		HibernateUtil.startHibernateTransaction();
 		try {
-			authManager.updateUser(request, appUser, userName, surname, forename, password,
+			authManager.updateUser(request, appUser, userName, surname, forename, password, email,
 					userType);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					oldPassword, oldUserType);
+					oldPassword, oldEmail, oldUserType);
 			throw new CantDoThatException("User update failed", hex);
 		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					oldPassword, oldUserType);
+					oldPassword, oldEmail, oldUserType);
 			throw new CantDoThatException(pex.getMessage(), pex);
 		} finally {
 			HibernateUtil.closeSession();

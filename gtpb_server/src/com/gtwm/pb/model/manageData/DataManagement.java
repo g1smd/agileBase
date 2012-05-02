@@ -35,6 +35,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.LinkedHashSet;
 import java.util.Arrays;
@@ -58,8 +59,11 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.math.util.MathUtils;
+
+import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
+import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
@@ -131,6 +135,14 @@ import com.gtwm.pb.util.Enumerations.HiddenFields;
 import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import javax.imageio.ImageIO;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import javax.xml.stream.XMLEventFactory;
@@ -184,7 +196,7 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public void addComment(BaseField field, int rowId, AppUserInfo user, String rawComment)
-			throws SQLException, ObjectNotFoundException, CantDoThatException {
+			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
 		String comment = Helpers.smartCharsReplace(rawComment);
 		Connection conn = null;
@@ -227,10 +239,62 @@ public final class DataManagement implements DataManagementInfo {
 			statement.close();
 			conn.commit();
 			field.setHasComments(true);
+			CompanyInfo company = user.getCompany();
+			Set<String> recipients = new HashSet<String>();
+			for (AppUserInfo companyUser : company.getUsers()) {
+				String email = companyUser.getEmail();
+				if (email != null) {
+					if (email.contains("@")) {
+						recipients.add(email);
+					}
+				}
+			}
+			if (recipients.size() > 0) {
+				this.emailComments(recipients, field, rowId, user, comment);
+			}
 		} finally {
 			if (conn != null) {
 				conn.close();
 			}
+		}
+	}
+
+	private void emailComments(Set<String> recipients, BaseField field, int rowId,
+			AppUserInfo user, String comment) throws CodingErrorException, CantDoThatException,
+			SQLException {
+		String body = user.getForename() + " " + user.getSurname() + " added the comment\n\n";
+		body += comment + "\n\n";
+		body += " to " + field.getTableContainingField().getSingularName() + " record: ";
+		TableInfo table = field.getTableContainingField();
+		BaseReportInfo report = table.getDefaultReport();
+		BaseField pKey = table.getPrimaryKey();
+		Map<BaseField, String> filters = new HashMap<BaseField, String>(1);
+		filters.put(pKey, String.valueOf(rowId));
+		List<DataRowInfo> rows = this.getReportDataRows(null, report, filters, true,
+				new HashMap<BaseField, Boolean>(0), 1, QuickFilterType.AND, false);
+		if (rows.size() != 1) {
+			logger.warn("Row can't be retrieved for comment for table " + table + ", row ID "
+					+ rowId);
+		} else {
+			DataRowInfo row = rows.get(0);
+			body += "'" + buildEventTitle(report, row, true) + "'\n";
+		}
+		Properties props = new Properties();
+		props.setProperty("mail.smtp.host", "localhost");
+		Session mailSession = Session.getDefaultInstance(props, null);
+		MimeMessage message = new MimeMessage(mailSession);
+		try {
+			message.setSubject("New comment for " + table.getSimpleName());
+			for (String emailRecipient : recipients) {
+				Address toAddress = new InternetAddress(emailRecipient);
+				message.addRecipient(Message.RecipientType.TO, toAddress);
+			}
+			Address fromAddress = new InternetAddress("notifications@agilebase.co.uk");
+			message.setFrom(fromAddress);
+			message.setText(body);
+			Transport.send(message);
+		} catch (MessagingException mex) {
+			logger.warn("Error sending comment notification email: " + mex);
 		}
 	}
 

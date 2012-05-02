@@ -349,8 +349,6 @@ public final class Helpers {
 		}
 		String replaced = string.replace("\u2018", "'").replace("\u2019", "'").replace("\u201C", "\"")
 				.replace("\u201D", "\"").replace("\u2014", "-").replace("\u2013", "-");
-		logger.debug("\u2018 \u2019 \u201C \u201D \u2014 \u2013");
-		logger.debug("Replaced " + string + " with " + replaced);
 		return replaced;
 	}
 

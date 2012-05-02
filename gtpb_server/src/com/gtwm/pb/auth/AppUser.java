@@ -27,6 +27,7 @@ import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.model.manageSchema.TableDefn;
+import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.InitialView;
@@ -138,6 +139,14 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 			throw new MissingParametersException("Password blank");
 		}
 		this.password = password;
+	}
+	
+	public String getEmail() {
+		return this.email;
+	}
+	
+	public void setEmail(String email) throws CantDoThatException {
+		this.email = email;
 	}
 
 	@Enumerated(EnumType.STRING)
@@ -300,6 +309,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private InitialView initialView = null;
 
 	private String password;
+	
+	private String email;
 
 	private CompanyInfo company = null;
 

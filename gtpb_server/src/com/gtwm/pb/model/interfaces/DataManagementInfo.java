@@ -165,7 +165,7 @@ public interface DataManagementInfo {
 	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException, CantDoThatException;
 
 	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment)
-			throws SQLException, ObjectNotFoundException, CantDoThatException;
+			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException;
 
 	/**
 	 * Return true if the record with the given primary key is visible in the

@@ -109,6 +109,14 @@ public class PublicUser implements AppUserInfo {
 	public String getPassword() throws CantDoThatException {
 		throw new CantDoThatException("This public user has no password");
 	}
+	
+	public void setEmail(String email) throws CantDoThatException {
+		throw new CantDoThatException("The email address for the public user " + this + " cannot be set");
+	}
+	
+	public String getEmail() {
+		return null;
+	}
 
 	public void setUserType(InitialView userType) throws CantDoThatException {
 		throw new CantDoThatException("The user type for the public user " + this + " cannot be set");
