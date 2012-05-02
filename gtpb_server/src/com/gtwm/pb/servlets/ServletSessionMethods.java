@@ -548,38 +548,6 @@ public final class ServletSessionMethods {
 					}
 				}
 			}
-		} else if (databaseFieldType.equals(DatabaseFieldType.INTERVAL)) {
-			// For error reporting
-			String partGotTo = "year";
-			try {
-				Integer years = ServletDataMethods.getIntegerParameterValue(request,
-						internalFieldName + "_years");
-				if ((years > 0) && (years < 99)) {
-					years += 2000;
-				}
-				partGotTo = "month";
-				Integer months = ServletDataMethods.getIntegerParameterValue(request,
-						internalFieldName + "_months");
-				partGotTo = "day";
-				Integer days = ServletDataMethods.getIntegerParameterValue(request,
-						internalFieldName + "_days");
-				partGotTo = "hour";
-				Integer hours = ServletDataMethods.getIntegerParameterValue(request,
-						internalFieldName + "_hours");
-				partGotTo = "minute";
-				Integer minutes = ServletDataMethods.getIntegerParameterValue(request,
-						internalFieldName + "_minutes");
-				partGotTo = "second";
-				Integer seconds = ServletDataMethods.getIntegerParameterValue(request,
-						internalFieldName + "_seconds");
-				if (years != null && months != null && days != null && hours != null
-						&& minutes != null && seconds != null) {
-					fieldValue = new DurationValueDefn(years, months, days, hours, minutes, seconds);
-				}
-			} catch (NumberFormatException nfex) {
-				throw new InputRecordException("The " + partGotTo
-						+ " is invalid because it needs to be a whole number", field, nfex);
-			}
 		} else if (databaseFieldType.equals(DatabaseFieldType.FLOAT)) {
 			if (fieldValueString != null) {
 				if (fieldValueString.equals("")) {
@@ -739,10 +707,8 @@ public final class ServletSessionMethods {
 										+ fieldValueString.substring(5);
 							}
 						} else {
-							// Replace smart quotes with normal quotes
-							fieldValueString = fieldValueString.replace("\u2018", "'")
-									.replace("'\u2019", "'").replace("\u201C", "\"")
-									.replace("\u201D", "\"");
+							// Replace smart quotes with normal quotes and em dashes with normal dashes
+							fieldValueString = Helpers.smartCharsReplace(fieldValueString);
 						}
 						fieldValue = new TextValueDefn(fieldValueString);
 					}

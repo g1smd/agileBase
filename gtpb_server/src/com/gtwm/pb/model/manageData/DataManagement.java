@@ -183,9 +183,10 @@ public final class DataManagement implements DataManagementInfo {
 		this.authManager = authManager;
 	}
 
-	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment)
+	public void addComment(BaseField field, int rowId, AppUserInfo user, String rawComment)
 			throws SQLException, ObjectNotFoundException, CantDoThatException {
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
+		String comment = Helpers.smartCharsReplace(rawComment);
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();

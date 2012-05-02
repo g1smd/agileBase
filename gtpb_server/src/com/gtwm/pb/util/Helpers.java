@@ -341,6 +341,15 @@ public final class Helpers {
 		unencoded = unencoded.replace("&gt;", ">" );
 		return unencoded;
 	}
+	
+	public static String smartCharsReplace(String string) {
+		if (string == null) {
+			return "";
+		}
+		return string.replace("\u2018", "'")
+				.replace("'\u2019", "'").replace("\u201C", "\"")
+				.replace("\u201D", "\"").replace("\u2014", "-");
+	}
 
 	private static final SimpleLogger logger = new SimpleLogger(Helpers.class);
 }
