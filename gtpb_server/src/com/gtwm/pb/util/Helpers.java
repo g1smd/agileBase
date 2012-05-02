@@ -90,7 +90,7 @@ public final class Helpers {
 			return false;
 		}
 	}
-	
+
 	public static boolean isImage(String fileName) {
 		if (fileName == null) {
 			return false;
@@ -194,9 +194,9 @@ public final class Helpers {
 		// value
 		Collection<String> mapValues = map.values();
 		int numOccurences = Collections.frequency(mapValues, value);
-		if (numOccurences >1) {
-			throw new CantDoThatException("To look up the relation there should be only one '" + value
-					+ "' but there are actually " + numOccurences);
+		if (numOccurences > 1) {
+			throw new CantDoThatException("To look up the relation there should be only one '"
+					+ value + "' but there are actually " + numOccurences);
 		} else if ((numOccurences == 0) && requireExactMatch) {
 			throw new CantDoThatException("No '" + value + "' items were found");
 		}
@@ -215,7 +215,7 @@ public final class Helpers {
 			for (Map.Entry<Integer, String> mapEntry : mapEntrySet) {
 				String mapValue = mapEntry.getValue();
 				if (mapValue != null) {
-					//TODO: consider something more sophisticated, e.g. from
+					// TODO: consider something more sophisticated, e.g. from
 					// http://www.dcs.shef.ac.uk/%7Esam/stringmetrics.html
 					if (mapEntry.getValue().toLowerCase().contains(value.toLowerCase())) {
 						return mapEntry.getKey();
@@ -223,7 +223,7 @@ public final class Helpers {
 				} else {
 					logger.warn("Null value found in map when searching for value " + value);
 				}
-			}			
+			}
 		}
 		throw new CantDoThatException("No '" + value + "' items were found");
 	}
@@ -316,8 +316,8 @@ public final class Helpers {
 			String internalTableName = table.getInternalTableName();
 			resultString = resultString.replaceAll(internalTableName, table.toString());
 			for (BaseField field : table.getFields()) {
-				resultString = resultString.replaceAll(field.getInternalFieldName(), field
-						.toString());
+				resultString = resultString.replaceAll(field.getInternalFieldName(),
+						field.toString());
 			}
 			for (BaseReportInfo tableReport : table.getReports()) {
 				resultString = resultString.replaceAll(tableReport.getInternalReportName(),
@@ -326,9 +326,10 @@ public final class Helpers {
 		}
 		return resultString;
 	}
-	
+
 	/**
 	 * Replace HTML entities with plain versions
+	 * 
 	 * @param string
 	 * @return
 	 */
@@ -338,17 +339,18 @@ public final class Helpers {
 		}
 		String unencoded = string.replace("&amp;", "&");
 		unencoded = unencoded.replace("&lt;", "<");
-		unencoded = unencoded.replace("&gt;", ">" );
+		unencoded = unencoded.replace("&gt;", ">");
 		return unencoded;
 	}
-	
+
 	public static String smartCharsReplace(String string) {
 		if (string == null) {
 			return "";
 		}
-		return string.replace("\u2018", "'")
-				.replace("'\u2019", "'").replace("\u201C", "\"")
-				.replace("\u201D", "\"").replace("\u2014", "-");
+		String replaced = string.replace("\u2018", "'").replace("'\u2019", "'").replace("\u201C", "\"")
+				.replace("\u201D", "\"").replace("\u2014", "-").replace("\u2013", "-");
+		logger.debug("Replaced " + string + " with " + replaced);
+		return replaced;
 	}
 
 	private static final SimpleLogger logger = new SimpleLogger(Helpers.class);
