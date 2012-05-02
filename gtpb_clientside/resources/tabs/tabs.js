@@ -1528,7 +1528,6 @@ pane3Scripts.functionList.push(editTabFunctions);
 pane3Scripts.functionList.push(fUnlockButton);
 pane3Scripts.functionList.push(fSetupCharts);
 pane3Scripts.functionList.push(fAssignButtonTableActions);
-pane3Scripts.functionList.push(fMarkInactiveTabs);
 pane3Scripts.functionList.push(fMap);
 pane3Scripts.functionList.push(fInitialiseDependencies);
 pane3Scripts.functionList.push(fFormStyle);
@@ -1539,6 +1538,7 @@ function editTabFunctions() {
 	fDatePickers();
 	fSexyUpload();
 	fTabs();
+	fMarkInactiveTabs();
 	fComments();
 	fTwitter();
 }
