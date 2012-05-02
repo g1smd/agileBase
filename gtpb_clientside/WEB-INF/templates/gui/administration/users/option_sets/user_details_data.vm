@@ -42,7 +42,11 @@
   <tr>
     <td>Email:</td>
     <td colspan="2">
-      <input type="text" name="email" gtpb_internalusername="$username" gtpb_update_user value="$sessionUser.getEmail()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
+      #set($email = $sessionUser.getEmail())
+      #if(!$email)
+        #set($email = "")
+      #end
+      <input type="text" name="email" gtpb_internalusername="$username" gtpb_update_user value="$email" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
       <br />only enter this if you want the user to receive notifications of *all comments* added throughout agileBase
     </td>
   <tr>
