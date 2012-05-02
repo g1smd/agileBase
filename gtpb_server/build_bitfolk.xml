@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="deploy" name="agileBase">
+	<!-- java components -->
+	<property name="compiler" value="javac" />
+	<property name="jvm" value="java" />
+	<property name="documentor" value="javadoc" />
+	<!-- project directories -->
+	<property name="src.dir" location="src" />
+	<property name="build.dir" location="build" />
+	<property name="doc.dir" location="doc" />
+	<!-- server directories -->
+	<property name="tomcat.dir" location="/var/lib/tomcat7" />
+	<property name="webapp" value="agileBase" />
+
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${doc.dir}" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${doc.dir}" />
+		<delete dir="${tomcat.dir}/webapps/${webapp}/WEB-INF/classes" />
+		<delete dir="${tomcat.dir}/webapps/${webapp}/WEB-INF/lib" />
+	</target>
+
+	<target name="build" depends="clean, init">
+		<javac destdir="${build.dir}" executable="${compiler}" fork="true" listfiles="true" source="1.7" target="1.7">
+			<compilerarg value="-Xlint:unchecked" />
+			<src>
+				<pathelement path="${src.dir}" />
+			</src>
+			<classpath>
+				<pathelement path="${build.dir}" />
+				<!--Apache Velocity templating engine - used by servlet when serving web pages -->
+				<pathelement location="WEB-INF/lib/velocity-1.7.jar" />
+				<pathelement location="WEB-INF/lib/velocity-tools-view-2.0.jar" />
+				<!--Unit testing framework -->
+				<pathelement location="WEB-INF/lib/junit.jar" />
+				<!--Apache tomcat jar -->
+				<pathelement location="/usr/share/tomcat7/lib/servlet-api.jar" />
+				<!--Postgresql JDBC driver -->
+				<pathelement location="/usr/share/tomcat7/lib/postgresql.jar" />
+				<!--File uploads -->
+				<pathelement location="WEB-INF/lib/commons-fileupload-1.1.jar" />
+				<pathelement location="WEB-INF/lib/commons-io-2.0.jar" />
+				<!-- Hibernate -->
+		        <pathelement location="WEB-INF/lib/hibernate3.jar"/>
+		        <pathelement location="WEB-INF/lib/xml-apis.jar"/>
+		        <pathelement location="WEB-INF/lib/versioncheck.jar"/>
+		        <pathelement location="WEB-INF/lib/syndiag2.jar"/>
+		        <pathelement location="WEB-INF/lib/junit-3.8.1.jar"/>
+		        <pathelement location="WEB-INF/lib/ehcache-core-2.2.0.jar"/>
+		        <pathelement location="WEB-INF/lib/dom4j-1.6.1.jar"/>
+		        <pathelement location="WEB-INF/lib/commons-logging-1.1.jar" />
+		        <pathelement location="WEB-INF/lib/commons-collections-3.2.jar" />
+		        <pathelement location="WEB-INF/lib/commons-lang-2.3.jar" />
+		        <pathelement location="WEB-INF/lib/cleanimports.jar"/>
+		        <pathelement location="WEB-INF/lib/asm-attrs.jar"/>
+		        <pathelement location="WEB-INF/lib/asm.jar"/>
+		        <pathelement location="WEB-INF/lib/ant-swing-1.6.5.jar"/>
+		        <pathelement location="WEB-INF/lib/antlr-2.7.6.jar"/>
+		        <pathelement location="WEB-INF/lib/ant-launcher-1.6.5.jar"/>
+		        <pathelement location="WEB-INF/lib/ant-junit-1.6.5.jar"/>
+		        <pathelement location="WEB-INF/lib/ant-antlr-1.6.5.jar"/>
+		        <pathelement location="WEB-INF/lib/ant-1.6.5.jar"/>
+		        <pathelement location="WEB-INF/lib/jta-1.1.jar"/>
+				<pathelement location="WEB-INF/lib/javassist-3.12.0.GA.jar"/>
+				<pathelement location="WEB-INF/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+        <pathelement location="WEB-INF/lib/backport-util-concurrent.jar"/>
+        <pathelement location="WEB-INF/lib/jackson-mini-1.9.2.jar"/>
+        <pathelement location="WEB-INF/lib/mail.jar"/>
+        <pathelement location="WEB-INF/lib/im4java-1.3.0.jar"/>
+				<!-- CSV import/export -->
+		        <pathelement location="WEB-INF/lib/opencsv-1.5.jar"/>
+				<!-- Google client API -->
+				<!-- <pathelement location="WEB-INF/lib/gdata-client-1.0.jar"/> -->
+				<!-- Jamon profiler, currently unused -->
+				<!-- <pathelement location="${tomcat.dir}/common/lib/jamon-2.2.jar"/> -->
+				<!-- Treemaps -->
+				<!-- <pathelement location="WEB-INF/lib/treemap.jar"/> -->
+				<!-- number utilities -->
+				<pathelement location="WEB-INF/lib/icu4j-3_6.jar"/>
+				<pathelement location="WEB-INF/lib/commons-math-1.2.jar"/>
+				<!-- Logging -->
+				<pathelement location="WEB-INF/lib/simple-log.jar"/>
+				<pathelement location="WEB-INF/lib/simple-log-rollover.jar"/>
+				<!-- Excel spreadsheets -->
+				<pathelement location="WEB-INF/lib/poi-3.8.jar"/>
+				<pathelement location="WEB-INF/lib/poi-ooxml-3.8.jar"/>
+				<!-- date/time parsing -->
+				<pathelement location="WEB-INF/lib/ERChronic.jar"/>
+				<!-- iCal generation -->
+				<pathelement location="WEB-INF/lib/ical4j-1.0-rc3.jar"/>
+				<!-- Image resizer -->
+				<pathelement location="WEB-INF/lib/Thumbnailator-0.3.6.jar"/>
+        <!-- Plural to singular -->
+        <pathelement location="WEB-INF/lib/javatools.jar"/>
+				<!-- Testing -->
+        <pathelement location="WEB-INF/lib/JWalk11.jar"/>
+				<!-- closed source dashboard -->
+				<pathelement location="WEB-INF/lib/gtpb-dashboard.jar"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="deploy" depends="build">
+		<copy todir="${tomcat.dir}/webapps/${webapp}/WEB-INF">
+			<fileset dir="WEB-INF" />
+		</copy>
+		<copy file="velocity.properties" todir="${tomcat.dir}/webapps/${webapp}" />
+		<copy file="hibernate.properties" todir="${tomcat.dir}/webapps/${webapp}/WEB-INF/classes" />
+		<copy todir="${tomcat.dir}/webapps/${webapp}/WEB-INF/classes">
+			<fileset dir="build" />
+		</copy>
+	</target>
+
+	<target name="run">
+		<echo>This is a web application and can't be run from the command line</echo>
+	</target>
+
+	<target name="doc">
+		<javadoc destdir="${doc.dir}" link="http://java.sun.com/j2se/1.5.0/docs/api/">
+			<fileset dir="${src.dir}">
+				<include name="**/*.java" />
+				<!--<include name="**/package.html" />-->
+			</fileset>
+		</javadoc>
+	</target>
+
+	<target name="all" depends="clean, doc, run" />
+
+</project>

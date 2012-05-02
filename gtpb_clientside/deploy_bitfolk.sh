@@ -2,7 +2,7 @@
 # Get code from repository
 git pull origin master
 # Deploy to servlet container
-ant -f deploy_templates_linode.xml deploy
+ant -f deploy_templates_bitfolk.xml deploy
 # Amalgamate JS and CSS
 # CSS
 #pane 1
