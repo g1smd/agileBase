@@ -230,8 +230,6 @@ function hidePane3() {
 // Any other number will refresh if there are that many tabs in pane 3,
 // otherwise reload
 function loadIntoPane3(url, rowId, numberOfTabsExpected) {
-	alert("loadIntoPane3");
-	
 	try {
 		var pane_3_doc = parent.pane_3.document;
 	} catch (err) {
@@ -265,8 +263,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 			if (typeof (parent.pane_3.pane3TabInterface) == "undefined") {
 				// something in pane 3 but not a tabset
 				parent.pane_3.document.location = url;
-			} else if (document.location.href
-					.match('set_module')) { // set_module
+			} else if (document.location.href.match('set_module')) { // set_module
 				// means we must be viewing a report
 				if ((numberOfTabsExpected == null)
 						|| (numberOfTabsExpected == parent.pane_3.pane3TabInterface
@@ -275,7 +272,6 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 					// we can
 					// just refresh the one tab
 					try {
-						alert("right number of tabs");
 						parent.pane_3.pane3TabInterface
 								.refresh(rowId);
 						// Click the edit or view tab as appropriate if one of those is not the current tab
@@ -284,7 +280,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 							targetTabNum = 2;
 						}
 						alert("target: " + targetTabNum);
-						var targetTab = $(parent.pane_3.document).find("ul.tab-list > li:eq(" + targetTab + ")");
+						var targetTab = $(parent.pane_3.document).find("ul.tab-list > li:eq(" + targetTabNum + ")");
 						if (targetTab.find("strong").size() == 0) {
 							targetTab.click();
 						}
