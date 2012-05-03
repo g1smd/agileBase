@@ -204,7 +204,9 @@ var TabInterfaceObject = function(containerElem) {
 	}
 	
 	TabInterfaceObjectPub.showTab = function(tabNumber) {
-		tabList[tabNumber].showTab();
+		if (tabList[tabNumber] != currentTab) {
+			tabList[tabNumber].showTab();
+		}
 	}
 
 	return TabInterfaceObjectPub;
