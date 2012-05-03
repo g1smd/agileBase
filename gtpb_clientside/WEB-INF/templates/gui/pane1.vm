@@ -60,6 +60,7 @@
 	    top.jQuery("button.toggleButton:first").click();
 	  }
 	  jQuery("a.report_tooltip").click(function() {
+	    alert("click " + $(this).attr("href"));
 	    parent.pane_2.document.location = $(this).attr("href");
 	    parent.pane_3.pane3TabInterface.showTab($(this).attr("data-tabNum"));
 	    return false;
