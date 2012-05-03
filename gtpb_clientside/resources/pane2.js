@@ -224,13 +224,6 @@ function hidePane3() {
 	$(top.document).find("#pane3butt").click();
 }
 
-/**
- * Load a record when clicking on a picker in a tab
- */
-function loadIntoTab(url, targetElement) {
-	
-}
-
 // numberOfTabsExpected parameter:
 // -1 will always force a complete reload of pane 3
 // null will always force a single tab refresh only
@@ -238,6 +231,7 @@ function loadIntoTab(url, targetElement) {
 // otherwise reload
 function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	alert("loadIntoPane3");
+	
 	try {
 		var pane_3_doc = parent.pane_3.document;
 	} catch (err) {
@@ -344,7 +338,7 @@ function showTooltip() {
 }
 
 function hideTooltip() {
-	// Actually, hide any visible tooltips
+	// Hide any visible tooltips
 	$(".ab_tooltip").fadeOut("normal");
 	clearTimeout(abTooltipTimeout);
 }
