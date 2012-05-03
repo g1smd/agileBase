@@ -282,8 +282,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 						var targetTab = $(parent.pane_3.document).find("ul.tab-list > li:eq(" + targetTabNum + ")");
 						alert(targetTab.text());
 						if (targetTab.find("strong").size() == 0) {
-							alert("not strong");
-							targetTab.click();
+							targetTab.find("a").click();
 						}
 					} catch (err) {
 						// Fast refresh failed, falling back to
