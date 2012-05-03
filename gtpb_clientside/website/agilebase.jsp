@@ -16,7 +16,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 	googleKey = "http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSc_vMwNn3P31Pbn-7BnVhZNCM03BSA2_dWIrkQNs5kAuiaHmwVTAjuYw";
 }
 %>
-<!DOCTYPE html>
 <html>
 	<head>
 		<title>agileBase - a dedicated Lean Back Office platform</title>

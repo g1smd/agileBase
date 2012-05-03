@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <%
 String requestURL = request.getRequestURL().toString();
 boolean live = false;

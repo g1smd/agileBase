@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<!DOCTYPE html>
 <!--  
 ##  Copyright 2011 GT webMarque Ltd
 ## 
