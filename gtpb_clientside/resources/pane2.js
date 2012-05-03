@@ -281,8 +281,8 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 						}
 						var targetTab = $(parent.pane_3.document).find("ul.tab-list > li:eq(" + targetTabNum + ")");
 						if (targetTab.find("strong").size() == 0) {
-							alert("clicking " + targetTab.find("a").attr("href"));
-							targetTab.find("a").click();
+							// jQuery.click doesn't work on an 'a' element
+							parent.pane_3.pane3TabInterface.showTab(targetTabNum);
 						}
 					} catch (err) {
 						// Fast refresh failed, falling back to

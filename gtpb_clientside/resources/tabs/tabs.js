@@ -202,6 +202,10 @@ var TabInterfaceObject = function(containerElem) {
 	TabInterfaceObjectPub.getNumberOfTabs = function() {
 		return tabList.length;
 	}
+	
+	TabInterfaceObjectPub.showTab = function(tabNumber) {
+		tabList[tabNumber].showTab();
+	}
 
 	return TabInterfaceObjectPub;
 }
