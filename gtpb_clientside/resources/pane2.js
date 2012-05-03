@@ -237,6 +237,7 @@ function loadIntoTab(url, targetElement) {
 // Any other number will refresh if there are that many tabs in pane 3,
 // otherwise reload
 function loadIntoPane3(url, rowId, numberOfTabsExpected) {
+	alert("loadIntoPane3");
 	try {
 		var pane_3_doc = parent.pane_3.document;
 	} catch (err) {
