@@ -282,6 +282,15 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 					try {
 						parent.pane_3.pane3TabInterface
 								.refresh(rowId);
+						// Click the edit or view tab as appropriate if one of those is not the current tab
+						var targetTabNum = 1;
+						if (numberOfTabsExpected > 1) {
+							targetTabNum = 2;
+						}
+						var targetTab = $(parent.pane_3.document).find("ul.tab_list > li:eq(" + targetTab + ")");
+						if (targetTab.find("strong").size() == 0) {
+							targetTab.click();
+						}
 					} catch (err) {
 						// Fast refresh failed, falling back to
 						// slow - don't worry about this
