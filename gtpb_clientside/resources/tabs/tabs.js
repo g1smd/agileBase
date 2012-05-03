@@ -102,6 +102,7 @@ var TabInterfaceObject = function(containerElem) {
 			for ( var i = 0; i < len; i++) {
 				if (tabList[i] != TabObjectPub) {
 					tabList[i].hideTab();
+					alert("Hiding " + i);
 				}
 			}
 
@@ -204,7 +205,6 @@ var TabInterfaceObject = function(containerElem) {
 	}
 	
 	TabInterfaceObjectPub.showTab = function(tabNumber) {
-		alert("Showing tab " + tabNumber);
 		tabList[tabNumber].showTab();
 	}
 
