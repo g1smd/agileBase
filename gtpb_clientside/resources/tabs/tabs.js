@@ -102,7 +102,6 @@ var TabInterfaceObject = function(containerElem) {
 			for ( var i = 0; i < len; i++) {
 				if (tabList[i] != TabObjectPub) {
 					tabList[i].hideTab();
-					alert("Hiding " + i);
 				}
 			}
 
