@@ -15,8 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 <!DOCTYPE html>
+#set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 <html>
 <head>
     #parse('gui/display_error.vm')
@@ -58,6 +58,11 @@
 	  // Hide pane 1 when there's only one report visible
 	  if(jQuery("a.report_tooltip").size() == 1) {
 	    top.jQuery("button.toggleButton:first").click();
+	  }
+	  jQuery("a.report_tooltip").click(function() {
+	    parent.pane_2.document.location = $(this).attr("href");
+	    parent.pane_3.pane3TabInterface.showTab($(this).attr("data-tabNum"));
+	    return false;
 	  }
 	});
     </script>
