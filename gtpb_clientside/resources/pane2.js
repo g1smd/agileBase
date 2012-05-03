@@ -275,9 +275,9 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 						parent.pane_3.pane3TabInterface
 								.refresh(rowId);
 						// Click the edit or view tab as appropriate if one of those is not the current tab
-						var targetTabNum = 1;
+						var targetTabNum = 0;
 						if (numberOfTabsExpected > 1) {
-							targetTabNum = 2;
+							targetTabNum = 1;
 						}
 						alert("target: " + targetTabNum);
 						var targetTab = $(parent.pane_3.document).find("ul.tab-list > li:eq(" + targetTabNum + ")");
