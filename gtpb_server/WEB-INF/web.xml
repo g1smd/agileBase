@@ -90,40 +90,6 @@
       <url-pattern>/Public.ab</url-pattern>
     </servlet-mapping>
     
-<!--  SSIs replaced by JSP
-    <servlet>
-        <servlet-name>ssi</servlet-name>
-        <description>
-          To support server-side includes
-        </description>
-        <servlet-class>
-          org.apache.catalina.ssi.SSIServlet
-        </servlet-class>
-        <init-param>
-          <param-name>buffered</param-name>
-          <param-value>1</param-value>
-        </init-param>
-        <init-param>
-          <param-name>debug</param-name>
-          <param-value>0</param-value>
-        </init-param>
-        <init-param>
-          <param-name>expires</param-name>
-          <param-value>666</param-value>
-        </init-param>
-        <init-param>
-          <param-name>isVirtualWebappRelative</param-name>
-          <param-value>0</param-value>
-        </init-param>
-        <load-on-startup>4</load-on-startup>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ssi</servlet-name>
-        <url-pattern>*.shtml</url-pattern>
-    </servlet-mapping>    
--->
-
     <session-config>
       <!-- 360 = 6 hours - set the session timeout to a long time so the app won't break if the user leaves it on screen for a few hours without doing anything -->
       <!-- 240 = 4 hours-->

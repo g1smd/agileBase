@@ -64,7 +64,7 @@
 	    parent.pane_2.document.location = jQuery(this).attr("href");
 	    parent.pane_3.pane3TabInterface.showTab(jQuery(this).attr("data-tabNum"));
 	    return false;
-	  }
+	  });
 	});
     </script>
 	#end
