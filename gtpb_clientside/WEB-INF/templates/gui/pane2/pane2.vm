@@ -194,12 +194,12 @@
 				  #set($numberOfTabs = '3')
 				#end
 			  #end
-			  #if($numberOfTabs > 2)
-			    #set($tabNum = 2)
-			  #else
-			    #set($tabNum = 1)
-			  #end
-		      url += "&set_custom_string=true&stringkey=report_tabindex&customstringvalue=$tabNum";
+			  ###if($numberOfTabs > 2)
+			  ##  #set($tabNum = 2)
+			  ###else
+			  ##  #set($tabNum = 1)
+			  ###end
+		      ##url += "&set_custom_string=true&stringkey=report_tabindex&customstringvalue=$tabNum";
 		  #end
 		  loadIntoPane3(url,rowId,$numberOfTabs);
 	  }
