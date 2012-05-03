@@ -279,8 +279,8 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 						if (numberOfTabsExpected > 1) {
 							targetTabNum = 1;
 						}
-						alert("target: " + targetTabNum);
 						var targetTab = $(parent.pane_3.document).find("ul.tab-list > li:eq(" + targetTabNum + ")");
+						alert(targetTab.text());
 						if (targetTab.find("strong").size() == 0) {
 							targetTab.click();
 						}
