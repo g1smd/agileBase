@@ -296,6 +296,13 @@
                 	month: '%Y',
                 	year: '%Y'
                  }
+               #elseif($dateFormat.equals("%B %Y"))
+			     ,dateTimeLabelFormats: {
+                	day: '%B %Y',
+                	week: '%B %Y',
+                	month: '%B %Y',
+                	year: '%Y'
+                 }
 			   #end
 		     #else
                categories: $xAxisCategories
