@@ -130,11 +130,7 @@
   	  ## Don't add null grouping
   	  ## NB on some graphs, the null grouping can have the largest value
   	  #if(($year != "") && ($month != ""))
-  	    #if($columnDisplay)
-  	      #set($success = $point.add("$day/$month/$year"))
-  	    #else
-  	      #set($success = $point.add("Date.UTC($year,$month,$day)"))
-  	    #end
+  	    #set($success = $point.add("Date.UTC($year,$month,$day)"))
   		#set($success = $point.add($summaryRow.getAggregateValue($aggregateFunction)))
   	    #set($success = $seriesData.add($point))
         #set($calendar = $viewTools.getCalendar())
