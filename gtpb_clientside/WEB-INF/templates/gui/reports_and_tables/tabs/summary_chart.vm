@@ -298,7 +298,7 @@
                  }
                #elseif($dateFormat.equals("%B %Y"))
 			     ,dateTimeLabelFormats: {
-                	day: '%B %Y',
+                	day: '',
                 	week: '%B %Y',
                 	month: '%B %Y',
                 	year: '%Y'
