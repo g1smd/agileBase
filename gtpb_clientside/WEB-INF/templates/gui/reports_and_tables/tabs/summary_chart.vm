@@ -353,9 +353,9 @@
 			     animation: false,
 			   }
 			   #if($numDateFields == 1)
-			     ,series[{pointInterval: 365 * 24 * 3600 * 1000}]
+			     ,series: [{pointInterval: 365 * 24 * 3600 * 1000}]
 			   #elseif($numDateFields == 2)
-			     ,series[{pointInterval: 365 * 24 * 3600 * 1000}]
+			     ,series: [{pointInterval: 365 * 24 * 3600 * 1000}]
 			   #end
 		   #else
 		       bar: {
