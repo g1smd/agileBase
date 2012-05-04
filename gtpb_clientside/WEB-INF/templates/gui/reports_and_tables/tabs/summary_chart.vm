@@ -35,6 +35,7 @@
 #if($chartRows.size() == 1)
   #set($dateAxis = false)
 #end	
+#set($dateAxis = false)
 #if($dateAxis)
   ## Work out date format for tooltip
   #set($numDateFields = 1)
@@ -227,14 +228,14 @@
         renderTo: "$chart_id",
 			#if($dateAxis)
         #if($scatter)
-          ##defaultSeriesType: 'scatter',
-          defaultSeriesType: 'column',
+          defaultSeriesType: 'scatter',
+          ##defaultSeriesType: 'column',
         #elseif($timeline || ($aggregateFunctions.size() > 1))
-          ##defaultSeriesType: 'line',
-          defaultSeriesType: 'column',
+          defaultSeriesType: 'line',
+          ##defaultSeriesType: 'column',
         #else
-          ##defaultSeriesType: 'area',
-          defaultSeriesType: 'column',
+          defaultSeriesType: 'area',
+          ##defaultSeriesType: 'column',
         #end
         zoomType: 'x',
 			#elseif($pieChart)
