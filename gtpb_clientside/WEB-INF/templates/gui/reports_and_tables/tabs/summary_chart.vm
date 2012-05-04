@@ -290,7 +290,7 @@
 		 #end
 		 #if(!$pieChart)
            xAxis: {
-		     #if($dateAxis)
+		     #if($dateAxis && !$columnDisplay)
                type: 'datetime',
 			   maxZoom: 60 * 24 * 3600000 // two months
 			   #if($dateFormat.equals("%Y"))
