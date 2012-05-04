@@ -228,13 +228,13 @@
 			#if($dateAxis)
         #if($scatter)
           ##defaultSeriesType: 'scatter',
-          defaultSeriesType: 'bar',
+          defaultSeriesType: 'column',
         #elseif($timeline || ($aggregateFunctions.size() > 1))
           ##defaultSeriesType: 'line',
-          defaultSeriesType: 'bar',
+          defaultSeriesType: 'column',
         #else
           ##defaultSeriesType: 'area',
-          defaultSeriesType: 'bar',
+          defaultSeriesType: 'column',
         #end
         zoomType: 'x',
 			#elseif($pieChart)
