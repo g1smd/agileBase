@@ -130,8 +130,12 @@
   	  ## Don't add null grouping
   	  ## NB on some graphs, the null grouping can have the largest value
   	  #if(($year != "") && ($month != ""))
-  	    #set($success = $point.add("Date.UTC($year,$month,$day)"))
-  		  #set($success = $point.add($summaryRow.getAggregateValue($aggregateFunction)))
+  	    #if($columnDisplay)
+  	      #set($success = $point.add("$day/$month/$year"))
+  	    #else
+  	      #set($success = $point.add("Date.UTC($year,$month,$day)"))
+  	    #end
+  		#set($success = $point.add($summaryRow.getAggregateValue($aggregateFunction)))
   	    #set($success = $seriesData.add($point))
         #set($calendar = $viewTools.getCalendar())
         #set($temp = $calendar.clear())
@@ -231,8 +235,11 @@
         renderTo: "$chart_id",
 			#if($dateAxis)
         #if($scatter)
-          defaultSeriesType: 'scatter',
-          ##defaultSeriesType: 'column',
+          #if($columnDisplay)
+            defaultSeriesType: 'column',
+          #else
+            defaultSeriesType: 'scatter',
+          #end
         #elseif($timeline || ($aggregateFunctions.size() > 1))
           #if($columnDisplay)
             defaultSeriesType: 'column',
