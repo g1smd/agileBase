@@ -59,7 +59,7 @@
 ## Work out if we can display data as a pie chart
 #set($pieChart = false)
 #if((!$dateAxis) && ($chartRows.size() > 1) && ($chartRows.size() < 5) && ($aggregateFunctions.size() == 1))
-  #set($pieChart = true)
+  ###set($pieChart = true)
 #end
 #if($chartRows.size() > 0)
 #if((!$dateAxis) && (!$pieChart))
