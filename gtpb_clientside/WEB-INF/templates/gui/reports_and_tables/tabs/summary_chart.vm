@@ -227,11 +227,14 @@
         renderTo: "$chart_id",
 			#if($dateAxis)
         #if($scatter)
-          defaultSeriesType: 'scatter',
+          ##defaultSeriesType: 'scatter',
+          defaultSeriesType: 'bar',
         #elseif($timeline || ($aggregateFunctions.size() > 1))
-          defaultSeriesType: 'line',
+          ##defaultSeriesType: 'line',
+          defaultSeriesType: 'bar',
         #else
-          defaultSeriesType: 'area',
+          ##defaultSeriesType: 'area',
+          defaultSeriesType: 'bar',
         #end
         zoomType: 'x',
 			#elseif($pieChart)
@@ -352,11 +355,6 @@
 			   area: {
 			     animation: false,
 			   }
-			   #if($numDateFields == 1)
-			     ,series: [{pointInterval: 31 * 24 * 3600 * 1000}]
-			   #elseif($numDateFields == 2)
-			     ,series: [{pointInterval: 31 * 24 * 3600 * 1000}]
-			   #end
 		   #else
 		       bar: {
 			     animation: false,
