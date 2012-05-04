@@ -297,12 +297,7 @@
                 	year: '%Y'
                  }
                #elseif($dateFormat.equals("%B %Y"))
-			     ,dateTimeLabelFormats: {
-                	day: '',
-                	week: '%B %Y',
-                	month: '%B %Y',
-                	year: '%Y'
-                 }
+                 ,tickInterval: 86400000 * 31
 			   #end
 		     #else
                categories: $xAxisCategories
