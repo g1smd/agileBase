@@ -296,7 +296,10 @@
                 	month: '%Y',
                 	year: '%Y'
                  }
-               #elseif($dateFormat.equals("%B %Y"))
+                 #if($columnDisplay)
+                   ,tickInterval: 86400000 * 365
+                 #end
+               #elseif($dateFormat.equals("%B %Y") && $columnDisplay)
                  ,tickInterval: 86400000 * 31
 			   #end
 		     #else
