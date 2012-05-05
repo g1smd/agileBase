@@ -19,6 +19,7 @@ package com.gtwm.pb.model.manageSchema;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -133,6 +134,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.apache.commons.io.FileUtils;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -179,7 +181,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
 				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
 		// one-off boot actions
-		//this.addCommentsFeedFields();
+		// this.addCommentsFeedFields();
 	}
 
 	public void cancelScheduledEvents() {
@@ -678,8 +680,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 						RelationField relationField = ((RelationField) field);
 						// Workaround for bug: creating more than one relation
 						// at a time fails with a Hibernate Exception
-						// Also relation fields which have a display field which is also a relation field are complex
-						if ((relatedTables.size() == 0) && !(relationField.getDisplayField() instanceof RelationField)) {
+						// Also relation fields which have a display field which
+						// is also a relation field are complex
+						if ((relatedTables.size() == 0)
+								&& !(relationField.getDisplayField() instanceof RelationField)) {
 							// add a join to allow related field to be added to
 							// the report
 							TableInfo relatedTable = relationField.getRelatedTable();
@@ -982,7 +986,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				BaseReportInfo selectorReport = formTab.getSelectorReport();
 				if (selectorReport != null) {
 					if (selectorReport.equals(reportToRemove)) {
-						throw new CantDoThatException("The table " + table + " has a tab that uses this report");
+						throw new CantDoThatException("The table " + table
+								+ " has a tab that uses this report");
 					}
 				}
 			}
@@ -1082,7 +1087,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				try {
 					item.write(selectedFile);
 				} catch (Exception ex) {
-					// Catching a general exception?! This is because the third party
+					// Catching a general exception?! This is because the third
+					// party
 					// library throws a raw exception. Not very good
 					throw new FileUploadException("Error writing file: " + ex.getMessage());
 				}
@@ -2051,7 +2057,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 			statement.close();
 		}
 		// Also delete any comments linked to the field
-		PreparedStatement statement = conn.prepareStatement("DELETE FROM dbint_comments WHERE internalfieldname=?");
+		PreparedStatement statement = conn
+				.prepareStatement("DELETE FROM dbint_comments WHERE internalfieldname=?");
 		statement.setString(1, field.getInternalFieldName());
 		statement.execute();
 		statement.close();
@@ -2060,6 +2067,20 @@ public final class DatabaseDefn implements DatabaseInfo {
 			HibernateUtil.currentSession().delete(removedReportField);
 		}
 		HibernateUtil.currentSession().delete(field);
+		if (field instanceof FileField) {
+			String fieldFolderName = this.dataManagement.getWebAppRoot() + "uploads/"
+					+ field.getTableContainingField().getInternalTableName() + "/"
+					+ field.getInternalFieldName();
+			File directory = new File(fieldFolderName);
+			if (directory.exists()) {
+				try {
+					FileUtils.deleteDirectory(directory);
+				} catch (IOException e) {
+					logger.warn("Unable to remove " + fieldFolderName + " when removing field "
+							+ table + "." + field + ": " + e);
+				}
+			}
+		}
 	}
 
 	public ReportFieldInfo addFieldToReport(HttpServletRequest request, Connection conn,

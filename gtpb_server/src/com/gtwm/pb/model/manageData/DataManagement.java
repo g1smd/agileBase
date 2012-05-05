@@ -1744,6 +1744,25 @@ public final class DataManagement implements DataManagementInfo {
 		return recordDependencies;
 	}
 
+	private void removeUploadedFiles(TableInfo table, int rowId) {
+		for (BaseField field : table.getFields()) {
+			if (field instanceof FileField) {
+				String folderName = this.getWebAppRoot() + "uploads/"
+						+ table.getInternalTableName() + "/" + field.getInternalFieldName() + "/"
+						+ rowId;
+				File folder = new File(folderName);
+				if (folder.exists()) {
+					try {
+						FileUtils.deleteDirectory(folder);
+					} catch (IOException e) {
+						logger.warn("Unable to remove " + folderName + " when removing field "
+								+ table + "." + field + ": " + e);
+					}
+				}
+			}
+		}
+	}
+
 	public void removeRecord(HttpServletRequest request, SessionDataInfo sessionData,
 			DatabaseInfo databaseDefn, TableInfo table, int rowId, boolean cascade)
 			throws SQLException, ObjectNotFoundException, CodingErrorException,
@@ -1834,6 +1853,7 @@ public final class DataManagement implements DataManagementInfo {
 				conn.close();
 			}
 		}
+		this.removeUploadedFiles(table, rowId);
 		this.logLastDataChangeTime(request);
 		logLastTableDataChangeTime(table);
 		UsageLogger usageLogger = new UsageLogger(dataSource);
