@@ -60,6 +60,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	public void run() {
 		// If logging an update for a single field value in a record
 		if (this.appAction.equals(AppAction.UPDATE_RECORD) && (this.field != null)) {
+			logger.debug("Single field value update");
 			// In the case of data updates, use a queue system to avoid logging
 			// every change
 			// First, add the current update to the queue
@@ -68,9 +69,10 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			BlockingQueue<DataLogEntryInfo> userQueue = userQueues.get(this.user);
 			if (userQueue == null) {
 				userQueue = new LinkedBlockingQueue<DataLogEntryInfo>();
-				userQueues.put(user, userQueue);
+				userQueues.put(this.user, userQueue);
 			}
 			userQueue.add(newEntry);
+			logger.debug("User queue for " + this.user + " is now " + userQueue);
 			// Then compare with old value
 			if (userQueue.size() > 1) {
 				try {
@@ -83,6 +85,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 						this.rowId = oldEntry.getRowId();
 						this.timestamp.setTime(oldEntry.getTime());
 						this.details = oldEntry.getValue();
+						logger.debug("Logging old entry " + oldEntry);
 					} else {
 						logger.debug("Old and new are similar: " + oldEntry + " ... " + newEntry);
 						return;
@@ -240,6 +243,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 		this.logType = LogType.DATA_CHANGE;
 		this.user = user;
 		this.table = table;
+		logger.debug("Accepting data change for field " + field);
 		this.field = field;
 		this.appAction = appAction;
 		this.rowId = rowId;
