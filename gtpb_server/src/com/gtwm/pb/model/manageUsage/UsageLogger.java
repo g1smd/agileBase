@@ -22,10 +22,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
+import com.gtwm.pb.model.interfaces.DataLogEntryInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.UsageLoggerInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
@@ -52,15 +58,57 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	 * operations
 	 */
 	public void run() {
+		// If logging an update for a single field value in a record
+		if (this.appAction.equals(AppAction.UPDATE_RECORD) && (this.field != null)) {
+			// In the case of data updates, use a queue system to avoid logging
+			// every change
+			// First, add the current update to the queue
+			DataLogEntryInfo newEntry = new DataLogEntry(this.field, this.rowId, this.details,
+					this.appAction);
+			BlockingQueue<DataLogEntryInfo> userQueue = userQueues.get(this.user);
+			if (userQueue == null) {
+				userQueue = new LinkedBlockingQueue<DataLogEntryInfo>();
+				userQueues.put(user, userQueue);
+			}
+			userQueue.add(newEntry);
+			// Then compare with old value
+			if (userQueue.size() > 1) {
+				try {
+					DataLogEntryInfo oldEntry = userQueue.take();
+					// If old entry is of a different field, log it otherwise
+					// forget it, the new one will be used instead
+					if ((!oldEntry.getField().equals(this.field))
+							|| (oldEntry.getRowId() != this.rowId)) {
+						this.table = oldEntry.getField().getTableContainingField();
+						this.rowId = oldEntry.getRowId();
+						this.timestamp.setTime(oldEntry.getTime());
+						this.details = oldEntry.getValue();
+					} else {
+						logger.debug("Old and new are similar: " + oldEntry + " ... " + newEntry);
+						return;
+					}
+				} catch (InterruptedException iex) {
+					logger.error("Logging of update interrupted: " + iex + ". Current queue = "
+							+ userQueue);
+					Thread.currentThread().interrupt();
+				}
+			} else {
+				// We've only got one thing in the queue, wait until another
+				// comes along before deciding whether to log it
+				logger.debug("Only one thing in queue: " + newEntry);
+				return;
+			}
+		}
 		// Delay execution to give the original action we're logging time to
 		// complete, or get off to a good start at least. We don't want to make
 		// a slow action even slower by adding in a log statement in
 		// the middle.
-		try {
-			// requests seldom take longer than 100ms. Log inserts are approx. 1ms
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			logger.error("UsageLogger interrupted while sleeping");
+		if (this.logType.equals(LogType.REPORT_VIEW)) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				logger.error("UsageLogger interrupted while sleeping");
+			}
 		}
 		String companyName = this.user.getCompany().getCompanyName();
 		String userName = this.user.getUserName();
@@ -187,11 +235,12 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 		this.timestamp.setTime(System.currentTimeMillis());
 	}
 
-	public void logDataChange(AppUserInfo user, TableInfo table, AppAction appAction, int rowId,
-			String details) {
+	public void logDataChange(AppUserInfo user, TableInfo table, BaseField field,
+			AppAction appAction, int rowId, String details) {
 		this.logType = LogType.DATA_CHANGE;
 		this.user = user;
 		this.table = table;
+		this.field = field;
 		this.appAction = appAction;
 		this.rowId = rowId;
 		this.details = details;
@@ -220,6 +269,8 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 
 	private TableInfo table;
 
+	private BaseField field = null;
+
 	private AppAction appAction;
 
 	private String details = "";
@@ -227,6 +278,9 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	private String ipAddress = "";
 
 	private int rowId = -1;
+
+	// A shared (static) data change queue for each user
+	private static final Map<AppUserInfo, BlockingQueue<DataLogEntryInfo>> userQueues = new ConcurrentHashMap<AppUserInfo, BlockingQueue<DataLogEntryInfo>>();
 
 	private final DataSource relationalDataSource;
 

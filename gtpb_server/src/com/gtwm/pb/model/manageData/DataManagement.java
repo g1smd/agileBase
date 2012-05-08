@@ -925,14 +925,19 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		if (newRecord) {
-			usageLogger.logDataChange(user, table, AppAction.SAVE_NEW_RECORD, newRowId,
+			usageLogger.logDataChange(user, table, null, AppAction.SAVE_NEW_RECORD, newRowId,
 					dataToLog.toString());
 		} else if (globalEdit) {
 			// TODO: need better logging of global edits
-			usageLogger.logDataChange(user, table, AppAction.GLOBAL_EDIT, rowId,
+			usageLogger.logDataChange(user, table, null, AppAction.GLOBAL_EDIT, rowId,
 					dataToLog.toString());
 		} else {
-			usageLogger.logDataChange(user, table, AppAction.UPDATE_RECORD, rowId,
+			BaseField fieldUpdated = null;
+			Set<BaseField> fieldSet = dataToSave.keySet();
+			if (fieldSet.size() == 1) {
+				fieldUpdated = new LinkedList<BaseField>(fieldSet).get(0);
+			}
+			usageLogger.logDataChange(user, table, fieldUpdated, AppAction.UPDATE_RECORD, rowId,
 					dataToLog.toString());
 		}
 		UsageLogger.startLoggingThread(usageLogger);
@@ -1448,7 +1453,7 @@ public final class DataManagement implements DataManagementInfo {
 		if (csvContent != null) {
 			logMessage += " from file";
 		}
-		usageLogger.logDataChange(loggedInUser, table, AppAction.CSV_IMPORT, -1, logMessage);
+		usageLogger.logDataChange(loggedInUser, table, null, AppAction.CSV_IMPORT, -1, logMessage);
 		UsageLogger.startLoggingThread(usageLogger);
 		return numImportedRecords;
 	}
@@ -1858,7 +1863,7 @@ public final class DataManagement implements DataManagementInfo {
 		logLastTableDataChangeTime(table);
 		UsageLogger usageLogger = new UsageLogger(dataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logDataChange(user, table, AppAction.REMOVE_RECORD, rowId, "");
+		usageLogger.logDataChange(user, table, null, AppAction.REMOVE_RECORD, rowId, "");
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 

@@ -37,7 +37,13 @@ public interface UsageLoggerInfo {
 	public void logReportSchemaChange(AppUserInfo user, BaseReportInfo report, AppAction appAction,
 			String details);
 
-	public void logDataChange(AppUserInfo user, TableInfo table, AppAction appAction, int rowId, String details);
+	/**
+	 * @param field
+	 *            If editing a single field value, supply the field, otherwise supply
+	 *            null
+	 */
+	public void logDataChange(AppUserInfo user, TableInfo table, BaseField field,
+			AppAction appAction, int rowId, String details);
 
 	public void logLogin(AppUserInfo user, String ipAddress, String browser);
 }
