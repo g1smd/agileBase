@@ -933,7 +933,12 @@ public final class DataManagement implements DataManagementInfo {
 					dataToLog.toString());
 		} else {
 			BaseField fieldUpdated = null;
-			Set<BaseField> fieldSet = dataToSave.keySet();
+			Set<BaseField> fieldSet = new TreeSet<BaseField>();
+			for (BaseField field : dataToSave.keySet()) {
+				if (!field.getHidden()) {
+					fieldSet.add(field);
+				}
+			}
 			logger.debug("Field set is " + fieldSet + ", size " + fieldSet.size());
 			if (fieldSet.size() == 1) {
 				fieldUpdated = new LinkedList<BaseField>(fieldSet).getFirst();
