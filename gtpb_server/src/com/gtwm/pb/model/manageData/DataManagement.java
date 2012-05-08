@@ -934,8 +934,10 @@ public final class DataManagement implements DataManagementInfo {
 		} else {
 			BaseField fieldUpdated = null;
 			Set<BaseField> fieldSet = dataToSave.keySet();
+			logger.debug("Field set is " + fieldSet + ", size " + fieldSet.size());
 			if (fieldSet.size() == 1) {
-				fieldUpdated = new LinkedList<BaseField>(fieldSet).get(0);
+				fieldUpdated = new LinkedList<BaseField>(fieldSet).getFirst();
+				logger.debug("Field updated is " + fieldUpdated);
 			}
 			usageLogger.logDataChange(user, table, fieldUpdated, AppAction.UPDATE_RECORD, rowId,
 					dataToLog.toString());
