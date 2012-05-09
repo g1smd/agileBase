@@ -45,7 +45,7 @@
         });
       </script>  
     </head>
-	  <body #if($viewTools.getAppUrl().contains("gtwmbackup")) class="localhost" #end>
+	  <body #if($viewTools.getAppUrl().contains("backup")) class="localhost" #end>
     <div id="preview"></div>
     #set($noCaption = true)
     <div id="toolbarDiv">
@@ -78,18 +78,19 @@
       </div>
       <div class="buttonGroup" style="float:right; margin-left:0; margin-right: 90px"> ## external applications, built in and customised
         ## #parse('gui/toolbar/buttons/wiki.vm')
-      #set($apps = $company.getApps())
-      #if($apps.contains("calendar"))
-        #parse('gui/toolbar/buttons/calendar.vm')
-      #end
-      #if($apps.contains("dashboard"))
-		    #parse('gui/toolbar/buttons/dashboard.vm')
-      #end
-      ##parse('gui/toolbar/buttons/fullscreen.vm')
-      #parse('gui/toolbar/buttons/apps.vm')
-      #set($sessionContext = $sessionData.getContext().toString())
-      #if($sessionContext == "SYSADMIN")
-        #parse('gui/toolbar/buttons/dev_tools.vm')
+      #if($appUser.getUserType() != "LIMITED")
+	      #set($apps = $company.getApps())
+	      #if($apps.contains("calendar"))
+	        #parse('gui/toolbar/buttons/calendar.vm')
+	      #end
+	      #if($apps.contains("dashboard"))
+			#parse('gui/toolbar/buttons/dashboard.vm')
+	      #end
+	      #parse('gui/toolbar/buttons/apps.vm')
+	      #set($sessionContext = $sessionData.getContext().toString())
+	      #if($sessionContext == "SYSADMIN")
+	        #parse('gui/toolbar/buttons/dev_tools.vm')
+	      #end
       #end
       #if($view.usesToolbarPlugin())
         #set($toolbarPluginName = $view.getToolbarPluginName())
