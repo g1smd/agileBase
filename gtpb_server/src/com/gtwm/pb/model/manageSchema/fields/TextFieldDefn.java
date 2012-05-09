@@ -416,6 +416,10 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			if (report.getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
 				ReportData.enableNestloop(conn, false);
 			}
+			Integer memoryAllocation = report.getMemoryAllocation();
+			if (memoryAllocation != null) {
+				ReportData.setWorkMemOverride(conn, memoryAllocation, true);
+			}
 			// Generates a SELECT DISTINCT on this field including filterValues
 			// in the WHERE clause
 			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
@@ -436,6 +440,9 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			statement.close();
 			if (report.getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
 				ReportData.enableNestloop(conn, true);
+			}
+			if (memoryAllocation != null) {
+				ReportData.setWorkMemOverride(conn, 0, false);
 			}
 		} catch (SQLException sqlex) {
 			// catch exception where field is not included

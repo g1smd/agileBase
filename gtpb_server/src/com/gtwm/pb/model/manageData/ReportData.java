@@ -143,6 +143,10 @@ public class ReportData implements ReportDataInfo {
 				if (report.getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
 					enableNestloop(conn, false);
 				}
+				Integer memoryAllocation = report.getMemoryAllocation();
+				if (memoryAllocation != null) {
+					setWorkMemOverride(conn, memoryAllocation, true);
+				}
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				ResultSet results = statement.executeQuery();
 				// Save average and mean of each colourable report field to
@@ -173,6 +177,9 @@ public class ReportData implements ReportDataInfo {
 				statement.close();
 				if (report.getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
 					enableNestloop(conn, true);
+				}
+				if (memoryAllocation != null) {
+					ReportData.setWorkMemOverride(conn, 0, false);
 				}
 			} catch (SQLException sqlex) {
 				logger.error("Error calculating field statistics for report " + report
@@ -411,14 +418,13 @@ public class ReportData implements ReportDataInfo {
 			}
 		}
 		/*
+		 * if (filterField instanceof RelationField) { sqlFilterString =
+		 * generateSqlFilterStringForRelation((RelationField) filterField,
+		 * filterType); filterStringForField.append(sqlFilterString); } else
+		 */
 		if (filterField instanceof RelationField) {
-			sqlFilterString = generateSqlFilterStringForRelation((RelationField) filterField,
-					filterType);
-			filterStringForField.append(sqlFilterString);
-		} else 
-		*/
-		if (filterField instanceof RelationField) {
-			logger.warn("Relation field filter: " + filterField.getTableContainingField() + "." + filterField + " = " + filterValue);
+			logger.warn("Relation field filter: " + filterField.getTableContainingField() + "."
+					+ filterField + " = " + filterValue);
 		}
 		if (dbType.equals(DatabaseFieldType.TIMESTAMP) && !timespanCanBeParsed) {
 			sqlFilterString = generateSqlFilterStringForDateAsText(filterField, filterType);
@@ -821,10 +827,15 @@ public class ReportData implements ReportDataInfo {
 				postcodeField = map.getPostcodeField();
 			}
 		}
+		// Query tuning settings
 		QueryPlanSelection qp = report.getQueryPlanSelection();
 		if (qp.equals(QueryPlanSelection.TRY_NO_NESTED_LOOPS)
 				|| qp.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
 			enableNestloop(conn, false);
+		}
+		Integer memoryAllocation = report.getMemoryAllocation();
+		if (memoryAllocation != null) {
+			setWorkMemOverride(conn, memoryAllocation, true);
 		}
 		PreparedStatement statement = this.getReportSqlPreparedStatement(conn, filterValues,
 				exactFilters, reportSorts, rowLimit, null, filterType, lookupPostcodeLatLong);
@@ -847,6 +858,9 @@ public class ReportData implements ReportDataInfo {
 							+ " times faster, not going to use that technique");
 				}
 			}
+		}
+		if (memoryAllocation != null) {
+			setWorkMemOverride(conn, 0, false);
 		}
 		float durationSecs = (System.currentTimeMillis() - executionStartTime) / ((float) 1000);
 		if (durationSecs > AppProperties.longSqlTime) {
@@ -1173,6 +1187,14 @@ public class ReportData implements ReportDataInfo {
 		return this.cachedFieldStats;
 	}
 
+	/**
+	 * Calling methods should always revert back to enable=true at the end of
+	 * querying
+	 * 
+	 * @param enableNestLoop
+	 *            true = enable nested loops in queries (default), false =
+	 *            disable
+	 */
 	public static void enableNestloop(Connection conn, boolean enableNestLoop) throws SQLException {
 		Statement setNestedLoopStatement = conn.createStatement();
 		if (enableNestLoop) {
@@ -1181,6 +1203,24 @@ public class ReportData implements ReportDataInfo {
 			setNestedLoopStatement.execute("SET enable_nestloop=false");
 		}
 		setNestedLoopStatement.close();
+	}
+
+	/**
+	 * Use if a particular report requires an increased worK_mem. Be sure to
+	 * revert back to default after queries
+	 * 
+	 * @param enableOverride
+	 *            true = use the report's value for work_mem, false = revert back
+	 *            to the default
+	 */
+	public static void setWorkMemOverride(Connection conn, int workMem, boolean enableOverride) throws SQLException {
+		Statement setWorkMemStatement = conn.createStatement();
+		if (enableOverride && (workMem > 0)) {
+			setWorkMemStatement.execute("SET work_mem='" + workMem + "MB'");
+		} else {
+			setWorkMemStatement.execute("SET work_mem=default");
+		}
+		setWorkMemStatement.close();
 	}
 
 	/**

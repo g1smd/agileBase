@@ -2658,9 +2658,14 @@ public final class DataManagement implements DataManagementInfo {
 			Map<ReportFieldInfo, Date> previousDateValues = new HashMap<ReportFieldInfo, Date>();
 			Calendar calendar = Calendar.getInstance();
 			// Get database data
-			if (chart.getReport().getQueryPlanSelection()
+			BaseReportInfo report = chart.getReport();
+			if (report.getQueryPlanSelection()
 					.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
 				ReportData.enableNestloop(conn, false);
+			}
+			Integer memoryAllocation = report.getMemoryAllocation();
+			if (memoryAllocation != null) {
+				ReportData.setWorkMemOverride(conn, memoryAllocation, true);
 			}
 			statement = chart.getChartSqlPreparedStatement(conn, reportFilterValues, false);
 			long startTime = System.currentTimeMillis();
@@ -2794,9 +2799,12 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			summaryResults.close();
 			statement.close();
-			if (chart.getReport().getQueryPlanSelection()
+			if (report.getQueryPlanSelection()
 					.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
 				ReportData.enableNestloop(conn, true);
+			}
+			if (memoryAllocation != null) {
+				ReportData.setWorkMemOverride(conn, 0, false);
 			}
 			float durationSecs = (System.currentTimeMillis() - startTime) / ((float) 1000);
 			if (durationSecs > AppProperties.longSqlTime) {
