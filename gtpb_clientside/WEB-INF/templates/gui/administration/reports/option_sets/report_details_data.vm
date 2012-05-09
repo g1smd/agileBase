@@ -114,7 +114,11 @@
       <span class='greytext'><i>In exceptional cases, an administrator may want to override the default <a href="http://www.postgresql.org/docs/current/static/runtime-config-resource.html" target="_blank">working memory (work_mem)</a> limit</i></span>
     </td>
     <td>
-      <input type="text" name="memoryallocation" gtpb_update_report value="$report" pane1_report_name="$pane1_report_name" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="2" identifier="$internalReportName" gtpb_internalreportname="$internalReportName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/> MB
+      #set($memoryAllocation = $report.getMemoryAllocation())
+      #if(!$memoryAllocation)
+        #set($memoryAllocation = 0)
+      #end
+      <input type="text" name="memoryallocation" gtpb_update_report value="$memoryAllocation" pane1_report_name="$pane1_report_name" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="2" identifier="$internalReportName" gtpb_internalreportname="$internalReportName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/> MB
     </td>
   </tr>
   <tr id="showAdvanced">
