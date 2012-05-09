@@ -41,7 +41,7 @@ public class DataLogEntry implements DataLogEntryInfo {
 	}
 
 	public String toString() {
-		return this.appAction.toString() + "log for " + this.user + ": " + this.field + " " + this.rowId + " = " + this.value;
+		return this.appAction.toString() + " log for " + this.user + ": " + this.field + "(" + this.rowId + ") = " + this.value;
 	}
 	
 	/**

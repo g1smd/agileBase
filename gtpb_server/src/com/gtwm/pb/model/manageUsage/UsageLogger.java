@@ -85,6 +85,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 						this.rowId = oldEntry.getRowId();
 						this.timestamp.setTime(oldEntry.getTime());
 						this.details = oldEntry.getValue();
+						logger.debug("Logging entry " + oldEntry)
 					} else {
 						logger.debug("Skipping, " + oldEntry + " = " + newEntry);
 						return;
@@ -101,6 +102,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 				return;
 			}
 		}
+		logger.debug("Logging this entry");
 		// Delay execution to give the original action we're logging time to
 		// complete, or get off to a good start at least. We don't want to make
 		// a slow action even slower by adding in a log statement in
@@ -182,6 +184,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			if (this.logType.equals(LogType.DATA_CHANGE)) {
 				logDataOlderThan(conn, 30);
 			}
+			logger.debug("Committing log");
 			conn.commit();
 		} catch (SQLException sqlex) {
 			// deal with exceptions here, don't rethrow, we're only logging
