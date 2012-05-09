@@ -60,6 +60,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	public void run() {
 		// If logging an update for a single field value in a record
 		if (this.appAction.equals(AppAction.UPDATE_RECORD) && (this.field != null)) {
+			logger.debug("Queued log");
 			// In the case of data updates, use a queue system to avoid logging
 			// every change.
 			// First, add the current update to the queue
@@ -71,6 +72,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 				userQueues.put(this.user, userQueue);
 			}
 			userQueue.add(newEntry);
+			logger.debug("Queue for " + this.user + " is " + userQueue);
 			// Then compare with old value
 			if (userQueue.size() > 1) {
 				try {
@@ -84,6 +86,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 						this.timestamp.setTime(oldEntry.getTime());
 						this.details = oldEntry.getValue();
 					} else {
+						logger.debug("Skipping, " + oldEntry + " = " + newEntry);
 						return;
 					}
 				} catch (InterruptedException iex) {
@@ -94,6 +97,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			} else {
 				// We've only got one thing in the queue, wait until another
 				// comes along before deciding whether to log it
+				logger.debug("Queue only one long, wait a bit...");
 				return;
 			}
 		}
@@ -208,6 +212,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 				DataLogEntryInfo logEntry = queue.peek();
 				if (logEntry.getTime() < someTimeAgo) {
 					oldEntries.add(logEntry);
+					queue.remove(logEntry);
 				}
 			}
 		}

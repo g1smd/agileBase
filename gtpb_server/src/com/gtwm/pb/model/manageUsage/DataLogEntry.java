@@ -67,6 +67,7 @@ public class DataLogEntry implements DataLogEntryInfo {
 		if (this.hashCode == 0) {
 			int hashCode = 17;
 			hashCode = 37 * hashCode + Long.valueOf(this.time).hashCode();
+			hashCode = 37 * hashCode + this.user.hashCode();
 			hashCode = 37 * hashCode + this.field.hashCode();
 			hashCode = 37 * hashCode + this.rowId;
 			hashCode = 37 * hashCode + this.value.hashCode();
