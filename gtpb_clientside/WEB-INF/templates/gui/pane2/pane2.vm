@@ -128,9 +128,11 @@
        jqDoc.find('#button_fullscreen').removeAttr('disabled');
        jqDoc.find('#button_apps').removeAttr('disabled');
        jqDoc.find('#button_forms').removeAttr('disabled');
+         $viewTools.log("Filters should be shown is $filtersShouldBeShown")
 		 #if($filtersShouldBeShown)
 		   var jqFilter = jqDoc.find('#filter');
 			 if (!jqFilter.hasClass('selected')) {
+			   alert("filterClick");
 			   jqFilter.click();
 			 }
 		 #end

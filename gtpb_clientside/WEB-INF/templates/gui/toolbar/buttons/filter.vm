@@ -60,7 +60,6 @@ function fFilters(){
 
     var oReportDoc=document.getElementById('oViewPane').contentWindow.pane_2.document;
     if ($(oButton).hasClass('selected')) {
-      //oReportDoc.getElementById('fieldFilters').setAttribute('on','true'); // set the expando property to turn the row on - now replaced by jQuery show/hide
       $(oReportDoc).find("#fieldFilters").show();
       $(oReportDoc).find("#reportData").addClass("lowered");
       var aPostVars=new Array();  // send a post to the server to set the session variable for the filters on
@@ -71,7 +70,6 @@ function fFilters(){
       var oReq=new fRequest('AppController.servlet', aPostVars, fWhatever, -1);
     }
     else {
-      //oReportDoc.getElementById('fieldFilters').setAttribute('on','false');
       $(oReportDoc).find("#fieldFilters").hide();
       $(oReportDoc).find("#reportData").removeClass("lowered");
       var aPostVars=new Array();
