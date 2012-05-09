@@ -61,7 +61,6 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 		// If logging an update for a single field value in a record
 		if (this.appAction != null) {
 			if (this.appAction.equals(AppAction.UPDATE_RECORD) && (this.field != null)) {
-				logger.debug("Queued log");
 				// In the case of data updates, use a queue system to avoid
 				// logging
 				// every change.
@@ -74,7 +73,6 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 					userQueues.put(this.user, userQueue);
 				}
 				userQueue.add(newEntry);
-				logger.debug("Queue for " + this.user + " is " + userQueue);
 				// Then compare with old value
 				if (userQueue.size() > 1) {
 					try {
@@ -88,9 +86,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 							this.rowId = oldEntry.getRowId();
 							this.timestamp.setTime(oldEntry.getTime());
 							this.details = oldEntry.getValue();
-							logger.debug("Logging entry " + oldEntry);
 						} else {
-							logger.debug("Skipping, " + oldEntry + " = " + newEntry);
 							return;
 						}
 					} catch (InterruptedException iex) {
@@ -101,12 +97,10 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 				} else {
 					// We've only got one thing in the queue, wait until another
 					// comes along before deciding whether to log it
-					logger.debug("Queue only one long, wait a bit...");
 					return;
 				}
 			}
 		}
-		logger.debug("Logging this entry");
 		// Delay execution to give the original action we're logging time to
 		// complete, or get off to a good start at least. We don't want to make
 		// a slow action even slower by adding in a log statement in
@@ -188,7 +182,6 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			if (this.logType.equals(LogType.DATA_CHANGE)) {
 				logDataOlderThan(conn, 30);
 			}
-			logger.debug("Committing log");
 			conn.commit();
 		} catch (SQLException sqlex) {
 			// deal with exceptions here, don't rethrow, we're only logging
@@ -236,7 +229,6 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			try {
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				for (DataLogEntryInfo oldEntry : oldEntries) {
-					logger.debug("Logging old entry " + oldEntry);
 					AppUserInfo user = oldEntry.getUser();
 					statement.setString(1, user.getCompany().getCompanyName());
 					statement.setString(2, user.getUserName());
