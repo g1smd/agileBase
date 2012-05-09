@@ -216,7 +216,12 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 				if (logEntry.getTime() < someTimeAgo) {
 					oldEntries.add(logEntry);
 					queue.remove(logEntry);
+				} else {
+					oldiesAllDone = true;
 				}
+			}
+			if (queue.size() == 0) {
+				userQueues.remove(user);
 			}
 		}
 		if (oldEntries.size() > 0) {
@@ -225,13 +230,15 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			try {
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				for (DataLogEntryInfo oldEntry : oldEntries) {
+					logger.debug("Logging old entry " + oldEntry);
 					AppUserInfo user = oldEntry.getUser();
 					statement.setString(1, user.getCompany().getCompanyName());
 					statement.setString(2, user.getUserName());
-					statement.setString(3, oldEntry.getAppAction().toString().toLowerCase().replace('_', ' '));
-					statement.setInt(4, oldEntry.getRowId());
-					statement.setString(5, oldEntry.getValue());
-					statement.setTimestamp(6, new Timestamp(oldEntry.getTime()));
+					statement.setString(3, oldEntry.getField().getTableContainingField().getInternalTableName());
+					statement.setString(4, oldEntry.getAppAction().toString().toLowerCase().replace('_', ' '));
+					statement.setInt(5, oldEntry.getRowId());
+					statement.setString(6, oldEntry.getValue());
+					statement.setTimestamp(7, new Timestamp(oldEntry.getTime()));
 					int rowsInserted = statement.executeUpdate();
 					if (rowsInserted != 1) {
 						logger.error("Logging 1 data change but inserted " + rowsInserted + " rows with " + statement);
