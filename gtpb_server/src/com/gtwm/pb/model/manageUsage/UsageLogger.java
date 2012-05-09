@@ -22,12 +22,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
-
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -60,11 +60,10 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	public void run() {
 		// If logging an update for a single field value in a record
 		if (this.appAction.equals(AppAction.UPDATE_RECORD) && (this.field != null)) {
-			logger.debug("Single field value update");
 			// In the case of data updates, use a queue system to avoid logging
-			// every change
+			// every change.
 			// First, add the current update to the queue
-			DataLogEntryInfo newEntry = new DataLogEntry(this.field, this.rowId, this.details,
+			DataLogEntryInfo newEntry = new DataLogEntry(this.user, this.field, this.rowId, this.details,
 					this.appAction);
 			BlockingQueue<DataLogEntryInfo> userQueue = userQueues.get(this.user);
 			if (userQueue == null) {
@@ -72,7 +71,6 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 				userQueues.put(this.user, userQueue);
 			}
 			userQueue.add(newEntry);
-			logger.debug("User queue for " + this.user + " is now " + userQueue);
 			// Then compare with old value
 			if (userQueue.size() > 1) {
 				try {
@@ -85,9 +83,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 						this.rowId = oldEntry.getRowId();
 						this.timestamp.setTime(oldEntry.getTime());
 						this.details = oldEntry.getValue();
-						logger.debug("Logging old entry " + oldEntry);
 					} else {
-						logger.debug("Old and new are similar: " + oldEntry + " ... " + newEntry);
 						return;
 					}
 				} catch (InterruptedException iex) {
@@ -98,7 +94,6 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			} else {
 				// We've only got one thing in the queue, wait until another
 				// comes along before deciding whether to log it
-				logger.debug("Only one thing in queue: " + newEntry);
 				return;
 			}
 		}
@@ -180,6 +175,9 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			Thread.yield();
 			statement.executeUpdate();
 			statement.close();
+			if (this.logType.equals(LogType.DATA_CHANGE)) {
+				logDataOlderThan(conn, 30);
+			}
 			conn.commit();
 		} catch (SQLException sqlex) {
 			// deal with exceptions here, don't rethrow, we're only logging
@@ -196,6 +194,51 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 		}
 	}
 
+	/**
+	 * Clear out the queue of old entries (or all entries if seconds=0 is specified)
+	 */
+	public static void logDataOlderThan(Connection conn, int seconds) {
+		long someTimeAgo = System.currentTimeMillis() - (seconds * 1000);
+		Set<DataLogEntryInfo> oldEntries = new HashSet<DataLogEntryInfo>();
+		for (Map.Entry<AppUserInfo, BlockingQueue<DataLogEntryInfo>> entry : userQueues.entrySet()) {
+			AppUserInfo user = entry.getKey();
+			BlockingQueue<DataLogEntryInfo> queue = entry.getValue();
+			boolean oldiesAllDone = false;
+			while ((queue.size() > 0) && (!oldiesAllDone)) {
+				DataLogEntryInfo logEntry = queue.peek();
+				if (logEntry.getTime() < someTimeAgo) {
+					oldEntries.add(logEntry);
+				}
+			}
+		}
+		if (oldEntries.size() > 0) {
+			String SQLCode = "INSERT INTO dbint_log_" + LogType.DATA_CHANGE.toString().toLowerCase();
+			SQLCode += "(company, app_user, app_table, app_action, row_id, saved_data, app_timestamp) VALUES (?,?,?,?,?,?,?)";
+			try {
+				PreparedStatement statement = conn.prepareStatement(SQLCode);
+				for (DataLogEntryInfo oldEntry : oldEntries) {
+					AppUserInfo user = oldEntry.getUser();
+					statement.setString(1, user.getCompany().getCompanyName());
+					statement.setString(2, user.getUserName());
+					statement.setString(3, oldEntry.getAppAction().toString().toLowerCase().replace('_', ' '));
+					statement.setInt(4, oldEntry.getRowId());
+					statement.setString(5, oldEntry.getValue());
+					statement.setTimestamp(6, new Timestamp(oldEntry.getTime()));
+					int rowsInserted = statement.executeUpdate();
+					if (rowsInserted != 1) {
+						logger.error("Logging 1 data change but inserted " + rowsInserted + " rows with " + statement);
+					}
+					Thread.yield();
+				}
+				statement.close();
+			} catch (SQLException sqlex) {
+				// TODO Auto-generated catch block
+				logger.error("Error logging old data changes to database. Logger SQL = " + SQLCode);
+				logger.error("Exception details: " + sqlex);
+			}
+		}
+	}
+	
 	public void logReportView(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> reportFilterValues, int rowLimit, String extraDetails) {
 		this.logType = LogType.REPORT_VIEW;
@@ -243,7 +286,6 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 		this.logType = LogType.DATA_CHANGE;
 		this.user = user;
 		this.table = table;
-		logger.debug("Accepting data change for field " + field);
 		this.field = field;
 		this.appAction = appAction;
 		this.rowId = rowId;

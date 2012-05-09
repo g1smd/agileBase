@@ -15,6 +15,8 @@ public interface DataLogEntryInfo {
 	 */
 	public long getTime();
 	
+	public AppUserInfo getUser();
+	
 	public BaseField getField();
 	
 	public int getRowId();

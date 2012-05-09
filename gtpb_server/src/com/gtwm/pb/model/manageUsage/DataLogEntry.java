@@ -1,13 +1,15 @@
 package com.gtwm.pb.model.manageUsage;
 
+import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.DataLogEntryInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.util.Enumerations.AppAction;
 
 public class DataLogEntry implements DataLogEntryInfo {
 
-	public DataLogEntry(BaseField field, int rowId, String value, AppAction appAction) {
+	public DataLogEntry(AppUserInfo user, BaseField field, int rowId, String value, AppAction appAction) {
 		this.time = System.currentTimeMillis();
+		this.user = user;
 		this.field = field;
 		this.rowId = rowId;
 		this.value = value;
@@ -18,6 +20,10 @@ public class DataLogEntry implements DataLogEntryInfo {
 		return this.time;
 	}
 
+	public AppUserInfo getUser() {
+		return this.user;
+	}
+	
 	public BaseField getField() {
 		return this.field;
 	}
@@ -35,7 +41,7 @@ public class DataLogEntry implements DataLogEntryInfo {
 	}
 
 	public String toString() {
-		return this.appAction.toString() + "log: " + this.field + " " + this.rowId + " = " + this.value;
+		return this.appAction.toString() + "log for " + this.user + ": " + this.field + " " + this.rowId + " = " + this.value;
 	}
 	
 	/**
@@ -49,7 +55,7 @@ public class DataLogEntry implements DataLogEntryInfo {
 			return false;
 		}
 		DataLogEntry otherEntry = (DataLogEntry) obj;
-		if ((this.time != otherEntry.getTime()) || (!this.field.equals(otherEntry.getField()))
+		if ((this.time != otherEntry.getTime()) || (!this.user.equals(otherEntry.getUser())) || (!this.field.equals(otherEntry.getField()))
 				|| (this.rowId != otherEntry.getRowId())
 				|| (!this.value.equals(otherEntry.getValue())) || (!this.appAction.equals(otherEntry.getAppAction()))) {
 			return false;
@@ -71,6 +77,8 @@ public class DataLogEntry implements DataLogEntryInfo {
 	}
 
 	private final long time;
+	
+	private final AppUserInfo user;
 
 	private final BaseField field;
 

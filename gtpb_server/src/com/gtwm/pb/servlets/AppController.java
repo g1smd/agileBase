@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.servlets;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Locale;
@@ -55,6 +56,7 @@ import com.gtwm.pb.model.manageData.ViewMethods;
 import com.gtwm.pb.model.manageData.ViewTools;
 import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageSchema.DatabaseDefn;
+import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.auth.DisallowedException;
@@ -149,6 +151,17 @@ public final class AppController extends VelocityViewServlet {
 	public void destroy() {
 		super.destroy();
 		this.databaseDefn.cancelScheduledEvents();
+		Connection conn;
+		try {
+			conn = this.relationalDataSource.getConnection();
+			UsageLogger.logDataOlderThan(conn, 0);
+			conn.commit();
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (SQLException sqlex) {
+			logger.error("SQL exception while performing final logging during shutdown: " + sqlex);
+		}
 		// Release memory - still not sure if this is actually necessary
 		this.databaseDefn = null;
 		this.relationalDataSource = null;
