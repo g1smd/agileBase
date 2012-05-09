@@ -325,15 +325,15 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 
 	private static final SimpleLogger logger = new SimpleLogger(UsageLogger.class);
 
-	private AppUserInfo user;
+	private AppUserInfo user = null;
 
-	private BaseReportInfo report;
+	private BaseReportInfo report = null;
 
-	private TableInfo table;
+	private TableInfo table = null;
 
 	private BaseField field = null;
 
-	private AppAction appAction;
+	private AppAction appAction = null;
 
 	private String details = "";
 
