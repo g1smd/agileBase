@@ -85,7 +85,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 						this.rowId = oldEntry.getRowId();
 						this.timestamp.setTime(oldEntry.getTime());
 						this.details = oldEntry.getValue();
-						logger.debug("Logging entry " + oldEntry)
+						logger.debug("Logging entry " + oldEntry);
 					} else {
 						logger.debug("Skipping, " + oldEntry + " = " + newEntry);
 						return;
