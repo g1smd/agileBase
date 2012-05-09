@@ -55,11 +55,15 @@
           <a href="http://www.agilebase.co.uk" target="_blank"><img src="$logo" border="0" /></a>
         </div>
       #end
+      ## Show add/clone/delete buttons if user has edit privileges on *any* tables
+      #set($editableTables = $view.getTabledAllowedTo("EDIT_TABLE_DATA"))
+      #if($editableTables.size() > 0)
       <div class="buttonGroup"> ## record actions
         #parse('gui/toolbar/buttons/new.vm')
         #parse('gui/toolbar/buttons/clone.vm')
         #parse('gui/toolbar/buttons/delete.vm')
       </div>
+      #end
       <div class="buttonGroup joined"> ## display preferences
         #parse('gui/toolbar/buttons/pane1.vm')
 	      #parse('gui/toolbar/buttons/pane2.vm')
