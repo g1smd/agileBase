@@ -59,47 +59,51 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	 */
 	public void run() {
 		// If logging an update for a single field value in a record
-		if (this.appAction.equals(AppAction.UPDATE_RECORD) && (this.field != null)) {
-			logger.debug("Queued log");
-			// In the case of data updates, use a queue system to avoid logging
-			// every change.
-			// First, add the current update to the queue
-			DataLogEntryInfo newEntry = new DataLogEntry(this.user, this.field, this.rowId, this.details,
-					this.appAction);
-			BlockingQueue<DataLogEntryInfo> userQueue = userQueues.get(this.user);
-			if (userQueue == null) {
-				userQueue = new LinkedBlockingQueue<DataLogEntryInfo>();
-				userQueues.put(this.user, userQueue);
-			}
-			userQueue.add(newEntry);
-			logger.debug("Queue for " + this.user + " is " + userQueue);
-			// Then compare with old value
-			if (userQueue.size() > 1) {
-				try {
-					DataLogEntryInfo oldEntry = userQueue.take();
-					// If old entry is of a different field, log it otherwise
-					// forget it, the new one will be used instead
-					if ((!oldEntry.getField().equals(this.field))
-							|| (oldEntry.getRowId() != this.rowId)) {
-						this.table = oldEntry.getField().getTableContainingField();
-						this.rowId = oldEntry.getRowId();
-						this.timestamp.setTime(oldEntry.getTime());
-						this.details = oldEntry.getValue();
-						logger.debug("Logging entry " + oldEntry);
-					} else {
-						logger.debug("Skipping, " + oldEntry + " = " + newEntry);
-						return;
-					}
-				} catch (InterruptedException iex) {
-					logger.error("Logging of update interrupted: " + iex + ". Current queue = "
-							+ userQueue);
-					Thread.currentThread().interrupt();
+		if (this.appAction != null) {
+			if (this.appAction.equals(AppAction.UPDATE_RECORD) && (this.field != null)) {
+				logger.debug("Queued log");
+				// In the case of data updates, use a queue system to avoid
+				// logging
+				// every change.
+				// First, add the current update to the queue
+				DataLogEntryInfo newEntry = new DataLogEntry(this.user, this.field, this.rowId,
+						this.details, this.appAction);
+				BlockingQueue<DataLogEntryInfo> userQueue = userQueues.get(this.user);
+				if (userQueue == null) {
+					userQueue = new LinkedBlockingQueue<DataLogEntryInfo>();
+					userQueues.put(this.user, userQueue);
 				}
-			} else {
-				// We've only got one thing in the queue, wait until another
-				// comes along before deciding whether to log it
-				logger.debug("Queue only one long, wait a bit...");
-				return;
+				userQueue.add(newEntry);
+				logger.debug("Queue for " + this.user + " is " + userQueue);
+				// Then compare with old value
+				if (userQueue.size() > 1) {
+					try {
+						DataLogEntryInfo oldEntry = userQueue.take();
+						// If old entry is of a different field, log it
+						// otherwise
+						// forget it, the new one will be used instead
+						if ((!oldEntry.getField().equals(this.field))
+								|| (oldEntry.getRowId() != this.rowId)) {
+							this.table = oldEntry.getField().getTableContainingField();
+							this.rowId = oldEntry.getRowId();
+							this.timestamp.setTime(oldEntry.getTime());
+							this.details = oldEntry.getValue();
+							logger.debug("Logging entry " + oldEntry);
+						} else {
+							logger.debug("Skipping, " + oldEntry + " = " + newEntry);
+							return;
+						}
+					} catch (InterruptedException iex) {
+						logger.error("Logging of update interrupted: " + iex + ". Current queue = "
+								+ userQueue);
+						Thread.currentThread().interrupt();
+					}
+				} else {
+					// We've only got one thing in the queue, wait until another
+					// comes along before deciding whether to log it
+					logger.debug("Queue only one long, wait a bit...");
+					return;
+				}
 			}
 		}
 		logger.debug("Logging this entry");
@@ -202,7 +206,8 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	}
 
 	/**
-	 * Clear out the queue of old entries (or all entries if seconds=0 is specified)
+	 * Clear out the queue of old entries (or all entries if seconds=0 is
+	 * specified)
 	 */
 	public static void logDataOlderThan(Connection conn, int seconds) {
 		long someTimeAgo = System.currentTimeMillis() - (seconds * 1000);
@@ -225,7 +230,8 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			}
 		}
 		if (oldEntries.size() > 0) {
-			String SQLCode = "INSERT INTO dbint_log_" + LogType.DATA_CHANGE.toString().toLowerCase();
+			String SQLCode = "INSERT INTO dbint_log_"
+					+ LogType.DATA_CHANGE.toString().toLowerCase();
 			SQLCode += "(company, app_user, app_table, app_action, row_id, saved_data, app_timestamp) VALUES (?,?,?,?,?,?,?)";
 			try {
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
@@ -234,14 +240,17 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 					AppUserInfo user = oldEntry.getUser();
 					statement.setString(1, user.getCompany().getCompanyName());
 					statement.setString(2, user.getUserName());
-					statement.setString(3, oldEntry.getField().getTableContainingField().getInternalTableName());
-					statement.setString(4, oldEntry.getAppAction().toString().toLowerCase().replace('_', ' '));
+					statement.setString(3, oldEntry.getField().getTableContainingField()
+							.getInternalTableName());
+					statement.setString(4, oldEntry.getAppAction().toString().toLowerCase()
+							.replace('_', ' '));
 					statement.setInt(5, oldEntry.getRowId());
 					statement.setString(6, oldEntry.getValue());
 					statement.setTimestamp(7, new Timestamp(oldEntry.getTime()));
 					int rowsInserted = statement.executeUpdate();
 					if (rowsInserted != 1) {
-						logger.error("Logging 1 data change but inserted " + rowsInserted + " rows with " + statement);
+						logger.error("Logging 1 data change but inserted " + rowsInserted
+								+ " rows with " + statement);
 					}
 					Thread.yield();
 				}
@@ -253,7 +262,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			}
 		}
 	}
-	
+
 	public void logReportView(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> reportFilterValues, int rowLimit, String extraDetails) {
 		this.logType = LogType.REPORT_VIEW;

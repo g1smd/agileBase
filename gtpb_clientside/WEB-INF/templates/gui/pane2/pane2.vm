@@ -114,6 +114,15 @@
 		  #set($filtersShouldBeShown = ($sessionFilterString=='true'))
 		  #if($viewTools.isNull($sessionFilterString) && ($view.getLoggedInUser().getUserType() != "FULL"))
 			#set($filtersShouldBeShown = true)
+			#if($filtersShouldBeShown)
+			   <script language=Javascript>
+			   var jqFilter = jqDoc.find('#filter');
+				 if (!jqFilter.hasClass('selected')) {
+				   alert("filterClick");
+				   jqFilter.click();
+				 }
+			   </script>
+			#end
 		  #end
 	  #end
 	#if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
@@ -128,14 +137,6 @@
        jqDoc.find('#button_fullscreen').removeAttr('disabled');
        jqDoc.find('#button_apps').removeAttr('disabled');
        jqDoc.find('#button_forms').removeAttr('disabled');
-         $viewTools.log("Filters should be shown is $filtersShouldBeShown")
-		 #if($filtersShouldBeShown)
-		   var jqFilter = jqDoc.find('#filter');
-			 if (!jqFilter.hasClass('selected')) {
-			   alert("filterClick");
-			   jqFilter.click();
-			 }
-		 #end
       </script>
     #else
       <script language=Javascript>
