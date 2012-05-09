@@ -112,7 +112,7 @@
 	  #if(($resource_folder!='user') && ($resource_folder!='roles'))
 		  #set($sessionFilterString = $sessionData.getCustomString('filtering_on'))
 		  #set($filtersShouldBeShown = ($sessionFilterString=='true'))
-		  #if($viewTools.isNull($sessionFilterString) && ($view.getLoggedInUser().getUserType() == "REPORT"))
+		  #if($viewTools.isNull($sessionFilterString) && ($view.getLoggedInUser().getUserType() != "FULL"))
 			#set($filtersShouldBeShown = true)
 		  #end
 	  #end

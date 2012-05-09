@@ -114,7 +114,7 @@
 #set($click="fFormatRHPanes(this)")
 #set($id='pane3butt')
 #set($caption='Record')
-#if($view.getLoggedInUser().getUserType() == "REPORT")
+#if($view.getLoggedInUser().getUserType() != "FULL")
   #set($params='toggleButton=true')
   #set($classes='toggleButton REPORT')
 #else

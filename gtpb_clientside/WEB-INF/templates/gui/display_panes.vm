@@ -50,7 +50,7 @@
 ##  #else
     <frameset id="colsWrapper" cols="250,*" border="5" frameborder="yes" framespacing="5">
     	<frame name="pane_1" id="pane_1" frameborder="no" scrolling="auto" src="AppController.servlet?return=gui/pane1">
-      #if($view.getLoggedInUser().getUserType() == "REPORT")
+      #if($view.getLoggedInUser().getUserType() != "FULL")
         #set($rows = "*,0") ## full height pane 2
       #else
         #set($rows = "*,*") ## panes 2 and 3 both displayed
