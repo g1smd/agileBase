@@ -55,8 +55,8 @@
           <a href="http://www.agilebase.co.uk" target="_blank"><img src="$logo" border="0" /></a>
         </div>
       #end
-      ## Show add/clone/delete buttons if user has edit privileges on *any* tables
-      #set($editableTables = $view.getTabledAllowedTo("EDIT_TABLE_DATA"))
+      ## Show add/clone/delete buttons if user has edit privileges on at least one table
+      #set($editableTables = $view.getTablesAllowedTo("EDIT_TABLE_DATA"))
       #if($editableTables.size() > 0)
       <div class="buttonGroup"> ## record actions
         #parse('gui/toolbar/buttons/new.vm')
