@@ -1125,8 +1125,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
 			String newReportName, String newReportDesc, ModuleInfo newModule,
-			ReportStyle newReportStyle, boolean allowExport) throws DisallowedException,
-			CantDoThatException, SQLException, ObjectNotFoundException {
+			ReportStyle newReportStyle, boolean allowExport, Integer memoryAllocation)
+			throws DisallowedException, CantDoThatException, SQLException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -1159,6 +1159,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		if (newReportStyle != null) {
 			report.setReportStyle(newReportStyle);
+		}
+		if (memoryAllocation != null) {
+			if (memoryAllocation < 1) {
+				report.setMemoryAllocation(null);
+			} else if (memoryAllocation > 500) {
+				throw new CantDoThatException("Memory allocation max. is 500MB");
+			} else {
+				report.setMemoryAllocation(memoryAllocation);
+			}
 		}
 		report.setAllowExport(allowExport);
 	}

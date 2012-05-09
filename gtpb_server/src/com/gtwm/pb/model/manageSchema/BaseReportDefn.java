@@ -173,6 +173,14 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	public void setAllowExport(boolean allowExport) {
 		this.allowExport = allowExport;
 	}
+	
+	public Integer getMemoryAllocation() {
+		return this.memoryAllocation;
+	}
+	
+	public void setMemoryAllocation(Integer memoryAllocation) {
+		this.memoryAllocation = memoryAllocation;
+	}
 
 	@Transient
 	public int getRowCount() {
@@ -290,4 +298,6 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	private boolean rowCountIsEstimate = false;
 	
 	private boolean allowExport = false;
+	
+	private Integer memoryAllocation = null;
 }

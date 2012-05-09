@@ -170,7 +170,7 @@ public interface DatabaseInfo {
 	 */
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
 			String newReportName, String newReportDesc, ModuleInfo newModule,
-			ReportStyle reportStyle, boolean allowExport) throws DisallowedException, CantDoThatException, SQLException,
+			ReportStyle reportStyle, boolean allowExport, Integer memoryAllocation) throws DisallowedException, CantDoThatException, SQLException,
 			ObjectNotFoundException;
 
 	/**
