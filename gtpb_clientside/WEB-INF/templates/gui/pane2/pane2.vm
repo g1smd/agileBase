@@ -109,20 +109,18 @@
       </script>
 	  #end
       #set($filtersShouldBeShown = false)
-	  #if(($resource_folder!='user') && ($resource_folder!='roles'))
+	  #if(($resource_folder != 'user') && ($resource_folder != 'roles'))
 		  #set($sessionFilterString = $sessionData.getCustomString('filtering_on'))
 		  #set($filtersShouldBeShown = ($sessionFilterString=='true'))
 		  #if($viewTools.isNull($sessionFilterString) && ($view.getLoggedInUser().getUserType() != "FULL"))
 			#set($filtersShouldBeShown = true)
-			#if($filtersShouldBeShown)
 			   <script language=Javascript>
-			   var jqFilter = jqDoc.find('#filter');
+			   var jqFilter = $(top.document).find('#filter');
 				 if (!jqFilter.hasClass('selected')) {
 				   alert("filterClick");
 				   jqFilter.click();
 				 }
 			   </script>
-			#end
 		  #end
 	  #end
 	#if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
