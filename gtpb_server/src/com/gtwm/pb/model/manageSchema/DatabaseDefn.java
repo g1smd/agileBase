@@ -89,6 +89,7 @@ import com.gtwm.pb.auth.DashboardPopulator;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.manageData.DataManagement;
+import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.servlets.ServletSchemaMethods;
 import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.AttachmentType;
@@ -916,6 +917,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			throws SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		PreparedStatement statement = null;
 		try {
+			ReportData.enableOptimisations(conn, report, true);
 			String SQLCode = "SELECT * FROM " + report.getInternalReportName() + " LIMIT 10";
 			statement = conn.prepareStatement(SQLCode);
 			ResultSet testResults = statement.executeQuery();
@@ -928,6 +930,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			}
 			testResults.close();
 			statement.close();
+			ReportData.enableOptimisations(conn, report, false);
 		} catch (SQLException sqlex) {
 			// log the cause but return a more user friendly message
 			// logger.error("Requested change to report " +

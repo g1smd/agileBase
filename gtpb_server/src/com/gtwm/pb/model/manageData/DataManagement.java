@@ -2659,14 +2659,7 @@ public final class DataManagement implements DataManagementInfo {
 			Calendar calendar = Calendar.getInstance();
 			// Get database data
 			BaseReportInfo report = chart.getReport();
-			if (report.getQueryPlanSelection()
-					.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
-				ReportData.enableNestloop(conn, false);
-			}
-			Integer memoryAllocation = report.getMemoryAllocation();
-			if (memoryAllocation != null) {
-				ReportData.setWorkMemOverride(conn, memoryAllocation, true);
-			}
+			ReportData.enableOptimisations(conn, report, true);
 			statement = chart.getChartSqlPreparedStatement(conn, reportFilterValues, false);
 			long startTime = System.currentTimeMillis();
 			ResultSet summaryResults = statement.executeQuery();
@@ -2799,13 +2792,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			summaryResults.close();
 			statement.close();
-			if (report.getQueryPlanSelection()
-					.equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
-				ReportData.enableNestloop(conn, true);
-			}
-			if (memoryAllocation != null) {
-				ReportData.setWorkMemOverride(conn, 0, false);
-			}
+			ReportData.enableOptimisations(conn, report, false);
 			float durationSecs = (System.currentTimeMillis() - startTime) / ((float) 1000);
 			if (durationSecs > AppProperties.longSqlTime) {
 				logger.debug("Long SELECT SQL execution time of " + durationSecs

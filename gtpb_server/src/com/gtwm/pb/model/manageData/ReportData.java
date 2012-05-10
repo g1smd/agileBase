@@ -140,13 +140,7 @@ public class ReportData implements ReportDataInfo {
 				SQLCode += " WHERE " + pKeyInternalName + " % 10 = " + randomNumber;
 			}
 			try {
-				if (report.getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
-					enableNestloop(conn, false);
-				}
-				Integer memoryAllocation = report.getMemoryAllocation();
-				if (memoryAllocation != null) {
-					setWorkMemOverride(conn, memoryAllocation, true);
-				}
+				ReportData.enableOptimisations(conn, report, true);
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				ResultSet results = statement.executeQuery();
 				// Save average and mean of each colourable report field to
@@ -175,12 +169,7 @@ public class ReportData implements ReportDataInfo {
 				}
 				results.close();
 				statement.close();
-				if (report.getQueryPlanSelection().equals(QueryPlanSelection.NO_NESTED_LOOPS)) {
-					enableNestloop(conn, true);
-				}
-				if (memoryAllocation != null) {
-					ReportData.setWorkMemOverride(conn, 0, false);
-				}
+				ReportData.enableOptimisations(conn, report, false);
 			} catch (SQLException sqlex) {
 				logger.error("Error calculating field statistics for report " + report
 						+ " in module " + report.getModule() + " from table "
@@ -1187,6 +1176,30 @@ public class ReportData implements ReportDataInfo {
 		return this.cachedFieldStats;
 	}
 
+	/**
+	 * One-call method to enable all report-specific optimisations or revert to defaults
+	 */
+	public static void enableOptimisations(Connection conn, BaseReportInfo report, boolean enable) throws SQLException {
+		QueryPlanSelection planSelection = report.getQueryPlanSelection();
+		boolean no_nested_loops = planSelection.equals(QueryPlanSelection.NO_NESTED_LOOPS);
+		Integer memoryAllocation = report.getMemoryAllocation();
+		if (enable) {
+			if (no_nested_loops) {
+				enableNestloop(conn, false);
+			}
+			if (memoryAllocation != null) {
+				setWorkMemOverride(conn, memoryAllocation, true);
+			}
+		} else {
+			if (no_nested_loops) {
+				enableNestloop(conn, true);
+			}
+			if (memoryAllocation != null) {
+				setWorkMemOverride(conn, 0, false);
+			}
+		}
+	}
+	
 	/**
 	 * Calling methods should always revert back to enable=true at the end of
 	 * querying
