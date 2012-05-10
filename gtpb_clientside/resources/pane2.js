@@ -204,13 +204,16 @@ function fDeleteObj(sAction, sRowIdentifier) {
 }
 
 function showPane3IfNecessary(oEvent) {
+	alert("showPane3IfNecessary");
 	if ($(oEvent.target).attr("type") == "checkbox") {
 		return;
 	}
 	var jqButt = $(top.document).find("#pane3butt")
 	if (!jqButt.hasClass("selected")) {
 		jqButt.click();
+		alert("pane 3 clicked");
 		if (!jqButt.hasClass("REPORT")) {
+			alert("not REPORT");
 		  $(top.document).find("#pane2butt").click();
 		  // For forms, show full screen
 		  if($(parent.pane_3.document).find(".form_tabber").size() > 0) {
