@@ -48,7 +48,7 @@
 			    		    <br />
   			    		  <input type="submit" value="translate another" />
 			      </form>
-            $externalText
+            <textarea cols=100 rows=30 name="converted">$externalText</textarea>
 			  </td>
 			  </tr>
 			  </table>
