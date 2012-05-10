@@ -170,8 +170,8 @@ public interface DatabaseInfo {
 	 */
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
 			String newReportName, String newReportDesc, ModuleInfo newModule,
-			ReportStyle reportStyle, boolean allowExport, Integer memoryAllocation) throws DisallowedException, CantDoThatException, SQLException,
-			ObjectNotFoundException;
+			ReportStyle reportStyle, boolean allowExport, Integer memoryAllocation)
+			throws DisallowedException, CantDoThatException, SQLException, ObjectNotFoundException;
 
 	/**
 	 * Attach a custom template to a report for printout / outputs
@@ -309,10 +309,12 @@ public interface DatabaseInfo {
 			CantDoThatException, CodingErrorException, ObjectNotFoundException;
 
 	public void addDistinctToReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, BaseField distinctField) throws DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException;
-	
+			SimpleReportInfo report, BaseField distinctField) throws DisallowedException,
+			ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException;
+
 	public void removeDistinctFromReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, BaseField distinctField) throws DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException;
+			SimpleReportInfo report, BaseField distinctField) throws DisallowedException,
+			ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException;
 
 	public void addSortToReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportFieldInfo reportField, boolean ascending)
@@ -357,8 +359,9 @@ public interface DatabaseInfo {
 
 	public void updateCalculationInReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportCalcFieldInfo calculationField, String calculationName,
-			String calculationDefn, DatabaseFieldType dbFieldType, boolean isReportHidden) throws DisallowedException,
-			SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException;
+			String calculationDefn, DatabaseFieldType dbFieldType, boolean isReportHidden)
+			throws DisallowedException, SQLException, ObjectNotFoundException, CantDoThatException,
+			CodingErrorException;
 
 	public void returnCalculationInReportToMemory(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportCalcFieldInfo calculationField,
@@ -546,10 +549,13 @@ public interface DatabaseInfo {
 			CodingErrorException;
 
 	/**
-	 * Creates a new module and adds it to the company of the logged in user
+	 * Creates a new module and adds it to the company of the logged in user, or the specified company
+	 * 
+	 * @param company
+	 *            If null, add to the current company
 	 */
-	public ModuleInfo addModule(HttpServletRequest request) throws ObjectNotFoundException,
-			DisallowedException;
+	public ModuleInfo addModule(HttpServletRequest request, CompanyInfo company)
+			throws ObjectNotFoundException, DisallowedException;
 
 	/**
 	 * Return a reference to the object that manages and caches database data.

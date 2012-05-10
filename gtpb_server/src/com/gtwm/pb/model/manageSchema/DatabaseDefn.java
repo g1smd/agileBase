@@ -2271,9 +2271,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public ModuleInfo addModule(HttpServletRequest request) throws ObjectNotFoundException,
+	public ModuleInfo addModule(HttpServletRequest request, CompanyInfo company) throws ObjectNotFoundException,
 			DisallowedException {
-		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
+		if (company == null) {
+			company = this.authManager.getCompanyForLoggedInUser(request);
+		}
 		// Make sure module name is unique
 		String baseModuleName = "New Module";
 		String moduleName = baseModuleName;

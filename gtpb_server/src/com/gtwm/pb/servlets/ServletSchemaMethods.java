@@ -129,7 +129,7 @@ public final class ServletSchemaMethods {
 			AuthManagerInfo authManager = databaseDefn.getAuthManager();
 			authManager.addCompany(request, company);
 			// Create an initial module
-			ModuleInfo module = databaseDefn.addModule(request);
+			ModuleInfo module = databaseDefn.addModule(request, company);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (Exception ex) {
 			HibernateUtil.rollbackHibernateTransaction();
@@ -175,7 +175,7 @@ public final class ServletSchemaMethods {
 		ModuleInfo newModule = null;
 		try {
 			HibernateUtil.startHibernateTransaction();
-			newModule = databaseDefn.addModule(request);
+			newModule = databaseDefn.addModule(request, company);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			HibernateUtil.currentSession().getTransaction().rollback();

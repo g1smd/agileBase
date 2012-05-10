@@ -32,8 +32,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.HashSet;
 import java.util.Collections;
-import java.util.concurrent.CopyOnWriteArraySet;
-
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
