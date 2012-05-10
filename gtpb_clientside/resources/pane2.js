@@ -212,6 +212,13 @@ function showPane3IfNecessary(oEvent) {
 		jqButt.click();
 		if (!jqButt.hasClass("REPORT")) {
 		  $(top.document).find("#pane2butt").click();
+		  // For forms, show full screen
+		  if($(parent.pane_3.document).find(".form_tabber").size() > 0) {
+		  	var jqPane1Butt = $(top.document).find("#pane1butt");
+		  	if (!jqPane1Butt.hasClass("selected")) {
+		  		jqPane1Butt.click();
+		  	}
+		  }
 		}
 	}
 }
@@ -269,8 +276,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 						|| (numberOfTabsExpected == parent.pane_3.pane3TabInterface
 								.getNumberOfTabs())) {
 					// if pane 3 has the right number of tabs,
-					// we can
-					// just refresh the one tab
+					// we can just refresh the one tab
 					try {
 						parent.pane_3.pane3TabInterface
 								.refresh(rowId);
@@ -280,17 +286,13 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 						parent.pane_3.document.location = url;
 					}
 				} else {
-					// if it doesn't have the right number of
-					// tabs, we
-					// need to refresh the whole frame to reload
-					// the
-					// tabset
+					// if it doesn't have the right number of tabs, we
+					// need to refresh the whole frame to reload the tabset
 					parent.pane_3.document.location = url;
 				}
 			} else {
 				// fallback after everything else: simple
-				// refresh of
-				// pane 3
+				// refresh of pane 3
 				parent.pane_3.document.location = url;
 			}
 		}

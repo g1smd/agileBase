@@ -17,6 +17,7 @@
 ##
 #set($button_img='resources/toolbar/pane1.png')
 #set($click="fTogglePane1(this)")
+#set($id='pane1butt')
 #set($caption='Modules')
 #set($params='selected=true toggleButton=true')
 #set($classes='selected toggleButton')
