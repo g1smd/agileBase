@@ -21,9 +21,6 @@ $(document).ready(function() {
 	$("#doneSearch").click(function() {
 		closePreview();
 	});
-	//$(".searchbox").blur(function() {
-	//	closePreview();
-	//});
 });
 
 /**
