@@ -204,7 +204,6 @@ function fDeleteObj(sAction, sRowIdentifier) {
 }
 
 function showPane3IfNecessary(oEvent) {
-	alert("showPane3IfNecessary");
 	if ($(oEvent.target).attr("type") == "checkbox") {
 		return;
 	}
@@ -213,20 +212,19 @@ function showPane3IfNecessary(oEvent) {
 		jqButt.click();
 		alert("pane 3 clicked");
 		if (!jqButt.hasClass("REPORT")) {
-			alert("not REPORT");
 		  $(top.document).find("#pane2butt").click();
-		  // For forms, show full screen
-		  if($(parent.pane_3.document).find(".form_tabber").size() > 0) {
-		  	var jqPane1Butt = $(top.document).find("#pane1butt");
-		  	if (!jqPane1Butt.hasClass("selected")) {
-		  		jqPane1Butt.click();
-		  	} else {
-		  		alert("pane 1 already off");
-		  	}
-		  } else {
-		  	alert("no form tabber");
-		  }
 		}
+	  // For forms, show full screen
+	  if($(parent.pane_3.document).find(".form_tabber").size() > 0) {
+	  	var jqPane1Butt = $(top.document).find("#pane1butt");
+	  	if (!jqPane1Butt.hasClass("selected")) {
+	  		jqPane1Butt.click();
+	  	} else {
+	  		alert("pane 1 already off");
+	  	}
+	  } else {
+	  	alert("no form tabber");
+	  }
 	}
 }
 
