@@ -217,7 +217,7 @@ function showPane3IfNecessary(oEvent) {
 	  // For forms, show full screen
 	  if($(parent.pane_3.document).find(".form_tabber").size() > 0) {
 	  	var jqPane1Butt = $(top.document).find("#pane1butt");
-	  	if (!jqPane1Butt.hasClass("selected")) {
+	  	if (jqPane1Butt.hasClass("selected")) {
 	  		jqPane1Butt.click();
 	  	} else {
 	  		alert("pane 1 already off");
