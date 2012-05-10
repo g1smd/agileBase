@@ -219,11 +219,7 @@ function showPane3IfNecessary(oEvent) {
 	  	var jqPane1Butt = $(top.document).find("#pane1butt");
 	  	if (jqPane1Butt.hasClass("selected")) {
 	  		jqPane1Butt.click();
-	  	} else {
-	  		alert("pane 1 already off");
 	  	}
-	  } else {
-	  	alert("no form tabber");
 	  }
 	}
 }
