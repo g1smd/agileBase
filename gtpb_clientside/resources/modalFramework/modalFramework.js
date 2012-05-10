@@ -206,11 +206,11 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
   	      oTitle.appendChild(document.createTextNode(sCaption));
   	    }
   	    
-  		var oTitle=document.createElement('DIV');
+  		  var oTitle=document.createElement('DIV');
   	    oTitle.setAttribute('id','_md_title');
         fSetCaption(sCaption);
         oDialog.setCaption=fSetCaption;
-  		return(oTitle);
+  		  return(oTitle);
   	  }
 		
   	  function fContent() {
@@ -344,8 +344,12 @@ function fShowModalDialog(sTemplateLocation, sCaption, fCallbackFn, sButtons, sA
 
   	        var oForms=oContent.getElementsByTagName('FORM');  // look for any forms in the content area
   	        for(var f=0; f<oForms.length; f++) { // for each form, look at all the elements...
-  	          var oElements=oForms[f].elements;  // ... and set the post vars from them
-  	          for(var e=0; e<oElements.length; e++) fSetPostVars(oElements[e]);
+  	        	if (!($(oForms[f]).hasClass("fileUploader"))) {
+  	            var oElements=oForms[f].elements;  // ... and set the post vars from them
+  	            for(var e=0; e<oElements.length; e++) {
+  	          	  fSetPostVars(oElements[e]);
+  	            }
+  	        	}
   	        }  
   	      }
   		  var aPostVars=new Array();
