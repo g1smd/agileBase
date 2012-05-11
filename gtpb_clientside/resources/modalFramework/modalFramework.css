@@ -163,9 +163,11 @@ div#_md_blank div#_md_dialog div#_md_content table#reportData tr#errorRow:hover 
   background-color:#ffd588!important;
 }  
   
+/*
 div#_md_blank div#_md_dialog div#_md_content table#reportData tr.rowb {
   background-color:#f0f0f0;
 }
+*/
 
 div#_md_blank div#_md_dialog div#_md_content table#reportData th { 
   background-color:#f0f0f0; 
