@@ -66,7 +66,7 @@ public class AuthCacheObject implements AuthCacheObjectInfo {
 			int hashCode = 17;
 			hashCode = 37 * hashCode + this.getTable().hashCode();
 			hashCode = 37 * hashCode + this.getPrivilegeType().hashCode();
-			hashCode = 37 * hashCode + Boolean.valueOf((this.userAllowedTo())).hashCode();
+			hashCode = 37 * hashCode + Boolean.valueOf(this.allowedTo).hashCode();
 			this.hashCode = hashCode;
 		}
 		return this.hashCode;

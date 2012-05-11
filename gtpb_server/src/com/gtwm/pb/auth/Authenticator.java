@@ -372,11 +372,15 @@ public final class Authenticator implements AuthenticatorInfo {
 			// If there's no user then they can't see anything
 			return false;
 		}
-		return userAllowedTo(privilegeType, table, appUser);
+		return this.userAllowedTo(privilegeType, table, appUser);
 	}
 
 	protected boolean userAllowedTo(PrivilegeType privilegeType, TableInfo table,
 			AppUserInfo appUser) {
+		// From a bug report, seems as if it's possible for table to be null if table's just been deleted
+		if (table == null) {
+			return false;
+		}
 		// Check cache
 		Set<AuthCacheObjectInfo> cachedResults = this.authCache.get(appUser);
 		if (cachedResults == null) {
@@ -659,8 +663,8 @@ public final class Authenticator implements AuthenticatorInfo {
 	 * privilege removed
 	 */
 	protected void destroyCache() {
-		this.authCache = new ConcurrentHashMap<AppUserInfo, Set<AuthCacheObjectInfo>>();
-		this.usersCache = new ConcurrentHashMap<String, AppUserInfo>();
+		this.authCache.clear();
+		this.usersCache.clear();
 	}
 
 	public String toString() {

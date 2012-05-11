@@ -2257,8 +2257,13 @@ public final class ServletSchemaMethods {
 			String errorMessage = "Join addition failed";
 			if (sqlex.getMessage().contains("No operator matches the given name and argument type")) {
 				errorMessage += ". You're trying to join two fields of different types (e.g. a text field to a number field). They have to be the same";
+			} else {
+				errorMessage += ". " + Helpers.replaceInternalNames(sqlex.getMessage(), report);
+				if (sqlex.getMessage().contains("column reference") && sqlex.getMessage().contains(" is ambiguous")) {
+					errorMessage += ". It may be that a calculation using this field needs to specifically include the field's table or report name";
+				}
 			}
-			throw new CantDoThatException("", sqlex);
+			throw new CantDoThatException(errorMessage, sqlex);
 		} catch (HibernateException hex) {
 			rollbackConnections(conn);
 			// remove join from memory
