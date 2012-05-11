@@ -115,6 +115,10 @@ div#_md_blank div#_md_dialog div#_md_content .add_comment_row {
   display: none;
 }
 
+div#_md_blank div#_md_dialog div#_md_content .comment_toggle {
+  display: none;
+}
+
 div#_md_blank div#_md_dialog div#_md_content h1 {
   font-family:"Trebuchet MS";
 }
