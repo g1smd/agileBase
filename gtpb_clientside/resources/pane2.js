@@ -214,12 +214,12 @@ function showPane3IfNecessary(oEvent) {
 		  $(top.document).find("#pane2butt").click();
 		}
 	  // For forms, show full screen
-	  if($(parent.pane_3.document).find(".form_tabber").size() > 0) {
-	  	var jqPane1Butt = $(top.document).find("#pane1butt");
-	  	if (jqPane1Butt.hasClass("selected")) {
-	  		jqPane1Butt.click();
-	  	}
-	  }
+	  //if($(parent.pane_3.document).find(".form_tabber").size() > 0) {
+	  //	var jqPane1Butt = $(top.document).find("#pane1butt");
+	  //	if (jqPane1Butt.hasClass("selected")) {
+	  //		jqPane1Butt.click();
+	  //	}
+	  //}
 	}
 }
 
