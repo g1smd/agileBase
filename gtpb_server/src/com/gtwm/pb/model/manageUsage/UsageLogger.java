@@ -18,6 +18,15 @@
 package com.gtwm.pb.model.manageUsage;
 
 import javax.sql.DataSource;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -35,6 +44,7 @@ import com.gtwm.pb.model.interfaces.DataLogEntryInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.UsageLoggerInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.AppAction;
 
 public class UsageLogger implements UsageLoggerInfo, Runnable {
@@ -251,6 +261,40 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 				// TODO Auto-generated catch block
 				logger.error("Error logging old data changes to database. Logger SQL = " + SQLCode);
 				logger.error("Exception details: " + sqlex);
+			}
+		}
+	}
+
+	/**
+	 * Send a string to a localhost HTTP server for broadcasting as a websocket
+	 * message
+	 */
+	public static void sendNotification(String notification) throws CodingErrorException {
+		URL localhost;
+		try {
+			localhost = new URL("http://localhost:8181");
+		} catch (MalformedURLException muex) {
+			throw new CodingErrorException("URL in sendNotification not valid: " + muex);
+		}
+		HttpURLConnection connection = null;
+		try {
+			connection = (HttpURLConnection) localhost.openConnection();
+			connection.setDoOutput(true);
+			OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+			out.write(notification);
+			out.close();
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+			String decodedString;
+			while ((decodedString = in.readLine()) != null) {
+				logger.debug(decodedString);
+			}
+			in.close();
+		} catch (IOException ioex) {
+			logger.error("Error sending HTTP notification: " + ioex);
+		} finally {
+			if (connection != null) {
+				connection.disconnect();
 			}
 		}
 	}

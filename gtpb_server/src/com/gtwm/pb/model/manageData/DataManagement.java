@@ -117,7 +117,6 @@ import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.DataDependencyException;
 import com.gtwm.pb.util.Enumerations.AttachmentType;
 import com.gtwm.pb.util.Enumerations.DataFormat;
-import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
@@ -270,16 +269,37 @@ public final class DataManagement implements DataManagementInfo {
 		if (rows.size() != 1) {
 			logger.warn("Row can't be retrieved for comment for table " + table + ", row ID "
 					+ rowId);
-		} else {
-			DataRowInfo row = rows.get(0);
-			body += "'" + buildEventTitle(report, row, true) + "'\n";
+			return;
 		}
+		DataRowInfo row = rows.get(0);
+		body += "'" + buildEventTitle(report, row, true) + "'\n";
 		Properties props = new Properties();
 		props.setProperty("mail.smtp.host", "localhost");
 		Session mailSession = Session.getDefaultInstance(props, null);
 		MimeMessage message = new MimeMessage(mailSession);
 		try {
-			message.setSubject("New comment for " + table.getSimpleName());
+			String subject = "Comment for " + table.getSimpleName();
+			boolean rowIdentifierFound = false;
+			BaseField firstField = null;
+			DataRowFieldInfo firstValue = null;
+			ENTRY_LOOP: for (Map.Entry<BaseField, DataRowFieldInfo> rowEntry : row.getDataRowFields()
+					.entrySet()) {
+				BaseField rowField = rowEntry.getKey();
+				if (!rowField.equals(pKey)) {
+					if (rowField instanceof SequenceField) {
+						subject += " " + rowEntry.getValue();
+						rowIdentifierFound = true;
+						break ENTRY_LOOP;
+					} else if (firstField == null) {
+						firstField = rowField;
+						firstValue = rowEntry.getValue();
+					}
+				}
+			}
+			if (!rowIdentifierFound) {
+				subject += " " + firstField + "=" + firstValue;
+			}
+			message.setSubject(subject);
 			for (String emailRecipient : recipients) {
 				Address toAddress = new InternetAddress(emailRecipient);
 				message.addRecipient(Message.RecipientType.TO, toAddress);
