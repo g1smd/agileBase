@@ -709,7 +709,12 @@ public final class DatabaseDefn implements DatabaseInfo {
 				// the primary key
 				List<ReportFieldInfo> reportFieldList = new ArrayList<ReportFieldInfo>(
 						report.getReportFields());
-				report.addSort(reportFieldList.get(1), true);
+				boolean ascending = true;
+				ReportFieldInfo sortField = reportFieldList.get(1);
+				if (sortField.getBaseField().getDbType().equals(DatabaseFieldType.TIMESTAMP)) {
+					ascending = false;
+				}
+				report.addSort(sortField, ascending);
 			}
 		}
 		HibernateUtil.currentSession().save(report);
