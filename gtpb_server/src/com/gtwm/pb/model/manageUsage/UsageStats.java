@@ -686,7 +686,7 @@ public class UsageStats implements UsageStatsInfo {
 		}
 		rawStats.add(columnHeadings);
 		SQLCode += "FROM " + "dbint_log_" + logType.name().toLowerCase();
-		SQLCode += " WHERE company=? ORDER BY app_timestamp desc LIMIT 10000";
+		SQLCode += " WHERE company=? ORDER BY app_timestamp desc LIMIT 100000";
 		Connection conn = null;
 		try {
 			conn = this.databaseDefn.getDataSource().getConnection();
