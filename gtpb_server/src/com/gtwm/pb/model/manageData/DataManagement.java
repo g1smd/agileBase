@@ -1833,6 +1833,8 @@ public final class DataManagement implements DataManagementInfo {
 				throw new DataDependencyException(warning);
 			}
 		}
+		// First get all the content of the row we're deleting, for logging purposes
+		Map<BaseField, BaseValue> deletedRow = this.getTableDataRow(null, table, rowId, false);
 		String SQLCode = "DELETE FROM " + table.getInternalTableName() + " WHERE "
 				+ table.getPrimaryKey().getInternalFieldName() + "=?";
 		try {
@@ -1883,7 +1885,7 @@ public final class DataManagement implements DataManagementInfo {
 		logLastTableDataChangeTime(table);
 		UsageLogger usageLogger = new UsageLogger(dataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logDataChange(user, table, null, AppAction.REMOVE_RECORD, rowId, "");
+		usageLogger.logDataChange(user, table, null, AppAction.REMOVE_RECORD, rowId, "Deleted data: " + deletedRow);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
