@@ -59,7 +59,7 @@ $(document).ready(function(){
   var socket = io.connect(socketUrl);
   socket.on('notification', function (data) {
   	var json = $.parseJSON(data);
-    var forename = json[0].forename;
+    var forename = json.forename;
     alert(forename);
   });
 });
