@@ -115,7 +115,7 @@
 			<fileset dir="build" />
 		</copy>
 		<copy todir="${node.dir}">
-			<filset dir="node" />
+			<fileset dir="node" />
 		</copy>
 	</target>
 
