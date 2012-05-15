@@ -273,7 +273,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	 * Send a string to a localhost HTTP server for broadcasting with a websocket
 	 * message
 	 */
-	public static void sendNotification(AppUserInfo user, TableInfo table, int rowId, String notification) throws CodingErrorException {
+	public static void sendNotification(AppUserInfo user, TableInfo table, int rowId, String messageType, String notification) throws CodingErrorException {
 		// Generate the JSON message
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(512);
@@ -283,6 +283,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			jg.writeStartObject();
 			jg.writeStringField("forename", user.getForename());
 			jg.writeStringField("surname", user.getSurname());
+			jg.writeStringField("messagetype", messageType);
 			jg.writeStringField("internaltablename", table.getInternalTableName());
 			jg.writeNumberField("rowid", rowId);
 			jg.writeStringField("notification", notification);

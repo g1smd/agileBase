@@ -193,6 +193,7 @@ public final class DataManagement implements DataManagementInfo {
 			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
 		String comment = Helpers.smartCharsReplace(rawComment);
+		TableInfo table = field.getTableContainingField();
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
@@ -212,7 +213,6 @@ public final class DataManagement implements DataManagementInfo {
 			statement.close();
 			// Concatenate all comments into the hidden comments field (for
 			// searching)
-			TableInfo table = field.getTableContainingField();
 			BaseField concatenationField = table
 					.getField(HiddenFields.COMMENTS_FEED.getFieldName());
 			BaseField lastModifiedField = table.getField(HiddenFields.LAST_MODIFIED.getFieldName());
@@ -233,24 +233,27 @@ public final class DataManagement implements DataManagementInfo {
 			statement.close();
 			conn.commit();
 			field.setHasComments(true);
-			CompanyInfo company = user.getCompany();
-			Set<String> recipients = new HashSet<String>();
-			for (AppUserInfo companyUser : company.getUsers()) {
-				String email = companyUser.getEmail();
-				if (email != null) {
-					if (email.contains("@")) {
-						recipients.add(email);
-					}
-				}
-			}
-			if (recipients.size() > 0) {
-				this.emailComments(recipients, field, rowId, user, comment);
-			}
 		} finally {
 			if (conn != null) {
 				conn.close();
 			}
 		}
+		// Email notification
+		CompanyInfo company = user.getCompany();
+		Set<String> recipients = new HashSet<String>();
+		for (AppUserInfo companyUser : company.getUsers()) {
+			String email = companyUser.getEmail();
+			if (email != null) {
+				if (email.contains("@")) {
+					recipients.add(email);
+				}
+			}
+		}
+		if (recipients.size() > 0) {
+			this.emailComments(recipients, field, rowId, user, comment);
+		}
+		// HTTP / websocket notification
+		UsageLogger.sendNotification(user, table, rowId, "comment", comment);
 	}
 
 	private void emailComments(Set<String> recipients, BaseField field, int rowId,
