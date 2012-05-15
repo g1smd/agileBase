@@ -58,7 +58,7 @@ $(document).ready(function(){
   var socket = io.connect(socketUrl);
   socket.on('notification', function (data) {
   	var n = $.parseJSON(data);
-    notify(n.forename, n.internaltablename, n.internalreportname, n.messageType, n.notification);
+    notify(n.forename, n.internaltablename, n.internalreportname, n.messagetype, n.notification);
   });
 });
 
