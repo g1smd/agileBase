@@ -75,7 +75,7 @@ function notify(forename, internalTableName, internalReportName) {
 		if (notification.attr("data-forename") == forename) {
 			notification.remove();
 		}
-	}
+	});
 	var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
 	notifications.prepend(notification);
 }
