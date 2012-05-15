@@ -71,7 +71,12 @@ function notify(forename, internalTableName, internalReportName) {
 		return;
 	}
 	var notifications = reportItem.closest("ul").closest("li").find(".notifications");
-	var notification = $("<span class='notification'>" + forename + "</span>");
+	notifications.children(".notification").each(function(notification)) {
+		if (notification.attr("data-forename") == forename) {
+			notification.remove();
+		}
+	}
+	var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
 	notifications.prepend(notification);
 }
 

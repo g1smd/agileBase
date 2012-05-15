@@ -51,6 +51,10 @@ li#setup h2 {
 	border-radius: 0;
 }
 
+span.notifications {
+  padding-left: 0.5em;
+}
+
 span.notification {
   font-size: 60%;
   font-weight: bold;
