@@ -23,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,6 +38,9 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonGenerator;
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -266,11 +270,30 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	}
 
 	/**
-	 * Send a string to a localhost HTTP server for broadcasting as a websocket
+	 * Send a string to a localhost HTTP server for broadcasting with a websocket
 	 * message
 	 */
-	public static void sendNotification(String notification) throws CodingErrorException {
-		URL localhost;
+	public static void sendNotification(AppUserInfo user, TableInfo table, int rowId, String notification) throws CodingErrorException {
+		// Generate the JSON message
+		JsonFactory jsonFactory = new JsonFactory();
+		StringWriter stringWriter = new StringWriter(512);
+		JsonGenerator jg;
+		try {
+			jg = jsonFactory.createJsonGenerator(stringWriter);
+			jg.writeStartObject();
+			jg.writeStringField("forename", user.getForename());
+			jg.writeStringField("surname", user.getSurname());
+			jg.writeStringField("internaltablename", table.getInternalTableName());
+			jg.writeNumberField("rowid", rowId);
+			jg.writeStringField("notification", notification);
+			jg.writeEndObject();
+			jg.flush();
+			jg.close();
+		} catch (IOException ioex) {
+			throw new CodingErrorException("JSON generation threw an IO exception: " + ioex);
+		}
+		// Send the message
+		URL localhost = null;
 		try {
 			localhost = new URL("http://localhost:8181");
 		} catch (MalformedURLException muex) {
@@ -281,7 +304,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 			connection = (HttpURLConnection) localhost.openConnection();
 			connection.setDoOutput(true);
 			OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-			out.write(notification);
+			out.write(stringWriter.toString());
 			out.close();
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					connection.getInputStream()));
