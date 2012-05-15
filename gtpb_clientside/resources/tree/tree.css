@@ -54,9 +54,9 @@ li#setup h2 {
 span.notification {
   font-size: 60%;
   font-weight: bold;
-  background-color: white;
+  background-color: rgba(255,255,255,0.5);
   border-radius: 0.5em;
-  padding: 0.5em;
+  padding: 0.25em;
 }
 
 h2 span {
