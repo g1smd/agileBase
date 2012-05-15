@@ -53,6 +53,7 @@ $(document).ready(function(){
 		top.showPane3IfNecessary();
 	}
 	var socketUrl = window.location.href;
+	socketUrl = socketUrl.replace(":8080","");
 	socketUrl = socketUrl.replace(/\/agileBase\/.*$/,"") + ":8181";
 	alert("Connecting to " + socketUrl);
   var socket = io.connect(socketUrl);
