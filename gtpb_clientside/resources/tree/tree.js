@@ -79,7 +79,10 @@ function notify(forename, internalTableName, internalReportName) {
 	});
 	var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
 	notifications.prepend(notification);
-	notification.addClass("going");
+	// Start to fade out notification after a few seconds
+	setTimeout(function() {
+		$(".notification").not(".going").addClass("going");
+	}, 10000);
 }
 
 function pane1Setup() {
