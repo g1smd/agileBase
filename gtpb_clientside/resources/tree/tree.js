@@ -88,7 +88,6 @@ function notify(n) {
 	if (messageType == "comment") {
 		var tooltip = message + " - " + forename + " " + surname;
 		notification.attr("title", tooltip);
-		alert(tooltip);
 	}
 	// Start to fade out notification after a few seconds
 	setTimeout(function() {
