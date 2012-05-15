@@ -58,7 +58,8 @@ $(document).ready(function(){
 	alert("Connecting to " + socketUrl);
   var socket = io.connect(socketUrl);
   socket.on('notification', function (data) {
-    console.log(data);
+    var forename = data["forename"];
+    alert(forename);
   });
 });
 
