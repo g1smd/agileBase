@@ -52,7 +52,14 @@ $(document).ready(function(){
 	if (currentOption.closest("#setup").length > 0) {
 		top.showPane3IfNecessary();
 	}
-	
+	var socketUrl = window.location.href;
+	socketUrl = socketUrl.replace(/\/agileBase\/.*$/,"") + ":8181";
+	alert("Connecting to " + socketUrl);
+  var socket = io.connect(socketUrl);
+  socket.on('notification', function (data) {
+    var forename = data.forename;
+    alert("Notification of activity by " + forename);
+  });
 });
 
 function pane1Setup() {
