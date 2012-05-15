@@ -71,7 +71,7 @@ function notify(forename, internalTableName, internalReportName) {
 		return;
 	}
 	var notifications = reportItem.closest("ul").closest("li").find(".notifications");
-	notifications.children(".notification").each(function()) {
+	notifications.children(".notification").each(function() {
 		var notification = $(this);
 		if (notification.attr("data-forename") == forename) {
 			notification.remove();
