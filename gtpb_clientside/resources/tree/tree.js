@@ -78,11 +78,12 @@ function notify(forename, internalTableName, internalReportName, messageType, me
 		}
 	});
 	var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
+	notifications.prepend(notification);
 	if (messageType == "comment") {
 		var tooltip = notification + " - " + forename + " " + surname;
 		notification.attr("title", tooltip);
+		alert(tooltip);
 	}
-	notifications.prepend(notification);
 	// Start to fade out notification after a few seconds
 	setTimeout(function() {
 		$(".notification").not(".going").addClass("going");
