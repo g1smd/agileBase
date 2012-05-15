@@ -58,11 +58,17 @@ $(document).ready(function(){
   var socket = io.connect(socketUrl);
   socket.on('notification', function (data) {
   	var n = $.parseJSON(data);
-    notify(n.forename, n.internaltablename, n.internalreportname, n.messagetype, n.notification);
+    notify(n);
   });
 });
 
-function notify(forename, internalTableName, internalReportName, messageType, message) {
+function notify(n) {
+	var forename = n.forename;
+	var surname = n.surname;
+	var internalTableName = n.internaltablename;
+	var internalReportName = n.internalreportname;
+	var messageType = n.messagetype;
+	var message = n.notification;
 	// Find module containing the report that's the source of the notification
 	var reportId = internalTableName + internalReportName;
 	var reportItem = $("#" + reportId);
