@@ -17,7 +17,6 @@
 ##
 ## a list of reports by module for pane1
 #set($SQ = "'")
-
 #if($mobile_device)
   #parse('gui/browser_incapabilities.vm')
   #set($pane2_template = "gui/mobile/pane2_selector")
@@ -26,7 +25,6 @@
   #set($pane2_template = "gui/reports_and_tables/report_data")
   #set($reportRowLimit=100)
 #end
-
 #set($sessionReport = $sessionData.getReport())
 #set($sessionReportModule = $sessionReport.getModule())
 #set($sessionTable = $sessionData.getTable())
@@ -79,9 +77,12 @@
 		#end
     	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end $colourStyleName">
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
-    	  <h2><span><img src="resources/icons/applications/tango/$module.getIconPath()"/>$module</span></h2>
+    	  <h2>
+    	    <span><img src="resources/icons/applications/tango/$module.getIconPath()"/>$module</span>
+    	    <span class="notifications"></span>
+    	  </h2>
     	  #if(($moduleActions.size()>0) && (!$mobile_device) && (!$edit_nav) && ($user.getUserType() != "LIMITED"))
-        <ul parent="$internalModuleName" class="moduleaction">
+          <ul parent="$internalModuleName" class="moduleaction">
     		  #foreach($moduleAction in $moduleActions)
     			<li title="$moduleAction.getDescription()"><div class="module-tree-item-wrap"><a href="#" onclick="top.fShowModalDialog(${SQ}$moduleAction.getActionTemplate()${SQ},${SQ}$moduleAction.getActionName()${SQ},$moduleAction.getCallbackFunction(),${SQ}$moduleAction.getButtons()${SQ},${SQ}$moduleAction.getAttributes()${SQ}); return false">$moduleAction</a></div></li>
     		  #end

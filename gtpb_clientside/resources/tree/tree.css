@@ -24,15 +24,15 @@ h1{
 	padding: 0 10px;
 }
 
-h2 {
+#tree h2 {
 	display: block;
 	margin-bottom: -3px;
 	padding: 8px 10px 5px 5px;
-	/* background: url(tree/drop-shadow.gif) bottom repeat-x; */
 	cursor: hand;
 	cursor: pointer;
 	height: 23px;
-	/* border-top: #CECECE 1px solid; */
+	min-width: 250px;
+	overflow: hidden;
 }
 
 li:first-child h2 {

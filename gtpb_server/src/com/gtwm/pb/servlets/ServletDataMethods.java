@@ -104,7 +104,7 @@ public final class ServletDataMethods {
 		}
 		AppUserInfo user = databaseDefn.getAuthManager().getLoggedInUser(request);
 		String comment = request.getParameter("comment");
-		databaseDefn.getDataManagement().addComment(field, rowId, user, comment);
+		databaseDefn.getDataManagement().addComment(sessionData, field, rowId, user, comment);
 	}
 
 	/**

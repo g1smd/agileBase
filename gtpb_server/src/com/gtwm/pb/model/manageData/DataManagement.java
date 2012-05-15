@@ -189,7 +189,7 @@ public final class DataManagement implements DataManagementInfo {
 		this.authManager = authManager;
 	}
 
-	public void addComment(BaseField field, int rowId, AppUserInfo user, String rawComment)
+	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId, AppUserInfo user, String rawComment)
 			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
 		String comment = Helpers.smartCharsReplace(rawComment);
@@ -253,7 +253,7 @@ public final class DataManagement implements DataManagementInfo {
 			this.emailComments(recipients, field, rowId, user, comment);
 		}
 		// HTTP / websocket notification
-		UsageLogger.sendNotification(user, table, rowId, "comment", comment);
+		UsageLogger.sendNotification(user, table, sessionData.getReport(), rowId, "comment", comment);
 	}
 
 	private void emailComments(Set<String> recipients, BaseField field, int rowId,

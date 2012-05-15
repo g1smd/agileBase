@@ -55,14 +55,25 @@ $(document).ready(function(){
 	var socketUrl = window.location.href;
 	socketUrl = socketUrl.replace(":8080","");
 	socketUrl = socketUrl.replace(/\/agileBase\/.*$/,"") + ":8181";
-	alert("Connecting to " + socketUrl);
   var socket = io.connect(socketUrl);
   socket.on('notification', function (data) {
-  	var json = $.parseJSON(data);
-    var forename = json.forename;
-    alert(forename);
+  	var n = $.parseJSON(data);
+    notify(n.forename, n.internaltablename, n.internalreportname)
   });
 });
+
+function notify(forename, internalTableName, internalReportName) {
+	// Find module containing the report that's the source of the notification
+	var reportId = internalTableName + internalReportName;
+	var reportItem = $("#" + reportId);
+	if (reportItem.size() == 0) {
+		// Maybe we don't have privileges to see the source report
+		return;
+	}
+	var notifications = reportItem.closest("ul").closest("li").find(".notifications");
+	var notification = $("<span class='notification'>" + forename + "</span>");
+	notifications.prepend(notification);
+}
 
 function pane1Setup() {
 	if ($("#tree").hasClass("setup")) {

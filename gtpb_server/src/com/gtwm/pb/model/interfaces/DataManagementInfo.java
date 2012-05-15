@@ -164,7 +164,7 @@ public interface DataManagementInfo {
 	 */
 	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException, CantDoThatException;
 
-	public void addComment(BaseField field, int rowId, AppUserInfo user, String comment)
+	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId, AppUserInfo user, String comment)
 			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException;
 
 	/**
