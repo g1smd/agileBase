@@ -61,9 +61,18 @@ span.notification {
   background-color: rgba(255,255,255,0.5);
   border-radius: 0.5em;
   padding: 0.25em;
-  -moz-transition-duration: 10s;
+  -moz-transition-duration: 1800s; /* half an hour */
   -moz-transition-timing-function: ease-out;
   -moz-transition-property: opacity;
+  -webkit-transition-duration: 1800s; /* half an hour */
+  -webkit-transition-timing-function: ease-out;
+  -webkit-transition-property: opacity;
+  -ms-transition-duration: 1800s; /* half an hour */
+  -ms-transition-timing-function: ease-out;
+  -ms-transition-property: opacity;
+  -transition-duration: 1800s; /* half an hour */
+  -transition-timing-function: ease-out;
+  -transition-property: opacity;
 }
 
 span.notification.going {

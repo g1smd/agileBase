@@ -58,11 +58,11 @@ $(document).ready(function(){
   var socket = io.connect(socketUrl);
   socket.on('notification', function (data) {
   	var n = $.parseJSON(data);
-    notify(n.forename, n.internaltablename, n.internalreportname)
+    notify(n.forename, n.internaltablename, n.internalreportname, n.messageType, n.notification);
   });
 });
 
-function notify(forename, internalTableName, internalReportName) {
+function notify(forename, internalTableName, internalReportName, messageType, message) {
 	// Find module containing the report that's the source of the notification
 	var reportId = internalTableName + internalReportName;
 	var reportItem = $("#" + reportId);
@@ -78,6 +78,10 @@ function notify(forename, internalTableName, internalReportName) {
 		}
 	});
 	var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
+	if (messageType == "comment") {
+		var tooltip = notification + " - " + forename + " " + surname;
+		notification.attr("title", tooltip);
+	}
 	notifications.prepend(notification);
 	// Start to fade out notification after a few seconds
 	setTimeout(function() {
