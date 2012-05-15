@@ -86,7 +86,7 @@ function notify(n) {
 	var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
 	notifications.prepend(notification);
 	if (messageType == "comment") {
-		var tooltip = notification + " - " + forename + " " + surname;
+		var tooltip = message + " - " + forename + " " + surname;
 		notification.attr("title", tooltip);
 		alert(tooltip);
 	}
