@@ -52,6 +52,7 @@ $(document).ready(function(){
 	if (currentOption.closest("#setup").length > 0) {
 		top.showPane3IfNecessary();
 	}
+	
 });
 
 function pane1Setup() {

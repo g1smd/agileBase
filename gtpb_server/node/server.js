@@ -9,7 +9,9 @@ app.listen(8181);
  */
 function handler(req, res) {
 	var ip = req.connection.remoteAddress;
-	console.log("Connection from " + ip);
+	if (ip != "127.0.0.1") {
+		return;
+	}
 	if (req.method == 'POST') {
 		var postContent = "";
     req.addListener('data', function(chunk) {

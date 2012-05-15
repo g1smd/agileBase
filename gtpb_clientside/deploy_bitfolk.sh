@@ -19,7 +19,7 @@ cat /var/lib/tomcat7/webapps/agileBase/resources/display_application.css /var/li
 # JS
 # pane 1
 cat /var/lib/tomcat7/webapps/agileBase/resources/tree/tree.js /var/lib/tomcat7/webapps/agileBase/resources/mobile/module_actions.js > /var/lib/tomcat7/webapps/agileBase/resources/mobile/pane1_amalgam.js
-cat /var/lib/tomcat7/webapps/agileBase/resources/jquery.hoverIntent.js /var/lib/tomcat7/webapps/agileBase/resources/jquery.cluetip.js /var/lib/tomcat7/webapps/agileBase/resources/tree/tree.js > /var/lib/tomcat7/webapps/agileBase/resources/pane1_amalgam.js
+cat /var/lib/tomcat7/webapps/agileBase/resources/jquery.hoverIntent.js /var/lib/tomcat7/webapps/agileBase/resources/jquery.cluetip.js /var/lib/tomcat7/webapps/agileBase/resources/socket.io.js /var/lib/tomcat7/webapps/agileBase/resources/tree/tree.js > /var/lib/tomcat7/webapps/agileBase/resources/pane1_amalgam.js
 # pane 2
 cat /var/lib/tomcat7/webapps/agileBase/resources/tables/new_delete.js /var/lib/tomcat7/webapps/agileBase/resources/wait/request_setFilter.js /var/lib/tomcat7/webapps/agileBase/resources/wait/jquery.ajaxmanager.js /var/lib/tomcat7/webapps/agileBase/resources/mobile/module_actions.js > /var/lib/tomcat7/webapps/agileBase/resources/mobile/pane2_amalgam.js
 cat /var/lib/tomcat7/webapps/agileBase/resources/jquery.hoverIntent.js /var/lib/tomcat7/webapps/agileBase/resources/jquery.sparkline.js /var/lib/tomcat7/webapps/agileBase/resources/wait/request_setFilter.js /var/lib/tomcat7/webapps/agileBase/resources/wait/jquery.ajaxmanager.js /var/lib/tomcat7/webapps/agileBase/resources/pane2.js > /var/lib/tomcat7/webapps/agileBase/resources/pane2_amalgam.js
