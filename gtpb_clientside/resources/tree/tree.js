@@ -86,7 +86,7 @@ function notify(n) {
 	var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
 	notifications.prepend(notification);
 	if (messageType == "comment") {
-		var tooltip = message + " - " + forename + " " + surname;
+		var tooltip = message + " - comment from " + forename + " " + surname;
 		notification.attr("title", tooltip);
 	}
 	// Start to fade out notification after a few seconds
