@@ -53,7 +53,7 @@ $(document).ready(function(){
 		top.showPane3IfNecessary();
 	}
 	// Uncomment when enabling websocket notifications
-	//return;
+	return;
 	var socketUrl = window.location.href;
 	socketUrl = socketUrl.replace(":8080","");
 	socketUrl = socketUrl.replace(/\/agileBase\/.*$/,"") + ":8181";
