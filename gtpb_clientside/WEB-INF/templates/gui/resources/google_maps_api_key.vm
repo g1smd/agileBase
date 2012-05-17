@@ -21,7 +21,10 @@
 ## If not, comment out the 'set' function to leave the variable undefined
 ##
 ## http://code.google.com/apis/maps/signup.html
-	
+
+## https://code.google.com/apis/console/#project:84377935155:access
+#set($google_maps_api_key = "AIzaSyD87nNNZYrfRNIAOSC0ayCB4yj6KkJ9JlI")
+## Old style keys
 ## https://appserver.agilebase.co.uk
 ##set($google_maps_api_key = "ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg")
 ## http://gtwmbackup.dh.bytemark.co.uk
