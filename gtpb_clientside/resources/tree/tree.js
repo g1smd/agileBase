@@ -92,13 +92,6 @@ function notify(n) {
 		var tooltip = reportName + " comment: " + message + " - by " + forename + " " + surname;
 		notification.attr("title", tooltip);
 	}
-	// If a few notifications, shorten them
-	if (notifications.children(".notification").size() > 2) {
-		notifications.children(".notification").each(function() {
-			var notification = $(this);
-			notification.text(notification.text().charAt(0));
-		});
-	}
 	// Start to fade out notification after a few seconds
 	setTimeout(function() {
 		$(".notification").not(".going").addClass("going");

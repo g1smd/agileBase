@@ -1212,8 +1212,14 @@ function fTabs() {
 		}
 	}); // end of .tab_choice.each
 }
+
 /**
- * Used when clicking on a selector report in a tab
+ * Used when clicking on a selector report in a tab, or a grandchild record
+ * @param oRow
+ *    The tr being clicked
+ * @param internalTableName
+ *    The table of the selected tab, in the case of selector report clicks.
+ *    The grandchild table in case of grandchild record clicks
  */
 function loadIntoTabTable(oRow, internalTableName, rowId) {
 	var jqSelector = $(oRow).closest(".selectorReport");
@@ -1232,6 +1238,7 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 				+ "&set_custom_boolean=true&booleankey=overrideTableForm&custombooleanvalue=true"
 				+ "&cachebust=" + (new Date()).getTime();
 	} else {
+		// A selector row click
 		var targetDiv = jqSelector.next("div");
 		targetDiv.fadeOut();
 		targetDiv.load("AppController.servlet", {
@@ -1244,6 +1251,7 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 		}, function() {
 			jqSelector.find("tr#currentRow").removeAttr("id");
 			$(oRow).attr("id", "currentRow");
+			$("#rowid_" + internalTableName).attr("data-rowid", rowId);
 			targetDiv.fadeIn();
 			editTabFunctions();
 		});
