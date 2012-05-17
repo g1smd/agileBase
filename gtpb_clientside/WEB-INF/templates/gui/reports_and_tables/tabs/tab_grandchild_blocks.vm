@@ -23,7 +23,11 @@
 #set($sessionTableInternalName = $sessionTable.getInternalTableName())
 #set($lookupRowId = true) ## Used by tab_selector_report
 #if(!$formTab)
-  <h1>Parent table is $parentTable</h1>
+  #foreach($parentFormTab in $parentTable.getFormTabs())
+    #if($parentFormTab.getTable().equals($gcParentTable))
+      #set($formTab = $parentFormTab)
+    #end
+  #end
 #end
 #foreach($gcFormTab in $gcFormTabs)
   #set($selectorReport = $gcFormTab.getSelectorReport())
