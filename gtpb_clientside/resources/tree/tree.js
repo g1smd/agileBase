@@ -52,6 +52,8 @@ $(document).ready(function(){
 	if (currentOption.closest("#setup").length > 0) {
 		top.showPane3IfNecessary();
 	}
+	// Uncomment when enabling websocket notifications
+	return;
 	var socketUrl = window.location.href;
 	socketUrl = socketUrl.replace(":8080","");
 	socketUrl = socketUrl.replace(/\/agileBase\/.*$/,"") + ":8181";
@@ -72,21 +74,26 @@ function notify(n) {
 	// Find module containing the report that's the source of the notification
 	var reportId = internalTableName + internalReportName;
 	var reportItem = $("#" + reportId);
+	var reportName = reportItem.text();
 	if (reportItem.size() == 0) {
 		// Maybe we don't have privileges to see the source report
 		return;
 	}
 	var notifications = reportItem.closest("ul").closest("li").find(".notifications");
+	var numNotifications = notifications.children(".notification").size();
 	notifications.children(".notification").each(function() {
 		var notification = $(this);
 		if (notification.attr("data-forename") == forename) {
 			notification.remove();
+		} else if (numNotifications > 3) {
+			// Shorten notification
+			notification.text(notification.text().charAt(0));
 		}
 	});
 	var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
 	notifications.prepend(notification);
 	if (messageType == "comment") {
-		var tooltip = message + " - comment from " + forename + " " + surname;
+		var tooltip = reportName + " comment: " + message + " - by " + forename + " " + surname;
 		notification.attr("title", tooltip);
 	}
 	// Start to fade out notification after a few seconds
