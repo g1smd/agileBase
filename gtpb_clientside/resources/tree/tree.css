@@ -31,8 +31,8 @@ h1{
 	cursor: hand;
 	cursor: pointer;
 	height: 23px;
-	min-width: 250px;
-	overflow: hidden;
+	/*min-width: 250px; 
+	overflow: hidden;*/
 }
 
 li:first-child h2 {
