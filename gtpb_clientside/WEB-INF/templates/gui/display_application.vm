@@ -62,7 +62,7 @@
         #parse('gui/toolbar/buttons/pane3.vm')
       </div>
       #set($editableTables = $view.getTablesAllowedTo("EDIT_TABLE_DATA"))
-      #if($editableTables.size() > 0)
+      #if(($editableTables.size() > 0) || $view.loggedInUserAllowedTo("ADMINISTRATE"))
       <div class="buttonGroup"> ## record actions
         #parse('gui/toolbar/buttons/new.vm')
         #parse('gui/toolbar/buttons/clone.vm')

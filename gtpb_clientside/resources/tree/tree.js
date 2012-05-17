@@ -15,36 +15,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
-function fClearCurrentOption() {
-	$("li.currentOption").removeClass("currentOption");
-}       
-
-function fSetCurrentOption(sName, sRecordCount){
-	fClearCurrentOption();
-	var jqCurrentItem = $("#"+sName);
-	jqCurrentItem.addClass("currentOption");
-	jqCurrentItem.find(".recordcount").html("("+sRecordCount+")");
-	// open the report's module, if not already open
-	var parentElem = jqCurrentItem.parent().parent();
-	if (parentElem.hasClass('modulecollapsed')) {
-		parentElem.children('ul').slideDown('fast');
-		parentElem.removeClass('modulecollapsed');
-		parentElem.addClass('moduleexpanded');
-	}
-	var mtiw = $(".module-tree-item-wrap");
-	mtiw.removeClass("loading");
-	if (mtiw.hasClass("needs_pane2_click")) {
-		$(top.document.getElementById("pane2butt")).click();
-		mtiw.removeClass("needs_pane2_click");
-	}
-	
-}
-
-function fUpdateTitle(sName, sNewTitle) {
-	var jqCurrentItem = $("#"+sName);
-	jqCurrentItem.find('a').text(sNewTitle);
-}
-
 $(document).ready(function(){
 	pane1Setup();
 	// If in a table (or admin section), show pane 3
@@ -96,6 +66,35 @@ function notify(n) {
 	setTimeout(function() {
 		$(".notification").not(".going").addClass("going");
 	}, 10000);
+}
+
+function fClearCurrentOption() {
+	$("li.currentOption").removeClass("currentOption");
+}       
+
+function fSetCurrentOption(sName, sRecordCount){
+	fClearCurrentOption();
+	var jqCurrentItem = $("#"+sName);
+	jqCurrentItem.addClass("currentOption");
+	jqCurrentItem.find(".recordcount").html("("+sRecordCount+")");
+	// open the report's module, if not already open
+	var parentElem = jqCurrentItem.parent().parent();
+	if (parentElem.hasClass('modulecollapsed')) {
+		parentElem.children('ul').slideDown('fast');
+		parentElem.removeClass('modulecollapsed');
+		parentElem.addClass('moduleexpanded');
+	}
+	var mtiw = $(".module-tree-item-wrap");
+	mtiw.removeClass("loading");
+	if (mtiw.hasClass("needs_pane2_click")) {
+		$(top.document.getElementById("pane2butt")).click();
+		mtiw.removeClass("needs_pane2_click");
+	}
+}
+
+function fUpdateTitle(sName, sNewTitle) {
+	var jqCurrentItem = $("#"+sName);
+	jqCurrentItem.find('a').text(sNewTitle);
 }
 
 function pane1Setup() {
