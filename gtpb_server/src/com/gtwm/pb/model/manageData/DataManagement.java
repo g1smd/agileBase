@@ -253,7 +253,7 @@ public final class DataManagement implements DataManagementInfo {
 			this.emailComments(recipients, field, rowId, user, comment);
 		}
 		// HTTP / websocket notification
-		UsageLogger.sendNotification(user, table, sessionData.getReport(), rowId, "comment", comment);
+		//UsageLogger.sendNotification(user, table, sessionData.getReport(), rowId, "comment", comment);
 	}
 
 	private void emailComments(Set<String> recipients, BaseField field, int rowId,
