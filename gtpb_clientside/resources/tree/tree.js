@@ -80,14 +80,10 @@ function notify(n) {
 		return;
 	}
 	var notifications = reportItem.closest("ul").closest("li").find(".notifications");
-	var numNotifications = notifications.children(".notification").size();
 	notifications.children(".notification").each(function() {
 		var notification = $(this);
 		if (notification.attr("data-forename") == forename) {
 			notification.remove();
-		} else if (numNotifications > 3) {
-			// Shorten notification
-			notification.text(notification.text().charAt(0));
 		}
 	});
 	var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
@@ -95,6 +91,13 @@ function notify(n) {
 	if (messageType == "comment") {
 		var tooltip = reportName + " comment: " + message + " - by " + forename + " " + surname;
 		notification.attr("title", tooltip);
+	}
+	// If a few notifications, shorten them
+	if (notifications.children(".notification").size() > 2) {
+		notifications.children(".notification").each(function() {
+			var notification = $(this);
+			notification.text(notification.text().charAt(0));
+		});
 	}
 	// Start to fade out notification after a few seconds
 	setTimeout(function() {
