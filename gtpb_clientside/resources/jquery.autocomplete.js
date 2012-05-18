@@ -343,8 +343,9 @@ $.Autocompleter = function(input, options) {
 						else {
 							//$input.val( "" );
 							//Oliver
-							console.log("result=" + result + ", valueSelected=" + valueSelected);
-							$input.val(valueAtStart);
+							if(!valueSelected) {
+							  $input.val(valueAtStart);
+							}
 						}
 					}
 				}
