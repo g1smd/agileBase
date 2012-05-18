@@ -376,6 +376,7 @@ function fRelationPickers() {
 							  	pane3TabInterface.refresh();
 							  });
 							} else {
+								alert('fChange: ' + sValue);
 							  new fChange(oHidden);
 							}
 							try {

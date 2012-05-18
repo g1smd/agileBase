@@ -166,7 +166,6 @@ $.Autocompleter = function(input, options) {
 					// stop default to prevent a form submit, Opera needs special handling
 					event.preventDefault();
 					blockSubmit = true;
-					alert('selectCurrent, blockSubmit');
 					return false;
 				}
 				break;
