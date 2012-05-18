@@ -417,10 +417,11 @@ $.Autocompleter = function(input, options) {
 			var row = $.trim(rows[i]);
 			if (row) {
 				row = row.split("|");
+				var rowVal = row[0].replace("&amp;","&");
 				parsed[parsed.length] = {
 					data: row,
-					value: row[0],
-					result: options.formatResult && options.formatResult(row, row[0]) || row[0]
+					value: rowVal,
+					result: options.formatResult && options.formatResult(row, rowVal) || rowVal
 				};
 			}
 		}
