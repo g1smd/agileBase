@@ -31,7 +31,6 @@
       #foreach($reportField in $sessionReport.getReportFields())
         #set($field = $reportField.getBaseField())
         #set($fieldObject = $field) ## used in filter_input.vm
-		$filters.get($fieldObject) got from $filters using $fieldObject
         #set($internalFieldName = $field.getInternalFieldName())
         #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
           #if($headingCalcMap.get($reportField) == $headingLevel)
@@ -50,6 +49,7 @@
     <span class="sectioned_filter_name">Detail:</span> 
     #foreach($reportField in $sessionReport.getReportFields())
       #set($field = $reportField.getBaseField())
+      #set($fieldObject = $field) ## used in filter_input.vm
       #set($internalFieldName = $field.getInternalFieldName())
       #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
         #if(!$headingCalcs.contains($reportField))
