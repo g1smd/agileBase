@@ -376,7 +376,6 @@ function fRelationPickers() {
 							  	pane3TabInterface.refresh();
 							  });
 							} else {
-								alert('fChange: ' + sValue);
 							  new fChange(oHidden);
 							}
 							try {
@@ -388,6 +387,7 @@ function fRelationPickers() {
 							}
 						}
 					}
+					alert("label: " + jqHidden.next()[0]);
 					oHidden.label = jqHidden.next()[0];
 				};
 				oHidden.doUpdateObj = function(oValue) {
