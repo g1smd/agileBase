@@ -20,7 +20,7 @@
 <div id="fieldFilters" #if(!$filtersShouldBeShown) style="display:none" #end>
   #foreach($headingLevel in [1..$numHeadingLevels])
     <div class="sectioned_filter_row">
-      <span class="sectioned_filter_name">Header $headingLevel:</span>
+      <span class="sectioned_filter_name">Filters: $filters. Header $headingLevel:</span>
       ## Find the table corresponding with this heading level
       #foreach($testHeadingTable in $headingTables)
         #if($headingMap.get($testHeadingTable) == $headingLevel)
