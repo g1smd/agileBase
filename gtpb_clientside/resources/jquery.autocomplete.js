@@ -343,6 +343,7 @@ $.Autocompleter = function(input, options) {
 						else {
 							//$input.val( "" );
 							//Oliver
+							alert("Setting input back to value at start " + valueAtStart);
 							$input.val(valueAtStart);
 						}
 					}
