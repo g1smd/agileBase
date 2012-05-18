@@ -1272,8 +1272,7 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 		rowId = $("#rowid_" + internalTableName).attr("data-rowid");
 	} else {
 		rowId = jqElement.closest("tr").attr("name");
-		internalTableName = jqElement.closest(".selectorReport").attr(
-				"data-internaltablename");
+		internalTableName = jqElement.closest(".selectorReport").attr("data-internaltablename");
 	}
 	var options = {
 		remove_record : true,

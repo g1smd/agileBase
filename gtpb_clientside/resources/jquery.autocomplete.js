@@ -162,6 +162,7 @@ $.Autocompleter = function(input, options) {
 			case options.multiple && $.trim(options.multipleSeparator) == "," && KEY.COMMA:
 			case KEY.TAB:
 			case KEY.RETURN:
+				alert('tab or return');
 				if( selectCurrent() ) {
 					// stop default to prevent a form submit, Opera needs special handling
 					event.preventDefault();
