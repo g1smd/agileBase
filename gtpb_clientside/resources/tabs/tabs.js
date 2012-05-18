@@ -387,7 +387,7 @@ function fRelationPickers() {
 							}
 						}
 					}
-					alert("label: " + jqHidden.next()[0]);
+					alert("label: " + jqHidden.next().val());
 					oHidden.label = jqHidden.next()[0];
 				};
 				oHidden.doUpdateObj = function(oValue) {
