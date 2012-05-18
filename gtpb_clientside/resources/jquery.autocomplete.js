@@ -343,7 +343,7 @@ $.Autocompleter = function(input, options) {
 						else {
 							//$input.val( "" );
 							//Oliver
-							if(!valueSelected) {
+							if(!valueSelected && (!$input.hasClass("new_relation_value"))) {
 							  $input.val(valueAtStart);
 							}
 						}
