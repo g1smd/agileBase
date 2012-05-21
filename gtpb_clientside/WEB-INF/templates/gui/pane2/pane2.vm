@@ -207,7 +207,6 @@
 
 	#if($browser != "Internet Explorer")
 	function alignTableHeaderCells() {
-	    console.log('align');
 		var jqFirstRowCells = $("tbody#reportBody tr:first").children("td");
 		var jqHeaderCells = $("#reportData thead tr:first").children("th");
 		var jqFilterCells = $("#fieldFilters").children("td");
