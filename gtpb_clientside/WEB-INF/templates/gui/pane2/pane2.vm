@@ -80,7 +80,7 @@
 		div#wrapper table#reportData #fieldFilters {
 		position: absolute;
 		top: 30px;
-		left: 0.25em;
+		left: 0;
 		}
 		
 		##div#wrapper table#reportData #fieldFilters td {
