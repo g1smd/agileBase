@@ -221,7 +221,7 @@
 		  }
 		  jqFilterElement.children("div").width(width + 6);
 		  jqHeaderElement.css("left",left);
-		  jqFilterElement.css("left",left+1+5);
+		  jqFilterElement.css("left",left+21);
 		  i++;
 		});
 	}
