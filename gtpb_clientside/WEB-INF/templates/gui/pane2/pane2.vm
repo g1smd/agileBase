@@ -70,6 +70,7 @@
 		div#wrapper table#reportData thead {
 		position:fixed;
 		top: 0px;
+		left: 0px;
 		}
 
 		div#wrapper table#reportData th {
@@ -79,7 +80,7 @@
 		div#wrapper table#reportData #fieldFilters {
 		position: absolute;
 		top: 30px;
-		left: 0;
+		left: 0px;
 		}
 		
 		##div#wrapper table#reportData #fieldFilters td {
@@ -214,7 +215,6 @@
 		jqFirstRowCells.each(function() {
 		  var width = $(this).width();
 		  var left = $(this).offset().left - 1;   // 1px border
-		  console.log(i + ": width=" + width + ", left=" + left);
 		  var jqHeaderElement = jqHeaderCells.filter(":eq(" + i + ")");
 		  var jqFilterElement = jqFilterCells.filter(":eq(" + i + ")");
 		  if (jqHeaderElement.children("div").size() > 0) {
