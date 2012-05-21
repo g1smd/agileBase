@@ -224,6 +224,7 @@
 		  //jqFilterElement.css("left",left+1);
 		  i++;
 		});
+		$("#fieldFilters").css("left: 0.5em");
 	}
 	#end
 	
