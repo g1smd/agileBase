@@ -22,8 +22,8 @@ $(document).ready(function(){
 	if (currentOption.closest("#setup").length > 0) {
 		top.showPane3IfNecessary();
 	}
-	// Uncomment when enabling websocket notifications
-	return;
+	// Remove when enabling websocket notifications
+	//return;
 	var socketUrl = window.location.href;
 	socketUrl = socketUrl.replace(":8080","");
 	socketUrl = socketUrl.replace(/\/agileBase\/.*$/,"") + ":8181";

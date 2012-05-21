@@ -572,10 +572,16 @@ public final class ServletSchemaMethods {
 		if (formStyleString != null) {
 			formStyle = FormStyle.valueOf(formStyleString.toUpperCase());
 		}
+		boolean allowAutoDelete = table.getAllowAutoDelete();
+		boolean oldAllowAutoDelete = allowAutoDelete;
+		String allowAutoDeleteString = request.getParameter("allowautodelete");
+		if (allowAutoDeleteString != null) {
+			allowAutoDelete = Helpers.valueRepresentsBooleanTrue(allowAutoDeleteString);
+		}
 		if (newTableName == null && newTableDesc == null && lockable == null
-				&& tableFormPublic == null && tableEmail == null && formStyle == null) {
+				&& tableFormPublic == null && tableEmail == null && formStyle == null && allowAutoDeleteString == null) {
 			throw new MissingParametersException(
-					"tablename, tabledesc, tableformpublic, tableemail or lockable parameter must be supplied to update a table with a new name or description");
+					"One or more table update parameter must be supplied to update a table");
 		}
 		// store current values that may be overwritten by
 		// DatabaseDefn.updateTable so they can be rolled back
@@ -593,7 +599,7 @@ public final class ServletSchemaMethods {
 			conn.setAutoCommit(false);
 			// update the table:
 			databaseDefn.updateTable(conn, request, table, newTableName, newTableDesc, lockable,
-					tableFormPublic, tableEmail, formStyle);
+					tableFormPublic, tableEmail, formStyle, allowAutoDelete);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
@@ -605,6 +611,7 @@ public final class ServletSchemaMethods {
 			table.setTableFormPublic(oldTableFormPublic);
 			table.setEmail(oldTableEmail);
 			table.setFormStyle(oldFormStyle);
+			table.setAllowAutoDelete(oldAllowAutoDelete);
 			throw new CantDoThatException("Updating table failed", hex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(conn);
@@ -615,6 +622,7 @@ public final class ServletSchemaMethods {
 			table.setTableFormPublic(oldTableFormPublic);
 			table.setEmail(oldTableEmail);
 			table.setFormStyle(oldFormStyle);
+			table.setAllowAutoDelete(oldAllowAutoDelete);
 			throw new CantDoThatException("Updating table failed", sqlex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(conn);
@@ -625,6 +633,7 @@ public final class ServletSchemaMethods {
 			table.setTableFormPublic(oldTableFormPublic);
 			table.setEmail(oldTableEmail);
 			table.setFormStyle(oldFormStyle);
+			table.setAllowAutoDelete(oldAllowAutoDelete);
 			throw new CantDoThatException("Updating table failed", pex);
 		} finally {
 			HibernateUtil.closeSession();

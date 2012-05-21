@@ -92,7 +92,7 @@ public interface DatabaseInfo {
 	 */
 	public void updateTable(Connection conn, HttpServletRequest request, TableInfo table,
 			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic,
-			String tableEmail, FormStyle formStyle) throws DisallowedException,
+			String tableEmail, FormStyle formStyle, boolean allowAutoDelete) throws DisallowedException,
 			CantDoThatException, ObjectNotFoundException, SQLException;
 
 	/**

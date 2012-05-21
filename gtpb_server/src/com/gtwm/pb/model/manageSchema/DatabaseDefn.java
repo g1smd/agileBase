@@ -507,7 +507,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public void updateTable(Connection conn, HttpServletRequest request, TableInfo table,
 			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic,
-			String tableEmail, FormStyle formStyle) throws DisallowedException,
+			String tableEmail, FormStyle formStyle, boolean allowAutoDelete) throws DisallowedException,
 			CantDoThatException, ObjectNotFoundException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
@@ -562,6 +562,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		if (formStyle != null) {
 			table.setFormStyle(formStyle);
 		}
+		table.setAllowAutoDelete(allowAutoDelete);
 	}
 
 	public void updateMap(HttpServletRequest request, BaseReportInfo report,

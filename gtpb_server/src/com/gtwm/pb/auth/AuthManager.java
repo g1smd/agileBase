@@ -82,6 +82,8 @@ public final class AuthManager implements AuthManagerInfo {
 	public AuthManager(DataSource relationalDataSource) throws ObjectNotFoundException,
 			CantDoThatException, MissingParametersException, CodingErrorException {
 		logger.info("Loading schema and authentication objects into memory...");
+		// Don't pollute javamelody log with startup SQL
+		System.setProperty("javamelody.disabled", "true");
 		try {
 			Session hibernateSession = HibernateUtil.currentSession();
 			Transaction hibernateTransaction = hibernateSession.beginTransaction();
@@ -172,6 +174,8 @@ public final class AuthManager implements AuthManagerInfo {
 		} catch (RuntimeException rtex) {
 			throw rtex;
 		}
+		// Re-enable JavaMelody
+		System.setProperty("javamelody.disabled", "false");
 	}
 
 	/**

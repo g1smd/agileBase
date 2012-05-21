@@ -211,4 +211,12 @@ public interface TableInfo extends Comparable<TableInfo> {
 	public void setFormTable(TableInfo table);
 
 	public TableInfo getFormTable();
+
+	/**
+	 * Whether agileBase should be allowed to automatically delete records, if
+	 * they are unedited since creation, have empty mandated fields for example
+	 */
+	public boolean getAllowAutoDelete();
+
+	public void setAllowAutoDelete(boolean allowAutoDelete);
 }

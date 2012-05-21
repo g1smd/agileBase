@@ -453,6 +453,14 @@ public class TableDefn implements TableInfo {
 		this.formTable = formTable;
 	}
 	
+	public boolean getAllowAutoDelete() {
+		return this.allowAutoDelete;
+	}
+	
+	public void setAllowAutoDelete(boolean allowAutoDelete) {
+		this.allowAutoDelete = allowAutoDelete;
+	}
+	
 	/**
 	 * Provide a natural sort order by table name case insensitively
 	 */
@@ -519,6 +527,8 @@ public class TableDefn implements TableInfo {
 	private Set<FormTabInfo> formTabs = new HashSet<FormTabInfo>();
 	
 	private TableInfo formTable = null;
+	
+	private boolean allowAutoDelete = false;
 
 	private volatile String simpleName = null;
 

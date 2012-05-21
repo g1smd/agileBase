@@ -28,9 +28,15 @@
       <input type="text" name="tablename" gtpb_update_table value="$table.getTableName()" onkeyup="top.oBuffer.writeBuffer(this); parent.pane_1.fUpdateTitle('$internalTableName$table.getDefaultReport().getInternalReportName()', this.value);" maxKeyCount="6" identifier="$internalTableName" gtpb_internaltablename="$internalTableName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/><p>
     <b>Purpose:</b><br><span class="greytext" style="font-size:8pt">Purpose of table and key stakeholders who value it</span><br>
 	  <textarea name="tabledesc" cols="50" rows="4" gtpb_update_table onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" gtpb_internaltablename="$internalTableName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">$table.getTableDescription()</textarea><p>
+
       <input type="checkbox" name="lockable" gtpb_update_table #if($table.getRecordsLockable()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$internalTableName" gtpb_internaltablename="$internalTableName">
 	  Records lockable<br>
 	  <span class="greytext" style="font-size:8pt">Allow custom actions (such as 'print invoice') to lock records against future editing</span><p>
+
+      <input type="checkbox" name="allowautodelete" gtpb_update_table #if($table.getAllowAutoDelete()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$internalTableName" gtpb_internaltablename="$internalTableName">
+	  Auto delete<br>
+	  <span class="greytext" style="font-size:8pt">Allow agileBase to automatically delete blank/unedited records or those with blank mandated fields</span><p>
+
       <input type="checkbox" name="tableformpublic" gtpb_update_table #if($table.getTableFormPublic()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$internalTableName" gtpb_internaltablename="$internalTableName">
 	  Public data entry<br>
 	  <span class="greytext" style="font-size:8pt">Publish a <a href="Public.ab?show_form=true&c=$company.getInternalCompanyName()&t=$internalTableName" target="_blank">form</a> which the general public can use to enter data.<br>Send notifications of new items to:</span><br>
