@@ -222,7 +222,7 @@
 		  }
 		  jqFilterElement.children("div").width(width + 6);
 		  jqHeaderElement.css("left",left);
-		  jqFilterElement.css("left",left+21);
+		  jqFilterElement.css("left",left+1);
 		  i++;
 		});
 	}
@@ -258,7 +258,7 @@
   #end
   
   #set($filters = $sessionData.getReportFilterValues())
-  <body #if(!$mobile_device) onload="#if($selection||($data.size()==0))loadPane3(); #else eval(document.getElementById('reportBody').rows[0].getAttribute('onclick')); #end" #end>
+  <body #if(!$mobile_device) style="margin-left:0.5em;" onload="#if($selection||($data.size()==0))loadPane3(); #else eval(document.getElementById('reportBody').rows[0].getAttribute('onclick')); #end" #end>
     <div id=wrapper>
 	  #if($mobile_device)
 		  #parse("gui/mobile/pane2_header.vm")
