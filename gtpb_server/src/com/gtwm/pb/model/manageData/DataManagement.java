@@ -281,7 +281,7 @@ public final class DataManagement implements DataManagementInfo {
 		Session mailSession = Session.getDefaultInstance(props, null);
 		MimeMessage message = new MimeMessage(mailSession);
 		try {
-			String subject = "Comment for " + table.getSimpleName();
+			String subject = "Comment for " + table.getSingularName();
 			boolean rowIdentifierFound = false;
 			BaseField firstField = null;
 			DataRowFieldInfo firstValue = null;
@@ -293,7 +293,7 @@ public final class DataManagement implements DataManagementInfo {
 						subject += " " + rowEntry.getValue();
 						rowIdentifierFound = true;
 						break ENTRY_LOOP;
-					} else if (firstField == null) {
+					} else if (firstField == null && (!(rowField instanceof FileField))) {
 						firstField = rowField;
 						firstValue = rowEntry.getValue();
 					}

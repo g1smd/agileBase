@@ -33,12 +33,13 @@
 		  }
 	
 	      html, body { 
-	        /* font-family: "Arial", sans-serif;  */
     			    color: black; 
-    			    font-size: 11pt; 
+    			    font-size: 10pt; 
     			    margin:0; 
     			    padding:0;
+    			    margin-left: 0.5em;
     			    height:100%;
+    			    background-color: #F0F0F0;
     			  }
 				 
 	      div#wrapper { 
