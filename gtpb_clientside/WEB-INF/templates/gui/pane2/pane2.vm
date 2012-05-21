@@ -63,7 +63,7 @@
   		}
   
   		div#wrapper table#reportData.lowered {
-  		margin-top: 57px;
+  		margin-top: 56px;
   		}
     #end
 
