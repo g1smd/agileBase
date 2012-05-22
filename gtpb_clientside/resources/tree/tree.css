@@ -79,10 +79,10 @@ span.notification {
 span.notification.edit {
   font-size: 100%;
   color: white;
-  -moz-transition-duration: 30s;
-  -webkit-transition-duration: 30s;
-  -ms-transition-duration: 30s;
-  transition-duration: 30s;
+  -moz-transition-duration: 60s;
+  -webkit-transition-duration: 60s;
+  -ms-transition-duration: 60s;
+  transition-duration: 60s;
 }
 
 span.notification.going {
