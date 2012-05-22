@@ -67,7 +67,6 @@ function notify(n) {
 	} else {
 		// Not a comment but a normal edit
 		notifications.children(".notification.edit").remove();
-		alert("Removed old. No. now " + notifications.children().size());
 		var notification = $("<span class='notification edit'>&#x25cf;</span>"); // &#x25cf; = filled in circle
 		notifications.prepend(notification);
 		var tooltip = reportName + " edit: " + message + " - " + forename + " " + surname;
