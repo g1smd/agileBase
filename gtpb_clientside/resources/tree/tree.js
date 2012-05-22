@@ -25,8 +25,8 @@ $(document).ready(function(){
 	// Remove when enabling websocket notifications
 	//return;
 	var socketUrl = window.location.href;
-	socketUrl = socketUrl.replace(":8080","");
-	socketUrl = socketUrl.replace(/\/agileBase\/.*$/,"") + ":8181";
+	socketUrl = socketUrl.replace(":8080","").replace(/\/agileBase\/.*$/,"") + ":8181";
+	alert("listening to " + socketUrl);
   var socket = io.connect(socketUrl);
   socket.on('notification', function (data) {
   	var n = $.parseJSON(data);
