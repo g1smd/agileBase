@@ -41,6 +41,7 @@ function notify(n) {
 	var internalReportName = n.internalreportname;
 	var messageType = n.messagetype;
 	var message = n.notification;
+	alert(messageType);
 	// Find module containing the report that's the source of the notification
 	var reportId = internalTableName + internalReportName;
 	var reportItem = $("#" + reportId);
