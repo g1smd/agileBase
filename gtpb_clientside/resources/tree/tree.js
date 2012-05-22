@@ -41,7 +41,6 @@ function notify(n) {
 	var internalReportName = n.internalreportname;
 	var messageType = n.messagetype;
 	var message = n.notification;
-	alert(messageType);
 	// Find module containing the report that's the source of the notification
 	var reportId = internalTableName + internalReportName;
 	var reportItem = $("#" + reportId);
@@ -71,6 +70,7 @@ function notify(n) {
 		notifications.children(".notification.edit").remove();
 		var notification = $("<span class='notification edit>&#x25cf;</span>"); // &#x25cf; = filled in circle
 		notifications.prepend(notification);
+		alert("There are now " + notifications.size() + " notifications");
 		var tooltip = reportName + " edit: " + message + " - " + forename + " " + surname;
 		notification.attr("title", tooltip);
 		// Start to fade out notification
