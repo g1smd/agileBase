@@ -70,7 +70,6 @@ function notify(n) {
 		notifications.children(".notification.edit").remove();
 		var notification = $("<span class='notification edit'>&#x25cf;</span>"); // &#x25cf; = filled in circle
 		notifications.prepend(notification);
-		alert("There are now " + notifications.size() + " notifications");
 		var tooltip = reportName + " edit: " + message + " - " + forename + " " + surname;
 		notification.attr("title", tooltip);
 		// Start to fade out notification
