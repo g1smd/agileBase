@@ -47,6 +47,7 @@ function notify(n) {
 	var reportItem = $("#" + reportId);
 	var reportName = reportItem.text();
 	if (reportItem.size() == 0) {
+		alert("no report " + reportId);
 		// Maybe we don't have privileges to see the source report
 		return;
 	}
