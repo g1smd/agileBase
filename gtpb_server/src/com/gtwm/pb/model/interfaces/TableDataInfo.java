@@ -51,7 +51,9 @@ public interface TableDataInfo {
 
 	/**
 	 * Checks whether the record identified by rowId is locked, taking into
-	 * account whether the lock has been overridden for the logged in user
+	 * account whether the lock has been overridden for the logged in user.
+	 * 
+	 * If null is passed in as the sessionData, no override check is done
 	 */
 	public boolean isRecordLocked(Connection conn, SessionDataInfo sessionData, int rowId)
 			throws ObjectNotFoundException, SQLException;

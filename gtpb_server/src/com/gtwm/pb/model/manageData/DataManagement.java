@@ -189,8 +189,9 @@ public final class DataManagement implements DataManagementInfo {
 		this.authManager = authManager;
 	}
 
-	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId, AppUserInfo user, String rawComment)
-			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
+	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId,
+			AppUserInfo user, String rawComment) throws SQLException, ObjectNotFoundException,
+			CantDoThatException, CodingErrorException {
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
 		String comment = Helpers.smartCharsReplace(rawComment);
 		TableInfo table = field.getTableContainingField();
@@ -253,7 +254,8 @@ public final class DataManagement implements DataManagementInfo {
 			this.emailComments(recipients, field, rowId, user, comment);
 		}
 		// HTTP / websocket notification
-		//UsageLogger.sendNotification(user, table, sessionData.getReport(), rowId, "comment", comment);
+		// UsageLogger.sendNotification(user, table, sessionData.getReport(),
+		// rowId, "comment", comment);
 	}
 
 	private void emailComments(Set<String> recipients, BaseField field, int rowId,
@@ -285,8 +287,8 @@ public final class DataManagement implements DataManagementInfo {
 			boolean rowIdentifierFound = false;
 			BaseField firstField = null;
 			DataRowFieldInfo firstValue = null;
-			ENTRY_LOOP: for (Map.Entry<BaseField, DataRowFieldInfo> rowEntry : row.getDataRowFields()
-					.entrySet()) {
+			ENTRY_LOOP: for (Map.Entry<BaseField, DataRowFieldInfo> rowEntry : row
+					.getDataRowFields().entrySet()) {
 				BaseField rowField = rowEntry.getKey();
 				if (!rowField.equals(pKey)) {
 					if (rowField instanceof SequenceField) {
@@ -933,6 +935,8 @@ public final class DataManagement implements DataManagementInfo {
 		} else {
 			user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		}
+		// Send websocket notification
+		UsageLogger.sendNotification(user, table, sessionData.getReport(), rowId, "edit", "Record saved: " + dataToSave);
 		// Log everything apart from hidden (auto set) fields
 		Map<BaseField, BaseValue> dataToLog = new LinkedHashMap<BaseField, BaseValue>();
 		for (Map.Entry<BaseField, BaseValue> entrySet : dataToSave.entrySet()) {
@@ -1680,13 +1684,19 @@ public final class DataManagement implements DataManagementInfo {
 	 * 
 	 * Also throw an exception immediately if any locked records are found as
 	 * this means the deletion should fail
+	 * 
+	 * @param tables
+	 *            The set of tables to check for dependencies between, e.g. all
+	 *            the tables in a company
+	 * @param sessionData
+	 *            Used to check for locked record overrides
+	 * @param recordDependencies
+	 *            This method is recursive
 	 */
-	private static Map<TableInfo, String> getRecordsDependencies(Connection conn,
-			HttpServletRequest request, SessionDataInfo sessionData, DatabaseInfo databaseDefn,
+	public static Map<TableInfo, String> getRecordsDependencies(Connection conn,
+			Set<TableInfo> tables, SessionDataInfo sessionData, DatabaseInfo databaseDefn,
 			TableInfo table, int rowId, Map<TableInfo, String> recordDependencies)
 			throws SQLException, ObjectNotFoundException, CantDoThatException {
-		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
-		Set<TableInfo> tables = company.getTables();
 		for (TableInfo otherTable : tables) {
 			Set<BaseField> otherTableFields = otherTable.getFields();
 			for (BaseField field : otherTableFields) {
@@ -1759,9 +1769,8 @@ public final class DataManagement implements DataManagementInfo {
 					}
 					// recurse
 					if (!recordDependencies.keySet().contains(otherTable)) {
-						recordDependencies.putAll(getRecordsDependencies(conn, request,
-								sessionData, databaseDefn, otherTable, otherRowId,
-								recordDependencies));
+						recordDependencies.putAll(getRecordsDependencies(conn, tables, sessionData,
+								databaseDefn, otherTable, otherRowId, recordDependencies));
 					}
 					recordDependencies.put(otherTable, recordDescription);
 				}
@@ -1796,11 +1805,12 @@ public final class DataManagement implements DataManagementInfo {
 			throws SQLException, ObjectNotFoundException, CodingErrorException,
 			CantDoThatException, DisallowedException, DataDependencyException {
 		Map<TableInfo, String> recordDependencies = new LinkedHashMap<TableInfo, String>();
+		Set<TableInfo> tables = this.authManager.getCompanyForLoggedInUser(request).getTables();
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			recordDependencies = getRecordsDependencies(conn, request, sessionData, databaseDefn,
+			recordDependencies = getRecordsDependencies(conn, tables, sessionData, databaseDefn,
 					table, rowId, recordDependencies);
 		} finally {
 			if (conn != null) {
@@ -1836,7 +1846,8 @@ public final class DataManagement implements DataManagementInfo {
 				throw new DataDependencyException(warning);
 			}
 		}
-		// First get all the content of the row we're deleting, for logging purposes
+		// First get all the content of the row we're deleting, for logging
+		// purposes
 		Map<BaseField, BaseValue> deletedRow = this.getTableDataRow(null, table, rowId, false);
 		String SQLCode = "DELETE FROM " + table.getInternalTableName() + " WHERE "
 				+ table.getPrimaryKey().getInternalFieldName() + "=?";
@@ -1888,7 +1899,8 @@ public final class DataManagement implements DataManagementInfo {
 		logLastTableDataChangeTime(table);
 		UsageLogger usageLogger = new UsageLogger(dataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logDataChange(user, table, null, AppAction.REMOVE_RECORD, rowId, "Deleted data: " + deletedRow);
+		usageLogger.logDataChange(user, table, null, AppAction.REMOVE_RECORD, rowId,
+				"Deleted data: " + deletedRow);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 

@@ -50,22 +50,32 @@ function notify(n) {
 		return;
 	}
 	var notifications = reportItem.closest("ul").closest("li").find(".notifications");
-	notifications.children(".notification").each(function() {
-		var notification = $(this);
-		if (notification.attr("data-forename") == forename) {
-			notification.remove();
-		}
-	});
-	var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
-	notifications.prepend(notification);
 	if (messageType == "comment") {
+		notifications.children(".notification").each(function() {
+			var notification = $(this);
+			if (notification.attr("data-forename") == forename) {
+				notification.remove();
+			}
+		});
+		var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
+		notifications.prepend(notification);
 		var tooltip = reportName + " comment: " + message + " - by " + forename + " " + surname;
 		notification.attr("title", tooltip);
+		// Start to fade out notification after a few seconds
+		setTimeout(function() {
+			$(".notification").not(".going").addClass("going");
+		}, 10000);
+	} else {
+		// Not a comment but a normal edit
+		notifications.children(".notification.edit").remove();
+		var notification = $("<span class='notification edit>&#x25cf;<span>"); // &#x25cf; = filled in circle
+		var tooltip = reportName + " edit: " + message + " - " + forename + " " + surname;
+		notification.attr("title", tooltip);
+		// Start to fade out notification
+		setTimeout(function() {
+			$(".notification").not(".going").addClass("going");
+		}, 1000);
 	}
-	// Start to fade out notification after a few seconds
-	setTimeout(function() {
-		$(".notification").not(".going").addClass("going");
-	}, 10000);
 }
 
 function fClearCurrentOption() {

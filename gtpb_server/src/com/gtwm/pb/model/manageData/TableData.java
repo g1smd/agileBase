@@ -65,14 +65,17 @@ public class TableData implements TableDataInfo {
 		if (!this.table.getRecordsLockable()) {
 			return false;
 		}
-		// Check if any possible lock is overridden
-		// If so, we don't have to do an SQL query
-		TableInfo recordLockOverrideTable = ((SessionData) sessionData)
-				.getRecordLockOverrideTable();
-		int recordLockOverrideRowId = ((SessionData) sessionData).getRecordLockOverrideRowId();
-		if (recordLockOverrideTable != null) {
-			if ((rowId == recordLockOverrideRowId) && (recordLockOverrideTable.equals(this.table))) {
-				return false;
+		if (sessionData != null) {
+			// Check if any possible lock is overridden
+			// If so, we don't have to do an SQL query
+			TableInfo recordLockOverrideTable = ((SessionData) sessionData)
+					.getRecordLockOverrideTable();
+			int recordLockOverrideRowId = ((SessionData) sessionData).getRecordLockOverrideRowId();
+			if (recordLockOverrideTable != null) {
+				if ((rowId == recordLockOverrideRowId)
+						&& (recordLockOverrideTable.equals(this.table))) {
+					return false;
+				}
 			}
 		}
 		String SQLCode = "SELECT "
@@ -178,7 +181,7 @@ public class TableData implements TableDataInfo {
 					}
 					tableDataRow.put(field, fieldValue);
 				} // end loop through fields
-				// Log access to the row
+					// Log access to the row
 				if (logView && (rowId > 0)) {
 					BaseField viewCountField = this.table.getField(HiddenFields.VIEW_COUNT
 							.getFieldName());

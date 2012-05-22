@@ -70,9 +70,18 @@ span.notification {
   -ms-transition-duration: 1800s; /* half an hour */
   -ms-transition-timing-function: ease-out;
   -ms-transition-property: opacity;
-  -transition-duration: 1800s; /* half an hour */
-  -transition-timing-function: ease-out;
-  -transition-property: opacity;
+  transition-duration: 1800s; /* half an hour */
+  transition-timing-function: ease-out;
+  transition-property: opacity;
+}
+
+/* Edit notifications fade out faster */
+span.notification.edit {
+  font-size: 100%;
+  -moz-transition-duration: 30s;
+  -webkit-transition-duration: 30s;
+  -ms-transition-duration: 30s;
+  transition-duration: 30s;
 }
 
 span.notification.going {
