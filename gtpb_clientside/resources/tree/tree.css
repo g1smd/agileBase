@@ -78,6 +78,7 @@ span.notification {
 /* Edit notifications fade out faster */
 span.notification.edit {
   font-size: 100%;
+  color: white;
   -moz-transition-duration: 30s;
   -webkit-transition-duration: 30s;
   -ms-transition-duration: 30s;
