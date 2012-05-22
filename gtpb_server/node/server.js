@@ -2,7 +2,7 @@ var app = require('http').createServer(handler)
   , io = require('socket.io').listen(app)
   , url = require('url')
   
-io.set('log level', 1); // reduce logging
+//io.set('log level', 1); // reduce logging
 app.listen(8181);
 
 /**
