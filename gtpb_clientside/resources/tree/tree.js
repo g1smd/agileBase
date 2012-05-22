@@ -47,7 +47,6 @@ function notify(n) {
 	var reportItem = $("#" + reportId);
 	var reportName = reportItem.text();
 	if (reportItem.size() == 0) {
-		alert("no report " + reportId);
 		// Maybe we don't have privileges to see the source report
 		return;
 	}
@@ -71,6 +70,7 @@ function notify(n) {
 		// Not a comment but a normal edit
 		notifications.children(".notification.edit").remove();
 		var notification = $("<span class='notification edit>&#x25cf;<span>"); // &#x25cf; = filled in circle
+		notifications.prepend(notification);
 		var tooltip = reportName + " edit: " + message + " - " + forename + " " + surname;
 		notification.attr("title", tooltip);
 		// Start to fade out notification
