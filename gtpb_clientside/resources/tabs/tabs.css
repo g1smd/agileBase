@@ -758,7 +758,7 @@ div#reportData {
 
 #reportData .block.non_section .date {
   float: none;
-  margin-left: 1em;
+  margin-left: 0.25em;
 }
 
 .two_cols .block .fieldname {
