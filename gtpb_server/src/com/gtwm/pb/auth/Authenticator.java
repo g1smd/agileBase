@@ -375,7 +375,10 @@ public final class Authenticator implements AuthenticatorInfo {
 		return this.userAllowedTo(privilegeType, table, appUser);
 	}
 
-	protected boolean userAllowedTo(PrivilegeType privilegeType, TableInfo table,
+	/**
+	 * Public so DataManagement can call this method, however not part of the interface
+	 */
+	public boolean userAllowedTo(PrivilegeType privilegeType, TableInfo table,
 			AppUserInfo appUser) {
 		// From a bug report, seems as if it's possible for table to be null if table's just been deleted
 		if (table == null) {

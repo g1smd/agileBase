@@ -58,6 +58,8 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.math.util.MathUtils;
+
+import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.AuthManagerInfo;
@@ -240,12 +242,13 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		// Email notification
+		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
 		CompanyInfo company = user.getCompany();
 		Set<String> recipients = new HashSet<String>();
 		for (AppUserInfo companyUser : company.getUsers()) {
 			String email = companyUser.getEmail();
 			if (email != null) {
-				if (email.contains("@")) {
+				if (email.contains("@") && authenticator.userAllowedTo(PrivilegeType.VIEW_TABLE_DATA, table, companyUser)) {
 					recipients.add(email);
 				}
 			}
