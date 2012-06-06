@@ -210,4 +210,9 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	public Integer getMemoryAllocation();
 	
 	public void setMemoryAllocation(Integer memoryAllocation);
+	
+	/**
+	 * Return a JSON representation of the report structure for export, potentially useful for cloning
+	 */
+	public String toJSON();
 }

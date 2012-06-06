@@ -101,16 +101,6 @@ var gtwmJson = [{
 {
 	anonymise : true,
 	'return': 'blank',
-	set_table : 'scwuex91ctplyefcf',
-	table_description: 'b2.3) daily sales log',
-	dncs2uqspndetykb8: 'NOTES', // event record
-	xmj34tau3dygxlhab: 'NOTES', // client issues
-	gkzutxt9wra3b6rzj: 'NOTES', // our issues
-	n95um5rsmp9tccnn5: 'NOTES' // follow up actions
-},
-{
-	anonymise : true,
-	'return': 'blank',
 	set_table : 'a4f80b0b966b2c039',
 	table_description: 'b2.4) quotes',
 	ab55f3ef31662902e: 'OTHER', // proj. manager
