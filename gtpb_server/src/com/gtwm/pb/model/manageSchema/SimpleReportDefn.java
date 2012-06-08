@@ -1281,6 +1281,12 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 		}
 		return globalFilterValues;
 	}
+	
+	@Override
+	public String toJSON() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * Fields in the report, i.e columns in the view from the DB's point of
@@ -1300,8 +1306,6 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 
 	private Set<BaseField> distinctFields = new LinkedHashSet<BaseField>();
 	
-	private Set<ReportFieldInfo> distinctReportFields = new LinkedHashSet<ReportFieldInfo>();
-
 	private Set<ReportSortInfo> sorts = new HashSet<ReportSortInfo>();
 
 	private boolean calendarSyncable = false;
@@ -1311,4 +1315,5 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	private ReportStyle reportStyle = ReportStyle.SPREADSHEET;
 
 	private static final SimpleLogger logger = new SimpleLogger(SimpleReportDefn.class);
+
 }
