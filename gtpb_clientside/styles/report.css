@@ -182,7 +182,7 @@ table#reportData tr.h1 {
 
 table#reportData tr.h1 td {
   font-size: 10pt;
-  font-weight: bold;
+  /* font-weight: bold; */
   height: 3em;
   line-height: 1.5em;
   vertical-align: middle;
