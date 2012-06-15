@@ -47,7 +47,7 @@
       #end
       #set($style="")
       #if($rightAlign) #set($style = "$style text-align:right; ") #end
-      <td #if($style != "")style="$style"#end>#if($headingRow) $field #else $cell #end</td>
+      <td #if($style != "")style="$style"#end>#if($headingRow) <span style="overflow: hidden" title="$field">$field</span> #else $cell #end</td>
     #end
   #end
   #if(!$useDeleteCheckboxes)
