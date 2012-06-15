@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <tr name="$thisUniqueId"
-  #if($headingRow) class="rowb" #end 
+  #if($headingRow) class="rowb sectioned_detail_heading" #else class="sectioned_detail_row" #end 
   #if($row.size()>=6 && $row.get(5))
     #foreach($expando in $row.get(5))
       $expando.get(0)="$expando.get(1)"
@@ -47,7 +47,7 @@
       #end
       #set($style="")
       #if($rightAlign) #set($style = "$style text-align:right; ") #end
-      <td #if($style != "")style="$style"#end>#if($headingRow) <span style="overflow: hidden" title="$field">$field</span> #else $cell #end</td>
+      <td #if($style != "")style="$style"#end>#if($headingRow) $field #else $cell #end</td>
     #end
   #end
   #if(!$useDeleteCheckboxes)

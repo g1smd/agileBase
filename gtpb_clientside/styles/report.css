@@ -287,6 +287,10 @@ table#reportData tr.excludedRecord td {
   margin-left: 0.2em
 }
 
+.sectioned_detail_heading {
+  display: none;
+}
+
 .error { color: red; }
 
 .greytext {
