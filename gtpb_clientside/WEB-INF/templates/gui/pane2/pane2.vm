@@ -239,8 +239,7 @@
 	  $(".ab_field_title").hoverIntent(hoverIntentConfig);
 	  $("tr.sectioned_detail_row").mouseenter(function() {
 	    $("tr.sectioned_detail_heading").hide();
-	    $(this).prevAll("tr.sectioned_detail_heading").last().show();
-	    console.log($(this).prevAll("tr.sectioned_detail_heading").size());
+	    $(this).prevAll("tr.sectioned_detail_heading").first().show();
 	  });
 	  #if($browser != "Internet Explorer")
 	    alignTableHeaderCells();
