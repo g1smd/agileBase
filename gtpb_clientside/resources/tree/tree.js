@@ -23,7 +23,7 @@ $(document).ready(function(){
 		top.showPane3IfNecessary();
 	}
 	// Remove when enabling websocket notifications
-	//return;
+	return;
 	var socketUrl = window.location.href;
 	socketUrl = socketUrl.replace(":8080","").replace(/\/agileBase\/.*$/,"") + ":8181";
   var socket = io.connect(socketUrl);
