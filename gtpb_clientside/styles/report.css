@@ -181,14 +181,12 @@ table#reportData tr.h1 {
 }
 
 table#reportData tr.h1 td {
-  font-size: 14pt;
+  font-size: 11pt;
   font-weight: bold;
-  border-bottom: 1px solid black;
   height: 3em;
   line-height: 1.5em;
   vertical-align: middle;
-  background-color: gray;
-  color: white!important;
+  background-color: #f4f4f4;
 }
 
 table#reportData tr.h2 td {
@@ -207,7 +205,7 @@ table#reportData tr.h3 td {
 }
 
 table#reportData tr.h1 td .smaller {
-  font-size: 10pt;
+  font-size: 8.5pt;
 }
 	
 table#reportData tr.rowb td, 

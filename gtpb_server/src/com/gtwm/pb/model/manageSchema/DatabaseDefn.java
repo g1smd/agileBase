@@ -963,7 +963,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				updateViewDbActionWithDropAndCreateDependencies(conn, report, request);
 			}
 		}
-		throwExceptionIfDbViewIsBroken(conn, report);
+		this.throwExceptionIfDbViewIsBroken(conn, report);
 	}
 
 	public void removeReport(SessionDataInfo sessionData, HttpServletRequest request,

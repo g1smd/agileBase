@@ -115,9 +115,9 @@ public final class ServletSchemaMethods {
 	 *             If the currently logged in user doesn't have MASTER
 	 *             privileges
 	 */
-	public synchronized static void addCompany(HttpServletRequest request,
-			DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException,
-			CantDoThatException, CodingErrorException, SQLException {
+	public synchronized static void addCompany(HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws DisallowedException, MissingParametersException, CantDoThatException,
+			CodingErrorException, SQLException {
 		String companyName = request.getParameter("companyname");
 		if (companyName == null) {
 			throw new MissingParametersException("'companyname' is required to add a company");
@@ -374,7 +374,9 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void setTableForm(HttpServletRequest request, SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException, ObjectNotFoundException {
+	public synchronized static void setTableForm(HttpServletRequest request,
+			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException,
+			MissingParametersException, ObjectNotFoundException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				true);
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
@@ -385,11 +387,12 @@ public final class ServletSchemaMethods {
 		}
 		String formInternalTableName = request.getParameter("forminternaltablename");
 		if (formInternalTableName == null) {
-			throw new MissingParametersException("forminternaltablename is required to set a table form");
+			throw new MissingParametersException(
+					"forminternaltablename is required to set a table form");
 		}
 		TableInfo formTable = null;
 		if (!formInternalTableName.equals("")) {
-			 formTable = databaseDefn.getTable(request, formInternalTableName);
+			formTable = databaseDefn.getTable(request, formInternalTableName);
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
@@ -400,7 +403,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
+
 	public synchronized static void addFormTab(HttpServletRequest request,
 			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException {
@@ -579,7 +582,8 @@ public final class ServletSchemaMethods {
 			allowAutoDelete = Helpers.valueRepresentsBooleanTrue(allowAutoDeleteString);
 		}
 		if (newTableName == null && newTableDesc == null && lockable == null
-				&& tableFormPublic == null && tableEmail == null && formStyle == null && allowAutoDeleteString == null) {
+				&& tableFormPublic == null && tableEmail == null && formStyle == null
+				&& allowAutoDeleteString == null) {
 			throw new MissingParametersException(
 					"One or more table update parameter must be supplied to update a table");
 		}
@@ -886,7 +890,7 @@ public final class ServletSchemaMethods {
 		String memoryAllocationString = request.getParameter("memoryallocation");
 		Integer memoryAllocation = null;
 		if (memoryAllocationString != null) {
-			memoryAllocation=Integer.valueOf(memoryAllocationString);
+			memoryAllocation = Integer.valueOf(memoryAllocationString);
 		}
 		boolean allowExport = Helpers.valueRepresentsBooleanTrue(allowExportString);
 		if (newReportName == null && newReportDesc == null && internalModuleName == null
@@ -1853,8 +1857,13 @@ public final class ServletSchemaMethods {
 				report.removeField(newCalculationField);
 			}
 			String message = sqlex.getMessage();
-			int bracketDifference = StringUtils.countMatches(message, "(")
-					- StringUtils.countMatches(message, ")");
+			int bracketDifference = 0;
+			if (message.contains("syntax error at or near \")\"")) {
+				bracketDifference = -1;
+			} else {
+				bracketDifference = StringUtils.countMatches(message, "(")
+						- StringUtils.countMatches(message, ")");
+			}
 			if (bracketDifference != 0) {
 				String word;
 				if (Math.abs(bracketDifference) == 1) {
@@ -2268,7 +2277,8 @@ public final class ServletSchemaMethods {
 				errorMessage += ". You're trying to join two fields of different types (e.g. a text field to a number field). They have to be the same";
 			} else {
 				errorMessage += ". " + Helpers.replaceInternalNames(sqlex.getMessage(), report);
-				if (sqlex.getMessage().contains("column reference") && sqlex.getMessage().contains(" is ambiguous")) {
+				if (sqlex.getMessage().contains("column reference")
+						&& sqlex.getMessage().contains(" is ambiguous")) {
 					errorMessage += ". It may be that a calculation using this field needs to specifically include the field's table or report name";
 				}
 			}

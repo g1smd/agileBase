@@ -94,6 +94,14 @@
           #set($headingRow=true)
           #parse("gui/pane2/sectioned_detail_row.vm")
         #end
+        ## A row of headings for the detail rows
+        <tr class="sectioned_detail_headings"><td class="leading">&nbsp;</td>
+          #foreach($field in $fields)
+            <td><span class="sectioned_detail_heading">
+              $field
+            </span></td>
+          #end
+        <td class="trailing">&nbsp;</td></tr>
       #end
     #end
   #end
