@@ -240,6 +240,7 @@
 	  $("tr.sectioned_detail_row").mouseenter(function() {
 	    $("tr.sectioned_detail_heading").hide();
 	    $(this).prevAll("tr.sectioned_detail_heading").last().show();
+	    console.log($(this).prevAll("tr.sectioned_detail_heading").last().attr("name"));
 	  });
 	  #if($browser != "Internet Explorer")
 	    alignTableHeaderCells();
