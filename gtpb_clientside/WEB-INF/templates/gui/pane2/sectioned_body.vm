@@ -90,10 +90,10 @@
           #end
         </tr>
         ## A subheading row for the detail field names
-        #if($reportStyle == "SECTIONED")
+        ###if($reportStyle == "SECTIONED")
           #set($headingRow=true)
           #parse("gui/pane2/sectioned_detail_row.vm")
-        #end
+        ###end
       #end
     #end
   #end
