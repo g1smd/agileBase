@@ -268,7 +268,7 @@ table#reportData tr.excludedRecord td {
 }
 
 .sectioned_filter_row {
-  background-color: #dddddd;
+  background-color: white;
   border-bottom: 1px solid #cecece;
   font-size: 8.5pt;
   line-height: 2em;
