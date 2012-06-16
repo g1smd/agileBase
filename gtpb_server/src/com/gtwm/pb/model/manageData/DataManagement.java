@@ -257,7 +257,7 @@ public final class DataManagement implements DataManagementInfo {
 			this.emailComments(recipients, field, rowId, user, comment);
 		}
 		// HTTP / websocket notification
-		UsageLogger.sendNotification(user, table, sessionData.getReport(), rowId, "comment", comment);
+		//UsageLogger.sendNotification(user, table, sessionData.getReport(), rowId, "comment", comment);
 	}
 
 	private void emailComments(Set<String> recipients, BaseField field, int rowId,
@@ -938,7 +938,7 @@ public final class DataManagement implements DataManagementInfo {
 			user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		}
 		// Send websocket notification
-		UsageLogger.sendNotification(user, table, sessionData.getReport(), rowId, "edit", "Record saved: " + dataToSave);
+		//UsageLogger.sendNotification(user, table, sessionData.getReport(), rowId, "edit", "Record saved: " + dataToSave);
 		// Log everything apart from hidden (auto set) fields
 		Map<BaseField, BaseValue> dataToLog = new LinkedHashMap<BaseField, BaseValue>();
 		for (Map.Entry<BaseField, BaseValue> entrySet : dataToSave.entrySet()) {
