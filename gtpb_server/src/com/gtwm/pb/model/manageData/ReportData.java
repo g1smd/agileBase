@@ -37,6 +37,7 @@ import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.manageData.ReportDataFieldStats;
 import com.gtwm.pb.model.manageData.ReportQuickFilter;
+import com.gtwm.pb.util.Enumerations.FilterType;
 import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
@@ -190,6 +191,8 @@ public class ReportData implements ReportDataInfo {
 		// case
 		if (filterValue.startsWith(QuickFilterType.NOT_LIKE.getUserRepresentation())) {
 			filterType = QuickFilterType.NOT_LIKE;
+		} else if (filterValue.startsWith(QuickFilterType.EQUAL.getUserRepresentation())) {
+			filterType = QuickFilterType.EQUAL;
 		} else if (filterValue.startsWith(QuickFilterType.GREATER_THAN.getUserRepresentation())) {
 			filterType = QuickFilterType.GREATER_THAN;
 		} else if (filterValue.startsWith(QuickFilterType.LESS_THAN.getUserRepresentation())) {
@@ -223,7 +226,6 @@ public class ReportData implements ReportDataInfo {
 			filterValue = filterValue.replaceAll("^\\Q" + filterType.getUserRepresentation()
 					+ "\\E\\s*", "");
 		}
-
 		if (dbType.equals(DatabaseFieldType.BOOLEAN)) {
 			boolean filterValueIsTrue = Helpers.valueRepresentsBooleanTrue(filterValue);
 			if (filterValueIsTrue) {
@@ -246,12 +248,13 @@ public class ReportData implements ReportDataInfo {
 					// seem to like them
 					filterValue = filterValue.trim();
 				}
-
-				if (filterType.equals(QuickFilterType.LIKE)
-						|| filterType.equals(QuickFilterType.NOT_LIKE)
-						|| filterField.getDbType().equals(DatabaseFieldType.VARCHAR)
-						|| filterField.getDbType().equals(DatabaseFieldType.TIMESTAMP)) {
-					filterValue = filterValue + "%";
+				if (!filterType.equals(QuickFilterType.EQUAL)) {
+					if (filterType.equals(QuickFilterType.LIKE)
+							|| filterType.equals(QuickFilterType.NOT_LIKE)
+							|| filterField.getDbType().equals(DatabaseFieldType.VARCHAR)
+							|| filterField.getDbType().equals(DatabaseFieldType.TIMESTAMP)) {
+						filterValue = filterValue + "%";
+					}
 				}
 			}
 		}
@@ -273,45 +276,6 @@ public class ReportData implements ReportDataInfo {
 					"gtpb_field_placeholder", filterField.getInternalFieldName() + "::text");
 		}
 		return filterTypeSqlRepresentation;
-	}
-
-	/**
-	 * Filter on the display value
-	 */
-	private static String generateSqlFilterStringForRelation(RelationField relationField,
-			QuickFilterType filterType) {
-		StringBuilder sqlFilterString = new StringBuilder();
-		String filterFieldInternalName = relationField.getInternalFieldName();
-		String relatedTableInternalName = relationField.getRelatedTable().getInternalTableName();
-		String relatedFieldInternalName = relationField.getRelatedField().getInternalFieldName();
-		String displayFieldInternalName = relationField.getDisplayField().getInternalFieldName();
-		// I'm not sure if the following is correct. Should a where clause be
-		// added to only return when
-		// relatedTableInternalName.relatedFieldInternalName=thisReportInternalName.relatedFieldInternalName
-		sqlFilterString.append(filterFieldInternalName).append(" IN (SELECT ");
-		sqlFilterString.append(relatedFieldInternalName).append(" FROM ");
-		sqlFilterString.append(relatedTableInternalName).append(" WHERE ");
-		String filterTypeSqlRepresentation = filterType.getSqlRepresentation();
-		if (relationField.getDisplayField().getDbType().equals(DatabaseFieldType.VARCHAR)) {
-			filterTypeSqlRepresentation = filterTypeSqlRepresentation.replaceAll(
-					"gtpb_field_placeholder", displayFieldInternalName);
-		} else {
-			filterTypeSqlRepresentation = filterTypeSqlRepresentation.replaceAll(
-					"gtpb_field_placeholder", displayFieldInternalName + "::text");
-		}
-		// TODO: We should really check for > or < filtering on numbers here, as
-		// in generateFilterStringForField(BaseField, String,
-		// List<ReportQuickFilterInfo>, boolean)
-		// but relations to number fields are very uncommon, perhaps adding the
-		// code wouldn't be worth it?
-		if (relationField.getDisplayField().getDbType().equals(DatabaseFieldType.VARCHAR)) {
-			sqlFilterString.append("lower(" + displayFieldInternalName + ")" + " "
-					+ filterTypeSqlRepresentation + " ?) ");
-		} else {
-			sqlFilterString.append(displayFieldInternalName + "::text "
-					+ filterTypeSqlRepresentation + " ?) ");
-		}
-		return sqlFilterString.toString();
 	}
 
 	/**
@@ -450,6 +414,9 @@ public class ReportData implements ReportDataInfo {
 					// Allows indexes etc. to work
 					filterStringForField.append(filterFieldInternalName);
 				} else if (dbType.equals(DatabaseFieldType.VARCHAR)) {
+					filterStringForField.append(filterFieldInternalName);
+				} else if (filterType.equals(QuickFilterType.EQUAL)
+						&& (!dbType.equals(DatabaseFieldType.VARCHAR))) {
 					filterStringForField.append(filterFieldInternalName);
 				} else {
 					filterStringForField.append(filterFieldInternalName + "::text");
@@ -619,6 +586,13 @@ public class ReportData implements ReportDataInfo {
 						}
 						statement.setTimestamp(i, timestamp);
 					}
+				} else {
+					statement.setString(i, value);
+				}
+			} else if (filterType.equals(QuickFilterType.EQUAL)) {
+				if (dbFieldType.equals(DatabaseFieldType.INTEGER)
+						|| dbFieldType.equals(DatabaseFieldType.SERIAL)) {
+					statement.setInt(i, Integer.valueOf(value));
 				} else {
 					statement.setString(i, value);
 				}
@@ -1177,9 +1151,11 @@ public class ReportData implements ReportDataInfo {
 	}
 
 	/**
-	 * One-call method to enable all report-specific optimisations or revert to defaults
+	 * One-call method to enable all report-specific optimisations or revert to
+	 * defaults
 	 */
-	public static void enableOptimisations(Connection conn, BaseReportInfo report, boolean enable) throws SQLException {
+	public static void enableOptimisations(Connection conn, BaseReportInfo report, boolean enable)
+			throws SQLException {
 		QueryPlanSelection planSelection = report.getQueryPlanSelection();
 		boolean no_nested_loops = planSelection.equals(QueryPlanSelection.NO_NESTED_LOOPS);
 		Integer memoryAllocation = report.getMemoryAllocation();
@@ -1199,7 +1175,7 @@ public class ReportData implements ReportDataInfo {
 			}
 		}
 	}
-	
+
 	/**
 	 * Calling methods should always revert back to enable=true at the end of
 	 * querying
@@ -1223,10 +1199,11 @@ public class ReportData implements ReportDataInfo {
 	 * revert back to default after queries
 	 * 
 	 * @param enableOverride
-	 *            true = use the report's value for work_mem, false = revert back
-	 *            to the default
+	 *            true = use the report's value for work_mem, false = revert
+	 *            back to the default
 	 */
-	public static void setWorkMemOverride(Connection conn, int workMem, boolean enableOverride) throws SQLException {
+	public static void setWorkMemOverride(Connection conn, int workMem, boolean enableOverride)
+			throws SQLException {
 		Statement setWorkMemStatement = conn.createStatement();
 		if (enableOverride && (workMem > 0)) {
 			setWorkMemStatement.execute("SET work_mem='" + workMem + "MB'");

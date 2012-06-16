@@ -180,7 +180,7 @@ public class Enumerations {
 	}
 
 	public enum QuickFilterType {
-		LIKE("LIKE", ""), NOT_LIKE("NOT LIKE", "!"), GREATER_THAN(">=", ">"), LESS_THAN("<", "<"), EMPTY(
+		LIKE("LIKE", ""), NOT_LIKE("NOT LIKE", "!"), EQUAL("=","="), GREATER_THAN(">=", ">"), LESS_THAN("<", "<"), EMPTY(
 				"IS NULL OR gtpb_field_placeholder = ", "?"), OR(" OR ", " OR "), AND(" AND ",
 				" AND ");
 
