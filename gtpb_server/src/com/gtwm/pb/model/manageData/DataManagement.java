@@ -2120,6 +2120,7 @@ public final class DataManagement implements DataManagementInfo {
 		JsonGenerator jg;
 		try {
 			jg = jsonFactory.createJsonGenerator(stringWriter);
+			jg.writeStartObject();
 			jg.writeFieldName("fields");
 			jg.writeStartArray();
 			for (ReportFieldInfo reportField : report.getReportFields()) {
@@ -2156,6 +2157,7 @@ public final class DataManagement implements DataManagementInfo {
 				jg.writeEndObject();
 			}
 			jg.writeEndArray();
+			jg.writeEndObject();
 			jg.flush();
 			jg.close();
 		} catch (IOException ioex) {
