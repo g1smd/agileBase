@@ -2126,6 +2126,7 @@ public final class DataManagement implements DataManagementInfo {
 				jg.writeNumberField("rowId", reportDataRow.getRowId());
 				String valueString = null;
 				for (ReportFieldInfo reportField : report.getReportFields()) {
+					jg.writeFieldName("field");
 					jg.writeStartObject();
 					BaseField field = reportField.getBaseField();
 					DataRowFieldInfo value = reportDataRow.getValue(reportField);
