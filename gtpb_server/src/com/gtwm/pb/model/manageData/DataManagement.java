@@ -2147,9 +2147,9 @@ public final class DataManagement implements DataManagementInfo {
 					switch (field.getDbType()) {
 					case INTEGER:
 					case SERIAL:
-						jg.writeNumberField("fieldvalue", Integer.valueOf(valueString));
+						jg.writeNumberField("fieldvalue", Integer.valueOf(valueString.replace(",","")));
 					case FLOAT:
-						jg.writeNumberField("fieldvalue", Double.valueOf(valueString));
+						jg.writeNumberField("fieldvalue", Double.valueOf(valueString.replace(",","")));
 					default:
 						jg.writeStringField("fieldvalue", valueString);
 					}
