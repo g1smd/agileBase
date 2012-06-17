@@ -2125,8 +2125,9 @@ public final class DataManagement implements DataManagementInfo {
 				jg.writeStartObject();
 				jg.writeNumberField("rowId", reportDataRow.getRowId());
 				String valueString = null;
+				jg.writeFieldName("fields");
+				jg.writeStartArray();
 				for (ReportFieldInfo reportField : report.getReportFields()) {
-					jg.writeFieldName("field");
 					jg.writeStartObject();
 					BaseField field = reportField.getBaseField();
 					DataRowFieldInfo value = reportDataRow.getValue(reportField);
@@ -2142,20 +2143,21 @@ public final class DataManagement implements DataManagementInfo {
 					} else {
 						valueString = value.getDisplayValue();
 					}
-					jg.writeStringField("internalfieldname", reportField.getInternalFieldName());
-					jg.writeStringField("fieldname", reportField.getFieldName());
-					jg.writeStringField("fielddescription", reportField.getFieldDescription());
+					jg.writeStringField("id", reportField.getInternalFieldName());
+					jg.writeStringField("name", reportField.getFieldName());
+					jg.writeStringField("desc", reportField.getFieldDescription());
 					switch (field.getDbType()) {
 					case INTEGER:
 					case SERIAL:
-						jg.writeNumberField("fieldvalue", Integer.valueOf(valueString.replace(",","")));
+						jg.writeNumberField("val", Integer.valueOf(valueString.replace(",","")));
 					case FLOAT:
-						jg.writeNumberField("fieldvalue", Double.valueOf(valueString.replace(",","")));
+						jg.writeNumberField("val", Double.valueOf(valueString.replace(",","")));
 					default:
-						jg.writeStringField("fieldvalue", valueString);
+						jg.writeStringField("val", valueString);
 					}
 					jg.writeEndObject();
 				}
+				jg.writeEndArray();
 				jg.writeEndObject();
 			}
 			jg.writeEndArray();
