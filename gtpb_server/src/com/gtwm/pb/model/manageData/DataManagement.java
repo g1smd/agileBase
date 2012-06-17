@@ -2158,8 +2158,8 @@ public final class DataManagement implements DataManagementInfo {
 			jg.writeEndArray();
 			jg.flush();
 			jg.close();
-		} catch (IOException e) {
-			throw new CodingErrorException("StringWriter produced an IO exception!");
+		} catch (IOException ioex) {
+			throw new CodingErrorException("StringWriter produced an IO exception!", ioex);
 		}
 		return stringWriter.toString();
 	}
