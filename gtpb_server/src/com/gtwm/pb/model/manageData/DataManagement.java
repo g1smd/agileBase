@@ -248,7 +248,9 @@ public final class DataManagement implements DataManagementInfo {
 		for (AppUserInfo companyUser : company.getUsers()) {
 			String email = companyUser.getEmail();
 			if (email != null) {
-				if (email.contains("@") && authenticator.userAllowedTo(PrivilegeType.VIEW_TABLE_DATA, table, companyUser)) {
+				if (email.contains("@")
+						&& authenticator.userAllowedTo(PrivilegeType.VIEW_TABLE_DATA, table,
+								companyUser)) {
 					recipients.add(email);
 				}
 			}
@@ -257,7 +259,8 @@ public final class DataManagement implements DataManagementInfo {
 			this.emailComments(recipients, field, rowId, user, comment);
 		}
 		// HTTP / websocket notification
-		//UsageLogger.sendNotification(user, table, sessionData.getReport(), rowId, "comment", comment);
+		// UsageLogger.sendNotification(user, table, sessionData.getReport(),
+		// rowId, "comment", comment);
 	}
 
 	private void emailComments(Set<String> recipients, BaseField field, int rowId,
@@ -938,7 +941,8 @@ public final class DataManagement implements DataManagementInfo {
 			user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		}
 		// Send websocket notification
-		//UsageLogger.sendNotification(user, table, sessionData.getReport(), rowId, "edit", "Record saved: " + dataToSave);
+		// UsageLogger.sendNotification(user, table, sessionData.getReport(),
+		// rowId, "edit", "Record saved: " + dataToSave);
 		// Log everything apart from hidden (auto set) fields
 		Map<BaseField, BaseValue> dataToLog = new LinkedHashMap<BaseField, BaseValue>();
 		for (Map.Entry<BaseField, BaseValue> entrySet : dataToSave.entrySet()) {
@@ -2122,6 +2126,7 @@ public final class DataManagement implements DataManagementInfo {
 				jg.writeNumberField("rowId", reportDataRow.getRowId());
 				String valueString = null;
 				for (ReportFieldInfo reportField : report.getReportFields()) {
+					jg.writeStartObject();
 					BaseField field = reportField.getBaseField();
 					DataRowFieldInfo value = reportDataRow.getValue(reportField);
 					boolean useKey = false;
@@ -2136,7 +2141,19 @@ public final class DataManagement implements DataManagementInfo {
 					} else {
 						valueString = value.getDisplayValue();
 					}
-					jg.writeStringField(reportField.getInternalFieldName(), valueString);
+					jg.writeStringField("internalfieldname", reportField.getInternalFieldName());
+					jg.writeStringField("fieldname", reportField.getFieldName());
+					jg.writeStringField("fielddescription", reportField.getFieldDescription());
+					switch (field.getDbType()) {
+					case INTEGER:
+					case SERIAL:
+						jg.writeNumberField("fieldvalue", Integer.valueOf(valueString));
+					case FLOAT:
+						jg.writeNumberField("fieldvalue", Double.valueOf(valueString));
+					default:
+						jg.writeStringField("fieldvalue", valueString);
+					}
+					jg.writeEndObject();
 				}
 				jg.writeEndObject();
 			}

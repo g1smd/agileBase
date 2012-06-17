@@ -26,7 +26,7 @@
 #else
 	class="modulecollapsed silver"
 #end
-><h2><span>Tables</span></h2>
+><h2><span>Development</span></h2>
 	<ul>
     #foreach($table in $manageableTables)
         #set($tableReports = $view.getViewableReports($table))
