@@ -335,4 +335,14 @@ ul.moduleaction li {
 	text-decoration: none;
 	color: #486f98;
 }
+
+.warningmessage {
+		border-radius: 1em;
+		border: 2px solid rgb(254,233,84);
+		text-align: center;
+		background: rgb(254,242,149);
+		margin: 10px;
+		padding: 10px;
+}
+
 				
