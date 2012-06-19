@@ -29,7 +29,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
   #set($formTable = $sessionTable.getFormTable())
 #end
 ## If set to use a table different to the current one as a form
-#if($formTable)
+#if($formTable && (!$mobile_device))
   #if(!$formTable.equals($sessionTable)) 
     #set($originalTable = $sessionTable)
     #set($sessionTable = $formTable)
