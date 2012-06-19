@@ -33,7 +33,7 @@ if (requestURL.contains("appserver.")) {
 			<% if(live) { %>
 				<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
 			<% } else { %>
-				<form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
+				<form method="POST" action="http://backup.agilebase.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 			<% } %>
 			username<br />
 			<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/><br>
