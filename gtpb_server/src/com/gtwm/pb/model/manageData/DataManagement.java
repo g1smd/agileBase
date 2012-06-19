@@ -58,7 +58,6 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.math.util.MathUtils;
-
 import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -164,7 +163,6 @@ import org.glowacki.CalendarParserException;
 import org.im4java.core.ConvertCmd;
 import org.im4java.core.IM4JavaException;
 import org.im4java.core.IMOperation;
-
 import au.com.bytecode.opencsv.CSVReader;
 
 // TODO: There is only one instance of DataManagement in the app
@@ -1540,6 +1538,9 @@ public final class DataManagement implements DataManagementInfo {
 		if (fileValue.toString().contains("/")) {
 			throw new CantDoThatException(
 					"Filename contains a slash character which is not allowed, no upload done");
+		}
+		if (fileValue.toString().contains("'") || fileValue.toString().contains("\"")) {
+			throw new CantDoThatException("Filename must not contain quote marks");
 		}
 		// Put the file in a unique folder per row ID.
 		// This is in the format table ID / field ID / row ID

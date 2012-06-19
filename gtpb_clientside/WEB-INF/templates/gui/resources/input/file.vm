@@ -45,10 +45,11 @@
       #set($previewUrl = "$downloadUrl.500.png")
 			#set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
       <a href="$downloadUrl">download</a>
-			#if($pdf && !$sectionHasImage)
-				<br clear="left" />
-			  <a href="$downloadUrl"><img class="edit_image file_preview" src="$previewUrl"></a>
-			#end
+            ## PDF preview
+			###if($pdf && !$sectionHasImage)
+			##	<br clear="left" />
+			##  <a href="$downloadUrl"><img class="edit_image file_preview" src="$previewUrl"></a>
+			###end
   	  #if(!$userCanEdit)
   	    #set($previousFileVersions = $field.getPreviousFileVersions($viewTools.getWebAppRoot(), $sessionRowId, $fieldValue))
   	    #if($previousFileVersions.size() > 0)
