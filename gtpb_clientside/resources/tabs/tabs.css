@@ -243,12 +243,18 @@ a[error] { font-size:8pt; }
 .reportDataView #leftcol {
   float: left;
   width: 50%;
+  background-color: #f4f4f4;
 }
 
 .reportDataView #rightcol {
   float: right;
   width: 50%;
+  background-color: #f4f4f4;
 }	
+
+.reportDataView #rightcol .related {
+  margin-left: 0;
+}
 
 .reportDataView h1 {
   font-size: 14pt;
@@ -258,7 +264,6 @@ a[error] { font-size:8pt; }
   margin-top: 0;
   clear: both;
   position: relative;
-  left: -0.5em;
 }
 
 .reportDataView h2 {
@@ -267,11 +272,11 @@ a[error] { font-size:8pt; }
   margin-left: 0;
   clear: both;
   position: relative;
-  left: -0.5em;
 }
 
 .reportDataView .related {
   color: #888888;
+  background-color: white;
   /* background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e6e7ea)); /* for webkit browsers */
   /* background: -moz-linear-gradient(top,  #fff,  #e6e7ea); /* for firefox 3.6+ */
   /* background: -ms-linear-gradient(top,  #fff,  #e6e7ea); */
