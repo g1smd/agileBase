@@ -282,13 +282,8 @@ a[error] { font-size:8pt; }
   /* background: -ms-linear-gradient(top,  #fff,  #e6e7ea); */
   /* background: linear-gradient(top,  #fff,  #e6e7ea); */
   padding: 1em;
-  margin: 5px;
-  border: solid 1px #b4b4b4;
-  border-radius: 10px;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
-  -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+  margin: 0.5em;
+  border-radius: 0.5em;
   word-wrap: break-word;
 }
 
