@@ -15,6 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+#set($internalTableName=$field.getTableContainingField().getInternalTableName())
 #if($field.storesCurrency())
   #set($currencySymbol = "<span class='currency_symbol'>&pound;</span>")
   #set($currencySymbolBare = "&pound;")
@@ -30,16 +31,16 @@
   #end##
   	#if($userCanEdit)##
   	  #if($globalEdit || (!$updateAsType))##
-  	    		$currencySymbol <input type="text" name="$field.getInternalFieldName()" value="$fieldValue" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
+  	    		$currencySymbol <input type="text" gtpb_internaltablename="$internalTableName" "$sessionTable.getInternalTableName()" name="$field.getInternalFieldName()" value="$fieldValue" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
   	  #else##
-  	    		$currencySymbol <input type="text" #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this, event)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+  	    		$currencySymbol <input type="text" gtpb_internaltablename="$internalTableName" #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this, event)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
 				#if($field.getNotNull() && (($fieldValue == "") || $customAction))
 					<span class="mandated">* Mandatory field - please enter a value</span>
 				#end
 				<div id="$field.getInternalFieldName()_warning" class="warningmessage" style="display:none"></div>
 	  #end##
     		#if($field.allowNotApplicable())##
-		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
+		      <br><input type="checkbox" gtpb_internaltablename="$internalTableName" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
 		    #end##
   	#else##
       $currencySymbolBare $fieldValue,##
@@ -50,7 +51,7 @@
   	#end##
   	#if($userCanEdit)##
   	  #if($globalEdit || (!$updateAsType))##
-  	    		$currencySymbol <input type="text" name="$field.getInternalFieldName()" value="" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
+  	    		$currencySymbol <input type="text" gtpb_internaltablename="$internalTableName" name="$field.getInternalFieldName()" value="" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
   	  #else##
   	    		$currencySymbol <input type="text" #if($field.getNotNull()) required #end gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this, event)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
 				#if($field.getNotNull() && (($tableDataRow.get($field) == "") || $customAction))
@@ -59,7 +60,7 @@
 				<div id="$field.getInternalFieldName()_warning" class="warningmessage" style="display:none"></div>
   	  #end##
     		#if($field.allowNotApplicable())##
-		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
+		      <br><input type="checkbox" gtpb_internaltablename="$internalTableName" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
 		    #end##
   	#else##
       $currencySymbolBare $fieldValue,##
