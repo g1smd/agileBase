@@ -93,6 +93,7 @@
   	<script src="resources/jquery.js" language="Javascript"></script>
 	#set($sessionReport = $sessionData.getReport())
 	#set($sessionTable = $sessionData.getTable())
+	#set($filtersShouldBeShown = true)
     <title>$sessionReport.getModule() - $sessionReport</title>
 	#if($mobile_device)
 	  <meta name = "viewport" content = "initial-scale = 1.0"> <!-- stop iPad automatically zooming out of large reports -->
@@ -103,7 +104,6 @@
         loadCharts();
 	  });	  
 	  </script>
-	  #set($filtersShouldBeShown = true)
 	#else
 	  #if($isNotTable)
       <script type="text/javascript">
@@ -112,17 +112,18 @@
 	  #end
       #set($filtersShouldBeShown = false)
 	  #if(($resource_folder != 'user') && ($resource_folder != 'roles'))
-		  #set($sessionFilterString = $sessionData.getCustomString('filtering_on'))
-		  #set($filtersShouldBeShown = ($sessionFilterString=='true'))
-		  #if($viewTools.isNull($sessionFilterString) && ($view.getLoggedInUser().getUserType() != "FULL"))
-			#set($filtersShouldBeShown = true)
-			   <script language=Javascript>
-			   var jqFilter = $(top.document).find('#filter');
-				 if (!jqFilter.hasClass('selected')) {
-				   jqFilter.click();
-				 }
-			   </script>
-		  #end
+		  ##set($sessionFilterString = $sessionData.getCustomString('filtering_on'))
+		  ##set($filtersShouldBeShown = ($sessionFilterString=='true'))
+      	  #set($filtersShouldBeShown = true)
+##		  #if($viewTools.isNull($sessionFilterString) && ($view.getLoggedInUser().getUserType() != "FULL"))
+##			#set($filtersShouldBeShown = true)
+##			   <script language=Javascript>
+##			   var jqFilter = $(top.document).find('#filter');
+##				 if (!jqFilter.hasClass('selected')) {
+##				   jqFilter.click();
+##				 }
+##			   </script>
+##		  #end
 	  #end
 	#if($isNotTable||$view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$sessionTable))
 	    <script language=Javascript>
@@ -169,9 +170,9 @@
           #end
         #end
       var jqDoc = $(top.document);
-    	#if(!$isNotTable)
-          jqDoc.find('#filter').removeAttr('disabled');
-    	#end
+##    	#if(!$isNotTable)
+##          jqDoc.find('#filter').removeAttr('disabled');
+##    	#end
     	## Enable the dashboard if relevant
       jqDoc.find('#button_dashboard').removeAttr('disabled');
       jqDoc.find('#button_forms').removeAttr('disabled');
