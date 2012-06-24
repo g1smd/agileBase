@@ -333,12 +333,15 @@ function hideTooltip() {
 
 function clearFilters() {
 	var oReportBody = document.getElementById('reportBody');
+	$("input[is_filter=true]").val("");
+	$("input[is_filter=true]").attr("disabled", "true");
 	$.post("AppController.servlet",
 		{
 		  'return': 'gui/reports_and_tables/report_data_only',
 		  'clear_all_report_filter_values': true,
 		  'clear_custom_variable': 'filtering_on'
 	  }, function(sResponseText) {
+	  	$("input[is_filter=true]").removeAttr("disabled");
 		  fLoadReport(sResponseText, oReportBody, null);
 	});
 }
