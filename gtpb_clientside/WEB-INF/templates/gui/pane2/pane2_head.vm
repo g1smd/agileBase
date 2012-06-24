@@ -52,7 +52,7 @@
     #set($internalFieldName = $field.getInternalFieldName())
     #set($fieldObject = $field)
     <td><div>
-      #parse("gui/pane2/filter_input.vm")
+      $field: #parse("gui/pane2/filter_input.vm")
     </div></td>
   #end
   <td class=trailing><div>&nbsp;</div></td>      
