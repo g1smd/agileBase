@@ -330,3 +330,15 @@ function hideTooltip() {
 	$(".ab_tooltip").fadeOut("normal");
 	clearTimeout(abTooltipTimeout);
 }
+
+function clearFilters() {
+	var oReportBody = document.getElementById('reportBody');
+	$.post("AppController.servlet",
+		{
+		  'return': 'gui/reports_and_tables/report_data_only',
+		  'clear_all_report_filter_values': true,
+		  'clear_custom_variable': 'filtering_on'
+	  }, function(sResponseText) {
+		  fLoadReport(sResponseText, oReportBody, null);
+	});
+}
