@@ -24,6 +24,7 @@ import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.InitialView;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -224,6 +225,14 @@ public class PublicUser implements AppUserInfo {
 
 	public void removeFormTable(TableInfo table) throws CantDoThatException {
 		throw new CantDoThatException("This public user can have no forms");
+	}
+
+	public boolean getAllowPasswordReset() {
+		return false;
+	}
+
+	public void allowPasswordReset() throws CantDoThatException, CodingErrorException {
+		throw new CantDoThatException("This public user can't have a password reset");
 	}
 
 }

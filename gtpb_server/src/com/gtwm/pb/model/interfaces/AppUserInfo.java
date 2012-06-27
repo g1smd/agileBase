@@ -19,7 +19,10 @@ package com.gtwm.pb.model.interfaces;
 
 import java.util.Set;
 
+import javax.mail.MessagingException;
+
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.Enumerations.InitialView;
 
@@ -39,7 +42,7 @@ public interface AppUserInfo {
 	public static final String FORENAME = "forename";
 
 	public static final String INITIALVIEW = "initialview";
-	
+
 	public static final String EMAIL = "email";
 
 	public CompanyInfo getCompany();
@@ -59,9 +62,9 @@ public interface AppUserInfo {
 	public String getForename();
 
 	public void setPassword(String password) throws MissingParametersException, CantDoThatException;
-	
+
 	public String getEmail();
-	
+
 	public void setEmail(String email) throws CantDoThatException;
 
 	/**
@@ -82,43 +85,67 @@ public interface AppUserInfo {
 	 * but to reduce clutter
 	 */
 	public Set<BaseReportInfo> getHiddenReports();
-	
+
 	/**
-	 * Reports that should be visible by default on the user's operational dashboard and calendar
+	 * Reports that should be visible by default on the user's operational
+	 * dashboard and calendar
 	 */
 	public Set<BaseReportInfo> getOperationalDashboardReports();
-	
+
 	public void addOperationalDashboardReport(BaseReportInfo report) throws CantDoThatException;
-	
+
 	public void removeOperationalDashboardReport(BaseReportInfo report) throws CantDoThatException;
-	
+
 	/**
 	 * Tables that the user can use the 'form' data input method with
 	 */
 	public Set<TableInfo> getFormTables() throws CantDoThatException;
-	
+
 	public void addFormTable(TableInfo table) throws CantDoThatException;
-	
+
 	public void removeFormTable(TableInfo table) throws CantDoThatException;
-	
+
 	public void hideReport(BaseReportInfo report) throws CantDoThatException;
-	
+
 	public void unhideReport(BaseReportInfo report) throws CantDoThatException;
-	
+
 	/**
-	 * Record the fact that a section in the edit tab is contracted for this user
-	 * @param internalFieldName	The identifier of the section heading field
+	 * Record the fact that a section in the edit tab is contracted for this
+	 * user
+	 * 
+	 * @param internalFieldName
+	 *            The identifier of the section heading field
 	 */
 	public void contractSection(String internalFieldName) throws CantDoThatException;
-	
+
 	public void expandSection(String internalFieldName) throws CantDoThatException;
-	
+
 	public Set<String> getContractedSections();
-	
+
 	/**
 	 * Get the initial report this user should see when logging in
 	 */
 	public BaseReportInfo getDefaultReport() throws CantDoThatException;
-	
+
 	public void setDefaultReport(BaseReportInfo report) throws CantDoThatException;
+
+	/**
+	 * See whether the user can be sent a link to reset their password.
+	 * 
+	 * Note the current password is reset to a value that can be sent out by
+	 * email, so between the time the email is sent and the user actually resets
+	 * the password, the login is at risk. To help protect the account,
+	 * passwords have to be reset within a certain time period. If this time
+	 * period has passed,
+	 */
+	public boolean getAllowPasswordReset();
+
+	/**
+	 * Sets the counter going for the time period in which the password can be
+	 * reset. Also resets the password to a random value
+	 * 
+	 * @throws CantDoThatException
+	 *             if the user doesn't have an email address
+	 */
+	public void allowPasswordReset() throws CantDoThatException, CodingErrorException, MessagingException;
 }

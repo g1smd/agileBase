@@ -28,9 +28,13 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.InitialView;
+
+import javax.mail.MessagingException;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -264,6 +268,35 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.defaultReport = report;
 	}
 	
+	@Transient
+	public boolean getAllowPasswordReset() {
+		if ((System.currentTimeMillis() - this.passwordResetSent) < (24*60*60*1000)) {
+			return true;
+		} 
+		return false;
+	}
+	
+	public void allowPasswordReset() throws CantDoThatException, CodingErrorException, MessagingException {
+		if (this.getEmail() == null) {
+			throw new CantDoThatException("The user has no email address");
+		}
+		if (!this.getEmail().contains("@")) {
+			throw new CantDoThatException("The user's email isn't valid");
+		}
+		try {
+			this.setPassword(RandomString.generate());
+		} catch (MissingParametersException mpex) {
+			throw new CodingErrorException("Error generating a password: " + mpex);
+		}
+		Set<String> recipients = new HashSet<String>();
+		recipients.add(this.getEmail());
+		String subject = "Set your password";
+		String body = "Please choose a password for your account by following this link:\n\n";
+		body += "https://appserver.gtportalbase.com/agileBase/AppController.servlet?return=set_password/email_reset\n";
+		Helpers.sendEmail(recipients, body, subject);
+		this.passwordResetSent = System.currentTimeMillis();
+	}
+	
 	public String toString() {
 		return this.getUserName();
 	}
@@ -323,4 +356,9 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private Set<String> contractedSections = new HashSet<String>();
 	
 	private BaseReportInfo defaultReport = null;
+	
+	/**
+	 * Epoch time at which a password reset email was sent
+	 */
+	private long passwordResetSent = 0;
 }

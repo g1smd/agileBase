@@ -17,8 +17,6 @@
  */
 package com.gtwm.pb.util;
 
-import java.util.Random;
-
 import org.apache.commons.lang.RandomStringUtils;
 
 /**

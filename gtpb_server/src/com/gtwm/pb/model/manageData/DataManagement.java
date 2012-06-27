@@ -35,7 +35,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.LinkedHashSet;
 import java.util.Arrays;
@@ -131,13 +130,7 @@ import com.gtwm.pb.util.Enumerations.HiddenFields;
 import com.gtwm.pb.util.Enumerations.AppAction;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import javax.imageio.ImageIO;
-import javax.mail.Address;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import javax.xml.stream.XMLEventFactory;
@@ -281,10 +274,6 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		DataRowInfo row = rows.get(0);
 		body += "'" + buildEventTitle(report, row, true) + "'\n";
-		Properties props = new Properties();
-		props.setProperty("mail.smtp.host", "localhost");
-		Session mailSession = Session.getDefaultInstance(props, null);
-		MimeMessage message = new MimeMessage(mailSession);
 		try {
 			String subject = "Comment for " + table.getSingularName();
 			boolean rowIdentifierFound = false;
@@ -307,15 +296,7 @@ public final class DataManagement implements DataManagementInfo {
 			if (!rowIdentifierFound) {
 				subject += " " + firstField + "=" + firstValue;
 			}
-			message.setSubject(subject);
-			for (String emailRecipient : recipients) {
-				Address toAddress = new InternetAddress(emailRecipient);
-				message.addRecipient(Message.RecipientType.TO, toAddress);
-			}
-			Address fromAddress = new InternetAddress("notifications@agilebase.co.uk");
-			message.setFrom(fromAddress);
-			message.setText(body);
-			Transport.send(message);
+			Helpers.sendEmail(recipients, body, subject);
 		} catch (MessagingException mex) {
 			logger.warn("Error sending comment notification email: " + mex);
 		}
