@@ -405,8 +405,7 @@ tr.separator + tr.separator {
 }
 
 #filterhelp {
-	color: gray;
-	text-shadow: 0 1px 0 white;
+  position: relative;
 }
 
 .ab_tooltip {
