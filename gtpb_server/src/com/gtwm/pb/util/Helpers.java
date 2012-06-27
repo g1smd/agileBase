@@ -57,6 +57,7 @@ public final class Helpers {
 
 	public static void sendEmail(Set<String> recipients, String body, String subject)
 			throws MessagingException {
+		logger.debug("About to send email to " + recipients);
 		Properties props = new Properties();
 		props.setProperty("mail.smtp.host", "localhost");
 		Session mailSession = Session.getDefaultInstance(props, null);
@@ -70,6 +71,7 @@ public final class Helpers {
 		message.setFrom(fromAddress);
 		message.setText(body);
 		Transport.send(message);
+		logger.debug("Sent message about " + subject + " to " + recipients);
 	}
 	
 	public static String readFile(String fileName) throws IOException {
