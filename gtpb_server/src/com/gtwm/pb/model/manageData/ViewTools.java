@@ -1122,20 +1122,7 @@ public final class ViewTools implements ViewToolsInfo {
 	}
 
 	public String getAppUrl() {
-		String appUrl = "";
-		if (this.request.isSecure()) {
-			appUrl = "https://";
-		} else {
-			appUrl = "http://";
-		}
-		String serverName = this.request.getServerName();
-		appUrl += serverName;
-		int port = this.request.getServerPort();
-		if ((port != 80) && (!this.request.isSecure())) {
-			appUrl += ":" + port;
-		}
-		appUrl += this.request.getContextPath() + this.request.getServletPath();
-		return appUrl;
+		return Helpers.getAppUrl(this.request);
 	}
 
 	public String lpad(String stringToPad, int lengthToPadTo, String padCharacter) {

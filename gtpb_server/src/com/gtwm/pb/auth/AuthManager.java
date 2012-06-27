@@ -41,6 +41,7 @@ import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -884,7 +885,7 @@ public final class AuthManager implements AuthManagerInfo {
 		if (!this.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
-		user.sendPasswordReset();
+		user.sendPasswordReset(Helpers.getAppUrl(request));
 	}
 
 	private AuthenticatorInfo authenticator = null;

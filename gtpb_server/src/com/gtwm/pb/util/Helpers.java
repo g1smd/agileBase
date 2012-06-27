@@ -40,6 +40,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
@@ -72,6 +74,23 @@ public final class Helpers {
 		message.setText(body);
 		Transport.send(message);
 		logger.debug("Sent message about " + subject + " to " + recipients);
+	}
+	
+	public static String getAppUrl(HttpServletRequest request) {
+		String appUrl = "";
+		if (request.isSecure()) {
+			appUrl = "https://";
+		} else {
+			appUrl = "http://";
+		}
+		String serverName = request.getServerName();
+		appUrl += serverName;
+		int port = request.getServerPort();
+		if ((port != 80) && (!request.isSecure())) {
+			appUrl += ":" + port;
+		}
+		appUrl += request.getContextPath() + request.getServletPath();
+		return appUrl;
 	}
 	
 	public static String readFile(String fileName) throws IOException {

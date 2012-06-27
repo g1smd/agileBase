@@ -23,11 +23,11 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
     <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"></script>
-        <% if(ssl) { %>
+    <% if(ssl) { %>
 			<script src="https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
 		<% } else { %>
 			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
-	    <% } %>
+	  <% } %>
 		<script type="text/javascript">
 			google.load("feeds", "1");
 		</script>
@@ -96,7 +96,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
           </div>
 			<div id="intro" class="wrapper">      
 				<div class="content">
-								<div id="login">
+					<div id="login">
 					<% if(live) { %>
 						<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
 					<% } else { %>

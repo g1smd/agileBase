@@ -148,8 +148,10 @@ public interface AppUserInfo {
 	 * 
 	 * 3) Sends the user a password reset email
 	 * 
+	 * @param appUrl is used in the email notification to the user
+	 * 
 	 * @throws CantDoThatException
 	 *             if the user doesn't have an email address
 	 */
-	public void sendPasswordReset() throws CantDoThatException, CodingErrorException, MessagingException;
+	public void sendPasswordReset(String appUrl) throws CantDoThatException, CodingErrorException, MessagingException;
 }

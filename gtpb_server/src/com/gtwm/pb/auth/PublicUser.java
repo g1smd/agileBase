@@ -231,7 +231,7 @@ public class PublicUser implements AppUserInfo {
 		return false;
 	}
 
-	public void sendPasswordReset() throws CantDoThatException, CodingErrorException {
+	public void sendPasswordReset(String appUrl) throws CantDoThatException, CodingErrorException {
 		throw new CantDoThatException("This public user can't have a password reset");
 	}
 

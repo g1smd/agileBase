@@ -143,6 +143,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 			throw new MissingParametersException("Password blank");
 		}
 		this.password = password;
+		// Reset the password timer so a password can only be reset once from a single email notification
+		this.passwordResetSent = 0;
 	}
 	
 	public String getEmail() {
@@ -277,14 +279,14 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		return false;
 	}
 	
-	public void sendPasswordReset() throws CantDoThatException, CodingErrorException, MessagingException {
+	public void sendPasswordReset(String appUrl) throws CantDoThatException, CodingErrorException, MessagingException {
 		if (this.getEmail() == null) {
 			throw new CantDoThatException("The user has no email address");
 		}
 		if (!this.getEmail().contains("@")) {
 			throw new CantDoThatException("The user's email isn't valid");
 		}
-		String passwordResetLink = "https://appserver.gtportalbase.com/agileBase/AppController.servlet?return=set_password/email_reset";
+		String passwordResetLink = appUrl + "/AppController.servlet?return=set_password/email_reset";
 		if (this.getAllowPasswordReset()) {
 			throw new CantDoThatException("The previous password reset request hasn't timed out yet, please use that: " + passwordResetLink);
 		}
