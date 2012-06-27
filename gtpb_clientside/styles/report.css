@@ -415,9 +415,9 @@ tr.separator + tr.separator {
 	top: 30px;
 	left: 0;
 	background-color: #f0f0f0;
-	-moz-box-shadow: 0.5em 0.5em 1em #eeeeee;
-	-webkit-box-shadow: 0.5em 0.5em 1em #eeeeee;
-	box-shadow: 0.5em 0.5em 1em #eeeeee;
+	-moz-box-shadow: 0.5em 0.5em 2em #cccccc;
+	-webkit-box-shadow: 0.5em 0.5em 2em #cccccc;
+	box-shadow: 0.5em 0.5em 2em #cccccc;
 	width: auto!important;
 	max-width: 1000px;
 	font-weight: normal;
@@ -425,6 +425,7 @@ tr.separator + tr.separator {
 	padding: 0.2em;
 	text-transform: none;
 	border-radius: 5px;
+	border: 1px solid white;
 }
 
 .ab_tooltip .tooltip_content {
@@ -438,11 +439,11 @@ tr.separator + tr.separator {
 table#reportData thead td .ab_tooltip td:nth-child(even) {
   border-bottom:0;
   min-width: 10em;
+  border-right: 2px solid white;
 }
 
 table#reportData thead td .ab_tooltip td:nth-child(odd) {
   text-align: right;
-  border: 1px solid white;
 }
 
 img.mini_icon {
