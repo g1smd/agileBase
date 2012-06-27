@@ -29,6 +29,8 @@ if (queryString.contains("boot_mobile")) {
   <%@ include file="a3/a3.jsp" %>
 <% } else if(queryString.contains("absolutelypc")) { %>
   <%@ include file="partner/absolutelypc.jsp" %>
+<% } else if(queryString.contains("set_password")) { %>
+  <%@ include file="password_reset.jsp" %>
 <% } else { %>
   <%@ include file="agilebase.jsp" %>
 <% } %>
