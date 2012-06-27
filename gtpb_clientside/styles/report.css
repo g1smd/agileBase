@@ -440,6 +440,10 @@ table#reportData thead td .ab_tooltip td:nth-child(even) {
   min-width: 10em;
 }
 
+table#reportData thead td .ab_tooltip td:nth-child(odd) {
+  text-align: right;
+}
+
 img.mini_icon {
 	vertical-align: middle;
 }
