@@ -50,6 +50,7 @@
 		ajaxCache: true,
 		waitImage: false,
 		width: 229,
+		dropShadow: false,
 		hoverIntent: {  
 		  interval: 500
 		}

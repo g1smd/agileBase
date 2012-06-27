@@ -1,8 +1,12 @@
 /* Oliver */
 
 #cluetip {
+	/* Match report.css -> .ab_tooltip */
 	opacity: 0.95;
   border: 1px solid white;
+	-moz-box-shadow: 0.5em 0.5em 2em #cccccc;
+	-webkit-box-shadow: 0.5em 0.5em 2em #cccccc;
+	box-shadow: 0.5em 0.5em 2em #cccccc;
 }
 
 /* global */
