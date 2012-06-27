@@ -321,7 +321,7 @@ function showTooltip() {
 		tooltip.find(".sparkline").sparkline('html', {
 			type : 'bar'
 		});
-		abTooltipTimeout = setTimeout("hideTooltip()", 8000);
+		abTooltipTimeout = setTimeout("hideTooltip()", 13000);
 	});
 }
 
