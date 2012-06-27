@@ -105,11 +105,6 @@
 	  });	  
 	  </script>
 	#else
-	  #if($isNotTable)
-      <script type="text/javascript">
-        jqDoc.find('#filter').attr('disabled','true');
-      </script>
-	  #end
       #set($filtersShouldBeShown = false)
 	  #if(($resource_folder != 'user') && ($resource_folder != 'roles'))
 		  ##set($sessionFilterString = $sessionData.getCustomString('filtering_on'))
