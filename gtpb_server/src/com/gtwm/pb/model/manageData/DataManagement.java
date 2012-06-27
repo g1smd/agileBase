@@ -460,11 +460,10 @@ public final class DataManagement implements DataManagementInfo {
 		SortedSet<BaseField> fields = table.getFields();
 		// Ignore un-clonable fields
 		for (BaseField field : fields) {
-			if (!(field instanceof FileField) && !(field instanceof SeparatorField)
-					&& !(field instanceof CommentFeedField)
-					&& !(field instanceof ReferencedReportDataField) && !(field.getUnique())) { // &&
-				// !(field.getHidden()))
-				// {
+			if ((!(field instanceof FileField)) && (!(field instanceof SeparatorField))
+					&& (!(field instanceof CommentFeedField))
+					&& (!(field.getFieldName().equals(HiddenFields.COMMENTS_FEED.getFieldName())))
+					&& (!(field instanceof ReferencedReportDataField)) && (!(field.getUnique()))) {
 				if (field instanceof RelationField) {
 					BaseValue relationValue = values.get(((RelationField) field).getRelatedField());
 					valuesToClone.put(field, relationValue);
