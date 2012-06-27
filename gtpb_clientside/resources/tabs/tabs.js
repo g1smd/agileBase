@@ -1537,6 +1537,15 @@ function HueToRgb(m1, m2, hue) {
 	return 255 * v;
 }
 
+function sendPasswordReset(oButton) {
+	var jqButton = $(oButton);
+	var internalUserName = jqButton.attr("data_internalusername");
+	$("#password_reset_result").load("AppController.servlet", {
+		"return": "gui/administration/users/return_password_reset",
+		internalusername: internalUserName
+	});
+}
+
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
 pane3Scripts.functionList.push(editTabFunctions);

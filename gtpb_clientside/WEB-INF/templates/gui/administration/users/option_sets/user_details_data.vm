@@ -48,7 +48,7 @@
       #end
       <input type="text" name="email" gtpb_internalusername="$username" gtpb_update_user value="$email" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
       <br />only enter this if you want the user to receive notifications of *all comments* added throughout agileBase<p>
-      <button data_internalusername="$username" onclick="parent.pane_2.sendPasswordReset(this);" #if($sessionUser.getAllowPasswordReset()) disabled="true" title="A password reset has already been sent to this user" #end />Send password notification</button>
+      <button data_internalusername="$username" onclick="sendPasswordReset(this);" #if($sessionUser.getAllowPasswordReset()) disabled="true" title="A password reset has already been sent to this user" #end />Send password notification</button>
       <br /><span id="password_reset_result">Send $sessionUser.getForename() an email link they can use to choose a password</span>
     </td>
   <tr>

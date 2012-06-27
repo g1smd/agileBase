@@ -24,13 +24,3 @@ function fDelete() {
 	var sRowIdentifier='internalusername';
 	var oDelete=new fDeleteObj(sAction,sRowIdentifier);
 }
-
-function sendPasswordReset(oButton) {
-	var jqButton = $(oButton);
-	var internalUserName = jqButton.attr("data_internalusername");
-	$("#password_reset_result").load("AppController.servlet", {
-		"return": "gui/administration/users/return_password_reset",
-		internalusername: internalUserName
-	});
-}
-
