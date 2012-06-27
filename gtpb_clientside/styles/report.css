@@ -414,12 +414,12 @@ tr.separator + tr.separator {
 	display: none;
 	top: 30px;
 	left: 0;
-	background-color: #fffcdc;
-	-moz-box-shadow: 3px 3px 8px #888;
-	-webkit-box-shadow: 3px 3px 8px #888;
-	box-shadow: 3px 3px 4px #888;
+	background-color: #f0f0f0;
+	-moz-box-shadow: 0.5em 0.5em 1em #cccccc;
+	-webkit-box-shadow: 0.5em 0.5em 1em #cccccc;
+	box-shadow: 0.5em 0.5em 1em #cccccc;
 	width: auto!important;
-	max-width: 400px;
+	max-width: 1000px;
 	font-weight: normal;
 	font-size: 9pt;
 	padding: 0.2em;
@@ -429,6 +429,10 @@ tr.separator + tr.separator {
 
 .ab_tooltip .tooltip_content {
 	font-size: 8pt;
+}
+
+.ab_tooltip td {
+  border: 0;
 }
 
 img.mini_icon {
