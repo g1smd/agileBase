@@ -439,11 +439,13 @@ tr.separator + tr.separator {
 table#reportData thead td .ab_tooltip td:nth-child(even) {
   border-bottom:0;
   min-width: 10em;
-  border-right: 2px solid white;
+  border: 0;
 }
 
 table#reportData thead td .ab_tooltip td:nth-child(odd) {
   text-align: right;
+  border: 0;
+  border-right: 2px solid white;
 }
 
 img.mini_icon {
