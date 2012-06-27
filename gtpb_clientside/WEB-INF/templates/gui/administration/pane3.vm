@@ -188,6 +188,7 @@ function sendPasswordReset(oButton) {
 	var internalUserName = jqButton.attr("data_internalusername");
 	jQuery("#password_reset_result").load("AppController.servlet", {
 		"return": "gui/administration/users/return_password_reset",
+		send_password_reset: true,
 		internalusername: internalUserName
 	});
 }
