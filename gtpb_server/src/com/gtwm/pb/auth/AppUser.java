@@ -270,18 +270,23 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	
 	@Transient
 	public boolean getAllowPasswordReset() {
+		// Request times out after a day
 		if ((System.currentTimeMillis() - this.passwordResetSent) < (24*60*60*1000)) {
 			return true;
 		} 
 		return false;
 	}
 	
-	public void allowPasswordReset() throws CantDoThatException, CodingErrorException, MessagingException {
+	public void sendPasswordReset() throws CantDoThatException, CodingErrorException, MessagingException {
 		if (this.getEmail() == null) {
 			throw new CantDoThatException("The user has no email address");
 		}
 		if (!this.getEmail().contains("@")) {
 			throw new CantDoThatException("The user's email isn't valid");
+		}
+		String passwordResetLink = "https://appserver.gtportalbase.com/agileBase/AppController.servlet?return=set_password/email_reset";
+		if (this.getAllowPasswordReset()) {
+			throw new CantDoThatException("The previous password reset request hasn't timed out yet, please use that: " + passwordResetLink);
 		}
 		try {
 			this.setPassword(RandomString.generate());
@@ -292,7 +297,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		recipients.add(this.getEmail());
 		String subject = "Set your password";
 		String body = "Please choose a password for your account by following this link:\n\n";
-		body += "https://appserver.gtportalbase.com/agileBase/AppController.servlet?return=set_password/email_reset\n";
+		body += passwordResetLink + "\n";
 		Helpers.sendEmail(recipients, body, subject);
 		this.passwordResetSent = System.currentTimeMillis();
 	}

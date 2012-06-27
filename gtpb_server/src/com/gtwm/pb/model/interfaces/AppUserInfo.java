@@ -141,11 +141,15 @@ public interface AppUserInfo {
 	public boolean getAllowPasswordReset();
 
 	/**
-	 * Sets the counter going for the time period in which the password can be
-	 * reset. Also resets the password to a random value
+	 * 1) Sets the counter going for the time period in which the password can be
+	 * reset.
+	 * 
+	 * 2) Resets the password to a random value
+	 * 
+	 * 3) Sends the user a password reset email
 	 * 
 	 * @throws CantDoThatException
 	 *             if the user doesn't have an email address
 	 */
-	public void allowPasswordReset() throws CantDoThatException, CodingErrorException, MessagingException;
+	public void sendPasswordReset() throws CantDoThatException, CodingErrorException, MessagingException;
 }

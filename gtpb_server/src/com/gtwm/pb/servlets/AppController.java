@@ -25,6 +25,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.io.IOException;
+
+import javax.mail.MessagingException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
@@ -307,7 +309,7 @@ public final class AppController extends VelocityViewServlet {
 
 	public static void carryOutAppActions(HttpServletRequest request, SessionDataInfo sessionData,
 			DatabaseInfo databaseDefn, List<FileItem> multipartItems, StringBuffer appActionName)
-			throws AgileBaseException, SQLException, FileUploadException, IOException {
+			throws AgileBaseException, SQLException, FileUploadException, IOException, MessagingException {
 		// perform any actions
 		EnumSet<AppAction> appActions = EnumSet.allOf(AppAction.class);
 		for (AppAction appAction : appActions) {
@@ -357,6 +359,9 @@ public final class AppController extends VelocityViewServlet {
 				case UPDATE_USER:
 					ServletAuthMethods.updateUser(sessionData, request,
 							databaseDefn.getAuthManager());
+					break;
+				case SEND_PASSWORD_RESET:
+					ServletAuthMethods.sendPasswordReset(request, databaseDefn.getAuthManager());
 					break;
 				case ADD_ROLE:
 					ServletAuthMethods.addRole(sessionData, request, databaseDefn.getAuthManager());

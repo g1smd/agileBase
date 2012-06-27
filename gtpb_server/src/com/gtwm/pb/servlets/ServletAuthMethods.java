@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
@@ -62,6 +64,16 @@ import com.gtwm.pb.util.Enumerations.InitialView;
  */
 public final class ServletAuthMethods {
 
+	/**
+	 * Sends a password reset email to a user
+	 * @throws DisallowedException Only an administrator can send a password reset email
+	 */
+	public synchronized static void sendPasswordReset(HttpServletRequest request, AuthManagerInfo authManager) throws DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException, MessagingException {
+		String internalUserName = request.getParameter("internalusername");
+		AppUserInfo user = authManager.getUserByInternalName(request, internalUserName);
+		authManager.sendPasswordReset(request, user);
+	}
+	
 	/**
 	 * TODO: Http example usage
 	 * 

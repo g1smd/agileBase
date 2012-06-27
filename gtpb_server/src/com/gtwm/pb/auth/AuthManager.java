@@ -47,6 +47,8 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.InitialView;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import org.grlea.log.SimpleLogger;
@@ -876,7 +878,13 @@ public final class AuthManager implements AuthManagerInfo {
 	public AppUserInfo getLoggedInUser(HttpServletRequest request) throws DisallowedException, ObjectNotFoundException {
 		return this.getUserByUserName(request, request
 				.getRemoteUser());
-
+	}
+	
+	public void sendPasswordReset(HttpServletRequest request, AppUserInfo user) throws DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException, MessagingException {
+		if (!this.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
+			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
+		}
+		user.sendPasswordReset();
 	}
 
 	private AuthenticatorInfo authenticator = null;

@@ -35,7 +35,7 @@
       <br />username
     </td>
     <td>
-      <input type="password" name="password" gtpb_internalusername="$username" gtpb_update_user #*value="$sessionUser.getPassword()"*# onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" #*onfocus="this.setAttribute('type','text')" onblur="this.setAttribute('type','password')*#">
+      <input type="password" name="password" gtpb_internalusername="$username" gtpb_update_user onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" #*onfocus="this.setAttribute('type','text')" onblur="this.setAttribute('type','password')*#">
       <br />type new password to reset
     </td>
   </tr>
@@ -47,7 +47,9 @@
         #set($email = "")
       #end
       <input type="text" name="email" gtpb_internalusername="$username" gtpb_update_user value="$email" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
-      <br />only enter this if you want the user to receive notifications of *all comments* added throughout agileBase
+      <br />only enter this if you want the user to receive notifications of *all comments* added throughout agileBase<p>
+      <button data_internalusername="$username" onpress="top.sendPasswordReset(this);" #if($sessionUser.getAllowPasswordReset()) disabled="true" title="A password reset has already been sent to this user" #end />Send password notification</button>
+      <br /><span id="password_reset_result">Send $sessionUser.getForename() an email link they can use to choose a password</span>
     </td>
   <tr>
 	<td>Initial view:<br>What the user will see on logging in</td>

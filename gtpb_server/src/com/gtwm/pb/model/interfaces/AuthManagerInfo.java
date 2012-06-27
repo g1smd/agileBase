@@ -19,6 +19,8 @@ package com.gtwm.pb.model.interfaces;
 
 import java.util.Set;
 import java.util.SortedSet;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -352,4 +354,6 @@ public interface AuthManagerInfo {
 	public boolean specifiedUserAllowedToViewReport(HttpServletRequest request, AppUserInfo user,
 			BaseReportInfo report) throws DisallowedException, CodingErrorException,
 			ObjectNotFoundException;
+	
+	public void sendPasswordReset(HttpServletRequest request, AppUserInfo user) throws DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException, MessagingException;
 }
