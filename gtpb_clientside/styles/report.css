@@ -435,7 +435,7 @@ tr.separator + tr.separator {
   border: 0;
 }
 
-.ab_tooltip: table#reportData #fieldFilters td:n-th-child(even) {
+.ab_tooltip table#reportData #fieldFilters td:n-th-child(even) {
   border-bottom:0;
   min-width: 10em;
 }
