@@ -415,9 +415,9 @@ tr.separator + tr.separator {
 	top: 30px;
 	left: 0;
 	background-color: #f0f0f0;
-	-moz-box-shadow: 0.5em 0.5em 1em #cccccc;
-	-webkit-box-shadow: 0.5em 0.5em 1em #cccccc;
-	box-shadow: 0.5em 0.5em 1em #cccccc;
+	-moz-box-shadow: 0.5em 0.5em 1em #f0f0f0;
+	-webkit-box-shadow: 0.5em 0.5em 1em #f0f0f0;
+	box-shadow: 0.5em 0.5em 1em #f0f0f0;
 	width: auto!important;
 	max-width: 1000px;
 	font-weight: normal;
