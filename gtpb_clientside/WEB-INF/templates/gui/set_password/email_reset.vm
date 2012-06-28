@@ -16,8 +16,25 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($user = $view.getLoggedInUser())
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
 #if($user.getAllowPasswordReset())
-  Resetting password via email link
+  <h1>Your details</h1>
+  Name: $user.getForename() $user.getSurname()<br>
+  Email: $user.getEmail()<br>
+  <h1>Please choose a password</h1>
+  <form name="changepassword" method="post" action="AppController.servlet">
+    <input type="hidden" name="return" value="gui/set_password/email_success" />
+    <input type="hidden" name="update_user" value="true" />
+    <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
+    <input type="password" name="password" /><p>
+    <input type="submit" value="Set" />
+  </form>
 #else
   The password reset link you used has expired, please ask your administrative contact for another.
 #end
+</body>
+</html>

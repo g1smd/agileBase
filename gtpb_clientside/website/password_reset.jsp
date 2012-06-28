@@ -9,6 +9,7 @@ if (requestURL.contains("appserver.")) {
 <head>
 	<title>agileBase</title>
 	<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
+	<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 	<script type="text/javascript">
 	  var _gaq = _gaq || [];
 	  _gaq.push(['_setAccount', 'UA-59206-20']);
@@ -20,6 +21,11 @@ if (requestURL.contains("appserver.")) {
 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  })();
 	</script>
+	<script type="text/javascript">
+	  $(document).ready(function() {
+	  	$("#loginform").submit();
+	  });
+	</script>
 </head>
 <body>
 	Please wait a moment...
@@ -30,7 +36,6 @@ if (requestURL.contains("appserver.")) {
 	<% } %>
 	  <input type="hidden" name="j_username" id="j_username" value="<%= request.getParameter("u") %>" /><br>
 	  <input type="hidden" name="j_password" id="j_password" value="<%= request.getParameter("x") %>" /><br><br>
-	  <input type="submit" value="login">
 	</form>
 </body>
 </html>
