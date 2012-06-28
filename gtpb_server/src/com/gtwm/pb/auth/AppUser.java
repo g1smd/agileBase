@@ -286,14 +286,14 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		if (!this.getEmail().contains("@")) {
 			throw new CantDoThatException("The user's email isn't valid");
 		}
-		String passwordResetLink = appUrl + "/AppController.servlet?return=set_password/email_reset";
-		if (this.getAllowPasswordReset()) {
-			throw new CantDoThatException("The previous password reset request hasn't timed out yet, please use that: " + passwordResetLink);
-		}
 		try {
 			this.setPassword(RandomString.generate());
 		} catch (MissingParametersException mpex) {
 			throw new CodingErrorException("Error generating a password: " + mpex);
+		}
+		String passwordResetLink = appUrl + "/AppController.servlet?return=set_password/email_reset&u=" + this.getUserName() + "&x=" + this.getPassword();
+		if (this.getAllowPasswordReset()) {
+			throw new CantDoThatException("The previous password reset request hasn't timed out yet, please use that: " + passwordResetLink);
 		}
 		Set<String> recipients = new HashSet<String>();
 		recipients.add(this.getEmail());
