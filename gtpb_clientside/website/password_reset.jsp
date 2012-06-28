@@ -28,8 +28,8 @@ if (requestURL.contains("appserver.")) {
 	<% } else { %>
 		<form method="POST" action="http://backup.agilebase.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 	<% } %>
-	username<br />
-	<input type="text" name="j_username" id="j_username" value='<%= request.getParameter("name") %>'/><br>
+	username is <%= request.getParameter("name") %><br />
+	<input type="text" name="j_username" id="j_username" /><br>
 	password<br />
 	<input type="password" name="j_password" id="j_password" /><br><br>
 	<input type="submit" value="login">
