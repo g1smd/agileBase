@@ -885,6 +885,7 @@ public final class AuthManager implements AuthManagerInfo {
 		if (!this.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
+		HibernateUtil.activateObject(user);
 		user.sendPasswordReset(Helpers.getAppUrl(request));
 	}
 

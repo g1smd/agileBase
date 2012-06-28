@@ -71,7 +71,19 @@ public final class ServletAuthMethods {
 	public synchronized static void sendPasswordReset(HttpServletRequest request, AuthManagerInfo authManager) throws DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException, MessagingException {
 		String internalUserName = request.getParameter("internalusername");
 		AppUserInfo user = authManager.getUserByInternalName(request, internalUserName);
-		authManager.sendPasswordReset(request, user);
+		HibernateUtil.startHibernateTransaction();
+		try {
+			authManager.sendPasswordReset(request, user);			
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			HibernateUtil.rollbackHibernateTransaction();
+			throw new CantDoThatException("Sending password reset failed", hex);
+		} catch (AgileBaseException pex) {
+			HibernateUtil.rollbackHibernateTransaction();
+			throw new CantDoThatException(pex.getMessage(), pex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
 	}
 	
 	/**
