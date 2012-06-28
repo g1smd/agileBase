@@ -291,7 +291,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		} catch (MissingParametersException mpex) {
 			throw new CodingErrorException("Error generating a password: " + mpex);
 		}
-		String passwordResetLink = appUrl + "/AppController.servlet?return=gui/set_password/email_reset&u=" + this.getUserName() + "&x=" + this.getPassword();
+		String passwordResetLink = appUrl + "?return=gui/set_password/email_reset&u=" + this.getUserName() + "&x=" + this.getPassword();
 		if (this.getAllowPasswordReset()) {
 			throw new CantDoThatException("The previous password reset request hasn't timed out yet, please use that: " + passwordResetLink);
 		}
