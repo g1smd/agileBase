@@ -228,7 +228,7 @@ public final class ServletAuthMethods {
 		String forename = request.getParameter(AppUserInfo.FORENAME.toLowerCase());
 		String password = request.getParameter(AppUserInfo.PASSWORD.toLowerCase());
 		String email = request.getParameter(AppUserInfo.EMAIL.toLowerCase());
-		String usesCustomUIString = request.getParameter(AppUserInfo.EMAIL.toLowerCase());
+		String usesCustomUIString = request.getParameter(AppUserInfo.USES_CUSTOM_UI.toLowerCase());
 		boolean usesCustomUI = Helpers.valueRepresentsBooleanTrue(usesCustomUIString);
 		if (password != null) {
 			if (password.equals("false")) {
