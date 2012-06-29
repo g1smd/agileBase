@@ -62,7 +62,7 @@
         <option value="FULL" #if($sessionUserType == "FULL") selected #end>Full three pane interface</option>
 		<option value="EXECUTIVE_DASHBOARD" #if($sessionUserType == "EXECUTIVE_DASHBOARD") selected #end>Executive dashboard</option>
 	  </select><p>
-	  <input type="checkbox" name="uses_custom_ui" gtpb_update_user="true" #if($sessionUser.getUsesCustomUI()) selected #end/> Use the custom $sessionUser.getCompany() UI rather than agileBase's
+	  <input type="checkbox" name="uses_custom_ui" gtpb_update_user="true" #if($sessionUser.getUsesCustomUI()) selected #end onchange="top.oBuffer.writeBuffer(this);" /> Use the custom $sessionUser.getCompany() UI rather than agileBase's
 	</td>
   </tr>
   <tr style="vertical-align: top">
