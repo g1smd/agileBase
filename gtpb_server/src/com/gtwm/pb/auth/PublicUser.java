@@ -235,4 +235,12 @@ public class PublicUser implements AppUserInfo {
 		throw new CantDoThatException("This public user can't have a password reset");
 	}
 
+	public boolean getUsesCustomUI() {
+		return false;
+	}
+
+	public void setUsesCustomUI(boolean usesCustomUI) throws CantDoThatException {
+		throw new CantDoThatException("This public user can't have a password reset");
+	}
+
 }

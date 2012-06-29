@@ -33,6 +33,7 @@ import com.gtwm.pb.util.Enumerations.InitialView;
  */
 public interface AppUserInfo {
 
+	//TODO: get rid of these contants, I think they're only used in one place
 	public static final String USERNAME = "username";
 
 	public static final String PASSWORD = "password";
@@ -44,6 +45,8 @@ public interface AppUserInfo {
 	public static final String INITIALVIEW = "initialview";
 
 	public static final String EMAIL = "email";
+	
+	public static final String USES_CUSTOM_UI = "uses_custom_ui";
 
 	public CompanyInfo getCompany();
 
@@ -130,6 +133,16 @@ public interface AppUserInfo {
 	public void setDefaultReport(BaseReportInfo report) throws CantDoThatException;
 
 	/**
+	 * Wether this user is set to use the company custom UI (if one exists).
+	 * 
+	 * If this is selected the user will be unable to use the agileBase standard
+	 * interface but will be taken to the company custom interface on login
+	 */
+	public boolean getUsesCustomUI();
+	
+	public void setUsesCustomUI(boolean usesCustomUI) throws CantDoThatException;
+
+	/**
 	 * See whether the user can be sent a link to reset their password.
 	 * 
 	 * Note the current password is reset to a value that can be sent out by
@@ -141,17 +154,19 @@ public interface AppUserInfo {
 	public boolean getAllowPasswordReset();
 
 	/**
-	 * 1) Sets the counter going for the time period in which the password can be
-	 * reset.
+	 * 1) Sets the counter going for the time period in which the password can
+	 * be reset.
 	 * 
 	 * 2) Resets the password to a random value
 	 * 
 	 * 3) Sends the user a password reset email
 	 * 
-	 * @param appUrl is used in the email notification to the user
+	 * @param appUrl
+	 *            is used in the email notification to the user
 	 * 
 	 * @throws CantDoThatException
 	 *             if the user doesn't have an email address
 	 */
-	public void sendPasswordReset(String appUrl) throws CantDoThatException, CodingErrorException, MessagingException;
+	public void sendPasswordReset(String appUrl) throws CantDoThatException, CodingErrorException,
+			MessagingException;
 }

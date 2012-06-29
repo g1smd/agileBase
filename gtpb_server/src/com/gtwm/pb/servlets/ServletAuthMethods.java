@@ -41,6 +41,7 @@ import com.gtwm.pb.model.interfaces.UserTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.RoleTablePrivilegeInfo;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -227,6 +228,8 @@ public final class ServletAuthMethods {
 		String forename = request.getParameter(AppUserInfo.FORENAME.toLowerCase());
 		String password = request.getParameter(AppUserInfo.PASSWORD.toLowerCase());
 		String email = request.getParameter(AppUserInfo.EMAIL.toLowerCase());
+		String usesCustomUIString = request.getParameter(AppUserInfo.EMAIL.toLowerCase());
+		boolean usesCustomUI = Helpers.valueRepresentsBooleanTrue(usesCustomUIString);
 		if (password != null) {
 			if (password.equals("false")) {
 				throw new CantDoThatException("User update failed: error setting password");
@@ -244,23 +247,24 @@ public final class ServletAuthMethods {
 		String oldPassword = appUser.getPassword();
 		String oldEmail = appUser.getEmail();
 		InitialView oldUserType = appUser.getUserType();
+		boolean oldUsesCustomUI = appUser.getUsesCustomUI();
 		// begin updating model and persisting changes
 		HibernateUtil.startHibernateTransaction();
 		try {
 			authManager.updateUser(request, appUser, userName, surname, forename, password, email,
-					userType);
+					userType, usesCustomUI);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					oldPassword, oldEmail, oldUserType);
+					oldPassword, oldEmail, oldUserType, oldUsesCustomUI);
 			throw new CantDoThatException("User update failed", hex);
 		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					oldPassword, oldEmail, oldUserType);
+					oldPassword, oldEmail, oldUserType, oldUsesCustomUI);
 			throw new CantDoThatException(pex.getMessage(), pex);
 		} finally {
 			HibernateUtil.closeSession();

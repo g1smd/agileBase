@@ -270,6 +270,14 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.defaultReport = report;
 	}
 	
+	public boolean getUsesCustomUI() {
+		return this.usesCustomUI;
+	}
+	
+	public void setUsesCustomUI(boolean usesCustomUI) {
+		this.usesCustomUI = usesCustomUI;
+	}
+	
 	@Transient
 	public boolean getAllowPasswordReset() {
 		// Request times out after a day
@@ -363,6 +371,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private Set<String> contractedSections = new HashSet<String>();
 	
 	private BaseReportInfo defaultReport = null;
+	
+	private boolean usesCustomUI = false;
 	
 	/**
 	 * Epoch time at which a password reset email was sent
