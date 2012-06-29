@@ -17,7 +17,7 @@
 ##
 #set($username = $sessionUser.getInternalUserName())
 <table cellspacing=0 border=0 cellpadding=0>
-  <tr>
+  <tr style="vertical-align: top">
     <td>Name:</td>
     <td>
       <input type="text" name="forename" gtpb_internalusername="$username" gtpb_update_user value="$sessionUser.getForename()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
@@ -28,7 +28,7 @@
       <br />surname
     </td>
   </tr>
-  <tr>
+  <tr style="vertical-align: top">
     <td>Login:</td>
     <td>
       <input type="text" name="username" gtpb_internalusername="$username" gtpb_update_user value="$sessionUser.getUserName()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
@@ -39,7 +39,7 @@
       <br />type new password to reset
     </td>
   </tr>
-  <tr>
+  <tr style="vertical-align: top">
     <td>Email:</td>
     <td colspan="2">
       #set($email = $sessionUser.getEmail())
@@ -51,7 +51,8 @@
       <button data_internalusername="$username" onclick="sendPasswordReset(this);" #if($sessionUser.getAllowPasswordReset()) disabled="true" title="A password reset has already been sent to this user" #end />Send password notification</button>
       <br /><span id="password_reset_result">Send $sessionUser.getForename() an email link they can use to choose a password</span>
     </td>
-  <tr>
+  </tr>
+  <tr style="vertical-align: top">
 	<td>Initial view:<br>What the user will see on logging in</td>
 	<td colspan="2">
 	  #set($sessionUserType = $sessionUser.getUserType())
@@ -63,7 +64,7 @@
 	  </select>
 	</td>
   </tr>
-  <tr>
+  <tr style="vertical-align: top">
 	<td>Last login:</td>
 	<td colspan="2">$view.getUsageStats().getLastLoginAge($sessionUser)</td>
   </tr>
