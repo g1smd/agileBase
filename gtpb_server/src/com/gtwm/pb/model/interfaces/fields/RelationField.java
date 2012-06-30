@@ -123,6 +123,7 @@ public interface RelationField extends BaseField {
 	 */
 	public SortedMap<String, String> getItems(boolean reverseKeyValue, String filterString,
 			int maxResults) throws SQLException, CodingErrorException;
+	
 
 	/**
 	 * NOT CURRENTLY IMPLEMENTED
