@@ -1137,30 +1137,35 @@ function fTabs() {
 					+ tabInternalTableName);
 			$("#tab_deleter").fadeOut();
 			if (tabContainer.children().size() == 0) {
-				$(".tab_container").fadeOut();
-				tabContainer.addClass("load-spinner").css("position", "relative");
-				tabContainer.fadeIn();
-				tabContainer.load("AppController.servlet", {
-					"return" : "gui/reports_and_tables/tabs/tab_content",
-					set_custom_table : true,
-					tablekey : "tabTable",
-					custominternaltablename : tabInternalTableName,
-					set_row_id: parentRowId,
-					rowidinternaltablename: parentInternalTableName
-				}, function() {
-					tabContainer.removeClass("load-spinner");
-					jqTab.addClass("active");
-					jqTab.removeClass("tabLoading");
-					editTabFunctions();
-					// If only one child record, show delete button in tabs bar
-					if ((tabContainer.find(".selectorReport").size() == 0)
-							&& jqTab.attr("data-singular") && (!jqTab.hasClass("no_records"))) {
-						var singularName = jqTab.attr("data-singular");
-						$("#tab_deleter").find("img").attr("title",
-								"delete this " + singularName);
-						$("#tab_deleter").fadeIn();
-					}
-				});
+				if(jqTab.hasClass("no_records") && jqTab.hasClass("one_to_one")) {
+					newChild(jqTab, parentInternalTableName);
+				} else {
+					// load existing content (if any)
+					$(".tab_container").fadeOut();
+					tabContainer.addClass("load-spinner").css("position", "relative");
+					tabContainer.fadeIn();
+					tabContainer.load("AppController.servlet", {
+						"return" : "gui/reports_and_tables/tabs/tab_content",
+						set_custom_table : true,
+						tablekey : "tabTable",
+						custominternaltablename : tabInternalTableName,
+						set_row_id: parentRowId,
+						rowidinternaltablename: parentInternalTableName
+					}, function() {
+						tabContainer.removeClass("load-spinner");
+						jqTab.addClass("active");
+						jqTab.removeClass("tabLoading");
+						editTabFunctions();
+						// If only one child record, show delete button in tabs bar
+						if ((tabContainer.find(".selectorReport").size() == 0)
+								&& jqTab.attr("data-singular") && (!jqTab.hasClass("no_records"))) {
+							var singularName = jqTab.attr("data-singular");
+							$("#tab_deleter").find("img").attr("title",
+									"delete this " + singularName);
+							$("#tab_deleter").fadeIn();
+						}
+					});
+				} // end of load existing content (if any)
 			} else {
 				$(".tab_container").hide();
 				tabContainer.show();
@@ -1215,6 +1220,7 @@ function newChild(jqTab, parentInternalTableName) {
 		tabContainer.fadeIn();
 		editTabFunctions();
 	});
+	jqTab.removeClass("no_records");
 }
 
 /**
