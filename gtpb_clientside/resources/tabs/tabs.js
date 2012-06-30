@@ -1183,34 +1183,38 @@ function fTabs() {
 		}); // end of jqTab.click()
 		jqTab.find("img.new").click(
 				function() {
-					var tabInternalTableName = jqTab.attr("data-internaltablename");
-					var relationFieldInternalName = jqTab.attr("data-relationfield");
-					var parentRowId = jqTab.closest(".form_tabber")
-							.attr("data-rowid");
-					var tabContainer = $("#form_tabs_" + parentInternalTableName
-							+ "_" + tabInternalTableName);
-					tabContainer.fadeOut();
-					var options = {
-						"return" : "gui/reports_and_tables/tabs/tab_content",
-						save_new_record : true,
-						internaltablename : tabInternalTableName,
-						set_custom_table : true,
-						tablekey : 'tabTable',
-						custominternaltablename : tabInternalTableName
-					}
-					// Set relationFieldInternalName like this as it is a variable
-					// property name
-					options[relationFieldInternalName] = parentRowId;
-					tabContainer.load("AppController.servlet", options, function() {
-						tabContainer.fadeIn();
-						editTabFunctions();
-					});
+					newChild(jqTab);
 				});
 		// Initialise to session tab on load (if not already the active tab)
 		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active")) && (!jqTab.hasClass("tabLoading"))) {
 			jqTab.click();
 		}
 	}); // end of .tab_choice.each
+}
+
+function newChild(jqTab) {
+	var tabInternalTableName = jqTab.attr("data-internaltablename");
+	var relationFieldInternalName = jqTab.attr("data-relationfield");
+	var parentRowId = jqTab.closest(".form_tabber")
+			.attr("data-rowid");
+	var tabContainer = $("#form_tabs_" + parentInternalTableName
+			+ "_" + tabInternalTableName);
+	tabContainer.fadeOut();
+	var options = {
+		"return" : "gui/reports_and_tables/tabs/tab_content",
+		save_new_record : true,
+		internaltablename : tabInternalTableName,
+		set_custom_table : true,
+		tablekey : 'tabTable',
+		custominternaltablename : tabInternalTableName
+	}
+	// Set relationFieldInternalName like this as it is a variable
+	// property name
+	options[relationFieldInternalName] = parentRowId;
+	tabContainer.load("AppController.servlet", options, function() {
+		tabContainer.fadeIn();
+		editTabFunctions();
+	});
 }
 
 /**
