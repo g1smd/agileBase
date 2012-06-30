@@ -507,8 +507,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public void updateTable(Connection conn, HttpServletRequest request, TableInfo table,
 			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic,
-			String tableEmail, FormStyle formStyle, boolean allowAutoDelete) throws DisallowedException,
-			CantDoThatException, ObjectNotFoundException, SQLException {
+			String tableEmail, FormStyle formStyle, boolean allowAutoDelete)
+			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -1561,13 +1561,14 @@ public final class DatabaseDefn implements DatabaseInfo {
 			RelationField relationField = (RelationField) field;
 			FieldTypeDescriptorInfo fieldDescriptor = relationField.getFieldDescriptor();
 			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
+			String internalFieldName = field.getInternalFieldName();
 			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = "updateoption" + field.getInternalFieldName()
+				String formInputName = "updateoption" + internalFieldName
 						+ fieldOption.getFormInputName();
 				String formInputValue = request.getParameter(formInputName);
 				if (formInputValue != null) {
 					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
-						if (formInputName.equals("updateoption" + field.getInternalFieldName()
+						if (formInputName.equals("updateoption" + internalFieldName
 								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
 							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 							relationField.setNotNull(notNull);
@@ -1577,15 +1578,18 @@ public final class DatabaseDefn implements DatabaseInfo {
 							Boolean defaultToNull = Helpers
 									.valueRepresentsBooleanTrue(formInputValue);
 							relationField.setDefaultToNull(defaultToNull);
+						} else if (formInputName.equals("updateoption" + internalFieldName
+								+ PossibleBooleanOptions.ONETOONE.getFormInputName())) {
+							Boolean oneToOne = Helpers.valueRepresentsBooleanTrue(formInputValue);
+							relationField.setOneToOne(oneToOne);
 						}
 					} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
-						if (formInputName.equals("updateoption" + field.getInternalFieldName()
+						if (formInputName.equals("updateoption" + internalFieldName
 								+ PossibleListOptions.LISTVALUEFIELD.getFormInputName())) {
 							BaseField displayField = relationField.getRelatedTable().getField(
 									formInputValue);
 							relationField.setDisplayField(displayField);
-						} else if (formInputName.equals("updateoption"
-								+ field.getInternalFieldName()
+						} else if (formInputName.equals("updateoption" + internalFieldName
 								+ PossibleListOptions.LISTSECONDARYFIELD.getFormInputName())) {
 							BaseField secondaryDisplayField = null;
 							if (!formInputValue.equals("")) {
@@ -2277,8 +2281,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public ModuleInfo addModule(HttpServletRequest request, CompanyInfo company) throws ObjectNotFoundException,
-			DisallowedException {
+	public ModuleInfo addModule(HttpServletRequest request, CompanyInfo company)
+			throws ObjectNotFoundException, DisallowedException {
 		if (company == null) {
 			company = this.authManager.getCompanyForLoggedInUser(request);
 		}

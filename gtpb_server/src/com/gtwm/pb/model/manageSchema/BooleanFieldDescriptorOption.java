@@ -54,7 +54,8 @@ public class BooleanFieldDescriptorOption implements BooleanFieldDescriptorOptio
         USELOOKUP("Use dropdown for input", false),
         STORECURRENCY("Store currency amounts", true),
         HIDDEN("Hidden field",true),
-        MANDATORY("Mandatory", true);
+        MANDATORY("Mandatory", true),
+        ONETOONE("One to one only", true);
 
         PossibleBooleanOptions(String optionDescription, boolean advancedOption) {
             this.optionDescription = optionDescription;

@@ -270,7 +270,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		String SQLCode = "";
 		if (primaryFieldRequiresJoin) {
 			logger.debug("Primary field requires join");
-			// TODO: refactor primaryFieldRequiresJoin and secondaryFieldRequiresJoin.
+			// TODO: refactor primaryFieldRequiresJoin and
+			// secondaryFieldRequiresJoin.
 			// Basically the same query
 			SQLCode = "SELECT " + relatedTableInternalName + "." + relatedFieldInternalName;
 			RelationField displayRelationField = (RelationField) displayField;
@@ -596,6 +597,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 			}
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY,
 					this.getNotNull());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.ONETOONE,
+					this.getOneToOne());
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.DEFAULTTONULL,
 					this.getDefaultToNull());
 			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
@@ -639,6 +642,14 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	@Transient
 	public FieldCategory getFieldCategory() {
 		return FieldCategory.RELATION;
+	}
+
+	public boolean getOneToOne() {
+		return this.oneToOne;
+	}
+
+	public void setOneToOne(boolean oneToOne) {
+		this.oneToOne = oneToOne;
 	}
 
 	/*
@@ -718,6 +729,8 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	private BaseField secondaryDisplayField;
 
 	private boolean defaultToNull = false;
+
+	private boolean oneToOne = false;
 
 	private ForeignKeyConstraint onUpdateAction = ForeignKeyConstraint.CASCADE;
 

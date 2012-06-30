@@ -83,7 +83,7 @@ public interface RelationField extends BaseField {
 	 * table
 	 */
 	public boolean getDefaultToNull();
-	
+
 	public void setDefaultToNull(boolean defaultToNull);
 
 	/**
@@ -123,7 +123,14 @@ public interface RelationField extends BaseField {
 	 */
 	public SortedMap<String, String> getItems(boolean reverseKeyValue, String filterString,
 			int maxResults) throws SQLException, CodingErrorException;
-	
+
+	/**
+	 * Return true if this relation limits to only one record per parent
+	 * (one-to-one) or whether it's a standard one-to-many
+	 */
+	public boolean getOneToOne();
+
+	public void setOneToOne(boolean oneToOne);
 
 	/**
 	 * NOT CURRENTLY IMPLEMENTED
