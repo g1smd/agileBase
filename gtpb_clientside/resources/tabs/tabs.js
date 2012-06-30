@@ -1183,7 +1183,7 @@ function fTabs() {
 		}); // end of jqTab.click()
 		jqTab.find("img.new").click(
 				function() {
-					newChild(jqTab);
+					newChild(jqTab, parentTableInternalName);
 				});
 		// Initialise to session tab on load (if not already the active tab)
 		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active")) && (!jqTab.hasClass("tabLoading"))) {
@@ -1192,7 +1192,7 @@ function fTabs() {
 	}); // end of .tab_choice.each
 }
 
-function newChild(jqTab) {
+function newChild(jqTab, parentInternalTableName) {
 	var tabInternalTableName = jqTab.attr("data-internaltablename");
 	var relationFieldInternalName = jqTab.attr("data-relationfield");
 	var parentRowId = jqTab.closest(".form_tabber")
