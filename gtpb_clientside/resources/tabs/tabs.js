@@ -1138,10 +1138,13 @@ function fTabs() {
 			$("#tab_deleter").fadeOut();
 			if (tabContainer.children().size() == 0) {
 				if(jqTab.hasClass("no_records") && jqTab.hasClass("one_to_one")) {
+					$(".tab_container").fadeOut(); // fade out all tab containers
+					tabContainer.addClass("load-spinner").css("position", "relative");
+					tabContainer.fadeIn();
 					newChild(jqTab, parentInternalTableName);
 				} else {
 					// load existing content (if any)
-					$(".tab_container").fadeOut();
+					$(".tab_container").fadeOut(); // fade out all tab containers
 					tabContainer.addClass("load-spinner").css("position", "relative");
 					tabContainer.fadeIn();
 					tabContainer.load("AppController.servlet", {
@@ -1204,7 +1207,9 @@ function newChild(jqTab, parentInternalTableName) {
 			.attr("data-rowid");
 	var tabContainer = $("#form_tabs_" + parentInternalTableName
 			+ "_" + tabInternalTableName);
-	tabContainer.fadeOut();
+	if (!tabContainer.hasClass("load-spinner")) {
+		tabContainer.fadeOut();
+	}
 	var options = {
 		"return" : "gui/reports_and_tables/tabs/tab_content",
 		save_new_record : true,
@@ -1217,6 +1222,7 @@ function newChild(jqTab, parentInternalTableName) {
 	// property name
 	options[relationFieldInternalName] = parentRowId;
 	tabContainer.load("AppController.servlet", options, function() {
+		tabContainer.removeClass("load-spinner");
 		tabContainer.fadeIn();
 		editTabFunctions();
 	});
