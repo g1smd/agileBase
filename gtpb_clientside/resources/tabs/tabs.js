@@ -1183,7 +1183,7 @@ function fTabs() {
 		}); // end of jqTab.click()
 		jqTab.find("img.new").click(
 				function() {
-					newChild(jqTab, parentTableInternalName);
+					newChild(jqTab, parentInternalTableName);
 				});
 		// Initialise to session tab on load (if not already the active tab)
 		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active")) && (!jqTab.hasClass("tabLoading"))) {
