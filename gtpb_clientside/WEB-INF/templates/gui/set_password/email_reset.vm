@@ -19,12 +19,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>$user.getCompany() :: agileBase - set password</title>
+  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
+  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
 #if($user.getAllowPasswordReset())
-  <h1>Your details</h1>
+  <h1>Your $user.getCompany() details</h1>
   Name: $user.getForename() $user.getSurname()<br>
   Email: $user.getEmail()<br>
+  Username: $user.getUsername()
   <h1>Please choose a password</h1>
   <form name="changepassword" method="post" action="AppController.servlet">
     <input type="hidden" name="return" value="gui/set_password/email_success" />

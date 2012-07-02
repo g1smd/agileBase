@@ -41,6 +41,7 @@ import org.apache.velocity.tools.view.VelocityViewServlet;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.exception.ParseErrorException;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
+import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CommentInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
@@ -309,7 +310,8 @@ public final class AppController extends VelocityViewServlet {
 
 	public static void carryOutAppActions(HttpServletRequest request, SessionDataInfo sessionData,
 			DatabaseInfo databaseDefn, List<FileItem> multipartItems, StringBuffer appActionName)
-			throws AgileBaseException, SQLException, FileUploadException, IOException, MessagingException {
+			throws AgileBaseException, SQLException, FileUploadException, IOException,
+			MessagingException {
 		// perform any actions
 		EnumSet<AppAction> appActions = EnumSet.allOf(AppAction.class);
 		for (AppAction appAction : appActions) {
@@ -577,7 +579,8 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.addDistinctToReport(sessionData, request, databaseDefn);
 					break;
 				case REMOVE_REPORT_DISTINCT:
-					ServletSchemaMethods.removeDistinctFromReport(sessionData, request, databaseDefn);
+					ServletSchemaMethods.removeDistinctFromReport(sessionData, request,
+							databaseDefn);
 					break;
 				}
 			}
@@ -797,16 +800,26 @@ public final class AppController extends VelocityViewServlet {
 	 * Create an instance of ViewMethods to provide the UI with the necessary
 	 * functionality, and return the requested template.
 	 * 
+	 *         TODO: This method obviously doesn't throw any exceptions for a
+	 *         reason, presumably we always want to return a template whatever
+	 *         happens. Check out whether there's a better way of doing things
+	 *         though
+
 	 * @param exceptionCaught
 	 *            An exception thrown by handleRequest. Pass null if none. This
 	 *            will be saved in ViewMethods to allow the UI to find out what
 	 *            went wrong
 	 * @return The template requested, ready to parse by the UI
+	 * 
 	 */
 	private Template getUserInterfaceTemplate(HttpServletRequest request,
 			HttpServletResponse response, String templateName, Context context,
 			HttpSession session, SessionDataInfo sessionData, Exception exceptionCaught,
 			List<FileItem> multipartItems) {
+		// template ('return' parameter) *must* be specified
+		if (templateName == null) {
+			logger.error("No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
+		}
 		try {
 			boolean sessionValid = request.isRequestedSessionIdValid();
 			// Check user's logged in otherwise an exception will be thrown
@@ -823,8 +836,8 @@ public final class AppController extends VelocityViewServlet {
 				context.put("sessionData", sessionData);
 			}
 			context.put("viewTools", new ViewTools(request, response, this.webAppRoot));
-			// If a custom template, add in field variables from session table
-			// and report
+			// If a custom user-uploaded template, add in field variables from
+			// session table and report
 			if (templateName != null) {
 				if (templateName.startsWith("uploads/")) {
 					try {
@@ -839,14 +852,22 @@ public final class AppController extends VelocityViewServlet {
 					}
 				}
 			}
+			AppUserInfo user = this.databaseDefn.getAuthManager().getLoggedInUser(request);
+			if (user.getUsesCustomUI()) {
+				String cleanCompanyName = user.getCompany().getCompanyName().toLowerCase().replaceAll("\\W", "");
+				String companyPath = "gui/customisations/" + cleanCompanyName + "/";
+				if (!templateName.startsWith(companyPath)) {
+					// Disallow templates outside of the company path
+					logger.error("Path " + templateName + " is outside of the company path " + companyPath + " for user " + user);
+					templateName = null;
+				}
+			}
 		} catch (ObjectNotFoundException onfex) {
-			ServletUtilMethods.logException(onfex, request, "Error creating view methods object");
+			ServletUtilMethods.logException(onfex, request, "Error getting template");
+		} catch (DisallowedException dex) {
+			ServletUtilMethods.logException(dex, request, "Error getting template");
 		}
-		// template ('return' parameter) *must* be specified
-		if (templateName == null) {
-			logger.error("No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
-		}
-		templateName = templateName + ".vm";
+		templateName = "" + templateName + ".vm";
 		Template template = null;
 		try {
 			// See note about template locations at top of file
@@ -864,8 +885,8 @@ public final class AppController extends VelocityViewServlet {
 	 * current report (values from the current report row) and current table
 	 */
 	private static void addCurrentDataToContext(Context context, SessionDataInfo sessionData,
- ViewMethodsInfo view) throws DisallowedException,
-			ObjectNotFoundException, CodingErrorException, CantDoThatException, SQLException {
+			ViewMethodsInfo view) throws DisallowedException, ObjectNotFoundException,
+			CodingErrorException, CantDoThatException, SQLException {
 		BaseReportInfo report = sessionData.getReport();
 		int rowId = sessionData.getRowId();
 		TableInfo table = sessionData.getTable();
@@ -876,8 +897,8 @@ public final class AppController extends VelocityViewServlet {
 		// There will be only one row
 		for (DataRowInfo dataRow : reportDataRows) {
 			for (BaseField field : report.getReportBaseFields()) {
-				String rinsedFieldName = Helpers.rinseString(
-						field.getFieldName().toLowerCase()).replace(" ", "_");
+				String rinsedFieldName = Helpers.rinseString(field.getFieldName().toLowerCase())
+						.replace(" ", "_");
 				DataRowFieldInfo value = dataRow.getValue(field);
 				if (field instanceof TextField) {
 					context.put(rinsedFieldName, value.getKeyValue());
@@ -898,7 +919,8 @@ public final class AppController extends VelocityViewServlet {
 				// TODO: I know, hard coding HTML but what else can we do?
 				value += "<div class='comment'>";
 				value += "<span class='comment_text'>" + comment.getText() + "</span> ";
-				value += "<span class='comment_attribution'>- " + comment.getAuthor() + ", " + comment.getTimestampString() + "</span>";
+				value += "<span class='comment_attribution'>- " + comment.getAuthor() + ", "
+						+ comment.getTimestampString() + "</span>";
 				value += "</div>";
 			}
 			String rinsedFieldName = Helpers.rinseString(field.getFieldName().toLowerCase())
@@ -911,7 +933,8 @@ public final class AppController extends VelocityViewServlet {
 			BaseReportInfo selectorReport = formTab.getSelectorReport();
 			Map<BaseField, String> filter = new HashMap<BaseField, String>();
 			filter.put(table.getPrimaryKey(), String.valueOf(rowId));
-			List<DataRowInfo> selectorRows = view.getReportDataRows(selectorReport, 50, filter, true);
+			List<DataRowInfo> selectorRows = view.getReportDataRows(selectorReport, 50, filter,
+					true);
 			String tabName = formTab.toString().toLowerCase().replace(" ", "_");
 			context.put(tabName + "_rows", selectorRows);
 			StringBuilder selectorRowsHtml = new StringBuilder("<table class='childData'><tr>\n");
@@ -921,12 +944,15 @@ public final class AppController extends VelocityViewServlet {
 				}
 			}
 			selectorRowsHtml.append("</tr>\n");
-			for(DataRowInfo selectorRow: selectorRows) {
+			for (DataRowInfo selectorRow : selectorRows) {
 				selectorRowsHtml.append("  <tr>");
 				for (BaseField selectorField : selectorReport.getReportBaseFields()) {
 					TableInfo parentTable = selectorField.getTableContainingField();
 					if (!selectorField.equals(parentTable.getPrimaryKey())) {
-						selectorRowsHtml.append("<td class='" + selectorField.getDbType().toString().toLowerCase() + " table_" + parentTable.getInternalTableName() + "'>" + selectorRow.getValue(selectorField) + "</td>");
+						selectorRowsHtml.append("<td class='"
+								+ selectorField.getDbType().toString().toLowerCase() + " table_"
+								+ parentTable.getInternalTableName() + "'>"
+								+ selectorRow.getValue(selectorField) + "</td>");
 					}
 				}
 				selectorRowsHtml.append("</tr>\n");
@@ -976,7 +1002,10 @@ public final class AppController extends VelocityViewServlet {
 			SessionDataInfo sessionData = (SessionDataInfo) context.get("sessionData");
 			try {
 				BaseReportInfo report = sessionData.getReport();
-				logger.warn("Logged in user: " + viewMethods.getLoggedInUser() + ", session report = " + report+ " filtered by " + sessionData.getReportFilterValues(report) + ", limit " + sessionData.getReportRowLimit());
+				logger.warn("Logged in user: " + viewMethods.getLoggedInUser()
+						+ ", session report = " + report + " filtered by "
+						+ sessionData.getReportFilterValues(report) + ", limit "
+						+ sessionData.getReportRowLimit());
 			} catch (DisallowedException dex) {
 				logger.warn("Not allowed to get logged in user: " + dex);
 			} catch (ObjectNotFoundException onfex) {

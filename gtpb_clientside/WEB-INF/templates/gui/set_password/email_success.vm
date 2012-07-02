@@ -15,5 +15,16 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-Your password is now set, you can continue to<p>
+#set($user = $view.getLoggedInUser())
+<!DOCTYPE html>
+<html>
+<head>
+  <title>$user.getCompany() :: agileBase - password set</title>
+  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
+  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+Your password is now set, you can continue to log in to $user.getCompany at<p>
 <a href="http://www.agilebase.co.uk/start">http://www.agilebase.co.uk/start</a>
+</body>
+</html>
