@@ -190,8 +190,10 @@ function sendPasswordReset(oButton) {
 		"return": "gui/administration/users/return_password_reset",
 		send_password_reset: true,
 		internalusername: internalUserName
-	}, function() {
-	  jqButton.attr("disabled","true");
+	}, function(data) {
+	  if($(data).find(".errormessage").size() == 0) {
+	    jqButton.attr("disabled","true");
+	  }
 	});
 }
 
