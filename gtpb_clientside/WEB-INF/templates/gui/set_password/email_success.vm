@@ -23,8 +23,8 @@
   <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
   <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
 </head>
-<body>
-Your password is now set, you can continue to log in to $user.getCompany at<p>
+<body style="padding: 5em">
+Your password is now set, you can continue to log in to $user.getCompany() at<p>
 <a href="http://www.agilebase.co.uk/start">http://www.agilebase.co.uk/start</a>
 </body>
 </html>
