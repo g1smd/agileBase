@@ -1063,3 +1063,13 @@ div#reportData {
   .advanced {
     display: none;
   }
+  
+.errormessage {
+	border-radius: 1em;
+	border: 2px solid #ff0000;
+	text-align: center;
+	background: rgb(233,204,201);
+	margin: 10px;
+}
+
+  
