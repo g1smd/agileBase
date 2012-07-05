@@ -29,10 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.SortedSet;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.TreeSet;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
@@ -40,11 +37,9 @@ import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
-import com.gtwm.pb.model.interfaces.fields.ReferencedReportDataField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.DateValue;
-import com.gtwm.pb.model.interfaces.fields.SeparatorField;
 import com.gtwm.pb.model.manageData.fields.DateValueDefn;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
