@@ -154,14 +154,6 @@
          	 // we're deleting a column
          	 //alert(oObj.getAttribute('deleteColumn'));
          	 if(oObj.getAttribute('deleteColumn')=='true') {    
-         		 /* don't delete col with JS, just refresh tab contents with AJAX
-    	 			       var oCell=fParent(oObj,'TD')
-    	 			       if(!oCell) oCell=fParent(oObj,'TH');
-    	 		       	var oTable=fParent(oCell,'TABLE');
-    	 			       var iCellIndex=oCell.cellIndex;
-    	 			       fDeleteColumn(iCellIndex,oTable); 
-    	 			       // we only need to call fReformatTable if deleting rows
-    	 		*/
     	 			      parent.pane_2
     						.loadIntoPane3(
     								'AppController.servlet?return=gui/reports_and_tables/pane3',
@@ -208,18 +200,10 @@
     #if($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$table))
       #set($currentTab = "2")
     #else
-		  #set($currentTab = "1")
+	  #set($currentTab = "1")
     #end
-	#end		
-	#if(($pane2_id) && (!$mobile_device))
-	  <script language=Javascript>
-  	  var rowFound = parent.pane_2.fSetRowSelection('$pane2_id');
-##  	  if ((!rowFound) && ($currentTab < 3)) {
-##  		  jQuery.get("?return=gui/reports_and_tables/tabs/edit_warning", appendWarning);
-##  	  }
-	  </script>
 	#end
-  #parse('gui/resources/google_maps_api_key.vm')
+    #parse('gui/resources/google_maps_api_key.vm')
 	#if($google_maps_api_key)
     #if($viewTools.getAppUrl().startsWith("https"))
       <script src="https://maps.googleapis.com/maps/api/js?key=$google_maps_api_key&sensor=false" type="text/javascript"></script>
@@ -235,6 +219,7 @@
 	#else
 		## Create tab interface		
 		<ul class="tab-list">
+		$viewTools.log("Current tab is $currentTab")
 		#foreach($tab in $tabs)
     		#if($foreach.count == $currentTab)
     			<li class="current">

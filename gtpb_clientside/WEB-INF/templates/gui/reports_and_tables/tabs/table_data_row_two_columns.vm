@@ -31,7 +31,7 @@
     #set($firstSection = false)
   #end
   #if($formStyle == 'TWO_COLUMNS')
-    <div class="block" title="$field"> <!-- start of section block -->
+    <div class="block"> <!-- start of section block -->
     ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
     <table style="width:100%"><tr><td style="column-break-inside: avoid;">
   #else

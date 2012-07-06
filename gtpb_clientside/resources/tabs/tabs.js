@@ -74,23 +74,10 @@ var TabInterfaceObject = function(containerElem) {
 
 		TabObjectPub.queueTab = function() {
 			tabLoaded = false;
-
 			loadSpinner.show();
 			jqTabContainer.load(tabSource, null, function() {
 				TabObjectPub.showTab();
-
 				loadSpinner.hide();
-				if (parent.pane_2 && currentRowId != -1) {
-					var rowFound = parent.pane_2.fSetRowSelection(currentRowId);
-					/*
-					if ((!rowFound) && (tabNumber < 2)) {
-						$.get("?return=gui/reports_and_tables/tabs/edit_warning", function(
-								warningRowHtml) {
-							appendWarning(warningRowHtml);
-						});
-					}
-					*/
-				}
 				pane3Scripts.update();
 			});
 			tabLoaded = true;
