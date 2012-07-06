@@ -58,6 +58,7 @@ var TabInterfaceObject = function(containerElem) {
 	}();
 
 	var TabObject = function(tabNumber, linkElem, current) {
+		alert("tab number " + tabNumber + ": current=" + current);
 		var TabObjectPub = new Object();
 
 		var jqLinkElem = $(linkElem);
@@ -121,7 +122,6 @@ var TabInterfaceObject = function(containerElem) {
 			aPostVars['key'] = 'report_tabindex';
 			aPostVars['value'] = tabNumber + 1;
 			aPostVars['return'] = 'blank';
-			alert("about to set tab " + tabNumber + " + 1");
 			var oReq = new fRequest('AppController.servlet', aPostVars, fNothing, -1);
 
 			// Disable and replace link
