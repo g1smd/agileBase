@@ -277,6 +277,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 								.getNumberOfTabs())) {
 					// if pane 3 has the right number of tabs,
 					// we can just refresh the one tab
+					console.log("refreshing. " + numberOfTabsExpected + " tabs");
 					try {
 						parent.pane_3.pane3TabInterface
 								.refresh(rowId);
