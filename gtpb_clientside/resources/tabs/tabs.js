@@ -79,7 +79,10 @@ var TabInterfaceObject = function(containerElem) {
 			jqTabContainer.load(tabSource, null, function() {
 				TabObjectPub.showTab();
 				loadSpinner.hide();
+				if (parent.pane_2 && currentRowId != -1) {
+				}
 				pane3Scripts.update();
+				var rowFound = parent.pane_2.fSetRowSelection(currentRowId);
 			});
 			tabLoaded = true;
 		}

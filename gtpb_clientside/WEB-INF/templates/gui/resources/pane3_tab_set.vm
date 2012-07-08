@@ -197,12 +197,17 @@
     #end ## end if not mobile device
 	#set($currentTab = $sessionData.getCustomString('report_tabindex'))
 	#if(!$currentTab)
-    #if($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$table))
-      #set($currentTab = "2")
-    #else
-	  #set($currentTab = "1")
-    #end
+      #if($view.loggedInUserAllowedTo('EDIT_TABLE_DATA',$table))
+        #set($currentTab = "2")
+      #else
+	    #set($currentTab = "1")
+      #end
 	#end
+    #if(($pane2_id) && (!$mobile_device))
+    <script language=Javascript>
+      var rowFound = parent.pane_2.fSetRowSelection('$pane2_id');
+    </script>
+    #end
     #parse('gui/resources/google_maps_api_key.vm')
 	#if($google_maps_api_key)
     #if($viewTools.getAppUrl().startsWith("https"))
