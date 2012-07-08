@@ -35,13 +35,13 @@
   #foreach($formTab in $formTabs)
     #set($formTable = $formTab.getTable())
     #if($view.loggedInUserAllowedTo("VIEW_TABLE_DATA",$formTable))
-		#set($formInternalTableName = $formTable.getInternalTableName())
-		## Find the relation field that relates to the parent table
-		#foreach($formField in $formTable.getFields())
-			#if($formField.getRelatedTable().equals($sessionTable))
-				#set($relationField = $formField)
-			#end
+	  #set($formInternalTableName = $formTable.getInternalTableName())
+	  ## Find the relation field that relates to the parent table
+	  #foreach($formField in $formTable.getFields())
+		#if($formField.getRelatedTable().equals($sessionTable))
+		  #set($relationField = $formField)
 		#end
+	  #end
       <div data-singular="$formTable.getSingularName()" class="tab_choice #if($relationField.getOneToOne()) one_to_one #end #if($formTable.equals($sessionTabTable) || ((!$sessionTabTable) && ($formTable.equals($originalTable)))) session_tab #end" id="tab_choice_$formInternalTableName" data-internaltablename="$formInternalTableName" data-internalreportname="$formTab.getSelectorReport().getInternalReportName()" data-relationfield="$relationField.getInternalFieldName()">$formTab#if(!$relationField.getOneToOne())&nbsp;<img class="new" src="resources/toolbar/new.png" title="add new $formTable.getSingularName()"/>#end</div>
     #end
   #end

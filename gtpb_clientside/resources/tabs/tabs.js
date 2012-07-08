@@ -58,7 +58,6 @@ var TabInterfaceObject = function(containerElem) {
 	}();
 
 	var TabObject = function(tabNumber, linkElem, current) {
-		console.log("tab number " + tabNumber + ": current=" + current);
 		var TabObjectPub = new Object();
 
 		var jqLinkElem = $(linkElem);

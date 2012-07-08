@@ -12,8 +12,8 @@
 #foreach($formTab in $formTabs)
 	## Really we should use tab report, but the table is likely to be a lot faster in some cases
 	#set($tabTable = $formTab.getTable())
-	#if(!$view.childDataRowsExist($table, $rowId, $tabTable))
+	###if(!$view.childDataRowsExist($table, $rowId, $tabTable))
 	  "$tabTable.getInternalTableName()",
-	#end
+	###end
 #end
 ""] ## End JSON array
