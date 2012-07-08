@@ -117,7 +117,7 @@
 			#else
 			  #set($setTab = "clear_custom_variable=tabTable")
             #end
-		    #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$sessionTable))
+		    #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))
 		      #set($tabNum = 1)
 		    #else
 		      #set($tabNum = 0)
