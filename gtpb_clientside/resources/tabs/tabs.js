@@ -80,9 +80,9 @@ var TabInterfaceObject = function(containerElem) {
 				TabObjectPub.showTab();
 				loadSpinner.hide();
 				if (parent.pane_2 && currentRowId != -1) {
+					var rowFound = parent.pane_2.fSetRowSelection(currentRowId);
 				}
 				pane3Scripts.update();
-				var rowFound = parent.pane_2.fSetRowSelection(currentRowId);
 			});
 			tabLoaded = true;
 		}
