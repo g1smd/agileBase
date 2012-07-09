@@ -228,8 +228,11 @@ public final class ServletAuthMethods {
 		String forename = request.getParameter(AppUserInfo.FORENAME.toLowerCase());
 		String password = request.getParameter(AppUserInfo.PASSWORD.toLowerCase());
 		String email = request.getParameter(AppUserInfo.EMAIL.toLowerCase());
+		boolean usesCustomUI = appUser.getUsesCustomUI();
 		String usesCustomUIString = request.getParameter(AppUserInfo.USES_CUSTOM_UI.toLowerCase());
-		boolean usesCustomUI = Helpers.valueRepresentsBooleanTrue(usesCustomUIString);
+		if (usesCustomUIString != null) {
+			usesCustomUI = Helpers.valueRepresentsBooleanTrue(usesCustomUIString);
+		}
 		if (password != null) {
 			if (password.equals("false")) {
 				throw new CantDoThatException("User update failed: error setting password");
