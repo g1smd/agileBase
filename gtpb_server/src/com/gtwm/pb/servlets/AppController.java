@@ -853,6 +853,7 @@ public final class AppController extends VelocityViewServlet {
 				}
 			}
 			AppUserInfo user = this.databaseDefn.getAuthManager().getLoggedInUser(request);
+			/*
 			if (user.getUsesCustomUI()) {
 				String cleanCompanyName = user.getCompany().getCompanyName().toLowerCase().replaceAll("\\W", "");
 				String companyPath = "gui/customisations/" + cleanCompanyName + "/";
@@ -862,6 +863,7 @@ public final class AppController extends VelocityViewServlet {
 					templateName = null;
 				}
 			}
+			*/
 		} catch (ObjectNotFoundException onfex) {
 			ServletUtilMethods.logException(onfex, request, "Error getting template");
 		} catch (DisallowedException dex) {
