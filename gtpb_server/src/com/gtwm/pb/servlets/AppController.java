@@ -856,8 +856,8 @@ public final class AppController extends VelocityViewServlet {
 			if (user.getUsesCustomUI()) {
 				String cleanCompanyName = user.getCompany().getCompanyName().toLowerCase().replaceAll("\\W", "");
 				String companyPath = "gui/customisations/" + cleanCompanyName + "/";
-				if (!templateName.startsWith(companyPath)) {
-					// Disallow templates outside of the company path
+				// Only allow templates in the company path, or the boot template
+				if ((!templateName.startsWith(companyPath)) && (!templateName.equals("boot"))) {
 					logger.error("Path " + templateName + " is outside of the company path " + companyPath + " for user " + user);
 					templateName = null;
 				}

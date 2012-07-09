@@ -224,7 +224,6 @@
 	#else
 		## Create tab interface		
 		<ul class="tab-list">
-		$viewTools.log("Current tab is $currentTab")
 		#foreach($tab in $tabs)
     		#if($foreach.count == $currentTab)
     			<li class="current">
