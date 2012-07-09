@@ -59,19 +59,13 @@ var TabInterfaceObject = function(containerElem) {
 
 	var TabObject = function(tabNumber, linkElem, current) {
 		var TabObjectPub = new Object();
-
 		var jqLinkElem = $(linkElem);
 		var tabSource = jqLinkElem.attr('href');
-
 		var jqStrongElem = $("<strong />");
 		jqStrongElem.append(jqLinkElem.contents().clone());
-
 		var currentElem = jqLinkElem;
-
 		var jqTabContainer = $("<div class='tab-item _" + tabNumber + "'></div>");
-
 		var tabLoaded = false;
-
 		TabObjectPub.queueTab = function() {
 			tabLoaded = false;
 			loadSpinner.show();
@@ -89,7 +83,6 @@ var TabInterfaceObject = function(containerElem) {
 		TabObjectPub.showTab = function(evt) {
 			// First, if there is an active relation picker, close it
 			$("#relationPicker").remove();
-
 			var len = tabList.length;
 			for ( var i = 0; i < len; i++) {
 				if (tabList[i] != TabObjectPub) {
