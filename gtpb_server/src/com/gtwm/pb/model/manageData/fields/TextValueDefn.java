@@ -108,12 +108,12 @@ public class TextValueDefn implements TextValue {
 			return false;
 		}
 		int length = this.textValue.trim().length();
-		if ((length > 10) && (length < 20)) {
+		if ((length > 9) && (length < 20)) {
 			// regex from http://www.regexlib.com/
 			if (this.textValue
 					.trim()
 					.matches(
-							"^((\\(?0\\d{4}\\)?\\s?\\d{3}\\s?\\d{3})|(\\(?0\\d{3}\\)?\\s?\\d{3}\\s?\\d{4})|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#(\\d{4}|\\d{3}))?$")) {
+							"^((\\(?0\\d{5}\\)?\\s?\\d{4,5})|(\\(?0\\d{4}\\)?\\s?(\\d{3}\\s?\\d{3}|\\d{5}))|(\\(?0\\d{3}\\)?\\s?(\\d{3}\\s?\\d{4}|\\d{6}))|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#\\d{3,4})?$")) {
 				return true;
 			}
 		}
