@@ -136,12 +136,22 @@ public final class ViewTools implements ViewToolsInfo {
 	public String getAreaForPhoneNumber(String phoneNumber) {
 		if (this.areaCodes.isEmpty()) {
 			// initialise array, values from wikipedia
-			this.areaCodes.put("020", "London");
+			this.areaCodes.put("0200", "London");
+			this.areaCodes.put("0201", "London");
+			this.areaCodes.put("0203", "London");
+			this.areaCodes.put("0207", "London");
+			this.areaCodes.put("0208", "London");
+			this.areaCodes.put("0230", "Southampton and Portsmouth");
+			this.areaCodes.put("0231", "Southampton and Portsmouth");
 			this.areaCodes.put("0238", "Southampton");
 			this.areaCodes.put("0239", "Portsmouth");
-			this.areaCodes.put("024", "Coventry");
+			this.areaCodes.put("0240", "Coventry");
+			this.areaCodes.put("0241", "Coventry");
+			this.areaCodes.put("0247", "Coventry");
 			this.areaCodes.put("028", "Northern Ireland");
-			this.areaCodes.put("029", "Cardiff");
+			this.areaCodes.put("0290", "Cardiff");
+			this.areaCodes.put("0291", "Cardiff");
+			this.areaCodes.put("0292", "Cardiff");
 			this.areaCodes.put("0121", "Birmingham");
 			this.areaCodes.put("0113", "Leeds");
 			this.areaCodes.put("0131", "Edinburgh");
@@ -153,6 +163,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("0161", "Manchester");
 			this.areaCodes.put("0117", "Bristol");
 			this.areaCodes.put("0118", "Reading");
+			this.areaCodes.put("0191", "Tyneside, Sunderland and Durham");
 			this.areaCodes.put("01912", "Tyneside");
 			this.areaCodes.put("01914", "Tyneside");
 			this.areaCodes.put("01916", "Tyneside");
@@ -761,7 +772,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("0500", "Freephone");
 			this.areaCodes.put("055", "Voice over IP");
 			this.areaCodes.put("056", "Voice over IP");
-			this.areaCodes.put("070", "Personal number (can be redirected)");
+			this.areaCodes.put("070", "Personal number (Premium rate)");
 			this.areaCodes.put("074", "Mobile");
 			this.areaCodes.put("075", "Mobile");
 			this.areaCodes.put("07624", "Mobile");
