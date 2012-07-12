@@ -76,8 +76,8 @@
         #else
           <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /></a>##
         #end
-      #elseif ($fieldValueObject.isTwitterName() || $field.getFieldName().toLowerCase().contains("twitter"))##
-        <div class="twitter tweet query" username="$fieldValueObject"></div>
+      #elseif ($fieldValueObject.isTwitterName() || ($field.getFieldName().toLowerCase().contains("twitter") && ($fieldValue.trim().length() > 1)))##
+        <br/><div class="twitter tweet query" username="$fieldValueObject"></div>
         ##<a href="http://www.twitter.com/$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
       #elseif ($fieldValueObject.isTwitterHashTag())##      
         <a href="http://twitter.com/#!/search?q=$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
