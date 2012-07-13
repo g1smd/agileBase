@@ -30,7 +30,7 @@
   #if($globalEdit || $field.getDateResolution() == $CONST_YEAR)##
     #set($years="")##
   #else
-    #set($years=$viewTools.getCalendar().get($CONST_YEAR))##
+    #set($years=$calendar.get($CONST_YEAR))##
   #end
   #set($hours="00")##
   #set($minutes="00")##
@@ -91,7 +91,27 @@
 	  #end
     </select>
   #end
-  <input type="text" #if(!$updateAsType) name="$field.getInternalFieldName()_years" #end maxlength="4" size="4" maxKeyCount="4" value="$years" wrapperAttribute="gtpb_$field.getInternalFieldName()_years" onkeyup="fKeyUpEvent(this, event)" #if($globalEdit) global_edit="true" #end>
+  #set($maxAgeYears = false)
+  #set($maxAgeYears = $field.getMaxAgeYears())
+  #if($maxAgeYears)
+    ## Dropdown for year
+    #set($minAgeYears = $field.getMinAgeYears())
+    #if(!$field.getMinAgeYears())
+      #set($minAgeYears = 0)
+    #end
+    #set($currentYear = $calendar.get($CONST_YEAR))
+    #set($startYear = $currentYear - $maxAgeYears)
+    #set($endYear = $currentYear - $minAgeYears)
+    <select #if(!$updateAsType) name="$field.getInternalFieldName()_years" #end wrapperAttribute="gtpb_$field.getInternalFieldName()_years" onchange="fChangeEvent(this);" #if($globalEdit) global_edit="true" #end>
+      <option value="">year</option>
+      #foreach($yearOption in [$startYear..$endYear])
+        <option value="$yearOption">$yearOption</option>
+      #end
+    </select>
+  #else
+    ## Standard text box for year
+    <input type="text" #if(!$updateAsType) name="$field.getInternalFieldName()_years" #end maxlength="4" size="4" maxKeyCount="4" value="$years" wrapperAttribute="gtpb_$field.getInternalFieldName()_years" onkeyup="fKeyUpEvent(this, event)" #if($globalEdit) global_edit="true" #end>
+  #end
   #if($dateResolution >= $CONST_HOUR_OF_DAY)
 	#if(($formStyle == "TWO_COLUMNS") || ($formStyle == "TWO_COLUMNS_WITHIN_SECTION"))<br />#end
   Time 
