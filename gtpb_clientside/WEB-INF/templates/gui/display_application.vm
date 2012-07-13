@@ -42,7 +42,6 @@
       <script language="JavaScript" type="text/javascript">
         $(document).ready(function() {
           window.spawnWindow=fSpawnWindow;
-          alert('deploy test');
         });
       </script>  
     </head>
