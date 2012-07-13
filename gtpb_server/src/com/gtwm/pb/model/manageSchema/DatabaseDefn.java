@@ -1457,7 +1457,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 							if (!formInputValue.equals("")) {
 								minAgeYears = Integer.valueOf(formInputValue);
 							}
-							dateField.setMaxAgeYears(minAgeYears);
+							dateField.setMinAgeYears(minAgeYears);
 						}
 					}
 				}
