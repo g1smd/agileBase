@@ -42,6 +42,7 @@
       <script language="JavaScript" type="text/javascript">
         $(document).ready(function() {
           window.spawnWindow=fSpawnWindow;
+          alert("1");
         });
       </script>  
     </head>
