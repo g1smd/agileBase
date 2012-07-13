@@ -48,7 +48,7 @@ public class DateFieldDefn extends AbstractField implements DateField {
 
 	public DateFieldDefn(TableInfo tableContainingField, String internalFieldName,
 			String fieldName, String fieldDesc, boolean unique, boolean notNull,
-			boolean defaultToNow, int dateResolution, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
+			boolean defaultToNow, int dateResolution, Integer maxAgeYears, Integer minAgeYears, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
 			super.setInternalFieldName(RandomString.generate());
@@ -64,6 +64,8 @@ public class DateFieldDefn extends AbstractField implements DateField {
 											// once a method of setting
 											// defaults has been added
 		this.setDateResolution(dateResolution);
+		this.setMaxAgeYears(maxAgeYears);
+		this.setMinAgeYears(minAgeYears);
 		super.setPrintoutSetting(printoutSetting);
 	}
 
@@ -152,6 +154,22 @@ public class DateFieldDefn extends AbstractField implements DateField {
 		super.setDefaultDefined(false);
 		this.setDefaultToNowDirect(false);
 	}
+	
+	public Integer getMaxAgeYears() {
+		return this.maxAgeYears;	
+	}
+	
+	public Integer getMinAgeYears() {
+		return this.minAgeYears;
+	}
+	
+	public void setMaxAgeYears(Integer maxAgeYears) {
+		this.maxAgeYears = maxAgeYears;
+	}
+
+	public void setMinAgeYears(Integer minAgeYears) {
+		this.minAgeYears = minAgeYears;
+	}
 
 	public String formatDate(Date dateValue) {
 		return String.format(this.getJavaFormatString(), dateValue);
@@ -188,6 +206,10 @@ public class DateFieldDefn extends AbstractField implements DateField {
 	private String databaseFormatString = "DD Mon YYYY HH24:MI";
 
 	private Boolean defaultToNow = false;
+	
+	private Integer minAgeYears = null;
+	
+	private Integer maxAgeYears = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(DateFieldDefn.class);
 

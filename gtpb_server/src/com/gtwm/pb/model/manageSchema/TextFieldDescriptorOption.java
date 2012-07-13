@@ -53,7 +53,9 @@ public class TextFieldDescriptorOption implements TextFieldDescriptorOptionInfo 
     public enum PossibleTextOptions {
         DEFAULTVALUE("Default Value", true),
         NOTAPPLICABLEDESCRIPTION("Not applicable description", true),
-        NOTAPPLICABLEVALUE("Not applicable value", true);
+        NOTAPPLICABLEVALUE("Not applicable value", true),
+        MINYEARS("Min. years age", true),
+        MAXYEARS("Max. years age", true);
 
         PossibleTextOptions(String optionDescription, boolean advancedOption) {
             this.optionDescription = optionDescription;

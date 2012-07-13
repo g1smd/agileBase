@@ -69,6 +69,8 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.DEFAULTTONOW));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.PRINTFORMAT));
+			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.MINYEARS));
+			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.MAXYEARS));
 			break;
 		case DURATION:
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.DURATIONRESOLUTION));

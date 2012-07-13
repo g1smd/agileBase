@@ -49,8 +49,8 @@ public interface DateField extends BaseField {
 	/**
 	 * @see #format(Date)
 	 * 
-	 * Note: format methods have different methods rather
-	 *      than overloading each other: see Bloch item 26 for why
+	 *      Note: format methods have different methods rather than overloading
+	 *      each other: see Bloch item 26 for why
 	 */
 	public String formatCalendar(Calendar dateValue);
 
@@ -75,4 +75,21 @@ public interface DateField extends BaseField {
 	public Calendar getDefault();
 
 	public void clearDefault();
+
+	/**
+	 * Return the max. age in years that this field should store. Useful for
+	 * e.g. date of birth fields
+	 */
+	public Integer getMaxAgeYears();
+
+	/**
+	 * Return the min. age in years that this field should store. If maxAgeYears
+	 * is specified and minAgeYears is null, then years up to and including the
+	 * current year will be allowed
+	 */
+	public Integer getMinAgeYears();
+	
+	public void setMaxAgeYears(Integer maxAgeYears);
+	
+	public void setMinAgeYears(Integer minAgeYears);
 }
