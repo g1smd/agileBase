@@ -33,7 +33,7 @@
     </style>		
 	<![endif]-->
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-    <title>$view.getApplicationName() - $company_name deploy test</title>
+    <title>$view.getApplicationName() - $company_name</title>
    	  <script src="resources/jquery.js" language="Javascript"></script>
 	  ## <script type="text/javascript" src="resources/fauxconsole.js"></script>	
       <script language=JavaScript src="resources/logger.js"></script>
@@ -42,6 +42,7 @@
       <script language="JavaScript" type="text/javascript">
         $(document).ready(function() {
           window.spawnWindow=fSpawnWindow;
+          alert('deploy');
         });
       </script>  
     </head>
