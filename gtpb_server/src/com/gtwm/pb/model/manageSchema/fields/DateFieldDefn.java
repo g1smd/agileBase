@@ -31,6 +31,7 @@ import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBoole
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
+import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
@@ -114,6 +115,12 @@ public class DateFieldDefn extends AbstractField implements DateField {
 			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
 					printoutSetting.name());
+			if (this.getMaxAgeYears() != null) {
+				fieldDescriptor.setTextOptionValue(PossibleTextOptions.MAXYEARS, this.getMaxAgeYears().toString());
+				if (this.getMinAgeYears() != null) {
+					fieldDescriptor.setTextOptionValue(PossibleTextOptions.MINYEARS, this.getMinAgeYears().toString());
+				}
+			}
 			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
