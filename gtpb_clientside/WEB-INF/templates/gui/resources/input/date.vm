@@ -105,7 +105,7 @@
     <select #if(!$updateAsType) name="$field.getInternalFieldName()_years" #end wrapperAttribute="gtpb_$field.getInternalFieldName()_years" onchange="fChangeEvent(this);" #if($globalEdit) global_edit="true" #end>
       <option value="">year</option>
       #foreach($yearOption in [$startYear..$endYear])
-        <option value="$yearOption">$yearOption</option>
+        <option value="$yearOption" #if($yearOption == $currentYear) selected #end>$yearOption</option>
       #end
     </select>
   #else
@@ -126,7 +126,7 @@
     : <input type="text" #if(!$updateAsType) name="$field.getInternalFieldName()_seconds" #end maxlength="2" size="2" maxKeyCount="2" value="$seconds" wrapperAttribute="gtpb_$field.getInternalFieldName()_seconds" onkeyup="fKeyUpEvent(this, event)" #if($globalEdit) global_edit="true" #end>
   #end
   #if(($dateResolution >= $CONST_DAY_OF_MONTH) && (!$maxAgeYears))
-	  <input type="hidden" class="dp-choose-date" id="date_picker_$field.getInternalFieldName()" inline="false">
+	<input type="hidden" class="dp-choose-date" id="date_picker_$field.getInternalFieldName()" inline="false">
   #end
   #if($globalEdit)
 	<button class="globalEdit" onclick="fUpdateGlobalDate(this)">update globally</button>
