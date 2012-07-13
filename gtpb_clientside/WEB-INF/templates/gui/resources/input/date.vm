@@ -27,7 +27,7 @@
 #if(!$tableDataRow || $tableDataRow.get($field).isNull() || $globalEdit)##
   #set($days="0")##
   #set($months="0")##
-  #if($globalEdit || $field.getDateResolution() == $CONST_YEAR)##
+  #if($globalEdit || ($field.getDateResolution() == $CONST_YEAR) || $field.getMaxAgeYears())##
     #set($years="")##
   #else
     #set($years=$calendar.get($CONST_YEAR))##
@@ -105,7 +105,7 @@
     <select #if(!$updateAsType) name="$field.getInternalFieldName()_years" #end wrapperAttribute="gtpb_$field.getInternalFieldName()_years" onchange="fChangeEvent(this);" #if($globalEdit) global_edit="true" #end>
       <option value="">year</option>
       #foreach($yearOption in [$startYear..$endYear])
-        <option value="$yearOption" #if($yearOption == $currentYear) selected #end>$yearOption</option>
+        <option value="$yearOption" #if($yearOption == $years) selected #end>$yearOption</option>
       #end
     </select>
   #else
