@@ -42,7 +42,7 @@
       <script language="JavaScript" type="text/javascript">
         $(document).ready(function() {
           window.spawnWindow=fSpawnWindow;
-          alert('deploy');
+          alert('deploy test');
         });
       </script>  
     </head>
