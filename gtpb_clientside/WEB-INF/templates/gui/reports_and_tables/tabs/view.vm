@@ -21,8 +21,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 ## view the data in the session table, plus related data
 #set($tabCaption='view')
 #set($viewOnly=true) ## $viewOnly used by resources/input/input.vm
-#set($sessionTable=$sessionData.getTable())
-#set($sessionReport=$sessionData.getReport())
+#if(!$sessionTable)
+  #set($sessionTable=$sessionData.getTable())
+  #set($sessionReport=$sessionData.getReport())
+#end
 #if(!$sessionRowId)
   #set($sessionRowId=$sessionData.getRowId())
 #end
@@ -99,7 +101,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 									#set($comments = $view.getComments($field$, $relatedRowId))
 									#set($hasComments = ($comments.size() > 0))
             		  ## don't display hidden or blank fields. Do display fields that may have comments
-            		  #if($hasComments || (!$fieldCategory.savesData()) || (($field.getHidden() == false) && (!($tableDataValue.toString() == ''))))
+            		  #if($hasComments || (!$fieldCategory.savesData()) || (($field.getHidden() == false) && (($tableDataValue.toString() != '') || ($printBlankFields)) ))
                     ## don't display checkbox values that are false
                     #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
                       #if($fieldCategory == "RELATION")
