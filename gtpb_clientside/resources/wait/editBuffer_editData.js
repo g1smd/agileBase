@@ -445,7 +445,6 @@ function fEnableDisable(sAction, oFormObject) {
 			$(oObjToChange).addClass("input_saved");
 			$(oObjToChange).prev("select.combo-component").addClass("input_saved");
 		} else {
-			alert("setting " + sBusyAttr + " property");
 			oObjToChange.setAttribute(sBusyAttr, 'true');
 			if (sBusyAttr=='changed') {
 				$(oObjToChange).addClass('changed');
