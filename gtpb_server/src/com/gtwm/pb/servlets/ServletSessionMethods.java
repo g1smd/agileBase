@@ -703,8 +703,8 @@ public final class ServletSessionMethods {
 						// as text rather than numbers
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
 							if (!fieldValueString.matches(".*\\D.*")) {
-								fieldValueString = fieldValueString.substring(0, 5) + " "
-										+ fieldValueString.substring(5);
+										fieldValueString = fieldValueString.substring(0, 5) + " "
+												+ fieldValueString.substring(5);
 							}
 						} else {
 							// Replace smart quotes with normal quotes and em dashes with normal dashes
