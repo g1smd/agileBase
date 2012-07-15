@@ -78,6 +78,7 @@ import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.ExtraAction;
+import com.gtwm.pb.util.Enumerations.HiddenFields;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
@@ -302,8 +303,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		return viewableReports;
 	}
-	
-	
 
 	/**
 	 * Returns all the reports from a table that the specified user is able to
@@ -349,7 +348,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			throws CodingErrorException {
 		return this.getAuthenticator().getTablesNecessaryToViewReport(this.request, report);
 	}
-	
+
 	public TableInfo getTable(String tableID) throws ObjectNotFoundException, DisallowedException {
 		return this.databaseDefn.getTable(this.request, tableID);
 	}
@@ -463,12 +462,15 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 	}
 
-	public boolean childDataRowsExist(TableInfo parentTable, int parentRowId, TableInfo childTable) throws SQLException, DisallowedException, ObjectNotFoundException {
-		if (!this.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, childTable)) {
+	public boolean childDataRowsExist(TableInfo parentTable, int parentRowId, TableInfo childTable)
+			throws SQLException, DisallowedException, ObjectNotFoundException {
+		if (!this.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
+				childTable)) {
 			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
 					childTable);
 		}
-		return this.databaseDefn.getDataManagement().childDataRowsExist(parentTable, parentRowId, childTable);
+		return this.databaseDefn.getDataManagement().childDataRowsExist(parentTable, parentRowId,
+				childTable);
 	}
 
 	public Set<Integer> getRelatedRowIds(int masterRowId, TableInfo relatedTable)
@@ -759,7 +761,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 				reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
 						.getReportField(report.getParentTable().getPrimaryKey()
 								.getInternalFieldName())));
-			} else if (!field.getTableContainingField().equals(report.getParentTable())) {
+			} else if ((!field.getTableContainingField().equals(report.getParentTable()))
+					&& (!field.getFieldName().equals(HiddenFields.COMMENTS_FEED.getFieldName()))) {
 				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
 						.getReportField(report.getParentTable().getPrimaryKey()
