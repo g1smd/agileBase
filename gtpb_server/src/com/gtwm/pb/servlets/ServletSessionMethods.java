@@ -722,10 +722,10 @@ public final class ServletSessionMethods {
 									String pattern55sa = "(1(3873|5(242|39[456])|697[347]|768[347]|9467)).*";
 									// [5+4] 1ddd   (1 area)
 									String pattern54sa = "(16977[23]).*";
-									// [4+6/4+5] 1ddd
-									String pattern465a = "1.*";
-									// [4+6] 7ddd (inc 7624) (not 70, 76)
-									String pattern46sa = "7([1-5789]|624).*";
+									// [4+6] 1ddd, 7ddd (inc 7624) (not 70, 76)
+									String pattern46sa = "(1|7([1-5789]|624)).*";
+									// [4+5] 1ddd  (40 areas)
+									String pattern45sa = "(1(2(0[48]|54|76|9[78])|3(6[34]|8[46])|4(04|20|6[01]|8[08])|5(27|6[26])|6(06|29|35|47|59|95)|7(26|44|50)|8(27|37|84)|9(0[05]|35|49|63|95))).*";
 									// [3+6] 500, 800
 									String pattern36sa = "[58]00.*";
 									// Format numbers by leading digits and length
@@ -745,14 +745,14 @@ public final class ServletSessionMethods {
 										Pattern pattern54 = Pattern.compile("^(\\d{5})(\\d{4})$");
 										Matcher m54 = pattern54.matcher(fieldValueString);
 										fieldValueString = (m54.group(1) + " " + m54.group(2));
-									} else if ((fieldValueLength == 10 || fieldValueLength == 9) && fieldValueString.matches(pattern465a)) {
-										Pattern pattern465 = Pattern.compile("^(\\d{4})(\\d{5,6})$");
-										Matcher m465 = pattern465.matcher(fieldValueString);
-										fieldValueString = (m465.group(1) + " " + m465.group(2));
 									} else if (fieldValueLength == 10 && fieldValueString.matches(pattern46sa)) {
 										Pattern pattern46 = Pattern.compile("^(\\d{4})(\\d{6})$");
 										Matcher m46 = pattern46.matcher(fieldValueString);
 										fieldValueString = (m46.group(1) + " " + m46.group(2));
+									} else if (fieldValueLength == 9  && fieldValueString.matches(pattern45sa)) {
+										Pattern pattern45 = Pattern.compile("^(\\d{4})(\\d{5})$");
+										Matcher m45 = pattern45.matcher(fieldValueString);
+										fieldValueString = (m45.group(1) + " " + m45.group(2));
 									} else if (fieldValueLength == 9  && fieldValueString.matches(pattern36sa)) {
 										Pattern pattern36 = Pattern.compile("^(\\d{3})(\\d{6})$");
 										Matcher m36 = pattern36.matcher(fieldValueString);
