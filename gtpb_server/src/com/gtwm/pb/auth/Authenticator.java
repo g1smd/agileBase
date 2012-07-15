@@ -199,6 +199,7 @@ public final class Authenticator implements AuthenticatorInfo {
 					+ "' already has privileges " + this.getPrivilegesForRole(role));
 		}
 		RoleGeneralPrivilegeInfo privilege = new RoleGeneralPrivilege(role, privilegeType);
+		HibernateUtil.currentSession().save(privilege);
 		this.getRolePrivilegesDirect().add(privilege);
 	}
 
@@ -211,6 +212,7 @@ public final class Authenticator implements AuthenticatorInfo {
 			PrivilegeType privilegeType) {
 		RoleGeneralPrivilegeInfo privilege = new RoleGeneralPrivilege(role, privilegeType);
 		this.getRolePrivilegesDirect().remove(privilege);
+		HibernateUtil.currentSession().delete(privilege);
 		return privilege;
 	}
 
@@ -224,6 +226,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	protected synchronized void addRolePrivilege(AppRoleInfo role, PrivilegeType privilegeType,
 			TableInfo table) throws IllegalArgumentException {
 		RoleTablePrivilegeInfo rolePrivilege = new RoleTablePrivilege(role, privilegeType, table);
+		HibernateUtil.currentSession().save(rolePrivilege);
 		this.getRolePrivilegesDirect().add(rolePrivilege);
 		this.destroyCache();
 	}
@@ -242,6 +245,7 @@ public final class Authenticator implements AuthenticatorInfo {
 		RoleTablePrivilegeInfo rolePrivilege = new RoleTablePrivilege(role, privilegeType, table);
 		this.getRolePrivilegesDirect().remove(rolePrivilege);
 		this.destroyCache();
+		HibernateUtil.currentSession().delete(rolePrivilege);
 		return rolePrivilege;
 	}
 
@@ -269,7 +273,7 @@ public final class Authenticator implements AuthenticatorInfo {
 			}
 		}
 		UserGeneralPrivilegeInfo userPrivilege = new UserGeneralPrivilege(appUser, privilegeType);
-		//HibernateUtil.currentSession().save(userPrivilege);
+		HibernateUtil.currentSession().save(userPrivilege);
 		this.getUserPrivilegesDirect().add(userPrivilege);
 	}
 
@@ -285,6 +289,7 @@ public final class Authenticator implements AuthenticatorInfo {
 		UserTablePrivilegeInfo userPrivilege = new UserTablePrivilege(appUser, privilegeType, table);
 		//HibernateUtil.currentSession().save(userPrivilege);
 		long startTime = System.currentTimeMillis();
+		HibernateUtil.currentSession().save(userPrivilege);
 		this.getUserPrivilegesDirect().add(userPrivilege);
 		long duration = System.currentTimeMillis() - startTime;
 		this.destroyCache();
@@ -299,6 +304,7 @@ public final class Authenticator implements AuthenticatorInfo {
 			PrivilegeType privilegeType) {
 		UserGeneralPrivilegeInfo userPrivilege = new UserGeneralPrivilege(appUser, privilegeType);
 		this.getUserPrivilegesDirect().remove(userPrivilege);
+		HibernateUtil.currentSession().delete(userPrivilege);
 		return userPrivilege;
 	}
 
@@ -316,6 +322,7 @@ public final class Authenticator implements AuthenticatorInfo {
 		UserTablePrivilegeInfo userPrivilege = new UserTablePrivilege(appUser, privilegeType, table);
 		this.getUserPrivilegesDirect().remove(userPrivilege);
 		this.destroyCache();
+		HibernateUtil.currentSession().delete(userPrivilege);
 		return userPrivilege;
 	}
 

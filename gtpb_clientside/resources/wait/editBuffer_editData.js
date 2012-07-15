@@ -418,7 +418,12 @@ function fEnableDisable(sAction, oFormObject) {
   
   function fBusyAttr() {
     if(oFormObject.getAttribute('busyAttribute')) return oFormObject.getAttribute('busyAttribute');
-    else return (fIsBooleanType(oFormObject)?'disabled':'changed');
+    else {
+    	if(fIsBooleanType(oFormObject) || ($(oFormObject).attr("type") == "radio")) {
+    		return 'disabled';
+    	}
+    }
+    return 'changed';
   }
   // enable or disable the current object or object group
 
