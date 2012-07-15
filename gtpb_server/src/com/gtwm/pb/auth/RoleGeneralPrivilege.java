@@ -25,12 +25,16 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Immutable;
+
 import com.gtwm.pb.model.interfaces.RoleGeneralPrivilegeInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 
 @Entity
 //Specify inheritance because RoleObjectPrivilege extends this type
 @Inheritance(strategy = InheritanceType.JOINED) 
+@Immutable
 public class RoleGeneralPrivilege implements RoleGeneralPrivilegeInfo {
 
     /**

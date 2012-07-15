@@ -19,12 +19,16 @@ package com.gtwm.pb.auth;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Immutable;
+
 import com.gtwm.pb.model.interfaces.RoleTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 
 @Entity
+@Immutable
 public class RoleTablePrivilege extends RoleGeneralPrivilege implements RoleTablePrivilegeInfo {
 
     protected RoleTablePrivilege() {    

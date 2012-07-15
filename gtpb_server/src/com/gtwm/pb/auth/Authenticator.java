@@ -269,6 +269,7 @@ public final class Authenticator implements AuthenticatorInfo {
 			}
 		}
 		UserGeneralPrivilegeInfo userPrivilege = new UserGeneralPrivilege(appUser, privilegeType);
+		//HibernateUtil.currentSession().save(userPrivilege);
 		this.getUserPrivilegesDirect().add(userPrivilege);
 	}
 
@@ -282,7 +283,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	protected synchronized void addUserPrivilege(AppUserInfo appUser, PrivilegeType privilegeType,
 			TableInfo table) throws IllegalArgumentException {
 		UserTablePrivilegeInfo userPrivilege = new UserTablePrivilege(appUser, privilegeType, table);
-		HibernateUtil.currentSession().save(userPrivilege);
+		//HibernateUtil.currentSession().save(userPrivilege);
 		long startTime = System.currentTimeMillis();
 		this.getUserPrivilegesDirect().add(userPrivilege);
 		long duration = System.currentTimeMillis() - startTime;
@@ -298,7 +299,6 @@ public final class Authenticator implements AuthenticatorInfo {
 			PrivilegeType privilegeType) {
 		UserGeneralPrivilegeInfo userPrivilege = new UserGeneralPrivilege(appUser, privilegeType);
 		this.getUserPrivilegesDirect().remove(userPrivilege);
-		HibernateUtil.currentSession().delete(userPrivilege);
 		return userPrivilege;
 	}
 
@@ -634,9 +634,10 @@ public final class Authenticator implements AuthenticatorInfo {
 				getRolePrivilegesDirect()));
 	}
 
-	@OneToMany(targetEntity = RoleGeneralPrivilege.class, cascade = CascadeType.ALL)
-	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(targetEntity = RoleGeneralPrivilege.class, cascade =  {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.DETACH}, orphanRemoval=true)
+	//@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	// Uni-directional OneToMany
+	// No cascade type all necessary because privileges are @Immutable
 	private synchronized Set<RoleGeneralPrivilegeInfo> getRolePrivilegesDirect() {
 		return this.rolePrivileges;
 	}
