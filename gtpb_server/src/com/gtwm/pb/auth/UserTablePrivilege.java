@@ -25,7 +25,6 @@ import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 
 @Entity
-@org.hibernate.annotations.Entity(selectBeforeUpdate = true)
 public class UserTablePrivilege extends UserGeneralPrivilege implements UserTablePrivilegeInfo {
 
 	private UserTablePrivilege() {

@@ -31,6 +31,7 @@ import com.gtwm.pb.model.interfaces.AuthCacheObjectInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.auth.AuthCacheObject;
+import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -281,6 +282,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	protected synchronized void addUserPrivilege(AppUserInfo appUser, PrivilegeType privilegeType,
 			TableInfo table) throws IllegalArgumentException {
 		UserTablePrivilegeInfo userPrivilege = new UserTablePrivilege(appUser, privilegeType, table);
+		HibernateUtil.currentSession().save(userPrivilege);
 		long startTime = System.currentTimeMillis();
 		this.getUserPrivilegesDirect().add(userPrivilege);
 		long duration = System.currentTimeMillis() - startTime;
@@ -296,6 +298,7 @@ public final class Authenticator implements AuthenticatorInfo {
 			PrivilegeType privilegeType) {
 		UserGeneralPrivilegeInfo userPrivilege = new UserGeneralPrivilege(appUser, privilegeType);
 		this.getUserPrivilegesDirect().remove(userPrivilege);
+		HibernateUtil.currentSession().delete(userPrivilege);
 		return userPrivilege;
 	}
 
@@ -651,8 +654,8 @@ public final class Authenticator implements AuthenticatorInfo {
 				getUserPrivilegesDirect()));
 	}
 
-	@OneToMany(targetEntity = UserGeneralPrivilege.class, cascade = CascadeType.ALL)
-	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(targetEntity = UserGeneralPrivilege.class, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.DETACH}, orphanRemoval=true)
+	//@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	// Uni-directional OneToMany
 	private synchronized Set<UserGeneralPrivilegeInfo> getUserPrivilegesDirect() {
 		return this.userPrivileges;
