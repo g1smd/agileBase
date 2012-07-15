@@ -101,7 +101,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
 									#set($comments = $view.getComments($field$, $relatedRowId))
 									#set($hasComments = ($comments.size() > 0))
             		  ## don't display hidden or blank fields. Do display fields that may have comments
-            		  #if($hasComments || (!$fieldCategory.savesData()) || (($field.getHidden() == false) && (($tableDataValue.toString() != '') || ($printBlankFields)) ))
+            		  #if($hasComments || (!$fieldCategory.savesData()) || (($field.getHidden() == false) && (($tableDataValue.toString() != '') || $printBlankFields) ))
                     ## don't display checkbox values that are false
                     #if(!(($tableDataValue.getClass().getSimpleName().equals("CheckboxValueDefn")) && ($tableDataValue.toString() == "false")))
                       #if($fieldCategory == "RELATION")
