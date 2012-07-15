@@ -19,12 +19,16 @@ package com.gtwm.pb.auth;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Immutable;
+
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.UserTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 
 @Entity
+@Immutable
 public class UserTablePrivilege extends UserGeneralPrivilege implements UserTablePrivilegeInfo {
 
 	private UserTablePrivilege() {

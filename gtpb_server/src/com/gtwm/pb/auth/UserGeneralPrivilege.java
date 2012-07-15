@@ -25,12 +25,16 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Immutable;
+
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.UserGeneralPrivilegeInfo;
 
 @Entity
 // Specify inheritance because UserObjectPrivilege extends this type
 @Inheritance(strategy = InheritanceType.JOINED) 
+@Immutable
 public class UserGeneralPrivilege implements UserGeneralPrivilegeInfo {
 
     /**
