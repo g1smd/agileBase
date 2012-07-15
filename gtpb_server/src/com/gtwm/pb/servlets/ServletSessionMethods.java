@@ -702,7 +702,7 @@ public final class ServletSessionMethods {
 						// they're exported to CSV, spreadsheets recognise them
 						// as text rather than numbers
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
-							if (!fieldValueString.matches("\\D")) {
+							if (!fieldValueString.matches(".*\\D.*")) {
 								fieldValueString = fieldValueString.substring(0, 5) + " "
 										+ fieldValueString.substring(5);
 							}
