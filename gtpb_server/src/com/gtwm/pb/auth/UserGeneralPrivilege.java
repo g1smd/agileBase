@@ -31,6 +31,7 @@ import com.gtwm.pb.model.interfaces.UserGeneralPrivilegeInfo;
 @Entity
 // Specify inheritance because UserObjectPrivilege extends this type
 @Inheritance(strategy = InheritanceType.JOINED) 
+@org.hibernate.annotations.Entity(selectBeforeUpdate = true)
 public class UserGeneralPrivilege implements UserGeneralPrivilegeInfo {
 
     /**
