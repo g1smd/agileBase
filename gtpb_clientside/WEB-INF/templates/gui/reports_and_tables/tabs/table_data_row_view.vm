@@ -21,7 +21,11 @@
 #set($contractedSections = $loggedInUser.getContractedSections())
 #set($internalFieldName = $field.getInternalFieldName())
 #set($fieldCategory = $field.getFieldCategory())
-#set($printoutSetting = $field.getPrintoutSetting().name())
+#if($printoutSettingOverride)
+  #set($printoutSetting = $printoutSettingOverride)
+#else
+  #set($printoutSetting = $field.getPrintoutSetting().name())
+#end
 ## don't show primary key field
 ## don't show referenced fields if the raw data in the ref. field report parent table has already been displayed
 #set($refFieldTableEncountered = false)
