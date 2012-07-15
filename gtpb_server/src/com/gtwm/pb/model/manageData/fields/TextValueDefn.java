@@ -78,7 +78,7 @@ public class TextValueDefn implements TextValue {
 		}
 		return false;
 	}
-	
+
 	public boolean isImage() {
 		return Helpers.isImage(this.textValue);
 	}
@@ -110,10 +110,18 @@ public class TextValueDefn implements TextValue {
 		int length = this.textValue.trim().length();
 		if ((length > 9) && (length < 20)) {
 			// regex from http://www.regexlib.com/
-			if (this.textValue
-					.trim()
-					.matches(
-							"^((\\(?0\\d{5}\\)?\\s?\\d{4,5})|(\\(?0\\d{4}\\)?\\s?(\\d{3}\\s?\\d{3}|\\d{5}))|(\\(?0\\d{3}\\)?\\s?(\\d{3}\\s?\\d{4}|\\d{6}))|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#\\d{3,4})?$")) {
+			// alteration by g1smd
+			// "^((\\(?0\\d{5}\\)?\\s?\\d{4,5})|(\\(?0\\d{4}\\)?\\s?(\\d{3}\\s?\\d{3}|\\d{5}))|(\\(?0\\d{3}\\)?\\s?(\\d{3}\\s?\\d{4}|\\d{6}))|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#\\d{3,4})?$"
+			String regex = "^";
+			regex += "(";
+			regex += "(\\(?0\\d{5}\\)?\\s?\\d{4,5})|"; //5+4/5+5
+			regex += "(\\(?0\\d{4}\\)?\\s?(\\d{3}\\s?\\d{3}|\\d{5}))|"; //4+6/4+5
+			regex += "(\\(?0\\d{3}\\)?\\s?(\\d{3}\\s?\\d{4}|\\d{6}))|"; //3+7/3+6
+			regex += "(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4})"; //2+8
+			regex += ")";
+			regex += "(\\s?\\#\\d{3,4})?"; //extension
+			regex += "$";
+			if (this.textValue.trim().matches(regex)) {
 				return true;
 			}
 		}
