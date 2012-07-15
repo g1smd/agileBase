@@ -36,7 +36,7 @@ public class AppProperties {
 	 * request. agileBase will log any server-side or template processing that
 	 * exceeds this time.
 	 */
-	public static final float longProcessingTime = 3f;
+	public static final float longProcessingTime = 0.001f; //3
 
 	/**
 	 * The number of seconds that is considered a long time for a SQL view
