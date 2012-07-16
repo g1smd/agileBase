@@ -720,7 +720,7 @@ public final class ServletSessionMethods {
 									// [2+8] 2d, 55, 56, 70, 76 (not 7624)
 									String pattern28sa = "(2|5[56]|7(0|6([013-9]|2[0-35-9]))).*";
 									// [3+7] 11d, 1d1, 3dd, 80d, 84d, 87d, 9dd
-									String pattern37sa = "(1(1|\\d1)|3|8(0[08]|4[2-5]|7[0-3]|9[018]).*";
+									String pattern37sa = "(1(1|\\d1)|3|8(0[08]|4[2-5]|7[0-3])|9[018]).*";
 									// [5+5] 1dddd (12 areas)
 									String pattern55sa = "(1(3873|5(242|39[456])|697[347]|768[347]|9467)).*";
 									// [5+4] 1ddd   (1 area)
