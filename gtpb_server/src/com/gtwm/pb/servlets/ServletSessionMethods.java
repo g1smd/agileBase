@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.http.HttpServletRequest;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
@@ -713,7 +716,7 @@ public final class ServletSessionMethods {
 									// Temporarily remove leading zero
 									fieldValueString = fieldValueString.substring(1);
 									// Find string length
-									int fieldValueLength = fieldValueString.length()
+									int fieldValueLength = fieldValueString.length();
 									// [2+8] 2d, 55, 56, 70, 76 (not 7624)
 									String pattern28sa = "(2|5[56]|7(0|6([013-9]|2[0-35-9]))).*";
 									// [3+7] 11d, 1d1, 3dd, 80d, 84d, 87d, 9dd
