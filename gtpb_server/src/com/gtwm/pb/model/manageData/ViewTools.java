@@ -804,7 +804,7 @@ public final class ViewTools implements ViewToolsInfo {
 				return area;
 			}
 		}
-		return "";
+		return "may be invalid";
 	}
 
 	public SortedMap<BaseField, BaseValue> getAddress(Map<BaseField, BaseValue> tableDataRow) {

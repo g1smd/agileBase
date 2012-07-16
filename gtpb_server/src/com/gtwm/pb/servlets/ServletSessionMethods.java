@@ -703,8 +703,67 @@ public final class ServletSessionMethods {
 						// as text rather than numbers
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
 							if (!fieldValueString.matches(".*\\D.*")) {
-								fieldValueString = fieldValueString.substring(0, 5) + " "
-										+ fieldValueString.substring(5);
+								// Format phone number by type, based on
+								// http://www.aa-asterisk.org.uk/index.php/Number_format and
+								// http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+								// edited by Ian Galpin; twitter: @g1smd
+								if (fieldValueString.matches("0[1-9].*")) {
+									// Grab only digits for processing
+									fieldValueString = fieldValueString.replaceAll("[^\\d#]", "");
+									// Temporarily remove leading zero
+									fieldValueString = fieldValueString.substring(1);
+									// Find string length
+									int fieldValueLength = fieldValueString.length()
+									// [2+8] 2d, 55, 56, 70, 76 (not 7624)
+									String pattern28sa = "(2|5[56]|7(0|6([013-9]|2[0-35-9]))).*";
+									// [3+7] 11d, 1d1, 3dd, 80d, 84d, 87d, 9dd
+									String pattern37sa = "(1(1|\\d1)|3|8(0[08]|4[2-5]|7[0-3]|9[018]).*";
+									// [5+5] 1dddd (12 areas)
+									String pattern55sa = "(1(3873|5(242|39[456])|697[347]|768[347]|9467)).*";
+									// [5+4] 1ddd   (1 area)
+									String pattern54sa = "(16977[23]).*";
+									// [4+6] 1ddd, 7ddd (inc 7624) (not 70, 76)
+									String pattern46sa = "(1|7([1-5789]|624)).*";
+									// [4+5] 1ddd  (40 areas)
+									String pattern45sa = "(1(2(0[48]|54|76|9[78])|3(6[34]|8[46])|4(04|20|6[01]|8[08])|5(27|6[26])|6(06|29|35|47|59|95)|7(26|44|50)|8(27|37|84)|9(0[05]|35|49|63|95))).*";
+									// [3+6] 500, 800
+									String pattern36sa = "[58]00.*";
+									// Format numbers by leading digits and length
+									if (fieldValueLength == 10 && fieldValueString.matches(pattern28sa)) {
+										Pattern pattern28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$");
+										Matcher m28 = pattern28.matcher(fieldValueString);
+										fieldValueString = (m28.group(1) + " " + m28.group(2) + " " + m28.group(3));
+									} else if (fieldValueLength == 10 && fieldValueString.matches(pattern37sa)) {
+										Pattern pattern37 = Pattern.compile("^(\\d{3})(\\d{3})(\\d{4})$");
+										Matcher m37 = pattern37.matcher(fieldValueString);
+										fieldValueString = (m37.group(1) + " " + m37.group(2) + " " + m37.group(3));
+									} else if (fieldValueLength == 10 && fieldValueString.matches(pattern55sa)) {
+										Pattern pattern55 = Pattern.compile("^(\\d{5})(\\d{5})$");
+										Matcher m55 = pattern55.matcher(fieldValueString);
+										fieldValueString = (m55.group(1) + " " + m55.group(2));
+									} else if (fieldValueLength == 9  && fieldValueString.matches(pattern54sa)) {
+										Pattern pattern54 = Pattern.compile("^(\\d{5})(\\d{4})$");
+										Matcher m54 = pattern54.matcher(fieldValueString);
+										fieldValueString = (m54.group(1) + " " + m54.group(2));
+									} else if (fieldValueLength == 10 && fieldValueString.matches(pattern46sa)) {
+										Pattern pattern46 = Pattern.compile("^(\\d{4})(\\d{6})$");
+										Matcher m46 = pattern46.matcher(fieldValueString);
+										fieldValueString = (m46.group(1) + " " + m46.group(2));
+									} else if (fieldValueLength == 9  && fieldValueString.matches(pattern45sa)) {
+										Pattern pattern45 = Pattern.compile("^(\\d{4})(\\d{5})$");
+										Matcher m45 = pattern45.matcher(fieldValueString);
+										fieldValueString = (m45.group(1) + " " + m45.group(2));
+									} else if (fieldValueLength == 9  && fieldValueString.matches(pattern36sa)) {
+										Pattern pattern36 = Pattern.compile("^(\\d{3})(\\d{6})$");
+										Matcher m36 = pattern36.matcher(fieldValueString);
+										fieldValueString = (m36.group(1) + " " + m36.group(2));
+									} else {
+										fieldValueString = fieldValueString.substring(0, 4) + " "
+												+ fieldValueString.substring(4);
+									}
+									// Add leading zero back on after above formatting
+									fieldValueString = "0" + fieldValueString;
+								}
 							}
 						} else {
 							// Replace smart quotes with normal quotes and em dashes with normal dashes
