@@ -3057,7 +3057,8 @@ public final class DataManagement implements DataManagementInfo {
 			throw new CantDoThatException(
 					"For safety, anonymisation can only run on a test/backup server");
 		}
-		if (!this.authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table)) {
+		if (!this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, table)) {
 			AppUserInfo user = this.authManager.getLoggedInUser(request);
 			throw new DisallowedException(user, PrivilegeType.MANAGE_TABLE, table);
 		}
@@ -3089,7 +3090,8 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			results.close();
 			statement.close();
-			SQLCode = "UPDATE " + table.getInternalTableName() + " SET " + commentsFeed.getInternalFieldName() + "=?";
+			SQLCode = "UPDATE " + table.getInternalTableName() + " SET "
+					+ commentsFeed.getInternalFieldName() + "=?";
 			SQLCode += " WHERE " + pKey.getInternalFieldName() + "=?";
 			statement = conn.prepareStatement(SQLCode);
 			int numComments = commentsList.size();
@@ -3101,7 +3103,8 @@ public final class DataManagement implements DataManagementInfo {
 				logger.debug("Executing anonymisation: " + statement);
 				int rowsAffected = statement.executeUpdate();
 				if (rowsAffected != 1) {
-					throw new SQLException("Update failed: returned " + rowsAffected + " rows: " + statement);
+					throw new SQLException("Update failed: returned " + rowsAffected + " rows: "
+							+ statement);
 				}
 			}
 			statement.close();
@@ -3384,8 +3387,8 @@ public final class DataManagement implements DataManagementInfo {
 	private static String anonymiseNote(List<String> capitalisedWords, String note) {
 		String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
 				"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-				Pattern numeralPattern = Pattern.compile("[123456789]"); // no zero
-				Pattern capitalWordsPattern = Pattern.compile("[A-Z][a-z0-9]+");
+		Pattern numeralPattern = Pattern.compile("[123456789]"); // no zero
+		Pattern capitalWordsPattern = Pattern.compile("[A-Z][a-z0-9]+");
 		String newNote = note;
 		Matcher capitalWordMatcher = capitalWordsPattern.matcher(note);
 		Random randomGenerator = new Random();
@@ -3397,7 +3400,7 @@ public final class DataManagement implements DataManagementInfo {
 		// Also anonymise numbers within the text
 		Matcher numeralMatcher = numeralPattern.matcher(newNote);
 		char[] keyChars = newNote.toCharArray();
-		while (numeralMatcher.matches()) {
+		while (numeralMatcher.find()) {
 			int position = numeralMatcher.start();
 			keyChars[position] = alphabet[randomGenerator.nextInt(26)].charAt(0);
 		}
