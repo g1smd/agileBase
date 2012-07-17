@@ -776,7 +776,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
-		logger.debug(("End: groupings are " + chart.getGroupings());
+		logger.debug("End: groupings are " + chart.getGroupings());
 		return this.databaseDefn.getDataManagement().getChartData(company, chart, filters,
 				false);
 	}
