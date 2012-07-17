@@ -154,16 +154,21 @@ public final class AppController extends VelocityViewServlet {
 	public void destroy() {
 		super.destroy();
 		this.databaseDefn.cancelScheduledEvents();
-		Connection conn;
+		Connection conn = null;
 		try {
 			conn = this.relationalDataSource.getConnection();
 			UsageLogger.logDataOlderThan(conn, 0);
 			conn.commit();
-			if (conn != null) {
-				conn.close();
-			}
 		} catch (SQLException sqlex) {
 			logger.error("SQL exception while performing final logging during shutdown: " + sqlex);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException sqlex) {
+					logger.error("Error closing SQL connection at app close: " + sqlex);
+				}
+			}
 		}
 		// Release memory - still not sure if this is actually necessary
 		this.databaseDefn = null;

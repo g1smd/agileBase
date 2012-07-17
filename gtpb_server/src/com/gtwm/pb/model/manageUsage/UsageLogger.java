@@ -186,6 +186,9 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 				statement.setTimestamp(4, this.timestamp);
 				statement.setString(5, this.details);
 				break;
+			default:
+				logger.error("Unhandled log type" + this.logType);
+				return;
 			}
 			Thread.yield();
 			statement.executeUpdate();

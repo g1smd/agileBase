@@ -2071,10 +2071,22 @@ public final class DataManagement implements DataManagementInfo {
 				if (colourField != null) {
 					String colourValue = reportDataRow.getValue(colourField).getKeyValue();
 					jg.writeStringField("colourValue", colourValue);
-					int hue = Math.abs(colourValue.toUpperCase().hashCode()) % 360;
-					int saturation = 20 + (Math.abs(colourValue.toLowerCase().hashCode()) % 80);
-					int lightness = 50 + (Math.abs(WordUtils.capitalizeFully(colourValue)
-							.hashCode()) % 40);
+					int upperHash = colourValue.toUpperCase().hashCode();
+					int hue = 0;
+					if (upperHash != Integer.MIN_VALUE) {
+						// http://findbugs.blogspot.co.uk/2006/09/is-mathabs-broken.html
+						hue = Math.abs(upperHash) % 360;
+					}
+					int saturation = 20;
+					int lowerHash = colourValue.toLowerCase().hashCode();
+					if (lowerHash != Integer.MIN_VALUE) {
+						saturation += (Math.abs(lowerHash) % 80);
+					}
+					int lightness = 50;
+					int capsHash = WordUtils.capitalizeFully(colourValue).hashCode();
+					if (capsHash != Integer.MIN_VALUE) {
+						lightness += (Math.abs(capsHash) % 40);
+					}
 					jg.writeNumberField("h", hue);
 					jg.writeNumberField("s", saturation);
 					jg.writeNumberField("l", lightness);

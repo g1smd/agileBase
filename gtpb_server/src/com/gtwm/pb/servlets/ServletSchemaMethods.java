@@ -366,7 +366,9 @@ public final class ServletSchemaMethods {
 			databaseDefn.getAuthManager().removePrivilegesOnTable(request, newTable);
 			throw new CantDoThatException("table addition failed", abex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 		if (newTable != null) {
@@ -692,7 +694,9 @@ public final class ServletSchemaMethods {
 			rollbackConnections(conn);
 			throw new CantDoThatException("table removal failed. " + pbex.getMessage(), pbex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 		// If the table removed was the session table, set the session table to
@@ -779,7 +783,9 @@ public final class ServletSchemaMethods {
 			}
 			throw new CantDoThatException("report addition failed", pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 		// change the session report to update pane 2 & 3
@@ -959,7 +965,9 @@ public final class ServletSchemaMethods {
 			report.setMemoryAllocation(oldMemoryAllocation);
 			throw new CantDoThatException("Updating report failed", pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 	}
@@ -1007,7 +1015,9 @@ public final class ServletSchemaMethods {
 			}
 			throw new CantDoThatException("report removal failed: " + pex.getMessage(), pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 		// change the session report to update pane 2 & 3
@@ -1123,7 +1133,9 @@ public final class ServletSchemaMethods {
 				// but they should be left here
 				logger.info(table.getFields().toString());
 				logger.info(table.getDefaultReport().getReportFields().toString());
-				conn.close();
+				if (conn != null) {
+					conn.close();
+				}
 				HibernateUtil.closeSession();
 			}
 		}
@@ -1220,7 +1232,9 @@ public final class ServletSchemaMethods {
 			// remove field from memory (table fields and default report fields)
 			throw new CantDoThatException("field addition failed", pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 	}
@@ -1293,7 +1307,9 @@ public final class ServletSchemaMethods {
 			rollbackConnections(conn);
 			throw new CantDoThatException("Field removal failed: " + pex.getMessage(), pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 	}
@@ -1658,7 +1674,9 @@ public final class ServletSchemaMethods {
 			}
 			throw new CantDoThatException("Report field removal failed. " + pex.getMessage(), pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 	}
@@ -1715,7 +1733,9 @@ public final class ServletSchemaMethods {
 			report.setFieldIndex(oldFieldIndex, field);
 			throw new CantDoThatException("Report field re-indexing failed", pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 	}
@@ -1808,7 +1828,9 @@ public final class ServletSchemaMethods {
 			}
 			throw new CantDoThatException("report field sorting failed", pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 			logger.info(report.getSorts().toString());
 		}
@@ -1962,7 +1984,9 @@ public final class ServletSchemaMethods {
 					oldCalculationName, oldCalculationDefn, oldDbFieldType);
 			throw new CantDoThatException("Calculation addition failed. " + pex.getMessage(), pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 	}
@@ -2075,7 +2099,9 @@ public final class ServletSchemaMethods {
 			}
 			throw new CantDoThatException("filter addition failed", pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 	}
@@ -2123,7 +2149,9 @@ public final class ServletSchemaMethods {
 			report.addFilter(reportFilter);
 			throw new CantDoThatException("Filter removal failed", pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 	}
@@ -2294,7 +2322,9 @@ public final class ServletSchemaMethods {
 			report.removeJoin(join);
 			throw new CantDoThatException("Join addition failed", pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 	}
@@ -2346,7 +2376,9 @@ public final class ServletSchemaMethods {
 			report.addJoin(join);
 			throw new CantDoThatException("Join removal failed: " + abex.getMessage(), abex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 	}

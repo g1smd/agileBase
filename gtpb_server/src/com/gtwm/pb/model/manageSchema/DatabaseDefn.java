@@ -1209,18 +1209,21 @@ public final class DatabaseDefn implements DatabaseInfo {
 					.getParameter(PossibleListOptions.DATERESOLUTION.getFormInputName()));
 			boolean defaultToNow = HttpRequestUtil.getBooleanValue(request,
 					PossibleBooleanOptions.DEFAULTTONOW.getFormInputName());
-			String maxAgeYearsString = request.getParameter(PossibleTextOptions.MAXYEARS.getFormInputName());
+			String maxAgeYearsString = request.getParameter(PossibleTextOptions.MAXYEARS
+					.getFormInputName());
 			Integer maxAgeYears = null;
 			if (!maxAgeYearsString.equals("")) {
 				maxAgeYears = Integer.valueOf(maxAgeYearsString);
 			}
-			String minAgeYearsString = request.getParameter(PossibleTextOptions.MINYEARS.getFormInputName());
+			String minAgeYearsString = request.getParameter(PossibleTextOptions.MINYEARS
+					.getFormInputName());
 			Integer minAgeYears = null;
 			if (!minAgeYearsString.equals("")) {
 				minAgeYears = Integer.valueOf(minAgeYearsString);
 			}
 			field = new DateFieldDefn(table, internalFieldName, fieldName, fieldDesc, unique,
-					notNull, defaultToNow, dateResolution, maxAgeYears, minAgeYears, printoutSetting);
+					notNull, defaultToNow, dateResolution, maxAgeYears, minAgeYears,
+					printoutSetting);
 			break;
 		case TEXT:
 			String defaultValue = HttpRequestUtil.getStringValue(request,
@@ -1341,7 +1344,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return field;
 	}
 
-	//TODO: improve: takes a lot of repetitive code to do very little
+	// TODO: improve: takes a lot of repetitive code to do very little
 	public void updateFieldOption(HttpServletRequest request, BaseField field)
 			throws DisallowedException, CantDoThatException, CodingErrorException, SQLException,
 			ObjectNotFoundException {
@@ -1359,8 +1362,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			FieldTypeDescriptorInfo fieldDescriptor = textField.getFieldDescriptor();
 			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
 			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart
-						+ fieldOption.getFormInputName();
+				String formInputName = inputStart + fieldOption.getFormInputName();
 				String formInputValue = request.getParameter(formInputName);
 				if (formInputValue != null) {
 					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
@@ -1423,8 +1425,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			FieldTypeDescriptorInfo fieldDescriptor = dateField.getFieldDescriptor();
 			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
 			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart
-						+ fieldOption.getFormInputName();
+				String formInputName = inputStart + fieldOption.getFormInputName();
 				String formInputValue = request.getParameter(formInputName);
 				if (formInputValue != null) {
 					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
@@ -1446,13 +1447,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 							dateField.setDateResolution(dateResolution);
 						}
 					} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart + PossibleTextOptions.MAXYEARS.getFormInputName())) {
+						if (formInputName.equals(inputStart
+								+ PossibleTextOptions.MAXYEARS.getFormInputName())) {
 							Integer maxAgeYears = null;
 							if (!formInputValue.equals("")) {
 								maxAgeYears = Integer.valueOf(formInputValue);
 							}
 							dateField.setMaxAgeYears(maxAgeYears);
-						} else if (formInputName.equals(inputStart + PossibleTextOptions.MINYEARS.getFormInputName())) {
+						} else if (formInputName.equals(inputStart
+								+ PossibleTextOptions.MINYEARS.getFormInputName())) {
 							Integer minAgeYears = null;
 							if (!formInputValue.equals("")) {
 								minAgeYears = Integer.valueOf(formInputValue);
@@ -1467,8 +1470,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			FieldTypeDescriptorInfo fieldDescriptor = decimalField.getFieldDescriptor();
 			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
 			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart
-						+ fieldOption.getFormInputName();
+				String formInputName = inputStart + fieldOption.getFormInputName();
 				String formInputValue = request.getParameter(formInputName);
 				if (formInputValue != null) {
 					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
@@ -1507,8 +1509,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			FieldTypeDescriptorInfo fieldDescriptor = integerField.getFieldDescriptor();
 			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
 			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart
-						+ fieldOption.getFormInputName();
+				String formInputName = inputStart + fieldOption.getFormInputName();
 				String formInputValue = request.getParameter(formInputName);
 				if (formInputValue != null) {
 					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
@@ -1559,8 +1560,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			FieldTypeDescriptorInfo fieldDescriptor = checkboxField.getFieldDescriptor();
 			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
 			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart
-						+ fieldOption.getFormInputName();
+				String formInputName = inputStart + fieldOption.getFormInputName();
 				String formInputValue = request.getParameter(formInputName);
 				if (formInputValue != null) {
 					if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
@@ -1579,8 +1579,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			FieldTypeDescriptorInfo fieldDescriptor = relationField.getFieldDescriptor();
 			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
 			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart
-						+ fieldOption.getFormInputName();
+				String formInputName = inputStart + fieldOption.getFormInputName();
 				String formInputValue = request.getParameter(formInputName);
 				if (formInputValue != null) {
 					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
@@ -1622,8 +1621,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			FieldTypeDescriptorInfo fieldDescriptor = fileField.getFieldDescriptor();
 			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
 			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart
-						+ fieldOption.getFormInputName();
+				String formInputName = inputStart + fieldOption.getFormInputName();
 				String formInputValue = request.getParameter(formInputName);
 				if (formInputValue != null) {
 					if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
@@ -3245,9 +3243,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 			if (sqlex.getMessage().contains("Table contains duplicated values")) {
 				// Find the actual duplicates
 				String errorMessage = "There are duplicate values: ";
-				Connection dupConn = this.relationalDataSource.getConnection();
-				dupConn.setAutoCommit(false);
+				Connection dupConn = null;
 				try {
+					dupConn = this.relationalDataSource.getConnection();
+					dupConn.setAutoCommit(false);
 					SQLCode = "SELECT " + internalFieldName + ", count(*) FROM "
 							+ internalTableName;
 					SQLCode += " GROUP BY " + internalFieldName;
@@ -3278,7 +3277,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 				throw sqlex;
 			}
 		} finally {
-			statement.close();
+			if (statement != null) {
+				statement.close();
+			}
 		}
 	}
 
