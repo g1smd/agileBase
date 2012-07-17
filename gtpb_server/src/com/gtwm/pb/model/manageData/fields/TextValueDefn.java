@@ -113,7 +113,8 @@ public class TextValueDefn implements TextValue {
 			// alteration by g1smd
 			// "^((\\(?0\\d{5}\\)?\\s?\\d{4,5})|(\\(?0\\d{4}\\)?\\s?(\\d{3}\\s?\\d{3}|\\d{5}))|(\\(?0\\d{3}\\)?\\s?(\\d{3}\\s?\\d{4}|\\d{6}))|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#\\d{3,4})?$"
 			String regex = "^";
-			regex += "(\\(?0"; // leading optional "(" and leading "0"
+			regex += "\\(?0"; // leading optional "(" and leading "0"
+			regex += "(";
 			regex += "(\\d{5}\\)?\\s?\\d{4,5})|"; // [5+4]/[5+5]
 			regex += "(\\d{4}\\)?\\s?(\\d{3}\\s?\\d{3}|\\d{5}))|"; // [4+6]/[4+5]
 			regex += "(\\d{3}\\)?\\s?(\\d{3}\\s?\\d{4}|\\d{6}))|"; // [3+7]/[3+6]
