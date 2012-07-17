@@ -3090,7 +3090,7 @@ public final class DataManagement implements DataManagementInfo {
 			results.close();
 			statement.close();
 			SQLCode = "UPDATE " + table.getInternalTableName() + " SET " + commentsFeed.getInternalFieldName() + "=?";
-			SQLCode += " WHERE " + pKey.getInternalFieldName() + "?";
+			SQLCode += " WHERE " + pKey.getInternalFieldName() + "=?";
 			statement = conn.prepareStatement(SQLCode);
 			int numComments = commentsList.size();
 			for (int rowId : rowIds) {
@@ -3401,7 +3401,7 @@ public final class DataManagement implements DataManagementInfo {
 			int position = numeralMatcher.start();
 			keyChars[position] = alphabet[randomGenerator.nextInt(26)].charAt(0);
 		}
-		return keyChars.toString();
+		return String.valueOf(keyChars);
 	}
 
 	public BaseReportInfo getMostPopularReport(HttpServletRequest request,
