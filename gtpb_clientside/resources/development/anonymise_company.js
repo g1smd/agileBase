@@ -50,7 +50,8 @@ var gtwmJson = [{
 	aca70cd262c1a420c: 'OTHER', // interests
 	af752f749d68f6ad1: 'NOTES', // friends and colleagues
 	a182f3ed5cae2c47d: 'NOTES', // family
-	a8dc1652dcf676329: 'OTHER' // notes
+	a8dc1652dcf676329: 'OTHER', // notes
+	vh7xzbjirlisl3ggb: 'OTHER' // comment feed
 },
 {
 	anonymise : true,

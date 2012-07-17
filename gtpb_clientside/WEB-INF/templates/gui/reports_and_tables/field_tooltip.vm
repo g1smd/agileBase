@@ -13,6 +13,7 @@ $reportField
   #set($chartDataRows = $chartData.getChartDataRows())
 	#if($chartDataRows.size() > 0)
     #set($groupingValues = $chartDataRows.get(0).getGroupingValues())
+    grouping values are $groupingValues<br>
     #if($groupingValues.size() == 0)
       <br>
       #set($aggregateValues = $chartDataRows.get(0).getAggregateValues())
