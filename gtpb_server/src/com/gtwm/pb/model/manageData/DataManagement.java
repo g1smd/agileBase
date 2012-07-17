@@ -3050,15 +3050,77 @@ public final class DataManagement implements DataManagementInfo {
 		return relatedRowIds;
 	}
 
+	private void anonymizeComments(TableInfo table, HttpServletRequest request,
+			List<String> capitalisedWords) throws CantDoThatException, SQLException,
+			ObjectNotFoundException, DisallowedException {
+		if (!request.getServerName().contains("backup")) {
+			throw new CantDoThatException(
+					"For safety, anonymisation can only run on a test/backup server");
+		}
+		if (!this.authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table)) {
+			AppUserInfo user = this.authManager.getLoggedInUser(request);
+			throw new DisallowedException(user, PrivilegeType.MANAGE_TABLE, table);
+		}
+		Pattern capitalWordsPattern = Pattern.compile("[A-Z][a-z0-9]+");
+		Random rand = new Random();
+		Connection conn = null;
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			BaseField commentsFeed = table.getField(HiddenFields.COMMENTS_FEED.getFieldName());
+			BaseField pKey = table.getPrimaryKey();
+			// Read existing comments and add to the capitalizedWords list
+			Set<Integer> rowIds = new HashSet<Integer>();
+			List<String> commentsList = new LinkedList<String>();
+			String SQLCode = "SELECT " + pKey.getInternalFieldName() + ", "
+					+ commentsFeed.getInternalFieldName() + " FROM " + table.getInternalTableName();
+			SQLCode += " WHERE " + commentsFeed.getInternalFieldName() + " IS NOT NULL";
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			ResultSet results = statement.executeQuery();
+			while (results.next()) {
+				rowIds.add(results.getInt(1));
+				String comments = results.getString(2);
+				commentsList.add(comments);
+				// extract capitalised words
+				Matcher matcher = capitalWordsPattern.matcher(comments);
+				while (matcher.find()) {
+					capitalisedWords.add(matcher.group());
+				}
+			}
+			results.close();
+			statement.close();
+			SQLCode = "UPDATE " + table.getInternalTableName() + " SET " + commentsFeed.getInternalFieldName() + "=?";
+			SQLCode += " WHERE " + pKey.getInternalFieldName() + "?";
+			statement = conn.prepareStatement(SQLCode);
+			int numComments = commentsList.size();
+			for (int rowId : rowIds) {
+				statement.setInt(2, rowId);
+				// Choose a random comment and anonymize it
+				String comment = commentsList.get(rand.nextInt(numComments));
+				statement.setString(1, anonymiseNote(capitalisedWords, comment));
+				int rowsAffected = statement.executeUpdate();
+				if (rowsAffected != 1) {
+					throw new SQLException("Update failed: returned " + rowsAffected + " rows: " + statement);
+				}
+			}
+			statement.close();
+			conn.commit();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+
 	public void anonymiseData(TableInfo table, HttpServletRequest request,
 			SessionDataInfo sessionData, Map<BaseField, FieldContentType> fieldContentTypes,
 			List<FileItem> multipartItems) throws SQLException, CodingErrorException,
 			CantDoThatException, InputRecordException, ObjectNotFoundException,
 			DisallowedException, MissingParametersException {
-		// if (!request.getServerName().contains("gtwmbackup")) {
-		// throw new CantDoThatException(
-		// "For safety, anonymisation can only run on a test/backup server");
-		// }
+		if (!request.getServerName().contains("backup")) {
+			throw new CantDoThatException(
+					"For safety, anonymisation can only run on a test/backup server");
+		}
 		Random randomGenerator = new Random();
 		String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
 				"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -3265,21 +3327,8 @@ public final class DataManagement implements DataManagementInfo {
 					// word
 					int dataRowIndex = randomGenerator.nextInt(dataRows.size());
 					String currentKey = dataRow.getDataRowFields().get(field).getKeyValue();
-					String newKey = currentKey;
-					Matcher capitalWordMatcher = capitalWordsPattern.matcher(currentKey);
-					while (capitalWordMatcher.find()) {
-						int capitalWordIndex = randomGenerator.nextInt(capitalisedWords.size());
-						String capitalWord = capitalisedWords.get(capitalWordIndex);
-						newKey = newKey.replace(capitalWordMatcher.group(), capitalWord);
-					}
-					// Also anonymise numbers within the text
-					Matcher numeralMatcher = numeralPattern.matcher(newKey);
-					char[] keyChars = newKey.toCharArray();
-					while (numeralMatcher.matches()) {
-						int position = numeralMatcher.start();
-						keyChars[position] = alphabet[randomGenerator.nextInt(26)].charAt(0);
-					}
-					TextValue textValue = new TextValueDefn(String.valueOf(keyChars));
+					String newKey = anonymiseNote(capitalisedWords, currentKey);
+					TextValue textValue = new TextValueDefn(newKey);
 					dataToSave.put(field, textValue);
 				} else if (contentType.equals(FieldContentType.OTHER)) {
 					int dataRowIndex = randomGenerator.nextInt(dataRows.size());
@@ -3328,6 +3377,30 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			this.saveRecord(request, table, dataToSave, false, rowId, sessionData, multipartItems);
 		}
+		this.anonymizeComments(table, request, capitalisedWords);
+	}
+
+	private static String anonymiseNote(List<String> capitalisedWords, String note) {
+		String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+				"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+				Pattern numeralPattern = Pattern.compile("[123456789]"); // no zero
+				Pattern capitalWordsPattern = Pattern.compile("[A-Z][a-z0-9]+");
+		String newNote = note;
+		Matcher capitalWordMatcher = capitalWordsPattern.matcher(note);
+		Random randomGenerator = new Random();
+		while (capitalWordMatcher.find()) {
+			int capitalWordIndex = randomGenerator.nextInt(capitalisedWords.size());
+			String capitalWord = capitalisedWords.get(capitalWordIndex);
+			newNote = newNote.replace(capitalWordMatcher.group(), capitalWord);
+		}
+		// Also anonymise numbers within the text
+		Matcher numeralMatcher = numeralPattern.matcher(newNote);
+		char[] keyChars = newNote.toCharArray();
+		while (numeralMatcher.matches()) {
+			int position = numeralMatcher.start();
+			keyChars[position] = alphabet[randomGenerator.nextInt(26)].charAt(0);
+		}
+		return keyChars.toString();
 	}
 
 	public BaseReportInfo getMostPopularReport(HttpServletRequest request,
