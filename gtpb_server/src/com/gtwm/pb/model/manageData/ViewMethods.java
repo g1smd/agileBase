@@ -750,7 +750,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 		BaseReportInfo report = reportField.getParentReport();
 		this.checkReportViewPrivileges(report);
 		ChartInfo chart = new ChartDefn(report, reportField.getFieldName(), false);
-		logger.debug("Start: groupings are " + chart.getGroupings());
 		BaseField field = reportField.getBaseField();
 		FieldCategory fieldCategory = field.getFieldCategory();
 		if (fieldCategory.equals(FieldCategory.NUMBER)) {
