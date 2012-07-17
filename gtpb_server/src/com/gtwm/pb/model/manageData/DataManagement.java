@@ -3100,7 +3100,6 @@ public final class DataManagement implements DataManagementInfo {
 				// Choose a random comment and anonymize it
 				String comment = commentsList.get(rand.nextInt(numComments));
 				statement.setString(1, anonymiseNote(capitalisedWords, comment));
-				logger.debug("Executing anonymisation: " + statement);
 				int rowsAffected = statement.executeUpdate();
 				if (rowsAffected != 1) {
 					throw new SQLException("Update failed: returned " + rowsAffected + " rows: "
