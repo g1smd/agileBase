@@ -749,16 +749,16 @@ public final class ViewMethods implements ViewMethodsInfo {
 			ObjectNotFoundException, CantDoThatException {
 		BaseReportInfo report = reportField.getParentReport();
 		this.checkReportViewPrivileges(report);
-		ChartInfo reportSummary = new ChartDefn(report, reportField.getFieldName(), false);
+		ChartInfo chart = new ChartDefn(report, reportField.getFieldName(), false);
 		BaseField field = reportField.getBaseField();
 		FieldCategory fieldCategory = field.getFieldCategory();
 		if (fieldCategory.equals(FieldCategory.NUMBER)) {
-			reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.SUM, reportField));
-			reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.AVG, reportField));
+			chart.addFunction(new ChartAggregateDefn(AggregateFunction.SUM, reportField));
+			chart.addFunction(new ChartAggregateDefn(AggregateFunction.AVG, reportField));
 		} else if (fieldCategory.equals(FieldCategory.TEXT)) {
 			if (((TextField) field).usesLookup()) {
-				reportSummary.addGrouping(reportField, null);
-				reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
+				chart.addGrouping(reportField, null);
+				chart.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
 						.getReportField(report.getParentTable().getPrimaryKey()
 								.getInternalFieldName())));
 			} else if ((!field.getTableContainingField().equals(report.getParentTable()))
@@ -766,8 +766,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 				// Data from other tables is treated as look-up-able as there may be more than one related record
 				// Don't include comments 
 				logger.debug("Adding count for " + reportField);
-				reportSummary.addGrouping(reportField, null);
-				reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
+				chart.addGrouping(reportField, null);
+				chart.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
 						.getReportField(report.getParentTable().getPrimaryKey()
 								.getInternalFieldName())));
 			}
@@ -775,7 +775,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
-		return this.databaseDefn.getDataManagement().getChartData(company, reportSummary, filters,
+		return this.databaseDefn.getDataManagement().getChartData(company, chart, filters,
 				false);
 	}
 

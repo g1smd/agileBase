@@ -2625,28 +2625,28 @@ public final class DataManagement implements DataManagementInfo {
 		return displayLookup;
 	}
 
-	public ChartDataInfo getChartData(CompanyInfo company, ChartInfo reportSummary,
+	public ChartDataInfo getChartData(CompanyInfo company, ChartInfo chart,
 			Map<BaseField, String> reportFilterValues, boolean aggressiveCache)
 			throws SQLException, CantDoThatException {
-		boolean needSummary = (reportSummary.getAggregateFunctions().size() > 0);
+		boolean needSummary = (chart.getAggregateFunctions().size() > 0);
 		if (!needSummary) {
 			return null;
 		}
 		// Work out whether any user filters are active that could affect the
 		// returned data. If there are, always look up direct from db
-		ReportDataInfo reportData = new ReportData(null, reportSummary.getReport(), false, false);
+		ReportDataInfo reportData = new ReportData(null, chart.getReport(), false, false);
 		Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
 				reportFilterValues, false, QuickFilterType.AND);
 		if (whereClauseMap.size() > 0) {
-			return this.fetchChartData(reportSummary, reportFilterValues);
+			return this.fetchChartData(chart, reportFilterValues);
 		}
-		ChartDataInfo reportSummaryData = this.cachedChartDatas.get(reportSummary);
-		if (reportSummaryData == null) {
-			reportSummaryData = this.fetchChartData(reportSummary, reportFilterValues);
-			this.cachedChartDatas.put(reportSummary, reportSummaryData);
+		ChartDataInfo chartData = this.cachedChartDatas.get(chart);
+		if (chartData == null) {
+			chartData = this.fetchChartData(chart, reportFilterValues);
+			this.cachedChartDatas.put(chart, chartData);
 			this.chartDataCacheMisses.incrementAndGet();
 		} else {
-			long cacheCreationTime = reportSummaryData.getCacheCreationTime();
+			long cacheCreationTime = chartData.getCacheCreationTime();
 			long lastDataChangeTime = getLastCompanyDataChangeTime(company);
 			long lastSchemaChangeTime = this.getLastSchemaChangeTime(company);
 			long interval = 0;
@@ -2655,8 +2655,8 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			if (((cacheCreationTime - interval) <= lastDataChangeTime)
 					|| ((cacheCreationTime - interval) <= lastSchemaChangeTime)) {
-				reportSummaryData = this.fetchChartData(reportSummary, reportFilterValues);
-				this.cachedChartDatas.put(reportSummary, reportSummaryData);
+				chartData = this.fetchChartData(chart, reportFilterValues);
+				this.cachedChartDatas.put(chart, chartData);
 				this.chartDataCacheMisses.incrementAndGet();
 			} else {
 				this.chartDataCacheHits.incrementAndGet();
@@ -2668,7 +2668,7 @@ public final class DataManagement implements DataManagementInfo {
 			this.chartDataCacheHits.set(0);
 			this.chartDataCacheMisses.set(0);
 		}
-		return reportSummaryData;
+		return chartData;
 	}
 
 	/**
@@ -2678,6 +2678,7 @@ public final class DataManagement implements DataManagementInfo {
 			throws CantDoThatException, SQLException {
 		Set<ChartAggregateInfo> aggregateFunctions = chart.getAggregateFunctions();
 		Set<ChartGroupingInfo> groupings = chart.getGroupings();
+		logger.debug("Chart groupings are " + groupings);
 		List<ChartDataRowInfo> reportSummaryRows;
 		reportSummaryRows = new LinkedList<ChartDataRowInfo>();
 		Connection conn = null;
