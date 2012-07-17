@@ -278,8 +278,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		TextField commentFeedField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.COMMENTS_FEED.getFieldName(),
 				HiddenFields.COMMENTS_FEED.getFieldDescription(), !TextField.UNIQUE,
-				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null, TextField.HIDDEN,
-				true, FieldPrintoutSetting.NAME_AND_VALUE);
+				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null, !TextField.USES_LOOKUP,
+				TextField.HIDDEN, FieldPrintoutSetting.NAME_AND_VALUE);
 		HibernateUtil.currentSession().save(commentFeedField);
 		table.addField(commentFeedField);
 		this.addFieldToRelationalDb(conn, table, commentFeedField);

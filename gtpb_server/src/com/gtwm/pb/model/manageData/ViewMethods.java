@@ -762,11 +762,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 				chart.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
 						.getReportField(report.getParentTable().getPrimaryKey()
 								.getInternalFieldName())));
-			} else if ((!field.getTableContainingField().equals(report.getParentTable()))
-					&& (!field.getFieldName().equals(HiddenFields.COMMENTS_FEED.getFieldName()))) {
+			} else if (!field.getTableContainingField().equals(report.getParentTable())) {
 				// Data from other tables is treated as look-up-able as there may be more than one related record
-				// Don't include comments 
-				logger.debug("Adding count for " + reportField);
 				chart.addGrouping(reportField, null);
 				chart.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
 						.getReportField(report.getParentTable().getPrimaryKey()
@@ -776,7 +773,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
-		logger.debug("End: groupings are " + chart.getGroupings());
 		return this.databaseDefn.getDataManagement().getChartData(company, chart, filters,
 				false);
 	}
