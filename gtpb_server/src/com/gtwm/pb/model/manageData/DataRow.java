@@ -73,6 +73,7 @@ public class DataRow implements DataRowInfo {
 				+ table.getInternalTableName() + " WHERE "
 				+ table.getPrimaryKey().getInternalFieldName() + " = ?");
 		this.loadDataRow(conn, statement);
+		statement.close();
 	}
 
 	public DataRow(TableInfo table, BaseField whereRowField, int rowid, Connection conn)
@@ -85,6 +86,7 @@ public class DataRow implements DataRowInfo {
 				+ table.getInternalTableName() + " WHERE " + whereRowField.getInternalFieldName()
 				+ " = ?");
 		this.loadDataRow(conn, statement);
+		statement.close();
 	}
 
 	private static Map<String, String> getKeyToDisplayMapping(Connection conn,
@@ -100,9 +102,14 @@ public class DataRow implements DataRowInfo {
 			displayLookup.put(results.getString(internalKeyFieldName),
 					results.getString(internalDisplayFieldName));
 		}
+		results.close();
+		statement.close();
 		return displayLookup;
 	}
 
+	/**
+	 * Caller must close statment and conn
+	 */
 	private void loadDataRow(Connection conn, PreparedStatement statement) throws SQLException,
 			ObjectNotFoundException, CodingErrorException {
 		// 0) Obtain all display values taken from other sources:
@@ -158,7 +165,6 @@ public class DataRow implements DataRowInfo {
 			throw new ObjectNotFoundException("Record with identifier " + rowid + " not found");
 		}
 		results.close();
-		statement.close();
 	}
 
 	public int getRowId() {

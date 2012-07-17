@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.servlet.http.HttpServletRequest;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
@@ -39,7 +38,6 @@ import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
 import com.gtwm.pb.model.manageData.fields.DateValueDefn;
 import com.gtwm.pb.model.manageData.fields.DecimalValueDefn;
-import com.gtwm.pb.model.manageData.fields.DurationValueDefn;
 import com.gtwm.pb.model.manageData.fields.IntegerValueDefn;
 import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageData.fields.FileValueDefn;
@@ -572,8 +570,8 @@ public final class ServletSessionMethods {
 						fieldValueString = fieldValueString + "0";
 					}
 					try {
-						fieldValue = new DecimalValueDefn(Double.valueOf(Double
-								.valueOf(fieldValueString)));
+						fieldValue = new DecimalValueDefn(Double
+								.valueOf(fieldValueString));
 					} catch (NumberFormatException nfex) {
 						throw new InputRecordException("Value " + fieldValueString
 								+ " not allowed because a number needs to be entered", field, nfex);
@@ -732,8 +730,7 @@ public final class ServletSessionMethods {
 	 * 
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
-	 * http://www.aa-asterisk.org.uk/index.php/
-	 * Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumber(String fieldValueString) {

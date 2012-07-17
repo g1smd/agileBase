@@ -200,11 +200,11 @@ public final class DataManagement implements DataManagementInfo {
 			statement.setInt(4, rowId);
 			statement.setString(5, comment);
 			int rowsAffected = statement.executeUpdate();
+			statement.close();
 			if (rowsAffected != 1) {
 				throw new ObjectNotFoundException("Error adding comment. " + rowsAffected
 						+ " rows inserted. SQL = " + statement);
 			}
-			statement.close();
 			// Concatenate all comments into the hidden comments field (for
 			// searching)
 			BaseField concatenationField = table
@@ -2620,6 +2620,8 @@ public final class DataManagement implements DataManagementInfo {
 			displayLookup.put(results.getString(internalKeyFieldName),
 					results.getString(internalDisplayFieldName));
 		}
+		results.close();
+		statement.close();
 		return displayLookup;
 	}
 

@@ -536,7 +536,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 	 */
 	public int hashCode() {
 		if (this.hashCode == 0) {
-			this.hashCode = (new Long(this.getId())).hashCode();
+			this.hashCode = (Long.valueOf(this.getId())).hashCode();
 		}
 		return this.hashCode;
 	}

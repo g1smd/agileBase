@@ -709,11 +709,11 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 	}
 
 	@Column(length = 10000)
-	private String getCalculationSQLDirect() {
+	private synchronized String getCalculationSQLDirect() {
 		return this.calculationSQL;
 	}
 
-	private void setCalculationSQLDirect(String calculationSQL) {
+	private synchronized void setCalculationSQLDirect(String calculationSQL) {
 		this.calculationSQL = calculationSQL;
 	}
 

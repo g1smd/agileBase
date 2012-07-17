@@ -144,11 +144,11 @@ public class WordCloud implements WordCloudInfo {
 		// Scale and create tag objects
 		double scaleFactor;
 		if (maxFreq == minFreq) {
-			scaleFactor = (maxWeight - minWeight) / 4; // TODO: a realistic
+			scaleFactor = (double) (maxWeight - minWeight) / 4; // TODO: a realistic
 														// scale factor in this
 														// case
 		} else {
-			scaleFactor = new Double(maxWeight - minWeight) / new Double(maxFreq - minFreq);
+			scaleFactor = (double) (maxWeight - minWeight) / (maxFreq - minFreq);
 		}
 		freqIt = frequencies.valuesIterator();
 		int weight;
@@ -159,7 +159,7 @@ public class WordCloud implements WordCloudInfo {
 			if (stemFreq <= minFreq) {
 				weight = minWeight;
 			} else {
-				weight = (int) (Math.ceil(new Double(stemFreq - minFreq) * scaleFactor) + minWeight);
+				weight = (int) (Math.ceil((double) (stemFreq - minFreq) * scaleFactor) + minWeight);
 			}
 			SortedSet<WordInfo> origins = this.stemOriginMap.get(wordStem);
 			String mostCommonOrigin = origins.last().getName();

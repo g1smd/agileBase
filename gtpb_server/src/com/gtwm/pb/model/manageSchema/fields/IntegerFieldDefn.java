@@ -264,6 +264,8 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 			while (results.next()) {
 				items.add(results.getInt(1));
 			}
+			results.close();
+			statement.close();
 		} catch (SQLException sqlex) {
 			// catch exception where field is not included
 			// within report and simply return an empty tree

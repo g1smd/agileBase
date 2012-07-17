@@ -1609,7 +1609,9 @@ public final class ServletSchemaMethods {
 			}
 			throw new CantDoThatException("report field addition failed: " + pex.getMessage(), pex);
 		} finally {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 			HibernateUtil.closeSession();
 		}
 	}
@@ -2940,7 +2942,7 @@ public final class ServletSchemaMethods {
 					"internalfieldname parameter needed to set a report word cloud field");
 		}
 		ReportFieldInfo wordCloudReportField = null;
-		if (internalFieldName != "") {
+		if (!internalFieldName.equals("")) {
 			wordCloudReportField = report.getReportField(internalFieldName);
 		}
 		try {

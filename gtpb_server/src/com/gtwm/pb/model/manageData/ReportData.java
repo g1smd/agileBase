@@ -53,6 +53,7 @@ import java.sql.Timestamp;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Random;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
@@ -134,10 +135,7 @@ public class ReportData implements ReportDataInfo {
 				// SQLCode += " WHERE random() > 0.9 ORDER BY random()";
 				String pKeyInternalName = report.getParentTable().getPrimaryKey()
 						.getInternalFieldName();
-				int randomNumber = (int) (Math.random() * 10);
-				if (randomNumber == 10) {
-					randomNumber = 9;
-				}
+				int randomNumber = (new Random()).nextInt(10);
 				SQLCode += " WHERE " + pKeyInternalName + " % 10 = " + randomNumber;
 			}
 			try {
@@ -738,24 +736,6 @@ public class ReportData implements ReportDataInfo {
 		Map<String, List<ReportQuickFilterInfo>> whereClause = new HashMap<String, List<ReportQuickFilterInfo>>();
 		whereClause.put(filterArgs, filtersUsed);
 		return whereClause;
-	}
-
-	private static Map<String, String> getKeyToDisplayMapping(Connection conn,
-			String internalSourceName, String internalKeyFieldName, String internalDisplayFieldName)
-			throws SQLException {
-		// Buffer the set of display values for this field:
-		// Note: don't need to cache these as relation fields shouldn't be used
-		// in general reports, just in table default reports
-		String SQLCode = "SELECT " + internalKeyFieldName + ", " + internalDisplayFieldName;
-		SQLCode += " FROM " + internalSourceName;
-		PreparedStatement statement = conn.prepareStatement(SQLCode);
-		ResultSet results = statement.executeQuery();
-		Map<String, String> displayLookup = new HashMap<String, String>();
-		while (results.next()) {
-			displayLookup.put(results.getString(internalKeyFieldName),
-					results.getString(internalDisplayFieldName));
-		}
-		return displayLookup;
 	}
 
 	public List<DataRowInfo> getReportDataRows(Connection conn,

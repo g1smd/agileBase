@@ -293,6 +293,8 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 			while (results.next()) {
 				items.add(results.getDouble(1));
 			}
+			results.close();
+			statement.close();
 		} catch (SQLException sqlex) {
 			// catch exception where field is not included
 			// within report and simply return an empty tree
