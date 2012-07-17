@@ -763,6 +763,9 @@ public final class ViewMethods implements ViewMethodsInfo {
 								.getInternalFieldName())));
 			} else if ((!field.getTableContainingField().equals(report.getParentTable()))
 					&& (!field.getFieldName().equals(HiddenFields.COMMENTS_FEED.getFieldName()))) {
+				// Data from other tables is treated as look-up-able as there may be more than one related record
+				// Don't include comments 
+				logger.debug("Adding count for " + reportField);
 				reportSummary.addGrouping(reportField, null);
 				reportSummary.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
 						.getReportField(report.getParentTable().getPrimaryKey()
