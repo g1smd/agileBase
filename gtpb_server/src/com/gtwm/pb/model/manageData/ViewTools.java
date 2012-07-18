@@ -782,7 +782,8 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("077", "Mobile");
 			this.areaCodes.put("078", "Mobile");
 			this.areaCodes.put("079", "Mobile");
-			this.areaCodes.put("080", "Freephone");
+			this.areaCodes.put("0800", "Freephone");
+			this.areaCodes.put("0808", "Freephone");
 			this.areaCodes.put("0842", "Non geographic/special");
 			this.areaCodes.put("0843", "Non geographic/special");
 			this.areaCodes.put("0844", "Non geographic/special");
