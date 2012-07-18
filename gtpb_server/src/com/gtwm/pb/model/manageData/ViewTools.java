@@ -768,7 +768,10 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("01994", "St Clears, West Wales");
 			this.areaCodes.put("01995", "Garstang, Wyre");
 			this.areaCodes.put("01997", "Strathpeffer, Wyvis");
-			this.areaCodes.put("03", "Non geographic (charged at 01/02 rate)");
+			this.areaCodes.put("030", "Non geographic (charged at 01/02 rate)");
+			this.areaCodes.put("033", "Non geographic (charged at 01/02 rate)");
+			this.areaCodes.put("034", "Non geographic (charged at 01/02 rate)");
+			this.areaCodes.put("037", "Non geographic (charged at 01/02 rate)");
 			this.areaCodes.put("0500", "Freephone");
 			this.areaCodes.put("055", "Voice over IP");
 			this.areaCodes.put("056", "Voice over IP");
@@ -788,7 +791,9 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("0871", "Premium rate");
 			this.areaCodes.put("0872", "Premium rate");
 			this.areaCodes.put("0873", "Premium rate");
-			this.areaCodes.put("09", "Premium rate");
+			this.areaCodes.put("090", "Premium rate");
+			this.areaCodes.put("091", "Premium rate");
+			this.areaCodes.put("098", "Premium rate");
 		}
 		phoneNumber = phoneNumber.replaceAll(" ", "");
 		String possibleCode = "";
@@ -804,7 +809,7 @@ public final class ViewTools implements ViewToolsInfo {
 				return area;
 			}
 		}
-		return "may be invalid";
+		return "(may be invalid)";
 	}
 
 	public SortedMap<BaseField, BaseValue> getAddress(Map<BaseField, BaseValue> tableDataRow) {
