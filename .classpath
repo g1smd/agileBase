@@ -80,5 +80,6 @@
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/im4java-1.3.0.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/poi-3.8.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/poi-ooxml-3.8.jar"/>
+	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/esapi-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
