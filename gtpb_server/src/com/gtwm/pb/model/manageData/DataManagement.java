@@ -120,6 +120,7 @@ import com.gtwm.pb.util.Enumerations.DataFormat;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
+import com.gtwm.pb.util.Naming;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -186,7 +187,8 @@ public final class DataManagement implements DataManagementInfo {
 			AppUserInfo user, String rawComment) throws SQLException, ObjectNotFoundException,
 			CantDoThatException, CodingErrorException {
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
-		String comment = Helpers.smartCharsReplace(rawComment);
+		// Protect against cross-site scripting
+		String comment = Naming.makeValidXML(Helpers.smartCharsReplace(rawComment));
 		TableInfo table = field.getTableContainingField();
 		Connection conn = null;
 		try {

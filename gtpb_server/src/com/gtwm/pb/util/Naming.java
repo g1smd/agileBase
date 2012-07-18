@@ -33,7 +33,11 @@ public final class Naming {
 
 	/**
 	 * Replace invalid characters in XML, i.e. angle brackets, ampersands and
-	 * double quotes with their HTML codes
+	 * double quotes with their HTML codes.
+	 * 
+	 * This can also be used to sanitise input protecting against cross-site scripting vulnerabilities
+	 * 
+	 * Also check out https://www.owasp.org/index.php/ESAPI
 	 * 
 	 * Note there is an Apache 3rd party utility to do
 	 * this better but it converts all entities not just the few we need
@@ -42,10 +46,12 @@ public final class Naming {
 		if (xmlValue == null) {
 			return null;
 		}
+		// See https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
 		String returnValue = xmlValue.replaceAll("&(?!(\\w+|#\\d+);)", "&amp;"); // &s which are not part of an entity
 		returnValue = returnValue.replace("<", "&lt;");
 		returnValue = returnValue.replace(">", "&gt;");
 		returnValue = returnValue.replace("\"", "&quot;");
+		returnValue = returnValue.replace("'","&#x27;");
 		returnValue = returnValue.replace("\u00A3", "&pound;");
 		return returnValue;
 	}

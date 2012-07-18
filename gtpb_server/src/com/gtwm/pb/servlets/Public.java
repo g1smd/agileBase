@@ -81,24 +81,38 @@ public class Public extends VelocityViewServlet {
 		response.setContentType(responseReturnType.getResponseType());
 		response.setCharacterEncoding("ISO-8859-1");
 		EnumSet<PublicAction> publicActions = EnumSet.allOf(PublicAction.class);
-		String templatePath = "gui/public/";
 		List<FileItem> multipartItems = ServletUtilMethods.getMultipartItems(request);
+		boolean useCustomForms = Helpers.valueRepresentsBooleanTrue(ServletUtilMethods
+				.getParameter(request, "custom", multipartItems));
+		AppUserInfo publicUser;
+		try {
+			publicUser = ServletUtilMethods.getPublicUserForRequest(request,
+					this.databaseDefn.getAuthManager().getAuthenticator());
+		} catch (AgileBaseException abex) {
+			ServletUtilMethods.logException(abex, request,
+					"Error getting public user for request");
+			return this.getUserInterfaceTemplate(request, response, "gui/public/error",
+					context, abex);
+		}
+		CompanyInfo company = publicUser.getCompany();
+		String templatePath;
+		if (useCustomForms) {
+			templatePath = "gui/customisations/"
+					+ company.getCompanyName().replaceAll("\\W", "").toLowerCase() + "/public/";
+		} else {
+			templatePath = "gui/public/";
+		}
 		String templateName = ServletUtilMethods.getParameter(request, "return", multipartItems);
 		if (templateName != null) {
 			// var is from public input, clean
 			templateName = templateName.replaceAll("\\W", "");
 		}
-		AppUserInfo publicUser = null;
 		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
 		for (PublicAction publicAction : publicActions) {
 			String publicActionValue = request.getParameter(publicAction.toString().toLowerCase());
 			if (publicActionValue != null) {
 				TableInfo table = null;
-				CompanyInfo company = null;
 				try {
-					publicUser = ServletUtilMethods.getPublicUserForRequest(request,
-							this.databaseDefn.getAuthManager().getAuthenticator());
-					company = publicUser.getCompany();
 					String internalTableName = request.getParameter("t");
 					if (internalTableName == null) {
 						throw new MissingParametersException(
