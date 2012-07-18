@@ -796,6 +796,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("098", "Premium rate");
 		}
 		phoneNumber = phoneNumber.replaceAll(" ", "");
+		phoneNumber = phoneNumber.replaceAll("[\\(\\)]", "");
 		String possibleCode = "";
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 7) {
