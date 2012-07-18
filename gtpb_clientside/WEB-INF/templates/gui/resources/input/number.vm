@@ -1,0 +1,103 @@
+##
+##  Copyright 2012 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($internalTableName=$field.getTableContainingField().getInternalTableName())
+#if($field.storesCurrency())
+  #set($currencySymbol = "<span class='currency_symbol'>&pound;</span>")
+  #set($currencySymbolBare = "&pound;")
+#else
+  #set($currencySymbol = "")
+  #set($currencySymbolBare = "")
+#end
+#if ($field.getClass().getSimpleName() == "IntegerFieldDefn")##
+  #if($globalEdit)##
+    #set($fieldValue = "")##
+  #else##
+  	#set($fieldValue=$tableDataRow.get($field).toString())##
+  #end##
+  	#if($userCanEdit)##
+  	  #if($globalEdit || (!$updateAsType))##
+  	    		$currencySymbol <input type="text" gtpb_internaltablename="$internalTableName" "$sessionTable.getInternalTableName()" name="$field.getInternalFieldName()" value="$fieldValue" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
+  	  #else##
+  	    		$currencySymbol <input type="text" gtpb_internaltablename="$internalTableName" #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this, event)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+				#if($field.getNotNull() && (($fieldValue == "") || $customAction))
+					<span class="mandated">* Mandatory field - please enter a value</span>
+				#end
+				<div id="$field.getInternalFieldName()_warning" class="warningmessage" style="display:none"></div>
+	  #end##
+    		#if($field.allowNotApplicable())##
+		      <br><input type="checkbox" gtpb_internaltablename="$internalTableName" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
+		    #end##
+  	#else##
+      $currencySymbolBare $fieldValue,##
+  	#end##
+#else##  if not integer
+  #if(!$globalEdit)##
+  	  #set($fieldValue=$field.formatDecimalValue($tableDataRow.get($field)).replace(",",""))##
+  	#end##
+  	#if($userCanEdit)##
+  	  #if($globalEdit || (!$updateAsType))##
+  	    		$currencySymbol <input type="text" gtpb_internaltablename="$internalTableName" name="$field.getInternalFieldName()" value="" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
+  	  #else##
+  	    		$currencySymbol <input type="text" #if($field.getNotNull()) required #end gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this, event)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device) top.oBuffer.writeBuffer(this); #end">##
+				#if($field.getNotNull() && (($tableDataRow.get($field) == "") || $customAction))
+					<span class="mandated">* Mandatory field - please enter a value</span>
+				#end
+				<div id="$field.getInternalFieldName()_warning" class="warningmessage" style="display:none"></div>
+  	  #end##
+    		#if($field.allowNotApplicable())##
+		      <br><input type="checkbox" gtpb_internaltablename="$internalTableName" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
+		    #end##
+  	#else##
+      $currencySymbolBare $fieldValue,##
+  	#end##
+#end##
+#if($globalEdit)
+  <script language="Javascript">
+    function fUpdateGlobalNumber() {
+      function fResponse(sResponseText, sResponseXML) {
+        if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
+  	        var sRowsToChange=sResponseXML.getElementsByTagName('rowsTotal')[0].firstChild.nodeValue;
+  	        #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
+            var sFieldName='$field.getSimplifiedFieldName()';
+          #else
+            var sFieldName='$field';
+          #end
+          var sFieldValue=oField.value;
+  	        if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+sFieldValue+'?\nThis will update '+sRowsToChange+' records'))         
+			new fChange(oField);
+        }
+      }
+          
+      var oField=this.field;
+      var aPostVars=new Array();
+      aPostVars['returntype']='xml'; 
+      aPostVars['return']='gui/resources/sessionReportInfo';
+      var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);
+    }
+    var oElement=document.getElementsByName('$field.getInternalFieldName()')[document.getElementsByName('$field.getInternalFieldName()').length-1];
+    oElement.setAttribute('gtpb_global_edit','true');
+    var oButton=document.createElement('BUTTON');
+    $(oButton).addClass('globalEdit');
+    oButton.innerHTML='update globally';
+    oButton.field=oElement;
+    ##oButton.addEventListener('click',fUpdateGlobalNumber,false);
+    $(oButton).click(fUpdateGlobalNumber);
+    oElement.parentNode.appendChild(oButton);
+  </script>
+#end
+		
