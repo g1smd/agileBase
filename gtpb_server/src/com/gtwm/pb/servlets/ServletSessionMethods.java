@@ -737,7 +737,7 @@ public final class ServletSessionMethods {
 		if (!fieldValueString.matches(".*\\D.*")) {
 			if (fieldValueString.matches("0[1-9].*")) {
 				// Grab only digits for processing
-				fieldValueString = fieldValueString.replaceAll("[^\\d#]", "");
+				fieldValueString = fieldValueString.replaceAll("[^\\d\\#]", "");
 				// Temporarily remove leading zero
 				fieldValueString = fieldValueString.substring(1);
 				// Find string length
