@@ -760,31 +760,31 @@ public final class ServletSessionMethods {
 				if (fieldValueLength == 10 && fieldValueString.matches(pattern28sa)) {
 					Pattern pattern28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$");
 					Matcher m28 = pattern28.matcher(fieldValueString);
-					fieldValueString = (m28.group(1) + " " + m28.group(2) + " " + m28.group(3));
+					fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
 				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern37sa)) {
 					Pattern pattern37 = Pattern.compile("^(\\d{3})(\\d{3})(\\d{4})$");
 					Matcher m37 = pattern37.matcher(fieldValueString);
-					fieldValueString = (m37.group(1) + " " + m37.group(2) + " " + m37.group(3));
+					fieldValueString = m37.group(1) + " " + m37.group(2) + " " + m37.group(3);
 				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern55sa)) {
 					Pattern pattern55 = Pattern.compile("^(\\d{5})(\\d{5})$");
 					Matcher m55 = pattern55.matcher(fieldValueString);
-					fieldValueString = (m55.group(1) + " " + m55.group(2));
-				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern54sa)) {
+					fieldValueString = m55.group(1) + " " + m55.group(2);
+				} else if (fieldValueLength == 9  && fieldValueString.matches(pattern54sa)) {
 					Pattern pattern54 = Pattern.compile("^(\\d{5})(\\d{4})$");
 					Matcher m54 = pattern54.matcher(fieldValueString);
-					fieldValueString = (m54.group(1) + " " + m54.group(2));
+					fieldValueString = m54.group(1) + " " + m54.group(2);
 				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern46sa)) {
 					Pattern pattern46 = Pattern.compile("^(\\d{4})(\\d{6})$");
 					Matcher m46 = pattern46.matcher(fieldValueString);
-					fieldValueString = (m46.group(1) + " " + m46.group(2));
-				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern45sa)) {
+					fieldValueString = m46.group(1) + " " + m46.group(2);
+				} else if (fieldValueLength == 9  && fieldValueString.matches(pattern45sa)) {
 					Pattern pattern45 = Pattern.compile("^(\\d{4})(\\d{5})$");
 					Matcher m45 = pattern45.matcher(fieldValueString);
-					fieldValueString = (m45.group(1) + " " + m45.group(2));
-				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern36sa)) {
+					fieldValueString = m45.group(1) + " " + m45.group(2);
+				} else if (fieldValueLength == 9  && fieldValueString.matches(pattern36sa)) {
 					Pattern pattern36 = Pattern.compile("^(\\d{3})(\\d{6})$");
 					Matcher m36 = pattern36.matcher(fieldValueString);
-					fieldValueString = (m36.group(1) + " " + m36.group(2));
+					fieldValueString = m36.group(1) + " " + m36.group(2);
 				} else {
 					fieldValueString = fieldValueString.substring(0, 4) + " "
 							+ fieldValueString.substring(4);
