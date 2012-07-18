@@ -1,3 +1,0 @@
-<request>
-  <rowId>$sessionData.getRowId()</rowId>
-</request>
