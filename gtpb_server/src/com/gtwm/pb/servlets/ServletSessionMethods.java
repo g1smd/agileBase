@@ -739,7 +739,7 @@ public final class ServletSessionMethods {
 				// Grab only digits for processing
 				fieldValueString = fieldValueString.replaceAll("[^\\d\\#]", "");
 				// Temporarily remove leading zero
-				fieldValueString = fieldValueString.substring(1);
+				fieldValueString = fieldValueString.replaceAll("0([1-9][0-9]+)", "$1");
 				// Find string length
 				int fieldValueLength = fieldValueString.length();
 				// [2+8] 2d, 55, 56, 70, 76 (not 7624)
