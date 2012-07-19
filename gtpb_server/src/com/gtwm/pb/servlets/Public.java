@@ -97,11 +97,14 @@ public class Public extends VelocityViewServlet {
 		CompanyInfo company = publicUser.getCompany();
 		String templatePath;
 		if (customFolder != null) {
+			String cleanCompanyName = company.getCompanyName().replaceAll("\\W", "").toLowerCase();
+			customFolder = customFolder.replaceAll("\\W", "").toLowerCase();
 			templatePath = "gui/customisations/"
-					+ company.getCompanyName().replaceAll("\\W", "").toLowerCase() + "/public/" + customFolder + "/";
+					+ cleanCompanyName + "/public/" + customFolder + "/";
 		} else {
 			templatePath = "gui/public/";
 		}
+		logger.debug("Template path is " + templatePath);
 		String templateName = ServletUtilMethods.getParameter(request, "return", multipartItems);
 		if (templateName != null) {
 			// var is from public input, clean
@@ -217,6 +220,7 @@ public class Public extends VelocityViewServlet {
 						templateName = "form";
 					}
 					templateName = templatePath + templateName;
+					logger.debug("Complete path = " + templateName);
 					String gtpbCss = request.getParameter("css");
 					if (gtpbCss != null) {
 						context.put("gtpbCss", gtpbCss);
@@ -306,6 +310,7 @@ public class Public extends VelocityViewServlet {
 				}
 			}
 		}
+		logger.debug("Returning " + templateName);
 		return this.getUserInterfaceTemplate(request, response, templateName, context, null);
 	}
 

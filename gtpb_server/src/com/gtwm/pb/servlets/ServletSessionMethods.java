@@ -740,8 +740,10 @@ public final class ServletSessionMethods {
 				fieldValueString = fieldValueString.replaceAll("[^\\d\\#]", "");
 				// Temporarily remove leading zero
 				fieldValueString = fieldValueString.replaceAll("0([1-9][0-9]+)", "$1");
+				logger.debug("Removed leading zero: " + fieldValueString);
 				// Find string length
 				int fieldValueLength = fieldValueString.length();
+				logger.debug("Field value length is " + fieldValueLength);
 				// [2+8] 2d, 55, 56, 70, 76 (not 7624)
 				String pattern28sa = "(:?2|5[56]|7(:?0|6(:?[013-9]|2[0-35-9]))).*";
 				// [3+7] 11d, 1d1, 3dd, 80d, 84d, 87d, 9dd
@@ -760,6 +762,9 @@ public final class ServletSessionMethods {
 				if (fieldValueLength == 10 && fieldValueString.matches(pattern28sa)) {
 					Pattern pattern28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$");
 					Matcher m28 = pattern28.matcher(fieldValueString);
+					logger.debug("Group 1 = " + m28.group(1));
+					logger.debug("Group 2 = " + m28.group(2));
+					logger.debug("Group 3 = " + m28.group(3));
 					fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
 				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern37sa)) {
 					Pattern pattern37 = Pattern.compile("^(\\d{3})(\\d{3})(\\d{4})$");
