@@ -41,7 +41,14 @@
 #end
 #if($customInputFolder)
   #set($customInputFolder = $viewTools.cleanString($customInputFolder)) ## sanitize just in case
-  #set($inputFolder = "gui/customisations/$viewTools.cleanString($view.getLoggedInUser().getCompany().getCompanyName())/input/$customInputFolder")
+  #if($view)
+    ## served by standard servlet - a logged in user
+    #set($companyFolder = $viewTools.cleanString($view.getLoggedInUser().getCompany().getCompanyName()))
+  #else
+    ## served by Public servlet - non-logged in public user
+    #set($companyFolder = $viewTools.cleanString($gtwmCompany.getCompanyName()))
+  #end
+  #set($inputFolder = "gui/customisations/$companyFolder/input/$customInputFolder")
 #else
   #set($inputFolder = "gui/resources/input")
 #end
