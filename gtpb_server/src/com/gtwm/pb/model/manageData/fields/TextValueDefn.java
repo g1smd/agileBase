@@ -103,7 +103,7 @@ public class TextValueDefn implements TextValue {
 		return false;
 	}
 
-	public boolean isPhoneNumberGB() {
+	public boolean isPhoneNumber() {
 		if (this.isNull()) {
 			return false;
 		}

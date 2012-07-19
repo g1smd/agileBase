@@ -104,7 +104,6 @@ public class Public extends VelocityViewServlet {
 		} else {
 			templatePath = "gui/public/";
 		}
-		logger.debug("Template path is " + templatePath);
 		String templateName = ServletUtilMethods.getParameter(request, "return", multipartItems);
 		if (templateName != null) {
 			// var is from public input, clean
@@ -310,7 +309,6 @@ public class Public extends VelocityViewServlet {
 				}
 			}
 		}
-		logger.debug("Returning " + templateName);
 		return this.getUserInterfaceTemplate(request, response, templateName, context, null);
 	}
 
