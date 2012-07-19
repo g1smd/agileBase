@@ -570,8 +570,7 @@ public final class ServletSessionMethods {
 						fieldValueString = fieldValueString + "0";
 					}
 					try {
-						fieldValue = new DecimalValueDefn(Double
-								.valueOf(fieldValueString));
+						fieldValue = new DecimalValueDefn(Double.valueOf(fieldValueString));
 					} catch (NumberFormatException nfex) {
 						throw new InputRecordException("Value " + fieldValueString
 								+ " not allowed because a number needs to be entered", field, nfex);
@@ -725,12 +724,13 @@ public final class ServletSessionMethods {
 	}
 
 	/**
-	 * Format phone numbers to include a space so that when they're exported
-	 * to CSV, spreadsheets recognise them as text rather than numbers
+	 * Format phone numbers to include a space so that when they're exported to
+	 * CSV, spreadsheets recognise them as text rather than numbers
 	 * 
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
-	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+	 * http://www.aa-asterisk.org.uk/index.php/
+	 * Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumber(String fieldValueString) {
@@ -740,10 +740,8 @@ public final class ServletSessionMethods {
 				fieldValueString = fieldValueString.replaceAll("[^\\d\\#]", "");
 				// Temporarily remove leading zero
 				fieldValueString = fieldValueString.replaceAll("0([1-9][0-9]+)", "$1");
-				logger.debug("Removed leading zero: " + fieldValueString);
 				// Find string length
 				int fieldValueLength = fieldValueString.length();
-				logger.debug("Field value length is " + fieldValueLength);
 				// [2+8] 2d, 55, 56, 70, 76 (not 7624)
 				String pattern28sa = "(:?2|5[56]|7(:?0|6(:?[013-9]|2[0-35-9]))).*";
 				// [3+7] 11d, 1d1, 3dd, 80d, 84d, 87d, 9dd
@@ -762,34 +760,45 @@ public final class ServletSessionMethods {
 				if (fieldValueLength == 10 && fieldValueString.matches(pattern28sa)) {
 					Pattern pattern28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$");
 					Matcher m28 = pattern28.matcher(fieldValueString);
-					logger.debug("Group 1 = " + m28.group(1));
-					logger.debug("Group 2 = " + m28.group(2));
-					logger.debug("Group 3 = " + m28.group(3));
-					fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
+					if (m28.matches()) {
+						fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
+					}
 				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern37sa)) {
 					Pattern pattern37 = Pattern.compile("^(\\d{3})(\\d{3})(\\d{4})$");
 					Matcher m37 = pattern37.matcher(fieldValueString);
-					fieldValueString = m37.group(1) + " " + m37.group(2) + " " + m37.group(3);
+					if (m37.matches()) {
+						fieldValueString = m37.group(1) + " " + m37.group(2) + " " + m37.group(3);
+					}
 				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern55sa)) {
 					Pattern pattern55 = Pattern.compile("^(\\d{5})(\\d{5})$");
 					Matcher m55 = pattern55.matcher(fieldValueString);
-					fieldValueString = m55.group(1) + " " + m55.group(2);
-				} else if (fieldValueLength == 9  && fieldValueString.matches(pattern54sa)) {
+					if (m55.matches()) {
+						fieldValueString = m55.group(1) + " " + m55.group(2);
+					}
+				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern54sa)) {
 					Pattern pattern54 = Pattern.compile("^(\\d{5})(\\d{4})$");
 					Matcher m54 = pattern54.matcher(fieldValueString);
-					fieldValueString = m54.group(1) + " " + m54.group(2);
+					if (m54.matches()) {
+						fieldValueString = m54.group(1) + " " + m54.group(2);
+					}
 				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern46sa)) {
 					Pattern pattern46 = Pattern.compile("^(\\d{4})(\\d{6})$");
 					Matcher m46 = pattern46.matcher(fieldValueString);
-					fieldValueString = m46.group(1) + " " + m46.group(2);
-				} else if (fieldValueLength == 9  && fieldValueString.matches(pattern45sa)) {
+					if (m46.matches()) {
+						fieldValueString = m46.group(1) + " " + m46.group(2);
+					}
+				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern45sa)) {
 					Pattern pattern45 = Pattern.compile("^(\\d{4})(\\d{5})$");
 					Matcher m45 = pattern45.matcher(fieldValueString);
-					fieldValueString = m45.group(1) + " " + m45.group(2);
-				} else if (fieldValueLength == 9  && fieldValueString.matches(pattern36sa)) {
+					if (m45.matches()) {
+						fieldValueString = m45.group(1) + " " + m45.group(2);
+					}
+				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern36sa)) {
 					Pattern pattern36 = Pattern.compile("^(\\d{3})(\\d{6})$");
 					Matcher m36 = pattern36.matcher(fieldValueString);
-					fieldValueString = m36.group(1) + " " + m36.group(2);
+					if (m36.matches()) {
+						fieldValueString = m36.group(1) + " " + m36.group(2);
+					}
 				} else {
 					fieldValueString = fieldValueString.substring(0, 4) + " "
 							+ fieldValueString.substring(4);
