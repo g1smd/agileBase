@@ -95,7 +95,7 @@ public interface ViewToolsInfo {
 	 * e.g. given 01792 367514, return Swansea. Return an empty string if the
 	 * area can't be found. Currently works for numbers in the UK.
 	 */
-	public String getAreaForPhoneNumber(String phoneNumber);
+	public String getAreaForPhoneNumberGB(String phoneNumber);
 
 	/**
 	 * Given a table data row, as returned by ViewMethodsInfo.getTableDataRow(),

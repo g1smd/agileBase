@@ -698,8 +698,8 @@ public final class ServletSessionMethods {
 						if (textCase != null) {
 							fieldValueString = textCase.transform(fieldValueString);
 						}
-						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
-							fieldValueString = formatPhoneNumber(fieldValueString);
+						if ((new TextValueDefn(fieldValueString)).isPhoneNumberGB()) {
+							fieldValueString = formatPhoneNumberGB(fieldValueString);
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes
@@ -732,7 +732,7 @@ public final class ServletSessionMethods {
 	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
-	private static String formatPhoneNumber(String fieldValueString) {
+	private static String formatPhoneNumberGB(String fieldValueString) {
 		if (!fieldValueString.matches(".*\\D.*")) {
 			if (fieldValueString.matches("0[1-9].*")) {
 				// Grab only digits for processing
