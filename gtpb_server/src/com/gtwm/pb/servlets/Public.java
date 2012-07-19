@@ -82,8 +82,8 @@ public class Public extends VelocityViewServlet {
 		response.setCharacterEncoding("ISO-8859-1");
 		EnumSet<PublicAction> publicActions = EnumSet.allOf(PublicAction.class);
 		List<FileItem> multipartItems = ServletUtilMethods.getMultipartItems(request);
-		boolean useCustomForms = Helpers.valueRepresentsBooleanTrue(ServletUtilMethods
-				.getParameter(request, "custom", multipartItems));
+		String customFolder = ServletUtilMethods
+				.getParameter(request, "custom", multipartItems);
 		AppUserInfo publicUser;
 		try {
 			publicUser = ServletUtilMethods.getPublicUserForRequest(request,
@@ -96,9 +96,9 @@ public class Public extends VelocityViewServlet {
 		}
 		CompanyInfo company = publicUser.getCompany();
 		String templatePath;
-		if (useCustomForms) {
+		if (customFolder != null) {
 			templatePath = "gui/customisations/"
-					+ company.getCompanyName().replaceAll("\\W", "").toLowerCase() + "/public/";
+					+ company.getCompanyName().replaceAll("\\W", "").toLowerCase() + "/public/" + customFolder + "/";
 		} else {
 			templatePath = "gui/public/";
 		}
