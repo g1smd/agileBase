@@ -725,7 +725,8 @@ public final class ServletSessionMethods {
 
 	/**
 	 * Format phone numbers to include a space so that when they're exported to
-	 * CSV, spreadsheets recognise them as text rather than numbers
+	 * CSV, spreadsheets recognise them as text rather than numbers. For numbers
+	 * entered with incorrect spacing, correct the spacing. 
 	 * 
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
@@ -733,7 +734,7 @@ public final class ServletSessionMethods {
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
-		if (!fieldValueString.matches(".*\\D.*")) {
+	//	if (!fieldValueString.matches(".*\\D.*")) {
 			if (fieldValueString.matches("0[1-9].*")) {
 				// Grab only digits for processing
 				fieldValueString = fieldValueString.replaceAll("[^\\d\\#]", "");
@@ -798,7 +799,7 @@ public final class ServletSessionMethods {
 				// Add leading zero back on after above formatting
 				fieldValueString = "0" + fieldValueString;
 			}
-		}
+	//	}
 		return fieldValueString;
 	}
 
