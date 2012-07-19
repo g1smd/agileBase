@@ -46,7 +46,7 @@
     #set($companyFolder = $viewTools.cleanString($view.getLoggedInUser().getCompany().getCompanyName()))
   #else
     ## served by Public servlet - non-logged in public user
-    #set($companyFolder = $viewTools.cleanString($gtwmCompany.getCompanyName()))
+    #set($companyFolder = $viewTools.cleanString($gtpbCompany.getCompanyName()))
   #end
   #set($inputFolder = "gui/customisations/$companyFolder/input/$customInputFolder")
 #else
