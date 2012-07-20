@@ -79,6 +79,14 @@ public interface TextField extends BaseField {
 	 */
 	public boolean usesLookup();
 
+	public boolean getTieDownLookup();
+
+	/**
+	 * Whether to use only the values specified in the 'default' property for
+	 * the lookup, or whether to allow user input values too
+	 */
+	public void setTieDownLookup(boolean tieDownLookup);
+
 	/**
 	 * @throws CantDoThatException
 	 *             If you try to run this method on a big text field, which

@@ -142,6 +142,60 @@ public abstract class AbstractField implements BaseField {
 		return this.tableContainingField;
 	}
 
+	public Boolean getHidden() {
+		return this.hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+
+	public void setFieldIndex(Integer fieldIndex) {
+		this.fieldIndex = fieldIndex;
+	}
+
+	public Integer getFieldIndex() {
+		return this.fieldIndex;
+	}
+
+	@Transient
+	public boolean hasDefault() {
+		return this.getDefaultDefined();
+	}
+	
+	@Transient
+	public Boolean hasComments() {
+		return this.hasComments;
+	}
+	
+	public void setHasComments(boolean hasComments) {
+		this.hasComments = hasComments;
+	}
+
+	private Boolean getDefaultDefined() {
+		return this.defaultDefined;
+	}
+	
+	@Enumerated(EnumType.STRING)
+	public FieldPrintoutSetting getPrintoutSetting() {
+		return this.printoutSetting;
+	}
+	
+	public void setPrintoutSetting(FieldPrintoutSetting printoutSetting) {
+		this.printoutSetting = printoutSetting;
+	}
+
+	/**
+	 * To be used by subclasses
+	 */
+	protected void setDefaultDefined(Boolean defaultDefined) {
+		this.defaultDefined = defaultDefined;
+	}
+
+	public String toString() {
+		return this.getFieldName();
+	}
+	
 	/**
 	 * Provide a natural sort order by parent table then field index then field
 	 * name + internal name
@@ -208,60 +262,6 @@ public abstract class AbstractField implements BaseField {
 		return this.hashCode;
 	}
 
-	public Boolean getHidden() {
-		return this.hidden;
-	}
-
-	public void setHidden(Boolean hidden) {
-		this.hidden = hidden;
-	}
-
-	public void setFieldIndex(Integer fieldIndex) {
-		this.fieldIndex = fieldIndex;
-	}
-
-	public Integer getFieldIndex() {
-		return this.fieldIndex;
-	}
-
-	@Transient
-	public boolean hasDefault() {
-		return this.getDefaultDefined();
-	}
-	
-	@Transient
-	public Boolean hasComments() {
-		return this.hasComments;
-	}
-	
-	public void setHasComments(boolean hasComments) {
-		this.hasComments = hasComments;
-	}
-
-	private Boolean getDefaultDefined() {
-		return this.defaultDefined;
-	}
-	
-	@Enumerated(EnumType.STRING)
-	public FieldPrintoutSetting getPrintoutSetting() {
-		return this.printoutSetting;
-	}
-	
-	public void setPrintoutSetting(FieldPrintoutSetting printoutSetting) {
-		this.printoutSetting = printoutSetting;
-	}
-
-	/**
-	 * To be used by subclasses
-	 */
-	protected void setDefaultDefined(Boolean defaultDefined) {
-		this.defaultDefined = defaultDefined;
-	}
-
-	public String toString() {
-		return this.getFieldName();
-	}
-	
 	private String fieldName = "";
 
 	private String internalFieldName = null;

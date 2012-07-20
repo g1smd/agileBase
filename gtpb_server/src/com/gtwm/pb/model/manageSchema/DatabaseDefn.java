@@ -278,8 +278,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		TextField commentFeedField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.COMMENTS_FEED.getFieldName(),
 				HiddenFields.COMMENTS_FEED.getFieldDescription(), !TextField.UNIQUE,
-				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null, !TextField.USES_LOOKUP,
-				TextField.HIDDEN, FieldPrintoutSetting.NAME_AND_VALUE);
+				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null,
+				!TextField.USES_LOOKUP, !TextField.TIE_DOWN_LOOKUP, TextField.HIDDEN,
+				FieldPrintoutSetting.NAME_AND_VALUE);
 		HibernateUtil.currentSession().save(commentFeedField);
 		table.addField(commentFeedField);
 		this.addFieldToRelationalDb(conn, table, commentFeedField);
@@ -303,8 +304,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		TextField createdByField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.CREATED_BY.getFieldName(),
 				HiddenFields.CREATED_BY.getFieldDescription(), !TextField.UNIQUE,
-				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null, TextField.HIDDEN,
-				true, FieldPrintoutSetting.NAME_AND_VALUE);
+				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null,
+				!TextField.USES_LOOKUP, !TextField.TIE_DOWN_LOOKUP, TextField.HIDDEN,
+				FieldPrintoutSetting.NAME_AND_VALUE);
 		HibernateUtil.currentSession().save(createdByField);
 		table.addField(createdByField);
 		this.addFieldToRelationalDb(conn, table, createdByField);
@@ -328,10 +330,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 	private void addModifiedByFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		TextField modifiedByField = new TextFieldDefn(this.relationalDataSource, table, null,
-				HiddenFields.MODIFIED_BY.getFieldName(),
-				HiddenFields.MODIFIED_BY.getFieldDescription(), !TextField.UNIQUE,
-				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null, TextField.HIDDEN,
-				true, FieldPrintoutSetting.NO_PRINTOUT);
+				HiddenFields.CREATED_BY.getFieldName(),
+				HiddenFields.CREATED_BY.getFieldDescription(), !TextField.UNIQUE,
+				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null,
+				!TextField.USES_LOOKUP, !TextField.TIE_DOWN_LOOKUP, TextField.HIDDEN,
+				FieldPrintoutSetting.NAME_AND_VALUE);
 		HibernateUtil.currentSession().save(modifiedByField);
 		table.addField(modifiedByField);
 		this.addFieldToRelationalDb(conn, table, modifiedByField);
@@ -1230,9 +1233,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 					PossibleTextOptions.DEFAULTVALUE.getFormInputName());
 			boolean usesLookup = HttpRequestUtil.getBooleanValue(request,
 					PossibleBooleanOptions.USELOOKUP.getFormInputName());
+			boolean tieDownLookup = HttpRequestUtil.getBooleanValue(request,
+					PossibleBooleanOptions.TIEDOWNLOOKUP.getFormInputName());
 			field = new TextFieldDefn(this.relationalDataSource, table, internalFieldName,
 					fieldName, fieldDesc, unique, notNull, defaultValue, notApplicable,
-					notApplicableDescription, notApplicableValue, usesLookup, false,
+					notApplicableDescription, notApplicableValue, usesLookup, tieDownLookup, false,
 					printoutSetting);
 			int textContentSize = Integer.valueOf(request
 					.getParameter(PossibleListOptions.TEXTCONTENTSIZE.getFormInputName()));
@@ -1375,6 +1380,12 @@ public final class DatabaseDefn implements DatabaseInfo {
 								+ PossibleBooleanOptions.UNIQUE.getFormInputName())) {
 							Boolean unique = Helpers.valueRepresentsBooleanTrue(formInputValue);
 							textField.setUnique(unique);
+						} else if (formInputName.equals("updateoption"
+								+ field.getInternalFieldName()
+								+ PossibleBooleanOptions.TIEDOWNLOOKUP.getFormInputName())) {
+							Boolean tieDownLookup = Helpers
+									.valueRepresentsBooleanTrue(formInputValue);
+							textField.setTieDownLookup(tieDownLookup);
 						} else if (formInputName.equals("updateoption"
 								+ field.getInternalFieldName()
 								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {

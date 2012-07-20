@@ -199,4 +199,16 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
 	private Integer contentSize = TextContentSizes.FEW_SENTENCES.getNumChars();
 
 	private String defaultValue = null;
+
+	@Override
+	public boolean getTieDownLookup() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setTieDownLookup(boolean tieDownLookup) {
+		// TODO Auto-generated method stub
+		
+	}
 }

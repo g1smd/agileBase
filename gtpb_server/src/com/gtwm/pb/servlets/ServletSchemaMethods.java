@@ -1339,14 +1339,20 @@ public final class ServletSchemaMethods {
 		Boolean unique = field.getUnique();
 		Boolean notNull = field.getNotNull();
 		TextCase textCase = null;
+		Integer minYear = null;
+		Integer maxYear = null;
+		boolean tieDownLookup = false;
 		if (field instanceof TextField) {
 			textFieldUsesLookup = ((TextField) field).usesLookup();
 			textFieldContentSize = ((TextField) field).getContentSize();
 			textFieldDefault = ((TextField) field).getDefault();
 			textCase = ((TextField) field).getTextCase();
+			tieDownLookup = ((TextField) field).getTieDownLookup();
 		} else if (field instanceof DateField) {
 			dateFieldDefaultToNow = ((DateField) field).getDefaultToNow();
 			dateFieldResolution = ((DateField) field).getDateResolution();
+			minYear = ((DateField) field).getMinAgeYears();
+			maxYear = ((DateField) field).getMaxAgeYears();
 		} else if (field instanceof DecimalField) {
 			decimalFieldPrecision = ((DecimalField) field).getPrecision();
 			decimalFieldDefault = ((DecimalField) field).getDefault();
@@ -1361,22 +1367,22 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
-					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
+			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
+					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull,
 					textCase);
 			throw new CantDoThatException("Updating field failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
-			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
-					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
+			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
+					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull,
 					textCase);
 			throw new CantDoThatException("Updating field failed: " + pex.getMessage(), pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
-			restoreFieldOptions(field, textFieldUsesLookup, textFieldContentSize,
-					dateFieldDefaultToNow, dateFieldResolution, decimalFieldPrecision,
+			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
+					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull,
 					textCase);
 			throw new CantDoThatException("Updating field failed", sqlex);
@@ -1388,10 +1394,12 @@ public final class ServletSchemaMethods {
 	/**
 	 * Used by updateFieldOptions when restoring a field object to it's initial
 	 * state after an update error
+	 * 
+	 * TODO: refactor to use a properties object rather than masses of parameters
 	 */
-	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup,
+	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup, boolean tieDownLookup,
 			Integer textFieldContentSize, Boolean dateFieldDefaultToNow,
-			Integer dateFieldResolution, Integer decimalFieldPrecision, String textFieldDefault,
+			Integer dateFieldResolution, Integer minYear, Integer maxYear, Integer decimalFieldPrecision, String textFieldDefault,
 			Double decimalFieldDefault, Integer integerFieldDefault, Boolean unique,
 			Boolean notNull, TextCase textCase) throws CantDoThatException {
 		field.setUnique(unique);
@@ -1401,9 +1409,12 @@ public final class ServletSchemaMethods {
 			((TextField) field).setContentSize(textFieldContentSize);
 			((TextField) field).setDefault(textFieldDefault);
 			((TextField) field).setTextCase(textCase);
+			((TextField) field).setTieDownLookup(tieDownLookup);
 		} else if (field instanceof DateField) {
 			((DateField) field).setDefaultToNow(dateFieldDefaultToNow);
 			((DateField) field).setDateResolution(dateFieldResolution);
+			((DateField) field).setMinAgeYears(minYear);
+			((DateField) field).setMaxAgeYears(maxYear);
 		} else if (field instanceof DecimalField) {
 			((DecimalField) field).setPrecision(decimalFieldPrecision);
 			((DecimalField) field).setDefault(decimalFieldDefault);

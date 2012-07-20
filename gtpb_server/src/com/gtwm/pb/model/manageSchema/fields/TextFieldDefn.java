@@ -45,7 +45,6 @@ import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
-import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Enumerations.TextCase;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -73,7 +72,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	public TextFieldDefn(DataSource dataSource, TableInfo tableContainingField,
 			String internalFieldName, String fieldName, String fieldDesc, boolean unique,
 			boolean notNull, String defaultValue, boolean notApplicable,
-			String notApplicableDescription, String notApplicableValue, boolean usesLookup,
+			String notApplicableDescription, String notApplicableValue, boolean usesLookup, boolean tieDownLookup,
 			boolean hidden, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		checkOptionsConsistency(this.contentSize, usesLookup, unique);
 		this.setDataSource(dataSource);
@@ -94,6 +93,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			this.setNotApplicableValueDirect(notApplicableValue);
 		}
 		this.setUsesLookup(usesLookup);
+		this.setTieDownLookup(tieDownLookup);
 		super.setHidden(hidden);
 		super.setPrintoutSetting(printoutSetting);
 	}
@@ -262,7 +262,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	private Integer getContentSizeDirect() {
 		return this.contentSize;
 	}
-
+	
 	public void setUsesLookup(Boolean usesLookup) throws CantDoThatException {
 		checkOptionsConsistency(this.getContentSize(), usesLookup, this.getUnique());
 		this.setUsesLookupDirect(usesLookup);
@@ -279,6 +279,14 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	@Transient
 	public boolean usesLookup() {
 		return this.getUsesLookupDirect();
+	}
+	
+	public boolean getTieDownLookup() {
+		return this.tieDownLookup;
+	}
+	
+	public void setTieDownLookup(boolean tieDownLookup) {
+		this.tieDownLookup = tieDownLookup;
 	}
 
 	public void setUnique(Boolean fieldUnique) throws CantDoThatException {
@@ -507,6 +515,8 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	private String notApplicableValue = "NOT APPLICABLE";
 
 	private Boolean usesLookup = false;
+	
+	private Boolean tieDownLookup = false;
 
 	private SortedSet<String> allItemsCache = Collections.synchronizedSortedSet(new TreeSet<String>(String.CASE_INSENSITIVE_ORDER));
 

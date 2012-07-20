@@ -158,6 +158,8 @@ public interface BaseField extends Comparable<BaseField> {
 	public static final boolean UNIQUE = true;
 
 	public static final boolean USES_LOOKUP = true;
+	
+	public static final boolean TIE_DOWN_LOOKUP = true;
 
 	public static final boolean DEFAULT_TO_NOW = true;
 

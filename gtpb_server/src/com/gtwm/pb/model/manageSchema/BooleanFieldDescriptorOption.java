@@ -52,6 +52,7 @@ public class BooleanFieldDescriptorOption implements BooleanFieldDescriptorOptio
         DEFAULTTONULL("Always empty for new records", false),
         ALLOWNOTAPPLICABLE("Allow not applicable", true), 
         USELOOKUP("Use dropdown for input", false),
+        TIEDOWNLOOKUP("Use only given values", true),
         STORECURRENCY("Store currency amounts", true),
         HIDDEN("Hidden field",true),
         MANDATORY("Mandatory", true),
