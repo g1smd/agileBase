@@ -43,6 +43,7 @@ import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
+import com.gtwm.pb.model.manageSchema.fields.options.DecimalFieldOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -60,10 +61,7 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 	}
 
 	public DecimalFieldDefn(DataSource dataSource, TableInfo tableContainingField,
-			String internalFieldName, String fieldName, String fieldDesc, boolean unique,
-			boolean notNull, Double defaultValue, int precision, boolean notApplicable,
-			String notApplicableDescription, double notApplicableValue, boolean usesLookup,
-			boolean storesCurrency, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
+			String internalFieldName, String fieldName, String fieldDesc, DecimalFieldOptions fieldOptions) throws CantDoThatException {
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
@@ -73,18 +71,18 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 		}
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
-		super.setUnique(unique);
-		this.setDefault(defaultValue);
-		super.setNotNull(notNull);
-		this.setPrecision(precision);
-		this.setNotApplicable(notApplicable);
-		if (notApplicable) {
-			this.setNotApplicableDescriptionDirect(notApplicableDescription);
-			this.setNotApplicableValueDirect(notApplicableValue);
+		super.setUnique(fieldOptions.getUnique());
+		this.setDefault(fieldOptions.getDefaultValue());
+		super.setNotNull(fieldOptions.getNotNull());
+		this.setPrecision(fieldOptions.getPrecision());
+		this.setNotApplicable(fieldOptions.isNotApplicable());
+		if (fieldOptions.isNotApplicable()) {
+			this.setNotApplicableDescriptionDirect(fieldOptions.getNotApplicableDescription());
+			this.setNotApplicableValueDirect(fieldOptions.getDefaultValue());
 		}
-		this.setUsesLookup(usesLookup);
-		this.setStoresCurrency(storesCurrency);
-		super.setPrintoutSetting(printoutSetting);
+		this.setUsesLookup(fieldOptions.isUsesLookup());
+		this.setStoresCurrency(fieldOptions.isStoresCurrency());
+		super.setPrintoutSetting(fieldOptions.getPrintoutSetting());
 	}
 
 	public boolean allowNotApplicable() {

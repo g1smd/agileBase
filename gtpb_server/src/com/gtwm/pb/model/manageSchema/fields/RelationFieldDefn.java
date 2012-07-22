@@ -47,6 +47,7 @@ import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSet
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.model.manageSchema.DatabaseDefn;
+import com.gtwm.pb.model.manageSchema.fields.options.RelationFieldOptions;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
@@ -65,8 +66,7 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	 * Constructs an object which is related to another particular field
 	 */
 	public RelationFieldDefn(DataSource dataSource, TableInfo tableContainingField,
-			String internalFieldName, TableInfo relatedTable, BaseField relatedField,
-			boolean notNull, boolean defaultToNull, FieldPrintoutSetting printoutSetting)
+			String internalFieldName, TableInfo relatedTable, BaseField relatedField, RelationFieldOptions fieldOptions)
 			throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
@@ -78,10 +78,11 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		this.setRelatedTable(relatedTable);
 		this.setRelatedField(relatedField);
 		this.setDisplayField(relatedField);
-		this.setDefaultToNull(defaultToNull);
-		super.setUnique(false);
-		super.setNotNullDirect(notNull);
-		super.setPrintoutSetting(printoutSetting);
+		this.setDefaultToNull(fieldOptions.isDefaultToNull());
+		this.setOneToOne(fieldOptions.isOneToOne());
+		super.setUnique(fieldOptions.getUnique());
+		super.setNotNullDirect(fieldOptions.getNotNull());
+		super.setPrintoutSetting(fieldOptions.getPrintoutSetting());
 	}
 
 	@ManyToOne(targetEntity = TableDefn.class)

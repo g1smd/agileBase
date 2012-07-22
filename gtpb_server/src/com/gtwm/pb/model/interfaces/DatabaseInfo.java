@@ -230,8 +230,7 @@ public interface DatabaseInfo {
 	 *             table
 	 */
 	public BaseField addField(HttpServletRequest request, Connection conn, TableInfo table,
-			String internalFieldName, String fieldType, String fieldName, String fieldDesc,
-			boolean unique, boolean hidden, boolean notNull) throws SQLException,
+			String internalFieldName, String fieldType, String fieldName, String fieldDesc) throws SQLException,
 			ObjectNotFoundException, DisallowedException, CantDoThatException, CodingErrorException;
 
 	/**

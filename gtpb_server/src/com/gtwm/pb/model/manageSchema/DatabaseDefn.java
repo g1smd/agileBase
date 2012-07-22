@@ -113,7 +113,12 @@ import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SequenceFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.FileFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SeparatorFieldDefn;
+import com.gtwm.pb.model.manageSchema.fields.options.BasicFieldOptions;
 import com.gtwm.pb.model.manageSchema.fields.options.DateFieldOptions;
+import com.gtwm.pb.model.manageSchema.fields.options.DecimalFieldOptions;
+import com.gtwm.pb.model.manageSchema.fields.options.IntegerFieldOptions;
+import com.gtwm.pb.model.manageSchema.fields.options.RelationFieldOptions;
+import com.gtwm.pb.model.manageSchema.fields.options.TextFieldOptions;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CantDoThatException;
@@ -276,12 +281,19 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	private void addCommentsFeedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
+		TextFieldOptions fieldOptions = new TextFieldOptions();
+		fieldOptions.setNotNull(false);
+		fieldOptions.setUnique(false);
+		fieldOptions.setNotApplicable(false);
+		fieldOptions.setUsesLookup(false);
+		fieldOptions.setTieDownLookup(false);
+		fieldOptions.setTextCase(TextCase.ANY);
+		fieldOptions.setTextContentSize(TextContentSizes.FEW_PARAS.getNumChars());
+		fieldOptions.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 		TextField commentFeedField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.COMMENTS_FEED.getFieldName(),
-				HiddenFields.COMMENTS_FEED.getFieldDescription(), !TextField.UNIQUE,
-				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null,
-				!TextField.USES_LOOKUP, !TextField.TIE_DOWN_LOOKUP, TextField.HIDDEN,
-				FieldPrintoutSetting.NAME_AND_VALUE);
+				HiddenFields.COMMENTS_FEED.getFieldDescription(), TextField.HIDDEN,
+				fieldOptions);
 		HibernateUtil.currentSession().save(commentFeedField);
 		table.addField(commentFeedField);
 		this.addFieldToRelationalDb(conn, table, commentFeedField);
@@ -307,12 +319,19 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	private void addCreatedByFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
+		TextFieldOptions fieldOptions = new TextFieldOptions();
+		fieldOptions.setNotApplicable(false);
+		fieldOptions.setNotNull(true);
+		fieldOptions.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		fieldOptions.setTextCase(TextCase.ANY);
+		fieldOptions.setTextContentSize(TextContentSizes.FEW_WORDS.getNumChars());
+		fieldOptions.setTieDownLookup(false);
+		fieldOptions.setUnique(false);
+		fieldOptions.setUsesLookup(false);
 		TextField createdByField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.CREATED_BY.getFieldName(),
-				HiddenFields.CREATED_BY.getFieldDescription(), !TextField.UNIQUE,
-				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null,
-				!TextField.USES_LOOKUP, !TextField.TIE_DOWN_LOOKUP, TextField.HIDDEN,
-				FieldPrintoutSetting.NAME_AND_VALUE);
+				HiddenFields.CREATED_BY.getFieldDescription(), TextField.HIDDEN,
+				fieldOptions);
 		HibernateUtil.currentSession().save(createdByField);
 		table.addField(createdByField);
 		this.addFieldToRelationalDb(conn, table, createdByField);
@@ -340,12 +359,19 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	private void addModifiedByFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
+		TextFieldOptions fieldOptions = new TextFieldOptions();
+		fieldOptions.setNotApplicable(false);
+		fieldOptions.setNotNull(true);
+		fieldOptions.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		fieldOptions.setTextCase(TextCase.ANY);
+		fieldOptions.setTextContentSize(TextContentSizes.FEW_WORDS.getNumChars());
+		fieldOptions.setTieDownLookup(false);
+		fieldOptions.setUnique(false);
+		fieldOptions.setUsesLookup(false);
 		TextField modifiedByField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.CREATED_BY.getFieldName(),
-				HiddenFields.CREATED_BY.getFieldDescription(), !TextField.UNIQUE,
-				!TextField.NOT_NULL, null, !TextField.NOT_APPLICABLE, null, null,
-				!TextField.USES_LOOKUP, !TextField.TIE_DOWN_LOOKUP, TextField.HIDDEN,
-				FieldPrintoutSetting.NAME_AND_VALUE);
+				HiddenFields.CREATED_BY.getFieldDescription(),  TextField.HIDDEN,
+				fieldOptions);
 		HibernateUtil.currentSession().save(modifiedByField);
 		table.addField(modifiedByField);
 		this.addFieldToRelationalDb(conn, table, modifiedByField);
@@ -363,12 +389,17 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	private void addViewCountFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
+		IntegerFieldOptions fieldOptions = new IntegerFieldOptions();
+		fieldOptions.setDefaultValue(0);
+		fieldOptions.setNotApplicable(false);
+		fieldOptions.setNotNull(false);
+		fieldOptions.setPrintoutSetting(FieldPrintoutSetting.NO_PRINTOUT);
+		fieldOptions.setStoresCurrency(false);
+		fieldOptions.setUnique(false);
+		fieldOptions.setUsesLookup(false);
 		IntegerField viewCountField = new IntegerFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.VIEW_COUNT.getFieldName(),
-				HiddenFields.VIEW_COUNT.getFieldDescription(), !IntegerField.UNIQUE, 0,
-				!IntegerField.NOT_NULL, !IntegerField.NOT_APPLICABLE, null, 0,
-				!IntegerField.USES_LOOKUP, !IntegerField.STORES_CURRENCY,
-				FieldPrintoutSetting.NO_PRINTOUT);
+				HiddenFields.VIEW_COUNT.getFieldDescription(), fieldOptions);
 		viewCountField.setHidden(true);
 		HibernateUtil.currentSession().save(viewCountField);
 		table.addField(viewCountField);
@@ -1196,22 +1227,25 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private BaseField generateFieldObject(HttpServletRequest request, TableInfo table,
-			String fieldType, String internalFieldName, String fieldName, String fieldDesc,
-			boolean unique) throws CodingErrorException, CantDoThatException,
+			String fieldType, String internalFieldName, String fieldName, String fieldDesc) throws CodingErrorException, CantDoThatException,
 			ObjectNotFoundException, DisallowedException {
 		BaseField field = null;
-		// No fields in agileBase are mandatory
-		boolean notNull = false;
-		// The 'not applicable' property is also not used currently
-		boolean notApplicable = false;
-		String notApplicableDescription = null;
-		String notApplicableValue = null;
-		FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.NAME_AND_VALUE;
+		BasicFieldOptions basicOptions = new BasicFieldOptions(); 
+		basicOptions.setUnique(HttpRequestUtil.getBooleanValue(request,
+				PossibleBooleanOptions.UNIQUE.getFormInputName()));
+		basicOptions.setNotNull(HttpRequestUtil.getBooleanValue(request,
+					PossibleBooleanOptions.MANDATORY.getFormInputName()));
+		// The 'not applicable' property is not used currently
+		// TODO: really? check
+		//boolean notApplicable = false;
+		//String notApplicableDescription = null;
+		//String notApplicableValue = null;
+		basicOptions.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 		String printoutSettingString = HttpRequestUtil.getStringValue(request,
 				PossibleListOptions.PRINTFORMAT.getFormInputName());
 		if (printoutSettingString != null) {
 			if (!printoutSettingString.equals("")) {
-				printoutSetting = FieldPrintoutSetting.valueOf(printoutSettingString.toUpperCase());
+				basicOptions.setPrintoutSetting(FieldPrintoutSetting.valueOf(printoutSettingString.toUpperCase()));
 			}
 		}
 		FieldCategory fieldCategoryRequested = FieldCategory.valueOf(fieldType
@@ -1219,90 +1253,30 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldName = fieldName.trim();
 		switch (fieldCategoryRequested) {
 		case DATE:
-			int dateResolution = Integer.valueOf(request
-					.getParameter(PossibleListOptions.DATERESOLUTION.getFormInputName()));
-			boolean defaultToNow = HttpRequestUtil.getBooleanValue(request,
-					PossibleBooleanOptions.DEFAULTTONOW.getFormInputName());
-			String maxAgeYearsString = request.getParameter(PossibleTextOptions.MAXYEARS
-					.getFormInputName());
-			Integer maxAgeYears = null;
-			if (!maxAgeYearsString.equals("")) {
-				maxAgeYears = Integer.valueOf(maxAgeYearsString);
-			}
-			String minAgeYearsString = request.getParameter(PossibleTextOptions.MINYEARS
-					.getFormInputName());
-			Integer minAgeYears = null;
-			if (!minAgeYearsString.equals("")) {
-				minAgeYears = Integer.valueOf(minAgeYearsString);
-			}
-			DateFieldOptions fieldOptions = new DateFieldOptions();
-			fieldOptions.setDateResolution(dateResolution);
-			fieldOptions.setDefaultToNow(defaultToNow);
-			fieldOptions.setMaxAgeYears(maxAgeYears);
-			fieldOptions.setMinAgeYears(minAgeYears);
-			fieldOptions.setPrintoutSetting(printoutSetting);
-			fieldOptions.setUnique(unique);
-			fieldOptions.setNotNull(notNull);
-			field = new DateFieldDefn(table, internalFieldName, fieldName, fieldDesc, fieldOptions);
+			field = this.generateDateField(request, table, internalFieldName, fieldName, fieldDesc,
+					basicOptions);
 			break;
 		case TEXT:
-			String defaultValue = HttpRequestUtil.getStringValue(request,
-					PossibleTextOptions.DEFAULTVALUE.getFormInputName());
-			boolean usesLookup = HttpRequestUtil.getBooleanValue(request,
-					PossibleBooleanOptions.USELOOKUP.getFormInputName());
-			boolean tieDownLookup = HttpRequestUtil.getBooleanValue(request,
-					PossibleBooleanOptions.TIEDOWNLOOKUP.getFormInputName());
-			field = new TextFieldDefn(this.relationalDataSource, table, internalFieldName,
-					fieldName, fieldDesc, unique, notNull, defaultValue, notApplicable,
-					notApplicableDescription, notApplicableValue, usesLookup, tieDownLookup, false,
-					printoutSetting);
-			int textContentSize = Integer.valueOf(request
-					.getParameter(PossibleListOptions.TEXTCONTENTSIZE.getFormInputName()));
-			((TextField) field).setContentSize(textContentSize);
-			TextCase textCase = TextCase.valueOf(request.getParameter(
-					PossibleListOptions.TEXTCASE.getFormInputName()).toUpperCase());
-			((TextField) field).setTextCase(textCase);
+			field = generateTextField(request, table, internalFieldName, fieldName, fieldDesc,
+					basicOptions);
 			break;
 		case NUMBER:
-			int precision = HttpRequestUtil.getIntegerValue(request,
-					PossibleListOptions.NUMBERPRECISION.getFormInputName(), 0);
-			usesLookup = HttpRequestUtil.getBooleanValue(request,
-					PossibleBooleanOptions.USELOOKUP.getFormInputName());
-			boolean storesCurrency = HttpRequestUtil.getBooleanValue(request,
-					PossibleBooleanOptions.STORECURRENCY.getFormInputName());
-			if (precision > 0) {
-				Double defaultNumber = HttpRequestUtil.getDoubleValueStrict(request,
-						PossibleTextOptions.DEFAULTVALUE.getFormInputName(), null,
-						"Default value must be a number");
-				Double notApplicableNumber = 0.0d;
-				field = new DecimalFieldDefn(this.relationalDataSource, table, internalFieldName,
-						fieldName, fieldDesc, unique, notNull, defaultNumber, precision,
-						notApplicable, notApplicableDescription, notApplicableNumber, usesLookup,
-						storesCurrency, printoutSetting);
-			} else {
-				Integer defaultNumber = HttpRequestUtil.getIntegerValueStrict(request,
-						PossibleTextOptions.DEFAULTVALUE.getFormInputName(), null,
-						"Default value must be an integer");
-				int notApplicableNumber = -1;
-				field = new IntegerFieldDefn(this.relationalDataSource, table, internalFieldName,
-						fieldName, fieldDesc, unique, defaultNumber, notNull, notApplicable,
-						notApplicableDescription, notApplicableNumber, usesLookup, storesCurrency,
-						printoutSetting);
-			}
+			field = generateNumberField(request, table, internalFieldName, fieldName, fieldDesc,
+					basicOptions);
 			break;
 		case SEQUENCE:
 			field = new SequenceFieldDefn(table, internalFieldName, fieldName, fieldDesc,
-					printoutSetting);
+					basicOptions.getPrintoutSetting());
 			break;
 		case CHECKBOX:
 			Boolean checkboxDefaultValue = HttpRequestUtil.getBooleanValue(request,
 					PossibleListOptions.CHECKBOXDEFAULT.getFormInputName());
 			field = new CheckboxFieldDefn(table, internalFieldName, fieldName, fieldDesc,
-					checkboxDefaultValue, false, printoutSetting);
+					checkboxDefaultValue, false, basicOptions.getPrintoutSetting());
 			break;
 		case FILE:
 			field = new FileFieldDefn(table, internalFieldName, fieldName, fieldDesc,
-					printoutSetting);
+					basicOptions.getPrintoutSetting());
 			break;
 		case SEPARATOR:
 			field = new SeparatorFieldDefn(table, internalFieldName, fieldName, fieldDesc);
@@ -1318,11 +1292,120 @@ public final class DatabaseDefn implements DatabaseInfo {
 			TableInfo referencedReportTable = this.getTable(request, internalTableName);
 			BaseReportInfo referencedReport = referencedReportTable.getReport(internalReportName);
 			field = new ReferencedReportDataFieldDefn(table, internalFieldName, fieldName,
-					fieldDesc, referencedReport, printoutSetting);
+					fieldDesc, referencedReport, basicOptions.getPrintoutSetting());
 			break;
 		default:
 			throw new CantDoThatException("Adding unrecognised field type '" + fieldType + "'");
 		}
+		return field;
+	}
+
+	private BaseField generateNumberField(HttpServletRequest request, TableInfo table,
+			String internalFieldName, String fieldName, String fieldDesc,
+			BasicFieldOptions basicOptions) throws CantDoThatException {
+		BaseField field;
+		int precision = HttpRequestUtil.getIntegerValue(request,
+				PossibleListOptions.NUMBERPRECISION.getFormInputName(), 0);
+		boolean usesLookup = HttpRequestUtil.getBooleanValue(request,
+				PossibleBooleanOptions.USELOOKUP.getFormInputName());
+		boolean storesCurrency = HttpRequestUtil.getBooleanValue(request,
+				PossibleBooleanOptions.STORECURRENCY.getFormInputName());
+		if (precision > 0) {
+			Double defaultNumber = HttpRequestUtil.getDoubleValueStrict(request,
+					PossibleTextOptions.DEFAULTVALUE.getFormInputName(), null,
+					"Default value must be a number");
+			DecimalFieldOptions fieldOptions = new DecimalFieldOptions();
+			fieldOptions.setUnique(basicOptions.getUnique());
+			fieldOptions.setNotNull(basicOptions.getNotNull());
+			fieldOptions.setDefaultValue(defaultNumber);
+			fieldOptions.setNotApplicable(false);
+			fieldOptions.setNotApplicableValue(0.0d);
+			fieldOptions.setPrecision(precision);
+			fieldOptions.setPrintoutSetting(basicOptions.getPrintoutSetting());
+			fieldOptions.setStoresCurrency(storesCurrency);
+			fieldOptions.setUsesLookup(usesLookup);
+			field = new DecimalFieldDefn(this.relationalDataSource, table, internalFieldName,
+					fieldName, fieldDesc, fieldOptions);
+		} else {
+			Integer defaultNumber = HttpRequestUtil.getIntegerValueStrict(request,
+					PossibleTextOptions.DEFAULTVALUE.getFormInputName(), null,
+					"Default value must be an integer");
+			IntegerFieldOptions fieldOptions = new IntegerFieldOptions();
+			fieldOptions.setUnique(basicOptions.getUnique());
+			fieldOptions.setNotNull(basicOptions.getNotNull());
+			fieldOptions.setPrintoutSetting(basicOptions.getPrintoutSetting());
+			fieldOptions.setDefaultValue(defaultNumber);
+			fieldOptions.setNotApplicable(false);
+			fieldOptions.setNotApplicableValue(-1);
+			fieldOptions.setStoresCurrency(storesCurrency);
+			fieldOptions.setUsesLookup(usesLookup);
+			field = new IntegerFieldDefn(this.relationalDataSource, table, internalFieldName,
+					fieldName, fieldDesc, fieldOptions);
+		}
+		return field;
+	}
+
+	private BaseField generateTextField(HttpServletRequest request, TableInfo table,
+			String internalFieldName, String fieldName, String fieldDesc,
+			BasicFieldOptions basicOptions) throws CantDoThatException {
+		BaseField field;
+		String defaultValue = HttpRequestUtil.getStringValue(request,
+				PossibleTextOptions.DEFAULTVALUE.getFormInputName());
+		boolean usesLookup = HttpRequestUtil.getBooleanValue(request,
+				PossibleBooleanOptions.USELOOKUP.getFormInputName());
+		boolean tieDownLookup = HttpRequestUtil.getBooleanValue(request,
+				PossibleBooleanOptions.TIEDOWNLOOKUP.getFormInputName());
+		int textContentSize = Integer.valueOf(request
+				.getParameter(PossibleListOptions.TEXTCONTENTSIZE.getFormInputName()));
+		TextCase textCase = TextCase.valueOf(request.getParameter(
+				PossibleListOptions.TEXTCASE.getFormInputName()).toUpperCase());
+		TextFieldOptions textOptions = new TextFieldOptions();
+		textOptions.setDefaultValue(defaultValue);
+		textOptions.setNotApplicable(false);
+		textOptions.setNotApplicableDescription(null);
+		textOptions.setNotApplicableValue(null);
+		textOptions.setNotNull(basicOptions.getNotNull());
+		textOptions.setPrintoutSetting(basicOptions.getPrintoutSetting());
+		textOptions.setTextCase(textCase);
+		textOptions.setTextContentSize(textContentSize);
+		textOptions.setTieDownLookup(tieDownLookup);
+		textOptions.setUnique(basicOptions.getUnique());
+		textOptions.setUsesLookup(usesLookup);
+		field = new TextFieldDefn(this.relationalDataSource, table, internalFieldName,
+				fieldName, fieldDesc, !TextField.HIDDEN,
+				textOptions);
+		return field;
+	}
+
+	private BaseField generateDateField(HttpServletRequest request, TableInfo table,
+			String internalFieldName, String fieldName, String fieldDesc,
+			BasicFieldOptions basicOptions) throws CantDoThatException {
+		BaseField field;
+		int dateResolution = Integer.valueOf(request
+				.getParameter(PossibleListOptions.DATERESOLUTION.getFormInputName()));
+		boolean defaultToNow = HttpRequestUtil.getBooleanValue(request,
+				PossibleBooleanOptions.DEFAULTTONOW.getFormInputName());
+		String maxAgeYearsString = request.getParameter(PossibleTextOptions.MAXYEARS
+				.getFormInputName());
+		Integer maxAgeYears = null;
+		if (!maxAgeYearsString.equals("")) {
+			maxAgeYears = Integer.valueOf(maxAgeYearsString);
+		}
+		String minAgeYearsString = request.getParameter(PossibleTextOptions.MINYEARS
+				.getFormInputName());
+		Integer minAgeYears = null;
+		if (!minAgeYearsString.equals("")) {
+			minAgeYears = Integer.valueOf(minAgeYearsString);
+		}
+		DateFieldOptions dateOptions = new DateFieldOptions();
+		dateOptions.setDateResolution(dateResolution);
+		dateOptions.setDefaultToNow(defaultToNow);
+		dateOptions.setMaxAgeYears(maxAgeYears);
+		dateOptions.setMinAgeYears(minAgeYears);
+		dateOptions.setPrintoutSetting(basicOptions.getPrintoutSetting());
+		dateOptions.setUnique(basicOptions.getUnique());
+		dateOptions.setNotNull(basicOptions.getNotNull());
+		field = new DateFieldDefn(table, internalFieldName, fieldName, fieldDesc, dateOptions);
 		return field;
 	}
 
@@ -1337,8 +1420,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * the specifics
 	 */
 	public BaseField addField(HttpServletRequest request, Connection conn, TableInfo table,
-			String fieldType, String internalFieldName, String fieldName, String fieldDesc,
-			boolean unique, boolean hidden, boolean notNull) throws SQLException,
+			String fieldType, String internalFieldName, String fieldName, String fieldDesc) throws SQLException,
 			ObjectNotFoundException, DisallowedException, CantDoThatException, CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
@@ -1347,14 +1429,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		BaseField field = null;
 		field = this.generateFieldObject(request, table, fieldType, internalFieldName, fieldName,
-				fieldDesc, unique);
+				fieldDesc);
 		this.addField(conn, table, field, request);
-		field.setHidden(hidden);
-		if (!(field instanceof SequenceField)) {
-			// Sequences are generated and can't be null, setNotNull throws an
-			// exception
-			field.setNotNull(notNull);
-		}
 		// schema change time not recorded in memory because it doesn't affect
 		// summary reports
 		// this.dataManagement.logLastSchemaChangeTime(request);
@@ -1394,7 +1470,6 @@ public final class DatabaseDefn implements DatabaseInfo {
 		} else if (field instanceof FileField) {
 			this.updateFieldFieldOptions(request, field, inputStart);
 		}
-		// end of all fields
 		// Simple properties common to all fields
 		BaseFieldDescriptorOptionInfo printoutOption = new ListFieldDescriptorOption(
 				PossibleListOptions.PRINTFORMAT);
@@ -1943,11 +2018,6 @@ public final class DatabaseDefn implements DatabaseInfo {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
 					PrivilegeType.MANAGE_TABLE, tableToAddTo);
 		}
-		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.VIEW_TABLE_DATA, relatedTable))) {
-			throw new DisallowedException(this.authManager.getLoggedInUser(request),
-					PrivilegeType.VIEW_TABLE_DATA, relatedTable);
-		}
 		String listValueFieldInternalName = request.getParameter(PossibleListOptions.LISTVALUEFIELD
 				.getFormInputName());
 		String mandatoryString = request.getParameter(PossibleBooleanOptions.MANDATORY
@@ -1957,6 +2027,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				.getFormInputName());
 		boolean defaultToNull = Helpers.valueRepresentsBooleanTrue(defaultToNullString);
 		FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.NAME_AND_VALUE;
+		String oneToOneString = request.getParameter(PossibleBooleanOptions.ONETOONE.getFormInputName());
+		boolean oneToOne = Helpers.valueRepresentsBooleanTrue(oneToOneString);
 		String printoutSettingString = HttpRequestUtil.getStringValue(request,
 				PossibleListOptions.PRINTFORMAT.getFormInputName());
 		if (printoutSettingString != null) {
@@ -1965,9 +2037,18 @@ public final class DatabaseDefn implements DatabaseInfo {
 			}
 		}
 		// Create the relation object
+		RelationFieldOptions fieldOptions = new RelationFieldOptions();
+		fieldOptions.setDefaultToNull(defaultToNull);
+		fieldOptions.setNotNull(notNull);
+		fieldOptions.setPrintoutSetting(printoutSetting);
+		fieldOptions.setOneToOne(oneToOne);
+		if (oneToOne) {
+			fieldOptions.setUnique(false);
+		} else {
+			fieldOptions.setUnique(true);
+		}
 		RelationField relationToAdd = new RelationFieldDefn(this.relationalDataSource,
-				tableToAddTo, internalFieldName, relatedTable, relatedField, notNull,
-				defaultToNull, printoutSetting);
+				tableToAddTo, internalFieldName, relatedTable, relatedField, fieldOptions);
 		relationToAdd.setFieldDescription(fieldDesc);
 		relationToAdd.setFieldName(fieldName);
 		if (listValueFieldInternalName == null) {

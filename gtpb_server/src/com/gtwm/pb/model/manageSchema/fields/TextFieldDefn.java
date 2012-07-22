@@ -41,6 +41,7 @@ import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSet
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
+import com.gtwm.pb.model.manageSchema.fields.options.TextFieldOptions;
 import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.util.CantDoThatException;
@@ -70,11 +71,9 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	}
 
 	public TextFieldDefn(DataSource dataSource, TableInfo tableContainingField,
-			String internalFieldName, String fieldName, String fieldDesc, boolean unique,
-			boolean notNull, String defaultValue, boolean notApplicable,
-			String notApplicableDescription, String notApplicableValue, boolean usesLookup, boolean tieDownLookup,
-			boolean hidden, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
-		checkOptionsConsistency(this.contentSize, usesLookup, unique);
+			String internalFieldName, String fieldName, String fieldDesc, 
+			boolean hidden, TextFieldOptions fieldOptions) throws CantDoThatException {
+		checkOptionsConsistency(fieldOptions.getTextContentSize(), fieldOptions.isUsesLookup(), fieldOptions.getUnique());
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
@@ -84,18 +83,18 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		}
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
-		super.setUnique(unique);
-		this.setDefault(defaultValue);
-		super.setNotNull(notNull);
-		this.setNotApplicable(notApplicable);
-		if (notApplicable) {
-			this.setNotApplicableDescriptionDirect(notApplicableDescription);
-			this.setNotApplicableValueDirect(notApplicableValue);
+		super.setUnique(fieldOptions.getUnique());
+		this.setDefault(fieldOptions.getDefaultValue());
+		super.setNotNull(fieldOptions.getNotNull());
+		this.setNotApplicable(fieldOptions.isNotApplicable());
+		if (fieldOptions.isNotApplicable()) {
+			this.setNotApplicableDescriptionDirect(fieldOptions.getNotApplicableDescription());
+			this.setNotApplicableValueDirect(fieldOptions.getNotApplicableValue());
 		}
-		this.setUsesLookup(usesLookup);
-		this.setTieDownLookup(tieDownLookup);
+		this.setUsesLookup(fieldOptions.isUsesLookup());
+		this.setTieDownLookup(fieldOptions.isTieDownLookup());
 		super.setHidden(hidden);
-		super.setPrintoutSetting(printoutSetting);
+		super.setPrintoutSetting(fieldOptions.getPrintoutSetting());
 	}
 
 	public boolean allowNotApplicable() {

@@ -10,6 +10,16 @@ public class RelationFieldOptions extends BasicFieldOptions {
 		this.defaultToNull = defaultToNull;
 	}
 	
+	public boolean isOneToOne() {
+		return oneToOne;
+	}
+
+	public void setOneToOne(boolean oneToOne) {
+		this.oneToOne = oneToOne;
+	}
+
 	private boolean defaultToNull = true;
+	
+	private boolean oneToOne = false;
 
 }

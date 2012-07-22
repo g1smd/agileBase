@@ -1067,15 +1067,6 @@ public final class ServletSchemaMethods {
 			if (fieldName.equals("")) {
 				throw new MissingParametersException("Field name must be specified");
 			}
-			// Gather field properties applicable to any field
-			// Any field-type specific properties must be got further down the
-			// line
-			boolean unique = HttpRequestUtil.getBooleanValue(request,
-					PossibleBooleanOptions.UNIQUE.getFormInputName());
-			boolean hidden = HttpRequestUtil.getBooleanValue(request,
-					PossibleBooleanOptions.HIDDEN.getFormInputName());
-			boolean notNull = HttpRequestUtil.getBooleanValue(request,
-					PossibleBooleanOptions.MANDATORY.getFormInputName());
 			// begin updating model and persisting changes
 			BaseField newField = null;
 			Connection conn = null;
@@ -1085,7 +1076,7 @@ public final class ServletSchemaMethods {
 				conn.setAutoCommit(false);
 				// create the new field
 				newField = databaseDefn.addField(request, conn, table, fieldType,
-						internalFieldName, fieldName, fieldDesc, unique, hidden, notNull);
+						internalFieldName, fieldName, fieldDesc);
 				conn.commit();
 				HibernateUtil.currentSession().getTransaction().commit();
 			} catch (SQLException sqlex) {

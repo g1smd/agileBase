@@ -1,5 +1,7 @@
 package com.gtwm.pb.model.manageSchema.fields.options;
 
+import com.gtwm.pb.util.Enumerations.TextCase;
+
 public class TextFieldOptions extends BasicFieldOptions {
 	
 	public String getDefaultValue() {
@@ -50,6 +52,25 @@ public class TextFieldOptions extends BasicFieldOptions {
 		this.tieDownLookup = tieDownLookup;
 	}
 
+	public Integer getTextContentSize() {
+		return textContentSize;
+	}
+
+	/**
+	 * @see com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes
+	 */
+	public void setTextContentSize(Integer textContentSize) {
+		this.textContentSize = textContentSize;
+	}
+
+	public TextCase getTextCase() {
+		return textCase;
+	}
+
+	public void setTextCase(TextCase textCase) {
+		this.textCase = textCase;
+	}
+
 	private String defaultValue = null;
 	
 	private boolean notApplicable = false;
@@ -61,5 +82,9 @@ public class TextFieldOptions extends BasicFieldOptions {
 	private boolean usesLookup = false;
 	
 	private boolean tieDownLookup = false;
+	
+	private TextCase textCase = null;
+	
+	private Integer textContentSize = null;
 
 }
