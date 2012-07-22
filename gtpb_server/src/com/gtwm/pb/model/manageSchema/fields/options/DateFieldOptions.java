@@ -2,7 +2,7 @@ package com.gtwm.pb.model.manageSchema.fields.options;
 
 public class DateFieldOptions extends BasicFieldOptions {
 	
-	public boolean isDefaultToNow() {
+	public boolean getDefaultToNow() {
 		return defaultToNow;
 	}
 

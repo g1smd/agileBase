@@ -32,6 +32,7 @@ import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSetting;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
+import com.gtwm.pb.model.manageSchema.fields.options.DateFieldOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
@@ -47,9 +48,10 @@ public class DateFieldDefn extends AbstractField implements DateField {
 	protected DateFieldDefn() {
 	}
 
+	// boolean unique, boolean notNull,
+	//boolean defaultToNow, int dateResolution, Integer maxAgeYears, Integer minAgeYears, FieldPrintoutSetting printoutSetting
 	public DateFieldDefn(TableInfo tableContainingField, String internalFieldName,
-			String fieldName, String fieldDesc, boolean unique, boolean notNull,
-			boolean defaultToNow, int dateResolution, Integer maxAgeYears, Integer minAgeYears, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
+			String fieldName, String fieldDesc, DateFieldOptions fieldOptions) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
 			super.setInternalFieldName(RandomString.generate());
@@ -58,16 +60,16 @@ public class DateFieldDefn extends AbstractField implements DateField {
 		}
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
-		super.setUnique(unique);
-		if (defaultToNow)
+		super.setUnique(fieldOptions.getUnique());
+		if (fieldOptions.getDefaultToNow())
 			this.setDefaultToNow(true);
-		super.setNotNullDirect(notNull); // TODO: Reference super.setNotNull()
+		super.setNotNullDirect(fieldOptions.getNotNull()); // TODO: Reference super.setNotNull()
 											// once a method of setting
 											// defaults has been added
-		this.setDateResolution(dateResolution);
-		this.setMaxAgeYears(maxAgeYears);
-		this.setMinAgeYears(minAgeYears);
-		super.setPrintoutSetting(printoutSetting);
+		this.setDateResolution(fieldOptions.getDateResolution());
+		this.setMaxAgeYears(fieldOptions.getMaxAgeYears());
+		this.setMinAgeYears(fieldOptions.getMinAgeYears());
+		super.setPrintoutSetting(fieldOptions.getPrintoutSetting());
 	}
 
 	/**

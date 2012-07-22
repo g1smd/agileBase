@@ -113,6 +113,7 @@ import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SequenceFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.FileFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SeparatorFieldDefn;
+import com.gtwm.pb.model.manageSchema.fields.options.DateFieldOptions;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CantDoThatException;
@@ -286,13 +287,18 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.addFieldToRelationalDb(conn, table, commentFeedField);
 	}
 
+	//!DateField.UNIQUE,	!DateField.NOT_NULL, DateField.DEFAULT_TO_NOW, Calendar.SECOND, null, null,	FieldPrintoutSetting.NO_PRINTOUT
 	private void addDateCreatedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
+		DateFieldOptions fieldOptions = new DateFieldOptions();
+		fieldOptions.setDateResolution(Calendar.SECOND);
+		fieldOptions.setDefaultToNow(true);
+		fieldOptions.setNotNull(true);
+		fieldOptions.setPrintoutSetting(FieldPrintoutSetting.NO_PRINTOUT);
+		fieldOptions.setUnique(false);
 		DateField dateCreatedField = new DateFieldDefn(table, null,
 				HiddenFields.DATE_CREATED.getFieldName(),
-				HiddenFields.DATE_CREATED.getFieldDescription(), !DateField.UNIQUE,
-				!DateField.NOT_NULL, DateField.DEFAULT_TO_NOW, Calendar.SECOND, null, null,
-				FieldPrintoutSetting.NO_PRINTOUT);
+				HiddenFields.DATE_CREATED.getFieldDescription(), fieldOptions);
 		dateCreatedField.setHidden(DateFieldDefn.HIDDEN);
 		HibernateUtil.currentSession().save(dateCreatedField);
 		table.addField(dateCreatedField);
@@ -313,13 +319,18 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// Don't add the created by field to the default report
 	}
 
+	//!DateField.UNIQUE,	!DateField.NOT_NULL, DateField.DEFAULT_TO_NOW, Calendar.SECOND, null, null,	FieldPrintoutSetting.NO_PRINTOUT
 	private void addLastModifiedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
+		DateFieldOptions fieldOptions = new DateFieldOptions();
+		fieldOptions.setDateResolution(Calendar.SECOND);
+		fieldOptions.setDefaultToNow(true);
+		fieldOptions.setNotNull(false);
+		fieldOptions.setPrintoutSetting(FieldPrintoutSetting.NO_PRINTOUT);
+		fieldOptions.setUnique(false);
 		DateField lastModifiedField = new DateFieldDefn(table, null,
 				HiddenFields.LAST_MODIFIED.getFieldName(),
-				HiddenFields.LAST_MODIFIED.getFieldDescription(), !DateField.UNIQUE,
-				!DateField.NOT_NULL, DateField.DEFAULT_TO_NOW, Calendar.SECOND, null, null,
-				FieldPrintoutSetting.NO_PRINTOUT);
+				HiddenFields.LAST_MODIFIED.getFieldDescription(), fieldOptions);
 		lastModifiedField.setHidden(DateFieldDefn.HIDDEN);
 		HibernateUtil.currentSession().save(lastModifiedField);
 		table.addField(lastModifiedField);
@@ -1224,9 +1235,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 			if (!minAgeYearsString.equals("")) {
 				minAgeYears = Integer.valueOf(minAgeYearsString);
 			}
-			field = new DateFieldDefn(table, internalFieldName, fieldName, fieldDesc, unique,
-					notNull, defaultToNow, dateResolution, maxAgeYears, minAgeYears,
-					printoutSetting);
+			DateFieldOptions fieldOptions = new DateFieldOptions();
+			fieldOptions.setDateResolution(dateResolution);
+			fieldOptions.setDefaultToNow(defaultToNow);
+			fieldOptions.setMaxAgeYears(maxAgeYears);
+			fieldOptions.setMinAgeYears(minAgeYears);
+			fieldOptions.setPrintoutSetting(printoutSetting);
+			fieldOptions.setUnique(unique);
+			fieldOptions.setNotNull(notNull);
+			field = new DateFieldDefn(table, internalFieldName, fieldName, fieldDesc, fieldOptions);
 			break;
 		case TEXT:
 			String defaultValue = HttpRequestUtil.getStringValue(request,
@@ -1349,7 +1366,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		return field;
 	}
 
-	// TODO: improve: takes a lot of repetitive code to do very little
+	// TODO: improve: takes a lot of repetitive code to do very little: updateXFieldOptions are all very similar
 	public void updateFieldOption(HttpServletRequest request, BaseField field)
 			throws DisallowedException, CantDoThatException, CodingErrorException, SQLException,
 			ObjectNotFoundException {
@@ -1361,289 +1378,21 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		HibernateUtil.activateObject(field);
 		String inputStart = "updateoption" + field.getInternalFieldName();
-		// TODO: switch statement
 		if (field instanceof TextField) {
-			TextField textField = (TextField) field;
-			FieldTypeDescriptorInfo fieldDescriptor = textField.getFieldDescriptor();
-			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
-			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart + fieldOption.getFormInputName();
-				String formInputValue = request.getParameter(formInputName);
-				if (formInputValue != null) {
-					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleBooleanOptions.USELOOKUP.getFormInputName())) {
-							Boolean useLookup = Helpers.valueRepresentsBooleanTrue(formInputValue);
-							textField.setUsesLookup(useLookup);
-						} else if (formInputName.equals("updateoption"
-								+ field.getInternalFieldName()
-								+ PossibleBooleanOptions.UNIQUE.getFormInputName())) {
-							Boolean unique = Helpers.valueRepresentsBooleanTrue(formInputValue);
-							textField.setUnique(unique);
-						} else if (formInputName.equals("updateoption"
-								+ field.getInternalFieldName()
-								+ PossibleBooleanOptions.TIEDOWNLOOKUP.getFormInputName())) {
-							Boolean tieDownLookup = Helpers
-									.valueRepresentsBooleanTrue(formInputValue);
-							textField.setTieDownLookup(tieDownLookup);
-						} else if (formInputName.equals("updateoption"
-								+ field.getInternalFieldName()
-								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
-							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
-							textField.setNotNull(notNull);
-						}
-					} // end of BooleanFieldDescriptorOptionInfo
-					else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleListOptions.TEXTCONTENTSIZE.getFormInputName())) {
-							int textContentSize = Integer.valueOf(formInputValue);
-							textField.setContentSize(textContentSize);
-						} else if (formInputName.equals("updateoption"
-								+ field.getInternalFieldName()
-								+ PossibleListOptions.TEXTCASE.getFormInputName())) {
-							TextCase textCase = TextCase.valueOf(formInputValue.toUpperCase());
-							this.setTextCase(field, textCase);
-							textField.setTextCase(textCase);
-						}
-					} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
-							if (formInputValue.equals("")) {
-								textField.setDefault(null);
-							} else {
-								textField.setDefault(formInputValue);
-							}
-						}
-					}
-				}
-			}
-			Connection conn = null;
-			try {
-				conn = this.relationalDataSource.getConnection();
-				conn.setAutoCommit(false);
-				this.addRemoveRelevantTextIndexes(conn, textField);
-				conn.commit();
-			} catch (SQLException sqlex) {
-				logger.error("Error setting relevant text indexes: " + sqlex);
-			} finally {
-				if (conn != null) {
-					conn.close();
-				}
-			}
-		} // end of TextField
+			this.updateTextFieldOptions(request, field, inputStart);
+		}
 		else if (field instanceof DateField) {
-			DateField dateField = (DateField) field;
-			FieldTypeDescriptorInfo fieldDescriptor = dateField.getFieldDescriptor();
-			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
-			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart + fieldOption.getFormInputName();
-				String formInputValue = request.getParameter(formInputName);
-				if (formInputValue != null) {
-					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleBooleanOptions.DEFAULTTONOW.getFormInputName())) {
-							Boolean defaultToNow = Helpers
-									.valueRepresentsBooleanTrue(formInputValue);
-							dateField.setDefaultToNow(defaultToNow);
-						} else if (formInputName.equals("updateoption"
-								+ field.getInternalFieldName()
-								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
-							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
-							dateField.setNotNull(notNull);
-						}
-					} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleListOptions.DATERESOLUTION.getFormInputName())) {
-							int dateResolution = Integer.valueOf(formInputValue);
-							dateField.setDateResolution(dateResolution);
-						}
-					} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleTextOptions.MAXYEARS.getFormInputName())) {
-							Integer maxAgeYears = null;
-							if (!formInputValue.equals("")) {
-								maxAgeYears = Integer.valueOf(formInputValue);
-							}
-							dateField.setMaxAgeYears(maxAgeYears);
-						} else if (formInputName.equals(inputStart
-								+ PossibleTextOptions.MINYEARS.getFormInputName())) {
-							Integer minAgeYears = null;
-							if (!formInputValue.equals("")) {
-								minAgeYears = Integer.valueOf(formInputValue);
-							}
-							dateField.setMinAgeYears(minAgeYears);
-						}
-					}
-				}
-			}
+			this.updateDateFieldOptions(request, field, inputStart);
 		} else if (field instanceof DecimalField) {
-			DecimalField decimalField = (DecimalField) field;
-			FieldTypeDescriptorInfo fieldDescriptor = decimalField.getFieldDescriptor();
-			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
-			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart + fieldOption.getFormInputName();
-				String formInputValue = request.getParameter(formInputName);
-				if (formInputValue != null) {
-					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
-							boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
-							decimalField.setNotNull(notNull);
-						} else if (formInputName.equals("updateoption"
-								+ field.getInternalFieldName()
-								+ PossibleBooleanOptions.STORECURRENCY.getFormInputName())) {
-							boolean storesCurrency = Helpers
-									.valueRepresentsBooleanTrue(formInputValue);
-							decimalField.setStoresCurrency(storesCurrency);
-						}
-					} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleListOptions.NUMBERPRECISION.getFormInputName())) {
-							int precision = Integer.valueOf(formInputValue);
-							decimalField.setPrecision(precision);
-						}
-					} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
-							if (formInputValue.equals("")) {
-								decimalField.setDefault(null);
-							} else {
-								Double defaultValue = Double.parseDouble(formInputValue);
-								decimalField.setDefault(defaultValue);
-							}
-						}
-					}
-				}
-			}
+			this.updateDecimalFieldOptions(request, field, inputStart);
 		} else if (field instanceof IntegerFieldDefn) {
-			IntegerFieldDefn integerField = (IntegerFieldDefn) field;
-			FieldTypeDescriptorInfo fieldDescriptor = integerField.getFieldDescriptor();
-			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
-			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart + fieldOption.getFormInputName();
-				String formInputValue = request.getParameter(formInputName);
-				if (formInputValue != null) {
-					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
-							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
-							integerField.setNotNull(notNull);
-						} else if (formInputName.equals("updateoption"
-								+ field.getInternalFieldName()
-								+ PossibleBooleanOptions.STORECURRENCY.getFormInputName())) {
-							boolean storesCurrency = Helpers
-									.valueRepresentsBooleanTrue(formInputValue);
-							integerField.setStoresCurrency(storesCurrency);
-						} else if (formInputName.equals("updateoption"
-								+ field.getInternalFieldName()
-								+ PossibleBooleanOptions.UNIQUE.getFormInputName())) {
-							Boolean unique = Helpers.valueRepresentsBooleanTrue(formInputValue);
-							integerField.setUnique(unique);
-							if (unique) {
-								// remove old index (if there is one) before
-								// adding the unique index
-								this.removeIndexWrapper(table.getInternalTableName(),
-										integerField.getInternalFieldName(), false);
-								this.addUniqueWrapper(table.getInternalTableName(),
-										integerField.getInternalFieldName());
-							} else {
-								// remove the unique index
-								this.removeUniqueWrapper(table.getInternalTableName(),
-										integerField.getInternalFieldName());
-							}
-						}
-					} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
-							if (formInputValue.equals("")) {
-								integerField.setDefault(null);
-							} else {
-								Integer defaultValue = Integer.parseInt(formInputValue);
-								integerField.setDefault(defaultValue);
-							}
-						}
-					}
-				}
-			}
-		} // end of IntegerField
-		else if (field instanceof CheckboxField) {
-			CheckboxField checkboxField = (CheckboxField) field;
-			FieldTypeDescriptorInfo fieldDescriptor = checkboxField.getFieldDescriptor();
-			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
-			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart + fieldOption.getFormInputName();
-				String formInputValue = request.getParameter(formInputName);
-				if (formInputValue != null) {
-					if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleListOptions.CHECKBOXDEFAULT.getFormInputName())) {
-							Boolean defaultValue = Helpers
-									.valueRepresentsBooleanTrue(formInputValue);
-							checkboxField.setDefault(defaultValue);
-						}
-					}
-				}
-			}
-		} // end of CheckboxField
-		else if (field instanceof RelationField) {
-			RelationField relationField = (RelationField) field;
-			FieldTypeDescriptorInfo fieldDescriptor = relationField.getFieldDescriptor();
-			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
-			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart + fieldOption.getFormInputName();
-				String formInputValue = request.getParameter(formInputName);
-				if (formInputValue != null) {
-					if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
-							Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
-							relationField.setNotNull(notNull);
-						} else if (formInputName.equals("updateoption"
-								+ field.getInternalFieldName()
-								+ PossibleBooleanOptions.DEFAULTTONULL.getFormInputName())) {
-							Boolean defaultToNull = Helpers
-									.valueRepresentsBooleanTrue(formInputValue);
-							relationField.setDefaultToNull(defaultToNull);
-						} else if (formInputName.equals(inputStart
-								+ PossibleBooleanOptions.ONETOONE.getFormInputName())) {
-							Boolean oneToOne = Helpers.valueRepresentsBooleanTrue(formInputValue);
-							relationField.setOneToOne(oneToOne);
-						}
-					} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleListOptions.LISTVALUEFIELD.getFormInputName())) {
-							BaseField displayField = relationField.getRelatedTable().getField(
-									formInputValue);
-							relationField.setDisplayField(displayField);
-						} else if (formInputName.equals(inputStart
-								+ PossibleListOptions.LISTSECONDARYFIELD.getFormInputName())) {
-							BaseField secondaryDisplayField = null;
-							if (!formInputValue.equals("")) {
-								secondaryDisplayField = relationField.getRelatedTable().getField(
-										formInputValue);
-							}
-							relationField.setSecondaryDisplayField(secondaryDisplayField);
-						}
-					}
-				}
-			}
+			this.updateIntegerFieldOptions(request, field, table, inputStart);
+		} else if (field instanceof CheckboxField) {
+			this.updateCheckboxFieldOptions(request, field, inputStart);
+		} else if (field instanceof RelationField) {
+			this.updateRelationFieldOptions(request, field, inputStart);
 		} else if (field instanceof FileField) {
-			FileField fileField = (FileField) field;
-			FieldTypeDescriptorInfo fieldDescriptor = fileField.getFieldDescriptor();
-			List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
-			for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
-				String formInputName = inputStart + fieldOption.getFormInputName();
-				String formInputValue = request.getParameter(formInputName);
-				if (formInputValue != null) {
-					if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
-						if (formInputName.equals(inputStart
-								+ PossibleListOptions.ATTACHMENTTYPE.getFormInputName())) {
-							AttachmentType attachmentType = AttachmentType.valueOf(formInputValue);
-							fileField.setAttachmentType(attachmentType);
-						}
-					}
-				}
-			}
+			this.updateFieldFieldOptions(request, field, inputStart);
 		}
 		// end of all fields
 		// Simple properties common to all fields
@@ -1655,6 +1404,307 @@ public final class DatabaseDefn implements DatabaseInfo {
 		if (formInputValue != null) {
 			FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.valueOf(formInputValue);
 			field.setPrintoutSetting(printoutSetting);
+		}
+	}
+
+	private void updateFieldFieldOptions(HttpServletRequest request, BaseField field,
+			String inputStart) throws CantDoThatException, CodingErrorException {
+		FileField fileField = (FileField) field;
+		FieldTypeDescriptorInfo fieldDescriptor = fileField.getFieldDescriptor();
+		List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
+		for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
+			String formInputName = inputStart + fieldOption.getFormInputName();
+			String formInputValue = request.getParameter(formInputName);
+			if (formInputValue != null) {
+				if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleListOptions.ATTACHMENTTYPE.getFormInputName())) {
+						AttachmentType attachmentType = AttachmentType.valueOf(formInputValue);
+						fileField.setAttachmentType(attachmentType);
+					}
+				}
+			}
+		}
+	}
+
+	private void updateRelationFieldOptions(HttpServletRequest request, BaseField field,
+			String inputStart) throws CantDoThatException, CodingErrorException,
+			ObjectNotFoundException {
+		RelationField relationField = (RelationField) field;
+		FieldTypeDescriptorInfo fieldDescriptor = relationField.getFieldDescriptor();
+		List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
+		for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
+			String formInputName = inputStart + fieldOption.getFormInputName();
+			String formInputValue = request.getParameter(formInputName);
+			if (formInputValue != null) {
+				if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+						Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+						relationField.setNotNull(notNull);
+					} else if (formInputName.equals("updateoption"
+							+ field.getInternalFieldName()
+							+ PossibleBooleanOptions.DEFAULTTONULL.getFormInputName())) {
+						Boolean defaultToNull = Helpers
+								.valueRepresentsBooleanTrue(formInputValue);
+						relationField.setDefaultToNull(defaultToNull);
+					} else if (formInputName.equals(inputStart
+							+ PossibleBooleanOptions.ONETOONE.getFormInputName())) {
+						Boolean oneToOne = Helpers.valueRepresentsBooleanTrue(formInputValue);
+						relationField.setOneToOne(oneToOne);
+					}
+				} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleListOptions.LISTVALUEFIELD.getFormInputName())) {
+						BaseField displayField = relationField.getRelatedTable().getField(
+								formInputValue);
+						relationField.setDisplayField(displayField);
+					} else if (formInputName.equals(inputStart
+							+ PossibleListOptions.LISTSECONDARYFIELD.getFormInputName())) {
+						BaseField secondaryDisplayField = null;
+						if (!formInputValue.equals("")) {
+							secondaryDisplayField = relationField.getRelatedTable().getField(
+									formInputValue);
+						}
+						relationField.setSecondaryDisplayField(secondaryDisplayField);
+					}
+				}
+			}
+		}
+	}
+
+	private void updateCheckboxFieldOptions(HttpServletRequest request, BaseField field,
+			String inputStart) throws CantDoThatException, CodingErrorException {
+		CheckboxField checkboxField = (CheckboxField) field;
+		FieldTypeDescriptorInfo fieldDescriptor = checkboxField.getFieldDescriptor();
+		List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
+		for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
+			String formInputName = inputStart + fieldOption.getFormInputName();
+			String formInputValue = request.getParameter(formInputName);
+			if (formInputValue != null) {
+				if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleListOptions.CHECKBOXDEFAULT.getFormInputName())) {
+						Boolean defaultValue = Helpers
+								.valueRepresentsBooleanTrue(formInputValue);
+						checkboxField.setDefault(defaultValue);
+					}
+				}
+			}
+		}
+	}
+
+	private void updateDecimalFieldOptions(HttpServletRequest request, BaseField field,
+			String inputStart) throws CantDoThatException, CodingErrorException {
+		DecimalField decimalField = (DecimalField) field;
+		FieldTypeDescriptorInfo fieldDescriptor = decimalField.getFieldDescriptor();
+		List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
+		for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
+			String formInputName = inputStart + fieldOption.getFormInputName();
+			String formInputValue = request.getParameter(formInputName);
+			if (formInputValue != null) {
+				if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+						boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+						decimalField.setNotNull(notNull);
+					} else if (formInputName.equals("updateoption"
+							+ field.getInternalFieldName()
+							+ PossibleBooleanOptions.STORECURRENCY.getFormInputName())) {
+						boolean storesCurrency = Helpers
+								.valueRepresentsBooleanTrue(formInputValue);
+						decimalField.setStoresCurrency(storesCurrency);
+					}
+				} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleListOptions.NUMBERPRECISION.getFormInputName())) {
+						int precision = Integer.valueOf(formInputValue);
+						decimalField.setPrecision(precision);
+					}
+				} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
+						if (formInputValue.equals("")) {
+							decimalField.setDefault(null);
+						} else {
+							Double defaultValue = Double.parseDouble(formInputValue);
+							decimalField.setDefault(defaultValue);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private void updateDateFieldOptions(HttpServletRequest request, BaseField field,
+			String inputStart) throws CantDoThatException, CodingErrorException {
+		DateField dateField = (DateField) field;
+		FieldTypeDescriptorInfo fieldDescriptor = dateField.getFieldDescriptor();
+		List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
+		for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
+			String formInputName = inputStart + fieldOption.getFormInputName();
+			String formInputValue = request.getParameter(formInputName);
+			if (formInputValue != null) {
+				if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleBooleanOptions.DEFAULTTONOW.getFormInputName())) {
+						Boolean defaultToNow = Helpers
+								.valueRepresentsBooleanTrue(formInputValue);
+						dateField.setDefaultToNow(defaultToNow);
+					} else if (formInputName.equals("updateoption"
+							+ field.getInternalFieldName()
+							+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+						Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+						dateField.setNotNull(notNull);
+					}
+				} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleListOptions.DATERESOLUTION.getFormInputName())) {
+						int dateResolution = Integer.valueOf(formInputValue);
+						dateField.setDateResolution(dateResolution);
+					}
+				} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleTextOptions.MAXYEARS.getFormInputName())) {
+						Integer maxAgeYears = null;
+						if (!formInputValue.equals("")) {
+							maxAgeYears = Integer.valueOf(formInputValue);
+						}
+						dateField.setMaxAgeYears(maxAgeYears);
+					} else if (formInputName.equals(inputStart
+							+ PossibleTextOptions.MINYEARS.getFormInputName())) {
+						Integer minAgeYears = null;
+						if (!formInputValue.equals("")) {
+							minAgeYears = Integer.valueOf(formInputValue);
+						}
+						dateField.setMinAgeYears(minAgeYears);
+					}
+				}
+			}
+		}
+	}
+
+	private void updateTextFieldOptions(HttpServletRequest request, BaseField field,
+			String inputStart) throws CantDoThatException, CodingErrorException, SQLException {
+		TextField textField = (TextField) field;
+		FieldTypeDescriptorInfo fieldDescriptor = textField.getFieldDescriptor();
+		List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
+		for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
+			String formInputName = inputStart + fieldOption.getFormInputName();
+			String formInputValue = request.getParameter(formInputName);
+			if (formInputValue != null) {
+				if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleBooleanOptions.USELOOKUP.getFormInputName())) {
+						Boolean useLookup = Helpers.valueRepresentsBooleanTrue(formInputValue);
+						textField.setUsesLookup(useLookup);
+					} else if (formInputName.equals("updateoption"
+							+ field.getInternalFieldName()
+							+ PossibleBooleanOptions.UNIQUE.getFormInputName())) {
+						Boolean unique = Helpers.valueRepresentsBooleanTrue(formInputValue);
+						textField.setUnique(unique);
+					} else if (formInputName.equals("updateoption"
+							+ field.getInternalFieldName()
+							+ PossibleBooleanOptions.TIEDOWNLOOKUP.getFormInputName())) {
+						Boolean tieDownLookup = Helpers
+								.valueRepresentsBooleanTrue(formInputValue);
+						textField.setTieDownLookup(tieDownLookup);
+					} else if (formInputName.equals("updateoption"
+							+ field.getInternalFieldName()
+							+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+						Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+						textField.setNotNull(notNull);
+					}
+				} // end of BooleanFieldDescriptorOptionInfo
+				else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleListOptions.TEXTCONTENTSIZE.getFormInputName())) {
+						int textContentSize = Integer.valueOf(formInputValue);
+						textField.setContentSize(textContentSize);
+					} else if (formInputName.equals("updateoption"
+							+ field.getInternalFieldName()
+							+ PossibleListOptions.TEXTCASE.getFormInputName())) {
+						TextCase textCase = TextCase.valueOf(formInputValue.toUpperCase());
+						this.setTextCase(field, textCase);
+						textField.setTextCase(textCase);
+					}
+				} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
+						if (formInputValue.equals("")) {
+							textField.setDefault(null);
+						} else {
+							textField.setDefault(formInputValue);
+						}
+					}
+				}
+			}
+		}
+		Connection conn = null;
+		try {
+			conn = this.relationalDataSource.getConnection();
+			conn.setAutoCommit(false);
+			this.addRemoveRelevantTextIndexes(conn, textField);
+			conn.commit();
+		} catch (SQLException sqlex) {
+			logger.error("Error setting relevant text indexes: " + sqlex);
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+
+	private void updateIntegerFieldOptions(HttpServletRequest request, BaseField field,
+			TableInfo table, String inputStart) throws CantDoThatException {
+		IntegerFieldDefn integerField = (IntegerFieldDefn) field;
+		FieldTypeDescriptorInfo fieldDescriptor = integerField.getFieldDescriptor();
+		List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
+		for (BaseFieldDescriptorOptionInfo fieldOption : fieldOptions) {
+			String formInputName = inputStart + fieldOption.getFormInputName();
+			String formInputValue = request.getParameter(formInputName);
+			if (formInputValue != null) {
+				if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+						Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
+						integerField.setNotNull(notNull);
+					} else if (formInputName.equals("updateoption"
+							+ field.getInternalFieldName()
+							+ PossibleBooleanOptions.STORECURRENCY.getFormInputName())) {
+						boolean storesCurrency = Helpers
+								.valueRepresentsBooleanTrue(formInputValue);
+						integerField.setStoresCurrency(storesCurrency);
+					} else if (formInputName.equals("updateoption"
+							+ field.getInternalFieldName()
+							+ PossibleBooleanOptions.UNIQUE.getFormInputName())) {
+						Boolean unique = Helpers.valueRepresentsBooleanTrue(formInputValue);
+						integerField.setUnique(unique);
+						if (unique) {
+							// remove old index (if there is one) before
+							// adding the unique index
+							this.removeIndexWrapper(table.getInternalTableName(),
+									integerField.getInternalFieldName(), false);
+							this.addUniqueWrapper(table.getInternalTableName(),
+									integerField.getInternalFieldName());
+						} else {
+							// remove the unique index
+							this.removeUniqueWrapper(table.getInternalTableName(),
+									integerField.getInternalFieldName());
+						}
+					}
+				} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart
+							+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
+						if (formInputValue.equals("")) {
+							integerField.setDefault(null);
+						} else {
+							Integer defaultValue = Integer.parseInt(formInputValue);
+							integerField.setDefault(defaultValue);
+						}
+					}
+				}
+			}
 		}
 	}
 
