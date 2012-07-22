@@ -167,7 +167,6 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
 	}
 
 	@Transient
-	
 	public SortedSet<String> getItemsCached() throws CantDoThatException {
 		throw new CantDoThatException("" + this.getClass().getSimpleName()
 				+ " can't use getItems()");
@@ -200,13 +199,12 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
 
 	private String defaultValue = null;
 
-	@Override
+	@Transient
 	public boolean getTieDownLookup() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void setTieDownLookup(boolean tieDownLookup) {
 		// TODO Auto-generated method stub
 		
