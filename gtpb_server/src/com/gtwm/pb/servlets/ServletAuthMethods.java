@@ -211,7 +211,7 @@ public final class ServletAuthMethods {
 
 	public synchronized static void updateUser(SessionDataInfo sessionData,
 			HttpServletRequest request, AuthManagerInfo authManager) throws DisallowedException,
-			MissingParametersException, ObjectNotFoundException, CantDoThatException {
+			MissingParametersException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
 		AppUserInfo appUser;
 		String internalUserName = request.getParameter("internalusername");
 		if (internalUserName == null) {
@@ -247,7 +247,6 @@ public final class ServletAuthMethods {
 		String oldUserName = appUser.getUserName();
 		String oldSurname = appUser.getSurname();
 		String oldForename = appUser.getForename();
-		String oldPassword = appUser.getPassword();
 		String oldEmail = appUser.getEmail();
 		InitialView oldUserType = appUser.getUserType();
 		boolean oldUsesCustomUI = appUser.getUsesCustomUI();
@@ -261,13 +260,13 @@ public final class ServletAuthMethods {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					oldPassword, oldEmail, oldUserType, oldUsesCustomUI);
+					null, oldEmail, oldUserType, oldUsesCustomUI);
 			throw new CantDoThatException("User update failed", hex);
 		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					oldPassword, oldEmail, oldUserType, oldUsesCustomUI);
+					null, oldEmail, oldUserType, oldUsesCustomUI);
 			throw new CantDoThatException(pex.getMessage(), pex);
 		} finally {
 			HibernateUtil.closeSession();

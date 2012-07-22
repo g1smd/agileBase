@@ -17,6 +17,8 @@
  */
 package com.gtwm.pb.auth;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,7 +35,6 @@ import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.InitialView;
-
 import javax.mail.MessagingException;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -54,7 +55,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 
 	public AppUser(CompanyInfo company, String internalUserName, String userName, String surname,
-			String forename, String password) throws MissingParametersException {
+			String forename, String password) throws MissingParametersException, CantDoThatException, CodingErrorException {
 		if (userName == null || password == null) {
 			throw new MissingParametersException("User name or password not specified");
 		}
@@ -78,7 +79,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		} else {
 			this.setForename(forename);
 		}
-		this.setPassword(password);
+		this.hashAndSetPassword(password);
 		// Give them a default UI layout
 		this.setUserType(InitialView.REPORT);
 	}
@@ -131,20 +132,30 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.forename = forename;
 	}
 
-	public String getPassword() {
+	private String getPassword() {
 		return this.password;
 	}
 
-	public void setPassword(String password) throws MissingParametersException {
+	public void hashAndSetPassword(String plainPassword) throws MissingParametersException, CantDoThatException, CodingErrorException {
 		if (password == null) {
 			throw new MissingParametersException("Password not specified");
 		}
 		if (password.equals("")) {
 			throw new MissingParametersException("Password blank");
 		}
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			String hashedPassword = String.valueOf(md.digest(password.getBytes()));
+			this.setPassword(hashedPassword);
+			// Reset the password timer so a password can only be reset once from a single email notification
+			this.passwordResetSent = 0;
+		} catch (NoSuchAlgorithmException nsaex) {
+			throw new CodingErrorException("Algorithm MD5 not found: " + nsaex, nsaex);
+		}
+	}
+	
+	private void setPassword(String password) throws MissingParametersException {
 		this.password = password;
-		// Reset the password timer so a password can only be reset once from a single email notification
-		this.passwordResetSent = 0;
 	}
 	
 	public String getEmail() {
@@ -295,20 +306,21 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 			throw new CantDoThatException("The user's email isn't valid");
 		}
 		try {
-			this.setPassword(RandomString.generate());
+			String password = RandomString.generate();
+			this.hashAndSetPassword(password);
+			String passwordResetLink = appUrl + "?return=gui/set_password/email_reset&u=" + this.getUserName() + "&x=" + password;
+			if (this.getAllowPasswordReset()) {
+				throw new CantDoThatException("The previous password reset request hasn't timed out yet, please use that: " + passwordResetLink);
+			}
+			Set<String> recipients = new HashSet<String>();
+			recipients.add(this.getEmail());
+			String subject = "Set your password";
+			String body = "Please choose a password for your account by following this link:\n\n";
+			body += passwordResetLink + "\n";
+			Helpers.sendEmail(recipients, body, subject);
 		} catch (MissingParametersException mpex) {
 			throw new CodingErrorException("Error generating a password: " + mpex);
 		}
-		String passwordResetLink = appUrl + "?return=gui/set_password/email_reset&u=" + this.getUserName() + "&x=" + this.getPassword();
-		if (this.getAllowPasswordReset()) {
-			throw new CantDoThatException("The previous password reset request hasn't timed out yet, please use that: " + passwordResetLink);
-		}
-		Set<String> recipients = new HashSet<String>();
-		recipients.add(this.getEmail());
-		String subject = "Set your password";
-		String body = "Please choose a password for your account by following this link:\n\n";
-		body += passwordResetLink + "\n";
-		Helpers.sendEmail(recipients, body, subject);
 		this.passwordResetSent = System.currentTimeMillis();
 	}
 	

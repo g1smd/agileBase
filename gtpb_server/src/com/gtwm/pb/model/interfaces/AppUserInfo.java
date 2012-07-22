@@ -33,7 +33,7 @@ import com.gtwm.pb.util.Enumerations.InitialView;
  */
 public interface AppUserInfo {
 
-	//TODO: get rid of these contants, I think they're only used in one place
+	// TODO: get rid of these contants, I think they're only used in one place
 	public static final String USERNAME = "username";
 
 	public static final String PASSWORD = "password";
@@ -45,7 +45,7 @@ public interface AppUserInfo {
 	public static final String INITIALVIEW = "initialview";
 
 	public static final String EMAIL = "email";
-	
+
 	public static final String USES_CUSTOM_UI = "uses_custom_ui";
 
 	public CompanyInfo getCompany();
@@ -64,20 +64,17 @@ public interface AppUserInfo {
 
 	public String getForename();
 
-	public void setPassword(String password) throws MissingParametersException, CantDoThatException;
+	public void hashAndSetPassword(String plainPassword) throws MissingParametersException,
+			CantDoThatException, CodingErrorException;
+
+	/*
+	 * public void setPassword(String password) throws
+	 * MissingParametersException, CantDoThatException;
+	 */
 
 	public String getEmail();
 
 	public void setEmail(String email) throws CantDoThatException;
-
-	/**
-	 * Note: It is up to the UI to decide whether it wants to retrieve
-	 * passwords, security conscious organisations may want 'write-only'
-	 * passwords in which case this method should never be called
-	 * 
-	 * @return Plain text password
-	 */
-	public String getPassword() throws CantDoThatException;
 
 	public void setUserType(InitialView userType) throws CantDoThatException;
 
@@ -139,7 +136,7 @@ public interface AppUserInfo {
 	 * interface but will be taken to the company custom interface on login
 	 */
 	public boolean getUsesCustomUI();
-	
+
 	public void setUsesCustomUI(boolean usesCustomUI) throws CantDoThatException;
 
 	/**

@@ -115,7 +115,7 @@ public interface AuthManagerInfo {
 	public void updateUser(HttpServletRequest request, AppUserInfo appUser, String userName,
 			String surname, String forename, String password, String email, InitialView userType, boolean usesCustomUI)
 			throws DisallowedException, MissingParametersException, CantDoThatException,
-			ObjectNotFoundException;
+			ObjectNotFoundException, CodingErrorException;
 
 	/**
 	 * @param appUser

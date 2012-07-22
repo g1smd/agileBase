@@ -31,7 +31,8 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 
 /**
- * Represents a *not logged in* public user who will have VIEW privileges on all tables
+ * Represents a *not logged in* public user who will have VIEW privileges on all
+ * tables
  */
 public class PublicUser implements AppUserInfo {
 
@@ -42,8 +43,9 @@ public class PublicUser implements AppUserInfo {
 		this.company = null;
 	}
 
-	public PublicUser(AuthenticatorInfo authenticator, String internalCompanyName, String userName, String surname,
-			String forename) throws MissingParametersException, ObjectNotFoundException {
+	public PublicUser(AuthenticatorInfo authenticator, String internalCompanyName, String userName,
+			String surname, String forename) throws MissingParametersException,
+			ObjectNotFoundException {
 		if (userName == null) {
 			throw new MissingParametersException("Username not specified");
 		}
@@ -53,13 +55,14 @@ public class PublicUser implements AppUserInfo {
 		Set<CompanyInfo> companies = ((Authenticator) authenticator).getCompanies();
 		CompanyInfo foundCompany = null;
 		COMPANY_LOOP: for (CompanyInfo company : companies) {
-			if(internalCompanyName.equals(company.getInternalCompanyName())) {
+			if (internalCompanyName.equals(company.getInternalCompanyName())) {
 				foundCompany = company;
 				break COMPANY_LOOP;
 			}
 		}
 		if (foundCompany == null) {
-			throw new ObjectNotFoundException("Company with ID " + internalCompanyName + " not found");
+			throw new ObjectNotFoundException("Company with ID " + internalCompanyName
+					+ " not found");
 		}
 		this.company = foundCompany;
 		this.username = userName;
@@ -80,7 +83,8 @@ public class PublicUser implements AppUserInfo {
 	}
 
 	public void setUserName(String userName) throws MissingParametersException, CantDoThatException {
-		throw new CantDoThatException("The username for the public user " + this + " cannot be changed");
+		throw new CantDoThatException("The username for the public user " + this
+				+ " cannot be changed");
 	}
 
 	public String getUserName() {
@@ -103,34 +107,37 @@ public class PublicUser implements AppUserInfo {
 		return this.forename;
 	}
 
-	public void setPassword(String password) throws MissingParametersException, CantDoThatException {
+	public void hashAndSetPassword(String plainPassword) throws MissingParametersException,
+			CantDoThatException, CodingErrorException {
 		throw new CantDoThatException("The password for the public user " + this + " cannot be set");
 	}
 
 	public String getPassword() throws CantDoThatException {
 		throw new CantDoThatException("This public user has no password");
 	}
-	
+
 	public void setEmail(String email) throws CantDoThatException {
-		throw new CantDoThatException("The email address for the public user " + this + " cannot be set");
+		throw new CantDoThatException("The email address for the public user " + this
+				+ " cannot be set");
 	}
-	
+
 	public String getEmail() {
 		return null;
 	}
 
 	public void setUserType(InitialView userType) throws CantDoThatException {
-		throw new CantDoThatException("The user type for the public user " + this + " cannot be set");
+		throw new CantDoThatException("The user type for the public user " + this
+				+ " cannot be set");
 	}
 
 	public InitialView getUserType() {
 		return InitialView.LIMITED;
 	}
 
-	public Set<BaseReportInfo> getHiddenReports()  {
+	public Set<BaseReportInfo> getHiddenReports() {
 		return new HashSet<BaseReportInfo>();
 	}
-	
+
 	public Set<BaseReportInfo> getOperationalDashboardReports() {
 		return new HashSet<BaseReportInfo>();
 	}
@@ -158,11 +165,11 @@ public class PublicUser implements AppUserInfo {
 	public void setDefaultReport(BaseReportInfo report) throws CantDoThatException {
 		throw new CantDoThatException("This public user can have no default report");
 	}
-	
+
 	public void contractSection(String internalFieldName) throws CantDoThatException {
 		throw new CantDoThatException("This public user can have no contracted sections");
 	}
-	
+
 	public void expandSection(String internalFieldName) throws CantDoThatException {
 		throw new CantDoThatException("This public user can have no contracted sections");
 	}
@@ -206,11 +213,11 @@ public class PublicUser implements AppUserInfo {
 	private volatile int hashCode = 0;
 
 	private final CompanyInfo company;
-	
+
 	private final String username;
-	
+
 	private final String forename;
-	
+
 	private final String surname;
 
 	private final String internalUserName = RandomString.generate();

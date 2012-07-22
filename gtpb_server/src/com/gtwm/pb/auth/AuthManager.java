@@ -365,7 +365,7 @@ public final class AuthManager implements AuthManagerInfo {
 
 	public synchronized void updateUser(HttpServletRequest request, AppUserInfo appUser,
 			String userName, String surname, String forename, String password, String email, InitialView userType, boolean usesCustomUI)
-			throws DisallowedException, MissingParametersException, CantDoThatException, ObjectNotFoundException {
+			throws DisallowedException, MissingParametersException, CantDoThatException, ObjectNotFoundException, CodingErrorException {
 		// Allow updating of any user if administrator or yourself if not
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || appUser
 				.getUserName().equals(request.getRemoteUser()))) {
@@ -392,9 +392,7 @@ public final class AuthManager implements AuthManagerInfo {
 				}
 			}
 		}
-		if (password == null) {
-			password = appUser.getPassword();
-		} else {
+		if (password != null) {
 			if (password.trim().equals("")) {
 				throw new MissingParametersException("Password cannot be empty");
 			}

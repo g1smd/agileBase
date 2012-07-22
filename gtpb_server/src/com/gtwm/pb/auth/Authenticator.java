@@ -110,14 +110,17 @@ public final class Authenticator implements AuthenticatorInfo {
 	}
 
 	protected synchronized void updateUser(AppUserInfo appUser, String userName, String surname,
-			String forename, String password, String email, InitialView userType, boolean usesCustomUI)
-			throws MissingParametersException, CantDoThatException {
+			String forename, String password, String email, InitialView userType,
+			boolean usesCustomUI) throws MissingParametersException, CantDoThatException,
+			CodingErrorException {
 		// need to remove and add user to all sorted collections it's in because
 		// we may be changing a property (userName) that compareTo depends on
 		this.getUsersDirect().remove(appUser);
 		((Company) appUser.getCompany()).getUsersCollection().remove(appUser);
 		appUser.setUserName(userName);
-		appUser.setPassword(password);
+		if (password != null) {
+			appUser.hashAndSetPassword(password);
+		}
 		appUser.setSurname(surname);
 		appUser.setForename(forename);
 		appUser.setEmail(email);
@@ -287,7 +290,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	protected synchronized void addUserPrivilege(AppUserInfo appUser, PrivilegeType privilegeType,
 			TableInfo table) throws IllegalArgumentException {
 		UserTablePrivilegeInfo userPrivilege = new UserTablePrivilege(appUser, privilegeType, table);
-		//HibernateUtil.currentSession().save(userPrivilege);
+		// HibernateUtil.currentSession().save(userPrivilege);
 		long startTime = System.currentTimeMillis();
 		HibernateUtil.currentSession().save(userPrivilege);
 		this.getUserPrivilegesDirect().add(userPrivilege);
@@ -387,11 +390,12 @@ public final class Authenticator implements AuthenticatorInfo {
 	}
 
 	/**
-	 * Public so DataManagement can call this method, however not part of the interface
+	 * Public so DataManagement can call this method, however not part of the
+	 * interface
 	 */
-	public boolean userAllowedTo(PrivilegeType privilegeType, TableInfo table,
-			AppUserInfo appUser) {
-		// From a bug report, seems as if it's possible for table to be null if table's just been deleted
+	public boolean userAllowedTo(PrivilegeType privilegeType, TableInfo table, AppUserInfo appUser) {
+		// From a bug report, seems as if it's possible for table to be null if
+		// table's just been deleted
 		if (table == null) {
 			return false;
 		}
@@ -641,8 +645,9 @@ public final class Authenticator implements AuthenticatorInfo {
 				getRolePrivilegesDirect()));
 	}
 
-	@OneToMany(targetEntity = RoleGeneralPrivilege.class, cascade =  {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.DETACH}, orphanRemoval=true)
-	//@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(targetEntity = RoleGeneralPrivilege.class, cascade = { CascadeType.PERSIST,
+			CascadeType.REMOVE, CascadeType.DETACH }, orphanRemoval = true)
+	// @org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	// Uni-directional OneToMany
 	// No cascade type all necessary because privileges are @Immutable
 	private synchronized Set<RoleGeneralPrivilegeInfo> getRolePrivilegesDirect() {
@@ -662,8 +667,9 @@ public final class Authenticator implements AuthenticatorInfo {
 				getUserPrivilegesDirect()));
 	}
 
-	@OneToMany(targetEntity = UserGeneralPrivilege.class, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.DETACH}, orphanRemoval=true)
-	//@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(targetEntity = UserGeneralPrivilege.class, cascade = { CascadeType.PERSIST,
+			CascadeType.REMOVE, CascadeType.DETACH }, orphanRemoval = true)
+	// @org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	// Uni-directional OneToMany
 	private synchronized Set<UserGeneralPrivilegeInfo> getUserPrivilegesDirect() {
 		return this.userPrivileges;

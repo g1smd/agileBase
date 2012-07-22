@@ -109,7 +109,7 @@
       <auth-method>FORM</auth-method>
       <form-login-config>
 	    <form-login-page>/website/index.jsp</form-login-page>
-	    <form-error-page>/website/login_error.htm</form-error-page>
+	    <form-error-page>/website/login_error.jsp</form-error-page>
 	  </form-login-config>
 	</login-config>
   <error-page>
