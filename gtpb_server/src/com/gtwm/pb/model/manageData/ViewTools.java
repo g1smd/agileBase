@@ -133,7 +133,7 @@ public final class ViewTools implements ViewToolsInfo {
 		throw new CantDoThatException("Unimplemented calendar constant: " + constantName);
 	}
 
-	public String getAreaForPhoneNumberGB(String phoneNumber) {
+	public String getAreaForPhoneNumber(String phoneNumber) {
 		if (this.areaCodes.isEmpty()) {
 			// initialise array, values from wikipedia
 			this.areaCodes.put("0200", "London");
