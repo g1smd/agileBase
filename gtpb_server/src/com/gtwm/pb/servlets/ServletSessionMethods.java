@@ -699,7 +699,7 @@ public final class ServletSessionMethods {
 							fieldValueString = textCase.transform(fieldValueString);
 						}
 						// GB phone numbers
-						if ((new TextValueDefn(fieldValueString)).isPhoneNumberGB()) {
+						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
 							// Extract and store optional country prefix and optional extension.
 							// Grab only the NSN part for formatting.
 							// NSN part might include spaces or ')' and will need to be removed.
@@ -732,13 +732,13 @@ public final class ServletSessionMethods {
 								}
 							}
 						// International phone numbers
-						} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
+/*						} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
 							fieldValueString = fieldValueString.replaceAll("\\+([1-9][0-9]+).*", "$1");
 							if (!fieldValueString.matches(".*\\D.*"))
 								// Format international number
 								fieldValueString = formatPhoneNumberInternational(fieldValueString);
 							}
-							fieldValueString = "+" + fieldValueString;
+							fieldValueString = "+" + fieldValueString;		*/
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes

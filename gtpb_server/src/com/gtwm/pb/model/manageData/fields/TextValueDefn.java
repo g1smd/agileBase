@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -103,7 +103,7 @@ public class TextValueDefn implements TextValue {
 		return false;
 	}
 
-	public boolean isPhoneNumberGB() {
+	public boolean isPhoneNumber() {
 		if (this.isNull()) {
 			return false;
 		}
@@ -129,7 +129,7 @@ public class TextValueDefn implements TextValue {
 		return false;
 	}
 
-	public boolean isPhoneNumberInternational() {
+/*	public boolean isPhoneNumberInternational() {
 		if (this.isNull()) {
 			return false;
 		}
@@ -148,7 +148,7 @@ public class TextValueDefn implements TextValue {
 		}
 		return false;
 	}
-
+*/
 	public String getFormattedURL() {
 		if (!this.isURL()) {
 			return null;

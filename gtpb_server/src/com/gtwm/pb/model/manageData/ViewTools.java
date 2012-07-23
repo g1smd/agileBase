@@ -133,7 +133,7 @@ public final class ViewTools implements ViewToolsInfo {
 		throw new CantDoThatException("Unimplemented calendar constant: " + constantName);
 	}
 
-	public String getAreaForPhoneNumberGB(String phoneNumber) {
+	public String getAreaForPhoneNumber(String phoneNumber) {
 		if (this.areaCodes.isEmpty()) {
 			// initialise array, values from wikipedia
 			this.areaCodes.put("200", "London");
@@ -815,7 +815,7 @@ public final class ViewTools implements ViewToolsInfo {
 		return "(may be invalid)";
 	}
 
-	public String getCountryForPhoneNumberInternational(String phoneNumber) {
+/*	public String getCountryForPhoneNumberInternational(String phoneNumber) {
 		if (this.countryCodes.isEmpty()) {
 			this.countryCodes.put("1", "NANP countries");
 			this.countryCodes.put("27", "South Africa");
@@ -844,7 +844,7 @@ public final class ViewTools implements ViewToolsInfo {
 		}
 		return "(may be invalid)";
 	}
-
+*/
 	public SortedMap<BaseField, BaseValue> getAddress(Map<BaseField, BaseValue> tableDataRow) {
 		SortedMap<BaseField, BaseValue> address = new TreeMap<BaseField, BaseValue>();
 		SortedMap<BaseField, BaseValue> sortedTableDataRows = new TreeMap<BaseField, BaseValue>(

@@ -95,14 +95,14 @@ public interface ViewToolsInfo {
 	 * e.g. given 01792 367514, return Swansea. Return '(may be invalid)' if 
 	 * the area can't be found. Currently works for numbers in the UK.
 	 */
-	public String getAreaForPhoneNumberGB(String phoneNumber);
+	public String getAreaForPhoneNumber(String phoneNumber);
 
 	/**
 	 * e.g. given +61 3 4455 6677, return Australia. Return '(may be invalid)'
 	 * if the country name can't be found.
 	 */
-	public String getCountryForPhoneNumberInternational(String phoneNumber);
-
+/*	public String getCountryForPhoneNumberInternational(String phoneNumber);
+*/
 	/**
 	 * Given a table data row, as returned by ViewMethodsInfo.getTableDataRow(),
 	 * return a subset of that data which is a detected address. For example,
