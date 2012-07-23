@@ -699,7 +699,18 @@ public final class ServletSessionMethods {
 							fieldValueString = textCase.transform(fieldValueString);
 						}
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumberGB()) {
+	//	if (!fieldValueString.matches(".*\\D.*")) {
+			if (fieldValueString.matches("0[1-9].*")) {
+				// Grab only digits for processing
+				fieldValueString = fieldValueString.replaceAll("[^\\d\\#]", "");
+				// Temporarily remove leading zero
+				fieldValueString = fieldValueString.replaceAll("0([1-9][0-9]+)", "$1");
+							// Format NSN part of GB number
 							fieldValueString = formatPhoneNumberGB(fieldValueString);
+				// Add leading zero back on after above formatting
+				fieldValueString = "0" + fieldValueString;
+			}
+	//	}
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes
@@ -724,9 +735,9 @@ public final class ServletSessionMethods {
 	}
 
 	/**
-	 * Format phone numbers to include a space so that when they're exported to
-	 * CSV, spreadsheets recognise them as text rather than numbers. For numbers
-	 * entered with incorrect spacing, correct the spacing. 
+	 * Format GB phone numbers to include a space so that when they're exported
+	 * to CSV, spreadsheets recognise them as text rather than numbers.
+	 * For numbers entered with incorrect spacing, correct the spacing.
 	 * 
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
@@ -734,12 +745,6 @@ public final class ServletSessionMethods {
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
-	//	if (!fieldValueString.matches(".*\\D.*")) {
-			if (fieldValueString.matches("0[1-9].*")) {
-				// Grab only digits for processing
-				fieldValueString = fieldValueString.replaceAll("[^\\d\\#]", "");
-				// Temporarily remove leading zero
-				fieldValueString = fieldValueString.replaceAll("0([1-9][0-9]+)", "$1");
 				// Find string length
 				int fieldValueLength = fieldValueString.length();
 				// [2+8] 2d, 55, 56, 70, 76 (not 7624)
@@ -793,13 +798,9 @@ public final class ServletSessionMethods {
 						fieldValueString = m36.group(1) + " " + m36.group(2);
 					}
 				} else {
-					fieldValueString = fieldValueString.substring(0, 4) + " "
-							+ fieldValueString.substring(4);
+					fieldValueString = fieldValueString.substring(0, 1) + " "
+							+ fieldValueString.substring(1);
 				}
-				// Add leading zero back on after above formatting
-				fieldValueString = "0" + fieldValueString;
-			}
-	//	}
 		return fieldValueString;
 	}
 
