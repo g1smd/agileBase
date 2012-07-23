@@ -698,7 +698,7 @@ public final class ServletSessionMethods {
 						if (textCase != null) {
 							fieldValueString = textCase.transform(fieldValueString);
 						}
-						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
+						if ((new TextValueDefn(fieldValueString)).isPhoneNumberGB()) {
 							fieldValueString = formatPhoneNumberGB(fieldValueString);
 						} else {
 							// Replace smart quotes with normal quotes and em
