@@ -700,25 +700,34 @@ public final class ServletSessionMethods {
 						}
 						// GB phone numbers
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
-							// Extract and store optional country prefix and optional extension.
+							// Extract and store optional country prefix and
+							// optional extension.
 							// Grab only the NSN part for formatting.
-							// NSN part might include spaces or ')' and will need to be removed.
+							// NSN part might include spaces or ')' and will
+							// need to be removed.
 							Matcher numberPartsGB = Pattern
-									.compile("^((\\+44)\\s?)?\\(?0?(:?\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(#\\d{3,4})?$")
+									.compile(
+											"^((\\+44)\\s?)?\\(?0?(:?\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(#\\d{3,4})?$")
 									.matcher(fieldValueString);
 							if (numberPartsGB.matches()) {
 								// Extract +44 prefix if present
 								String phonePrefixString = numberPartsGB.group(2);
 								// Set prefix as 0 or as +44 and space
-								if (phonePrefixString == "+44") {
+								if (phonePrefixString.equals("+44")) {
 									phonePrefixString = "+44 "; // adds space
 								} else {
 									phonePrefixString = "0";
 								}
-								// Extract NSN part of GB number, trim it and remove ')' if present
-								String phoneNSNString = numberPartsGB.group(3).trim().replaceAll("[\\)]","");
-								// Format NSN part of GB number
-								String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
+								// Extract NSN part of GB number, trim it and
+								// remove ')' if present
+								if (numberPartsGB.group(3) != null) {
+									String phoneNSNString = numberPartsGB.group(3).trim()
+											.replaceAll("[\\)]", "");
+									// Format NSN part of GB number
+									String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
+									// Add prefix back on to NSN
+									fieldValueString = phonePrefixString + phoneNSNFormattedString;
+								}
 								// Extract extension
 								boolean phoneHasExtension = false;
 								String phoneExtensionString = null;
@@ -726,21 +735,22 @@ public final class ServletSessionMethods {
 									phoneHasExtension = true;
 									phoneExtensionString = " " + numberPartsGB.group(4);
 								}
-								// Add prefix back on to NSN
-								fieldValueString = phonePrefixString + phoneNSNFormattedString;
 								// Add extension back on to NSN
 								if (phoneHasExtension) {
 									fieldValueString += phoneExtensionString;
 								}
 							}
-						// International phone numbers
-/*						} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
-							fieldValueString = fieldValueString.replaceAll("\\+([1-9][0-9]+).*", "$1");
-							if (!fieldValueString.matches(".*\\D.*"))
-								// Format international number
-								fieldValueString = formatPhoneNumberInternational(fieldValueString);
-							}
-							fieldValueString = "+" + fieldValueString;		*/
+							// International phone numbers
+							/*
+							 * } else if ((new TextValueDefn(fieldValueString)).
+							 * isPhoneNumberInternational()) { fieldValueString
+							 * =
+							 * fieldValueString.replaceAll("\\+([1-9][0-9]+).*",
+							 * "$1"); if (!fieldValueString.matches(".*\\D.*"))
+							 * // Format international number fieldValueString =
+							 * formatPhoneNumberInternational(fieldValueString);
+							 * } fieldValueString = "+" + fieldValueString;
+							 */
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes
@@ -766,12 +776,13 @@ public final class ServletSessionMethods {
 
 	/**
 	 * Format GB phone numbers to include a space so that when they're exported
-	 * to CSV, spreadsheets recognise them as text rather than numbers.
-	 * For numbers entered with incorrect spacing, correct the spacing.
+	 * to CSV, spreadsheets recognise them as text rather than numbers. For
+	 * numbers entered with incorrect spacing, correct the spacing.
 	 * 
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
-	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+	 * http://www.aa-asterisk.org.uk/index.php/
+	 * Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
@@ -836,8 +847,8 @@ public final class ServletSessionMethods {
 
 	/**
 	 * Format international phone numbers to include a space so that when
-	 * they're exported to CSV, spreadsheets recognise them as text rather
-	 * than numbers. Edited by Ian Galpin; twitter: @g1smd
+	 * they're exported to CSV, spreadsheets recognise them as text rather than
+	 * numbers. Edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumberInternational(String fieldValueString) {
 		// Single digit country codes
