@@ -698,19 +698,33 @@ public final class ServletSessionMethods {
 						if (textCase != null) {
 							fieldValueString = textCase.transform(fieldValueString);
 						}
+						// GB phone numbers
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumberGB()) {
-						//	if (!fieldValueString.matches(".*\\D.*")) {
-								if (fieldValueString.matches("0[1-9].*")) {
-									// Grab only digits for processing
-									fieldValueString = fieldValueString.replaceAll("[^\\d\\#]", "");
-									// Temporarily remove leading zero
-									fieldValueString = fieldValueString.replaceAll("0([1-9][0-9]+)", "$1");
-									// Format NSN part of GB number
-									fieldValueString = formatPhoneNumberGB(fieldValueString);
-									// Add leading zero back on after above formatting
-									fieldValueString = "0" + fieldValueString;
+							// Extract and store optional country prefix and optional extension.
+							// Grab only the NSN part for formatting.
+							// NSN part might include spaces or ')' and will need to be removed.
+							Matcher numberPartsGB = Pattern
+									.compile("^((\\+44)\\s?)?\\(?0?(:?\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(#\\d{3,4})?$")
+									.matcher(fieldValueString);
+							if (numberPartsGB.matches()) {
+								// Extract +44 prefix if present
+								String phonePrefixString = numberPartsGB.group(2);
+								// Set prefix as 0 or as +44 and space
+								if (phonePrefixString == "+44") {
+									phonePrefixString = "+44 "; // adds space
+								} else {
+									phonePrefixString = "0";
 								}
-						//	}
+								// Extract NSN part of GB number, trim it and remove ')' if present
+								String phoneNSNString = numberPartsGB.group(3).trim().replaceAll("[\\)]","");
+								// Format NSN part of GB number
+								String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
+								// Extract extension
+								String phoneExtensionString = " " + numberPartsGB.group(4);
+								// Add prefix and extension back on to NSN
+								fieldValueString = phonePrefixString + phoneNSNFormattedString
+										+ phoneExtensionString;
+							}
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes
