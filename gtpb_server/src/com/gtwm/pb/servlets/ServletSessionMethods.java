@@ -840,8 +840,8 @@ public final class ServletSessionMethods {
 			if (m36.matches()) {
 				fieldValueString = m36.group(1) + " " + m36.group(2);
 			}
-		} else {
-			fieldValueString = fieldValueString.substring(0, 1) + " "
+		} else if (fieldValueLength > 1) {
+			fieldValueString = fieldValueString.charAt(0) + " "
 					+ fieldValueString.substring(1);
 		}
 		return fieldValueString;
