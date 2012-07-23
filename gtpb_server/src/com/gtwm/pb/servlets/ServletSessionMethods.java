@@ -713,8 +713,10 @@ public final class ServletSessionMethods {
 								// Extract +44 prefix if present
 								String phonePrefixString = numberPartsGB.group(2);
 								// Set prefix as 0 or as +44 and space
-								if (phonePrefixString.equals("+44")) {
-									phonePrefixString = "+44 "; // adds space
+								if (phonePrefixString != null) {
+									if (phonePrefixString.equals("+44")) {
+										phonePrefixString += " ";
+									}
 								} else {
 									phonePrefixString = "0";
 								}
