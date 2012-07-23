@@ -699,18 +699,18 @@ public final class ServletSessionMethods {
 							fieldValueString = textCase.transform(fieldValueString);
 						}
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumberGB()) {
-	//	if (!fieldValueString.matches(".*\\D.*")) {
-			if (fieldValueString.matches("0[1-9].*")) {
-				// Grab only digits for processing
-				fieldValueString = fieldValueString.replaceAll("[^\\d\\#]", "");
-				// Temporarily remove leading zero
-				fieldValueString = fieldValueString.replaceAll("0([1-9][0-9]+)", "$1");
-							// Format NSN part of GB number
-							fieldValueString = formatPhoneNumberGB(fieldValueString);
-				// Add leading zero back on after above formatting
-				fieldValueString = "0" + fieldValueString;
-			}
-	//	}
+						//	if (!fieldValueString.matches(".*\\D.*")) {
+								if (fieldValueString.matches("0[1-9].*")) {
+									// Grab only digits for processing
+									fieldValueString = fieldValueString.replaceAll("[^\\d\\#]", "");
+									// Temporarily remove leading zero
+									fieldValueString = fieldValueString.replaceAll("0([1-9][0-9]+)", "$1");
+									// Format NSN part of GB number
+									fieldValueString = formatPhoneNumberGB(fieldValueString);
+									// Add leading zero back on after above formatting
+									fieldValueString = "0" + fieldValueString;
+								}
+						//	}
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes
@@ -745,62 +745,62 @@ public final class ServletSessionMethods {
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
-				// Find string length
-				int fieldValueLength = fieldValueString.length();
-				// [2+8] 2d, 55, 56, 70, 76 (not 7624)
-				String pattern28 = "(:?2|5[56]|7(:?0|6(:?[013-9]|2[0-35-9]))).*";
-				// [3+7] 11d, 1d1, 3dd, 80d, 84d, 87d, 9dd
-				String pattern37 = "(:?1(:?1|\\d1)|3|8(:?0[08]|4[2-5]|7[0-3])|9[018]).*";
-				// [5+5] 1dddd (12 areas)
-				String pattern55 = "(:?1(:?3873|5(:?242|39[456])|697[347]|768[347]|9467)).*";
-				// [5+4] 1ddd (1 area)
-				String pattern54 = "(:?16977[23]).*";
-				// [4+6] 1ddd, 7ddd (inc 7624) (not 70, 76)
-				String pattern46 = "(:?1|7(:?[1-5789]|624)).*";
-				// [4+5] 1ddd (40 areas)
-				String pattern45 = "(:?1(:?2(:?0[48]|54|76|9[78])|3(:?6[34]|8[46])|4(:?04|20|6[01]|8[08])|5(:?27|6[26])|6(:?06|29|35|47|59|95)|7(:?26|44|50)|8(:?27|37|84)|9(:?0[05]|35|49|63|95))).*";
-				// [3+6] 500, 800
-				String pattern36 = "[58]00.*";
-				// Format numbers by leading digits and length
-				if (fieldValueLength == 10 && fieldValueString.matches(pattern28)) {
-					Matcher m28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$").matcher(fieldValueString);
-					if (m28.matches()) {
-						fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
-					}
-				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern37)) {
-					Matcher m37 = Pattern.compile("^(\\d{3})(\\d{3})(\\d{4})$").matcher(fieldValueString);
-					if (m37.matches()) {
-						fieldValueString = m37.group(1) + " " + m37.group(2) + " " + m37.group(3);
-					}
-				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern55)) {
-					Matcher m55 = Pattern.compile("^(\\d{5})(\\d{5})$").matcher(fieldValueString);
-					if (m55.matches()) {
-						fieldValueString = m55.group(1) + " " + m55.group(2);
-					}
-				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern54)) {
-					Matcher m54 = Pattern.compile("^(\\d{5})(\\d{4})$").matcher(fieldValueString);
-					if (m54.matches()) {
-						fieldValueString = m54.group(1) + " " + m54.group(2);
-					}
-				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern46)) {
-					Matcher m46 = Pattern.compile("^(\\d{4})(\\d{6})$").matcher(fieldValueString);
-					if (m46.matches()) {
-						fieldValueString = m46.group(1) + " " + m46.group(2);
-					}
-				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern45)) {
-					Matcher m45 = Pattern.compile("^(\\d{4})(\\d{5})$").matcher(fieldValueString);
-					if (m45.matches()) {
-						fieldValueString = m45.group(1) + " " + m45.group(2);
-					}
-				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern36)) {
-					Matcher m36 = Pattern.compile("^(\\d{3})(\\d{6})$").matcher(fieldValueString);
-					if (m36.matches()) {
-						fieldValueString = m36.group(1) + " " + m36.group(2);
-					}
-				} else {
-					fieldValueString = fieldValueString.substring(0, 1) + " "
-							+ fieldValueString.substring(1);
-				}
+		// Find string length
+		int fieldValueLength = fieldValueString.length();
+		// [2+8] 2d, 55, 56, 70, 76 (not 7624)
+		String pattern28 = "(:?2|5[56]|7(:?0|6(:?[013-9]|2[0-35-9]))).*";
+		// [3+7] 11d, 1d1, 3dd, 80d, 84d, 87d, 9dd
+		String pattern37 = "(:?1(:?1|\\d1)|3|8(:?0[08]|4[2-5]|7[0-3])|9[018]).*";
+		// [5+5] 1dddd (12 areas)
+		String pattern55 = "(:?1(:?3873|5(:?242|39[456])|697[347]|768[347]|9467)).*";
+		// [5+4] 1ddd (1 area)
+		String pattern54 = "(:?16977[23]).*";
+		// [4+6] 1ddd, 7ddd (inc 7624) (not 70, 76)
+		String pattern46 = "(:?1|7(:?[1-5789]|624)).*";
+		// [4+5] 1ddd (40 areas)
+		String pattern45 = "(:?1(:?2(:?0[48]|54|76|9[78])|3(:?6[34]|8[46])|4(:?04|20|6[01]|8[08])|5(:?27|6[26])|6(:?06|29|35|47|59|95)|7(:?26|44|50)|8(:?27|37|84)|9(:?0[05]|35|49|63|95))).*";
+		// [3+6] 500, 800
+		String pattern36 = "[58]00.*";
+		// Format numbers by leading digits and length
+		if (fieldValueLength == 10 && fieldValueString.matches(pattern28)) {
+			Matcher m28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$").matcher(fieldValueString);
+			if (m28.matches()) {
+				fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
+			}
+		} else if (fieldValueLength == 10 && fieldValueString.matches(pattern37)) {
+			Matcher m37 = Pattern.compile("^(\\d{3})(\\d{3})(\\d{4})$").matcher(fieldValueString);
+			if (m37.matches()) {
+				fieldValueString = m37.group(1) + " " + m37.group(2) + " " + m37.group(3);
+			}
+		} else if (fieldValueLength == 10 && fieldValueString.matches(pattern55)) {
+			Matcher m55 = Pattern.compile("^(\\d{5})(\\d{5})$").matcher(fieldValueString);
+			if (m55.matches()) {
+				fieldValueString = m55.group(1) + " " + m55.group(2);
+			}
+		} else if (fieldValueLength == 9 && fieldValueString.matches(pattern54)) {
+			Matcher m54 = Pattern.compile("^(\\d{5})(\\d{4})$").matcher(fieldValueString);
+			if (m54.matches()) {
+				fieldValueString = m54.group(1) + " " + m54.group(2);
+			}
+		} else if (fieldValueLength == 10 && fieldValueString.matches(pattern46)) {
+			Matcher m46 = Pattern.compile("^(\\d{4})(\\d{6})$").matcher(fieldValueString);
+			if (m46.matches()) {
+				fieldValueString = m46.group(1) + " " + m46.group(2);
+			}
+		} else if (fieldValueLength == 9 && fieldValueString.matches(pattern45)) {
+			Matcher m45 = Pattern.compile("^(\\d{4})(\\d{5})$").matcher(fieldValueString);
+			if (m45.matches()) {
+				fieldValueString = m45.group(1) + " " + m45.group(2);
+			}
+		} else if (fieldValueLength == 9 && fieldValueString.matches(pattern36)) {
+			Matcher m36 = Pattern.compile("^(\\d{3})(\\d{6})$").matcher(fieldValueString);
+			if (m36.matches()) {
+				fieldValueString = m36.group(1) + " " + m36.group(2);
+			}
+		} else {
+			fieldValueString = fieldValueString.substring(0, 1) + " "
+					+ fieldValueString.substring(1);
+		}
 		return fieldValueString;
 	}
 
