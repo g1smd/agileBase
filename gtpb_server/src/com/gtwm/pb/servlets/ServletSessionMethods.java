@@ -733,14 +733,12 @@ public final class ServletSessionMethods {
 							}
 						// International phone numbers
 						} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
-						// Format international phone numbers to include a space so that
-						// when they're exported to CSV, spreadsheets recognise them
-						// as text rather than numbers.
-							fieldValueString = fieldValueString.replaceAll("\\+([1-9][0-9\\s]+).*", "$1");
-							if (!fieldValueString.matches(".*\\D.*")) {
-								fieldValueString = fieldValueString.substring(0, 2) + " "
-									+ fieldValueString.substring(2);
+							fieldValueString = fieldValueString.replaceAll("\\+([1-9][0-9]+).*", "$1");
+							if (!fieldValueString.matches(".*\\D.*"))
+								// Format international number
+								fieldValueString = formatPhoneNumberInternational(fieldValueString);
 							}
+							fieldValueString = "+" + fieldValueString;
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes
@@ -826,6 +824,41 @@ public final class ServletSessionMethods {
 			Matcher m36 = Pattern.compile("^(\\d{3})(\\d{6})$").matcher(fieldValueString);
 			if (m36.matches()) {
 				fieldValueString = m36.group(1) + " " + m36.group(2);
+			}
+		} else {
+			fieldValueString = fieldValueString.substring(0, 1) + " "
+					+ fieldValueString.substring(1);
+		}
+		return fieldValueString;
+	}
+
+	/**
+	 * Format international phone numbers to include a space so that when
+	 * they're exported to CSV, spreadsheets recognise them as text rather
+	 * than numbers. Edited by Ian Galpin; twitter: @g1smd
+	 */
+	private static String formatPhoneNumberInternational(String fieldValueString) {
+		// Single digit country codes
+		String pattern1 = "(:?(1|7)).*";
+		// Double digit country codes
+		String pattern2 = "(:?(2[07]|3[0123469]|4[013456789|5[12345678]|6[0123456]|8[12469]|9[0123458])).*";
+		// Triple digit country codes
+		String pattern3 = "(:?(2[12345689]|3[578]|42|5[09]|6[789]|8[03578]|9[679])\\d).*";
+		// Format international numbers by leading digits
+		if (fieldValueString.matches(pattern1)) {
+			Matcher m1 = Pattern.compile("^(\\d{1})(.*)$").matcher(fieldValueString);
+			if (m1.matches()) {
+				fieldValueString = m1.group(1) + " " + m1.group(2);
+			}
+		} else if (fieldValueString.matches(pattern2)) {
+			Matcher m2 = Pattern.compile("^(\\d{2})(.*)$").matcher(fieldValueString);
+			if (m2.matches()) {
+				fieldValueString = m2.group(1) + " " + m2.group(2);
+			}
+		} else if (fieldValueString.matches(pattern3)) {
+			Matcher m3 = Pattern.compile("^(\\d{3})(.*)$").matcher(fieldValueString);
+			if (m3.matches()) {
+				fieldValueString = m3.group(1) + " " + m3.group(2);
 			}
 		} else {
 			fieldValueString = fieldValueString.substring(0, 1) + " "
