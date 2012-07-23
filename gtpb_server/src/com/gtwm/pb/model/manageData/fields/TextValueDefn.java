@@ -129,6 +129,26 @@ public class TextValueDefn implements TextValue {
 		return false;
 	}
 
+	public boolean isPhoneNumberInternational() {
+		if (this.isNull()) {
+			return false;
+		}
+		int length = this.textValue.trim().length();
+		if ((length > 6) && (length < 22)) {
+			String regex = "^";
+			regex += "(";
+			regex += "\\+"; // +
+			regex += "\\d{1,3}\\s?[\\d\\s]+"; // number
+			regex += ")";
+			regex += "(\\#\\d{3,4})?"; // optional "#" and extension
+			regex += "$";
+			if (this.textValue.trim().matches(regex)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public String getFormattedURL() {
 		if (!this.isURL()) {
 			return null;

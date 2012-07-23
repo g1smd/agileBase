@@ -815,6 +815,36 @@ public final class ViewTools implements ViewToolsInfo {
 		return "(may be invalid)";
 	}
 
+	public String getCountryForPhoneNumberInternational(String phoneNumber) {
+		if (this.countryCodes.isEmpty()) {
+			this.countryCodes.put("1", "NANP countries");
+			this.countryCodes.put("27", "South Africa");
+			this.countryCodes.put("33", "France");
+			this.countryCodes.put("353", "Ireland");
+			this.countryCodes.put("61", "Australia");
+			this.countryCodes.put("64", "New Zealand");
+			this.countryCodes.put("7", "Russia");
+			this.countryCodes.put("91", "India");
+		}
+		phoneNumber = phoneNumber.replaceAll(" ", "");
+		phoneNumber = phoneNumber.replaceAll("[\\(\\)]", "");
+		phoneNumber = phoneNumber.replaceAll("+([1-9][0-9]+).*", "$1");
+		String possibleCode = "";
+		// stop substring creating an IndexOutOfBoundsException below
+		if (phoneNumber.length() < 5) {
+			return "";
+		}
+		String area = "";
+		for (int numDigitsInCountry = 4; numDigitsInCountry > 0; numDigitsInCountry--) {
+			possibleCountry = phoneNumber.substring(0, numDigitsInCountry);
+			country = this.countryCodes.get(possibleCountry);
+			if (country != null) {
+				return country;
+			}
+		}
+		return "(may be invalid)";
+	}
+
 	public SortedMap<BaseField, BaseValue> getAddress(Map<BaseField, BaseValue> tableDataRow) {
 		SortedMap<BaseField, BaseValue> address = new TreeMap<BaseField, BaseValue>();
 		SortedMap<BaseField, BaseValue> sortedTableDataRows = new TreeMap<BaseField, BaseValue>(

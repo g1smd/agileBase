@@ -731,6 +731,16 @@ public final class ServletSessionMethods {
 									fieldValueString += phoneExtensionString;
 								}
 							}
+						// International phone numbers
+						} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
+						// Format international phone numbers to include a space so that
+						// when they're exported to CSV, spreadsheets recognise them
+						// as text rather than numbers.
+							fieldValueString = fieldValueString.replaceAll("\\+([1-9][0-9\\s]+).*", "$1");
+							if (!fieldValueString.matches(".*\\D.*")) {
+								fieldValueString = fieldValueString.substring(0, 2) + " "
+									+ fieldValueString.substring(2);
+							}
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes
