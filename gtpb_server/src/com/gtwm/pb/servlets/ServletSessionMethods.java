@@ -720,10 +720,16 @@ public final class ServletSessionMethods {
 								// Format NSN part of GB number
 								String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
 								// Extract extension
-								String phoneExtensionString = " " + numberPartsGB.group(4);
-								// Add prefix and extension back on to NSN
+								if (numberPartsGB.group(4)) {
+									boolean phoneHasExtension = true;
+									String phoneExtensionString = " " + numberPartsGB.group(4);
+								}
+								// Add prefix back on to NSN
 								fieldValueString = phonePrefixString + phoneNSNFormattedString
-										+ phoneExtensionString;
+								// Add extension back on to NSN
+								if (phoneHasExtension) {
+									fieldValueString += phoneExtensionString;
+								}
 							}
 						} else {
 							// Replace smart quotes with normal quotes and em
