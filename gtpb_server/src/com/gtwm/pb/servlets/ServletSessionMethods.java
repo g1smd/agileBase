@@ -698,8 +698,47 @@ public final class ServletSessionMethods {
 						if (textCase != null) {
 							fieldValueString = textCase.transform(fieldValueString);
 						}
+						// GB phone numbers
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
-							fieldValueString = formatPhoneNumberGB(fieldValueString);
+							// Extract and store optional country prefix and optional extension.
+							// Grab only the NSN part for formatting.
+							// NSN part might include spaces or ')' and will need to be removed.
+							Matcher numberPartsGB = Pattern
+									.compile("^((\\+44)\\s?)?\\(?0?(:?\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(#\\d{3,4})?$")
+									.matcher(fieldValueString);
+							if (numberPartsGB.matches()) {
+								// Extract +44 prefix if present
+								String phonePrefixString = numberPartsGB.group(2);
+								// Set prefix as 0 or as +44 and space
+								if (phonePrefixString == "+44") {
+									phonePrefixString = "+44 "; // adds space
+								} else {
+									phonePrefixString = "0";
+								}
+								// Extract NSN part of GB number, trim it and remove ')' if present
+								String phoneNSNString = numberPartsGB.group(3).trim().replaceAll("[\\)]","");
+								// Format NSN part of GB number
+								String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
+								// Extract extension
+								if (numberPartsGB.group(4)) {
+									boolean phoneHasExtension = true;
+									String phoneExtensionString = " " + numberPartsGB.group(4);
+								}
+								// Add prefix back on to NSN
+								fieldValueString = phonePrefixString + phoneNSNFormattedString
+								// Add extension back on to NSN
+								if (phoneHasExtension) {
+									fieldValueString += phoneExtensionString;
+								}
+							}
+						// International phone numbers
+/*						} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
+							fieldValueString = fieldValueString.replaceAll("\\+([1-9][0-9]+).*", "$1");
+							if (!fieldValueString.matches(".*\\D.*"))
+								// Format international number
+								fieldValueString = formatPhoneNumberInternational(fieldValueString);
+							}
+							fieldValueString = "+" + fieldValueString;		*/
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes
@@ -724,9 +763,9 @@ public final class ServletSessionMethods {
 	}
 
 	/**
-	 * Format phone numbers to include a space so that when they're exported to
-	 * CSV, spreadsheets recognise them as text rather than numbers. For numbers
-	 * entered with incorrect spacing, correct the spacing. 
+	 * Format GB phone numbers to include a space so that when they're exported
+	 * to CSV, spreadsheets recognise them as text rather than numbers.
+	 * For numbers entered with incorrect spacing, correct the spacing.
 	 * 
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
@@ -734,72 +773,97 @@ public final class ServletSessionMethods {
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
-	//	if (!fieldValueString.matches(".*\\D.*")) {
-			if (fieldValueString.matches("0[1-9].*")) {
-				// Grab only digits for processing
-				fieldValueString = fieldValueString.replaceAll("[^\\d\\#]", "");
-				// Temporarily remove leading zero
-				fieldValueString = fieldValueString.replaceAll("0([1-9][0-9]+)", "$1");
-				// Find string length
-				int fieldValueLength = fieldValueString.length();
-				// [2+8] 2d, 55, 56, 70, 76 (not 7624)
-				String pattern28 = "(:?2|5[56]|7(:?0|6(:?[013-9]|2[0-35-9]))).*";
-				// [3+7] 11d, 1d1, 3dd, 80d, 84d, 87d, 9dd
-				String pattern37 = "(:?1(:?1|\\d1)|3|8(:?0[08]|4[2-5]|7[0-3])|9[018]).*";
-				// [5+5] 1dddd (12 areas)
-				String pattern55 = "(:?1(:?3873|5(:?242|39[456])|697[347]|768[347]|9467)).*";
-				// [5+4] 1ddd (1 area)
-				String pattern54 = "(:?16977[23]).*";
-				// [4+6] 1ddd, 7ddd (inc 7624) (not 70, 76)
-				String pattern46 = "(:?1|7(:?[1-5789]|624)).*";
-				// [4+5] 1ddd (40 areas)
-				String pattern45 = "(:?1(:?2(:?0[48]|54|76|9[78])|3(:?6[34]|8[46])|4(:?04|20|6[01]|8[08])|5(:?27|6[26])|6(:?06|29|35|47|59|95)|7(:?26|44|50)|8(:?27|37|84)|9(:?0[05]|35|49|63|95))).*";
-				// [3+6] 500, 800
-				String pattern36 = "[58]00.*";
-				// Format numbers by leading digits and length
-				if (fieldValueLength == 10 && fieldValueString.matches(pattern28)) {
-					Matcher m28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$").matcher(fieldValueString);
-					if (m28.matches()) {
-						fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
-					}
-				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern37)) {
-					Matcher m37 = Pattern.compile("^(\\d{3})(\\d{3})(\\d{4})$").matcher(fieldValueString);
-					if (m37.matches()) {
-						fieldValueString = m37.group(1) + " " + m37.group(2) + " " + m37.group(3);
-					}
-				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern55)) {
-					Matcher m55 = Pattern.compile("^(\\d{5})(\\d{5})$").matcher(fieldValueString);
-					if (m55.matches()) {
-						fieldValueString = m55.group(1) + " " + m55.group(2);
-					}
-				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern54)) {
-					Matcher m54 = Pattern.compile("^(\\d{5})(\\d{4})$").matcher(fieldValueString);
-					if (m54.matches()) {
-						fieldValueString = m54.group(1) + " " + m54.group(2);
-					}
-				} else if (fieldValueLength == 10 && fieldValueString.matches(pattern46)) {
-					Matcher m46 = Pattern.compile("^(\\d{4})(\\d{6})$").matcher(fieldValueString);
-					if (m46.matches()) {
-						fieldValueString = m46.group(1) + " " + m46.group(2);
-					}
-				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern45)) {
-					Matcher m45 = Pattern.compile("^(\\d{4})(\\d{5})$").matcher(fieldValueString);
-					if (m45.matches()) {
-						fieldValueString = m45.group(1) + " " + m45.group(2);
-					}
-				} else if (fieldValueLength == 9 && fieldValueString.matches(pattern36)) {
-					Matcher m36 = Pattern.compile("^(\\d{3})(\\d{6})$").matcher(fieldValueString);
-					if (m36.matches()) {
-						fieldValueString = m36.group(1) + " " + m36.group(2);
-					}
-				} else {
-					fieldValueString = fieldValueString.substring(0, 4) + " "
-							+ fieldValueString.substring(4);
-				}
-				// Add leading zero back on after above formatting
-				fieldValueString = "0" + fieldValueString;
+		// Find string length
+		int fieldValueLength = fieldValueString.length();
+		// [2+8] 2d, 55, 56, 70, 76 (not 7624)
+		String pattern28 = "(:?2|5[56]|7(:?0|6(:?[013-9]|2[0-35-9]))).*";
+		// [3+7] 11d, 1d1, 3dd, 80d, 84d, 87d, 9dd
+		String pattern37 = "(:?1(:?1|\\d1)|3|8(:?0[08]|4[2-5]|7[0-3])|9[018]).*";
+		// [5+5] 1dddd (12 areas)
+		String pattern55 = "(:?1(:?3873|5(:?242|39[456])|697[347]|768[347]|9467)).*";
+		// [5+4] 1ddd (1 area)
+		String pattern54 = "(:?16977[23]).*";
+		// [4+6] 1ddd, 7ddd (inc 7624) (not 70, 76)
+		String pattern46 = "(:?1|7(:?[1-5789]|624)).*";
+		// [4+5] 1ddd (40 areas)
+		String pattern45 = "(:?1(:?2(:?0[48]|54|76|9[78])|3(:?6[34]|8[46])|4(:?04|20|6[01]|8[08])|5(:?27|6[26])|6(:?06|29|35|47|59|95)|7(:?26|44|50)|8(:?27|37|84)|9(:?0[05]|35|49|63|95))).*";
+		// [3+6] 500, 800
+		String pattern36 = "[58]00.*";
+		// Format numbers by leading digits and length
+		if (fieldValueLength == 10 && fieldValueString.matches(pattern28)) {
+			Matcher m28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$").matcher(fieldValueString);
+			if (m28.matches()) {
+				fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
 			}
-	//	}
+		} else if (fieldValueLength == 10 && fieldValueString.matches(pattern37)) {
+			Matcher m37 = Pattern.compile("^(\\d{3})(\\d{3})(\\d{4})$").matcher(fieldValueString);
+			if (m37.matches()) {
+				fieldValueString = m37.group(1) + " " + m37.group(2) + " " + m37.group(3);
+			}
+		} else if (fieldValueLength == 10 && fieldValueString.matches(pattern55)) {
+			Matcher m55 = Pattern.compile("^(\\d{5})(\\d{5})$").matcher(fieldValueString);
+			if (m55.matches()) {
+				fieldValueString = m55.group(1) + " " + m55.group(2);
+			}
+		} else if (fieldValueLength == 9 && fieldValueString.matches(pattern54)) {
+			Matcher m54 = Pattern.compile("^(\\d{5})(\\d{4})$").matcher(fieldValueString);
+			if (m54.matches()) {
+				fieldValueString = m54.group(1) + " " + m54.group(2);
+			}
+		} else if (fieldValueLength == 10 && fieldValueString.matches(pattern46)) {
+			Matcher m46 = Pattern.compile("^(\\d{4})(\\d{6})$").matcher(fieldValueString);
+			if (m46.matches()) {
+				fieldValueString = m46.group(1) + " " + m46.group(2);
+			}
+		} else if (fieldValueLength == 9 && fieldValueString.matches(pattern45)) {
+			Matcher m45 = Pattern.compile("^(\\d{4})(\\d{5})$").matcher(fieldValueString);
+			if (m45.matches()) {
+				fieldValueString = m45.group(1) + " " + m45.group(2);
+			}
+		} else if (fieldValueLength == 9 && fieldValueString.matches(pattern36)) {
+			Matcher m36 = Pattern.compile("^(\\d{3})(\\d{6})$").matcher(fieldValueString);
+			if (m36.matches()) {
+				fieldValueString = m36.group(1) + " " + m36.group(2);
+			}
+		} else {
+			fieldValueString = fieldValueString.substring(0, 1) + " "
+					+ fieldValueString.substring(1);
+		}
+		return fieldValueString;
+	}
+
+	/**
+	 * Format international phone numbers to include a space so that when
+	 * they're exported to CSV, spreadsheets recognise them as text rather
+	 * than numbers. Edited by Ian Galpin; twitter: @g1smd
+	 */
+	private static String formatPhoneNumberInternational(String fieldValueString) {
+		// Single digit country codes
+		String pattern1 = "(:?(1|7)).*";
+		// Double digit country codes
+		String pattern2 = "(:?(2[07]|3[0123469]|4[013456789|5[12345678]|6[0123456]|8[12469]|9[0123458])).*";
+		// Triple digit country codes
+		String pattern3 = "(:?(2[12345689]|3[578]|42|5[09]|6[789]|8[03578]|9[679])\\d).*";
+		// Format international numbers by leading digits
+		if (fieldValueString.matches(pattern1)) {
+			Matcher m1 = Pattern.compile("^(\\d{1})(.*)$").matcher(fieldValueString);
+			if (m1.matches()) {
+				fieldValueString = m1.group(1) + " " + m1.group(2);
+			}
+		} else if (fieldValueString.matches(pattern2)) {
+			Matcher m2 = Pattern.compile("^(\\d{2})(.*)$").matcher(fieldValueString);
+			if (m2.matches()) {
+				fieldValueString = m2.group(1) + " " + m2.group(2);
+			}
+		} else if (fieldValueString.matches(pattern3)) {
+			Matcher m3 = Pattern.compile("^(\\d{3})(.*)$").matcher(fieldValueString);
+			if (m3.matches()) {
+				fieldValueString = m3.group(1) + " " + m3.group(2);
+			}
+		} else {
+			fieldValueString = fieldValueString.substring(0, 1) + " "
+					+ fieldValueString.substring(1);
+		}
 		return fieldValueString;
 	}
 

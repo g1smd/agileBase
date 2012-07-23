@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -113,11 +113,11 @@ public class TextValueDefn implements TextValue {
 			// alteration by g1smd
 			// "^((\\(?0\\d{5}\\)?\\s?\\d{4,5})|(\\(?0\\d{4}\\)?\\s?(\\d{3}\\s?\\d{3}|\\d{5}))|(\\(?0\\d{3}\\)?\\s?(\\d{3}\\s?\\d{4}|\\d{6}))|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#\\d{3,4})?$"
 			String regex = "^";
-			regex += "\\(?0"; // leading optional "(" and leading "0"
+			regex += "(\\+44\\s?)?\\(?0?(\\)\\s?)?"; // leading +44, +44(0), 0, (0; spaces optional
 			regex += "(";
 			regex += "(\\d{5}\\)?\\s?\\d{4,5})|"; // [5+4]/[5+5]
 			regex += "(\\d{4}\\)?\\s?(\\d{5}|\\d{3}\\s?\\d{3}))|"; // [4+5]/[4+6]
-			regex += "(\\d{3}\\)?\\s?(\\d{6}|\\d{3}\\s?\\d{4}))|"; // [3+6]/[3+7]
+			regex += "(\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|"; // [3+6]/[3+7]
 			regex += "(\\d{2}\\)?\\s?\\d{4}\\s?\\d{4})"; // [2+8]
 			regex += ")";
 			regex += "(\\s?\\#\\d{3,4})?"; // optional "#" and extension
@@ -129,6 +129,26 @@ public class TextValueDefn implements TextValue {
 		return false;
 	}
 
+/*	public boolean isPhoneNumberInternational() {
+		if (this.isNull()) {
+			return false;
+		}
+		int length = this.textValue.trim().length();
+		if ((length > 6) && (length < 22)) {
+			String regex = "^";
+			regex += "(";
+			regex += "\\+"; // +
+			regex += "\\d{1,3}\\s?[\\d\\s]+"; // number
+			regex += ")";
+			regex += "(\\#\\d{3,4})?"; // optional "#" and extension
+			regex += "$";
+			if (this.textValue.trim().matches(regex)) {
+				return true;
+			}
+		}
+		return false;
+	}
+*/
 	public String getFormattedURL() {
 		if (!this.isURL()) {
 			return null;
