@@ -727,8 +727,6 @@ public final class ServletSessionMethods {
 									} else {
 										phonePrefixString = "0";
 									}
-									// Add prefix back on to NSN
-									fieldValueString = phonePrefixString + phoneNSNFormattedString;
 									// Extract extension
 									boolean phoneHasExtension = false;
 									String phoneExtensionString = null;
@@ -736,6 +734,8 @@ public final class ServletSessionMethods {
 										phoneHasExtension = true;
 										phoneExtensionString = " " + numberPartsGB.group(4);
 									}
+									// Add prefix back on to NSN
+									fieldValueString = phonePrefixString + phoneNSNFormattedString;
 									// Add extension back on to NSN
 									if (phoneHasExtension) {
 										fieldValueString += phoneExtensionString;
