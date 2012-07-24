@@ -46,6 +46,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 			<div id="header" class="wrapper">
 					<div class="content">
 						<a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
+						<!--
 						<table cellspacing="0" cellpadding="0" border="0">
               <tr class="row1">
                 <td class="col1"><a href="#popupPricingContent" class="colorbox">pricing</a></td>
@@ -56,6 +57,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
                 <td><a href="#popupContactContent" class="colorbox">contact</a></td>
               </tr>
 						</table>
+						-->
 					</div>
 		  </div> <!-- end of header -->
           <div id="popupPricingContent" class="popup">
