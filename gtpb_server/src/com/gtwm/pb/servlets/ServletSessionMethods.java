@@ -730,7 +730,7 @@ public final class ServletSessionMethods {
 									// Extract extension
 									boolean phoneHasExtension = false;
 									String phoneExtensionString = null;
-										if (numberPartsGB.group(4) != null) {
+									if (numberPartsGB.group(4) != null) {
 										phoneHasExtension = true;
 										phoneExtensionString = " " + numberPartsGB.group(4);
 									}
