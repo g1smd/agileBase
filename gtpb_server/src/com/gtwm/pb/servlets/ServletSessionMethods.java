@@ -710,49 +710,46 @@ public final class ServletSessionMethods {
 											"^((\\+44)\\s?)?\\(?0?(:?\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(#\\d{3,4})?$")
 									.matcher(fieldValueString);
 							if (numberPartsGB.matches()) {
-								// Extract +44 prefix if present
-								String phonePrefixString = numberPartsGB.group(2);
-								// Set prefix as 0 or as +44 and space
-								if (phonePrefixString != null) {
-									if (phonePrefixString.equals("+44")) {
-										phonePrefixString += " ";
-									}
-								} else {
-									phonePrefixString = "0";
-								}
 								// Extract NSN part of GB number, trim it and
 								// remove ')' if present
 								if (numberPartsGB.group(3) != null) {
 									String phoneNSNString = numberPartsGB.group(3).trim()
-											.replaceAll("[\\)]", "");
+											.replaceAll("[\\)\\s]", "");
 									// Format NSN part of GB number
 									String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
+									// Extract +44 prefix if present
+									String phonePrefixString = numberPartsGB.group(2);
+									// Set prefix as 0 or as +44 and space
+									if (phonePrefixString != null) {
+										if (phonePrefixString.equals("+44")) {
+											phonePrefixString += " ";
+										}
+									} else {
+										phonePrefixString = "0";
+									}
+									// Extract extension
+									boolean phoneHasExtension = false;
+									String phoneExtensionString = null;
+										if (numberPartsGB.group(4) != null) {
+										phoneHasExtension = true;
+										phoneExtensionString = " " + numberPartsGB.group(4);
+									}
 									// Add prefix back on to NSN
 									fieldValueString = phonePrefixString + phoneNSNFormattedString;
-								}
-								// Extract extension
-								boolean phoneHasExtension = false;
-								String phoneExtensionString = null;
-								if (numberPartsGB.group(4) != null) {
-									phoneHasExtension = true;
-									phoneExtensionString = " " + numberPartsGB.group(4);
-								}
-								// Add extension back on to NSN
-								if (phoneHasExtension) {
-									fieldValueString += phoneExtensionString;
+									// Add extension back on to NSN
+									if (phoneHasExtension) {
+										fieldValueString += phoneExtensionString;
+									}
 								}
 							}
-							// International phone numbers
-							/*
-							 * } else if ((new TextValueDefn(fieldValueString)).
-							 * isPhoneNumberInternational()) { fieldValueString
-							 * =
-							 * fieldValueString.replaceAll("\\+([1-9][0-9]+).*",
-							 * "$1"); if (!fieldValueString.matches(".*\\D.*"))
-							 * // Format international number fieldValueString =
-							 * formatPhoneNumberInternational(fieldValueString);
-							 * } fieldValueString = "+" + fieldValueString;
-							 */
+						// International phone numbers
+					//	} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
+					//		fieldValueString = fieldValueString.replaceAll("\\+([1-9][0-9]+).*", "$1");
+					//		if (!fieldValueString.matches(".*\\D.*")) {
+								// Format international number
+					//			fieldValueString = formatPhoneNumberInternational(fieldValueString);
+					//		}
+					//	fieldValueString = "+" + fieldValueString;
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes
@@ -783,8 +780,7 @@ public final class ServletSessionMethods {
 	 * 
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
-	 * http://www.aa-asterisk.org.uk/index.php/
-	 * Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
