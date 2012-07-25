@@ -27,6 +27,7 @@ import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
+import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.util.CantDoThatException;
@@ -47,6 +48,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.grlea.log.SimpleLogger;
 
 @Entity
 public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
@@ -143,15 +147,20 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		if (plainPassword.equals("")) {
 			throw new MissingParametersException("Password blank");
 		}
-		try {
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			String hashedPassword = String.valueOf(md.digest(plainPassword.getBytes()));
+		//try {
+			//MessageDigest md = MessageDigest.getInstance("MD5");
+			//logger.debug("Plain password is " + plainPassword);
+			//logger.debug("To and from bytes is " + String.valueOf(plainPassword.getBytes()));
+			//byte[] plainBytes = plainPassword.getBytes();
+			//String hashedPassword = String.valueOf(md.digest(plainPassword.getBytes()));
+			String hashedPassword = DigestUtils.md5Hex(plainPassword);
+			logger.debug("Hashed password = " + hashedPassword);
 			this.setPassword(hashedPassword);
 			// Reset the password timer so a password can only be reset once from a single email notification
 			this.passwordResetSent = 0;
-		} catch (NoSuchAlgorithmException nsaex) {
-			throw new CodingErrorException("Algorithm MD5 not found: " + nsaex, nsaex);
-		}
+		//} catch (NoSuchAlgorithmException nsaex) {
+		//	throw new CodingErrorException("Algorithm MD5 not found: " + nsaex, nsaex);
+		//}
 	}
 	
 	/*
@@ -393,4 +402,6 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	 * Epoch time at which a password reset email was sent
 	 */
 	private long passwordResetSent = 0;
+
+	private static final SimpleLogger logger = new SimpleLogger(AppUser.class);
 }
