@@ -20,8 +20,8 @@
 <%
 String customLogin = request.getParameter("customlogin");
 if (customLogin != null) {
-  customLogin = customLogin.trim().toLowerCase().replaceAll("\\W","") + ".jsp"; %>
-  <jsp:include page="customlogin/<%=customLogin%>" />
+  customLogin = "customlogin/" + customLogin.trim().toLowerCase().replaceAll("\\W","") + ".jsp"; %>
+  <jsp:include page="<%=customLogin%>" />
 <% } else {
   String queryString = request.getQueryString();
   if (queryString == null) {
