@@ -137,15 +137,15 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 
 	public void hashAndSetPassword(String plainPassword) throws MissingParametersException, CantDoThatException, CodingErrorException {
-		if (password == null) {
+		if (plainPassword == null) {
 			throw new MissingParametersException("Password not specified");
 		}
-		if (password.equals("")) {
+		if (plainPassword.equals("")) {
 			throw new MissingParametersException("Password blank");
 		}
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
-			String hashedPassword = String.valueOf(md.digest(password.getBytes()));
+			String hashedPassword = String.valueOf(md.digest(plainPassword.getBytes()));
 			this.setPassword(hashedPassword);
 			// Reset the password timer so a password can only be reset once from a single email notification
 			this.passwordResetSent = 0;
