@@ -21,7 +21,7 @@
 String customLogin = request.getParameter("customlogin");
 if (customLogin != null) {
   customLogin = customLogin.replaceAll("\\W","") + ".jsp"; %>
-  <%@include file="customLogin"%>
+  <%@include file="%><%customLogin%><%"%>
 <% } else {
   String queryString = request.getQueryString();
   if (queryString == null) {
