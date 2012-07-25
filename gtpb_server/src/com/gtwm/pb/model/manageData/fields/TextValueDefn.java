@@ -126,11 +126,11 @@ public class TextValueDefn implements TextValue {
 			regex += "(?:\\s?\\#\\d{3,4})?";	// optional "#" and extension
 			regex += "$";
 			if (this.textValue.trim().matches(regex)) {
-logger.debug("z01: this is a phone number: " + this.textValue.trim());
+//logger.debug("z01: this is a phone number: " + this.textValue.trim());
 				return true;
 			}
 		}
-logger.debug("z02: this is not a phone number: " + this.textValue);
+//logger.debug("z02: this is not a phone number: " + this.textValue);
 		return false;
 	}
 

@@ -2680,7 +2680,6 @@ public final class DataManagement implements DataManagementInfo {
 			throws CantDoThatException, SQLException {
 		Set<ChartAggregateInfo> aggregateFunctions = chart.getAggregateFunctions();
 		Set<ChartGroupingInfo> groupings = chart.getGroupings();
-		logger.debug("Chart groupings are " + groupings);
 		List<ChartDataRowInfo> reportSummaryRows;
 		reportSummaryRows = new LinkedList<ChartDataRowInfo>();
 		Connection conn = null;

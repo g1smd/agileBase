@@ -87,7 +87,6 @@ public class Public extends VelocityViewServlet {
 				.getParameter(request, "custom", multipartItems);
 		AppUserInfo publicUser;
 		try {
-			logger.debug("Getting public user");
 			publicUser = ServletUtilMethods.getPublicUserForRequest(request,
 					this.databaseDefn.getAuthManager().getAuthenticator());
 		} catch (AgileBaseException abex) {
@@ -96,7 +95,6 @@ public class Public extends VelocityViewServlet {
 			return this.getUserInterfaceTemplate(request, response, "gui/public/error",
 					context, abex);
 		}
-		logger.debug("Public user is " + publicUser);
 		CompanyInfo company = publicUser.getCompany();
 		String templatePath;
 		if (customFolder != null) {
@@ -112,7 +110,6 @@ public class Public extends VelocityViewServlet {
 			// var is from public input, clean
 			templateName = templateName.replaceAll("\\W", "");
 		}
-		logger.debug("Path " + templatePath + ", template " + templateName);
 		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
 		for (PublicAction publicAction : publicActions) {
 			String publicActionValue = request.getParameter(publicAction.toString().toLowerCase());
@@ -230,7 +227,6 @@ public class Public extends VelocityViewServlet {
 					break;
 				case SAVE_NEW_RECORD:
 				case UPDATE_RECORD:
-					logger.debug("saving record");
 					int rowId = -1;
 					boolean newRecord = true;
 					if (templateName == null) {
@@ -276,17 +272,14 @@ public class Public extends VelocityViewServlet {
 								}
 							}
 						}
-						logger.debug("Saving " + table + " record with values " + fieldInputValues);
 						dataManagement.saveRecord(request, table, fieldInputValues, newRecord,
 								rowId, sessionData, multipartItems);
 						if (newRecord) {
 							sendEmail(company, table, fieldInputValues);
 						}
-						logger.debug("About to get JSON for row ID " + sessionData.getRowId(table));
 						String tableDataRowJson = dataManagement.getTableDataRowJson(table,
 								sessionData.getRowId(table));
 						context.put("tableDataRowJson", tableDataRowJson);
-						logger.debug("JSON " + tableDataRowJson);
 					} catch (AgileBaseException abex) {
 						ServletUtilMethods.logException(abex, request,
 								"General error performing save from public");
@@ -344,7 +337,6 @@ public class Public extends VelocityViewServlet {
 	private Template getUserInterfaceTemplate(HttpServletRequest request,
 			HttpServletResponse response, String templateName, Context context,
 			Exception exceptionCaught) {
-		logger.debug("Getting user interface template " + templateName);
 		ViewToolsInfo viewTools = new ViewTools(request, response, this.webAppRoot);
 		context.put("viewTools", viewTools);
 		context.put("exceptionCaught", exceptionCaught);
@@ -380,7 +372,6 @@ public class Public extends VelocityViewServlet {
 	private static void sendEmail(CompanyInfo company, TableInfo table,
 			Map<BaseField, BaseValue> fieldInputValues) throws MessagingException {
 		String emailTo = table.getEmail();
-		logger.debug("Emailing " + emailTo);
 		if (emailTo == null) {
 			return;
 		}

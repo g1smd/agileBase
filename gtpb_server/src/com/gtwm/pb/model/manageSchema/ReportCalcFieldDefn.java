@@ -230,7 +230,6 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		ReportCalcFieldInfo referencedCalc = this.getReferencedCalc();
 		String calculationSQL = referencedCalc.getParentReport().getInternalReportName() + "."
 				+ referencedCalc.getInternalFieldName();
-		logger.debug("Referencing another calculation: " + referencedCalc);
 		this.setCalculationSQLDirect(calculationSQL);
 	}
 
@@ -616,14 +615,11 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		this.setDateResolutionDirect(Calendar.YEAR);
 		String calcSQL = this.getCalculationSQL(false).toLowerCase().replace(" ", "");
 		if (calcSQL.contains("date_trunc('year'") || calcSQL.matches(".*generate_series\\('.*'1year'::interval\\).*")) {
-			logger.debug("Year matched");
 			dateResolutionFound = true;
 		} else if (calcSQL.contains("date_trunc('month'") || calcSQL.matches(".*generate_series\\('.*'1month'::interval\\).*")) {
-			logger.debug("Month matched");
 			this.setDateResolutionDirect(Calendar.MONTH);
 			dateResolutionFound = true;
 		} else if (calcSQL.contains("date_trunc('day'") || calcSQL.matches(".*generate_series\\('.*'1day'::interval\\).*")) {
-			logger.debug("Day matched");
 			this.setDateResolutionDirect(Calendar.DAY_OF_MONTH);
 			dateResolutionFound = true;
 		}
