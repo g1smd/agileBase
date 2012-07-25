@@ -282,9 +282,11 @@ public class Public extends VelocityViewServlet {
 						if (newRecord) {
 							sendEmail(company, table, fieldInputValues);
 						}
+						logger.debug("About to get JSON for row ID " + sessionData.getRowId(table));
 						String tableDataRowJson = dataManagement.getTableDataRowJson(table,
 								sessionData.getRowId(table));
 						context.put("tableDataRowJson", tableDataRowJson);
+						logger.debug("JSON " + tableDataRowJson);
 					} catch (AgileBaseException abex) {
 						ServletUtilMethods.logException(abex, request,
 								"General error performing save from public");
