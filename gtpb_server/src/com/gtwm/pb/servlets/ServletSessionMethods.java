@@ -710,11 +710,11 @@ public final class ServletSessionMethods {
 											"^((\\+44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(#\\d{3,4})?$")
 									.matcher(fieldValueString);
 							if (numberPartsGB.matches()) {
-logger.debug("z06: number regex matches");
+logger.debug("z06: number regex matches against " + fieldValueString);
 								// Extract NSN part of GB number, trim it and
 								// remove ')' if present
 								if (numberPartsGB.group(3) != null) {
-logger.debug("z07: this has an NSN");
+logger.debug("z07: this has an NSN of " + numberPartsGB.group(3));
 									String phoneNSNString = numberPartsGB.group(3).trim()
 											.replaceAll("[\\)\\s]", "");
 									// Format NSN part of GB number
@@ -790,7 +790,7 @@ logger.debug("z16: we are now here");
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
-logger.debug("z08: attempting to format number");
+logger.debug("z08: attempting to format number " + fieldValueString);
 		// Find string length
 		int fieldValueLength = fieldValueString.length();
 		// [2+8] 2d, 55, 56, 70, 76 (not 7624)
@@ -846,11 +846,12 @@ logger.debug("z10: a 9 digit NSN beginning with 169772  was found");
 				fieldValueString = m36.group(1) + " " + m36.group(2);
 			}
 		} else if (fieldValueLength > 1) {
-logger.debug("z11: returning default splitting");
+logger.debug("z11: returning default splitting of " + fieldValueString);
 			fieldValueString = fieldValueString.charAt(0) + " "
 					+ fieldValueString.substring(1);
+logger.debug("z11a: which is " + fieldValueString);
 		}
-logger.debug("z12: hopefully some sort of formatting has been done");
+logger.debug("z12: hopefully some sort of formatting has been done, returning " + fieldValueString);
 		return fieldValueString;
 	}
 
