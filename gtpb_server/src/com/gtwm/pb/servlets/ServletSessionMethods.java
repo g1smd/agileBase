@@ -707,7 +707,7 @@ public final class ServletSessionMethods {
 							// need to be removed.
 							Matcher numberPartsGB = Pattern
 									.compile(
-											"^((\\+44)\\s?)?\\(?0?(:?\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(#\\d{3,4})?$")
+											"^((\\+44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(#\\d{3,4})?$")
 									.matcher(fieldValueString);
 							if (numberPartsGB.matches()) {
 logger.debug("z06: number regex matches against " + fieldValueString);
@@ -794,17 +794,17 @@ logger.debug("z08: attempting to format number " + fieldValueString);
 		// Find string length
 		int fieldValueLength = fieldValueString.length();
 		// [2+8] 2d, 55, 56, 70, 76 (not 7624)
-		String pattern28 = "(:?2|5[56]|7(:?0|6(:?[013-9]|2[0-35-9]))).*";
+		String pattern28 = "(?:2|5[56]|7(?:0|6(?:[013-9]|2[0-35-9]))).*";
 		// [3+7] 11d, 1d1, 3dd, 80d, 84d, 87d, 9dd
-		String pattern37 = "(:?1(:?1|\\d1)|3|8(:?0[08]|4[2-5]|7[0-3])|9[018]).*";
+		String pattern37 = "(?:1(?:1|\\d1)|3|8(?:0[08]|4[2-5]|7[0-3])|9[018]).*";
 		// [5+5] 1dddd (12 areas)
-		String pattern55 = "(:?1(:?3873|5(:?242|39[456])|697[347]|768[347]|9467)).*";
+		String pattern55 = "(?:1(?:3873|5(?:242|39[456])|697[347]|768[347]|9467)).*";
 		// [5+4] 1ddd (1 area)
-		String pattern54 = "(:?16977[23]).*";
+		String pattern54 = "(?:16977[23]).*";
 		// [4+6] 1ddd, 7ddd (inc 7624) (not 70, 76)
-		String pattern46 = "(:?1|7(:?[1-5789]|624)).*";
+		String pattern46 = "(?:1|7(?:[1-5789]|624)).*";
 		// [4+5] 1ddd (40 areas)
-		String pattern45 = "(:?1(:?2(:?0[48]|54|76|9[78])|3(:?6[34]|8[46])|4(:?04|20|6[01]|8[08])|5(:?27|6[26])|6(:?06|29|35|47|59|95)|7(:?26|44|50)|8(:?27|37|84)|9(:?0[05]|35|49|63|95))).*";
+		String pattern45 = "(?:1(?:2(?:0[48]|54|76|9[78])|3(?:6[34]|8[46])|4(?:04|20|6[01]|8[08])|5(?:27|6[26])|6(?:06|29|35|47|59|95)|7(?:26|44|50)|8(?:27|37|84)|9(?:0[05]|35|49|63|95))).*";
 		// [3+6] 500, 800
 		String pattern36 = "[58]00.*";
 		// Format numbers by leading digits and length
@@ -846,10 +846,10 @@ logger.debug("z10: a 9 digit NSN beginning with 169772  was found");
 				fieldValueString = m36.group(1) + " " + m36.group(2);
 			}
 		} else if (fieldValueLength > 1) {
-			logger.debug("z11: returning default splitting of " + fieldValueString);
+logger.debug("z11: returning default splitting of " + fieldValueString);
 			fieldValueString = fieldValueString.charAt(0) + " "
 					+ fieldValueString.substring(1);
-			logger.debug("z11a: which is " + fieldValueString);
+logger.debug("z11a: which is " + fieldValueString);
 		}
 logger.debug("z12: hopefully some sort of formatting has been done, returning " + fieldValueString);
 		return fieldValueString;
@@ -862,11 +862,11 @@ logger.debug("z12: hopefully some sort of formatting has been done, returning " 
 	 */
 	private static String formatPhoneNumberInternational(String fieldValueString) {
 		// Single digit country codes
-		String pattern1 = "(:?(1|7)).*";
+		String pattern1 = "(?:(1|7)).*";
 		// Double digit country codes
-		String pattern2 = "(:?(2[07]|3[0123469]|4[013456789|5[12345678]|6[0123456]|8[12469]|9[0123458])).*";
+		String pattern2 = "(?:(2[07]|3[0123469]|4[013456789|5[12345678]|6[0123456]|8[12469]|9[0123458])).*";
 		// Triple digit country codes
-		String pattern3 = "(:?(2[12345689]|3[578]|42|5[09]|6[789]|8[03578]|9[679])\\d).*";
+		String pattern3 = "(?:(2[12345689]|3[578]|42|5[09]|6[789]|8[03578]|9[679])\\d).*";
 		// Format international numbers by leading digits
 		if (fieldValueString.matches(pattern1)) {
 			Matcher m1 = Pattern.compile("^(\\d{1})(.*)$").matcher(fieldValueString);
