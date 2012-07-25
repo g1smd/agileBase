@@ -798,15 +798,18 @@ public final class ViewTools implements ViewToolsInfo {
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
 		phoneNumber = phoneNumber.replaceAll("(:?\\+44)?0?([1-9][0-9]+).*", "$1");
+logger.debug("z03: RegEx matching done");
 		String possibleCode = "";
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 6) {
+logger.debug("z04: number length is less than 6");
 			return "";
 		}
 		String area = "";
 		for (int numDigitsInCode = 5; numDigitsInCode > 1; numDigitsInCode--) {
 			possibleCode = phoneNumber.substring(0, numDigitsInCode);
 			area = this.areaCodes.get(possibleCode);
+logger.debug("z05: area code name has been looked up");
 			if (area != null) {
 				return area;
 			}

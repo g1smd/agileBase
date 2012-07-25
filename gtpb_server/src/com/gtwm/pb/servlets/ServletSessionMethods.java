@@ -710,9 +710,11 @@ public final class ServletSessionMethods {
 											"^((\\+44)\\s?)?\\(?0?(:?\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(#\\d{3,4})?$")
 									.matcher(fieldValueString);
 							if (numberPartsGB.matches()) {
+logger.debug("z06: number regex matches");
 								// Extract NSN part of GB number, trim it and
 								// remove ')' if present
 								if (numberPartsGB.group(3) != null) {
+logger.debug("z07: this has an NSN");
 									String phoneNSNString = numberPartsGB.group(3).trim()
 											.replaceAll("[\\)\\s]", "");
 									// Format NSN part of GB number
@@ -722,9 +724,11 @@ public final class ServletSessionMethods {
 									// Set prefix as 0 or as +44 and space
 									if (phonePrefixString != null) {
 										if (phonePrefixString.equals("+44")) {
+logger.debug("z13: setting +44 prefix");
 											phonePrefixString += " ";
 										}
 									} else {
+logger.debug("z14: setting 0 prefix");
 										phonePrefixString = "0";
 									}
 									// Extract extension
@@ -740,7 +744,9 @@ public final class ServletSessionMethods {
 									if (phoneHasExtension) {
 										fieldValueString += phoneExtensionString;
 									}
+logger.debug("z15: we are here");
 								}
+logger.debug("z16: we are now here");
 							}
 						// International phone numbers
 					//	} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
@@ -784,6 +790,7 @@ public final class ServletSessionMethods {
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
+logger.debug("z08: attempting to format number");
 		// Find string length
 		int fieldValueLength = fieldValueString.length();
 		// [2+8] 2d, 55, 56, 70, 76 (not 7624)
@@ -802,6 +809,7 @@ public final class ServletSessionMethods {
 		String pattern36 = "[58]00.*";
 		// Format numbers by leading digits and length
 		if (fieldValueLength == 10 && fieldValueString.matches(pattern28)) {
+logger.debug("z09: a 10 digit NSN beginning with 2 was found");
 			Matcher m28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$").matcher(fieldValueString);
 			if (m28.matches()) {
 				fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
@@ -817,6 +825,7 @@ public final class ServletSessionMethods {
 				fieldValueString = m55.group(1) + " " + m55.group(2);
 			}
 		} else if (fieldValueLength == 9 && fieldValueString.matches(pattern54)) {
+logger.debug("z10: a 9 digit NSN beginning with 169772  was found");
 			Matcher m54 = Pattern.compile("^(\\d{5})(\\d{4})$").matcher(fieldValueString);
 			if (m54.matches()) {
 				fieldValueString = m54.group(1) + " " + m54.group(2);
@@ -837,9 +846,11 @@ public final class ServletSessionMethods {
 				fieldValueString = m36.group(1) + " " + m36.group(2);
 			}
 		} else if (fieldValueLength > 1) {
+logger.debug("z11: returning default splitting");
 			fieldValueString = fieldValueString.charAt(0) + " "
 					+ fieldValueString.substring(1);
 		}
+logger.debug("z12: hopefully some sort of formatting has been done");
 		return fieldValueString;
 	}
 
