@@ -146,16 +146,12 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			String hashedPassword = String.valueOf(md.digest(plainPassword.getBytes()));
-			this.setPassword(hashedPassword);
+			this.password = hashedPassword;
 			// Reset the password timer so a password can only be reset once from a single email notification
 			this.passwordResetSent = 0;
 		} catch (NoSuchAlgorithmException nsaex) {
 			throw new CodingErrorException("Algorithm MD5 not found: " + nsaex, nsaex);
 		}
-	}
-	
-	private void setPassword(String password) throws MissingParametersException {
-		this.password = password;
 	}
 	
 	public String getEmail() {
