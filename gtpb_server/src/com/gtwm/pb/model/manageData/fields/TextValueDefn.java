@@ -114,7 +114,7 @@ public class TextValueDefn implements TextValue {
 			// "^((\\(?0\\d{5}\\)?\\s?\\d{4,5})|(\\(?0\\d{4}\\)?\\s?(\\d{3}\\s?\\d{3}|\\d{5}))|(\\(?0\\d{3}\\)?\\s?(\\d{3}\\s?\\d{4}|\\d{6}))|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#\\d{3,4})?$"
 			String regex = "^";
 			regex += "(?:";
-			regex += "(?:\\+44\\s?(?:\\(?0\\)?\\s?)?)|";	// leading +44, +44(0); +44 0, spaces optional
+			regex += "(?:\\+44\\s?(?:\\(?0\\)?\\s?)?)|";	// leading +44, +44(0), +44 0; spaces optional
 			regex += "(?:\\(?0)";							// leading (0, 0
 			regex += ")";
 			regex += "(?:";
