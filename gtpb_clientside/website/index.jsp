@@ -21,7 +21,7 @@
 String customLogin = request.getParameter("customlogin");
 if (customLogin != null) {
   customLogin = customLogin.replaceAll("\\W","") + ".jsp"; %>
-  <jsp:include page="<%=customlogin%>" />
+  <jsp:include page="<%=customLogin%>" />
 <% } else {
   String queryString = request.getQueryString();
   if (queryString == null) {
