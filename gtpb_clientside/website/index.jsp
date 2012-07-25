@@ -21,20 +21,20 @@
 String customLogin = request.getParameter("customlogin");
 if (customLogin != null) {
   customLogin = customLogin.replaceAll("\\W","") + ".jsp";
-  @include file=%>"<%customLogin%>"<%
+  @include file=%>"<%customLogin%>"<%;
 } else {
   String queryString = request.getQueryString();
   if (queryString == null) {
     queryString = "";
   }
   if (queryString.contains("boot_mobile")) {
-    @include file="mobile.jsp"
+    @include file="mobile.jsp";
   } else if(queryString.contains("/common/a3/")) {
-    @include file="a3/a3.jsp"
+    @include file="a3/a3.jsp";
   } else if(queryString.contains("set_password")) {
-    @include file="password_reset.jsp"
+    @include file="password_reset.jsp";
   } else {
-    @include file="agilebase.jsp"
+    @include file="agilebase.jsp";
   }
 }
 %>
