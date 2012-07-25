@@ -82,6 +82,7 @@ public class Public extends VelocityViewServlet {
 		response.setCharacterEncoding("ISO-8859-1");
 		EnumSet<PublicAction> publicActions = EnumSet.allOf(PublicAction.class);
 		List<FileItem> multipartItems = ServletUtilMethods.getMultipartItems(request);
+		// For company specific customisations
 		String customFolder = ServletUtilMethods
 				.getParameter(request, "custom", multipartItems);
 		AppUserInfo publicUser;
@@ -219,7 +220,6 @@ public class Public extends VelocityViewServlet {
 						templateName = "form";
 					}
 					templateName = templatePath + templateName;
-					logger.debug("Complete path = " + templateName);
 					String gtpbCss = request.getParameter("css");
 					if (gtpbCss != null) {
 						context.put("gtpbCss", gtpbCss);
@@ -227,6 +227,7 @@ public class Public extends VelocityViewServlet {
 					break;
 				case SAVE_NEW_RECORD:
 				case UPDATE_RECORD:
+					logger.debug("saving record");
 					int rowId = -1;
 					boolean newRecord = true;
 					if (templateName == null) {
@@ -272,6 +273,7 @@ public class Public extends VelocityViewServlet {
 								}
 							}
 						}
+						logger.debug("Saving " + table + " record with values " + fieldInputValues);
 						dataManagement.saveRecord(request, table, fieldInputValues, newRecord,
 								rowId, sessionData, multipartItems);
 						if (newRecord) {
@@ -337,6 +339,7 @@ public class Public extends VelocityViewServlet {
 	private Template getUserInterfaceTemplate(HttpServletRequest request,
 			HttpServletResponse response, String templateName, Context context,
 			Exception exceptionCaught) {
+		logger.debug("Getting user interface template " + templateName);
 		ViewToolsInfo viewTools = new ViewTools(request, response, this.webAppRoot);
 		context.put("viewTools", viewTools);
 		context.put("exceptionCaught", exceptionCaught);
