@@ -73,7 +73,7 @@ public class TextValueDefn implements TextValue {
 		if (this.textValue
 				.trim()
 				.matches(
-						"^(((ht|f)tp(s?))\\://)?(www.|[a-zA-Z].)[a-zA-Z0-9\\-\\.]+\\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk)(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\;\\?\\'\\@\\\\\\+&%\\$#\\=~_\\-]+))*$")) {
+						"^(((ht|f)tp(s?))\\://)?(www\\.|[a-zA-Z].)[a-zA-Z0-9\\-\\.]+\\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk)(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\;\\?\\'\\@\\\\\\+&%\\$#\\=~_\\-]+))*$")) {
 			return true;
 		}
 		return false;
@@ -109,9 +109,9 @@ public class TextValueDefn implements TextValue {
 		}
 		int length = this.textValue.trim().length();
 		if ((length > 9) && (length < 20)) {
-			// regex from http://www.regexlib.com/
-			// alteration by g1smd
-			// "^((\\(?0\\d{5}\\)?\\s?\\d{4,5})|(\\(?0\\d{4}\\)?\\s?(\\d{3}\\s?\\d{3}|\\d{5}))|(\\(?0\\d{3}\\)?\\s?(\\d{3}\\s?\\d{4}|\\d{6}))|(\\(?0\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(\\s?\\#\\d{3,4})?$"
+			// vaguely based on a regex from http://www.regexlib.com/
+			// alterations by @g1smd
+			// "^(?:";(?:\\+44\\s?(?:\\(?0\\)?\\s?)?)|(?:\\(?0))(?:(?:\\d{5}\\)?\\s?\\d{4,5})|(?:\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3}))|(?:\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|(?:\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(?:\\s?\\#\\d{3,4})?$";
 			String regex = "^";
 			regex += "(?:";
 			regex += "(?:\\+44\\s?(?:\\(?0\\)?\\s?)?)|";	// leading +44, +44(0), +44 0; spaces optional
@@ -147,7 +147,7 @@ logger.debug("z02: this is not a phone number: " + this.textValue);
 			regex += ")";
 			regex += "(\\#\\d{3,4})?"; // optional "#" and extension
 			regex += "$";
-			if (this.textValue.trim().matches(regex)) {
+			if (this.textValue.trim().matches(regex) && !this.textValue.trim().matches("\\+44.*")) {
 				return true;
 			}
 		}

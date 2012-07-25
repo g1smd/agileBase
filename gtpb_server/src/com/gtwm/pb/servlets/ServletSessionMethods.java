@@ -864,7 +864,7 @@ logger.debug("z12: hopefully some sort of formatting has been done, returning " 
 		// Single digit country codes
 		String pattern1 = "(?:(1|7)).*";
 		// Double digit country codes
-		String pattern2 = "(?:(2[07]|3[0123469]|4[013456789|5[12345678]|6[0123456]|8[12469]|9[0123458])).*";
+		String pattern2 = "(?:(2[07]|3[0123469]|4[01356789|5[12345678]|6[0123456]|8[12469]|9[0123458])).*";
 		// Triple digit country codes
 		String pattern3 = "(?:(2[12345689]|3[578]|42|5[09]|6[789]|8[03578]|9[679])\\d).*";
 		// Format international numbers by leading digits
