@@ -72,6 +72,7 @@
         <pathelement location="WEB-INF/lib/mail.jar"/>
         <pathelement location="WEB-INF/lib/im4java-1.3.0.jar"/>
         <pathelement location="WEB-INF/lib/esapi-2.0.1.jar"/>
+        <pathelement location="WEB-INF/lib/commons-codec-1.6.jar"/>
 				<!-- CSV import/export -->
 		        <pathelement location="WEB-INF/lib/opencsv-1.5.jar"/>
 				<!-- Google client API -->

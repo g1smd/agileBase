@@ -82,6 +82,7 @@ public class Public extends VelocityViewServlet {
 		response.setCharacterEncoding("ISO-8859-1");
 		EnumSet<PublicAction> publicActions = EnumSet.allOf(PublicAction.class);
 		List<FileItem> multipartItems = ServletUtilMethods.getMultipartItems(request);
+		// For company specific customisations
 		String customFolder = ServletUtilMethods
 				.getParameter(request, "custom", multipartItems);
 		AppUserInfo publicUser;
@@ -219,7 +220,6 @@ public class Public extends VelocityViewServlet {
 						templateName = "form";
 					}
 					templateName = templatePath + templateName;
-					logger.debug("Complete path = " + templateName);
 					String gtpbCss = request.getParameter("css");
 					if (gtpbCss != null) {
 						context.put("gtpbCss", gtpbCss);

@@ -2680,7 +2680,6 @@ public final class DataManagement implements DataManagementInfo {
 			throws CantDoThatException, SQLException {
 		Set<ChartAggregateInfo> aggregateFunctions = chart.getAggregateFunctions();
 		Set<ChartGroupingInfo> groupings = chart.getGroupings();
-		logger.debug("Chart groupings are " + groupings);
 		List<ChartDataRowInfo> reportSummaryRows;
 		reportSummaryRows = new LinkedList<ChartDataRowInfo>();
 		Connection conn = null;
@@ -2910,25 +2909,33 @@ public final class DataManagement implements DataManagementInfo {
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(512);
 		JsonGenerator jg;
+		BaseField pKey = table.getPrimaryKey();
 		try {
 			jg = jsonFactory.createJsonGenerator(stringWriter);
 			jg.writeStartObject();
 			for (Map.Entry<BaseField, BaseValue> rowEntry : tableDataRow.entrySet()) {
 				BaseField field = rowEntry.getKey();
 				BaseValue value = rowEntry.getValue();
-				if (field.equals(table.getPrimaryKey())) {
+				String internalFieldName = field.getInternalFieldName();
+				if (field.equals(pKey)) {
 					jg.writeNumberField("rowId", ((IntegerValue) value).getValueInteger());
 				} else if (value instanceof IntegerValue) {
-					jg.writeNumberField(field.getInternalFieldName(),
-							((IntegerValue) value).getValueInteger());
+					IntegerValue intVal = (IntegerValue) value;
+					if (!intVal.isNull()) {
+						jg.writeNumberField(internalFieldName, intVal.getValueInteger());
+					}
 				} else if (value instanceof CheckboxValue) {
-					jg.writeBooleanField(field.getInternalFieldName(),
-							((CheckboxValue) value).getValueBoolean());
+					CheckboxValue checkVal = (CheckboxValue) value;
+					if (!value.isNull()) {
+						jg.writeBooleanField(internalFieldName, checkVal.getValueBoolean());
+					}
 				} else if (value instanceof DecimalValue) {
-					jg.writeNumberField(field.getInternalFieldName(),
-							((DecimalValue) value).getValueFloat());
+					DecimalValue decVal = (DecimalValue) value;
+					if (!decVal.isNull()) {
+						jg.writeNumberField(internalFieldName, decVal.getValueFloat());
+					}
 				} else {
-					jg.writeStringField(field.getInternalFieldName(), value.toString());
+					jg.writeStringField(internalFieldName, value.toString());
 				}
 			}
 			jg.writeEndObject();

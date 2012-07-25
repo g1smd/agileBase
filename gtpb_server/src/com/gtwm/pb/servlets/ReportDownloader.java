@@ -288,11 +288,9 @@ public final class ReportDownloader extends HttpServlet {
 						try {
 							cell.setCellValue(Integer.valueOf(fieldValue.replace(",", "")));
 						} catch (NumberFormatException nfex) {
-							logger.debug(nfex.toString() + ": value " + fieldValue.replace(",", ""));
 							// Fall back to a string representation
 							cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
 							cell.setCellValue(fieldValue);
-							logger.debug("Successfully set string instead");
 						}
 						break;
 					case VARCHAR:

@@ -634,7 +634,6 @@ public final class DatabaseDefn implements DatabaseInfo {
 		if (categoryField != null) {
 			map.setCategoryField(categoryField);
 		}
-		logger.debug("Map updated: " + map);
 	}
 
 	public void removeTable(SessionDataInfo sessionData, HttpServletRequest request,

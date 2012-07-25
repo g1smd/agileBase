@@ -270,7 +270,6 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		}
 		String SQLCode = "";
 		if (primaryFieldRequiresJoin) {
-			logger.debug("Primary field requires join");
 			// TODO: refactor primaryFieldRequiresJoin and
 			// secondaryFieldRequiresJoin.
 			// Basically the same query
@@ -336,7 +335,6 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 		if (maxResults > 0) {
 			SQLCode += " LIMIT " + maxResults;
 		}
-		logger.debug(SQLCode);
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
