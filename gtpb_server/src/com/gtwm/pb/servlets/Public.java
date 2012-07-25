@@ -87,6 +87,7 @@ public class Public extends VelocityViewServlet {
 				.getParameter(request, "custom", multipartItems);
 		AppUserInfo publicUser;
 		try {
+			logger.debug("Getting public user");
 			publicUser = ServletUtilMethods.getPublicUserForRequest(request,
 					this.databaseDefn.getAuthManager().getAuthenticator());
 		} catch (AgileBaseException abex) {
@@ -95,6 +96,7 @@ public class Public extends VelocityViewServlet {
 			return this.getUserInterfaceTemplate(request, response, "gui/public/error",
 					context, abex);
 		}
+		logger.debug("Public user is " + publicUser);
 		CompanyInfo company = publicUser.getCompany();
 		String templatePath;
 		if (customFolder != null) {
@@ -110,6 +112,7 @@ public class Public extends VelocityViewServlet {
 			// var is from public input, clean
 			templateName = templateName.replaceAll("\\W", "");
 		}
+		logger.debug("Path " + templatePath + ", template " + templateName);
 		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
 		for (PublicAction publicAction : publicActions) {
 			String publicActionValue = request.getParameter(publicAction.toString().toLowerCase());
@@ -375,6 +378,7 @@ public class Public extends VelocityViewServlet {
 	private static void sendEmail(CompanyInfo company, TableInfo table,
 			Map<BaseField, BaseValue> fieldInputValues) throws MessagingException {
 		String emailTo = table.getEmail();
+		logger.debug("Emailing " + emailTo);
 		if (emailTo == null) {
 			return;
 		}
