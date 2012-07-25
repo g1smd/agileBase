@@ -59,7 +59,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 
 	public AppUser(CompanyInfo company, String internalUserName, String userName, String surname,
-			String forename, String password) throws MissingParametersException, CantDoThatException, CodingErrorException {
+			String forename, String password) throws MissingParametersException,
+			CantDoThatException, CodingErrorException {
 		if (userName == null || password == null) {
 			throw new MissingParametersException("User name or password not specified");
 		}
@@ -136,44 +137,39 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.forename = forename;
 	}
 
+	/*
+	 * Used by Hibernate
+	 */
 	private String getPassword() {
 		return this.password;
 	}
 
-	public void hashAndSetPassword(String plainPassword) throws MissingParametersException, CantDoThatException, CodingErrorException {
+	public void hashAndSetPassword(String plainPassword) throws MissingParametersException,
+			CantDoThatException, CodingErrorException {
 		if (plainPassword == null) {
 			throw new MissingParametersException("Password not specified");
 		}
 		if (plainPassword.equals("")) {
 			throw new MissingParametersException("Password blank");
 		}
-		//try {
-			//MessageDigest md = MessageDigest.getInstance("MD5");
-			//logger.debug("Plain password is " + plainPassword);
-			//logger.debug("To and from bytes is " + String.valueOf(plainPassword.getBytes()));
-			//byte[] plainBytes = plainPassword.getBytes();
-			//String hashedPassword = String.valueOf(md.digest(plainPassword.getBytes()));
-			String hashedPassword = DigestUtils.md5Hex(plainPassword);
-			logger.debug("Hashed password = " + hashedPassword);
-			this.setPassword(hashedPassword);
-			// Reset the password timer so a password can only be reset once from a single email notification
-			this.passwordResetSent = 0;
-		//} catch (NoSuchAlgorithmException nsaex) {
-		//	throw new CodingErrorException("Algorithm MD5 not found: " + nsaex, nsaex);
-		//}
+		String hashedPassword = DigestUtils.md5Hex(plainPassword);
+		this.setPassword(hashedPassword);
+		// Reset the password timer so a password can only be reset once from a
+		// single email notification
+		this.passwordResetSent = 0;
 	}
-	
+
 	/*
 	 * Used by Hibernate
 	 */
 	private void setPassword(String password) throws MissingParametersException {
 		this.password = password;
 	}
-	
+
 	public String getEmail() {
 		return this.email;
 	}
-	
+
 	public void setEmail(String email) throws CantDoThatException {
 		this.email = email;
 	}
@@ -201,7 +197,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.getHiddenReportsDirect().remove(report);
 	}
 
-	@ManyToMany(targetEntity = BaseReportDefn.class, cascade={})
+	@ManyToMany(targetEntity = BaseReportDefn.class, cascade = {})
 	private Set<BaseReportInfo> getHiddenReportsDirect() {
 		return this.hiddenReports;
 	}
@@ -215,8 +211,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 
 	@Transient
 	public Set<TableInfo> getFormTables() {
-		return Collections.unmodifiableSortedSet(new TreeSet<TableInfo>(this
-				.getFormTablesDirect()));
+		return Collections
+				.unmodifiableSortedSet(new TreeSet<TableInfo>(this.getFormTablesDirect()));
 	}
 
 	public synchronized void removeFormTable(TableInfo table) {
@@ -227,7 +223,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.getFormTablesDirect().add(table);
 	}
 
-	@ManyToMany(targetEntity = TableDefn.class, cascade={})
+	@ManyToMany(targetEntity = TableDefn.class, cascade = {})
 	private Set<TableInfo> getFormTablesDirect() {
 		return this.formTables;
 	}
@@ -253,9 +249,10 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.getOperationalDashboardReportsDirect().add(report);
 	}
 
-	@ManyToMany(targetEntity = BaseReportDefn.class, cascade={})
-	// We need a custom joinTable so Hibernate doesn't confuse this ManyToMany with that for hidden reports, which has the same object types
-	@JoinTable(name="appuser_basereportdefn_opdash")
+	@ManyToMany(targetEntity = BaseReportDefn.class, cascade = {})
+	// We need a custom joinTable so Hibernate doesn't confuse this ManyToMany
+	// with that for hidden reports, which has the same object types
+	@JoinTable(name = "appuser_basereportdefn_opdash")
 	private Set<BaseReportInfo> getOperationalDashboardReportsDirect() {
 		return this.operationalDashboardReports;
 	}
@@ -263,54 +260,56 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	/**
 	 * For Hibernate use only
 	 */
-	private synchronized void setOperationalDashboardReportsDirect(Set<BaseReportInfo> operationalDashboardReports) {
+	private synchronized void setOperationalDashboardReportsDirect(
+			Set<BaseReportInfo> operationalDashboardReports) {
 		this.operationalDashboardReports = operationalDashboardReports;
 	}
 
 	public synchronized void contractSection(String internalFieldName) {
 		this.getContractedSections().add(internalFieldName);
 	}
-	
+
 	public synchronized void expandSection(String internalFieldName) {
 		this.getContractedSections().remove(internalFieldName);
 	}
-	
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	public Set<String> getContractedSections() {
 		return this.contractedSections;
 	}
-	
+
 	private void setContractedSections(Set<String> contractedSections) {
 		this.contractedSections = contractedSections;
 	}
-	
-	@OneToOne(targetEntity = BaseReportDefn.class, cascade={})
+
+	@OneToOne(targetEntity = BaseReportDefn.class, cascade = {})
 	public BaseReportInfo getDefaultReport() {
 		return this.defaultReport;
 	}
-	
+
 	public void setDefaultReport(BaseReportInfo report) {
 		this.defaultReport = report;
 	}
-	
+
 	public boolean getUsesCustomUI() {
 		return this.usesCustomUI;
 	}
-	
+
 	public void setUsesCustomUI(boolean usesCustomUI) {
 		this.usesCustomUI = usesCustomUI;
 	}
-	
+
 	@Transient
 	public boolean getAllowPasswordReset() {
 		// Request times out after a day
-		if ((System.currentTimeMillis() - this.passwordResetSent) < (24*60*60*1000)) {
+		if ((System.currentTimeMillis() - this.passwordResetSent) < (24 * 60 * 60 * 1000)) {
 			return true;
-		} 
+		}
 		return false;
 	}
-	
-	public void sendPasswordReset(String appUrl) throws CantDoThatException, CodingErrorException, MessagingException {
+
+	public void sendPasswordReset(String appUrl) throws CantDoThatException, CodingErrorException,
+			MessagingException {
 		if (this.getEmail() == null) {
 			throw new CantDoThatException("The user has no email address");
 		}
@@ -320,9 +319,12 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		try {
 			String password = RandomString.generate();
 			this.hashAndSetPassword(password);
-			String passwordResetLink = appUrl + "?return=gui/set_password/email_reset&u=" + this.getUserName() + "&x=" + password;
+			String passwordResetLink = appUrl + "?return=gui/set_password/email_reset&u="
+					+ this.getUserName() + "&x=" + password;
 			if (this.getAllowPasswordReset()) {
-				throw new CantDoThatException("The previous password reset request hasn't timed out yet, please use that: " + passwordResetLink);
+				throw new CantDoThatException(
+						"The previous password reset request hasn't timed out yet, please use that: "
+								+ passwordResetLink);
 			}
 			Set<String> recipients = new HashSet<String>();
 			recipients.add(this.getEmail());
@@ -335,7 +337,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		}
 		this.passwordResetSent = System.currentTimeMillis();
 	}
-	
+
 	public String toString() {
 		return this.getUserName();
 	}
@@ -344,7 +346,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		if (this == anotherAppUser) {
 			return 0;
 		}
-		int comparison = this.getUserName().toLowerCase().compareTo(anotherAppUser.getUserName().toLowerCase());
+		int comparison = this.getUserName().toLowerCase()
+				.compareTo(anotherAppUser.getUserName().toLowerCase());
 		if (comparison != 0) {
 			return comparison;
 		}
@@ -381,23 +384,23 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private InitialView initialView = null;
 
 	private String password;
-	
+
 	private String email;
 
 	private CompanyInfo company = null;
 
 	private Set<BaseReportInfo> hiddenReports = new HashSet<BaseReportInfo>();
-	
+
 	private Set<BaseReportInfo> operationalDashboardReports = new HashSet<BaseReportInfo>();
-	
+
 	private Set<TableInfo> formTables = new HashSet<TableInfo>();
-	
+
 	private Set<String> contractedSections = new HashSet<String>();
-	
+
 	private BaseReportInfo defaultReport = null;
-	
+
 	private boolean usesCustomUI = false;
-	
+
 	/**
 	 * Epoch time at which a password reset email was sent
 	 */
