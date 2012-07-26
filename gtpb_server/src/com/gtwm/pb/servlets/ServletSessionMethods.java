@@ -707,7 +707,7 @@ public final class ServletSessionMethods {
 							// need to be removed.
 							Matcher numberPartsGB = Pattern
 									.compile(
-											"^((\\+44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(#\\d{3,4})?$")
+											"^(\\+(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
 									.matcher(fieldValueString);
 							if (numberPartsGB.matches()) {
 //logger.debug("z06: number regex matches against " + fieldValueString);
@@ -723,9 +723,9 @@ public final class ServletSessionMethods {
 									String phonePrefixString = numberPartsGB.group(2);
 									// Set prefix as 0 or as +44 and space
 									if (phonePrefixString != null) {
-										if (phonePrefixString.equals("+44")) {
+										if (phonePrefixString.equals("44")) {
 //logger.debug("z13: setting +44 prefix");
-											phonePrefixString += " ";
+											phonePrefixString += "+44 ";
 										}
 									} else {
 //logger.debug("z14: setting 0 prefix");

@@ -768,27 +768,28 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("1994", "St Clears, West Wales");
 			this.areaCodes.put("1995", "Garstang, Wyre");
 			this.areaCodes.put("1997", "Strathpeffer, Wyvis");
-			this.areaCodes.put("30", "Non geographic (charged at 01/02 rate)");
-			this.areaCodes.put("33", "Non geographic (charged at 01/02 rate)");
-			this.areaCodes.put("34", "Non geographic (charged at 01/02 rate)");
-			this.areaCodes.put("37", "Non geographic (charged at 01/02 rate)");
+			this.areaCodes.put("30", "Non-geographic (charged at 01/02 rate)");
+			this.areaCodes.put("33", "Non-geographic (charged at 01/02 rate)");
+			this.areaCodes.put("34", "Non-geographic (charged at 01/02 rate)");
+			this.areaCodes.put("37", "Non-geographic (charged at 01/02 rate)");
 			this.areaCodes.put("500", "Freephone");
 			this.areaCodes.put("55", "Voice over IP");
 			this.areaCodes.put("56", "Voice over IP");
 			this.areaCodes.put("70", "Personal number (Premium rate)");
 			this.areaCodes.put("74", "Mobile");
 			this.areaCodes.put("75", "Mobile");
+			this.areaCodes.put("76", "Pager");
 			this.areaCodes.put("7624", "Mobile");
 			this.areaCodes.put("77", "Mobile");
 			this.areaCodes.put("78", "Mobile");
 			this.areaCodes.put("79", "Mobile");
 			this.areaCodes.put("800", "Freephone");
 			this.areaCodes.put("808", "Freephone");
-			this.areaCodes.put("842", "Non geographic/special");
-			this.areaCodes.put("843", "Non geographic/special");
-			this.areaCodes.put("844", "Non geographic/special");
-			this.areaCodes.put("845", "Non geographic");
-			this.areaCodes.put("870", "Non geographic/special");
+			this.areaCodes.put("842", "Non-geographic/special");
+			this.areaCodes.put("843", "Non-geographic/special");
+			this.areaCodes.put("844", "Non-geographic/special");
+			this.areaCodes.put("845", "Non-geographic");
+			this.areaCodes.put("870", "Non-geographic/special");
 			this.areaCodes.put("871", "Premium rate");
 			this.areaCodes.put("872", "Premium rate");
 			this.areaCodes.put("873", "Premium rate");
@@ -797,7 +798,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("98", "Premium rate");
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
-		phoneNumber = phoneNumber.replaceAll("(?:\\+44)?0?([1-9][0-9]+).*", "$1");
+		phoneNumber = phoneNumber.replaceAll("(?:\\+44)?0?([1-9][0-9]+)\\#?.*", "$1");
 //logger.debug("z03: RegEx matching done, resulting number is " + phoneNumber);
 		String possibleCode = "";
 		// stop substring creating an IndexOutOfBoundsException below
