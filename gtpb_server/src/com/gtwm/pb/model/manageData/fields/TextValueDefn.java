@@ -142,7 +142,7 @@ public class TextValueDefn implements TextValue {
 		if ((length > 6) && (length < 22)) {
 			String regex = "^";
 			regex += "(";
-			regex += "\\+"; // +
+			regex += "(?:00\\s?|\\+)"; // 00 or +
 			regex += "\\d{1,3}\\s?[\\d\\s]+"; // number
 			regex += ")";
 			regex += "(\\#\\d{3,4})?"; // optional "#" and extension
