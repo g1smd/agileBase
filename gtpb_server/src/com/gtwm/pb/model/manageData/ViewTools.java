@@ -778,6 +778,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("70", "Personal number (Premium rate)");
 			this.areaCodes.put("74", "Mobile");
 			this.areaCodes.put("75", "Mobile");
+			this.areaCodes.put("76", "Pager");
 			this.areaCodes.put("7624", "Mobile");
 			this.areaCodes.put("77", "Mobile");
 			this.areaCodes.put("78", "Mobile");
@@ -797,7 +798,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("98", "Premium rate");
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
-		phoneNumber = phoneNumber.replaceAll("(?:\\+44)?0?([1-9][0-9]+).*", "$1");
+		phoneNumber = phoneNumber.replaceAll("(?:\\+44)?0?([1-9][0-9]+)\\#?.*", "$1");
 //logger.debug("z03: RegEx matching done, resulting number is " + phoneNumber);
 		String possibleCode = "";
 		// stop substring creating an IndexOutOfBoundsException below
