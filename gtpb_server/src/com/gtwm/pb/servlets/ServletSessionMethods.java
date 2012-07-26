@@ -707,7 +707,7 @@ public final class ServletSessionMethods {
 							// need to be removed.
 							Matcher numberPartsGB = Pattern
 									.compile(
-											"^(\\+(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
+											"^((?:00\\s?|\\+)(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
 									.matcher(fieldValueString);
 							if (numberPartsGB.matches()) {
 //logger.debug("z06: number regex matches against " + fieldValueString);
