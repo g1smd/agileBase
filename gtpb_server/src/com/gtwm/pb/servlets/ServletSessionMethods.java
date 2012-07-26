@@ -725,7 +725,7 @@ public final class ServletSessionMethods {
 									if (phonePrefixString != null) {
 										if (phonePrefixString.equals("44")) {
 //logger.debug("z13: setting +44 prefix");
-											phonePrefixString += "+44 ";
+											phonePrefixString = "+44 ";
 										}
 									} else {
 //logger.debug("z14: setting 0 prefix");
