@@ -848,7 +848,7 @@ public final class ServletSessionMethods {
 		} else if (fieldValueLength > 1) {
 //logger.debug("z11: returning default splitting of " + fieldValueString);
 			fieldValueString = fieldValueString.charAt(0) + " "
-					+ fieldValueString.substring(1, 5) + fieldValueString.substring(5);
+					+ fieldValueString.substring(1, 5) + " " + fieldValueString.substring(5);
 //logger.debug("z11a: which is " + fieldValueString);
 		}
 //logger.debug("z12: hopefully some sort of formatting has been done, returning " + fieldValueString);
