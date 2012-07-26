@@ -33,7 +33,8 @@
   #set($sectionedReport = ($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION"))
   #set($sessionTable=$sessionReport.getParentTable())##
   #set($return='gui/reports_and_tables/pane3')##
-  #set($pane1_id="$sessionTable.getInternalTableName()$sessionReport.getInternalReportName()")##
+  #set($internalTableName = $sessionTable.getInternalTableName())
+  #set($pane1_id="$internalTableName$sessionReport.getInternalReportName()")##
   ##test to see whether a record has previously been selected and is stored in the session
   #if($sessionData.getRowId())##
 	#set($selection=$sessionData.getRowId())##
@@ -73,13 +74,14 @@
   #set($colsCapacity = $reportBaseFields.size() + 2)##
 	#set($formTable = $sessionTable.getFormTable())
 	#if($formTable)
-	  #set($setTab = "set_custom_table=true&tablekey=tabTable&custominternaltablename=$sessionTable.getInternalTableName()")
+	  #set($setTab = "set_custom_table=true&tablekey=tabTable&custominternaltablename=$internalTableName")
 	#else
 	  #set($setTab = "clear_custom_variable=tabTable")
 	#end
   #foreach($datarow in $datarows)##
     #set($row=[])##
     #set($colours=[])##
+    #set($rowId = $datarow.getRowId())
 	  #set($success = $row.ensureCapacity($colsCapacity))##
 	  #set($success = $colours.ensureCapacity($colsCapacity))##
     #set($dataRowFields = $datarow.getDataRowFields())##
@@ -108,20 +110,20 @@
     #set($success=$colours.add("")) ## needs an extra one for some reason
     #if($printout)##
       #set($click='')##
-      #set($locked=$view.isRecordLocked($sessionTable,$datarow.getRowId()))##
+      #set($locked=$view.isRecordLocked($sessionTable,$rowId))##
     #else##
       #set($locked='')##
 	  #if($mobile_device)
-		  #set($click="document.location='AppController.servlet?return=$return&set_row_id=$datarow.getRowId()';")
+		  #set($click="document.location='AppController.servlet?return=$return&set_row_id=$rowId';")
 	  #elseif($parentTable)
-      #set($click="loadIntoTabTable(this, '$sessionTable.getInternalTableName()', $datarow.getRowId());")##
+      #set($click="loadIntoTabTable(this, '$internalTableName', $rowId);")##
     #elseif($table_part_only)
-      #set($click="loadIntoPanel('$sessionReport.getInternalReportName()', $datarow.getRowId());")##
+      #set($click="loadIntoPanel('$sessionReport.getInternalReportName()', $rowId);")##
     #else
-      #set($click="loadIntoPane3('AppController.servlet?return=$return&set_row_id=$datarow.getRowId()&set_custom_string=1&key=report_tabindex&value=2&clear_custom_variable=overrideTableForm&$setTab', $datarow.getRowId(), $numberOfTabs);showPane3IfNecessary(event);")##
+      #set($click="loadIntoPane3('AppController.servlet?return=$return&set_table=$internalTableName&set_row_id=$rowId&set_custom_string=1&key=report_tabindex&value=2&clear_custom_variable=overrideTableForm&$setTab', $rowId, $numberOfTabs);showPane3IfNecessary(event);")##
 	  #end##
 	#end##
-    #set($uniqueid=$datarow.getRowId())##
+    #set($uniqueid=$rowId)##
     #set($success=$data.add([$row,$click,$uniqueid,$colours,$locked]))##
     #if ($uniqueid==$selection)##
       #set($selectionFound = true)##
