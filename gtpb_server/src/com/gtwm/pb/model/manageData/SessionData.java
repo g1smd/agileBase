@@ -271,6 +271,8 @@ public final class SessionData implements SessionDataInfo {
 
 	public synchronized void setReportFilterValue(BaseField field, String fieldValue) {
 		if (fieldValue != null) {
+			// Trim filters so that users aren't confused if they accidentally type a space as a filter
+			fieldValue = fieldValue.trim();
 			if (!(fieldValue.equals(""))) {
 				this.reportFilterValues.put(field, fieldValue);
 				return;
@@ -282,6 +284,7 @@ public final class SessionData implements SessionDataInfo {
 	
 	public synchronized void setGlobalFilterString(BaseReportInfo report, String filterString) {
 		if (filterString != null) {
+			filterString = filterString.trim();
 			if (!(filterString.equals(""))) {
 				this.globalFilterStrings.put(report, filterString);
 				return;
@@ -297,6 +300,7 @@ public final class SessionData implements SessionDataInfo {
 			customFilterValues = new HashMap<BaseField, String>();
 		}
 		if (fieldValue != null) {
+			fieldValue = fieldValue.trim();
 			if (!(fieldValue.equals(""))) {
 				customFilterValues.put(field, fieldValue);
 				this.customReportFilterValues.put(filterSet, customFilterValues);

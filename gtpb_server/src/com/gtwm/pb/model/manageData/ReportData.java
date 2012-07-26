@@ -37,7 +37,6 @@ import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.manageData.ReportDataFieldStats;
 import com.gtwm.pb.model.manageData.ReportQuickFilter;
-import com.gtwm.pb.util.Enumerations.FilterType;
 import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
