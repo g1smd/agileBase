@@ -798,7 +798,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("98", "Premium rate");
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
-		phoneNumber = phoneNumber.replaceAll("(?:(?:00\\s?|\\+)44)?0?([1-9][0-9]+)\\#?.*", "$1");
+		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0\\s?|11\\s)|\\+)44)?0?([1-9][0-9]+)\\#?.*", "$1");
 //logger.debug("z03: RegEx matching done, resulting number is " + phoneNumber);
 		String possibleCode = "";
 		// stop substring creating an IndexOutOfBoundsException below
