@@ -111,10 +111,10 @@ public class TextValueDefn implements TextValue {
 		if ((length > 9) && (length < 20)) {
 			// vaguely based on a regex from http://www.regexlib.com/
 			// alterations by @g1smd
-			// "^(?:(?:\\+44\\s?(?:\\(?0\\)?\\s?)?)|(?:\\(?0))(?:(?:\\d{5}\\)?\\s?\\d{4,5})|(?:\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3}))|(?:\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|(?:\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(?:\\s?\\#\\d{3,4})?$"
+			// "^(?:(?:(?:0(?:0\\s?|11\\s)|\\+)44\\s?(?:\\(?0\\)?\\s?)?)|(?:\\(?0))(?:(?:\\d{5}\\)?\\s?\\d{4,5})|(?:\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3}))|(?:\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|(?:\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(?:\\s?\\#\\d{3,4})?$"
 			String regex = "^";
 			regex += "(?:";
-			regex += "(?:(?:0(?:0\\s?|11\\s)|\\+)44\\s?(?:\\(?0\\)?\\s?)?)|";	// leading 00 44, +44, 00 44(0), +44(0), 00 44 0, +44 0; spaces optional
+			regex += "(?:(?:0(?:0\\s?|11\\s)|\\+)44\\s?(?:\\(?0\\)?\\s?)?)|";	// leading 00, 011 or + before 44 with optional (0); parentheses and spaces optional
 			regex += "(?:\\(?0)";							// leading (0, 0
 			regex += ")";
 			regex += "(?:";
@@ -142,7 +142,7 @@ public class TextValueDefn implements TextValue {
 		if ((length > 6) && (length < 22)) {
 			String regex = "^";
 			regex += "(";
-			regex += "(?:00\\s?|\\+)"; // 00 or +
+			regex += "(?:0(?:0\\s?|11\\s)|\\+)"; // 00, 011 or +
 			regex += "\\d{1,3}\\s?[\\d\\s]+"; // number
 			regex += ")";
 			regex += "(\\#\\d{3,4})?"; // optional "#" and extension

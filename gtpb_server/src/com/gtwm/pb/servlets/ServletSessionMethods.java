@@ -750,7 +750,7 @@ public final class ServletSessionMethods {
 							}
 						// International phone numbers
 					//	} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
-					//		fieldValueString = fieldValueString.replaceAll("(?:00\\s?|\\+)([1-9][0-9]+).*", "$1");
+					//		fieldValueString = fieldValueString.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9][0-9]+).*", "$1");
 					//		if (!fieldValueString.matches(".*\\D.*")) {
 								// Format international number
 					//			fieldValueString = formatPhoneNumberInternational(fieldValueString);
