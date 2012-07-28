@@ -826,7 +826,7 @@ public final class ViewTools implements ViewToolsInfo {
 		return "(may be invalid)";
 	}
 
-	public String getCountryForPhoneNumberInternational(String phoneNumber) {
+	public String getCountryForPhoneNumber(String phoneNumber) {
 		if (this.countryCodes.isEmpty()) {
 			this.countryCodes.put("1", "NANP countries");
 			this.countryCodes.put("27", "South Africa");
