@@ -791,7 +791,7 @@ public final class ServletSessionMethods {
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
 //logger.debug("z08: attempting to format number " + fieldValueString);
-		fieldValueLength = fieldValueLength.trim();
+		fieldValueString = fieldValueString.trim();
 		// Find string length
 		int fieldValueLength = fieldValueString.length();
 		// [2+8] 2d, 55, 56, 70, 76 (not 7624)
