@@ -1,4 +1,4 @@
 #!/bin/bash
-git pull origin master
-git log -n 1 > lastcommit.txt
+git fetch
+git log --remotes -n 1 > lastcommit.txt
 ant -f build_redhat.xml deploy
