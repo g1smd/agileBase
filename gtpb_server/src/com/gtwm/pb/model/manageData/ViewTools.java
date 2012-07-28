@@ -806,7 +806,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("98", "Premium rate");
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
-		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0\\s?|11\\s)|\\+)44)?0?([1-9][0-9]+)\\#?.*", "$1");
+		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0\\s?|11\\s)|\\+)44)?0?([1-9]\\d+)\\#?.*", "$1");
 //logger.debug("z03: RegEx matching done, resulting number is " + phoneNumber);
 		String possibleCode = "";
 		// stop substring creating an IndexOutOfBoundsException below
@@ -826,7 +826,7 @@ public final class ViewTools implements ViewToolsInfo {
 		return "(may be invalid)";
 	}
 
-/*	public String getCountryForPhoneNumberInternational(String phoneNumber) {
+	public String getCountryForPhoneNumber(String phoneNumber) {
 		if (this.countryCodes.isEmpty()) {
 			this.countryCodes.put("1", "NANP countries");
 			this.countryCodes.put("27", "South Africa");
@@ -837,9 +837,9 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("7", "Russia");
 			this.countryCodes.put("91", "India");
 		}
-		phoneNumber = phoneNumber.replaceAll(" ", "");
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)]", "");
-		phoneNumber = phoneNumber.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9][0-9]+).*", "$1");
+		phoneNumber = phoneNumber.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+)\\#?.*", "$1");
+		phoneNumber = phoneNumber.replaceAll("[\\s]", "");
 		String possibleCode = "";
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 5) {
@@ -855,7 +855,7 @@ public final class ViewTools implements ViewToolsInfo {
 		}
 		return "(may be invalid)";
 	}
-*/
+
 	public SortedMap<BaseField, BaseValue> getAddress(Map<BaseField, BaseValue> tableDataRow) {
 		SortedMap<BaseField, BaseValue> address = new TreeMap<BaseField, BaseValue>();
 		SortedMap<BaseField, BaseValue> sortedTableDataRows = new TreeMap<BaseField, BaseValue>(
