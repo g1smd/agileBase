@@ -1,0 +1,16 @@
+<!doctype HTML>
+#set($commitUrl = $viewTools.getCommitUrl())
+#set($commitMessage = $viewTools.getCommitMessage())
+<html>
+<head>
+  <title>agileBase release version</title>
+  <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />      
+</head>
+<body>
+The last code commit that was used to build this version of agileBase is 
+<a href="$commitUrl">$commitUrl</a><p>
+Tip: use the 'parent' link to browse through past commits<p>
+Details of the commit:
+<div class="infomessage">$commitMessage</div>
+</body>
+</html>
