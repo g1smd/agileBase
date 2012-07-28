@@ -100,7 +100,7 @@ public interface ViewToolsInfo {
 	public String getAreaForPhoneNumber(String phoneNumber);
 
 	/**
-	 * e.g. given +61 3 4455 6677, return Australia. Return '(may be invalid) if'
+	 * e.g. given +61 3 4455 6677, return Australia. Return '(may be invalid)' if
 	 * the country name can't be found.
 	 */
 	public String getCountryForPhoneNumber(String phoneNumber);
