@@ -749,13 +749,13 @@ public final class ServletSessionMethods {
 //logger.debug("z16: we are now here");
 							}
 						// International phone numbers
-					//	} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
-					//		fieldValueString = fieldValueString.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9][0-9]+).*", "$1");
-					//		if (!fieldValueString.matches(".*\\D.*")) {
+						} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
+							fieldValueString = fieldValueString.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9]\\d+).*", "$1");
+							if (!fieldValueString.matches(".*\\D.*")) {
 								// Format international number
-					//			fieldValueString = formatPhoneNumberInternational(fieldValueString);
-					//		}
-					//	fieldValueString = "+" + fieldValueString;
+								fieldValueString = formatPhoneNumberInternational(fieldValueString);
+							}
+						fieldValueString = "+" + fieldValueString;
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes
@@ -791,6 +791,7 @@ public final class ServletSessionMethods {
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
 //logger.debug("z08: attempting to format number " + fieldValueString);
+		fieldValueLength = fieldValueLength.trim();
 		// Find string length
 		int fieldValueLength = fieldValueString.length();
 		// [2+8] 2d, 55, 56, 70, 76 (not 7624)
@@ -863,7 +864,7 @@ public final class ServletSessionMethods {
 	private static String formatPhoneNumberInternational(String fieldValueString) {
 		// Single digit country codes
 		String pattern1 = "(?:(1|7)).*";
-		// Double digit country codes
+		// Double digit country codes, but not 44
 		String pattern2 = "(?:(2[07]|3[0123469]|4[01356789|5[12345678]|6[0123456]|8[12469]|9[0123458])).*";
 		// Triple digit country codes
 		String pattern3 = "(?:(2[12345689]|3[578]|42|5[09]|6[789]|8[03578]|9[679])\\d).*";
