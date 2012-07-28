@@ -6,7 +6,7 @@
   <title>agileBase release version</title>
   <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />      
 </head>
-<body>
+<body style="padding: 1em">
 <h1>agileBase build reference</h1>
 The last code commit that was used to build this version of agileBase is 
 <a href="$commitUrl">$commitUrl</a><p>
