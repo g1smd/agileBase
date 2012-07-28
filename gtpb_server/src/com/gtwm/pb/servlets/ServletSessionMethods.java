@@ -749,13 +749,15 @@ public final class ServletSessionMethods {
 //logger.debug("z16: we are now here");
 							}
 						// International phone numbers
+						/* Uncomment when TextValue.isPhoneNumberInternational implemented
 						} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
 							fieldValueString = fieldValueString.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9]\\d+).*", "$1");
 							if (!fieldValueString.matches(".*\\D.*")) {
 								// Format international number
 								fieldValueString = formatPhoneNumberInternational(fieldValueString);
 							}
-						fieldValueString = "+" + fieldValueString;
+							fieldValueString = "+" + fieldValueString;
+						*/
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes

@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -808,16 +809,14 @@ public final class ViewTools implements ViewToolsInfo {
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
 		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0\\s?|11\\s)|\\+)44)?0?([1-9]\\d+)\\#?.*", "$1");
 //logger.debug("z03: RegEx matching done, resulting number is " + phoneNumber);
-		String possibleCode = "";
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 6) {
 //logger.debug("z04: number length is less than 6 for phone number " + phoneNumber);
 			return "";
 		}
-		String area = "";
 		for (int numDigitsInCode = 5; numDigitsInCode > 1; numDigitsInCode--) {
-			possibleCode = phoneNumber.substring(0, numDigitsInCode);
-			area = this.areaCodes.get(possibleCode);
+			String possibleCode = phoneNumber.substring(0, numDigitsInCode);
+			String area = this.areaCodes.get(possibleCode);
 //logger.debug("z05: area code name has been looked up from " + possibleCode + ", it is " + area);
 			if (area != null) {
 				return area;
@@ -840,15 +839,13 @@ public final class ViewTools implements ViewToolsInfo {
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)]", "");
 		phoneNumber = phoneNumber.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+)\\#?.*", "$1");
 		phoneNumber = phoneNumber.replaceAll("[\\s]", "");
-		String possibleCode = "";
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 5) {
 			return "";
 		}
-		String area = "";
 		for (int numDigitsInCountry = 4; numDigitsInCountry > 0; numDigitsInCountry--) {
-			possibleCountry = phoneNumber.substring(0, numDigitsInCountry);
-			country = this.countryCodes.get(possibleCountry);
+			String possibleCountry = phoneNumber.substring(0, numDigitsInCountry);
+			String country = this.countryCodes.get(possibleCountry);
 			if (country != null) {
 				return country;
 			}
@@ -1303,7 +1300,9 @@ public final class ViewTools implements ViewToolsInfo {
 	/**
 	 * A map of telephone area code to city / location
 	 */
-	private Map<String, String> areaCodes = new HashMap<String, String>(602);
+	private Map<String, String> areaCodes = new ConcurrentHashMap<String, String>(1000);
+	
+	private Map<String, String> countryCodes = new ConcurrentHashMap<String, String>();
 
 	private Map<String, Boolean> templateExistsCache = new HashMap<String, Boolean>();
 
