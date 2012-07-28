@@ -24,6 +24,8 @@ import java.util.Set;
 import java.util.Map;
 import java.util.SortedMap;
 import java.io.File;
+import java.io.IOException;
+
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.interfaces.fields.TextValue;
@@ -41,7 +43,7 @@ import org.apache.velocity.tools.generic.MathTool;
 public interface ViewToolsInfo {
 
 	public boolean isNull(Object o);
-	
+
 	/**
 	 * Turn a number such as 1023.54 into text such as one thousand and twenty
 	 * three point five four, using the ICU tools
@@ -92,8 +94,8 @@ public interface ViewToolsInfo {
 	public int getCalendarConstant(String constantName) throws CantDoThatException;
 
 	/**
-	 * e.g. given 01792 367514, return Swansea. Return '(may be invalid)' if 
-	 * the area can't be found. Currently works for numbers in the UK.
+	 * e.g. given 01792 367514, return Swansea. Return '(may be invalid)' if the
+	 * area can't be found. Currently works for numbers in the UK.
 	 */
 	public String getAreaForPhoneNumber(String phoneNumber);
 
@@ -101,7 +103,7 @@ public interface ViewToolsInfo {
 	 * e.g. given +61 3 4455 6677, return Australia. Return '(may be invalid)'
 	 * if the country name can't be found.
 	 */
-//	public String getCountryForPhoneNumberInternational(String phoneNumber);
+	// public String getCountryForPhoneNumberInternational(String phoneNumber);
 
 	/**
 	 * Given a table data row, as returned by ViewMethodsInfo.getTableDataRow(),
@@ -131,9 +133,9 @@ public interface ViewToolsInfo {
 	public Set<FilterTypeDescriptorInfo> getFilterTypeDescriptors();
 
 	/**
-	 * Log a message to file - can be used for debugging
-	 * purposes. If a string is passed, then that string will be logged, if
-	 * another object is passed then that object's toString() will be logged
+	 * Log a message to file - can be used for debugging purposes. If a string
+	 * is passed, then that string will be logged, if another object is passed
+	 * then that object's toString() will be logged
 	 * 
 	 * The log file is located at [tomcat root]/logs/catalina.out
 	 */
@@ -170,13 +172,11 @@ public interface ViewToolsInfo {
 	 * Escape for use in a mailo tag or URL
 	 * 
 	 * @param string
-	 *            e.g.
-	 *            http://appserver.agilebase.co.uk/agileBase/AppController
+	 *            e.g. http://appserver.agilebase.co.uk/agileBase/AppController
 	 *            .servlet
 	 *            ?return=gui/display_application&set_table=a3b09a609b4c70624
 	 *            &set_report=ac64d0f1598cf78eb
-	 * @return e.g.
-	 *         http%3A//appserver.agilebase.co.uk/agileBase/AppController.
+	 * @return e.g. http%3A//appserver.agilebase.co.uk/agileBase/AppController.
 	 *         servlet%3Freturn%3Dgui/display_application%26set_table%3D
 	 *         a3b09a609b4c70624%26set_report%3Dac64d0f1598cf78eb
 	 */
@@ -278,7 +278,7 @@ public interface ViewToolsInfo {
 	 * Return an empty set of strings
 	 */
 	public Set<String> getNewStringSet();
-	
+
 	public Set<TableInfo> getNewTableSet();
 
 	/**
@@ -361,12 +361,13 @@ public interface ViewToolsInfo {
 	public String lineBreaksToParas(String stringToConvert);
 
 	/**
-	 * Replace &amp; with &, &lt; and &gt; with < and > to allow HTML tags to work.
+	 * Replace &amp; with &, &lt; and &gt; with < and > to allow HTML tags to
+	 * work.
 	 * 
 	 * AgileBase replaces < and > with the two equivalents when saving data
 	 */
 	public String unencodeHtml(String string);
-	
+
 	/**
 	 * Tells you whether the given template exists
 	 * 
@@ -383,6 +384,17 @@ public interface ViewToolsInfo {
 	 *            "resources/icons/applications/tango"
 	 */
 	public Set<File> listFiles(String folder);
+
+	/**
+	 * Returns the URL pointing to the last commit that the app was built
+	 * against. Currently a github URL
+	 */
+	public String getCommitUrl() throws IOException, CantDoThatException;
+	
+	/**
+	 * Return fuller details of the last commit that the app was built with
+	 */
+	public String getCommitMessage() throws CantDoThatException, IOException;
 
 	/**
 	 * Causes an exception to be thrown for test purposes - intended for testing

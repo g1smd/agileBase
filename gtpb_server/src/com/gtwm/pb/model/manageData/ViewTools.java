@@ -17,7 +17,13 @@
  */
 package com.gtwm.pb.model.manageData;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Collection;
@@ -36,6 +42,8 @@ import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.math.MathContext;
+import java.nio.charset.Charset;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
@@ -1237,6 +1245,43 @@ public final class ViewTools implements ViewToolsInfo {
 		return files;
 	}
 
+	public String getCommitUrl() throws IOException, CantDoThatException {
+		String commitFileName =  this.request.getSession().getServletContext().getRealPath(
+				"/lastcommit.txt");
+		File commitFile = new File(commitFileName);
+		try {
+			InputStream inputStream = new FileInputStream(commitFileName);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+			String commitLine = reader.readLine();
+			String commitId = commitLine.replace("commit ", "");
+			return "https://github.com/okohll/agileBase/commit/" + commitId;
+		} catch (FileNotFoundException e) {
+			logger.error("Commit file " + commitFileName + " not found: " + e);
+			// Throw exception but don't show the actual file name
+			throw new CantDoThatException("Commit log not found");
+		}
+	}
+
+	public String getCommitMessage() throws CantDoThatException, IOException {
+		String commitFileName =  this.request.getSession().getServletContext().getRealPath(
+				"/lastcommit.txt");
+		File commitFile = new File(commitFileName);
+		try {
+			InputStream inputStream = new FileInputStream(commitFileName);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+			String line = null;
+			String message = "";
+			while ((line = reader.readLine()) != null) {
+				message += line + "<br />";
+			}
+			return message;
+		} catch (FileNotFoundException e) {
+			logger.error("Commit file " + commitFileName + " not found: " + e);
+			// Throw exception but don't show the actual file name
+			throw new CantDoThatException("Commit log not found");
+		}
+	}
+	
 	public String toString() {
 		return "ViewTools contains utility methods useful to Velocity template designers";
 	}
