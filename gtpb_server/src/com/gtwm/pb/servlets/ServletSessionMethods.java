@@ -707,7 +707,7 @@ public final class ServletSessionMethods {
 							// need to be removed.
 							Matcher numberPartsGB = Pattern
 									.compile(
-											"^(\\+(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
+											"^((?:0(?:0\\s?|11\\s)|\\+)(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
 									.matcher(fieldValueString);
 							if (numberPartsGB.matches()) {
 //logger.debug("z06: number regex matches against " + fieldValueString);
@@ -725,7 +725,7 @@ public final class ServletSessionMethods {
 									if (phonePrefixString != null) {
 										if (phonePrefixString.equals("44")) {
 //logger.debug("z13: setting +44 prefix");
-											phonePrefixString += "+44 ";
+											phonePrefixString = "+44 ";
 										}
 									} else {
 //logger.debug("z14: setting 0 prefix");
@@ -750,7 +750,7 @@ public final class ServletSessionMethods {
 							}
 						// International phone numbers
 					//	} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
-					//		fieldValueString = fieldValueString.replaceAll("\\+([1-9][0-9]+).*", "$1");
+					//		fieldValueString = fieldValueString.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9][0-9]+).*", "$1");
 					//		if (!fieldValueString.matches(".*\\D.*")) {
 								// Format international number
 					//			fieldValueString = formatPhoneNumberInternational(fieldValueString);
@@ -848,7 +848,7 @@ public final class ServletSessionMethods {
 		} else if (fieldValueLength > 1) {
 //logger.debug("z11: returning default splitting of " + fieldValueString);
 			fieldValueString = fieldValueString.charAt(0) + " "
-					+ fieldValueString.substring(1);
+					+ fieldValueString.substring(1, 5) + " " + fieldValueString.substring(5);
 //logger.debug("z11a: which is " + fieldValueString);
 		}
 //logger.debug("z12: hopefully some sort of formatting has been done, returning " + fieldValueString);
@@ -883,9 +883,6 @@ public final class ServletSessionMethods {
 			if (m3.matches()) {
 				fieldValueString = m3.group(1) + " " + m3.group(2);
 			}
-		} else {
-			fieldValueString = fieldValueString.substring(0, 1) + " "
-					+ fieldValueString.substring(1);
 		}
 		return fieldValueString;
 	}
