@@ -38,13 +38,11 @@ import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
 import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.math.MathContext;
 import java.nio.charset.Charset;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
@@ -1300,9 +1298,9 @@ public final class ViewTools implements ViewToolsInfo {
 	/**
 	 * A map of telephone area code to city / location
 	 */
-	private Map<String, String> areaCodes = new ConcurrentHashMap<String, String>(1000);
+	private Map<String, String> areaCodes = new HashMap<String, String>(1000);
 	
-	private Map<String, String> countryCodes = new ConcurrentHashMap<String, String>();
+	private Map<String, String> countryCodes = new HashMap<String, String>();
 
 	private Map<String, Boolean> templateExistsCache = new HashMap<String, Boolean>();
 
