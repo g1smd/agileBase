@@ -1297,6 +1297,8 @@ public final class ViewTools implements ViewToolsInfo {
 
 	/**
 	 * A map of telephone area code to city / location
+	 * 
+	 * Don't need ConcurrentHashMap here as data will only be put into this cache once
 	 */
 	private Map<String, String> areaCodes = new HashMap<String, String>(1000);
 	
