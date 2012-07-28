@@ -7,6 +7,7 @@
   <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />      
 </head>
 <body>
+<h1>agileBase build reference</h1>
 The last code commit that was used to build this version of agileBase is 
 <a href="$commitUrl">$commitUrl</a><p>
 Tip: use the 'parent' link to browse through past commits<p>
