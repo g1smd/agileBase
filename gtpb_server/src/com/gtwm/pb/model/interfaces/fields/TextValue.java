@@ -23,25 +23,27 @@ package com.gtwm.pb.model.interfaces.fields;
  */
 public interface TextValue extends BaseValue {
 
-    public String toXmlString();
+	public String toXmlString();
 
-    public boolean isEmailAddress();
+	public boolean isEmailAddress();
 
-    public boolean isURL();
+	public boolean isURL();
 
-    public boolean isImage();
+	public boolean isImage();
 
-    public boolean isTwitterName();
+	public boolean isTwitterName();
 
-    public boolean isTwitterHashTag();
+	public boolean isTwitterHashTag();
 
-    public boolean isPhoneNumber();
+	public boolean isPhoneNumber();
 
-    /**
-    * If the value is a URL that hasn't got http:// in front of it, then put http:// in front of it to ensure
-    * web browsers load it properly from a link
-    */
-    public String getFormattedURL();
+	public boolean isPhoneNumberInternational();
 
-    public boolean isPostcode();
+ /**
+  * If the value is a URL that hasn't got http:// in front of it, then put http:// in front of it to ensure
+  * web browsers load it properly from a link
+  */
+	public String getFormattedURL();
+
+	public boolean isPostcode();
 }
