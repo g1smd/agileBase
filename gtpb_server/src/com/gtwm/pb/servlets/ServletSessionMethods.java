@@ -700,6 +700,7 @@ public final class ServletSessionMethods {
 						}
 						// GB phone numbers
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
+							if (this.isPhoneNumberGB()) {
 							// Extract and store optional country prefix and
 							// optional extension.
 							// Grab only the NSN part for formatting.
@@ -750,13 +751,15 @@ logger.debug("z16: we are now here");
 							}
 						// International phone numbers
 						// Uncomment when TextValue.isPhoneNumberInternational implemented
-						} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
+							if (this.isPhoneNumberInternational()) {
+					//	} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
 							fieldValueString = fieldValueString.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9]\\d+).*", "$1");
 							if (!fieldValueString.matches(".*\\D.*")) {
 								// Format international number
 								fieldValueString = formatPhoneNumberInternational(fieldValueString);
 							}
 							fieldValueString = "+" + fieldValueString;
+							}
 						//
 						} else {
 							// Replace smart quotes with normal quotes and em

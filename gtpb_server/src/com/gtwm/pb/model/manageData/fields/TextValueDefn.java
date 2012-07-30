@@ -104,6 +104,13 @@ public class TextValueDefn implements TextValue {
 	}
 
 	public boolean isPhoneNumber() {
+		if (this.isPhoneNumberGB() || (this.isPhoneNumberInternational()) {
+			return true;
+		}
+	return false;
+	}
+
+	public boolean isPhoneNumberGB() {
 		if (this.isNull()) {
 			return false;
 		}
