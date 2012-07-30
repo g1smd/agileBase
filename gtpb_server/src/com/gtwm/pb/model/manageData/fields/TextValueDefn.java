@@ -130,6 +130,15 @@ public class TextValueDefn implements TextValue {
 				return true;
 			}
 		}
+//logger.debug("z02a: this is not a phone number: " + this.textValue);
+		return false;
+	}
+
+	public boolean isPhoneNumberInternational() {
+		if (this.isNull()) {
+			return false;
+		}
+		int length = this.textValue.trim().length();
 		if ((length > 6) && (length < 22)) {
 			String regexIntl = "^";
 			regexIntl += "(";
@@ -145,7 +154,7 @@ public class TextValueDefn implements TextValue {
 				return true;
 			}
 		}
-//logger.debug("z02: this is not a phone number: " + this.textValue);
+//logger.debug("z02b: this is not a phone number: " + this.textValue);
 		return false;
 	}
 
