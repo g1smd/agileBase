@@ -8,7 +8,7 @@
 </head>
 <body style="padding: 1em">
 <h1>agileBase build reference</h1>
-The last code commit that was used to build this version of agileBase is 
+The last code commit that was used to build this version of agileBase is <p>
 <a href="$commitUrl">$commitUrl</a><p>
 Tip: use the 'parent' link to browse through past commits<p>
 Details of the commit:
