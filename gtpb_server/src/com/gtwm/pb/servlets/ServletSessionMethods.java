@@ -709,14 +709,13 @@ public final class ServletSessionMethods {
 								Matcher numberPartsGB = Pattern
 										.compile(
 											"^((?:0(?:0\\s?|11\\s)|\\+)(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
-<<<<<<< HEAD
 										.matcher(fieldValueString);
 								if (numberPartsGB.matches()) {
-logger.debug("z06: number regex matches against " + fieldValueString);
+//logger.debug("z06: number regex matches against " + fieldValueString);
 									// Extract NSN part of GB number, trim it and
 									// remove ')' if present
 									if (numberPartsGB.group(3) != null) {
-logger.debug("z07: this has an NSN of " + numberPartsGB.group(3));
+//logger.debug("z07: this has an NSN of " + numberPartsGB.group(3));
 										String phoneNSNString = numberPartsGB.group(3).trim()
 												.replaceAll("[\\)\\s]", "");
 										// Format NSN part of GB number
@@ -726,11 +725,11 @@ logger.debug("z07: this has an NSN of " + numberPartsGB.group(3));
 										// Set prefix as 0 or as +44 and space
 										if (phonePrefixString != null) {
 											if (phonePrefixString.equals("44")) {
-logger.debug("z13: setting +44 prefix");
+//logger.debug("z13: setting +44 prefix");
 												phonePrefixString = "+44 ";
 											}
 										} else {
-logger.debug("z14: setting 0 prefix");
+//logger.debug("z14: setting 0 prefix");
 											phonePrefixString = "0";
 										}
 										// Extract extension
@@ -746,51 +745,10 @@ logger.debug("z14: setting 0 prefix");
 										if (phoneHasExtension) {
 											fieldValueString += phoneExtensionString;
 										}
-logger.debug("z15: we are here");
-									}
-logger.debug("z16: we are now here");
-								}
-=======
-									.matcher(fieldValueString);
-							if (numberPartsGB.matches()) {
-//logger.debug("z06: number regex matches against " + fieldValueString);
-								// Extract NSN part of GB number, trim it and
-								// remove ')' if present
-								if (numberPartsGB.group(3) != null) {
-//logger.debug("z07: this has an NSN of " + numberPartsGB.group(3));
-									String phoneNSNString = numberPartsGB.group(3).trim()
-											.replaceAll("[\\)\\s]", "");
-									// Format NSN part of GB number
-									String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
-									// Extract +44 prefix if present
-									String phonePrefixString = numberPartsGB.group(2);
-									// Set prefix as 0 or as +44 and space
-									if (phonePrefixString != null) {
-										if (phonePrefixString.equals("44")) {
-//logger.debug("z13: setting +44 prefix");
-											phonePrefixString = "+44 ";
-										}
-									} else {
-//logger.debug("z14: setting 0 prefix");
-										phonePrefixString = "0";
-									}
-									// Extract extension
-									boolean phoneHasExtension = false;
-									String phoneExtensionString = null;
-									if (numberPartsGB.group(4) != null) {
-										phoneHasExtension = true;
-										phoneExtensionString = " " + numberPartsGB.group(4);
-									}
-									// Add prefix back on to NSN
-									fieldValueString = phonePrefixString + phoneNSNFormattedString;
-									// Add extension back on to NSN
-									if (phoneHasExtension) {
-										fieldValueString += phoneExtensionString;
-									}
 //logger.debug("z15: we are here");
-								}
+									}
 //logger.debug("z16: we are now here");
->>>>>>> 78bfc0c6917f9512039a8e3d5b77c8810c5df917
+								}
 							}
 							// International phone numbers
 							// Uncomment when TextValue.isPhoneNumberInternational implemented
