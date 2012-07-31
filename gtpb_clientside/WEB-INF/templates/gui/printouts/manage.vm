@@ -49,6 +49,7 @@
 	    #set($slashIndex = $filePath.lastIndexOf('/') + 1)
 	    #set($fileName = $filePath.substring($slashIndex))
 	    <a href="ReportDownloader.servlet?template=$fileName">$fileName</a> <a href="?return=gui/printouts/manage&remove_custom_template=true&customtemplatename=$fileName"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a><br>
+	    - direct access: $viewTools.getAppUrl()?return=uploads/$internalCompanyName/$internalReportName/$fileName<p>
 	  #end
 	  <p>
   #end

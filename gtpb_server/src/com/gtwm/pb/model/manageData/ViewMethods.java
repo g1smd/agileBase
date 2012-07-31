@@ -429,7 +429,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	public Map<BaseField, BaseValue> getTableDataRow() throws DisallowedException,
 			ObjectNotFoundException, SQLException, CantDoThatException, CodingErrorException {
-		return getTableDataRow(this.sessionData.getTable());
+		return this.getTableDataRow(this.sessionData.getTable());
 	}
 
 	public Map<BaseField, BaseValue> getTableDataRow(TableInfo table) throws DisallowedException,
