@@ -92,6 +92,10 @@ public final class ViewTools implements ViewToolsInfo {
 	public boolean isNull(Object o) {
 		return (o == null);
 	}
+	
+	public boolean isInteger(String string) {
+		return (string.matches("\\d+"));
+	}
 
 	public String spelloutDecimal(double number) {
 		RuleBasedNumberFormat rbnf = new RuleBasedNumberFormat(RuleBasedNumberFormat.SPELLOUT);

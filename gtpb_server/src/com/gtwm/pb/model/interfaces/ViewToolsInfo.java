@@ -44,6 +44,8 @@ public interface ViewToolsInfo {
 
 	public boolean isNull(Object o);
 
+	public boolean isInteger(String string);
+	
 	/**
 	 * Turn a number such as 1023.54 into text such as one thousand and twenty
 	 * three point five four, using the ICU tools
