@@ -534,246 +534,29 @@ public final class ServletSessionMethods {
 				}
 			}
 		}
-		if (databaseFieldType.equals(DatabaseFieldType.INTEGER)
-				|| databaseFieldType.equals(DatabaseFieldType.SERIAL)) {
-			if (fieldValueString != null) {
-				if (fieldValueString.equals("")) {
-					// empty string means null
-					fieldValue = new IntegerValueDefn(null);
-				} else {
-					try {
-						fieldValue = new IntegerValueDefn(Integer.valueOf(fieldValueString));
-					} catch (NumberFormatException nfex) {
-						throw new InputRecordException("Value " + fieldValueString
-								+ " not allowed because a whole number needs to be entered", field,
-								nfex);
-					}
-				}
-			}
-		} else if (databaseFieldType.equals(DatabaseFieldType.FLOAT)) {
-			if (fieldValueString != null) {
-				if (fieldValueString.equals("")) {
-					// empty string translated to null
-					fieldValue = new DecimalValueDefn(null);
-				} else {
-					// reformat to ensure number can be recognised by Java
-					// .4 -> 0.4
-					// 4. -> 4.0
-					// . -> 0.0
-					// (pound sign)46.50 -> 46.50 - from the error logs, users
-					// commonly input pound signs
-					fieldValueString = fieldValueString.replace("\u00A3", "");
-					fieldValueString = fieldValueString.replace("$", "");
-					if (fieldValueString.startsWith(".")) {
-						fieldValueString = "0" + fieldValueString;
-					}
-					if (fieldValueString.endsWith(".")) {
-						fieldValueString = fieldValueString + "0";
-					}
-					try {
-						fieldValue = new DecimalValueDefn(Double.valueOf(fieldValueString));
-					} catch (NumberFormatException nfex) {
-						throw new InputRecordException("Value " + fieldValueString
-								+ " not allowed because a number needs to be entered", field, nfex);
-					}
-				}
-			}
-		} else if (databaseFieldType.equals(DatabaseFieldType.TIMESTAMP)) {
-			Set<String> httpParameters = request.getParameterMap().keySet();
-			// Every date will include at least a year, use this to check if
-			// the date value been specifically sent by the user
-			if (httpParameters.contains(internalFieldName + "_years")) {
-				DateValue dateFieldValue = new DateValueDefn(null, null, null, null, null, null);
-				dateFieldValue.setDateResolution(((DateField) field).getDateResolution());
-				// obtain values passed within the request, (if any)
-				String partGotTo = "year";
-				Integer years = null;
-				Integer months = null;
-				Integer days = null;
-				Integer hours = null;
-				Integer minutes = null;
-				Integer seconds = null;
-				try {
-					years = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
-							+ "_years");
-					partGotTo = "month";
-					months = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
-							+ "_months");
-					partGotTo = "day";
-					days = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
-							+ "_days");
-					partGotTo = "hour";
-					hours = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
-							+ "_hours");
-					partGotTo = "minute";
-					minutes = ServletDataMethods.getIntegerParameterValue(request,
-							internalFieldName + "_minutes");
-					partGotTo = "second";
-					seconds = ServletDataMethods.getIntegerParameterValue(request,
-							internalFieldName + "_seconds");
-					if (years != null) {
-						dateFieldValue.set(Calendar.YEAR, years);
-					}
-					if (months != null) {
-						dateFieldValue.set(Calendar.MONTH, months);
-					}
-					if (days != null) {
-						dateFieldValue.set(Calendar.DAY_OF_MONTH, days);
-					}
-					if (hours != null) {
-						dateFieldValue.set(Calendar.HOUR_OF_DAY, hours);
-					}
-					if (minutes != null) {
-						dateFieldValue.set(Calendar.MINUTE, minutes);
-					}
-					if (seconds != null) {
-						dateFieldValue.set(Calendar.SECOND, seconds);
-					}
-					// Additionally, allow delta values to be submitted (add
-					// more on an as-needed basis)
-					Integer days_delta = ServletDataMethods.getIntegerParameterValue(request,
-							internalFieldName + "_days_delta");
-					if (days_delta != null) {
-						dateFieldValue.add(Calendar.DAY_OF_MONTH, days_delta);
-					}
-					Integer minutes_delta = ServletDataMethods.getIntegerParameterValue(request,
-							internalFieldName + "_minutes_delta");
-					if (minutes_delta != null) {
-						dateFieldValue.add(Calendar.MINUTE, minutes_delta);
-					}
-				} catch (NumberFormatException nfex) {
-					throw new InputRecordException("The " + partGotTo
-							+ " is invalid because it needs to be a whole number", field, nfex);
-				}
-				// If date value is null, leave fieldValue as a null object as
-				// well
-				// or the dateField in the database will be set to null
-				if (dateFieldValue.getValueDate() == null) {
-					// However if all fields have specifically been set as null
-					// by
-					// the user then do set the fieldValue to the dateFieldValue
-					// object representing null
-					switch (((DateField) field).getDateResolution()) {
-					case Calendar.YEAR:
-						if (years == null) {
-							fieldValue = dateFieldValue;
-						}
-						break;
-					case Calendar.MONTH:
-						if (years == null && months == null) {
-							fieldValue = dateFieldValue;
-						}
-						break;
-					case Calendar.DAY_OF_MONTH:
-						if (years == null && months == null && days == null) {
-							fieldValue = dateFieldValue;
-						}
-						break;
-					case Calendar.HOUR_OF_DAY:
-						if (years == null && months == null && days == null && hours == null) {
-							fieldValue = dateFieldValue;
-						}
-						break;
-					case Calendar.MINUTE:
-						if (years == null && months == null && days == null && hours == null
-								&& minutes == null) {
-							fieldValue = dateFieldValue;
-						}
-						break;
-					}
-				} else {
-					fieldValue = dateFieldValue;
-				}
-			}
-		} else if (databaseFieldType.equals(DatabaseFieldType.VARCHAR)) {
+		switch (databaseFieldType) {
+		case INTEGER:
+		case SERIAL:
+			fieldValue = getIntegerValue(field, fieldValueString);
+			break;
+		case FLOAT:
+			fieldValue = getDecimalValue(field, fieldValueString);
+			break;
+		case TIMESTAMP:
+			fieldValue = getTimestampValue(request, field, internalFieldName);
+			break;
+		case VARCHAR:
 			if (fieldValueString != null) {
 				if (field instanceof FileField && !fieldValueString.equals("")) {
 					// file values are the only ones that can't represent null
 					// just skip it if no filename specified
 					fieldValue = new FileValueDefn(request, (FileField) field, multipartItems);
 				} else {
-					if (fieldValueString.equals("")) {
-						fieldValue = new TextValueDefn(null);
-					} else {
-						TextCase textCase = ((TextField) field).getTextCase();
-						if (textCase != null) {
-							fieldValueString = textCase.transform(fieldValueString);
-						}
-						TextValue textValue = new TextValueDefn(fieldValueString);
-						if (textValue.isPhoneNumber()) {
-							// GB phone numbers
-							if (textValue.isPhoneNumberGB()) {
-								// Extract and store optional country prefix and
-								// optional extension.
-								// Grab only the NSN part for formatting.
-								// NSN part might include spaces or ')' and will
-								// need to be removed.
-								Matcher numberPartsGB = Pattern
-										.compile(
-											"^((?:0(?:0\\s?|11\\s)|\\+)(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
-										.matcher(fieldValueString);
-								if (numberPartsGB.matches()) {
-//logger.debug("z06: number regex matches against " + fieldValueString);
-									// Extract NSN part of GB number, trim it and
-									// remove ')' if present
-									if (numberPartsGB.group(3) != null) {
-//logger.debug("z07: this has an NSN of " + numberPartsGB.group(3));
-										String phoneNSNString = numberPartsGB.group(3).trim()
-												.replaceAll("[\\)\\s]", "");
-										// Format NSN part of GB number
-										String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
-										// Extract +44 prefix if present
-										String phonePrefixString = numberPartsGB.group(2);
-										// Set prefix as 0 or as +44 and space
-										if (phonePrefixString != null) {
-											if (phonePrefixString.equals("44")) {
-//logger.debug("z13: setting +44 prefix");
-												phonePrefixString = "+44 ";
-											}
-										} else {
-//logger.debug("z14: setting 0 prefix");
-											phonePrefixString = "0";
-										}
-										// Extract extension
-										boolean phoneHasExtension = false;
-										String phoneExtensionString = null;
-										if (numberPartsGB.group(4) != null) {
-											phoneHasExtension = true;
-											phoneExtensionString = " " + numberPartsGB.group(4);
-										}
-										// Add prefix back on to NSN
-										fieldValueString = phonePrefixString + phoneNSNFormattedString;
-										// Add extension back on to NSN
-										if (phoneHasExtension) {
-											fieldValueString += phoneExtensionString;
-										}
-//logger.debug("z15: we are here");
-									}
-//logger.debug("z16: we are now here");
-								}
-							}
-							// International phone numbers
-							// Uncomment when TextValue.isPhoneNumberInternational implemented
-							//	} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
-							if (textValue.isPhoneNumberInternational()) {
-							fieldValueString = fieldValueString.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9]\\d+).*", "$1");
-								if (!fieldValueString.matches(".*\\D.*")) {
-									// Format international number
-									fieldValueString = formatPhoneNumberInternational(fieldValueString);
-								}
-								fieldValueString = "+" + fieldValueString;
-							}
-						//
-						} else {
-							// Replace smart quotes with normal quotes and em
-							// dashes with normal dashes
-							fieldValueString = Helpers.smartCharsReplace(fieldValueString);
-						}
-						fieldValue = new TextValueDefn(fieldValueString);
-					}
+					fieldValue = getTextValue(field, fieldValueString);
 				}
 			}
-		} else if (databaseFieldType.equals(DatabaseFieldType.BOOLEAN)) {
+			break;
+		case BOOLEAN:
 			if (fieldValueString != null) {
 				if (fieldValueString.equals("")) {
 					fieldValue = new CheckboxValueDefn(null);
@@ -781,6 +564,266 @@ public final class ServletSessionMethods {
 					// fieldValueString should be 'true' to set a true value,
 					// anything else means false
 					fieldValue = new CheckboxValueDefn(Boolean.valueOf(fieldValueString));
+				}
+			}
+			break;
+		default:
+			throw new CodingErrorException("Unrecognised field type " + databaseFieldType);
+		}
+		return fieldValue;
+	}
+
+	private static BaseValue getTextValue(BaseField field, String fieldValueString) {
+		BaseValue fieldValue = null;
+		if (fieldValueString.equals("")) {
+			fieldValue = new TextValueDefn(null);
+		} else {
+			TextCase textCase = ((TextField) field).getTextCase();
+			if (textCase != null) {
+				fieldValueString = textCase.transform(fieldValueString);
+			}
+			TextValue textValue = new TextValueDefn(fieldValueString);
+			if (textValue.isPhoneNumber()) {
+				// GB phone numbers
+				if (textValue.isPhoneNumberGB()) {
+					// Extract and store optional country prefix and
+					// optional extension.
+					// Grab only the NSN part for formatting.
+					// NSN part might include spaces or ')' and will
+					// need to be removed.
+					Matcher numberPartsGB = Pattern
+							.compile(
+									"^((?:0(?:0\\s?|11\\s)|\\+)(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
+							.matcher(fieldValueString);
+					if (numberPartsGB.matches()) {
+						// logger.debug("z06: number regex matches against "
+						// + fieldValueString);
+						// Extract NSN part of GB number, trim it
+						// and
+						// remove ')' if present
+						if (numberPartsGB.group(3) != null) {
+							// logger.debug("z07: this has an NSN of "
+							// + numberPartsGB.group(3));
+							String phoneNSNString = numberPartsGB.group(3).trim()
+									.replaceAll("[\\)\\s]", "");
+							// Format NSN part of GB number
+							String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
+							// Extract +44 prefix if present
+							String phonePrefixString = numberPartsGB.group(2);
+							// Set prefix as 0 or as +44 and space
+							if (phonePrefixString != null) {
+								if (phonePrefixString.equals("44")) {
+									// logger.debug("z13: setting +44 prefix");
+									phonePrefixString = "+44 ";
+								}
+							} else {
+								// logger.debug("z14: setting 0 prefix");
+								phonePrefixString = "0";
+							}
+							// Extract extension
+							boolean phoneHasExtension = false;
+							String phoneExtensionString = null;
+							if (numberPartsGB.group(4) != null) {
+								phoneHasExtension = true;
+								phoneExtensionString = " " + numberPartsGB.group(4);
+							}
+							// Add prefix back on to NSN
+							fieldValueString = phonePrefixString
+									+ phoneNSNFormattedString;
+							// Add extension back on to NSN
+							if (phoneHasExtension) {
+								fieldValueString += phoneExtensionString;
+							}
+							// logger.debug("z15: we are here");
+						}
+						// logger.debug("z16: we are now here");
+					}
+				}
+				// International phone numbers
+				// Uncomment when
+				// TextValue.isPhoneNumberInternational implemented
+				// } else if ((new
+				// TextValueDefn(fieldValueString)).isPhoneNumberInternational())
+				// {
+				if (textValue.isPhoneNumberInternational()) {
+					fieldValueString = fieldValueString.replaceAll(
+							"(?:0(?:0\\s?|11\\s)|\\+)([1-9]\\d+).*", "$1");
+					if (!fieldValueString.matches(".*\\D.*")) {
+						// Format international number
+						fieldValueString = formatPhoneNumberInternational(fieldValueString);
+					}
+					fieldValueString = "+" + fieldValueString;
+				}
+				//
+			} else {
+				// Replace smart quotes with normal quotes and em
+				// dashes with normal dashes
+				fieldValueString = Helpers.smartCharsReplace(fieldValueString);
+			}
+			fieldValue = new TextValueDefn(fieldValueString);
+		}
+		return fieldValue;
+	}
+
+	private static BaseValue getTimestampValue(HttpServletRequest request, BaseField field,
+			String internalFieldName) throws CantDoThatException,
+			InputRecordException {
+		BaseValue fieldValue = null;
+		Set<String> httpParameters = request.getParameterMap().keySet();
+		// Every date will include at least a year, use this to check if
+		// the date value been specifically sent by the user
+		if (httpParameters.contains(internalFieldName + "_years")) {
+			DateValue dateFieldValue = new DateValueDefn(null, null, null, null, null, null);
+			dateFieldValue.setDateResolution(((DateField) field).getDateResolution());
+			// obtain values passed within the request, (if any)
+			String partGotTo = "year";
+			Integer years = null;
+			Integer months = null;
+			Integer days = null;
+			Integer hours = null;
+			Integer minutes = null;
+			Integer seconds = null;
+			try {
+				years = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
+						+ "_years");
+				partGotTo = "month";
+				months = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
+						+ "_months");
+				partGotTo = "day";
+				days = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
+						+ "_days");
+				partGotTo = "hour";
+				hours = ServletDataMethods.getIntegerParameterValue(request, internalFieldName
+						+ "_hours");
+				partGotTo = "minute";
+				minutes = ServletDataMethods.getIntegerParameterValue(request,
+						internalFieldName + "_minutes");
+				partGotTo = "second";
+				seconds = ServletDataMethods.getIntegerParameterValue(request,
+						internalFieldName + "_seconds");
+				if (years != null) {
+					dateFieldValue.set(Calendar.YEAR, years);
+				}
+				if (months != null) {
+					dateFieldValue.set(Calendar.MONTH, months);
+				}
+				if (days != null) {
+					dateFieldValue.set(Calendar.DAY_OF_MONTH, days);
+				}
+				if (hours != null) {
+					dateFieldValue.set(Calendar.HOUR_OF_DAY, hours);
+				}
+				if (minutes != null) {
+					dateFieldValue.set(Calendar.MINUTE, minutes);
+				}
+				if (seconds != null) {
+					dateFieldValue.set(Calendar.SECOND, seconds);
+				}
+				// Additionally, allow delta values to be submitted (add
+				// more on an as-needed basis)
+				Integer days_delta = ServletDataMethods.getIntegerParameterValue(request,
+						internalFieldName + "_days_delta");
+				if (days_delta != null) {
+					dateFieldValue.add(Calendar.DAY_OF_MONTH, days_delta);
+				}
+				Integer minutes_delta = ServletDataMethods.getIntegerParameterValue(request,
+						internalFieldName + "_minutes_delta");
+				if (minutes_delta != null) {
+					dateFieldValue.add(Calendar.MINUTE, minutes_delta);
+				}
+			} catch (NumberFormatException nfex) {
+				throw new InputRecordException("The " + partGotTo
+						+ " is invalid because it needs to be a whole number", field, nfex);
+			}
+			// If date value is null, leave fieldValue as a null object as
+			// well
+			// or the dateField in the database will be set to null
+			if (dateFieldValue.getValueDate() == null) {
+				// However if all fields have specifically been set as null
+				// by
+				// the user then do set the fieldValue to the dateFieldValue
+				// object representing null
+				switch (((DateField) field).getDateResolution()) {
+				case Calendar.YEAR:
+					if (years == null) {
+						fieldValue = dateFieldValue;
+					}
+					break;
+				case Calendar.MONTH:
+					if (years == null && months == null) {
+						fieldValue = dateFieldValue;
+					}
+					break;
+				case Calendar.DAY_OF_MONTH:
+					if (years == null && months == null && days == null) {
+						fieldValue = dateFieldValue;
+					}
+					break;
+				case Calendar.HOUR_OF_DAY:
+					if (years == null && months == null && days == null && hours == null) {
+						fieldValue = dateFieldValue;
+					}
+					break;
+				case Calendar.MINUTE:
+					if (years == null && months == null && days == null && hours == null
+							&& minutes == null) {
+						fieldValue = dateFieldValue;
+					}
+					break;
+				}
+			} else {
+				fieldValue = dateFieldValue;
+			}
+		}
+		return fieldValue;
+	}
+
+	private static BaseValue getDecimalValue(BaseField field, String fieldValueString)
+			throws InputRecordException {
+		BaseValue fieldValue = null;
+		if (fieldValueString != null) {
+			if (fieldValueString.equals("")) {
+				// empty string translated to null
+				fieldValue = new DecimalValueDefn(null);
+			} else {
+				// reformat to ensure number can be recognised by Java
+				// .4 -> 0.4
+				// 4. -> 4.0
+				// . -> 0.0
+				// (pound sign)46.50 -> 46.50 - from the error logs, users
+				// commonly input pound signs
+				fieldValueString = fieldValueString.replace("\u00A3", "");
+				fieldValueString = fieldValueString.replace("$", "");
+				if (fieldValueString.startsWith(".")) {
+					fieldValueString = "0" + fieldValueString;
+				}
+				if (fieldValueString.endsWith(".")) {
+					fieldValueString = fieldValueString + "0";
+				}
+				try {
+					fieldValue = new DecimalValueDefn(Double.valueOf(fieldValueString));
+				} catch (NumberFormatException nfex) {
+					throw new InputRecordException("Value " + fieldValueString
+							+ " not allowed because a number needs to be entered", field, nfex);
+				}
+			}
+		}
+		return fieldValue;
+	}
+
+	private static BaseValue getIntegerValue(BaseField field, String fieldValueString)
+			throws InputRecordException {
+		BaseValue fieldValue = null;
+		if (fieldValueString != null) {
+			if (!fieldValueString.equals("")) {
+				fieldValue = new IntegerValueDefn(null);
+			} else {
+				try {
+					fieldValue = new IntegerValueDefn(Integer.valueOf(fieldValueString));
+				} catch (NumberFormatException nfex) {
+					throw new InputRecordException("Value " + fieldValueString
+							+ " not allowed because a whole number needs to be entered", field,
+							nfex);
 				}
 			}
 		}
@@ -794,11 +837,12 @@ public final class ServletSessionMethods {
 	 * 
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
-	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+	 * http://www.aa-asterisk.org.uk/index.php/
+	 * Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
 	 * edited by Ian Galpin; twitter: @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
-//logger.debug("z08: attempting to format number " + fieldValueString);
+		// logger.debug("z08: attempting to format number " + fieldValueString);
 		fieldValueString = fieldValueString.trim();
 		// Find string length
 		int fieldValueLength = fieldValueString.length();
@@ -818,7 +862,7 @@ public final class ServletSessionMethods {
 		String pattern36 = "[58]00.*";
 		// Format numbers by leading digits and length
 		if (fieldValueLength == 10 && fieldValueString.matches(pattern28)) {
-//logger.debug("z09: a 10 digit NSN beginning with 2 was found");
+			// logger.debug("z09: a 10 digit NSN beginning with 2 was found");
 			Matcher m28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$").matcher(fieldValueString);
 			if (m28.matches()) {
 				fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
@@ -834,7 +878,7 @@ public final class ServletSessionMethods {
 				fieldValueString = m55.group(1) + " " + m55.group(2);
 			}
 		} else if (fieldValueLength == 9 && fieldValueString.matches(pattern54)) {
-//logger.debug("z10: a 9 digit NSN beginning with 169772  was found");
+			// logger.debug("z10: a 9 digit NSN beginning with 169772  was found");
 			Matcher m54 = Pattern.compile("^(\\d{5})(\\d{4})$").matcher(fieldValueString);
 			if (m54.matches()) {
 				fieldValueString = m54.group(1) + " " + m54.group(2);
@@ -855,12 +899,14 @@ public final class ServletSessionMethods {
 				fieldValueString = m36.group(1) + " " + m36.group(2);
 			}
 		} else if (fieldValueLength > 1) {
-//logger.debug("z11: returning default splitting of " + fieldValueString);
-			fieldValueString = fieldValueString.charAt(0) + " "
-					+ fieldValueString.substring(1, 5) + " " + fieldValueString.substring(5);
-//logger.debug("z11a: which is " + fieldValueString);
+			// logger.debug("z11: returning default splitting of " +
+			// fieldValueString);
+			fieldValueString = fieldValueString.charAt(0) + " " + fieldValueString.substring(1, 5)
+					+ " " + fieldValueString.substring(5);
+			// logger.debug("z11a: which is " + fieldValueString);
 		}
-//logger.debug("z12: hopefully some sort of formatting has been done, returning " + fieldValueString);
+		// logger.debug("z12: hopefully some sort of formatting has been done, returning "
+		// + fieldValueString);
 		return fieldValueString;
 	}
 
