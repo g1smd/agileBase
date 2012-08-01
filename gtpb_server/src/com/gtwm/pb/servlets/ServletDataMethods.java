@@ -163,6 +163,7 @@ public final class ServletDataMethods {
 				rowId = Integer.parseInt(stringRowId);
 			}
 		}
+		logger.debug("Updating " + table + " " + rowId);
 		sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
 		ServletSessionMethods.setFieldInputValues(sessionData, request, newRecord, databaseDefn,
 				table, multipartItems);

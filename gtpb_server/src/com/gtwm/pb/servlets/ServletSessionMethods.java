@@ -447,6 +447,7 @@ public final class ServletSessionMethods {
 				continue FIELDSLOOP;
 			}
 			try {
+				logger.debug("About to ket field value for " + field);
 				BaseValue fieldValue = getFieldValue(request, field, newRecord, databaseDefn,
 						multipartItems);
 				// The following logic is:
@@ -518,7 +519,7 @@ public final class ServletSessionMethods {
 		String fieldValueString = ServletUtilMethods.getParameter(request, internalFieldName,
 				multipartItems);
 		DatabaseFieldType databaseFieldType = field.getDbType();
-		logger.debug(field.toString() + " is a " + databaseFieldType);
+		logger.debug("Field " + field + " is a " + databaseFieldType);
 		// reduce common errors for numbers (commas, spaces at end, - signs on
 		// their own)
 		if (databaseFieldType.equals(DatabaseFieldType.INTEGER)
