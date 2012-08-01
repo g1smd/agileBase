@@ -583,6 +583,7 @@ public final class ServletSessionMethods {
 				fieldValueString = textCase.transform(fieldValueString);
 			}
 			TextValue textValue = new TextValueDefn(fieldValueString);
+			// Phone numbers
 			if (textValue.isPhoneNumber()) {
 				// GB phone numbers
 				if (textValue.isPhoneNumberGB()) {
@@ -596,14 +597,11 @@ public final class ServletSessionMethods {
 									"^((?:0(?:0\\s?|11\\s)|\\+)(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
 							.matcher(fieldValueString);
 					if (numberPartsGB.matches()) {
-						// logger.debug("z06: number regex matches against "
-						// + fieldValueString);
+//logger.debug("z06: number regex matches against " + fieldValueString);
 						// Extract NSN part of GB number, trim it
-						// and
-						// remove ')' if present
+						// and remove ')' if present
 						if (numberPartsGB.group(3) != null) {
-							// logger.debug("z07: this has an NSN of "
-							// + numberPartsGB.group(3));
+//logger.debug("z07: this has an NSN of " + numberPartsGB.group(3));
 							String phoneNSNString = numberPartsGB.group(3).trim()
 									.replaceAll("[\\)\\s]", "");
 							// Format NSN part of GB number
@@ -613,11 +611,11 @@ public final class ServletSessionMethods {
 							// Set prefix as 0 or as +44 and space
 							if (phonePrefixString != null) {
 								if (phonePrefixString.equals("44")) {
-									// logger.debug("z13: setting +44 prefix");
+//logger.debug("z13: setting +44 prefix");
 									phonePrefixString = "+44 ";
 								}
 							} else {
-								// logger.debug("z14: setting 0 prefix");
+//logger.debug("z14: setting 0 prefix");
 								phonePrefixString = "0";
 							}
 							// Extract extension
@@ -630,24 +628,20 @@ public final class ServletSessionMethods {
 							// Add prefix back on to NSN
 							fieldValueString = phonePrefixString
 									+ phoneNSNFormattedString;
-							// Add extension back on to NSN
+							// Add extension back on to number
 							if (phoneHasExtension) {
 								fieldValueString += phoneExtensionString;
 							}
-							// logger.debug("z15: we are here");
+//logger.debug("z15: we are here");
 						}
-						// logger.debug("z16: we are now here");
+//logger.debug("z16: we are now here");
 					}
 				}
 				// International phone numbers
-				// Uncomment when
-				// TextValue.isPhoneNumberInternational implemented
-				// } else if ((new
-				// TextValueDefn(fieldValueString)).isPhoneNumberInternational())
-				// {
+				// } else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
 				if (textValue.isPhoneNumberInternational()) {
 					fieldValueString = fieldValueString.replaceAll(
-							"(?:0(?:0\\s?|11\\s)|\\+)([1-9]\\d+).*", "$1");
+							"(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+).*", "$1");
 					if (!fieldValueString.matches(".*\\D.*")) {
 						// Format international number
 						fieldValueString = formatPhoneNumberInternational(fieldValueString);
@@ -837,12 +831,11 @@ public final class ServletSessionMethods {
 	 * 
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
-	 * http://www.aa-asterisk.org.uk/index.php/
-	 * Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
-	 * edited by Ian Galpin; twitter: @g1smd
+	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+	 * edited by Ian Galpin; @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
-		// logger.debug("z08: attempting to format number " + fieldValueString);
+//logger.debug("z08: attempting to format number " + fieldValueString);
 		fieldValueString = fieldValueString.trim();
 		// Find string length
 		int fieldValueLength = fieldValueString.length();
@@ -862,7 +855,7 @@ public final class ServletSessionMethods {
 		String pattern36 = "[58]00.*";
 		// Format numbers by leading digits and length
 		if (fieldValueLength == 10 && fieldValueString.matches(pattern28)) {
-			// logger.debug("z09: a 10 digit NSN beginning with 2 was found");
+//logger.debug("z09: a 10 digit NSN beginning with 2 was found");
 			Matcher m28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$").matcher(fieldValueString);
 			if (m28.matches()) {
 				fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
@@ -878,7 +871,7 @@ public final class ServletSessionMethods {
 				fieldValueString = m55.group(1) + " " + m55.group(2);
 			}
 		} else if (fieldValueLength == 9 && fieldValueString.matches(pattern54)) {
-			// logger.debug("z10: a 9 digit NSN beginning with 169772  was found");
+//logger.debug("z10: a 9 digit NSN beginning with 169772  was found");
 			Matcher m54 = Pattern.compile("^(\\d{5})(\\d{4})$").matcher(fieldValueString);
 			if (m54.matches()) {
 				fieldValueString = m54.group(1) + " " + m54.group(2);
@@ -899,27 +892,26 @@ public final class ServletSessionMethods {
 				fieldValueString = m36.group(1) + " " + m36.group(2);
 			}
 		} else if (fieldValueLength > 1) {
-			// logger.debug("z11: returning default splitting of " +
-			// fieldValueString);
+//logger.debug("z11: returning default splitting of " + fieldValueString);
 			fieldValueString = fieldValueString.charAt(0) + " " + fieldValueString.substring(1, 5)
 					+ " " + fieldValueString.substring(5);
-			// logger.debug("z11a: which is " + fieldValueString);
+//logger.debug("z11a: which is " + fieldValueString);
 		}
-		// logger.debug("z12: hopefully some sort of formatting has been done, returning "
-		// + fieldValueString);
+//logger.debug("z12: hopefully some sort of formatting has been done, returning " + fieldValueString);
 		return fieldValueString;
 	}
 
 	/**
 	 * Format international phone numbers to include a space so that when
 	 * they're exported to CSV, spreadsheets recognise them as text rather than
-	 * numbers. Edited by Ian Galpin; twitter: @g1smd
+	 * numbers. Edited by Ian Galpin @g1smd
 	 */
 	private static String formatPhoneNumberInternational(String fieldValueString) {
+		fieldValueString = fieldValueString.trim();
 		// Single digit country codes
 		String pattern1 = "(?:(1|7)).*";
 		// Double digit country codes, but not 44
-		String pattern2 = "(?:(2[07]|3[0123469]|4[01356789|5[12345678]|6[0123456]|8[12469]|9[0123458])).*";
+		String pattern2 = "(?:(2[07]|3[0123469]|4[01356789]|5[12345678]|6[0123456]|8[12469]|9[0123458])).*";
 		// Triple digit country codes
 		String pattern3 = "(?:(2[12345689]|3[578]|42|5[09]|6[789]|8[03578]|9[679])\\d).*";
 		// Format international numbers by leading digits
