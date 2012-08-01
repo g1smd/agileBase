@@ -1113,7 +1113,6 @@ function fTabs() {
 		// Set parent row ID for use if we're using a form table
 		var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
 		jqTab.click(function() {
-			console.log("Tab click: " + jqTab.text());
 			jqTab.addClass("tabLoading");
 			var tabInternalTableName = $(this).attr("data-internaltablename");
 			$(".tab_choice").removeClass("active");

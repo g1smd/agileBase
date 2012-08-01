@@ -20,6 +20,7 @@
 #end
 #if(!$sessionRowId)
   #set($sessionRowId = $sessionData.getRowId($sessionTable))
+  $viewTools.log("Looked up sessionRowId $sessionRowId")
 #end
 #if(!$parentTable)
   #set($parentTable = $sessionData.getTable())
