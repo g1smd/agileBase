@@ -17,6 +17,7 @@
 ##
 #set($sessionTable = $sessionData.getCustomTable("tabTable"))
 #set($parentTable = $sessionData.getTable())
+$viewTools.log("session table $sessionTable, parent $parentTable")
 #if(!$sessionData.getCustomBoolean("overrideTableForm"))
   #set($formTable = $parentTable.getFormTable())
 #end

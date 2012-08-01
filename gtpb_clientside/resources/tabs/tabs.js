@@ -1184,6 +1184,10 @@ function fTabs() {
 	}); // end of .tab_choice.each
 }
 
+/**
+ * Save a new record in the table given by the tab's internaltablename property.
+ * The record will be linked by relation to the parent table parentInternalTableName
+ */
 function newChild(jqTab, parentInternalTableName) {
 	var tabInternalTableName = jqTab.attr("data-internaltablename");
 	var relationFieldInternalName = jqTab.attr("data-relationfield");
