@@ -698,66 +698,70 @@ public final class ServletSessionMethods {
 						if (textCase != null) {
 							fieldValueString = textCase.transform(fieldValueString);
 						}
-						// GB phone numbers
 						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
-							// Extract and store optional country prefix and
-							// optional extension.
-							// Grab only the NSN part for formatting.
-							// NSN part might include spaces or ')' and will
-							// need to be removed.
-							Matcher numberPartsGB = Pattern
-									.compile(
+							// GB phone numbers
+							if (this.isPhoneNumberGB()) {
+								// Extract and store optional country prefix and
+								// optional extension.
+								// Grab only the NSN part for formatting.
+								// NSN part might include spaces or ')' and will
+								// need to be removed.
+								Matcher numberPartsGB = Pattern
+										.compile(
 											"^((?:0(?:0\\s?|11\\s)|\\+)(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
-									.matcher(fieldValueString);
-							if (numberPartsGB.matches()) {
+										.matcher(fieldValueString);
+								if (numberPartsGB.matches()) {
 //logger.debug("z06: number regex matches against " + fieldValueString);
-								// Extract NSN part of GB number, trim it and
-								// remove ')' if present
-								if (numberPartsGB.group(3) != null) {
+									// Extract NSN part of GB number, trim it and
+									// remove ')' if present
+									if (numberPartsGB.group(3) != null) {
 //logger.debug("z07: this has an NSN of " + numberPartsGB.group(3));
-									String phoneNSNString = numberPartsGB.group(3).trim()
-											.replaceAll("[\\)\\s]", "");
-									// Format NSN part of GB number
-									String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
-									// Extract +44 prefix if present
-									String phonePrefixString = numberPartsGB.group(2);
-									// Set prefix as 0 or as +44 and space
-									if (phonePrefixString != null) {
-										if (phonePrefixString.equals("44")) {
+										String phoneNSNString = numberPartsGB.group(3).trim()
+												.replaceAll("[\\)\\s]", "");
+										// Format NSN part of GB number
+										String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
+										// Extract +44 prefix if present
+										String phonePrefixString = numberPartsGB.group(2);
+										// Set prefix as 0 or as +44 and space
+										if (phonePrefixString != null) {
+											if (phonePrefixString.equals("44")) {
 //logger.debug("z13: setting +44 prefix");
-											phonePrefixString = "+44 ";
-										}
-									} else {
+												phonePrefixString = "+44 ";
+											}
+										} else {
 //logger.debug("z14: setting 0 prefix");
-										phonePrefixString = "0";
-									}
-									// Extract extension
-									boolean phoneHasExtension = false;
-									String phoneExtensionString = null;
-									if (numberPartsGB.group(4) != null) {
-										phoneHasExtension = true;
-										phoneExtensionString = " " + numberPartsGB.group(4);
-									}
-									// Add prefix back on to NSN
-									fieldValueString = phonePrefixString + phoneNSNFormattedString;
-									// Add extension back on to NSN
-									if (phoneHasExtension) {
-										fieldValueString += phoneExtensionString;
-									}
+											phonePrefixString = "0";
+										}
+										// Extract extension
+										boolean phoneHasExtension = false;
+										String phoneExtensionString = null;
+										if (numberPartsGB.group(4) != null) {
+											phoneHasExtension = true;
+											phoneExtensionString = " " + numberPartsGB.group(4);
+										}
+										// Add prefix back on to NSN
+										fieldValueString = phonePrefixString + phoneNSNFormattedString;
+										// Add extension back on to NSN
+										if (phoneHasExtension) {
+											fieldValueString += phoneExtensionString;
+										}
 //logger.debug("z15: we are here");
-								}
+									}
 //logger.debug("z16: we are now here");
+								}
 							}
-						// International phone numbers
-						/* Uncomment when TextValue.isPhoneNumberInternational implemented
-						} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
+							// International phone numbers
+							// Uncomment when TextValue.isPhoneNumberInternational implemented
+							//	} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
+							if (this.isPhoneNumberInternational()) {
 							fieldValueString = fieldValueString.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9]\\d+).*", "$1");
-							if (!fieldValueString.matches(".*\\D.*")) {
-								// Format international number
-								fieldValueString = formatPhoneNumberInternational(fieldValueString);
+								if (!fieldValueString.matches(".*\\D.*")) {
+									// Format international number
+									fieldValueString = formatPhoneNumberInternational(fieldValueString);
+								}
+								fieldValueString = "+" + fieldValueString;
 							}
-							fieldValueString = "+" + fieldValueString;
-						*/
+						//
 						} else {
 							// Replace smart quotes with normal quotes and em
 							// dashes with normal dashes

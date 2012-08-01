@@ -146,7 +146,8 @@ public final class ViewTools implements ViewToolsInfo {
 
 	public String getAreaForPhoneNumber(String phoneNumber) {
 		if (this.areaCodes.isEmpty()) {
-			// initialise array, values from wikipedia
+			// initialise array, values from wikipedia and @g1smd
+			// this is a list of initial digits not area codes
 			this.areaCodes.put("200", "London");
 			this.areaCodes.put("201", "London");
 			this.areaCodes.put("203", "London");
