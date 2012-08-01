@@ -518,6 +518,7 @@ public final class ServletSessionMethods {
 		String fieldValueString = ServletUtilMethods.getParameter(request, internalFieldName,
 				multipartItems);
 		DatabaseFieldType databaseFieldType = field.getDbType();
+		logger.debug(field.toString() + " is a " + databaseFieldType);
 		// reduce common errors for numbers (commas, spaces at end, - signs on
 		// their own)
 		if (databaseFieldType.equals(DatabaseFieldType.INTEGER)
@@ -533,11 +534,13 @@ public final class ServletSessionMethods {
 					fieldValueString = "0";
 				}
 			}
+			logger.debug("int/ser/float: " + fieldValueString);
 		}
 		switch (databaseFieldType) {
 		case INTEGER:
 		case SERIAL:
 			fieldValue = getIntegerValue(field, fieldValueString);
+			logger.debug("getIntegerValue -> " + fieldValue);
 			break;
 		case FLOAT:
 			fieldValue = getDecimalValue(field, fieldValueString);

@@ -1,19 +1,14 @@
 <%
-String googleKey = "";
+String googleKey = "https://www.google.com/jsapi?key=AIzaSyD87nNNZYrfRNIAOSC0ayCB4yj6KkJ9JlI";
 String requestURL = request.getRequestURL().toString();
 boolean ssl = false;
 boolean live = false;
 if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
-  googleKey = "http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBTkxqGBZcNO6KTJ8OH7el13ZyLEzxT0-wdY7BkQmrNPx8dhLS-syRRsRQ";  
   live = true;
 } else if (requestURL.startsWith("https://appserver.gtportalbase.com")) {
-  googleKey = "https://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg";
+  //googleKey = "https://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg";
   ssl = true;
   live = true;
-} else if (requestURL.startsWith("http://gtwmbackup.dh.bytemark.co.uk")) {
-  googleKey = "http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBQf1koDrgwv2nVopgtXyNJJGf3wPhSGxzvELTvIoGYjhEXJzrBbXQIbKw";
-} else if (requestURL.startsWith("http://mcc.hpl.hp.com:8080")) {
-	googleKey = "http://www.google.com/jsapi?key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSc_vMwNn3P31Pbn-7BnVhZNCM03BSA2_dWIrkQNs5kAuiaHmwVTAjuYw";
 }
 %>
 <html>
