@@ -37,6 +37,8 @@ public interface TextValue extends BaseValue {
 
 	public boolean isPhoneNumber();
 
+	public boolean isPhoneNumberGB();
+
 	public boolean isPhoneNumberInternational();
 
  /**

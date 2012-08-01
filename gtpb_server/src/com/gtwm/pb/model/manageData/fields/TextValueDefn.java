@@ -104,11 +104,18 @@ public class TextValueDefn implements TextValue {
 	}
 
 	public boolean isPhoneNumber() {
+		if (this.isPhoneNumberGB() || (this.isPhoneNumberInternational()) {
+			return true;
+		}
+	return false;
+	}
+
+	public boolean isPhoneNumberGB() {
 		if (this.isNull()) {
 			return false;
 		}
 		int length = this.textValue.trim().length();
-		if ((length > 9) && (length < 20)) {
+		if ((length > 9) && (length < 26)) {
 			// vaguely based on a regex from http://www.regexlib.com/
 			// alterations by @g1smd
 			// "^(?:(?:(?:0(?:0\\s?|11\\s)|\\+)44\\s?(?:\\(?0\\)?\\s?)?)|(?:\\(?0))(?:(?:\\d{5}\\)?\\s?\\d{4,5})|(?:\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3}))|(?:\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|(?:\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(?:\\s?\\#\\d{3,4})?$"
@@ -139,7 +146,7 @@ logger.debug("z02a: this is not a phone number: " + this.textValue);
 			return false;
 		}
 		int length = this.textValue.trim().length();
-		if ((length > 6) && (length < 22)) {
+		if ((length > 6) && (length < 27)) {
 			String regexIntl = "^";
 			regexIntl += "(";
 			regexIntl += "(?:0(?:0\\s?|11\\s)|\\+)"; // 00, 011 or +
