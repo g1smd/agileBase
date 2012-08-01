@@ -32,7 +32,7 @@
 #if(($formStyle == "TWO_COLUMNS") && ($component))
   <div class="two_cols" id="rowid_$sessionTable.getInternalTableName()" data-rowid="$sessionRowId">
 #end
-$viewTools.log("Loading tab content for $sessionTable $sessionRowId")
+$viewTools.log("Form table is $formTable. Loading tab content for $sessionTable $sessionRowId")
 #set($fields = $sessionTable.getFields())
 #set($primaryKey = $sessionTable.getPrimaryKey())
 #set($lastField = $fields.last())
