@@ -937,7 +937,7 @@ public final class ViewTools implements ViewToolsInfo {
 	}
 
 	public void log(Object itemToLog) {
-		logger.info("Template message at " + System.currentTimeMillis() + ": " + itemToLog);
+		logger.info("Template message at " + System.currentTimeMillis() + "(" + this.request.getRemoteUser() + ") : " + itemToLog);
 	}
 
 	public void startTimer(String timerName) {
