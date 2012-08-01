@@ -813,7 +813,7 @@ public final class ServletSessionMethods {
 			throws InputRecordException {
 		BaseValue fieldValue = null;
 		if (fieldValueString != null) {
-			if (!fieldValueString.equals("")) {
+			if (fieldValueString.equals("")) {
 				fieldValue = new IntegerValueDefn(null);
 			} else {
 				try {
