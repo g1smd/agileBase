@@ -53,6 +53,7 @@ import com.gtwm.pb.model.interfaces.fields.IntegerField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.FileField;
+import com.gtwm.pb.model.interfaces.fields.TextValue;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.SessionAction;
@@ -698,9 +699,10 @@ public final class ServletSessionMethods {
 						if (textCase != null) {
 							fieldValueString = textCase.transform(fieldValueString);
 						}
-						if ((new TextValueDefn(fieldValueString)).isPhoneNumber()) {
+						TextValue textValue = new TextValueDefn(fieldValueString);
+						if (textValue.isPhoneNumber()) {
 							// GB phone numbers
-							if (this.isPhoneNumberGB()) {
+							if (textValue.isPhoneNumberGB()) {
 								// Extract and store optional country prefix and
 								// optional extension.
 								// Grab only the NSN part for formatting.
@@ -753,7 +755,7 @@ public final class ServletSessionMethods {
 							// International phone numbers
 							// Uncomment when TextValue.isPhoneNumberInternational implemented
 							//	} else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
-							if (this.isPhoneNumberInternational()) {
+							if (textValue.isPhoneNumberInternational()) {
 							fieldValueString = fieldValueString.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9]\\d+).*", "$1");
 								if (!fieldValueString.matches(".*\\D.*")) {
 									// Format international number
