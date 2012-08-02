@@ -926,23 +926,25 @@ public final class ServletSessionMethods {
 		// Triple digit country codes
 		String pattern3 = "(?:(2[12345689]|3[578]|42|5[09]|6[789]|8[03578]|9[679])\\d).*";
 		// Format international numbers by leading digits
+		// Use country code from digits-only data
+		// and remainer of number from original data (preserves spaces)
 		if (fieldValueDigitsOnlyString.matches(pattern1)) {
-			Matcher m1 = Pattern.compile("^((\\d\\s?){1})(.*)$").matcher(fieldValueString);
-			if (m1.matches()) {
-				String countryCode = m1.group(1).replaceAll("[\\s]", "")
-				fieldValueString = countryCode + " " + m1.group(3);
+			Matcher c1 = Pattern.compile("^(\\d{1})(.*)$").matcher(fieldValueDigitsOnlyString);
+			Matcher m1 = Pattern.compile("^(?:(?:\\d\\s?){1})(.*)$").matcher(fieldValueString);
+			if (c1.matches() && m1.matches()) {
+				fieldValueString = c1.group(1) + " " + m1.group(1);
 			}
 		} else if (fieldValueDigitsOnlyString.matches(pattern2)) {
-			Matcher m2 = Pattern.compile("^((\\d\\s?){2})(.*)$").matcher(fieldValueString);
-			if (m2.matches()) {
-				String countryCode = m2.group(1).replaceAll("[\\s]", "")
-				fieldValueString = countryCode + " " + m2.group(3);
+			Matcher c2 = Pattern.compile("^(\\d{2})(.*)$").matcher(fieldValueDigitsOnlyString);
+			Matcher m2 = Pattern.compile("^(?:(?:\\d\\s?){2})(.*)$").matcher(fieldValueString);
+			if (c2.matches() && m2.matches()) {
+				fieldValueString = c2.group(1) + " " + m2.group(1);
 			}
 		} else if (fieldValueDigitsOnlyString.matches(pattern3)) {
-			Matcher m3 = Pattern.compile("^((\\d\\s?){3})(.*)$").matcher(fieldValueString);
-			if (m3.matches()) {
-				String countryCode = m3.group(1).replaceAll("[\\s]", "")
-				fieldValueString = countryCode + " " + m3.group(3);
+			Matcher c3 = Pattern.compile("^(\\d{3})(.*)$").matcher(fieldValueDigitsOnlyString);
+			Matcher m3 = Pattern.compile("^(?:(?:\\d\\s?){3})(.*)$").matcher(fieldValueString);
+			if (c3.matches() && m3.matches()) {
+				fieldValueString = c3.group(1) + " " + m3.group(1);
 			}
 		}
 		return fieldValueString;
