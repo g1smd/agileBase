@@ -638,7 +638,6 @@ public final class ServletSessionMethods {
 					}
 				}
 				// International phone numbers
-				// } else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
 				if (textValue.isPhoneNumberInternational()) {
 					// Extract extension
 					boolean phoneHasExtension = false;
@@ -650,8 +649,8 @@ public final class ServletSessionMethods {
 					fieldValueString = fieldValueString.replaceAll(
 							"(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+).*", "$1");
 			//		if (!fieldValueString.matches(".*\\D.*")) {
-						// Format international number
-						fieldValueString = formatPhoneNumberInternational(fieldValueString);
+					// Format international number
+					fieldValueString = formatPhoneNumberInternational(fieldValueString);
 			//		}
 					// Add + to country code and number
 					fieldValueString = "+" + fieldValueString;
