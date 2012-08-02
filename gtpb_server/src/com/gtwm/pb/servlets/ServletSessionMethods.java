@@ -646,6 +646,7 @@ public final class ServletSessionMethods {
 						phoneHasExtension = true;
 						phoneExtensionString = " " + fieldValueString.replaceAll("[^\#]+(\#\d{3,4})", $1);
 					}
+					// Extract country code and number
 					fieldValueString = fieldValueString.replaceAll(
 							"(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+).*", "$1");
 			//		if (!fieldValueString.matches(".*\\D.*")) {
@@ -654,6 +655,7 @@ public final class ServletSessionMethods {
 			//		}
 					// Add + to country code and number
 					fieldValueString = "+" + fieldValueString;
+					// Add extension back on to number
 					if (phoneHasExtension) {
 						fieldValueString += phoneExtensionString;
 					}
