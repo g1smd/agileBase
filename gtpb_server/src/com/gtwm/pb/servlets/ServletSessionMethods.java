@@ -944,8 +944,8 @@ logger.debug("z26: international number digits only " + fieldValueDigitsOnlyStri
 			Matcher m2 = Pattern.compile("^(?:(?:\\d\\s?){2})(.*)$").matcher(fieldValueString);
 			if (c2.matches() && m2.matches()) {
 				fieldValueString = c2.group(1) + " " + m2.group(1);
-//logger.debug("z27: international - country " + c2.group(1));
-//logger.debug("z28: international - number " + m2.group(1));
+logger.debug("z27: international - country " + c2.group(1));
+logger.debug("z28: international - number " + m2.group(1));
 			}
 		} else if (fieldValueDigitsOnlyString.matches(pattern3)) {
 			Matcher c3 = Pattern.compile("^(\\d{3})(.*)$").matcher(fieldValueDigitsOnlyString);
