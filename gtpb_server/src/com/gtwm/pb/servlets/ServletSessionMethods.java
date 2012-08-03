@@ -645,20 +645,22 @@ logger.debug("z16: we are now here");
 					if (fieldValueString.replaceAll("[^\\#]+(\\#\\d{3,4})", "$1") != null) {
 						phoneHasExtension = true;
 						phoneExtensionString = " " + fieldValueString.replaceAll("[^\\#]+(\\#\\d{3,4})", "$1");
+logger.debug("z21: international extension " + phoneExtensionString);
 					}
 					// Extract country code and number
 					fieldValueString = fieldValueString.replaceAll(
 							"(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+).*", "$1");
-			//		if (!fieldValueString.matches(".*\\D.*")) {
+logger.debug("z22: international number without prefix " + fieldValueString);
 					// Format international number
 					fieldValueString = formatPhoneNumberInternational(fieldValueString);
-			//		}
+logger.debug("z23: formatted international number " + fieldValueString);
 					// Add + to country code and number
 					fieldValueString = "+" + fieldValueString;
 					// Add extension back on to number
 					if (phoneHasExtension) {
 						fieldValueString += phoneExtensionString;
 					}
+logger.debug("z24: we are now here");
 				}
 			} else {
 				// Replace smart quotes with normal quotes and em
@@ -920,6 +922,8 @@ logger.debug("z12: hopefully some sort of formatting has been done, returning " 
 	private static String formatPhoneNumberInternational(String fieldValueString) {
 		fieldValueString = fieldValueString.trim();
 		String fieldValueDigitsOnlyString = fieldValueString.replaceAll("[\\s]", "");
+logger.debug("z25: international number " + fieldValueString);
+logger.debug("z26: international number digits only " + fieldValueDigitsOnlyString);
 		// Single digit country codes
 		String pattern1 = "(?:(1|7)).*";
 		// Double digit country codes, but not 44
@@ -940,6 +944,8 @@ logger.debug("z12: hopefully some sort of formatting has been done, returning " 
 			Matcher m2 = Pattern.compile("^(?:(?:\\d\\s?){2})(.*)$").matcher(fieldValueString);
 			if (c2.matches() && m2.matches()) {
 				fieldValueString = c2.group(1) + " " + m2.group(1);
+logger.debug("z27: international - country " + c2.group(1));
+logger.debug("z28: international - number " + m2.group(1));
 			}
 		} else if (fieldValueDigitsOnlyString.matches(pattern3)) {
 			Matcher c3 = Pattern.compile("^(\\d{3})(.*)$").matcher(fieldValueDigitsOnlyString);
