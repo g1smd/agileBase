@@ -811,16 +811,16 @@ public final class ViewTools implements ViewToolsInfo {
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
 		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0\\s?|11\\s)|\\+)44)?0?([1-9]\\d+)\\#?.*", "$1");
-//logger.debug("z03: RegEx matching done, resulting number is " + phoneNumber);
+logger.debug("z03: RegEx matching done, resulting number is " + phoneNumber);
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 6) {
-//logger.debug("z04: number length is less than 6 for phone number " + phoneNumber);
+logger.debug("z04: number length is less than 6 for phone number " + phoneNumber);
 			return "";
 		}
 		for (int numDigitsInCode = 5; numDigitsInCode > 1; numDigitsInCode--) {
 			String possibleCode = phoneNumber.substring(0, numDigitsInCode);
 			String area = this.areaCodes.get(possibleCode);
-//logger.debug("z05: area code name has been looked up from " + possibleCode + ", it is " + area);
+logger.debug("z05: area code name has been looked up from " + possibleCode + ", it is " + area);
 			if (area != null) {
 				return area;
 			}
