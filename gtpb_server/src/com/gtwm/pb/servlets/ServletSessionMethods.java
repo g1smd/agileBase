@@ -642,17 +642,28 @@ public final class ServletSessionMethods {
 					}
 				}
 				// International phone numbers
-				// } else if ((new TextValueDefn(fieldValueString)).isPhoneNumberInternational()) {
 				if (textValue.isPhoneNumberInternational()) {
+					// Extract extension
+					boolean phoneHasExtension = false;
+					String phoneExtensionString = null;
+					if (fieldValueString.replaceAll("[^\#]+(\#\d{3,4})", $1) != null) {
+						phoneHasExtension = true;
+						phoneExtensionString = " " + fieldValueString.replaceAll("[^\#]+(\#\d{3,4})", $1);
+					}
+					// Extract country code and number
 					fieldValueString = fieldValueString.replaceAll(
 							"(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+).*", "$1");
-					if (!fieldValueString.matches(".*\\D.*")) {
-						// Format international number
-						fieldValueString = formatPhoneNumberInternational(fieldValueString);
-					}
+			//		if (!fieldValueString.matches(".*\\D.*")) {
+					// Format international number
+					fieldValueString = formatPhoneNumberInternational(fieldValueString);
+			//		}
+					// Add + to country code and number
 					fieldValueString = "+" + fieldValueString;
+					// Add extension back on to number
+					if (phoneHasExtension) {
+						fieldValueString += phoneExtensionString;
+					}
 				}
-				//
 			} else {
 				// Replace smart quotes with normal quotes and em
 				// dashes with normal dashes
@@ -912,6 +923,7 @@ public final class ServletSessionMethods {
 	 */
 	private static String formatPhoneNumberInternational(String fieldValueString) {
 		fieldValueString = fieldValueString.trim();
+		fieldValueDigitsOnlyString = fieldValueString.replaceAll("[\\s]", "");
 		// Single digit country codes
 		String pattern1 = "(?:(1|7)).*";
 		// Double digit country codes, but not 44
@@ -919,20 +931,25 @@ public final class ServletSessionMethods {
 		// Triple digit country codes
 		String pattern3 = "(?:(2[12345689]|3[578]|42|5[09]|6[789]|8[03578]|9[679])\\d).*";
 		// Format international numbers by leading digits
-		if (fieldValueString.matches(pattern1)) {
-			Matcher m1 = Pattern.compile("^(\\d{1})(.*)$").matcher(fieldValueString);
-			if (m1.matches()) {
-				fieldValueString = m1.group(1) + " " + m1.group(2);
+		// Use country code from digits-only data
+		// and remainer of number from original data (preserves spaces)
+		if (fieldValueDigitsOnlyString.matches(pattern1)) {
+			Matcher c1 = Pattern.compile("^(\\d{1})(.*)$").matcher(fieldValueDigitsOnlyString);
+			Matcher m1 = Pattern.compile("^(?:(?:\\d\\s?){1})(.*)$").matcher(fieldValueString);
+			if (c1.matches() && m1.matches()) {
+				fieldValueString = c1.group(1) + " " + m1.group(1);
 			}
-		} else if (fieldValueString.matches(pattern2)) {
-			Matcher m2 = Pattern.compile("^(\\d{2})(.*)$").matcher(fieldValueString);
-			if (m2.matches()) {
-				fieldValueString = m2.group(1) + " " + m2.group(2);
+		} else if (fieldValueDigitsOnlyString.matches(pattern2)) {
+			Matcher c2 = Pattern.compile("^(\\d{2})(.*)$").matcher(fieldValueDigitsOnlyString);
+			Matcher m2 = Pattern.compile("^(?:(?:\\d\\s?){2})(.*)$").matcher(fieldValueString);
+			if (c2.matches() && m2.matches()) {
+				fieldValueString = c2.group(1) + " " + m2.group(1);
 			}
-		} else if (fieldValueString.matches(pattern3)) {
-			Matcher m3 = Pattern.compile("^(\\d{3})(.*)$").matcher(fieldValueString);
-			if (m3.matches()) {
-				fieldValueString = m3.group(1) + " " + m3.group(2);
+		} else if (fieldValueDigitsOnlyString.matches(pattern3)) {
+			Matcher c3 = Pattern.compile("^(\\d{3})(.*)$").matcher(fieldValueDigitsOnlyString);
+			Matcher m3 = Pattern.compile("^(?:(?:\\d\\s?){3})(.*)$").matcher(fieldValueString);
+			if (c3.matches() && m3.matches()) {
+				fieldValueString = c3.group(1) + " " + m3.group(1);
 			}
 		}
 		return fieldValueString;

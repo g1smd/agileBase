@@ -853,7 +853,7 @@ public final class ViewTools implements ViewToolsInfo {
 				return country;
 			}
 		}
-		return "(may be invalid)";
+		return "(country code may be invalid)";
 	}
 
 	public SortedMap<BaseField, BaseValue> getAddress(Map<BaseField, BaseValue> tableDataRow) {
