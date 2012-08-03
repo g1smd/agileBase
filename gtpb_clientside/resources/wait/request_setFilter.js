@@ -17,6 +17,7 @@
  */
 
 // This function is never called - deletion candidate
+;
 function fCallback(sResponseText,sResponseXML){  			 
 
 }

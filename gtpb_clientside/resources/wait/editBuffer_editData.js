@@ -36,6 +36,7 @@
    Notes:
    1.  The value in the object isn't cached - the value sent is the value in the object when the request is made
  */
+;
 function fBuffer() {
 	// object maintains a reference to a DOM element and tracks keypresses and
 	// delays between keypresses

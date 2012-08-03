@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
+;
 $(document).ready(function(){
 	pane1Setup();
 	// If in a table (or admin section), show pane 3

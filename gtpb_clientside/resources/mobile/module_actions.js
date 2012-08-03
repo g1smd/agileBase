@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+;
 function assignButtonModuleActions() {
 	$('button.moduleaction').click(function() {
 		var internalModuleName = $(this).attr('internalmodulename');

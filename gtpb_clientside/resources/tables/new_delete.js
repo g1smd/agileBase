@@ -16,6 +16,7 @@
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
 //Create a new record and activate the edit tab
+;
 function fNew() {
 	document.location='AppController.servlet?return=gui/reports_and_tables/report_data&save_new_record&set_custom_string=true&key=report_tabindex&value=2';
 }

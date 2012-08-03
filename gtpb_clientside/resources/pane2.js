@@ -18,6 +18,7 @@
 
 // clear all the selected rows
 // there should only be one but will clear all if more than this.
+;
 function fClearRowSelection() {
 	while (oSelected = document.getElementById('currentRow'))
 		oSelected.id = null;

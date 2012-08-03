@@ -20,6 +20,7 @@
  * JS for view tab is separated out because the mobile version of agileBase
  * only needs these functions, not those for the edit, manage etc. tabs
  */
+;
 function loadMap(postcode) {
 	if (!postcode) {
 	  return;
