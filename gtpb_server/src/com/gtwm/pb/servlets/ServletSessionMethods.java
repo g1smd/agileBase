@@ -646,9 +646,9 @@ public final class ServletSessionMethods {
 					// Extract extension
 					boolean phoneHasExtension = false;
 					String phoneExtensionString = null;
-					if (fieldValueString.replaceAll("[^\#]+(\#\d{3,4})", $1) != null) {
+					if (fieldValueString.replaceAll("[^\\#]+(\\#\\d{3,4})", "$1") != null) {
 						phoneHasExtension = true;
-						phoneExtensionString = " " + fieldValueString.replaceAll("[^\#]+(\#\d{3,4})", $1);
+						phoneExtensionString = " " + fieldValueString.replaceAll("[^\\#]+(\\#\\d{3,4})", "$1");
 					}
 					// Extract country code and number
 					fieldValueString = fieldValueString.replaceAll(
@@ -923,7 +923,7 @@ public final class ServletSessionMethods {
 	 */
 	private static String formatPhoneNumberInternational(String fieldValueString) {
 		fieldValueString = fieldValueString.trim();
-		fieldValueDigitsOnlyString = fieldValueString.replaceAll("[\\s]", "");
+		String fieldValueDigitsOnlyString = fieldValueString.replaceAll("[\\s]", "");
 		// Single digit country codes
 		String pattern1 = "(?:(1|7)).*";
 		// Double digit country codes, but not 44
