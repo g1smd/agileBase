@@ -26,9 +26,9 @@
   #set($phoneArea = false)
   #set($isPhoneNumber = $fieldValueObject.isPhoneNumber())
   #if($isPhoneNumber)
-    #set($phoneArea = $viewTools.getAreaForPhoneNumber())
+    #set($phoneArea = $viewTools.getAreaForPhoneNumber($fieldValue))
     #if($phoneArea.contains("invalid"))
-      #set($phoneArea = $viewTools.getCountryForPhoneNumber())
+      #set($phoneArea = $viewTools.getCountryForPhoneNumber($fieldValue))
     #end
   #end  
 #end##
