@@ -1176,10 +1176,10 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 		phoneNumber = phoneNumber.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+)\\#?.*", "$1");
 		phoneNumber = phoneNumber.replaceAll("[\\s]", "");
 		// stop substring creating an IndexOutOfBoundsException below
-		if (phoneNumber.length() < 5) {
+		if (phoneNumber.length() < 8) {
 			return "";
 		}
-		for (int numDigitsInCountry = 4; numDigitsInCountry > 0; numDigitsInCountry--) {
+		for (int numDigitsInCountry = 7; numDigitsInCountry > 0; numDigitsInCountry--) {
 			String possibleCountry = phoneNumber.substring(0, numDigitsInCountry);
 			String country = this.countryCodes.get(possibleCountry);
 			if (country != null) {
