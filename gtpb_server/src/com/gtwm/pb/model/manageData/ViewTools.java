@@ -830,7 +830,7 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 
 	public String getCountryForPhoneNumber(String phoneNumber) {
 		if (this.countryCodes.isEmpty()) {
-    		this.countryCodes.put("1", "Canada and United States");
+			this.countryCodes.put("1", "Canada and United States");
     			this.countryCodes.put("1340", "United States Virgin Islands");
     			this.countryCodes.put("1670", "Northern Mariana Islands");
     			this.countryCodes.put("1671", "Guam");
