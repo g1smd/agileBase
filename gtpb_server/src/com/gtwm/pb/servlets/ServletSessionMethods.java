@@ -642,7 +642,7 @@ logger.debug("z16: we are now here");
 					// Extract extension
 					boolean phoneHasExtension = false;
 					String phoneExtensionString = null;
-					if (fieldValueString.replaceAll("[^\\#]+(\\#\\d{3,4})", "$1") != null) {
+					if (fieldValueString.matches("[^\\#]+(\\#\\d{3,4})")) {
 						phoneHasExtension = true;
 						phoneExtensionString = " " + fieldValueString.replaceAll("[^\\#]+(\\#\\d{3,4})", "$1");
 logger.debug("z21: international extension " + phoneExtensionString);
