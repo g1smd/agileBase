@@ -1069,7 +1069,7 @@ public final class ViewTools implements ViewToolsInfo {
 
 			this.countryCodes.put("57", "Colombia");
 			this.countryCodes.put("58", "Venezuela");
-			this.countryCodes.put("590", "Guadeloupe (including Saint Barthélemy, Saint Martin)");
+			this.countryCodes.put("590", "Guadeloupe (including Saint BarthŽlemy, Saint Martin)");
 			this.countryCodes.put("591", "Bolivia");
 			this.countryCodes.put("592", "Guyana");
 			this.countryCodes.put("593", "Ecuador");
@@ -1084,7 +1084,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("5994", "Saba");
 			this.countryCodes.put("5995", "formerly Sint Maarten");
 			this.countryCodes.put("5997", "Bonaire");
-			this.countryCodes.put("5999", "Curaçao");
+			this.countryCodes.put("5999", "Curacao");
 
 			this.countryCodes.put("60", "Malaysia");
 			this.countryCodes.put("61", "Australia");
