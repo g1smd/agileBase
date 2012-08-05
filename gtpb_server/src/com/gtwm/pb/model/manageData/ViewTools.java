@@ -883,7 +883,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("222", "Mauritania");
 			this.countryCodes.put("223", "Mali");
 			this.countryCodes.put("224", "Guinea");
-			this.countryCodes.put("225", "Côte d'Ivoire");
+			this.countryCodes.put("225", "Ivory Coast");
 			this.countryCodes.put("226", "Burkina Faso");
 			this.countryCodes.put("227", "Niger");
 			this.countryCodes.put("228", "Togo");
@@ -897,7 +897,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("236", "Central African Republic");
 			this.countryCodes.put("237", "Cameroon");
 			this.countryCodes.put("238", "Cape Verde");
-			this.countryCodes.put("239", "São Tomé and Príncipe");
+			this.countryCodes.put("239", "Sao Tome and Principe");
 			this.countryCodes.put("240", "Equatorial Guinea");
 			this.countryCodes.put("241", "Gabon");
 			this.countryCodes.put("242", "Republic of the Congo");
@@ -924,7 +924,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("259", "unassigned");
 			this.countryCodes.put("260", "Zambia");
 			this.countryCodes.put("261", "Madagascar");
-			this.countryCodes.put("262", "Réunion");
+			this.countryCodes.put("262", "Reunion");
 
 			/* 262... */
 			this.countryCodes.put("262269", "Mayotte");
@@ -969,7 +969,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("358", "Finland");
 
 			/* 258... */
-			this.countryCodes.put("35818", "Åland");
+			//this.countryCodes.put("35818", "...land");
 
 			this.countryCodes.put("359", "Bulgaria");
 			this.countryCodes.put("36", "Hungary");
