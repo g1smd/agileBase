@@ -133,11 +133,9 @@ public class TextValueDefn implements TextValue {
 			regexGB += "(?:\\s?\\#\\d{3,4})?";					// optional "#" and extension
 			regexGB += "$";
 			if (this.textValue.trim().matches(regexGB)) {
-logger.debug("z01a: this is a phone number (GB): " + this.textValue.trim());
 				return true;
 			}
 		}
-logger.debug("z02a: this is not a phone number: " + this.textValue);
 		return false;
 	}
 
@@ -157,11 +155,9 @@ logger.debug("z02a: this is not a phone number: " + this.textValue);
 			if (this.textValue.trim().matches(regexIntl) 
 					&& !this.textValue.trim()
 					.matches("(?:0(?:0\\s?|11\\s)|\\+)44.*")) {
-logger.debug("z01b: this is a phone number (Intl): " + this.textValue.trim());
 				return true;
 			}
 		}
-logger.debug("z02b: this is not a phone number: " + this.textValue);
 		return false;
 	}
 

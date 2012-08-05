@@ -597,11 +597,9 @@ public final class ServletSessionMethods {
 									"^((?:0(?:0\\s?|11\\s)|\\+)(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
 							.matcher(fieldValueString);
 					if (numberPartsGB.matches()) {
-logger.debug("z06: number regex matches against " + fieldValueString);
 						// Extract NSN part of GB number, trim it
 						// and remove ')' if present
 						if (numberPartsGB.group(3) != null) {
-logger.debug("z07: this has an NSN of " + numberPartsGB.group(3));
 							String phoneNSNString = numberPartsGB.group(3).trim()
 									.replaceAll("[\\)\\s]", "");
 							// Format NSN part of GB number
@@ -611,11 +609,9 @@ logger.debug("z07: this has an NSN of " + numberPartsGB.group(3));
 							// Set prefix as 0 or as +44 and space
 							if (phonePrefixString != null) {
 								if (phonePrefixString.equals("44")) {
-logger.debug("z13: setting +44 prefix");
 									phonePrefixString = "+44 ";
 								}
 							} else {
-logger.debug("z14: setting 0 prefix");
 								phonePrefixString = "0";
 							}
 							// Extract extension
@@ -632,9 +628,7 @@ logger.debug("z14: setting 0 prefix");
 							if (phoneHasExtension) {
 								fieldValueString += phoneExtensionString;
 							}
-logger.debug("z15: we are here");
 						}
-logger.debug("z16: we are now here");
 					}
 				}
 				// International phone numbers
@@ -645,22 +639,18 @@ logger.debug("z16: we are now here");
 					if (fieldValueString.matches("[^\\#]+(\\#\\d{3,4})")) {
 						phoneHasExtension = true;
 						phoneExtensionString = " " + fieldValueString.replaceAll("[^\\#]+(\\#\\d{3,4})", "$1");
-logger.debug("z21: international extension " + phoneExtensionString);
 					}
 					// Extract country code and number
 					fieldValueString = fieldValueString.replaceAll(
 							"(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+).*", "$1");
-logger.debug("z22: international number without prefix " + fieldValueString);
 					// Format international number
 					fieldValueString = formatPhoneNumberInternational(fieldValueString);
-logger.debug("z23: formatted international number " + fieldValueString);
 					// Add + to country code and number
 					fieldValueString = "+" + fieldValueString;
 					// Add extension back on to number
 					if (phoneHasExtension) {
 						fieldValueString += phoneExtensionString;
 					}
-logger.debug("z24: we are now here");
 				}
 			} else {
 				// Replace smart quotes with normal quotes and em
@@ -848,7 +838,6 @@ logger.debug("z24: we are now here");
 	 * edited by Ian Galpin; @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
-logger.debug("z08: attempting to format number " + fieldValueString);
 		fieldValueString = fieldValueString.trim();
 		// Find string length
 		int fieldValueLength = fieldValueString.length();
@@ -868,7 +857,6 @@ logger.debug("z08: attempting to format number " + fieldValueString);
 		String pattern36 = "[58]00.*";
 		// Format numbers by leading digits and length
 		if (fieldValueLength == 10 && fieldValueString.matches(pattern28)) {
-logger.debug("z09: a 10 digit NSN beginning with 2 was found");
 			Matcher m28 = Pattern.compile("^(\\d{2})(\\d{4})(\\d{4})$").matcher(fieldValueString);
 			if (m28.matches()) {
 				fieldValueString = m28.group(1) + " " + m28.group(2) + " " + m28.group(3);
@@ -884,7 +872,6 @@ logger.debug("z09: a 10 digit NSN beginning with 2 was found");
 				fieldValueString = m55.group(1) + " " + m55.group(2);
 			}
 		} else if (fieldValueLength == 9 && fieldValueString.matches(pattern54)) {
-logger.debug("z10: a 9 digit NSN beginning with 169772  was found");
 			Matcher m54 = Pattern.compile("^(\\d{5})(\\d{4})$").matcher(fieldValueString);
 			if (m54.matches()) {
 				fieldValueString = m54.group(1) + " " + m54.group(2);
@@ -905,12 +892,9 @@ logger.debug("z10: a 9 digit NSN beginning with 169772  was found");
 				fieldValueString = m36.group(1) + " " + m36.group(2);
 			}
 		} else if (fieldValueLength > 1) {
-logger.debug("z11: returning default splitting of " + fieldValueString);
 			fieldValueString = fieldValueString.charAt(0) + " " + fieldValueString.substring(1, 5)
 					+ " " + fieldValueString.substring(5);
-logger.debug("z11a: which is " + fieldValueString);
 		}
-logger.debug("z12: hopefully some sort of formatting has been done, returning " + fieldValueString);
 		return fieldValueString;
 	}
 
@@ -922,8 +906,6 @@ logger.debug("z12: hopefully some sort of formatting has been done, returning " 
 	private static String formatPhoneNumberInternational(String fieldValueString) {
 		fieldValueString = fieldValueString.trim();
 		String fieldValueDigitsOnlyString = fieldValueString.replaceAll("[\\s]", "");
-logger.debug("z25: international number " + fieldValueString);
-logger.debug("z26: international number digits only " + fieldValueDigitsOnlyString);
 		// Single digit country codes
 		String pattern1 = "(?:(1|7)).*";
 		// Double digit country codes, but not 44
@@ -944,8 +926,6 @@ logger.debug("z26: international number digits only " + fieldValueDigitsOnlyStri
 			Matcher m2 = Pattern.compile("^(?:(?:\\d\\s?){2})(.*)$").matcher(fieldValueString);
 			if (c2.matches() && m2.matches()) {
 				fieldValueString = c2.group(1) + " " + m2.group(1);
-logger.debug("z27: international - country " + c2.group(1));
-logger.debug("z28: international - number " + m2.group(1));
 			}
 		} else if (fieldValueDigitsOnlyString.matches(pattern3)) {
 			Matcher c3 = Pattern.compile("^(\\d{3})(.*)$").matcher(fieldValueDigitsOnlyString);
