@@ -92,7 +92,7 @@ public final class ViewTools implements ViewToolsInfo {
 	public boolean isNull(Object o) {
 		return (o == null);
 	}
-	
+
 	public boolean isInteger(String string) {
 		return (string.matches("\\d+"));
 	}
@@ -810,17 +810,19 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("98", "Premium rate");
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
-		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0\\s?|11\\s)|\\+)44)?0?([1-9]\\d+)\\#?.*", "$1");
-logger.debug("z03: RegEx matching done, resulting number is " + phoneNumber);
+		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0\\s?|11\\s)|\\+)44)?0?([1-9]\\d+)\\#?.*",
+				"$1");
+		logger.debug("z03: RegEx matching done, resulting number is " + phoneNumber);
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 6) {
-logger.debug("z04: number length is less than 6 for phone number " + phoneNumber);
+			logger.debug("z04: number length is less than 6 for phone number " + phoneNumber);
 			return "";
 		}
 		for (int numDigitsInCode = 5; numDigitsInCode > 1; numDigitsInCode--) {
 			String possibleCode = phoneNumber.substring(0, numDigitsInCode);
 			String area = this.areaCodes.get(possibleCode);
-logger.debug("z05: area code name has been looked up from " + possibleCode + ", it is " + area);
+			logger.debug("z05: area code name has been looked up from " + possibleCode + ", it is "
+					+ area);
 			if (area != null) {
 				return area;
 			}
@@ -831,38 +833,44 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 	public String getCountryForPhoneNumber(String phoneNumber) {
 		if (this.countryCodes.isEmpty()) {
 			this.countryCodes.put("1", "Canada and United States");
-    			this.countryCodes.put("1340", "United States Virgin Islands");
-    			this.countryCodes.put("1670", "Northern Mariana Islands");
-    			this.countryCodes.put("1671", "Guam");
-    			this.countryCodes.put("1684", "American Samoa");
-    			this.countryCodes.put("1787", "Puerto Rico");
-    			this.countryCodes.put("1939", "Puerto Rico");
-    			this.countryCodes.put("1242", "Bahamas");
-    			this.countryCodes.put("1246", "Barbados");
-    			this.countryCodes.put("1264", "Anguilla");
-    			this.countryCodes.put("1268", "Antigua and Barbuda");
-    			this.countryCodes.put("1284", "British Virgin Islands");
-    			this.countryCodes.put("1345", "Cayman Islands");
-    			this.countryCodes.put("1441", "Bermuda");
-    			this.countryCodes.put("1473", "Grenada");
-    			this.countryCodes.put("1649", "Turks and Caicos Islands");
-    			this.countryCodes.put("1664", "Montserrat");
-    			this.countryCodes.put("1721", "Sint Maarten");
-    			this.countryCodes.put("1758", "Saint Lucia");
-    			this.countryCodes.put("1767", "Dominica");
-    			this.countryCodes.put("1784", "Saint Vincent and the Grenadines");
-    			this.countryCodes.put("1809", "Dominican Republic");
-    			this.countryCodes.put("1829", "Dominican Republic");
-    			this.countryCodes.put("1849", "Dominican Republic");
-    			this.countryCodes.put("1868", "Trinidad and Tobago");
-    			this.countryCodes.put("1869", "Saint Kitts and Nevis");
-    			this.countryCodes.put("1876", "Jamaica");
+
+			/* 1... */
+			this.countryCodes.put("1340", "United States Virgin Islands");
+			this.countryCodes.put("1670", "Northern Mariana Islands");
+			this.countryCodes.put("1671", "Guam");
+			this.countryCodes.put("1684", "American Samoa");
+			this.countryCodes.put("1787", "Puerto Rico");
+			this.countryCodes.put("1939", "Puerto Rico");
+			this.countryCodes.put("1242", "Bahamas");
+			this.countryCodes.put("1246", "Barbados");
+			this.countryCodes.put("1264", "Anguilla");
+			this.countryCodes.put("1268", "Antigua and Barbuda");
+			this.countryCodes.put("1284", "British Virgin Islands");
+			this.countryCodes.put("1345", "Cayman Islands");
+			this.countryCodes.put("1441", "Bermuda");
+			this.countryCodes.put("1473", "Grenada");
+			this.countryCodes.put("1649", "Turks and Caicos Islands");
+			this.countryCodes.put("1664", "Montserrat");
+			this.countryCodes.put("1721", "Sint Maarten");
+			this.countryCodes.put("1758", "Saint Lucia");
+			this.countryCodes.put("1767", "Dominica");
+			this.countryCodes.put("1784", "Saint Vincent and the Grenadines");
+			this.countryCodes.put("1809", "Dominican Republic");
+			this.countryCodes.put("1829", "Dominican Republic");
+			this.countryCodes.put("1849", "Dominican Republic");
+			this.countryCodes.put("1868", "Trinidad and Tobago");
+			this.countryCodes.put("1869", "Saint Kitts and Nevis");
+			this.countryCodes.put("1876", "Jamaica");
+
 			this.countryCodes.put("20", "Egypt");
 			this.countryCodes.put("210", "unassigned");
 			this.countryCodes.put("211", "South Sudan");
 			this.countryCodes.put("212", "Morocco");
-    			this.countryCodes.put("2125288", "Western Sahara");
-    			this.countryCodes.put("2125289", "Western Sahara");
+
+			/* 212... */
+			this.countryCodes.put("2125288", "Western Sahara");
+			this.countryCodes.put("2125289", "Western Sahara");
+
 			this.countryCodes.put("213", "Algeria");
 			this.countryCodes.put("214", "unassigned");
 			this.countryCodes.put("215", "unassigned");
@@ -906,7 +914,10 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			this.countryCodes.put("253", "Djibouti");
 			this.countryCodes.put("254", "Kenya");
 			this.countryCodes.put("255", "Tanzania");
-    			this.countryCodes.put("25524", "Zanzibar");
+
+			/* 255... */
+			this.countryCodes.put("25524", "Zanzibar");
+
 			this.countryCodes.put("256", "Uganda");
 			this.countryCodes.put("257", "Burundi");
 			this.countryCodes.put("258", "Mozambique");
@@ -914,8 +925,11 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			this.countryCodes.put("260", "Zambia");
 			this.countryCodes.put("261", "Madagascar");
 			this.countryCodes.put("262", "Réunion");
-    			this.countryCodes.put("262269", "Mayotte");
-    			this.countryCodes.put("262639", "Mayotte");
+
+			/* 262... */
+			this.countryCodes.put("262269", "Mayotte");
+			this.countryCodes.put("262639", "Mayotte");
+
 			this.countryCodes.put("263", "Zimbabwe");
 			this.countryCodes.put("264", "Namibia");
 			this.countryCodes.put("265", "Malawi");
@@ -926,7 +940,10 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			this.countryCodes.put("27", "South Africa");
 			this.countryCodes.put("28", "unassigned");
 			this.countryCodes.put("290", "Saint Helena");
-    			this.countryCodes.put("2908", "Tristan da Cunha");
+
+			/* 290... */
+			this.countryCodes.put("2908", "Tristan da Cunha");
+
 			this.countryCodes.put("291", "Eritrea");
 			this.countryCodes.put("292", "unassigned");
 			this.countryCodes.put("293", "unassigned");
@@ -950,43 +967,64 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			this.countryCodes.put("356", "Malta");
 			this.countryCodes.put("357", "Cyprus");
 			this.countryCodes.put("358", "Finland");
-    			this.countryCodes.put("35818", "Åland");
+
+			/* 258... */
+			this.countryCodes.put("35818", "Åland");
+
 			this.countryCodes.put("359", "Bulgaria");
 			this.countryCodes.put("36", "Hungary");
 			this.countryCodes.put("370", "Lithuania");
 			this.countryCodes.put("371", "Latvia");
 			this.countryCodes.put("372", "Estonia");
 			this.countryCodes.put("373", "Moldova");
-    			this.countryCodes.put("3732", "Transnistria");
-    			this.countryCodes.put("3735", "Transnistria");
+
+			/* 373... */
+			this.countryCodes.put("3732", "Transnistria");
+			this.countryCodes.put("3735", "Transnistria");
+
 			this.countryCodes.put("374", "Armenia");
-    			this.countryCodes.put("37447", "Nagorno-Karabakh");
-    			this.countryCodes.put("37497", "Nagorno-Karabakh");
+
+			/* 374... */
+			this.countryCodes.put("37447", "Nagorno-Karabakh");
+			this.countryCodes.put("37497", "Nagorno-Karabakh");
+
 			this.countryCodes.put("375", "Belarus");
 			this.countryCodes.put("376", "Andorra");
 			this.countryCodes.put("377", "Monaco");
-    			this.countryCodes.put("37745", "Kosovo");
-    			this.countryCodes.put("37745", "Kosovo");
+
+			/* 377... */
+			this.countryCodes.put("37745", "Kosovo");
+			this.countryCodes.put("37745", "Kosovo");
+
 			this.countryCodes.put("378", "San Marino");
 			this.countryCodes.put("379", "Vatican City");
 			this.countryCodes.put("380", "Ukraine");
 			this.countryCodes.put("381", "Serbia");
-    			this.countryCodes.put("38128", "Kosovo");
-    			this.countryCodes.put("38129", "Kosovo");
-    			this.countryCodes.put("38138", "Kosovo");
-    			this.countryCodes.put("38139", "Kosovo");
+
+			/* 381... */
+			this.countryCodes.put("38128", "Kosovo");
+			this.countryCodes.put("38129", "Kosovo");
+			this.countryCodes.put("38138", "Kosovo");
+			this.countryCodes.put("38139", "Kosovo");
+
 			this.countryCodes.put("382", "Montenegro");
 			this.countryCodes.put("383", "unassigned");
 			this.countryCodes.put("384", "unassigned");
 			this.countryCodes.put("385", "Croatia");
 			this.countryCodes.put("386", "Slovenia");
-    			this.countryCodes.put("38643", "Kosovo");
-    			this.countryCodes.put("38649", "Kosovo");
+
+			/* 386... */
+			this.countryCodes.put("38643", "Kosovo");
+			this.countryCodes.put("38649", "Kosovo");
+
 			this.countryCodes.put("387", "Bosnia and Herzegovina");
 			this.countryCodes.put("388", "discontinued");
 			this.countryCodes.put("389", "Macedonia");
 			this.countryCodes.put("39", "Italy");
-    			this.countryCodes.put("3906698", "Vatican City");
+
+			/* 39... */
+			this.countryCodes.put("3906698", "Vatican City");
+
 			this.countryCodes.put("40", "Romania");
 			this.countryCodes.put("41", "Switzerland");
 			this.countryCodes.put("420", "Czech Republic");
@@ -1003,7 +1041,10 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			this.countryCodes.put("45", "Denmark");
 			this.countryCodes.put("46", "Sweden");
 			this.countryCodes.put("47", "Norway");
-    			this.countryCodes.put("4779", "Svalbard and Jan Mayen");
+
+			/* 47... */
+			this.countryCodes.put("4779", "Svalbard and Jan Mayen");
+
 			this.countryCodes.put("48", "Poland");
 			this.countryCodes.put("49", "Germany");
 			this.countryCodes.put("500", "Falkland Islands");
@@ -1022,7 +1063,10 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			this.countryCodes.put("54", "Argentina");
 			this.countryCodes.put("55", "Brazil");
 			this.countryCodes.put("56", "Chile");
-    			this.countryCodes.put("5632", "Easter Island");
+
+			/* 56... */
+			this.countryCodes.put("5632", "Easter Island");
+
 			this.countryCodes.put("57", "Colombia");
 			this.countryCodes.put("58", "Venezuela");
 			this.countryCodes.put("590", "Guadeloupe (including Saint Barthélemy, Saint Martin)");
@@ -1034,15 +1078,21 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			this.countryCodes.put("596", "Martinique");
 			this.countryCodes.put("597", "Suriname");
 			this.countryCodes.put("598", "Uruguay");
-    			this.countryCodes.put("5993", "Sint Eustatius");
-    			this.countryCodes.put("5994", "Saba");
-    			this.countryCodes.put("5995", "formerly Sint Maarten");
-    			this.countryCodes.put("5997", "Bonaire");
-    			this.countryCodes.put("5999", "Curaçao");
+
+			/* 598.. */
+			this.countryCodes.put("5993", "Sint Eustatius");
+			this.countryCodes.put("5994", "Saba");
+			this.countryCodes.put("5995", "formerly Sint Maarten");
+			this.countryCodes.put("5997", "Bonaire");
+			this.countryCodes.put("5999", "Curaçao");
+
 			this.countryCodes.put("60", "Malaysia");
 			this.countryCodes.put("61", "Australia");
-    			this.countryCodes.put("6189162", "Cocos Islands");
-    			this.countryCodes.put("6189164", "Christmas Island");
+
+			/* 61... */
+			this.countryCodes.put("6189162", "Cocos Islands");
+			this.countryCodes.put("6189164", "Christmas Island");
+
 			this.countryCodes.put("62", "Indonesia");
 			this.countryCodes.put("63", "Philippines");
 			this.countryCodes.put("64", "New Zealand");
@@ -1051,8 +1101,11 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			this.countryCodes.put("670", "East Timor");
 			this.countryCodes.put("671", "formerly Guam");
 			this.countryCodes.put("672", "Australian External Territories");
-    			this.countryCodes.put("6721", "Australia Australian Antarctic Territory");
-    			this.countryCodes.put("6723", "Norfolk Island");
+
+			/* 672... */
+			this.countryCodes.put("6721", "Australia Australian Antarctic Territory");
+			this.countryCodes.put("6723", "Norfolk Island");
+
 			this.countryCodes.put("673", "Brunei");
 			this.countryCodes.put("674", "Nauru");
 			this.countryCodes.put("675", "Papua New Guinea");
@@ -1110,11 +1163,15 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			this.countryCodes.put("858", "unassigned, formerly ANAC satellite service");
 			this.countryCodes.put("859", "unassigned");
 			this.countryCodes.put("86", "China");
-			this.countryCodes.put("870", "Inmarsat "SNAC" service");
-			this.countryCodes.put("871", "unassigned (formerly used by Inmarsat, Atlantic East), discontinued in 2008");
-			this.countryCodes.put("872", "unassigned (formerly used by Inmarsat, Pacific), discontinued in 2008");
-			this.countryCodes.put("873", "unassigned (formerly used by Inmarsat, Indian), discontinued in 2008");
-			this.countryCodes.put("874", "unassigned (formerly used by Inmarsat, Atlantic West), discontinued 2008");
+			this.countryCodes.put("870", "Inmarsat 'SNAC' service");
+			this.countryCodes.put("871",
+					"unassigned (formerly used by Inmarsat, Atlantic East), discontinued in 2008");
+			this.countryCodes.put("872",
+					"unassigned (formerly used by Inmarsat, Pacific), discontinued in 2008");
+			this.countryCodes.put("873",
+					"unassigned (formerly used by Inmarsat, Indian), discontinued in 2008");
+			this.countryCodes.put("874",
+					"unassigned (formerly used by Inmarsat, Atlantic West), discontinued 2008");
 			this.countryCodes.put("875", "reserved for Maritime Mobile service");
 			this.countryCodes.put("876", "reserved for Maritime Mobile service");
 			this.countryCodes.put("877", "reserved for Maritime Mobile service");
@@ -1132,7 +1189,10 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			this.countryCodes.put("889", "unassigned");
 			this.countryCodes.put("89", "unassigned");
 			this.countryCodes.put("90", "Turkey");
-    			this.countryCodes.put("90392", "Northern Cyprus");
+
+			/* 90... */
+			this.countryCodes.put("90392", "Northern Cyprus");
+
 			this.countryCodes.put("91", "India");
 			this.countryCodes.put("92", "Pakistan");
 			this.countryCodes.put("93", "Afghanistan");
@@ -1160,20 +1220,25 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			this.countryCodes.put("979", "International Premium Rate Service");
 			this.countryCodes.put("98", "Iran");
 			this.countryCodes.put("990", "unassigned");
-			this.countryCodes.put("991", "International Telecommunications Public Correspondence Service trial (ITPCS)");
+			this.countryCodes.put("991",
+					"International Telecommunications Public Correspondence Service trial (ITPCS)");
 			this.countryCodes.put("992", "Tajikistan");
 			this.countryCodes.put("993", "Turkmenistan");
 			this.countryCodes.put("994", "Azerbaijan");
 			this.countryCodes.put("995", "Georgia");
-    			this.countryCodes.put("99534", "South Ossetia");
-    			this.countryCodes.put("99544", "Abkhazia");
+
+			/* 955... */
+			this.countryCodes.put("99534", "South Ossetia");
+			this.countryCodes.put("99544", "Abkhazia");
+
 			this.countryCodes.put("996", "Kyrgyzstan");
 			this.countryCodes.put("997", "unassigned");
 			this.countryCodes.put("998", "Uzbekistan");
 			this.countryCodes.put("999", "reserved for future global service");
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)]", "");
-		phoneNumber = phoneNumber.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+)\\#?.*", "$1");
+		phoneNumber = phoneNumber
+				.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+)\\#?.*", "$1");
 		phoneNumber = phoneNumber.replaceAll("[\\s]", "");
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 8) {
@@ -1270,7 +1335,8 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 	}
 
 	public void log(Object itemToLog) {
-		logger.info("Template message at " + System.currentTimeMillis() + "(" + this.request.getRemoteUser() + ") : " + itemToLog);
+		logger.info("Template message at " + System.currentTimeMillis() + "("
+				+ this.request.getRemoteUser() + ") : " + itemToLog);
 	}
 
 	public void startTimer(String timerName) {
@@ -1556,8 +1622,8 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 		if (templateExists != null) {
 			return templateExists;
 		}
-		String absoluteFilename = this.request.getSession().getServletContext().getRealPath(
-				"/WEB-INF/templates/" + templateFilename);
+		String absoluteFilename = this.request.getSession().getServletContext()
+				.getRealPath("/WEB-INF/templates/" + templateFilename);
 		File templateFile = new File(absoluteFilename);
 		templateExists = templateFile.exists();
 		this.templateExistsCache.put(templateFilename, templateExists);
@@ -1566,8 +1632,8 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 
 	public Set<File> listFiles(String folderName) {
 		Set<File> files = null;
-		String absoluteFolderName = this.request.getSession().getServletContext().getRealPath(
-				"/" + folderName);
+		String absoluteFolderName = this.request.getSession().getServletContext()
+				.getRealPath("/" + folderName);
 		File folder = new File(absoluteFolderName);
 		File[] filesArray = folder.listFiles();
 		if (filesArray != null) {
@@ -1579,12 +1645,13 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 	}
 
 	public String getCommitUrl() throws IOException, CantDoThatException {
-		String commitFileName =  this.request.getSession().getServletContext().getRealPath(
-				"/lastcommit.txt");
+		String commitFileName = this.request.getSession().getServletContext()
+				.getRealPath("/lastcommit.txt");
 		File commitFile = new File(commitFileName);
 		try {
 			InputStream inputStream = new FileInputStream(commitFileName);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,
+					Charset.forName("UTF-8")));
 			String commitLine = reader.readLine();
 			String commitId = commitLine.replace("commit ", "");
 			inputStream.close();
@@ -1597,12 +1664,13 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 	}
 
 	public String getCommitMessage() throws CantDoThatException, IOException {
-		String commitFileName =  this.request.getSession().getServletContext().getRealPath(
-				"/lastcommit.txt");
+		String commitFileName = this.request.getSession().getServletContext()
+				.getRealPath("/lastcommit.txt");
 		File commitFile = new File(commitFileName);
 		try {
 			InputStream inputStream = new FileInputStream(commitFileName);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream,
+					Charset.forName("UTF-8")));
 			String line = null;
 			String message = "";
 			while ((line = reader.readLine()) != null) {
@@ -1616,7 +1684,7 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 			throw new CantDoThatException("Commit log not found");
 		}
 	}
-	
+
 	public String toString() {
 		return "ViewTools contains utility methods useful to Velocity template designers";
 	}
@@ -1638,10 +1706,11 @@ logger.debug("z05: area code name has been looked up from " + possibleCode + ", 
 	/**
 	 * A map of telephone area code to city / location
 	 * 
-	 * Don't need ConcurrentHashMap here as data will only be put into this cache once
+	 * Don't need ConcurrentHashMap here as data will only be put into this
+	 * cache once
 	 */
 	private Map<String, String> areaCodes = new HashMap<String, String>(1000);
-	
+
 	private Map<String, String> countryCodes = new HashMap<String, String>();
 
 	private Map<String, Boolean> templateExistsCache = new HashMap<String, Boolean>();
