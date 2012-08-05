@@ -968,8 +968,8 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("357", "Cyprus");
 			this.countryCodes.put("358", "Finland");
 
-			/* 258... */
-			//this.countryCodes.put("35818", "...land");
+			/* 358... */
+			this.countryCodes.put("35818", "Aland Island");
 
 			this.countryCodes.put("359", "Bulgaria");
 			this.countryCodes.put("36", "Hungary");
@@ -1079,7 +1079,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("597", "Suriname");
 			this.countryCodes.put("598", "Uruguay");
 
-			/* 598.. */
+			/* 599.. */
 			this.countryCodes.put("5993", "Sint Eustatius");
 			this.countryCodes.put("5994", "Saba");
 			this.countryCodes.put("5995", "formerly Sint Maarten");
@@ -1227,7 +1227,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("994", "Azerbaijan");
 			this.countryCodes.put("995", "Georgia");
 
-			/* 955... */
+			/* 995... */
 			this.countryCodes.put("99534", "South Ossetia");
 			this.countryCodes.put("99544", "Abkhazia");
 
