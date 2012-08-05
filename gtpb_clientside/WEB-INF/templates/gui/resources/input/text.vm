@@ -17,24 +17,6 @@
 ##
 #set($fieldValueObject = $tableDataRow.get($field))##
 ##
-#if($globalEdit)##
-  #set($fieldValue = "")##
-  #set($isPhoneNumber = false)
-  #set($phoneArea = false)
-#else##
-  #set($fieldValue=$fieldValueObject.toString())##
-  #set($phoneArea = false)
-  #set($isPhoneNumber = $fieldValueObject.isPhoneNumber())
-  #if($isPhoneNumber)
-    #if($fieldValueObject.isPhoneNumberGB())
-      #set($phoneArea = $viewTools.getAreaForPhoneNumber($fieldValue))
-    #elseif($fieldValueObject.isPhoneNumberInternational())
-      #set($phoneArea = $viewTools.getCountryForPhoneNumber($fieldValue))
-    #else
-      #set($phoneArea = "unknown phone area")
-    #end
-  #end  
-#end##
 ##
 #if($userCanEdit)##
 	  #if(($field.getContentSize() > 50) || ($fieldValue.length() > 100))##
@@ -75,8 +57,6 @@
         	<input type="text" gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" name="$field.getInternalFieldName()" value="$fieldValue" gtpbBasicTextField="true" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">##
 	      #else##
 	        <input type="text" #if($field.getNotNull()) required #end name="$field.getInternalFieldName()" value="$fieldValue"
-	            #if($isPhoneNumber) title="$phoneArea" #end
-				#if($updateAsType) maxKeyCount="6" gtpb_update_record gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" onkeyup="top.oBuffer.writeBuffer(this, event)" onpaste="top.oBuffer.writeBuffer(this)" gtpbBasicTextField="true"#end onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused'); #if($mobile_device && $updateAsType) top.oBuffer.writeBuffer(this); #end">##
       #end##
     #end##
 		##
@@ -97,8 +77,6 @@
         <a href="http://twitter.com/#!/search?q=$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
       #elseif ($fieldValueObject.isPostcode())##
         <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue.trim()" target="_blank">map</a>##
-	    #elseif ($mobile_device && $fieldValueObject.isPhoneNumber())##
-		    <a href="tel:$fieldValue">phone</a>##
       #elseif($field.getNotNull() && $fieldValue == "")
 	      <span class="mandated">* Mandatory field - please enter a value</span>
       #end##
@@ -160,10 +138,6 @@
       <a href="http://twitter.com/#!/search?q=$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
 	#elseif ($fieldValueObject.isPostcode())##
   	  <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue.trim()" target="_blank">$fieldValue</a>##
-    #elseif ($mobile_device && $isPhoneNumber)##
-	  <a href="tel:$fieldValue">$fieldValue</a> <i>$phoneArea</i>,##
-    #else##
-      $fieldValue#if($isPhoneNumber) <i>$phoneArea</i>,#else,#end##
     #end##
   #elseif ($fieldValueObject.isURL())
 	<a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>,##

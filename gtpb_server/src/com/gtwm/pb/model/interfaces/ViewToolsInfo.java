@@ -96,22 +96,10 @@ public interface ViewToolsInfo {
 	public int getCalendarConstant(String constantName) throws CantDoThatException;
 
 	/**
-	 * e.g. given 01792 367514, return Swansea. Return '(may be invalid)' if the
-	 * area can't be found. Currently works for numbers in the UK.
-	 */
-	public String getAreaForPhoneNumber(String phoneNumber);
-
-	/**
-	 * e.g. given +61 3 4455 6677, return Australia. Return '(may be invalid)' if
-	 * the country name can't be found.
-	 */
-	public String getCountryForPhoneNumber(String phoneNumber);
-
-	/**
 	 * Given a table data row, as returned by ViewMethodsInfo.getTableDataRow(),
 	 * return a subset of that data which is a detected address. For example,
 	 * the tableDataRow may contain fields 'company name, address 1, address 2,
-	 * city, postcode, telephone number'. The returned map would be of fields
+	 * city, postcode'. The returned map would be of fields
 	 * 'address 1, address 2, city, postcode' and their corresponding values. If
 	 * no address is detected, an empty map is returned
 	 * 

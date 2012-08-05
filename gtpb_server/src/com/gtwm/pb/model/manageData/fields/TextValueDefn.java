@@ -103,68 +103,6 @@ public class TextValueDefn implements TextValue {
 		return false;
 	}
 
-	public boolean isPhoneNumber() {
-		if (this.isPhoneNumberGB() || this.isPhoneNumberInternational()) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean isPhoneNumberGB() {
-		if (this.isNull()) {
-			return false;
-		}
-		int length = this.textValue.trim().length();
-		if ((length > 9) && (length < 26)) {
-			// vaguely based on a regex from http://www.regexlib.com/
-			// alterations by @g1smd
-			// "^(?:(?:(?:0(?:0\\s?|11\\s)|\\+)44\\s?(?:\\(?0\\)?\\s?)?)|(?:\\(?0))(?:(?:\\d{5}\\)?\\s?\\d{4,5})|(?:\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3}))|(?:\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|(?:\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(?:\\s?\\#\\d{3,4})?$"
-			String regexGB = "^";
-			regexGB += "(?:";
-			regexGB += "(?:(?:0(?:0\\s?|11\\s)|\\+)44\\s?(?:\\(?0\\)?\\s?)?)|";	// leading 00, 011 or + before 44 with optional (0); parentheses and spaces optional
-			regexGB += "(?:\\(?0)";												// leading (0, 0
-			regexGB += ")";
-			regexGB += "(?:";
-			regexGB += "(?:\\d{5}\\)?\\s?\\d{4,5})|";						// [5+4]/[5+5]
-			regexGB += "(?:\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3}))|";	// [4+5]/[4+6]
-			regexGB += "(?:\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|";				// [3+6]/[3+7]
-			regexGB += "(?:\\d{2}\\)?\\s?\\d{4}\\s?\\d{4})";				// [2+8]
-			regexGB += ")";
-			regexGB += "(?:\\s?\\#\\d{3,4})?";					// optional "#" and extension
-			regexGB += "$";
-			if (this.textValue.trim().matches(regexGB)) {
-logger.debug("z01a: this is a phone number (GB): " + this.textValue.trim());
-				return true;
-			}
-		}
-logger.debug("z02a: this is not a phone number: " + this.textValue);
-		return false;
-	}
-
-	public boolean isPhoneNumberInternational() {
-		if (this.isNull()) {
-			return false;
-		}
-		int length = this.textValue.trim().length();
-		if ((length > 6) && (length < 27)) {
-			String regexIntl = "^";
-			regexIntl += "(";
-			regexIntl += "(?:0(?:0\\s?|11\\s)|\\+)"; // 00, 011 or +
-			regexIntl += "\\d{1,3}\\s?[\\d\\s]+"; // number
-			regexIntl += ")";
-			regexIntl += "(\\#\\d{3,4})?"; // optional "#" and extension
-			regexIntl += "$";
-			if (this.textValue.trim().matches(regexIntl) 
-					&& !this.textValue.trim()
-					.matches("(?:0(?:0\\s?|11\\s)|\\+)44.*")) {
-logger.debug("z01b: this is a phone number (Intl): " + this.textValue.trim());
-				return true;
-			}
-		}
-logger.debug("z02b: this is not a phone number: " + this.textValue);
-		return false;
-	}
-
 	public String getFormattedURL() {
 		if (!this.isURL()) {
 			return null;
