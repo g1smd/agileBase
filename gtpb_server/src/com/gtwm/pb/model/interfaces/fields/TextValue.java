@@ -35,6 +35,11 @@ public interface TextValue extends BaseValue {
 
 	public boolean isTwitterHashTag();
 
+	public boolean isPhoneNumber();
+
+	public boolean isPhoneNumberGB();
+
+	public boolean isPhoneNumberInternational();
 
  /**
   * If the value is a URL that hasn't got http:// in front of it, then put http:// in front of it to ensure
