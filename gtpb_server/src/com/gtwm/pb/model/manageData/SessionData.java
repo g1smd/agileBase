@@ -90,11 +90,11 @@ public final class SessionData implements SessionDataInfo {
 			}
 		}
 		if (browserName.equals("")) {
-			browserName = "Unknown browser: " + userAgent;
+			browserName = "Unknown browser";
 		} else {
 			browserName = browserName.substring(0, browserName.length() - 1);
 		}
-		usageLogger.logLogin(user, request.getRemoteAddr(), browserName);
+		usageLogger.logLogin(user, request.getRemoteAddr(), browserName + " / " + userAgent);
 		UsageLogger.startLoggingThread(usageLogger);
 		this.relationalDataSource = relationalDataSource;
 		AuthenticatorInfo authenticator = databaseDefn.getAuthManager().getAuthenticator();
