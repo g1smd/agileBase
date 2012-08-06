@@ -83,7 +83,6 @@ import com.gtwm.pb.model.interfaces.fields.IntegerField;
 import com.gtwm.pb.model.interfaces.fields.FileField;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
-import com.gtwm.pb.model.manageData.fields.DurationValueDefn;
 import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.DashboardPopulator;
 import com.gtwm.pb.auth.DisallowedException;
@@ -105,7 +104,6 @@ import com.gtwm.pb.model.manageSchema.fields.CheckboxFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.CommentFeedFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.DateFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.DecimalFieldDefn;
-import com.gtwm.pb.model.manageSchema.fields.DurationFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.ReferencedReportDataFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
@@ -338,7 +336,6 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// Don't add the created by field to the default report
 	}
 
-	//!DateField.UNIQUE,	!DateField.NOT_NULL, DateField.DEFAULT_TO_NOW, Calendar.SECOND, null, null,	FieldPrintoutSetting.NO_PRINTOUT
 	private void addLastModifiedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		DateFieldOptions fieldOptions = new DateFieldOptions();
