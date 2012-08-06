@@ -812,17 +812,13 @@ public final class ViewTools implements ViewToolsInfo {
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
 		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0\\s?|11\\s)|\\+)44)?0?([1-9]\\d+)\\#?.*",
 				"$1");
-		logger.debug("z03: RegEx matching done, resulting number is " + phoneNumber);
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 6) {
-			logger.debug("z04: number length is less than 6 for phone number " + phoneNumber);
 			return "";
 		}
 		for (int numDigitsInCode = 5; numDigitsInCode > 1; numDigitsInCode--) {
 			String possibleCode = phoneNumber.substring(0, numDigitsInCode);
 			String area = this.areaCodes.get(possibleCode);
-			logger.debug("z05: area code name has been looked up from " + possibleCode + ", it is "
-					+ area);
 			if (area != null) {
 				return area;
 			}
@@ -968,8 +964,8 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("357", "Cyprus");
 			this.countryCodes.put("358", "Finland");
 
-			/* 258... */
-			//this.countryCodes.put("35818", "...land");
+			/* 358... */
+			this.countryCodes.put("35818", "Aland Island");
 
 			this.countryCodes.put("359", "Bulgaria");
 			this.countryCodes.put("36", "Hungary");
@@ -1079,7 +1075,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("597", "Suriname");
 			this.countryCodes.put("598", "Uruguay");
 
-			/* 598.. */
+			/* 599.. */
 			this.countryCodes.put("5993", "Sint Eustatius");
 			this.countryCodes.put("5994", "Saba");
 			this.countryCodes.put("5995", "formerly Sint Maarten");
@@ -1227,7 +1223,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("994", "Azerbaijan");
 			this.countryCodes.put("995", "Georgia");
 
-			/* 955... */
+			/* 995... */
 			this.countryCodes.put("99534", "South Ossetia");
 			this.countryCodes.put("99544", "Abkhazia");
 
