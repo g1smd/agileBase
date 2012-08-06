@@ -243,7 +243,7 @@ public final class DataManagement implements DataManagementInfo {
 			if (email != null) {
 				if (email.contains("@")
 						&& authenticator.userAllowedTo(PrivilegeType.VIEW_TABLE_DATA, table,
-								companyUser)) {
+								companyUser) && (!companyUser.getUsesCustomUI())) {
 					recipients.add(email);
 				}
 			}
