@@ -25,10 +25,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Collections;
 import java.util.Arrays;
@@ -1444,13 +1446,10 @@ public final class ViewTools implements ViewToolsInfo {
 				browsersMatched.add(browser);
 			}
 		}
-		// Treat the iPhone and iPod as one
-		if (browsersMatched.contains(Browsers.IPHONE) || browsersMatched.contains(Browsers.IPOD)) {
-			return Browsers.APPLE_MOBILE;
-		} else {
-			for (Browsers browser : browsersMatched) {
-				return browser;
-			}
+		if (browsersMatched.size() > 0) {
+			// Return the last (most specific) browser in the list of matches
+			LinkedList<Browsers> br = new LinkedList<Browsers>(browsersMatched);
+			return br.getLast();
 		}
 		return Browsers.UNKNOWN;
 	}
