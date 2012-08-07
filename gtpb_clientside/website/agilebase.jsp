@@ -44,7 +44,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<div id="tl_wrapper">
 			<div id="header" class="wrapper">
 					<div class="content">
-						<a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
+						<a id="home" href="#"><img src="/agileBase/website/images/logo-agilebase.png" alt="agileBase"></a>
 						<!--
 						<table cellspacing="0" cellpadding="0" border="0">
               <tr class="row1">
@@ -114,7 +114,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				</div>
 				<div id="urls" class="detail">
 				  <h1>Log in to agileBase &rarr;</h1>
-				  <br clear="left" />
+				  <br style="clear: left;" />
 				  Bookmark<p>
 				  <a href="https://www.agilebase.co.uk/start">www.agilebase.co.uk/start</a><p>
 				  to return to this login page
@@ -127,7 +127,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 					  <div id="detail_right">
 						</div>
 
-						<br clear="both" /> <!-- because of the right floated content -->
+						<br style="clear: both;" /> <!-- because of the right floated content -->
 					</div>  <!-- end of content -->
 				</div>   <!-- end of wrapper -->
 				<div class="wrapper">
