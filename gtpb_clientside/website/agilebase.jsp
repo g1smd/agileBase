@@ -34,6 +34,10 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		@import url("/agileBase/website/styles/fonts.css");
 		</style>
     <meta name="google-site-verification" content="f-uEpO4sFJ0ePStIn6Svsj_wumUtsr153X4VYBA96K8" />
+    <% if(!live) { %>
+      <!-- don't index the test server -->
+      <meta name="robots" content="noindex">
+    <% } %>
 	</head>
 	<body>
 	<div id="scroller">
