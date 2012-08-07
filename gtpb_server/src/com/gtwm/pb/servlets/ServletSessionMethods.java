@@ -632,7 +632,7 @@ public final class ServletSessionMethods {
 					}
 				}
 				// International phone numbers
-				if (textValue.isPhoneNumberInternational()) {
+				else if (textValue.isPhoneNumberInternational()) {
 					// Extract extension
 					boolean phoneHasExtension = false;
 					String phoneExtensionString = null;
