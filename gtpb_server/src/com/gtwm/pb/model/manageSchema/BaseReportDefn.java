@@ -85,10 +85,8 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		String description = this.getReportDescription().replaceAll("\\n", "").toLowerCase();
 		// Pick 'pink' out of 'the report description. colour: pink' or similar.
 		Matcher colourMatcher = Pattern.compile("^(.*colou?r\\s?\\:\\s?)(#?[\\d\\w]+)(\\s.*)?$").matcher(description);
-		logger.debug("Checking " + description);
 		if (colourMatcher.matches()) {
 			String colour = colourMatcher.group(2);
-			logger.debug("Matches colour " + colour);
 			if (colour != null) {
 				return colour;
 			}
@@ -101,7 +99,6 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		int hue = hash1 % 360;
 		int saturation = (hash2 % 65) + 20;
 		int lightness = (hash3 % 40) + 40;
-		logger.debug(this.toString() + ": " + hue + ", " + saturation + ", " + lightness);
 		return "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
 	}
 
