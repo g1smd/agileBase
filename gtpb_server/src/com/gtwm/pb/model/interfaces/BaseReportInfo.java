@@ -56,6 +56,25 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 
 	public String getReportDescription();
 
+	/**
+	 * Reports can be given colours in applications such as calendars. Colours
+	 * are usually generated using the report's internal ID as a salt, so will
+	 * remain constant for the life of the report. However they can be overriden
+	 * if the user includes text of the form
+	 * 
+	 * colour:#ffffff
+	 * 
+	 * or
+	 * 
+	 * colour:white
+	 * 
+	 * in the report's description text. Colour can be spelled with a u or
+	 * without.
+	 * 
+	 * @return Internally generated codes will be HTML compatible, e.g. "white", "#ffffff" or "hsl(360,100,100)"
+	 */
+	public String getColour();
+
 	public ModuleInfo getModule();
 
 	public void setModule(ModuleInfo module);
@@ -197,9 +216,10 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	public void setRowCountEstimate(boolean rowCountIsEstimate);
 
 	/**
-	 * The default working memory limit for SQL queries can be overriden per report.
-	 * Useful if a particular report uses more memory than usual. This can be
-	 * seen from an EXPLAIN ANALYZE on the SQL. The value is MB allocated.
+	 * The default working memory limit for SQL queries can be overriden per
+	 * report. Useful if a particular report uses more memory than usual. This
+	 * can be seen from an EXPLAIN ANALYZE on the SQL. The value is MB
+	 * allocated.
 	 * 
 	 * See the work_mem parameter:
 	 * 
@@ -208,11 +228,12 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	 *      .html
 	 */
 	public Integer getMemoryAllocation();
-	
+
 	public void setMemoryAllocation(Integer memoryAllocation);
-	
+
 	/**
-	 * Return a JSON representation of the report structure for export, potentially useful for cloning
+	 * Return a JSON representation of the report structure for export,
+	 * potentially useful for cloning
 	 */
 	public String toJSON();
 }

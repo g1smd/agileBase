@@ -28,6 +28,9 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -72,6 +75,28 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 
 	public String getReportDescription() {
 		return this.reportDesc;
+	}
+	
+	@Transient
+	public String getColour() {
+		// First check if there is a colour override in the report description
+		String description = this.getReportDescription().replaceAll("\\n", "").toLowerCase();
+		Matcher colourMatcher = Pattern.compile("^(.*colou?r\\s?\\:\\s?)(#?[\\d\\w]+)\\s.*$").matcher(description);
+		if (colourMatcher.matches()) {
+			String colour = colourMatcher.group(2);
+			if (colour != null) {
+				return colour;
+			}
+		}
+		// Generate a colour from the report internalName
+		int hash1 = this.hashCode();
+		int hash2 = (this.getInternalReportName() + this.getInternalReportName()).hashCode();
+		StringBuilder temp = new StringBuilder(this.getInternalReportName());
+		int hash3 = temp.reverse().toString().hashCode();
+		int hue = hash1 % 360;
+		int saturation = (hash2 % 65) + 20;
+		int lightness = (hash3 % 40) + 40;
+		return "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
 	}
 
 	@ManyToOne(targetEntity = Module.class)

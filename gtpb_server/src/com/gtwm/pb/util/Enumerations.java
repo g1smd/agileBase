@@ -285,15 +285,12 @@ public class Enumerations {
 	}
 
 	public enum Browsers {
-		MSIE("Internet Explorer", "msie"), FIREFOX("Firefox", "firefox"), MINEFIELD(
-				"Firefox development version", "minefield"), CAMINO("Camino", "camino"), SYMBIAN_MOBILE(
-				"Safari on Symbian mobile", "symbian"), CHROME("Google Chrome","chrome"), SAFARI("Safari", "applewebkit"), OPERA(
-				"Opera", "opera"), IPOD("iPod", "ipod"), IPHONE("iPhone", "iphone"), IPAD("iPad",
-				"ipad"), KONQUEROR("Konqueror", "konqueror"),
-		// So we can treat the ipod and iphone as one. They have similar or the
-		// same rendering engines
-		APPLE_MOBILE("iPod/iPhone", "gtpb_ipod_or_iphone"), UNKNOWN("unknown",
-				"gtpb_unknown_browser");
+		MSIE("Internet Explorer", "msie", false), FIREFOX("Firefox", "firefox", false), MINEFIELD(
+				"Firefox development version", "minefield", false), CAMINO("Camino", "camino",false), SYMBIAN_MOBILE(
+				"Safari on Symbian mobile", "symbian", true), CHROME("Google Chrome","chrome", false), SAFARI("Safari", "applewebkit", false), OPERA(
+				"Opera", "opera", false), IPOD("iPod", "ipod", true), IPHONE("iPhone", "iphone", true), IPAD("iPad",
+				"ipad", true), KONQUEROR("Konqueror", "konqueror", false), UNKNOWN("unknown",
+				"gtpb_unknown_browser", false);
 
 		/**
 		 * Return the human digestible form of the browser name
@@ -309,6 +306,10 @@ public class Enumerations {
 		public String getUserAgentString() {
 			return this.userAgentString;
 		}
+		
+		public boolean isMobile() {
+			return this.mobile;
+		}
 
 		public String toString() {
 			return this.browserName;
@@ -317,6 +318,8 @@ public class Enumerations {
 		private String browserName = "";
 
 		private String userAgentString = "";
+		
+		private boolean mobile = false;
 
 		/**
 		 * @param browserName
@@ -325,9 +328,10 @@ public class Enumerations {
 		 *            Lowercase version of user agent component that identifies
 		 *            the browser
 		 */
-		Browsers(String browserName, String userAgentString) {
+		Browsers(String browserName, String userAgentString, boolean mobile) {
 			this.browserName = browserName;
 			this.userAgentString = userAgentString;
+			this.mobile = mobile;
 		}
 	}
 	
