@@ -82,9 +82,9 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	@Transient
 	public String getColour() {
 		// First check if there is a colour override in the report description
-		String description = this.getReportDescription().replaceAll("\\n", "").toLowerCase();
+		String description = this.getReportDescription().replaceAll("\\n", " ").toLowerCase();
 		// Pick 'pink' out of 'the report description. colour: pink' or similar.
-		Matcher colourMatcher = Pattern.compile("^(.*colou?r\\s?\\:\\s?)(#?[\\d\\w]+)(\\s.*)?$").matcher(description);
+		Matcher colourMatcher = Pattern.compile("^(.*colou?r\\s?\\:\\s?)(#?[\\d\\w]+)([\\s\\.].*)?$").matcher(description);
 		if (colourMatcher.matches()) {
 			String colour = colourMatcher.group(2);
 			if (colour != null) {
