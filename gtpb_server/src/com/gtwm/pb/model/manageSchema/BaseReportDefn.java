@@ -84,8 +84,10 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		// First check if there is a colour override in the report description
 		String description = this.getReportDescription().replaceAll("\\n", "").toLowerCase();
 		Matcher colourMatcher = Pattern.compile("^(.*colou?r\\s?\\:\\s?)(#?[\\d\\w]+)\\s.*$").matcher(description);
+		logger.debug("Checking " + description);
 		if (colourMatcher.matches()) {
 			String colour = colourMatcher.group(2);
+			logger.debug("Matches colour " + colour);
 			if (colour != null) {
 				return colour;
 			}
