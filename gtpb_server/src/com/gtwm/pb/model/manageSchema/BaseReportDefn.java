@@ -41,6 +41,8 @@ import javax.persistence.Transient;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.grlea.log.SimpleLogger;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class BaseReportDefn implements BaseReportInfo {
@@ -89,13 +91,14 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 			}
 		}
 		// Generate a colour from the report internalName
-		int hash1 = this.hashCode();
-		int hash2 = (this.getInternalReportName() + this.getInternalReportName()).hashCode();
+		int hash1 = Math.abs(this.hashCode());
+		int hash2 = Math.abs((this.getInternalReportName() + this.getInternalReportName()).hashCode());
 		StringBuilder temp = new StringBuilder(this.getInternalReportName());
-		int hash3 = temp.reverse().toString().hashCode();
+		int hash3 = Math.abs(temp.reverse().toString().hashCode());
 		int hue = hash1 % 360;
 		int saturation = (hash2 % 65) + 20;
 		int lightness = (hash3 % 40) + 40;
+		logger.debug(this.toString() + ": " + hue + ", " + saturation + ", " + lightness);
 		return "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
 	}
 
@@ -325,4 +328,6 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	private boolean allowExport = false;
 	
 	private Integer memoryAllocation = null;
+
+	private static final SimpleLogger logger = new SimpleLogger(BaseReportDefn.class);
 }
