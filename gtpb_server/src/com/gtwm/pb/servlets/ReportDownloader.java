@@ -24,10 +24,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.ServletOutputStream;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 // Java 7
 //import java.nio.charset.Charset;
 //import java.nio.file.Files;
@@ -76,6 +83,7 @@ import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.ObjectNotFoundException;
+import com.gtwm.pb.util.RandomString;
 
 public final class ReportDownloader extends HttpServlet {
 
@@ -160,7 +168,8 @@ public final class ReportDownloader extends HttpServlet {
 
 	private void serveSpreadsheet(HttpServletRequest request, HttpServletResponse response,
 			SessionDataInfo sessionData, BaseReportInfo report) throws ServletException {
-		ByteArrayOutputStream spreadsheetOutputStream = null;
+		BufferedInputStream input = null;
+		BufferedOutputStream output = null;
 		try {
 			TableInfo table = report.getParentTable();
 			AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
@@ -173,7 +182,6 @@ public final class ReportDownloader extends HttpServlet {
 			CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
 			AppUserInfo user = authManager.getUserByUserName(request, request.getRemoteUser());
 			logger.info("User " + user + " exporting report " + report + " from table " + table);
-			spreadsheetOutputStream = this.getSessionReportAsExcel(company, user, sessionData);
 			response.setHeader("Cache-Control", "no-cache");
 			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 			String filename = "";
@@ -185,10 +193,17 @@ public final class ReportDownloader extends HttpServlet {
 			filename = filename.replaceAll("\\W+", "_");
 			filename += ".xlsx";
 			response.setHeader("Content-disposition", "attachment; filename=" + filename);
-			response.setContentLength(spreadsheetOutputStream.size());
-			ServletOutputStream sos = response.getOutputStream();
-			spreadsheetOutputStream.writeTo(sos);
-			sos.flush();
+			File file = this.getSessionReportAsExcel(company, user, sessionData);
+			response.setContentLength((int) file.length());
+			input = new BufferedInputStream(new FileInputStream(file));
+			output = new BufferedOutputStream(response.getOutputStream());
+			byte[] buffer = new byte[1000000];
+			int length;
+			while ((length = input.read(buffer)) > 0) {
+				output.write(buffer, 0, length);
+			}
+			response.getOutputStream().flush();
+			file.delete();
 		} catch (IOException ioex) {
 			throw new ServletException("IO exception generating spreadsheet: " + ioex);
 		} catch (AgileBaseException pbex) {
@@ -196,19 +211,27 @@ public final class ReportDownloader extends HttpServlet {
 		} catch (SQLException sqlex) {
 			throw new ServletException("Database exception generating spreadsheet: " + sqlex);
 		} finally {
-			if (spreadsheetOutputStream != null) {
-				spreadsheetOutputStream.reset();
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					throw new ServletException("Error closing input file: " + e);
+				}
+			}
+			if (output != null) {
+				try {
+					output.close();
+				} catch (IOException e) {
+					throw new ServletException("Error closing output stream: " + e);
+				}
 			}
 		}
 	}
 
 	/**
-	 * Return the session report as an Excel file
-	 * 
-	 * @param sessionData
-	 * @return
+	 * Write the session report as an Excel file in a temporary location
 	 */
-	private ByteArrayOutputStream getSessionReportAsExcel(CompanyInfo company, AppUserInfo user,
+	private File getSessionReportAsExcel(CompanyInfo company, AppUserInfo user,
 			SessionDataInfo sessionData) throws AgileBaseException, IOException, SQLException {
 		BaseReportInfo report = sessionData.getReport();
 		if (report == null) {
@@ -318,9 +341,11 @@ public final class ReportDownloader extends HttpServlet {
 			this.addSummaryWorksheet(company, sessionData, reportSummary, workbook);
 		}
 		// write to output
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		workbook.write(outputStream);
-		return outputStream;
+		// ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		File file = new File("/tmp/" + RandomString.generate() + ".xlsx");
+		FileOutputStream fileOutputStream = new FileOutputStream(file);
+		workbook.write(fileOutputStream);
+		return file;
 	}
 
 	/**
