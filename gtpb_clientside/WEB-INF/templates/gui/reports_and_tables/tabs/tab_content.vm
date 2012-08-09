@@ -83,7 +83,7 @@ $viewTools.log("session table <- tabTable $sessionTable, parent table <- actual 
 	  #end
 	  #if($sessionRowId > -1)
 	    #set($component = true)
-	    $viewTools.log("Parsing tab_content_table for $sessionTable $sessionRowId")
+##	    $viewTools.log("Parsing tab_content_table for $sessionTable $sessionRowId")
 	    #parse("gui/reports_and_tables/tabs/tab_content_table.vm")
 	  #end
     #else
