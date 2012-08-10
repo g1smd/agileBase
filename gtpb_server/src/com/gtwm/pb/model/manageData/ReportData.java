@@ -541,6 +541,7 @@ public class ReportData implements ReportDataInfo {
 		}
 		PreparedStatement statement = conn.prepareStatement(SQLCode.toString());
 		if ((rowLimit > 10000) && (this.report.getRowCount() > 10000)) {
+			// Don't load large datasets fully into memory in one go
 			statement.setFetchSize(100);
 		}
 		statement = this.fillInFilterValues(filtersUsed, statement, exactFilters);
