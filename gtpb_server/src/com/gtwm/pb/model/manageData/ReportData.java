@@ -1030,6 +1030,9 @@ public class ReportData implements ReportDataInfo {
 									// if (textFieldSize > 400) {
 									// textFieldSize = 400; // max out
 									// }
+									if (fieldSchemaText.usesLookup() || (!fieldSchema.getTableContainingField().equals(parentTable))) {
+										keyValue = keyValue.intern();
+									}
 									if (keyValue.length() > 401) {
 										displayValue = keyValue.substring(0, 400) + "...";
 									}
