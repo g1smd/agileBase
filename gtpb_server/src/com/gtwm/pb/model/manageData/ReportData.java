@@ -540,6 +540,9 @@ public class ReportData implements ReportDataInfo {
 			SQLCode.append(" LIMIT ").append(rowLimit);
 		}
 		PreparedStatement statement = conn.prepareStatement(SQLCode.toString());
+		if ((rowLimit > 10000) && (this.report.getRowCount() > 10000)) {
+			statement.setFetchSize(100);
+		}
 		statement = this.fillInFilterValues(filtersUsed, statement, exactFilters);
 		logger.debug("Report prepared statement: " + statement);
 		return statement;
@@ -1030,9 +1033,6 @@ public class ReportData implements ReportDataInfo {
 									// if (textFieldSize > 400) {
 									// textFieldSize = 400; // max out
 									// }
-									if (fieldSchemaText.usesLookup() || (!fieldSchema.getTableContainingField().equals(parentTable))) {
-										keyValue = keyValue.intern();
-									}
 									if (keyValue.length() > 401) {
 										displayValue = keyValue.substring(0, 400) + "...";
 									}
