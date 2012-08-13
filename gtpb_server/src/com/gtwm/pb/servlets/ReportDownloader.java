@@ -273,7 +273,7 @@ public final class ReportDownloader extends HttpServlet {
 				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), -1,
 				QuickFilterType.AND, false);
 		String fieldValue = "";
-		boolean defaultReport = (report.equals(report.getParentTable().getDefaultReport()));
+		boolean isDefaultReport = (report.equals(report.getParentTable().getDefaultReport()));
 		for (DataRowInfo dataRow : reportDataRows) {
 			Map<BaseField, DataRowFieldInfo> dataRowFieldMap = dataRow.getDataRowFields();
 			row = reportSheet.createRow(rowNum);
@@ -288,7 +288,7 @@ public final class ReportDownloader extends HttpServlet {
 				if (!fieldValue.equals("")) {
 					Cell cell;
 					DatabaseFieldType dbFieldType = field.getDbType();
-					if ((defaultReport) && (field instanceof RelationField)) {
+					if ((isDefaultReport) && (field instanceof RelationField)) {
 						dbFieldType = ((RelationField) field).getDisplayField().getDbType();
 					}
 					switch (dbFieldType) {

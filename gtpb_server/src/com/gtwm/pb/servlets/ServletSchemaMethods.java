@@ -2047,16 +2047,18 @@ public final class ServletSchemaMethods {
 			}
 		}
 		Set<String> filterValues = new HashSet<String>();
+		// Use if there's only one filter item
+		String firstFilterValue = null;
 		if (FilterType.IS_ONE_OF.getFilterTypeParameter().equals(filterType)) {
 			String parameter = request.getParameter(PossibleTextOptions.DEFAULTVALUE
 					.getFormInputName());
 			filterValues = Helpers.stringArrayToSet(parameter.split(";"));
-		} else {
+		} else if ((!FilterType.IS_NULL.getFilterTypeParameter().equals(filterType)) && (!FilterType.IS_NOT_NULL.getFilterTypeParameter().equals(filterType))) {
+			// For IS_NULL and IS_NOT_NULL, there is no filter value
 			filterValues.add(request.getParameter(PossibleTextOptions.DEFAULTVALUE
 					.getFormInputName()));
+			 firstFilterValue = new TreeSet<String>(filterValues).first();
 		}
-		// Use if there's only one filter item
-		String firstFilterValue = new TreeSet<String>(filterValues).first();
 		// create filter object
 		ReportFilterInfo filter = null;
 		// begin updating model and persisting changes
