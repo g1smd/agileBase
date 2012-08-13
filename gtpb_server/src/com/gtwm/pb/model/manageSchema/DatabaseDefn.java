@@ -366,8 +366,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setUnique(false);
 		fieldOptions.setUsesLookup(false);
 		TextField modifiedByField = new TextFieldDefn(this.relationalDataSource, table, null,
-				HiddenFields.CREATED_BY.getFieldName(),
-				HiddenFields.CREATED_BY.getFieldDescription(),  TextField.HIDDEN,
+				HiddenFields.MODIFIED_BY.getFieldName(),
+				HiddenFields.MODIFIED_BY.getFieldDescription(),  TextField.HIDDEN,
 				fieldOptions);
 		HibernateUtil.currentSession().save(modifiedByField);
 		table.addField(modifiedByField);
