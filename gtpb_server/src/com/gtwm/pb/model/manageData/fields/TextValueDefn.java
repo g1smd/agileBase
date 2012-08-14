@@ -118,10 +118,10 @@ public class TextValueDefn implements TextValue {
 		if ((length > 9) && (length < 26)) {
 			// vaguely based on a regex from http://www.regexlib.com/
 			// alterations by @g1smd
-			// "^(?:(?:(?:0(?:0\\s?|11\\s)|\\+)4\\s?4\\s?(?:\\(?0\\)?\\s?)?)|(?:\\(?0))(?:(?:\\d{5}\\)?\\s?\\d{4,5})|(?:\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3}))|(?:\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|(?:\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(?:\\s?\\#\\d{3,4})?$"
+			// "^(?:(?:(?:0(?:0|11)\\s?|\\+)4\\s?4\\s?(?:\\(?0\\)?\\s?)?)|(?:\\(?0))(?:(?:\\d{5}\\)?\\s?\\d{4,5})|(?:\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3}))|(?:\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|(?:\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(?:\\s?\\#\\d{3,4})?$"
 			String regexGB = "^";
 			regexGB += "(?:";
-			regexGB += "(?:(?:0(?:0\\s?|11\\s)|\\+)4\\s?4\\s?(?:\\(?0\\)?\\s?)?)|";	// leading 00, 011 or + before 44 with optional (0); parentheses and spaces optional
+			regexGB += "(?:(?:0(?:0|11)\\s?|\\+)4\\s?4\\s?(?:\\(?0\\)?\\s?)?)|";	// leading 00, 011 or + before 44 with optional (0); parentheses and spaces optional
 			regexGB += "(?:\\(?0)";													// leading (0, 0
 			regexGB += ")";
 			regexGB += "(?:";
@@ -147,14 +147,14 @@ public class TextValueDefn implements TextValue {
 		if ((length > 6) && (length < 27)) {
 			String regexIntl = "^";
 			regexIntl += "(";
-			regexIntl += "(?:0(?:0\\s?|11\\s)|\\+)"; // 00, 011 or +
+			regexIntl += "(?:0(?:0|11)\\s?|\\+)"; // 00, 011 or +
 			regexIntl += "\\d{1,3}\\s?[\\d\\s]+"; // number
 			regexIntl += ")";
 			regexIntl += "(\\#\\d{3,4})?"; // optional "#" and extension
 			regexIntl += "$";
 			if (this.textValue.trim().matches(regexIntl) 
 					&& !this.textValue.trim()
-					.matches("(?:0(?:0\\s?|11\\s)|\\+)4\\s?4.*")) {
+					.matches("(?:0(?:0|11)\\s?|\\+)4\\s?4.*")) {
 				return true;
 			}
 		}

@@ -812,7 +812,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("98", "Premium rate");
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
-		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0\\s?|11\\s)|\\+)4\\s?4)?0?([1-9]\\d+)\\#?.*",
+		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0|11)\\s?|\\+)4\\s?4)?0?([1-9]\\d+)\\#?.*",
 				"$1");
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 6) {
@@ -1236,7 +1236,7 @@ public final class ViewTools implements ViewToolsInfo {
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)]", "");
 		phoneNumber = phoneNumber
-				.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+)\\#?.*", "$1");
+				.replaceAll("(?:0(?:0|11)\\s?|\\+)([1-9][\\d\\s]+)\\#?.*", "$1");
 		phoneNumber = phoneNumber.replaceAll("[\\s]", "");
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 8) {
