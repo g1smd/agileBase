@@ -118,7 +118,7 @@ public class TextValueDefn implements TextValue {
 		if ((length > 9) && (length < 26)) {
 			// vaguely based on a regex from http://www.regexlib.com/
 			// alterations by @g1smd
-			// "^(?:(?:(?:0(?:0|11)\\s?|\\+)4\\s?4\\s?(?:\\(?0\\)?\\s?)?)|(?:\\(?0))(?:(?:\\d{5}\\)?\\s?\\d{4,5})|(?:\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3}))|(?:\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|(?:\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(?:\\s?\\#\\d{3,4})?$"
+			// "^(?:(?:(?:0(?:0|11)\\s?|\\+)4\\s?4\\s?(?:\\(?0\\)?\\s?)?)|(?:\\(?0))(?:(?:\\d{5}\\)?\\s?\\d{4,5})|(?:\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3}))|(?:\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|(?:\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}))(?:\\s?[x\\#]\\d{3,4})?$"
 			String regexGB = "^";
 			regexGB += "(?:";
 			regexGB += "(?:(?:0(?:0|11)\\s?|\\+)4\\s?4\\s?(?:\\(?0\\)?\\s?)?)|";	// leading 00, 011 or + before 44 with optional (0); parentheses and spaces optional
@@ -130,7 +130,7 @@ public class TextValueDefn implements TextValue {
 			regexGB += "(?:\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4})|";				// [3+6]/[3+7]
 			regexGB += "(?:\\d{2}\\)?\\s?\\d{4}\\s?\\d{4})";				// [2+8]
 			regexGB += ")";
-			regexGB += "(?:\\s?\\#\\d{3,4})?";					// optional "#" and extension
+			regexGB += "(?:\\s?[x\\#]\\d{3,4})?";					// optional "#" and extension
 			regexGB += "$";
 			if (this.textValue.trim().matches(regexGB)) {
 				return true;
@@ -150,7 +150,7 @@ public class TextValueDefn implements TextValue {
 			regexIntl += "(?:0(?:0|11)\\s?|\\+)"; // 00, 011 or +
 			regexIntl += "\\d{1,3}\\s?[\\s\\d]+"; // number
 			regexIntl += ")";
-			regexIntl += "(\\#\\d{3,4})?"; // optional "#" and extension
+			regexIntl += "([x\\#]\\d{3,4})?"; // optional "#" and extension
 			regexIntl += "$";
 			if (this.textValue.trim().matches(regexIntl) 
 					&& !this.textValue.trim()

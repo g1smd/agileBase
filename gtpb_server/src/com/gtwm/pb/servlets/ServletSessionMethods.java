@@ -594,7 +594,7 @@ public final class ServletSessionMethods {
 					// need to be removed.
 					Matcher numberPartsGB = Pattern
 							.compile(
-									"^((?:0(?:0|11)\\s?|\\+)(4\\s?4)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
+									"^((?:0(?:0|11)\\s?|\\+)(4\\s?4)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)([x\\#]\\d{3,4})?$")
 							.matcher(fieldValueString);
 					if (numberPartsGB.matches()) {
 						// Extract NSN part of GB number, trim it
@@ -636,9 +636,9 @@ public final class ServletSessionMethods {
 					// Extract extension
 					boolean phoneHasExtension = false;
 					String phoneExtensionString = null;
-					if (fieldValueString.matches("[^\\#]+(\\#\\d{3,4})")) {
+					if (fieldValueString.matches("[^x\\#]+([x\\#]\\d{3,4})")) {
 						phoneHasExtension = true;
-						phoneExtensionString = " " + fieldValueString.replaceAll("[^\\#]+(\\#\\d{3,4})", "$1");
+						phoneExtensionString = " " + fieldValueString.replaceAll("[^x\\#]+([x\\#]\\d{3,4})", "$1");
 					}
 					// Extract country code and number
 					fieldValueString = fieldValueString.replaceAll(
