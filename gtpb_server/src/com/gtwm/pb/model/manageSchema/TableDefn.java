@@ -329,8 +329,10 @@ public class TableDefn implements TableInfo {
 		}
 		// Report with that internal name doesn't exist
 		// Try treating it as a public name
+		String lowerReportID = reportID.toLowerCase();
 		for (BaseReportInfo report : reports) {
-			if (report.getReportName().equalsIgnoreCase(reportID)) {
+			logger.debug("Comparing " + report.getReportName().toLowerCase() + " with " + lowerReportID);
+			if (report.getReportName().toLowerCase().equals(lowerReportID)) {
 				return report;
 			}
 		}
