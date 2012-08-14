@@ -343,7 +343,7 @@ public final class SessionData implements SessionDataInfo {
 	}
 
 	public synchronized Map<BaseField, String> getReportFilterValues() {
-		return Collections.unmodifiableMap(new HashMap<BaseField, String>(this.reportFilterValues));
+		return this.reportFilterValues;
 	}
 	
 	public synchronized Map<BaseField, String> getReportFilterValues(BaseReportInfo report) {
@@ -364,14 +364,14 @@ public final class SessionData implements SessionDataInfo {
 	public synchronized Map<BaseField, String> getCustomReportFilterValues(String filterSet) {
 		Map<BaseField, String> customFilterValues = this.customReportFilterValues.get(filterSet);
 		if (customFilterValues == null) {
-			return Collections.unmodifiableMap(new HashMap<BaseField, String>(0));
+			return new HashMap<BaseField, String>(0);
 		} else {
-			return Collections.unmodifiableMap(new HashMap<BaseField, String>(customFilterValues));
+			return customFilterValues;
 		}
 	}
 
 	public synchronized Map<BaseField, Boolean> getReportSorts() {
-		return Collections.unmodifiableMap(new HashMap<BaseField, Boolean>(this.reportSorts));
+		return this.reportSorts;
 	}
 
 	public synchronized void setFieldInputValues(Map<BaseField, BaseValue> inputValues) {
