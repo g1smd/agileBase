@@ -1242,6 +1242,7 @@ public final class ViewTools implements ViewToolsInfo {
 		if (phoneNumber.length() < 8) {
 			return "";
 		}
+		// Known issue: Numbers as short as +290 5555 fail to show country name
 		for (int numDigitsInCountry = 7; numDigitsInCountry > 0; numDigitsInCountry--) {
 			String possibleCountry = phoneNumber.substring(0, numDigitsInCountry);
 			String country = this.countryCodes.get(possibleCountry);

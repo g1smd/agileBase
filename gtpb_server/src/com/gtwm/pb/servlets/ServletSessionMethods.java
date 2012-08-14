@@ -632,7 +632,7 @@ public final class ServletSessionMethods {
 					}
 				}
 				// International phone numbers
-				else if (textValue.isPhoneNumberInternational()) {
+				if (textValue.isPhoneNumberInternational()) {
 					// Extract extension
 					boolean phoneHasExtension = false;
 					String phoneExtensionString = null;
@@ -651,8 +651,6 @@ public final class ServletSessionMethods {
 					if (phoneHasExtension) {
 						fieldValueString += phoneExtensionString;
 					}
-				} else {
-					logger.warn("Number " + textValue + " recognised as a phone number but unable to detect GB or International");
 				}
 			} else {
 				// Replace smart quotes with normal quotes and em
