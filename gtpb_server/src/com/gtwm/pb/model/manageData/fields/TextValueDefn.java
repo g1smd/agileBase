@@ -148,7 +148,7 @@ public class TextValueDefn implements TextValue {
 			String regexIntl = "^";
 			regexIntl += "(";
 			regexIntl += "(?:0(?:0|11)\\s?|\\+)"; // 00, 011 or +
-			regexIntl += "\\d{1,3}\\s?[\\d\\s]+"; // number
+			regexIntl += "\\d{1,3}\\s?[\\s\\d]+"; // number
 			regexIntl += ")";
 			regexIntl += "(\\#\\d{3,4})?"; // optional "#" and extension
 			regexIntl += "$";
