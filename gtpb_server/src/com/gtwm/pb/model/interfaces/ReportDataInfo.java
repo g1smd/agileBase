@@ -21,6 +21,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
+import com.gtwm.pb.util.ObjectNotFoundException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,16 +43,24 @@ public interface ReportDataInfo {
 	 *            The maximum number of rows to return, -1 means no limit
 	 * @param filterType
 	 *            Whether to join separate field filters with AND or OR
+	 * @param user
+	 *            The currently logged in user. This is used to check if the
+	 *            user is a restricted 'app' user. If so, the report is
+	 *            automatically filtered by 'Created By [Auto] = [the user]'. If
+	 *            the report contains no Created By field, an ObjectNotFoundException
+	 *            will be thrown. This helps ensure app-only users can't see
+	 *            information entered by other users
 	 * @return Report data as ArrayList of ReportDataRow
 	 * @see http 
 	 *      ://java.sun.com/j2ee/sdk_1.3/techdocs/api/javax/servlet/ServletRequest
 	 *      .html#getParameterMap() HTTPServletRequest.getParameterMap generates
 	 *      the filterValues map
 	 */
-	public List<DataRowInfo> getReportDataRows(Connection conn,
+	public List<DataRowInfo> getReportDataRows(Connection conn, AppUserInfo user,
 			Map<BaseField, String> filterValues, boolean exactFilters,
-			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType, boolean lookupPostcodeLatLong)
-			throws SQLException, CodingErrorException, CantDoThatException;
+			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType,
+			boolean lookupPostcodeLatLong) throws SQLException, CodingErrorException,
+			CantDoThatException, ObjectNotFoundException;
 
 	/**
 	 * Return true if the record identified by the given number is present in
@@ -75,7 +84,8 @@ public interface ReportDataInfo {
 	public PreparedStatement getReportSqlPreparedStatement(Connection conn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> reportSorts, int rowLimit, BaseField selectField,
-			QuickFilterType filterType, boolean lookupPostcodeLatLong) throws SQLException, CantDoThatException;
+			QuickFilterType filterType, boolean lookupPostcodeLatLong) throws SQLException,
+			CantDoThatException;
 
 	/**
 	 * Generate a SQL WHERE clause that will work on a report given a map of

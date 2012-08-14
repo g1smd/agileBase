@@ -258,7 +258,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	private void emailComments(Set<String> recipients, BaseField field, int rowId,
 			AppUserInfo user, String comment) throws CodingErrorException, CantDoThatException,
-			SQLException {
+			SQLException, ObjectNotFoundException {
 		String body = user.getForename() + " " + user.getSurname() + " added the comment\n\n";
 		body += comment + "\n\n";
 		body += " to " + field.getTableContainingField().getSingularName() + " ";
@@ -507,7 +507,7 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public void lockReportRecords(HttpServletRequest request, SessionDataInfo sessionData)
-			throws ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException {
+			throws ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException, DisallowedException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		BaseReportInfo report = sessionData.getReport();
 		TableInfo table = report.getParentTable();
@@ -516,7 +516,8 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		Map<BaseField, String> filters = sessionData.getReportFilterValues();
 		Map<BaseField, Boolean> sorts = new HashMap<BaseField, Boolean>();
-		List<DataRowInfo> dataRows = this.getReportDataRows(company, report, filters, false, sorts,
+		AppUserInfo user = this.authManager.getLoggedInUser(request);
+		List<DataRowInfo> dataRows = this.getReportDataRows(user, report, filters, false, sorts,
 				-1, QuickFilterType.AND, false);
 		String lockFieldInternalName = table.getField(HiddenFields.LOCKED.getFieldName())
 				.getInternalFieldName();
@@ -1917,7 +1918,7 @@ public final class DataManagement implements DataManagementInfo {
 		if (dataFormat.equals(DataFormat.RSS)) {
 			numRows = 100;
 		}
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report,
 				filters, exactFilters, new HashMap<BaseField, Boolean>(0), numRows,
 				QuickFilterType.AND, false);
 		String dataFeedString = null;
@@ -2040,9 +2041,9 @@ public final class DataManagement implements DataManagementInfo {
 		eventWriter.add(end);
 	}
 
-	public String getReportMapJson(CompanyInfo company, BaseReportInfo report,
+	public String getReportMapJson(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters) throws CodingErrorException, CantDoThatException,
-			SQLException {
+			SQLException, ObjectNotFoundException {
 		ReportMapInfo map = report.getMap();
 		if (map == null) {
 			throw new CantDoThatException("Report has no map configured");
@@ -2053,7 +2054,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		ReportFieldInfo colourField = map.getColourField();
 		ReportFieldInfo categoryField = map.getCategoryField();
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(company, report, filters, false,
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filters, false,
 				new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, true);
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
@@ -2163,7 +2164,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	public String getReportTimelineJSON(AppUserInfo user, Set<BaseReportInfo> reports,
 			Map<BaseField, String> filterValues) throws CodingErrorException, CantDoThatException,
-			SQLException, JsonGenerationException {
+			SQLException, JsonGenerationException, ObjectNotFoundException {
 		String id = "";
 		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
 				filterValues);
@@ -2197,7 +2198,7 @@ public final class DataManagement implements DataManagementInfo {
 			for (BaseReportInfo report : reports) {
 				String className = "report_" + report.getInternalReportName();
 				ReportFieldInfo eventDateReportField = report.getCalendarStartField();
-				List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(),
+				List<DataRowInfo> reportDataRows = this.getReportDataRows(user,
 						report, filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
 						QuickFilterType.AND, false);
 				ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
@@ -2248,7 +2249,7 @@ public final class DataManagement implements DataManagementInfo {
 
 	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
-			throws CodingErrorException, CantDoThatException, SQLException, JsonGenerationException {
+			throws CodingErrorException, CantDoThatException, SQLException, JsonGenerationException, ObjectNotFoundException {
 		ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
@@ -2281,7 +2282,7 @@ public final class DataManagement implements DataManagementInfo {
 		if (dateResolution > Calendar.DAY_OF_MONTH) {
 			allDayValues = false;
 		}
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(user.getCompany(), report,
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report,
 				filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
 				QuickFilterType.AND, false);
 		JsonFactory jsonFactory = new JsonFactory();
@@ -2433,18 +2434,22 @@ public final class DataManagement implements DataManagementInfo {
 		return eventTitle;
 	}
 
-	public List<DataRowInfo> getReportDataRows(CompanyInfo company, BaseReportInfo reportDefn,
+	public List<DataRowInfo> getReportDataRows(AppUserInfo user, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType,
 			boolean lookupPostcodeLatLong) throws SQLException, CodingErrorException,
-			CantDoThatException {
+			CantDoThatException, ObjectNotFoundException {
 		Connection conn = null;
 		List<DataRowInfo> reportDataRows = null;
+		CompanyInfo company = null;
+		if (user != null) {
+			company = user.getCompany();
+		}
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			ReportDataInfo reportData = this.getReportData(company, reportDefn, conn, true);
-			reportDataRows = reportData.getReportDataRows(conn, filterValues, exactFilters,
+			reportDataRows = reportData.getReportDataRows(conn, user, filterValues, exactFilters,
 					sessionSorts, rowLimit, filterType, lookupPostcodeLatLong);
 		} finally {
 			if (conn != null) {

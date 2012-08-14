@@ -78,7 +78,6 @@ import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.ExtraAction;
-import com.gtwm.pb.util.Enumerations.HiddenFields;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
@@ -544,6 +543,31 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return this.getReportDataRows(report, rowLimit, reportFilterValues, false);
 	}
 
+	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit,
+			Map<BaseField, String> reportFilterValues, boolean exactFilters)
+			throws DisallowedException, SQLException, ObjectNotFoundException,
+			CodingErrorException, CantDoThatException {
+		if (report == null) {
+			throw new ObjectNotFoundException("No report was provided");
+		}
+		// Check privileges for all tables from which data is displayed from,
+		// throw DisallowedException if privileges not sufficient
+		this.checkReportViewPrivileges(report);
+		Map<BaseField, Boolean> sessionReportSorts = this.sessionData.getReportSorts();
+		AppUserInfo user = this.databaseDefn.getAuthManager().getUserByUserName(this.request,
+				this.request.getRemoteUser());
+		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
+				user, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
+				QuickFilterType.AND, false);
+		if (!exactFilters) {
+			// Also only log user requested (pane 2) reports
+			UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
+			usageLogger.logReportView(user, report, reportFilterValues, rowLimit, null);
+			UsageLogger.startLoggingThread(usageLogger);
+		}
+		return reportDataRows;
+	}
+
 	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException {
@@ -563,7 +587,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		boolean exactFilters = false;
 		int rowLimit = 100;
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
-				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
+				user, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
 				QuickFilterType.OR, false);
 		UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
 		usageLogger.logReportView(user, report, reportFilterValues, rowLimit, "global search");
@@ -571,45 +595,14 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return reportDataRows;
 	}
 
-	public List<DataRowInfo> getReportDataRows(BaseReportInfo report, int rowLimit,
-			Map<BaseField, String> reportFilterValues, boolean exactFilters)
-			throws DisallowedException, SQLException, ObjectNotFoundException,
-			CodingErrorException, CantDoThatException {
-		if (report == null) {
-			throw new ObjectNotFoundException("No report was provided");
-		}
-		// Check privileges for all tables from which data is displayed from,
-		// throw DisallowedException if privileges not sufficient
-		this.checkReportViewPrivileges(report);
-		Map<BaseField, Boolean> sessionReportSorts = this.sessionData.getReportSorts();
-		AppUserInfo user = this.databaseDefn.getAuthManager().getUserByUserName(this.request,
-				this.request.getRemoteUser());
-		CompanyInfo company = null;
-		if (!exactFilters) {
-			// If using exact filters, we probably don't need colour information
-			// - not a pane 2 report
-			// therefore leave company = null to disable colour generation
-			company = user.getCompany();
-		}
-		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
-				company, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
-				QuickFilterType.AND, false);
-		if (!exactFilters) {
-			// Also only log user requested (pane 2) reports
-			UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
-			usageLogger.logReportView(user, report, reportFilterValues, rowLimit, null);
-			UsageLogger.startLoggingThread(usageLogger);
-		}
-		return reportDataRows;
-	}
-
 	public String getReportMapJSON() throws ObjectNotFoundException, CodingErrorException,
-			CantDoThatException, SQLException {
+			CantDoThatException, SQLException, DisallowedException {
 		BaseReportInfo report = this.sessionData.getReport();
 		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues(report);
+		AppUserInfo user = this.databaseDefn.getAuthManager().getLoggedInUser(request);
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
-		return this.databaseDefn.getDataManagement().getReportMapJson(company, report,
+		return this.databaseDefn.getDataManagement().getReportMapJson(user, report,
 				reportFilterValues);
 	}
 
@@ -762,7 +755,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 						.getReportField(report.getParentTable().getPrimaryKey()
 								.getInternalFieldName())));
 			} else if (!field.getTableContainingField().equals(report.getParentTable())) {
-				// Data from other tables is treated as look-up-able as there may be more than one related record
+				// Data from other tables is treated as look-up-able as there
+				// may be more than one related record
 				chart.addGrouping(reportField, null);
 				chart.addFunction(new ChartAggregateDefn(AggregateFunction.COUNT, report
 						.getReportField(report.getParentTable().getPrimaryKey()
@@ -772,8 +766,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		Map<BaseField, String> filters = this.sessionData.getReportFilterValues();
 		CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
 				this.request);
-		return this.databaseDefn.getDataManagement().getChartData(company, chart, filters,
-				false);
+		return this.databaseDefn.getDataManagement().getChartData(company, chart, filters, false);
 	}
 
 	public SortedSet<WordInfo> getReportWordCloud(int minWeight, int maxWeight, int maxTags)

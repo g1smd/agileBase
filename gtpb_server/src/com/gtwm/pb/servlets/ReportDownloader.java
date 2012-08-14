@@ -177,7 +177,7 @@ public final class ReportDownloader extends HttpServlet {
 						PrivilegeType.MANAGE_TABLE, table);
 			}
 			CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
-			AppUserInfo user = authManager.getUserByUserName(request, request.getRemoteUser());
+			AppUserInfo user = authManager.getLoggedInUser(request);
 			logger.info("User " + user + " exporting report " + report + " from table " + table);
 			response.setHeader("Cache-Control", "no-cache");
 			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -190,7 +190,7 @@ public final class ReportDownloader extends HttpServlet {
 			filename = filename.replaceAll("\\W+", "_");
 			filename += ".xlsx";
 			response.setHeader("Content-disposition", "attachment; filename=" + filename);
-			File file = this.getSessionReportAsExcel(company, user, sessionData);
+			File file = this.getSessionReportAsExcel(user, sessionData);
 			response.setContentLength((int) file.length());
 			input = new BufferedInputStream(new FileInputStream(file));
 			output = new BufferedOutputStream(response.getOutputStream());
@@ -228,7 +228,7 @@ public final class ReportDownloader extends HttpServlet {
 	/**
 	 * Write the session report as an Excel file in a temporary location
 	 */
-	private File getSessionReportAsExcel(CompanyInfo company, AppUserInfo user,
+	private File getSessionReportAsExcel(AppUserInfo user,
 			SessionDataInfo sessionData) throws AgileBaseException, IOException, SQLException {
 		BaseReportInfo report = sessionData.getReport();
 		if (report == null) {
@@ -269,7 +269,7 @@ public final class ReportDownloader extends HttpServlet {
 		// data
 		rowNum++;
 		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
-		List<DataRowInfo> reportDataRows = dataManagement.getReportDataRows(company, report,
+		List<DataRowInfo> reportDataRows = dataManagement.getReportDataRows(user, report,
 				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), -1,
 				QuickFilterType.AND, false);
 		String fieldValue = "";
@@ -325,8 +325,9 @@ public final class ReportDownloader extends HttpServlet {
 			rowNum++;
 		}
 		// Export info worksheet
-		addReportMetaDataWorksheet(company, user, sessionData, report, workbook);
+		addReportMetaDataWorksheet(user, sessionData, report, workbook);
 		// one worksheet for each of the report summaries
+		CompanyInfo company = user.getCompany();
 		for (ChartInfo savedChart : report.getSavedCharts()) {
 			this.addSummaryWorksheet(company, sessionData, savedChart, workbook);
 		}
@@ -348,7 +349,7 @@ public final class ReportDownloader extends HttpServlet {
 	/**
 	 * Add a sheet with export information to the workbook
 	 */
-	private static void addReportMetaDataWorksheet(CompanyInfo company, AppUserInfo user,
+	private static void addReportMetaDataWorksheet(AppUserInfo user,
 			SessionDataInfo sessionData, BaseReportInfo report, Workbook workbook) {
 		String title = "Export information";
 		Sheet infoSheet;
@@ -360,6 +361,7 @@ public final class ReportDownloader extends HttpServlet {
 			// The sheet name must be unique
 			infoSheet = workbook.createSheet(title + " " + report.getInternalReportName());
 		}
+		CompanyInfo company = user.getCompany();
 		Row row = infoSheet.createRow(0);
 		Cell cell = row.createCell(1);
 		cell.setCellValue("Export from www.agilebase.co.uk");

@@ -174,7 +174,7 @@ public final class CalendarPublisher extends HttpServlet {
 	 */
 	private synchronized net.fortuna.ical4j.model.Calendar getCalendar(HttpServletRequest request,
 			AppUserInfo publicUser, BaseReportInfo report) throws CantDoThatException,
-			CodingErrorException, SQLException, ParseException, SocketException {
+			CodingErrorException, SQLException, ParseException, SocketException, ObjectNotFoundException {
 		if (!report.getCalendarSyncable()) {
 			throw new CantDoThatException("The report " + report
 					+ " has not been set as publicly exportable");
@@ -204,7 +204,7 @@ public final class CalendarPublisher extends HttpServlet {
 			Map<BaseField, String> reportFilterValues = new HashMap<BaseField, String>();
 			// select only rows with an event date
 			reportFilterValues.put(eventStartField.getBaseField(), "!?");
-			List<DataRowInfo> reportDataRows = reportData.getReportDataRows(conn,
+			List<DataRowInfo> reportDataRows = reportData.getReportDataRows(conn, publicUser,
 					reportFilterValues, false, sessionReportSorts, rowLimit, QuickFilterType.AND,
 					false);
 			net.fortuna.ical4j.model.Calendar calendar = new Calendar();

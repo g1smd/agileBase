@@ -452,7 +452,7 @@ public interface ViewMethodsInfo {
 			JsonGenerationException;
 
 	public String getReportMapJSON() throws ObjectNotFoundException, CodingErrorException,
-			CantDoThatException, SQLException;
+			CantDoThatException, SQLException, DisallowedException;
 
 	/**
 	 * Returns true if the record identified by the session row ID is visible in

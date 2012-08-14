@@ -52,6 +52,8 @@ public interface DataManagementInfo {
 	 * @param company
 	 *            Needed for internal caching mechanism. Can be null, but if so,
 	 *            no caching will be done
+	 * @param user
+	 *            The logged in user. Used to restrict results if the user is an app-only user without access to the full agileBase interface
 	 * @param reportDefn
 	 *            The report definition which contains the list of fields etc.
 	 * @param filterValues
@@ -74,11 +76,11 @@ public interface DataManagementInfo {
 	 *            containing a postcode and include them in results
 	 * @return report data as a list of rows
 	 */
-	public List<DataRowInfo> getReportDataRows(CompanyInfo company, BaseReportInfo reportDefn,
+	public List<DataRowInfo> getReportDataRows(AppUserInfo user, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType,
 			boolean lookupPostcodeLatLong) throws SQLException, CodingErrorException,
-			CantDoThatException;
+			CantDoThatException, ObjectNotFoundException;
 
 	/**
 	 * Return all the text from the specified fields in the report as one big
@@ -110,15 +112,15 @@ public interface DataManagementInfo {
 	 */
 	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
-			throws CodingErrorException, CantDoThatException, SQLException, JsonGenerationException;
+			throws CodingErrorException, CantDoThatException, SQLException, JsonGenerationException, ObjectNotFoundException;
 
-	public String getReportMapJson(CompanyInfo company, BaseReportInfo report,
+	public String getReportMapJson(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters) throws CodingErrorException, CantDoThatException,
-			SQLException;
+			SQLException, ObjectNotFoundException;
 
 	public String getReportTimelineJSON(AppUserInfo user, Set<BaseReportInfo> reports,
 			Map<BaseField, String> filterValues) throws CodingErrorException, CantDoThatException,
-			SQLException, JsonGenerationException;
+			SQLException, JsonGenerationException, ObjectNotFoundException;
 
 	/**
 	 * @param user
@@ -161,10 +163,12 @@ public interface DataManagementInfo {
 	/**
 	 * Get all comments attached to a particular field for a particular record
 	 */
-	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException, CantDoThatException;
+	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException,
+			CantDoThatException;
 
-	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId, AppUserInfo user, String comment)
-			throws SQLException, ObjectNotFoundException, CantDoThatException, CodingErrorException;
+	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId,
+			AppUserInfo user, String comment) throws SQLException, ObjectNotFoundException,
+			CantDoThatException, CodingErrorException;
 
 	/**
 	 * Return true if the record with the given primary key is visible in the
@@ -195,13 +199,14 @@ public interface DataManagementInfo {
 	 * @param company
 	 *            Used to inform per-company caching
 	 * @param aggressiveCache
-	 *            If true, always use the cached data if any's available for the past 48 hrs
+	 *            If true, always use the cached data if any's available for the
+	 *            past 48 hrs
 	 * @return The report summary data, or null if the summary isn't valid, e.g.
 	 *         doesn't contain an aggregate function
 	 */
 	public ChartDataInfo getChartData(CompanyInfo company, ChartInfo reportSummaryDefn,
-			Map<BaseField, String> reportFilterValues, boolean aggressiveCache) throws SQLException,
-			CantDoThatException;
+			Map<BaseField, String> reportFilterValues, boolean aggressiveCache)
+			throws SQLException, CantDoThatException;
 
 	/**
 	 * Get a single row as a map of field name => value, for editing or viewing
@@ -210,7 +215,8 @@ public interface DataManagementInfo {
 	 *      int) See TableData.getTableDataRow for an explanation of the
 	 *      exceptions thrown
 	 * @param logView
-	 *            If true, increment the view count hidden field of the row returned
+	 *            If true, increment the view count hidden field of the row
+	 *            returned
 	 * @param sessionData
 	 *            Only necessary if logView is true, otherwise can be null
 	 */
@@ -240,8 +246,9 @@ public interface DataManagementInfo {
 	/**
 	 * @see DataRowInfo#childDataRowsExist
 	 */
-	public boolean childDataRowsExist(TableInfo parentTable, int parentRowId, TableInfo childTable) throws SQLException;
-	
+	public boolean childDataRowsExist(TableInfo parentTable, int parentRowId, TableInfo childTable)
+			throws SQLException;
+
 	/**
 	 * Save a new record or update an existing one in a database table. Also
 	 * save the field input values in the session for later retrieval
@@ -302,7 +309,7 @@ public interface DataManagementInfo {
 	 * lockAllTableRecords instead if appropriate which is a lot faster
 	 */
 	public void lockReportRecords(HttpServletRequest request, SessionDataInfo sessionData)
-			throws ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException;
+			throws ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException, DisallowedException;
 
 	/**
 	 * Lock an individual record

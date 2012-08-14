@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
+import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageData.InputRecordException;
@@ -438,10 +439,14 @@ public final class ServletDataMethods {
 		if (table == null) {
 			throw new ObjectNotFoundException("There's no table in the session");
 		}
-		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.EDIT_TABLE_DATA, table))) {
-			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
-					PrivilegeType.EDIT_TABLE_DATA, table);
+		AppUserInfo user = databaseDefn.getAuthManager().getLoggedInUser(request);
+		AuthenticatorInfo authenticator = databaseDefn.getAuthManager().getAuthenticator();
+		if (!(authenticator.loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, table))) {
+			throw new DisallowedException(user,	PrivilegeType.MANAGE_TABLE, table);
+		}
+		if (!authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
+			throw new DisallowedException(user, PrivilegeType.ADMINISTRATE);
 		}
 		// get field content types specified
 		Map<BaseField, FieldContentType> fieldContentTypes = new HashMap<BaseField, FieldContentType>();

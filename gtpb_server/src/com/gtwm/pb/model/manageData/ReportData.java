@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.model.manageData;
 
+import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.ReportMapInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
@@ -37,6 +38,7 @@ import com.gtwm.pb.model.interfaces.fields.DateField;
 import com.gtwm.pb.model.interfaces.fields.CalculationField;
 import com.gtwm.pb.model.manageData.ReportDataFieldStats;
 import com.gtwm.pb.model.manageData.ReportQuickFilter;
+import com.gtwm.pb.util.Enumerations.HiddenFields;
 import com.gtwm.pb.util.Enumerations.QueryPlanSelection;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
@@ -44,6 +46,8 @@ import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.AppProperties;
+import com.gtwm.pb.util.ObjectNotFoundException;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -741,32 +745,25 @@ public class ReportData implements ReportDataInfo {
 		return whereClause;
 	}
 
-	public List<DataRowInfo> getReportDataRows(Connection conn,
+	public List<DataRowInfo> getReportDataRows(Connection conn, AppUserInfo user,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType,
 			boolean lookupPostcodeLatLong) throws SQLException, CodingErrorException,
-			CantDoThatException {
+			CantDoThatException, ObjectNotFoundException {
 		List<DataRowInfo> reportData = null;
-		// 0) Obtain all display values taken from other sources:
-		/*
-		 * Map<BaseField, Map<String, String>> displayLookups = new
-		 * HashMap<BaseField, Map<String, String>>(); for (ReportFieldInfo
-		 * reportField : this.report.getReportFields()) { BaseField fieldSchema
-		 * = reportField.getBaseField(); if (fieldSchema instanceof
-		 * RelationField) { // Buffer the set of display values for this field:
-		 * RelationField relationField = (RelationField) fieldSchema; String
-		 * relatedKey = relationField.getRelatedField().getInternalFieldName();
-		 * String relatedDisplay =
-		 * relationField.getDisplayField().getInternalFieldName(); String
-		 * relatedSource =
-		 * relationField.getRelatedTable().getInternalTableName(); Map<String,
-		 * String> displayLookup = getKeyToDisplayMapping(conn, relatedSource,
-		 * relatedKey, relatedDisplay);
-		 * displayLookups.put(relationField.getRelatedField(), displayLookup); }
-		 * }
-		 */
 		long executionStartTime = System.currentTimeMillis();
 		ReportFieldInfo postcodeField = null;
+		if (user != null) {
+			if (user.getUsesCustomUI()) {
+				// Throws ObjectNotFoundException if the report has no 'created
+				// by' field
+				BaseField createdByField = this.report.getReportField(
+						HiddenFields.CREATED_BY.getFieldName()).getBaseField();
+				String createdBy = "=" + user.getForename() + " " + user.getSurname() + "("
+						+ user.getUserName() + ")";
+				filterValues.put(createdByField, createdBy);
+			}
+		}
 		if (lookupPostcodeLatLong) {
 			ReportMapInfo map = report.getMap();
 			if (map != null) {
