@@ -594,7 +594,7 @@ public final class ServletSessionMethods {
 					// need to be removed.
 					Matcher numberPartsGB = Pattern
 							.compile(
-									"^((?:0(?:0\\s?|11\\s)|\\+)(44)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
+									"^((?:0(?:0\\s?|11\\s)|\\+)(4\s?4)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)(\\#\\d{3,4})?$")
 							.matcher(fieldValueString);
 					if (numberPartsGB.matches()) {
 						// Extract NSN part of GB number, trim it
@@ -608,7 +608,7 @@ public final class ServletSessionMethods {
 							String phonePrefixString = numberPartsGB.group(2);
 							// Set prefix as 0 or as +44 and space
 							if (phonePrefixString != null) {
-								if (phonePrefixString.equals("44")) {
+								if (phonePrefixString.equals("44") || phonePrefixString.equals("4 4")) {
 									phonePrefixString = "+44 ";
 								}
 							} else {
