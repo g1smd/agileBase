@@ -354,7 +354,7 @@ public final class SessionData implements SessionDataInfo {
 				reportFilterValues.put(field, value);
 			}
 		}
-		return Collections.unmodifiableMap(reportFilterValues);
+		return reportFilterValues;
 	}
 	
 	public synchronized String getGlobalFilterString(BaseReportInfo report) {
