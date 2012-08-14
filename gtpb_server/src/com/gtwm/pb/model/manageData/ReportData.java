@@ -759,7 +759,7 @@ public class ReportData implements ReportDataInfo {
 				// by' field
 				BaseField createdByField = this.report.getReportField(
 						HiddenFields.CREATED_BY.getFieldName()).getBaseField();
-				String createdBy = "=" + user.getForename() + " " + user.getSurname() + "("
+				String createdBy = "=" + user.getForename() + " " + user.getSurname() + " ("
 						+ user.getUserName() + ")";
 				filterValues.put(createdByField, createdBy);
 			}
