@@ -331,7 +331,6 @@ public class TableDefn implements TableInfo {
 		// Try treating it as a public name
 		String lowerReportID = reportID.toLowerCase();
 		for (BaseReportInfo report : reports) {
-			logger.debug("Comparing " + report.getReportName().toLowerCase() + " with " + lowerReportID);
 			if (report.getReportName().toLowerCase().equals(lowerReportID)) {
 				return report;
 			}
