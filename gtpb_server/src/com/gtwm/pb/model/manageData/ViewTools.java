@@ -812,7 +812,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("98", "Premium rate");
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
-		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0\\s?|11\\s)|\\+)44)?0?([1-9]\\d+)\\#?.*",
+		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0|11)\\s?|\\+)4\\s?4)?0?([1-9]\\d+)[x\\#]?.*",
 				"$1");
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 6) {
@@ -1236,12 +1236,13 @@ public final class ViewTools implements ViewToolsInfo {
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)]", "");
 		phoneNumber = phoneNumber
-				.replaceAll("(?:0(?:0\\s?|11\\s)|\\+)([1-9][\\d\\s]+)\\#?.*", "$1");
+				.replaceAll("(?:0(?:0|11)\\s?|\\+)([1-9][\\d\\s]+)[x\\#]?.*", "$1");
 		phoneNumber = phoneNumber.replaceAll("[\\s]", "");
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 8) {
 			return "";
 		}
+		// Known issue: Numbers as short as +290 5555 fail to show country name
 		for (int numDigitsInCountry = 7; numDigitsInCountry > 0; numDigitsInCountry--) {
 			String possibleCountry = phoneNumber.substring(0, numDigitsInCountry);
 			String country = this.countryCodes.get(possibleCountry);
