@@ -1320,18 +1320,21 @@ function fMarkInactiveTabs() {
 	if ($(".form_tabber").size() == 0) {
 		return;
 	}
-	$.getJSON(
-			"AppController.servlet?return=gui/reports_and_tables/tabs/tabs_inactive",
-			function(data) {
-				for (i = 0; i < data.length; i++) {
-					var jqTab = $("#tab_choice_" + data[i]);
-					jqTab.addClass("no_records");
-					if (jqTab.hasClass("active")) {
-						// Hide the deleter if the active tab has no record(s)
-						$("#tab_deleter").fadeOut();
+	if (!($(".form_tabber").hasClass("inactives_marked"))) {
+		$(".form_tabber").addClass("inactives_marked");
+		$.getJSON(
+				"AppController.servlet?return=gui/reports_and_tables/tabs/tabs_inactive",
+				function(data) {
+					for (i = 0; i < data.length; i++) {
+						var jqTab = $("#tab_choice_" + data[i]);
+						jqTab.addClass("no_records");
+						if (jqTab.hasClass("active")) {
+							// Hide the deleter if the active tab has no record(s)
+							$("#tab_deleter").fadeOut();
+						}
 					}
-				}
-			});
+				});
+	}
 }
 
 /*
