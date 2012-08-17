@@ -267,6 +267,8 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	var params = replacedTemplateUrl.replace(/^.*\??/,'');
 	var paramsObj = $.deparam(params);
 	var baseUrl = replacedTemplateUrl.replace(/\?.*$/,'');
+	console.log("Base URL: " + baseUrl);
+	console.log("Origi URL: " + replacedTemplateUrl);
 	$.post(baseUrl, paramsObj, function(data) {
 		// Refresh frame 3
 		if (typeof (parent.pane_3) != "undefined") {
