@@ -57,7 +57,7 @@ import java.sql.ResultSet;
 public final class SessionData implements SessionDataInfo {
 
 	public SessionData() {
-		//logger.warn("Empty SessionData object created");
+		// logger.warn("Empty SessionData object created");
 		this.relationalDataSource = null;
 	}
 
@@ -98,7 +98,8 @@ public final class SessionData implements SessionDataInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 		this.relationalDataSource = relationalDataSource;
 		AuthenticatorInfo authenticator = databaseDefn.getAuthManager().getAuthenticator();
-		// First try the default report that's been set by the user, if there is one
+		// First try the default report that's been set by the user, if there is
+		// one
 		BaseReportInfo defaultReport = user.getDefaultReport();
 		if (defaultReport != null) {
 			if (authenticator.loggedInUserAllowedToViewReport(request, defaultReport)) {
@@ -107,9 +108,11 @@ public final class SessionData implements SessionDataInfo {
 			}
 		}
 		// Next get the user's most popular report
-		defaultReport = databaseDefn.getDataManagement().getMostPopularReport(request, databaseDefn, user);
+		defaultReport = databaseDefn.getDataManagement().getMostPopularReport(request,
+				databaseDefn, user);
 		if (defaultReport != null) {
-			// authenticator check not necessary as getMostPopularReport does that
+			// authenticator check not necessary as getMostPopularReport does
+			// that
 			this.setReport(defaultReport);
 			return;
 		}
@@ -193,8 +196,8 @@ public final class SessionData implements SessionDataInfo {
 				resultSet.close();
 				statement.close();
 			} catch (SQLException sqlex) {
-				logger.warn("SQL error auto setting row ID. The session report " + this.getReport() + " may have an error. "
-						+ sqlex);
+				logger.warn("SQL error auto setting row ID. The session report " + this.getReport()
+						+ " may have an error. " + sqlex);
 			} finally {
 				if (conn != null) {
 					conn.close();
@@ -271,7 +274,8 @@ public final class SessionData implements SessionDataInfo {
 
 	public synchronized void setReportFilterValue(BaseField field, String fieldValue) {
 		if (fieldValue != null) {
-			// Trim filters so that users aren't confused if they accidentally type a space as a filter
+			// Trim filters so that users aren't confused if they accidentally
+			// type a space as a filter
 			fieldValue = fieldValue.trim();
 			if (!(fieldValue.equals(""))) {
 				this.reportFilterValues.put(field, fieldValue);
@@ -281,7 +285,7 @@ public final class SessionData implements SessionDataInfo {
 		// if fieldValue empty, clear the field filter
 		this.clearReportFilterValue(field);
 	}
-	
+
 	public synchronized void setGlobalFilterString(BaseReportInfo report, String filterString) {
 		if (filterString != null) {
 			filterString = filterString.trim();
@@ -325,7 +329,7 @@ public final class SessionData implements SessionDataInfo {
 	public synchronized void clearReportFilterValue(BaseField field) {
 		this.reportFilterValues.remove(field);
 	}
-	
+
 	private synchronized void clearGlobalFilterString(BaseReportInfo report) {
 		this.globalFilterStrings.remove(report);
 	}
@@ -345,7 +349,7 @@ public final class SessionData implements SessionDataInfo {
 	public synchronized Map<BaseField, String> getReportFilterValues() {
 		return this.reportFilterValues;
 	}
-	
+
 	public synchronized Map<BaseField, String> getReportFilterValues(BaseReportInfo report) {
 		Map<BaseField, String> reportFilterValues = new HashMap<BaseField, String>();
 		for (BaseField field : report.getReportBaseFields()) {
@@ -356,7 +360,7 @@ public final class SessionData implements SessionDataInfo {
 		}
 		return reportFilterValues;
 	}
-	
+
 	public synchronized String getGlobalFilterString(BaseReportInfo report) {
 		return this.globalFilterStrings.get(report);
 	}
@@ -412,13 +416,16 @@ public final class SessionData implements SessionDataInfo {
 	}
 
 	public synchronized void clearCustomVariable(String key) {
-		this.customStrings.remove(key);
-		this.customIntegers.remove(key);
-		this.customLongs.remove(key);
-		this.customBooleans.remove(key);
-		this.customTables.remove(key);
-		this.customReports.remove(key);
-		this.customFields.remove(key);
+		for (String individualKey : key.split(",")) {
+			logger.debug("Clearing custom variable " + key);
+			this.customStrings.remove(key);
+			this.customIntegers.remove(key);
+			this.customLongs.remove(key);
+			this.customBooleans.remove(key);
+			this.customTables.remove(key);
+			this.customReports.remove(key);
+			this.customFields.remove(key);
+		}
 	}
 
 	public synchronized String getCustomVariable(String key) {
@@ -480,7 +487,7 @@ public final class SessionData implements SessionDataInfo {
 	public synchronized void setCustomReport(String key, BaseReportInfo value) {
 		this.customReports.put(key, value);
 	}
-	
+
 	public synchronized void setCustomField(String key, BaseField value) {
 		this.customFields.put(key, value);
 	}
@@ -616,7 +623,7 @@ public final class SessionData implements SessionDataInfo {
 	private Map<String, BaseReportInfo> customReports = new HashMap<String, BaseReportInfo>();
 
 	private Map<String, BaseField> customFields = new HashMap<String, BaseField>();
-	
+
 	private Map<BaseReportInfo, String> globalFilterStrings = new HashMap<BaseReportInfo, String>();
 
 	private TableDependencyException tdex = null;

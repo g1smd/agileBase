@@ -54,6 +54,8 @@ public interface SessionDataInfo {
 	 * Delete a custom session variable, or take no action if it doesn't exist.
 	 * Variables of any type are cleared, i.e. anything that's been set with
 	 * setCustomString, setCustomTable, setCustomReport etc.
+	 * 
+	 * A comma separated list of keys can be provided to clear more than one key
 	 */
 	public void clearCustomVariable(String key);
 
