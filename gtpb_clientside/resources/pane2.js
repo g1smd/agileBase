@@ -276,6 +276,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 			// list, otherwise just refresh the current tab
 			if (typeof (parent.pane_3.pane3TabInterface) == "undefined") {
 				// something in pane 3 but not a tabset
+				console.log("load A");
 				parent.pane_3.document.location = url;
 			} else if (document.location.href.match('set_module')) { // set_module
 				// means we must be viewing a report
@@ -285,21 +286,25 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 					// if pane 3 has the right number of tabs,
 					// we can just refresh the one tab
 					try {
+						console.log("load B");
 						parent.pane_3.pane3TabInterface
 								.refresh(rowId);
 					} catch (err) {
 						// Fast refresh failed, falling back to
 						// slow - don't worry about this
+						console.log("load C");
 						parent.pane_3.document.location = url;
 					}
 				} else {
 					// if it doesn't have the right number of tabs, we
 					// need to refresh the whole frame to reload the tabset
+					console.log("load D");
 					parent.pane_3.document.location = url;
 				}
 			} else {
 				// fallback after everything else: simple
 				// refresh of pane 3
+				console.log("load E");
 				parent.pane_3.document.location = url;
 			}
 		}

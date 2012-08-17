@@ -417,7 +417,6 @@ public final class SessionData implements SessionDataInfo {
 
 	public synchronized void clearCustomVariable(String key) {
 		for (String individualKey : key.split(",")) {
-			logger.debug("Clearing custom variable " + key);
 			this.customStrings.remove(key);
 			this.customIntegers.remove(key);
 			this.customLongs.remove(key);
