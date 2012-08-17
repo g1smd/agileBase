@@ -279,7 +279,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 				// something in pane 3 but not a tabset
 				console.log("load A");
 				parent.pane_3.document.location = url;
-			} else if (document.location.href.match('set_module')) { // set_module
+			} else if (document.location.href.match('set_module') || document.location.href.match('gui/reports_and_tables/report_data')) {
 				// means we must be viewing a report
 				if ((numberOfTabsExpected == null)
 						|| (numberOfTabsExpected == parent.pane_3.pane3TabInterface
