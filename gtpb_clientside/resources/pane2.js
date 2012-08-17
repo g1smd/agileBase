@@ -264,11 +264,10 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	templateName = templateName.replace(/\&.*$/, '');
 	replacedTemplateUrl = url.replace('return=' + templateName, 'return=blank');
 	// ? means non greedy, after the escaped ?, i.e. replace everything up to and including the first question mark
-	var params = replacedTemplateUrl.replace(/^.*\??/,'');
+	var params = replacedTemplateUrl.replace(/^.*?\?/,'');
 	var paramsObj = $.deparam(params);
 	var baseUrl = replacedTemplateUrl.replace(/\?.*$/,'');
-	console.log("Base URL: " + baseUrl);
-	console.log("Origi URL: " + replacedTemplateUrl);
+	console.log("Params: " + params);
 	$.post(baseUrl, paramsObj, function(data) {
 		// Refresh frame 3
 		if (typeof (parent.pane_3) != "undefined") {
