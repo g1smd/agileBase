@@ -17,7 +17,6 @@
 ##
 #set($sessionTable = $sessionData.getCustomTable("tabTable"))
 #set($parentTable = $sessionData.getTable())
-$viewTools.log("session table <- tabTable $sessionTable, parent table <- actual session table $parentTable")
 #if(!$sessionData.getCustomBoolean("overrideTableForm"))
   #set($formTable = $parentTable.getFormTable())
 #end
@@ -59,7 +58,6 @@ $viewTools.log("session table <- tabTable $sessionTable, parent table <- actual 
       ## Don't overwrite row ID if we're using a form table and the tab is the session table
       #if($formTable && $sessionTable.equals($sessionData.getTable()))
         #set($lookupRowId = false)
-        $viewTools.log("Not looking up row ID, staying at $sessionRowId")
         ## Check if there is a parent
         #set($tableDataRow = $view.getTableDataRow($sessionTable, $sessionRowId))
 	    #foreach($field in $sessionTable.getFields())
@@ -83,7 +81,6 @@ $viewTools.log("session table <- tabTable $sessionTable, parent table <- actual 
 	  #end
 	  #if($sessionRowId > -1)
 	    #set($component = true)
-##	    $viewTools.log("Parsing tab_content_table for $sessionTable $sessionRowId")
 	    #parse("gui/reports_and_tables/tabs/tab_content_table.vm")
 	  #end
     #else
