@@ -274,6 +274,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 			// different privileges to the last one.
 			// If so, reload the whole of pane 3 to refresh the tab
 			// list, otherwise just refresh the current tab
+			console.log("typeof (parent.pane_3.pane3TabInterface) = " + typeof (parent.pane_3.pane3TabInterface));
 			if (typeof (parent.pane_3.pane3TabInterface) == "undefined") {
 				// something in pane 3 but not a tabset
 				console.log("load A");
@@ -304,7 +305,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 			} else {
 				// fallback after everything else: simple
 				// refresh of pane 3
-				console.log("load E");
+				console.log("load E. document.location.href = " + document.location.href);
 				parent.pane_3.document.location = url;
 			}
 		}
