@@ -265,7 +265,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	replacedTemplateUrl = url.replace('return=' + templateName, 'return=blank');
 	// ? means non greedy, after the escaped ?, i.e. replace everything up to and including the first question mark
 	var params = replacedTemplateUrl.replace(/^.*\??/,'');
-	var paramsObj = $.deparam(params)
+	var paramsObj = $.deparam(params);
 	var baseUrl = replacedTemplateUrl.replace(/\?.*$/,'');
 	$.post(baseUrl, paramsObj, function(data) {
 		// Refresh frame 3
