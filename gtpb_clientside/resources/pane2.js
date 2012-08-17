@@ -263,7 +263,12 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	var templateName = url.replace(/^.*return=/, '');
 	templateName = templateName.replace(/\&.*$/, '');
 	replacedTemplateUrl = url.replace('return=' + templateName, 'return=blank');
-	$.post(replacedTemplateUrl, null, function(data) {
+	// ? means non greedy, after the escaped ?, i.e. replace everything up to and including the first question mark
+	var params = replacedTemplateUrl.replace(/^.*\??/,'');
+	http://stackoverflow.com/questions/8648892/convert-url-parameters-to-a-javascript-object
+	params = JSON.parse('{"' + decodeURI(params.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}');
+	var baseUrl = replacedTemplateUrl.replace(/\?.*$/,'');
+	$.post(baseUrl, params, function(data) {
 		// Refresh frame 3
 		if (typeof (parent.pane_3) != "undefined") {
 			// If user is loading a new report, it may have
