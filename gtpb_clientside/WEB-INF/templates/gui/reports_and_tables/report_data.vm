@@ -74,6 +74,7 @@
   #set($colsCapacity = $reportBaseFields.size() + 2)##
   #set($formTable = $sessionTable.getFormTable())
   #if($formTable)
+    ## Set the tab and clear the form table override
     #set($setTab = "clear_custom_variable=overrideTableForm&set_custom_table=true&tablekey=tabTable&custominternaltablename=$internalTableName")
   #else
     #set($setTab = "clear_custom_variable=overrideTableForm,tabTable")
