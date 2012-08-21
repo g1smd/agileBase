@@ -34,6 +34,7 @@ import com.gtwm.pb.util.Enumerations.Browsers;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 
+import org.apache.http.client.ClientProtocolException;
 import org.apache.velocity.tools.generic.MathTool;
 
 /**
@@ -386,6 +387,11 @@ public interface ViewToolsInfo {
 	 *            "resources/icons/applications/tango"
 	 */
 	public Set<File> listFiles(String folder);
+
+	/**
+	 * Return the HTML content of an external URL. Useful for content that couldn't be loaded by a standard client side AJAX request due to cross-domain policy issues
+	 */
+	public String getExternalHtml(String url) throws ClientProtocolException, IOException;
 
 	/**
 	 * Returns the URL pointing to the last commit that the app was built

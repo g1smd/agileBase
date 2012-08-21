@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -69,6 +68,8 @@ import com.gtwm.pb.model.manageData.fields.FileValueDefn;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.RandomString;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.fluent.Request;
 import org.apache.velocity.tools.generic.MathTool;
 import org.grlea.log.SimpleLogger;
 import com.ibm.icu.text.RuleBasedNumberFormat;
@@ -1640,6 +1641,10 @@ public final class ViewTools implements ViewToolsInfo {
 		return files;
 	}
 
+	public String getExternalHtml(String url) throws ClientProtocolException, IOException {
+		return Request.Get(url).execute().returnContent().asString();
+	}
+
 	public String getCommitUrl() throws IOException, CantDoThatException {
 		String commitFileName = this.request.getSession().getServletContext()
 				.getRealPath("/lastcommit.txt");
@@ -1712,5 +1717,6 @@ public final class ViewTools implements ViewToolsInfo {
 	private Map<String, Boolean> templateExistsCache = new HashMap<String, Boolean>();
 
 	private static final SimpleLogger logger = new SimpleLogger(ViewTools.class);
+
 
 }

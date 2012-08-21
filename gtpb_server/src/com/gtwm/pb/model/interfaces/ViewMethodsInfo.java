@@ -766,4 +766,5 @@ public interface ViewMethodsInfo {
 	 * @return Bytes per second
 	 */
 	public int getUploadSpeed();
+	
 }
