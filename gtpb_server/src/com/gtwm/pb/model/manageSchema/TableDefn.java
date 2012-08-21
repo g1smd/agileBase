@@ -119,10 +119,7 @@ public class TableDefn implements TableInfo {
 			return this.singularName;
 		}
 		String simpleName = this.getSimpleName();
-		if (simpleName.toLowerCase().endsWith("premises") || simpleName.toLowerCase().endsWith("expenses")) {
-			// PlingStemmer doesn't return the correct singular form of
-			// "premises" which is also "premises"
-			// TODO: the next version of PlingStemmer corrects this, replace when released
+		if (simpleName.toLowerCase().endsWith("expenses")) {
 			this.singularName = simpleName;
 		} else if (PlingStemmer.isSingular(simpleName)) {
 			this.singularName = simpleName;
