@@ -1237,7 +1237,7 @@ public final class ViewTools implements ViewToolsInfo {
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)]", "");
 		phoneNumber = phoneNumber
-				.replaceAll("(?:0(?:0|11)\\s?|\\+)([1-9][\\d\\s]+)[x\\#]?.*", "$1");
+				.replaceAll("(?:00\\s?|\\+)([1-9][\\d\\s]+)[x\\#]?.*", "$1");
 		phoneNumber = phoneNumber.replaceAll("[\\s]", "");
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 8) {
