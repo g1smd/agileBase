@@ -143,6 +143,9 @@ public class TextValueDefn implements TextValue {
 		if (this.isNull()) {
 			return false;
 		}
+		if (this.contains("  ")) {
+			return false;
+		}
 		int length = this.textValue.trim().length();
 		if ((length > 6) && (length < 27)) {
 			String regexIntl = "^";
