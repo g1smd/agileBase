@@ -48,6 +48,7 @@
         <tr>
           <td iconname="icon-adjust"><i class="icon-adjust"></i></td>
           <td iconname="icon-exclamation-sign"><i class="icon-exclamation-sign"></i></td>
+          <td iconname="icon-money"><i class="icon-money"></i></td>
         </tr>
       </tbody>
     </table>
