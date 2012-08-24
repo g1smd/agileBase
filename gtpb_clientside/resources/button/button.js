@@ -166,6 +166,7 @@ function fFullScreen() {
 
 function fAppLauncher() {
 	var previewDiv = $("#preview");
+	$(".searchbox").hide();
 	previewDiv.fadeIn().load("AppController.servlet", {
 		"return": "gui/preview/app_launcher"
 	});
@@ -175,6 +176,7 @@ function closePreview() {
 	$("#preview").fadeOut();
 	$("#doneSearch").fadeOut();
 	$(".searchbox").val("");
+	$(".searchbox").show();
 }
 
 function fAppStore() {
