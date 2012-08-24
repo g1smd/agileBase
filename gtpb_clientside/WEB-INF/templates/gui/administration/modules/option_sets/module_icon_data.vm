@@ -41,8 +41,8 @@
   }
   
   .options_wrapper div.options_set td:first-child:first-line {
-    font-size: auto;
-    color: auto;
+    font-size: 8pt;
+    color: #666666;
   }
 </style>
 
