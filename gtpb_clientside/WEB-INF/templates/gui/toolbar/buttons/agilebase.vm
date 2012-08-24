@@ -15,16 +15,11 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($user = $view.getLoggedInUser())
-#set($company=$user.getCompany())
-#if(!$report)
-  #set($report = $sessionData.getReport())
-#end
-#set($searchTitle = "$report.getModule() - $report")
-#if($searchTitle.length() > 25)
-	#set($searchTitle = "$report")
-#end
-<span id="searchTitle">$searchTitle</span>
-<div class="reportDataView" id="homeContent">
-  #parse("gui/preview/report_content.vm")
-</div>
+#set($button_img='resources/toolbar/agilebase.png')
+#set($click="fAppLauncher()")
+#set($id='app_launcher')
+#set($caption='App Launcher')
+##set($params='selected=false')
+##set($classes='selected toggleButton')
+#set($tooltip='Show all apps')
+#parse('gui/resources/button.vm')

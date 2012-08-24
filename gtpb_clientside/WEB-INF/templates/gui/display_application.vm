@@ -19,8 +19,8 @@
 <html>
   <head>
 	#set($appUser = $view.getLoggedInUser())
-  #set($company = $appUser.getCompany())
-  #set($company_name=$company.getCompanyName())
+    #set($company = $appUser.getCompany())
+    #set($company_name=$company.getCompanyName())
 	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
 	<link href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" type="text/css" rel="stylesheet" />
 	<link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />      
@@ -45,7 +45,7 @@
         });
       </script>  
     </head>
-	  <body> ##if($viewTools.getAppUrl().contains("backup")) class="localhost" #end
+	<body> ##if($viewTools.getAppUrl().contains("backup")) class="localhost" #end
     <div id="preview"></div>
     #set($noCaption = true)
     <div id="toolbarDiv">
@@ -57,19 +57,20 @@
       #end
       ## Show add/clone/delete buttons if user has edit privileges on at least one table
       <div class="buttonGroup joined"> ## display preferences
+        #parse('gui/toolbar/buttons/agilebase.vm')
         #parse('gui/toolbar/buttons/pane1.vm')
 	    #parse('gui/toolbar/buttons/pane2.vm')
         #parse('gui/toolbar/buttons/pane3.vm')
       </div>
       #set($editableTables = $view.getTablesAllowedTo("EDIT_TABLE_DATA"))
       #if(($editableTables.size() > 0) || $view.loggedInUserAllowedTo("ADMINISTRATE"))
-      <div class="buttonGroup"> ## record actions
+      <div class="buttonGroup joined"> ## record actions
         #parse('gui/toolbar/buttons/new.vm')
         #parse('gui/toolbar/buttons/clone.vm')
         #parse('gui/toolbar/buttons/delete.vm')
       </div>
       #end
-      <div class=buttonGroup> ## display preferences
+      <div class="buttonGroup joined"> ## display preferences
         ###parse('gui/toolbar/buttons/filter.vm')
         #parse('gui/toolbar/buttons/print.vm')
         #parse('gui/toolbar/buttons/export.vm')
