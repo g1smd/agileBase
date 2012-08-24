@@ -167,7 +167,7 @@ function fFullScreen() {
 function fAppLauncher() {
 	var previewDiv = $("#preview");
 	previewDiv.fadeIn().load("AppController.servlet", {
-		"return": "gui/preview/app_launchert"
+		"return": "gui/preview/app_launcher"
 	});
 }
 
