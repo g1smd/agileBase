@@ -39,6 +39,11 @@
     border-color:#FFBA3B;
     background-color:#ffd588;
   }
+  
+  .options_wrapper div.options_set td:first-child:first-line {
+    font-size: auto;
+    color: auto;
+  }
 </style>
 
 <div id="moduleIconPicker">
