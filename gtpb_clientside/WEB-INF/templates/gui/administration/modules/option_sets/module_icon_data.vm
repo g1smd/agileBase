@@ -40,8 +40,12 @@
     background-color:#ffd588;
   }
   
+  .options_wrapper div.options_set td {
+    font-size: 10pt;
+  }
+  
   .options_wrapper div.options_set td:first-child:first-line {
-    font-size: 8pt;
+    font-size: 10pt;
     color: #666666;
   }
 </style>
