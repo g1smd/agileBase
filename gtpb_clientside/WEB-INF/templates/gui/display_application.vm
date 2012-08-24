@@ -74,6 +74,8 @@
         ###parse('gui/toolbar/buttons/filter.vm')
         #parse('gui/toolbar/buttons/print.vm')
         #parse('gui/toolbar/buttons/export.vm')
+      </div>
+      <div class="buttonGroup">
 		<input type="search" class="searchbox" id="searchbox" placeholder="quick search"/>
 		<button id="doneSearch" />done</button>
       </div>
