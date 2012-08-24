@@ -143,7 +143,8 @@ public class TextValueDefn implements TextValue {
 		if (this.isNull()) {
 			return false;
 		}
-		if (this.contains("  ")) {
+		if (this.textValue.contains("  ")) {
+			// contains two spaces
 			return false;
 		}
 		int length = this.textValue.trim().length();
