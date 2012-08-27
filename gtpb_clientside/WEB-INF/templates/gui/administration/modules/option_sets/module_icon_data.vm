@@ -294,6 +294,6 @@
 </div>
 
 <script language="JavaScript">
-  $("td[data-iconname=$currentIconPath]").attr("id","icon_selected");
+  $("td[data-iconname='$currentIconPath']").attr("id","icon_selected");
 </script>
 
