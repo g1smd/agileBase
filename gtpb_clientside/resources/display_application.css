@@ -276,6 +276,8 @@ div#_md_blank.window_disable h1 {
 	color: #DDE6EF;
 	font-family: "Arial Black", Arial, Helvetica, sans-serif;
 	font-weight: bold;
+	font-size: 30pt;
+	float: right;
 }
 
 /* temporary */
