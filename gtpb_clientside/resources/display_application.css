@@ -272,6 +272,12 @@ div#_md_blank.window_disable h1 {
 	vertical-align: top;
 }
 
+#companyname {
+	color: #DDE6EF;
+	font-family: "Arial Black", Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
 /* temporary */
 .warningmessage {
 	display: none;
