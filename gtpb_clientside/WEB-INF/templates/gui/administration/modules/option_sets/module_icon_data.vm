@@ -70,8 +70,8 @@
 <td iconname=' icon-bullhorn'><i class=' icon-bullhorn'></i></td>
 <td iconname=' icon-calendar'><i class=' icon-calendar'></i></td>
 <td iconname=' icon-camera'><i class=' icon-camera'></i></td>
-</tr><tr>
 <td iconname=' icon-camera-retro'><i class=' icon-camera-retro'></i></td>
+</tr><tr>
 <td iconname=' icon-certificate'><i class=' icon-certificate'></i></td>
 <td iconname=' icon-check'><i class=' icon-check'></i></td>
 <td iconname=' icon-check-empty'><i class=' icon-check-empty'></i></td>
@@ -138,8 +138,8 @@
 <td iconname=' icon-plus'><i class=' icon-plus'></i></td>
 <td iconname=' icon-plus-sign'><i class=' icon-plus-sign'></i></td>
 <td iconname=' icon-print'><i class=' icon-print'></i></td>
-<td iconname=' icon-pushpin'><i class=' icon-pushpin'></i></td>
 </tr><tr>
+<td iconname=' icon-pushpin'><i class=' icon-pushpin'></i></td>
 <td iconname=' icon-qrcode'><i class=' icon-qrcode'></i></td>
 <td iconname=' icon-question-sign'><i class=' icon-question-sign'></i></td>
 <td iconname=' icon-random'><i class=' icon-random'></i></td>
@@ -155,9 +155,9 @@
 <td iconname=' icon-rss'><i class=' icon-rss'></i></td>
 <td iconname=' icon-screenshot'><i class=' icon-screenshot'></i></td>
 <td iconname=' icon-search'><i class=' icon-search'></i></td>
+</tr><tr>
 <td iconname=' icon-share'><i class=' icon-share'></i></td>
 <td iconname=' icon-share-alt'><i class=' icon-share-alt'></i></td>
-</tr><tr>
 <td iconname=' icon-shopping-cart'><i class=' icon-shopping-cart'></i></td>
 <td iconname=' icon-signal'><i class=' icon-signal'></i></td>
 <td iconname=' icon-signin'><i class=' icon-signin'></i></td>
@@ -172,9 +172,9 @@
 <td iconname=' icon-tag'><i class=' icon-tag'></i></td>
 <td iconname=' icon-tags'><i class=' icon-tags'></i></td>
 <td iconname=' icon-tasks'><i class=' icon-tasks'></i></td>
+</tr><tr>
 <td iconname=' icon-thumbs-down'><i class=' icon-thumbs-down'></i></td>
 <td iconname=' icon-thumbs-up'><i class=' icon-thumbs-up'></i></td>
-</tr><tr>
 <td iconname=' icon-time'><i class=' icon-time'></i></td>
 <td iconname=' icon-tint'><i class=' icon-tint'></i></td>
 <td iconname=' icon-trash'><i class=' icon-trash'></i></td>
@@ -189,9 +189,9 @@
 <td iconname=' icon-volume-down'><i class=' icon-volume-down'></i></td>
 <td iconname=' icon-volume-up'><i class=' icon-volume-up'></i></td>
 <td iconname=' icon-warning-sign'><i class=' icon-warning-sign'></i></td>
+</tr><tr>
 <td iconname=' icon-wrench'><i class=' icon-wrench'></i></td>
 <td iconname=' icon-zoom-in'><i class=' icon-zoom-in'></i></td>
-</tr><tr>
 <td iconname=' icon-zoom-out'><i class=' icon-zoom-out'></i></td>
         </tr>
       </tbody>
