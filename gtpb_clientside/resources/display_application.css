@@ -248,3 +248,9 @@ div#_md_blank.window_disable h1 {
 	top: 0;
 	left: 0;
 }
+
+#apps h1 span {
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+}
