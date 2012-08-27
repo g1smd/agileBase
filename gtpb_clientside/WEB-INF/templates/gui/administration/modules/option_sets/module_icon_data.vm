@@ -194,6 +194,41 @@
 <td iconname=' icon-zoom-in'><i class=' icon-zoom-in'></i></td>
 <td iconname=' icon-zoom-out'><i class=' icon-zoom-out'></i></td>
         </tr>
+        <tr><td colspan="16"></td></tr>
+        <tr>
+<td iconname=' icon-file'><i class=' icon-file'></i></td>
+<td iconname=' icon-cut'><i class=' icon-cut'></i></td>
+<td iconname=' icon-copy'><i class=' icon-copy'></i></td>
+<td iconname=' icon-paste'><i class=' icon-paste'></i></td>
+<td iconname=' icon-save'><i class=' icon-save'></i></td>
+<td iconname=' icon-undo'><i class=' icon-undo'></i></td>
+<td iconname=' icon-repeat'><i class=' icon-repeat'></i></td>
+<td iconname=' icon-paper-clip'><i class=' icon-paper-clip'></i></td>
+<td iconname=' icon-text-height'><i class=' icon-text-height'></i></td>
+<td iconname=' icon-text-width'><i class=' icon-text-width'></i></td>
+<td iconname=' icon-align-left'><i class=' icon-align-left'></i></td>
+<td iconname=' icon-align-center'><i class=' icon-align-center'></i></td>
+<td iconname=' icon-align-right'><i class=' icon-align-right'></i></td>
+<td iconname=' icon-align-justify'><i class=' icon-align-justify'></i></td>
+<td iconname=' icon-indent-left'><i class=' icon-indent-left'></i></td>
+<td iconname=' icon-indent-right'><i class=' icon-indent-right'></i></td>
+</tr><tr>
+<td iconname=' icon-font'><i class=' icon-font'></i></td>
+<td iconname=' icon-bold'><i class=' icon-bold'></i></td>
+<td iconname=' icon-italic'><i class=' icon-italic'></i></td>
+<td iconname=' icon-strikethrough'><i class=' icon-strikethrough'></i></td>
+<td iconname=' icon-underline'><i class=' icon-underline'></i></td>
+<td iconname=' icon-link'><i class=' icon-link'></i></td>
+<td iconname=' icon-columns'><i class=' icon-columns'></i></td>
+<td iconname=' icon-table'><i class=' icon-table'></i></td>
+<td iconname=' icon-th-large'><i class=' icon-th-large'></i></td>
+<td iconname=' icon-th'><i class=' icon-th'></i></td>
+<td iconname=' icon-th-list'><i class=' icon-th-list'></i></td>
+<td iconname=' icon-list'><i class=' icon-list'></i></td>
+<td iconname=' icon-list-ol'><i class=' icon-list-ol'></i></td>
+<td iconname=' icon-list-ul'><i class=' icon-list-ul'></i></td>
+<td iconname=' icon-list-alt'><i class=' icon-list-alt'></i></td>
+        </tr>
       </tbody>
     </table>
   </div>
