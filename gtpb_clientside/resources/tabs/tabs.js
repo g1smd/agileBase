@@ -1544,6 +1544,20 @@ function HueToRgb(m1, m2, hue) {
 	return 255 * v;
 }
 
+function fModuleIconPicker() {
+	$(".iconPickerTable td").click(function() {
+		$(".iconPickerTable td").removeAttr("id");
+		var iconName = $(this).attr("data-iconname");
+		$.post("AppController.servlet", {
+			"return": "blank",
+			update_module: true,
+			iconpath: iconName
+		}, function() {
+			$(this).attr("id", "icon_selected");
+		});
+	});
+}
+
 /* ---------- Add functions to the callFunctions list ---------- */
 /* ------ These will be called every time a tab refreshes ------ */
 pane3Scripts.functionList.push(editTabFunctions);
@@ -1553,6 +1567,7 @@ pane3Scripts.functionList.push(fAssignButtonTableActions);
 pane3Scripts.functionList.push(fMap);
 pane3Scripts.functionList.push(fInitialiseDependencies);
 pane3Scripts.functionList.push(fFormStyle);
+pane3Scripts.functionList.push(fModuleIconPicker);
 
 function editTabFunctions() {
 	fComboComponents();
