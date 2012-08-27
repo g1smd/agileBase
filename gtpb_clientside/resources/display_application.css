@@ -220,3 +220,7 @@ div#_md_blank.window_disable h1 {
 	top: 700px;
 	position: absolute;
 }
+
+#apps li {
+	list-style: none;
+}
