@@ -225,6 +225,10 @@ div#_md_blank.window_disable h1 {
 	list-style-type: none;
 }
 
+#apps > li {
+	margin: 0;
+}
+
 #apps li {
 	display: block;
 	position: relative;
