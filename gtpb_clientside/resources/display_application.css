@@ -221,6 +221,10 @@ div#_md_blank.window_disable h1 {
 	position: absolute;
 }
 
-#apps li {
+#apps ul {
 	list-style: none;
+}
+
+#apps ul li {
+	
 }
