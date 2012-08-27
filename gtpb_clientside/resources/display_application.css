@@ -242,7 +242,7 @@ div#_md_blank.window_disable h1 {
 }
 
 #apps ul li span {
-	text-shadow: 1px 0px white;
+	text-shadow: 0px 1px white;
 }
 
 #apps i.fonticon {
