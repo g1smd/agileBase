@@ -241,6 +241,7 @@ div#_md_blank.window_disable h1 {
 }
 
 #apps h1 {
+	display: block;
 	position: absolute;
 	text-transform: uppercase;
 	top: 0;
