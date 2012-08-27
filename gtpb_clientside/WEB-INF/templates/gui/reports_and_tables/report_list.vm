@@ -80,11 +80,12 @@
     	#if($mobile_device && $internalModuleName.equals($sessionReportModule.getInternalModuleName()))
 		  #set($moduleExpanded = true)
 		#end
+    	#set($iconPath = $module.getIconPath())
+    	#if(!$app_launcher || ($iconPath != $previousIconPath))
+    	  #set($previousIconPath = $iconPath)
     	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName #end">
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  #if(!$app_launcher)<h2>#end
-    	  #set($iconPath = $module.getIconPath())
-    	  #if($app_launcher && ($iconPath != $previousIconPath))
     	    #if($iconPath.contains(".png"))
     	      <span><img src="resources/icons/applications/tango/$module.getIconPath()"/>$module</span> ## png icon
     	    #else
@@ -93,8 +94,6 @@
     	      $module</span> ## font icon
     	    #end
     	    <span class="notifications"></span>
-    	  #end
-    	  #set($previousIconPath = $iconPath)
     	  #if(!$app_launcher)</h2>#end
     	  #if(($moduleActions.size()>0) && (!$mobile_device) && (!$edit_nav) && ($user.getUserType() != "LIMITED") && (!$app_launcher))
           <ul parent="$internalModuleName" class="moduleaction">
@@ -103,8 +102,8 @@
     		  #end
     		</ul>
     	  #end ## end if there are module actions
-    	  <ul parent="$internalModuleName">
     	  #if(!$app_launcher)
+    	  <ul parent="$internalModuleName">
     	  #foreach($report in $visibleModuleReports) 
     		#set($table=$report.getParentTable())
     		<li id="$table.getInternalTableName()$report.getInternalReportName()">
@@ -140,9 +139,10 @@
     			<span class="recordcount">()</span>
     		  </div>
     		</li>
+    		#end ## end if a different icon
     	  #end ## end of loop through reports in a module
-    	  #end ## end of if not app launcher
     	  </ul>
+    	  #end ## end of if not app launcher
     	</li>
       #end
 	#end ## end loop through modules
