@@ -293,12 +293,14 @@
   </div>
 </div>
 
+## TODO: for some reason, script isn't called when in external tabs.js
 <script language="JavaScript">
   $("td[data-iconname='$currentIconPath']").attr("id","icon_selected");
   fModuleIconPicker();
   
   function fModuleIconPicker() {
 	$("table.iconPickerTable td").click(function() {
+	  var selected = $(this);
 		$("table.iconPickerTable td").removeAttr("id");
 		var iconName = $(this).attr("data-iconname");
 		$.post("AppController.servlet", {
@@ -306,7 +308,7 @@
 			update_module: true,
 			iconpath: iconName
 		}, function() {
-			$(this).attr("id", "icon_selected");
+			selected.attr("id", "icon_selected");
 		});
 	});
 }
