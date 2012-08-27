@@ -222,7 +222,7 @@ div#_md_blank.window_disable h1 {
 }
 
 #apps ul {
-	list-style: none;
+	list-style-type: none;
 }
 
 #apps ul li {
