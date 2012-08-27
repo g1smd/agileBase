@@ -25,7 +25,7 @@
   <script src="resources/jquery.js" language="Javascript"></script>
   <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />      
 </head>
-<body>
+<body style="overflow: auto">
 #parse("gui/preview/app_launcher.vm")
 </body>
 </html>
