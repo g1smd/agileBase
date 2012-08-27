@@ -245,9 +245,9 @@ div#_md_blank.window_disable h1 {
 	display: block;
 	position: absolute;
 	text-transform: uppercase;
-	top: 0;
+	top: -0.5em;
 	left: 0;
-	font-size: 30pt;
+	font-size: 90pt;
 	font-weight: bold;
 	color: white;
 	margin: 0;
