@@ -83,7 +83,8 @@
     	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName #end">
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  #if(!$app_launcher)<h2>#end
-    	    #set($iconPath = $module.getIconPath())
+    	  #set($iconPath = $module.getIconPath())
+    	  #if($iconPath != $previousIconPath)
     	    #if($iconPath.contains(".png"))
     	      <span><img src="resources/icons/applications/tango/$module.getIconPath()"/>$module</span> ## png icon
     	    #else
@@ -92,6 +93,8 @@
     	      $module</span> ## font icon
     	    #end
     	    <span class="notifications"></span>
+    	  #end
+    	  #set($previousIconPath = $iconPath)
     	  #if(!$app_launcher)</h2>#end
     	  #if(($moduleActions.size()>0) && (!$mobile_device) && (!$edit_nav) && ($user.getUserType() != "LIMITED") && (!$app_launcher))
           <ul parent="$internalModuleName" class="moduleaction">
