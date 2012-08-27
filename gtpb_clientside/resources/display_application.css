@@ -230,6 +230,7 @@ div#_md_blank.window_disable h1 {
 	min-width: 10em;
 	float: left;
 	text-align: center;
+	margin: 1em;
 }
 
 #apps i.fonticon {
