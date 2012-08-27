@@ -250,6 +250,8 @@ div#_md_blank.window_disable h1 {
 	font-size: 30pt;
 	font-weight: bold;
 	color: white;
+	margin: 0;
+	padding: 0;
 }
 
 #apps h1 span {
