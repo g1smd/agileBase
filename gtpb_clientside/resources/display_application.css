@@ -230,5 +230,5 @@ div#_md_blank.window_disable h1 {
 }
 
 #apps i.fonticon:after {
-	content: "hello";
+	content: "";
 }
