@@ -25,6 +25,7 @@
   
   div#moduleIconPicker table.iconPickerTable td {  
     border:1px solid #999999;
+    cursor: pointer;
   }
   
   div#moduleIconPicker table.iconPickerTable td:hover {
