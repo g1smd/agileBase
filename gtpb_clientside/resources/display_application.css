@@ -229,5 +229,9 @@ div#_md_blank.window_disable h1 {
 	display: block;
 	min-width: 10em;
 	float: left;
+	text-align: center;
 }
 
+#apps i.fonticon {
+	font-size: 30pt;
+}
