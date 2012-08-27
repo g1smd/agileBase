@@ -20,7 +20,7 @@
 #set($company = $appUser.getCompany())
 <html>
 <head>
-  <title>agileBase - $company/title>
+  <title>agileBase - $company</title>
   <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
   <script src="resources/jquery.js" language="Javascript"></script>
   <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />      
