@@ -80,7 +80,7 @@
     	#if($mobile_device && $internalModuleName.equals($sessionReportModule.getInternalModuleName()))
 		  #set($moduleExpanded = true)
 		#end
-    	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end $colourStyleName">
+    	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName #end">
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  #if(!$app_launcher)<h2>#end
     	    #set($iconPath = $module.getIconPath())
