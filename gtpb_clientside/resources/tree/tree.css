@@ -51,6 +51,11 @@ li#setup h2 {
 	border-radius: 0;
 }
 
+.fonticon {
+  padding-right: 0.5em;
+  color: #666666;
+}
+
 span.notifications {
   padding-left: 0.5em;
 }

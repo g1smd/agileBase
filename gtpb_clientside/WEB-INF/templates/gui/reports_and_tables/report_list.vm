@@ -87,7 +87,7 @@
     	    #if($iconPath.contains(".png"))
     	      <span><img src="resources/icons/applications/tango/$module.getIconPath()"/>$module</span> ## png icon
     	    #else
-    	      <span><i class="$iconPath"></i>$module</span> ## font icon
+    	      <span><i class="fonticon $iconPath"></i>$module</span> ## font icon
     	    #end
     	    <span class="notifications"></span>
     	  </h2>
