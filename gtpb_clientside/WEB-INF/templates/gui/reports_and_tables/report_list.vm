@@ -99,6 +99,7 @@
     		</ul>
     	  #end ## end if there are module actions
     	  <ul parent="$internalModuleName">
+    	  #if(!$app_launcher)
     	  #foreach($report in $visibleModuleReports) 
     		#set($table=$report.getParentTable())
     		<li id="$table.getInternalTableName()$report.getInternalReportName()">
@@ -135,6 +136,7 @@
     		  </div>
     		</li>
     	  #end ## end of loop through reports in a module
+    	  #end ## end of if not app launcher
     	  </ul>
     	</li>
       #end

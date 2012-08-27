@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-## App launcher
 <div class="reportDataView" id="apps">
+  #set($app_launcher = true)
   #parse("gui/reports_and_tables/report_list.vm")
 </div>
