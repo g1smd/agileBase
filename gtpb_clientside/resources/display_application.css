@@ -226,6 +226,8 @@ div#_md_blank.window_disable h1 {
 }
 
 #apps ul li {
-	
+	display: block;
+	width: auto;
+	float: left;
 }
 
