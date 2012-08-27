@@ -55,9 +55,144 @@
     <table cellspacing="5" cellpadding="0" border="0" class="iconPickerTable">
       <tbody>
         <tr>
-          <td iconname="icon-adjust"><i class="icon-adjust"></i></td>
-          <td iconname="icon-exclamation-sign"><i class="icon-exclamation-sign"></i></td>
-          <td iconname="icon-money"><i class="icon-money"></i></td>
+<td iconname=' icon-adjust'><i class=' icon-adjust'></i></td>
+<td iconname=' icon-asterisk'><i class=' icon-asterisk'></i></td>
+<td iconname=' icon-ban-circle'><i class=' icon-ban-circle'></i></td>
+<td iconname=' icon-bar-chart'><i class=' icon-bar-chart'></i></td>
+<td iconname=' icon-barcode'><i class=' icon-barcode'></i></td>
+<td iconname=' icon-beaker'><i class=' icon-beaker'></i></td>
+<td iconname=' icon-bell'><i class=' icon-bell'></i></td>
+<td iconname=' icon-bolt'><i class=' icon-bolt'></i></td>
+<td iconname=' icon-book'><i class=' icon-book'></i></td>
+<td iconname=' icon-bookmark'><i class=' icon-bookmark'></i></td>
+<td iconname=' icon-bookmark-empty'><i class=' icon-bookmark-empty'></i></td>
+<td iconname=' icon-briefcase'><i class=' icon-briefcase'></i></td>
+<td iconname=' icon-bullhorn'><i class=' icon-bullhorn'></i></td>
+<td iconname=' icon-calendar'><i class=' icon-calendar'></i></td>
+<td iconname=' icon-camera'><i class=' icon-camera'></i></td>
+</tr><tr>
+<td iconname=' icon-camera-retro'><i class=' icon-camera-retro'></i></td>
+<td iconname=' icon-certificate'><i class=' icon-certificate'></i></td>
+<td iconname=' icon-check'><i class=' icon-check'></i></td>
+<td iconname=' icon-check-empty'><i class=' icon-check-empty'></i></td>
+<td iconname=' icon-cloud'><i class=' icon-cloud'></i></td>
+<td iconname=' icon-cog'><i class=' icon-cog'></i></td>
+<td iconname=' icon-cogs'><i class=' icon-cogs'></i></td>
+<td iconname=' icon-comment'><i class=' icon-comment'></i></td>
+<td iconname=' icon-comment-alt'><i class=' icon-comment-alt'></i></td>
+<td iconname=' icon-comments'><i class=' icon-comments'></i></td>
+<td iconname=' icon-comments-alt'><i class=' icon-comments-alt'></i></td>
+<td iconname=' icon-credit-card'><i class=' icon-credit-card'></i></td>
+<td iconname=' icon-dashboard'><i class=' icon-dashboard'></i></td>
+<td iconname=' icon-download'><i class=' icon-download'></i></td>
+<td iconname=' icon-download-alt'><i class=' icon-download-alt'></i></td>
+<td iconname=' icon-edit'><i class=' icon-edit'></i></td>
+</tr><tr>
+<td iconname=' icon-envelope'><i class=' icon-envelope'></i></td>
+<td iconname=' icon-envelope-alt'><i class=' icon-envelope-alt'></i></td>
+<td iconname=' icon-exclamation-sign'><i class=' icon-exclamation-sign'></i></td>
+<td iconname=' icon-external-link'><i class=' icon-external-link'></i></td>
+<td iconname=' icon-eye-close'><i class=' icon-eye-close'></i></td>
+<td iconname=' icon-eye-open'><i class=' icon-eye-open'></i></td>
+<td iconname=' icon-facetime-video'><i class=' icon-facetime-video'></i></td>
+<td iconname=' icon-film'><i class=' icon-film'></i></td>
+<td iconname=' icon-filter'><i class=' icon-filter'></i></td>
+<td iconname=' icon-fire'><i class=' icon-fire'></i></td>
+<td iconname=' icon-flag'><i class=' icon-flag'></i></td>
+<td iconname=' icon-folder-close'><i class=' icon-folder-close'></i></td>
+<td iconname=' icon-folder-open'><i class=' icon-folder-open'></i></td>
+<td iconname=' icon-gift'><i class=' icon-gift'></i></td>
+<td iconname=' icon-glass'><i class=' icon-glass'></i></td>
+<td iconname=' icon-globe'><i class=' icon-globe'></i></td>
+</tr><tr>
+<td iconname=' icon-group'><i class=' icon-group'></i></td>
+<td iconname=' icon-hdd'><i class=' icon-hdd'></i></td>
+<td iconname=' icon-headphones'><i class=' icon-headphones'></i></td>
+<td iconname=' icon-heart'><i class=' icon-heart'></i></td>
+<td iconname=' icon-heart-empty'><i class=' icon-heart-empty'></i></td>
+<td iconname=' icon-home'><i class=' icon-home'></i></td>
+<td iconname=' icon-inbox'><i class=' icon-inbox'></i></td>
+<td iconname=' icon-info-sign'><i class=' icon-info-sign'></i></td>
+<td iconname=' icon-key'><i class=' icon-key'></i></td>
+<td iconname=' icon-leaf'><i class=' icon-leaf'></i></td>
+<td iconname=' icon-legal'><i class=' icon-legal'></i></td>
+<td iconname=' icon-lemon'><i class=' icon-lemon'></i></td>
+<td iconname=' icon-lock'><i class=' icon-lock'></i></td>
+<td iconname=' icon-unlock'><i class=' icon-unlock'></i></td>
+<td iconname=' icon-magic'><i class=' icon-magic'></i></td>
+<td iconname=' icon-magnet'><i class=' icon-magnet'></i></td>
+</tr><tr>
+<td iconname=' icon-map-marker'><i class=' icon-map-marker'></i></td>
+<td iconname=' icon-minus'><i class=' icon-minus'></i></td>
+<td iconname=' icon-minus-sign'><i class=' icon-minus-sign'></i></td>
+<td iconname=' icon-money'><i class=' icon-money'></i></td>
+<td iconname=' icon-move'><i class=' icon-move'></i></td>
+<td iconname=' icon-music'><i class=' icon-music'></i></td>
+<td iconname=' icon-off'><i class=' icon-off'></i></td>
+<td iconname=' icon-ok'><i class=' icon-ok'></i></td>
+<td iconname=' icon-ok-circle'><i class=' icon-ok-circle'></i></td>
+<td iconname=' icon-ok-sign'><i class=' icon-ok-sign'></i></td>
+<td iconname=' icon-pencil'><i class=' icon-pencil'></i></td>
+<td iconname=' icon-picture'><i class=' icon-picture'></i></td>
+<td iconname=' icon-plane'><i class=' icon-plane'></i></td>
+<td iconname=' icon-plus'><i class=' icon-plus'></i></td>
+<td iconname=' icon-plus-sign'><i class=' icon-plus-sign'></i></td>
+<td iconname=' icon-print'><i class=' icon-print'></i></td>
+<td iconname=' icon-pushpin'><i class=' icon-pushpin'></i></td>
+</tr><tr>
+<td iconname=' icon-qrcode'><i class=' icon-qrcode'></i></td>
+<td iconname=' icon-question-sign'><i class=' icon-question-sign'></i></td>
+<td iconname=' icon-random'><i class=' icon-random'></i></td>
+<td iconname=' icon-refresh'><i class=' icon-refresh'></i></td>
+<td iconname=' icon-remove'><i class=' icon-remove'></i></td>
+<td iconname=' icon-remove-circle'><i class=' icon-remove-circle'></i></td>
+<td iconname=' icon-remove-sign'><i class=' icon-remove-sign'></i></td>
+<td iconname=' icon-reorder'><i class=' icon-reorder'></i></td>
+<td iconname=' icon-resize-horizontal'><i class=' icon-resize-horizontal'></i></td>
+<td iconname=' icon-resize-vertical'><i class=' icon-resize-vertical'></i></td>
+<td iconname=' icon-retweet'><i class=' icon-retweet'></i></td>
+<td iconname=' icon-road'><i class=' icon-road'></i></td>
+<td iconname=' icon-rss'><i class=' icon-rss'></i></td>
+<td iconname=' icon-screenshot'><i class=' icon-screenshot'></i></td>
+<td iconname=' icon-search'><i class=' icon-search'></i></td>
+<td iconname=' icon-share'><i class=' icon-share'></i></td>
+<td iconname=' icon-share-alt'><i class=' icon-share-alt'></i></td>
+</tr><tr>
+<td iconname=' icon-shopping-cart'><i class=' icon-shopping-cart'></i></td>
+<td iconname=' icon-signal'><i class=' icon-signal'></i></td>
+<td iconname=' icon-signin'><i class=' icon-signin'></i></td>
+<td iconname=' icon-signout'><i class=' icon-signout'></i></td>
+<td iconname=' icon-sitemap'><i class=' icon-sitemap'></i></td>
+<td iconname=' icon-sort'><i class=' icon-sort'></i></td>
+<td iconname=' icon-sort-down'><i class=' icon-sort-down'></i></td>
+<td iconname=' icon-sort-up'><i class=' icon-sort-up'></i></td>
+<td iconname=' icon-star'><i class=' icon-star'></i></td>
+<td iconname=' icon-star-empty'><i class=' icon-star-empty'></i></td>
+<td iconname=' icon-star-half'><i class=' icon-star-half'></i></td>
+<td iconname=' icon-tag'><i class=' icon-tag'></i></td>
+<td iconname=' icon-tags'><i class=' icon-tags'></i></td>
+<td iconname=' icon-tasks'><i class=' icon-tasks'></i></td>
+<td iconname=' icon-thumbs-down'><i class=' icon-thumbs-down'></i></td>
+<td iconname=' icon-thumbs-up'><i class=' icon-thumbs-up'></i></td>
+</tr><tr>
+<td iconname=' icon-time'><i class=' icon-time'></i></td>
+<td iconname=' icon-tint'><i class=' icon-tint'></i></td>
+<td iconname=' icon-trash'><i class=' icon-trash'></i></td>
+<td iconname=' icon-trophy'><i class=' icon-trophy'></i></td>
+<td iconname=' icon-truck'><i class=' icon-truck'></i></td>
+<td iconname=' icon-umbrella'><i class=' icon-umbrella'></i></td>
+<td iconname=' icon-upload'><i class=' icon-upload'></i></td>
+<td iconname=' icon-upload-alt'><i class=' icon-upload-alt'></i></td>
+<td iconname=' icon-user'><i class=' icon-user'></i></td>
+<td iconname=' icon-user-md'><i class=' icon-user-md'></i></td>
+<td iconname=' icon-volume-off'><i class=' icon-volume-off'></i></td>
+<td iconname=' icon-volume-down'><i class=' icon-volume-down'></i></td>
+<td iconname=' icon-volume-up'><i class=' icon-volume-up'></i></td>
+<td iconname=' icon-warning-sign'><i class=' icon-warning-sign'></i></td>
+<td iconname=' icon-wrench'><i class=' icon-wrench'></i></td>
+<td iconname=' icon-zoom-in'><i class=' icon-zoom-in'></i></td>
+</tr><tr>
+<td iconname=' icon-zoom-out'><i class=' icon-zoom-out'></i></td>
         </tr>
       </tbody>
     </table>
