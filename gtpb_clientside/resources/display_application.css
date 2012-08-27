@@ -225,7 +225,7 @@ div#_md_blank.window_disable h1 {
 	list-style-type: none;
 }
 
-#apps ul li {
+#apps li {
 	display: block;
 	position: relative;
   min-width: 10em;
