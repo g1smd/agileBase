@@ -84,7 +84,7 @@
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  #if(!$app_launcher)<h2>#end
     	  #set($iconPath = $module.getIconPath())
-    	  #if($iconPath != $previousIconPath)
+    	  #if($app_launcher && ($iconPath != $previousIconPath))
     	    #if($iconPath.contains(".png"))
     	      <span><img src="resources/icons/applications/tango/$module.getIconPath()"/>$module</span> ## png icon
     	    #else
