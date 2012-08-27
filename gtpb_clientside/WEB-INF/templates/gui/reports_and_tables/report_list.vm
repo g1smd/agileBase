@@ -81,8 +81,6 @@
 		  #set($moduleExpanded = true)
 		#end
     	#set($iconPath = $module.getIconPath())
-    	#if(!$app_launcher || ($iconPath != $previousIconPath))
-    	  #set($previousIconPath = $iconPath)
     	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName #end">
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  #if(!$app_launcher)<h2>#end
@@ -94,6 +92,8 @@
     	      $module</span> ## font icon
     	    #end
     	    <span class="notifications"></span>
+    	  #end
+    	  #set($previousIconPath = $iconPath)
     	  #if(!$app_launcher)</h2>#end
     	  #if(($moduleActions.size()>0) && (!$mobile_device) && (!$edit_nav) && ($user.getUserType() != "LIMITED") && (!$app_launcher))
           <ul parent="$internalModuleName" class="moduleaction">
@@ -139,10 +139,8 @@
     			<span class="recordcount">()</span>
     		  </div>
     		</li>
-    		#end ## end if a different icon
     	  #end ## end of loop through reports in a module
     	  </ul>
-    	  #end ## end of if not app launcher
     	</li>
       #end
 	#end ## end loop through modules
