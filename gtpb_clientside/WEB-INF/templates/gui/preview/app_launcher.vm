@@ -17,5 +17,8 @@
 ##
 <div class="reportDataView" id="apps">
   #set($app_launcher = true)
+  <div id="launcher_title">
+    <img src="http://www.agilebase.co.uk/images/logo-agilebase.png">
+  </div>
   #parse("gui/reports_and_tables/report_list.vm")
 </div>
