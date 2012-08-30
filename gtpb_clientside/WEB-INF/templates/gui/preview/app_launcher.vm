@@ -18,7 +18,8 @@
 <div class="reportDataView" id="apps">
   #set($app_launcher = true)
   <div id="launcher_title">
-    <img src="resources/logo_transparent.png" id="app_logo"><span id="companyname">$company</span>
+    ##<img src="resources/logo_transparent.png" id="app_logo">
+    <span id="companyname">$company</span>
   </div>
   #parse("gui/reports_and_tables/report_list.vm")
 </div>
