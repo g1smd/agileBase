@@ -280,7 +280,8 @@ div#_md_blank.window_disable h1 {
 }
 
 #launcher_title {
-  padding: 1em;	
+	height: 4.2em;
+	overflow: hidden;
 }
 
 #app_logo {
@@ -294,6 +295,7 @@ div#_md_blank.window_disable h1 {
 	font-weight: bold;
 	font-size: 30pt;
 	float: right;
+	padding-right: 0.3em;
 }
 
 /* temporary */
