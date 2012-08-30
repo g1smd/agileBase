@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.model.manageSchema.fields;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -240,6 +241,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		this.defaultValue = defaultValue;
 	}
 
+	@Column(length=10000)
 	private String getDefaultDirect() {
 		return this.defaultValue;
 	}
