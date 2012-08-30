@@ -35,6 +35,9 @@ import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.auth.PrivilegeType;
 import java.io.IOException;
 import java.sql.SQLException;
+
+import javax.xml.stream.XMLStreamException;
+
 import org.codehaus.jackson.JsonGenerationException;
 
 /**
@@ -427,6 +430,12 @@ public interface ViewMethodsInfo {
 			Map<BaseField, String> filterValues, boolean exactFilters) throws DisallowedException,
 			SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
+	/**
+	 * Return report data as JSON
+	 */
+	public String getReportDataRowsJSON() throws DisallowedException,
+			SQLException, ObjectNotFoundException, JsonGenerationException, CodingErrorException, CantDoThatException, XMLStreamException;
+	
 	/**
 	 * Get a calendar feed for a report suitable for use with
 	 * 

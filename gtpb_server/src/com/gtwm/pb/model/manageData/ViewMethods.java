@@ -81,6 +81,8 @@ import com.gtwm.pb.util.Enumerations.ExtraAction;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.stream.XMLStreamException;
+
 import org.codehaus.jackson.JsonGenerationException;
 import org.grlea.log.SimpleLogger;
 import java.util.TreeSet;
@@ -595,6 +597,14 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return reportDataRows;
 	}
 
+	public String getReportDataRowsJSON() throws DisallowedException,
+	SQLException, ObjectNotFoundException, JsonGenerationException, CodingErrorException, CantDoThatException, XMLStreamException {
+		BaseReportInfo report = this.sessionData.getReport();
+		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues(report);
+		AppUserInfo user = this.databaseDefn.getAuthManager().getLoggedInUser(request);
+		return this.databaseDefn.getDataManagement().getReportJSON(user, report, reportFilterValues, false, 0);
+	}
+	
 	public String getReportMapJSON() throws ObjectNotFoundException, CodingErrorException,
 			CantDoThatException, SQLException, DisallowedException {
 		BaseReportInfo report = this.sessionData.getReport();
