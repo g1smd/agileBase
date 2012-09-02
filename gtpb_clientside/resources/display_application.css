@@ -249,12 +249,13 @@ div#_md_blank.window_disable h1 {
 }
 
 #apps li.modulecollapsed {
-		z-index: 1;
+  z-index: 1;
+	cursor: pointer;
 }
 
 #apps ul li span {
 	text-shadow: 0px 1px white;
-	cursor: pointer;
+	color: #666666;
 }
 
 #apps i.fonticon {
@@ -276,7 +277,7 @@ div#_md_blank.window_disable h1 {
 	display: block;
 	position: absolute;
 	text-transform: uppercase;
-	top: -0.45em;
+	top: -0.48em;
 	left: 0;
 	font-size: 90pt;
 	font-weight: bold;
