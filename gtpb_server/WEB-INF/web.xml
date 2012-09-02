@@ -112,12 +112,10 @@
 	    <form-error-page>/website/login_error.jsp</form-error-page>
 	  </form-login-config>
 	</login-config>
-	<!--
   <error-page>
     <error-code>500</error-code>
     <location>/website/500.jsp</location>
   </error-page>
-  -->
   <error-page> 
     <error-code>404</error-code> 
     <location>/website/404.htm</location> 

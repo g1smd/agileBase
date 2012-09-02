@@ -279,6 +279,16 @@ div#_md_blank.window_disable h1 {
 	vertical-align: top;
 }
 
+#apps li:last-child {
+	border-bottom-left-radius: 2em;
+	border-bottom-right-radius: 2em;
+}
+
+#apps li:first-of-type {
+	border-top-left-radius: 2em;
+	border-top-right-radius: 2em;
+}
+
 #launcher_title {
 	height: 4.2em;
 	overflow: hidden;

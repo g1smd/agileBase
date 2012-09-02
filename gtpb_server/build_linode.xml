@@ -99,7 +99,7 @@
 				<!-- iCal generation -->
 				<pathelement location="WEB-INF/lib/ical4j-1.0-rc3.jar"/>
 				<!-- Image resizer -->
-				<pathelement location="WEB-INF/lib/Thumbnailator-0.3.6.jar"/>
+				<pathelement location="WEB-INF/lib/thumbnailator-0.4.2.jar"/>
         <!-- Plural to singular -->
         <pathelement location="WEB-INF/lib/javatools.jar"/>
 				<!-- Testing -->

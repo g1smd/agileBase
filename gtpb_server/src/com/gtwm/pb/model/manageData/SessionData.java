@@ -81,7 +81,11 @@ public final class SessionData implements SessionDataInfo {
 		AppUserInfo user = databaseDefn.getAuthManager().getUserByUserName(request,
 				request.getRemoteUser());
 		UsageLogger usageLogger = new UsageLogger(relationalDataSource);
-		String userAgent = request.getHeader("User-Agent").toLowerCase();
+		String userAgent = request.getHeader("User-Agent");
+		if (userAgent == null) {
+			userAgent = "";
+		}
+		userAgent = userAgent.toLowerCase();
 		String browserName = "";
 		EnumSet<Browsers> browsersMatched = EnumSet.noneOf(Browsers.class);
 		for (Browsers browser : EnumSet.allOf(Browsers.class)) {
