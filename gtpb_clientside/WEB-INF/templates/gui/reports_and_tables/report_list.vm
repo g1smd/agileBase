@@ -94,7 +94,7 @@
     	      <span><img src="resources/icons/applications/tango/$module.getIconPath()"/>$module</span> ## png icon
     	    #else
     	      <span>
-    	        <i class="fonticon $iconPath" data-appid="$iconPath"></i>
+    	        <i class="fonticon icon-large $iconPath" data-appid="$iconPath"></i>
     	        #if($app_launcher) <br /> #end
     	        $module
     	      </span> ## font icon
