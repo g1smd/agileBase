@@ -15,8 +15,9 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+#set($company = $appUser.getCompany())
+#set($app_launcher = true)
 <div class="reportDataView" id="apps">
-  #set($app_launcher = true)
   <div id="launcher_title">
     ##<img src="resources/logo_transparent.png" id="app_logo">
     <span id="companyname">$company</span>
