@@ -221,6 +221,11 @@ div#_md_blank.window_disable h1 {
 	position: absolute;
 }
 
+#preview apps {
+	position: relative;
+	top: -1.5em;
+}
+
 #apps ul {
 	list-style-type: none;
 }
