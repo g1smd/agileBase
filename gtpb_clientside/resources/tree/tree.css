@@ -51,7 +51,7 @@ li#setup h2 {
 	border-radius: 0;
 }
 
-.fonticon {
+#tree .fonticon {
   padding-right: 0.75em;
   color: #666666;
 }
