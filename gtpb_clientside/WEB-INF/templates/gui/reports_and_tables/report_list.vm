@@ -81,14 +81,18 @@
 		  #set($moduleExpanded = true)
 		#end
     	#set($iconPath = $module.getIconPath())
-    	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName  #end" #if($app_launcher && ($iconPath == $previousIconPath)) style="display:none" #end>
+    	#if($app_launcher)
+    	 Ê#set($report = $visibleModuleReports.get(0))
+    	  #set($table = $report.getParentTable())
+    	#end
+    	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName  #end" #if($app_launcher) data-table="$table.getInternalTableName()" data-report="$report.getInternalReportName()" #if($iconPath == $previousIconPath) style="display:none"#end  #end>
     	  #set($previousIconPath = $iconPath)
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  #if(!$app_launcher)<h2>#end
     	    #if($iconPath.contains(".png"))
     	      <span><img src="resources/icons/applications/tango/$module.getIconPath()"/>$module</span> ## png icon
     	    #else
-    	      <span><i class="fonticon $iconPath"></i>
+    	      <span><i class="fonticon $iconPath" data-appid="$iconPath"></i>
     	      #if($app_launcher) <br /> #end
     	      $module</span> ## font icon
     	    #end

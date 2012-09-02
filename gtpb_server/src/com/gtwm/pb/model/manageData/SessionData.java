@@ -544,6 +544,14 @@ public final class SessionData implements SessionDataInfo {
 	public void setLastAppActionRowId(int lastAppActionRowId) {
 		this.lastAppActionRowId = lastAppActionRowId;
 	}
+	
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
+	
+	public String getAppId() {
+		return this.appId;
+	}
 
 	public String toString() {
 		String sessionData = "";
@@ -628,6 +636,8 @@ public final class SessionData implements SessionDataInfo {
 	private Map<String, BaseField> customFields = new HashMap<String, BaseField>();
 
 	private Map<BaseReportInfo, String> globalFilterStrings = new HashMap<BaseReportInfo, String>();
+	
+	private String appId = null;
 
 	private TableDependencyException tdex = null;
 

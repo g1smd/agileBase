@@ -301,5 +301,9 @@ public interface SessionDataInfo {
 	 * SET_USER=userName in the HTTP request.
 	 */
 	public void setUser(AppUserInfo appUser);
+	
+	public void setAppId(String appId);
+	
+	public String getAppId();
 
 }

@@ -21,7 +21,15 @@ $(document).ready(function() {
 	$("#doneSearch").click(function() {
 		closePreview();
 	});
+	appLauncher();
 });
+
+function appLauncher() {
+  $("#apps li.modulecollapsed").click(function() {
+  	var appId = $(this).find("i").attr("data-appid");
+  	//var internalTableNAme = $(this).attr("")
+  });	
+}
 
 /**
  * @param internalReportName

@@ -1147,6 +1147,15 @@ public final class ServletSessionMethods {
 	public static void clearAllReportSorts(SessionDataInfo sessionData) {
 		sessionData.clearAllReportSorts();
 	}
+	
+	public static void setAppId(SessionDataInfo sessionData, HttpServletRequest request) {
+		String appId = request.getParameter("appid");
+		sessionData.setAppId(appId);
+	}
+	
+	public static void clearAppId(SessionDataInfo sessionData) {
+		sessionData.setAppId(null);
+	}
 
 	private static final SimpleLogger logger = new SimpleLogger(ServletSessionMethods.class);
 }

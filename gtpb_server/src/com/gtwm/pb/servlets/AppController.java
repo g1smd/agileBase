@@ -305,6 +305,12 @@ public final class AppController extends VelocityViewServlet {
 				case SET_LOCK_OVERRIDE:
 					ServletSessionMethods.setLockOverride(sessionData, request, databaseDefn);
 					break;
+				case SET_APP_ID:
+					ServletSessionMethods.setAppId(sessionData, request);
+					break;
+				case CLEAR_APP_ID:
+					ServletSessionMethods.clearAppId(sessionData);
+					break;
 				case LOGOUT:
 					logout(request);
 					break;
@@ -805,11 +811,10 @@ public final class AppController extends VelocityViewServlet {
 	 * Create an instance of ViewMethods to provide the UI with the necessary
 	 * functionality, and return the requested template.
 	 * 
-	 *         TODO: This method obviously doesn't throw any exceptions for a
-	 *         reason, presumably we always want to return a template whatever
-	 *         happens. Check out whether there's a better way of doing things
-	 *         though
-
+	 * TODO: This method obviously doesn't throw any exceptions for a reason,
+	 * presumably we always want to return a template whatever happens. Check
+	 * out whether there's a better way of doing things though
+	 * 
 	 * @param exceptionCaught
 	 *            An exception thrown by handleRequest. Pass null if none. This
 	 *            will be saved in ViewMethods to allow the UI to find out what
@@ -859,16 +864,16 @@ public final class AppController extends VelocityViewServlet {
 			}
 			AppUserInfo user = this.databaseDefn.getAuthManager().getLoggedInUser(request);
 			/*
-			if (user.getUsesCustomUI()) {
-				String cleanCompanyName = user.getCompany().getCompanyName().toLowerCase().replaceAll("\\W", "");
-				String companyPath = "gui/customisations/" + cleanCompanyName + "/";
-				// Only allow templates in the company path, or the boot template
-				if ((!templateName.startsWith(companyPath)) && (!templateName.equals("boot"))) {
-					logger.error("Path " + templateName + " is outside of the company path " + companyPath + " for user " + user);
-					templateName = null;
-				}
-			}
-			*/
+			 * if (user.getUsesCustomUI()) { String cleanCompanyName =
+			 * user.getCompany
+			 * ().getCompanyName().toLowerCase().replaceAll("\\W", ""); String
+			 * companyPath = "gui/customisations/" + cleanCompanyName + "/"; //
+			 * Only allow templates in the company path, or the boot template if
+			 * ((!templateName.startsWith(companyPath)) &&
+			 * (!templateName.equals("boot"))) { logger.error("Path " +
+			 * templateName + " is outside of the company path " + companyPath +
+			 * " for user " + user); templateName = null; } }
+			 */
 		} catch (ObjectNotFoundException onfex) {
 			ServletUtilMethods.logException(onfex, request, "Error getting template");
 		} catch (DisallowedException dex) {
