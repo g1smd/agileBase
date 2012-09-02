@@ -82,7 +82,7 @@
 		#end
     	#set($iconPath = $module.getIconPath())
     	#if($app_launcher)
-    	 Ê#set($report = $visibleModuleReports.get(0))
+    	  #set($report = $visibleModuleReports.get(0))
     	  #set($table = $report.getParentTable())
     	#end
     	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName  #end" #if($app_launcher) data-table="$table.getInternalTableName()" data-report="$report.getInternalReportName()" #if($iconPath == $previousIconPath) style="display:none"#end  #end>
