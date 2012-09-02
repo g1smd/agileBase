@@ -92,9 +92,11 @@
     	    #if($iconPath.contains(".png"))
     	      <span><img src="resources/icons/applications/tango/$module.getIconPath()"/>$module</span> ## png icon
     	    #else
-    	      <span><i class="fonticon $iconPath" data-appid="$iconPath"></i>
-    	      #if($app_launcher) <br /> #end
-    	      $module</span> ## font icon
+    	      <span>
+    	        <i class="fonticon $iconPath" data-appid="$iconPath"></i>
+    	        #if($app_launcher) <br /> #end
+    	        $module
+    	      </span> ## font icon
     	    #end
     	    <span class="notifications"></span>
     	  #end
