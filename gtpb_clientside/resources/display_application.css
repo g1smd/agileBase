@@ -222,7 +222,15 @@ div#_md_blank.window_disable h1 {
 
 #preview #apps {
 	position: relative;
-	top: -3.9em;
+	top: -3.6em;
+}
+
+#preview #apps h1 {
+	top: -0.39em;
+}
+
+#preview #apps #launcher_title {
+	height: 3.3em;
 }
 
 #apps ul {
