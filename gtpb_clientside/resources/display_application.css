@@ -228,6 +228,8 @@ div#_md_blank.window_disable h1 {
 
 #apps ul {
 	list-style-type: none;
+	padding: 0;
+	margin: 0;
 }
 
 #apps>li {

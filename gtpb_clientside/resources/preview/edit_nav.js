@@ -21,10 +21,10 @@ $(document).ready(function() {
 	$("#doneSearch").click(function() {
 		closePreview();
 	});
-	appLauncher();
+	appLauncherStandalone();
 });
 
-function appLauncher() {
+function appLauncherStandalone() {
   $("#apps li.modulecollapsed").click(function() {
   	var appId = $(this).find("i").attr("data-appid");
   	var internalTableName = $(this).attr("data-table");
