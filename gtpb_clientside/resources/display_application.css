@@ -235,6 +235,7 @@ div#_md_blank.window_disable h1 {
 #apps>li {
 	margin: 0!important;
 	width: 100%;
+	position: relative;
 	z-index: 0;
 }
 
