@@ -76,8 +76,8 @@ a.dp-choose-date {
 div.dp-popup {
 	position: relative;
 	background: #ccc;
-	font-size: 10px;
-	font-family: arial, sans-serif;
+	font-size: 15px;
+	font-family: Verdana,Geneva,sans-serif;
 	padding: 2px;
 	width: 171px;
 	line-height: 1.2em;

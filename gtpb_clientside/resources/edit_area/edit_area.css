@@ -279,9 +279,8 @@ div#area_search_replace  #area_search_msg{
 }
 
 .area_toolbar select{
-  font-family: Verdana,Arial,sans-serif;
-  font-size-adjust: 0.58;
-  font-size: 7pt;
+  font-family: Verdana,Geneva,sans-serif;
+  font-size: 12pt;
   font-weight: normal;
   margin: 2px 0 0 0 ;
   padding: 0;

@@ -10,9 +10,8 @@ html,body {
 }
 
 body {
-	font-family: Verdana, Arial, sans_serif;
-	font-size-adjust: 0.58;
-	font-size: 9pt;
+	font-family: Verdana,Geneva,sans_serif;
+	font-size: 12pt;
 	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
@@ -138,7 +137,7 @@ div#_md_blank.window_disable h1 {
     /* margin:auto;   */
     background-color:#1D1D20;
 	font-size:8pt;
-	font-family: arial, helvetica, sans-serif;
+	font-family: Verdana,Geneva,sans-serif;
 }  
   
 #infovis div {  
@@ -208,7 +207,7 @@ div#_md_blank.window_disable h1 {
     background-color: white;  
     padding:5px;  
     position:absolute;
-	font-family: arial, helvetica, sans-serif;
+	font-family: Verdana,Geneva,sans-serif;
 	opacity: 0.9;
 	border-radius: 4px;
 }

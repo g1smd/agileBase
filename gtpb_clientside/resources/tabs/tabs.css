@@ -13,9 +13,8 @@
 
 body { 
   background-color:#f0f0f0; 
-  font-family: Verdana,Arial,sans-serif;
-  font-size-adjust: 0.58;
-  font-size:9pt;
+  font-family: Verdana,Geneva,sans-serif;
+  font-size:12pt;
   margin: 0;
   overflow: hidden;
 }
@@ -163,8 +162,7 @@ table#reportData td input {
   border: 1px solid #cecece;
   border-radius: 0.5em;
   padding: 0.3em;
-  font-family: Verdana,Arial,sans-serif;
-  font-size-adjust: 0.58;
+  font-family: Verdana,Geneva,sans-serif;
 }
 
 table#reportData td input[type='text'] {
@@ -184,8 +182,7 @@ table#reportData td select {
   border-radius: 0.5em;
   border: 1px solid #cecece;
   padding: 0.3em;
-  font-family: Verdana,Arial,sans-serif;
-  font-size-adjust: 0.58;
+  font-family: Verdana,Geneva,sans-serif;
 }
 
 table#reportData td .date select {
@@ -208,9 +205,8 @@ textarea {
   border: 1px solid #cecece;
   border-radius: 0.5em;
   padding: 0.3em;
-  font-family: Verdana,Arial,sans-serif;
-  font-size-adjust: 0.58;
-  font-size: 9pt;
+  font-family: Verdana,Geneva,sans-serif;
+  font-size: 12pt;
 }
 
 .draggingRow {
@@ -385,11 +381,10 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
 
 /* Match chart headings */
 #wordcloud h1 {
-  font-family: Verdana,Arial,sans-serif;
-  font-size-adjust: 0.58;
+  font-family: Verdana,Geneva,sans-serif;
   color: #3E576F;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 20px;
   background-color: #f4f4f4;
   margin: 0px;
   border-radius: 0.5em 0.5em 0 0;
@@ -720,11 +715,10 @@ div#reportData {
   float: right;
   width: 50%;
   border: 1px solid #dddddd;
-  font-size: 9pt;
+  font-size: 12pt;
   padding: 0.2em;
   border-radius: 0.5em;
-  font-family: Verdana,Arial,sans-serif;
-  font-size-adjust: 0.58;
+  font-family: Verdana,Geneva,sans-serif;
 }
 
 #reportData .block.parent_chooser input {
@@ -743,8 +737,7 @@ div#reportData {
 #reportData .block textarea {
   border: 1px solid #dddddd;
   width: 100%;
-  font-family: Verdana,Arial,sans-serif;
-  font-size-adjust: 0.58;
+  font-family: Verdana,Geneva,sans-serif;
 }
 
 #reportData .block.non_section textarea {

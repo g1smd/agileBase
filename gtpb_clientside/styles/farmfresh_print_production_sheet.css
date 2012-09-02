@@ -1,7 +1,6 @@
 html, body {
-  font-family: Verdana,Arial,sans-serif;
-  font-size-adjust: 0.58;
-  font-size: 9pt
+  font-family: Verdana,Geneva,sans-serif;
+  font-size: 12pt
 }
 h1 {font-size: 14pt;}
 th {font-size: 9pt; font-weight: bold; text-align: left;}

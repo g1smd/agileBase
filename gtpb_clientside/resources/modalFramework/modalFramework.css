@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family:arial;
+  font-family:Verdana,Geneva,sans-serif;
 }
 
 div#_md_blank {
@@ -46,8 +46,7 @@ div#_md_blank div#_md_dialog div#_md_title {
   color:white;
   font-weight:bold;
   text-transform:uppercase;
-  font-family: Verdana,Arial,sans-serif;
-  font-size-adjust: 0.58;
+  font-family: Verdana,Geneva,sans-serif;
 }
 
 div#_md_blank div#_md_dialog div#_md_toolbar {

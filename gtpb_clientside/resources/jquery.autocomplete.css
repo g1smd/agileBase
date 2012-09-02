@@ -29,9 +29,8 @@
 	when scroll mode will be used
 	*/
 	/*width: 100%;*/
-  font-family: Verdana,Arial,sans-serif;
-  font-size-adjust: 0.58;
-	font-size: 9pt;
+  font-family: Verdana,Geneva,sans-serif;
+	font-size: 12pt;
 	/* 
 	it is very important, if line-height not setted or setted 
 	in relative units scroll will be broken in firefox
