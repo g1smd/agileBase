@@ -155,11 +155,11 @@
   top: 0;
   left: 1em;
   font-size: 24pt;
-  color: #f0f0f0;
+  color: white;
   font-weight: bold;
   text-transform: lowercase;
   /* box-shadow: 0 0 1em 1em #dbdbdb; */
-  background-color: #dbdbdb;
+  background-color: rgb(238,243,249);
   padding: 1em;
   padding-top: 0;
 }
