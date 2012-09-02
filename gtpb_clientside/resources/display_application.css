@@ -264,6 +264,7 @@ div#_md_blank.window_disable h1 {
 	color: rgb(72,111,152);
   -moz-transition-duration: 0.5s;
   transition-duration: 0.5s;
+  line-height: 1.5em;
 }
 
 #apps i.fonticon:hover {
