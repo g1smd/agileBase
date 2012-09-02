@@ -257,6 +257,7 @@ div#_md_blank.window_disable h1 {
 
 #apps i.fonticon:hover {
   opacity: 1;
+  text-shadow: 1em 1em white;
 }
 
 #apps h1 {
@@ -305,7 +306,7 @@ div#_md_blank.window_disable h1 {
 	font-weight: bold;
 	font-size: 30pt;
 	float: right;
-	padding-right: 0.3em;
+	padding-right: 0.5em;
 }
 
 /* temporary */
