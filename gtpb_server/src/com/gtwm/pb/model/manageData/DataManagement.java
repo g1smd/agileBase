@@ -385,6 +385,7 @@ public final class DataManagement implements DataManagementInfo {
 		// editing a single record, pass in one row id
 		Set<Integer> rowIds = new HashSet<Integer>(1);
 		rowIds.add(rowId);
+		logger.debug("Saving record with row id " + rowId);
 		this.saveRecord(request, table, dataToSave, newRecord, rowIds, sessionData, multipartItems);
 	}
 
@@ -661,6 +662,7 @@ public final class DataManagement implements DataManagementInfo {
 			throws InputRecordException, ObjectNotFoundException, SQLException,
 			CantDoThatException, CodingErrorException, DisallowedException,
 			MissingParametersException {
+		logger.debug("Saving " + table + " data: " + dataToSave);
 		if ((dataToSave.size() == 0) && (!newRecord)) {
 			// Note: this does actually happen quite a lot, from two particular
 			// users, therefore I've commented out the log warning.
