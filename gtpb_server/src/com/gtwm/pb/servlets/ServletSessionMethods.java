@@ -458,14 +458,10 @@ public final class ServletSessionMethods {
 				// skip it.
 				if (newRecord) {
 					if (fieldValue == null) {
-						logger.debug("Getting default for " + field);
 						fieldValue = getDefaultFieldValue(sessionData, request, field, databaseDefn);
-						logger.debug("Default is " + fieldValue);
 					} else if (fieldValue.isNull()) {
-						logger.debug("Getting default (.isNull) for " + field);
 						BaseValue defaultValue = getDefaultFieldValue(sessionData, request, field,
 								databaseDefn);
-						logger.debug("Default is " + defaultValue);
 						if (defaultValue != null) {
 							fieldValue = defaultValue;
 						}
