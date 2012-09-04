@@ -163,6 +163,7 @@ table#reportData td input {
   border-radius: 0.5em;
   padding: 0.3em;
   font-family: Verdana,Geneva,sans-serif;
+  font-size: 9pt;
 }
 
 table#reportData td input[type='text'] {
@@ -206,7 +207,7 @@ textarea {
   border-radius: 0.5em;
   padding: 0.3em;
   font-family: Verdana,Geneva,sans-serif;
-  font-size: 12pt;
+  font-size: 9pt;
 }
 
 .draggingRow {
@@ -715,7 +716,7 @@ div#reportData {
   float: right;
   width: 50%;
   border: 1px solid #dddddd;
-  font-size: 12pt;
+  font-size: 9pt;
   padding: 0.2em;
   border-radius: 0.5em;
   font-family: Verdana,Geneva,sans-serif;
