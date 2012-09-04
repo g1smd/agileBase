@@ -130,7 +130,7 @@ table#reportData tr.rowb  {
 
 /* jquery.autocomplete override */
 .ac_results li {
-  font-size: 12pt;
+  font-size: 8pt;
   line-height: 25px;
 }
 
