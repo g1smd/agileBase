@@ -391,7 +391,7 @@ public interface ViewToolsInfo {
 	/**
 	 * Return the HTML content of an external URL. Useful for content that couldn't be loaded by a standard client side AJAX request due to cross-domain policy issues
 	 */
-	public String getExternalHtml(String url) throws ClientProtocolException, IOException;
+	public String getOfqualUnitPage(String url) throws ClientProtocolException, IOException;
 
 	/**
 	 * Returns the URL pointing to the last commit that the app was built

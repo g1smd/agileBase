@@ -1642,10 +1642,10 @@ public final class ViewTools implements ViewToolsInfo {
 		return files;
 	}
 
-	public String getExternalHtml(String url) throws ClientProtocolException, IOException {
-		String decodedUrl = URLDecoder.decode(url, "UTF-8");
-		logger.debug("Getting external URL " + decodedUrl);
-		return Request.Get(decodedUrl).execute().returnContent().asString();
+	public String getOfqualUnitPage(String qualificationNumber) throws ClientProtocolException, IOException {
+		qualificationNumber = qualificationNumber.replace("/", "_");
+		String url = "http://register.ofqual.gov.uk/Qualification/PrintDetails?qualificationNumber=" + qualificationNumber + "&showUnits=True";
+		return Request.Get(url).execute().returnContent().asString();
 	}
 
 	public String getCommitUrl() throws IOException, CantDoThatException {
