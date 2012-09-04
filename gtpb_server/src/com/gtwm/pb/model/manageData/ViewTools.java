@@ -43,6 +43,7 @@ import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.math.MathContext;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -1642,8 +1643,9 @@ public final class ViewTools implements ViewToolsInfo {
 	}
 
 	public String getExternalHtml(String url) throws ClientProtocolException, IOException {
-		logger.debug("Getting external URL " + url);
-		return Request.Get(url).execute().returnContent().asString();
+		String decodedUrl = URLDecoder.decode(url, "UTF-8");
+		logger.debug("Getting external URL " + decodedUrl);
+		return Request.Get(decodedUrl).execute().returnContent().asString();
 	}
 
 	public String getCommitUrl() throws IOException, CantDoThatException {
