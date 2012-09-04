@@ -27,7 +27,7 @@ table#reportData {
 
 table#reportData th {
   background-color: white; /* #f1f2ed; */
-  font-size:8.5pt; 
+  font-size:8pt; 
   color:black;
   font-weight:bold;
   border:1px solid white; /* #f0f0f0 / #cecece */
