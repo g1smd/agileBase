@@ -651,6 +651,10 @@ span.comment_attribution {
   top: 0;
 }
 
+.fieldname {
+  font-size: 9pt;
+}
+
 .block.two_cols.non_section .fieldname {
   min-width: 40%;
   display: inline-block;

@@ -127,7 +127,7 @@ table#reportData td {
   vertical-align:top;
   border-right:1px solid #f2f2f2;
   padding:3px 7px 3px 7px;
-  font-size:8.5pt;
+  font-size:8pt;
   cursor:default;
   height:30px;
   min-width:2em;
@@ -204,7 +204,7 @@ table#reportData tr.h3 td {
 }
 
 table#reportData tr.h1 td .smaller {
-  font-size: 8.5pt;
+  font-size: 8pt;
 }
 	
 table#reportData tr.rowb td, 
@@ -269,7 +269,7 @@ table#reportData tr.excludedRecord td {
 .sectioned_filter_row {
   background-color: white;
   border-bottom: 1px solid #cecece;
-  font-size: 8.5pt;
+  font-size: 8pt;
   line-height: 2em;
 }
 
