@@ -978,6 +978,7 @@ public final class AppController extends VelocityViewServlet {
 	 * Override Velocity's mergeTemplate to a) time the template processing b)
 	 * redirect on error
 	 */
+	@Override
 	public void mergeTemplate(Template template, Context context, HttpServletResponse response)
 			throws IOException {
 		long mergeTemplateStartTime = System.currentTimeMillis();

@@ -1642,6 +1642,7 @@ public final class ViewTools implements ViewToolsInfo {
 	}
 
 	public String getExternalHtml(String url) throws ClientProtocolException, IOException {
+		logger.debug("Getting external URL " + url);
 		return Request.Get(url).execute().returnContent().asString();
 	}
 
