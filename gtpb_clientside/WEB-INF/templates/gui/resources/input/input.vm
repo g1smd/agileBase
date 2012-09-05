@@ -31,9 +31,13 @@
 #set($fieldValue="") ##reset fieldValue since last usage
 #if(!$tabIndex) #set($tabIndex = 0) #end
 #set($tabIndex = $tabIndex + 1)
-#set($activateComments = false)
-#if((!$globalEdit) && (!$gtpbPublicTable))
-  #set($activateComments = true)
+#if($useComments)
+  #set($activateComments = $useComments)
+#else
+  #set($activateComments = false)
+  #if((!$globalEdit) && (!$gtpbPublicTable))
+    #set($activateComments = true)
+  #end
 #end
 #set($singleColumn = ($formStyle == "SINGLE_COLUMN") || $mobile_device)
 #if($activateComments && $userCanEdit && (!$singleColumn) && ($fieldCategory != "COMMENT_FEED"))
