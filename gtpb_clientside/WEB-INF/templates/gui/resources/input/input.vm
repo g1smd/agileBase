@@ -31,8 +31,8 @@
 #set($fieldValue="") ##reset fieldValue since last usage
 #if(!$tabIndex) #set($tabIndex = 0) #end
 #set($tabIndex = $tabIndex + 1)
-#if($useComments)
-  #set($activateComments = $useComments)
+#if($disableComments)
+  #set($activateComments = false)
 #else
   #set($activateComments = false)
   #if((!$globalEdit) && (!$gtpbPublicTable))
