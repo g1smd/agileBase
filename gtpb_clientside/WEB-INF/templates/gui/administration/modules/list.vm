@@ -32,7 +32,8 @@
 
 #foreach($module in $modules)
  #if($module.getIconPath() != "")
-   #set($imgTag='<img src="resources/icons/applications/tango/'+$module.getIconPath()+'">')
+   #set($imgTab='<i class="icon-large $module.getIconPath()"></i>')
+##   #set($imgTag='<img src="resources/icons/applications/tango/'+$module.getIconPath()+'">')
  #else
    #set($imgTag='')
  #end
