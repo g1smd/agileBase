@@ -76,10 +76,12 @@ a.dp-choose-date {
 div.dp-popup {
 	position: relative;
 	background: #ccc;
-	font-size: 15px;
+	/* font-size: 15px; */
+	font-size: 9pt;
 	font-family: Verdana,Geneva,sans-serif;
 	padding: 2px;
-	width: 171px;
+	/* width: 171px; */
+	width: 199px;
 	line-height: 1.2em;
 }
 div#dp-popup {
@@ -87,7 +89,8 @@ div#dp-popup {
 	z-index: 199;
 }
 div.dp-popup h2 {
-	font-size: 12px;
+	/* font-size: 12px; */
+	font-size: 9pt;
 	text-align: center;
 	margin: 2px 0;
 	padding: 0;
