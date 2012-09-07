@@ -849,7 +849,7 @@ public final class ServletSessionMethods {
 		String pattern37 = "(?:1(?:1|\\d1)|3|8(?:0[08]|4[2-5]|7[0-3])|9[018]).*";
 		// [5+5] 1dddd (12 areas)
 		String pattern55 = "(?:1(?:3873|5(?:242|39[456])|697[347]|768[347]|9467)).*";
-		// [5+4] 1ddd (1 area)
+		// [5+4] 1dddd (1 area)
 		String pattern54 = "(?:16977[23]).*";
 		// [4+6] 1ddd, 7ddd (inc 7624) (not 70, 76)
 		String pattern46 = "(?:1|7(?:[1-5789]|624)).*";
