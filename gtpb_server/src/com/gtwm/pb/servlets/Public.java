@@ -223,7 +223,7 @@ public class Public extends VelocityViewServlet {
 					String gtpbCss = request.getParameter("css");
 					if (gtpbCss != null) {
 						// Allow only local CSS. Arbitrary CSS injection is a vulnerability which could lead to Javascript injection, phishing etc.
-						gtpbCss = gtpbCss.replaceAll("^.*:", "").replace("//", "");
+						gtpbCss = gtpbCss.replaceAll("^.*:", "").replace("//", "").replaceAll("[^\\w\\.\\/]", "");
 						context.put("gtpbCss", gtpbCss);
 					}
 					break;
