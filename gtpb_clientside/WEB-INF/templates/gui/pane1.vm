@@ -119,6 +119,7 @@
 		</li>
 	  #else
 	    #set($appId = $sessionData.getAppId())
+	    <li><h1>App ID is $appId</h1></li>
 	    #if(!$appId)
         #set($manageableTables = $view.getTablesAllowedTo("MANAGE_TABLE"))
 	      <li id="setup"><h1><span>Setup</span></h1>

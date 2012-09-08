@@ -546,7 +546,7 @@ public final class SessionData implements SessionDataInfo {
 	}
 	
 	public void setAppId(String appId) {
-		this.appId = appId;
+		this.appId = appId.replaceAll("[^\\w-]", "");
 	}
 	
 	public String getAppId() {
