@@ -44,6 +44,10 @@
   #parse($customisationsTemplateLocation)
 #end
 
+#if(!$app_launcher)
+  #set($appId = $sessionData.getAppId())
+#end
+
 ## Create a collection $moduleReports: each module maps to an array of reports
 #parse("gui/resources/calc_module_reports.vm")
 ## only show the grouped reports section if it isn't empty!
@@ -86,7 +90,12 @@
     	  #set($report = $visibleModuleReports.get(0))
     	  #set($table = $report.getParentTable())
     	#end
-    	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName  #end" #if($app_launcher) data-table="$table.getInternalTableName()" data-report="$report.getInternalReportName()" #if($iconPath == $previousIconPath) style="display:none"#end  #end>
+    	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName  #end"
+    	  #if($app_launcher)
+    	    data-table="$table.getInternalTableName()" data-report="$report.getInternalReportName()" #if($iconPath == $previousIconPath) style="display:none"#end 
+    	  #elseif($iconPath != $appId)
+			style="display:none"
+    	  #end>
     	  #set($previousIconPath = $iconPath)
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  #if(!$app_launcher)<h2>#end

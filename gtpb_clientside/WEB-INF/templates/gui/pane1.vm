@@ -117,7 +117,7 @@
 					</div>
 			</ul>
 		</li>
-	  #else
+	  #elseif(!$app_launcher)
         #set($manageableTables = $view.getTablesAllowedTo("MANAGE_TABLE"))
 	    ## #if(($manageableTables.size() > 0) || $view.loggedInUserAllowedTo('ADMINISTRATE'))
 	    <li id="setup"><h1><span>Setup</span></h1>
