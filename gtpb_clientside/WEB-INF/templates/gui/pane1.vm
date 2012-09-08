@@ -117,17 +117,18 @@
 					</div>
 			</ul>
 		</li>
-	  #elseif(!$app_launcher)
+	  #else
+	    #set($appId = $sessionData.getAppId())
+	    #if(!$appId)
         #set($manageableTables = $view.getTablesAllowedTo("MANAGE_TABLE"))
-	    ## #if(($manageableTables.size() > 0) || $view.loggedInUserAllowedTo('ADMINISTRATE'))
-	    <li id="setup"><h1><span>Setup</span></h1>
-  		  <ul>
-		  #parse('gui/reports_and_tables/table_list.vm')
-		  #parse('gui/administration/administration.vm')
-		  </ul>
-	    </li>
+	      <li id="setup"><h1><span>Setup</span></h1>
+  		    <ul>
+		    #parse('gui/reports_and_tables/table_list.vm')
+		    #parse('gui/administration/administration.vm')
+		    </ul>
+	      </li>
 	    #end
-	  ## #end
+	  #end
 	</ol> ## end list of sections	  
 	  #if($view.getException().getMessage())
 		   <script language="javascript">
