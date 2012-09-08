@@ -1,5 +1,4 @@
-#preview {
-  background-color: rgba(238,243,249,0.9); /* rgba(219,219,219,0.9); */ /* #dbdbdb; 777788, bdbdbd */
+#preview, #launcher {
   position: absolute;
   top: 0;
   left: 0;
@@ -9,6 +8,14 @@
   display: none;
   padding-top: 2.5em;
   z-index: 2; /* above toolbar */
+}
+
+#preview {
+	background-color: rgba(238,243,249,0.9); /* rgba(219,219,219,0.9); */ /* #dbdbdb; 777788, bdbdbd */
+}
+
+#launcher {
+	background-color: rgb(238,243,249);
 }
 
 .pane1_id { display: none; }

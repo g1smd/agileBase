@@ -165,15 +165,16 @@ function fFullScreen() {
 }
 
 function fAppLauncher() {
-	var previewDiv = $("#preview");
+	var launcherDiv = $("#launcher");
 	$(".searchbox").hide();
-	previewDiv.fadeIn().load("AppController.servlet", {
+	launcherDiv.fadeIn().load("AppController.servlet", {
 		"return": "gui/preview/app_launcher"
 	});
 }
 
 function closePreview() {
 	$("#preview").fadeOut();
+	$("#launcher").fadeOut();
 	$("#doneSearch").fadeOut();
 	$(".searchbox").val("");
 	$(".searchbox").show();
