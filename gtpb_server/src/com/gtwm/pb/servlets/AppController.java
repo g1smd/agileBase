@@ -306,7 +306,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletSessionMethods.setLockOverride(sessionData, request, databaseDefn);
 					break;
 				case SET_APP_ID:
-					ServletSessionMethods.setAppId(sessionData, request);
+					ServletSessionMethods.setAppId(sessionData, request, sessionActionParam);
 					break;
 				case CLEAR_APP_ID:
 					ServletSessionMethods.clearAppId(sessionData);

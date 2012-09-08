@@ -1148,8 +1148,7 @@ public final class ServletSessionMethods {
 		sessionData.clearAllReportSorts();
 	}
 	
-	public static void setAppId(SessionDataInfo sessionData, HttpServletRequest request) {
-		String appId = request.getParameter("appid");
+	public static void setAppId(SessionDataInfo sessionData, HttpServletRequest request, String appId) {
 		sessionData.setAppId(appId);
 	}
 	
