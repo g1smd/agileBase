@@ -69,7 +69,7 @@ table#reportData {
 }
 
 table#reportData td, table#reportData th, table#reportData input, table#reportData textarea, table#reportData select {
-  font-size: 12pt; /* larger text for mobile */
+  font-size: 10pt; /* larger text for mobile */
 }
 
 table#reportData tr.rowa td {

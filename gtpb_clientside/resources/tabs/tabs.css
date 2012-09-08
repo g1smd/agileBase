@@ -652,7 +652,7 @@ span.comment_attribution {
 }
 
 .fieldname {
-  font-size: 9pt;
+  font-size: 9.5pt;
 }
 
 .block.two_cols.non_section .fieldname {
@@ -720,7 +720,7 @@ div#reportData {
   float: right;
   width: 50%;
   border: 1px solid #dddddd;
-  font-size: 9pt;
+  font-size: 9.5pt;
   padding: 0.2em;
   border-radius: 0.5em;
   font-family: Verdana,Geneva,sans-serif;
@@ -848,7 +848,7 @@ div#reportData {
   color: black; /* #777777 */
   border-radius: 0.5em;
   text-transform: uppercase;
-  font-size: 9pt;
+  font-size: 9.5pt;
   display: inline-block;
   margin: 0.5em;
   margin-right: 2em;
