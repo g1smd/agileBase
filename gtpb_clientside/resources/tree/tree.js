@@ -136,6 +136,14 @@ function pane1Setup() {
 		}
 	});
 	
+	// When an app is active, hide any other sections
+	$("#tree h1").each(function() {
+	  if($(this).find("li:visible")) {
+	  	return;
+	  }
+	  $(this).hide();
+	});
+	
 	// Initial expand?
 	var numReports = $('.module-tree-item-wrap').size();
 	if (numReports < 20) {
