@@ -138,7 +138,7 @@ function pane1Setup() {
 	
 	// When an app is active, hide any other sections
 	$("#tree h1").each(function() {
-	  if($(this).next("ul").find("li:visible")) {
+	  if($(this).next("ul").find("li:visible").size() > 0) {
 	  	return;
 	  }
 	  $(this).hide();
