@@ -212,10 +212,16 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 }
 
 function fSetupAppPreview() {
-	$("td.leading").next("td").mouseover(function() {
-		var rowId = $(this).closest("tr").attr("name");
-		console.log("Moused over row ID " + rowId);
-	});
+	var hoverIntentConfig = {
+			over: function() {
+				var rowId = parseInt($(this).closest("tr").attr("name"));
+				if (rowId != Number.NaN) {
+				  console.log("Moused over row ID " + rowId);
+				}
+			},
+			interval: 200
+	}
+	$("td.leading").next("td").hoverIntent(hoverIntentConfig);
 }
 
 /*
