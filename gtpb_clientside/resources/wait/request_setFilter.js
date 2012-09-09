@@ -219,6 +219,7 @@ function fSetupAppPreview() {
 				  console.log("Moused over row ID " + rowId);
 				}
 			},
+			out: function() {},
 			interval: 200
 	}
 	$("td.leading").next("td").hoverIntent(hoverIntentConfig);
