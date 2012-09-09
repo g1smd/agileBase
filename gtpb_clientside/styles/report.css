@@ -468,6 +468,10 @@ table#reportData th div.mini_action {
   width: auto; /* pane 3 override 100% width */
 }
 
+table#reportData td.appSelected {
+	background-color: #F0F0F0;
+}
+
 .mini_action a {
   color: #486F98;
   text-decoration: none;

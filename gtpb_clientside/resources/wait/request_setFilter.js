@@ -214,8 +214,10 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 function fSetupAppPreview() {
 	var hoverIntentConfig = {
 			over: function() {
+				$("td.leading").next("td").removeClass("appSelected");
 				var rowId = parseInt($(this).closest("tr").attr("name"));
 				if (rowId != Number.NaN) {
+					$(this).addClass("addSelected");
 				  console.log("Moused over row ID " + rowId);
 				}
 			},
