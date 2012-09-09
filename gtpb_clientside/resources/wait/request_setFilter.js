@@ -137,6 +137,7 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 		// Everything but IE can use innerHTML for this
 		oElement.innerHTML = sResponseText;
 		fUpdateOtherPanes();
+		fSetupAppPreview();
 		if(fCallback) fCallback();
 		return;
 	  }
@@ -208,6 +209,13 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 	}
 
 	fRenderRows();
+}
+
+function fSetupAppPreview() {
+	$("td.leading").next("td").mouseover(function() {
+		var rowId = $(this).closest("tr").attr("name");
+		console.log("Moused over row ID " + rowId);
+	});
 }
 
 /*

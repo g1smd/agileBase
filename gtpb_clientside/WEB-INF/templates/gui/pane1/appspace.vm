@@ -15,12 +15,18 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($appUser = $view.getLoggedInUser())
-#set($company = $appUser.getCompany())
-#set($app_launcher = true)
-<div class="reportDataView" id="apps">
-  <div id="launcher_title">
-    <span id="companyname">$company</span>
-  </div>
-  #parse("gui/reports_and_tables/report_list.vm")
-</div>
+## 'Widget' type space that the current app related content can go in
+#set($table = $sessionData.getTable())
+#set($rowId = $sessionData.getCustomInteger("preview_row_id"))
+#set($tableDataRow = $view.getTableDataRow($table, $rowId))
+#foreach($field in $table.getFields())
+  #set($fieldValueObject = $field.getValue())
+  #if($fieldValueObject.isImage())
+    #set($downloadBase = "uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/")
+  	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject "))
+    <div class="image $field.getAttachmentType().name().toLowerCase()">
+      <img src="$downloadUrl.500.$fieldValueObject.getExtension()" />
+    </div>
+  #else
+  #end
+#end
