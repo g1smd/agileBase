@@ -358,6 +358,20 @@ ul.moduleaction li {
   font-size: 9pt;
 }
 
+#appspace span.comment_text {
+  background-color: #f0f0f0;
+  color: black;
+  padding: 0.5em;
+  margin: 0.1em;
+  display: inline-block;
+  border-radius: 0.5em;
+}
+
+#appspace span.comment_attribution {
+  color: gray;
+}
+
+
 .warningmessage {
 		border-radius: 1em;
 		border: 2px solid rgb(254,233,84);
