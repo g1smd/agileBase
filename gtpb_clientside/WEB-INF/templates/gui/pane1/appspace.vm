@@ -22,7 +22,7 @@
 #foreach($field in $table.getFields())
   #set($fieldValueObject = $tableDataRow.get($field))
   #if($fieldValueObject.isImage())
-    #set($downloadBase = "uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/")
+    #set($downloadBase = "uploads/$table.getInternalTableName()/$field.getInternalFieldName()/$rowId/")
   	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject "))
     <div class="image $field.getAttachmentType().name().toLowerCase()">
       <img src="$downloadUrl.500.$fieldValueObject.getExtension()" />
