@@ -102,7 +102,6 @@
 	  $(document).ready(function() {
 	    assignButtonModuleActions();
         loadCharts();
-        fSetupAppPreview();
 	  });	  
 	  </script>
 	#else
@@ -227,6 +226,7 @@
 	#end
 	
 	$(document).ready(function() {
+	  fSetupAppPreview();
 	  var hoverIntentConfig = {    
          over: showTooltip,
          out: hideTooltip,
