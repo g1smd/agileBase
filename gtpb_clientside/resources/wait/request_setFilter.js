@@ -220,7 +220,7 @@ function fSetupAppPreview() {
 				}
 			},
 			out: function() {},
-			interval: 200
+			interval: 100
 	}
 	$("td.leading").next("td").hoverIntent(hoverIntentConfig);
 }
