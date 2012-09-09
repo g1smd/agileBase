@@ -34,6 +34,15 @@ $(document).ready(function(){
   });
 });
 
+function appSelect(var rowId) {
+	$("#appspace").load("AppController.servlet", {
+		"return": "gui/pane1/appspace",
+		set_custom_integer: true,
+		integerkey: "preview_row_id",
+		customintegervalue: rowId
+	});
+}
+
 function notify(n) {
 	var forename = n.forename;
 	var surname = n.surname;

@@ -218,12 +218,7 @@ function fSetupAppPreview() {
 				var rowId = parseInt($(this).closest("tr").attr("name"));
 				if (rowId != Number.NaN) {
 					$(this).addClass("appSelected");
-					$(parent.pane_1).find("#appspace").load("AppController.servlet", {
-						"return": "gui/pane1/appspace",
-						set_custom_integer: true,
-						integerkey: "preview_row_id",
-						customintegervalue: rowId
-					});
+					parent.pane_1.appSelect(rowId);
 				}
 			},
 			out: function() {},
