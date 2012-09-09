@@ -59,14 +59,14 @@
 		        <pathelement location="WEB-INF/lib/asm-attrs.jar"/>
 		        <pathelement location="WEB-INF/lib/asm.jar"/>
 		        <pathelement location="WEB-INF/lib/ant-swing-1.6.5.jar"/>
-		        <pathelement location="WEB-INF/lib/antlr-2.7.6.jar"/>
+		        <pathelement location="WEB-INF/lib/antlr-2.7.7.jar"/>
 		        <pathelement location="WEB-INF/lib/ant-launcher-1.6.5.jar"/>
 		        <pathelement location="WEB-INF/lib/ant-junit-1.6.5.jar"/>
 		        <pathelement location="WEB-INF/lib/ant-antlr-1.6.5.jar"/>
 		        <pathelement location="WEB-INF/lib/ant-1.6.5.jar"/>
 		        <pathelement location="WEB-INF/lib/jta-1.1.jar"/>
-				<pathelement location="WEB-INF/lib/javassist-3.12.0.GA.jar"/>
-				<pathelement location="WEB-INF/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+				<pathelement location="WEB-INF/lib/javassist-3.15.0-GA.jar"/>
+				<pathelement location="WEB-INF/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
 				<pathelement location="WEB-INF/lib/backport-util-concurrent.jar"/>
         <pathelement location="WEB-INF/lib/jackson-mini-1.9.2.jar"/>
         <pathelement location="WEB-INF/lib/mail.jar"/>

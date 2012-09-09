@@ -35,7 +35,6 @@
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
     <title>$view.getApplicationName() - $company_name</title>
    	  <script src="resources/jquery.js" language="Javascript"></script>
-	  ## <script type="text/javascript" src="resources/fauxconsole.js"></script>	
       <script language=JavaScript src="resources/logger.js"></script>
       <script language=JavaScript src="resources/display_application_amalgam.js"></script>
       <script language=JavaScript src="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.js"></script>      

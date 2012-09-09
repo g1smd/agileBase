@@ -57,7 +57,7 @@
 		        <pathelement location="WEB-INF/lib/asm-attrs.jar"/>
 		        <pathelement location="WEB-INF/lib/asm.jar"/>
 		        <pathelement location="WEB-INF/lib/ant-swing-1.6.5.jar"/>
-		        <pathelement location="WEB-INF/lib/antlr-2.7.6.jar"/>
+		        <pathelement location="WEB-INF/lib/antlr-2.7.7.jar"/>
 		        <pathelement location="WEB-INF/lib/ant-launcher-1.6.5.jar"/>
 		        <pathelement location="WEB-INF/lib/ant-junit-1.6.5.jar"/>
 		        <pathelement location="WEB-INF/lib/ant-antlr-1.6.5.jar"/>

@@ -37,6 +37,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -45,7 +47,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import org.grlea.log.SimpleLogger;
-import org.hibernate.annotations.CollectionOfElements;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 
 @Entity
@@ -556,7 +557,7 @@ public class ReportFilterDefn implements ReportFilterInfo {
 
 	// @CollectionOfElements must be used instead of @OneToMany for a collection
 	// of Java core types
-	@CollectionOfElements(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.EAGER)
 	private Set<String> getFilterValuesDirect() {
 		return this.filterValues;
 	}
