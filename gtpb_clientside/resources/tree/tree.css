@@ -339,6 +339,18 @@ ul.moduleaction li {
 	color: #486f98;
 }
 
+#appspace {
+  background-color: #f0f0f0;
+}
+
+#appspace .image {
+  text-align: center;
+}
+
+#appspace .image img {
+  max-width: 100%;
+}
+
 .warningmessage {
 		border-radius: 1em;
 		border: 2px solid rgb(254,233,84);
