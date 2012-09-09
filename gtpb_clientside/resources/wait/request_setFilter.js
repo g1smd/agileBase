@@ -217,7 +217,7 @@ function fSetupAppPreview() {
 				$("td.leading").next("td").removeClass("appSelected");
 				var rowId = parseInt($(this).closest("tr").attr("name"));
 				if (rowId != Number.NaN) {
-					$(this).addClass("addSelected");
+					$(this).addClass("appSelected");
 				  console.log("Moused over row ID " + rowId);
 				}
 			},
