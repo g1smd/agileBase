@@ -28,6 +28,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -229,6 +230,11 @@ public final class DataManagement implements DataManagementInfo {
 			statement.close();
 			conn.commit();
 			field.setHasComments(true);
+			Set<Integer> noCommentRows = this.noComments.get(field);
+			if (noCommentRows != null) {
+				noCommentRows.remove(rowId);
+				this.noComments.put(field, noCommentRows);
+			}
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -307,13 +313,21 @@ public final class DataManagement implements DataManagementInfo {
 	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException,
 			CantDoThatException {
 		SortedSet<CommentInfo> comments = new TreeSet<CommentInfo>();
+		// If no record for this field contains comments, return empty set
 		Boolean hasComments = field.hasComments();
 		if (hasComments != null) {
 			if (hasComments.equals(false)) {
 				return comments;
 			}
 		}
-		String sqlCode = "SELECT created, author, text FROM dbint_comments WHERE internalfieldname=? AND rowid=? order by created desc limit 10";
+		// If this particular row for the field is known to contain no comments, return empty set
+		Set<Integer> noCommentRows = this.noComments.get(field);
+		if (noCommentRows != null) {
+			if (noCommentRows.contains(rowId)) {
+				return comments;
+			}
+		}
+		String sqlCode = "SELECT created, author, text FROM dbint_comments WHERE internalfieldname=? AND rowid=? ORDER BY created DESC LIMIT 10";
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
@@ -335,34 +349,45 @@ public final class DataManagement implements DataManagementInfo {
 			statement.close();
 			if (comments.size() > 0) {
 				field.setHasComments(true);
-			} else if (hasComments == null) {
-				// We've seen there are no comments for this particular record
-				// but we don't know if there are any for the field in other
-				// records. Check.
-				sqlCode = "SELECT count(*) from dbint_comments WHERE internalfieldname=?";
-				statement = conn.prepareStatement(sqlCode);
-				statement.setString(1, internalFieldName);
-				results = statement.executeQuery();
-				if (results.next()) {
-					int numComments = results.getInt(1);
-					if (numComments > 0) {
-						field.setHasComments(true);
-					} else {
-						// Another check in case another thread e.g. running
-						// addComment has set this to true.
-						// We don't want to overwrite that
-						// TODO: Really, this should be atomic but it takes such
-						// a small amount of time compared to the SQL it's
-						// probably fine
-						if (field.hasComments() == null) {
-							field.setHasComments(false);
-						}
-					}
-				} else {
-					logger.error("Unable to see if comments exist with query " + statement);
+			} else {
+				if (noCommentRows == null) {
+					// Create a concurrent set
+					noCommentRows = Collections.newSetFromMap(new ConcurrentHashMap<Integer, Boolean>());
+				} else if (noCommentRows.size() > 1000) {
+					// Don't use an unlimited amount of memory
+					noCommentRows.clear();
 				}
-				results.close();
-				statement.close();
+				noCommentRows.add(rowId);
+				this.noComments.put(field, noCommentRows);
+				if (hasComments == null) {
+					// We've seen there are no comments for this particular record
+					// but we don't know if there are any for the field in other
+					// records. Check.
+					sqlCode = "SELECT count(*) from dbint_comments WHERE internalfieldname=?";
+					statement = conn.prepareStatement(sqlCode);
+					statement.setString(1, internalFieldName);
+					results = statement.executeQuery();
+					if (results.next()) {
+						int numComments = results.getInt(1);
+						if (numComments > 0) {
+							field.setHasComments(true);
+						} else {
+							// Another check in case another thread e.g. running
+							// addComment has set this to true.
+							// We don't want to overwrite that
+							// TODO: Really, this should be atomic but it takes such
+							// a small amount of time compared to the SQL it's
+							// probably fine
+							if (field.hasComments() == null) {
+								field.setHasComments(false);
+							}
+						}
+					} else {
+						logger.error("Unable to see if comments exist with query " + statement);
+					}
+					results.close();
+					statement.close();
+				}
 			}
 		} finally {
 			if (conn != null) {
@@ -419,7 +444,6 @@ public final class DataManagement implements DataManagementInfo {
 			// filterValues & rowLimits in the WHERE clause
 			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
 			Map<BaseField, String> filterValues = sessionData.getReportFilterValues();
-
 			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
 					filterValues, false, emptySorts, -1, primaryKey, QuickFilterType.AND, false);
 			ResultSet results = statement.executeQuery();
@@ -3563,6 +3587,11 @@ public final class DataManagement implements DataManagementInfo {
 	private Map<CompanyInfo, Long> lastSchemaChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
 
 	private Map<AppUserInfo, BaseReportInfo> userMostPopularReportCache = new ConcurrentHashMap<AppUserInfo, BaseReportInfo>();
+	
+	/**
+	 * In fields where some records have comments, keep track of those which definitely don't, so we don't have to look them up via SQL
+	 */
+	private Map<BaseField, Set<Integer>> noComments = new ConcurrentHashMap<BaseField, Set<Integer>>();
 
 	private AtomicInteger reportDataCacheHits = new AtomicInteger();
 

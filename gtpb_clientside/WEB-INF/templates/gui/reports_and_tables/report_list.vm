@@ -93,7 +93,7 @@
     	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName  #end"
     	  #if($app_launcher)
     	    data-table="$table.getInternalTableName()" data-report="$report.getInternalReportName()" #if($iconPath == $previousIconPath) style="display:none"#end 
-    	  #elseif($iconPath != $appId)
+    	  #elseif($appId && ($iconPath != $appId))
 			style="display:none"
     	  #end>
     	  #set($previousIconPath = $iconPath)
