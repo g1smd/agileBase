@@ -346,11 +346,11 @@ ul.moduleaction li {
 
 #appspace .image {
   text-align: center;
-  border-radius: 0.5em;
 }
 
 #appspace .image img {
   max-width: 100%;
+  border-radius: 1em;
 }
 
 .warningmessage {
