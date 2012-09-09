@@ -20,7 +20,7 @@
 #set($rowId = $sessionData.getCustomInteger("preview_row_id"))
 #set($tableDataRow = $view.getTableDataRow($table, $rowId))
 #foreach($field in $table.getFields())
-  #set($fieldValueObject = $tableDataRow.getValue($field))
+  #set($fieldValueObject = $tableDataRow.get($field))
   #if($fieldValueObject.isImage())
     #set($downloadBase = "uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/")
   	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject "))
