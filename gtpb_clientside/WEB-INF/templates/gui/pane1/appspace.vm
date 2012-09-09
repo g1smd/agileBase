@@ -17,17 +17,15 @@
 ##
 ## 'Widget' type space that the current app related content can go in
 #set($table = $sessionData.getTable())
-Table is $table<br>
 #set($rowId = $sessionData.getCustomInteger("preview_row_id"))
-Row ID is $rowId<br>
 #set($tableDataRow = $view.getTableDataRow($table, $rowId))
-Data row id $tableDataRow<br>
 #foreach($field in $table.getFields())
   #set($fieldValueObject = $field.getValue())
   #if($fieldValueObject.isImage())
     #set($downloadBase = "uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/")
   	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject "))
     <div class="image $field.getAttachmentType().name().toLowerCase()">
+      $downloadUrl.500.$fieldValueObject.getExtension()<p>
       <img src="$downloadUrl.500.$fieldValueObject.getExtension()" />
     </div>
   #else
