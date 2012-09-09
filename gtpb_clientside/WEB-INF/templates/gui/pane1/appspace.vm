@@ -21,12 +21,31 @@
 #set($tableDataRow = $view.getTableDataRow($table, $rowId))
 #foreach($field in $table.getFields())
   #set($fieldValueObject = $tableDataRow.get($field))
-  #if($fieldValueObject.isImage())
+  #set($category = $field.getFieldCategory())
+  #if($category == "FILE")
     #set($downloadBase = "uploads/$table.getInternalTableName()/$field.getInternalFieldName()/$rowId/")
   	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject"))
-    <div class="image $field.getAttachmentType().name().toLowerCase()">
-      <img src="$downloadUrl.500.$fieldValueObject.getExtension()" />
-    </div>
-  #else
+    ## Image
+    #if($fieldValueObject.isImage())
+      <div class="image $field.getAttachmentType().name().toLowerCase()">
+        <img src="$downloadUrl.500.$fieldValueObject.getExtension()" />
+      </div>
+    #elseif($downloadUrl.endsWith("pdf"))
+      #set($previewUrl = "$downloadUrl.500.png?cachebust=$viewTools.getRandomString()")
+      <div class="image pdf">
+        <img src="$previewUrl" />
+      </div>
+    #end
+  #end
+  ## Comments
+  #set($comments = $view.getComments($field, $rowId))
+  #if ($comments.size() > 0)
+    <div class="comments">
+	#foreach($comment in $comments)
+	  <div class="comment">
+	    <span class="comment_text">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>
+      </div>
+	#end
+	</div>
   #end
 #end

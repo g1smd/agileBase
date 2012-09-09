@@ -43,10 +43,12 @@ import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.math.MathContext;
-import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import jodd.lagarto.dom.jerry.Jerry;
+
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ViewToolsInfo;
@@ -1647,7 +1649,7 @@ public final class ViewTools implements ViewToolsInfo {
 		String url = "http://register.ofqual.gov.uk/Qualification/PrintDetails?qualificationNumber=" + qualificationNumber + "&showUnits=True";
 		return Request.Get(url).execute().returnContent().asString();
 	}
-
+	
 	public String getCommitUrl() throws IOException, CantDoThatException {
 		String commitFileName = this.request.getSession().getServletContext()
 				.getRealPath("/lastcommit.txt");
