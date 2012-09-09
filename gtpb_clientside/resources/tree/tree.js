@@ -34,7 +34,7 @@ $(document).ready(function(){
   });
 });
 
-function appSelect(var rowId) {
+function appSelect(rowId) {
 	$("#appspace").load("AppController.servlet", {
 		"return": "gui/pane1/appspace",
 		set_custom_integer: true,
