@@ -353,6 +353,11 @@ ul.moduleaction li {
   border-radius: 1em;
 }
 
+#appspace .comments {
+  background-color: white;
+  font-size: 9pt;
+}
+
 .warningmessage {
 		border-radius: 1em;
 		border: 2px solid rgb(254,233,84);
