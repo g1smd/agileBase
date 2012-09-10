@@ -1642,8 +1642,20 @@ public final class ViewTools implements ViewToolsInfo {
 	}
 
 	public String getOfqualUnitPage(String qualificationNumber) throws ClientProtocolException, IOException {
-		qualificationNumber = qualificationNumber.replace("/", "_");
+		qualificationNumber = qualificationNumber.replace("/", "_").replaceAll("[^\\w_]", "");
 		String url = "http://register.ofqual.gov.uk/Qualification/PrintDetails?qualificationNumber=" + qualificationNumber + "&showUnits=True";
+		return Request.Get(url).execute().returnContent().asString();
+	}
+	
+	public String getOfqualQualPage(String qualificationNumber) throws ClientProtocolException, IOException {
+		qualificationNumber = qualificationNumber.replace("/", "_").replaceAll("[^\\w_]", "");;
+		String url = "http://register.ofqual.gov.uk/Qualification/Details/" + qualificationNumber;
+		return Request.Get(url).execute().returnContent().asString();
+	}
+	
+	public String getOfqualOutcomesPage(String unitCode) throws ClientProtocolException, IOException {
+		unitCode = unitCode.replace("/", "_").replaceAll("[^\\w_]", "");;
+		String url = "http://register.ofqual.gov.uk/Unit/Details/" + unitCode;
 		return Request.Get(url).execute().returnContent().asString();
 	}
 	
