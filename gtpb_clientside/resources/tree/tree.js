@@ -51,6 +51,7 @@ function appSelect(rowId) {
 			}
 		});
 		fTwitter();
+		fYouTube();
 	});
 }
 
@@ -205,3 +206,17 @@ function fTwitter() {
 		}).bind("loaded",function(){$(this).find("a").attr("target","_blank");});
 	});
 }
+
+function fYouTube() {
+	$('a').each(
+		function() {
+			var sHref = this.getAttribute('href');
+			if ((sHref.indexOf('youtube.com') > -1)
+					|| (sHref.indexOf('vimeo.com') > -1)) {
+				var oContainer = $("<div class='gtpb_youtube'></div>");
+				$(this).replaceWith(oContainer);
+				oContainer.oembed(sHref);
+			}
+		});
+}
+

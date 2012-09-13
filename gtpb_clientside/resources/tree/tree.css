@@ -391,7 +391,7 @@ ul.moduleaction li {
 #appspace .map {
   width: 100%;
   height: 150px;
-  border-radius: 3em;
+  border-radius: 1em;
   background-position: center;
 }
 
@@ -403,6 +403,10 @@ ul.moduleaction li {
   font-size: 150%;
   vertical-align: top;
   padding-top: 0.2em;
+}
+
+object,embed {
+  max-width: 100%;
 }
 
 .warningmessage {
