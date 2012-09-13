@@ -41,6 +41,14 @@ function appSelect(rowId) {
 		integerkey: "preview_row_id",
 		customintegervalue: rowId
 	}, function() {
+		// Collapse modules
+		$('#tree h2').each(function(event) {
+		var parentElem = $(this).parent();
+		if (parentElem.hasClass('moduleexpanded')) {
+			parentElem.children('ul').slideUp('fast');
+			parentElem.removeClass('moduleexpanded');
+			parentElem.addClass('modulecollapsed');			
+		}
 		fTwitter();
 	});
 }
