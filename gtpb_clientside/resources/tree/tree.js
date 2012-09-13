@@ -217,7 +217,7 @@ function fYouTube() {
 				$(this).replaceWith(oContainer);
 				oContainer.oembed(sHref);
 				setTimeout(function() {
-					$("iframe").attr("width", "100%");
+					$("iframe").attr("width", "100%").attr("height", "150px");
 				}, 1000);
 			}
 		});
