@@ -344,6 +344,7 @@ ul.moduleaction li {
   padding-top: 0.5em;
   border: 1em solid #cccccc;
   border-radius: 0.5em;
+  margin: 0.5em;
 }
 
 #appspace .image {
