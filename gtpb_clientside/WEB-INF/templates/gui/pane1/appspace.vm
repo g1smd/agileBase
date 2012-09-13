@@ -24,7 +24,7 @@
   #set($fieldValue = $fieldValueObject.toString().trim())
   #if($fieldValue != "")
     #set($category = $field.getFieldCategory().toString().toLowerCase())
-    #if(($category == "text") || ($category == "file"))
+    #if(($category == "text") || ($category == "file") || ($category == "referenced_report_data"))
       #parse("gui/pane1/${category}.vm")
     #end
   #end
