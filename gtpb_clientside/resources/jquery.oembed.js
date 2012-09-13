@@ -21,7 +21,7 @@
 				provider;
 
             if (embedAction) {
-                settings.onEmbed = function() {
+                settings.onEmbed = function(oembedData) {
                   $.fn.oembed.insertCode(this, settings.embedMethod, oembedData);
                   embedAction();
                 }
