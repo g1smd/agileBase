@@ -388,6 +388,12 @@ ul.moduleaction li {
   color: gray;
 }
 
+#appspace .icon-phone {
+  font-size: 150%;
+  vertical-align: top;
+  padding-top: 0.5em;
+}
+
 .warningmessage {
 		border-radius: 1em;
 		border: 2px solid rgb(254,233,84);
