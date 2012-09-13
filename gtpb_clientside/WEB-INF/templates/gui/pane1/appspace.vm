@@ -36,7 +36,11 @@
         <img src="$previewUrl" />
       </div>
     #end
-  #end
+  #elseif($category == "TEXT") ##Ênot file
+    #if ($fieldValueObject.isTwitterName() || ($field.getFieldName().toLowerCase().contains("twitter") && ($fieldValue.trim().length() > 1)))
+        <div class="twitter tweet query" data-username="$fieldValueObject"></div>
+    #end
+  #end ## end category checks
   ## Comments
   #set($comments = $view.getComments($field, $rowId))
   #if ($comments.size() > 0)
