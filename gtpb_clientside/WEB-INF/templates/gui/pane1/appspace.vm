@@ -21,6 +21,7 @@
 #set($tableDataRow = $view.getTableDataRow($table, $rowId))
 #foreach($field in $table.getFields())
   #set($fieldValueObject = $tableDataRow.get($field))
+  #set($fieldValue = $fieldValueObject.toString())
   #set($category = $field.getFieldCategory())
   #if($category == "FILE")
     #set($downloadBase = "uploads/$table.getInternalTableName()/$field.getInternalFieldName()/$rowId/")
@@ -39,6 +40,9 @@
   #elseif($category == "TEXT") ##Ênot file
     #if ($fieldValueObject.isTwitterName() || ($field.getFieldName().toLowerCase().contains("twitter") && ($fieldValue.trim().length() > 1)))
         <div class="twitter tweet query" data-username="$fieldValueObject"></div>
+    #elseif($fieldValueObject.isUrl() && $fieldValue.contains("linkedin"))
+      <script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+      <script type="IN/MemberProfile" data-id="$fieldValue" data-format="inline"></script>
     #end
   #end ## end category checks
   ## Comments
