@@ -378,6 +378,13 @@ ul.moduleaction li {
   color: gray;
 }
 
+#appspace .map {
+  width: 200px;
+  height: 150px;
+  border-radius: 3em;
+  background-position: center;
+}
+
 #appspace a {
   color: gray;
 }
