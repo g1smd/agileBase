@@ -21,10 +21,7 @@
 				provider;
 
             if (embedAction) {
-                settings.onEmbed = function(oembedData) {
-                  $.fn.oembed.insertCode(this, settings.embedMethod, oembedData);
-                  embedAction();
-                }
+                settings.onEmbed = embedAction;
             } else {
                 settings.onEmbed = function (oembedData) {
                     $.fn.oembed.insertCode(this, settings.embedMethod, oembedData);
