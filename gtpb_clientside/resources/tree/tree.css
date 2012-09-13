@@ -353,6 +353,7 @@ ul.moduleaction li {
 
 #appspace .appelement {
   margin-bottom: 0.5em;
+  clear: left;
 }
 
 #appspace .image {
@@ -383,7 +384,7 @@ ul.moduleaction li {
 }
 
 #appspace .map {
-  width: 200px;
+  width: 100%;
   height: 150px;
   border-radius: 3em;
   background-position: center;
