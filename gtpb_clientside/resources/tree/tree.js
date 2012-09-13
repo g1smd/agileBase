@@ -215,7 +215,7 @@ function fYouTube() {
 					|| (sHref.indexOf('vimeo.com') > -1)) {
 				var oContainer = $("<div class='gtpb_youtube'></div>");
 				$(this).replaceWith(oContainer);
-				oContainer.oembed(sHref. {
+				oContainer.oembed(sHref, {
 					maxwidth: 200
 				});
 			}
