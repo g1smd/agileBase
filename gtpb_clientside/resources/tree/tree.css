@@ -378,12 +378,6 @@ ul.moduleaction li {
   color: gray;
 }
 
-/* For LinkedIn widget */
-#appspace iframe {
-  position: relative;
-  left: -10px;
-}
-
 #appspace a {
   color: gray;
 }
