@@ -51,6 +51,16 @@
       </div>
     #elseif($fieldValueObject.isEmailAddress())
       <div class="appelement"><a href="mailto:$fieldValue"><i class="icon-envelope"></i> $fieldValue</a></div>
+    #elseif($fieldValueObject.isPhoneNumber())
+	  #set($phoneArea = false)
+	  #if($fieldValueObject.isPhoneNumberGB())
+	    #set($phoneArea = $viewTools.getAreaForPhoneNumber($fieldValue))
+	  #elseif($fieldValueObject.isPhoneNumberInternational())
+	    #set($phoneArea = $viewTools.getCountryForPhoneNumber($fieldValue))
+	  #else
+	    #set($phoneArea = "unknown phone area")
+	  #end
+      <div class="appelement"><i class="icon-phone"></i> $fieldValueObject #if($phoneArea) ($phoneArea) #end</div>
     #end
   #end ## end category checks
   ## Comments

@@ -384,6 +384,9 @@ ul.moduleaction li {
   left: -10px;
 }
 
+#appspace a {
+  color: gray;
+}
 
 .warningmessage {
 		border-radius: 1em;
