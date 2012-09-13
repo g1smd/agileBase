@@ -7,7 +7,7 @@ ant -f deploy_templates_bitfolk.xml deploy
 # CSS
 #pane 1
 cat /var/lib/tomcat7/webapps/agileBase/resources/fontawesome/css/font-awesome.css /var/lib/tomcat7/webapps/agileBase/resources/tree/tree.css /var/lib/tomcat7/webapps/agileBase/resources/module-colours.css /var/lib/tomcat7/webapps/agileBase/resources/mobile/pane1_override.css > /var/lib/tomcat7/webapps/agileBase/resources/mobile/pane1_amalgam.css
-cat /var/lib/tomcat7/webapps/agileBase/resources/fontawesome/css/font-awesome.css /var/lib/tomcat7/webapps/agileBase/resources/tree/tree.css /var/lib/tomcat7/webapps/agileBase/resources/module-colours.css /var/lib/tomcat7/webapps/agileBase/styles/jquery.cluetip.css > /var/lib/tomcat7/webapps/agileBase/resources/pane1_amalgam.css
+cat /var/lib/tomcat7/webapps/agileBase/resources/jquery.tweet.css /var/lib/tomcat7/webapps/agileBase/resources/fontawesome/css/font-awesome.css /var/lib/tomcat7/webapps/agileBase/resources/tree/tree.css /var/lib/tomcat7/webapps/agileBase/resources/module-colours.css /var/lib/tomcat7/webapps/agileBase/styles/jquery.cluetip.css > /var/lib/tomcat7/webapps/agileBase/resources/pane1_amalgam.css
 #pane 2
 cat /var/lib/tomcat7/webapps/agileBase/styles/report.css /var/lib/tomcat7/webapps/agileBase/resources/module-colours.css /var/lib/tomcat7/webapps/agileBase/resources/mobile/override.css > /var/lib/tomcat7/webapps/agileBase/resources/mobile/pane2_amalgam.css
 cat /var/lib/tomcat7/webapps/agileBase/styles/report.css /var/lib/tomcat7/webapps/agileBase/resources/module-colours.css > /var/lib/tomcat7/webapps/agileBase/resources/pane2_amalgam.css
@@ -19,7 +19,7 @@ cat /var/lib/tomcat7/webapps/agileBase/resources/module-colours.css /var/lib/tom
 # JS
 # pane 1
 cat /var/lib/tomcat7/webapps/agileBase/resources/tree/tree.js /var/lib/tomcat7/webapps/agileBase/resources/mobile/module_actions.js > /var/lib/tomcat7/webapps/agileBase/resources/mobile/pane1_amalgam.js
-cat /var/lib/tomcat7/webapps/agileBase/resources/jquery.hoverIntent.js /var/lib/tomcat7/webapps/agileBase/resources/jquery.cluetip.js /var/lib/tomcat7/webapps/agileBase/resources/socket.io.js /var/lib/tomcat7/webapps/agileBase/resources/tree/tree.js > /var/lib/tomcat7/webapps/agileBase/resources/pane1_amalgam.js
+cat /var/lib/tomcat7/webapps/agileBase/resources/jquery.tweet.js /var/lib/tomcat7/webapps/agileBase/resources/jquery.hoverIntent.js /var/lib/tomcat7/webapps/agileBase/resources/jquery.cluetip.js /var/lib/tomcat7/webapps/agileBase/resources/socket.io.js /var/lib/tomcat7/webapps/agileBase/resources/tree/tree.js > /var/lib/tomcat7/webapps/agileBase/resources/pane1_amalgam.js
 # pane 2
 cat /var/lib/tomcat7/webapps/agileBase/resources/jquery.deparam.js /var/lib/tomcat7/webapps/agileBase/resources/tables/new_delete.js /var/lib/tomcat7/webapps/agileBase/resources/wait/request_setFilter.js /var/lib/tomcat7/webapps/agileBase/resources/wait/jquery.ajaxmanager.js /var/lib/tomcat7/webapps/agileBase/resources/mobile/module_actions.js > /var/lib/tomcat7/webapps/agileBase/resources/mobile/pane2_amalgam.js
 cat /var/lib/tomcat7/webapps/agileBase/resources/jquery.deparam.js /var/lib/tomcat7/webapps/agileBase/resources/jquery.hoverIntent.js /var/lib/tomcat7/webapps/agileBase/resources/jquery.sparkline.js /var/lib/tomcat7/webapps/agileBase/resources/wait/request_setFilter.js /var/lib/tomcat7/webapps/agileBase/resources/wait/jquery.ajaxmanager.js /var/lib/tomcat7/webapps/agileBase/resources/pane2.js > /var/lib/tomcat7/webapps/agileBase/resources/pane2_amalgam.js
