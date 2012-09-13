@@ -215,9 +215,9 @@ function fYouTube() {
 					|| (sHref.indexOf('vimeo.com') > -1)) {
 				var oContainer = $("<div class='gtpb_youtube'></div>");
 				$(this).replaceWith(oContainer);
-				oContainer.oembed(sHref, {}, function() {
-					alert("embedded");
-				});
+				oContainer.oembed(sHref, {}, function (oembedData) {
+          $.fn.oembed.insertCode(this, settings.embedMethod, oembedData);
+        });
 			}
 		});
 }
