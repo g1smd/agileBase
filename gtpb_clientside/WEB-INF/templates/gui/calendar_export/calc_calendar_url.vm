@@ -18,5 +18,5 @@
 #set($internalCompanyName = $view.getLoggedInUser().getCompany().getInternalCompanyName())
 #set($internalTableName = $sessionData.getTable().getInternalTableName())
 #set($internalReportName = $sessionData.getReport().getInternalReportName())
-#set($calendarUrl = $viewTools.getAppUrl().replace("AppController.servlet","CalendarPublisher.ics").replace("https://","http://"))
+#set($calendarUrl = $viewTools.getAppUrl().replace("AppController.servlet","CalendarPublisher.ics"))
 #set($calendarUrl = "$calendarUrl?c=$internalCompanyName&t=$internalTableName&r=$internalReportName")

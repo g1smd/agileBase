@@ -68,6 +68,8 @@ import com.gtwm.pb.model.manageData.fields.FileValueDefn;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.RandomString;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
 import org.apache.velocity.tools.generic.MathTool;
@@ -1698,6 +1700,10 @@ public final class ViewTools implements ViewToolsInfo {
 			// Throw exception but don't show the actual file path
 			throw new CantDoThatException("Commit log not found");
 		}
+	}
+	
+	public String md5(String input) {
+		return DigestUtils.md5Hex(input);
 	}
 
 	public String toString() {

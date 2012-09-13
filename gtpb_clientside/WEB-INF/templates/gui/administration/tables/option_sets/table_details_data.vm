@@ -33,6 +33,10 @@
 	  Records lockable<br>
 	  <span class="greytext" style="font-size:8pt">Allow custom actions (such as 'print invoice') to lock records against future editing</span><p>
 
+      <input type="checkbox" name="allownotifications" gtpb_update_table #if($table.getAllowNotifications()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$internalTableName" gtpb_internaltablename="$internalTableName">
+	  Allow notifications<br>
+	  <span class="greytext" style="font-size:8pt">Allow agileBase to send email notifications when comments are added to records</span><p>
+
       <input type="checkbox" name="allowautodelete" gtpb_update_table #if($table.getAllowAutoDelete()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$internalTableName" gtpb_internaltablename="$internalTableName">
 	  Auto delete<br>
 	  <span class="greytext" style="font-size:8pt">Allow agileBase to automatically delete blank/unedited records or those with blank mandated fields</span><p>

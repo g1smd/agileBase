@@ -30,7 +30,6 @@
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/javamelody.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/jaxen-1.1-beta-7.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/jboss-cache.jar"/>
-	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/jboss-common.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/jboss-jmx.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/jboss-system.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/jdbc2_0-stdext.jar"/>

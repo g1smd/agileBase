@@ -583,9 +583,15 @@ public final class ServletSchemaMethods {
 		if (allowAutoDeleteString != null) {
 			allowAutoDelete = Helpers.valueRepresentsBooleanTrue(allowAutoDeleteString);
 		}
+		boolean allowNotifications = table.getAllowNotifications();
+		boolean oldAllowNotifications = allowNotifications;
+		String allowNotificationsString = request.getParameter("allownotifications");
+		if (allowNotificationsString != null) {
+			allowNotifications = Helpers.valueRepresentsBooleanTrue(allowNotificationsString);
+		}
 		if (newTableName == null && newTableDesc == null && lockable == null
 				&& tableFormPublic == null && tableEmail == null && formStyle == null
-				&& allowAutoDeleteString == null) {
+				&& allowAutoDeleteString == null && allowNotificationsString == null) {
 			throw new MissingParametersException(
 					"One or more table update parameter must be supplied to update a table");
 		}
@@ -605,7 +611,7 @@ public final class ServletSchemaMethods {
 			conn.setAutoCommit(false);
 			// update the table:
 			databaseDefn.updateTable(conn, request, table, newTableName, newTableDesc, lockable,
-					tableFormPublic, tableEmail, formStyle, allowAutoDelete);
+					tableFormPublic, tableEmail, formStyle, allowAutoDelete, allowNotifications);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {

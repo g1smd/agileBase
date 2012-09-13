@@ -72,6 +72,7 @@ public final class Helpers {
 		message.setFrom(fromAddress);
 		message.setText(body);
 		Transport.send(message);
+		logger.info("Sent message '" + subject + "' to " + recipients);
 	}
 	
 	public static String getAppUrl(HttpServletRequest request) {

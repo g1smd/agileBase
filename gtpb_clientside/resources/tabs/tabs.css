@@ -186,6 +186,10 @@ table#reportData td select {
   font-family: Verdana,Geneva,sans-serif;
 }
 
+#newfield table#reportData td select {
+  min-width: 1em;
+}
+
 table#reportData td .date select {
   min-width: 0;
 }

@@ -459,6 +459,14 @@ public class TableDefn implements TableInfo {
 		this.allowAutoDelete = allowAutoDelete;
 	}
 	
+	public boolean getAllowNotifications() {
+		return this.allowNotifications;
+	}
+	
+	public void setAllowNotifications(boolean allowNotifications) {
+		this.allowNotifications = allowNotifications;
+	}
+	
 	/**
 	 * Provide a natural sort order by table name case insensitively
 	 */
@@ -527,6 +535,8 @@ public class TableDefn implements TableInfo {
 	private TableInfo formTable = null;
 	
 	private boolean allowAutoDelete = false;
+	
+	private boolean allowNotifications = false;
 
 	private volatile String simpleName = null;
 

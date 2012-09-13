@@ -244,18 +244,20 @@ public final class DataManagement implements DataManagementInfo {
 		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
 		CompanyInfo company = user.getCompany();
 		Set<String> recipients = new HashSet<String>();
-		for (AppUserInfo companyUser : company.getUsers()) {
-			String email = companyUser.getEmail();
-			if (email != null) {
-				if (email.contains("@")
-						&& authenticator.userAllowedTo(PrivilegeType.VIEW_TABLE_DATA, table,
-								companyUser) && (!companyUser.getUsesCustomUI())) {
-					recipients.add(email);
+		if (table.getAllowNotifications()) {
+			for (AppUserInfo companyUser : company.getUsers()) {
+				String email = companyUser.getEmail();
+				if (email != null) {
+					if (email.contains("@")
+							&& authenticator.userAllowedTo(PrivilegeType.VIEW_TABLE_DATA, table,
+									companyUser) && (!companyUser.getUsesCustomUI())) {
+						recipients.add(email);
+					}
 				}
 			}
-		}
-		if (recipients.size() > 0) {
-			this.emailComments(recipients, field, rowId, user, comment);
+			if (recipients.size() > 0) {
+				this.emailComments(recipients, field, rowId, user, comment);
+			}
 		}
 		// HTTP / websocket notification
 		// UsageLogger.sendNotification(user, table, sessionData.getReport(),
@@ -320,7 +322,8 @@ public final class DataManagement implements DataManagementInfo {
 				return comments;
 			}
 		}
-		// If this particular row for the field is known to contain no comments, return empty set
+		// If this particular row for the field is known to contain no comments,
+		// return empty set
 		Set<Integer> noCommentRows = this.noComments.get(field);
 		if (noCommentRows != null) {
 			if (noCommentRows.contains(rowId)) {
@@ -352,7 +355,8 @@ public final class DataManagement implements DataManagementInfo {
 			} else {
 				if (noCommentRows == null) {
 					// Create a concurrent set
-					noCommentRows = Collections.newSetFromMap(new ConcurrentHashMap<Integer, Boolean>());
+					noCommentRows = Collections
+							.newSetFromMap(new ConcurrentHashMap<Integer, Boolean>());
 				} else if (noCommentRows.size() > 1000) {
 					// Don't use an unlimited amount of memory
 					noCommentRows.clear();
@@ -360,7 +364,8 @@ public final class DataManagement implements DataManagementInfo {
 				noCommentRows.add(rowId);
 				this.noComments.put(field, noCommentRows);
 				if (hasComments == null) {
-					// We've seen there are no comments for this particular record
+					// We've seen there are no comments for this particular
+					// record
 					// but we don't know if there are any for the field in other
 					// records. Check.
 					sqlCode = "SELECT count(*) from dbint_comments WHERE internalfieldname=?";
@@ -375,7 +380,8 @@ public final class DataManagement implements DataManagementInfo {
 							// Another check in case another thread e.g. running
 							// addComment has set this to true.
 							// We don't want to overwrite that
-							// TODO: Really, this should be atomic but it takes such
+							// TODO: Really, this should be atomic but it takes
+							// such
 							// a small amount of time compared to the SQL it's
 							// probably fine
 							if (field.hasComments() == null) {
@@ -531,7 +537,8 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public void lockReportRecords(HttpServletRequest request, SessionDataInfo sessionData)
-			throws ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException, DisallowedException {
+			throws ObjectNotFoundException, CantDoThatException, SQLException,
+			CodingErrorException, DisallowedException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		BaseReportInfo report = sessionData.getReport();
 		TableInfo table = report.getParentTable();
@@ -1942,9 +1949,9 @@ public final class DataManagement implements DataManagementInfo {
 		if (dataFormat.equals(DataFormat.RSS)) {
 			numRows = 100;
 		}
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report,
-				filters, exactFilters, new HashMap<BaseField, Boolean>(0), numRows,
-				QuickFilterType.AND, false);
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filters,
+				exactFilters, new HashMap<BaseField, Boolean>(0), numRows, QuickFilterType.AND,
+				false);
 		String dataFeedString = null;
 		if (dataFormat.equals(DataFormat.JSON)) {
 			dataFeedString = this.generateJSON(report, reportDataRows);
@@ -2222,8 +2229,8 @@ public final class DataManagement implements DataManagementInfo {
 			for (BaseReportInfo report : reports) {
 				String className = "report_" + report.getInternalReportName();
 				ReportFieldInfo eventDateReportField = report.getCalendarStartField();
-				List<DataRowInfo> reportDataRows = this.getReportDataRows(user,
-						report, filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
+				List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report,
+						filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
 						QuickFilterType.AND, false);
 				ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
 					DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
@@ -2273,7 +2280,8 @@ public final class DataManagement implements DataManagementInfo {
 
 	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
-			throws CodingErrorException, CantDoThatException, SQLException, JsonGenerationException, ObjectNotFoundException {
+			throws CodingErrorException, CantDoThatException, SQLException,
+			JsonGenerationException, ObjectNotFoundException {
 		ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
@@ -2306,9 +2314,8 @@ public final class DataManagement implements DataManagementInfo {
 		if (dateResolution > Calendar.DAY_OF_MONTH) {
 			allDayValues = false;
 		}
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report,
-				filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
-				QuickFilterType.AND, false);
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filterValues,
+				false, new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false);
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
@@ -3587,9 +3594,10 @@ public final class DataManagement implements DataManagementInfo {
 	private Map<CompanyInfo, Long> lastSchemaChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
 
 	private Map<AppUserInfo, BaseReportInfo> userMostPopularReportCache = new ConcurrentHashMap<AppUserInfo, BaseReportInfo>();
-	
+
 	/**
-	 * In fields where some records have comments, keep track of those which definitely don't, so we don't have to look them up via SQL
+	 * In fields where some records have comments, keep track of those which
+	 * definitely don't, so we don't have to look them up via SQL
 	 */
 	private Map<BaseField, Set<Integer>> noComments = new ConcurrentHashMap<BaseField, Set<Integer>>();
 
