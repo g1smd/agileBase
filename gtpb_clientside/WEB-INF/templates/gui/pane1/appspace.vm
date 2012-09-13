@@ -23,7 +23,7 @@
   #set($fieldValueObject = $tableDataRow.get($field))
   #set($fieldValue = $fieldValueObject.toString().trim())
   #if($fieldValue != "")
-    #set($category = $field.getFieldCategory().toLowerCase())
+    #set($category = $field.getFieldCategory().toString().toLowerCase())
     #parse("gui/pane1/${category}.vm")
   #end
   ## Comments
