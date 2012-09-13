@@ -21,11 +21,13 @@
 				provider;
 
             if (embedAction) {
-                settings.onEmbed = embedAction;
+                settings.onEmbed = function() {
+                  $.fn.oembed.insertCode(this, settings.embedMethod, oembedData);
+                  embedAction();
+                }
             } else {
                 settings.onEmbed = function (oembedData) {
                     $.fn.oembed.insertCode(this, settings.embedMethod, oembedData);
-                    alert('embedded 2');
                 };
             }
 
