@@ -175,6 +175,14 @@ public class TextValueDefn implements TextValue {
 			return "http://" + this.textValue.trim();
 		}
 	}
+	
+	public String getShortURL() {
+		String shortUrl = this.textValue.trim();
+		shortUrl = shortUrl.replaceAll("^.*\\/\\/", "");
+		shortUrl = shortUrl.replaceAll("^www\\.", "");
+		shortUrl = shortUrl.replaceAll("\\/.*$", "").replaceAll("\\?.*$", "");
+		return shortUrl;
+	}
 
 	public boolean isPostcode() {
 		if (this.isNull()) {

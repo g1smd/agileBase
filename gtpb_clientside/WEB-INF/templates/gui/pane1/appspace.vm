@@ -45,8 +45,7 @@
       #if($fieldValueObject.isImage()) ## remote image
         <a href="$url" target="_blank"><img src="$url" style="max-width: 100%" /></a>
       #else
-        <img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" />
-        <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /></a>
+        <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /> $fieldValueObject.getShortURL()</a>
       #end
     #end
   #end ## end category checks

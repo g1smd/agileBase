@@ -46,6 +46,15 @@ public interface TextValue extends BaseValue {
   * web browsers load it properly from a link
   */
 	public String getFormattedURL();
-
+	
+	/**
+	 * Return a 'preview' version of the URL similar, cutting out bits that browser address bars sometimes grey out.
+	 * 
+	 * E.g. given http://www.google.com?q=my%20search
+	 * 
+	 * return google.com
+	 */
+	public String getShortURL();
+	
 	public boolean isPostcode();
 }
