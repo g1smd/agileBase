@@ -352,7 +352,8 @@ ul.moduleaction li {
 }
 
 #appspace .appelement {
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
+  padding: 0.5em;
   clear: left;
 }
 
