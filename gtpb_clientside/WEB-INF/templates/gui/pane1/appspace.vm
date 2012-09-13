@@ -52,7 +52,7 @@
     #elseif($fieldValueObject.isEmailAddress())
       <div class="appelement"><a href="mailto:$fieldValue"><i class="icon-envelope"></i> $fieldValue</a></div>
     #elseif($fieldValueObject.isPostcode())
-      <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" height="200px" src="https://maps.google.com/maps?q=$fieldValue"></iframe>
+      <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="200px" height="200px" src="https://maps.google.com/maps?q=$fieldValue"></iframe>
     #elseif($fieldValueObject.isPhoneNumber())
 	  #set($phoneArea = false)
 	  #if($fieldValueObject.isPhoneNumberGB())
