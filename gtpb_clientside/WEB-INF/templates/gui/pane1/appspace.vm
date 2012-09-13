@@ -22,52 +22,10 @@
 #foreach($field in $table.getFields())
   #set($fieldValueObject = $tableDataRow.get($field))
   #set($fieldValue = $fieldValueObject.toString().trim())
-  #set($category = $field.getFieldCategory())
-  #if($category == "FILE")
-    #set($downloadBase = "uploads/$table.getInternalTableName()/$field.getInternalFieldName()/$rowId/")
-  	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject"))
-    ## Image
-    #if($fieldValueObject.isImage())
-      <div class="appelement image $field.getAttachmentType().name().toLowerCase()">
-        <img src="$downloadUrl.500.$fieldValueObject.getExtension()" />
-      </div>
-    #elseif($downloadUrl.endsWith("pdf"))
-      #set($previewUrl = "$downloadUrl.500.png?cachebust=$viewTools.getRandomString()")
-      <div class="appelement image pdf">
-        <img src="$previewUrl" />
-      </div>
-    #end
-  #elseif($category == "TEXT") ##Ênot file
-    #if ($fieldValueObject.isTwitterName() || ($field.getFieldName().toLowerCase().contains("twitter") && ($fieldValue.length() > 1)))
-        <div class="appelement twitter tweet query" data-username="$fieldValueObject"></div>
-    #elseif($fieldValueObject.isURL())
-	  #set($url = $fieldValueObject.getFormattedURL())
-	  <div class="appelement">
-        #if($fieldValueObject.isImage()) ## remote image
-          <a href="$url" target="_blank"><img src="$url" style="max-width: 100%" /></a>
-        #else
-          <a href="$url" target="_blank" class="gtpb_url"><img style="vertical-align: middle" src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /> $fieldValueObject.getShortURL()</a>
-        #end
-      </div>
-    #elseif($fieldValueObject.isEmailAddress())
-      <div class="appelement"><a href="mailto:$fieldValue"><i class="icon-envelope"></i> $fieldValue</a></div>
-    #elseif($fieldValueObject.isPostcode())
-      #set($postcodeParam = $fieldValue.replace(" ","+"))
-      <div class="appelement map" style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center=$postcodeParam&size=200x150&zoom=10&maptype=terrain&sensor=false)" /></div>
-##<iframe width="300" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=bs3+4ua&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=43.528905,79.013672&amp;ie=UTF8&amp;hq=&amp;hnear=Bristol+BS3+4UA,+United+Kingdom&amp;t=m&amp;ll=51.442667,-2.5811&amp;spn=0.064198,0.102997&amp;z=12&amp;iwloc=A&amp;output=embed"></iframe>
-##      <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="200px" height="200px" src="https://maps.google.com/maps?q=$fieldValue&z=10&output=embed&mrt=loc"></iframe>
-    #elseif($fieldValueObject.isPhoneNumber())
-	  #set($phoneArea = false)
-	  #if($fieldValueObject.isPhoneNumberGB())
-	    #set($phoneArea = $viewTools.getAreaForPhoneNumber($fieldValue))
-	  #elseif($fieldValueObject.isPhoneNumberInternational())
-	    #set($phoneArea = $viewTools.getCountryForPhoneNumber($fieldValue))
-	  #else
-	    #set($phoneArea = "unknown phone area")
-	  #end
-      <div class="appelement"><i class="icon-phone"></i> <span style="font-size:200%">$fieldValueObject</span> #if($phoneArea) $phoneArea #end</div>
-    #end
-  #end ## end category checks
+  #if($fieldValue != "")
+    #set($category = $field.getFieldCategory().toLowerCase())
+    #parse("gui/pane1/$category.vm")
+  #end
   ## Comments
   #set($comments = $view.getComments($field, $rowId))
   #if ($comments.size() > 0)

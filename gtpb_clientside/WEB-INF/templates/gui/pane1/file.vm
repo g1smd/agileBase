@@ -1,0 +1,15 @@
+#set($downloadBase = "uploads/$table.getInternalTableName()/$field.getInternalFieldName()/$rowId/")
+#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject"))
+## Image
+#if($fieldValueObject.isImage())
+  <div class="appelement image $field.getAttachmentType().name().toLowerCase()">
+    <img src="$downloadUrl.500.$fieldValueObject.getExtension()" />
+  </div>
+#elseif($downloadUrl.endsWith("pdf"))
+  #set($previewUrl = "$downloadUrl.500.png?cachebust=$viewTools.getRandomString()")
+  <div class="appelement image pdf">
+    <img src="$previewUrl" />
+  </div>
+#else
+ <img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/> $fieldValue
+#end
