@@ -25,7 +25,7 @@
             } else {
                 settings.onEmbed = function (oembedData) {
                     $.fn.oembed.insertCode(this, settings.embedMethod, oembedData);
-                    alert('embedded');
+                    alert('embedded 2');
                 };
             }
 
