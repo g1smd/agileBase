@@ -40,8 +40,14 @@
   #elseif($category == "TEXT") ##Ênot file
     #if ($fieldValueObject.isTwitterName() || ($field.getFieldName().toLowerCase().contains("twitter") && ($fieldValue.trim().length() > 1)))
         <div class="twitter tweet query" data-username="$fieldValueObject"></div>
-    #elseif($fieldValueObject.isURL() && $fieldValue.contains("linkedin"))
-      <script type="IN/MemberProfile" data-id="$fieldValue" data-format="inline" data-related="false" data-width="300"></script>
+    #elseif($fieldValueObject.isURL())
+	  #set($url = $fieldValueObject.getFormattedURL())
+      #if($fieldValueObject.isImage()) ## remote image
+        <a href="$url" target="_blank"><img src="$url" style="max-width: 100%" /></a>
+      #else
+        <img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" />
+        <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /></a>
+      #end
     #end
   #end ## end category checks
   ## Comments
