@@ -43,7 +43,7 @@
     #elseif($fieldValueObject.isURL() && $fieldValue.contains("linkedin"))
       <h1>Linked In: $fieldValue</h1>
       <script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
-      <script type="IN/MemberProfile" data-id="$fieldValue" data-format="inline"></script>
+      <script type="IN/MemberProfile" data-id="$fieldValue" data-format="inline" data-related="false" data-width="300"></script>
     #end
   #end ## end category checks
   ## Comments
