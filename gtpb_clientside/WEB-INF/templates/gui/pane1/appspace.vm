@@ -28,31 +28,35 @@
   	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject"))
     ## Image
     #if($fieldValueObject.isImage())
-      <div class="image $field.getAttachmentType().name().toLowerCase()">
+      <div class="appelement image $field.getAttachmentType().name().toLowerCase()">
         <img src="$downloadUrl.500.$fieldValueObject.getExtension()" />
       </div>
     #elseif($downloadUrl.endsWith("pdf"))
       #set($previewUrl = "$downloadUrl.500.png?cachebust=$viewTools.getRandomString()")
-      <div class="image pdf">
+      <div class="appelement image pdf">
         <img src="$previewUrl" />
       </div>
     #end
   #elseif($category == "TEXT") ##Ênot file
     #if ($fieldValueObject.isTwitterName() || ($field.getFieldName().toLowerCase().contains("twitter") && ($fieldValue.trim().length() > 1)))
-        <div class="twitter tweet query" data-username="$fieldValueObject"></div>
+        <div class="appelement twitter tweet query" data-username="$fieldValueObject"></div>
     #elseif($fieldValueObject.isURL())
 	  #set($url = $fieldValueObject.getFormattedURL())
-      #if($fieldValueObject.isImage()) ## remote image
-        <a href="$url" target="_blank"><img src="$url" style="max-width: 100%" /></a>
-      #else
-        <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /> $fieldValueObject.getShortURL()</a>
-      #end
+	  <div class="appelement">
+        #if($fieldValueObject.isImage()) ## remote image
+          <a href="$url" target="_blank"><img src="$url" style="max-width: 100%" /></a>
+        #else
+          <a href="$url" target="_blank" class="gtpb_url"><img style="vertical-align: middle" src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /> $fieldValueObject.getShortURL()</a>
+        #end
+      </div>
+    #elseif($fieldValueObject.isEmailAddress())
+      <div class="appelement"><a href="mailto:$fieldValue"><i class="icon-envelope"></i> $fieldValue</a></div>
     #end
   #end ## end category checks
   ## Comments
   #set($comments = $view.getComments($field, $rowId))
   #if ($comments.size() > 0)
-    <div class="comments">
+    <div class="appelement comments">
 	#foreach($comment in $comments)
 	  <div class="comment">
 	    <span class="comment_text">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>

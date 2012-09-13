@@ -18,6 +18,10 @@ h1{
 	/* text-align: right; */
 }
 
+a {
+  text-decoration: none;
+}
+
 #tree h1 span {
 	/* background: #fff; */
 	padding: 0 10px;
@@ -207,7 +211,6 @@ ol li ul li ul li{
 /* links to tables, reports and admin functions */
 ol li ul li ul li div a {
 	color: #000;
-	text-decoration: none;
 }
 
 ol li ul li ul li ul {
@@ -335,7 +338,6 @@ ul.moduleaction li {
 }
 
 #header #links .button a {
-	text-decoration: none;
 	color: #486f98;
 }
 
