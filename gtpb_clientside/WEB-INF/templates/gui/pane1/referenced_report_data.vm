@@ -3,5 +3,5 @@
   ## exists or not for this field so we can choose whether to display the row
   #set($referencedData = "#parse('gui/resources/input/referenced_report_data.vm')")
 #if($referencedData.contains("span"))
-  $referencedData
+  <div class="appelement">$referencedData</div>
 #end
