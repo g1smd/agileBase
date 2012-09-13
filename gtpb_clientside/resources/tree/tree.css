@@ -351,6 +351,10 @@ ul.moduleaction li {
   overflow-x: hidden;
 }
 
+#appspace .appelement {
+  margin-bottom: 0.5em;
+}
+
 #appspace .image {
   text-align: center;
 }
