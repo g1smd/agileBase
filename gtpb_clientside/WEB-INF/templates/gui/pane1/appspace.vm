@@ -24,7 +24,7 @@
   #set($fieldValue = $fieldValueObject.toString().trim())
   #if($fieldValue != "")
     #set($category = $field.getFieldCategory().toLowerCase())
-    #parse("gui/pane1/$category.vm")
+    #parse("gui/pane1/${category}.vm")
   #end
   ## Comments
   #set($comments = $view.getComments($field, $rowId))
