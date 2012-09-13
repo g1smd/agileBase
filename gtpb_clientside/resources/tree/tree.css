@@ -346,6 +346,7 @@ ul.moduleaction li {
   border-radius: 0.5em;
   margin: 0.5em;
   font-size: 8.5pt;
+  overflow-x: hidden;
 }
 
 #appspace .image {
@@ -373,6 +374,12 @@ ul.moduleaction li {
 
 #appspace span.comment_attribution {
   color: gray;
+}
+
+/* For LinkedIn widget */
+#appspace iframe {
+  position: relative;
+  left: -10px;
 }
 
 

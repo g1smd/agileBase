@@ -41,8 +41,6 @@
     #if ($fieldValueObject.isTwitterName() || ($field.getFieldName().toLowerCase().contains("twitter") && ($fieldValue.trim().length() > 1)))
         <div class="twitter tweet query" data-username="$fieldValueObject"></div>
     #elseif($fieldValueObject.isURL() && $fieldValue.contains("linkedin"))
-      <h1>Linked In: $fieldValue</h1>
-      <script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
       <script type="IN/MemberProfile" data-id="$fieldValue" data-format="inline" data-related="false" data-width="300"></script>
     #end
   #end ## end category checks
