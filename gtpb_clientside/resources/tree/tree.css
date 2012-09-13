@@ -22,6 +22,10 @@ a {
   text-decoration: none;
 }
 
+#tree {
+  background-color: #EEF3F9;
+}
+
 #tree h1 span {
 	/* background: #fff; */
 	padding: 0 10px;
