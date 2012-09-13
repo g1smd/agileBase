@@ -216,9 +216,9 @@ function fYouTube() {
 				var oContainer = $("<div class='gtpb_youtube'></div>");
 				$(this).replaceWith(oContainer);
 				oContainer.oembed(sHref);
-				setTimeout(1000, function() {
+				setTimeout(function() {
 					$("iframe").attr("width", "100%");
-				});
+				}, 1000);
 			}
 		});
 }
