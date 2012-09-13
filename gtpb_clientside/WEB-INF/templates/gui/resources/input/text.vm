@@ -96,7 +96,7 @@
       #elseif ($fieldValueObject.isTwitterHashTag())##      
         <a href="http://twitter.com/#!/search?q=$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
       #elseif ($fieldValueObject.isPostcode())##
-        <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue.trim()" target="_blank">map</a>##
+        <a href="https://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue.trim()" target="_blank">map</a>##
 	    #elseif ($mobile_device && $fieldValueObject.isPhoneNumber())##
 		    <a href="tel:$fieldValue">phone</a>##
       #elseif($field.getNotNull() && $fieldValue == "")
