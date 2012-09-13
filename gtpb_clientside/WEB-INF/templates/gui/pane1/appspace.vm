@@ -38,6 +38,7 @@
       </div>
     #end
   #elseif($category == "TEXT") ##Ênot file
+    $fieldValue: $fieldValueObject.isUrl()<br>
     #if ($fieldValueObject.isTwitterName() || ($field.getFieldName().toLowerCase().contains("twitter") && ($fieldValue.trim().length() > 1)))
         <div class="twitter tweet query" data-username="$fieldValueObject"></div>
     #elseif($fieldValueObject.isUrl() && $fieldValue.contains("linkedin"))
