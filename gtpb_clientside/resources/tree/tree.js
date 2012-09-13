@@ -179,21 +179,20 @@ function pane1Setup() {
 			}
 		}
 	});
-	
-	function fTwitter() {
-		// Fetch 20 tweets, but filter out @replies, and display only 1:
-		$(".twitter").each(function() {
-			var username = $(this).attr("data-username");
-			$(this).tweet({
-				avatar_size : 32,
-				count : 1,
-				fetch : 20,
-				filter : function(t) {
-					return !/^@\w+/.test(t["tweet_raw_text"]);
-				},
-				username : username
-			}).bind("loaded",function(){$(this).find("a").attr("target","_blank");});
-		});
-	}
-	
+}
+
+function fTwitter() {
+	// Fetch 20 tweets, but filter out @replies, and display only 1:
+	$(".twitter").each(function() {
+		var username = $(this).attr("data-username");
+		$(this).tweet({
+			avatar_size : 32,
+			count : 1,
+			fetch : 20,
+			filter : function(t) {
+				return !/^@\w+/.test(t["tweet_raw_text"]);
+			},
+			username : username
+		}).bind("loaded",function(){$(this).find("a").attr("target","_blank");});
+	});
 }
