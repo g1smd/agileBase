@@ -361,6 +361,10 @@ ul.moduleaction li {
   clear: left;
 }
 
+#appspace .appelement.profile_photo {
+  margin-bottom: 0;
+}
+
 #appspace .image {
   text-align: center;
 }
