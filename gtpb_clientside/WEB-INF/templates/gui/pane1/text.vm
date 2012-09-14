@@ -25,5 +25,5 @@
   #else
     #set($phoneArea = "unknown phone area")
   #end
-  <div class="appelement"><i class="icon-phone"></i> <span style="font-size:200%">$fieldValueObject</span> #if($phoneArea) $phoneArea #end</div>
+  <div class="appelement"><i class="icon-phone"></i> <span style="font-size:200%">$fieldValueObject</span>#if($phoneArea)<br>$phoneArea #end</div>
 #end
