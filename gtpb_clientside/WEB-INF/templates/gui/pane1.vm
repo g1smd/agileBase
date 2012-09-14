@@ -120,7 +120,7 @@
 	  #else
 	    #set($appId = $sessionData.getAppId())
 	    #if($appId)
-	      <li id="appspace"></li>
+	      <li id="appspace" data-recordid=""></li>
 	    #else
           #set($manageableTables = $view.getTablesAllowedTo("MANAGE_TABLE"))
 	      <li id="setup"><h1><span>Setup</span></h1>

@@ -264,7 +264,7 @@
 	  #if($mobile_device)
 		  #parse("gui/mobile/pane2_header.vm")
 	  #end
-	  <table id=reportData cellspacing="0" #if($filtersShouldBeShown) class='lowered' #end>
+	  <table id=reportData cellspacing="0" #if($filtersShouldBeShown) class='lowered' #end data-internaltablename="$sessionTable.getInternalTableName()">
     	#set($reportStyle = $sessionReport.getReportStyle())
       #if((!$isNotTable) && $reportStyle && ($reportStyle != "SPREADSHEET"))
         ## First work out heading levels

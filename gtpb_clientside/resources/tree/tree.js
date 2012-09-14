@@ -34,7 +34,13 @@ $(document).ready(function(){
   });
 });
 
-function appSelect(rowId) {
+function appSelect(internalTableName, rowId) {
+	var recordId = internalTableName + "_" + rowId;
+	if ($("#appspace").attr("data-recordid") == recordId) {
+		return;
+	} else {
+		$("#appspace").attr("data-recordid", recordId);
+	}
 	$("#appspace").load("AppController.servlet", {
 		"return": "gui/pane1/appspace",
 		set_custom_integer: true,

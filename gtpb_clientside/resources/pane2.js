@@ -303,6 +303,8 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 				parent.pane_3.document.location = url;
 			}
 		}
+		var internalTableName = $("table#reportData").attr("data-internaltablename");
+		parent.pane_1.appSelect(internalTableName, rowId);
 	});
 }
 

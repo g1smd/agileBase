@@ -215,10 +215,11 @@ function fSetupAppPreview() {
 	var hoverIntentConfig = {
 			over: function() {
 				$("td.leading").next("td").removeClass("appSelected");
+				var internalTableName = $(this).closest("#reportData").attr("data-internaltablename");
 				var rowId = parseInt($(this).closest("tr").attr("name"));
 				if (rowId != Number.NaN) {
 					$(this).addClass("appSelected");
-					parent.pane_1.appSelect(rowId);
+					parent.pane_1.appSelect(internalTableName, rowId);
 				}
 			},
 			out: function() {},
@@ -505,14 +506,3 @@ function fSetSort(oColHeader) {
 	$(oColHeader).addClass('waiting');
 	var oReq = new fRequest('AppController.servlet', aPostVars, fReqComplete, -1);
 }
-
-
-/*
- * This function for older browsers only where filtering as you type doesn't work
-var gtpbOldBrowserTimeout;
-
-function fReloadAfterDelay() {
-  clearTimeout(gtpbOldBrowserTimeout);
-  gtpbOldBrowserTimeout = setTimeout("window.location.reload(true);", 3000);
-}
-*/
