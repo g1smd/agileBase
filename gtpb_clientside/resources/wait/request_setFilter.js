@@ -219,7 +219,7 @@ function fSetupAppPreview() {
 				var rowId = parseInt($(this).closest("tr").attr("name"));
 				if (rowId != Number.NaN) {
 					$(this).addClass("appSelected");
-					parent.pane_1.appSelect(internalTableName, rowId);
+					parent.pane_1.appSelect(internalTableName, rowId, true);
 				}
 			},
 			out: function() {},

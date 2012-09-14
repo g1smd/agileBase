@@ -304,7 +304,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 			}
 		}
 		var internalTableName = $("table#reportData").attr("data-internaltablename");
-		parent.pane_1.appSelect(internalTableName, rowId);
+		parent.pane_1.appSelect(internalTableName, rowId, false);
 	});
 }
 

@@ -34,7 +34,7 @@ $(document).ready(function(){
   });
 });
 
-function appSelect(internalTableName, rowId) {
+function appSelect(internalTableName, rowId, collapseModules) {
 	var recordId = internalTableName + "_" + rowId;
 	if ($("#appspace").attr("data-recordid") == recordId) {
 		return;
@@ -48,14 +48,16 @@ function appSelect(internalTableName, rowId) {
 		customintegervalue: rowId
 	}, function() {
 		// Collapse modules
-		$('#tree h2').each(function(event) {
-			var parentElem = $(this).parent();
-			if (parentElem.hasClass('moduleexpanded')) {
-				parentElem.children('ul').slideUp('fast');
-				parentElem.removeClass('moduleexpanded');
-				parentElem.addClass('modulecollapsed');			
-			}
-		});
+		if (collapseModules) {
+			$('#tree h2').each(function(event) {
+				var parentElem = $(this).parent();
+				if (parentElem.hasClass('moduleexpanded')) {
+					parentElem.children('ul').slideUp('fast');
+					parentElem.removeClass('moduleexpanded');
+					parentElem.addClass('modulecollapsed');			
+				}
+			});
+		}
 		fTwitter();
 		fYouTube();
 	});
