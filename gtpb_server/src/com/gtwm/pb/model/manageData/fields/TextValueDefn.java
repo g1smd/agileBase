@@ -149,16 +149,16 @@ public class TextValueDefn implements TextValue {
 		}
 		int length = this.textValue.trim().length();
 		if ((length > 6) && (length < 27)) {
-			String regexIntl = "^";
+			String regexIntl = "^\\(?";
 			regexIntl += "(";
-			regexIntl += "(?:00\\s?|\\+)"; // 00 or +
-			regexIntl += "\\d{1,3}\\s?[\\s\\d]+"; // number
+			regexIntl += "(?:00\\)?\\s?\\(?|\\+)"; // 00 or +
+			regexIntl += "\\d{1,3}[\\s\\(\\)\\d]+"; // number
 			regexIntl += ")";
 			regexIntl += "([x\\#]\\d{3,4})?"; // optional "#" and extension
 			regexIntl += "$";
 			if (this.textValue.trim().matches(regexIntl) 
 					&& !this.textValue.trim()
-					.matches("(?:0(?:0|11)\\s?|\\+)4\\s?4.*")) {
+					.matches("\\(?(?:0(?:0|11)\\)?\\s?\\(?|\\+)4\\s?4.*")) {
 				return true;
 			}
 		}

@@ -642,7 +642,7 @@ public final class ServletSessionMethods {
 					}
 					// Extract country code and number
 					fieldValueString = fieldValueString.replaceAll(
-							"(?:00\\s?|\\+)([1-9][\\d\\s]+).*", "$1");
+							"\\(?(?:00\\)?\\s?\\(?|\\+)\\)?\\s?\\(?([1-9][\\d\\(\\)\\s]+).*", "$1");
 					// Format international number
 					fieldValueString = formatPhoneNumberInternational(fieldValueString);
 					// Add + to country code and number
