@@ -594,7 +594,7 @@ public final class ServletSessionMethods {
 					// need to be removed.
 					Matcher numberPartsGB = Pattern
 							.compile(
-									"^\\(?(?:(?:0(?:0|11)\\)?\\s?\\(?|\\+)(4\\s?4)\\)?\\s?(?:\\(?0\\)?\\s?)?\\(?|0)([1-9]\\d{1,4}\\)?[\\s\\d]+)((?:[x\\#])\\d{3,4})?$")
+									"^\\(?(?:(?:0(?:0|11)\\)?\\s?\\(?|\\+)(4\\s?4)\\)?\\s?\\(?(?:0\\)?\\s?\\(?)?|0)([1-9]\\d{1,4}\\)?[\\s\\d]+)((?:[x\\#])\\d{3,4})?$")
 							.matcher(fieldValueString);
 					if (numberPartsGB.matches()) {
 						// Extract NSN part of GB number, trim it
