@@ -907,9 +907,9 @@ public final class ServletSessionMethods {
 	 */
 	private static String formatPhoneNumberInternational(String fieldValueString) {
 		fieldValueString = fieldValueString.trim();
-		String fieldValueDigitsOnlyString = fieldValueString.replaceAll("[\\s]", "");
+		String fieldValueDigitsOnlyString = fieldValueString.replaceAll("[\\s\\(\\)]", "");
 		// Single digit country codes
-		String pattern1 = "(?:(1|7)).*";
+		String pattern1 = "(?:[17]).*";
 		// Double digit country codes, but not 44
 		String pattern2 = "(?:(2[07]|3[0123469]|4[01356789]|5[12345678]|6[0123456]|8[12469]|9[0123458])).*";
 		// Triple digit country codes
