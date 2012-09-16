@@ -158,7 +158,7 @@ public class TextValueDefn implements TextValue {
 			regexIntl += "$";
 			if (this.textValue.trim().matches(regexIntl) 
 					&& !this.textValue.trim()
-					.matches("\\(?(?:0(?:0|11)\\)?\\s?\\(?|\\+)4\\s?4.*")) {
+					.matches("\\(?(?:0(?:0|11)\\)?\\s?\\(?|\\+)?4[\\s\\(\\)]*4.*")) {
 				return true;
 			}
 		}
