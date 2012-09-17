@@ -406,6 +406,7 @@ public class Public extends VelocityViewServlet {
 			}
 		}
 		message.setText(emailContent);
+		message.setFrom(new InternetAddress("notifications@agilebase.co.uk"));
 		Transport.send(message);
 	}
 
