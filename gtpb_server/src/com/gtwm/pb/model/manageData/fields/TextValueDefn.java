@@ -157,8 +157,10 @@ public class TextValueDefn implements TextValue {
 			regexIntl += "([x\\#]\\d{3,4})?"; // optional "#" and extension
 			regexIntl += "$";
 			if (this.textValue.trim().matches(regexIntl) 
-					&& !this.textValue.trim()
-					.matches("\\(?(?:0(?:0|11)\\)?\\s?\\(?|\\+)?4[\\s\\(\\)]*4.*")) {
+					&& !this.textValue.trim()  // Don't match country 44 as International
+					.matches("\\(?(?:0(?:0|11)\\)?\\s?\\(?|\\+)?4[\\s\\(\\)]*4.*") 
+					&& !this.textValue.trim()  // Reserve 011+8digits as always GB number
+					.matches("\\(?011([\\s\\(\\)]*\d){8}")) {
 				return true;
 			}
 		}
