@@ -186,7 +186,7 @@ public final class AppController extends VelocityViewServlet {
 	public static ResponseReturnType setReturnType(HttpServletRequest request,
 			HttpServletResponse response, List<FileItem> multipartItems) {
 		String returnType = ServletUtilMethods.getParameter(request, "returntype", multipartItems);
-		ResponseReturnType responseReturnType = null;
+		ResponseReturnType responseReturnType = ResponseReturnType.HTML;
 		if (returnType != null) {
 			try {
 				responseReturnType = ResponseReturnType.valueOf(returnType.toUpperCase());
@@ -673,17 +673,15 @@ public final class AppController extends VelocityViewServlet {
 		try {
 			carryOutSessionActions(request, sessionData, this.databaseDefn, context, session,
 					multipartItems);
-		} catch (AgileBaseException | RuntimeException | SQLException pbex) {
-			ServletUtilMethods.logException(pbex, request, "Error setting session data");
+		} catch (AgileBaseException | RuntimeException | SQLException ex) {
+			ServletUtilMethods.logException(ex, request, "Error setting session data");
 			if (returnType.equals(ResponseReturnType.XML)
 					|| returnType.equals(ResponseReturnType.JSON)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
-						sessionData, pbex, multipartItems);
+						sessionData, ex, multipartItems);
 			} else {
-				// override to return the error template
-				templateName = "report_error";
-				return getUserInterfaceTemplate(request, response, templateName, context, session,
-						sessionData, pbex, multipartItems);
+				return getUserInterfaceTemplate(request, response, "report_error", context, session,
+						sessionData, ex, multipartItems);
 			}
 			/*
 			 * } catch (Exception ex) { ServletUtilMethods.logException(ex,

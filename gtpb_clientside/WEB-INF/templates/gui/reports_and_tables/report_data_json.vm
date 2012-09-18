@@ -18,7 +18,7 @@
 #if($view.getWhetherExceptionOccurred())
   {
     "errormessage": "$view.getException().getMessage()",
-    "errortype": "$view.getException()"
+    "errortype": "$view.getException().getClassName()"
   }
 #else
   $view.getReportDataRowsJSON()
