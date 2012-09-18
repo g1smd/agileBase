@@ -17,6 +17,7 @@
 ##
 $viewTools.startTimer("gui/administration/tables/navigation")
 #parse('gui/administration/tables/buttons/table.vm')<br>
+#parse('gui/administration/tables/buttons/options.vm')<br>
 #parse('gui/administration/tables/buttons/usage.vm')<br>
  #if($view.loggedInUserAllowedTo('ADMINISTRATE'))
    #parse('gui/administration/tables/buttons/users.vm')<br>

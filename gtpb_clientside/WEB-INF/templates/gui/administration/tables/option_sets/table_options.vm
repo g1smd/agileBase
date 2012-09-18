@@ -15,16 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-$viewTools.startTimer("gui/administration/tables/options_set")
-## session user will be used often
-#set($sessionUser = $sessionData.getUser())
-
-#parse('gui/administration/tables/option_sets/table_details.vm')
-#parse('gui/administration/tables/option_sets/table_options.vm')
-#parse('gui/administration/tables/option_sets/table_usage.vm')
-#if($view.loggedInUserAllowedTo('ADMINISTRATE'))
-  #parse('gui/administration/tables/option_sets/user_privileges.vm')
-  #parse('gui/administration/tables/option_sets/role_privileges.vm')
-#end
-$viewTools.stopTimer("gui/administration/tables/options_set")
-
+#set($option_set_id='table_options')
+#set($option_set_title='table options')
+#set($option_set_data_path='gui/administration/tables/option_sets/table_options_data.vm')
+#parse('gui/administration/option_set.vm')
