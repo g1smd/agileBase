@@ -229,7 +229,7 @@ public class Enumerations {
 	 * server response as a web page, XML file or download for example
 	 */
 	public enum ResponseReturnType {
-		HTML("text/html"), XML("application/xml"), DOWNLOAD("application/octet-stream");
+		HTML("text/html"), JSON("application/javascript"), XML("application/xml"), DOWNLOAD("application/octet-stream");
 
 		private String responseType;
 

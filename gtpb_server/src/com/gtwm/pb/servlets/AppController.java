@@ -653,13 +653,9 @@ public final class AppController extends VelocityViewServlet {
 			try {
 				// Set up a session for a newly logged in user
 				sessionData = new SessionData(this.databaseDefn, this.relationalDataSource, request);
-			} catch (SQLException sqlex) {
-				ServletUtilMethods.logException(sqlex, request,
-						"SQL error creating session data object: " + sqlex);
-				sessionData = new SessionData();
-			} catch (AgileBaseException pbex) {
-				ServletUtilMethods.logException(pbex, request,
-						"Error creating session data object: " + pbex);
+			} catch (SQLException | AgileBaseException ex) {
+				ServletUtilMethods.logException(ex, request, "Error creating session data object: "
+						+ ex);
 				sessionData = new SessionData();
 			}
 			// Set session cookie expiry date
@@ -677,42 +673,29 @@ public final class AppController extends VelocityViewServlet {
 		try {
 			carryOutSessionActions(request, sessionData, this.databaseDefn, context, session,
 					multipartItems);
-		} catch (AgileBaseException pbex) {
+		} catch (AgileBaseException | RuntimeException | SQLException pbex) {
 			ServletUtilMethods.logException(pbex, request, "Error setting session data");
-			if (returnType.equals(ResponseReturnType.XML)) {
+			if (returnType.equals(ResponseReturnType.XML)
+					|| returnType.equals(ResponseReturnType.JSON)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, pbex, multipartItems);
-			}
-		} catch (NumberFormatException nfex) {
-			ServletUtilMethods.logException(nfex, request,
-					"Non-numeric value specified for numeric parameter");
-			if (returnType.equals(ResponseReturnType.XML)) {
-				return getUserInterfaceTemplate(request, response, templateName, context, session,
-						sessionData, nfex, multipartItems);
-			}
-		} catch (RuntimeException rtex) {
-			ServletUtilMethods.logException(rtex, request, "Runtime error setting session data");
-			if (returnType.equals(ResponseReturnType.XML)) {
-				return getUserInterfaceTemplate(request, response, templateName, context, session,
-						sessionData, rtex, multipartItems);
-			}
-		} catch (SQLException sqlex) {
-			ServletUtilMethods.logException(sqlex, request, "SQL error setting session data");
-			// override to return the error template
-			templateName = "report_error";
-			return getUserInterfaceTemplate(request, response, templateName, context, session,
-					sessionData, sqlex, multipartItems);
-		} catch (Exception ex) {
-			ServletUtilMethods.logException(ex, request, "General error setting session data");
-			if (returnType.equals(ResponseReturnType.XML)) {
-				return getUserInterfaceTemplate(request, response, templateName, context, session,
-						sessionData, ex, multipartItems);
 			} else {
 				// override to return the error template
 				templateName = "report_error";
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
-						sessionData, ex, multipartItems);
+						sessionData, pbex, multipartItems);
 			}
+			/*
+			 * } catch (Exception ex) { ServletUtilMethods.logException(ex,
+			 * request, "General error setting session data"); if
+			 * (returnType.equals(ResponseReturnType.XML)) { return
+			 * getUserInterfaceTemplate(request, response, templateName,
+			 * context, session, sessionData, ex, multipartItems); } else { //
+			 * override to return the error template templateName =
+			 * "report_error"; return getUserInterfaceTemplate(request,
+			 * response, templateName, context, session, sessionData, ex,
+			 * multipartItems); }
+			 */
 		}
 		// Use StringBuffer to get a mutable string that can be altered by
 		// carryOutAppActions
@@ -720,33 +703,9 @@ public final class AppController extends VelocityViewServlet {
 		try {
 			carryOutAppActions(request, sessionData, this.databaseDefn, multipartItems,
 					appActionName);
-		} catch (MissingParametersException mpex) {
-			ServletUtilMethods.logException(mpex, request,
-					"Required parameters missing for action " + appActionName);
-			return getUserInterfaceTemplate(request, response, templateName, context, session,
-					sessionData, mpex, multipartItems);
-		} catch (DisallowedException dex) {
-			ServletUtilMethods.logException(dex, request, "No privileges to perform action "
-					+ appActionName);
-			return getUserInterfaceTemplate(request, response, templateName, context, session,
-					sessionData, dex, multipartItems);
-		} catch (SQLException sqlex) {
-			ServletUtilMethods.logException(sqlex, request,
-					"Error accessing relational database while performing action" + appActionName);
-			return getUserInterfaceTemplate(request, response, templateName, context, session,
-					sessionData, sqlex, multipartItems);
-		} catch (ObjectNotFoundException onfex) {
-			ServletUtilMethods.logException(onfex, request,
-					"An object mis-referenced while performing action " + appActionName);
-			return getUserInterfaceTemplate(request, response, templateName, context, session,
-					sessionData, onfex, multipartItems);
-		} catch (InputRecordException irex) {
-			ServletUtilMethods.logException(irex, request, "Error saving data during "
-					+ appActionName);
-			return getUserInterfaceTemplate(request, response, templateName, context, session,
-					sessionData, irex, multipartItems);
-		} catch (Exception ex) {
-			ServletUtilMethods.logException(ex, request, "General error performing action "
+		} catch (AgileBaseException | SQLException | RuntimeException | FileUploadException
+				| IOException | MessagingException ex) {
+			ServletUtilMethods.logException(ex, request, "Error carrying out action "
 					+ appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, ex, multipartItems);
@@ -756,34 +715,15 @@ public final class AppController extends VelocityViewServlet {
 		EnumSet<SessionAction> sessionActions = EnumSet.allOf(SessionAction.class);
 		try {
 			carryOutPostSessionActions(request, sessionData, this.databaseDefn, sessionActions);
-		} catch (ObjectNotFoundException onfex) {
-			ServletUtilMethods.logException(onfex, request, "Error setting session data");
-			if (returnType.equals(ResponseReturnType.XML)) {
+		} catch (AgileBaseException | RuntimeException | SQLException ex) {
+			ServletUtilMethods.logException(ex, request, "Error setting session data post acction");
+			if (returnType.equals(ResponseReturnType.XML)
+					|| returnType.equals(ResponseReturnType.JSON)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
-						sessionData, onfex, multipartItems);
-			}
-		} catch (NumberFormatException nfex) {
-			ServletUtilMethods.logException(nfex, request,
-					"Non-numeric value specified for numeric parameter");
-			if (returnType.equals(ResponseReturnType.XML)) {
-				return getUserInterfaceTemplate(request, response, templateName, context, session,
-						sessionData, nfex, multipartItems);
-			}
-		} catch (MissingParametersException mpex) {
-			ServletUtilMethods.logException(mpex, request, "Error setting session data");
-			if (returnType.equals(ResponseReturnType.XML)) {
-				return getUserInterfaceTemplate(request, response, templateName, context, session,
-						sessionData, mpex, multipartItems);
-			}
-		} catch (RuntimeException rtex) {
-			ServletUtilMethods.logException(rtex, request, "Runtime error setting session data");
-			if (returnType.equals(ResponseReturnType.XML)) {
-				return getUserInterfaceTemplate(request, response, templateName, context, session,
-						sessionData, rtex, multipartItems);
-			}
-		} catch (Exception ex) {
-			ServletUtilMethods.logException(ex, request, "General error setting session data");
-			if (returnType.equals(ResponseReturnType.XML)) {
+						sessionData, ex, multipartItems);
+			} else {
+				// override to return the error template
+				templateName = "report_error";
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, ex, multipartItems);
 			}
