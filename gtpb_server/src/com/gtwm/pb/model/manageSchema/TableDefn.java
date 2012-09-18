@@ -40,6 +40,7 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.CantDoThatException;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -410,6 +411,15 @@ public class TableDefn implements TableInfo {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	@Column(length=10000)
+	public String getEmailResponse() {
+		return this.emailResponse;
+	}
+	
+	public void setEmailResponse(String emailResponse) {
+		this.emailResponse = emailResponse;
+	}
 
 	public void setFormStyle(FormStyle formStyle) {
 		this.formStyle = formStyle;
@@ -527,6 +537,8 @@ public class TableDefn implements TableInfo {
 	private boolean tableFormPublic = false;
 	
 	private String email = null;
+	
+	private String emailResponse = null;
 	
 	private FormStyle formStyle = FormStyle.SINGLE_COLUMN;
 	

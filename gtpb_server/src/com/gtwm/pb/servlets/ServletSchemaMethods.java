@@ -65,7 +65,6 @@ import com.gtwm.pb.model.manageSchema.ReportCalcFieldDefn;
 import com.gtwm.pb.model.manageSchema.ReportFilterDefn;
 import com.gtwm.pb.model.manageSchema.ReportSort;
 import com.gtwm.pb.model.manageSchema.ChartAggregateDefn;
-import com.gtwm.pb.model.manageSchema.BooleanFieldDescriptorOption.PossibleBooleanOptions;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
@@ -562,6 +561,7 @@ public final class ServletSchemaMethods {
 		String newTableName = request.getParameter("tablename");
 		String newTableDesc = request.getParameter("tabledesc");
 		String tableEmail = request.getParameter("tableemail");
+		String tableEmailResponse = request.getParameter("tableemailresponse");
 		Boolean lockable = null;
 		String lockableString = request.getParameter("lockable");
 		if (lockableString != null) {
@@ -590,7 +590,7 @@ public final class ServletSchemaMethods {
 			allowNotifications = Helpers.valueRepresentsBooleanTrue(allowNotificationsString);
 		}
 		if (newTableName == null && newTableDesc == null && lockable == null
-				&& tableFormPublic == null && tableEmail == null && formStyle == null
+				&& tableFormPublic == null && tableEmail == null && tableEmailResponse == null && formStyle == null
 				&& allowAutoDeleteString == null && allowNotificationsString == null) {
 			throw new MissingParametersException(
 					"One or more table update parameter must be supplied to update a table");
@@ -602,6 +602,7 @@ public final class ServletSchemaMethods {
 		boolean oldLockable = table.getRecordsLockable();
 		boolean oldTableFormPublic = table.getTableFormPublic();
 		String oldTableEmail = table.getEmail();
+		String oldTableEmailResponse = table.getEmailResponse();
 		FormStyle oldFormStyle = table.getFormStyle();
 		// begin updating model and persisting changes
 		Connection conn = null;
@@ -611,7 +612,7 @@ public final class ServletSchemaMethods {
 			conn.setAutoCommit(false);
 			// update the table:
 			databaseDefn.updateTable(conn, request, table, newTableName, newTableDesc, lockable,
-					tableFormPublic, tableEmail, formStyle, allowAutoDelete, allowNotifications);
+					tableFormPublic, tableEmail, tableEmailResponse, formStyle, allowAutoDelete, allowNotifications);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
@@ -622,6 +623,7 @@ public final class ServletSchemaMethods {
 			table.setRecordsLockable(oldLockable);
 			table.setTableFormPublic(oldTableFormPublic);
 			table.setEmail(oldTableEmail);
+			table.setEmailResponse(oldTableEmailResponse);
 			table.setFormStyle(oldFormStyle);
 			table.setAllowAutoDelete(oldAllowAutoDelete);
 			throw new CantDoThatException("Updating table failed", hex);
@@ -633,6 +635,7 @@ public final class ServletSchemaMethods {
 			table.setRecordsLockable(oldLockable);
 			table.setTableFormPublic(oldTableFormPublic);
 			table.setEmail(oldTableEmail);
+			table.setEmailResponse(oldTableEmailResponse);
 			table.setFormStyle(oldFormStyle);
 			table.setAllowAutoDelete(oldAllowAutoDelete);
 			throw new CantDoThatException("Updating table failed", sqlex);
@@ -644,6 +647,7 @@ public final class ServletSchemaMethods {
 			table.setRecordsLockable(oldLockable);
 			table.setTableFormPublic(oldTableFormPublic);
 			table.setEmail(oldTableEmail);
+			table.setEmailResponse(oldTableEmailResponse);
 			table.setFormStyle(oldFormStyle);
 			table.setAllowAutoDelete(oldAllowAutoDelete);
 			throw new CantDoThatException("Updating table failed", pex);

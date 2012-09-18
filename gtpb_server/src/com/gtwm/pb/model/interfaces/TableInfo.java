@@ -192,6 +192,16 @@ public interface TableInfo extends Comparable<TableInfo> {
 
 	public void setEmail(String email);
 
+	/**
+	 * If there is a public form, optionally set a response message that will
+	 * get sent to any email address found in the input data. If this is left
+	 * blank, a default message containing the contents of the record will be
+	 * sent
+	 */
+	public String getEmailResponse();
+
+	public void setEmailResponse(String emailResponse);
+
 	public FormStyle getFormStyle();
 
 	public void setFormStyle(FormStyle formStyle);
@@ -217,12 +227,14 @@ public interface TableInfo extends Comparable<TableInfo> {
 	 * they are unedited since creation, have empty mandated fields for example
 	 */
 	public boolean getAllowAutoDelete();
-	
+
 	public void setAllowAutoDelete(boolean allowAutoDelete);
+
 	/**
-	 * Allow comments to be able to be sent to users who have privileges on the table
+	 * Allow comments to be able to be sent to users who have privileges on the
+	 * table
 	 */
 	public boolean getAllowNotifications();
-	
+
 	public void setAllowNotifications(boolean allowNotifications);
 }
