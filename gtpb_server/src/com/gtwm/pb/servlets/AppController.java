@@ -180,6 +180,8 @@ public final class AppController extends VelocityViewServlet {
 	 * Optionally return application/xml or other content rather than the
 	 * default text/html
 	 * 
+	 * If there is no returntype specified, don't set a header, but return ResponseReturnType.HTML
+	 * 
 	 * This can be useful when using AJAX interfaces with XMLHttpRequest in the
 	 * browser
 	 */
