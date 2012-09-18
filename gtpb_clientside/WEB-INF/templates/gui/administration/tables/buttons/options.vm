@@ -17,6 +17,6 @@
 ##
 #set($button_img='resources/tables/options.png')
 #set($click="fShowOption('options_wrapper_$options_wrapper_no','table_options')")
-#set($caption='Table')
+#set($caption='Options')
 #set($id='button_table_options')
 #parse('gui/resources/button.vm')
