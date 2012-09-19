@@ -42,6 +42,7 @@ import java.util.Arrays;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.io.File;
@@ -2319,6 +2320,8 @@ public final class DataManagement implements DataManagementInfo {
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
+		int timezoneOffset = Calendar.getInstance().get(Calendar.DST_OFFSET);
+		logger.debug("timezoneOffset is " + timezoneOffset);
 		try {
 			jg = jsonFactory.createJsonGenerator(stringWriter);
 			jg.writeStartArray();
@@ -2343,7 +2346,8 @@ public final class DataManagement implements DataManagementInfo {
 				}
 				jg.writeBooleanField("allDay", allDayEvent);
 				// fullcalendar needs the number of seconds since the epoch
-				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
+				// Output in UTC rather than local time as fullcalendar adjusts clientside
+				Long eventDateEpoch = (Long.parseLong(eventDateValue.getKeyValue()) - timezoneOffset) / 1000;
 				jg.writeNumberField("start", eventDateEpoch);
 				if (!allDayEvent) {
 					if (endDateReportField.equals(eventDateReportField)) {
@@ -2355,7 +2359,7 @@ public final class DataManagement implements DataManagementInfo {
 							// events last 1 hr by default
 							jg.writeNumberField("end", eventDateEpoch + 3600);
 						} else {
-							Long endDateEpoch = Long.parseLong(endDateValue.getKeyValue()) / 1000;
+							Long endDateEpoch = (Long.parseLong(endDateValue.getKeyValue()) - timezoneOffset) / 1000;
 							if (endDateEpoch > eventDateEpoch) {
 								jg.writeNumberField("end", endDateEpoch);
 							} else {
@@ -2368,7 +2372,7 @@ public final class DataManagement implements DataManagementInfo {
 					DataRowFieldInfo endDateValue = reportDataRow.getValue(endDateReportField);
 					String endDateEpochString = endDateValue.getKeyValue();
 					if (!endDateEpochString.equals("")) {
-						Long endDateEpoch = Long.parseLong(endDateValue.getKeyValue()) / 1000;
+						Long endDateEpoch = (Long.parseLong(endDateValue.getKeyValue()) - timezoneOffset) / 1000;
 						if (endDateEpoch > eventDateEpoch) {
 							jg.writeNumberField("end", endDateEpoch);
 						}
