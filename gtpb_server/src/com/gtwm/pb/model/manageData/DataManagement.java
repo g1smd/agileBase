@@ -2320,6 +2320,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		DateTimeZone zone = DateTimeZone.getDefault();
 		// Workaround. At least on Ubuntu, the default timezone is Etc/GMT not Europe/London, when Europe/London is set in the OS
+		// Note: JodaTime used because Java's TimeZone class doesn't return Europe/London when requested, on the development OS
 		if (zone.getID().contains("GMT")) {
 			zone = DateTimeZone.forID("Europe/London");
 		}
