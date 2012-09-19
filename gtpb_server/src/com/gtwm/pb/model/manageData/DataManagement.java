@@ -2319,12 +2319,10 @@ public final class DataManagement implements DataManagementInfo {
 			allDayValues = false;
 		}
 		DateTimeZone zone = DateTimeZone.getDefault();
+		// Workaround. At least on Ubuntu, the default timezone is Etc/GMT not Europe/London, when Europe/London is set in the OS
 		if (zone.getID().contains("GMT")) {
 			zone = DateTimeZone.forID("Europe/London");
 		}
-		logger.debug("Default timezone " + zone.getID());
-		long offset = zone.getOffset(new Instant());
-		logger.debug("Time zone offset = " + offset);
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filterValues,
 				false, new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false);
 		JsonFactory jsonFactory = new JsonFactory();
@@ -2358,8 +2356,7 @@ public final class DataManagement implements DataManagementInfo {
 				// TODO: This may not work for non-GMT timezones as the offset is from UTC, untested
 				Long eventDateMillis = Long.parseLong(eventDateValue.getKeyValue());
 				//int timezoneOffset = timeZone.getOffset(eventDateMillis);
-				int timezoneOffset = 0;
-				//logger.debug("Offset for " + eventDateValue + "(" + eventDateMillis + ") using timezone " + timeZone.getDisplayName() + " is " + timezoneOffset);
+				int timezoneOffset = zone.getOffset(eventDateMillis);
 				Long eventDateEpoch = (eventDateMillis - timezoneOffset) / 1000;
 				jg.writeNumberField("start", eventDateEpoch);
 				if (!allDayEvent) {
