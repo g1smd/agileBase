@@ -2321,6 +2321,7 @@ public final class DataManagement implements DataManagementInfo {
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
 		TimeZone timeZone = TimeZone.getDefault();
+		logger.debug("Timezone ID is " + timeZone.getID());
 		try {
 			jg = jsonFactory.createJsonGenerator(stringWriter);
 			jg.writeStartArray();
