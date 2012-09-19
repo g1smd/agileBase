@@ -2319,7 +2319,6 @@ public final class DataManagement implements DataManagementInfo {
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
-		int dstOffset = Calendar.getInstance().get(Calendar.DST_OFFSET);
 		try {
 			jg = jsonFactory.createJsonGenerator(stringWriter);
 			jg.writeStartArray();
@@ -2344,7 +2343,7 @@ public final class DataManagement implements DataManagementInfo {
 				}
 				jg.writeBooleanField("allDay", allDayEvent);
 				// fullcalendar needs the number of seconds since the epoch
-				Long eventDateEpoch = (Long.parseLong(eventDateValue.getKeyValue()) + dstOffset) / 1000;
+				Long eventDateEpoch = Long.parseLong(eventDateValue.getKeyValue()) / 1000;
 				jg.writeNumberField("start", eventDateEpoch);
 				if (!allDayEvent) {
 					if (endDateReportField.equals(eventDateReportField)) {

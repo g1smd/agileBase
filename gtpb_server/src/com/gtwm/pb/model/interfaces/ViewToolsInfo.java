@@ -72,6 +72,11 @@ public interface ViewToolsInfo {
 	 * Returns the current date in the form dd/mm/yyyy
 	 */
 	public String getDatestampString();
+	
+	/**
+	 * Return the name of the current timezone, as recognised by the server
+	 */
+	public String getTimezone();
 
 	/**
 	 * Because velocity doesn't allow you to access constant values, you can't

@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.SortedMap;
+import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.math.BigInteger;
@@ -147,6 +148,10 @@ public final class ViewTools implements ViewToolsInfo {
 			return Calendar.SECOND;
 		}
 		throw new CantDoThatException("Unimplemented calendar constant: " + constantName);
+	}
+	
+	public String getTimezone() {
+		return TimeZone.getDefault().getDisplayName(false, TimeZone.LONG);
 	}
 
 	public String getAreaForPhoneNumber(String phoneNumber) {
