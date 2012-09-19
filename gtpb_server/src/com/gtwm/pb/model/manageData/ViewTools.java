@@ -151,6 +151,7 @@ public final class ViewTools implements ViewToolsInfo {
 	}
 	
 	public String getTimezone() {
+		logger.debug("Returning timezone " + TimeZone.getDefault().getDisplayName(false, TimeZone.LONG));
 		return TimeZone.getDefault().getDisplayName(false, TimeZone.LONG);
 	}
 
