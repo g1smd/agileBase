@@ -2319,6 +2319,9 @@ public final class DataManagement implements DataManagementInfo {
 			allDayValues = false;
 		}
 		DateTimeZone zone = DateTimeZone.getDefault();
+		if (zone.getID().contains("GMT")) {
+			zone = DateTimeZone.forID("Europe/London");
+		}
 		logger.debug("Default timezone " + zone.getID());
 		long offset = zone.getOffset(new Instant());
 		logger.debug("Time zone offset = " + offset);
