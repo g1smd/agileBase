@@ -120,17 +120,17 @@ public class TextValueDefn implements TextValue {
 			// alterations by @g1smd
 			// "^\\(?(?:(?:0(?:0|11)\\)?\\s?\\(?|\\+)4[\\s\\(\\)]*4\\)?\\s?\\(?(?:0\\)?\\s?\\(?)?|0)(?:\\d{5}\\)?\\s?\\d{4,5}|\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3})|\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4}|\\d{2}\\)?\\s?\\d{4}\\s?\\d{4})(?:\\s?[x\\#]\\d{3,4})?$"
 			String regexGB = "^\\(?";
-			regexGB += "(?:";	// leading 00, 011 or + before 44 with optional (0); parentheses and spaces optional
+			regexGB += "(?:";  // leading 00, 011 or + before 44 with optional (0); parentheses and spaces optional
 			regexGB += "(?:0(?:0|11)\\)?\\s?\\(?|\\+)4[\\s\\(\\)]*4\\)?\\s?\\(?(?:0\\)?\\s?\\(?)?|";
-			regexGB += "0";												// leading 0
+			regexGB += "0";                                           // leading 0
 			regexGB += ")";
 			regexGB += "(?:";
-			regexGB += "\\d{5}\\)?\\s?\\d{4,5}|";						// [5+4][5+5]
-			regexGB += "\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3})|";	// [4+5][4+6]
-			regexGB += "\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4}|";				// [3+6][3+7]
-			regexGB += "\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}";				// [2+8]
+			regexGB += "\\d{5}\\)?\\s?\\d{4,5}|";                     // [5+4][5+5]
+			regexGB += "\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3})|";  // [4+5][4+6]
+			regexGB += "\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4}|";           // [3+6][3+7]
+			regexGB += "\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}";              // [2+8]
 			regexGB += ")";
-			regexGB += "(?:\\s?[x\\#]\\d{3,4})?";						// optional "x" or "#" and extension
+			regexGB += "(?:\\s?[x\\#]\\d{3,4})?";                     // optional "x" or "#" and extension
 			regexGB += "$";
 			if (this.textValue.trim().matches(regexGB)) {
 				return true;
@@ -151,10 +151,10 @@ public class TextValueDefn implements TextValue {
 		if ((length > 6) && (length < 27)) {
 			String regexIntl = "^\\(?";
 			regexIntl += "(";
-			regexIntl += "(?:00\\)?\\s?\\(?|\\+)"; // 00 or +
-			regexIntl += "\\d{1,3}[\\s\\(\\)\\d]+"; // number
+			regexIntl += "(?:00\\)?\\s?\\(?|\\+)";   // 00 or +
+			regexIntl += "\\d{1,3}[\\s\\(\\)\\d]+";  // number
 			regexIntl += ")";
-			regexIntl += "([x\\#]\\d{3,4})?"; // optional "#" and extension
+			regexIntl += "([x\\#]\\d{3,4})?";        // optional "x" or "#" and extension
 			regexIntl += "$";
 			if (this.textValue.trim().matches(regexIntl) 
 					&& !this.textValue.trim()  // Don't match country 44 as International
