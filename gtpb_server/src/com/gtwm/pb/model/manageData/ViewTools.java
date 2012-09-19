@@ -151,8 +151,11 @@ public final class ViewTools implements ViewToolsInfo {
 	}
 	
 	public String getTimezone() {
-		logger.debug("Returning timezone " + TimeZone.getDefault().getDisplayName(false, TimeZone.LONG));
-		return TimeZone.getDefault().getDisplayName(false, TimeZone.LONG);
+		String timezone = TimeZone.getDefault().getDisplayName(false, TimeZone.LONG);
+		if (timezone.toLowerCase().equals("greenwich mean time")) {
+			timezone = "Europe/London";
+		}
+		return timezone;
 	}
 
 	public String getAreaForPhoneNumber(String phoneNumber) {
