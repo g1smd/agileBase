@@ -2349,7 +2349,7 @@ public final class DataManagement implements DataManagementInfo {
 				// TODO: This may not work for non-GMT timezones as the offset is from UTC, untested
 				Long eventDateMillis = Long.parseLong(eventDateValue.getKeyValue());
 				int timezoneOffset = timeZone.getOffset(eventDateMillis);
-				logger.debug("Offset for " + eventDateValue + " is " + timezoneOffset);
+				logger.debug("Offset for " + eventDateValue + "(" + eventDateMillis + ") using timezone " + timeZone.getDisplayName() + " is " + timezoneOffset);
 				Long eventDateEpoch = (eventDateMillis - timezoneOffset) / 1000;
 				jg.writeNumberField("start", eventDateEpoch);
 				if (!allDayEvent) {
