@@ -2320,9 +2320,7 @@ public final class DataManagement implements DataManagementInfo {
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
-		logger.debug("Timezone " + Calendar.getInstance().getTimeZone());
-		int timezoneOffset = Calendar.getInstance().get(Calendar.DST_OFFSET);
-		logger.debug("timezoneOffset is " + timezoneOffset);
+		TimeZone timeZone = TimeZone.getDefault();
 		try {
 			jg = jsonFactory.createJsonGenerator(stringWriter);
 			jg.writeStartArray();
@@ -2348,7 +2346,11 @@ public final class DataManagement implements DataManagementInfo {
 				jg.writeBooleanField("allDay", allDayEvent);
 				// fullcalendar needs the number of seconds since the epoch
 				// Output in UTC rather than local time as fullcalendar adjusts clientside
-				Long eventDateEpoch = (Long.parseLong(eventDateValue.getKeyValue()) - timezoneOffset) / 1000;
+				// TODO: This may not work for non-GMT timezones as the offset is from UTC, untested
+				Long eventDateMillis = Long.parseLong(eventDateValue.getKeyValue());
+				int timezoneOffset = timeZone.getOffset(eventDateMillis);
+				logger.debug("Offset for " + eventDateValue + " is " + timezoneOffset);
+				Long eventDateEpoch = (eventDateMillis - timezoneOffset) / 1000;
 				jg.writeNumberField("start", eventDateEpoch);
 				if (!allDayEvent) {
 					if (endDateReportField.equals(eventDateReportField)) {
