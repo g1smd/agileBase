@@ -2321,10 +2321,11 @@ public final class DataManagement implements DataManagementInfo {
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
 		TimeZone timeZone = TimeZone.getDefault();
-		logger.debug("Timezone ID is " + timeZone.getID());
+		logger.debug("Timezone ID is '" + timeZone.getID() + "'");
 		// If GMT, swap for BST - seems to be incorrectly detected. Java timezone stuff is wierd sometimes
 		if (timeZone.getID().equals("GMT")) {
 			timeZone = TimeZone.getTimeZone("Europe/London");
+			logger.debug("New timezone is " + timeZone.getID());
 		}
 		try {
 			jg = jsonFactory.createJsonGenerator(stringWriter);
