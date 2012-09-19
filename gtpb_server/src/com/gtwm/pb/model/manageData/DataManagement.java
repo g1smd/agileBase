@@ -2325,7 +2325,7 @@ public final class DataManagement implements DataManagementInfo {
 		// If GMT, swap for BST - seems to be incorrectly detected. Java timezone stuff is wierd sometimes
 		if (timeZone.getID().equals("GMT")) {
 			timeZone = TimeZone.getTimeZone("Europe/London");
-			logger.debug("New timezone is " + timeZone.getID());
+			logger.debug("New timezone is '" + timeZone.getID() + "'");
 		}
 		try {
 			jg = jsonFactory.createJsonGenerator(stringWriter);
