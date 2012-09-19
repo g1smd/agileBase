@@ -594,18 +594,18 @@ public final class ServletSessionMethods {
 					// need to be removed.
 					Matcher numberPartsGB = Pattern
 							.compile(
-									"^((?:0(?:0|11)\\s?|\\+)(4\\s?4)\\s?)?\\(?0?(?:\\)\\s?)?([1-9]\\d{1,4}\\)?[\\d\\s]+)([x\\#]\\d{3,4})?$")
+									"^\\(?(?:(?:0(?:0|11)\\)?\\s?\\(?|\\+)(4[\\s\\(\\)]*4)\\)?\\s?\\(?(?:0\\)?\\s?\\(?)?|0)([1-9]\\d{1,4}\\)?[\\s\\d]+)((?:[x\\#])\\d{3,4})?$")
 							.matcher(fieldValueString);
 					if (numberPartsGB.matches()) {
 						// Extract NSN part of GB number, trim it
 						// and remove ')' if present
-						if (numberPartsGB.group(3) != null) {
-							String phoneNSNString = numberPartsGB.group(3).trim()
+						if (numberPartsGB.group(2) != null) {
+							String phoneNSNString = numberPartsGB.group(2).trim()
 									.replaceAll("[\\)\\s]", "");
 							// Format NSN part of GB number
 							String phoneNSNFormattedString = formatPhoneNumberGB(phoneNSNString);
 							// Extract +44 prefix if present
-							String phonePrefixString = numberPartsGB.group(2);
+							String phonePrefixString = numberPartsGB.group(1);
 							// Set prefix as 0 or as +44 and space
 							if (phonePrefixString != null) {
 								if (phonePrefixString.equals("44") || phonePrefixString.equals("4 4")) {
@@ -617,9 +617,9 @@ public final class ServletSessionMethods {
 							// Extract extension
 							boolean phoneHasExtension = false;
 							String phoneExtensionString = null;
-							if (numberPartsGB.group(4) != null) {
+							if (numberPartsGB.group(3) != null) {
 								phoneHasExtension = true;
-								phoneExtensionString = " " + numberPartsGB.group(4);
+								phoneExtensionString = " #" + numberPartsGB.group(3);
 							}
 							// Add prefix back on to NSN
 							fieldValueString = phonePrefixString
@@ -642,7 +642,7 @@ public final class ServletSessionMethods {
 					}
 					// Extract country code and number
 					fieldValueString = fieldValueString.replaceAll(
-							"(?:00\\s?|\\+)([1-9][\\d\\s]+).*", "$1");
+							"\\(?(?:00\\)?\\s?\\(?|\\+)\\)?\\s?\\(?([1-9][\\d\\(\\)\\s]+).*", "$1");
 					// Format international number
 					fieldValueString = formatPhoneNumberInternational(fieldValueString);
 					// Add + to country code and number
@@ -907,9 +907,9 @@ public final class ServletSessionMethods {
 	 */
 	private static String formatPhoneNumberInternational(String fieldValueString) {
 		fieldValueString = fieldValueString.trim();
-		String fieldValueDigitsOnlyString = fieldValueString.replaceAll("[\\s]", "");
+		String fieldValueDigitsOnlyString = fieldValueString.replaceAll("[\\s\\(\\)]", "");
 		// Single digit country codes
-		String pattern1 = "(?:(1|7)).*";
+		String pattern1 = "(?:[17]).*";
 		// Double digit country codes, but not 44
 		String pattern2 = "(?:(2[07]|3[0123469]|4[01356789]|5[12345678]|6[0123456]|8[12469]|9[0123458])).*";
 		// Triple digit country codes
