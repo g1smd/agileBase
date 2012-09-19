@@ -93,6 +93,7 @@
 				<pathelement location="WEB-INF/lib/poi-ooxml-3.8.jar"/>
 				<!-- date/time parsing -->
 				<pathelement location="WEB-INF/lib/ERChronic.jar"/>
+				<pathelement location="WEB-INF/lib/joda-time-2.1.jar" />
 				<!-- iCal generation -->
 				<pathelement location="WEB-INF/lib/ical4j-1.0-rc3.jar"/>
 				<!-- Image resizer -->

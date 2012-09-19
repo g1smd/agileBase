@@ -159,6 +159,9 @@ import org.glowacki.CalendarParserException;
 import org.im4java.core.ConvertCmd;
 import org.im4java.core.IM4JavaException;
 import org.im4java.core.IMOperation;
+import org.joda.time.DateTimeZone;
+import org.joda.time.Instant;
+
 import au.com.bytecode.opencsv.CSVReader;
 
 // TODO: There is only one instance of DataManagement in the app
@@ -2315,18 +2318,15 @@ public final class DataManagement implements DataManagementInfo {
 		if (dateResolution > Calendar.DAY_OF_MONTH) {
 			allDayValues = false;
 		}
+		DateTimeZone zone = DateTimeZone.getDefault();
+		logger.debug("Default timezone " + zone.getID());
+		long offset = zone.getOffset(new Instant());
+		logger.debug("Time zone offset = " + offset);
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filterValues,
 				false, new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false);
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
-		TimeZone timeZone = TimeZone.getDefault();
-		logger.debug("Timezone ID is '" + timeZone.getID() + "'");
-		// If GMT, swap for BST - seems to be incorrectly detected. Java timezone stuff is wierd sometimes
-		if (timeZone.getID().equals("GMT")) {
-			timeZone = TimeZone.getTimeZone("Europe/London");
-			logger.debug("New timezone is '" + timeZone.getID() + "'");
-		}
 		try {
 			jg = jsonFactory.createJsonGenerator(stringWriter);
 			jg.writeStartArray();
@@ -2354,8 +2354,9 @@ public final class DataManagement implements DataManagementInfo {
 				// Output in UTC rather than local time as fullcalendar adjusts clientside
 				// TODO: This may not work for non-GMT timezones as the offset is from UTC, untested
 				Long eventDateMillis = Long.parseLong(eventDateValue.getKeyValue());
-				int timezoneOffset = timeZone.getOffset(eventDateMillis);
-				logger.debug("Offset for " + eventDateValue + "(" + eventDateMillis + ") using timezone " + timeZone.getDisplayName() + " is " + timezoneOffset);
+				//int timezoneOffset = timeZone.getOffset(eventDateMillis);
+				int timezoneOffset = 0;
+				//logger.debug("Offset for " + eventDateValue + "(" + eventDateMillis + ") using timezone " + timeZone.getDisplayName() + " is " + timezoneOffset);
 				Long eventDateEpoch = (eventDateMillis - timezoneOffset) / 1000;
 				jg.writeNumberField("start", eventDateEpoch);
 				if (!allDayEvent) {
