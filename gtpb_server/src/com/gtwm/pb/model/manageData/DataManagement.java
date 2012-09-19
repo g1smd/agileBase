@@ -2320,6 +2320,7 @@ public final class DataManagement implements DataManagementInfo {
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
+		logger.debug("Timezone " + Calendar.getInstance().getTimeZone());
 		int timezoneOffset = Calendar.getInstance().get(Calendar.DST_OFFSET);
 		logger.debug("timezoneOffset is " + timezoneOffset);
 		try {
