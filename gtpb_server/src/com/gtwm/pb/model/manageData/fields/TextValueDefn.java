@@ -160,7 +160,7 @@ public class TextValueDefn implements TextValue {
 					&& !this.textValue.trim()  // Don't match country 44 as International
 					.matches("\\(?(?:0(?:0|11)\\)?\\s?\\(?|\\+)?4[\\s\\(\\)]*4.*") 
 					&& !this.textValue.trim()  // Reserve 011+8digits as always GB number
-					.matches("\\(?011([\\s\\(\\)]*\d){8}")) {
+					.matches("\\(?011([\\s\\(\\)]*\\d){8}")) {
 				return true;
 			}
 		}
