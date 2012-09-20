@@ -401,6 +401,8 @@ ul.moduleaction li {
 
 #appspace a {
   color: gray;
+  display: block;
+  width: 100em;
 }
 
 #appspace .icon-phone {
