@@ -214,6 +214,9 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 function fSetupAppPreview() {
 	var hoverIntentConfig = {
 			over: function() {
+				if($(this).closest("thead").size() > 0) {
+					return;
+				}
 				$("td.leading").next("td").removeClass("appSelected");
 				var internalTableName = $(this).closest("#reportData").attr("data-internaltablename");
 				var rowId = parseInt($(this).closest("tr").attr("name"));
