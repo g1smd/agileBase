@@ -46,8 +46,8 @@
   #set($field = $reportField.getBaseField())
   #if($field.isPrimaryKey())
     #set($reportFieldTable = $field.getTableContainingField())
- 	  #if(!$reportFieldTable.equals($table))
- 	    $field: $tableDataRow.get($field)<br>
-      #end
+ 	#if(!$reportFieldTable.equals($table))
+ 	  $field: $tableDataRow.get($field)<br>
+    #end
   #end
 #end
