@@ -40,3 +40,23 @@
 	</div>
   #end
 #end
+## Related data
+#set($report = $sessionData.getReport())
+#foreach($reportField in $report.getReportFields())
+  #set($field = $reportField.getBaseField())
+  #if($field.isPrimaryKey())
+    #set($reportFieldTable = $field.getTableContainingField())
+ 	  #if(!$reportFieldTable.equals($table))
+        #set($relatedRowIds = $view.getRelatedRowIds($sessionRowId, $reportFieldTable))
+        #if($relatedRowIds.size() > 0)
+          ## We've got to here, there is related data
+          ## Heading for the related data
+          #foreach($entry in $tableDataRow.entrySet())
+            #if($entry.key().getRelatedTable().equals($reportFieldTable))
+              <b>$entry.value()</b>
+            #end
+          #end
+        #end
+      #end
+  #end
+#end
