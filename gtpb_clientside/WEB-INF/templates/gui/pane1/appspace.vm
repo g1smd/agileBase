@@ -53,9 +53,8 @@
           ## We've got to here, there is related data
           ## Heading for the related data
           #foreach($entry in $tableDataRow.entrySet())
-            <i>$entry.getKey() - $entry.getKey().getRelatedTable()</i> <br>
             #if($entry.getKey().getRelatedTable().equals($reportFieldTable))
-              <b>$entry.getValue()</b><br>
+              <b>$reportFieldTable - $entry.getValue()</b><br>
             #end
           #end
         #end
