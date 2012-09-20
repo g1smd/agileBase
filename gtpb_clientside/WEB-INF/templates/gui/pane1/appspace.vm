@@ -33,7 +33,7 @@
         #if($relatedRowIds.size() == 1)
           ## We've got to here, there is related data
           ## Heading for the related data
-          #foreach($relatedRowId in $relatedRowIds)
+          #foreach($relatedRowId in $relatedRowIds)	
 		    #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
 		    #foreach($field in $reportFieldTable.getFields())
               #parse("gui/pane1/field.vm")
