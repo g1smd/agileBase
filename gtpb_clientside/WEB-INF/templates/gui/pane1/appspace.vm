@@ -45,10 +45,8 @@
 #foreach($reportField in $report.getReportFields())
   #set($field = $reportField.getBaseField())
   #if($field.isPrimaryKey())
-    Primary key: $field<br>
     #set($reportFieldTable = $field.getTableContainingField())
  	  #if(!$reportFieldTable.equals($table))
- 	    Different table: $reportFieldTable<br>
         #set($relatedRowIds = $view.getRelatedRowIds($rowId, $reportFieldTable))
         Related row IDs: $relatedRowIds<br>
         #if($relatedRowIds.size() > 0)
