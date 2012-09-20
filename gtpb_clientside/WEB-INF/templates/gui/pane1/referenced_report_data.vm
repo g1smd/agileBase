@@ -1,4 +1,3 @@
-Referenced data for $field<br>
 #set($referencedData = "")
   ## Capture the output of the parsing into a variable. We want to know whether a value
   ## exists or not for this field so we can choose whether to display the row
