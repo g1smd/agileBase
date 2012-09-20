@@ -35,10 +35,10 @@
           ## Heading for the related data
           #foreach($relatedRowId in $relatedRowIds)
             Getting table data row for $reportFieldTable, $relatedRowId<br>
-##		  #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
-##		  #foreach($field in $reportFieldTable.getFields())
-##            #parse("gui/pane1/field.vm")
-##		  #end
+		  #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
+		  #foreach($field in $reportFieldTable.getFields())
+            #parse("gui/pane1/field.vm")
+		  #end
           #end
         #end
       #end
