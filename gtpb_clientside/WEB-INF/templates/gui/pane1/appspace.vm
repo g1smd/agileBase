@@ -20,25 +20,7 @@
 #set($rowId = $sessionData.getCustomInteger("preview_row_id"))
 #set($tableDataRow = $view.getTableDataRow($table, $rowId))
 #foreach($field in $table.getFields())
-  #set($fieldValueObject = $tableDataRow.get($field))
-  #set($fieldValue = $fieldValueObject.toString().trim())
-  #if($fieldValue != "")
-    #set($category = $field.getFieldCategory().toString().toLowerCase())
-    #if(($category == "text") || ($category == "file") || ($category == "referenced_report_data"))
-      #parse("gui/pane1/${category}.vm")
-    #end
-  #end
-  ## Comments
-  #set($comments = $view.getComments($field, $rowId))
-  #if ($comments.size() > 0)
-    <div class="appelement comments">
-	#foreach($comment in $comments)
-	  <div class="comment">
-	    <span class="comment_text">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>
-      </div>
-	#end
-	</div>
-  #end
+  #parse("gui/pane1/field.vm")
 #end
 ## Related data
 #set($report = $sessionData.getReport())
@@ -46,8 +28,17 @@
   #set($field = $reportField.getBaseField())
   #if($field.isPrimaryKey())
     #set($reportFieldTable = $field.getTableContainingField())
- 	#if(!$reportFieldTable.equals($table))
- 	  $field: $tableDataRow.get($field)<br>
-    #end
+ 	  #if(!$reportFieldTable.equals($table))
+        #set($relatedRowIds = $view.getRelatedRowIds($rowId, $reportFieldTable))
+        #if($relatedRowIds.size() > 0)
+          ## We've got to here, there is related data
+          ## Heading for the related data
+          #set($relatedRowId = $relatedRowIds.get(0))
+		  #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
+		  #foreach($field in $reportFieldTable.getFields())
+            #parse("gui/pane1/field.vm")
+		  #end
+        #end
+      #end
   #end
 #end
