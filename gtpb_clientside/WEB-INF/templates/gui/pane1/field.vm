@@ -1,0 +1,19 @@
+#set($fieldValueObject = $tableDataRow.get($field))
+#set($fieldValue = $fieldValueObject.toString().trim())
+#if($fieldValue != "")
+  #set($category = $field.getFieldCategory().toString().toLowerCase())
+  #if(($category == "text") || ($category == "file") || ($category == "referenced_report_data"))
+    #parse("gui/pane1/${category}.vm")
+  #end
+#end
+## Comments
+#set($comments = $view.getComments($field, $rowId))
+#if ($comments.size() > 0)
+  <div class="appelement comments">
+  #foreach($comment in $comments)
+  <div class="comment">
+    <span class="comment_text">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>
+  </div>
+  #end
+</div>
+#end
