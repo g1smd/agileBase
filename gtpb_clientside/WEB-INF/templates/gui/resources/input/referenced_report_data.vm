@@ -22,7 +22,7 @@
     <p style="line-height:1.5em; color: black">$referencedData</p>
   #end  
 #else
-	#set($referencedData = false)
+  #set($referencedData = false)
   #set($fieldTable = $field.getTableContainingField())
   #set($primaryKey = $fieldTable.getPrimaryKey())
   #set($referencedReport = $field.getReferencedReport())
@@ -33,10 +33,10 @@
 	#end
 	#if(!$rrd_rowId)
 	  #if($sessionRowId)
-		  #set($rrd_rowId = $sessionRowId)
-		#else
+	    #set($rrd_rowId = $sessionRowId)
+	  #else
 	    #set($rrd_rowId = $sessionData.getRowId())
-		#end
+	  #end
 	#end
   #set($filter = $viewTools.getNewFilterMap())
   #set($success = $filter.put($primaryKey, "$rrd_rowId"))

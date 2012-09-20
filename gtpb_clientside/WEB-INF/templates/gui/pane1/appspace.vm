@@ -19,7 +19,7 @@
 #set($valuesFound = 0)
 #set($table = $sessionData.getTable())
 #set($rowId = $sessionData.getCustomInteger("preview_row_id"))
-$table $rowId<p>
+#set($rrd_rowId = $rowId)
 #set($tableDataRow = $view.getTableDataRow($table, $rowId))
 #foreach($field in $table.getFields())
   #parse("gui/pane1/field.vm")
@@ -37,6 +37,7 @@ $table $rowId<p>
           ## Heading for the related data
           #set($needHeading = true)
           #foreach($relatedRowId in $relatedRowIds)	
+            #set($rrd_rowId = $relatedRowId)
 		    #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
 		    #foreach($field in $reportFieldTable.getFields())
               #parse("gui/pane1/field.vm")
