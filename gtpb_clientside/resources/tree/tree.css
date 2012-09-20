@@ -351,6 +351,8 @@ ul.moduleaction li {
   border: 1em solid #cccccc;
   border-radius: 0.5em;
   margin: 0.5em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
   font-size: 8.5pt;
   overflow-x: hidden;
 }

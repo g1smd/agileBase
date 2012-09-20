@@ -16,8 +16,10 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## 'Widget' type space that the current app related content can go in
+#set($valuesFound = 0)
 #set($table = $sessionData.getTable())
 #set($rowId = $sessionData.getCustomInteger("preview_row_id"))
+$table $rowId<p>
 #set($tableDataRow = $view.getTableDataRow($table, $rowId))
 #foreach($field in $table.getFields())
   #parse("gui/pane1/field.vm")
