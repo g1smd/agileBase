@@ -47,18 +47,7 @@
   #if($field.isPrimaryKey())
     #set($reportFieldTable = $field.getTableContainingField())
  	  #if(!$reportFieldTable.equals($table))
-        #set($relatedRowIds = $view.getRelatedRowIds($rowId, $reportFieldTable))
-        Related row IDs: $relatedRowIds<br>
-        #if($relatedRowIds.size() > 0)
-          ## We've got to here, there is related data
-          ## Heading for the related data
-          #foreach($entry in $tableDataRow.entrySet())
-            $entry.getKey(): $entry.getKey().getFieldCategory()<br>
-            #if($entry.getKey().getRelatedTable().equals($reportFieldTable))
-              <b>$reportFieldTable - $entry.getValue()</b><br>
-            #end
-          #end
-        #end
+ 	    $field: $tableDataRow.get($field)<br>
       #end
   #end
 #end
