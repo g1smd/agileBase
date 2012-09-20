@@ -53,7 +53,7 @@
           ## Heading for the related data
           #foreach($entry in $tableDataRow.entrySet())
             #if($entry.key().getRelatedTable().equals($reportFieldTable))
-              <b>$entry.value()</b>
+              <b>$entry.value()</b><br>
             #end
           #end
         #end
