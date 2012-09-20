@@ -34,6 +34,7 @@
           ## We've got to here, there is related data
           ## Heading for the related data
           #set($relatedRowId = $relatedRowIds.get(0))
+          Getting table data row for $reportFieldTable, $relatedRowId<br>
 		  #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
 		  #foreach($field in $reportFieldTable.getFields())
             #parse("gui/pane1/field.vm")
