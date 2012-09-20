@@ -17,7 +17,7 @@
 #elseif($fieldValueObject.isPostcode())
   #parse("gui/pane1/heading.vm")
   #set($postcodeParam = $fieldValue.replace(" ","+"))
-  <div class="appelement map" style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center=$postcodeParam&size=250x150&zoom=10&maptype=terrain&sensor=false)" /></div>
+  <div class="appelement map" style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center=$postcodeParam&size=250x150&zoom=10&maptype=terrain&sensor=false)" /><a href="http://maps.google.com?q=$postcodeParam" style="height:100%"></a></div>
 ##<iframe width="300" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=bs3+4ua&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=43.528905,79.013672&amp;ie=UTF8&amp;hq=&amp;hnear=Bristol+BS3+4UA,+United+Kingdom&amp;t=m&amp;ll=51.442667,-2.5811&amp;spn=0.064198,0.102997&amp;z=12&amp;iwloc=A&amp;output=embed"></iframe>
 ##      <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="200px" height="200px" src="https://maps.google.com/maps?q=$fieldValue&z=10&output=embed&mrt=loc"></iframe>
 #elseif($fieldValueObject.isPhoneNumber())
