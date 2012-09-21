@@ -1330,6 +1330,9 @@ function fMarkInactiveTabs() {
 		$(".form_tabber").addClass("inactives_marked");
 		$.getJSON(
 				"AppController.servlet?return=gui/reports_and_tables/tabs/tabs_inactive",
+				{
+					abCache: new Date().getTime()
+				},
 				function(data) {
 					for (i = 0; i < data.length; i++) {
 						var jqTab = $("#tab_choice_" + data[i]);
@@ -1456,6 +1459,9 @@ function fMap() {
 		var mapJSON = $
 				.getJSON(
 						"AppController.servlet?return=gui/reports_and_tables/tabs/map_json",
+						{
+							abCache: new Date().getTime()
+						},
 						function(data) {
 							var len = data.length;
 							for ( var i = 0; i < len; i++) {
