@@ -1140,9 +1140,6 @@ function fTabs() {
 						console.log("About to load tab_content");
 					}
 					tabContainer.load("AppController.servlet", {
-						if(console) {
-							console.log("Loaded load tab_content");
-						}
 						"return" : "gui/reports_and_tables/tabs/tab_content",
 						set_custom_table : true,
 						tablekey : "tabTable",
@@ -1151,6 +1148,9 @@ function fTabs() {
 						rowidinternaltablename: parentInternalTableName, 
 						abCache: new Date().getTime()
 					}, function() {
+						if(console) {
+							console.log("Loaded load tab_content");
+						}
 						tabContainer.removeClass("load-spinner");
 						jqTab.addClass("active");
 						jqTab.removeClass("tabLoading");
