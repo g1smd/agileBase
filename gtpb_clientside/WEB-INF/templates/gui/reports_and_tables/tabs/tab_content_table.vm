@@ -15,11 +15,13 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+#set($debugMessage = "")
 #if(!$sessionTable)
   #set($sessionTable = $sessionData.getCustomTable("tabTable"))
 #end
 #if(!$sessionRowId)
   #set($sessionRowId = $sessionData.getRowId($sessionTable))
+  #set($debugMessage = "Got session ID $sessionRowId from $sessionTable")
 #end
 #if(!$parentTable)
   #set($parentTable = $sessionData.getTable())
@@ -29,7 +31,7 @@
 #end
 #set($formStyle = $parentTable.getFormStyle()) ## Inherit form style from the parent
 #if(($formStyle == "TWO_COLUMNS") && ($component))
-  <div class="two_cols" id="rowid_$sessionTable.getInternalTableName()" data-rowid="$sessionRowId">
+  <div class="two_cols" id="rowid_$sessionTable.getInternalTableName()" data-rowid="$sessionRowId" title="$debugMessage">
 #end
 #set($fields = $sessionTable.getFields())
 #set($primaryKey = $sessionTable.getPrimaryKey())
