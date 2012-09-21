@@ -1116,14 +1116,10 @@ function fTabs() {
 		var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
 		jqTab.click(function() {
 			var tabInternalTableName = $(this).attr("data-internaltablename");
-			$(".tab_choice").removeClass("active");
+			$(".tab_choice").not(jqTab).removeClass("active");
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
 					+ tabInternalTableName);
 			$("#tab_deleter").fadeOut();
-			var classes = jqTab.attr("class").split(/\s+/);
-			for (i = 0; i < classes.length; i++) {
-				console.log("class '" + classes[i] + "'");
-			}
 			// Load tab if there is no data yet or if this is the current tab (user has clicked to re-load it)
 			if ((tabContainer.children().size() == 0) || jqTab.hasClass("active")) {
 				console.log("Really about to load");
