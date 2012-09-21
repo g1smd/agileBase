@@ -70,7 +70,9 @@ var TabInterfaceObject = function(containerElem) {
 		TabObjectPub.queueTab = function() {
 			tabLoaded = false;
 			loadSpinner.show();
-			jqTabContainer.load(tabSource, null, function() {
+			jqTabContainer.load(tabSource, {
+				abCache: new Date().getTime()
+			}, function() {
 				TabObjectPub.showTab();
 				loadSpinner.hide();
 				if (parent.pane_2 && currentRowId != -1) {
@@ -94,16 +96,12 @@ var TabInterfaceObject = function(containerElem) {
 			if (!tabLoaded) {
 				jqTabContainer.empty();
 				loadSpinner.show();
-				jqTabContainer.load(tabSource, null, function() {
+				jqTabContainer.load(tabSource, {
+					abCache: new Date().getTime()
+				}, function() {
 					loadSpinner.hide();
 					if (parent.pane_2 && currentRowId != -1) {
 						var rowFound = parent.pane_2.fSetRowSelection(currentRowId);
-						/* if ((!rowFound) && (tabNumber < 2)) {
-							$.get("?return=gui/reports_and_tables/tabs/edit_warning",
-									function(warningRowHtml) {
-										appendWarning(warningRowHtml);
-									});
-						} */
 					}
 					pane3Scripts.update();
 				});
@@ -473,7 +471,8 @@ function fRelationPickers() {
 		var postData = {
 			"return" : "gui/resources/input/xmlreturn_record_info",
 			set_table : relatedInternalTableName,
-			save_new_record : true
+			save_new_record : true,
+			abCache: new Date().getTime()
 		};
 		postData[displayFieldInternalName] = newValue;
 		$.post("AppController.servlet", postData, function(data) {
@@ -850,7 +849,8 @@ function fShowTableUsage() {
 				.get(
 						"AppController.servlet",
 						{
-							"return" : "gui/administration/tables/option_sets/table_usage_data_loader"
+							"return" : "gui/administration/tables/option_sets/table_usage_data_loader",
+							abCache: new Date().getTime()
 						}, function(returned_content) {
 							$("#table_usage_loader").html(returned_content);
 							$("#table_usage_loader").removeClass("load_spinner");
@@ -865,7 +865,8 @@ function fShowReportUsage() {
 				.get(
 						"AppController.servlet",
 						{
-							"return" : "gui/administration/reports/option_sets/report_usage_data_loader"
+							"return" : "gui/administration/reports/option_sets/report_usage_data_loader",
+							abCache: new Date().getTime()
 						}, function(returned_content) {
 							$("#report_usage_loader").html(returned_content);
 							$("#report_usage_loader").removeClass("load_spinner");
@@ -1120,7 +1121,8 @@ function fTabs() {
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
 					+ tabInternalTableName);
 			$("#tab_deleter").fadeOut();
-			if (tabContainer.children().size() == 0) {
+			// Load tab if there is no data yet or if this is the current tab (user has clicked to re-load it)
+			if ((tabContainer.children().size() == 0) || jqTab.hasClass("active")) {
 				if(jqTab.hasClass("no_records") && jqTab.hasClass("one_to_one")) {
 					$(".tab_container").fadeOut(); // fade out all tab containers
 					tabContainer.addClass("load-spinner").css("position", "relative");
@@ -1137,7 +1139,8 @@ function fTabs() {
 						tablekey : "tabTable",
 						custominternaltablename : tabInternalTableName,
 						set_row_id: parentRowId,
-						rowidinternaltablename: parentInternalTableName
+						rowidinternaltablename: parentInternalTableName, 
+						abCache: new Date().getTime()
 					}, function() {
 						tabContainer.removeClass("load-spinner");
 						jqTab.addClass("active");
@@ -1162,7 +1165,8 @@ function fTabs() {
 					"return" : "blank",
 					set_custom_table : true,
 					tablekey : "tabTable",
-					custominternaltablename : tabInternalTableName
+					custominternaltablename : tabInternalTableName,
+					abCache: new Date().getTime()
 				});
 				// If only one child record, show delete button in tabs bar
 				if ((tabContainer.find(".selectorReport").size() == 0)
@@ -1204,7 +1208,8 @@ function newChild(jqTab, parentInternalTableName) {
 		internaltablename : tabInternalTableName,
 		set_custom_table : true,
 		tablekey : 'tabTable',
-		custominternaltablename : tabInternalTableName
+		custominternaltablename : tabInternalTableName,
+		abCache: new Date().getTime()
 	}
 	// Set relationFieldInternalName like this as it is a variable
 	// property name
@@ -1251,7 +1256,8 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 			"return" : "gui/reports_and_tables/tabs/tab_content_table",
 			set_custom_table : true,
 			tablekey : "tabTable",
-			custominternaltablename : internalTableName
+			custominternaltablename : internalTableName,
+			abCache: new Date().getTime()
 		}, function() {
 			jqSelector.find("tr#currentRow").removeAttr("id");
 			$(oRow).attr("id", "currentRow");
@@ -1416,7 +1422,8 @@ function fFormStyle() {
 		$.post("AppController.servlet", {
 			"return" : "blank",
 			"update_table" : true,
-			"formstyle" : formStyle
+			"formstyle" : formStyle,
+			abCache: new Date().getTime()
 		}, function() {
 			clicked.addClass("selected_layout");
 		});

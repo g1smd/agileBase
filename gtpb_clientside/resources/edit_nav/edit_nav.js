@@ -35,7 +35,9 @@ $(document).ready(function() {
 		var id = jqLink.closest("li").attr("id");
 		var jqReportIncludingContent = $(".report_including_content");
 		jqReportIncludingContent.addClass("transparent");
-		jqReportIncludingContent.load(href, function() {
+		jqReportIncludingContent.load(href, {
+			abCache: new Date().getTime()
+		}, function() {
 			var rowCount = $(".row_count").html();
 			fSetCurrentOption(id, rowCount);
 			jqReportIncludingContent.removeClass("transparent");
@@ -77,7 +79,8 @@ $(document).ready(function() {
 										{
 											"return" : "gui/resources/xmlreturn_rowid",
 											set_table : internalTableName,
-											save_new_record : true
+											save_new_record : true,
+											abCache: new Date().getTime()
 										},
 										function(xml) {
 											var jqXml = $(xml);
@@ -108,7 +111,8 @@ $(document).ready(function() {
 											"return" : "gui/resources/xmlreturn_rowid",
 											set_table : internalTableName,
 											set_row_id : rowId,
-											clone_record : true
+											clone_record : true,
+											abCache: new Date().getTime()
 										},
 										function(xml) {
 											var jqXml = $(xml);
@@ -138,7 +142,8 @@ $(document).ready(function() {
 					remove_record : true,
 					returntype : "xml",
 					set_table : internalTableName,
-					rowid : rowId
+					rowid : rowId,
+					abCache: new Date().getTime()
 				},
 				function(xml) {
 					var jqXml = $(xml);
@@ -158,7 +163,8 @@ $(document).ready(function() {
 									returntype : "xml",
 									set_table : internalTableName,
 									rowid : rowId,
-									cascadedelete : true
+									cascadedelete : true,
+									abCache: new Date().getTime()
 								},
 								function(xml) {
 									jqXml = $(xml);
@@ -246,7 +252,8 @@ function relationChangeActions(oHidden) {
 		set_custom_field : true,
 		fieldkey : "relation_snippet_field",
 		custominternaltablename : internalTableName,
-		custominternalfieldname : internalFieldName
+		custominternalfieldname : internalFieldName,
+		abCache: new Date().getTime()
 	}, function(data) {
 		var jqSnippet = $("#" + snippetId);
 		jqSnippet.html(data);
@@ -335,8 +342,9 @@ function loadDependentSlides() {
 	var jqSlides = $(levelsList[currentLevel].levelContent).find(".slides");
 	var firstSlide = jqSlides.find(".slide").first();
 	if (firstSlide.find(".dependent_tables").children().size() > 0) {
-		$.get("AppController.servlet?return=gui/edit_nav/dependent_slides",
-				function(data) {
+		$.get("AppController.servlet?return=gui/edit_nav/dependent_slides", {
+			abCache: new Date().getTime()
+		}, function(data) {
 					jqSlides.append(data);
 					initialiseDependencies();
 					dependentSnippets();
@@ -350,7 +358,9 @@ function loadDependentSlides() {
 function createLevel(levelUrl) {
 	var jqLevel = $("<div class='level transparent'></div>");
 	$("#levels").append(jqLevel);
-	jqLevel.load(levelUrl, function() {
+	jqLevel.load(levelUrl, {
+		abCache: new Date().getTime()
+	},function() {
 		var newLevel = {};
 		newLevel.levelUrl = levelUrl;
 		newLevel.title = jqLevel.find(".breadcrumb_title").text();
@@ -385,7 +395,9 @@ function showCurrentLevel() {
 	var levelUrl = levelsList[currentLevel].levelUrl;
 	// reload slide and related slides in case related content has changed
 	if (dataChanged) {
-		jqLevel.load(levelUrl, function() {
+		jqLevel.load(levelUrl, {
+			abCache: new Date().getTime()
+		},function() {
 			levelsList[currentLevel].levelContent = jqLevel[0];
 			loadDependentSlides();
 			initialiseSlides();

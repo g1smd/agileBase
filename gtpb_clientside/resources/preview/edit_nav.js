@@ -47,7 +47,9 @@ function loadPreviewResults(filterString, internalReportName) {
 		// We are being called probably not from a keypress - update the value in the search box
 		jqSearchBox.val(filterString);
 	}
-	$.get(request, function(data) {
+	$.get(request, {
+		abCache: new Date().getTime()
+	}, function(data) {
 			// response has come back from the
 			// server, check it isn't out of
 			// date

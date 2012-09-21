@@ -25,6 +25,8 @@
   #parse("gui/pane1/field.vm")
 #end
 ## Related data
+## otherRelatedData will store stuff not selected for display on first pass
+#set($otherRelatedData = $viewTools.getNewStringObjectMap() )
 #set($report = $sessionData.getReport())
 #foreach($reportField in $report.getReportFields())
   #set($field = $reportField.getBaseField())

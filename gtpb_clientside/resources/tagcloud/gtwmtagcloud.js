@@ -46,7 +46,9 @@ function fTagCloud(jTagCloud) {
 	  else var sFilterValue='';
 	  sQueryString+='&'+jTagCloud.attr('filterparams')+'='+escape(sFilterValue);
 	  
-	  jResults.load(sBaseURL+sQueryString,null,fResultsLoaded)
+	  jResults.load(sBaseURL+sQueryString,{
+	  	abCache: new Date().getTime()
+	  },fResultsLoaded);
 	}
 	
     //var jTagCloud=$('#tagCloud');  // this is now set in the function call
@@ -89,7 +91,7 @@ function fTagCloud(jTagCloud) {
       jTagCloud.empty();
       jTagCloud.addClass('loading');
       var sQueryString='?'+jTagCloud.attr('filterparams')+'='+escape(sFilterValue)+'&'+jTagCloud.attr('tagcloudtemplate');
-	  jTagCloud.load(sBaseURL+sQueryString,null,fTagCloudLoaded);	        
+	  jTagCloud.load(sBaseURL+sQueryString,{abCache: new Date().getTime()},fTagCloudLoaded);	        
 	}
 	
 	oFilter.add=function(vFilterObj) {
@@ -129,12 +131,14 @@ function fTagCloud(jTagCloud) {
     });
     
     jTagCloud[0].load=function(sExtraParams) {
-	  jTagCloud.load(sBaseURL+'?'+jTagCloud.attr('tagcloudtemplate')+(sExtraParams?sExtraParams:''),null,fTagCloudLoaded);     
+	  jTagCloud.load(sBaseURL+'?'+jTagCloud.attr('tagcloudtemplate')+(sExtraParams?sExtraParams:''),{abCache: new Date().getTime()},fTagCloudLoaded);     
 	}; 
     jTagCloud[0].load();
     
     // if any filter are set in the session, load them in as text (e.g. if the page has been refreshed)
-    $(oFilter).load(sBaseURL+'?'+jTagCloud.attr('filterstemplate'),function() {
+    $(oFilter).load(sBaseURL+'?'+jTagCloud.attr('filterstemplate'),{
+    	abCache: new Date().getTime()
+    },function() {
       if($(this).find('a').length==0) this.showDefaultText();
     });
     

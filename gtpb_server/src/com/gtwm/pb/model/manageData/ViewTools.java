@@ -28,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -1562,7 +1563,7 @@ public final class ViewTools implements ViewToolsInfo {
 	}
 
 	public Map<String, Object> getNewStringObjectMap() {
-		return new HashMap<String, Object>();
+		return new LinkedHashMap<String, Object>();
 	}
 
 	public Set<String> getNewStringSet() {

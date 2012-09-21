@@ -55,8 +55,9 @@ function fExport()
 
 function fLinks()
 {
-	$.get('AppController.servlet?return=gui/links',
-	  function(mailtoUrl) {
+	$.get('AppController.servlet?return=gui/links', {
+		abCache: new Date().getTime()
+	}, function(mailtoUrl) {
 		  document.location.href=mailtoUrl;
 	  }
 	);

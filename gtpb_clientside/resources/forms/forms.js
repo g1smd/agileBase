@@ -15,14 +15,18 @@ $(document).ready(function() {
           'add_form_table': 'true',
           'internaltablename': internalTableName
   	  }
-      $.post("AppController.servlet", addFormOptions);
+      $.post("AppController.servlet", {
+      	abCache: new Date().getTime()
+      }, addFormOptions);
     } else {
   	  var removeFormOptions = {
           'return': 'blank',
           'remove_form_table': 'true',
           'internaltablename': internalTableName
   	  }
-      $.post("AppController.servlet", removeFormOptions);
+      $.post("AppController.servlet", {
+      	abCache: new Date().getTime()
+      }, removeFormOptions);
     }
   });
 
@@ -38,7 +42,11 @@ $(document).ready(function() {
   $(".report_selection_header input").change(function(event) {
 	var jqRadio = $(this);
 	var internalTableName = jqRadio.attr("id").replace("legend_","");
-	$("#form").load("AppController.servlet?return=gui/reports_and_tables/tabs/edit&set_table=" + internalTableName);
+	$("#form").load("AppController.servlet", {
+		"return": "gui/reports_and_tables/tabs/edit",
+		set_table: internalTableName,
+		abCache: new Date().getTime()
+	});
 	return false;
   });
 	  

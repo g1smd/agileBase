@@ -158,7 +158,8 @@ function fFullScreen() {
 	previewDiv.fadeIn().load("AppController.servlet",{
 		"return": "gui/preview/report_including_content",
 		set_global_report_filter_string: true,
-		filterstring: ""
+		filterstring: "",
+		abCache: new Date().getTime()
 	}, function() {
 		$("#doneSearch").fadeIn();
 	});

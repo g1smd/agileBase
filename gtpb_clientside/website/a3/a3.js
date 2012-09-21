@@ -5,7 +5,8 @@
 	  var options = {
 		'return':'gui/customisations/common/a3/a3_report_content',
 		'set_table': jQuery("#internaltablename").text(),
-		'set_report':'dbvcalc_a3_reports'
+		'set_report':'dbvcalc_a3_reports',
+		abCache: new Date().getTime()
 	  };
 	  if(jQuery("#company").text() == "A3 Reports Demo") {
 	    options = {
@@ -14,7 +15,8 @@
 		  'set_report':'dbvcalc_a3_reports',
 		  'set_report_filter_value': 'true',
 		  'internalfieldname': 'Created by [Auto]',
-		  'fieldvalue': '*(' + jQuery("#username").text() + ')'
+		  'fieldvalue': '*(' + jQuery("#username").text() + ')',
+		  abCache: new Date().getTime()
 		};
 	  }
 	  jQuery("#a3_report").load("AppController.servlet", options, function() {
@@ -41,7 +43,7 @@
 	jQuery("#new_report").click(function() {
 	  jQuery("#a3_report").fadeOut("normal");
 	  jQuery("#a3_report").load("AppController.servlet",
-	    {'return':'gui/customisations/common/a3/a3_report_content', 'save_new_record':'true'},
+	    {'return':'gui/customisations/common/a3/a3_report_content', 'save_new_record':'true', abCache: new Date().getTime()},
 	    function() {
 		  jQuery("#a3_report").fadeIn("normal");
 		  fieldDisplayResize("leftcolumn");
@@ -90,7 +92,7 @@
 	  buttons : {
         "Delete" : function() {
           jQuery("#a3_report").hide().load("AppController.servlet",
-	        {'return':'gui/customisations/common/a3/a3_report_content', 'remove_record':'true'},
+	        {'return':'gui/customisations/common/a3/a3_report_content', 'remove_record':'true', abCache: new Date().getTime()},
 	        function() {
 		      jQuery("#a3_report").fadeIn("normal");
 	        }
@@ -202,7 +204,7 @@ function fontResize(targetSize, direction) {
 function next_report(sAction) {
 	 jQuery("#a3_report").hide();
 	 jQuery("#a3_report").load("AppController.servlet",
-	    {'return':'gui/customisations/common/a3/a3_report_content', 'set_row_id':sAction},
+	    {'return':'gui/customisations/common/a3/a3_report_content', 'set_row_id':sAction, abCache: new Date().getTime()},
 	    function() {
 		  jQuery("#a3_report").fadeIn("normal");
 		  fieldDisplayResize("leftcolumn");

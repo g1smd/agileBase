@@ -266,6 +266,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	// ? means non greedy, after the escaped ?, i.e. replace everything up to and including the first question mark
 	var params = replacedTemplateUrl.replace(/^.*?\?/,'');
 	var paramsObj = $.deparam(params);
+	paramsObj['abCache'] = new Date().getTime();
 	var baseUrl = replacedTemplateUrl.replace(/\?.*$/,'');
 	$.post(baseUrl, paramsObj, function(data) {
 		// Refresh frame 3
@@ -348,7 +349,8 @@ function clearFilters() {
 		{
 		  'return': 'gui/reports_and_tables/report_data_only',
 		  'clear_all_report_filter_values': true,
-		  'clear_custom_variable': 'filtering_on'
+		  'clear_custom_variable': 'filtering_on',
+		  abCache: new Date().getTime()
 	  }, function(sResponseText) {
 	  	$("input[is_filter=true]").removeAttr("disabled");
 		  fLoadReport(sResponseText, oReportBody, null);

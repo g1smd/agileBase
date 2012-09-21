@@ -45,7 +45,8 @@ function appSelect(internalTableName, rowId, collapseModules) {
 		"return": "gui/pane1/appspace",
 		set_custom_integer: true,
 		integerkey: "preview_row_id",
-		customintegervalue: rowId
+		customintegervalue: rowId,
+		abCache: new Date().getTime()
 	}, function() {
 		// Collapse modules
 		if (collapseModules) {
