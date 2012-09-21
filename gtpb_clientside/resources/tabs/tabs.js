@@ -1115,7 +1115,6 @@ function fTabs() {
 		// Set parent row ID for use if we're using a form table
 		var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
 		jqTab.click(function() {
-			jqTab.addClass("tabLoading");
 			var tabInternalTableName = $(this).attr("data-internaltablename");
 			$(".tab_choice").removeClass("active");
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
@@ -1123,6 +1122,7 @@ function fTabs() {
 			$("#tab_deleter").fadeOut();
 			// Load tab if there is no data yet or if this is the current tab (user has clicked to re-load it)
 			if ((tabContainer.children().size() == 0) || jqTab.hasClass("active")) {
+				jqTab.addClass("tabLoading");
 				if(jqTab.hasClass("no_records") && jqTab.hasClass("one_to_one")) {
 					$(".tab_container").fadeOut(); // fade out all tab containers
 					tabContainer.addClass("load-spinner").css("position", "relative");
@@ -1217,6 +1217,7 @@ function newChild(jqTab, parentInternalTableName) {
 	tabContainer.load("AppController.servlet", options, function() {
 		tabContainer.removeClass("load-spinner");
 		tabContainer.fadeIn();
+		jqTab.removeClass("tabLoading");
 		editTabFunctions();
 	});
 	jqTab.removeClass("no_records");
