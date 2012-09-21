@@ -1120,8 +1120,10 @@ function fTabs() {
 			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
 					+ tabInternalTableName);
 			$("#tab_deleter").fadeOut();
+			console.log("About to to load");
 			// Load tab if there is no data yet or if this is the current tab (user has clicked to re-load it)
 			if ((tabContainer.children().size() == 0) || jqTab.hasClass("active")) {
+				console.log("Really about to load");
 				jqTab.addClass("tabLoading");
 				if(jqTab.hasClass("no_records") && jqTab.hasClass("one_to_one")) {
 					$(".tab_container").fadeOut(); // fade out all tab containers
