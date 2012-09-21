@@ -235,7 +235,7 @@ public final class SessionData implements SessionDataInfo {
 		return this.currentTableReports.get(this.table);
 	}
 
-	public synchronized int getRowId() {
+	public int getRowId() {
 		return getRowId(this.table);
 	}
 
