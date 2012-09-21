@@ -180,6 +180,9 @@ var TabInterfaceObject = function(containerElem) {
 		if (typeof rowId != "undefined") {
 		  currentRowId = rowId;
 		}
+		if(console) {
+			console.log("TabInterfaceObjectPub.refresh(" + rowId + ")");
+		}
 		currentTab.queueTab();
 	}
 
@@ -1122,7 +1125,6 @@ function fTabs() {
 			$("#tab_deleter").fadeOut();
 			// Load tab if there is no data yet or if this is the current tab (user has clicked to re-load it)
 			if ((tabContainer.children().size() == 0) || jqTab.hasClass("active")) {
-				console.log("Really about to load");
 				jqTab.addClass("tabLoading");
 				if(jqTab.hasClass("no_records") && jqTab.hasClass("one_to_one")) {
 					$(".tab_container").fadeOut(); // fade out all tab containers
@@ -1134,7 +1136,13 @@ function fTabs() {
 					$(".tab_container").fadeOut(); // fade out all tab containers
 					tabContainer.addClass("load-spinner").css("position", "relative");
 					tabContainer.fadeIn();
+					if(console) {
+						console.log("About to load tab_content");
+					}
 					tabContainer.load("AppController.servlet", {
+						if(console) {
+							console.log("Loaded load tab_content");
+						}
 						"return" : "gui/reports_and_tables/tabs/tab_content",
 						set_custom_table : true,
 						tablekey : "tabTable",
