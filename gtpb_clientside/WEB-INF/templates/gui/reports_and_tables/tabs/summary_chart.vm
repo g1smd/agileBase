@@ -35,7 +35,6 @@
 #if($chartRows.size() == 1)
   #set($dateAxis = false)
 #end
-Chart name: $chart. Date axis $dateAxis<p>
 #if($dateAxis)
   #set($columnDisplay = false)
   #if(($chartRows.size() * $aggregateFunctions.size()) < 11)
