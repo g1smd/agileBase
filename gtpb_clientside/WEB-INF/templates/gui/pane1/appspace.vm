@@ -16,6 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## 'Widget' type space that the current app related content can go in
+<div class="block">
 #set($valuesFound = 0)
 #set($table = $sessionData.getTable())
 #set($rowId = $sessionData.getCustomInteger("preview_row_id"))
@@ -49,3 +50,4 @@
       #end
   #end
 #end
+</div>

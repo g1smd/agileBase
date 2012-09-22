@@ -1,7 +1,9 @@
 #set($valuesFound = $valuesFound + 1)
 #if($needHeading)
   #set($needHeading = false)
-  <div class="appelement">
-    <b>$field.getTableContainingField().getSingularName()</b>
-  </div>
+  </div> ## end previous block
+  <div class="block">
+##  <div class="appelement">
+##    <b>$field.getTableContainingField().getSingularName()</b>
+##  </div>
 #end
