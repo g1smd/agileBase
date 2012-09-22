@@ -66,6 +66,6 @@
 #set($charts = $report.getSavedCharts())
 #if($charts.size() > 0)
   <div class="block"><div class="appelement">
-    Chart $chart here
+    #parse("gui/reports_and_tables/tabs/summary_chart.vm")
   </div></div>
 #end
