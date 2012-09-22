@@ -201,8 +201,6 @@
 #if($aggregateFunctions.size() > 1)
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
 #end
-AggregateFunctions are $aggregateFunctions<p>
-Groupings are $groupings<p>
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
   #if($pieChart)
     #set($xAxisMargin = 10)
