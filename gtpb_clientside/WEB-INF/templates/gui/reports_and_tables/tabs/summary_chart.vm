@@ -64,7 +64,6 @@
 #if((!$dateAxis) && ($chartRows.size() > 1) && ($chartRows.size() < 5) && ($aggregateFunctions.size() == 1))
   #set($pieChart = true)
 #end
-Chart rows: $chartRows<p>
 #if($chartRows.size() > 0)
 #if(((!$dateAxis) || $columnDisplay) && (!$pieChart))
   ## we need to create category labels
