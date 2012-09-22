@@ -357,6 +357,14 @@ ul.moduleaction li {
   overflow-x: hidden;
 }
 
+#appspace .block:nth-of-type(2) {
+  border-color: #486f98;
+}
+
+#appspace .block:nth-of-type(3) {
+  border-color: #50add6;
+}
+
 #appspace .appelement {
   margin-bottom: 0.5em;
   padding-left: 0.5em;

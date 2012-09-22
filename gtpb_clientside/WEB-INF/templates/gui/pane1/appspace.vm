@@ -51,3 +51,15 @@
   #end
 #end
 </div>
+#if($otherRelatedData.size() > 0)
+  #set($i = 0)
+  <div class="block"><div class="appelement">
+    #foreach($entry in $otherRelatedData.entrySet())
+      #set($i = $i + 1)
+      #if($i > 4)
+        #break
+      #end
+      $entry.getKey(): $entry.getValue<br>
+    #end
+  </div></div>
+#end
