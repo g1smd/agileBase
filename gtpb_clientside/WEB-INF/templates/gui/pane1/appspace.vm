@@ -19,6 +19,7 @@
 <div class="block">
 #set($valuesFound = 0)
 #set($table = $sessionData.getTable())
+#set($report = $sessionData.getReport())
 #set($rowId = $sessionData.getCustomInteger("preview_row_id"))
 #set($rrd_rowId = $rowId)
 #set($tableDataRow = $view.getTableDataRow($table, $rowId))
@@ -28,7 +29,6 @@
 ## Related data
 ## otherRelatedData will store stuff not selected for display on first pass
 #set($otherRelatedData = $viewTools.getNewStringObjectMap() )
-#set($report = $sessionData.getReport())
 #foreach($reportField in $report.getReportFields())
   #set($field = $reportField.getBaseField())
   #if($field.isPrimaryKey())
@@ -51,7 +51,8 @@
   #end
 #end
 </div>
-#if($otherRelatedData.size() > 0)
+Values found: $valuesFound<p>
+#if(($valuesFound < 2) && ($otherRelatedData.size() > 0))
   #set($i = 0)
   <div class="block"><div class="appelement">
     #foreach($entry in $otherRelatedData.entrySet())
@@ -59,7 +60,13 @@
       #if($i > 4)
         #break
       #end
-      $entry.getKey(): $entry.getValue<br>
+      $entry.getKey(): $entry.getValue()<br>
     #end
+  </div></div>
+#end
+#set($charts = $report.getSavedCharts())
+#if($charts.size() > 0)
+  <div class="block"><div class="appelement">
+    Chart $chart here
   </div></div>
 #end
