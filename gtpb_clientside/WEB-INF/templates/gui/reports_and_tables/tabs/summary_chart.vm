@@ -201,6 +201,8 @@
 #if($aggregateFunctions.size() > 1)
   #set($height = $height * ($aggregateFunctions.size() * 0.8))
 #end
+AggregateFunctions are $aggregateFunctions<p>
+Groupings are $groupings<p>
 #if(($aggregateFunctions.size() > 0) || ($groupings.size() > 0))
   #if($pieChart)
     #set($xAxisMargin = 10)
@@ -225,7 +227,6 @@
   #set($subtitle = "")
   #set($export_filename = $viewTools.cleanString($title))
   #set($export_filename = "agilebase_$export_filename")
-  Script here<p>
   <script language="JavaScript">
     var $chart_id = new Highcharts.Chart({
       chart: {
