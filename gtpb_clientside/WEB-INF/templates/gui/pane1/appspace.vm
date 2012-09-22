@@ -67,6 +67,8 @@
 #if($charts.size() > 0)
   <div class="block"><div class="appelement">
     #set($chart = $charts.toArray()[0])
+    #set($chartData = $view.getChartData($chart))
+    #set($chartRows = $chartData.getChartDataRows())
     #parse("gui/reports_and_tables/tabs/summary_chart.vm")
   </div></div>
 #end
