@@ -415,6 +415,11 @@ ul.moduleaction li {
   width: 100em;
 }
 
+#appspace .twitter a {
+  width: auto;
+  display: inline;
+}
+
 #appspace .icon-phone {
   font-size: 150%;
   vertical-align: top;
