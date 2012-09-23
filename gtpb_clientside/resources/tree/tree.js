@@ -225,7 +225,6 @@ function expandRelated() {
 		for (i = 0; i < relatedModules.length; i++) {
 			var relatedModule = relatedModules[i].trim();
 			if (relatedModule.length > 0) {
-				alert("related module: " + relatedModule);
 				$("li#" + relatedModule).show();
 			}
 		}
