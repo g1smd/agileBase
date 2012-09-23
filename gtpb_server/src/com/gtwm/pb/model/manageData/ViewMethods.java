@@ -224,6 +224,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			for (BaseReportInfo report : this.getViewableReports(table)) {
 				dependentModules.add(report.getModule());
 			}
+			logger.debug("Table " + table + " -> modules " + dependentModules);
 		}
 		return dependentModules;
 	}
@@ -381,6 +382,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			throws ObjectNotFoundException {
 		Set<TableInfo> dependentTables = new LinkedHashSet<TableInfo>();
 		this.databaseDefn.getDependentTables(baseTable, dependentTables, direction, this.request);
+		logger.debug("Table " + baseTable + " -> dependencies " + dependentTables);
 		return dependentTables;
 	}
 
