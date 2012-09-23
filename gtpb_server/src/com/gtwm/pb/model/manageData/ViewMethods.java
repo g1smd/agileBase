@@ -214,15 +214,25 @@ public final class ViewMethods implements ViewMethodsInfo {
 			ObjectNotFoundException {
 		Set<ModuleInfo> dependentModules = new HashSet<ModuleInfo>();
 		Set<TableInfo> dependentTables = new HashSet<TableInfo>();
-		for (BaseReportInfo report : this.getReportsInModule(module)) {
+		Set<BaseReportInfo> moduleReports = this.getReportsInModule(module);
+		// Exclude tables that the reports in the module are from
+		Set<TableInfo> moduleTables = new HashSet<TableInfo>();
+		for (BaseReportInfo report : moduleReports) {
+			moduleTables.add(report.getParentTable());
+		}
+		for (BaseReportInfo report : moduleReports) {
 			TableInfo table = report.getParentTable();
 			if (this.loggedInUserAllowedTo(PrivilegeType.VIEW_TABLE_DATA.name(), table)) {
-				dependentTables.addAll(this.getDependentTables(table, false));
+				Set<TableInfo> reportDependentTables = this.getDependentTables(table, false);
+				reportDependentTables.removeAll(moduleTables);
+				dependentTables.addAll(reportDependentTables);
 			}
 		}
 		for (TableInfo table : dependentTables) {
 			for (BaseReportInfo report : this.getViewableReports(table)) {
-				dependentModules.add(report.getModule());
+				if (report.getModule() != null) {
+					dependentModules.add(report.getModule());
+				}
 			}
 			logger.debug("Table " + table + " -> modules " + dependentModules);
 		}
