@@ -190,20 +190,9 @@ function pane1Setup() {
 			  $(this).addClass('moduleexpanded');
 		  }
 	  });
-	  expandRelated();
 	}
-	
-	function expandRelated() {
-		alert('expanding related');
-		$("li.moduleexpanded:visible, li.modulecontracted:visible").each(function() {
-			var relatedModules = $(this).attr("data-related").split(/\s+/);
-			for (i = 0; i < relatedModules.length; i++) {
-				var relatedModule = relatedModules[i];
-				alert("related module: " + relatedModule);
-				$("li#" + relatedModule).show();
-			}
-		});
-	}
+
+  expandRelated();
 	
 	$('.expandable').click(function(event){
 		// Prevent the children triggering open/close
@@ -215,6 +204,18 @@ function pane1Setup() {
 				$(this).addClass('collapsed');
 				$(this).removeClass('expanded');
 			}
+		}
+	});
+}
+
+function expandRelated() {
+	alert('expanding related');
+	$("li.moduleexpanded:visible, li.modulecontracted:visible").each(function() {
+		var relatedModules = $(this).attr("data-related").split(/\s+/);
+		for (i = 0; i < relatedModules.length; i++) {
+			var relatedModule = relatedModules[i];
+			alert("related module: " + relatedModule);
+			$("li#" + relatedModule).show();
 		}
 	});
 }
