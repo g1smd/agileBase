@@ -245,10 +245,12 @@ public interface ViewMethodsInfo {
 	 * Calls DatabaseInfo#getDependentTables to retrieve a Set tables dependent
 	 * upon the Table passed as an argument to the method
 	 * 
+	 * @param direction: true find child tables, false finds parents and ancestors
+	 * 
 	 * @see com.gtwm.pb.model.interfaces.DatabaseInfo#getDependentTables(TableInfo,
 	 *      LinkedHashSet)
 	 */
-	public Set<TableInfo> getDependentTables(TableInfo baseTable) throws ObjectNotFoundException;
+	public Set<TableInfo> getDependentTables(TableInfo baseTable, boolean direction) throws ObjectNotFoundException;
 
 	/**
 	 * If an exception occurred during request processing, this method can be

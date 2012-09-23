@@ -509,21 +509,26 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables,
+	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, boolean direction,
 			HttpServletRequest request) throws ObjectNotFoundException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		Set<TableInfo> tables = company.getTables();
 		for (TableInfo table : tables) {
-			// check relation fields in table itself:
 			if (table.equals(baseTable)) {
 				continue;
 			}
-			// only check for table dependency if table in
-			// question is not the one to be deleted:
-			if (table.isDependentOn(baseTable)) {
+			// Find dependent parents
+			TableInfo t1 = baseTable;
+			TableInfo t2 = table;
+			if (direction) {
+				// No, find dependent children
+				t1 = table;
+				t2 = baseTable;
+			}
+			if (t1.isDependentOn(t2)) {
 				if (!dependentTables.contains(table)) {
 					dependentTables.add(table);
-					getDependentTables(table, dependentTables, request);
+					this.getDependentTables(table, dependentTables, direction, request);
 				}
 			}
 		}
@@ -660,7 +665,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// Get a set of dependent tables. If empty proceed with the deletion of
 		// the table, otherwise, raise an exception
 		LinkedHashSet<TableInfo> dependentTables = new LinkedHashSet<TableInfo>();
-		this.getDependentTables(tableToRemove, dependentTables, request);
+		this.getDependentTables(tableToRemove, dependentTables, true, request);
 		if (dependentTables.size() > 0) {
 			LinkedHashSet<BaseReportInfo> dependentReports = new LinkedHashSet<BaseReportInfo>();
 			for (TableInfo dependentTable : dependentTables) {

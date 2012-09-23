@@ -122,20 +122,20 @@ public interface DatabaseInfo {
 	 * return value.
 	 * 
 	 * @param baseTable
-	 * @param dependentTables
+	 * @param dependentTables Pass in an empty set to start with, will be populated through recursion
+	 * @param direction: true means find dependent child tables (contacts given orgs), false means the opposite
 	 */
-	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables,
+	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, boolean direction,
 			HttpServletRequest request) throws ObjectNotFoundException;
 
 	/**
 	 * Adds TableInfo objects to dependentTables where all tables added are
-	 * directly dependent (through RelationField) on baseTable. Access
-	 * dependentTables argument as return value.
+	 * directly dependent (through RelationField) on baseTable.
 	 * 
-	 * @param baseTable
-	 * @param dependentTables
+	 * @param direction: true means find dependent child tables (contacts given orgs), false means the opposite
+	 * 
 	 */
-	public SortedSet<TableInfo> getDirectlyDependentTables(TableInfo baseTable,
+	public SortedSet<TableInfo> getDirectlyDependentTables(TableInfo baseTable, 
 			HttpServletRequest request) throws ObjectNotFoundException;
 
 	/**

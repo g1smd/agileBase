@@ -211,7 +211,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	}
 	
 	public Set<ModuleInfo> getDependentModules(ModuleInfo module) {
-		
+		return null;
 	}
 
 	public UsageStatsInfo getUsageStats() throws DisallowedException, ObjectNotFoundException,
@@ -363,9 +363,9 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return this.databaseDefn.findTableContainingReport(this.request, reportInternalName);
 	}
 
-	public Set<TableInfo> getDependentTables(TableInfo baseTable) throws ObjectNotFoundException {
+	public Set<TableInfo> getDependentTables(TableInfo baseTable, boolean direction) throws ObjectNotFoundException {
 		Set<TableInfo> dependentTables = new LinkedHashSet<TableInfo>();
-		this.databaseDefn.getDependentTables(baseTable, dependentTables, this.request);
+		this.databaseDefn.getDependentTables(baseTable, dependentTables, direction, this.request);
 		return dependentTables;
 	}
 
@@ -376,7 +376,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 					"Can't select dependent tables prior to table selection");
 		}
 		Set<TableInfo> dependentTables = new LinkedHashSet<TableInfo>();
-		this.databaseDefn.getDependentTables(baseTable, dependentTables, this.request);
+		this.databaseDefn.getDependentTables(baseTable, dependentTables, true, this.request);
 		return dependentTables;
 	}
 
