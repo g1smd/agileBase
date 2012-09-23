@@ -1,2 +1,2 @@
 #set($table = $sessionData.getTable())
-Dependent tables: $view.getDependentTables($table))
+Tables dependent on $table: $view.getDependentTables($table))
