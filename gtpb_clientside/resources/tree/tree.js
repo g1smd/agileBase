@@ -190,6 +190,17 @@ function pane1Setup() {
 			  $(this).addClass('moduleexpanded');
 		  }
 	  });
+	  expandRelated();
+	}
+	
+	function expandRelated() {
+		$("li.moduleexpanded:visible, li.modulecontracted:visible").each(function() {
+			var relatedModules = $(this).attr("data-related").split(/\s+/);
+			for (i = 0; i < relatedModules.length; i++) {
+				var relatedModule = relatedModules[i];
+				$("li#" + relatedModule).show();
+			}
+		});
 	}
 	
 	$('.expandable').click(function(event){

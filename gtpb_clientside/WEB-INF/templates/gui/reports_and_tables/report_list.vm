@@ -97,7 +97,7 @@
     	    #if($iconPath == $previousIconPath) style="display:none"#end
     	  #else
     	    ## if in pane 1
-    	    data-dependent = "#foreach($dependentModule in $view.getDependentModules($module)) $dependentModule: $dependentModule.getInternalModuleName(), #end"
+    	    data-dependent = "#foreach($dependentModule in $view.getDependentModules($module)) $dependentModule.getInternalModuleName() #end"
     	    #if($appId && ($iconPath != $appId)) style="display:none" #end
     	  #end>
     	  #set($previousIconPath = $iconPath)
