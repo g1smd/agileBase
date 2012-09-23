@@ -74,6 +74,19 @@ public interface ViewMethodsInfo {
 			String attributes, String actionTemplate, String buttons, String callbackFunction);
 
 	/**
+	 * For a given module:
+	 * 
+	 * * for each of the reports in the module:
+	 * 
+	 * * find any tables the reports' parent table is depentent on e.g. for contacts, find organisations
+	 * 
+	 * * for all reports based on that ancestor table, add the modules to the list of modules that's returned
+	 * 
+	 * Note: use only tables and reports the logged in user's allowed to view
+	 */
+	public Set<ModuleInfo> getDependentModules(ModuleInfo module);
+	
+	/**
 	 * Returns true if the current session record is locked for editing, taking
 	 * into account any override
 	 */

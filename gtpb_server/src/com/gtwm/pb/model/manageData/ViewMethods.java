@@ -209,6 +209,10 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		return reportsInModule;
 	}
+	
+	public Set<ModuleInfo> getDependentModules(ModuleInfo module) {
+		
+	}
 
 	public UsageStatsInfo getUsageStats() throws DisallowedException, ObjectNotFoundException,
 			SQLException {

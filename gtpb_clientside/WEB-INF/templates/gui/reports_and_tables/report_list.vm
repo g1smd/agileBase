@@ -92,8 +92,10 @@
     	#end
     	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName  #end"
     	  #if($app_launcher)
+    	    ## if in app launcher
     	    data-table="$table.getInternalTableName()" data-report="$report.getInternalReportName()" #if($iconPath == $previousIconPath) style="display:none"#end 
     	  #elseif($appId && ($iconPath != $appId))
+    	    ## if in pane 1
 			style="display:none"
     	  #end>
     	  #set($previousIconPath = $iconPath)

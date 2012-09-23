@@ -139,8 +139,7 @@ public interface TableInfo extends Comparable<TableInfo> {
 	public BaseReportInfo getReport(String reportID) throws ObjectNotFoundException;
 
 	/**
-	 * @param table
-	 * @return true if the current table object contains RelationFields sourced
+	 * @return true if this table contains RelationFields sourced
 	 *         from the parameter table
 	 */
 	public boolean isDependentOn(TableInfo table);
