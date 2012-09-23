@@ -91,11 +91,13 @@
     	  #set($table = $report.getParentTable())
     	#end
     	<li id="$internalModuleName" class="#if(!$moduleExpanded) modulecollapsed #end #if(!$app_launcher) $colourStyleName  #end"
-          data-dependent = "#foreach($dependentModule in $view.getDependentModules($module)) $dependentModule.getInternalModuleName() #end"
     	  #if($app_launcher)
+    	    ## if in app launcher
     	    data-table="$table.getInternalTableName()" data-report="$report.getInternalReportName()"
     	    #if($iconPath == $previousIconPath) style="display:none"#end
     	  #else
+    	    ## if in pane 1
+    	    data-dependent = "#foreach($dependentModule in $view.getDependentModules($module)) $dependentModule.getInternalModuleName() #end"
     	    #if($appId && ($iconPath != $appId)) style="display:none" #end
     	  #end>
     	  #set($previousIconPath = $iconPath)
