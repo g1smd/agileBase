@@ -74,7 +74,7 @@ public interface ViewMethodsInfo {
 			String attributes, String actionTemplate, String buttons, String callbackFunction);
 
 	/**
-	 * For a given module:
+	 * For a given module, find any modules containing ancestor data. That means
 	 * 
 	 * * for each of the reports in the module:
 	 * 
@@ -84,7 +84,7 @@ public interface ViewMethodsInfo {
 	 * 
 	 * Note: use only tables and reports the logged in user's allowed to view
 	 */
-	public Set<ModuleInfo> getDependentModules(ModuleInfo module);
+	public Set<ModuleInfo> getDependentModules(ModuleInfo module) throws CodingErrorException, ObjectNotFoundException;
 	
 	/**
 	 * Returns true if the current session record is locked for editing, taking

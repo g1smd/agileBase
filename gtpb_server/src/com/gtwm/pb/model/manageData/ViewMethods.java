@@ -209,9 +209,24 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		return reportsInModule;
 	}
-	
-	public Set<ModuleInfo> getDependentModules(ModuleInfo module) {
-		return null;
+
+	public Set<ModuleInfo> getDependentModules(ModuleInfo module) throws CodingErrorException,
+			ObjectNotFoundException {
+		Set<ModuleInfo> dependentModules = new HashSet<ModuleInfo>();
+		Set<TableInfo> dependentTables = new HashSet<TableInfo>();
+		for (BaseReportInfo report : this.getReportsInModule(module)) {
+			TableInfo table = report.getParentTable();
+			if (this.loggedInUserAllowedTo(PrivilegeType.VIEW_TABLE_DATA.name(), table)) {
+				dependentTables.add(table);
+				dependentTables.addAll(this.getDependentTables(table, false));
+			}
+		}
+		for (TableInfo table : dependentTables) {
+			for (BaseReportInfo report : this.getViewableReports(table)) {
+				dependentModules.add(report.getModule());
+			}
+		}
+		return dependentModules;
 	}
 
 	public UsageStatsInfo getUsageStats() throws DisallowedException, ObjectNotFoundException,
@@ -363,7 +378,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return this.databaseDefn.findTableContainingReport(this.request, reportInternalName);
 	}
 
-	public Set<TableInfo> getDependentTables(TableInfo baseTable, boolean direction) throws ObjectNotFoundException {
+	public Set<TableInfo> getDependentTables(TableInfo baseTable, boolean direction)
+			throws ObjectNotFoundException {
 		Set<TableInfo> dependentTables = new LinkedHashSet<TableInfo>();
 		this.databaseDefn.getDependentTables(baseTable, dependentTables, direction, this.request);
 		return dependentTables;
@@ -601,14 +617,16 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return reportDataRows;
 	}
 
-	public String getReportDataRowsJSON() throws DisallowedException,
-	SQLException, ObjectNotFoundException, JsonGenerationException, CodingErrorException, CantDoThatException, XMLStreamException {
+	public String getReportDataRowsJSON() throws DisallowedException, SQLException,
+			ObjectNotFoundException, JsonGenerationException, CodingErrorException,
+			CantDoThatException, XMLStreamException {
 		BaseReportInfo report = this.sessionData.getReport();
 		Map<BaseField, String> reportFilterValues = this.sessionData.getReportFilterValues(report);
 		AppUserInfo user = this.databaseDefn.getAuthManager().getLoggedInUser(request);
-		return this.databaseDefn.getDataManagement().getReportJSON(user, report, reportFilterValues, false, 0);
+		return this.databaseDefn.getDataManagement().getReportJSON(user, report,
+				reportFilterValues, false, 0);
 	}
-	
+
 	public String getReportMapJSON() throws ObjectNotFoundException, CodingErrorException,
 			CantDoThatException, SQLException, DisallowedException {
 		BaseReportInfo report = this.sessionData.getReport();

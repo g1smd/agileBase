@@ -226,6 +226,13 @@
   #set($export_filename = $viewTools.cleanString($title))
   #set($export_filename = "agilebase_$export_filename")
   <script language="JavaScript">
+	Highcharts.setOptions({
+	  chart: {
+	    style: {
+	      fontFamily: 'Verdana, sans-serif'
+	    }
+	  }
+	});
     var $chart_id = new Highcharts.Chart({
       chart: {
         renderTo: "$chart_id",
