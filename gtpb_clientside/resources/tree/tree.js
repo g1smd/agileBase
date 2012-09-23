@@ -61,6 +61,12 @@ function appSelect(internalTableName, rowId, collapseModules) {
 		}
 		fTwitter();
 		fYouTube();
+		$("#appspace .block").each(function() {
+			var block = $(this);
+			if (block.children().size() == 0) {
+				block.remove();
+			}
+		});
 	});
 }
 
