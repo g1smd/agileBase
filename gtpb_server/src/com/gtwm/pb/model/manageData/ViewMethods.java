@@ -217,7 +217,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 		for (BaseReportInfo report : this.getReportsInModule(module)) {
 			TableInfo table = report.getParentTable();
 			if (this.loggedInUserAllowedTo(PrivilegeType.VIEW_TABLE_DATA.name(), table)) {
-				dependentTables.add(table);
 				dependentTables.addAll(this.getDependentTables(table, false));
 			}
 		}
