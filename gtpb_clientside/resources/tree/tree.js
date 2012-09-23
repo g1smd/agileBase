@@ -209,6 +209,7 @@ function pane1Setup() {
 }
 
 function expandRelated() {
+	alert('expandRelated');
 	$("li.moduleexpanded:visible, li.modulecontracted:visible").each(function() {
 		alert('expanding related for ' + $(this).text());
 		var relatedModules = $(this).attr("data-dependent").split(/\s+/);
