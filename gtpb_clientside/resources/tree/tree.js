@@ -196,6 +196,7 @@ function pane1Setup() {
 	function expandRelated() {
 		$("li.moduleexpanded:visible, li.modulecontracted:visible").each(function() {
 			var relatedModules = $(this).attr("data-related").split(/\s+/);
+			alert("related modules: " + relatedModules);
 			for (i = 0; i < relatedModules.length; i++) {
 				var relatedModule = relatedModules[i];
 				$("li#" + relatedModule).show();
