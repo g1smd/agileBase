@@ -16,23 +16,26 @@
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
 ;
-$(document).ready(function(){
-	pane1Setup();
-	// If in a table (or admin section), show pane 3
-	var currentOption = $("li.currentOption");
-	if (currentOption.closest("#setup").length > 0) {
-		top.showPane3IfNecessary();
-	}
-	// Remove when enabling websocket notifications
-	return;
-	var socketUrl = window.location.href;
-	socketUrl = socketUrl.replace(":8080","").replace(/\/agileBase\/.*$/,"") + ":8181";
-  var socket = io.connect(socketUrl);
-  socket.on('notification', function (data) {
-  	var n = $.parseJSON(data);
-    notify(n);
-  });
-});
+$(document).ready(
+		function() {
+			pane1Setup();
+			// If in a table (or admin section), show pane 3
+			var currentOption = $("li.currentOption");
+			if (currentOption.closest("#setup").length > 0) {
+				top.showPane3IfNecessary();
+			}
+			// Remove when enabling websocket notifications
+			return;
+			var socketUrl = window.location.href;
+			socketUrl = socketUrl.replace(":8080", "")
+					.replace(/\/agileBase\/.*$/, "")
+					+ ":8181";
+			var socket = io.connect(socketUrl);
+			socket.on('notification', function(data) {
+				var n = $.parseJSON(data);
+				notify(n);
+			});
+		});
 
 function appSelect(internalTableName, rowId, collapseModules) {
 	var recordId = internalTableName + "_" + rowId;
@@ -42,11 +45,11 @@ function appSelect(internalTableName, rowId, collapseModules) {
 		$("#appspace").attr("data-recordid", recordId);
 	}
 	$("#appspace").load("AppController.servlet", {
-		"return": "gui/pane1/appspace",
-		set_custom_integer: true,
-		integerkey: "preview_row_id",
-		customintegervalue: rowId,
-		abCache: new Date().getTime()
+		"return" : "gui/pane1/appspace",
+		set_custom_integer : true,
+		integerkey : "preview_row_id",
+		customintegervalue : rowId,
+		abCache : new Date().getTime()
 	}, function() {
 		// Collapse modules
 		if (collapseModules) {
@@ -55,7 +58,7 @@ function appSelect(internalTableName, rowId, collapseModules) {
 				if (parentElem.hasClass('moduleexpanded')) {
 					parentElem.children('ul').slideUp('fast');
 					parentElem.removeClass('moduleexpanded');
-					parentElem.addClass('modulecollapsed');			
+					parentElem.addClass('modulecollapsed');
 				}
 			});
 		}
@@ -85,7 +88,8 @@ function notify(n) {
 		// Maybe we don't have privileges to see the source report
 		return;
 	}
-	var notifications = reportItem.closest("ul").closest("li").find(".notifications");
+	var notifications = reportItem.closest("ul").closest("li").find(
+			".notifications");
 	if (messageType == "comment") {
 		notifications.children(".notification").each(function() {
 			var notification = $(this);
@@ -93,9 +97,11 @@ function notify(n) {
 				notification.remove();
 			}
 		});
-		var notification = $("<span class='notification' data-forename='" + forename + "'>" + forename + "</span>");
+		var notification = $("<span class='notification' data-forename='"
+				+ forename + "'>" + forename + "</span>");
 		notifications.prepend(notification);
-		var tooltip = reportName + " comment: " + message + " - by " + forename + " " + surname;
+		var tooltip = reportName + " comment: " + message + " - by " + forename
+				+ " " + surname;
 		notification.attr("title", tooltip);
 		// Start to fade out notification after a few seconds
 		setTimeout(function() {
@@ -104,9 +110,14 @@ function notify(n) {
 	} else {
 		// Not a comment but a normal edit
 		notifications.children(".notification.edit").remove();
-		var notification = $("<span class='notification edit'>&#x25cf;</span>"); // &#x25cf; = filled in circle
+		var notification = $("<span class='notification edit'>&#x25cf;</span>"); // &#x25cf;
+																																							// =
+																																							// filled
+																																							// in
+																																							// circle
 		notifications.prepend(notification);
-		var tooltip = reportName + " edit: " + message + " - " + forename + " " + surname;
+		var tooltip = reportName + " edit: " + message + " - " + forename + " "
+				+ surname;
 		notification.attr("title", tooltip);
 		// Start to fade out notification
 		setTimeout(function() {
@@ -117,13 +128,13 @@ function notify(n) {
 
 function fClearCurrentOption() {
 	$("li.currentOption").removeClass("currentOption");
-}       
+}
 
-function fSetCurrentOption(sName, sRecordCount){
+function fSetCurrentOption(sName, sRecordCount) {
 	fClearCurrentOption();
-	var jqCurrentItem = $("#"+sName);
+	var jqCurrentItem = $("#" + sName);
 	jqCurrentItem.addClass("currentOption");
-	jqCurrentItem.find(".recordcount").html("("+sRecordCount+")");
+	jqCurrentItem.find(".recordcount").html("(" + sRecordCount + ")");
 	// open the report's module, if not already open
 	var parentElem = jqCurrentItem.parent().parent();
 	if (parentElem.hasClass('modulecollapsed')) {
@@ -140,7 +151,7 @@ function fSetCurrentOption(sName, sRecordCount){
 }
 
 function fUpdateTitle(sName, sNewTitle) {
-	var jqCurrentItem = $("#"+sName);
+	var jqCurrentItem = $("#" + sName);
 	jqCurrentItem.find('a').text(sNewTitle);
 }
 
@@ -159,7 +170,7 @@ function pane1Setup() {
 		} else {
 			parentElem.children('ul').slideUp('fast');
 			parentElem.removeClass('moduleexpanded');
-			parentElem.addClass('modulecollapsed');			
+			parentElem.addClass('modulecollapsed');
 		}
 	});
 	$('#tree a.report_tooltip').click(function() {
@@ -171,30 +182,30 @@ function pane1Setup() {
 			mtiw.addClass("needs_pane2_click");
 		}
 	});
-	
+
 	// When an app is active, hide any other sections
 	$("#tree h1").each(function() {
-	  if($(this).next("ul").find("li:visible").size() > 0) {
-	  	return;
-	  }
-	  $(this).hide();
+		if ($(this).next("ul").find("li:visible").size() > 0) {
+			return;
+		}
+		$(this).hide();
 	});
-	
+
 	// Initial expand?
 	var numReports = $('.module-tree-item-wrap').size();
 	if (numReports < 20) {
-	  $('.modulecollapsed').each(function() {
-		  if ($(this).parents('li#setup').size() == 0) {
-			  $(this).children('ul').slideDown('fast');
-			  $(this).removeClass('modulecollapsed');
-			  $(this).addClass('moduleexpanded');
-		  }
-	  });
+		$('.modulecollapsed').each(function() {
+			if ($(this).parents('li#setup').size() == 0) {
+				$(this).children('ul').slideDown('fast');
+				$(this).removeClass('modulecollapsed');
+				$(this).addClass('moduleexpanded');
+			}
+		});
 	}
 
-  expandRelated();
-	
-	$('.expandable').click(function(event){
+	expandRelated();
+
+	$('.expandable').click(function(event) {
 		// Prevent the children triggering open/close
 		if (event.target == this) {
 			if ($(this).hasClass('collapsed')) {
@@ -213,9 +224,11 @@ function expandRelated() {
 	$("li.moduleexpanded:visible, li.modulecollapsed:visible").each(function() {
 		var relatedModules = $(this).attr("data-dependent").split(/\s+/);
 		for (i = 0; i < relatedModules.length; i++) {
-			var relatedModule = relatedModules[i];
-			alert("related module: " + relatedModule);
-			$("li#" + relatedModule).show();
+			var relatedModule = relatedModules[i].trim();
+			if (relatedModule.length > 0) {
+				alert("related module: " + relatedModule);
+				$("li#" + relatedModule).show();
+			}
 		}
 	});
 }
@@ -232,22 +245,24 @@ function fTwitter() {
 				return !/^@\w+/.test(t["tweet_raw_text"]);
 			},
 			username : username
-		}).bind("loaded",function(){$(this).find("a").attr("target","_blank");});
+		}).bind("loaded", function() {
+			$(this).find("a").attr("target", "_blank");
+		});
 	});
 }
 
 function fYouTube() {
 	$('a').each(
-		function() {
-			var sHref = this.getAttribute('href');
-			if ((sHref.indexOf('youtube.com') > -1)
-					|| (sHref.indexOf('vimeo.com') > -1)) {
-				var oContainer = $("<div class='gtpb_youtube'></div>");
-				$(this).replaceWith(oContainer);
-				oContainer.oembed(sHref);
-				setTimeout(function() {
-					$("iframe").attr("width", "100%").attr("height", "150px");
-				}, 1000);
-			}
-		});
+			function() {
+				var sHref = this.getAttribute('href');
+				if ((sHref.indexOf('youtube.com') > -1)
+						|| (sHref.indexOf('vimeo.com') > -1)) {
+					var oContainer = $("<div class='gtpb_youtube'></div>");
+					$(this).replaceWith(oContainer);
+					oContainer.oembed(sHref);
+					setTimeout(function() {
+						$("iframe").attr("width", "100%").attr("height", "150px");
+					}, 1000);
+				}
+			});
 }
