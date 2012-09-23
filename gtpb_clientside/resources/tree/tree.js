@@ -220,7 +220,6 @@ function pane1Setup() {
 }
 
 function expandRelated() {
-	alert('expandRelated');
 	$("li.moduleexpanded:visible, li.modulecollapsed:visible").each(function() {
 		var relatedModules = $(this).attr("data-dependent").split(/\s+/);
 		for (i = 0; i < relatedModules.length; i++) {
