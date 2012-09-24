@@ -221,11 +221,14 @@ function pane1Setup() {
 
 function expandRelated() {
 	$("li.moduleexpanded:visible, li.modulecollapsed:visible").each(function() {
-		var relatedModules = $(this).attr("data-dependent").split(/\s+/);
-		for (i = 0; i < relatedModules.length; i++) {
-			var relatedModule = relatedModules[i].trim();
-			if (relatedModule.length > 0) {
-				$("li#" + relatedModule).show();
+		var relatedModules = $(this).attr("data-dependent");
+		if (typeof relatedModules != "undefined") {
+			relatedModules = relatedModules.split(/\s+/);
+			for (i = 0; i < relatedModules.length; i++) {
+				var relatedModule = relatedModules[i].trim();
+				if (relatedModule.length > 0) {
+					$("li#" + relatedModule).show();
+				}
 			}
 		}
 	});
