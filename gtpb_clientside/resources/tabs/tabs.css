@@ -184,6 +184,7 @@ table#reportData td select {
   border: 1px solid #cecece;
   padding: 0.3em;
   font-family: Verdana,Geneva,sans-serif;
+  font-size: 9pt;
 }
 
 #newfield table#reportData td select {
