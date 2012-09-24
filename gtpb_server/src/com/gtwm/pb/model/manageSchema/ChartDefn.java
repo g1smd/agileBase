@@ -31,7 +31,6 @@ import java.util.TreeSet;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.EnumSet;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -57,7 +56,6 @@ import com.gtwm.pb.model.manageData.ReportData;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
-import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
@@ -273,7 +271,9 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 		if (this.getRangeDirection()) {
 			sortDirection = " ASC";
 		}
+		int rangePercent = this.getRangePercent();
 		if ((groupings.size() > 0) && (this.getAggregateFunctionsDirect().size() > 0)) {
+			// 1) groupings and functions
 			sqlForSummary = "SELECT " + groupByFieldsCsv + ", " + aggregateFunctionsCsv;
 			sqlForSummary += " FROM " + this.getReport().getInternalReportName();
 			if (filterArgs.length() > 0) {
@@ -288,17 +288,25 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 				if (this.getRangeDirection()) {
 					oppositeSortDirection = " DESC";
 				}
-				sqlForSummary += " ORDER BY "
-						+ aggregateFunctionsCsv.replace(",", oppositeSortDirection + ",");
-				sqlForSummary += oppositeSortDirection;
+				if (rangePercent < 100) {
+					// order by function
+					sqlForSummary += " ORDER BY "
+							+ aggregateFunctionsCsv.replace(",", oppositeSortDirection + ",");
+					sqlForSummary += oppositeSortDirection;
+				} else {
+					// order by group
+					sqlForSummary += " ORDER BY " + groupByFieldsCsv + sortDirection;
+				}
 			}
 		} else if (this.getAggregateFunctionsDirect().size() > 0) {
+			// 2) functions but no groupings
 			sqlForSummary = "SELECT " + aggregateFunctionsCsv + " FROM "
 					+ this.getReport().getInternalReportName();
 			if (filterArgs.length() > 0) {
 				sqlForSummary += " WHERE " + filterArgs;
 			}
 		} else if (groupings.size() > 0) {
+			// 3) groupings but no functions
 			sqlForSummary = "SELECT " + groupByFieldsCsv + " FROM "
 					+ this.getReport().getInternalReportName();
 			if (filterArgs.length() > 0) {
@@ -313,7 +321,6 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 			sqlForSummary = "SELECT '' where false";
 			validSummary = false;
 		}
-		int rangePercent = this.getRangePercent();
 		if (rangePercent < 100) {
 			// TODO: perhaps a window function cume_dist or percentage_rank
 			// would be faster than a subselect
