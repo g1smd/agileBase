@@ -2357,7 +2357,10 @@ public final class DataManagement implements DataManagementInfo {
 				// TODO: This may not work for non-GMT timezones as the offset is from UTC, untested
 				Long eventDateMillis = Long.parseLong(eventDateValue.getKeyValue());
 				//int timezoneOffset = timeZone.getOffset(eventDateMillis);
-				int timezoneOffset = zone.getOffset(eventDateMillis);
+				int timezoneOffset = 0;
+				if (timezoneAdjust) {
+					timezoneOffset = zone.getOffset(eventDateMillis);
+				}
 				Long eventDateEpoch = (eventDateMillis - timezoneOffset) / 1000;
 				jg.writeNumberField("start", eventDateEpoch);
 				if (!allDayEvent) {
@@ -3642,5 +3645,7 @@ public final class DataManagement implements DataManagementInfo {
 	private float uploadSpeed = 50000; // Default to 50KB per second
 
 	private static final SimpleLogger logger = new SimpleLogger(DataManagement.class);
+	
+	private static final boolean timezoneAdjust = false;
 
 }
