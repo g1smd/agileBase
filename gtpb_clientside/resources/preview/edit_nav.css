@@ -131,6 +131,10 @@
   height: auto;
 }
 
+.reportDataView .block.notselected {
+  opacity: 0:1;
+}
+
 .reportDataView .block.selected img.image {
 	/* Make card expand to full height of image */
   display: block;
