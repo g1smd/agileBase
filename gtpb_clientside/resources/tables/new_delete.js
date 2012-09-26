@@ -75,6 +75,8 @@ function fLoadFromPreview(oBlock, event) {
   if (target.hasClass("image")) {
   	jqBlock.addClass("selected");
   	var img = jqBlock.find("img.image");
+  	// Hide content apart from the image itself
+  	jqBlock.find(".cell").hide();
   	img.attr("src", img.attr("data-bigsrc"));
   } else {
   	top.closePreview();

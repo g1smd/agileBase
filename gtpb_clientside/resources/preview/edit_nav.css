@@ -127,6 +127,13 @@
 
 .reportDataView .block.selected {
 	-moz-transform: scale(4);
+  height: auto;
+}
+
+.reportDataView .block.selected img.image {
+	/* Make card expand to full height of image */
+  display: block;
+  position: relative;
 }
 
 .block .details {
