@@ -65,7 +65,8 @@ function fLinks()
 
 function fLoadFromPreview(oBlock, event) {
 	var jqBlock = $(oBlock);
-	$(".block").css("background-color", "red");
+	// Note other objects have to be selected relative to jqBlock because this JS file is in a different frame
+	jqBlock.siblings(".block").css("background-color", "red");
 	var rowId = jqBlock.attr("data-rowid");
 	// Find the row in pane 2, click it
 	//var jqRow = $(document).find("tr[name=" + rowId + "]");
