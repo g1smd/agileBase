@@ -73,10 +73,10 @@ function fLoadFromPreview(oBlock, event) {
   showPane3IfNecessary(event);
   var target = $(event.target);
   if (target.hasClass("image")) {
+  	var left = jqBlock.position().left;
+  	alert("Left: " + left);
   	jqBlock.addClass("selected");
   	var img = jqBlock.find("img.image");
-  	// Hide content apart from the image itself
-  	jqBlock.find(".cell").hide();
   	img.attr("src", img.attr("data-bigsrc"));
   } else {
   	top.closePreview();

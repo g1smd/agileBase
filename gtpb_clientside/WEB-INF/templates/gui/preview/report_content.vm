@@ -113,7 +113,7 @@
 							#elseif($field.getContentSize() > 100)
 								#set($style = "$style color:gray; ")
               #end
-              <span style="$style" class="cell $class">$cell</span>,
+              <span style="$style" class="cell $class">$cell,</span>
               #set($emboldened = true)
 							#set($cellsHtml = "$cellsHtml <span style='$style' class='cell $class'>$cell</span>")
             #end
