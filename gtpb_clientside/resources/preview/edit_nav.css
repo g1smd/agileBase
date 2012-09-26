@@ -132,7 +132,7 @@
 }
 
 .reportDataView .block.notselected {
-  opacity: 0:1;
+  opacity: 0.1;
 }
 
 .reportDataView .block.selected img.image {
