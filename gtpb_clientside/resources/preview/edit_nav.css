@@ -125,7 +125,7 @@
   -moz-filter: grayscale(0);
 }
 
-.reportDataView .block.current {
+.reportDataView .block.selected {
 	-moz-transform: scale(4);
 }
 

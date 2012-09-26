@@ -73,7 +73,7 @@ function fLoadFromPreview(oBlock, event) {
   showPane3IfNecessary(event);
   var target = $(event.target);
   if (target.hasClass("image")) {
-  	jqBlock.addClass("current");
+  	jqBlock.addClass("selected");
   } else {
   	top.closePreview();
   	//TODO: also clear quick search string in session
