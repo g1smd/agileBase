@@ -77,7 +77,7 @@
             #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
             #if($fileValue.isImage())
               #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
-              <img src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #set($captionNecessary = true) #end/>
+              <img data-bigsrc="$targetUrl" src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #set($captionNecessary = true) #end/>
               #set($image = true)
 			#elseif($cell.endsWith("pdf") && !$captionNecessary)
 				#set($srcUrl = "$targetUrl.500.png")

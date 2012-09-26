@@ -74,6 +74,8 @@ function fLoadFromPreview(oBlock, event) {
   var target = $(event.target);
   if (target.hasClass("image")) {
   	jqBlock.addClass("selected");
+  	var img = jqBlock.find("img.image");
+  	img.attr("src", img.attr("data-bigsrc"));
   } else {
   	top.closePreview();
   	//TODO: also clear quick search string in session
