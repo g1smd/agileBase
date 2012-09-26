@@ -49,8 +49,8 @@ function fAppStore() {
 }
 
 // Download the current session report
-function fExport()
-{    this.location.href='ReportDownloader.servlet';
+function fExport() {
+	this.location.href='ReportDownloader.servlet';
 }
 
 function fLinks()
@@ -71,8 +71,10 @@ function fLoadFromPreview(oBlock, event) {
   //jqRow.click();
 	parent.pane_2.loadIntoPane3('AppController.servlet?return=gui/reports_and_tables/pane3&set_row_id=' + rowId + '&set_custom_string=1&key=report_tabindex&value=2', rowId, 6);
   showPane3IfNecessary(event);
-  if (event.target.nodeName != "IMG") {
-  	//jqBlock.closest("#preview").fadeOut();
+  var target = $(event.target);
+  if (target.hasClass("image")) {
+  	jqBlock.addClass("current");
+  } else {
   	top.closePreview();
   	//TODO: also clear quick search string in session
   }
