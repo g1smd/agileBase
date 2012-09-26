@@ -74,7 +74,9 @@ function fLoadFromPreview(oBlock, event) {
   var target = $(event.target);
   if (target.hasClass("image")) {
   	var left = jqBlock.position().left;
-  	alert("Left: " + left);
+  	if (left < 50) {
+  		jqBlock.css("left", "400px");
+  	}
   	jqBlock.addClass("selected");
   	var img = jqBlock.find("img.image");
   	img.attr("src", img.attr("data-bigsrc"));
