@@ -65,6 +65,7 @@ function fLinks()
 
 function fLoadFromPreview(oBlock, event) {
 	var jqBlock = $(oBlock);
+	$(".block.selected").removeClass("selected");
 	var rowId = jqBlock.attr("data-rowid");
 	// Find the row in pane 2, click it
 	//var jqRow = $(document).find("tr[name=" + rowId + "]");
@@ -74,8 +75,12 @@ function fLoadFromPreview(oBlock, event) {
   var target = $(event.target);
   if (target.hasClass("image")) {
   	var left = jqBlock.position().left;
+  	var right = jqBlock.position().right;
+  	var areaRight = $("#preview").width();
   	if (left < 50) {
   		jqBlock.css("left", "400px");
+  	} else if (right > (areaRight - 50)) {
+  		jqBlock.css("left", "-400px");
   	}
   	jqBlock.addClass("selected");
   	var img = jqBlock.find("img.image");
