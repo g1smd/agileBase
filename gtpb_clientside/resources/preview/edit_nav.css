@@ -114,7 +114,7 @@
   left: 0;
   width: 100%;
   position: absolute;
-  border-radius: 1em;
+/*   border-radius: 1em; */
 }
 
 .reportDataView .block.centrebox {
