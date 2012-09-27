@@ -30,9 +30,9 @@
   overflow: hidden;
   color: black;
   position: relative;
-  -webkit-transition: all 7s ease-in-out;
-  -moz-transition: all 7s ease-in-out;
-  transition: all 7s ease-in-out;
+  -webkit-transition: all 5s ease-in-out;
+  -moz-transition: all 5s ease-in-out;
+  transition: all 5s ease-in-out;
   /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
   padding: 1em;
   border: solid 1px #b4b4b4;
@@ -43,6 +43,23 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
   word-wrap: break-word;
   line-height: 1.5em;
+  transform-style: preserve-3d;
+}
+
+.reportDataView .block.back, .reportDataView .block.front {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.reportDataView .block.back {
+	transform: rotateY(180deg);
+}
+
+.reportDataView .block.flipped {
+  transform: rotateY(180deg);
 }
 
 .reportDataView .block.landscape {
@@ -114,9 +131,9 @@
 
 .reportDataView .block:hover {
   cursor: pointer;
-  -moz-transform: scale(1.5);
-  -webkit-transform: scale(1.5);
-  transform: scale(1.5);
+  -moz-transform: scale(1.3);
+  -webkit-transform: scale(1.3);
+  transform: scale(1.3);
   z-index: 99;
   box-shadow: 0 1px 3px rgba(80, 173, 214, 0.5); /* RGB ab light blue */
   -webkit-transition-duration: 3s;
@@ -222,6 +239,7 @@
 	z-index: 200;
 	padding-top: 0.25em;
 	padding-bottom: 0.25em;
+	padding: 0.25em;
 	color: gray;
 	display: none;
 }
