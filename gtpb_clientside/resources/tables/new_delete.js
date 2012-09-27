@@ -78,10 +78,10 @@ function fLoadFromPreview(oBlock, event) {
   if (target.hasClass("image")) {
   	var left = jqBlock.position().left;
   	var right = jqBlock.position().right;
-  	var areaRight = $("#preview").width();
+  	var windowRight = $("#preview").width();
   	if (left < 50) {
   		jqBlock.css("left", "400px");
-  	} else if (right > (areaRight - 50)) {
+  	} else if (right > (windowRight - 50)) {
   		jqBlock.css("left", "-400px");
   	}
   	$(top.document).contents().find('#searchbox').css("z-index", "0");

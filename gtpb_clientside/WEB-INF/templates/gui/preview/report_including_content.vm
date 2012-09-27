@@ -26,5 +26,13 @@
 #end
 <span id="searchTitle">$searchTitle</span>
 <div class="reportDataView" id="homeContent">
+  <div class="control" style="left: 0">
+    <i class="icon-remove"></i>
+    <i class="icon-repeat"></i>
+  </div>
+  <div class="control" style="right: 0">
+    <i class="icon-zoom-in"></i>
+    <i class="icon-zoom-out"></i>
+  </div>
   #parse("gui/preview/report_content.vm")
 </div>

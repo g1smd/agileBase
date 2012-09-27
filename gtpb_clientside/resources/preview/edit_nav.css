@@ -11,7 +11,8 @@
 }
 
 #preview {
-	background-color: rgba(238,243,249,0.9); /* rgba(219,219,219,0.9); */ /* #dbdbdb; 777788, bdbdbd */
+	/* background-color: rgba(238,243,249,0.9); /* rgba(219,219,219,0.9); */ /* #dbdbdb; 777788, bdbdbd */
+	background-color: rgb(238,243,249);
 }
 
 #launcher {
@@ -210,6 +211,14 @@
 
 #searchbox:focus {
   box-shadow: 0 0 1em 1em white;
+}
+
+.control {
+	position: fixed:
+	top: 0;
+	background-color: white;
+	opacity: 0.5;
+	font-size: 20pt;
 }
 
 .report_including_content {
