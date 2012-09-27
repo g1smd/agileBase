@@ -48,7 +48,7 @@
   -webkit-transform-style: preserve-3d;
 }
 
-.reportDataView .block.back, .reportDataView .block.front {
+.reportDataView .block .back, .reportDataView .block .front {
   display: block;
   position: absolute;
   width: 100%;
@@ -58,7 +58,7 @@
   -webkit-backface-visibility: hidden;
 }
 
-.reportDataView .block.back {
+.reportDataView .block .back {
 	transform: rotateY(180deg);
 	-moz-transform: rotateY(180deg);
 	-webkit-transform: rotateY(180deg);
