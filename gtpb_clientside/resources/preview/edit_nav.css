@@ -12,9 +12,9 @@
 
 #preview {
 	background-color: rgb(238,243,249);
-  perspective: 10;
-  -moz-perspective: 10;
-  -webkit-perspective: 10;
+  perspective: 1000;
+  -moz-perspective: 1000;
+  -webkit-perspective: 1000;
   -moz-perspective-origin: 50%;
   -webkit-perspective-origin: 50%;
   perspective-origin: 50%;
