@@ -21,6 +21,7 @@
   -moz-transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
+  position: relative;
 }
 
 #launcher {
