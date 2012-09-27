@@ -16,6 +16,9 @@
   perspective: 10;
   -moz-perspective: 10;
   -webkit-perspective: 10;
+  -moz-perspective-origin: 50%;
+  -webkit-perspective-origin: 50%;
+  perspective-origin: 50%;
   -moz-transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
