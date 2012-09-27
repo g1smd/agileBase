@@ -219,6 +219,7 @@
 	background-color: white;
 	opacity: 0.5;
 	font-size: 20pt;
+	z-index: 200;
 }
 
 .report_including_content {
