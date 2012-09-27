@@ -8,14 +8,17 @@
   display: none;
   padding-top: 2.5em;
   z-index: 2; /* above toolbar */
-  perspective: 800px;
-  -moz-perspective: 800px;
-  -webkit-perspective: 800px;
 }
 
 #preview {
 	/* background-color: rgba(238,243,249,0.9); /* rgba(219,219,219,0.9); */ /* #dbdbdb; 777788, bdbdbd */
 	background-color: rgb(238,243,249);
+  perspective: 10;
+  -moz-perspective: 10;
+  -webkit-perspective: 10;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 
 #launcher {
