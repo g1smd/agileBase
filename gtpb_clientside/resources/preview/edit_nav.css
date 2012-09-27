@@ -163,7 +163,7 @@
   -moz-filter: grayscale(0);
 }
 
-.reportDataView .block.selected {
+#preview .reportDataView .block.selected {
 	-moz-transform: scale(4);
   height: 424px; /* paper size ratio to width 300px */
 }
