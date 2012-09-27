@@ -33,7 +33,6 @@
   -webkit-transition: all 5s ease-in-out;
   -moz-transition: all 5s ease-in-out;
   transition: all 5s ease-in-out;
-  /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
   padding: 1em;
   border: solid 1px #b4b4b4;
   border-radius: 1em;
@@ -68,6 +67,7 @@
   -moz-transform: rotateY(180deg) scale(4);
   -webkit-transform: rotateY(180deg) scale(4);
   transform: rotateY(180deg) scale(4);
+  overflow: visible;
 }
 
 .reportDataView .block.landscape {
