@@ -21,7 +21,6 @@
   -moz-transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
-  position: relative;
 }
 
 #launcher {
@@ -165,11 +164,11 @@
 }
 
 .reportDataView .block.selected {  /* override hover */
-	-moz-transform: scale(1);
-	-webkit-transform: scale(1);
-	transform: scale(1);
-	width: 1000px;
-	height: 1414px;
+	-moz-transform: scale(4);
+	-webkit-transform: scale(4);
+	transform: scale(4);
+	/*width: 1000px;
+	height: 1414px; */
 }
 
 .reportDataView .block.notselected {
