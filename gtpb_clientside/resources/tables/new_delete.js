@@ -85,6 +85,7 @@ function fLoadFromPreview(oBlock, event) {
 		if (jqBlock.hasClass("selected")) {
 			jqBlock.addClass("flipped");
 		} else {
+/*
 			var left = jqBlock.position().left;
 			var right = jqBlock.position().right;
 			var windowRight = $("#preview").width();
@@ -93,6 +94,7 @@ function fLoadFromPreview(oBlock, event) {
 			} else if (right > (windowRight - 50)) {
 				jqBlock.css("left", "-400px");
 			}
+			*/
 			$(top.document).contents().find('#searchbox').css("z-index", "0");
 			$(top.document).contents().find('#doneSearch').css("z-index", "0");
 			jqBlock.addClass("selected").removeClass("notselected");
