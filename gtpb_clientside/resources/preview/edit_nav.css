@@ -163,8 +163,6 @@
   -webkit-transition-timing-function: ease-out;
   */
   /* box-shadow: 0 1px 3px rgba(72, 111, 152, 0.3); /* RGB ab dark blue */
-  -webkit-filter: grayscale(0);
-  -moz-filter: grayscale(0);
 }
 
 .reportDataView .block.selected {
