@@ -169,7 +169,6 @@
 	transform: scale(1);
 	width: 1000px;
 	height: 1414px;
-  height: 424px; /* paper size ratio to width 300px */
 }
 
 .reportDataView .block.notselected {
