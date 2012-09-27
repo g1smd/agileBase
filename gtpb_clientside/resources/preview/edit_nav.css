@@ -74,9 +74,9 @@
 }
 
 .reportDataView .block.selected.flipped {
-  -moz-transform: rotateY(180deg) scale(4);
-  -webkit-transform: rotateY(180deg) scale(4);
-  transform: rotateY(180deg) scale(4);
+  -moz-transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
   overflow: visible;
 }
 
@@ -167,8 +167,8 @@
 	-moz-transform: scale(1);
 	-webkit-transform: scale(1);
 	transform: scale(1);
-	width: 800px;
-	height: 1131px;
+	width: 1000px;
+	height: 1414px;
   height: 424px; /* paper size ratio to width 300px */
 }
 
