@@ -163,8 +163,8 @@
   -moz-filter: grayscale(0);
 }
 
-#preview .reportDataView .block.selected {
-	-moz-transform: scale(4);
+.reportDataView .block.selected {
+	-moz-transform: scale(4)!important; /* override hover */
   height: 424px; /* paper size ratio to width 300px */
 }
 
