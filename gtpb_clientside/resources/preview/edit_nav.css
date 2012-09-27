@@ -220,6 +220,7 @@
 	opacity: 0.5;
 	font-size: 20pt;
 	z-index: 200;
+	padding: 1em;
 }
 
 .report_including_content {
