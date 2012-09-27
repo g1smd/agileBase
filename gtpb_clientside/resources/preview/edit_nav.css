@@ -9,6 +9,8 @@
   padding-top: 2.5em;
   z-index: 2; /* above toolbar */
   perspective: 800px;
+  -moz-perspective: 800px;
+  -webkit-perspective: 800px;
 }
 
 #preview {
