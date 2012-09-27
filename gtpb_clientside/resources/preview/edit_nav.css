@@ -220,13 +220,13 @@
 	opacity: 0.5;
 	font-size: 20pt;
 	z-index: 200;
-	padding-top: 0.5em;
-	padding-bottom: 0.5em;
+	padding-top: 0.75em;
+	padding-bottom: 0.75em;
 	color: gray;
 }
 
 .control i {
-  padding: 0.5em;
+  padding: 0.25em;
   cursor: pointer;	
 }
 
