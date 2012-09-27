@@ -220,7 +220,11 @@
 	opacity: 0.5;
 	font-size: 20pt;
 	z-index: 200;
-	padding: 1em;
+}
+
+.control i {
+  padding: 0.5em;
+  cursor: pointer;	
 }
 
 .report_including_content {
