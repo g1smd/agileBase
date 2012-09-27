@@ -84,7 +84,7 @@ function fLoadFromPreview(oBlock, event) {
   	} else if (right > (areaRight - 50)) {
   		jqBlock.css("left", "-400px");
   	}
-  	jqBlock.addClass("selected");
+  	jqBlock.addClass("selected").removeClass("notselected");
   	var img = jqBlock.find("img.image");
   	img.attr("src", img.attr("data-bigsrc"));
   } else {

@@ -23,6 +23,7 @@
 .reportDataView .block {
   margin: 2em;
   float: left;
+  left: 0px; /* so we can animate the left property, give it a starting value */
   width: 250px;
   height: 300px;
   overflow: hidden;
