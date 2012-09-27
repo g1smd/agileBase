@@ -163,8 +163,10 @@
   -moz-filter: grayscale(0);
 }
 
-.reportDataView .block.portrait.selected {  /* override hover */
+.reportDataView .block.selected {  /* override hover */
 	-moz-transform: scale(4);
+	-webkit-transform: scale(4);
+	transform: scale(4);
   height: 424px; /* paper size ratio to width 300px */
 }
 
