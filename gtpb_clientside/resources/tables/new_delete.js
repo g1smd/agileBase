@@ -84,8 +84,8 @@ function fLoadFromPreview(oBlock, event) {
   	} else if (right > (areaRight - 50)) {
   		jqBlock.css("left", "-400px");
   	}
-  	$(document, top.document).contents().find('#searchbox').css("z-index", "0");
-  	$(document, top.document).contents().find('#doneSearch').css("z-index", "0");
+  	$(top.document).contents().find('#searchbox').css("z-index", "0");
+  	$(top.document).contents().find('#doneSearch').css("z-index", "0");
   	jqBlock.addClass("selected").removeClass("notselected");
   	var img = jqBlock.find("img.image");
   	img.attr("src", img.attr("data-bigsrc"));
