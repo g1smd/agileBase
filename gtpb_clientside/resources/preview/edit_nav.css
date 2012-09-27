@@ -44,6 +44,8 @@
   word-wrap: break-word;
   line-height: 1.5em;
   transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 }
 
 .reportDataView .block.back, .reportDataView .block.front {
@@ -52,14 +54,20 @@
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .reportDataView .block.back {
 	transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+	-webkit-transform: rotateY(180deg);
 }
 
 .reportDataView .block.flipped {
   transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }
 
 .reportDataView .block.landscape {
