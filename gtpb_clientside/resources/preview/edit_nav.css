@@ -64,7 +64,7 @@
 	-webkit-transform: rotateY(180deg);
 }
 
-.reportDataView .block.flipped {
+.reportDataView .block.selected.flipped {
   transform: rotateY(180deg) scale(4);
   -moz-transform: rotateY(180deg) scale(4);
   -webkit-transform: rotateY(180deg) scale(4);
