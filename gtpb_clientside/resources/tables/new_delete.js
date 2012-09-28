@@ -103,7 +103,7 @@ function fLoadFromPreview(oBlock, event) {
 			$(top.document).contents().find(".control").show("normal");
 			setInterval(function() {
 				jqBlock.css("-webkit-transform","none");
-				setTimeout(jqBlock.css("-webkit-transform","scale(4)"), 0);
+				setTimeout(function() {jqBlock.css("-webkit-transform","scale(4)")}, 0);
 				console.log('here');
 			}, 1111);
 		}
