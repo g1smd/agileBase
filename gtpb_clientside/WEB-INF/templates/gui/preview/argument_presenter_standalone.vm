@@ -114,6 +114,8 @@
     }
 
     .card .back {
+      background-color: white;
+      color: black;
       -webkit-transform: rotateY( 180deg );
          -moz-transform: rotateY( 180deg );
            -o-transform: rotateY( 180deg );
