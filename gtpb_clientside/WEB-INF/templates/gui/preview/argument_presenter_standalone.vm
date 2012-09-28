@@ -11,7 +11,7 @@
       if(container.hasClass("zoomed")) {
         $(this).toggleClass("flipped");
       } else {
-        if (container.position().left < 400) {
+        if (container.position().left < 600) {
           container.css("left","400px");
         }
         var img = $(this).find("img.image");
