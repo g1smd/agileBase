@@ -24,9 +24,9 @@
 }
 
 .threed {
-  perspective: 1000;
-  -moz-perspective: 1000;
-  -webkit-perspective: 1000;
+  perspective: 1000px;
+  -moz-perspective: 1000px;
+  -webkit-perspective: 1000px;
   -moz-perspective-origin: 50%;
   -webkit-perspective-origin: 50%;
   perspective-origin: 50%;
