@@ -1,6 +1,53 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="resources/preview/edit_nav.css" />
+  <script language="JavaScript" src="resources/jquery.js"></script>
+  <script language="JavaScript" src="rsources/preview/edit_nav.js"></script>
+  <script language="JavaScript">
+  function fLoadFromPreview(oBlock, event) {
+	var jqBlock = $(oBlock);
+	// Note other objects have to be selected relative to jqBlock because this JS
+	// file is in a different frame
+	jqBlock.siblings(".block.selected").removeClass("selected");
+	/* jqBlock.siblings(".block").addClass("notselected"); */
+	var rowId = jqBlock.attr("data-rowid");
+	// Find the row in pane 2, click it
+	// var jqRow = $(document).find("tr[name=" + rowId + "]");
+	// jqRow.click();
+	parent.pane_2.loadIntoPane3(
+			'AppController.servlet?return=gui/reports_and_tables/pane3&set_row_id='
+					+ rowId + '&set_custom_string=1&key=report_tabindex&value=2', rowId,
+			6);
+	showPane3IfNecessary(event);
+	var target = $(event.target);
+	if (target.hasClass("image")) {
+		if (jqBlock.hasClass("selected")) {
+			jqBlock.addClass("flipped");
+		} else {
+			
+			var left = jqBlock.position().left;
+			var right = jqBlock.position().right;
+			var windowRight = $("#preview").width();
+			if (left < 50) {
+				jqBlock.css("left", "400px");
+			} else if (right > (windowRight - 50)) {
+				jqBlock.css("left", "-400px");
+			}
+			
+			$(top.document).contents().find('#searchbox').css("z-index", "0");
+			$(top.document).contents().find('#doneSearch').css("z-index", "0");
+			jqBlock.addClass("selected").removeClass("notselected");
+			var img = jqBlock.find("img.image");
+			img.attr("src", img.attr("data-bigsrc"));
+			$(top.document).contents().find(".control").show("normal");
+		}
+	} else {
+		top.closePreview();
+		// TODO: also clear quick search string in session
+	}
+}
+  
+  </script>
 </head>
 <body>
 #parse("gui/preview/report_including_content.vm")
