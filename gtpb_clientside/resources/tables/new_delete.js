@@ -101,6 +101,10 @@ function fLoadFromPreview(oBlock, event) {
 			var img = jqBlock.find("img.image");
 			img.attr("src", img.attr("data-bigsrc"));
 			$(top.document).contents().find(".control").show("normal");
+			setInterval(function() {
+				jqBlock.css("-webkit-transform","none");
+				setTimeout(jqBlock.css("-webkit-transform","scale(4)"), 0);
+			}, 1000);
 		}
 	} else {
 		top.closePreview();
