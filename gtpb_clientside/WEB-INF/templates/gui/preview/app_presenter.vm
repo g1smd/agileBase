@@ -1,0 +1,38 @@
+#if(!$report)
+  #set($report = $sessionData.getReport())
+#end
+#set($filterString = $sessionData.getGlobalFilterString($report).toLowerCase())
+#if(!$filterString)
+	#set($filterString = "")
+#end
+#set($table = $report.getParentTable())
+#set($internalTableName = $table.getInternalTableName())
+#set($reportBaseFields = $report.getReportBaseFields())##
+#set($reportRowLimit = 100) ## hard code for now
+#if(!$reportDataRows)
+  #if(!$filters)
+    #set($reportDataRows = $view.getGloballyFilteredReportDataRows($report))
+  #else
+    #set($reportDataRows = $view.getReportDataRows($report, $reportRowLimit, $filters, true))##
+  #end
+#end
+#foreach($row in $reportDataRows)
+  #set($thisUniqueId = $row.getRowId())
+  #set($dataRowFields = $row.getDataRowFields())
+    <div class="card" data-rowid="$thisUniqueId" >
+      <figure class="front">
+      #foreach($field in $reportBaseFields)##
+        #set($fieldCategory = $field.getFieldCategory().toString())
+        #if($fieldCategory == "FILE")
+          #if($fileValue.isImage())
+            #set($fileValue = $viewTools.getFileValueTool($cell))
+            #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
+            #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
+            <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
+          #end
+        #end
+      #end
+      </figure>
+      <figure class="back">2</figure>
+    </div>
+#end

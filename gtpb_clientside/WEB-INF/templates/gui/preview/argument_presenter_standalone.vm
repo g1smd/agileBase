@@ -83,22 +83,7 @@
 <body>
 
   <section class="container">
-    <div class="card">
-      <figure class="front">1</figure>
-      <figure class="back">2</figure>
-    </div>
-    <div class="card">
-      <figure class="front">1</figure>
-      <figure class="back">2</figure>
-    </div>
-    <div class="card">
-      <figure class="front">1</figure>
-      <figure class="back">2</figure>
-    </div>
-    <div class="card">
-      <figure class="front">1</figure>
-      <figure class="back">2</figure>
-    </div>
+    #parse("gui/preview/app_presenter.vm")
   </section>
 
   <section id="options">
