@@ -1,61 +1,90 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-##  <link rel="stylesheet" type="text/css" href="resources/display_application_amalgam.css" />
-  <link rel="stylesheet" type="text/css" href="resources/preview/edit_nav.css" />
-  <script language="JavaScript" src="resources/jquery.js"></script>
-  <script language="JavaScript" src="rsources/preview/edit_nav.js"></script>
-  <script language="JavaScript">
-  $(document).ready(function() {
-    $("span.cell").remove();
-    $(".details").remove();
-    $(".imageCaption").remove();
-  });
+  <meta charset="utf-8" />
   
-  function fLoadFromPreview(oBlock, event) {
-	var jqBlock = $(oBlock);
-	// Note other objects have to be selected relative to jqBlock because this JS
-	// file is in a different frame
-	jqBlock.siblings(".block.selected").removeClass("selected");
-	jqBlock.siblings(".block").addClass("notselected");
-	var rowId = jqBlock.attr("data-rowid");
-/*
-	parent.pane_2.loadIntoPane3(
-			'AppController.servlet?return=gui/reports_and_tables/pane3&set_row_id='
-					+ rowId + '&set_custom_string=1&key=report_tabindex&value=2', rowId,
-			6);			
-	showPane3IfNecessary(event);
-*/
-	var target = $(event.target);
-	if (target.hasClass("image")) {
-		if (jqBlock.hasClass("selected")) {
-			jqBlock.addClass("flipped");
-		} else {
-			
-			var left = jqBlock.position().left;
-			var right = jqBlock.position().right;
-			var windowRight = $("#preview").width();
-			if (left < 50) {
-				jqBlock.css("left", "400px");
-			} else if (right > (windowRight - 50)) {
-				jqBlock.css("left", "-400px");
-			}
-			
-			$(top.document).contents().find('#searchbox').css("z-index", "0");
-			$(top.document).contents().find('#doneSearch').css("z-index", "0");
-			jqBlock.addClass("selected").removeClass("notselected");
-			var img = jqBlock.find("img.image");
-			img.attr("src", img.attr("data-bigsrc"));
-			$(top.document).contents().find(".control").show("normal");
-		}
-	} else {
-		top.closePreview();
-		// TODO: also clear quick search string in session
-	}
-}
+  <script language="JavaScript" src="resources/jquery.js">
+  <title>Card 1 &middot; Intro to CSS 3D transforms &rsaquo; Examples</title>
   
-  </script>
+
+    <style media="screen">
+    .container {
+      width: 200px;
+      height: 260px;
+      position: relative;
+      margin: 0 auto 40px;
+      border: 1px solid #CCC;
+      -webkit-perspective: 800px;
+         -moz-perspective: 800px;
+           -o-perspective: 800px;
+              perspective: 800px;
+    }
+
+    #card {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      -webkit-transition: -webkit-transform 1s;
+         -moz-transition: -moz-transform 1s;
+           -o-transition: -o-transform 1s;
+              transition: transform 1s;
+      -webkit-transform-style: preserve-3d;
+         -moz-transform-style: preserve-3d;
+           -o-transform-style: preserve-3d;
+              transform-style: preserve-3d;
+    }
+
+    #card.flipped {
+      -webkit-transform: rotateY( 180deg );
+         -moz-transform: rotateY( 180deg );
+           -o-transform: rotateY( 180deg );
+              transform: rotateY( 180deg );
+    }
+
+    #card figure {
+      display: block;
+      height: 100%;
+      width: 100%;
+      line-height: 260px;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      font-size: 140px;
+      position: absolute;
+      -webkit-backface-visibility: hidden;
+         -moz-backface-visibility: hidden;
+           -o-backface-visibility: hidden;
+              backface-visibility: hidden;
+    }
+
+    #card .front {
+      background: red;
+    }
+
+    #card .back {
+      background: blue;
+      -webkit-transform: rotateY( 180deg );
+         -moz-transform: rotateY( 180deg );
+           -o-transform: rotateY( 180deg );
+              transform: rotateY( 180deg );
+    }
+  </style>
+
 </head>
-<body style="overflow: visible; background-color: #eef3f9" class="threed">
-#parse("gui/preview/report_including_content.vm")
+<body>
+
+  <h1>Card 1</h1>
+
+  <section class="container">
+    <div id="card">
+      <figure class="front">1</figure>
+      <figure class="back">2</figure>
+    </div>
+  </section>
+
+  <section id="options">
+    <p><button id="flip">Flip Card</button></p>
+  </section>
+
 </body>
 </html>

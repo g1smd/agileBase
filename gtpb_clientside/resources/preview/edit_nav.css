@@ -91,7 +91,7 @@
 }
 
 .reportDataView .block.selected.flipped .front {
-	  -moz-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
