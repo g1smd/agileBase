@@ -13,6 +13,10 @@
   
     <style>
     
+    body {
+      background-color: #EEF3F9;
+    }
+    
     figure {
       margin: 0;
     }
@@ -23,6 +27,7 @@
       width: 250px;
       height: 354px;
       margin: 2em;
+      border: 2px solid #cccccc;
       -webkit-perspective: 800px;
          -moz-perspective: 800px;
            -o-perspective: 800px;
