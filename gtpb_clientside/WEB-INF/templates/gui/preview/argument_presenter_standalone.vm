@@ -5,6 +5,12 @@
   <script language="JavaScript" src="resources/jquery.js"></script>
   <script language="JavaScript" src="rsources/preview/edit_nav.js"></script>
   <script language="JavaScript">
+  $(document).ready(function() {
+    $("span.cell").remove();
+    $(".details").remove();
+    $(".imageCaption").remove();
+  });
+  
   function fLoadFromPreview(oBlock, event) {
 	var jqBlock = $(oBlock);
 	// Note other objects have to be selected relative to jqBlock because this JS

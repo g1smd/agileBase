@@ -103,7 +103,7 @@
 						#end
             #set($printoutSetting = $field.getPrintoutSetting())
             #if($fieldCategory == "CHECKBOX")
-              #if($cell == "true")
+              #if(($cell == "true") && !($image))
                 <span style="$style" class="cell $class">$field</span>
               #end
             #elseif($printoutSetting == "NAME_AND_VALUE")
