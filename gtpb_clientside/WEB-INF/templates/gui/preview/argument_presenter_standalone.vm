@@ -73,6 +73,10 @@
            -o-transform: rotateY( 180deg );
               transform: rotateY( 180deg );
     }
+    
+    .image {
+      width: 100%;
+    }
   </style>
 
 </head>
