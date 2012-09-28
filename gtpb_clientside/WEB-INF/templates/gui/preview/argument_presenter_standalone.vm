@@ -30,11 +30,11 @@
     .container {
       display: block;
       float: left;
-      width: 300px;
-      height: 400px;
+      width: 1000px;
+      height: 1414px;
       -webkit-transform: scale(0.2);
       -moz-transform: scale(0.2);      
-      margin: 2em;
+      margin: -800px;
       border: 2px solid #cccccc;
       -webkit-perspective: 800px;
          -moz-perspective: 800px;
