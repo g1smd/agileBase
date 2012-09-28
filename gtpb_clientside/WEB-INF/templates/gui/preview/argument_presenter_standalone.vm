@@ -1,6 +1,7 @@
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="resources/display_application_amalgam.css" />
+##  <link rel="stylesheet" type="text/css" href="resources/display_application_amalgam.css" />
+  <link rel="stylesheet" type="text/css" href="resources/preview/edit_nav.css" />
   <script language="JavaScript" src="resources/jquery.js"></script>
   <script language="JavaScript" src="rsources/preview/edit_nav.js"></script>
   <script language="JavaScript">
