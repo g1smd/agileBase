@@ -3,6 +3,11 @@
 <head>
   
   <script language="JavaScript" src="resources/jquery.js"></script>
+  <script language="JavaScript">
+    $("#flip").click(function() {
+      $("#card").addClass("flipped");
+    });
+  </script>
   
     <style>
     .container {
