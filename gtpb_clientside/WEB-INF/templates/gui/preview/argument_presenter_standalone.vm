@@ -12,6 +12,11 @@
   </script>
   
     <style>
+    
+    figure {
+      margin: 0;
+    }
+    
     .container {
       -webkit-perspective: 800px;
          -moz-perspective: 800px;
@@ -72,8 +77,6 @@
 
 </head>
 <body>
-
-  <h1>Card 1</h1>
 
   <section class="container">
     <div class="card">
