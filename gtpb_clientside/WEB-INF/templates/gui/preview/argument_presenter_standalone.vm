@@ -87,9 +87,7 @@
 </head>
 <body>
 
-  <section class="container">
     #parse("gui/preview/app_presenter.vm")
-  </section>
 
   <section id="options">
     <p><button id="flip">Flip Card</button></p>

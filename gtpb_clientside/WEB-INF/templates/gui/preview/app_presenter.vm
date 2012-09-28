@@ -19,6 +19,7 @@
 #foreach($row in $reportDataRows)
   #set($thisUniqueId = $row.getRowId())
   #set($dataRowFields = $row.getDataRowFields())
+    <section class="container">
     <div class="card" data-rowid="$thisUniqueId" >
       <figure class="front">
       #foreach($field in $reportBaseFields)##
@@ -37,4 +38,5 @@
       </figure>
       <figure class="back">2</figure>
     </div>
+    </section>
 #end
