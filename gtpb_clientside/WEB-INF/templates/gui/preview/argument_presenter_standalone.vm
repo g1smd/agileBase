@@ -18,6 +18,7 @@
     }
     
     .container {
+      display: block;
       -webkit-perspective: 800px;
          -moz-perspective: 800px;
            -o-perspective: 800px;
