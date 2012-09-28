@@ -116,6 +116,8 @@
     .card .back {
       background-color: white;
       color: black;
+      line-height: 2em;
+      font-family: Verdana, sans-serif;
       -webkit-transform: rotateY( 180deg );
          -moz-transform: rotateY( 180deg );
            -o-transform: rotateY( 180deg );

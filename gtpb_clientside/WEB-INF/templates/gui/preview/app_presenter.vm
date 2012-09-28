@@ -40,7 +40,7 @@
       <figure class="back">
         #foreach($field in $reportBaseFields)
           #set($fieldCategory = $field.getFieldCategory().toString())
-          #if($fieldCategory != "FILE")
+          #if(($fieldCategory != "FILE") && (!$field.isPrimaryKey()) && (!$field.getHidden()))
             <div class="fieldname">$field</div>
             <div class="fieldcontent">$dataRowFields.get($field)</div>
           #end
