@@ -112,8 +112,8 @@
     }
 
     .card .back {
-      background-color: white;
-      color: black;
+      background-color: gray;
+      color: white;
       line-height: 2em;
       font-family: Verdana, sans-serif;
       font-size: 20pt;
