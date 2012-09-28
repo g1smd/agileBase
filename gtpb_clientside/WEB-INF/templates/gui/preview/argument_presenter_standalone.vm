@@ -45,10 +45,10 @@
       -moz-transform: scale(0.2);      
       margin: -350px;
       border: 2px solid #cccccc;
-      -webkit-perspective: 2000px;
-         -moz-perspective: 2000px;
-           -o-perspective: 2000px;
-              perspective: 2000px;
+      -webkit-perspective: 1500px;
+         -moz-perspective: 1500px;
+           -o-perspective: 1500px;
+              perspective: 1500px;
       -webkit-transition-duration: 2s;
       -moz-transition-duration: 2s;
       transition-duration: 2s;
