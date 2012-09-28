@@ -13,7 +13,6 @@
       } else {
         var img = $(this).find("img.image");
         img.attr("src", img.attr("data-bigsrc"));
-        console.log($(
         container.addClass("zoomed");
       }
     });
