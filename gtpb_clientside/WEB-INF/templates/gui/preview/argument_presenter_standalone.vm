@@ -8,12 +8,12 @@
     $(".card").click(function() {
       var container = $(this).closest(".container");
       console.log(container.position().left + ", " + container.position().top);
-      if (container.position().left < 400) {
-        container.css("left","400px");
-      }
       if(container.hasClass("zoomed")) {
         $(this).toggleClass("flipped");
       } else {
+        if (container.position().left < 400) {
+          container.css("left","400px");
+        }
         var img = $(this).find("img.image");
         img.attr("src", img.attr("data-bigsrc"));
         container.addClass("zoomed");
