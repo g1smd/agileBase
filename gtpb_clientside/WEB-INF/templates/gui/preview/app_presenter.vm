@@ -16,6 +16,7 @@
     #set($reportDataRows = $view.getReportDataRows($report, $reportRowLimit, $filters, true))##
   #end
 #end
+<h1>There are $reportDataRows.size() rows</h1>
 #foreach($row in $reportDataRows)
   #set($thisUniqueId = $row.getRowId())
   #set($dataRowFields = $row.getDataRowFields())
@@ -31,7 +32,7 @@
           #if($fileValue.isImage())
             #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
             #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
-            <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
+            ##<img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
           #end
         #end
       #end
