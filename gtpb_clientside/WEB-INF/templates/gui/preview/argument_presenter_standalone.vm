@@ -11,6 +11,7 @@
       if(container.hasClass("zoomed")) {
         $(this).toggleClass("flipped");
       } else {
+        console.log(container.position().left);
         if (container.position().left < 600) {
           container.css("left","400px");
         }
