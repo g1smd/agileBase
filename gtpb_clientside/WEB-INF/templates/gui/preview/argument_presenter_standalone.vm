@@ -28,6 +28,7 @@
     }
     
     .container {
+      z-index: 0;
       display: block;
       float: left;
       width: 1000px;
