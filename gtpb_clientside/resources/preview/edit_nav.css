@@ -88,6 +88,9 @@
   -moz-transform: rotateY(180deg) scale(4);
   -webkit-transform: rotateY(180deg) scale(4);
   transform: rotateY(180deg) scale(4);
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .reportDataView .block.landscape {
