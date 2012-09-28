@@ -34,7 +34,7 @@
       height: 1414px;
       -webkit-transform: scale(0.2);
       -moz-transform: scale(0.2);      
-      margin: -800px;
+      margin: -350px;
       border: 2px solid #cccccc;
       -webkit-perspective: 800px;
          -moz-perspective: 800px;
