@@ -4,8 +4,10 @@
   
   <script language="JavaScript" src="resources/jquery.js"></script>
   <script language="JavaScript">
+    $(document).ready(function() {
     $("#flip").click(function() {
       $("#card").addClass("flipped");
+    });
     });
   </script>
   
