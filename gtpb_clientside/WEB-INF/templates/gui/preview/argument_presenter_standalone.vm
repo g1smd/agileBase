@@ -7,12 +7,15 @@
     $(document).ready(function() {
     $(".card").click(function() {
       var container = $(this).closest(".container");
-      console.log(container.position().left + ", " + container.position().top);
+      var left = container.position().left;
+      console.log(left);
       if(container.hasClass("zoomed")) {
         $(this).toggleClass("flipped");
       } else {
-        if (container.position().left < 800) {
+        if (left < 400) {
           container.css("left","400px");
+        } else if (left < 800) {
+          container.css("left","200px");
         }
         var img = $(this).find("img.image");
         img.attr("src", img.attr("data-bigsrc"));
