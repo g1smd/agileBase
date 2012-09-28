@@ -73,9 +73,9 @@
     }
     
     .card.zoomed {
-      transform: scale(1);
-      -webkit-transform: scale(1);
-      -moz-transform: scale(1);
+      transform: scale(4);
+      -webkit-transform: scale(4);
+      -moz-transform: scale(4);
       overflow: hidden;
     }
 
