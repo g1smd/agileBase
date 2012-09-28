@@ -34,6 +34,7 @@
       height: 354px;
       margin: 2em;
       border: 2px solid #cccccc;
+      overflow: hidden;
       -webkit-perspective: 800px;
          -moz-perspective: 800px;
            -o-perspective: 800px;
