@@ -7,7 +7,7 @@
     $(document).ready(function() {
     $(".card").click(function() {
       var container = $(this).closest(".container");
-      console.log(container.position().left + " - " + container.position().right);
+      console.log(container.position().left + ", " + container.position().top);
       if(container.hasClass("zoomed")) {
         $(this).addClass("flipped");
       } else {
