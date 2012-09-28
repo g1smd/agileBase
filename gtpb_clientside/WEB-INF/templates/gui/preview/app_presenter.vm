@@ -22,10 +22,12 @@
     <div class="card" data-rowid="$thisUniqueId" >
       <figure class="front">
       #foreach($field in $reportBaseFields)##
+        #set($dataRowField = $dataRowFields.get($field))
         #set($fieldCategory = $field.getFieldCategory().toString())
         #if($fieldCategory == "FILE")
+          #set($cell = $dataRowField.getKeyValue())
+          #set($fileValue = $viewTools.getFileValueTool($cell))
           #if($fileValue.isImage())
-            #set($fileValue = $viewTools.getFileValueTool($cell))
             #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
             #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
             <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
