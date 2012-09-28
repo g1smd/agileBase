@@ -27,6 +27,7 @@
       width: 100px;
       height: 150px;
       position: relative;
+      float: left;
       -webkit-transition: -webkit-transform 1s;
          -moz-transition: -moz-transform 1s;
            -o-transition: -o-transform 1s;
