@@ -63,10 +63,8 @@
     }
 
     .card {
-      border-radius: 1em;
       width: 100%;
       height: 100%;
-      border: 2px solid #cccccc;
       -webkit-transition: -webkit-transform 1s;
          -moz-transition: -moz-transform 1s;
            -o-transition: -o-transform 1s;
@@ -96,6 +94,7 @@
     }
 
     .card figure {
+      border: 2px solid #cccccc;
       border-radius: 1em;
       display: block;
       height: 100%;
