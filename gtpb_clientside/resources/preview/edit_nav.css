@@ -79,7 +79,6 @@
   -moz-transform: rotateY(180deg) scale(4);
   -webkit-transform: rotateY(180deg) scale(4);
   transform: rotateY(180deg) scale(4);
-  overflow: visible;
 }
 
 .reportDataView .block.landscape {
