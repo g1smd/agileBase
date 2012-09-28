@@ -114,13 +114,20 @@
     .card .back {
       background-color: gray;
       color: white;
-      line-height: 2em;
       font-family: Verdana, sans-serif;
       font-size: 20pt;
       -webkit-transform: rotateY( 180deg );
          -moz-transform: rotateY( 180deg );
            -o-transform: rotateY( 180deg );
               transform: rotateY( 180deg );
+    }
+    
+    .fieldcontent {
+      padding: 1em;
+      border: 2px solid #cccccc;
+      background-color: #DDE6EF;
+      border-radius: 1em;
+      margin: 1em;
     }
     
     .image {
