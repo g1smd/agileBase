@@ -6,12 +6,15 @@
   <script language="JavaScript">
     $(document).ready(function() {
     $(".card").click(function() {
-      if($(this).closest(".container").hasClass("zoomed")) {
+      var container = $(this).closest(".container");
+      console.log(container.position().left + " - " + container.position().right);
+      if(container.hasClass("zoomed")) {
         $(this).addClass("flipped");
       } else {
         var img = $(this).find("img.image");
         img.attr("src", img.attr("data-bigsrc"));
-        $(this).closest(".container").addClass("zoomed");
+        console.log($(
+        container.addClass("zoomed");
       }
     });
     });
