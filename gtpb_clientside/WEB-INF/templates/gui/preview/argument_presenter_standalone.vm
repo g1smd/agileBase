@@ -13,10 +13,8 @@
   
     <style>
     .container {
-      width: 200px;
-      height: 260px;
+      width: 100%;
       position: relative;
-      margin: 0 auto 40px;
       border: 1px solid #CCC;
       -webkit-perspective: 800px;
          -moz-perspective: 800px;
