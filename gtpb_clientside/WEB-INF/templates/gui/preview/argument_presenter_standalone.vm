@@ -16,6 +16,7 @@
       width: 100%;
       position: relative;
       border: 1px solid #CCC;
+      display: block;
       -webkit-perspective: 800px;
          -moz-perspective: 800px;
            -o-perspective: 800px;
