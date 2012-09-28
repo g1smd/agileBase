@@ -30,8 +30,8 @@
     .container {
       display: block;
       float: left;
-      width: 1000px;
-      height: 1414px;
+      width: 300px;
+      height: 400px;
       -webkit-transform: scale(0.2);
       -moz-transform: scale(0.2);      
       margin: 2em;
