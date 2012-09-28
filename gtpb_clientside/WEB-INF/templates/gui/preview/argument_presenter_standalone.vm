@@ -32,6 +32,8 @@
       z-index: 0;
       display: block;
       float: left;
+      left: 0;
+      top: 0;
       width: 1000px;
       height: 1414px;
       -webkit-transform: scale(0.2);
@@ -42,6 +44,10 @@
          -moz-perspective: 800px;
            -o-perspective: 800px;
               perspective: 800px;
+      -webkit-transition-duration: 3s;
+      -moz-transition-duration: 3s;
+      -moz-transition-timing-function: ease-out;
+      -webkit-transition-timing-function: ease-out;
     }
     
     .container:hover {
