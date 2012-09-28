@@ -6,7 +6,13 @@
   <script language="JavaScript">
     $(document).ready(function() {
     $(".card").click(function() {
-      $(this).addClass("flipped");
+      if($(this).hasClass("zoomed")) {
+        $(this).addClass("flipped");
+      } else {
+        var img = $(this).find("img.image");
+        img.attr("src", img.attr("data-bigsrc"));
+        $(this).addClass("zoomed");
+      }
     });
     });
   </script>
@@ -62,6 +68,12 @@
          -moz-transform: rotateY( 180deg );
            -o-transform: rotateY( 180deg );
               transform: rotateY( 180deg );
+    }
+    
+    .card.zoomed {
+      transform: scale(4);
+      -webkit-transform: scale(4);
+      -moz-transform: scale(4);
     }
 
     .card figure {
