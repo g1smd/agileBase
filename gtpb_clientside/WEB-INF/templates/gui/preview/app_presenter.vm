@@ -8,7 +8,7 @@
 #set($table = $report.getParentTable())
 #set($internalTableName = $table.getInternalTableName())
 #set($reportBaseFields = $report.getReportBaseFields())##
-#set($reportRowLimit = 100) ## hard code for now
+#set($reportRowLimit = 10) ## hard code for now
 #if(!$reportDataRows)
   #if(!$filters)
     #set($reportDataRows = $view.getGloballyFilteredReportDataRows($report))
