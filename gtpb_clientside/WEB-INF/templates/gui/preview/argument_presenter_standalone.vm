@@ -1,6 +1,6 @@
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="resources/preview/edit_nav.css" />
+  <link rel="stylesheet" type="text/css" href="resources/preview/display_application_amalgam.css" />
   <script language="JavaScript" src="resources/jquery.js"></script>
   <script language="JavaScript" src="rsources/preview/edit_nav.js"></script>
   <script language="JavaScript">
