@@ -26,7 +26,7 @@
     .card {
       width: 100px;
       height: 150px;
-      position: absolute;
+      position: relative;
       -webkit-transition: -webkit-transform 1s;
          -moz-transition: -moz-transform 1s;
            -o-transition: -o-transform 1s;
