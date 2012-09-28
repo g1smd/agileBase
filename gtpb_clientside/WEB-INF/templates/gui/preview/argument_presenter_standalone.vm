@@ -74,6 +74,7 @@
       transform: scale(4);
       -webkit-transform: scale(4);
       -moz-transform: scale(4);
+      overflow: hidden;
     }
 
     .card figure {
