@@ -1,13 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8" />
   
-  <script language="JavaScript" src="resources/jquery.js">
-  <title>Card 1 &middot; Intro to CSS 3D transforms &rsaquo; Examples</title>
+  <script language="JavaScript" src="resources/jquery.js"></script>
   
-
-    <style media="screen">
+    <style>
     .container {
       width: 200px;
       height: 260px;
