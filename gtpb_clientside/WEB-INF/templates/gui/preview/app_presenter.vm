@@ -33,12 +33,19 @@
             #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
             #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
             <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
-            
           #end
         #end
       #end
       </figure>
-      <figure class="back">2</figure>
+      <figure class="back">
+        #foreach($field in $reportBaseFields)
+          #set($fieldCategory = $field.getFieldCategory().toString())
+          #if($fieldCategory != "FILE")
+            <div class="fieldname">$field</div>
+            <div class="fieldcontent">$dataRowFields.get($field)</div>
+          #end
+        #end
+      </figure>
     </div>
     </section>
 #end
