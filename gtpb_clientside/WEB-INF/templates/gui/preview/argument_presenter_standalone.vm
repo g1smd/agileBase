@@ -124,10 +124,11 @@
     
     .fieldcontent {
       padding: 1em;
-      border: 2px solid #cccccc;
+      border: 2px solid #ff8040;
       background-color: #DDE6EF;
       border-radius: 1em;
       margin: 1em;
+      color: black;
     }
     
     .image {
