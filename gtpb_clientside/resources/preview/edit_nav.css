@@ -169,6 +169,7 @@
 	-moz-transform: scale(4);
 	-webkit-transform: scale(4);
 	transform: scale(4);
+	height: 400px;
 	/*width: 1000px;
 	height: 1414px; */
 }
