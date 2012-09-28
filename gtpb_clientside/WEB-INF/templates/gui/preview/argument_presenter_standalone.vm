@@ -55,7 +55,7 @@
   
   </script>
 </head>
-<body style="overflow: visible; background-color: #eef3f9">
+<body style="overflow: visible; background-color: #eef3f9" id="preview">
 #parse("gui/preview/report_including_content.vm")
 </body>
 </html>
