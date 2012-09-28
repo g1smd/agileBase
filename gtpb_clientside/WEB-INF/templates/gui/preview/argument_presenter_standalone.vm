@@ -3,6 +3,6 @@
   <link rel="stylesheet" type="text/css" href="resources/preview/edit_nav.css" />
 </head>
 <body>
-#parse("gui/preview_report_including_content.vm")
+#parse("gui/preview/report_including_content.vm")
 </body>
 </html>
