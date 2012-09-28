@@ -6,12 +6,12 @@
   <script language="JavaScript">
     $(document).ready(function() {
     $(".card").click(function() {
-      if($(this).hasClass("zoomed")) {
+      if($(this).closest(".container").hasClass("zoomed")) {
         $(this).addClass("flipped");
       } else {
         var img = $(this).find("img.image");
         img.attr("src", img.attr("data-bigsrc"));
-        $(this).addClass("zoomed");
+        $(this).closest(".container").addClass("zoomed");
       }
     });
     });
@@ -72,11 +72,10 @@
               transform: rotateY( 180deg );
     }
     
-    .card.zoomed {
-      transform: scale(10);
-      -webkit-transform: scale(10);
-      -moz-transform: scale(10);
-      overflow: hidden;
+    .container.zoomed {
+      transform: scale(1);
+      -webkit-transform: scale(1);
+      -moz-transform: scale(1);
     }
 
     .card figure {
