@@ -20,9 +20,9 @@
     .container {
       display: block;
       float: left;
-      width: 200px;
-      height: 300px;
-      margin: 1em;
+      width: 250px;
+      height: 354px;
+      margin: 2em;
       -webkit-perspective: 800px;
          -moz-perspective: 800px;
            -o-perspective: 800px;
