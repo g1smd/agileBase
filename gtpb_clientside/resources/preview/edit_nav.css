@@ -88,7 +88,10 @@
   -moz-transform: rotateY(180deg) scale(4);
   -webkit-transform: rotateY(180deg) scale(4);
   transform: rotateY(180deg) scale(4);
-  -moz-backface-visibility: hidden;
+}
+
+.reportDataView .block.selected.flipped .front {
+	  -moz-backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
