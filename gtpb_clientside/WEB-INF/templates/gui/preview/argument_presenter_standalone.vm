@@ -12,7 +12,7 @@
         container.css("left","400px");
       }
       if(container.hasClass("zoomed")) {
-        $(this).addClass("flipped");
+        $(this).toggleClass("flipped");
       } else {
         var img = $(this).find("img.image");
         img.attr("src", img.attr("data-bigsrc"));
