@@ -33,6 +33,7 @@
             #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
             #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
             <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
+            
           #end
         #end
       #end
