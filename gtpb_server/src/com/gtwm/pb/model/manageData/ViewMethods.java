@@ -618,7 +618,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		CompanyInfo company = user.getCompany();
 		Map<BaseField, Boolean> sessionReportSorts = new HashMap<BaseField, Boolean>(0);
 		boolean exactFilters = false;
-		int rowLimit = 100;
+		int rowLimit = this.sessionData.getReportRowLimit();
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
 				user, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
 				QuickFilterType.OR, false);
