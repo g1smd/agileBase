@@ -15,7 +15,7 @@
         if (left < 400) {
           container.css("left","400px");
         } else if (left < 800) {
-          container.css("left","200px");
+          container.css("left","100px");
         }
         var img = $(this).find("img.image");
         img.attr("src", img.attr("data-bigsrc"));

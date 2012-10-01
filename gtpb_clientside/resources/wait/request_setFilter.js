@@ -212,12 +212,17 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 }
 
 function fSetupAppPreview() {
+	var cells = $("td.leading").next("td");
+	if (typeof cells.hoverIntent != 'function') {
+		// This function only needs to work when called from pane 2, not the relation picker in pane 3 where hoverIntent is not defined
+		return;
+	}
 	var hoverIntentConfig = {
 			over: function() {
 				if($(this).closest("thead").size() > 0) {
 					return;
 				}
-				$("td.leading").next("td").removeClass("appSelected");
+				cells.removeClass("appSelected");
 				var internalTableName = $(this).closest("#reportData").attr("data-internaltablename");
 				var rowId = parseInt($(this).closest("tr").attr("name"));
 				if (rowId != Number.NaN) {
@@ -228,7 +233,7 @@ function fSetupAppPreview() {
 			out: function() {},
 			interval: 100
 	}
-	$("td.leading").next("td").hoverIntent(hoverIntentConfig);
+	cells.hoverIntent(hoverIntentConfig);
 }
 
 /*
