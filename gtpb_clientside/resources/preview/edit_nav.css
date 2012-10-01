@@ -7,32 +7,11 @@
   overflow: scroll;
   display: none;
   padding-top: 2.5em;
-  /* z-index: 2; /* above toolbar */
+  z-index: 2; /* above toolbar */
 }
 
 #preview {
-	background-color: rgb(238,243,249);
-  perspective: 1000;
-  -moz-perspective: 1000;
-  -webkit-perspective: 1000;
-  -moz-perspective-origin: 50%;
-  -webkit-perspective-origin: 50%;
-  perspective-origin: 50%;
-  -moz-transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-}
-
-.threed {
-  perspective: 1000px;
-  -moz-perspective: 1000px;
-  -webkit-perspective: 1000px;
-  -moz-perspective-origin: 50%;
-  -webkit-perspective-origin: 50%;
-  perspective-origin: 50%;
-  -moz-transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
+	background-color: rgba(238,243,249,0.9); /* rgba(219,219,219,0.9); */ /* #dbdbdb; 777788, bdbdbd */
 }
 
 #launcher {
@@ -44,56 +23,23 @@
 .reportDataView .block {
   margin: 2em;
   float: left;
-  left: 0px; /* so we can animate the left property, give it a starting value */
   width: 250px;
   height: 300px;
   overflow: hidden;
   color: black;
   position: relative;
-  /*
-  -webkit-transition: all 5s ease-in-out;
-  -moz-transition: all 5s ease-in-out;
-  transition: all 5s ease-in-out;
-  */
+  -webkit-transition: all 7s ease-in-out;
+  -moz-transition: all 7s ease-in-out;
+  /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
+  padding: 1em;
   border: solid 1px #b4b4b4;
-  /* border-radius: 1em; */
+  border-radius: 1em;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
   -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
   box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
   word-wrap: break-word;
   line-height: 1.5em;
-}
-
-.reportDataView .block .back, .reportDataView .block .front {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  padding: 1em;
-  -moz-backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.reportDataView .block .back {
-	-moz-transform: rotateY(180deg);
-	-webkit-transform: rotateY(180deg);
-	transform: rotateY(180deg);
-}
-
-.reportDataView .block.selected.flipped {
-  -moz-transform: rotateY(180deg) scale(4);
-  -webkit-transform: rotateY(180deg) scale(4);
-  transform: rotateY(180deg) scale(4);
-}
-
-.reportDataView .block.selected.flipped .front {
-	-moz-backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 .reportDataView .block.landscape {
@@ -128,7 +74,7 @@
   left: 0;
   width: 100%;
   position: absolute;
-/*   border-radius: 1em; */
+  border-radius: 1em;
 }
 
 .reportDataView .block.centrebox {
@@ -165,9 +111,9 @@
 
 .reportDataView .block:hover {
   cursor: pointer;
-  -moz-transform: scale(1.3);
-  -webkit-transform: scale(1.3);
-  transform: scale(1.3);
+  -moz-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
   z-index: 99;
   box-shadow: 0 1px 3px rgba(80, 173, 214, 0.5); /* RGB ab light blue */
   -webkit-transition-duration: 3s;
@@ -175,31 +121,8 @@
   -moz-transition-timing-function: ease-out;
   -webkit-transition-timing-function: ease-out;
   /* box-shadow: 0 1px 3px rgba(72, 111, 152, 0.3); /* RGB ab dark blue */
-}
-
-.reportDataView .block.selected {
-	-moz-transform: scale(4);
-	-webkit-transform: scale(4);
-	transform: scale(4);
-	height: 400px;
-  z-index: 99;
-/*width: 1000px;
-	height: 1414px; */
-}
-
-.reportDataView .block.notselected {
-  opacity: 0.1;
-}
-
-.reportDataView .block.selected img.image {
-	/* Make card expand to full height of image */
-  display: block;
-  position: relative;
-}
-
-.reportDataView .block.selected .details, .reportDataView .block.selected .imageCaption, .reportDataView .block.selected .cell {
-	/* Hide all content apart from image itself */
-	display: none;
+  -webkit-filter: grayscale(0);
+  -moz-filter: grayscale(0);
 }
 
 .block .details {
@@ -265,25 +188,6 @@
 
 #searchbox:focus {
   box-shadow: 0 0 1em 1em white;
-}
-
-.control {
-	position: fixed;
-	top: 0;
-	background-color: white;
-	opacity: 0.7;
-	font-size: 40pt;
-	z-index: 200;
-	padding-top: 0.25em;
-	padding-bottom: 0.25em;
-	padding: 0.25em;
-	color: gray;
-	display: none;
-}
-
-.control i {
-  padding: 0.25em;
-  cursor: pointer;	
 }
 
 .report_including_content {

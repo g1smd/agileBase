@@ -63,7 +63,6 @@
     #set($goToRowId = $thisUniqueId)
     ##onclick is workaround for iOS bug http://blog.alanszlosek.com/post/4369588562/jquerys-live-click-handler-on-mobile-safari
     <div class="related block current $ratio" data-rowid="$thisUniqueId" href="AppController.servlet?return=gui/display_application&set_table=$goToTable.getInternalTableName()&set_row_id=$goToRowId" onclick="fLoadFromPreview(this,event);"> 
-    <div class="front">
 			#set($fieldNum = 0)
 			#set($details = false)
 			#foreach($field in $reportBaseFields)##
@@ -78,7 +77,7 @@
             #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
             #if($fileValue.isImage())
               #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
-              <img data-bigsrc="$targetUrl" src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #set($captionNecessary = true) #end/>
+              <a target = "_blank" href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$targetUrl"><img src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #set($captionNecessary = true) #end/></a>
               #set($image = true)
 			#elseif($cell.endsWith("pdf") && !$captionNecessary)
 				#set($srcUrl = "$targetUrl.500.png")
@@ -114,7 +113,7 @@
 							#elseif($field.getContentSize() > 100)
 								#set($style = "$style color:gray; ")
               #end
-              <span style="$style" class="cell $class">$cell,</span>
+              <span style="$style" class="cell $class">$cell</span>,
               #set($emboldened = true)
 							#set($cellsHtml = "$cellsHtml <span style='$style' class='cell $class'>$cell</span>")
             #end
@@ -125,10 +124,6 @@
 			#if($captionNecessary)
 				<div class="imageCaption">$cellsHtml</div>
 			#end
-    </div> ## end of front of card
-    <div class="back">
-      Back of card
-    </div>
     </div> ## end of block
   #end
 #end ## end of reportDataRows
