@@ -41,7 +41,7 @@
 	#else
 		#set($filtered_items = $field.getItems($sessionData.getReport(), $sessionData.getReportFilterValues()))
     #end
-	#if(($all_items.size() == $filtered_items.size()) || ($disableFilteredOptions))
+	#if(($all_items.size() == $filtered_items.size()) || ($disableComboFilteredOptions))
     	## there are no items filtered
     	#foreach($item in $all_items)
     		#set($washedItem = $viewTools.escape($item))
