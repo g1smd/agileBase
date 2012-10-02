@@ -49,8 +49,10 @@
       width: 1000px;
       height: 1414px;
       -webkit-transform: scale(0.2);
-      -moz-transform: scale(0.2);      
+      -moz-transform: scale(0.2);   
+      /* margins compensate for zoom out */   
       margin: -350px;
+      margin-bottom: -700px;
       -webkit-perspective: 1500px;
          -moz-perspective: 1500px;
            -o-perspective: 1500px;
