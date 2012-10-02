@@ -30,8 +30,13 @@
           #set($cell = $dataRowField.getKeyValue())
           #set($fileValue = $viewTools.getFileValueTool($cell))
           #if($fileValue.isImage())
-            #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue")
-            #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$thisUniqueId/$fileValue.500.$fileValue.getExtension()")
+            #if($field.getTableContainingField().equals($table))
+              #set($fieldId = $thisUniqueId)
+            #else
+              #set($fieldId = $row.getValue($field.getTableContainingField().getPrimaryKey()).getKeyValue())
+            #end
+            #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
+            #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getExtension()")
             <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
           #end
         #end
