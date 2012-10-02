@@ -79,7 +79,7 @@
             #else
               $viewTools.log("Parent table is $field.getTableContainingField()")
               $viewTools.log("pkey is $field.getTableContainingField().getPrimaryKey()")
-              $viewTools.log("Value is $row.getValue($field.getTableContainingField().getPrimaryKey())")
+              $viewTools.log("Value is $row.getValue($field.getTableContainingField().getPrimaryKey()).keyValue()")
               #set($fieldId = $row.getValue($field.getTableContainingField().getPrimaryKey()).keyValue())
             #end
             #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
