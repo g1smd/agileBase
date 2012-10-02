@@ -84,6 +84,10 @@
       -moz-perspective-origin: 50% 50%;
       -o-perspective-origin: 50% 50%;
       perspective-origin: 50% 50%;
+      /* timing function same as .container */
+      -moz-transition-timing-function: ease-out;
+      -webkit-transition-timing-function: ease-out;
+      transition-timing-function: ease-out;
     }
 
     .card.flipped {
