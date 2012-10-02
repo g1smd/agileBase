@@ -16,7 +16,6 @@
     #set($reportDataRows = $view.getReportDataRows($report, $reportRowLimit, $filters, true))##
   #end
 #end
-<h1>There are $reportDataRows.size() rows, row limit is $reportRowLimit</h1>
 #foreach($row in $reportDataRows)
   #set($thisUniqueId = $row.getRowId())
   #set($dataRowFields = $row.getDataRowFields())
