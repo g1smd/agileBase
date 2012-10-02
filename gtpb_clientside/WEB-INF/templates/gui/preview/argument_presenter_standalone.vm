@@ -11,6 +11,10 @@
       console.log(left);
       if(container.hasClass("zoomed")) {
         $(this).toggleClass("flipped");
+        container.addClass("semi");
+        setTimeout(function() {
+          container.removeClass("semi");
+        }, 1000);
       } else {
         if (left < 400) {
           container.css("left","400px");
@@ -94,6 +98,12 @@
       -webkit-transform: scale(1);
       -moz-transform: scale(1);
       z-index: 10;
+    }
+    
+    .container.zoomed.semi {
+      transform: scale(0.5);
+      -webkit-transform: scale(0.5);
+      -moz-transform: scale(0.5);
     }
 
     .card figure {
