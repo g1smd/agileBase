@@ -19,6 +19,8 @@
 <tr>
   <th class=leading><div>&nbsp;</div></th>
   #foreach($field in $fields)
+    #if(((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN") || $sectionedReport)
+  
     #set($internalFieldName = $field.getInternalFieldName())
     ## Todo: merge fieldObject and field variables into one
     #set($fieldObject = $field)
@@ -42,6 +44,8 @@
     #end
     </th>
   #end
+  
+  #end
   <th class=trailing><div>&nbsp;</div></th>
 </tr>
 #set($report = $sessionData.getReport())
@@ -49,6 +53,8 @@
 <tr name="fieldFilters" id="fieldFilters" #if(!$filtersShouldBeShown) style="display:none" #end>
   <td class="leading" style="border-right:0">#if($mobile_device)&nbsp;#else<div id="filterhelp"><img src="resources/toolbar/help.png" style="height:16px; position: absolute; left: -1px" /></div><div class="ab_tooltip" rel="resources/reports/filtering_help.htm"></div>#end</td>
   #foreach($field in $fields)
+    #if(((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN") || $sectionedReport)
+  
     #set($internalFieldName = $field.getInternalFieldName())
     #set($fieldObject = $field)
     <td><div>
@@ -58,6 +64,8 @@
         <span onclick="clearFilters();">clear</span>
       #end
     </div></td>
+    
+    #end
   #end
   <td class=trailing><div>&nbsp;</div></td>      
 </tr>
