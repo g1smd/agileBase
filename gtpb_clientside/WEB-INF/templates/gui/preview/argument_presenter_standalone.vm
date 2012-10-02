@@ -52,7 +52,7 @@
            -o-perspective: 1500px;
               perspective: 1500px;
       -webkit-transition-duration: 2s;
-      -moz-transition-duration: 2s;
+      -moz-transition-duration: 20s;
       transition-duration: 2s;
       -moz-transition-timing-function: ease-out;
       -webkit-transition-timing-function: ease-out;
@@ -113,10 +113,11 @@
     }
 
     .card .front {
+      background-color: white;
     }
 
     .card .back {
-      background-color: gray;
+      background-color: #cccccc;
       color: white;
       font-family: Verdana, sans-serif;
       font-size: 20pt;
@@ -128,7 +129,7 @@
     
     .fieldcontent {
       padding: 1em;
-      border: 2px solid #ff8040;
+      border: 0.1em solid #ff8040;
       background-color: #DDE6EF;
       border-radius: 1em;
       margin: 1em;
@@ -142,12 +143,6 @@
 
 </head>
 <body>
-
-    #parse("gui/preview/app_presenter.vm")
-
-  <section id="options">
-    <p><button id="flip">Flip Card</button></p>
-  </section>
-
+  #parse("gui/preview/app_presenter.vm")
 </body>
 </html>
