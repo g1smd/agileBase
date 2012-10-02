@@ -42,14 +42,11 @@
   #set($fields=[])##
   #set($reportBaseFields = $sessionReport.getReportBaseFields())##
   #foreach ($field in $reportBaseFields)##
-    #if(((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || 
-         ($sessionContext == "SYSADMIN") || $sectionedReport)##
       ## parentTable will only be defined if we're in a tab
 	  #set($tableContainingField = $field.getTableContainingField())
       #if(!($tableContainingField.equals($parentTable) || $tableContainingField.equals($gcParentTable)))##
 	      #set($success=$fields.add($field))##
       #end
-	  #end ## added to show display field name for relation fields
   #end##
   #if($sessionTable.getDefaultReport().equals($sessionReport))##
 	#set($numberOfTabs = '-1')##
@@ -90,6 +87,7 @@
       #set($dataRowField = $dataRowFields.get($field))##
       #if($printout && ($field.getContentSize() > 500))##
         #set($success=$row.add($dataRowField.getKeyValue()))##
+        #set($success=$colours.add("")) ## TODO: this may fix the issue in pane2_body.vm, labelled 'Workaround for intermittent index out of bounds bug'
       #elseif($parentTable)##
         #if($field.getDbType() == "BOOLEAN")
           #if($dataRowField.getKeyValue() == "true")##
