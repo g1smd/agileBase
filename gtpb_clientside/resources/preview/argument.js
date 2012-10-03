@@ -2,7 +2,8 @@ $(document).ready(function() {
 	$(".card").click(function(event) {
 	  var container = $(this).closest(".container");
 	  var left = container.position().left;
-	  console.log(left);
+	  var top = container.position().top;
+	  console.log(top + ", " + left);
 	  if(container.hasClass("zoomed")) {
 	    $(this).toggleClass("flipped");
 	    container.addClass("semi");
