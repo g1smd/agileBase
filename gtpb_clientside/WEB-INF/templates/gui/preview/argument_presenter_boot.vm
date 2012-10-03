@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+  <script language="JavaScript" src="resources/jquery.js"></script>
+  <script language="JavaScript" src="resources/preview/argument.js"></script>
+  <link rel="stylesheet" type="text/css" href="resources/preview/argument.css" />
+</head>
+<body>
+  </h1>Please choose a set</h1>
+  #set($module = $sessionData.getModule())
+  #foreach($report in $view.getAllViewableReports())
+    #if($module.equals($report.getModule()))
+      ## See if the report contains any images
+      #foreach($reportField in $report.getReportFields())
+        #if($reportField.getBaseField().getFieldCategory() == "FILE")
+          <button data-internaltablename="$report.getParentTable().getInternalTableName()" value="$report.getInternalReportName()">$report</button><p>
+          #break
+        #end
+      #end
+    #end
+  #end
+</body>
+</html>
