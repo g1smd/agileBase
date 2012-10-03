@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$(".card").click(function() {
+	$(".card").click(function(event) {
 	  var container = $(this).closest(".container");
 	  var left = container.position().left;
 	  console.log(left);
@@ -22,6 +22,7 @@ $(document).ready(function() {
 		    $(".container").not(container).addClass("unzoomed");	    	
 	    }, 1000);
 	  }
+	  event.stopPropagation();
 	});
 	$("body").click(function() {
 		unzoom();
