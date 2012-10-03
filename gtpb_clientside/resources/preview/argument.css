@@ -1,5 +1,6 @@
-body {
+html, body {
 	background-color: #EEF3F9;
+	font-family: Verdana, sans-serif;
 }
 
 #argument {
@@ -122,10 +123,9 @@ figure {
 }
 
 .fieldcontent {
+	font-family: Stylograph, Verdana, sans-serif;
 	padding: 1em;
-	border: 0.1em solid #ff8040;
-	background-color: #DDE6EF;
-	border-radius: 1em;
+	background-color: white;
 	margin: 1em;
 	color: black;
 }
