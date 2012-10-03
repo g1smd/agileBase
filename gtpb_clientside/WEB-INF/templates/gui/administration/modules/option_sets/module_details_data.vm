@@ -43,7 +43,7 @@
         <option value="">-- no app template--</option>
         #set($appTemplates = $viewTools.listFiles("WEB-INF/templates/gui/apps"))
         #foreach($appTemplate in $appTemplates)
-          <option value="$appTemplate.getName()">$appTemplate.getName().replace(".vm","").replace("_"," ")</option>
+          <option value="gui/apps/$appTemplate.getName()">$appTemplate.getName().replace(".vm","").replace("_"," ")</option>
         #end
       </select>
     </td>

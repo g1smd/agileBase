@@ -12,6 +12,13 @@ $(document).ready(function() {
 			});
 		});
 	});
+	// For report chooser
+	$("button").click(function() {
+		$("button").fadeOut();
+		var internalReportName = $(this).val();
+		var internalTableName = $(this).attr("internaltablename");
+		document.location = "AppController.servlet?return=gui/preview/argument_presenter_standalone&set_report=" + internalReportName + "&set_table=" + internalTableName;
+	});
 });
 
 function unzoom() {

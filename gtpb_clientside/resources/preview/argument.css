@@ -155,3 +155,8 @@ input {
   font-size: 12pt;
   padding: 0.5em;
 }
+
+button {
+  font-size: 14pt;
+  width: 10em;
+}
