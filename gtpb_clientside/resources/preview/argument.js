@@ -23,4 +23,11 @@ $(document).ready(function() {
 	    }, 1000);
 	  }
 	});
+	$(body).click(function() {
+		unzoom();
+	});
 });
+
+function unzoom() {
+	$(".container").removeClass("zoomed").removeClass("flipped").removeClass("unzoomed").removeAttr("css");
+}
