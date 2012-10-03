@@ -23,7 +23,7 @@ $(document).ready(function() {
 	    }, 1000);
 	  }
 	});
-	$(body).click(function() {
+	$("body").click(function() {
 		unzoom();
 	});
 });
