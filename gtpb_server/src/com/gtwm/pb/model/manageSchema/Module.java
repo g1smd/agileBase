@@ -74,6 +74,14 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 	public void setSection(String section) {
 		this.section = section;
 	}
+	
+	public String getAppTemplate() {
+		return this.appTemplate;
+	}
+	
+	public void setAppTemplate(String appTemplate) {
+		this.appTemplate = appTemplate;
+	}
 
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -133,5 +141,7 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 	private String section = "";
 
 	private int indexNumber = 1;
+	
+	private String appTemplate = "";
 
 }

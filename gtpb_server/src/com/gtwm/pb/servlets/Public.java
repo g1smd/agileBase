@@ -345,6 +345,12 @@ public class Public extends VelocityViewServlet {
 		context.put("exceptionCaught", exceptionCaught);
 		if (templateName == null) {
 			logger.error("No template specified.");
+		} else {
+			templateName = Helpers.rinseString(templateName, "\\/");
+			if (templateName.startsWith("/")) {
+				logger.error("Invalid template name " + templateName);
+				templateName = "";
+			}
 		}
 		templateName = templateName + ".vm";
 		Template template = null;

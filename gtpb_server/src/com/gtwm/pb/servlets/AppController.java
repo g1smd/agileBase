@@ -25,7 +25,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.io.IOException;
-
 import javax.mail.MessagingException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -57,7 +56,6 @@ import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.manageData.SessionData;
 import com.gtwm.pb.model.manageData.ViewMethods;
 import com.gtwm.pb.model.manageData.ViewTools;
-import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageSchema.DatabaseDefn;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AgileBaseException;
@@ -769,6 +767,13 @@ public final class AppController extends VelocityViewServlet {
 		// template ('return' parameter) *must* be specified
 		if (templateName == null) {
 			logger.error("No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
+		} else {
+			// Allow slashes but no other special characters
+			templateName = Helpers.rinseString(templateName, "\\/");
+			if (templateName.startsWith("/")) {
+				logger.error("Invalid template name " + templateName);
+				templateName = "";
+			}
 		}
 		try {
 			boolean sessionValid = request.isRequestedSessionIdValid();

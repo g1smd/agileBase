@@ -29,6 +29,7 @@ import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
+import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.TableDependencyException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.auth.DisallowedException;
@@ -546,7 +547,7 @@ public final class SessionData implements SessionDataInfo {
 	}
 	
 	public void setAppId(String appId) {
-		this.appId = appId.replaceAll("[^\\w-]", "");
+		this.appId = Helpers.rinseString(appId, "-");
 	}
 	
 	public String getAppId() {

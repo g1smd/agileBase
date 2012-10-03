@@ -292,6 +292,14 @@ public final class Helpers {
 		// remove the last space(s)
 		return rinsedStringBuilder.toString().trim();
 	}
+	
+	/**
+	 * Replace all non-word characters apart from the allowed characters
+	 * @param escapedAllowedCharacters Special characters must be double escaped. E.g. to allow slashes, pass in "\\/"
+	 */
+	public static String rinseString(String stringToRinse, String escapedAllowedChars) {
+		return stringToRinse.replaceAll("[^\\w" + escapedAllowedChars + "]", "");
+	}
 
 	/**
 	 * Parameterization should be and is used for protection against SQL

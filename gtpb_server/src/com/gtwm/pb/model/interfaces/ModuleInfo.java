@@ -58,6 +58,13 @@ public interface ModuleInfo {
 	public String getSection();
 	
 	public void setSection(String section);
+	
+	/**
+	 * If this module/app is a standalone app with a separate template, return that
+	 */
+	public String getAppTemplate();
+	
+	public void setAppTemplate(String appTemplate);
 
 	public String getInternalModuleName();
 }

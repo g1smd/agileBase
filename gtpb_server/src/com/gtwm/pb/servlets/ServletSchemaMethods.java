@@ -239,6 +239,7 @@ public final class ServletSchemaMethods {
 		String indexString = request.getParameter("indexnumber");
 		String colour = request.getParameter("colour");
 		String section = request.getParameter("section");
+		String appTemplate = request.getParameter("apptemplate");
 		Integer indexNumber = null;
 		if (indexString != null) {
 			indexNumber = Integer.valueOf(indexString);
