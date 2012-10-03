@@ -81,9 +81,9 @@ figure {
 
 .container.unzoomed {
 	opacity: 0.5;
-  transform: scale(0.1);
-  -webkit-transform: scale(0.1);
-  -moz-transform: scale(0.1);
+  transform: scale(0.15);
+  -webkit-transform: scale(0.15);
+  -moz-transform: scale(0.15);
 }
 
 .card figure {

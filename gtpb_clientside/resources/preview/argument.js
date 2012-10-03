@@ -18,7 +18,9 @@ $(document).ready(function() {
 	    var img = $(this).find("img.image");
 	    img.attr("src", img.attr("data-bigsrc"));
 	    container.addClass("zoomed");
-	    $(".container").not(container).addClass("unzoomed");
+	    setTimeout(function() {
+		    $(".container").not(container).addClass("unzoomed");	    	
+	    }, 1000);
 	  }
 	});
 });
