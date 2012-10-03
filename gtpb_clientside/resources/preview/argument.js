@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	$(".card").click(function(event) {
-		unzoom();
 	  var container = $(this).closest(".container");
 	  var left = container.position().left;
 	  console.log(left);
@@ -11,6 +10,7 @@ $(document).ready(function() {
 	      container.removeClass("semi");
 	    }, 500);
 	  } else {
+			unzoom(); // un-zoom other cards
 	    if (left < 400) {
 	      container.css("left","400px");
 	    } else if (left < 800) {
