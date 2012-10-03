@@ -154,6 +154,7 @@ input {
   border: 1px solid #cccccc;
   font-size: 12pt;
   padding: 0.5em;
+  text-transform: lowercase;
 }
 
 #sets {
