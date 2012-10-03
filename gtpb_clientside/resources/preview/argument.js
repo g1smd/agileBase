@@ -1,4 +1,27 @@
 $(document).ready(function() {
+	init();
+	$("#argument").click(function() {
+		unzoom();
+	});
+	$("#fieldFilters").show();
+	$("#fieldFilters input").removeAttr("onkeyup");
+	$("#fieldFilters input").keyup(function(event) {
+		new fSetFilter(event, this, function() {
+			$("#argument").load("AppController.servlet", {
+				"return": "gui/preview/argument",
+				abCache: (new Date()).getTime()
+			}, function() {
+				init();
+			});
+		});
+	});
+});
+
+function unzoom() {
+	$(".container").removeClass("zoomed unzoomed").removeAttr("style").find(".card").removeClass("flipped");
+}
+
+function init() {
 	$(".card").click(function(event) {
 	  var container = $(this).closest(".container");
 	  var left = container.position().left;
@@ -28,22 +51,5 @@ $(document).ready(function() {
 	    //}, 1000);
 	  }
 	  event.stopPropagation();
-	});
-	$("#argument").click(function() {
-		unzoom();
-	});
-	$("#fieldFilters").show();
-	$("#fieldFilters input").removeAttr("onkeyup");
-	$("#fieldFilters input").keyup(function(event) {
-		new fSetFilter(event, this, function() {
-			$("#argument").load("AppController.servlet", {
-				"return": "gui/preview/argument",
-				abCache: (new Date()).getTime()
-			});
-		});
-	});
-});
-
-function unzoom() {
-	$(".container").removeClass("zoomed unzoomed").removeAttr("style").find(".card").removeClass("flipped");
+	}); // end of card click
 }
