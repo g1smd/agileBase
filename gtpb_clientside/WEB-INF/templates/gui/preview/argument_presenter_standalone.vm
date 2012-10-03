@@ -3,6 +3,7 @@
 <head>
   <script language="JavaScript" src="resources/jquery.js"></script>
   <script language="JavaScript" src="resources/preview/argument.js"></script>
+  <script language="JavaScript" src="resources/wait/request_setFilter.js"></script>
   <link rel="stylesheet" type="text/css" href="resources/preview/argument.css" />
 </head>
 <body>
