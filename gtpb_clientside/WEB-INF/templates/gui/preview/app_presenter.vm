@@ -45,7 +45,8 @@
       <figure class="back">
         #foreach($field in $reportBaseFields)
           #set($fieldCategory = $field.getFieldCategory().toString())
-          #if(($fieldCategory != "FILE") && (!$field.isPrimaryKey()) && (!$field.getHidden()))
+          ## Show large text fields only
+          #if($field.getContentSize() > 100)
             <div class="fieldname">$field</div>
             <div class="fieldcontent">$dataRowFields.get($field)</div>
           #end
