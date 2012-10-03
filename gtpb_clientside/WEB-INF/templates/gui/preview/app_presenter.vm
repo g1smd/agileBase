@@ -46,7 +46,6 @@
         #foreach($field in $reportBaseFields)
           #set($fieldCategory = $field.getFieldCategory().toString())
           ## Show large text fields only
-          $field = $field.getContentSize()<br>
           #if($field.getContentSize() > 100)
             <div class="fieldname">$field</div>
             <div class="fieldcontent">$dataRowFields.get($field)</div>
