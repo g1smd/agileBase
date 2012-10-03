@@ -272,6 +272,7 @@ public final class ServletSchemaMethods {
 		int originalIndexNumber = module.getIndexNumber();
 		String originalColour = module.getColour();
 		String originalSection = module.getSection();
+		String originalAppTemplate = module.getAppTemplate();
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(module);
@@ -290,6 +291,9 @@ public final class ServletSchemaMethods {
 			if (section != null) {
 				module.setSection(section);
 			}
+			if (appTemplate != null) {
+				module.setAppTemplate(appTemplate);
+			}
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			HibernateUtil.currentSession().getTransaction().rollback();
@@ -298,6 +302,7 @@ public final class ServletSchemaMethods {
 			module.setIndexNumber(originalIndexNumber);
 			module.setColour(originalColour);
 			module.setSection(originalSection);
+			module.setAppTemplate(originalAppTemplate);
 			throw new CantDoThatException("module removal failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
