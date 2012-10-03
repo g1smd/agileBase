@@ -39,11 +39,11 @@
   <tr>
     <td>app template:<br><i>Rather than load agileBase, you can load a custom app when this module is selected</i></td>
     <td>
-      <select name="apptemplate">
+      <select name="apptemplate" onchange="new fChange(this);">
         <option value="">-- no app template--</option>
         #set($appTemplates = $viewTools.listFiles("WEB-INF/templates/gui/apps"))
         #foreach($appTemplate in $appTemplates)
-          <option value="$appTemplate.getName()">$appTemplate.getName().replace(".vm","")</option>
+          <option value="$appTemplate.getName()">$appTemplate.getName().replace(".vm","").replace("_"," ")</option>
         #end
       </select>
     </td>
