@@ -135,6 +135,11 @@ figure {
 	width: 100%;
 }
 
+#filters {
+  width: 100%;
+  background-color: #cccccc;
+}
+
 #fieldFilterHeadings {
   display: none;
 }
