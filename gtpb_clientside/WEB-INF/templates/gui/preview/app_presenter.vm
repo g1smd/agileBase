@@ -7,7 +7,7 @@
 #end
 #set($table = $report.getParentTable())
 #set($internalTableName = $table.getInternalTableName())
-#set($reportBaseFields = $report.getReportBaseFields())##
+#set($fields = $report.getReportBaseFields())##
 #set($reportRowLimit = 10) ## hard code for now
 #if(!$reportDataRows)
   #if(!$filters)
@@ -28,7 +28,7 @@
     <section class="container">
     <div class="card" data-rowid="$thisUniqueId" >
       <figure class="front">
-      #foreach($field in $reportBaseFields)##
+      #foreach($field in $fields)##
         #set($dataRowField = $dataRowFields.get($field))
         #set($fieldCategory = $field.getFieldCategory().toString())
         #if($fieldCategory == "FILE")
@@ -48,7 +48,7 @@
       #end
       </figure>
       <figure class="back">
-        #foreach($field in $reportBaseFields)
+        #foreach($field in $fields)
           #set($fieldCategory = $field.getFieldCategory().toString())
           ## Show large text fields only
           #if($field.getContentSize() > 100)
