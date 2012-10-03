@@ -92,7 +92,8 @@ figure {
 
 .card figure {
 	border: 2px solid #cccccc;
-	border-radius: 1em;
+	overflow: hidden; /* crop image corners under rounded border of container */
+	border-radius: 2em;
 	display: block;
 	height: 100%;
 	width: 100%;
