@@ -7,6 +7,6 @@
   <link rel="stylesheet" type="text/css" href="resources/preview/argument.css" />
 </head>
 <body>
-  #parse("gui/preview/app_presenter.vm")
+  #parse("gui/preview/argument_presenter.vm")
 </body>
 </html>

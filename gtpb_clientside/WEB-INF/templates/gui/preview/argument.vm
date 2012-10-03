@@ -1,3 +1,9 @@
+#if(!$report)
+  #set($report = $sessionData.getReport())
+#end
+#set($table = $report.getParentTable())
+#set($internalTableName = $table.getInternalTableName())
+#set($fields = $report.getReportBaseFields())##
 #set($reportRowLimit = 20) ## hard code for now
 #if(!$reportDataRows)
   #set($reportDataRows = $view.getReportDataRows($report, $reportRowLimit))
