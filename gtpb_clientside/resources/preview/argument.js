@@ -1,8 +1,5 @@
 $(document).ready(function() {
 	init();
-	$("#argument").click(function() {
-		unzoom();
-	});
 	$("#fieldFilters").show();
 	$("#fieldFilters input").removeAttr("onkeyup");
 	$("#fieldFilters input").keyup(function(event) {
@@ -52,4 +49,7 @@ function init() {
 	  }
 	  event.stopPropagation();
 	}); // end of card click
+	$("#argument").click(function() {
+		unzoom();
+	});
 }
