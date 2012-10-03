@@ -151,5 +151,6 @@ figure {
 input {
   border-radius: 0.5em;
   border: 1px solid #cccccc;
-  font-size: 12pt
+  font-size: 12pt;
+  padding: 0.5em;
 }
