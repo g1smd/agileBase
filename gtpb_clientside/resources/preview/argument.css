@@ -2,6 +2,10 @@ body {
 	background-color: #EEF3F9;
 }
 
+#argument {
+	display: inline-block;
+}
+
 figure {
 	margin: 0;
 }
