@@ -24,7 +24,7 @@ $(document).ready(function() {
 	  }
 	  event.stopPropagation();
 	});
-	$("body").click(function() {
+	$("#argument").click(function() {
 		unzoom();
 	});
 });

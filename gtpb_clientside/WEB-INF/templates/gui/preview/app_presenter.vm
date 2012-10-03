@@ -16,6 +16,7 @@
     #set($reportDataRows = $view.getReportDataRows($report, $reportRowLimit, $filters, true))##
   #end
 #end
+<div id="argument">
 #foreach($row in $reportDataRows)
   #set($thisUniqueId = $row.getRowId())
   #set($dataRowFields = $row.getDataRowFields())
@@ -53,3 +54,4 @@
     </div>
     </section>
 #end
+</div> ## end of argument
