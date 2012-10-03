@@ -33,6 +33,15 @@ $(document).ready(function() {
 		unzoom();
 	});
 	$("#fieldFilters").show();
+	$("#fieldFilters input").removeAttr("onkeyup");
+	$("#fieldFilters input").keyup(function(event) {
+		new fSetFilter(event, this, function() {
+			$("#argument").load("AppController.servlet", {
+				"return": "gui/preview/argument",
+				abCache: (new Date()).getTime()
+			});
+		});
+	});
 });
 
 function unzoom() {

@@ -1,21 +1,9 @@
 #if(!$report)
   #set($report = $sessionData.getReport())
 #end
-#set($filterString = $sessionData.getGlobalFilterString($report).toLowerCase())
-#if(!$filterString)
-	#set($filterString = "")
-#end
 #set($table = $report.getParentTable())
 #set($internalTableName = $table.getInternalTableName())
 #set($fields = $report.getReportBaseFields())##
-#set($reportRowLimit = 10) ## hard code for now
-#if(!$reportDataRows)
-  #if(!$filters)
-    #set($reportDataRows = $view.getGloballyFilteredReportDataRows($report))
-  #else
-    #set($reportDataRows = $view.getReportDataRows($report, $reportRowLimit, $filters, true))##
-  #end
-#end
 <table id="filters">
   #set($filterTextOnly = true)
   #set($filterExcludeLargeText = true)
@@ -23,42 +11,5 @@
   #parse("gui/pane2/pane2_head.vm")
 </table>
 <div id="argument">
-#foreach($row in $reportDataRows)
-  #set($thisUniqueId = $row.getRowId())
-  #set($dataRowFields = $row.getDataRowFields())
-    <section class="container">
-    <div class="card" data-rowid="$thisUniqueId" >
-      <figure class="front">
-      #foreach($field in $fields)##
-        #set($dataRowField = $dataRowFields.get($field))
-        #set($fieldCategory = $field.getFieldCategory().toString())
-        #if($fieldCategory == "FILE")
-          #set($cell = $dataRowField.getKeyValue())
-          #set($fileValue = $viewTools.getFileValueTool($cell))
-          #if($fileValue.isImage())
-            #if($field.getTableContainingField().equals($table))
-              #set($fieldId = $thisUniqueId)
-            #else
-              #set($fieldId = $row.getValue($field.getTableContainingField().getPrimaryKey()).getKeyValue())
-            #end
-            #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
-            #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getExtension()")
-            <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
-          #end
-        #end
-      #end
-      </figure>
-      <figure class="back">
-        #foreach($field in $fields)
-          #set($fieldCategory = $field.getFieldCategory().toString())
-          ## Show large text fields only
-          #if($field.getContentSize() > 100)
-            <div class="fieldname">$field</div>
-            <div class="fieldcontent">$dataRowFields.get($field)</div>
-          #end
-        #end
-      </figure>
-    </div>
-    </section>
-#end
-</div> ## end of argument
+  #parse("gui/preview/argument.vm")
+</div>

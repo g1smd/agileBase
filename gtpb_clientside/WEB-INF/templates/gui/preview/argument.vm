@@ -1,0 +1,42 @@
+#set($reportRowLimit = 20) ## hard code for now
+#if(!$reportDataRows)
+  #set($reportDataRows = $view.getReportDataRows($report, $reportRowLimit))
+#end
+#foreach($row in $reportDataRows)
+  #set($thisUniqueId = $row.getRowId())
+  #set($dataRowFields = $row.getDataRowFields())
+    <section class="container">
+    <div class="card" data-rowid="$thisUniqueId" >
+      <figure class="front">
+      #foreach($field in $fields)##
+        #set($dataRowField = $dataRowFields.get($field))
+        #set($fieldCategory = $field.getFieldCategory().toString())
+        #if($fieldCategory == "FILE")
+          #set($cell = $dataRowField.getKeyValue())
+          #set($fileValue = $viewTools.getFileValueTool($cell))
+          #if($fileValue.isImage())
+            #if($field.getTableContainingField().equals($table))
+              #set($fieldId = $thisUniqueId)
+            #else
+              #set($fieldId = $row.getValue($field.getTableContainingField().getPrimaryKey()).getKeyValue())
+            #end
+            #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
+            #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getExtension()")
+            <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
+          #end
+        #end
+      #end
+      </figure>
+      <figure class="back">
+        #foreach($field in $fields)
+          #set($fieldCategory = $field.getFieldCategory().toString())
+          ## Show large text fields only
+          #if($field.getContentSize() > 100)
+            <div class="fieldname">$field</div>
+            <div class="fieldcontent">$dataRowFields.get($field)</div>
+          #end
+        #end
+      </figure>
+    </div>
+    </section>
+#end
