@@ -30,5 +30,5 @@ $(document).ready(function() {
 });
 
 function unzoom() {
-	$(".container").removeClass("zoomed flipped unzoomed").removeAttr("style");
+	$(".container").removeClass("zoomed unzoomed").removeAttr("style").find(".card").removeClass("flipped");
 }
