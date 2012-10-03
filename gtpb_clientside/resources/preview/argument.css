@@ -156,7 +156,13 @@ input {
   padding: 0.5em;
 }
 
+#sets {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
 button {
   font-size: 14pt;
-  width: 10em;
+  width: 20em;
 }

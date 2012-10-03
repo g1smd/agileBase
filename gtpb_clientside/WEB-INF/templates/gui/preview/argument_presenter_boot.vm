@@ -6,7 +6,8 @@
   <link rel="stylesheet" type="text/css" href="resources/preview/argument.css" />
 </head>
 <body>
-  </h1>Please choose a set</h1>
+  <h1>please choose a set</h1>
+  <div id="sets">
   #set($module = $sessionData.getModule())
   #foreach($report in $view.getAllViewableReports())
     #if($module.equals($report.getModule()))
@@ -19,5 +20,6 @@
       #end
     #end
   #end
+  </div>
 </body>
 </html>
