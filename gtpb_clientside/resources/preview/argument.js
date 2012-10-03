@@ -32,6 +32,7 @@ $(document).ready(function() {
 	$("#argument").click(function() {
 		unzoom();
 	});
+	$("#fieldFilters").show();
 });
 
 function unzoom() {
