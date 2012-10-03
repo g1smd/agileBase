@@ -30,5 +30,5 @@ $(document).ready(function() {
 });
 
 function unzoom() {
-	$(".container").removeClass("zoomed flipped unzoomed").removeAttr("css");
+	$(".container").removeClass("zoomed flipped unzoomed").removeAttr("style");
 }
