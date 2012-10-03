@@ -25,6 +25,7 @@ figure {
 	/* margins compensate for zoom out */
 	margin: -350px;
 	margin-bottom: -700px;
+	margin-top: -500px;
 	-webkit-perspective: 1500px;
 	-moz-perspective: 1500px;
 	-o-perspective: 1500px;
