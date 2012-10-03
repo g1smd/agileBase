@@ -162,7 +162,13 @@ input {
   text-align: center;
 }
 
+h1 {
+  font-size: 14pt;'
+}
+
 button {
   font-size: 14pt;
   width: 20em;
+  text-transform: lowercase;
+  padding: 0.5em;
 }
