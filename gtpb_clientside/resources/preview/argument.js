@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	$(".card").click(function(event) {
+		unzoom();
 	  var container = $(this).closest(".container");
 	  var left = container.position().left;
 	  console.log(left);
