@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($browser=$viewTools.getBrowser().getBrowserName())
-<tr>
+<tr id="fieldFilterHeadings">
   <th class=leading><div>&nbsp;</div></th>
   #foreach($field in $fields)
     #if(((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN") || $sectionedReport) ## basic checks
@@ -56,17 +56,19 @@
   <td class="leading" style="border-right:0">#if($mobile_device)&nbsp;#else<div id="filterhelp"><img src="resources/toolbar/help.png" style="height:16px; position: absolute; left: -1px" /></div><div class="ab_tooltip" rel="resources/reports/filtering_help.htm"></div>#end</td>
   #foreach($field in $fields)
     #if(((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN") || $sectionedReport)
-  
-    #set($internalFieldName = $field.getInternalFieldName())
-    #set($fieldObject = $field)
-    <td><div>
-      #if($field.getInternalFieldName())
-        #parse("gui/pane2/filter_input.vm")
-      #elseif($fields.size() == $foreach.count)
-        <span onclick="clearFilters();">clear</span>
-      #end
-    </div></td>
-    
+      #if((!$filterTextOnly) || ($field.getFieldCategory() == "TEXT")) ## check for text only filtering
+        #if((!$filterExcludeLargeText) || ($field.getContentSize() < 100) || ($field.getFieldCategory() != "TEXT")) ## check for excluding large text fields
+		    #set($internalFieldName = $field.getInternalFieldName())
+		    #set($fieldObject = $field)
+		    <td><div>
+		      #if($field.getInternalFieldName())
+		        #parse("gui/pane2/filter_input.vm")
+		      #elseif($fields.size() == $foreach.count)
+		        <span onclick="clearFilters();">clear</span>
+		      #end
+		    </div></td>
+        #end
+      #end    
     #end
   #end
   <td class=trailing><div>&nbsp;</div></td>      

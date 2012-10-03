@@ -134,3 +134,7 @@ figure {
 .image {
 	width: 100%;
 }
+
+#fieldFilterHeadings {
+  display: none;
+}
