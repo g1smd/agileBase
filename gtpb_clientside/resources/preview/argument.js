@@ -16,7 +16,7 @@ $(document).ready(function() {
 	$("button").click(function() {
 		$("button").fadeOut();
 		var internalReportName = $(this).val();
-		var internalTableName = $(this).attr("internaltablename");
+		var internalTableName = $(this).attr("data-internaltablename");
 		document.location = "AppController.servlet?return=gui/preview/argument_presenter_standalone&set_report=" + internalReportName + "&set_table=" + internalTableName;
 	});
 });
