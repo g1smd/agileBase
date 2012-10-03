@@ -16,6 +16,11 @@
     #set($reportDataRows = $view.getReportDataRows($report, $reportRowLimit, $filters, true))##
   #end
 #end
+<table id="filters">
+  #set($filterTextOnly = true)
+  #set($filterExcludeLargeText = true)
+  #parse("gui/pane2/pane2_head.vm")
+</table>
 <div id="argument">
 #foreach($row in $reportDataRows)
   #set($thisUniqueId = $row.getRowId())

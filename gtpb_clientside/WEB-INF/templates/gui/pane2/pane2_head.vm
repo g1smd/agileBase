@@ -19,33 +19,35 @@
 <tr>
   <th class=leading><div>&nbsp;</div></th>
   #foreach($field in $fields)
-    #if(((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN") || $sectionedReport)
-  
-    #set($internalFieldName = $field.getInternalFieldName())
-    ## Todo: merge fieldObject and field variables into one
-    #set($fieldObject = $field)
-    #set($fieldName = $fieldObject.toString())
-    #if($fieldObject.getHidden())
-      #set($fieldName = $fieldName.replace(" [Auto]",""))
-    #end
-    ## row0 contains the internal field name
-    ## row1 contains the display field
-    #set($className=$fieldObject.getClass().getSimpleName())
-    <th #if(($className == "TextFieldDefn") || ($className == "BigTextFieldDefn")) maxTextLength="$fieldObject.getContentSize()" #end #if(($className != "String") && ($internalFieldName!="")) internalName="$internalFieldName" onclick="fSetSort(this)"#end>
-    #if($fieldObject)
-      #if(($className != "String") && ($internalFieldName!=""))
-        <div class="ab_field_title">$fieldName</div>
-        <div class="ab_tooltip" rel="?return=gui/reports_and_tables/field_tooltip&set_custom_string=true&key=tooltip_internalfieldname&value=$internalFieldName"></div>
-      #else
-        <div>$fieldName</div>
+    #if(((!$field.isPrimaryKey()) && (!$field.getReportCalcField().isReportHidden())) || ($sessionContext == "SYSADMIN") || $sectionedReport) ## basic checks
+      #if((!$filterTextOnly) || ($field.getFieldCategory() == "TEXT")) ## check for text only filtering
+        #if((!$filterExcludeLargeText) || ($field.getContentSize() < 100) || ($field.getFieldCategory() != "TEXT")) ## check for excluding large text fields
+	      #set($internalFieldName = $field.getInternalFieldName())
+	      ## Todo: merge fieldObject and field variables into one
+	      #set($fieldObject = $field)
+	      #set($fieldName = $fieldObject.toString())
+	      #if($fieldObject.getHidden())
+	        #set($fieldName = $fieldName.replace(" [Auto]",""))
+	      #end
+	      ## row0 contains the internal field name
+	      ## row1 contains the display field
+	      #set($className=$fieldObject.getClass().getSimpleName())
+	      <th #if(($className == "TextFieldDefn") || ($className == "BigTextFieldDefn")) maxTextLength="$fieldObject.getContentSize()" #end #if(($className != "String") && ($internalFieldName!="")) internalName="$internalFieldName" onclick="fSetSort(this)"#end>
+	      #if($fieldObject)
+	        #if(($className != "String") && ($internalFieldName!=""))
+	          <div class="ab_field_title">$fieldName</div>
+	          <div class="ab_tooltip" rel="?return=gui/reports_and_tables/field_tooltip&set_custom_string=true&key=tooltip_internalfieldname&value=$internalFieldName"></div>
+	        #else
+	          <div>$fieldName</div>
+	        #end
+	      #else
+	        <div>&nbsp;</div>
+	      #end
+	      </th>
+	    #end
       #end
-    #else
-      <div>&nbsp;</div>
-    #end
-    </th>
-  #end
-  
-  #end
+    #end ## end if not primary key etc.
+  #end ## end loop through fields
   <th class=trailing><div>&nbsp;</div></th>
 </tr>
 #set($report = $sessionData.getReport())
