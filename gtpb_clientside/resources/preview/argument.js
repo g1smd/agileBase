@@ -17,6 +17,9 @@ $(document).ready(function() {
 	    } else if (left < 800) {
 	      container.css("left","100px");
 	    }
+	    if (top < 600) {
+	    	container.css("top","600px");
+	    }
 	    var img = $(this).find("img.image");
 	    img.attr("src", img.attr("data-bigsrc"));
 	    container.addClass("zoomed");
