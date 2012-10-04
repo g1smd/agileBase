@@ -8,8 +8,8 @@
 </head>
 <body>
   <div id="sets">
+      #set($module = $sessionData.getModule())
 	  <h1><i class="fonticon icon-large $module.getIconPath()" ></i> $module: choose set</h1><p>
-	  #set($module = $sessionData.getModule())
 	  #foreach($report in $view.getAllViewableReports())
 	    #if($module.equals($report.getModule()))
 	      ## See if the report contains any images
