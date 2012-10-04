@@ -39,7 +39,7 @@
   <tr>
     <td>app template:<br><i>Rather than load agileBase, you can load a custom app when this module is selected</i></td>
     <td>
-      <select name="apptemplate" onchange="new fChange(this);">
+      <select name="apptemplate" onchange="new fChange(this);" gtpb_update_module="true" identifier="$module.getInternalModuleName()">
         <option value="">-- no app template--</option>
         #set($appTemplates = $viewTools.listFiles("WEB-INF/templates/gui/apps"))
         #foreach($appTemplate in $appTemplates)
