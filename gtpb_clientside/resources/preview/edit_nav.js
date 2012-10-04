@@ -26,6 +26,7 @@ $(document).ready(function() {
 
 function appLauncherStandalone() {
   $("#apps li.modulecollapsed").click(function() {
+  	var internalModuleName = $(this).attr("id");
   	var appId = $(this).find("i").attr("data-appid");
   	var internalTableName = $(this).attr("data-table");
   	var internalReportName = $(this).attr("data-report");
@@ -33,7 +34,7 @@ function appLauncherStandalone() {
   	if (appTemplate == "") {
   		appTemplate = "gui/display_application";
   	}
-  	document.location = "AppController.servlet?return=" + appTemplate + "&set_table=" + internalTableName + "&set_report=" + internalReportName + "&set_app_id=" + appId + "&cachebust=" + (new Date).getTime();
+  	document.location = "AppController.servlet?return=" + appTemplate + "&set_table=" + internalTableName + "&set_report=" + internalReportName + "&set_module=" + internalModuleName + "&set_app_id=" + appId + "&cachebust=" + (new Date).getTime();
   });	
 }
 

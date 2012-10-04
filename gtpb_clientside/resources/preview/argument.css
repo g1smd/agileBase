@@ -93,7 +93,7 @@ figure {
 }
 
 .card figure {
-	border: 2px solid #cccccc;
+	border: 0.3em solid #cccccc;
 	overflow: hidden; /* crop image corners under rounded border of container */
 	border-radius: 2em;
 	display: block;
@@ -155,6 +155,7 @@ input {
   font-size: 12pt;
   padding: 0.5em;
   text-transform: lowercase;
+  min-width: 60%;
 }
 
 #sets {
