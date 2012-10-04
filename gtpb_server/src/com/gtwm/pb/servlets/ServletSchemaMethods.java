@@ -245,9 +245,9 @@ public final class ServletSchemaMethods {
 			indexNumber = Integer.valueOf(indexString);
 		}
 		if ((moduleName == null) && (iconPath == null) && (indexString == null) && (colour == null)
-				&& (section == null)) {
+				&& (section == null) && (appTemplate == null)) {
 			throw new MissingParametersException(
-					"At least one of modulename, iconpath, colour, section or indexnumber are required to update a module");
+					"At least one of modulename, iconpath, colour, section, apptemplate or indexnumber are required to update a module");
 		}
 		// Look up module
 		ModuleInfo module = null;
