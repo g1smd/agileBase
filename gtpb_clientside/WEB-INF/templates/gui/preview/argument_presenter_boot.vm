@@ -3,8 +3,8 @@
 <head>
   <script language="JavaScript" src="resources/jquery.js"></script>
   <script language="JavaScript" src="resources/preview/argument.js"></script>
-  <link rel="stylesheet" type="text/css" href="resources/pane1_amalgam.css" />
   <link rel="stylesheet" type="text/css" href="resources/preview/argument.css" />
+  <link rel="stylesheet" type="text/css" href="resources/pane1_amalgam.css" />
 </head>
 <body>
   <div id="sets">
