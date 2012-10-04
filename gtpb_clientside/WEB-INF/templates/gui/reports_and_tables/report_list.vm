@@ -95,7 +95,7 @@
     	    ## if in app launcher
     	    data-table="$table.getInternalTableName()" data-report="$report.getInternalReportName()"
     	    #set($appTemplate = $module.getAppTemplate())
-    	    data-apptemplate="#if($appTemplate)${module}.getAppTemplate()#end"
+    	    data-apptemplate="#if($appTemplate)${module.getAppTemplate()}#end"
     	    #if($iconPath == $previousIconPath) style="display:none"#end
     	  #else
     	    ## if in pane 1
