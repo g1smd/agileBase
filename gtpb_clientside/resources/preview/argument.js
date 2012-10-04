@@ -22,7 +22,9 @@ $(document).ready(function() {
 });
 
 function unzoom() {
-	$(".container").removeClass("zoomed unzoomed").removeAttr("style").find(".card").removeClass("flipped");
+	setTimeout(function() {
+		$(".container").removeClass("zoomed unzoomed").removeAttr("style").find(".card").removeClass("flipped");
+	}, 1000);
 }
 
 function init() {
