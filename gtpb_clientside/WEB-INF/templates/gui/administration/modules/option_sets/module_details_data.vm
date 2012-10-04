@@ -45,6 +45,7 @@
         #set($appTemplates = $viewTools.listFiles("WEB-INF/templates/gui/apps"))
         #foreach($appTemplate in $appTemplates)
           #set($possibleAppTemplate = "gui/apps/$appTemplate.getName()")
+          #set($possibleAppTemplate = $possibleAppTemplate.replace(".vm",""))
           <option #if($possibleAppTemplate.equals($currentAppTemplate)) selected #end value="$possibleAppTemplate">$appTemplate.getName().replace(".vm","").replace("_"," ")</option>
         #end
       </select>
