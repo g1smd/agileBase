@@ -44,7 +44,7 @@ function init() {
 	    } else if (left < 800) {
 	      container.css("left","100px");
 	    }
-	    if (top < 600) {
+	    if (top < 700) {
 	    	container.css("top","600px");
 	    }
 	    var img = $(this).find("img.image");
