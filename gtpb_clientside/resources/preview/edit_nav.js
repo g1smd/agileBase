@@ -29,7 +29,11 @@ function appLauncherStandalone() {
   	var appId = $(this).find("i").attr("data-appid");
   	var internalTableName = $(this).attr("data-table");
   	var internalReportName = $(this).attr("data-report");
-  	document.location = "AppController.servlet?return=gui/display_application&set_table=" + internalTableName + "&set_report=" + internalReportName + "&set_app_id=" + appId + "&cachebust=" + (new Date).getTime();
+  	var appTemplate = $(this).attr("data-apptemplate");
+  	if (appTemplate == "") {
+  		appTemplate = "gui/display_application";
+  	}
+  	document.location = "AppController.servlet?return=" + appTemplate + "&set_table=" + internalTableName + "&set_report=" + internalReportName + "&set_app_id=" + appId + "&cachebust=" + (new Date).getTime();
   });	
 }
 
