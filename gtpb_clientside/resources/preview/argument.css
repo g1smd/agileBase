@@ -173,6 +173,7 @@ h1 {
   width: 20em;
   text-transform: lowercase;
   padding: 1em;
+  margin: 1em;
   border: 1px solid #cccccc;
   border-radius: 0.5em;
 }
