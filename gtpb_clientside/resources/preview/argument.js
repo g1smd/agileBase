@@ -30,6 +30,7 @@ function init() {
 	  var container = $(this).closest(".container");
 	  var left = container.position().left;
 	  var top = container.position().top;
+	  console.log(top + ", " + left);
 	  if(container.hasClass("zoomed")) {
 	    $(this).toggleClass("flipped");
 	    container.addClass("semi");
