@@ -3,11 +3,12 @@
 <head>
   <script language="JavaScript" src="resources/jquery.js"></script>
   <script language="JavaScript" src="resources/preview/argument.js"></script>
+  <link rel="stylesheet" type="text/css" href="resources/pane1_amalgam.css" />
   <link rel="stylesheet" type="text/css" href="resources/preview/argument.css" />
 </head>
 <body>
   <div id="sets">
-	  <h1>please choose a set</h1><p>
+	  <h1><i class="fonticon icon-large $module.getIconPath()" ></i> $module: choose set</h1><p>
 	  #set($module = $sessionData.getModule())
 	  #foreach($report in $view.getAllViewableReports())
 	    #if($module.equals($report.getModule()))
