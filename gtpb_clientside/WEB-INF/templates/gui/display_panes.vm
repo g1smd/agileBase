@@ -48,7 +48,7 @@
 ##    	</frameset>
 ##    </frameset>
 ##  #else
-    <frameset id="colsWrapper" cols="250,*" border="5" frameborder="yes" framespacing="5" bordercolor="#EEF3F9">
+    <frameset id="colsWrapper" cols="250,*" border="5" frameborder="yes" framespacing="5" bordercolor="#EEF3F9" style="border: 5px solid #EEF3F9">
     	<frame name="pane_1" id="pane_1" frameborder="no" scrolling="auto" src="AppController.servlet?return=gui/pane1">
       #if($view.getLoggedInUser().getUserType() != "FULL")
         #set($rows = "*,0") ## full height pane 2
