@@ -86,6 +86,7 @@
 		  #set($moduleExpanded = true)
 		#end
     	#set($iconPath = $module.getIconPath())
+    	#set($appTemplate = "")
     	#if($app_launcher)
     	  #set($report = $visibleModuleReports.get(0))
     	  #set($table = $report.getParentTable())
