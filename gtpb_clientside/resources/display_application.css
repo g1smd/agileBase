@@ -275,6 +275,10 @@ div#_md_blank.window_disable h1 {
   -moz-transition-duration: 0.5s;
   transition-duration: 0.5s;
   line-height: 1.5em;
+  background-color: white;
+  border-radius: 0.5em;
+  padding-top: 0.2em;
+  line-height: 1.7em;
 }
 
 #apps i.fonticon:hover {
@@ -286,7 +290,8 @@ div#_md_blank.window_disable h1 {
 	display: block;
 	position: absolute;
 	text-transform: uppercase;
-	top: -0.48em;
+	top: -0.2em;
+	left: 0.5em;
 	/* left: -0.05em; */
 	font-size: 16pt;
 	font-weight: bold;
