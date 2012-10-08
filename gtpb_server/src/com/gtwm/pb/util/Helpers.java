@@ -298,6 +298,9 @@ public final class Helpers {
 	 * @param escapedAllowedCharacters Special characters must be double escaped. E.g. to allow slashes, pass in "\\/"
 	 */
 	public static String rinseString(String stringToRinse, String escapedAllowedChars) {
+		if (stringToRinse == null) {
+			return null;
+		}
 		return stringToRinse.replaceAll("[^\\w" + escapedAllowedChars + "]", "");
 	}
 
