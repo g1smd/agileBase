@@ -41,6 +41,21 @@ function appLauncherStandalone() {
   });
 }
 
+function appLauncherIntegrated() {
+	$("#apps li.modulecollapsed").click(function() {
+  	var internalModuleName = $(this).attr("id");
+  	var appId = $(this).find("i").attr("data-appid");
+  	var internalTableName = $(this).attr("data-table");
+  	var internalReportName = $(this).attr("data-report");
+  	var appTemplate = $(this).attr("data-apptemplate");
+  	if (appTemplate == "") {
+  		
+  	} else {
+  		
+  	}
+	});
+}
+
 /**
  * @param internalReportName
  *   Optional parameter to set the session report along with sending the request

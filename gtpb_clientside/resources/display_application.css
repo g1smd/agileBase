@@ -283,7 +283,7 @@ div#_md_blank.window_disable h1 {
 
 #apps i.fonticon:hover {
   opacity: 1;
-  text-shadow: -4px 0px white, 4px 0px white, 0px 4px white, 0px -4px white, -4px -4px white, 4px -4px white, 4px 4px white, -4px 4px white;
+  /* text-shadow: -4px 0px white, 4px 0px white, 0px 4px white, 0px -4px white, -4px -4px white, 4px -4px white, 4px 4px white, -4px 4px white; */
 }
 
 #apps h1 {

@@ -170,6 +170,8 @@ function fAppLauncher() {
 	$(".searchbox").hide();
 	launcherDiv.fadeIn().load("AppController.servlet", {
 		"return": "gui/preview/app_launcher"
+	}, function() {
+		appLauncherIntegrated();
 	});
 }
 
