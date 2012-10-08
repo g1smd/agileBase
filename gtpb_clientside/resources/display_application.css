@@ -320,6 +320,7 @@ div#_md_blank.window_disable h1 {
 #launcher_title {
 	height: 3.6em;
 	overflow: hidden;
+	text-transform: lowercase;
 }
 
 #app_logo {
