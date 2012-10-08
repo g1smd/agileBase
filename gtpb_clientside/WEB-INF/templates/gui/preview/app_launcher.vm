@@ -23,9 +23,9 @@
     <span id="companyname">$company</span>
   </div>
   #parse("gui/reports_and_tables/report_list.vm")
+</div>
   <div id="other_actions">
     Other actions:
     <button id="all_apps">load all apps in one screen</button> 
     <button id="usage">show app usage</button>
   </div>
-</div>
