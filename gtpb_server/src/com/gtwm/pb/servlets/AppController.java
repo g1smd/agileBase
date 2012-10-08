@@ -768,7 +768,7 @@ public final class AppController extends VelocityViewServlet {
 		if (templateName == null) {
 			logger.error("No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
 		} else {
-			// Allow slashes but no other special characters
+			// Allow slashes and dashes but no other special characters
 			templateName = Helpers.rinseString(templateName, "\\/-");
 			if (templateName.startsWith("/")) {
 				logger.error("Invalid template name " + templateName);
