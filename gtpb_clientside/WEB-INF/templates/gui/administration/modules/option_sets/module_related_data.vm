@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($currentModule = $sessionData.getModule())
-These modules will be loaded along with $currentModule when $currentModule is loaded as an app<p>
+These modules will be loaded along with $currentModule when loaded as an app<p>
 #set($internalModuleName = $module.getInternalModuleName())
 ## Force refresh of graph and image if necessary
 #set($modules = $view.getLoggedInUser().getCompany().getModules())
