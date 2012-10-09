@@ -300,7 +300,12 @@ public final class ServletSchemaMethods {
 			}
 			if (relatedModule != null) {
 				// See whether we want to add or remove it
-				
+				boolean addRelated = Helpers.valueRepresentsBooleanTrue(request.getParameter("update_module"));
+				if (addRelated) {
+					module.addRelatedModule(relatedModule);
+				} else {
+					module.removeRelatedModule(relatedModule);
+				}
 			}
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
