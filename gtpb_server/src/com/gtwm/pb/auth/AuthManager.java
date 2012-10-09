@@ -26,6 +26,7 @@ import com.gtwm.pb.model.interfaces.AppRoleInfo;
 import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
 import com.gtwm.pb.model.interfaces.ChartGroupingInfo;
 import com.gtwm.pb.model.interfaces.ChartInfo;
+import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.RoleTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
@@ -101,7 +102,9 @@ public final class AuthManager implements AuthManagerInfo {
 					// their details
 					logger.info("" + company + " roles: " + company.getRoles());
 					logger.info("" + company + " users: " + company.getUsers());
-					logger.info("" + company + " modules: " + company.getModules());
+					for (ModuleInfo module : company.getModules()) {
+						logger.info("" + company + " module " + module + " related modules: " + module.getRelatedModules());
+					}
 					// Company identifiers:
 					// GTwM = aeaa2e59ef1798629
 					// CH = aa1d402725710a94d
