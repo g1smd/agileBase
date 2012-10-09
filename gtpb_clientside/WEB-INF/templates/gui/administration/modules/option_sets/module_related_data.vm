@@ -18,7 +18,7 @@
 #set($currentModule = $sessionData.getModule())
 #set($internalModuleName = $module.getInternalModuleName())
 ## Force refresh of graph and image if necessary
-#set($modules = $view.getCompanyForLoggedInUser().getModules())
+#set($modules = $view.getLoggedInUser().getCompany().getModules())
 #if($module.getUseDefaultRelatedModules())
   ## Generate a suggested set of related modules
   #set($relatedModules = $view.getDependentModules($currentModule))

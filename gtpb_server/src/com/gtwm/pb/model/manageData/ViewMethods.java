@@ -392,7 +392,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 			throws ObjectNotFoundException {
 		Set<TableInfo> dependentTables = new LinkedHashSet<TableInfo>();
 		this.databaseDefn.getDependentTables(baseTable, dependentTables, direction, this.request);
-		logger.debug("Table " + baseTable + " -> dependencies " + dependentTables);
 		return dependentTables;
 	}
 
