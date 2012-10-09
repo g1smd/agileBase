@@ -228,7 +228,10 @@ div#_md_blank.window_disable h1 {
 }
 
 #launcher #apps h1 {
-	top: -0.39em;
+}
+
+#launcher #other_actions {
+  padding-top: 0;
 }
 
 #launcher #apps #launcher_title {
