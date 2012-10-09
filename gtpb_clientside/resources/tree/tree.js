@@ -37,6 +37,21 @@ $(document).ready(
 			});
 		});
 
+function showApp(internalModuleName) {
+	// Hide all apps
+	$("#tree h1").next("ul").find("li").hide();
+	$("#tree h1").hide();
+	// Show selected app and related apps
+	var module = $("li#" + internalModuleName);
+	module.show();
+	expandRelated();
+	// Load the first report in the module
+	module.find("a.report_tooltip").first().click();
+}
+
+/**
+ * Load data relating to the row ID specified into the app space
+ */
 function appSelect(internalTableName, rowId, collapseModules) {
 	if (isNaN(rowId)) {
 		return;

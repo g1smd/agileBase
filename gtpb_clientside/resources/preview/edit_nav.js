@@ -42,7 +42,6 @@ function appLauncherStandalone() {
 }
 
 function appLauncherIntegrated() {
-	alert('app launcher with close');
 	$("#apps li.modulecollapsed").click(function() {
   	var internalModuleName = $(this).attr("id");
   	var appId = $(this).find("i").attr("data-appid");
@@ -50,9 +49,9 @@ function appLauncherIntegrated() {
   	var internalReportName = $(this).attr("data-report");
   	var appTemplate = $(this).attr("data-apptemplate");
   	if (appTemplate == "") {
-    	document.location = "AppController.servlet?return=" + appTemplate + "&set_table=" + internalTableName + "&set_report=" + internalReportName + "&set_module=" + internalModuleName + "&set_app_id=" + appId + "&cachebust=" + (new Date).getTime();
-  	} else {
   		top.oViewPane.pane_1.showApp(internalModuleName);
+  	} else {
+    	document.location = "AppController.servlet?return=" + appTemplate + "&set_table=" + internalTableName + "&set_report=" + internalReportName + "&set_module=" + internalModuleName + "&set_app_id=" + appId + "&cachebust=" + (new Date).getTime();
   	}
   	closePreview();
 	});
