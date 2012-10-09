@@ -84,7 +84,7 @@ function appSelect(internalTableName, rowId, collapseModules) {
 		fYouTube();
 		$("#appspace .block").each(function() {
 			var block = $(this);
-			alert("Testing block " + block.text());
+			console.log("Testing block " + block.children().size() + ": " + block.text());
 			if (block.children().size() == 0) {
 				block.remove();
 			}
