@@ -16,6 +16,9 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## 'Widget' type space that the current app related content can go in
+##
+## First, pull out interesting data (phone numbers, email addresses, maps etc.) from current record
+#set($otherRelatedData = false)
 <div class="block">
 #set($valuesFound = 0)
 #set($table = $sessionData.getTable())
@@ -51,15 +54,17 @@
   #end
 #end
 </div>
+## No interesting related data found? Show less interesting related data
 #if(($valuesFound < 2) && ($otherRelatedData.size() > 0))
-  #set($i = 0)
+  #set($numOtherRelatedData = 0)
   <div class="block"><div class="appelement">
-    #foreach($entry in $otherRelatedData.entrySet())
-      #set($i = $i + 1)
-      #if($i > 4)
-        #break
+    #parse("gui/pane1/other_related_data.vm")
+    ## No less interesting related data found? Fall back to less interesting table data
+    #if($numOtherRelatedData == 0)
+	  #foreach($field in $table.getFields())
+		#parse("gui/pane1/field.vm")
       #end
-      $entry.getKey(): $entry.getValue()<br>
+      #parse("gui/pane1/other_related_data.vm")
     #end
   </div></div>
 #end

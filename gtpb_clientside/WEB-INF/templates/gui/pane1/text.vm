@@ -29,6 +29,6 @@
     #set($phoneArea = "unknown phone area")
   #end
   <div class="appelement"><i class="icon-phone"></i> <span style="font-size:180%">$fieldValueObject</span>#if($phoneArea)<br>$phoneArea #end</div>
-#elseif(!$field.getHidden())
+#elseif(!$field.getHidden() && $otherRelatedData)
   #set($success = $otherRelatedData.put("$field",$fieldValue))
 #end

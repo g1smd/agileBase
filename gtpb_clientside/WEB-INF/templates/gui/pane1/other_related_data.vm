@@ -1,0 +1,8 @@
+## ecpects $otherRelatedData and $i to be defined
+#foreach($entry in $otherRelatedData.entrySet())
+  #set($numOtherRelatedData = $numOtherRelatedData + 1)
+  #if($numOtherRelatedData > 4)
+    #break
+  #end
+  $entry.getKey(): $entry.getValue()<br>
+#end
