@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($option_set_id='module_graph')
-#set($option_set_title='module graph')
-#set($option_set_data_path='gui/administration/modules/option_sets/module_graph_data.vm')
+#set($option_set_id='module_related')
+#set($option_set_title='module related')
+#set($option_set_data_path='gui/administration/modules/option_sets/module_related_data.vm')
 #parse('gui/administration/option_set.vm')
