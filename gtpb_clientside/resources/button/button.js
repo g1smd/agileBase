@@ -168,11 +168,14 @@ function fFullScreen() {
 function fAppLauncher() {
 	var launcherDiv = $("#launcher");
 	$(".searchbox").hide();
-	launcherDiv.fadeIn().load("AppController.servlet", {
-		"return": "gui/preview/app_launcher"
-	}, function() {
-		appLauncherIntegrated();
-	});
+	launcherDiv.fadeIn();
+	if (launcherDiv.find("#apps").size() == 0) {
+	  launcherDiv.load("AppController.servlet", {
+		  "return": "gui/preview/app_launcher"
+	  }, function() {
+		  appLauncherIntegrated();
+	  });
+	}
 }
 
 function closePreview() {
