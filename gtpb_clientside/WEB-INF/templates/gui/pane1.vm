@@ -118,10 +118,10 @@
 			</ul>
 		</li>
 	  #else
-	    #set($appId = $sessionData.getAppId())
-	    #if($appId)
+	    ##set($appId = $sessionData.getAppId())
+	    ##if($appId)
 	      <li id="appspace" data-recordid=""></li>
-	    #else
+	    ##else
           #set($manageableTables = $view.getTablesAllowedTo("MANAGE_TABLE"))
 	      <li id="setup"><h1><span>Setup</span></h1>
   		    <ul>
@@ -129,7 +129,7 @@
 		    #parse('gui/administration/administration.vm')
 		    </ul>
 	      </li>
-	    #end
+	   ##end
 	  #end
 	</ol> ## end list of sections	  
 	  #if($view.getException().getMessage())
