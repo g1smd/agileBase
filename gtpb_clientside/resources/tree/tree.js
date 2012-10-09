@@ -39,7 +39,7 @@ $(document).ready(
 
 function showApp(internalModuleName) {
 	// Hide all apps
-	$("#tree h1").next("ul").find("li").hide();
+	$("#tree h1").next("ul").children("li").hide();
 	$("#tree h1").hide();
 	// Show selected app and related apps
 	var module = $("li#" + internalModuleName);
