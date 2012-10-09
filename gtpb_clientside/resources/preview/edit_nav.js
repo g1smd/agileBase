@@ -42,6 +42,7 @@ function appLauncherStandalone() {
 }
 
 function appLauncherIntegrated() {
+	alert('app launcher');
 	$("#apps li.modulecollapsed").click(function() {
   	var internalModuleName = $(this).attr("id");
   	var appId = $(this).find("i").attr("data-appid");
@@ -51,7 +52,7 @@ function appLauncherIntegrated() {
   	if (appTemplate == "") {
   		
   	} else {
-  		top.oViewPane.pane_1.showApp()
+  		top.oViewPane.pane_1.showApp();
   	}
 	});
 }
