@@ -106,6 +106,13 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 		return this.relatedModules;
 	}
 	
+	/**
+	 * For Hibernate
+	 */
+	private void setRelatedModules(Set<ModuleInfo> relatedModules) {
+		this.relatedModules = relatedModules;
+	}
+	
 	public boolean getUseDefaultRelatedModules() {
 		return this.useDefaultRelatedModules;
 	}
