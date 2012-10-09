@@ -16,6 +16,6 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($option_set_id='module_related')
-#set($option_set_title='module related')
+#set($option_set_title='related modules')
 #set($option_set_data_path='gui/administration/modules/option_sets/module_related_data.vm')
 #parse('gui/administration/option_set.vm')
