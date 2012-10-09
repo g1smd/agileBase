@@ -1076,4 +1076,9 @@ div#reportData {
 	padding: 10px;
 }
 
-  
+/* manage tab */
+
+#module_related .suggested {
+  background-color: white;
+  border-radius: 0.5em;  
+}
