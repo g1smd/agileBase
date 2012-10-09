@@ -45,6 +45,7 @@ function showApp(internalModuleName) {
 	var module = $("li#" + internalModuleName);
 	module.show();
 	expandRelated();
+	$("li#setup").hide();
 	// Load the first report in the module
 	module.find("a.report_tooltip").first().click();
 }
