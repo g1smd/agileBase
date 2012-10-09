@@ -38,6 +38,9 @@ $(document).ready(
 		});
 
 function appSelect(internalTableName, rowId, collapseModules) {
+	if (isNaN(rowId)) {
+		return;
+	}
 	var recordId = internalTableName + "_" + rowId;
 	if ($("#appspace").attr("data-recordid") == recordId) {
 		return;
