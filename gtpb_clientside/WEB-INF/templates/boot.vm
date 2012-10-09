@@ -21,9 +21,8 @@
 #if($appUser.getUsesCustomUI())
   #set($companyId = $viewTools.cleanString($appUser.getCompany().getCompanyName()))
   #parse("gui/customisations/$companyId/index.vm")
-#elseif($apps.contains("dashboard") && $userType == "EXECUTIVE_DASHBOARD")
-  ## Executives get the dashboard by default
-  #parse("gui/customisations/common/dashboard/dashboard.vm")
+#elseif($appUser.getUsesAppLauncher())
+  #parse("gui/preview/app_launcher_standalone.vm")
 #else
   #parse("gui/display_application.vm")
 #end
