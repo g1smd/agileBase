@@ -367,7 +367,7 @@ public final class AuthManager implements AuthManagerInfo {
 	}
 
 	public synchronized void updateUser(HttpServletRequest request, AppUserInfo appUser,
-			String userName, String surname, String forename, String password, String email, InitialView userType, boolean usesCustomUI)
+			String userName, String surname, String forename, String password, String email, InitialView userType, boolean usesCustomUI, boolean usesAppLauncher)
 			throws DisallowedException, MissingParametersException, CantDoThatException, ObjectNotFoundException, CodingErrorException {
 		// Allow updating of any user if administrator or yourself if not
 		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE) || appUser
@@ -415,7 +415,7 @@ public final class AuthManager implements AuthManagerInfo {
 		// Update user in memory:
 		HibernateUtil.activateObject(appUser);
 		((Authenticator) this.authenticator).updateUser(appUser, userName, surname, forename,
-				password, email, userType, usesCustomUI);
+				password, email, userType, usesCustomUI, usesAppLauncher);
 	}
 
 	public synchronized void removeUser(HttpServletRequest request, AppUserInfo appUser)

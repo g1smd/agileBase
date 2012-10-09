@@ -247,7 +247,17 @@ public class PublicUser implements AppUserInfo {
 	}
 
 	public void setUsesCustomUI(boolean usesCustomUI) throws CantDoThatException {
-		throw new CantDoThatException("This public user can't have a password reset");
+		throw new CantDoThatException("This public user can't have a custom ui");
+	}
+
+	@Override
+	public boolean getUsesAppLauncher() {
+		return false;
+	}
+
+	@Override
+	public void setUsesAppLauncher(boolean usesAppLauncher) throws CantDoThatException {
+		throw new CantDoThatException("Not valid for public users");
 	}
 
 }

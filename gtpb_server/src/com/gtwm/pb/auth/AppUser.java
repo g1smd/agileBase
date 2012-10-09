@@ -84,6 +84,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.hashAndSetPassword(password);
 		// Give them a default UI layout
 		this.setUserType(InitialView.REPORT);
+		this.setUsesAppLauncher(true);
 	}
 
 	@ManyToOne(targetEntity = Company.class)
@@ -295,6 +296,14 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	public void setUsesCustomUI(boolean usesCustomUI) {
 		this.usesCustomUI = usesCustomUI;
 	}
+	
+	public boolean getUsesAppLauncher() {
+		return this.usesAppLauncher;
+	}
+	
+	public void setUsesAppLauncher(boolean usesAppLauncher) {
+		this.usesAppLauncher = usesAppLauncher;
+	}
 
 	@Transient
 	public boolean getAllowPasswordReset() {
@@ -397,6 +406,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private BaseReportInfo defaultReport = null;
 
 	private boolean usesCustomUI = false;
+	
+	private boolean usesAppLauncher = true;
 
 	/**
 	 * Epoch time at which a password reset email was sent

@@ -47,6 +47,8 @@ public interface AppUserInfo {
 	public static final String EMAIL = "email";
 
 	public static final String USES_CUSTOM_UI = "uses_custom_ui";
+	
+	public static final String USES_APP_LAUNCHER = "uses_app_launcher";
 
 	public CompanyInfo getCompany();
 
@@ -138,6 +140,13 @@ public interface AppUserInfo {
 	public boolean getUsesCustomUI();
 
 	public void setUsesCustomUI(boolean usesCustomUI) throws CantDoThatException;
+	
+	/**
+	 * Wether to show the app launcher by default on startup
+	 */
+	public boolean getUsesAppLauncher();
+	
+	public void setUsesAppLauncher(boolean usesAppLauncher) throws CantDoThatException;
 
 	/**
 	 * See whether the user can be sent a link to reset their password.

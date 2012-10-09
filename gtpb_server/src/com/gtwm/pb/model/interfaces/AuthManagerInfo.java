@@ -113,7 +113,7 @@ public interface AuthManagerInfo {
 	 *             If userName or password is whitespace or zero-length string
 	 */
 	public void updateUser(HttpServletRequest request, AppUserInfo appUser, String userName,
-			String surname, String forename, String password, String email, InitialView userType, boolean usesCustomUI)
+			String surname, String forename, String password, String email, InitialView userType, boolean usesCustomUI, boolean usesAppLauncher)
 			throws DisallowedException, MissingParametersException, CantDoThatException,
 			ObjectNotFoundException, CodingErrorException;
 

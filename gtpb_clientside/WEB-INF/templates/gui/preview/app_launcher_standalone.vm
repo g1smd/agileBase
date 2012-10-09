@@ -23,7 +23,7 @@
   <title>agileBase - $company</title>
   <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
   <script src="resources/jquery.js" language="Javascript"></script>
-  <script src="resources/preview/edit_nav.js" language="Javascript"></script>
+  <script src="resources/preview/display_application_amalgam.js" language="Javascript"></script>
   <link href="resources/pane1_amalgam.css" type="text/css" rel="stylesheet" />      
   <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />      
 </head>

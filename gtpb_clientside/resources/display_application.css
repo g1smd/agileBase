@@ -265,6 +265,7 @@ div#_md_blank.window_disable h1 {
 #apps ul li span {
 	text-shadow: 0px 1px white;
 	color: #666666;
+	line-height: 2em;
 }
 
 #apps i.fonticon {

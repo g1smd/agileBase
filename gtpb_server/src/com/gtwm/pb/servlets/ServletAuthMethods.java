@@ -233,6 +233,11 @@ public final class ServletAuthMethods {
 		if (usesCustomUIString != null) {
 			usesCustomUI = Helpers.valueRepresentsBooleanTrue(usesCustomUIString);
 		}
+		boolean usesAppLauncher = appUser.getUsesAppLauncher();
+		String usesAppLauncherString = request.getParameter(AppUserInfo.USES_APP_LAUNCHER.toLowerCase());
+		if (usesAppLauncherString != null) {
+			usesAppLauncher = Helpers.valueRepresentsBooleanTrue(usesAppLauncherString);
+		}
 		if (password != null) {
 			if (password.equals("false")) {
 				throw new CantDoThatException("User update failed: error setting password");
@@ -250,23 +255,24 @@ public final class ServletAuthMethods {
 		String oldEmail = appUser.getEmail();
 		InitialView oldUserType = appUser.getUserType();
 		boolean oldUsesCustomUI = appUser.getUsesCustomUI();
+		boolean oldUsesAppLauncher = appUser.getUsesAppLauncher();
 		// begin updating model and persisting changes
 		HibernateUtil.startHibernateTransaction();
 		try {
 			authManager.updateUser(request, appUser, userName, surname, forename, password, email,
-					userType, usesCustomUI);
+					userType, usesCustomUI, usesAppLauncher);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					null, oldEmail, oldUserType, oldUsesCustomUI);
+					null, oldEmail, oldUserType, oldUsesCustomUI, oldUsesAppLauncher);
 			throw new CantDoThatException("User update failed", hex);
 		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
 			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					null, oldEmail, oldUserType, oldUsesCustomUI);
+					null, oldEmail, oldUserType, oldUsesCustomUI, oldUsesAppLauncher);
 			throw new CantDoThatException(pex.getMessage(), pex);
 		} finally {
 			HibernateUtil.closeSession();
