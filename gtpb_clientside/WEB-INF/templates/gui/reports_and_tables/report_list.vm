@@ -100,8 +100,13 @@
     	    #if($iconPath == $previousIconPath) style="display:none"#end
     	  #else
     	    ## if in pane 1
-    	    data-dependent = "#foreach($dependentModule in $view.getDependentModules($module)) $dependentModule.getInternalModuleName() #end"
-    	    #if($appId && ($iconPath != $appId)) style="display:none" #end
+    	    #if($module.getUseDefaultRelatedModules())
+    	      #set($dependentModules = $view.getDependentModules($module))
+    	    #else
+    	      #set($dependentModules = $module.getRelatedModules())
+    	    #end
+    	    data-dependent = "#foreach($dependentModule in $dependentModules) $dependentModule.getInternalModuleName() #end"
+    	    #if($appId && (!$sessionReportModule.equals($module))) style="display:none" #end
     	  #end>
     	  #set($previousIconPath = $iconPath)
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))

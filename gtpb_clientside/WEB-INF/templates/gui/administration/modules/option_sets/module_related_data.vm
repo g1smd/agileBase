@@ -22,10 +22,7 @@ Suggested modules are highlighted<p>
 ## Force refresh of graph and image if necessary
 #set($modules = $view.getLoggedInUser().getCompany().getModules())
 #set($dependentModules = $view.getDependentModules($currentModule))
-#if($module.getUseDefaultRelatedModules())
-  ## Generate a suggested set of related modules
-  #set($relatedModules = $dependentModules)
-#else
+#if(!$module.getUseDefaultRelatedModules())
   #set($relatedModules = $currentModule.getRelatedModules())
 #end
 #foreach($module in $modules)
