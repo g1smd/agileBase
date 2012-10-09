@@ -84,7 +84,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.hashAndSetPassword(password);
 		// Give them a default UI layout
 		this.setUserType(InitialView.REPORT);
-		this.setUsesAppLauncher(true);
+		this.setUsesAppLauncher(false);
 	}
 
 	@ManyToOne(targetEntity = Company.class)
