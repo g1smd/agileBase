@@ -240,23 +240,27 @@ public final class ServletSchemaMethods {
 		String colour = request.getParameter("colour");
 		String section = request.getParameter("section");
 		String appTemplate = request.getParameter("apptemplate");
+		String relatedModuleInternalName = request.getParameter("relatedmodule");
 		Integer indexNumber = null;
 		if (indexString != null) {
 			indexNumber = Integer.valueOf(indexString);
 		}
 		if ((moduleName == null) && (iconPath == null) && (indexString == null) && (colour == null)
-				&& (section == null) && (appTemplate == null)) {
+				&& (section == null) && (appTemplate == null) && (relatedModuleInternalName  == null)) {
 			throw new MissingParametersException(
-					"At least one of modulename, iconpath, colour, section, apptemplate or indexnumber are required to update a module");
+					"At least one of modulename, iconpath, colour, section, apptemplate, relatedmodule or indexnumber are required to update a module");
 		}
 		// Look up module
 		ModuleInfo module = null;
-		if (internalModuleName != null) {
+		ModuleInfo relatedModule = null;
+		if ((internalModuleName != null) || (relatedModuleInternalName != null)) {
 			Set<ModuleInfo> modules = company.getModules();
 			for (ModuleInfo testModule : modules) {
-				if (testModule.getInternalModuleName().equals(internalModuleName)) {
+				String testInternalModuleName = testModule.getInternalModuleName();
+				if (testInternalModuleName.equals(internalModuleName)) {
 					module = testModule;
-					break;
+				} else if (testInternalModuleName.endsWith(relatedModuleInternalName)) {
+					relatedModule = testModule;
 				}
 			}
 		}
@@ -293,6 +297,10 @@ public final class ServletSchemaMethods {
 			}
 			if (appTemplate != null) {
 				module.setAppTemplate(appTemplate);
+			}
+			if (relatedModule != null) {
+				// See whether we want to add or remove it
+				
 			}
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {

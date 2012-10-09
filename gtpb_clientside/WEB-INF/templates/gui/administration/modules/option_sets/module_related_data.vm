@@ -29,7 +29,7 @@ These modules will be loaded along with $currentModule when loaded as an app<p>
 #foreach($module in $modules)
   #if(!$currentModule.equals($module))
     #set($internalModuleName = $module.getInternalModuleName())
-    <input type="checkbox" identifier="$internalModuleName" id="$internalModuleName" name="update_module" #if($relatedModules.contains($module)) checked #end>
+    <input type="checkbox" identifier="$internalModuleName" id="$internalModuleName" gtpb_relatedmodule="$internalModuleName" name="update_module" #if($relatedModules.contains($module)) checked #end>
     <label for="$internalModuleName">$module</label><br>
   #end
 #end
