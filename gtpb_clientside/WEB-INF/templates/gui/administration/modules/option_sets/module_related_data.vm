@@ -15,10 +15,20 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($module = $sessionData.getModule())
+#set($currentModule = $sessionData.getModule())
 #set($internalModuleName = $module.getInternalModuleName())
 ## Force refresh of graph and image if necessary
-#set($moduleGraphCode = $view.getModuleGraphCode($module))
-<a href="module_graphs/${internalModuleName}.png" target="module_graph">
-<img src="module_graphs/${internalModuleName}.png" border="0" style="max-width:100%" />
-</a>
+#set($modules = $view.getCompanyForLoggedInUser().getModules())
+#if($module.getUseDefaultRelatedModules())
+  ## Generate a suggested set of related modules
+  #set($relatedModules = $view.getDependentModules($currentModule))
+#else
+  #set($relatedModules = $currentModule.getRelatedModules())
+#end
+#foreach($module in $modules)
+  #if(!$currentModule.equals($module))
+    #set($internalModuleName = $module.getInternalModuleName())
+    <input type="checkbox" identifier="$internalModuleName" id="$internalModuleName" name="update_module" #if($relatedModules.contains($module)) checked #end>
+    <label for="$internalModuleName">$module</label><br>
+  #end
+#end

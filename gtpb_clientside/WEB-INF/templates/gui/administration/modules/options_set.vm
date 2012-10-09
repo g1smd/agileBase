@@ -20,5 +20,4 @@
 #parse('gui/administration/modules/option_sets/module_details.vm')
 #parse('gui/administration/modules/option_sets/module_icon.vm')
 #parse('gui/administration/modules/option_sets/module_color.vm')
-## Doesn't seem to work on test server
-## #parse('gui/administration/modules/option_sets/module_graph.vm')
+#parse('gui/administration/modules/option_sets/module_related.vm')

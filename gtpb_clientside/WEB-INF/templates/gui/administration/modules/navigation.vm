@@ -18,4 +18,4 @@
 #parse('gui/administration/modules/buttons/module.vm')
 #parse('gui/administration/modules/buttons/icon.vm')
 #parse('gui/administration/modules/buttons/color.vm')
-#parse('gui/administration/modules/buttons/graph.vm')
+#parse('gui/administration/modules/buttons/related.vm')

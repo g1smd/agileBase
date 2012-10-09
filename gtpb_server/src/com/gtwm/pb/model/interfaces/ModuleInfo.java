@@ -17,6 +17,8 @@
  */
 package com.gtwm.pb.model.interfaces;
 
+import java.util.Set;
+
 /**
  * A module consists of a set of reports plus any custom functionality that can
  * be added in such as data entry wizards
@@ -67,4 +69,16 @@ public interface ModuleInfo {
 	public void setAppTemplate(String appTemplate);
 
 	public String getInternalModuleName();
+	
+	public void addRelatedModule(ModuleInfo module);
+	
+	public void removeRelatedModule(ModuleInfo module);
+	
+	public Set<ModuleInfo> getRelatedModules();
+	
+	/**
+	 * If the user has added (or removed) any modules manually, this will return false, otherwise it will return true
+	 */
+	public boolean getUseDefaultRelatedModules();
+
 }

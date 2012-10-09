@@ -83,7 +83,6 @@ public class AppRole implements AppRoleInfo, Comparable<AppRoleInfo> {
 	// parent role is deleted
 	@ManyToMany(targetEntity = AppUser.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
-	// Uni-directional OneToMany
 	private Set<AppUserInfo> getUsersDirect() {
 		return this.users;
 	}

@@ -51,7 +51,7 @@ function appLauncherIntegrated() {
   	if (appTemplate == "") {
   		
   	} else {
-  		
+  		top.oViewPane.pane_1.showApp()
   	}
 	});
 }

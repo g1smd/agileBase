@@ -17,8 +17,12 @@
  */
 package com.gtwm.pb.model.manageSchema;
 
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.util.RandomString;
 
@@ -33,6 +37,7 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 		this.setModuleName(moduleName);
 		this.setIconPath(iconPath);
 		this.setIndexNumber(indexNumber);
+		this.setUseDefaultRelatedModules(true);
 	}
 	
 	public String getIconPath() {
@@ -81,6 +86,35 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 	
 	public void setAppTemplate(String appTemplate) {
 		this.appTemplate = appTemplate;
+	}
+	
+	public void addRelatedModule(ModuleInfo module) {
+		this.getRelatedModules().add(module);
+		this.setUseDefaultRelatedModules(false);
+	}
+	
+	public void removeRelatedModule(ModuleInfo module) {
+		this.getRelatedModules().remove(module);
+		this.setUseDefaultRelatedModules(false);
+	}
+	
+	// cascadeType isn't ALL because we don't want users to be deleted when a
+	// parent role is deleted
+	@ManyToMany(targetEntity = Module.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST,
+		CascadeType.REFRESH})
+	public Set<ModuleInfo> getRelatedModules() {
+		return this.relatedModules;
+	}
+	
+	public boolean getUseDefaultRelatedModules() {
+		return this.useDefaultRelatedModules;
+	}
+	
+	/**
+	 * For Hibernate
+	 */
+	private void setUseDefaultRelatedModules(boolean useDefaultRelatedModules) {
+		this.useDefaultRelatedModules = useDefaultRelatedModules;
 	}
 
 	public boolean equals(Object obj) {
@@ -143,5 +177,9 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 	private int indexNumber = 1;
 	
 	private String appTemplate = "";
+	
+	private Set<ModuleInfo> relatedModules = new HashSet<ModuleInfo>();
+	
+	private boolean useDefaultRelatedModules = true;
 
 }
