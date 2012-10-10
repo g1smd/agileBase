@@ -227,7 +227,8 @@ function fSetupAppPreview() {
 				var rowId = parseInt($(this).closest("tr").attr("name"));
 				if (rowId != Number.NaN) {
 					$(this).addClass("appSelected");
-					parent.pane_1.appSelect(internalTableName, rowId, true);
+					// true collapses modules, false leaves them alone
+					parent.pane_1.appSelect(internalTableName, rowId, false);
 				}
 			},
 			out: function() {},
