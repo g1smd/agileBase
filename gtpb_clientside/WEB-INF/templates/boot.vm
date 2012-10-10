@@ -16,6 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($appUser = $view.getLoggedInUser())
+App user is $appUser<br>
 #set($userType = $appUser.getUserType())
 #set($apps = $appUser.getCompany().getApps())
 #if($appUser.getUsesCustomUI())
