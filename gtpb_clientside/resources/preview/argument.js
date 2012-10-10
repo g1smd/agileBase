@@ -1,3 +1,5 @@
+var abCardScale = 1.0;
+
 $(document).ready(function() {
 	init();
   $("#filters td.trailing").children("div").append("<img id='home' src='resources/toolbar/agilebase.png' />");
@@ -55,12 +57,17 @@ function init() {
 	    var img = $(this).find("img.image");
 	    img.attr("src", img.attr("data-bigsrc"));
 	    container.addClass("zoomed");
+	    abCardScale = 1.0;
 	    setTimeout(function() {
 		    $(".container").not(container).addClass("unzoomed");	    	
 	    }, 1000);
 	  }
 	  event.stopPropagation();
 	}); // end of card click
+	$(document).keyup(function(event) {
+		var key = event.which;
+		console.log(key);
+	});
 	$("#argument").click(function() {
 		unzoom();
 	});
