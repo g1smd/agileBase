@@ -969,7 +969,8 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		if (newRecord) {
-			usageLogger.logDataChange(user, table, null, AppAction.SAVE_NEW_RECORD, newRowId,
+			// Last session action can be new or clone
+			usageLogger.logDataChange(user, table, null, sessionData.getLastAppAction(), newRowId,
 					dataToLog.toString());
 		} else if (globalEdit) {
 			// TODO: need better logging of global edits
