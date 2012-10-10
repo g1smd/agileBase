@@ -234,7 +234,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 					dependentModules.add(report.getModule());
 				}
 			}
-			logger.debug("Table " + table + " -> modules " + dependentModules);
 		}
 		return dependentModules;
 	}

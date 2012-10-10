@@ -423,7 +423,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.updateField(sessionData, request, databaseDefn);
 					break;
 				case UPDATE_FIELD_OPTION:
-					ServletSchemaMethods.updateFieldOption(null, sessionData, request, databaseDefn);
+					ServletSchemaMethods.updateFieldOption(sessionData, request, databaseDefn);
 					break;
 				case SET_FIELD_INDEX:
 					ServletSchemaMethods.setFieldIndex(sessionData, request, databaseDefn);

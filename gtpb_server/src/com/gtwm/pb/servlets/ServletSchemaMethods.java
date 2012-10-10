@@ -1103,7 +1103,7 @@ public final class ServletSchemaMethods {
 				newField = databaseDefn.addField(request, conn, table, fieldType, internalFieldName,
 						fieldName, fieldDesc);
 				// Set the field options
-				updateFieldOption(newField, sessionData, request, databaseDefn);
+				databaseDefn.updateFieldOption(request, newField);
 				conn.commit();
 				HibernateUtil.currentSession().getTransaction().commit();
 			} catch (SQLException sqlex) {
@@ -1331,19 +1331,17 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void updateFieldOption(BaseField field, SessionDataInfo sessionData,
+	public synchronized static void updateFieldOption(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
 			DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				ServletUtilMethods.USE_SESSION);
-		if (field == null) {
-			String internalFieldName = request.getParameter("internalfieldname");
-			if (internalFieldName == null) {
-				throw new MissingParametersException(
-						"'internalfieldname' parameter needed in the request to update a field option");
-			}
-			field = table.getField(internalFieldName);
+		String internalFieldName = request.getParameter("internalfieldname");
+		if (internalFieldName == null) {
+			throw new MissingParametersException(
+					"'internalfieldname' parameter needed in the request to update a field");
 		}
+		BaseField field = table.getField(internalFieldName);
 		// store current values that may be overwritten by
 		// DatabaseDefn.updateFieldOption so they can be rolled back
 		Boolean textFieldUsesLookup = null;
