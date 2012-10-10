@@ -49,6 +49,7 @@
               #parse("gui/pane1/field.vm")
 		    #end
           #end
+          #set($relatedRowId = false)
         #end
       #end
   #end

@@ -1,5 +1,10 @@
 #parse("gui/pane1/heading.vm")
-#set($downloadBase = "uploads/$table.getInternalTableName()/$field.getInternalFieldName()/$rowId/")
+#if($relatedRowId)
+  #set($rowIdUse = $relatedRowId)
+#else
+  #set($rowIdUse = $rowId)
+#end
+#set($downloadBase = "uploads/$table.getInternalTableName()/$field.getInternalFieldName()/$rowIdUse/")
 #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject"))
 ## Image
 #if($fieldValueObject.isImage())
