@@ -66,7 +66,15 @@ function init() {
 	}); // end of card click
 	$(document).keyup(function(event) {
 		var key = event.which;
-		console.log(key);
+		if (key == 61) {
+			// + or =, zoom in
+			abCardScale += 0.1;
+		} else if(key == 173) {
+			abCardScale -= 0.1;
+		}
+		$(".container.zoomed").css("-moz-transform","scale(" + abCardScale + ")");
+		$(".container.zoomed").css("-webkit-transform","scale(" + abCardScale + ")");
+		$(".container.zoomed").css("transform","scale(" + abCardScale + ")");
 	});
 	$("#argument").click(function() {
 		unzoom();
