@@ -103,16 +103,14 @@ import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOpti
 public final class ServletSchemaMethods {
 
 	/**
-	 * Add a new company which will be able to have its own private set of
-	 * tables
+	 * Add a new company which will be able to have its own private set of tables
 	 * 
 	 * Http usage example:
 	 * 
 	 * &add_company=true&companyname=GTWM
 	 * 
 	 * @throws DisallowedException
-	 *             If the currently logged in user doesn't have MASTER
-	 *             privileges
+	 *           If the currently logged in user doesn't have MASTER privileges
 	 */
 	public synchronized static void addCompany(HttpServletRequest request, DatabaseInfo databaseDefn)
 			throws DisallowedException, MissingParametersException, CantDoThatException,
@@ -143,8 +141,7 @@ public final class ServletSchemaMethods {
 			SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		String internalCompanyName = request.getParameter("internalcompanyname");
 		if (internalCompanyName == null) {
-			throw new MissingParametersException(
-					"'internalcompanyname' is required to remove a company");
+			throw new MissingParametersException("'internalcompanyname' is required to remove a company");
 		}
 		CompanyInfo company = authManager.getCompanyByInternalName(request, internalCompanyName);
 		HibernateUtil.startHibernateTransaction();
@@ -192,8 +189,7 @@ public final class ServletSchemaMethods {
 		CompanyInfo company = databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 		String internalModuleName = request.getParameter("internalmodulename");
 		if (internalModuleName == null) {
-			throw new MissingParametersException(
-					"internalmodulename is required to remove a module");
+			throw new MissingParametersException("internalmodulename is required to remove a module");
 		}
 		ModuleInfo module = company.getModuleByInternalName(internalModuleName);
 		// Check that the module hasn't got any reports in it
@@ -212,6 +208,14 @@ public final class ServletSchemaMethods {
 		if (memberReports.size() > 0) {
 			throw new CantDoThatException("The module " + module + " still contains reports "
 					+ memberReports);
+		}
+		// Check that module isn't referenced by any other modules
+		for (ModuleInfo testModule : company.getModules()) {
+			if (testModule.getRelatedModules().contains(module)) {
+				throw new CantDoThatException("The module " + module + " is related to another module "
+						+ testModule + ". Please remove the relation from the " + testModule
+						+ " management tab");
+			}
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
@@ -246,7 +250,7 @@ public final class ServletSchemaMethods {
 			indexNumber = Integer.valueOf(indexString);
 		}
 		if ((moduleName == null) && (iconPath == null) && (indexString == null) && (colour == null)
-				&& (section == null) && (appTemplate == null) && (relatedModuleInternalName  == null)) {
+				&& (section == null) && (appTemplate == null) && (relatedModuleInternalName == null)) {
 			throw new MissingParametersException(
 					"At least one of modulename, iconpath, colour, section, apptemplate, relatedmodule or indexnumber are required to update a module");
 		}
@@ -300,7 +304,8 @@ public final class ServletSchemaMethods {
 			}
 			if (relatedModule != null) {
 				// See whether we want to add or remove it
-				boolean addRelated = Helpers.valueRepresentsBooleanTrue(request.getParameter("update_module"));
+				boolean addRelated = Helpers.valueRepresentsBooleanTrue(request
+						.getParameter("update_module"));
 				if (addRelated) {
 					module.addRelatedModule(relatedModule);
 				} else {
@@ -322,9 +327,9 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void addTable(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
-			SQLException, CantDoThatException, ObjectNotFoundException, CodingErrorException {
+	public synchronized static void addTable(SessionDataInfo sessionData, HttpServletRequest request,
+			DatabaseInfo databaseDefn) throws DisallowedException, SQLException, CantDoThatException,
+			ObjectNotFoundException, CodingErrorException {
 		String internalTableName = request.getParameter("internaltablename");
 		String internalDefaultReportName = request.getParameter("internaldefaultreportname");
 		String internalPrimaryKeyName = request.getParameter("internalprimarykeyname");
@@ -400,15 +405,14 @@ public final class ServletSchemaMethods {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				true);
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, table)) {
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE,
+				table)) {
 			throw new DisallowedException(authManager.getLoggedInUser(request),
 					PrivilegeType.MANAGE_TABLE, table);
 		}
 		String formInternalTableName = request.getParameter("forminternaltablename");
 		if (formInternalTableName == null) {
-			throw new MissingParametersException(
-					"forminternaltablename is required to set a table form");
+			throw new MissingParametersException("forminternaltablename is required to set a table form");
 		}
 		TableInfo formTable = null;
 		if (!formInternalTableName.equals("")) {
@@ -430,15 +434,14 @@ public final class ServletSchemaMethods {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				true);
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, table)) {
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE,
+				table)) {
 			throw new DisallowedException(authManager.getLoggedInUser(request),
 					PrivilegeType.MANAGE_TABLE, table);
 		}
 		String tabTableId = request.getParameter("tabtable");
 		if (tabTableId == null) {
-			throw new MissingParametersException(
-					"tabtable must be supplied to add a form tab to a table");
+			throw new MissingParametersException("tabtable must be supplied to add a form tab to a table");
 		}
 		TableInfo tabTable = databaseDefn.getTable(request, tabTableId);
 		SortedSet<FormTabInfo> formTabs = table.getFormTabs();
@@ -464,8 +467,8 @@ public final class ServletSchemaMethods {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				true);
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, table)) {
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE,
+				table)) {
 			throw new DisallowedException(authManager.getLoggedInUser(request),
 					PrivilegeType.MANAGE_TABLE, table);
 		}
@@ -512,14 +515,13 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void updateFormTab(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				ServletUtilMethods.USE_SESSION);
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, table)) {
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE,
+				table)) {
 			throw new DisallowedException(authManager.getLoggedInUser(request),
 					PrivilegeType.MANAGE_TABLE, table);
 		}
@@ -533,8 +535,7 @@ public final class ServletSchemaMethods {
 			}
 		}
 		if (formTab == null) {
-			throw new ObjectNotFoundException("Table " + table + " doesn't contain a tab for "
-					+ tabTable);
+			throw new ObjectNotFoundException("Table " + table + " doesn't contain a tab for " + tabTable);
 		}
 		String tabInternalReportName = request.getParameter("tabinternalreportname");
 		if (tabInternalReportName == null) {
@@ -560,15 +561,15 @@ public final class ServletSchemaMethods {
 
 	/**
 	 * @throws CantDoThatException
-	 *             If a table already exists with the table name you're trying
-	 *             to rename to
+	 *           If a table already exists with the table name you're trying to
+	 *           rename to
 	 * @throws MissingParametersException
-	 *             If tablename and tabledesc both missing
+	 *           If tablename and tabledesc both missing
 	 * @throws ObjectNotFoundException
-	 *             If there's no table in the session
+	 *           If there's no table in the session
 	 * @throws DisallowedException
-	 *             If the logged in user doesn't have MANAGE_TABLE privileges on
-	 *             the table being altered
+	 *           If the logged in user doesn't have MANAGE_TABLE privileges on the
+	 *           table being altered
 	 */
 	public synchronized static void updateTable(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws CantDoThatException,
@@ -608,8 +609,8 @@ public final class ServletSchemaMethods {
 		if (allowNotificationsString != null) {
 			allowNotifications = Helpers.valueRepresentsBooleanTrue(allowNotificationsString);
 		}
-		if (newTableName == null && newTableDesc == null && lockable == null
-				&& tableFormPublic == null && tableEmail == null && tableEmailResponse == null && formStyle == null
+		if (newTableName == null && newTableDesc == null && lockable == null && tableFormPublic == null
+				&& tableEmail == null && tableEmailResponse == null && formStyle == null
 				&& allowAutoDeleteString == null && allowNotificationsString == null) {
 			throw new MissingParametersException(
 					"One or more table update parameter must be supplied to update a table");
@@ -631,7 +632,8 @@ public final class ServletSchemaMethods {
 			conn.setAutoCommit(false);
 			// update the table:
 			databaseDefn.updateTable(conn, request, table, newTableName, newTableDesc, lockable,
-					tableFormPublic, tableEmail, tableEmailResponse, formStyle, allowAutoDelete, allowNotifications);
+					tableFormPublic, tableEmail, tableEmailResponse, formStyle, allowAutoDelete,
+					allowNotifications);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
@@ -680,8 +682,8 @@ public final class ServletSchemaMethods {
 
 	public synchronized static void removeTable(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
-			SQLException, ObjectNotFoundException, MissingParametersException,
-			TableDependencyException, CantDoThatException, CodingErrorException {
+			SQLException, ObjectNotFoundException, MissingParametersException, TableDependencyException,
+			CantDoThatException, CodingErrorException {
 		// locate the table to be amended
 		TableInfo tableToRemove = ServletUtilMethods.getTableForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
@@ -779,8 +781,8 @@ public final class ServletSchemaMethods {
 			HibernateUtil.startHibernateTransaction();
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
-			newReport = databaseDefn.addReport(sessionData, request, conn, table,
-					baseInternalReportName, reportName, reportDesc, populateReport);
+			newReport = databaseDefn.addReport(sessionData, request, conn, table, baseInternalReportName,
+					reportName, reportDesc, populateReport);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (SQLException sqlex) {
@@ -830,8 +832,7 @@ public final class ServletSchemaMethods {
 		// TODO: use ServletUtilMethods.getReportForRequest but updating it for
 		// multi-part form data
 		BaseReportInfo report = sessionData.getReport();
-		String templateName = ServletUtilMethods.getParameter(request, "templatename",
-				multipartItems);
+		String templateName = ServletUtilMethods.getParameter(request, "templatename", multipartItems);
 		try {
 			databaseDefn.uploadCustomReportTemplate(request, report, templateName, multipartItems);
 		} catch (FileUploadException fuex) {
@@ -840,9 +841,8 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void removeCustomReportTemplate(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, DisallowedException, ObjectNotFoundException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			DisallowedException, ObjectNotFoundException, CantDoThatException {
 		BaseReportInfo report = sessionData.getReport();
 		String templateName = request.getParameter("customtemplatename");
 		if (templateName == null) {
@@ -1002,9 +1002,8 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void removeReport(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, DisallowedException, ObjectNotFoundException,
-			SQLException, CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			DisallowedException, ObjectNotFoundException, SQLException, CantDoThatException {
 		// get the table / report to be amended
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				ServletUtilMethods.USE_SESSION);
@@ -1053,10 +1052,9 @@ public final class ServletSchemaMethods {
 		sessionData.setReport(table.getDefaultReport());
 	}
 
-	public synchronized static void addField(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, SQLException,
-			DisallowedException, CantDoThatException, CodingErrorException {
+	public synchronized static void addField(SessionDataInfo sessionData, HttpServletRequest request,
+			DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException,
+			SQLException, DisallowedException, CantDoThatException, CodingErrorException {
 		// get the table to be amended
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				ServletUtilMethods.USE_SESSION);
@@ -1081,10 +1079,8 @@ public final class ServletSchemaMethods {
 							PossibleListOptions.LISTTABLE.getFormInputName());
 					String internalReportName = HttpRequestUtil.getStringValue(request,
 							PossibleListOptions.LISTREPORT.getFormInputName());
-					TableInfo referencedReportTable = databaseDefn.getTable(request,
-							internalTableName);
-					BaseReportInfo referencedReport = referencedReportTable
-							.getReport(internalReportName);
+					TableInfo referencedReportTable = databaseDefn.getTable(request, internalTableName);
+					BaseReportInfo referencedReport = referencedReportTable.getReport(internalReportName);
 					fieldName = referencedReport.getReportName();
 					if (fieldName.startsWith("dbvcalc_")) {
 						fieldName = fieldName.replace("dbvcalc_", "");
@@ -1104,8 +1100,8 @@ public final class ServletSchemaMethods {
 				conn = databaseDefn.getDataSource().getConnection();
 				conn.setAutoCommit(false);
 				// create the new field
-				newField = databaseDefn.addField(request, conn, table, fieldType,
-						internalFieldName, fieldName, fieldDesc);
+				newField = databaseDefn.addField(request, conn, table, fieldType, internalFieldName,
+						fieldName, fieldDesc);
 				conn.commit();
 				HibernateUtil.currentSession().getTransaction().commit();
 			} catch (SQLException sqlex) {
@@ -1165,7 +1161,7 @@ public final class ServletSchemaMethods {
 	 * Doesn't need to be public because it's only called by addField
 	 * 
 	 * @param table
-	 *            The table to add the relation to, normally the session table
+	 *          The table to add the relation to, normally the session table
 	 */
 	private static void addRelation(HttpServletRequest request, TableInfo table,
 			DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException,
@@ -1182,8 +1178,7 @@ public final class ServletSchemaMethods {
 		}
 		String listTable = request.getParameter(PossibleListOptions.LISTTABLE.getFormInputName());
 		if (listTable == null) {
-			throw new MissingParametersException("'"
-					+ PossibleListOptions.LISTTABLE.getFormInputName()
+			throw new MissingParametersException("'" + PossibleListOptions.LISTTABLE.getFormInputName()
 					+ "' parameter required in the request to add a relation");
 		}
 		TableInfo relatedTable = databaseDefn.getTable(request, listTable);
@@ -1192,8 +1187,8 @@ public final class ServletSchemaMethods {
 		for (BaseField field : table.getFields()) {
 			if (field instanceof RelationField) {
 				if (((RelationField) field).getRelatedTable().equals(relatedTable)) {
-					throw new CantDoThatException("Field '" + field
-							+ "' already relates to the table " + relatedTable);
+					throw new CantDoThatException("Field '" + field + "' already relates to the table "
+							+ relatedTable);
 				}
 			}
 		}
@@ -1335,9 +1330,8 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void updateFieldOption(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, DisallowedException, ObjectNotFoundException,
-			CantDoThatException, CodingErrorException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				ServletUtilMethods.USE_SESSION);
 		String internalFieldName = request.getParameter("internalfieldname");
@@ -1389,22 +1383,19 @@ public final class ServletSchemaMethods {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull,
-					textCase);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed", hex);
 		} catch (AgileBaseException pex) {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull,
-					textCase);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed: " + pex.getMessage(), pex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(null);
 			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull,
-					textCase);
+					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
@@ -1417,11 +1408,11 @@ public final class ServletSchemaMethods {
 	 * 
 	 * TODO: refactor to use a properties object rather than masses of parameters
 	 */
-	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup, boolean tieDownLookup,
-			Integer textFieldContentSize, Boolean dateFieldDefaultToNow,
-			Integer dateFieldResolution, Integer minYear, Integer maxYear, Integer decimalFieldPrecision, String textFieldDefault,
-			Double decimalFieldDefault, Integer integerFieldDefault, Boolean unique,
-			Boolean notNull, TextCase textCase) throws CantDoThatException {
+	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup,
+			boolean tieDownLookup, Integer textFieldContentSize, Boolean dateFieldDefaultToNow,
+			Integer dateFieldResolution, Integer minYear, Integer maxYear, Integer decimalFieldPrecision,
+			String textFieldDefault, Double decimalFieldDefault, Integer integerFieldDefault,
+			Boolean unique, Boolean notNull, TextCase textCase) throws CantDoThatException {
 		field.setUnique(unique);
 		field.setNotNull(notNull);
 		if (field instanceof TextField) {
@@ -1501,8 +1492,7 @@ public final class ServletSchemaMethods {
 					"'internalfieldname' parameter needed in the request to re-order a field");
 		}
 		BaseField field = table.getField(internalFieldName);
-		Integer newFieldIndex = ServletDataMethods.getIntegerParameterValue(request,
-				"newfieldindex");
+		Integer newFieldIndex = ServletDataMethods.getIntegerParameterValue(request, "newfieldindex");
 		if (newFieldIndex == null) {
 			throw new MissingParametersException(
 					"'newfieldindex' parameter needed in the request to re-order a field");
@@ -1519,8 +1509,7 @@ public final class ServletSchemaMethods {
 			// restore old field index
 			table.setFieldIndex(oldFieldIndex, field);
 			if (table.getDefaultReport().getReportBaseFields().contains(field)) {
-				ReportFieldInfo reportField = table.getDefaultReport().getReportField(
-						internalFieldName);
+				ReportFieldInfo reportField = table.getDefaultReport().getReportField(internalFieldName);
 				table.getDefaultReport().setFieldIndex(oldFieldIndex, reportField);
 			}
 			throw new CantDoThatException("Setting field index failed", hex);
@@ -1529,8 +1518,7 @@ public final class ServletSchemaMethods {
 			// restore old field index
 			table.setFieldIndex(oldFieldIndex, field);
 			if (table.getDefaultReport().getReportBaseFields().contains(field)) {
-				ReportFieldInfo reportField = table.getDefaultReport().getReportField(
-						internalFieldName);
+				ReportFieldInfo reportField = table.getDefaultReport().getReportField(internalFieldName);
 				table.getDefaultReport().setFieldIndex(oldFieldIndex, reportField);
 			}
 			throw new CantDoThatException("Setting field index failed", pex);
@@ -1553,8 +1541,7 @@ public final class ServletSchemaMethods {
 			throw new ObjectNotFoundException("There is no report in the session");
 		}
 		if (!(baseReport instanceof SimpleReportInfo)) {
-			throw new CantDoThatException(
-					"You can only add fields to normal reports, not union reports");
+			throw new CantDoThatException("You can only add fields to normal reports, not union reports");
 		}
 		SimpleReportInfo report = (SimpleReportInfo) baseReport;
 		TableInfo sourceTable = null;
@@ -1574,14 +1561,13 @@ public final class ServletSchemaMethods {
 			sourceTable = databaseDefn.getTable(request, internalTableName);
 		} else {
 			// obtain report
-			String internalReportName = request.getParameter("internalreportname") == null ? ""
-					: request.getParameter("internalreportname");
+			String internalReportName = request.getParameter("internalreportname") == null ? "" : request
+					.getParameter("internalreportname");
 			if (internalReportName == "") {
 				sourceTable = report.getParentTable();
 			} else {
 				sourceTable = databaseDefn.findTableContainingReport(request, internalReportName);
-				if (!sourceTable.getDefaultReport().getInternalReportName()
-						.equals(internalReportName)) {
+				if (!sourceTable.getDefaultReport().getInternalReportName().equals(internalReportName)) {
 					sourceReport = (SimpleReportInfo) sourceTable.getReport(internalReportName);
 				}
 			}
@@ -1604,8 +1590,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.startHibernateTransaction();
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
-			addedReportField = databaseDefn.addFieldToReport(request, conn, report, sourceReport,
-					field);
+			addedReportField = databaseDefn.addFieldToReport(request, conn, report, sourceReport, field);
 			// add sort on this field if specified:
 			String sortDirectionString = request.getParameter("sortdirection");
 			if (sortDirectionString != null) {
@@ -1733,8 +1718,7 @@ public final class ServletSchemaMethods {
 					"'internalfieldname' parameter needed in request to reorder a field in a report");
 		}
 		ReportFieldInfo field = report.getReportField(internalFieldName);
-		Integer newFieldIndex = ServletDataMethods.getIntegerParameterValue(request,
-				"newfieldindex");
+		Integer newFieldIndex = ServletDataMethods.getIntegerParameterValue(request, "newfieldindex");
 		if (newFieldIndex == null) {
 			throw new MissingParametersException(
 					"'newfieldindex' parameter needed in the request to re-order a field");
@@ -1896,8 +1880,7 @@ public final class ServletSchemaMethods {
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
 			// create the new field
-			DatabaseFieldType databaseType = DatabaseFieldType.valueOf(dbType
-					.toUpperCase(Locale.UK));
+			DatabaseFieldType databaseType = DatabaseFieldType.valueOf(dbType.toUpperCase(Locale.UK));
 			Map<TableInfo, Set<BaseReportInfo>> availableDataStores = databaseDefn
 					.getViewableDataStores(request);
 			newCalculationField = new ReportCalcFieldDefn(report, internalCalculationName,
@@ -1927,11 +1910,11 @@ public final class ServletSchemaMethods {
 					word = "are ";
 				}
 				if (bracketDifference > 0) {
-					message = "It looks like brackets may not match - there " + word
-							+ bracketDifference + " closing bracket(s) missing";
+					message = "It looks like brackets may not match - there " + word + bracketDifference
+							+ " closing bracket(s) missing";
 				} else {
-					message = "It looks like brackets may not match - there " + word
-							+ bracketDifference + " more closing bracket(s) than opening brackets";
+					message = "It looks like brackets may not match - there " + word + bracketDifference
+							+ " more closing bracket(s) than opening brackets";
 				}
 			}
 			throw new CantDoThatException("Calculation addition failed. "
@@ -1991,8 +1974,7 @@ public final class ServletSchemaMethods {
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
 			// update the calculation field
-			DatabaseFieldType databaseType = DatabaseFieldType.valueOf(dbType
-					.toUpperCase(Locale.UK));
+			DatabaseFieldType databaseType = DatabaseFieldType.valueOf(dbType.toUpperCase(Locale.UK));
 			databaseDefn.updateCalculationInReport(request, conn, report, calculationField,
 					calculationName, calculationDefn, databaseType, isReportHidden);
 			conn.commit();
@@ -2002,8 +1984,7 @@ public final class ServletSchemaMethods {
 			// undo changes to calculation in memory
 			databaseDefn.returnCalculationInReportToMemory(request, conn, report, calculationField,
 					oldCalculationName, oldCalculationDefn, oldDbFieldType);
-			throw new CantDoThatException("Calculation addition failed. " + sqlex.getMessage(),
-					sqlex);
+			throw new CantDoThatException("Calculation addition failed. " + sqlex.getMessage(), sqlex);
 		} catch (HibernateException hex) {
 			rollbackConnections(conn);
 			// undo changes to calculation in memory
@@ -2039,8 +2020,7 @@ public final class ServletSchemaMethods {
 			throw new ObjectNotFoundException("There is no report in the session");
 		}
 		if (!(baseReport instanceof SimpleReportInfo)) {
-			throw new CantDoThatException(
-					"You can only add filters to normal reports, not union reports");
+			throw new CantDoThatException("You can only add filters to normal reports, not union reports");
 		}
 		SimpleReportInfo report = (SimpleReportInfo) baseReport;
 		String internalTableName = request.getParameter("internaltablename");
@@ -2066,8 +2046,7 @@ public final class ServletSchemaMethods {
 			reportContainingFilterField = null;
 			field = fieldTable.getField(internalFieldName);
 		} else {
-			ReportFieldInfo reportField = reportContainingFilterField
-					.getReportField(internalFieldName);
+			ReportFieldInfo reportField = reportContainingFilterField.getReportField(internalFieldName);
 			if (reportField == null) {
 				throw new ObjectNotFoundException("Unable to locate field within report "
 						+ reportContainingFilterField.getReportName());
@@ -2079,14 +2058,13 @@ public final class ServletSchemaMethods {
 		// Use if there's only one filter item
 		String firstFilterValue = null;
 		if (FilterType.IS_ONE_OF.getFilterTypeParameter().equals(filterType)) {
-			String parameter = request.getParameter(PossibleTextOptions.DEFAULTVALUE
-					.getFormInputName());
+			String parameter = request.getParameter(PossibleTextOptions.DEFAULTVALUE.getFormInputName());
 			filterValues = Helpers.stringArrayToSet(parameter.split(";"));
-		} else if ((!FilterType.IS_NULL.getFilterTypeParameter().equals(filterType)) && (!FilterType.IS_NOT_NULL.getFilterTypeParameter().equals(filterType))) {
+		} else if ((!FilterType.IS_NULL.getFilterTypeParameter().equals(filterType))
+				&& (!FilterType.IS_NOT_NULL.getFilterTypeParameter().equals(filterType))) {
 			// For IS_NULL and IS_NOT_NULL, there is no filter value
-			filterValues.add(request.getParameter(PossibleTextOptions.DEFAULTVALUE
-					.getFormInputName()));
-			 firstFilterValue = new TreeSet<String>(filterValues).first();
+			filterValues.add(request.getParameter(PossibleTextOptions.DEFAULTVALUE.getFormInputName()));
+			firstFilterValue = new TreeSet<String>(filterValues).first();
 		}
 		// create filter object
 		ReportFilterInfo filter = null;
@@ -2097,13 +2075,13 @@ public final class ServletSchemaMethods {
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
 			if (FilterType.IS_ONE_OF.getFilterTypeParameter().equals(filterType)) {
-				filter = new ReportFilterDefn(report, reportContainingFilterField, field,
-						filterType, filterValues);
+				filter = new ReportFilterDefn(report, reportContainingFilterField, field, filterType,
+						filterValues);
 			} else {
 				Map<TableInfo, Set<BaseReportInfo>> availableDataStores = databaseDefn
 						.getViewableDataStores(request);
-				filter = new ReportFilterDefn(report, reportContainingFilterField, field,
-						filterType, firstFilterValue, availableDataStores);
+				filter = new ReportFilterDefn(report, reportContainingFilterField, field, filterType,
+						firstFilterValue, availableDataStores);
 			}
 			databaseDefn.addFilterToReport(request, conn, report, filter);
 			conn.commit();
@@ -2206,11 +2184,10 @@ public final class ServletSchemaMethods {
 	 * @throws CodingErrorException
 	 */
 	public static JoinClauseInfo generateJoinObject(HttpServletRequest request,
-			String leftInternalTableName, String leftInternalReportName,
-			String leftInternalFieldName, JoinType joinType, String rightInternalTableName,
-			String rightInternalReportName, String rightInternalFieldName, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, CodingErrorException,
-			DisallowedException {
+			String leftInternalTableName, String leftInternalReportName, String leftInternalFieldName,
+			JoinType joinType, String rightInternalTableName, String rightInternalReportName,
+			String rightInternalFieldName, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, CodingErrorException, DisallowedException {
 		// ensure fields and join type parameters are supplied
 		if ((leftInternalTableName == null && leftInternalReportName == null)
 				|| (rightInternalTableName == null && rightInternalReportName == null)
@@ -2231,8 +2208,7 @@ public final class ServletSchemaMethods {
 		// Check for a (left) report/table name, (if both were supplied make use
 		// of the report)
 		if (!leftInternalReportName.equals("")) {
-			TableInfo leftTable = databaseDefn.findTableContainingReport(request,
-					leftInternalReportName);
+			TableInfo leftTable = databaseDefn.findTableContainingReport(request, leftInternalReportName);
 			BaseReportInfo leftReport = leftTable.getReport(leftInternalReportName);
 			leftReportField = leftReport.getReportField(leftInternalFieldName);
 		} else if (!leftInternalTableName.equals("")) {
@@ -2278,16 +2254,14 @@ public final class ServletSchemaMethods {
 		BaseReportInfo baseReport = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		if (!(baseReport instanceof SimpleReportInfo)) {
-			throw new CantDoThatException(
-					"You can only add joins to normal reports, not union reports");
+			throw new CantDoThatException("You can only add joins to normal reports, not union reports");
 		}
 		SimpleReportInfo report = (SimpleReportInfo) baseReport;
 		String leftInternalTableName = "";
 		String leftInternalReportName = (request.getParameter("leftinternalreportname") == null) ? ""
 				: request.getParameter("leftinternalreportname");
 		if (!leftInternalReportName.equals("")) {
-			TableInfo table = databaseDefn.findTableContainingReport(request,
-					leftInternalReportName);
+			TableInfo table = databaseDefn.findTableContainingReport(request, leftInternalReportName);
 			if (table.getDefaultReport().getInternalReportName().equals(leftInternalReportName)) {
 				leftInternalTableName = table.getInternalTableName();
 				leftInternalReportName = "";
@@ -2306,8 +2280,7 @@ public final class ServletSchemaMethods {
 		String rightInternalReportName = (request.getParameter("rightinternalreportname") == null) ? ""
 				: request.getParameter("rightinternalreportname");
 		if (!rightInternalReportName.equals("")) {
-			TableInfo table = databaseDefn.findTableContainingReport(request,
-					rightInternalReportName);
+			TableInfo table = databaseDefn.findTableContainingReport(request, rightInternalReportName);
 			if (table.getDefaultReport().getInternalReportName().equals(rightInternalReportName)) {
 				rightInternalTableName = table.getInternalTableName();
 				rightInternalReportName = "";
@@ -2579,10 +2552,8 @@ public final class ServletSchemaMethods {
 		ChartInfo chart = report.getChart();
 		if (chart.getGroupings().size() == 1) {
 			for (ChartAggregateInfo aggregateFunction : chart.getAggregateFunctions()) {
-				if (aggregateFunction.getAggregateFunction().equals(
-						AggregateFunction.CUMULATIVE_COUNT)
-						|| aggregateFunction.getAggregateFunction().equals(
-								AggregateFunction.CUMULATIVE_SUM)) {
+				if (aggregateFunction.getAggregateFunction().equals(AggregateFunction.CUMULATIVE_COUNT)
+						|| aggregateFunction.getAggregateFunction().equals(AggregateFunction.CUMULATIVE_SUM)) {
 					// Can't leave a cumulative aggregate with no groupings, it
 					// will break the SQL
 					throw new CantDoThatException("Please remove the cumulative function first");
@@ -2671,8 +2642,7 @@ public final class ServletSchemaMethods {
 			} catch (ObjectNotFoundException onfex) {
 				logger.error("Unable to rollback function addition - maybe it didn't get added");
 			}
-			throw new CantDoThatException("summary function addition failed due to: " + sqlex,
-					sqlex);
+			throw new CantDoThatException("summary function addition failed due to: " + sqlex, sqlex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
@@ -2688,8 +2658,8 @@ public final class ServletSchemaMethods {
 			throw new MissingParametersException(
 					"'internalaggregatename' parameter is required to remove a function field from a report summary");
 		}
-		ChartAggregateInfo aggregateToRemove = report.getChart()
-				.getAggregateFunctionByInternalName(internalAggregateName);
+		ChartAggregateInfo aggregateToRemove = report.getChart().getAggregateFunctionByInternalName(
+				internalAggregateName);
 		AggregateFunction aggFunctionType = aggregateToRemove.getAggregateFunction();
 		ReportFieldInfo functionReportField = aggregateToRemove.getReportField();
 		ReportFieldInfo secondaryReportField = aggregateToRemove.getSecondaryReportField();
@@ -2715,9 +2685,9 @@ public final class ServletSchemaMethods {
 	}
 
 	/**
-	 * Takes the existing 'scratchpad' summary report, gives it a name
-	 * (specified by the user) and saves it to a permanent collection of
-	 * summaries in the report. Then the scratchpad summary is blanked
+	 * Takes the existing 'scratchpad' summary report, gives it a name (specified
+	 * by the user) and saves it to a permanent collection of summaries in the
+	 * report. Then the scratchpad summary is blanked
 	 */
 	public synchronized static void saveChart(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
@@ -2753,8 +2723,7 @@ public final class ServletSchemaMethods {
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		String summaryIdString = request.getParameter("summaryid");
 		if (summaryIdString == null) {
-			throw new MissingParametersException(
-					"'summaryid' parameter is required to remove a chart");
+			throw new MissingParametersException("'summaryid' parameter is required to remove a chart");
 		}
 		long summaryId = Long.valueOf(summaryIdString);
 		try {
@@ -2786,9 +2755,8 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void hideReportFromUser(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException {
 		// Authentication is here because we don't call any databaseDefn method
 		if (!databaseDefn.getAuthManager().getAuthenticator()
 				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
@@ -2818,9 +2786,8 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void unhideReportFromUser(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException {
 		// Authentication is here because we don't call any databaseDefn method
 		if (!databaseDefn.getAuthManager().getAuthenticator()
 				.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
@@ -2850,9 +2817,8 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void addFormTable(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				ServletUtilMethods.USE_SESSION);
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request,
@@ -2872,9 +2838,8 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void removeFormTable(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				ServletUtilMethods.USE_SESSION);
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request,
@@ -2886,17 +2851,16 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("removing table " + table + " from forms for user "
-					+ appUser + " failed", hex);
+			throw new CantDoThatException("removing table " + table + " from forms for user " + appUser
+					+ " failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 	}
 
 	public synchronized static void addOperationalDashboardReport(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request,
@@ -2916,9 +2880,8 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void removeOperationalDashboardReport(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByUserName(request,
@@ -2942,11 +2905,8 @@ public final class ServletSchemaMethods {
 			CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, ServletUtilMethods.USE_SESSION);
-		if (!databaseDefn
-				.getAuthManager()
-				.getAuthenticator()
-				.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
-						report.getParentTable())) {
+		if (!databaseDefn.getAuthManager().getAuthenticator()
+				.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, report.getParentTable())) {
 			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
 					PrivilegeType.VIEW_TABLE_DATA);
 		}
@@ -2964,9 +2924,8 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void setReportWordCloudField(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, true);
 		String internalFieldName = request.getParameter("internalfieldname");
@@ -2992,8 +2951,8 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void updateMap(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException {
 		BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 				databaseDefn, true);
 		String postcodeFieldInternalName = request.getParameter("postcodefieldinternalname");
@@ -3034,9 +2993,8 @@ public final class ServletSchemaMethods {
 	}
 
 	public synchronized static void setUserDefaultReport(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException {
 		String internalUserName = request.getParameter("internalusername");
 		if (internalUserName == null) {
 			throw new MissingParametersException(
@@ -3070,9 +3028,8 @@ public final class ServletSchemaMethods {
 
 	@Deprecated
 	public synchronized static void contractSection(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException {
 		String internalFieldName = request.getParameter("internalfieldname");
 		if (internalFieldName == null) {
 			throw new MissingParametersException(
@@ -3098,9 +3055,8 @@ public final class ServletSchemaMethods {
 
 	@Deprecated
 	public synchronized static void expandSection(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, ObjectNotFoundException, DisallowedException,
-			CantDoThatException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			ObjectNotFoundException, DisallowedException, CantDoThatException {
 		String internalFieldName = request.getParameter("internalfieldname");
 		if (internalFieldName == null) {
 			throw new MissingParametersException(
@@ -3117,8 +3073,8 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("expanding section " + field + " in table " + table
-					+ " failed", hex);
+			throw new CantDoThatException(
+					"expanding section " + field + " in table " + table + " failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
@@ -3135,8 +3091,7 @@ public final class ServletSchemaMethods {
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		AppUserInfo user = authManager.getLoggedInUser(request);
 		CompanyInfo company = user.getCompany();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.ADMINISTRATE)) {
+		if (!authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(user, PrivilegeType.ADMINISTRATE);
 		}
 		try {
