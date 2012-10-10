@@ -1,5 +1,10 @@
 $(document).ready(function() {
 	init();
+  $("#filters td.trailing").children("div").append("<img id='home' src='resources/toolbar/agilebase.png' />");
+  console.log("Trailing found: " + $("#filters td.trailing").size());
+  $("#home").click(function() {
+  	document.location = "AppController.servlet?return=boot";
+  });
 	$("#fieldFilters").show();
 	$("#fieldFilters input").removeAttr("onkeyup");
 	$("#fieldFilters input").keyup(function(event) {
