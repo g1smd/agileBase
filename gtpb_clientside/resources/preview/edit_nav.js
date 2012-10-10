@@ -57,6 +57,7 @@ function appLauncherIntegrated() {
 }
 
 function appLauncherCommon() {
+	alert('common');
   $("#all_apps").click(function() {
   	document.location = "AppController.servlet?return=gui/display_application&clear_app_id=true";
   });
