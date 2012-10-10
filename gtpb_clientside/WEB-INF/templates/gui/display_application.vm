@@ -105,7 +105,7 @@
 			<span>
         	  ##<a onclick="fHelp();" href="#" title="load help centre to view documentation or ask a question">help</a>
 			  ##<span style="color:white">|</span> 
-			  <a href="AppController.servlet?return=boot&logout=true">logout</a>
+			  <a href="AppController.servlet?return=boot&logout=true&cachebust=$viewTools.getRandomString()">logout</a>
 			</span>
 		</div>
     </div>
