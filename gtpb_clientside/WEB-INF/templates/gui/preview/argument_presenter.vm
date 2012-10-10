@@ -4,7 +4,7 @@
 #set($table = $report.getParentTable())
 #set($internalTableName = $table.getInternalTableName())
 #set($fields = $report.getReportBaseFields())##
-<div style="">Back
+<div>Back
 <table id="filters">
   #set($filterTextOnly = true)
   #set($filterExcludeLargeText = true)
