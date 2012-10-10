@@ -61,6 +61,7 @@ function appLauncherCommon() {
   	document.location = "AppController.servlet?return=gui/display_application&clear_app_id=true";
   });
   $("#filters td.trailing").children("div").append("<img id='home' src='resources/toolbar/agilebase.png' />");
+  console.log("Trailing found: " + $("#filters td.trailing").size());
   $("#home").click(function() {
   	document.location = "AppController.servlet?return=boot";
   })
