@@ -1,0 +1,12 @@
+## Should be called with logout=true in the parameters
+<html>
+<head>
+  <title>agileBase</title>
+  <script language="JavaScript">
+    top.document.location = "AppController.servlet?return=boot";
+  </script>
+</head>
+<body>
+Logging out...
+</body>
+</html>
