@@ -1102,6 +1102,8 @@ public final class ServletSchemaMethods {
 				// create the new field
 				newField = databaseDefn.addField(request, conn, table, fieldType, internalFieldName,
 						fieldName, fieldDesc);
+				// Set the field options
+				updateFieldOption(sessionData, request, databaseDefn);
 				conn.commit();
 				HibernateUtil.currentSession().getTransaction().commit();
 			} catch (SQLException sqlex) {
