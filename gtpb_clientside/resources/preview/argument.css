@@ -177,3 +177,7 @@ h1 {
   border: 1px solid #cccccc;
   border-radius: 0.5em;
 }
+
+#home {
+  cursor: pointer;
+}

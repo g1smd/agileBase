@@ -36,9 +36,7 @@ function appLauncherStandalone() {
   	}
   	document.location = "AppController.servlet?return=" + appTemplate + "&set_table=" + internalTableName + "&set_report=" + internalReportName + "&set_module=" + internalModuleName + "&set_app_id=" + appId + "&cachebust=" + (new Date).getTime();
   });	
-  $("#all_apps").click(function() {
-  	document.location = "AppController.servlet?return=gui/display_application&clear_app_id=true";
-  });
+	appLauncherCommon();
 }
 
 function appLauncherIntegrated() {
@@ -55,9 +53,17 @@ function appLauncherIntegrated() {
   	}
   	closePreview();
 	});
+	appLauncherCommon();
+}
+
+function appLauncherCommon() {
   $("#all_apps").click(function() {
   	document.location = "AppController.servlet?return=gui/display_application&clear_app_id=true";
   });
+  $("#filters td.trailing").children("div").append("<img id='home' src='resources/toolbar/agilebase.png' />");
+  $("#home").click(function() {
+  	document.location = "AppController.servlet?return=boot";
+  })
 }
 
 /**
