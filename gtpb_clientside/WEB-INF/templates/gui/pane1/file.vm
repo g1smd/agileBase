@@ -6,7 +6,6 @@
 #end
 #set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$rowIdUse/")
 #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject"))
-Download URL is $downloadUrl<br>
 ## Image
 #if($fieldValueObject.isImage())
   <div class="appelement image $field.getAttachmentType().name().toLowerCase()">
