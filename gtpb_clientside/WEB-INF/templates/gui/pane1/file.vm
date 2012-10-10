@@ -4,13 +4,15 @@
 ## Image
 #if($fieldValueObject.isImage())
   <div class="appelement image $field.getAttachmentType().name().toLowerCase()">
-    <img src="$downloadUrl.500.$fieldValueObject.getExtension()" />
+    <a href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
+      <img src="$downloadUrl.500.$fieldValueObject.getExtension()" />
+    </a>
   </div>
 #elseif($downloadUrl.endsWith("pdf"))
   #set($previewUrl = "$downloadUrl.500.png?cachebust=$viewTools.getRandomString()")
   <div class="appelement image pdf">
-    <img src="$previewUrl" />
+    <a href="$downloadUrl" target="_blank"><img src="$previewUrl" /></a>
   </div>
 #else
- <img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/> $fieldValue
+ <a href="$downloadUrl" target="_blank"><img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/> $fieldValue</a>
 #end
