@@ -80,9 +80,9 @@ figure {
 }
 
 .container.zoomed.semi {
-	transform: scale(0.5);
-	-webkit-transform: scale(0.5);
-	-moz-transform: scale(0.5);
+	transform: scale(0.5)!important;
+	-webkit-transform: scale(0.5)!important;
+	-moz-transform: scale(0.5)!important;
 }
 
 .container.unzoomed {
