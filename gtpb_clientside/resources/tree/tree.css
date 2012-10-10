@@ -415,6 +415,10 @@ ul.moduleaction li {
   width: 100em;
 }
 
+#appspace a.download {
+  width: auto;
+}
+
 #appspace .twitter a {
   width: auto;
   display: inline;
