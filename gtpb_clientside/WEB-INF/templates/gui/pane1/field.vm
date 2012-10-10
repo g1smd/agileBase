@@ -7,7 +7,12 @@
   #end
 #end
 ## Comments
-#set($comments = $view.getComments($field, $rowId))
+#if($relatedRowId)
+  #set($rowIdUse = $relatedRowId)
+#else
+  #set($rowIdUse = $rowId)
+#end
+#set($comments = $view.getComments($field, $rowIdUse))
 #if ($comments.size() > 0)
   #set($valuesFound = $valuesFound + 1)
   #parse("gui/pane1/heading.vm")
