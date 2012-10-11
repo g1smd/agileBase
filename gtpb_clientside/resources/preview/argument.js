@@ -69,7 +69,7 @@ function init() {
 		  var charPressed = String.fromCharCode(key);
 		  if ((charPressed == "-") || (charPressed == "_")) {
 				abCardScale -= 0.1; // zoom out
-		  } else if ((charPressed == "+") || (char == "=")) {
+		  } else if ((charPressed == "+") || (charPressed == "=")) {
 				abCardScale += 0.1; // zoom in
 		  }
 		}
