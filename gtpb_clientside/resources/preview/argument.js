@@ -66,10 +66,10 @@ function init() {
 	$(document).keypress(function(event) {
 		var key = event.which;
 		if (key !== 0) {
-		  var char = String.fromCharCode(key);
-		  if ((char == "-") || (char == "_")) {
+		  var charPressed = String.fromCharCode(key);
+		  if ((charPressed == "-") || (charPressed == "_")) {
 				abCardScale -= 0.1; // zoom out
-		  } else if ((char == "+") || (char == "=")) {
+		  } else if ((charPressed == "+") || (char == "=")) {
 				abCardScale += 0.1; // zoom in
 		  }
 		}
