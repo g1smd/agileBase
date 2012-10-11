@@ -67,7 +67,6 @@ function init() {
 		var key = event.which;
 		if (key !== 0) {
 		  var char = String.fromCharCode(key);
-		  console.log("Char is " + char);
 		  if ((char == "-") || (char == "_")) {
 				abCardScale -= 0.1; // zoom out
 		  } else if ((char == "+") || (char == "=")) {

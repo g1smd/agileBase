@@ -29,11 +29,11 @@
 #set($sessionReport = $sessionData.getReport())
 #set($sessionReportModule = $sessionReport.getModule())
 #set($sessionTable = $sessionData.getTable())
-#if($viewTools.getAppUrl().contains("backup"))
-  <div class="warningmessage">
-    Note: this is the backup server, not the live server
-  </div>
-#end
+###if($viewTools.getAppUrl().contains("backup"))
+##  <div class="warningmessage">
+##    Note: this is the backup server, not the live server
+##  </div>
+###end
 
 ## include custom per-company actions
 #set($user = $view.getLoggedInUser())
