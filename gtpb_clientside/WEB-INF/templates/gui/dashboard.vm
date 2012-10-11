@@ -51,15 +51,6 @@ function displayTreemap() {
 	}
 
     var json = $treeMapJSON;
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	\$jit.TM.Squarified.implement({  
     'onLeftClick': function(elem) {  
         var internalReportName = jQuery(elem).parent().attr("id");
