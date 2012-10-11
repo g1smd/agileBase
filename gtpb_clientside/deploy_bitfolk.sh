@@ -33,7 +33,7 @@ cat /var/lib/tomcat7/webapps/agileBase/resources/wait/request_setFilter.js /var/
 #find /var/lib/tomcat7/webapps/agileBase/resources/ -name '*.css' -print -exec java -jar /usr/local/agileBase/yui_compressor/yuicompressor.jar -o {} {} \;
 #find /var/lib/tomcat7/webapps/agileBase/styles/ -name '*.css' -print -exec java -jar /usr/local/agileBase/yui_compressor/yuicompressor.jar -o {} {} \;
 #echo "Compressing Javascript"
-find /var/lib/tomcat7/webapps/agileBase/resources/ -name '*.js' -print0 | xargs -0 -I '{}' ls '{}'; java -jar /usr/local/agileBase/yuicompressor/yuicompressor.jar --line-break 0 --nomunge --preserve-semi -o '.js$:.js' '{}'
+find /var/lib/tomcat7/webapps/agileBase/resources/ -name '*.js' -print0 | xargs -0 -I file java -jar /usr/local/agileBase/yuicompressor/yuicompressor.jar --line-break 0 --nomunge --preserve-semi -o '.js$:.js' file
 #echo "Compressing CSS"
 find /var/lib/tomcat7/webapps/agileBase/resources/ -name '*.css' -print0 | xargs -0 java -jar /usr/local/agileBase/yuicompressor/yuicompressor.jar -o '.css$:.css'
 find /var/lib/tomcat7/webapps/agileBase/styles/ -name '*.css' -print0 | xargs -0 java -jar /usr/local/agileBase/yuicompressor/yuicompressor.jar -o '.css$:.css'
