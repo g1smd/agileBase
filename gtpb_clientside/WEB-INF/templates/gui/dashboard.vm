@@ -11,6 +11,7 @@
 #set($treeMapJSON = $view.getUsageStats().getTreeMapJSON())
 JSON is<br>
 $treemapJSON<p>
+
 #if($treeMapJSON.startsWith("{")) ##if valid JSON
 <script language="JavaScript">
 
