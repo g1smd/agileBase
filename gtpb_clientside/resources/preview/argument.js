@@ -63,14 +63,17 @@ function init() {
 	  }
 	  event.stopPropagation();
 	}); // end of card click
-	$(document).keyup(function(event) {
+	$(document).keypress(function(event) {
 		var key = event.which;
-		console.log("Key " + key);
-		if (key == 61) {
-			// + or =, zoom in
-			abCardScale += 0.1;
-		} else if(key == 173) {
-			abCardScale -= 0.1;
+		if (e.which !== 0) {
+		  var char = String.fromCharCode(e.which);
+		  console.log("Char is " + char);
+		  if ((char == "-") || (char == "_")) {
+				// + or =, zoom in
+				abCardScale += 0.1;
+		  } else if ((char == "+") || (char == "=")) {
+				abCardScale -= 0.1;
+		  }
 		}
 		$(".container.zoomed").css("-moz-transform","scale(" + abCardScale + ")");
 		$(".container.zoomed").css("-webkit-transform","scale(" + abCardScale + ")");
