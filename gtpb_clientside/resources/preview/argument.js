@@ -69,10 +69,9 @@ function init() {
 		  var char = String.fromCharCode(key);
 		  console.log("Char is " + char);
 		  if ((char == "-") || (char == "_")) {
-				// + or =, zoom in
-				abCardScale += 0.1;
+				abCardScale -= 0.1; // zoom out
 		  } else if ((char == "+") || (char == "=")) {
-				abCardScale -= 0.1;
+				abCardScale += 0.1; // zoom in
 		  }
 		}
 		$(".container.zoomed").css("-moz-transform","scale(" + abCardScale + ")");
