@@ -9,6 +9,8 @@
 </head>
 <body>
 #set($treeMapJSON = $view.getUsageStats().getTreeMapJSON())
+JSON is<br>
+$treemapJSON<p>
 #if($treeMapJSON.startsWith("{")) ##if valid JSON
 <script language="JavaScript">
 
@@ -50,7 +52,7 @@ function displayTreemap() {
 
     var json = $treeMapJSON;
 	
-	TM.Squarified.implement({  
+	$jit.TM.Squarified.implement({  
     'onLeftClick': function(elem) {  
         var internalReportName = jQuery(elem).parent().attr("id");
 		// if a report node
@@ -82,7 +84,7 @@ function displayTreemap() {
 	}
 	});  
 
-    var tm = new TM.Squarified({  
+    var tm = new $jit.TM.Squarified({  
                 //Where to inject the Treemap  
                 rootId: 'infovis',
 				offset: 2,
