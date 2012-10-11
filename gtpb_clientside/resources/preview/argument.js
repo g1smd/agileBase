@@ -3,7 +3,6 @@ var abCardScale = 1.0;
 $(document).ready(function() {
 	init();
   $("#filters td.trailing").children("div").append("<img id='home' src='resources/toolbar/agilebase.png' />");
-  console.log("Trailing found: " + $("#filters td.trailing").size());
   $("#home").click(function() {
   	document.location = "AppController.servlet?return=boot";
   });
@@ -37,7 +36,7 @@ function init() {
 	  var container = $(this).closest(".container");
 	  var left = container.position().left;
 	  var top = container.position().top;
-	  console.log(top + ", " + left);
+	  //console.log(top + ", " + left);
 	  if(container.hasClass("zoomed")) {
 	    $(this).toggleClass("flipped");
 	    container.addClass("semi");
@@ -66,6 +65,7 @@ function init() {
 	}); // end of card click
 	$(document).keyup(function(event) {
 		var key = event.which;
+		console.log("Key " + key);
 		if (key == 61) {
 			// + or =, zoom in
 			abCardScale += 0.1;
