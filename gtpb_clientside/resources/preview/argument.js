@@ -65,8 +65,8 @@ function init() {
 	}); // end of card click
 	$(document).keypress(function(event) {
 		var key = event.which;
-		if (e.which !== 0) {
-		  var char = String.fromCharCode(e.which);
+		if (key !== 0) {
+		  var char = String.fromCharCode(key);
 		  console.log("Char is " + char);
 		  if ((char == "-") || (char == "_")) {
 				// + or =, zoom in
