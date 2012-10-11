@@ -231,7 +231,7 @@ public class UsageStats implements UsageStatsInfo {
 				String section = sectionTreeMapsEntry.getKey();
 				jg.writeStartObject();
 				jg.writeStringField("id", "s_" + section);
-				jg.writeStringField("name", "<b>" + section.toUpperCase() + "</b>");
+				jg.writeStringField("name", section.toUpperCase());
 				jg.writeObjectFieldStart("data");
 				jg.writeNumberField("$area", sectionAreas.get(section));
 				jg.writeEndObject();
