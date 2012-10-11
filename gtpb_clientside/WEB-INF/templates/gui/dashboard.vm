@@ -52,7 +52,7 @@ function displayTreemap() {
 
     var json = $treeMapJSON;
 	
-	$jit.TM.Squarified.implement({  
+	\$jit.TM.Squarified.implement({  
     'onLeftClick': function(elem) {  
         var internalReportName = jQuery(elem).parent().attr("id");
 		// if a report node
@@ -84,7 +84,7 @@ function displayTreemap() {
 	}
 	});  
 
-    var tm = new $jit.TM.Squarified({  
+    var tm = new \$jit.TM.Squarified({  
                 //Where to inject the Treemap  
                 rootId: 'infovis',
 				offset: 2,
