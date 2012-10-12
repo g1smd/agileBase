@@ -34,13 +34,13 @@
       #end
       </figure>
       <figure class="back">
-        #foreach($field in $fields)
-          Field $field - $field.getContentSize()<br>
+        #set($tableDataRow = $view.getTableDataRow($table, $thisUniqueId))
+        #foreach($field in $tableDataRow.keySet())
           #set($fieldCategory = $field.getFieldCategory().toString())
           ## Show large text fields only
           #if($field.getContentSize() > 100)
             <div class="fieldname">$field</div>
-            <div class="fieldcontent">$dataRowFields.get($field)</div>
+            <div class="fieldcontent">$dataRow.get($field)</div>
           #end
         #end
       </figure>
