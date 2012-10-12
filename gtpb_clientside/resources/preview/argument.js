@@ -2,7 +2,7 @@ var abCardScale = 1.0;
 
 $(document).ready(function() {
 	init();
-  $("#filters td.trailing").children("div").append("<img id='home' src='resources/toolbar/agilebase.png' />");
+  $("#filters td.leading").children("div").append("<img id='home' src='resources/toolbar/agilebase.png' />");
   $("#home").click(function() {
   	document.location = "AppController.servlet?return=boot";
   });
