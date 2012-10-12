@@ -40,7 +40,7 @@
           ## Show large text fields only
           #if($field.getContentSize() > 100)
             <div class="fieldname">$field</div>
-            <div class="fieldcontent">$dataRow.get($field)</div>
+            <div class="fieldcontent">$tableDataRow.get($field)</div>
           #end
         #end
       </figure>
