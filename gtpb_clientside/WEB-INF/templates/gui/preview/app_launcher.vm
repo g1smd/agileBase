@@ -31,3 +31,5 @@
     <input type="checkbox" name="uses_app_launcher" onchange="new fChange(this);" id="use_app_launcher" gtpb_internalusername="$appUser.getInternalUserName()" gtpb_update_user="true" #if($appUser.getUsesAppLauncher()) checked #end>
     <label for="uses_app_launcher">show this app list on startup</label>
   </div>
+  <div id="treemap">
+  </div>
