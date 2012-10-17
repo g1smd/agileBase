@@ -235,7 +235,7 @@ div#_md_blank.window_disable h1 {
 }
 
 #launcher #apps #launcher_title {
-	height: 3.3em;
+	/* height: 3.3em; */
 }
 
 #apps ul {
@@ -322,8 +322,10 @@ div#_md_blank.window_disable h1 {
 }
 
 #launcher_title {
+  /*
 	height: 3.6em;
 	overflow: hidden;
+	*/
 }
 
 #app_logo {
@@ -358,4 +360,8 @@ div#_md_blank.window_disable h1 {
   border: 1px solid #cccccc;
   margin-right: 1em;
   font-size: 10pt;
+}
+
+#other_actions button img {
+  vertical-align: middle;
 }
