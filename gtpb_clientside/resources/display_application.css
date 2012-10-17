@@ -324,7 +324,6 @@ div#_md_blank.window_disable h1 {
 #launcher_title {
 	height: 3.6em;
 	overflow: hidden;
-	text-transform: uppercase;
 }
 
 #app_logo {
@@ -339,6 +338,7 @@ div#_md_blank.window_disable h1 {
 	font-size: 30pt;
 	float: right;
 	padding-right: 0.5em;
+	text-transform: uppercase;
 }
 
 /* temporary */
