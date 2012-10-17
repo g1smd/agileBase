@@ -230,7 +230,7 @@ div#_md_blank.window_disable h1 {
 #launcher #apps h1 {
 }
 
-#launcher #other_actions {
+#launcher .other_actions {
   padding-top: 0;
 }
 
@@ -348,12 +348,12 @@ div#_md_blank.window_disable h1 {
 	display: none;
 }
 
-#other_actions {
+.other_actions {
   display: inline-block;
   padding: 1em;
 }
 
-#other_actions button {
+.other_actions button {
   background-color: white;
   padding: 1em;
   border-bottom-left-radius: 0.5em;
@@ -364,7 +364,7 @@ div#_md_blank.window_disable h1 {
   cursor: pointer;
 }
 
-#other_actions button img {
+.other_actions button img {
   vertical-align: middle;
   margin-right: 0.75em;
 }

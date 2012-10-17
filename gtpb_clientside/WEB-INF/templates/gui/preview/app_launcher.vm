@@ -21,16 +21,16 @@
 <div class="reportDataView" id="apps">
   <div id="launcher_title">
     <span id="companyname">$company</span>
-    <div id="other_actions">
+    <div class="other_actions">
       <button id="all_apps" title="load all apps in one screen"><img src="resources/toolbar/agilebase.png" />full view</button> 
-      <input type="checkbox" name="uses_app_launcher" onchange="new fChange(this);" id="use_app_launcher" gtpb_internalusername="$appUser.getInternalUserName()" gtpb_update_user="true" #if($appUser.getUsesAppLauncher()) checked #end>
-      <label for="uses_app_launcher">show this app list on startup</label>
     </div>
   </div>
   #parse("gui/reports_and_tables/report_list.vm")
 </div>
-<div>
+<div class="other_actions">
   <button id="usage" title="show a treemap of app usage">show app usage</button>
+  <input type="checkbox" name="uses_app_launcher" onchange="new fChange(this);" id="use_app_launcher" gtpb_internalusername="$appUser.getInternalUserName()" gtpb_update_user="true" #if($appUser.getUsesAppLauncher()) checked #end>
+  <label for="uses_app_launcher">show this app list on startup</label>
 </div>
 <div id="treemap">
 </div>
