@@ -135,6 +135,13 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	public int getRowCount();
 
 	public void setRowCount(int rowCountEstimate);
+	
+	/**
+	 * Get an average (daily?) view count. Useful for comparing usage to other reports
+	 */
+	public double getViewRank();
+	
+	public void setViewRank(double viewRank);
 
 	/**
 	 * Return a rolling average of the number of seconds the report SQL query

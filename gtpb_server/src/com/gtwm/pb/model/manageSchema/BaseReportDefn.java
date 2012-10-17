@@ -228,6 +228,15 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	public void setRowCountEstimate(boolean rowCountIsEstimate) {
 		this.rowCountIsEstimate = rowCountIsEstimate;
 	}
+	
+	@Transient
+	public double getViewRank() {
+		return this.viewRank;
+	}
+	
+	public void setViewRank(double viewRank) {
+		this.viewRank = viewRank;
+	}
 
 	/**
 	 * Provide a natural sort order by report name case insensitively. Use
@@ -324,6 +333,8 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	private int rowCount = 0;
 
 	private boolean rowCountIsEstimate = false;
+	
+	private double viewRank = 0d;
 	
 	private boolean allowExport = false;
 	
