@@ -328,6 +328,7 @@ table#reportData td.capitalised {
 table#reportData td .sequence {
   padding-top: 2px; /* match table#reportData td.capitalised */
   font-size: 9.5pt;
+  display: inline-block;
 }
 
 table#reportData.draggable td.capitalised {
