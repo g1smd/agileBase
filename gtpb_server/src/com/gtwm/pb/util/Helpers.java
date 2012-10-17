@@ -184,11 +184,11 @@ public final class Helpers {
 	 * @see String#format(java.lang.String, java.lang.Object[])
 	 */
 	public static String generateJavaDecimalFormat(int decimalPrecision) {
-		//if (decimalPrecision == 0) {
-		//	return "%,1d";
-		//} else {
+		if (decimalPrecision == 0) {
+			return "%,1d";
+		} else {
 			return "%,1." + decimalPrecision + "f";
-		//}
+		}
 	}
 
 	/**

@@ -61,7 +61,8 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 	}
 
 	public DecimalFieldDefn(DataSource dataSource, TableInfo tableContainingField,
-			String internalFieldName, String fieldName, String fieldDesc, DecimalFieldOptions fieldOptions) throws CantDoThatException {
+			String internalFieldName, String fieldName, String fieldDesc, DecimalFieldOptions fieldOptions)
+			throws CantDoThatException {
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
 		if (internalFieldName == null) {
@@ -133,8 +134,8 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 
 	/**
 	 * @param precision
-	 *            the number of decimal places to display on screen The stored
-	 *            value is as accurate as the float type storing it allows
+	 *          the number of decimal places to display on screen The stored value
+	 *          is as accurate as the float type storing it allows
 	 */
 	public synchronized void setPrecision(Integer precision) {
 		this.precision = precision;
@@ -159,8 +160,7 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 		try {
 			FieldTypeDescriptorInfo fieldDescriptor = new FieldTypeDescriptor(FieldCategory.NUMBER);
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
-			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY,
-					super.getNotNull());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super.getNotNull());
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.STORECURRENCY,
 					this.getStoresCurrency());
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.NUMBERPRECISION,
@@ -170,7 +170,8 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 						String.valueOf(this.getDefault().toString()));
 			}
 			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
-			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
+					printoutSetting.name());
 			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
@@ -220,8 +221,13 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 	}
 
 	public synchronized String formatFloat(double decimalValue) {
-		String floatFormat = Helpers.generateJavaDecimalFormat(this.getPrecision());
-		return String.format(floatFormat, decimalValue);
+		String floatFormat = Helpers.generateJavaDecimalFormat(precision);
+		int precision = this.getPrecision();
+		if (precision == 0) {
+			return String.format(floatFormat, (int) decimalValue);
+		} else {
+			return String.format(floatFormat, decimalValue);
+		}
 	}
 
 	private boolean getUsesLookup() {
@@ -285,8 +291,8 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 			// Generates a SELECT DISTINCT on this field including filterValues
 			// in the WHERE clause
 			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
-			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
-					filterValues, false, emptySorts, -1, this, QuickFilterType.AND, false);
+			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn, filterValues,
+					false, emptySorts, -1, this, QuickFilterType.AND, false);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				items.add(results.getDouble(1));
@@ -305,13 +311,12 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 	}
 
 	/**
-	 * Don't use in code. Only to be used from the DatabaseDefn constructor,
-	 * hence not in interface
+	 * Don't use in code. Only to be used from the DatabaseDefn constructor, hence
+	 * not in interface
 	 */
 	public void setDataSource(DataSource dataSource) throws CantDoThatException {
 		if (dataSource == null) {
-			throw new CantDoThatException(
-					"Can't set the data source to null, that's not very useful");
+			throw new CantDoThatException("Can't set the data source to null, that's not very useful");
 		}
 		this.dataSource = dataSource;
 	}
