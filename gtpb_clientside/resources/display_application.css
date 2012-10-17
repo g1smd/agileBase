@@ -357,9 +357,10 @@ div#_md_blank.window_disable h1 {
   background-color: white;
   padding: 1em;
   border-radius: 0.5em;
-  border: 1px solid #cccccc;
+  border: 0;
   margin-right: 1em;
   font-size: 10pt;
+  cursor: pointer;
 }
 
 #other_actions button img {
