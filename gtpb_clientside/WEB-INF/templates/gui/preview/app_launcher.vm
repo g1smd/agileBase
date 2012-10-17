@@ -21,9 +21,7 @@
 <div class="reportDataView" id="apps">
   <div id="launcher_title">
     <span id="companyname">$company</span>
-    <div id="toggler">
-      <a href="AppController.servlet?return=gui/display_application&clear_app_id=true"><img src="resources/toolbar/agilebase.png" /></a>
-    </div>
+    <button id="all_apps" title="load all apps in one screen"><img src="resources/toolbar/agilebase.png" />load all apps</button> 
   </div>
   #parse("gui/reports_and_tables/report_list.vm")
 </div>
