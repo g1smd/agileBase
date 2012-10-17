@@ -224,7 +224,7 @@ div#_md_blank.window_disable h1 {
 
 #launcher #apps {
 	position: relative;
-	top: -3.6em;
+	/* top: -3.6em; */
 }
 
 #launcher #apps h1 {

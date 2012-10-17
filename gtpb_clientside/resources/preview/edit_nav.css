@@ -6,12 +6,12 @@
   bottom: 0;
   overflow: scroll;
   display: none;
-  padding-top: 2.5em;
   z-index: 2; /* above toolbar */
 }
 
 #preview {
 	background-color: rgba(238,243,249,0.9); /* rgba(219,219,219,0.9); */ /* #dbdbdb; 777788, bdbdbd */
+  padding-top: 2.5em;
 }
 
 #launcher {
