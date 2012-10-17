@@ -22,7 +22,7 @@
   <div id="launcher_title">
     <span id="companyname">$company</span>
     <div id="other_actions">
-      <button id="all_apps" title="load all apps in one screen"><img src="resources/toolbar/agilebase.png" /> full view</button> 
+      <button id="all_apps" title="load all apps in one screen"><img src="resources/toolbar/agilebase.png" />full view</button> 
     </div>
   </div>
   #parse("gui/reports_and_tables/report_list.vm")

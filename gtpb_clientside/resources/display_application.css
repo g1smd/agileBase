@@ -356,8 +356,9 @@ div#_md_blank.window_disable h1 {
 #other_actions button {
   background-color: white;
   padding: 1em;
-  border-radius: 0.5em;
-  border: 0;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+border: 0;
   margin-right: 1em;
   font-size: 10pt;
   cursor: pointer;
@@ -365,4 +366,5 @@ div#_md_blank.window_disable h1 {
 
 #other_actions button img {
   vertical-align: middle;
+  margin-right: 0.5em;
 }
