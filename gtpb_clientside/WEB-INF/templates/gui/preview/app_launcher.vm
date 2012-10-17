@@ -24,12 +24,12 @@
   </div>
   #parse("gui/reports_and_tables/report_list.vm")
 </div>
-  <div id="other_actions">
-    other options:
-    <button id="all_apps" title="load all apps in one screen">load all apps</button> 
-    <button id="usage" title="show a treemap of app usage">show app usage</button>
-    <input type="checkbox" name="uses_app_launcher" onchange="new fChange(this);" id="use_app_launcher" gtpb_internalusername="$appUser.getInternalUserName()" gtpb_update_user="true" #if($appUser.getUsesAppLauncher()) checked #end>
-    <label for="uses_app_launcher">show this app list on startup</label>
-  </div>
-  <div id="treemap">
-  </div>
+<div id="other_actions">
+  other options:
+  <button id="all_apps" title="load all apps in one screen">load all apps</button> 
+  <button id="usage" title="show a treemap of app usage">show app usage</button>
+  <input type="checkbox" name="uses_app_launcher" onchange="new fChange(this);" id="use_app_launcher" gtpb_internalusername="$appUser.getInternalUserName()" gtpb_update_user="true" #if($appUser.getUsesAppLauncher()) checked #end>
+  <label for="uses_app_launcher">show this app list on startup</label>
+</div>
+<div id="treemap">
+</div>

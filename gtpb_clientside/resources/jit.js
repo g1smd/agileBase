@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2011 Sencha Inc. - Author: Nicolas Garcia Belmonte (http://philogb.github.com/)
+Copyright (c) 2012 Sencha Inc. - Author: Nicolas Garcia Belmonte (http://philogb.github.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,12 @@ THE SOFTWARE.
 
 /*
  Object: $jit
- 
- Defines the namespace for all library Classes and Objects. 
- This variable is the *only* global variable defined in the Toolkit. 
+
+ Defines the namespace for all library Classes and Objects.
+ This variable is the *only* global variable defined in the Toolkit.
  There are also other interesting properties attached to this variable described below.
  */
-window.$jit = function(w) {
+this.$jit = function(w) {
   w = w || window;
   for(var k in $jit) {
     if($jit[k].$extend) {
@@ -46,9 +46,9 @@ window.$jit = function(w) {
 $jit.version = '2.0.1';
 /*
   Object: $jit.id
-  
+
   Works just like *document.getElementById*
-  
+
   Example:
   (start code js)
   var element = $jit.id('elementId');
@@ -58,17 +58,17 @@ $jit.version = '2.0.1';
 
 /*
  Object: $jit.util
- 
+
  Contains utility functions.
- 
- Some of the utility functions and the Class system were based in the MooTools Framework 
- <http://mootools.net>. Copyright (c) 2006-2010 Valerio Proietti, <http://mad4milk.net/>. 
+
+ Some of the utility functions and the Class system were based in the MooTools Framework
+ <http://mootools.net>. Copyright (c) 2006-2010 Valerio Proietti, <http://mad4milk.net/>.
  MIT license <http://mootools.net/license.txt>.
- 
+
  These methods are generally also implemented in DOM manipulation frameworks like JQuery, MooTools and Prototype.
- I'd suggest you to use the functions from those libraries instead of using these, since their functions 
+ I'd suggest you to use the functions from those libraries instead of using these, since their functions
  are widely used and tested in many different platforms/browsers. Use these functions only if you have to.
- 
+
  */
 var $ = function(d) {
   return document.getElementById(d);
@@ -79,14 +79,14 @@ $.empty = function() {
 
 /*
   Method: extend
-  
+
   Augment an object by appending another object's properties.
-  
+
   Parameters:
-  
+
   original - (object) The object to be extended.
   extended - (object) An object which properties are going to be appended to the original object.
-  
+
   Example:
   (start code js)
   $jit.util.extend({ 'a': 1, 'b': 2 }, { 'b': 3, 'c': 4 }); //{ 'a':1, 'b': 3, 'c': 4 }
@@ -110,13 +110,13 @@ $.time = Date.now || function() {
 
 /*
   Method: splat
-  
+
   Returns an array wrapping *obj* if *obj* is not an array. Returns *obj* otherwise.
-  
+
   Parameters:
-  
+
   obj - (mixed) The object to be wrapped in an array.
-  
+
   Example:
   (start code js)
   $jit.util.splat(3);   //[3]
@@ -138,14 +138,14 @@ $.type.s = Object.prototype.toString;
 
 /*
   Method: each
-  
+
   Iterates through an iterable applying *f*.
-  
+
   Parameters:
-  
+
   iterable - (array) The original array.
   fn - (function) The function to apply to the array elements.
-  
+
   Example:
   (start code js)
   $jit.util.each([3, 4, 5], function(n) { alert('number ' + n); });
@@ -163,7 +163,7 @@ $.each = function(iterable, fn) {
 };
 
 $.indexOf = function(array, item) {
-  if(Array.indexOf) return array.indexOf(item);
+  if(array.indexOf) return array.indexOf(item);
   for(var i=0,l=array.length; i<l; i++) {
     if(array[i] === item) return i;
   }
@@ -172,14 +172,14 @@ $.indexOf = function(array, item) {
 
 /*
   Method: map
-  
+
   Maps or collects an array by applying *f*.
-  
+
   Parameters:
-  
+
   array - (array) The original array.
   f - (function) The function to apply to the array elements.
-  
+
   Example:
   (start code js)
   $jit.util.map([3, 4, 5], function(n) { return n*n; }); //[9, 16, 25]
@@ -195,15 +195,15 @@ $.map = function(array, f) {
 
 /*
   Method: reduce
-  
+
   Iteratively applies the binary function *f* storing the result in an accumulator.
-  
+
   Parameters:
-  
+
   array - (array) The original array.
   f - (function) The function to apply to the array elements.
   opt - (optional|mixed) The starting value for the acumulator.
-  
+
   Example:
   (start code js)
   $jit.util.reduce([3, 4, 5], function(x, y) { return x + y; }, 0); //12
@@ -221,13 +221,13 @@ $.reduce = function(array, f, opt) {
 
 /*
   Method: merge
-  
+
   Merges n-objects and their sub-objects creating a new, fresh object.
-  
+
   Parameters:
-  
+
   An arbitrary number of objects.
-  
+
   Example:
   (start code js)
   $jit.util.merge({ 'a': 1, 'b': 2 }, { 'b': 3, 'c': 4 }); //{ 'a':1, 'b': 3, 'c': 4 }
@@ -280,13 +280,13 @@ $.zip = function() {
 
 /*
   Method: rgbToHex
-  
+
   Converts an RGB array into a Hex string.
-  
+
   Parameters:
-  
+
   srcArray - (array) An array with R, G and B values
-  
+
   Example:
   (start code js)
   $jit.util.rgbToHex([255, 255, 255]); //'#ffffff'
@@ -307,13 +307,13 @@ $.rgbToHex = function(srcArray, array) {
 
 /*
   Method: hexToRgb
-  
+
   Converts an Hex color string into an RGB array.
-  
+
   Parameters:
-  
+
   hex - (string) A color hex string.
-  
+
   Example:
   (start code js)
   $jit.util.hexToRgb('#fff'); //[255, 255, 255]
@@ -355,15 +355,15 @@ $.clean = function(elem) {
 
 /*
   Method: addEvent
-  
+
   Cross-browser add event listener.
-  
+
   Parameters:
-  
+
   obj - (obj) The Element to attach the listener to.
   type - (string) The listener type. For example 'click', or 'mousemove'.
   fn - (function) The callback function to be used when the event is fired.
-  
+
   Example:
   (start code js)
   $jit.util.addEvent(elem, 'click', function(){ alert('hello'); });
@@ -568,19 +568,19 @@ $jit.Class = Class;
 
 /*
   Object: $jit.json
-  
+
   Provides JSON utility functions.
-  
+
   Most of these functions are JSON-tree traversal and manipulation functions.
 */
 $jit.json = {
   /*
      Method: prune
-  
+
      Clears all tree nodes having depth greater than maxLevel.
-  
+
      Parameters:
-  
+
         tree - (object) A JSON tree object. For more information please see <Loader.loadJSON>.
         maxLevel - (number) An integer specifying the maximum level allowed for this tree. All nodes having depth greater than max level will be deleted.
 
@@ -595,18 +595,18 @@ $jit.json = {
   },
   /*
      Method: getParent
-  
+
      Returns the parent node of the node having _id_ as id.
-  
+
      Parameters:
-  
+
         tree - (object) A JSON tree object. See also <Loader.loadJSON>.
         id - (string) The _id_ of the child node whose parent will be returned.
 
     Returns:
 
         A tree JSON node if any, or false otherwise.
-  
+
   */
   getParent: function(tree, id) {
     if (tree.id == id)
@@ -627,16 +627,16 @@ $jit.json = {
   },
   /*
      Method: getSubtree
-  
+
      Returns the subtree that matches the given id.
-  
+
      Parameters:
-  
+
         tree - (object) A JSON tree object. See also <Loader.loadJSON>.
         id - (string) A node *unique* identifier.
-  
+
      Returns:
-  
+
         A subtree having a root node matching the given id. Returns null if no subtree matching the id is found.
 
   */
@@ -652,16 +652,16 @@ $jit.json = {
   },
   /*
      Method: eachLevel
-  
+
       Iterates on tree nodes with relative depth less or equal than a specified level.
-  
+
      Parameters:
-  
+
         tree - (object) A JSON tree or subtree. See also <Loader.loadJSON>.
         initLevel - (number) An integer specifying the initial relative level. Usually zero.
         toLevel - (number) An integer specifying a top level. This method will iterate only through nodes with depth less than or equal this number.
         action - (function) A function that receives a node and an integer specifying the actual level of the node.
-          
+
     Example:
    (start code js)
      $jit.json.eachLevel(tree, 0, 3, function(node, depth) {
@@ -680,11 +680,11 @@ $jit.json = {
   },
   /*
      Method: each
-  
+
       A JSON tree iterator.
-  
+
      Parameters:
-  
+
         tree - (object) A JSON tree or subtree. See also <Loader.loadJSON>.
         action - (function) A function that receives a node.
 
@@ -694,7 +694,7 @@ $jit.json = {
         alert(node.name);
       });
     (end code)
-          
+
   */
   each: function(tree, action) {
     this.eachLevel(tree, 0, Number.MAX_VALUE, action);
@@ -897,137 +897,6 @@ var Options = function() {
     }
   }
   return ans;
-};
-
-/*
- * File: Options.AreaChart.js
- *
-*/
-
-/*
-  Object: Options.AreaChart
-  
-  <AreaChart> options. 
-  Other options included in the AreaChart are <Options.Canvas>, <Options.Label>, <Options.Margin>, <Options.Tips> and <Options.Events>.
-  
-  Syntax:
-  
-  (start code js)
-
-  Options.AreaChart = {
-    animate: true,
-    labelOffset: 3,
-    type: 'stacked',
-    selectOnHover: true,
-    showAggregates: true,
-    showLabels: true,
-    filterOnClick: false,
-    restoreOnRightClick: false
-  };
-  
-  (end code)
-  
-  Example:
-  
-  (start code js)
-
-  var areaChart = new $jit.AreaChart({
-    animate: true,
-    type: 'stacked:gradient',
-    selectOnHover: true,
-    filterOnClick: true,
-    restoreOnRightClick: true
-  });
-  
-  (end code)
-
-  Parameters:
-  
-  animate - (boolean) Default's *true*. Whether to add animated transitions when filtering/restoring stacks.
-  labelOffset - (number) Default's *3*. Adds margin between the label and the default place where it should be drawn.
-  type - (string) Default's *'stacked'*. Stack style. Posible values are 'stacked', 'stacked:gradient' to add gradients.
-  selectOnHover - (boolean) Default's *true*. If true, it will add a mark to the hovered stack.
-  showAggregates - (boolean, function) Default's *true*. Display the values of the stacks. Can also be a function that returns *true* or *false* to display or filter some values. That same function can also return a string with the formatted value.
-  showLabels - (boolean, function) Default's *true*. Display the name of the slots. Can also be a function that returns *true* or *false* to display or not each label.
-  filterOnClick - (boolean) Default's *true*. Select the clicked stack by hiding all other stacks.
-  restoreOnRightClick - (boolean) Default's *true*. Show all stacks by right clicking.
-  
-*/
-  
-Options.AreaChart = {
-  $extend: true,
-
-  animate: true,
-  labelOffset: 3, // label offset
-  type: 'stacked', // gradient
-  Tips: {
-    enable: false,
-    onShow: $.empty,
-    onHide: $.empty
-  },
-  Events: {
-    enable: false,
-    onClick: $.empty
-  },
-  selectOnHover: true,
-  showAggregates: true,
-  showLabels: true,
-  filterOnClick: false,
-  restoreOnRightClick: false
-};
-
-/*
- * File: Options.Margin.js
- *
-*/
-
-/*
-  Object: Options.Margin
-  
-  Canvas drawing margins. 
-  
-  Syntax:
-  
-  (start code js)
-
-  Options.Margin = {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
-  };
-  
-  (end code)
-  
-  Example:
-  
-  (start code js)
-
-  var viz = new $jit.Viz({
-    Margin: {
-      right: 10,
-      bottom: 20
-    }
-  });
-  
-  (end code)
-
-  Parameters:
-  
-  top - (number) Default's *0*. Top margin.
-  left - (number) Default's *0*. Left margin.
-  right - (number) Default's *0*. Right margin.
-  bottom - (number) Default's *0*. Bottom margin.
-  
-*/
-
-Options.Margin = {
-  $extend: false,
-  
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0
 };
 
 /*
@@ -1875,7 +1744,8 @@ Options.Navigation = {
    onAfterPlotNode(node) - This method is triggered right after plotting each <Graph.Node>.
    onBeforePlotLine(adj) - This method is triggered right before plotting a <Graph.Adjacence>. This method is useful for adding some styles to a particular edge before being plotted.
    onAfterPlotLine(adj) - This method is triggered right after plotting a <Graph.Adjacence>.
-
+   onBeforeRemoveNode(node) - This method is triggered right before removing each <Graph.Node>.
+   
     *Used in <ST>, <TM.Base> and <Icicle> visualizations*
     
     request(nodeId, level, onComplete) - This method is used for buffering information into the visualization. When clicking on an empty node, the visualization will make a request for this node's subtrees, specifying a given level for this subtree (defined by _levelsToShow_). Once the request is completed, the onComplete callback should be called with the given result. This is useful to provide on-demand information into the visualizations withought having to load the entire information from start. The parameters used by this method are _nodeId_, which is the id of the root of the subtree to request, _level_ which is the depth of the subtree to be requested (0 would mean just the root node). _onComplete_ is an object having the callback method _onComplete.onComplete(json)_ that should be called once the json has been retrieved.  
@@ -1884,15 +1754,16 @@ Options.Navigation = {
 Options.Controller = {
   $extend: true,
   
-  onBeforeCompute: $.empty,
-  onAfterCompute:  $.empty,
-  onCreateLabel:   $.empty,
-  onPlaceLabel:    $.empty,
-  onComplete:      $.empty,
-  onBeforePlotLine:$.empty,
-  onAfterPlotLine: $.empty,
-  onBeforePlotNode:$.empty,
-  onAfterPlotNode: $.empty,
+  onBeforeCompute:   $.empty,
+  onAfterCompute:    $.empty,
+  onCreateLabel:     $.empty,
+  onPlaceLabel:      $.empty,
+  onComplete:        $.empty,
+  onBeforePlotLine:  $.empty,
+  onAfterPlotLine:   $.empty,
+  onBeforePlotNode:  $.empty,
+  onAfterPlotNode:   $.empty,
+  onBeforeRemoveNode:$.empty,
   request:         false
 };
 
@@ -2375,10 +2246,21 @@ Extras.Classes.Tips = new Class({
         style = tip.style, 
         cont = this.config;
     style.display = '';
-    //get window dimensions
-    var win = {
-      'height': document.body.clientHeight,
-      'width': document.body.clientWidth
+    //get viewport dimensions
+    var elem = document.compatMode === "CSS1Compat" && document.documentElement ||
+               document.body ||
+               document.documentElement;
+    var view = {
+      'width': elem.clientWidth,
+      'height': elem.clientHeight,
+      'x': window.pageXOffset ||
+           document.documentElement && document.documentElement.scrollLeft ||
+           document.body && document.body.scrollLeft ||
+           0,
+      'y': window.pageYOffset ||
+           document.documentElement && document.documentElement.scrollTop ||
+           document.body && document.body.scrollTop ||
+           0
     };
     //get tooltip dimensions
     var obj = {
@@ -2387,9 +2269,9 @@ Extras.Classes.Tips = new Class({
     };
     //set tooltip position
     var x = cont.offsetX, y = cont.offsetY;
-    style.top = ((pos.y + y + obj.height > win.height)?  
+    style.top = ((pos.y + obj.height + y > view.height + view.y)?
         (pos.y - obj.height - y) : pos.y + y) + 'px';
-    style.left = ((pos.x + obj.width + x > win.width)? 
+    style.left = ((pos.x + obj.width + x > view.width + view.x)?
         (pos.x - obj.width - x) : pos.x + x) + 'px';
   },
   
@@ -2964,6 +2846,40 @@ var Canvas;
         this.canvases[i].scale(x, y, true);
       }
       this.translate(dx, dy, false);
+    },
+    /*
+      Method: getZoom
+
+      Returns canvas zooming factors. *1* means initial zoom.
+
+      Returns:
+
+      An object with *x* and *y* properties.
+    */
+    getZoom: function() {
+      return new Complex(this.scaleOffsetX, this.scaleOffsetY);
+    },
+    /*
+      Method: setZoom
+
+      Sets the zoom to given factors. *1* means initial zoom.
+
+      Parameters:
+
+      x - (number) zooming factor
+      y - (number) zooming factor
+      disablePlot - (boolean) Default's *false*. Set this to *true* if you don't want to refresh the visualization.
+
+      Example:
+      (start code js)
+      canvas.setZoom(2, 2); //sets 2x zoom
+      (end code)
+    */
+    setZoom: function(x, y, disablePlot) {
+      var cur = this.getZoom(),
+          px = x / cur.x,
+          py = y / cur.y;
+      this.scale(px, py, disablePlot);
     },
     /*
       Method: getPos
@@ -3894,6 +3810,7 @@ Complex.prototype = {
 var $C = function(a, b) { return new Complex(a, b); };
 
 Complex.KER = $C(0, 0);
+Complex.IM = $C(0, 1);
 
 
 
@@ -4972,6 +4889,7 @@ Graph.Util = {
         var queue = [graph.getNode(id)];
         while(queue.length != 0) {
             var node = queue.pop();
+            if (!node) return;
             node._flag = true;
             action(node, node._depth);
             this.eachAdjacency(node, function(adj) {
@@ -4988,6 +4906,7 @@ Graph.Util = {
        Method: eachLevel
     
        Iterates over a node's subgraph applying *action* to the nodes of relative depth between *levelBegin* and *levelEnd*.
+       In case you need to break the iteration, *action* should return false.
        
        Also implemented by:
        
@@ -5002,18 +4921,20 @@ Graph.Util = {
 
     */
     eachLevel: function(node, levelBegin, levelEnd, action, flags) {
-        var d = node._depth, filter = this.filter(flags), that = this;
+        var d = node._depth, filter = this.filter(flags), that = this, shouldContinue = true;
         levelEnd = levelEnd === false? Number.MAX_VALUE -d : levelEnd;
         (function loopLevel(node, levelBegin, levelEnd) {
-            var d = node._depth;
-            if(d >= levelBegin && d <= levelEnd && filter(node)) action(node, d);
-            if(d < levelEnd) {
+            if(!shouldContinue) return;
+            var d = node._depth, ret;
+            if(d >= levelBegin && d <= levelEnd && filter(node)) ret = action(node, d);
+            if(typeof ret !== "undefined") shouldContinue = ret;
+            if(shouldContinue && d < levelEnd) {
                 that.eachAdjacency(node, function(adj) {
                     var n = adj.nodeTo;
                     if(n._depth > d) loopLevel(n, levelBegin, levelEnd);
                 });
             }
-        })(node, levelBegin + d, levelEnd + d);      
+        })(node, levelBegin + d, levelEnd + d);
     },
 
     /*
@@ -5347,7 +5268,10 @@ Graph.Op = {
         var i, that, nodeObj;
         switch(options.type) {
             case 'nothing':
-                for(i=0; i<n.length; i++) viz.graph.removeNode(n[i]);
+                for(i=0; i<n.length; i++) {
+                    options.onBeforeRemoveNode(viz.graph.getNode(n[i]));
+                    viz.graph.removeNode(n[i]);
+                }
                 break;
             
             case 'replot':
@@ -6388,10 +6312,10 @@ var EdgeHelper = {
       'contains': function(posFrom, posTo, pos, epsilon) {
         var min = Math.min, 
             max = Math.max,
-            minPosX = min(posFrom.x, posTo.x),
-            maxPosX = max(posFrom.x, posTo.x),
-            minPosY = min(posFrom.y, posTo.y),
-            maxPosY = max(posFrom.y, posTo.y);
+            minPosX = min(posFrom.x, posTo.x) - epsilon,
+            maxPosX = max(posFrom.x, posTo.x) + epsilon,
+            minPosY = min(posFrom.y, posTo.y) - epsilon,
+            maxPosY = max(posFrom.y, posTo.y) + epsilon;
         
         if(pos.x >= minPosX && pos.x <= maxPosX 
             && pos.y >= minPosY && pos.y <= maxPosY) {
@@ -6604,7 +6528,7 @@ var EdgeHelper = {
 };
 
 
-/*
+	/*
  * File: Graph.Plot.js
  */
 
@@ -6648,10 +6572,11 @@ Graph.Plot = {
           'angularWidth':'number',
           'span':'number',
           'valueArray':'array-number',
-          'dimArray':'array-number'
+          'dimArray':'array-number',
+          'vertices':'polygon'
           //'colorArray':'array-color'
         },
-        
+
         //canvas specific parsers
         'canvas': {
           'globalAlpha': 'number',
@@ -6664,34 +6589,34 @@ Graph.Plot = {
           'shadowOffsetY': 'number',
           'miterLimit': 'number'
         },
-  
+
         //label parsers
         'label': {
           'size': 'number',
           'color': 'color'
         },
-  
+
         //Number interpolator
         'compute': function(from, to, delta) {
           return from + (to - from) * delta;
         },
-        
+
         //Position interpolators
         'moebius': function(elem, props, delta, vector) {
-          var v = vector.scale(-delta);  
+          var v = vector.scale(-delta);
           if(v.norm() < 1) {
               var x = v.x, y = v.y;
               var ans = elem.startPos
                 .getc().moebiusTransformation(v);
               elem.pos.setc(ans.x, ans.y);
               v.x = x; v.y = y;
-            }           
+            }
         },
 
         'linear': function(elem, props, delta) {
             var from = elem.startPos.getc(true);
             var to = elem.endPos.getc(true);
-            elem.pos.setc(this.compute(from.x, to.x, delta), 
+            elem.pos.setc(this.compute(from.x, to.x, delta),
                           this.compute(from.y, to.y, delta));
         },
 
@@ -6701,7 +6626,7 @@ Graph.Plot = {
           var ans = to.interpolate(from, delta);
           elem.pos.setp(ans.theta, ans.rho);
         },
-        
+
         //Graph's Node/Edge interpolators
         'number': function(elem, prop, delta, getter, setter) {
           var from = elem[getter](prop, 'start');
@@ -6716,10 +6641,10 @@ Graph.Plot = {
           var val = $.rgbToHex([parseInt(comp(from[0], to[0], delta)),
                                 parseInt(comp(from[1], to[1], delta)),
                                 parseInt(comp(from[2], to[2], delta))]);
-          
+
           elem[setter](prop, val);
         },
-        
+
         'array-number': function(elem, prop, delta, getter, setter) {
           var from = elem[getter](prop, 'start'),
               to = elem[getter](prop, 'end'),
@@ -6737,7 +6662,7 @@ Graph.Plot = {
           }
           elem[setter](prop, cur);
         },
-        
+
         'node': function(elem, props, delta, map, getter, setter) {
           map = this[map];
           if(props) {
@@ -6752,30 +6677,77 @@ Graph.Plot = {
             }
           }
         },
-        
+
         'edge': function(elem, props, delta, mapKey, getter, setter) {
             var adjs = elem.adjacencies;
             for(var id in adjs) this['node'](adjs[id], props, delta, mapKey, getter, setter);
         },
-        
+
         'node-property': function(elem, props, delta) {
           this['node'](elem, props, delta, 'map', 'getData', 'setData');
         },
-        
+
         'edge-property': function(elem, props, delta) {
-          this['edge'](elem, props, delta, 'map', 'getData', 'setData');  
+          this['edge'](elem, props, delta, 'map', 'getData', 'setData');
         },
 
         'label-property': function(elem, props, delta) {
           this['node'](elem, props, delta, 'label', 'getLabelData', 'setLabelData');
         },
-        
+
         'node-style': function(elem, props, delta) {
           this['node'](elem, props, delta, 'canvas', 'getCanvasStyle', 'setCanvasStyle');
         },
-        
+
         'edge-style': function(elem, props, delta) {
-          this['edge'](elem, props, delta, 'canvas', 'getCanvasStyle', 'setCanvasStyle');  
+          this['edge'](elem, props, delta, 'canvas', 'getCanvasStyle', 'setCanvasStyle');
+        },
+
+        'polygon': function(elem, prop, delta, getter, setter) {
+          var from = elem[getter](prop, 'start'),
+              to = elem[getter](prop, 'end'),
+              cur = [];
+          if (typeof from.offset == 'undefined') {
+            if (from === 0) {
+              from = $.map(to, function() {
+                return new $jit.Complex(0, 0);
+              });
+              from.offset = 0;
+            }
+            else {
+              if (from.length == 0) {
+                from.push(new $jit.Complex(0, 0));
+              }
+              while (from.length < to.length) {
+                from.push(from[0]);
+              }
+              while (from.length > to.length) {
+                to.push(to[0] || new $jit.Complex(0, 0));
+              }
+              if (from.length == 0) return;
+              var l = from.length;
+              var minDist = 1e300;
+              for (var offset = 0; offset < l; offset ++) {
+                var d = 0;
+                for (var i = 0; i < l; i++) {
+                  d +=Geometry.dist2(from[(offset + i) % l], to[i]);
+                }
+                if (d < minDist) {
+                  from.offset = offset;
+                  minDist = d;
+                }
+              }
+            }
+          }
+
+          for (var i = 0, l = from.length; i < l; i++) {
+            var fromi = from[(i + from.offset) % l], toi = to[i];
+            cur.push(new $jit.Complex(
+                this.compute(fromi.x, toi.x, delta),
+                this.compute(fromi.y, toi.y, delta)
+            ));
+          }
+          elem[setter](prop, cur);
         }
     },
     
@@ -7150,10 +7122,10 @@ Graph.Plot = {
    */
    plotTree: function(node, opt, animating) {
        var that = this, 
-       viz = this.viz, 
-       canvas = viz.canvas,
-       config = this.config,
-       ctx = canvas.getCtx();
+           viz = this.viz, 
+           canvas = viz.canvas,
+           config = this.config,
+           ctx = canvas.getCtx();
        var nodeAlpha = node.getData('alpha');
        node.eachSubnode(function(elem) {
          if(opt.plotSubtree(node, elem) && elem.exist && elem.drawn) {
@@ -7478,7 +7450,29 @@ Graph.Label.Native = new Class({
       ctx.fillText(node.name, pos.x, pos.y + node.getData("height") / 2);
     },
 
-    hideLabel: $.empty,
+    /*
+       Method: hideLabel
+   
+       Hides the corresponding <Graph.Node> label.
+    
+       Parameters:
+   
+       node - (object) A <Graph.Node>. Can also be an array of <Graph.Nodes>.
+       show - (boolean) If *true*, nodes will be shown. Otherwise nodes will be hidden.
+   
+       Example:
+       (start code js)
+        var rg = new $jit.Viz(options);
+        viz.labels.hideLabel(viz.graph.getNode('someid'), false);
+       (end code)
+    */
+    hideLabel: function(node, show) {
+      node = $.splat(node);
+      var al = show ? false : true;
+      $.each(node, function(n) {
+        n._hideLabel = al;
+      });
+    },
     hideLabels: $.empty
 });
 
@@ -7644,7 +7638,7 @@ Graph.Label.DOM = new Class({
       node = $.splat(node);
       var st = show ? "" : "none", lab, that = this;
       $.each(node, function(n) {
-        var lab = that.getLabel(n.id);
+        lab = that.getLabel(n.id);
         if (lab) {
           lab.style.display = st;
         }
@@ -7668,8 +7662,14 @@ Graph.Label.DOM = new Class({
     */
     fitsInCanvas: function(pos, canvas) {
       var size = canvas.getSize();
-      if(pos.x >= size.width || pos.x < 0
+      if (pos.w && pos.h) {
+      	if (pos.x >= size.width || pos.x < -pos.w
+         || pos.y >= size.height || pos.y < -pos.h) return false;      	
+      }
+      else {
+      	if (pos.x >= size.width || pos.x < 0
          || pos.y >= size.height || pos.y < 0) return false;
+      }
        return true;
     }
 });
@@ -8187,4862 +8187,6 @@ var NodeDim = {
 
 
 /*
- * Class: Layouts.Tree
- * 
- * Implements a Tree Layout.
- * 
- * Implemented By:
- * 
- * <ST>
- * 
- * Inspired by:
- * 
- * Drawing Trees (Andrew J. Kennedy) <http://research.microsoft.com/en-us/um/people/akenn/fun/drawingtrees.pdf>
- * 
- */
-Layouts.Tree = (function() {
-  //Layout functions
-  var slice = Array.prototype.slice;
-
-  /*
-     Calculates the max width and height nodes for a tree level
-  */  
-  function getBoundaries(graph, config, level, orn, prop) {
-    var dim = config.Node;
-    var multitree = config.multitree;
-    if (dim.overridable) {
-      var w = -1, h = -1;
-      graph.eachNode(function(n) {
-        if (n._depth == level
-            && (!multitree || ('$orn' in n.data) && n.data.$orn == orn)) {
-          var dw = n.getData('width', prop);
-          var dh = n.getData('height', prop);
-          w = (w < dw) ? dw : w;
-          h = (h < dh) ? dh : h;
-        }
-      });
-      return {
-        'width' : w < 0 ? dim.width : w,
-        'height' : h < 0 ? dim.height : h
-      };
-    } else {
-      return dim;
-    }
-  }
-
-
-  function movetree(node, prop, val, orn) {
-    var p = (orn == "left" || orn == "right") ? "y" : "x";
-    node.getPos(prop)[p] += val;
-  }
-
-
-  function moveextent(extent, val) {
-    var ans = [];
-    $.each(extent, function(elem) {
-      elem = slice.call(elem);
-      elem[0] += val;
-      elem[1] += val;
-      ans.push(elem);
-    });
-    return ans;
-  }
-
-
-  function merge(ps, qs) {
-    if (ps.length == 0)
-      return qs;
-    if (qs.length == 0)
-      return ps;
-    var p = ps.shift(), q = qs.shift();
-    return [ [ p[0], q[1] ] ].concat(merge(ps, qs));
-  }
-
-
-  function mergelist(ls, def) {
-    def = def || [];
-    if (ls.length == 0)
-      return def;
-    var ps = ls.pop();
-    return mergelist(ls, merge(ps, def));
-  }
-
-
-  function fit(ext1, ext2, subtreeOffset, siblingOffset, i) {
-    if (ext1.length <= i || ext2.length <= i)
-      return 0;
-
-    var p = ext1[i][1], q = ext2[i][0];
-    return Math.max(fit(ext1, ext2, subtreeOffset, siblingOffset, ++i)
-        + subtreeOffset, p - q + siblingOffset);
-  }
-
-
-  function fitlistl(es, subtreeOffset, siblingOffset) {
-    function $fitlistl(acc, es, i) {
-      if (es.length <= i)
-        return [];
-      var e = es[i], ans = fit(acc, e, subtreeOffset, siblingOffset, 0);
-      return [ ans ].concat($fitlistl(merge(acc, moveextent(e, ans)), es, ++i));
-    }
-    ;
-    return $fitlistl( [], es, 0);
-  }
-
-
-  function fitlistr(es, subtreeOffset, siblingOffset) {
-    function $fitlistr(acc, es, i) {
-      if (es.length <= i)
-        return [];
-      var e = es[i], ans = -fit(e, acc, subtreeOffset, siblingOffset, 0);
-      return [ ans ].concat($fitlistr(merge(moveextent(e, ans), acc), es, ++i));
-    }
-    ;
-    es = slice.call(es);
-    var ans = $fitlistr( [], es.reverse(), 0);
-    return ans.reverse();
-  }
-
-
-  function fitlist(es, subtreeOffset, siblingOffset, align) {
-    var esl = fitlistl(es, subtreeOffset, siblingOffset), esr = fitlistr(es,
-        subtreeOffset, siblingOffset);
-
-    if (align == "left")
-      esr = esl;
-    else if (align == "right")
-      esl = esr;
-
-    for ( var i = 0, ans = []; i < esl.length; i++) {
-      ans[i] = (esl[i] + esr[i]) / 2;
-    }
-    return ans;
-  }
-
-
-  function design(graph, node, prop, config, orn) {
-    var multitree = config.multitree;
-    var auxp = [ 'x', 'y' ], auxs = [ 'width', 'height' ];
-    var ind = +(orn == "left" || orn == "right");
-    var p = auxp[ind], notp = auxp[1 - ind];
-
-    var cnode = config.Node;
-    var s = auxs[ind], nots = auxs[1 - ind];
-
-    var siblingOffset = config.siblingOffset;
-    var subtreeOffset = config.subtreeOffset;
-    var align = config.align;
-
-    function $design(node, maxsize, acum) {
-      var sval = node.getData(s, prop);
-      var notsval = maxsize
-          || (node.getData(nots, prop));
-
-      var trees = [], extents = [], chmaxsize = false;
-      var chacum = notsval + config.levelDistance;
-      node.eachSubnode(function(n) {
-            if (n.exist
-                && (!multitree || ('$orn' in n.data) && n.data.$orn == orn)) {
-
-              if (!chmaxsize)
-                chmaxsize = getBoundaries(graph, config, n._depth, orn, prop);
-
-              var s = $design(n, chmaxsize[nots], acum + chacum);
-              trees.push(s.tree);
-              extents.push(s.extent);
-            }
-          });
-      var positions = fitlist(extents, subtreeOffset, siblingOffset, align);
-      for ( var i = 0, ptrees = [], pextents = []; i < trees.length; i++) {
-        movetree(trees[i], prop, positions[i], orn);
-        pextents.push(moveextent(extents[i], positions[i]));
-      }
-      var resultextent = [ [ -sval / 2, sval / 2 ] ]
-          .concat(mergelist(pextents));
-      node.getPos(prop)[p] = 0;
-
-      if (orn == "top" || orn == "left") {
-        node.getPos(prop)[notp] = acum;
-      } else {
-        node.getPos(prop)[notp] = -acum;
-      }
-
-      return {
-        tree : node,
-        extent : resultextent
-      };
-    }
-
-    $design(node, false, 0);
-  }
-
-
-  return new Class({
-    /*
-    Method: compute
-    
-    Computes nodes' positions.
-
-     */
-    compute : function(property, computeLevels) {
-      var prop = property || 'start';
-      var node = this.graph.getNode(this.root);
-      $.extend(node, {
-        'drawn' : true,
-        'exist' : true,
-        'selected' : true
-      });
-      NodeDim.compute(this.graph, prop, this.config);
-      if (!!computeLevels || !("_depth" in node)) {
-        this.graph.computeLevels(this.root, 0, "ignore");
-      }
-      
-      this.computePositions(node, prop);
-    },
-
-    computePositions : function(node, prop) {
-      var config = this.config;
-      var multitree = config.multitree;
-      var align = config.align;
-      var indent = align !== 'center' && config.indent;
-      var orn = config.orientation;
-      var orns = multitree ? [ 'top', 'right', 'bottom', 'left' ] : [ orn ];
-      var that = this;
-      $.each(orns, function(orn) {
-        //calculate layout
-          design(that.graph, node, prop, that.config, orn, prop);
-          var i = [ 'x', 'y' ][+(orn == "left" || orn == "right")];
-          //absolutize
-          (function red(node) {
-            node.eachSubnode(function(n) {
-              if (n.exist
-                  && (!multitree || ('$orn' in n.data) && n.data.$orn == orn)) {
-
-                n.getPos(prop)[i] += node.getPos(prop)[i];
-                if (indent) {
-                  n.getPos(prop)[i] += align == 'left' ? indent : -indent;
-                }
-                red(n);
-              }
-            });
-          })(node);
-        });
-    }
-  });
-  
-})();
-
-/*
- * File: Spacetree.js
- */
-
-/*
-   Class: ST
-   
-  A Tree layout with advanced contraction and expansion animations.
-     
-  Inspired by:
- 
-  SpaceTree: Supporting Exploration in Large Node Link Tree, Design Evolution and Empirical Evaluation (Catherine Plaisant, Jesse Grosjean, Benjamin B. Bederson) 
-  <http://hcil.cs.umd.edu/trs/2002-05/2002-05.pdf>
-  
-  Drawing Trees (Andrew J. Kennedy) <http://research.microsoft.com/en-us/um/people/akenn/fun/drawingtrees.pdf>
-  
-  Note:
- 
-  This visualization was built and engineered from scratch, taking only the papers as inspiration, and only shares some features with the visualization described in those papers.
- 
-  Implements:
-  
-  All <Loader> methods
-  
-  Constructor Options:
-  
-  Inherits options from
-  
-  - <Options.Canvas>
-  - <Options.Controller>
-  - <Options.Tree>
-  - <Options.Node>
-  - <Options.Edge>
-  - <Options.Label>
-  - <Options.Events>
-  - <Options.Tips>
-  - <Options.NodeStyles>
-  - <Options.Navigation>
-  
-  Additionally, there are other parameters and some default values changed
-  
-  constrained - (boolean) Default's *true*. Whether to show the entire tree when loaded or just the number of levels specified by _levelsToShow_.
-  levelsToShow - (number) Default's *2*. The number of levels to show for a subtree. This number is relative to the selected node.
-  levelDistance - (number) Default's *30*. The distance between two consecutive levels of the tree.
-  Node.type - Described in <Options.Node>. Default's set to *rectangle*.
-  offsetX - (number) Default's *0*. The x-offset distance from the selected node to the center of the canvas.
-  offsetY - (number) Default's *0*. The y-offset distance from the selected node to the center of the canvas.
-  duration - Described in <Options.Fx>. It's default value has been changed to *700*.
-  
-  Instance Properties:
-  
-  canvas - Access a <Canvas> instance.
-  graph - Access a <Graph> instance.
-  op - Access a <ST.Op> instance.
-  fx - Access a <ST.Plot> instance.
-  labels - Access a <ST.Label> interface implementation.
-
- */
-
-$jit.ST= (function() {
-    // Define some private methods first...
-    // Nodes in path
-    var nodesInPath = [];
-    // Nodes to contract
-    function getNodesToHide(node) {
-      node = node || this.clickedNode;
-      if(!this.config.constrained) {
-        return [];
-      }
-      var Geom = this.geom;
-      var graph = this.graph;
-      var canvas = this.canvas;
-      var level = node._depth, nodeArray = [];
-  	  graph.eachNode(function(n) {
-          if(n.exist && !n.selected) {
-              if(n.isDescendantOf(node.id)) {
-                if(n._depth <= level) nodeArray.push(n);
-              } else {
-                nodeArray.push(n);
-              }
-          }
-  	  });
-  	  var leafLevel = Geom.getRightLevelToShow(node, canvas);
-  	  node.eachLevel(leafLevel, leafLevel, function(n) {
-          if(n.exist && !n.selected) nodeArray.push(n);
-  	  });
-  	    
-  	  for (var i = 0; i < nodesInPath.length; i++) {
-  	    var n = this.graph.getNode(nodesInPath[i]);
-  	    if(!n.isDescendantOf(node.id)) {
-  	      nodeArray.push(n);
-  	    }
-  	  } 
-  	  return nodeArray;       
-    };
-    // Nodes to expand
-     function getNodesToShow(node) {
-        var nodeArray = [], config = this.config;
-        node = node || this.clickedNode;
-        this.clickedNode.eachLevel(0, config.levelsToShow, function(n) {
-            if(config.multitree && !('$orn' in n.data) 
-            		&& n.anySubnode(function(ch){ return ch.exist && !ch.drawn; })) {
-            	nodeArray.push(n);
-            } else if(n.drawn && !n.anySubnode("drawn")) {
-              nodeArray.push(n);
-            }
-        });
-        return nodeArray;
-     };
-    // Now define the actual class.
-    return new Class({
-    
-        Implements: [Loader, Extras, Layouts.Tree],
-        
-        initialize: function(controller) {            
-          var $ST = $jit.ST;
-          
-          var config= {
-                levelsToShow: 2,
-                levelDistance: 30,
-                constrained: true,                
-                Node: {
-                  type: 'rectangle'
-                },
-                duration: 700,
-                offsetX: 0,
-                offsetY: 0
-            };
-            
-            this.controller = this.config = $.merge(
-                Options("Canvas", "Fx", "Tree", "Node", "Edge", "Controller", 
-                    "Tips", "NodeStyles", "Events", "Navigation", "Label"), config, controller);
-
-            var canvasConfig = this.config;
-            if(canvasConfig.useCanvas) {
-              this.canvas = canvasConfig.useCanvas;
-              this.config.labelContainer = this.canvas.id + '-label';
-            } else {
-              if(canvasConfig.background) {
-                canvasConfig.background = $.merge({
-                  type: 'Circles'
-                }, canvasConfig.background);
-              }
-              this.canvas = new Canvas(this, canvasConfig);
-              this.config.labelContainer = (typeof canvasConfig.injectInto == 'string'? canvasConfig.injectInto : canvasConfig.injectInto.id) + '-label';
-            }
-
-            this.graphOptions = {
-                'klass': Complex
-            };
-            this.graph = new Graph(this.graphOptions, this.config.Node, this.config.Edge);
-            this.labels = new $ST.Label[canvasConfig.Label.type](this);
-            this.fx = new $ST.Plot(this, $ST);
-            this.op = new $ST.Op(this);
-            this.group = new $ST.Group(this);
-            this.geom = new $ST.Geom(this);
-            this.clickedNode=  null;
-            // initialize extras
-            this.initializeExtras();
-        },
-    
-        /*
-         Method: plot
-        
-         Plots the <ST>. This is a shortcut to *fx.plot*.
-
-        */  
-        plot: function() { this.fx.plot(this.controller); },
-    
-      
-        /*
-         Method: switchPosition
-        
-         Switches the tree orientation.
-
-         Parameters:
-
-        pos - (string) The new tree orientation. Possible values are "top", "left", "right" and "bottom".
-        method - (string) Set this to "animate" if you want to animate the tree when switching its position. You can also set this parameter to "replot" to just replot the subtree.
-        onComplete - (optional|object) This callback is called once the "switching" animation is complete.
-
-         Example:
-
-         (start code js)
-           st.switchPosition("right", "animate", {
-            onComplete: function() {
-              alert('completed!');
-            } 
-           });
-         (end code)
-        */  
-        switchPosition: function(pos, method, onComplete) {
-          var Geom = this.geom, Plot = this.fx, that = this;
-          if(!Plot.busy) {
-              Plot.busy = true;
-              this.contract({
-                  onComplete: function() {
-                      Geom.switchOrientation(pos);
-                      that.compute('end', false);
-                      Plot.busy = false;
-                      if(method == 'animate') {
-                    	  that.onClick(that.clickedNode.id, onComplete);  
-                      } else if(method == 'replot') {
-                    	  that.select(that.clickedNode.id, onComplete);
-                      }
-                  }
-              }, pos);
-          }
-        },
-
-        /*
-        Method: switchAlignment
-       
-        Switches the tree alignment.
-
-        Parameters:
-
-       align - (string) The new tree alignment. Possible values are "left", "center" and "right".
-       method - (string) Set this to "animate" if you want to animate the tree after aligning its position. You can also set this parameter to "replot" to just replot the subtree.
-       onComplete - (optional|object) This callback is called once the "switching" animation is complete.
-
-        Example:
-
-        (start code js)
-          st.switchAlignment("right", "animate", {
-           onComplete: function() {
-             alert('completed!');
-           } 
-          });
-        (end code)
-       */  
-       switchAlignment: function(align, method, onComplete) {
-        this.config.align = align;
-        if(method == 'animate') {
-        	this.select(this.clickedNode.id, onComplete);
-        } else if(method == 'replot') {
-        	this.onClick(this.clickedNode.id, onComplete);	
-        }
-       },
-
-       /*
-        Method: addNodeInPath
-       
-        Adds a node to the current path as selected node. The selected node will be visible (as in non-collapsed) at all times.
-        
-
-        Parameters:
-
-       id - (string) A <Graph.Node> id.
-
-        Example:
-
-        (start code js)
-          st.addNodeInPath("nodeId");
-        (end code)
-       */  
-       addNodeInPath: function(id) {
-           nodesInPath.push(id);
-           this.select((this.clickedNode && this.clickedNode.id) || this.root);
-       },       
-
-       /*
-       Method: clearNodesInPath
-      
-       Removes all nodes tagged as selected by the <ST.addNodeInPath> method.
-       
-       See also:
-       
-       <ST.addNodeInPath>
-     
-       Example:
-
-       (start code js)
-         st.clearNodesInPath();
-       (end code)
-      */  
-       clearNodesInPath: function(id) {
-           nodesInPath.length = 0;
-           this.select((this.clickedNode && this.clickedNode.id) || this.root);
-       },
-        
-       /*
-         Method: refresh
-        
-         Computes positions and plots the tree.
-         
-       */
-       refresh: function() {
-           this.reposition();
-           this.select((this.clickedNode && this.clickedNode.id) || this.root);
-       },    
-
-       reposition: function() {
-            this.graph.computeLevels(this.root, 0, "ignore");
-             this.geom.setRightLevelToShow(this.clickedNode, this.canvas);
-            this.graph.eachNode(function(n) {
-                if(n.exist) n.drawn = true;
-            });
-            this.compute('end');
-        },
-        
-        requestNodes: function(node, onComplete) {
-          var handler = $.merge(this.controller, onComplete), 
-          lev = this.config.levelsToShow;
-          if(handler.request) {
-              var leaves = [], d = node._depth;
-              node.eachLevel(0, lev, function(n) {
-                  if(n.drawn && 
-                   !n.anySubnode()) {
-                   leaves.push(n);
-                   n._level = lev - (n._depth - d);
-                  }
-              });
-              this.group.requestNodes(leaves, handler);
-          }
-            else
-              handler.onComplete();
-        },
-     
-        contract: function(onComplete, switched) {
-          var orn  = this.config.orientation;
-          var Geom = this.geom, Group = this.group;
-          if(switched) Geom.switchOrientation(switched);
-          var nodes = getNodesToHide.call(this);
-          if(switched) Geom.switchOrientation(orn);
-          Group.contract(nodes, $.merge(this.controller, onComplete));
-        },
-      
-         move: function(node, onComplete) {
-            this.compute('end', false);
-            var move = onComplete.Move, offset = {
-                'x': move.offsetX,
-                'y': move.offsetY 
-            };
-            if(move.enable) {
-                this.geom.translate(node.endPos.add(offset).$scale(-1), "end");
-            }
-            this.fx.animate($.merge(this.controller, { modes: ['linear'] }, onComplete));
-         },
-      
-        expand: function (node, onComplete) {
-            var nodeArray = getNodesToShow.call(this, node);
-            this.group.expand(nodeArray, $.merge(this.controller, onComplete));
-        },
-    
-        selectPath: function(node) {
-          var that = this;
-          this.graph.eachNode(function(n) { n.selected = false; }); 
-          function path(node) {
-              if(node == null || node.selected) return;
-              node.selected = true;
-              $.each(that.group.getSiblings([node])[node.id], 
-              function(n) { 
-                   n.exist = true; 
-                   n.drawn = true; 
-              });    
-              var parents = node.getParents();
-              parents = (parents.length > 0)? parents[0] : null;
-              path(parents);
-          };
-          for(var i=0, ns = [node.id].concat(nodesInPath); i < ns.length; i++) {
-              path(this.graph.getNode(ns[i]));
-          }
-        },
-      
-        /*
-        Method: setRoot
-     
-         Switches the current root node. Changes the topology of the Tree.
-     
-        Parameters:
-           id - (string) The id of the node to be set as root.
-           method - (string) Set this to "animate" if you want to animate the tree after adding the subtree. You can also set this parameter to "replot" to just replot the subtree.
-           onComplete - (optional|object) An action to perform after the animation (if any).
- 
-        Example:
-
-        (start code js)
-          st.setRoot('nodeId', 'animate', {
-             onComplete: function() {
-               alert('complete!');
-             }
-          });
-        (end code)
-     */
-     setRoot: function(id, method, onComplete) {
-        	if(this.busy) return;
-        	this.busy = true;
-          var that = this, canvas = this.canvas;
-        	var rootNode = this.graph.getNode(this.root);
-        	var clickedNode = this.graph.getNode(id);
-        	function $setRoot() {
-            	if(this.config.multitree && clickedNode.data.$orn) {
-            		var orn = clickedNode.data.$orn;
-            		var opp = {
-            				'left': 'right',
-            				'right': 'left',
-            				'top': 'bottom',
-            				'bottom': 'top'
-            		}[orn];
-            		rootNode.data.$orn = opp;
-            		(function tag(rootNode) {
-                		rootNode.eachSubnode(function(n) {
-                			if(n.id != id) {
-                				n.data.$orn = opp;
-                				tag(n);
-                			}
-                		});
-            		})(rootNode);
-            		delete clickedNode.data.$orn;
-            	}
-            	this.root = id;
-            	this.clickedNode = clickedNode;
-            	this.graph.computeLevels(this.root, 0, "ignore");
-            	this.geom.setRightLevelToShow(clickedNode, canvas, {
-            	  execHide: false,
-            	  onShow: function(node) {
-            	    if(!node.drawn) {
-                    node.drawn = true;
-                    node.setData('alpha', 1, 'end');
-                    node.setData('alpha', 0);
-                    node.pos.setc(clickedNode.pos.x, clickedNode.pos.y);
-            	    }
-            	  }
-            	});
-              this.compute('end');
-              this.busy = true;
-              this.fx.animate({
-                modes: ['linear', 'node-property:alpha'],
-                onComplete: function() {
-                  that.busy = false;
-                  that.onClick(id, {
-                    onComplete: function() {
-                      onComplete && onComplete.onComplete();
-                    }
-                  });
-                }
-              });
-        	}
-
-        	// delete previous orientations (if any)
-        	delete rootNode.data.$orns;
-
-        	if(method == 'animate') {
-        	  $setRoot.call(this);
-        	  that.selectPath(clickedNode);
-        	} else if(method == 'replot') {
-        		$setRoot.call(this);
-        		this.select(this.root);
-        	}
-     },
-
-     /*
-           Method: addSubtree
-        
-            Adds a subtree.
-        
-           Parameters:
-              subtree - (object) A JSON Tree object. See also <Loader.loadJSON>.
-              method - (string) Set this to "animate" if you want to animate the tree after adding the subtree. You can also set this parameter to "replot" to just replot the subtree.
-              onComplete - (optional|object) An action to perform after the animation (if any).
-    
-           Example:
-
-           (start code js)
-             st.addSubtree(json, 'animate', {
-                onComplete: function() {
-                  alert('complete!');
-                }
-             });
-           (end code)
-        */
-        addSubtree: function(subtree, method, onComplete) {
-            if(method == 'replot') {
-                this.op.sum(subtree, $.extend({ type: 'replot' }, onComplete || {}));
-            } else if (method == 'animate') {
-                this.op.sum(subtree, $.extend({ type: 'fade:seq' }, onComplete || {}));
-            }
-        },
-    
-        /*
-           Method: removeSubtree
-        
-            Removes a subtree.
-        
-           Parameters:
-              id - (string) The _id_ of the subtree to be removed.
-              removeRoot - (boolean) Default's *false*. Remove the root of the subtree or only its subnodes.
-              method - (string) Set this to "animate" if you want to animate the tree after removing the subtree. You can also set this parameter to "replot" to just replot the subtree.
-              onComplete - (optional|object) An action to perform after the animation (if any).
-
-          Example:
-
-          (start code js)
-            st.removeSubtree('idOfSubtreeToBeRemoved', false, 'animate', {
-              onComplete: function() {
-                alert('complete!');
-              }
-            });
-          (end code)
-    
-        */
-        removeSubtree: function(id, removeRoot, method, onComplete) {
-            var node = this.graph.getNode(id), subids = [];
-            node.eachLevel(+!removeRoot, false, function(n) {
-                subids.push(n.id);
-            });
-            if(method == 'replot') {
-                this.op.removeNode(subids, $.extend({ type: 'replot' }, onComplete || {}));
-            } else if (method == 'animate') {
-                this.op.removeNode(subids, $.extend({ type: 'fade:seq'}, onComplete || {}));
-            }
-        },
-    
-        /*
-           Method: select
-        
-            Selects a node in the <ST> without performing an animation. Useful when selecting 
-            nodes which are currently hidden or deep inside the tree.
-
-          Parameters:
-            id - (string) The id of the node to select.
-            onComplete - (optional|object) an onComplete callback.
-
-          Example:
-          (start code js)
-            st.select('mynodeid', {
-              onComplete: function() {
-                alert('complete!');
-              }
-            });
-          (end code)
-        */
-        select: function(id, onComplete) {
-            var group = this.group, geom = this.geom;
-            var node=  this.graph.getNode(id), canvas = this.canvas;
-            var root  = this.graph.getNode(this.root);
-            var complete = $.merge(this.controller, onComplete);
-            var that = this;
-    
-            complete.onBeforeCompute(node);
-            this.selectPath(node);
-            this.clickedNode= node;
-            this.requestNodes(node, {
-                onComplete: function(){
-                    group.hide(group.prepare(getNodesToHide.call(that)), complete);
-                    geom.setRightLevelToShow(node, canvas);
-                    that.compute("current");
-                    that.graph.eachNode(function(n) { 
-                        var pos = n.pos.getc(true);
-                        n.startPos.setc(pos.x, pos.y);
-                        n.endPos.setc(pos.x, pos.y);
-                        n.visited = false; 
-                    });
-                    var offset = { x: complete.offsetX, y: complete.offsetY };
-                    that.geom.translate(node.endPos.add(offset).$scale(-1), ["start", "current", "end"]);
-                    group.show(getNodesToShow.call(that));              
-                    that.plot();
-                    complete.onAfterCompute(that.clickedNode);
-                    complete.onComplete();
-                }
-            });     
-        },
-    
-      /*
-         Method: onClick
-    
-        Animates the <ST> to center the node specified by *id*.
-            
-        Parameters:
-        
-        id - (string) A node id.
-        options - (optional|object) A group of options and callbacks described below.
-        onComplete - (object) An object callback called when the animation finishes.
-        Move - (object) An object that has as properties _offsetX_ or _offsetY_ for adding some offset position to the centered node.
-
-        Example:
-
-        (start code js)
-          st.onClick('mynodeid', {
-	          Move: {
-	          	enable: true,
-	            offsetX: 30,
-	            offsetY: 5
-	          },
-	          onComplete: function() {
-	              alert('yay!');
-	          }
-          });
-        (end code)
-    
-        */    
-      onClick: function (id, options) {
-        var canvas = this.canvas, that = this, Geom = this.geom, config = this.config;
-        var innerController = {
-            Move: {
-        	    enable: true,
-              offsetX: config.offsetX || 0,
-              offsetY: config.offsetY || 0  
-            },
-            setRightLevelToShowConfig: false,
-            onBeforeRequest: $.empty,
-            onBeforeContract: $.empty,
-            onBeforeMove: $.empty,
-            onBeforeExpand: $.empty
-        };
-        var complete = $.merge(this.controller, innerController, options);
-        
-        if(!this.busy) {
-            this.busy = true;
-            var node = this.graph.getNode(id);
-            this.selectPath(node, this.clickedNode);
-           	this.clickedNode = node;
-            complete.onBeforeCompute(node);
-            complete.onBeforeRequest(node);
-            this.requestNodes(node, {
-                onComplete: function() {
-                    complete.onBeforeContract(node);
-                    that.contract({
-                        onComplete: function() {
-                            Geom.setRightLevelToShow(node, canvas, complete.setRightLevelToShowConfig);
-                            complete.onBeforeMove(node);
-                            that.move(node, {
-                                Move: complete.Move,
-                                onComplete: function() {
-                                    complete.onBeforeExpand(node);
-                                    that.expand(node, {
-                                        onComplete: function() {
-                                            that.busy = false;
-                                            complete.onAfterCompute(id);
-                                            complete.onComplete();
-                                        }
-                                    }); // expand
-                                }
-                            }); // move
-                        }
-                    });// contract
-                }
-            });// request
-        }
-      }
-    });
-
-})();
-
-$jit.ST.$extend = true;
-
-/*
-   Class: ST.Op
-    
-   Custom extension of <Graph.Op>.
-
-   Extends:
-
-   All <Graph.Op> methods
-   
-   See also:
-   
-   <Graph.Op>
-
-*/
-$jit.ST.Op = new Class({
-
-  Implements: Graph.Op
-    
-});
-
-/*
-    
-     Performs operations on group of nodes.
-
-*/
-$jit.ST.Group = new Class({
-    
-    initialize: function(viz) {
-        this.viz = viz;
-        this.canvas = viz.canvas;
-        this.config = viz.config;
-        this.animation = new Animation;
-        this.nodes = null;
-    },
-    
-    /*
-    
-       Calls the request method on the controller to request a subtree for each node. 
-    */
-    requestNodes: function(nodes, controller) {
-        var counter = 0, len = nodes.length, nodeSelected = {};
-        var complete = function() { controller.onComplete(); };
-        var viz = this.viz;
-        if(len == 0) complete();
-        for(var i=0; i<len; i++) {
-            nodeSelected[nodes[i].id] = nodes[i];
-            controller.request(nodes[i].id, nodes[i]._level, {
-                onComplete: function(nodeId, data) {
-                    if(data && data.children) {
-                        data.id = nodeId;
-                        viz.op.sum(data, { type: 'nothing' });
-                    }
-                    if(++counter == len) {
-                        viz.graph.computeLevels(viz.root, 0);
-                        complete();
-                    }
-                }
-            });
-        }
-    },
-    
-    /*
-    
-       Collapses group of nodes. 
-    */
-    contract: function(nodes, controller) {
-        var viz = this.viz;
-        var that = this;
-
-        nodes = this.prepare(nodes);
-        this.animation.setOptions($.merge(controller, {
-            $animating: false,
-            compute: function(delta) {
-              if(delta == 1) delta = 0.99;
-              that.plotStep(1 - delta, controller, this.$animating);
-              this.$animating = 'contract';
-            },
-            
-            complete: function() {
-                that.hide(nodes, controller);
-            }       
-        })).start();
-    },
-    
-    hide: function(nodes, controller) {
-        var viz = this.viz;
-        for(var i=0; i<nodes.length; i++) {
-            // TODO nodes are requested on demand, but not
-            // deleted when hidden. Would that be a good feature?
-            // Currently that feature is buggy, so I'll turn it off
-            // Actually this feature is buggy because trimming should take
-            // place onAfterCompute and not right after collapsing nodes.
-            if (true || !controller || !controller.request) {
-                nodes[i].eachLevel(1, false, function(elem){
-                    if (elem.exist) {
-                        $.extend(elem, {
-                            'drawn': false,
-                            'exist': false
-                        });
-                    }
-                });
-            } else {
-                var ids = [];
-                nodes[i].eachLevel(1, false, function(n) {
-                    ids.push(n.id);
-                });
-                viz.op.removeNode(ids, { 'type': 'nothing' });
-                viz.labels.clearLabels();
-            }
-        }
-        controller.onComplete();
-    },    
-    
-
-    /*
-       Expands group of nodes. 
-    */
-    expand: function(nodes, controller) {
-        var that = this;
-        this.show(nodes);
-        this.animation.setOptions($.merge(controller, {
-            $animating: false,
-            compute: function(delta) {
-                that.plotStep(delta, controller, this.$animating);
-                this.$animating = 'expand';
-            },
-            
-            complete: function() {
-                that.plotStep(undefined, controller, false);
-                controller.onComplete();
-            }       
-        })).start();
-        
-    },
-    
-    show: function(nodes) {
-        var config = this.config;
-        this.prepare(nodes);
-        $.each(nodes, function(n) {
-        	// check for root nodes if multitree
-        	if(config.multitree && !('$orn' in n.data)) {
-        		delete n.data.$orns;
-        		var orns = ' ';
-        		n.eachSubnode(function(ch) {
-        			if(('$orn' in ch.data) 
-        					&& orns.indexOf(ch.data.$orn) < 0 
-        					&& ch.exist && !ch.drawn) {
-        				orns += ch.data.$orn + ' ';
-        			}
-        		});
-        		n.data.$orns = orns;
-        	}
-            n.eachLevel(0, config.levelsToShow, function(n) {
-            	if(n.exist) n.drawn = true;
-            });     
-        });
-    },
-    
-    prepare: function(nodes) {
-        this.nodes = this.getNodesWithChildren(nodes);
-        return this.nodes;
-    },
-    
-    /*
-       Filters an array of nodes leaving only nodes with children.
-    */
-    getNodesWithChildren: function(nodes) {
-        var ans = [], config = this.config, root = this.viz.root;
-        nodes.sort(function(a, b) { return (a._depth <= b._depth) - (a._depth >= b._depth); });
-        for(var i=0; i<nodes.length; i++) {
-            if(nodes[i].anySubnode("exist")) {
-            	for (var j = i+1, desc = false; !desc && j < nodes.length; j++) {
-                    if(!config.multitree || '$orn' in nodes[j].data) {
-                		desc = desc || nodes[i].isDescendantOf(nodes[j].id);                    	
-                    }
-                }
-                if(!desc) ans.push(nodes[i]);
-            }
-        }
-        return ans;
-    },
-    
-    plotStep: function(delta, controller, animating) {
-        var viz = this.viz,
-        config = this.config,
-        canvas = viz.canvas, 
-        ctx = canvas.getCtx(),
-        nodes = this.nodes;
-        var i, node;
-        // hide nodes that are meant to be collapsed/expanded
-        var nds = {};
-        for(i=0; i<nodes.length; i++) {
-          node = nodes[i];
-          nds[node.id] = [];
-          var root = config.multitree && !('$orn' in node.data);
-          var orns = root && node.data.$orns;
-          node.eachSubgraph(function(n) { 
-            // TODO(nico): Cleanup
-        	  // special check for root node subnodes when
-        	  // multitree is checked.
-        	  if(root && orns && orns.indexOf(n.data.$orn) > 0 
-        			  && n.drawn) {
-        		  n.drawn = false;
-                  nds[node.id].push(n);
-              } else if((!root || !orns) && n.drawn) {
-                n.drawn = false;
-                nds[node.id].push(n);
-              }
-            });	
-            node.drawn = true;
-        }
-        // plot the whole (non-scaled) tree
-        if(nodes.length > 0) viz.fx.plot();
-        // show nodes that were previously hidden
-        for(i in nds) {
-          $.each(nds[i], function(n) { n.drawn = true; });
-        }
-        // plot each scaled subtree
-        for(i=0; i<nodes.length; i++) {
-          node = nodes[i];
-          ctx.save();
-          viz.fx.plotSubtree(node, controller, delta, animating);                
-          ctx.restore();
-        }
-      },
-
-      getSiblings: function(nodes) {
-        var siblings = {};
-        $.each(nodes, function(n) {
-            var par = n.getParents();
-            if (par.length == 0) {
-                siblings[n.id] = [n];
-            } else {
-                var ans = [];
-                par[0].eachSubnode(function(sn) {
-                    ans.push(sn);
-                });
-                siblings[n.id] = ans;
-            }
-        });
-        return siblings;
-    }
-});
-
-/*
-   ST.Geom
-
-   Performs low level geometrical computations.
-
-   Access:
-
-   This instance can be accessed with the _geom_ parameter of the st instance created.
-
-   Example:
-
-   (start code js)
-    var st = new ST(canvas, config);
-    st.geom.translate //or can also call any other <ST.Geom> method
-   (end code)
-
-*/
-
-$jit.ST.Geom = new Class({
-    Implements: Graph.Geom,
-    /*
-       Changes the tree current orientation to the one specified.
-
-       You should usually use <ST.switchPosition> instead.
-    */  
-    switchOrientation: function(orn) {
-    	this.config.orientation = orn;
-    },
-
-    /*
-       Makes a value dispatch according to the current layout
-       Works like a CSS property, either _top-right-bottom-left_ or _top|bottom - left|right_.
-     */
-    dispatch: function() {
-    	  // TODO(nico) should store Array.prototype.slice.call somewhere.
-        var args = Array.prototype.slice.call(arguments);
-        var s = args.shift(), len = args.length;
-        var val = function(a) { return typeof a == 'function'? a() : a; };
-        if(len == 2) {
-            return (s == "top" || s == "bottom")? val(args[0]) : val(args[1]);
-        } else if(len == 4) {
-            switch(s) {
-                case "top": return val(args[0]);
-                case "right": return val(args[1]);
-                case "bottom": return val(args[2]);
-                case "left": return val(args[3]);
-            }
-        }
-        return undefined;
-    },
-
-    /*
-       Returns label height or with, depending on the tree current orientation.
-    */  
-    getSize: function(n, invert) {
-        var data = n.data, config = this.config;
-        var siblingOffset = config.siblingOffset;
-        var s = (config.multitree 
-        		&& ('$orn' in data) 
-        		&& data.$orn) || config.orientation;
-        var w = n.getData('width') + siblingOffset;
-        var h = n.getData('height') + siblingOffset;
-        if(!invert)
-            return this.dispatch(s, h, w);
-        else
-            return this.dispatch(s, w, h);
-    },
-    
-    /*
-       Calculates a subtree base size. This is an utility function used by _getBaseSize_
-    */  
-    getTreeBaseSize: function(node, level, leaf) {
-        var size = this.getSize(node, true), baseHeight = 0, that = this;
-        if(leaf(level, node)) return size;
-        if(level === 0) return 0;
-        node.eachSubnode(function(elem) {
-            baseHeight += that.getTreeBaseSize(elem, level -1, leaf);
-        });
-        return (size > baseHeight? size : baseHeight) + this.config.subtreeOffset;
-    },
-
-
-    /*
-       getEdge
-       
-       Returns a Complex instance with the begin or end position of the edge to be plotted.
-
-       Parameters:
-
-       node - A <Graph.Node> that is connected to this edge.
-       type - Returns the begin or end edge position. Possible values are 'begin' or 'end'.
-
-       Returns:
-
-       A <Complex> number specifying the begin or end position.
-    */  
-    getEdge: function(node, type, s) {
-    	var $C = function(a, b) { 
-          return function(){
-            return node.pos.add(new Complex(a, b));
-          }; 
-        };
-        var dim = this.node;
-        var w = node.getData('width');
-        var h = node.getData('height');
-
-        if(type == 'begin') {
-            if(dim.align == "center") {
-                return this.dispatch(s, $C(0, h/2), $C(-w/2, 0),
-                                     $C(0, -h/2),$C(w/2, 0));
-            } else if(dim.align == "left") {
-                return this.dispatch(s, $C(0, h), $C(0, 0),
-                                     $C(0, 0), $C(w, 0));
-            } else if(dim.align == "right") {
-                return this.dispatch(s, $C(0, 0), $C(-w, 0),
-                                     $C(0, -h),$C(0, 0));
-            } else throw "align: not implemented";
-            
-            
-        } else if(type == 'end') {
-            if(dim.align == "center") {
-                return this.dispatch(s, $C(0, -h/2), $C(w/2, 0),
-                                     $C(0, h/2),  $C(-w/2, 0));
-            } else if(dim.align == "left") {
-                return this.dispatch(s, $C(0, 0), $C(w, 0),
-                                     $C(0, h), $C(0, 0));
-            } else if(dim.align == "right") {
-                return this.dispatch(s, $C(0, -h),$C(0, 0),
-                                     $C(0, 0), $C(-w, 0));
-            } else throw "align: not implemented";
-        }
-    },
-
-    /*
-       Adjusts the tree position due to canvas scaling or translation.
-    */  
-    getScaledTreePosition: function(node, scale) {
-        var dim = this.node;
-        var w = node.getData('width');
-        var h = node.getData('height');
-        var s = (this.config.multitree 
-        		&& ('$orn' in node.data) 
-        		&& node.data.$orn) || this.config.orientation;
-
-        var $C = function(a, b) { 
-          return function(){
-            return node.pos.add(new Complex(a, b)).$scale(1 - scale);
-          }; 
-        };
-        if(dim.align == "left") {
-            return this.dispatch(s, $C(0, h), $C(0, 0),
-                                 $C(0, 0), $C(w, 0));
-        } else if(dim.align == "center") {
-            return this.dispatch(s, $C(0, h / 2), $C(-w / 2, 0),
-                                 $C(0, -h / 2),$C(w / 2, 0));
-        } else if(dim.align == "right") {
-            return this.dispatch(s, $C(0, 0), $C(-w, 0),
-                                 $C(0, -h),$C(0, 0));
-        } else throw "align: not implemented";
-    },
-
-    /*
-       treeFitsInCanvas
-       
-       Returns a Boolean if the current subtree fits in canvas.
-
-       Parameters:
-
-       node - A <Graph.Node> which is the current root of the subtree.
-       canvas - The <Canvas> object.
-       level - The depth of the subtree to be considered.
-    */  
-    treeFitsInCanvas: function(node, canvas, level) {
-        var csize = canvas.getSize();
-        var s = (this.config.multitree 
-        		&& ('$orn' in node.data) 
-        		&& node.data.$orn) || this.config.orientation;
-
-        var size = this.dispatch(s, csize.width, csize.height);
-        var baseSize = this.getTreeBaseSize(node, level, function(level, node) { 
-          return level === 0 || !node.anySubnode();
-        });
-        return (baseSize < size);
-    }
-});
-
-/*
-  Class: ST.Plot
-  
-  Custom extension of <Graph.Plot>.
-
-  Extends:
-
-  All <Graph.Plot> methods
-  
-  See also:
-  
-  <Graph.Plot>
-
-*/
-$jit.ST.Plot = new Class({
-    
-    Implements: Graph.Plot,
-    
-    /*
-       Plots a subtree from the spacetree.
-    */
-    plotSubtree: function(node, opt, scale, animating) {
-        var viz = this.viz, canvas = viz.canvas, config = viz.config;
-        scale = Math.min(Math.max(0.001, scale), 1);
-        if(scale >= 0) {
-            node.drawn = false;     
-            var ctx = canvas.getCtx();
-            var diff = viz.geom.getScaledTreePosition(node, scale);
-            ctx.translate(diff.x, diff.y);
-            ctx.scale(scale, scale);
-        }
-        this.plotTree(node, $.merge(opt, {
-          'withLabels': true,
-          'hideLabels': !!scale,
-          'plotSubtree': function(n, ch) {
-            var root = config.multitree && !('$orn' in node.data);
-            var orns = root && node.getData('orns');
-            return !root || orns.indexOf(node.getData('orn')) > -1;
-          }
-        }), animating);
-        if(scale >= 0) node.drawn = true;
-    },   
-   
-    /*
-        Method: getAlignedPos
-        
-        Returns a *x, y* object with the position of the top/left corner of a <ST> node.
-        
-        Parameters:
-        
-        pos - (object) A <Graph.Node> position.
-        width - (number) The width of the node.
-        height - (number) The height of the node.
-        
-     */
-    getAlignedPos: function(pos, width, height) {
-        var nconfig = this.node;
-        var square, orn;
-        if(nconfig.align == "center") {
-            square = {
-                x: pos.x - width / 2,
-                y: pos.y - height / 2
-            };
-        } else if (nconfig.align == "left") {
-            orn = this.config.orientation;
-            if(orn == "bottom" || orn == "top") {
-                square = {
-                    x: pos.x - width / 2,
-                    y: pos.y
-                };
-            } else {
-                square = {
-                    x: pos.x,
-                    y: pos.y - height / 2
-                };
-            }
-        } else if(nconfig.align == "right") {
-            orn = this.config.orientation;
-            if(orn == "bottom" || orn == "top") {
-                square = {
-                    x: pos.x - width / 2,
-                    y: pos.y - height
-                };
-            } else {
-                square = {
-                    x: pos.x - width,
-                    y: pos.y - height / 2
-                };
-            }
-        } else throw "align: not implemented";
-        
-        return square;
-    },
-    
-    getOrientation: function(adj) {
-    	var config = this.config;
-    	var orn = config.orientation;
-
-    	if(config.multitree) {
-        	var nodeFrom = adj.nodeFrom;
-        	var nodeTo = adj.nodeTo;
-    		orn = (('$orn' in nodeFrom.data) 
-        		&& nodeFrom.data.$orn) 
-        		|| (('$orn' in nodeTo.data) 
-        		&& nodeTo.data.$orn);
-    	}
-
-    	return orn; 
-    }
-});
-
-/*
-  Class: ST.Label
-
-  Custom extension of <Graph.Label>. 
-  Contains custom <Graph.Label.SVG>, <Graph.Label.HTML> and <Graph.Label.Native> extensions.
-
-  Extends:
-
-  All <Graph.Label> methods and subclasses.
-
-  See also:
-
-  <Graph.Label>, <Graph.Label.Native>, <Graph.Label.HTML>, <Graph.Label.SVG>.
- */ 
-$jit.ST.Label = {};
-
-/*
-   ST.Label.Native
-
-   Custom extension of <Graph.Label.Native>.
-
-   Extends:
-
-   All <Graph.Label.Native> methods
-
-   See also:
-
-   <Graph.Label.Native>
-*/
-$jit.ST.Label.Native = new Class({
-  Implements: Graph.Label.Native,
-
-  renderLabel: function(canvas, node, controller) {
-    var ctx = canvas.getCtx(),
-        coord = node.pos.getc(true),
-        width = node.getData('width'),
-        height = node.getData('height'),
-        pos = this.viz.fx.getAlignedPos(coord, width, height);
-    ctx.fillText(node.name, pos.x + width / 2, pos.y + height / 2);
-  }
-});
-
-$jit.ST.Label.DOM = new Class({
-  Implements: Graph.Label.DOM,
-
-  /* 
-      placeLabel
-
-      Overrides abstract method placeLabel in <Graph.Plot>.
-
-      Parameters:
-
-      tag - A DOM label element.
-      node - A <Graph.Node>.
-      controller - A configuration/controller object passed to the visualization.
-     
-    */
-    placeLabel: function(tag, node, controller) {
-        var pos = node.pos.getc(true), 
-            config = this.viz.config, 
-            dim = config.Node, 
-            canvas = this.viz.canvas,
-            w = node.getData('width'),
-            h = node.getData('height'),
-            radius = canvas.getSize(),
-            labelPos, orn;
-        
-        var ox = canvas.translateOffsetX,
-            oy = canvas.translateOffsetY,
-            sx = canvas.scaleOffsetX,
-            sy = canvas.scaleOffsetY,
-            posx = pos.x * sx + ox,
-            posy = pos.y * sy + oy;
-
-        if(dim.align == "center") {
-            labelPos= {
-                x: Math.round(posx - w / 2 + radius.width/2),
-                y: Math.round(posy - h / 2 + radius.height/2)
-            };
-        } else if (dim.align == "left") {
-            orn = config.orientation;
-            if(orn == "bottom" || orn == "top") {
-                labelPos= {
-                    x: Math.round(posx - w / 2 + radius.width/2),
-                    y: Math.round(posy + radius.height/2)
-                };
-            } else {
-                labelPos= {
-                    x: Math.round(posx + radius.width/2),
-                    y: Math.round(posy - h / 2 + radius.height/2)
-                };
-            }
-        } else if(dim.align == "right") {
-            orn = config.orientation;
-            if(orn == "bottom" || orn == "top") {
-                labelPos= {
-                    x: Math.round(posx - w / 2 + radius.width/2),
-                    y: Math.round(posy - h + radius.height/2)
-                };
-            } else {
-                labelPos= {
-                    x: Math.round(posx - w + radius.width/2),
-                    y: Math.round(posy - h / 2 + radius.height/2)
-                };
-            }
-        } else throw "align: not implemented";
-
-        var style = tag.style;
-        style.left = labelPos.x + 'px';
-        style.top  = labelPos.y + 'px';
-        style.display = this.fitsInCanvas(labelPos, canvas)? '' : 'none';
-        controller.onPlaceLabel(tag, node);
-    }
-});
-
-/*
-  ST.Label.SVG
-
-  Custom extension of <Graph.Label.SVG>.
-
-  Extends:
-
-  All <Graph.Label.SVG> methods
-
-  See also:
-
-  <Graph.Label.SVG>
-*/
-$jit.ST.Label.SVG = new Class({
-  Implements: [$jit.ST.Label.DOM, Graph.Label.SVG],
-
-  initialize: function(viz) {
-    this.viz = viz;
-  }
-});
-
-/*
-   ST.Label.HTML
-
-   Custom extension of <Graph.Label.HTML>.
-
-   Extends:
-
-   All <Graph.Label.HTML> methods.
-
-   See also:
-
-   <Graph.Label.HTML>
-
-*/
-$jit.ST.Label.HTML = new Class({
-  Implements: [$jit.ST.Label.DOM, Graph.Label.HTML],
-
-  initialize: function(viz) {
-    this.viz = viz;
-  }
-});
-
-
-/*
-  Class: ST.Plot.NodeTypes
-
-  This class contains a list of <Graph.Node> built-in types. 
-  Node types implemented are 'none', 'circle', 'rectangle', 'ellipse' and 'square'.
-
-  You can add your custom node types, customizing your visualization to the extreme.
-
-  Example:
-
-  (start code js)
-    ST.Plot.NodeTypes.implement({
-      'mySpecialType': {
-        'render': function(node, canvas) {
-          //print your custom node to canvas
-        },
-        //optional
-        'contains': function(node, pos) {
-          //return true if pos is inside the node or false otherwise
-        }
-      }
-    });
-  (end code)
-
-*/
-$jit.ST.Plot.NodeTypes = new Class({
-  'none': {
-    'render': $.empty,
-    'contains': $.lambda(false)
-  },
-  'circle': {
-    'render': function(node, canvas) {
-      var dim  = node.getData('dim'),
-          pos = this.getAlignedPos(node.pos.getc(true), dim, dim),
-          dim2 = dim/2;
-      this.nodeHelper.circle.render('fill', {x:pos.x+dim2, y:pos.y+dim2}, dim2, canvas);
-    },
-    'contains': function(node, pos) {
-      var dim  = node.getData('dim'),
-          npos = this.getAlignedPos(node.pos.getc(true), dim, dim),
-          dim2 = dim/2;
-      this.nodeHelper.circle.contains({x:npos.x+dim2, y:npos.y+dim2}, pos, dim2);
-    }
-  },
-  'square': {
-    'render': function(node, canvas) {
-      var dim  = node.getData('dim'),
-          dim2 = dim/2,
-          pos = this.getAlignedPos(node.pos.getc(true), dim, dim);
-      this.nodeHelper.square.render('fill', {x:pos.x+dim2, y:pos.y+dim2}, dim2, canvas);
-    },
-    'contains': function(node, pos) {
-      var dim  = node.getData('dim'),
-          npos = this.getAlignedPos(node.pos.getc(true), dim, dim),
-          dim2 = dim/2;
-      this.nodeHelper.square.contains({x:npos.x+dim2, y:npos.y+dim2}, pos, dim2);
-    }
-  },
-  'ellipse': {
-    'render': function(node, canvas) {
-      var width = node.getData('width'),
-          height = node.getData('height'),
-          pos = this.getAlignedPos(node.pos.getc(true), width, height);
-      this.nodeHelper.ellipse.render('fill', {x:pos.x+width/2, y:pos.y+height/2}, width, height, canvas);
-    },
-    'contains': function(node, pos) {
-      var width = node.getData('width'),
-          height = node.getData('height'),
-          npos = this.getAlignedPos(node.pos.getc(true), width, height);
-      this.nodeHelper.ellipse.contains({x:npos.x+width/2, y:npos.y+height/2}, pos, width, height);
-    }
-  },
-  'rectangle': {
-    'render': function(node, canvas) {
-      var width = node.getData('width'),
-          height = node.getData('height'),
-          pos = this.getAlignedPos(node.pos.getc(true), width, height);
-      this.nodeHelper.rectangle.render('fill', {x:pos.x+width/2, y:pos.y+height/2}, width, height, canvas);
-    },
-    'contains': function(node, pos) {
-      var width = node.getData('width'),
-          height = node.getData('height'),
-          npos = this.getAlignedPos(node.pos.getc(true), width, height);
-      this.nodeHelper.rectangle.contains({x:npos.x+width/2, y:npos.y+height/2}, pos, width, height);
-    }
-  }
-});
-
-/*
-  Class: ST.Plot.EdgeTypes
-
-  This class contains a list of <Graph.Adjacence> built-in types. 
-  Edge types implemented are 'none', 'line', 'arrow', 'quadratic:begin', 'quadratic:end', 'bezier'.
-
-  You can add your custom edge types, customizing your visualization to the extreme.
-
-  Example:
-
-  (start code js)
-    ST.Plot.EdgeTypes.implement({
-      'mySpecialType': {
-        'render': function(adj, canvas) {
-          //print your custom edge to canvas
-        },
-        //optional
-        'contains': function(adj, pos) {
-          //return true if pos is inside the arc or false otherwise
-        }
-      }
-    });
-  (end code)
-
-*/
-$jit.ST.Plot.EdgeTypes = new Class({
-    'none': $.empty,
-    'line': {
-      'render': function(adj, canvas) {
-        var orn = this.getOrientation(adj),
-            nodeFrom = adj.nodeFrom, 
-            nodeTo = adj.nodeTo,
-            rel = nodeFrom._depth < nodeTo._depth,
-            from = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
-            to =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn);
-        this.edgeHelper.line.render(from, to, canvas);
-      },
-      'contains': function(adj, pos) {
-        var orn = this.getOrientation(adj),
-            nodeFrom = adj.nodeFrom, 
-            nodeTo = adj.nodeTo,
-            rel = nodeFrom._depth < nodeTo._depth,
-            from = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
-            to =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn);
-        return this.edgeHelper.line.contains(from, to, pos, this.edge.epsilon);
-      }
-    },
-     'arrow': {
-       'render': function(adj, canvas) {
-         var orn = this.getOrientation(adj),
-             node = adj.nodeFrom, 
-             child = adj.nodeTo,
-             dim = adj.getData('dim'),
-             from = this.viz.geom.getEdge(node, 'begin', orn),
-             to = this.viz.geom.getEdge(child, 'end', orn),
-             direction = adj.data.$direction,
-             inv = (direction && direction.length>1 && direction[0] != node.id);
-         this.edgeHelper.arrow.render(from, to, dim, inv, canvas);
-       },
-       'contains': function(adj, pos) {
-         var orn = this.getOrientation(adj),
-             nodeFrom = adj.nodeFrom, 
-             nodeTo = adj.nodeTo,
-             rel = nodeFrom._depth < nodeTo._depth,
-             from = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
-             to =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn);
-         return this.edgeHelper.arrow.contains(from, to, pos, this.edge.epsilon);
-       }
-     },
-    'quadratic:begin': {
-       'render': function(adj, canvas) {
-          var orn = this.getOrientation(adj);
-          var nodeFrom = adj.nodeFrom, 
-              nodeTo = adj.nodeTo,
-              rel = nodeFrom._depth < nodeTo._depth,
-              begin = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
-              end =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn),
-              dim = adj.getData('dim'),
-              ctx = canvas.getCtx();
-          ctx.beginPath();
-          ctx.moveTo(begin.x, begin.y);
-          switch(orn) {
-            case "left":
-              ctx.quadraticCurveTo(begin.x + dim, begin.y, end.x, end.y);
-              break;
-            case "right":
-              ctx.quadraticCurveTo(begin.x - dim, begin.y, end.x, end.y);
-              break;
-            case "top":
-              ctx.quadraticCurveTo(begin.x, begin.y + dim, end.x, end.y);
-              break;
-            case "bottom":
-              ctx.quadraticCurveTo(begin.x, begin.y - dim, end.x, end.y);
-              break;
-          }
-          ctx.stroke();
-        }
-     },
-    'quadratic:end': {
-       'render': function(adj, canvas) {
-          var orn = this.getOrientation(adj);
-          var nodeFrom = adj.nodeFrom, 
-              nodeTo = adj.nodeTo,
-              rel = nodeFrom._depth < nodeTo._depth,
-              begin = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
-              end =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn),
-              dim = adj.getData('dim'),
-              ctx = canvas.getCtx();
-          ctx.beginPath();
-          ctx.moveTo(begin.x, begin.y);
-          switch(orn) {
-            case "left":
-              ctx.quadraticCurveTo(end.x - dim, end.y, end.x, end.y);
-              break;
-            case "right":
-              ctx.quadraticCurveTo(end.x + dim, end.y, end.x, end.y);
-              break;
-            case "top":
-              ctx.quadraticCurveTo(end.x, end.y - dim, end.x, end.y);
-              break;
-            case "bottom":
-              ctx.quadraticCurveTo(end.x, end.y + dim, end.x, end.y);
-              break;
-          }
-          ctx.stroke();
-       }
-     },
-    'bezier': {
-       'render': function(adj, canvas) {
-         var orn = this.getOrientation(adj),
-             nodeFrom = adj.nodeFrom, 
-             nodeTo = adj.nodeTo,
-             rel = nodeFrom._depth < nodeTo._depth,
-             begin = this.viz.geom.getEdge(rel? nodeFrom:nodeTo, 'begin', orn),
-             end =  this.viz.geom.getEdge(rel? nodeTo:nodeFrom, 'end', orn),
-             dim = adj.getData('dim'),
-             ctx = canvas.getCtx();
-         ctx.beginPath();
-         ctx.moveTo(begin.x, begin.y);
-         switch(orn) {
-           case "left":
-             ctx.bezierCurveTo(begin.x + dim, begin.y, end.x - dim, end.y, end.x, end.y);
-             break;
-           case "right":
-             ctx.bezierCurveTo(begin.x - dim, begin.y, end.x + dim, end.y, end.x, end.y);
-             break;
-           case "top":
-             ctx.bezierCurveTo(begin.x, begin.y + dim, end.x, end.y - dim, end.x, end.y);
-             break;
-           case "bottom":
-             ctx.bezierCurveTo(begin.x, begin.y - dim, end.x, end.y + dim, end.x, end.y);
-             break;
-         }
-         ctx.stroke();
-       }
-    }
-});
-
-
-
-/*
- * File: AreaChart.js
- *
-*/
-
-$jit.ST.Plot.NodeTypes.implement({
-  'areachart-stacked' : {
-    'render' : function(node, canvas) {
-      var pos = node.pos.getc(true), 
-          width = node.getData('width'),
-          height = node.getData('height'),
-          algnPos = this.getAlignedPos(pos, width, height),
-          x = algnPos.x, y = algnPos.y,
-          stringArray = node.getData('stringArray'),
-          dimArray = node.getData('dimArray'),
-          valArray = node.getData('valueArray'),
-          valLeft = $.reduce(valArray, function(x, y) { return x + y[0]; }, 0),
-          valRight = $.reduce(valArray, function(x, y) { return x + y[1]; }, 0),
-          colorArray = node.getData('colorArray'),
-          colorLength = colorArray.length,
-          config = node.getData('config'),
-          gradient = node.getData('gradient'),
-          showLabels = config.showLabels,
-          aggregates = config.showAggregates,
-          label = config.Label,
-          prev = node.getData('prev');
-
-      var ctx = canvas.getCtx(), border = node.getData('border');
-      if (colorArray && dimArray && stringArray) {
-        for (var i=0, l=dimArray.length, acumLeft=0, acumRight=0, valAcum=0; i<l; i++) {
-          ctx.fillStyle = ctx.strokeStyle = colorArray[i % colorLength];
-          ctx.save();
-          if(gradient && (dimArray[i][0] > 0 || dimArray[i][1] > 0)) {
-            var h1 = acumLeft + dimArray[i][0],
-                h2 = acumRight + dimArray[i][1],
-                alpha = Math.atan((h2 - h1) / width),
-                delta = 55;
-            var linear = ctx.createLinearGradient(x + width/2, 
-                y - (h1 + h2)/2,
-                x + width/2 + delta * Math.sin(alpha),
-                y - (h1 + h2)/2 + delta * Math.cos(alpha));
-            var color = $.rgbToHex($.map($.hexToRgb(colorArray[i % colorLength].slice(1)), 
-                function(v) { return (v * 0.85) >> 0; }));
-            linear.addColorStop(0, colorArray[i % colorLength]);
-            linear.addColorStop(1, color);
-            ctx.fillStyle = linear;
-          }
-          ctx.beginPath();
-          ctx.moveTo(x, y - acumLeft);
-          ctx.lineTo(x + width, y - acumRight);
-          ctx.lineTo(x + width, y - acumRight - dimArray[i][1]);
-          ctx.lineTo(x, y - acumLeft - dimArray[i][0]);
-          ctx.lineTo(x, y - acumLeft);
-          ctx.fill();
-          ctx.restore();
-          if(border) {
-            var strong = border.name == stringArray[i];
-            var perc = strong? 0.7 : 0.8;
-            var color = $.rgbToHex($.map($.hexToRgb(colorArray[i % colorLength].slice(1)), 
-                function(v) { return (v * perc) >> 0; }));
-            ctx.strokeStyle = color;
-            ctx.lineWidth = strong? 4 : 1;
-            ctx.save();
-            ctx.beginPath();
-            if(border.index === 0) {
-              ctx.moveTo(x, y - acumLeft);
-              ctx.lineTo(x, y - acumLeft - dimArray[i][0]);
-            } else {
-              ctx.moveTo(x + width, y - acumRight);
-              ctx.lineTo(x + width, y - acumRight - dimArray[i][1]);
-            }
-            ctx.stroke();
-            ctx.restore();
-          }
-          acumLeft += (dimArray[i][0] || 0);
-          acumRight += (dimArray[i][1] || 0);
-          
-          if(dimArray[i][0] > 0)
-            valAcum += (valArray[i][0] || 0);
-        }
-        if(prev && label.type == 'Native') {
-          ctx.save();
-          ctx.beginPath();
-          ctx.fillStyle = ctx.strokeStyle = label.color;
-          ctx.font = label.style + ' ' + label.size + 'px ' + label.family;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          var aggValue = aggregates(node.name, valLeft, valRight, node, valAcum);
-          if(aggValue !== false) {
-            ctx.fillText(aggValue !== true? aggValue : valAcum, x, y - acumLeft - config.labelOffset - label.size/2, width);
-          }
-          if(showLabels(node.name, valLeft, valRight, node)) {
-            ctx.fillText(node.name, x, y + label.size/2 + config.labelOffset);
-          }
-          ctx.restore();
-        }
-      }
-    },
-    'contains': function(node, mpos) {
-      var pos = node.pos.getc(true), 
-          width = node.getData('width'),
-          height = node.getData('height'),
-          algnPos = this.getAlignedPos(pos, width, height),
-          x = algnPos.x, y = algnPos.y,
-          dimArray = node.getData('dimArray'),
-          rx = mpos.x - x;
-      //bounding box check
-      if(mpos.x < x || mpos.x > x + width
-        || mpos.y > y || mpos.y < y - height) {
-        return false;
-      }
-      //deep check
-      for(var i=0, l=dimArray.length, lAcum=y, rAcum=y; i<l; i++) {
-        var dimi = dimArray[i];
-        lAcum -= dimi[0];
-        rAcum -= dimi[1];
-        var intersec = lAcum + (rAcum - lAcum) * rx / width;
-        if(mpos.y >= intersec) {
-          var index = +(rx > width/2);
-          return {
-            'name': node.getData('stringArray')[i],
-            'color': node.getData('colorArray')[i],
-            'value': node.getData('valueArray')[i][index],
-            'index': index
-          };
-        }
-      }
-      return false;
-    }
-  }
-});
-
-/*
-  Class: AreaChart
-  
-  A visualization that displays stacked area charts.
-  
-  Constructor Options:
-  
-  See <Options.AreaChart>.
-
-*/
-$jit.AreaChart = new Class({
-  st: null,
-  colors: ["#416D9C", "#70A35E", "#EBB056", "#C74243", "#83548B", "#909291", "#557EAA"],
-  selected: {},
-  busy: false,
-  
-  initialize: function(opt) {
-    this.controller = this.config = 
-      $.merge(Options("Canvas", "Margin", "Label", "AreaChart"), {
-        Label: { type: 'Native' }
-      }, opt);
-    //set functions for showLabels and showAggregates
-    var showLabels = this.config.showLabels,
-        typeLabels = $.type(showLabels),
-        showAggregates = this.config.showAggregates,
-        typeAggregates = $.type(showAggregates);
-    this.config.showLabels = typeLabels == 'function'? showLabels : $.lambda(showLabels);
-    this.config.showAggregates = typeAggregates == 'function'? showAggregates : $.lambda(showAggregates);
-    
-    this.initializeViz();
-  },
-  
-  initializeViz: function() {
-    var config = this.config,
-        that = this,
-        nodeType = config.type.split(":")[0],
-        nodeLabels = {};
-
-    var delegate = new $jit.ST({
-      injectInto: config.injectInto,
-      width: config.width,
-      height: config.height,
-      orientation: "bottom",
-      levelDistance: 0,
-      siblingOffset: 0,
-      subtreeOffset: 0,
-      withLabels: config.Label.type != 'Native',
-      useCanvas: config.useCanvas,
-      Label: {
-        type: config.Label.type
-      },
-      Node: {
-        overridable: true,
-        type: 'areachart-' + nodeType,
-        align: 'left',
-        width: 1,
-        height: 1
-      },
-      Edge: {
-        type: 'none'
-      },
-      Tips: {
-        enable: config.Tips.enable,
-        type: 'Native',
-        force: true,
-        onShow: function(tip, node, contains) {
-          var elem = contains;
-          config.Tips.onShow(tip, elem, node);
-        }
-      },
-      Events: {
-        enable: true,
-        type: 'Native',
-        onClick: function(node, eventInfo, evt) {
-          if(!config.filterOnClick && !config.Events.enable) return;
-          var elem = eventInfo.getContains();
-          if(elem) config.filterOnClick && that.filter(elem.name);
-          config.Events.enable && config.Events.onClick(elem, eventInfo, evt);
-        },
-        onRightClick: function(node, eventInfo, evt) {
-          if(!config.restoreOnRightClick) return;
-          that.restore();
-        },
-        onMouseMove: function(node, eventInfo, evt) {
-          if(!config.selectOnHover) return;
-          if(node) {
-            var elem = eventInfo.getContains();
-            that.select(node.id, elem.name, elem.index);
-          } else {
-            that.select(false, false, false);
-          }
-        }
-      },
-      onCreateLabel: function(domElement, node) {
-        var labelConf = config.Label,
-            valueArray = node.getData('valueArray'),
-            acumLeft = $.reduce(valueArray, function(x, y) { return x + y[0]; }, 0),
-            acumRight = $.reduce(valueArray, function(x, y) { return x + y[1]; }, 0);
-        if(node.getData('prev')) {
-          var nlbs = {
-            wrapper: document.createElement('div'),
-            aggregate: document.createElement('div'),
-            label: document.createElement('div')
-          };
-          var wrapper = nlbs.wrapper,
-              label = nlbs.label,
-              aggregate = nlbs.aggregate,
-              wrapperStyle = wrapper.style,
-              labelStyle = label.style,
-              aggregateStyle = aggregate.style;
-          //store node labels
-          nodeLabels[node.id] = nlbs;
-          //append labels
-          wrapper.appendChild(label);
-          wrapper.appendChild(aggregate);
-          if(!config.showLabels(node.name, acumLeft, acumRight, node)) {
-            label.style.display = 'none';
-          }
-          if(!config.showAggregates(node.name, acumLeft, acumRight, node)) {
-            aggregate.style.display = 'none';
-          }
-          wrapperStyle.position = 'relative';
-          wrapperStyle.overflow = 'visible';
-          wrapperStyle.fontSize = labelConf.size + 'px';
-          wrapperStyle.fontFamily = labelConf.family;
-          wrapperStyle.color = labelConf.color;
-          wrapperStyle.textAlign = 'center';
-          aggregateStyle.position = labelStyle.position = 'absolute';
-          
-          domElement.style.width = node.getData('width') + 'px';
-          domElement.style.height = node.getData('height') + 'px';
-          label.innerHTML = node.name;
-          
-          domElement.appendChild(wrapper);
-        }
-      },
-      onPlaceLabel: function(domElement, node) {
-        if(!node.getData('prev')) return;
-        var labels = nodeLabels[node.id],
-            wrapperStyle = labels.wrapper.style,
-            labelStyle = labels.label.style,
-            aggregateStyle = labels.aggregate.style,
-            width = node.getData('width'),
-            height = node.getData('height'),
-            dimArray = node.getData('dimArray'),
-            valArray = node.getData('valueArray'),
-            acumLeft = $.reduce(valArray, function(x, y) { return x + y[0]; }, 0),
-            acumRight = $.reduce(valArray, function(x, y) { return x + y[1]; }, 0),
-            font = parseInt(wrapperStyle.fontSize, 10),
-            domStyle = domElement.style;
-        
-        if(dimArray && valArray) {
-          if(config.showLabels(node.name, acumLeft, acumRight, node)) {
-            labelStyle.display = '';
-          } else {
-            labelStyle.display = 'none';
-          }
-          var aggValue = config.showAggregates(node.name, acumLeft, acumRight, node);
-          if(aggValue !== false) {
-            aggregateStyle.display = '';
-          } else {
-            aggregateStyle.display = 'none';
-          }
-          wrapperStyle.width = aggregateStyle.width = labelStyle.width = domElement.style.width = width + 'px';
-          aggregateStyle.left = labelStyle.left = -width/2 + 'px';
-          for(var i=0, l=valArray.length, acum=0, leftAcum=0; i<l; i++) {
-            if(dimArray[i][0] > 0) {
-              acum+= valArray[i][0];
-              leftAcum+= dimArray[i][0];
-            }
-          }
-          aggregateStyle.top = (-font - config.labelOffset) + 'px';
-          labelStyle.top = (config.labelOffset + leftAcum) + 'px';
-          domElement.style.top = parseInt(domElement.style.top, 10) - leftAcum + 'px';
-          domElement.style.height = wrapperStyle.height = leftAcum + 'px';
-          labels.aggregate.innerHTML = aggValue !== true? aggValue : acum;
-        }
-      }
-    });
-    
-    var size = delegate.canvas.getSize(),
-        margin = config.Margin;
-    delegate.config.offsetY = -size.height/2 + margin.bottom 
-      + (config.showLabels && (config.labelOffset + config.Label.size));
-    delegate.config.offsetX = (margin.right - margin.left)/2;
-    this.delegate = delegate;
-    this.canvas = this.delegate.canvas;
-  },
-  
- /*
-  Method: loadJSON
- 
-  Loads JSON data into the visualization. 
-  
-  Parameters:
-  
-  json - The JSON data format. This format is described in <http://blog.thejit.org/2010/04/24/new-javascript-infovis-toolkit-visualizations/#json-data-format>.
-  
-  Example:
-  (start code js)
-  var areaChart = new $jit.AreaChart(options);
-  areaChart.loadJSON(json);
-  (end code)
- */  
-  loadJSON: function(json) {
-    var prefix = $.time(), 
-        ch = [], 
-        delegate = this.delegate,
-        name = $.splat(json.label), 
-        color = $.splat(json.color || this.colors),
-        config = this.config,
-        gradient = !!config.type.split(":")[1],
-        animate = config.animate;
-    
-    for(var i=0, values=json.values, l=values.length; i<l-1; i++) {
-      var val = values[i], prev = values[i-1], next = values[i+1];
-      var valLeft = $.splat(values[i].values), valRight = $.splat(values[i+1].values);
-      var valArray = $.zip(valLeft, valRight);
-      var acumLeft = 0, acumRight = 0;
-      ch.push({
-        'id': prefix + val.label,
-        'name': val.label,
-        'data': {
-          'value': valArray,
-          '$valueArray': valArray,
-          '$colorArray': color,
-          '$stringArray': name,
-          '$next': next.label,
-          '$prev': prev? prev.label:false,
-          '$config': config,
-          '$gradient': gradient
-        },
-        'children': []
-      });
-    }
-    var root = {
-      'id': prefix + '$root',
-      'name': '',
-      'data': {
-        '$type': 'none',
-        '$width': 1,
-        '$height': 1
-      },
-      'children': ch
-    };
-    delegate.loadJSON(root);
-    
-    this.normalizeDims();
-    delegate.compute();
-    delegate.select(delegate.root);
-    if(animate) {
-      delegate.fx.animate({
-        modes: ['node-property:height:dimArray'],
-        duration:1500
-      });
-    }
-  },
-  
- /*
-  Method: updateJSON
- 
-  Use this method when updating values for the current JSON data. If the items specified by the JSON data already exist in the graph then their values will be updated.
-  
-  Parameters:
-  
-  json - (object) JSON data to be updated. The JSON format corresponds to the one described in <AreaChart.loadJSON>.
-  onComplete - (object) A callback object to be called when the animation transition when updating the data end.
-  
-  Example:
-  
-  (start code js)
-  areaChart.updateJSON(json, {
-    onComplete: function() {
-      alert('update complete!');
-    }
-  });
-  (end code)
- */  
-  updateJSON: function(json, onComplete) {
-    if(this.busy) return;
-    this.busy = true;
-    
-    var delegate = this.delegate,
-        graph = delegate.graph,
-        labels = json.label && $.splat(json.label),
-        values = json.values,
-        animate = this.config.animate,
-        that = this,
-        hashValues = {};
-
-    //convert the whole thing into a hash
-    for (var i = 0, l = values.length; i < l; i++) {
-      hashValues[values[i].label] = values[i];
-    }
-  
-    graph.eachNode(function(n) {
-      var v = hashValues[n.name],
-          stringArray = n.getData('stringArray'),
-          valArray = n.getData('valueArray'),
-          next = n.getData('next');
-      
-      if (v) {
-        v.values = $.splat(v.values);
-        $.each(valArray, function(a, i) {
-          a[0] = v.values[i];
-          if(labels) stringArray[i] = labels[i];
-        });
-        n.setData('valueArray', valArray);
-      }
-     
-      if(next) {
-        v = hashValues[next];
-        if(v) {
-          $.each(valArray, function(a, i) {
-            a[1] = v.values[i];
-          });
-        }
-      }
-    });
-    this.normalizeDims();
-    delegate.compute();
-    delegate.select(delegate.root);
-    if(animate) {
-      delegate.fx.animate({
-        modes: ['node-property:height:dimArray'],
-        duration:1500,
-        onComplete: function() {
-          that.busy = false;
-          onComplete && onComplete.onComplete();
-        }
-      });
-    }
-  },
-  
-/*
-  Method: filter
- 
-  Filter selected stacks, collapsing all other stacks. You can filter multiple stacks at the same time.
-  
-  Parameters:
-  
-  filters - (array) An array of strings with the name of the stacks to be filtered.
-  callback - (object) An object with an *onComplete* callback method. 
-  
-  Example:
-  
-  (start code js)
-  areaChart.filter(['label A', 'label C'], {
-      onComplete: function() {
-          console.log('done!');
-      }
-  });
-  (end code)
-  
-  See also:
-  
-  <AreaChart.restore>.
- */  
-  filter: function(filters, callback) {
-    if(this.busy) return;
-    this.busy = true;
-    if(this.config.Tips.enable) this.delegate.tips.hide();
-    this.select(false, false, false);
-    var args = $.splat(filters);
-    var rt = this.delegate.graph.getNode(this.delegate.root);
-    var that = this;
-    this.normalizeDims();
-    rt.eachAdjacency(function(adj) {
-      var n = adj.nodeTo, 
-          dimArray = n.getData('dimArray', 'end'),
-          stringArray = n.getData('stringArray');
-      n.setData('dimArray', $.map(dimArray, function(d, i) {
-        return ($.indexOf(args, stringArray[i]) > -1)? d:[0, 0];
-      }), 'end');
-    });
-    this.delegate.fx.animate({
-      modes: ['node-property:dimArray'],
-      duration:1500,
-      onComplete: function() {
-        that.busy = false;
-        callback && callback.onComplete();
-      }
-    });
-  },
-  
-  /*
-  Method: restore
- 
-  Sets all stacks that could have been filtered visible.
-  
-  Example:
-  
-  (start code js)
-  areaChart.restore();
-  (end code)
-  
-  See also:
-  
-  <AreaChart.filter>.
- */  
-  restore: function(callback) {
-    if(this.busy) return;
-    this.busy = true;
-    if(this.config.Tips.enable) this.delegate.tips.hide();
-    this.select(false, false, false);
-    this.normalizeDims();
-    var that = this;
-    this.delegate.fx.animate({
-      modes: ['node-property:height:dimArray'],
-      duration:1500,
-      onComplete: function() {
-        that.busy = false;
-        callback && callback.onComplete();
-      }
-    });
-  },
-  //adds the little brown bar when hovering the node
-  select: function(id, name, index) {
-    if(!this.config.selectOnHover) return;
-    var s = this.selected;
-    if(s.id != id || s.name != name 
-        || s.index != index) {
-      s.id = id;
-      s.name = name;
-      s.index = index;
-      this.delegate.graph.eachNode(function(n) {
-        n.setData('border', false);
-      });
-      if(id) {
-        var n = this.delegate.graph.getNode(id);
-        n.setData('border', s);
-        var link = index === 0? 'prev':'next';
-        link = n.getData(link);
-        if(link) {
-          n = this.delegate.graph.getByName(link);
-          if(n) {
-            n.setData('border', {
-              name: name,
-              index: 1-index
-            });
-          }
-        }
-      }
-      this.delegate.plot();
-    }
-  },
-  
-  /*
-    Method: getLegend
-   
-    Returns an object containing as keys the legend names and as values hex strings with color values.
-    
-    Example:
-    
-    (start code js)
-    var legend = areaChart.getLegend();
-    (end code)
- */  
-  getLegend: function() {
-    var legend = {};
-    var n;
-    this.delegate.graph.getNode(this.delegate.root).eachAdjacency(function(adj) {
-      n = adj.nodeTo;
-    });
-    var colors = n.getData('colorArray'),
-        len = colors.length;
-    $.each(n.getData('stringArray'), function(s, i) {
-      legend[s] = colors[i % len];
-    });
-    return legend;
-  },
-  
-  /*
-    Method: getMaxValue
-   
-    Returns the maximum accumulated value for the stacks. This method is used for normalizing the graph heights according to the canvas height.
-    
-    Example:
-    
-    (start code js)
-    var ans = areaChart.getMaxValue();
-    (end code)
-    
-    In some cases it could be useful to override this method to normalize heights for a group of AreaCharts, like when doing small multiples.
-    
-    Example:
-    
-    (start code js)
-    //will return 100 for all AreaChart instances,
-    //displaying all of them with the same scale
-    $jit.AreaChart.implement({
-      'getMaxValue': function() {
-        return 100;
-      }
-    });
-    (end code)
-    
-*/  
-  getMaxValue: function() {
-    var maxValue = 0;
-    this.delegate.graph.eachNode(function(n) {
-      var valArray = n.getData('valueArray'),
-          acumLeft = 0, acumRight = 0;
-      $.each(valArray, function(v) { 
-        acumLeft += +v[0];
-        acumRight += +v[1];
-      });
-      var acum = acumRight>acumLeft? acumRight:acumLeft;
-      maxValue = maxValue>acum? maxValue:acum;
-    });
-    return maxValue;
-  },
-  
-  normalizeDims: function() {
-    //number of elements
-    var root = this.delegate.graph.getNode(this.delegate.root), l=0;
-    root.eachAdjacency(function() {
-      l++;
-    });
-    var maxValue = this.getMaxValue() || 1,
-        size = this.delegate.canvas.getSize(),
-        config = this.config,
-        margin = config.Margin,
-        labelOffset = config.labelOffset + config.Label.size,
-        fixedDim = (size.width - (margin.left + margin.right)) / l,
-        animate = config.animate,
-        height = size.height - (margin.top + margin.bottom) - (config.showAggregates && labelOffset) 
-          - (config.showLabels && labelOffset);
-    this.delegate.graph.eachNode(function(n) {
-      var acumLeft = 0, acumRight = 0, animateValue = [];
-      $.each(n.getData('valueArray'), function(v) {
-        acumLeft += +v[0];
-        acumRight += +v[1];
-        animateValue.push([0, 0]);
-      });
-      var acum = acumRight>acumLeft? acumRight:acumLeft;
-      n.setData('width', fixedDim);
-      if(animate) {
-        n.setData('height', acum * height / maxValue, 'end');
-        n.setData('dimArray', $.map(n.getData('valueArray'), function(n) { 
-          return [n[0] * height / maxValue, n[1] * height / maxValue]; 
-        }), 'end');
-        var dimArray = n.getData('dimArray');
-        if(!dimArray) {
-          n.setData('dimArray', animateValue);
-        }
-      } else {
-        n.setData('height', acum * height / maxValue);
-        n.setData('dimArray', $.map(n.getData('valueArray'), function(n) { 
-          return [n[0] * height / maxValue, n[1] * height / maxValue]; 
-        }));
-      }
-    });
-  }
-});
-
-
-/*
- * File: Options.BarChart.js
- *
-*/
-
-/*
-  Object: Options.BarChart
-  
-  <BarChart> options. 
-  Other options included in the BarChart are <Options.Canvas>, <Options.Label>, <Options.Margin>, <Options.Tips> and <Options.Events>.
-  
-  Syntax:
-  
-  (start code js)
-
-  Options.BarChart = {
-    animate: true,
-    labelOffset: 3,
-    barsOffset: 0,
-    type: 'stacked',
-    hoveredColor: '#9fd4ff',
-    orientation: 'horizontal',
-    showAggregates: true,
-    showLabels: true
-  };
-  
-  (end code)
-  
-  Example:
-  
-  (start code js)
-
-  var barChart = new $jit.BarChart({
-    animate: true,
-    barsOffset: 10,
-    type: 'stacked:gradient'
-  });
-  
-  (end code)
-
-  Parameters:
-  
-  animate - (boolean) Default's *true*. Whether to add animated transitions when filtering/restoring stacks.
-  offset - (number) Default's *25*. Adds margin between the visualization and the canvas.
-  labelOffset - (number) Default's *3*. Adds margin between the label and the default place where it should be drawn.
-  barsOffset - (number) Default's *0*. Separation between bars.
-  type - (string) Default's *'stacked'*. Stack or grouped styles. Posible values are 'stacked', 'grouped', 'stacked:gradient', 'grouped:gradient' to add gradients.
-  hoveredColor - (boolean|string) Default's *'#9fd4ff'*. Sets the selected color for a hovered bar stack.
-  orientation - (string) Default's 'horizontal'. Sets the direction of the bars. Possible options are 'vertical' or 'horizontal'.
-  showAggregates - (boolean, function) Default's *true*. Display the sum the values of each bar. Can also be a function that returns *true* or *false* to display the value of the bar or not. That same function can also return a string with the formatted data to be added.
-  showLabels - (boolean, function) Default's *true*. Display the name of the slots. Can also be a function that returns *true* or *false* for each bar to decide whether to show the label or not.
-  
-*/
-
-Options.BarChart = {
-  $extend: true,
-  
-  animate: true,
-  type: 'stacked', //stacked, grouped, : gradient
-  labelOffset: 3, //label offset
-  barsOffset: 0, //distance between bars
-  hoveredColor: '#9fd4ff',
-  orientation: 'horizontal',
-  showAggregates: true,
-  showLabels: true,
-  Tips: {
-    enable: false,
-    onShow: $.empty,
-    onHide: $.empty
-  },
-  Events: {
-    enable: false,
-    onClick: $.empty
-  }
-};
-
-/*
- * File: BarChart.js
- *
-*/
-
-$jit.ST.Plot.NodeTypes.implement({
-  'barchart-stacked' : {
-    'render' : function(node, canvas) {
-      var pos = node.pos.getc(true), 
-          width = node.getData('width'),
-          height = node.getData('height'),
-          algnPos = this.getAlignedPos(pos, width, height),
-          x = algnPos.x, y = algnPos.y,
-          dimArray = node.getData('dimArray'),
-          valueArray = node.getData('valueArray'),
-          colorArray = node.getData('colorArray'),
-          colorLength = colorArray.length,
-          stringArray = node.getData('stringArray');
-
-      var ctx = canvas.getCtx(),
-          opt = {},
-          border = node.getData('border'),
-          gradient = node.getData('gradient'),
-          config = node.getData('config'),
-          horz = config.orientation == 'horizontal',
-          aggregates = config.showAggregates,
-          showLabels = config.showLabels,
-          label = config.Label;
-      
-      if (colorArray && dimArray && stringArray) {
-        for (var i=0, l=dimArray.length, acum=0, valAcum=0; i<l; i++) {
-          ctx.fillStyle = ctx.strokeStyle = colorArray[i % colorLength];
-          if(gradient) {
-            var linear;
-            if(horz) {
-              linear = ctx.createLinearGradient(x + acum + dimArray[i]/2, y, 
-                  x + acum + dimArray[i]/2, y + height);
-            } else {
-              linear = ctx.createLinearGradient(x, y - acum - dimArray[i]/2, 
-                  x + width, y - acum- dimArray[i]/2);
-            }
-            var color = $.rgbToHex($.map($.hexToRgb(colorArray[i % colorLength].slice(1)), 
-                function(v) { return (v * 0.5) >> 0; }));
-            linear.addColorStop(0, color);
-            linear.addColorStop(0.5, colorArray[i % colorLength]);
-            linear.addColorStop(1, color);
-            ctx.fillStyle = linear;
-          }
-          if(horz) {
-            ctx.fillRect(x + acum, y, dimArray[i], height);
-          } else {
-            ctx.fillRect(x, y - acum - dimArray[i], width, dimArray[i]);
-          }
-          if(border && border.name == stringArray[i]) {
-            opt.acum = acum;
-            opt.dimValue = dimArray[i];
-          }
-          acum += (dimArray[i] || 0);
-          valAcum += (valueArray[i] || 0);
-        }
-        if(border) {
-          ctx.save();
-          ctx.lineWidth = 2;
-          ctx.strokeStyle = border.color;
-          if(horz) {
-            ctx.strokeRect(x + opt.acum + 1, y + 1, opt.dimValue -2, height - 2);
-          } else {
-            ctx.strokeRect(x + 1, y - opt.acum - opt.dimValue + 1, width -2, opt.dimValue -2);
-          }
-          ctx.restore();
-        }
-        if(label.type == 'Native') {
-          ctx.save();
-          ctx.fillStyle = ctx.strokeStyle = label.color;
-          ctx.font = label.style + ' ' + label.size + 'px ' + label.family;
-          ctx.textBaseline = 'middle';
-          var aggValue = aggregates(node.name, valAcum, node);
-          if(aggValue !== false) {
-            aggValue = aggValue !== true? aggValue : valAcum;
-            if(horz) {
-              ctx.textAlign = 'right';
-              ctx.fillText(aggValue, x + acum - config.labelOffset, y + height/2);
-            } else {
-              ctx.textAlign = 'center';
-              ctx.fillText(aggValue, x + width/2, y - height - label.size/2 - config.labelOffset);
-            }
-          }
-          if(showLabels(node.name, valAcum, node)) {
-            if(horz) {
-              ctx.textAlign = 'center';
-              ctx.translate(x - config.labelOffset - label.size/2, y + height/2);
-              ctx.rotate(Math.PI / 2);
-              ctx.fillText(node.name, 0, 0);
-            } else {
-              ctx.textAlign = 'center';
-              ctx.fillText(node.name, x + width/2, y + label.size/2 + config.labelOffset);
-            }
-          }
-          ctx.restore();
-        }
-      }
-    },
-    'contains': function(node, mpos) {
-      var pos = node.pos.getc(true), 
-          width = node.getData('width'),
-          height = node.getData('height'),
-          algnPos = this.getAlignedPos(pos, width, height),
-          x = algnPos.x, y = algnPos.y,
-          dimArray = node.getData('dimArray'),
-          config = node.getData('config'),
-          rx = mpos.x - x,
-          horz = config.orientation == 'horizontal';
-      //bounding box check
-      if(horz) {
-        if(mpos.x < x || mpos.x > x + width
-            || mpos.y > y + height || mpos.y < y) {
-            return false;
-          }
-      } else {
-        if(mpos.x < x || mpos.x > x + width
-            || mpos.y > y || mpos.y < y - height) {
-            return false;
-          }
-      }
-      //deep check
-      for(var i=0, l=dimArray.length, acum=(horz? x:y); i<l; i++) {
-        var dimi = dimArray[i];
-        if(horz) {
-          acum += dimi;
-          var intersec = acum;
-          if(mpos.x <= intersec) {
-            return {
-              'name': node.getData('stringArray')[i],
-              'color': node.getData('colorArray')[i],
-              'value': node.getData('valueArray')[i],
-              'label': node.name
-            };
-          }
-        } else {
-          acum -= dimi;
-          var intersec = acum;
-          if(mpos.y >= intersec) {
-            return {
-              'name': node.getData('stringArray')[i],
-              'color': node.getData('colorArray')[i],
-              'value': node.getData('valueArray')[i],
-              'label': node.name
-            };
-          }
-        }
-      }
-      return false;
-    }
-  },
-  'barchart-grouped' : {
-    'render' : function(node, canvas) {
-      var pos = node.pos.getc(true), 
-          width = node.getData('width'),
-          height = node.getData('height'),
-          algnPos = this.getAlignedPos(pos, width, height),
-          x = algnPos.x, y = algnPos.y,
-          dimArray = node.getData('dimArray'),
-          valueArray = node.getData('valueArray'),
-          valueLength = valueArray.length,
-          colorArray = node.getData('colorArray'),
-          colorLength = colorArray.length,
-          stringArray = node.getData('stringArray'); 
-
-      var ctx = canvas.getCtx(),
-          opt = {},
-          border = node.getData('border'),
-          gradient = node.getData('gradient'),
-          config = node.getData('config'),
-          horz = config.orientation == 'horizontal',
-          aggregates = config.showAggregates,
-          showLabels = config.showLabels,
-          label = config.Label,
-          fixedDim = (horz? height : width) / valueLength;
-      
-      if (colorArray && dimArray && stringArray) {
-        for (var i=0, l=valueLength, acum=0, valAcum=0; i<l; i++) {
-          ctx.fillStyle = ctx.strokeStyle = colorArray[i % colorLength];
-          if(gradient) {
-            var linear;
-            if(horz) {
-              linear = ctx.createLinearGradient(x + dimArray[i]/2, y + fixedDim * i, 
-                  x + dimArray[i]/2, y + fixedDim * (i + 1));
-            } else {
-              linear = ctx.createLinearGradient(x + fixedDim * i, y - dimArray[i]/2, 
-                  x + fixedDim * (i + 1), y - dimArray[i]/2);
-            }
-            var color = $.rgbToHex($.map($.hexToRgb(colorArray[i % colorLength].slice(1)), 
-                function(v) { return (v * 0.5) >> 0; }));
-            linear.addColorStop(0, color);
-            linear.addColorStop(0.5, colorArray[i % colorLength]);
-            linear.addColorStop(1, color);
-            ctx.fillStyle = linear;
-          }
-          if(horz) {
-            ctx.fillRect(x, y + fixedDim * i, dimArray[i], fixedDim);
-          } else {
-            ctx.fillRect(x + fixedDim * i, y - dimArray[i], fixedDim, dimArray[i]);
-          }
-          if(border && border.name == stringArray[i]) {
-            opt.acum = fixedDim * i;
-            opt.dimValue = dimArray[i];
-          }
-          acum += (dimArray[i] || 0);
-          valAcum += (valueArray[i] || 0);
-        }
-        if(border) {
-          ctx.save();
-          ctx.lineWidth = 2;
-          ctx.strokeStyle = border.color;
-          if(horz) {
-            ctx.strokeRect(x + 1, y + opt.acum + 1, opt.dimValue -2, fixedDim - 2);
-          } else {
-            ctx.strokeRect(x + opt.acum + 1, y - opt.dimValue + 1, fixedDim -2, opt.dimValue -2);
-          }
-          ctx.restore();
-        }
-        if(label.type == 'Native') {
-          ctx.save();
-          ctx.fillStyle = ctx.strokeStyle = label.color;
-          ctx.font = label.style + ' ' + label.size + 'px ' + label.family;
-          ctx.textBaseline = 'middle';
-          var aggValue = aggregates(node.name, valAcum, node);
-          if(aggValue !== false) {
-            aggValue = aggValue !== true? aggValue : valAcum;
-            if(horz) {
-              ctx.textAlign = 'right';
-              ctx.fillText(aggValue, x + Math.max.apply(null, dimArray) - config.labelOffset, y + height/2);
-            } else {
-              ctx.textAlign = 'center';
-              ctx.fillText(aggValue, x + width/2, y - Math.max.apply(null, dimArray) - label.size/2 - config.labelOffset);
-            }
-          }
-          if(showLabels(node.name, valAcum, node)) {
-            if(horz) {
-              ctx.textAlign = 'center';
-              ctx.translate(x - config.labelOffset - label.size/2, y + height/2);
-              ctx.rotate(Math.PI / 2);
-              ctx.fillText(node.name, 0, 0);
-            } else {
-              ctx.textAlign = 'center';
-              ctx.fillText(node.name, x + width/2, y + label.size/2 + config.labelOffset);
-            }
-          }
-          ctx.restore();
-        }
-      }
-    },
-    'contains': function(node, mpos) {
-      var pos = node.pos.getc(true), 
-          width = node.getData('width'),
-          height = node.getData('height'),
-          algnPos = this.getAlignedPos(pos, width, height),
-          x = algnPos.x, y = algnPos.y,
-          dimArray = node.getData('dimArray'),
-          len = dimArray.length,
-          config = node.getData('config'),
-          rx = mpos.x - x,
-          horz = config.orientation == 'horizontal',
-          fixedDim = (horz? height : width) / len;
-      //bounding box check
-      if(horz) {
-        if(mpos.x < x || mpos.x > x + width
-            || mpos.y > y + height || mpos.y < y) {
-            return false;
-          }
-      } else {
-        if(mpos.x < x || mpos.x > x + width
-            || mpos.y > y || mpos.y < y - height) {
-            return false;
-          }
-      }
-      //deep check
-      for(var i=0, l=dimArray.length; i<l; i++) {
-        var dimi = dimArray[i];
-        if(horz) {
-          var limit = y + fixedDim * i;
-          if(mpos.x <= x+ dimi && mpos.y >= limit && mpos.y <= limit + fixedDim) {
-            return {
-              'name': node.getData('stringArray')[i],
-              'color': node.getData('colorArray')[i],
-              'value': node.getData('valueArray')[i],
-              'label': node.name
-            };
-          }
-        } else {
-          var limit = x + fixedDim * i;
-          if(mpos.x >= limit && mpos.x <= limit + fixedDim && mpos.y >= y - dimi) {
-            return {
-              'name': node.getData('stringArray')[i],
-              'color': node.getData('colorArray')[i],
-              'value': node.getData('valueArray')[i],
-              'label': node.name
-            };
-          }
-        }
-      }
-      return false;
-    }
-  }
-});
-
-/*
-  Class: BarChart
-  
-  A visualization that displays stacked bar charts.
-  
-  Constructor Options:
-  
-  See <Options.BarChart>.
-
-*/
-$jit.BarChart = new Class({
-  st: null,
-  colors: ["#416D9C", "#70A35E", "#EBB056", "#C74243", "#83548B", "#909291", "#557EAA"],
-  selected: {},
-  busy: false,
-  
-  initialize: function(opt) {
-    this.controller = this.config = 
-      $.merge(Options("Canvas", "Margin", "Label", "BarChart"), {
-        Label: { type: 'Native' }
-      }, opt);
-    //set functions for showLabels and showAggregates
-    var showLabels = this.config.showLabels,
-        typeLabels = $.type(showLabels),
-        showAggregates = this.config.showAggregates,
-        typeAggregates = $.type(showAggregates);
-    this.config.showLabels = typeLabels == 'function'? showLabels : $.lambda(showLabels);
-    this.config.showAggregates = typeAggregates == 'function'? showAggregates : $.lambda(showAggregates);
-    
-    this.initializeViz();
-  },
-  
-  initializeViz: function() {
-    var config = this.config, that = this;
-    var nodeType = config.type.split(":")[0],
-        horz = config.orientation == 'horizontal',
-        nodeLabels = {};
-    
-    var delegate = new $jit.ST({
-      injectInto: config.injectInto,
-      width: config.width,
-      height: config.height,
-      orientation: horz? 'left' : 'bottom',
-      levelDistance: 0,
-      siblingOffset: config.barsOffset,
-      subtreeOffset: 0,
-      withLabels: config.Label.type != 'Native',      
-      useCanvas: config.useCanvas,
-      Label: {
-        type: config.Label.type
-      },
-      Node: {
-        overridable: true,
-        type: 'barchart-' + nodeType,
-        align: 'left',
-        width: 1,
-        height: 1
-      },
-      Edge: {
-        type: 'none'
-      },
-      Tips: {
-        enable: config.Tips.enable,
-        type: 'Native',
-        force: true,
-        onShow: function(tip, node, contains) {
-          var elem = contains;
-          config.Tips.onShow(tip, elem, node);
-        }
-      },
-      Events: {
-        enable: true,
-        type: 'Native',
-        onClick: function(node, eventInfo, evt) {
-          if(!config.Events.enable) return;
-          var elem = eventInfo.getContains();
-          config.Events.onClick(elem, eventInfo, evt);
-        },
-        onMouseMove: function(node, eventInfo, evt) {
-          if(!config.hoveredColor) return;
-          if(node) {
-            var elem = eventInfo.getContains();
-            that.select(node.id, elem.name, elem.index);
-          } else {
-            that.select(false, false, false);
-          }
-        }
-      },
-      onCreateLabel: function(domElement, node) {
-        var labelConf = config.Label,
-            valueArray = node.getData('valueArray'),
-            acum = $.reduce(valueArray, function(x, y) { return x + y; }, 0);
-        var nlbs = {
-          wrapper: document.createElement('div'),
-          aggregate: document.createElement('div'),
-          label: document.createElement('div')
-        };
-        var wrapper = nlbs.wrapper,
-            label = nlbs.label,
-            aggregate = nlbs.aggregate,
-            wrapperStyle = wrapper.style,
-            labelStyle = label.style,
-            aggregateStyle = aggregate.style;
-        //store node labels
-        nodeLabels[node.id] = nlbs;
-        //append labels
-        wrapper.appendChild(label);
-        wrapper.appendChild(aggregate);
-        if(!config.showLabels(node.name, acum, node)) {
-          labelStyle.display = 'none';
-        }
-        if(!config.showAggregates(node.name, acum, node)) {
-          aggregateStyle.display = 'none';
-        }
-        wrapperStyle.position = 'relative';
-        wrapperStyle.overflow = 'visible';
-        wrapperStyle.fontSize = labelConf.size + 'px';
-        wrapperStyle.fontFamily = labelConf.family;
-        wrapperStyle.color = labelConf.color;
-        wrapperStyle.textAlign = 'center';
-        aggregateStyle.position = labelStyle.position = 'absolute';
-        
-        domElement.style.width = node.getData('width') + 'px';
-        domElement.style.height = node.getData('height') + 'px';
-        aggregateStyle.left = labelStyle.left =  '0px';
-
-        label.innerHTML = node.name;
-        
-        domElement.appendChild(wrapper);
-      },
-      onPlaceLabel: function(domElement, node) {
-        if(!nodeLabels[node.id]) return;
-        var labels = nodeLabels[node.id],
-            wrapperStyle = labels.wrapper.style,
-            labelStyle = labels.label.style,
-            aggregateStyle = labels.aggregate.style,
-            grouped = config.type.split(':')[0] == 'grouped',
-            horz = config.orientation == 'horizontal',
-            dimArray = node.getData('dimArray'),
-            valArray = node.getData('valueArray'),
-            width = (grouped && horz)? Math.max.apply(null, dimArray) : node.getData('width'),
-            height = (grouped && !horz)? Math.max.apply(null, dimArray) : node.getData('height'),
-            font = parseInt(wrapperStyle.fontSize, 10),
-            domStyle = domElement.style;
-            
-        
-        if(dimArray && valArray) {
-          wrapperStyle.width = aggregateStyle.width = labelStyle.width = domElement.style.width = width + 'px';
-          for(var i=0, l=valArray.length, acum=0; i<l; i++) {
-            if(dimArray[i] > 0) {
-              acum+= valArray[i];
-            }
-          }
-          if(config.showLabels(node.name, acum, node)) {
-            labelStyle.display = '';
-          } else {
-            labelStyle.display = 'none';
-          }
-          var aggValue = config.showAggregates(node.name, acum, node);
-          if(aggValue !== false) {
-            aggregateStyle.display = '';
-          } else {
-            aggregateStyle.display = 'none';
-          }
-          if(config.orientation == 'horizontal') {
-            aggregateStyle.textAlign = 'right';
-            labelStyle.textAlign = 'left';
-            labelStyle.textIndex = aggregateStyle.textIndent = config.labelOffset + 'px';
-            aggregateStyle.top = labelStyle.top = (height-font)/2 + 'px';
-            domElement.style.height = wrapperStyle.height = height + 'px';
-          } else {
-            aggregateStyle.top = (-font - config.labelOffset) + 'px';
-            labelStyle.top = (config.labelOffset + height) + 'px';
-            domElement.style.top = parseInt(domElement.style.top, 10) - height + 'px';
-            domElement.style.height = wrapperStyle.height = height + 'px';
-          }
-          labels.aggregate.innerHTML = aggValue !== true? aggValue : acum;
-        }
-      }
-    });
-    
-    var size = delegate.canvas.getSize(),
-        margin = config.Margin;
-    if(horz) {
-      delegate.config.offsetX = size.width/2 - margin.left
-        - (config.showLabels && (config.labelOffset + config.Label.size));    
-      delegate.config.offsetY = (margin.bottom - margin.top)/2;
-    } else {
-      delegate.config.offsetY = -size.height/2 + margin.bottom 
-        + (config.showLabels && (config.labelOffset + config.Label.size));
-      delegate.config.offsetX = (margin.right - margin.left)/2;
-    }
-    this.delegate = delegate;
-    this.canvas = this.delegate.canvas;
-  },
-  
-  /*
-    Method: loadJSON
-   
-    Loads JSON data into the visualization. 
-    
-    Parameters:
-    
-    json - The JSON data format. This format is described in <http://blog.thejit.org/2010/04/24/new-javascript-infovis-toolkit-visualizations/#json-data-format>.
-    
-    Example:
-    (start code js)
-    var barChart = new $jit.BarChart(options);
-    barChart.loadJSON(json);
-    (end code)
- */  
-  loadJSON: function(json) {
-    if(this.busy) return;
-    this.busy = true;
-    
-    var prefix = $.time(), 
-        ch = [], 
-        delegate = this.delegate,
-        name = $.splat(json.label), 
-        color = $.splat(json.color || this.colors),
-        config = this.config,
-        gradient = !!config.type.split(":")[1],
-        animate = config.animate,
-        horz = config.orientation == 'horizontal',
-        that = this;
-    
-    for(var i=0, values=json.values, l=values.length; i<l; i++) {
-      var val = values[i]
-      var valArray = $.splat(values[i].values);
-      var acum = 0;
-      ch.push({
-        'id': prefix + val.label,
-        'name': val.label,
-        'data': {
-          'value': valArray,
-          '$valueArray': valArray,
-          '$colorArray': color,
-          '$stringArray': name,
-          '$gradient': gradient,
-          '$config': config
-        },
-        'children': []
-      });
-    }
-    var root = {
-      'id': prefix + '$root',
-      'name': '',
-      'data': {
-        '$type': 'none',
-        '$width': 1,
-        '$height': 1
-      },
-      'children': ch
-    };
-    delegate.loadJSON(root);
-    
-    this.normalizeDims();
-    delegate.compute();
-    delegate.select(delegate.root);
-    if(animate) {
-      if(horz) {
-        delegate.fx.animate({
-          modes: ['node-property:width:dimArray'],
-          duration:1500,
-          onComplete: function() {
-            that.busy = false;
-          }
-        });
-      } else {
-        delegate.fx.animate({
-          modes: ['node-property:height:dimArray'],
-          duration:1500,
-          onComplete: function() {
-            that.busy = false;
-          }
-        });
-      }
-    } else {
-      this.busy = false;
-    }
-  },
-  
-  /*
-    Method: updateJSON
-   
-    Use this method when updating values for the current JSON data. If the items specified by the JSON data already exist in the graph then their values will be updated.
-    
-    Parameters:
-    
-    json - (object) JSON data to be updated. The JSON format corresponds to the one described in <BarChart.loadJSON>.
-    onComplete - (object) A callback object to be called when the animation transition when updating the data end.
-    
-    Example:
-    
-    (start code js)
-    barChart.updateJSON(json, {
-      onComplete: function() {
-        alert('update complete!');
-      }
-    });
-    (end code)
- */  
-  updateJSON: function(json, onComplete) {
-    if(this.busy) return;
-    this.busy = true;
-    this.select(false, false, false);
-    var delegate = this.delegate;
-    var graph = delegate.graph;
-    var values = json.values;
-    var animate = this.config.animate;
-    var that = this;
-    var horz = this.config.orientation == 'horizontal';
-    $.each(values, function(v) {
-      var n = graph.getByName(v.label);
-      if(n) {
-        n.setData('valueArray', $.splat(v.values));
-        if(json.label) {
-          n.setData('stringArray', $.splat(json.label));
-        }
-      }
-    });
-    this.normalizeDims();
-    delegate.compute();
-    delegate.select(delegate.root);
-    if(animate) {
-      if(horz) {
-        delegate.fx.animate({
-          modes: ['node-property:width:dimArray'],
-          duration:1500,
-          onComplete: function() {
-            that.busy = false;
-            onComplete && onComplete.onComplete();
-          }
-        });
-      } else {
-        delegate.fx.animate({
-          modes: ['node-property:height:dimArray'],
-          duration:1500,
-          onComplete: function() {
-            that.busy = false;
-            onComplete && onComplete.onComplete();
-          }
-        });
-      }
-    }
-  },
-  
-  //adds the little brown bar when hovering the node
-  select: function(id, name) {
-    if(!this.config.hoveredColor) return;
-    var s = this.selected;
-    if(s.id != id || s.name != name) {
-      s.id = id;
-      s.name = name;
-      s.color = this.config.hoveredColor;
-      this.delegate.graph.eachNode(function(n) {
-        if(id == n.id) {
-          n.setData('border', s);
-        } else {
-          n.setData('border', false);
-        }
-      });
-      this.delegate.plot();
-    }
-  },
-  
-  /*
-    Method: getLegend
-   
-    Returns an object containing as keys the legend names and as values hex strings with color values.
-    
-    Example:
-    
-    (start code js)
-    var legend = barChart.getLegend();
-    (end code)
-  */  
-  getLegend: function() {
-    var legend = {};
-    var n;
-    this.delegate.graph.getNode(this.delegate.root).eachAdjacency(function(adj) {
-      n = adj.nodeTo;
-    });
-    var colors = n.getData('colorArray'),
-        len = colors.length;
-    $.each(n.getData('stringArray'), function(s, i) {
-      legend[s] = colors[i % len];
-    });
-    return legend;
-  },
-  
-  /*
-    Method: getMaxValue
-   
-    Returns the maximum accumulated value for the stacks. This method is used for normalizing the graph heights according to the canvas height.
-    
-    Example:
-    
-    (start code js)
-    var ans = barChart.getMaxValue();
-    (end code)
-    
-    In some cases it could be useful to override this method to normalize heights for a group of BarCharts, like when doing small multiples.
-    
-    Example:
-    
-    (start code js)
-    //will return 100 for all BarChart instances,
-    //displaying all of them with the same scale
-    $jit.BarChart.implement({
-      'getMaxValue': function() {
-        return 100;
-      }
-    });
-    (end code)
-    
-  */  
-  getMaxValue: function() {
-    var maxValue = 0, stacked = this.config.type.split(':')[0] == 'stacked';
-    this.delegate.graph.eachNode(function(n) {
-      var valArray = n.getData('valueArray'),
-          acum = 0;
-      if(!valArray) return;
-      if(stacked) {
-        $.each(valArray, function(v) { 
-          acum += +v;
-        });
-      } else {
-        acum = Math.max.apply(null, valArray);
-      }
-      maxValue = maxValue>acum? maxValue:acum;
-    });
-    return maxValue;
-  },
-  
-  setBarType: function(type) {
-    this.config.type = type;
-    this.delegate.config.Node.type = 'barchart-' + type.split(':')[0];
-  },
-  
-  normalizeDims: function() {
-    //number of elements
-    var root = this.delegate.graph.getNode(this.delegate.root), l=0;
-    root.eachAdjacency(function() {
-      l++;
-    });
-    var maxValue = this.getMaxValue() || 1,
-        size = this.delegate.canvas.getSize(),
-        config = this.config,
-        margin = config.Margin,
-        marginWidth = margin.left + margin.right,
-        marginHeight = margin.top + margin.bottom,
-        horz = config.orientation == 'horizontal',
-        fixedDim = (size[horz? 'height':'width'] - (horz? marginHeight:marginWidth) - (l -1) * config.barsOffset) / l,
-        animate = config.animate,
-        height = size[horz? 'width':'height'] - (horz? marginWidth:marginHeight) 
-          - (!horz && config.showAggregates && (config.Label.size + config.labelOffset))
-          - (config.showLabels && (config.Label.size + config.labelOffset)),
-        dim1 = horz? 'height':'width',
-        dim2 = horz? 'width':'height';
-    this.delegate.graph.eachNode(function(n) {
-      var acum = 0, animateValue = [];
-      $.each(n.getData('valueArray'), function(v) {
-        acum += +v;
-        animateValue.push(0);
-      });
-      n.setData(dim1, fixedDim);
-      if(animate) {
-        n.setData(dim2, acum * height / maxValue, 'end');
-        n.setData('dimArray', $.map(n.getData('valueArray'), function(n) { 
-          return n * height / maxValue; 
-        }), 'end');
-        var dimArray = n.getData('dimArray');
-        if(!dimArray) {
-          n.setData('dimArray', animateValue);
-        }
-      } else {
-        n.setData(dim2, acum * height / maxValue);
-        n.setData('dimArray', $.map(n.getData('valueArray'), function(n) { 
-          return n * height / maxValue; 
-        }));
-      }
-    });
-  }
-});
-
-
-/*
- * File: Options.PieChart.js
- *
-*/
-/*
-  Object: Options.PieChart
-  
-  <PieChart> options. 
-  Other options included in the PieChart are <Options.Canvas>, <Options.Label>, <Options.Tips> and <Options.Events>.
-  
-  Syntax:
-  
-  (start code js)
-
-  Options.PieChart = {
-    animate: true,
-    offset: 25,
-    sliceOffset:0,
-    labelOffset: 3,
-    type: 'stacked',
-    hoveredColor: '#9fd4ff',
-    showLabels: true,
-    resizeLabels: false,
-    updateHeights: false
-  };  
-
-  (end code)
-  
-  Example:
-  
-  (start code js)
-
-  var pie = new $jit.PieChart({
-    animate: true,
-    sliceOffset: 5,
-    type: 'stacked:gradient'
-  });  
-
-  (end code)
-  
-  Parameters:
-  
-  animate - (boolean) Default's *true*. Whether to add animated transitions when plotting/updating the visualization.
-  offset - (number) Default's *25*. Adds margin between the visualization and the canvas.
-  sliceOffset - (number) Default's *0*. Separation between the center of the canvas and each pie slice.
-  labelOffset - (number) Default's *3*. Adds margin between the label and the default place where it should be drawn.
-  type - (string) Default's *'stacked'*. Stack style. Posible values are 'stacked', 'stacked:gradient' to add gradients.
-  hoveredColor - (boolean|string) Default's *'#9fd4ff'*. Sets the selected color for a hovered pie stack.
-  showLabels - (boolean) Default's *true*. Display the name of the slots.
-  resizeLabels - (boolean|number) Default's *false*. Resize the pie labels according to their stacked values. Set a number for *resizeLabels* to set a font size minimum.
-  updateHeights - (boolean) Default's *false*. Only for mono-valued (most common) pie charts. Resize the height of the pie slices according to their current values.
-
-*/
-Options.PieChart = {
-  $extend: true,
-
-  animate: true,
-  offset: 25, // page offset
-  sliceOffset:0,
-  labelOffset: 3, // label offset
-  type: 'stacked', // gradient
-  hoveredColor: '#9fd4ff',
-  Events: {
-    enable: false,
-    onClick: $.empty
-  },
-  Tips: {
-    enable: false,
-    onShow: $.empty,
-    onHide: $.empty
-  },
-  showLabels: true,
-  resizeLabels: false,
-  
-  //only valid for mono-valued datasets
-  updateHeights: false
-};
-
-/*
- * Class: Layouts.Radial
- * 
- * Implements a Radial Layout.
- * 
- * Implemented By:
- * 
- * <RGraph>, <Hypertree>
- * 
- */
-Layouts.Radial = new Class({
-
-  /*
-   * Method: compute
-   * 
-   * Computes nodes' positions.
-   * 
-   * Parameters:
-   * 
-   * property - _optional_ A <Graph.Node> position property to store the new
-   * positions. Possible values are 'pos', 'end' or 'start'.
-   * 
-   */
-  compute : function(property) {
-    var prop = $.splat(property || [ 'current', 'start', 'end' ]);
-    NodeDim.compute(this.graph, prop, this.config);
-    this.graph.computeLevels(this.root, 0, "ignore");
-    var lengthFunc = this.createLevelDistanceFunc(); 
-    this.computeAngularWidths(prop);
-    this.computePositions(prop, lengthFunc);
-  },
-
-  /*
-   * computePositions
-   * 
-   * Performs the main algorithm for computing node positions.
-   */
-  computePositions : function(property, getLength) {
-    var propArray = property;
-    var graph = this.graph;
-    var root = graph.getNode(this.root);
-    var parent = this.parent;
-    var config = this.config;
-
-    for ( var i=0, l=propArray.length; i < l; i++) {
-      var pi = propArray[i];
-      root.setPos($P(0, 0), pi);
-      root.setData('span', Math.PI * 2, pi);
-    }
-
-    root.angleSpan = {
-      begin : 0,
-      end : 2 * Math.PI
-    };
-
-    graph.eachBFS(this.root, function(elem) {
-      var angleSpan = elem.angleSpan.end - elem.angleSpan.begin;
-      var angleInit = elem.angleSpan.begin;
-      var len = getLength(elem);
-      //Calculate the sum of all angular widths
-      var totalAngularWidths = 0, subnodes = [], maxDim = {};
-      elem.eachSubnode(function(sib) {
-        totalAngularWidths += sib._treeAngularWidth;
-        //get max dim
-        for ( var i=0, l=propArray.length; i < l; i++) {
-          var pi = propArray[i], dim = sib.getData('dim', pi);
-          maxDim[pi] = (pi in maxDim)? (dim > maxDim[pi]? dim : maxDim[pi]) : dim;
-        }
-        subnodes.push(sib);
-      }, "ignore");
-      //Maintain children order
-      //Second constraint for <http://bailando.sims.berkeley.edu/papers/infovis01.htm>
-      if (parent && parent.id == elem.id && subnodes.length > 0
-          && subnodes[0].dist) {
-        subnodes.sort(function(a, b) {
-          return (a.dist >= b.dist) - (a.dist <= b.dist);
-        });
-      }
-      //Calculate nodes positions.
-      for (var k = 0, ls=subnodes.length; k < ls; k++) {
-        var child = subnodes[k];
-        if (!child._flag) {
-          var angleProportion = child._treeAngularWidth / totalAngularWidths * angleSpan;
-          var theta = angleInit + angleProportion / 2;
-
-          for ( var i=0, l=propArray.length; i < l; i++) {
-            var pi = propArray[i];
-            child.setPos($P(theta, len), pi);
-            child.setData('span', angleProportion, pi);
-            child.setData('dim-quotient', child.getData('dim', pi) / maxDim[pi], pi);
-          }
-
-          child.angleSpan = {
-            begin : angleInit,
-            end : angleInit + angleProportion
-          };
-          angleInit += angleProportion;
-        }
-      }
-    }, "ignore");
-  },
-
-  /*
-   * Method: setAngularWidthForNodes
-   * 
-   * Sets nodes angular widths.
-   */
-  setAngularWidthForNodes : function(prop) {
-    this.graph.eachBFS(this.root, function(elem, i) {
-      var diamValue = elem.getData('angularWidth', prop[0]) || 5;
-      elem._angularWidth = diamValue / i;
-    }, "ignore");
-  },
-
-  /*
-   * Method: setSubtreesAngularWidth
-   * 
-   * Sets subtrees angular widths.
-   */
-  setSubtreesAngularWidth : function() {
-    var that = this;
-    this.graph.eachNode(function(elem) {
-      that.setSubtreeAngularWidth(elem);
-    }, "ignore");
-  },
-
-  /*
-   * Method: setSubtreeAngularWidth
-   * 
-   * Sets the angular width for a subtree.
-   */
-  setSubtreeAngularWidth : function(elem) {
-    var that = this, nodeAW = elem._angularWidth, sumAW = 0;
-    elem.eachSubnode(function(child) {
-      that.setSubtreeAngularWidth(child);
-      sumAW += child._treeAngularWidth;
-    }, "ignore");
-    elem._treeAngularWidth = Math.max(nodeAW, sumAW);
-  },
-
-  /*
-   * Method: computeAngularWidths
-   * 
-   * Computes nodes and subtrees angular widths.
-   */
-  computeAngularWidths : function(prop) {
-    this.setAngularWidthForNodes(prop);
-    this.setSubtreesAngularWidth();
-  }
-
-});
-
-
-/*
- * File: Sunburst.js
- */
-
-/*
-   Class: Sunburst
-      
-   A radial space filling tree visualization.
-   
-   Inspired by:
- 
-   Sunburst <http://www.cc.gatech.edu/gvu/ii/sunburst/>.
-   
-   Note:
-   
-   This visualization was built and engineered from scratch, taking only the paper as inspiration, and only shares some features with the visualization described in the paper.
-   
-  Implements:
-  
-  All <Loader> methods
-  
-   Constructor Options:
-   
-   Inherits options from
-   
-   - <Options.Canvas>
-   - <Options.Controller>
-   - <Options.Node>
-   - <Options.Edge>
-   - <Options.Label>
-   - <Options.Events>
-   - <Options.Tips>
-   - <Options.NodeStyles>
-   - <Options.Navigation>
-   
-   Additionally, there are other parameters and some default values changed
-   
-   interpolation - (string) Default's *linear*. Describes the way nodes are interpolated. Possible values are 'linear' and 'polar'.
-   levelDistance - (number) Default's *100*. The distance between levels of the tree. 
-   Node.type - Described in <Options.Node>. Default's to *multipie*.
-   Node.height - Described in <Options.Node>. Default's *0*.
-   Edge.type - Described in <Options.Edge>. Default's *none*.
-   Label.textAlign - Described in <Options.Label>. Default's *start*.
-   Label.textBaseline - Described in <Options.Label>. Default's *middle*.
-     
-   Instance Properties:
-
-   canvas - Access a <Canvas> instance.
-   graph - Access a <Graph> instance.
-   op - Access a <Sunburst.Op> instance.
-   fx - Access a <Sunburst.Plot> instance.
-   labels - Access a <Sunburst.Label> interface implementation.   
-
-*/
-
-$jit.Sunburst = new Class({
-
-  Implements: [ Loader, Extras, Layouts.Radial ],
-
-  initialize: function(controller) {
-    var $Sunburst = $jit.Sunburst;
-
-    var config = {
-      interpolation: 'linear',
-      levelDistance: 100,
-      Node: {
-        'type': 'multipie',
-        'height':0
-      },
-      Edge: {
-        'type': 'none'
-      },
-      Label: {
-        textAlign: 'start',
-        textBaseline: 'middle'
-      }
-    };
-
-    this.controller = this.config = $.merge(Options("Canvas", "Node", "Edge",
-        "Fx", "Tips", "NodeStyles", "Events", "Navigation", "Controller", "Label"), config, controller);
-
-    var canvasConfig = this.config;
-    if(canvasConfig.useCanvas) {
-      this.canvas = canvasConfig.useCanvas;
-      this.config.labelContainer = this.canvas.id + '-label';
-    } else {
-      if(canvasConfig.background) {
-        canvasConfig.background = $.merge({
-          type: 'Circles'
-        }, canvasConfig.background);
-      }
-      this.canvas = new Canvas(this, canvasConfig);
-      this.config.labelContainer = (typeof canvasConfig.injectInto == 'string'? canvasConfig.injectInto : canvasConfig.injectInto.id) + '-label';
-    }
-
-    this.graphOptions = {
-      'klass': Polar,
-      'Node': {
-        'selected': false,
-        'exist': true,
-        'drawn': true
-      }
-    };
-    this.graph = new Graph(this.graphOptions, this.config.Node,
-        this.config.Edge);
-    this.labels = new $Sunburst.Label[canvasConfig.Label.type](this);
-    this.fx = new $Sunburst.Plot(this, $Sunburst);
-    this.op = new $Sunburst.Op(this);
-    this.json = null;
-    this.root = null;
-    this.rotated = null;
-    this.busy = false;
-    // initialize extras
-    this.initializeExtras();
-  },
-
-  /* 
-  
-    createLevelDistanceFunc 
-  
-    Returns the levelDistance function used for calculating a node distance 
-    to its origin. This function returns a function that is computed 
-    per level and not per node, such that all nodes with the same depth will have the 
-    same distance to the origin. The resulting function gets the 
-    parent node as parameter and returns a float.
-
-   */
-  createLevelDistanceFunc: function() {
-    var ld = this.config.levelDistance;
-    return function(elem) {
-      return (elem._depth + 1) * ld;
-    };
-  },
-
-  /* 
-     Method: refresh 
-     
-     Computes positions and plots the tree.
-
-   */
-  refresh: function() {
-    this.compute();
-    this.plot();
-  },
-
-  /*
-   reposition
-  
-   An alias for computing new positions to _endPos_
-
-   See also:
-
-   <Sunburst.compute>
-   
-  */
-  reposition: function() {
-    this.compute('end');
-  },
-
-  /*
-  Method: rotate
-  
-  Rotates the graph so that the selected node is horizontal on the right.
-
-  Parameters:
-  
-  node - (object) A <Graph.Node>.
-  method - (string) Whether to perform an animation or just replot the graph. Possible values are "replot" or "animate".
-  opt - (object) Configuration options merged with this visualization configuration options.
-  
-  See also:
-
-  <Sunburst.rotateAngle>
-  
-  */
-  rotate: function(node, method, opt) {
-    var theta = node.getPos(opt.property || 'current').getp(true).theta;
-    this.rotated = node;
-    this.rotateAngle(-theta, method, opt);
-  },
-
-  /*
-  Method: rotateAngle
-  
-  Rotates the graph of an angle theta.
-  
-   Parameters:
-   
-   node - (object) A <Graph.Node>.
-   method - (string) Whether to perform an animation or just replot the graph. Possible values are "replot" or "animate".
-   opt - (object) Configuration options merged with this visualization configuration options.
-   
-   See also:
-
-   <Sunburst.rotate>
-  
-  */
-  rotateAngle: function(theta, method, opt) {
-    var that = this;
-    var options = $.merge(this.config, opt || {}, {
-      modes: [ 'polar' ]
-    });
-    var prop = opt.property || (method === "animate" ? 'end' : 'current');
-    if(method === 'animate') {
-      this.fx.animation.pause();
-    }
-    this.graph.eachNode(function(n) {
-      var p = n.getPos(prop);
-      p.theta += theta;
-      if (p.theta < 0) {
-        p.theta += Math.PI * 2;
-      }
-    });
-    if (method == 'animate') {
-      this.fx.animate(options);
-    } else if (method == 'replot') {
-      this.fx.plot();
-      this.busy = false;
-    }
-  },
-
-  /*
-   Method: plot
-  
-   Plots the Sunburst. This is a shortcut to *fx.plot*.
-  */
-  plot: function() {
-    this.fx.plot();
-  }
-});
-
-$jit.Sunburst.$extend = true;
-
-(function(Sunburst) {
-
-  /*
-     Class: Sunburst.Op
-
-     Custom extension of <Graph.Op>.
-
-     Extends:
-
-     All <Graph.Op> methods
-     
-     See also:
-     
-     <Graph.Op>
-
-  */
-  Sunburst.Op = new Class( {
-
-    Implements: Graph.Op
-
-  });
-
-  /*
-     Class: Sunburst.Plot
-
-    Custom extension of <Graph.Plot>.
-  
-    Extends:
-  
-    All <Graph.Plot> methods
-    
-    See also:
-    
-    <Graph.Plot>
-  
-  */
-  Sunburst.Plot = new Class( {
-
-    Implements: Graph.Plot
-
-  });
-
-  /*
-    Class: Sunburst.Label
-
-    Custom extension of <Graph.Label>. 
-    Contains custom <Graph.Label.SVG>, <Graph.Label.HTML> and <Graph.Label.Native> extensions.
-  
-    Extends:
-  
-    All <Graph.Label> methods and subclasses.
-  
-    See also:
-  
-    <Graph.Label>, <Graph.Label.Native>, <Graph.Label.HTML>, <Graph.Label.SVG>.
-  
-   */
-  Sunburst.Label = {};
-
-  /*
-     Sunburst.Label.Native
-
-     Custom extension of <Graph.Label.Native>.
-
-     Extends:
-
-     All <Graph.Label.Native> methods
-
-     See also:
-
-     <Graph.Label.Native>
-  */
-  Sunburst.Label.Native = new Class( {
-    Implements: Graph.Label.Native,
-
-    initialize: function(viz) {
-      this.viz = viz;
-      this.label = viz.config.Label;
-      this.config = viz.config;
-    },
-
-    renderLabel: function(canvas, node, controller) {
-      var span = node.getData('span');
-      if(span < Math.PI /2 && Math.tan(span) * 
-          this.config.levelDistance * node._depth < 10) {
-        return;
-      }
-      var ctx = canvas.getCtx();
-      var measure = ctx.measureText(node.name);
-      if (node.id == this.viz.root) {
-        var x = -measure.width / 2, y = 0, thetap = 0;
-        var ld = 0;
-      } else {
-        var indent = 5;
-        var ld = controller.levelDistance - indent;
-        var clone = node.pos.clone();
-        clone.rho += indent;
-        var p = clone.getp(true);
-        var ct = clone.getc(true);
-        var x = ct.x, y = ct.y;
-        // get angle in degrees
-        var pi = Math.PI;
-        var cond = (p.theta > pi / 2 && p.theta < 3 * pi / 2);
-        var thetap = cond ? p.theta + pi : p.theta;
-        if (cond) {
-          x -= Math.abs(Math.cos(p.theta) * measure.width);
-          y += Math.sin(p.theta) * measure.width;
-        } else if (node.id == this.viz.root) {
-          x -= measure.width / 2;
-        }
-      }
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(thetap);
-      ctx.fillText(node.name, 0, 0);
-      ctx.restore();
-    }
-  });
-
-  /*
-     Sunburst.Label.SVG
-
-    Custom extension of <Graph.Label.SVG>.
-  
-    Extends:
-  
-    All <Graph.Label.SVG> methods
-  
-    See also:
-  
-    <Graph.Label.SVG>
-  
-  */
-  Sunburst.Label.SVG = new Class( {
-    Implements: Graph.Label.SVG,
-
-    initialize: function(viz) {
-      this.viz = viz;
-    },
-
-    /* 
-       placeLabel
-
-       Overrides abstract method placeLabel in <Graph.Plot>.
-
-       Parameters:
-
-       tag - A DOM label element.
-       node - A <Graph.Node>.
-       controller - A configuration/controller object passed to the visualization.
-      
-     */
-    placeLabel: function(tag, node, controller) {
-      var pos = node.pos.getc(true), viz = this.viz, canvas = this.viz.canvas;
-      var radius = canvas.getSize();
-      var labelPos = {
-        x: Math.round(pos.x + radius.width / 2),
-        y: Math.round(pos.y + radius.height / 2)
-      };
-      tag.setAttribute('x', labelPos.x);
-      tag.setAttribute('y', labelPos.y);
-
-      var bb = tag.getBBox();
-      if (bb) {
-        // center the label
-    var x = tag.getAttribute('x');
-    var y = tag.getAttribute('y');
-    // get polar coordinates
-    var p = node.pos.getp(true);
-    // get angle in degrees
-    var pi = Math.PI;
-    var cond = (p.theta > pi / 2 && p.theta < 3 * pi / 2);
-    if (cond) {
-      tag.setAttribute('x', x - bb.width);
-      tag.setAttribute('y', y - bb.height);
-    } else if (node.id == viz.root) {
-      tag.setAttribute('x', x - bb.width / 2);
-    }
-
-    var thetap = cond ? p.theta + pi : p.theta;
-    if(node._depth)
-      tag.setAttribute('transform', 'rotate(' + thetap * 360 / (2 * pi) + ' ' + x
-          + ' ' + y + ')');
-  }
-
-  controller.onPlaceLabel(tag, node);
-}
-  });
-
-  /*
-     Sunburst.Label.HTML
-
-     Custom extension of <Graph.Label.HTML>.
-
-     Extends:
-
-     All <Graph.Label.HTML> methods.
-
-     See also:
-
-     <Graph.Label.HTML>
-
-  */
-  Sunburst.Label.HTML = new Class( {
-    Implements: Graph.Label.HTML,
-
-    initialize: function(viz) {
-      this.viz = viz;
-    },
-    /* 
-       placeLabel
-
-       Overrides abstract method placeLabel in <Graph.Plot>.
-
-       Parameters:
-
-       tag - A DOM label element.
-       node - A <Graph.Node>.
-       controller - A configuration/controller object passed to the visualization.
-      
-     */
-    placeLabel: function(tag, node, controller) {
-      var pos = node.pos.clone(), 
-          canvas = this.viz.canvas,
-          height = node.getData('height'),
-          ldist = ((height || node._depth == 0)? height : this.viz.config.levelDistance) /2,
-          radius = canvas.getSize();
-      pos.rho += ldist;
-      pos = pos.getc(true);
-      
-      var labelPos = {
-        x: Math.round(pos.x + radius.width / 2),
-        y: Math.round(pos.y + radius.height / 2)
-      };
-
-      var style = tag.style;
-      style.left = labelPos.x + 'px';
-      style.top = labelPos.y + 'px';
-      style.display = this.fitsInCanvas(labelPos, canvas) ? '' : 'none';
-
-      controller.onPlaceLabel(tag, node);
-    }
-  });
-
-  /*
-    Class: Sunburst.Plot.NodeTypes
-
-    This class contains a list of <Graph.Node> built-in types. 
-    Node types implemented are 'none', 'pie', 'multipie', 'gradient-pie' and 'gradient-multipie'.
-
-    You can add your custom node types, customizing your visualization to the extreme.
-
-    Example:
-
-    (start code js)
-      Sunburst.Plot.NodeTypes.implement({
-        'mySpecialType': {
-          'render': function(node, canvas) {
-            //print your custom node to canvas
-          },
-          //optional
-          'contains': function(node, pos) {
-            //return true if pos is inside the node or false otherwise
-          }
-        }
-      });
-    (end code)
-
-  */
-  Sunburst.Plot.NodeTypes = new Class( {
-    'none': {
-      'render': $.empty,
-      'contains': $.lambda(false),
-      'anglecontains': function(node, pos) {
-        var span = node.getData('span') / 2, theta = node.pos.theta;
-        var begin = theta - span, end = theta + span;
-        if (begin < 0)
-          begin += Math.PI * 2;
-        var atan = Math.atan2(pos.y, pos.x);
-        if (atan < 0)
-          atan += Math.PI * 2;
-        if (begin > end) {
-          return (atan > begin && atan <= Math.PI * 2) || atan < end;
-        } else {
-          return atan > begin && atan < end;
-        }
-      }
-    },
-
-    'pie': {
-      'render': function(node, canvas) {
-        var span = node.getData('span') / 2, theta = node.pos.theta;
-        var begin = theta - span, end = theta + span;
-        var polarNode = node.pos.getp(true);
-        var polar = new Polar(polarNode.rho, begin);
-        var p1coord = polar.getc(true);
-        polar.theta = end;
-        var p2coord = polar.getc(true);
-
-        var ctx = canvas.getCtx();
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(p1coord.x, p1coord.y);
-        ctx.moveTo(0, 0);
-        ctx.lineTo(p2coord.x, p2coord.y);
-        ctx.moveTo(0, 0);
-        ctx.arc(0, 0, polarNode.rho * node.getData('dim-quotient'), begin, end,
-            false);
-        ctx.fill();
-      },
-      'contains': function(node, pos) {
-        if (this.nodeTypes['none'].anglecontains.call(this, node, pos)) {
-          var rho = Math.sqrt(pos.x * pos.x + pos.y * pos.y);
-          var ld = this.config.levelDistance, d = node._depth;
-          return (rho <= ld * d);
-        }
-        return false;
-      }
-    },
-    'multipie': {
-      'render': function(node, canvas) {
-        var height = node.getData('height');
-        var ldist = height? height : this.config.levelDistance;
-        var span = node.getData('span') / 2, theta = node.pos.theta;
-        var begin = theta - span, end = theta + span;
-        var polarNode = node.pos.getp(true);
-
-        var polar = new Polar(polarNode.rho, begin);
-        var p1coord = polar.getc(true);
-
-        polar.theta = end;
-        var p2coord = polar.getc(true);
-
-        polar.rho += ldist;
-        var p3coord = polar.getc(true);
-
-        polar.theta = begin;
-        var p4coord = polar.getc(true);
-
-        var ctx = canvas.getCtx();
-        ctx.moveTo(0, 0);
-        ctx.beginPath();
-        ctx.arc(0, 0, polarNode.rho, begin, end, false);
-        ctx.arc(0, 0, polarNode.rho + ldist, end, begin, true);
-        ctx.moveTo(p1coord.x, p1coord.y);
-        ctx.lineTo(p4coord.x, p4coord.y);
-        ctx.moveTo(p2coord.x, p2coord.y);
-        ctx.lineTo(p3coord.x, p3coord.y);
-        ctx.fill();
-
-        if (node.collapsed) {
-          ctx.save();
-          ctx.lineWidth = 2;
-          ctx.moveTo(0, 0);
-          ctx.beginPath();
-          ctx.arc(0, 0, polarNode.rho + ldist + 5, end - 0.01, begin + 0.01,
-              true);
-          ctx.stroke();
-          ctx.restore();
-        }
-      },
-      'contains': function(node, pos) {
-        if (this.nodeTypes['none'].anglecontains.call(this, node, pos)) {
-          var rho = Math.sqrt(pos.x * pos.x + pos.y * pos.y);
-          var height = node.getData('height');
-          var ldist = height? height : this.config.levelDistance;
-          var ld = this.config.levelDistance, d = node._depth;
-          return (rho >= ld * d) && (rho <= (ld * d + ldist));
-        }
-        return false;
-      }
-    },
-
-    'gradient-multipie': {
-      'render': function(node, canvas) {
-        var ctx = canvas.getCtx();
-        var height = node.getData('height');
-        var ldist = height? height : this.config.levelDistance;
-        var radialGradient = ctx.createRadialGradient(0, 0, node.getPos().rho,
-            0, 0, node.getPos().rho + ldist);
-
-        var colorArray = $.hexToRgb(node.getData('color')), ans = [];
-        $.each(colorArray, function(i) {
-          ans.push(parseInt(i * 0.5, 10));
-        });
-        var endColor = $.rgbToHex(ans);
-        radialGradient.addColorStop(0, endColor);
-        radialGradient.addColorStop(1, node.getData('color'));
-        ctx.fillStyle = radialGradient;
-        this.nodeTypes['multipie'].render.call(this, node, canvas);
-      },
-      'contains': function(node, pos) {
-        return this.nodeTypes['multipie'].contains.call(this, node, pos);
-      }
-    },
-
-    'gradient-pie': {
-      'render': function(node, canvas) {
-        var ctx = canvas.getCtx();
-        var radialGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, node
-            .getPos().rho);
-
-        var colorArray = $.hexToRgb(node.getData('color')), ans = [];
-        $.each(colorArray, function(i) {
-          ans.push(parseInt(i * 0.5, 10));
-        });
-        var endColor = $.rgbToHex(ans);
-        radialGradient.addColorStop(1, endColor);
-        radialGradient.addColorStop(0, node.getData('color'));
-        ctx.fillStyle = radialGradient;
-        this.nodeTypes['pie'].render.call(this, node, canvas);
-      },
-      'contains': function(node, pos) {
-        return this.nodeTypes['pie'].contains.call(this, node, pos);
-      }
-    }
-  });
-
-  /*
-    Class: Sunburst.Plot.EdgeTypes
-
-    This class contains a list of <Graph.Adjacence> built-in types. 
-    Edge types implemented are 'none', 'line' and 'arrow'.
-  
-    You can add your custom edge types, customizing your visualization to the extreme.
-  
-    Example:
-  
-    (start code js)
-      Sunburst.Plot.EdgeTypes.implement({
-        'mySpecialType': {
-          'render': function(adj, canvas) {
-            //print your custom edge to canvas
-          },
-          //optional
-          'contains': function(adj, pos) {
-            //return true if pos is inside the arc or false otherwise
-          }
-        }
-      });
-    (end code)
-  
-  */
-  Sunburst.Plot.EdgeTypes = new Class({
-    'none': $.empty,
-    'line': {
-      'render': function(adj, canvas) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true);
-        this.edgeHelper.line.render(from, to, canvas);
-      },
-      'contains': function(adj, pos) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true);
-        return this.edgeHelper.line.contains(from, to, pos, this.edge.epsilon);
-      }
-    },
-    'arrow': {
-      'render': function(adj, canvas) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true),
-            dim = adj.getData('dim'),
-            direction = adj.data.$direction,
-            inv = (direction && direction.length>1 && direction[0] != adj.nodeFrom.id);
-        this.edgeHelper.arrow.render(from, to, dim, inv, canvas);
-      },
-      'contains': function(adj, pos) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true);
-        return this.edgeHelper.arrow.contains(from, to, pos, this.edge.epsilon);
-      }
-    },
-    'hyperline': {
-      'render': function(adj, canvas) {
-        var from = adj.nodeFrom.pos.getc(),
-            to = adj.nodeTo.pos.getc(),
-            dim = Math.max(from.norm(), to.norm());
-        this.edgeHelper.hyperline.render(from.$scale(1/dim), to.$scale(1/dim), dim, canvas);
-      },
-      'contains': $.lambda(false) //TODO(nico): Implement this!
-    }
-  });
-
-})($jit.Sunburst);
-
-
-/*
- * File: PieChart.js
- *
-*/
-
-$jit.Sunburst.Plot.NodeTypes.implement({
-  'piechart-stacked' : {
-    'render' : function(node, canvas) {
-      var pos = node.pos.getp(true),
-          dimArray = node.getData('dimArray'),
-          valueArray = node.getData('valueArray'),
-          colorArray = node.getData('colorArray'),
-          colorLength = colorArray.length,
-          stringArray = node.getData('stringArray'),
-          span = node.getData('span') / 2,
-          theta = node.pos.theta,
-          begin = theta - span,
-          end = theta + span,
-          polar = new Polar;
-    
-      var ctx = canvas.getCtx(), 
-          opt = {},
-          gradient = node.getData('gradient'),
-          border = node.getData('border'),
-          config = node.getData('config'),
-          showLabels = config.showLabels,
-          resizeLabels = config.resizeLabels,
-          label = config.Label;
-
-      var xpos = config.sliceOffset * Math.cos((begin + end) /2);
-      var ypos = config.sliceOffset * Math.sin((begin + end) /2);
-
-      if (colorArray && dimArray && stringArray) {
-        for (var i=0, l=dimArray.length, acum=0, valAcum=0; i<l; i++) {
-          var dimi = dimArray[i], colori = colorArray[i % colorLength];
-          if(dimi <= 0) continue;
-          ctx.fillStyle = ctx.strokeStyle = colori;
-          if(gradient && dimi) {
-            var radialGradient = ctx.createRadialGradient(xpos, ypos, acum + config.sliceOffset,
-                xpos, ypos, acum + dimi + config.sliceOffset);
-            var colorRgb = $.hexToRgb(colori), 
-                ans = $.map(colorRgb, function(i) { return (i * 0.8) >> 0; }),
-                endColor = $.rgbToHex(ans);
-
-            radialGradient.addColorStop(0, colori);
-            radialGradient.addColorStop(0.5, colori);
-            radialGradient.addColorStop(1, endColor);
-            ctx.fillStyle = radialGradient;
-          }
-          
-          polar.rho = acum + config.sliceOffset;
-          polar.theta = begin;
-          var p1coord = polar.getc(true);
-          polar.theta = end;
-          var p2coord = polar.getc(true);
-          polar.rho += dimi;
-          var p3coord = polar.getc(true);
-          polar.theta = begin;
-          var p4coord = polar.getc(true);
-
-          ctx.beginPath();
-          //fixing FF arc method + fill
-          ctx.arc(xpos, ypos, acum + .01, begin, end, false);
-          ctx.arc(xpos, ypos, acum + dimi + .01, end, begin, true);
-          ctx.fill();
-          if(border && border.name == stringArray[i]) {
-            opt.acum = acum;
-            opt.dimValue = dimArray[i];
-            opt.begin = begin;
-            opt.end = end;
-          }
-          acum += (dimi || 0);
-          valAcum += (valueArray[i] || 0);
-        }
-        if(border) {
-          ctx.save();
-          ctx.globalCompositeOperation = "source-over";
-          ctx.lineWidth = 2;
-          ctx.strokeStyle = border.color;
-          var s = begin < end? 1 : -1;
-          ctx.beginPath();
-          //fixing FF arc method + fill
-          ctx.arc(xpos, ypos, opt.acum + .01 + 1, opt.begin, opt.end, false);
-          ctx.arc(xpos, ypos, opt.acum + opt.dimValue + .01 - 1, opt.end, opt.begin, true);
-          ctx.closePath();
-          ctx.stroke();
-          ctx.restore();
-        }
-        if(showLabels && label.type == 'Native') {
-          ctx.save();
-          ctx.fillStyle = ctx.strokeStyle = label.color;
-          var scale = resizeLabels? node.getData('normalizedDim') : 1,
-              fontSize = (label.size * scale) >> 0;
-          fontSize = fontSize < +resizeLabels? +resizeLabels : fontSize;
-          
-          ctx.font = label.style + ' ' + fontSize + 'px ' + label.family;
-          ctx.textBaseline = 'middle';
-          ctx.textAlign = 'center';
-          
-          polar.rho = acum + config.labelOffset + config.sliceOffset;
-          polar.theta = node.pos.theta;
-          var cart = polar.getc(true);
-          
-          ctx.fillText(node.name, cart.x, cart.y);
-          ctx.restore();
-        }
-      }
-    },
-    'contains': function(node, pos) {
-      if (this.nodeTypes['none'].anglecontains.call(this, node, pos)) {
-        var rho = Math.sqrt(pos.x * pos.x + pos.y * pos.y);
-        var ld = this.config.levelDistance, d = node._depth;
-        var config = node.getData('config');
-        if(rho <=ld * d + config.sliceOffset) {
-          var dimArray = node.getData('dimArray');
-          for(var i=0,l=dimArray.length,acum=config.sliceOffset; i<l; i++) {
-            var dimi = dimArray[i];
-            if(rho >= acum && rho <= acum + dimi) {
-              return {
-                name: node.getData('stringArray')[i],
-                color: node.getData('colorArray')[i],
-                value: node.getData('valueArray')[i],
-                label: node.name
-              };
-            }
-            acum += dimi;
-          }
-        }
-        return false;
-        
-      }
-      return false;
-    }
-  }
-});
-
-/*
-  Class: PieChart
-  
-  A visualization that displays stacked bar charts.
-  
-  Constructor Options:
-  
-  See <Options.PieChart>.
-
-*/
-$jit.PieChart = new Class({
-  sb: null,
-  colors: ["#416D9C", "#70A35E", "#EBB056", "#C74243", "#83548B", "#909291", "#557EAA"],
-  selected: {},
-  busy: false,
-  
-  initialize: function(opt) {
-    this.controller = this.config = 
-      $.merge(Options("Canvas", "PieChart", "Label"), {
-        Label: { type: 'Native' }
-      }, opt);
-    this.initializeViz();
-  },
-  
-  initializeViz: function() {
-    var config = this.config, that = this;
-    var nodeType = config.type.split(":")[0];
-    var delegate = new $jit.Sunburst({
-      injectInto: config.injectInto,
-      width: config.width,
-      height: config.height,
-      useCanvas: config.useCanvas,
-      withLabels: config.Label.type != 'Native',
-      Label: {
-        type: config.Label.type
-      },
-      Node: {
-        overridable: true,
-        type: 'piechart-' + nodeType,
-        width: 1,
-        height: 1
-      },
-      Edge: {
-        type: 'none'
-      },
-      Tips: {
-        enable: config.Tips.enable,
-        type: 'Native',
-        force: true,
-        onShow: function(tip, node, contains) {
-          var elem = contains;
-          config.Tips.onShow(tip, elem, node);
-        }
-      },
-      Events: {
-        enable: true,
-        type: 'Native',
-        onClick: function(node, eventInfo, evt) {
-          if(!config.Events.enable) return;
-          var elem = eventInfo.getContains();
-          config.Events.onClick(elem, eventInfo, evt);
-        },
-        onMouseMove: function(node, eventInfo, evt) {
-          if(!config.hoveredColor) return;
-          if(node) {
-            var elem = eventInfo.getContains();
-            that.select(node.id, elem.name, elem.index);
-          } else {
-            that.select(false, false, false);
-          }
-        }
-      },
-      onCreateLabel: function(domElement, node) {
-        var labelConf = config.Label;
-        if(config.showLabels) {
-          var style = domElement.style;
-          style.fontSize = labelConf.size + 'px';
-          style.fontFamily = labelConf.family;
-          style.color = labelConf.color;
-          style.textAlign = 'center';
-          domElement.innerHTML = node.name;
-        }
-      },
-      onPlaceLabel: function(domElement, node) {
-        if(!config.showLabels) return;
-        var pos = node.pos.getp(true),
-            dimArray = node.getData('dimArray'),
-            span = node.getData('span') / 2,
-            theta = node.pos.theta,
-            begin = theta - span,
-            end = theta + span,
-            polar = new Polar;
-      
-        var showLabels = config.showLabels,
-            resizeLabels = config.resizeLabels,
-            label = config.Label;
-        
-        if (dimArray) {
-          for (var i=0, l=dimArray.length, acum=0; i<l; i++) {
-            acum += dimArray[i];
-          }
-          var scale = resizeLabels? node.getData('normalizedDim') : 1,
-              fontSize = (label.size * scale) >> 0;
-          fontSize = fontSize < +resizeLabels? +resizeLabels : fontSize;
-          domElement.style.fontSize = fontSize + 'px';
-          polar.rho = acum + config.labelOffset + config.sliceOffset;
-          polar.theta = (begin + end) / 2;
-          var pos = polar.getc(true);
-          var radius = that.canvas.getSize();
-          var labelPos = {
-            x: Math.round(pos.x + radius.width / 2),
-            y: Math.round(pos.y + radius.height / 2)
-          };
-          domElement.style.left = labelPos.x + 'px';
-          domElement.style.top = labelPos.y + 'px';
-        }
-      }
-    });
-    
-    var size = delegate.canvas.getSize(),
-        min = Math.min;
-    delegate.config.levelDistance = min(size.width, size.height)/2 
-      - config.offset - config.sliceOffset;
-    this.delegate = delegate;
-    this.canvas = this.delegate.canvas;
-    this.canvas.getCtx().globalCompositeOperation = 'lighter';
-  },
-  
-  /*
-    Method: loadJSON
-   
-    Loads JSON data into the visualization. 
-    
-    Parameters:
-    
-    json - The JSON data format. This format is described in <http://blog.thejit.org/2010/04/24/new-javascript-infovis-toolkit-visualizations/#json-data-format>.
-    
-    Example:
-    (start code js)
-    var pieChart = new $jit.PieChart(options);
-    pieChart.loadJSON(json);
-    (end code)
-  */  
-  loadJSON: function(json) {
-    var prefix = $.time(), 
-        ch = [], 
-        delegate = this.delegate,
-        name = $.splat(json.label),
-        nameLength = name.length,
-        color = $.splat(json.color || this.colors),
-        colorLength = color.length,
-        config = this.config,
-        gradient = !!config.type.split(":")[1],
-        animate = config.animate,
-        mono = nameLength == 1;
-    
-    for(var i=0, values=json.values, l=values.length; i<l; i++) {
-      var val = values[i];
-      var valArray = $.splat(val.values);
-      ch.push({
-        'id': prefix + val.label,
-        'name': val.label,
-        'data': {
-          'value': valArray,
-          '$valueArray': valArray,
-          '$colorArray': mono? $.splat(color[i % colorLength]) : color,
-          '$stringArray': name,
-          '$gradient': gradient,
-          '$config': config,
-          '$angularWidth': $.reduce(valArray, function(x,y){return x+y;})
-        },
-        'children': []
-      });
-    }
-    var root = {
-      'id': prefix + '$root',
-      'name': '',
-      'data': {
-        '$type': 'none',
-        '$width': 1,
-        '$height': 1
-      },
-      'children': ch
-    };
-    delegate.loadJSON(root);
-    
-    this.normalizeDims();
-    delegate.refresh();
-    if(animate) {
-      delegate.fx.animate({
-        modes: ['node-property:dimArray'],
-        duration:1500
-      });
-    }
-  },
-  
-  /*
-    Method: updateJSON
-   
-    Use this method when updating values for the current JSON data. If the items specified by the JSON data already exist in the graph then their values will be updated.
-    
-    Parameters:
-    
-    json - (object) JSON data to be updated. The JSON format corresponds to the one described in <PieChart.loadJSON>.
-    onComplete - (object) A callback object to be called when the animation transition when updating the data end.
-    
-    Example:
-    
-    (start code js)
-    pieChart.updateJSON(json, {
-      onComplete: function() {
-        alert('update complete!');
-      }
-    });
-    (end code)
-  */  
-  updateJSON: function(json, onComplete) {
-    if(this.busy) return;
-    this.busy = true;
-    
-    var delegate = this.delegate;
-    var graph = delegate.graph;
-    var values = json.values;
-    var animate = this.config.animate;
-    var that = this;
-    $.each(values, function(v) {
-      var n = graph.getByName(v.label),
-          vals = $.splat(v.values);
-      if(n) {
-        n.setData('valueArray', vals);
-        n.setData('angularWidth', $.reduce(vals, function(x,y){return x+y;}));
-        if(json.label) {
-          n.setData('stringArray', $.splat(json.label));
-        }
-      }
-    });
-    this.normalizeDims();
-    if(animate) {
-      delegate.compute('end');
-      delegate.fx.animate({
-        modes: ['node-property:dimArray:span', 'linear'],
-        duration:1500,
-        onComplete: function() {
-          that.busy = false;
-          onComplete && onComplete.onComplete();
-        }
-      });
-    } else {
-      delegate.refresh();
-    }
-  },
-    
-  //adds the little brown bar when hovering the node
-  select: function(id, name) {
-    if(!this.config.hoveredColor) return;
-    var s = this.selected;
-    if(s.id != id || s.name != name) {
-      s.id = id;
-      s.name = name;
-      s.color = this.config.hoveredColor;
-      this.delegate.graph.eachNode(function(n) {
-        if(id == n.id) {
-          n.setData('border', s);
-        } else {
-          n.setData('border', false);
-        }
-      });
-      this.delegate.plot();
-    }
-  },
-  
-  /*
-    Method: getLegend
-   
-    Returns an object containing as keys the legend names and as values hex strings with color values.
-    
-    Example:
-    
-    (start code js)
-    var legend = pieChart.getLegend();
-    (end code)
-  */  
-  getLegend: function() {
-    var legend = {};
-    var n;
-    this.delegate.graph.getNode(this.delegate.root).eachAdjacency(function(adj) {
-      n = adj.nodeTo;
-    });
-    var colors = n.getData('colorArray'),
-        len = colors.length;
-    $.each(n.getData('stringArray'), function(s, i) {
-      legend[s] = colors[i % len];
-    });
-    return legend;
-  },
-  
-  /*
-    Method: getMaxValue
-   
-    Returns the maximum accumulated value for the stacks. This method is used for normalizing the graph heights according to the canvas height.
-    
-    Example:
-    
-    (start code js)
-    var ans = pieChart.getMaxValue();
-    (end code)
-    
-    In some cases it could be useful to override this method to normalize heights for a group of PieCharts, like when doing small multiples.
-    
-    Example:
-    
-    (start code js)
-    //will return 100 for all PieChart instances,
-    //displaying all of them with the same scale
-    $jit.PieChart.implement({
-      'getMaxValue': function() {
-        return 100;
-      }
-    });
-    (end code)
-    
-  */  
-  getMaxValue: function() {
-    var maxValue = 0;
-    this.delegate.graph.eachNode(function(n) {
-      var valArray = n.getData('valueArray'),
-          acum = 0;
-      $.each(valArray, function(v) { 
-        acum += +v;
-      });
-      maxValue = maxValue>acum? maxValue:acum;
-    });
-    return maxValue;
-  },
-  
-  normalizeDims: function() {
-    //number of elements
-    var root = this.delegate.graph.getNode(this.delegate.root), l=0;
-    root.eachAdjacency(function() {
-      l++;
-    });
-    var maxValue = this.getMaxValue() || 1,
-        config = this.config,
-        animate = config.animate,
-        rho = this.delegate.config.levelDistance;
-    this.delegate.graph.eachNode(function(n) {
-      var acum = 0, animateValue = [];
-      $.each(n.getData('valueArray'), function(v) {
-        acum += +v;
-        animateValue.push(1);
-      });
-      var stat = (animateValue.length == 1) && !config.updateHeights;
-      if(animate) {
-        n.setData('dimArray', $.map(n.getData('valueArray'), function(n) { 
-          return stat? rho: (n * rho / maxValue); 
-        }), 'end');
-        var dimArray = n.getData('dimArray');
-        if(!dimArray) {
-          n.setData('dimArray', animateValue);
-        }
-      } else {
-        n.setData('dimArray', $.map(n.getData('valueArray'), function(n) { 
-          return stat? rho : (n * rho / maxValue); 
-        }));
-      }
-      n.setData('normalizedDim', acum / maxValue);
-    });
-  }
-});
-
-
-/*
  * Class: Layouts.TM
  * 
  * Implements TreeMaps layouts (SliceAndDice, Squarified, Strip).
@@ -13079,7 +8223,7 @@ Layouts.TM.SliceAndDice = new Class({
     });
     
     var config = this.config,
-        offst = config.offset,
+        offset = config.offset,
         width  = par.getData('width', prop),
         height = Math.max(par.getData('height', prop) - config.titleHeight, 0),
         fact = par == ch? 1 : (ch.getData('area', prop) / totalArea);
@@ -13149,8 +8293,8 @@ Layouts.TM.Area = {
     root.setData('height', height, prop);
     //create a coordinates object
     var coord = {
-        'top': -height/2 + config.titleHeight,
-        'left': -width/2,
+        'top': -height/2 + config.titleHeight + offst / 2,
+        'left': -width/2 + offst / 2,
         'width': offwdth,
         'height': offhght - config.titleHeight
     };
@@ -13305,8 +8449,8 @@ Layouts.TM.Squarified = new Class({
        coord = {
          'width': width,
          'height': height,
-         'top': chipos.y + config.titleHeight,
-         'left': chipos.x
+         'top': chipos.y + config.titleHeight + offst / 2,
+         'left': chipos.x + offst / 2
        };
        this.computePositions(chi, coord, prop);
      }
@@ -13380,12 +8524,12 @@ Layouts.TM.Squarified = new Class({
    }
  },
  
- layoutV: function(ch, w, coord, prop) {
-   var totalArea = 0, rnd = function(x) { return x; }; 
+layoutV: function(ch, w, coord, prop) {
+   var totalArea = 0, rnd = function(x) { return x; };
    $.each(ch, function(elem) { totalArea += elem._area; });
-   var width = rnd(totalArea / w), top =  0; 
+   var width = rnd(totalArea / w) || 0, top =  0;
    for(var i=0, l=ch.length; i<l; i++) {
-     var h = rnd(ch[i]._area / width);
+     var h = rnd(ch[i]._area / width) || 0;
      var chi = ch[i];
      chi.getPos(prop).setc(coord.left, coord.top + top);
      chi.setData('width', width, prop);
@@ -13403,17 +8547,17 @@ Layouts.TM.Squarified = new Class({
    if(ans.dim != ans.height) this.layout.change();
    return ans;
  },
- 
+
  layoutH: function(ch, w, coord, prop) {
-   var totalArea = 0; 
+   var totalArea = 0;
    $.each(ch, function(elem) { totalArea += elem._area; });
-   var height = totalArea / w,
-       top = coord.top, 
+   var height = totalArea / w || 0,
+       top = coord.top,
        left = 0;
-   
+
    for(var i=0, l=ch.length; i<l; i++) {
      var chi = ch[i];
-     var w = chi._area / height;
+     var w = chi._area / height || 0;
      chi.getPos(prop).setc(coord.left + left, top);
      chi.setData('width', w, prop);
      chi.setData('height', height, prop);
@@ -13459,8 +8603,8 @@ Layouts.TM.Strip = new Class({
          coord = {
            'width': width,
            'height': height,
-           'top': chipos.y + config.titleHeight,
-           'left': chipos.x
+           'top': chipos.y + config.titleHeight + offst / 2,
+           'left': chipos.x + offst / 2
          };
          this.computePositions(chi, coord, prop);
        }
@@ -13534,7 +8678,7 @@ Layouts.TM.Strip = new Class({
     layoutV: function(ch, w, coord, prop) {
      var totalArea = 0; 
      $.each(ch, function(elem) { totalArea += elem._area; });
-     var width = totalArea / w, top =  0; 
+     var width = totalArea / w || 0, top =  0;
      for(var i=0, l=ch.length; i<l; i++) {
        var chi = ch[i];
        var h = chi._area / width;
@@ -13557,7 +8701,7 @@ Layouts.TM.Strip = new Class({
     layoutH: function(ch, w, coord, prop) {
      var totalArea = 0; 
      $.each(ch, function(elem) { totalArea += elem._area; });
-     var height = totalArea / w,
+     var height = totalArea / w || 0,
          top = coord.height - height, 
          left = 0;
      
@@ -13580,1422 +8724,209 @@ Layouts.TM.Strip = new Class({
  });
 
 
-/*
- * Class: Layouts.Icicle
- *
- * Implements the icicle tree layout.
- *
- * Implemented By:
- *
- * <Icicle>
- *
- */
-
-Layouts.Icicle = new Class({
- /*
-  * Method: compute
-  *
-  * Called by loadJSON to calculate all node positions.
-  *
-  * Parameters:
-  *
-  * posType - The nodes' position to compute. Either "start", "end" or
-  *            "current". Defaults to "current".
-  */
-  compute: function(posType) {
-    posType = posType || "current";
-
-    var root = this.graph.getNode(this.root),
-        config = this.config,
-        size = this.canvas.getSize(),
-        width = size.width,
-        height = size.height,
-        offset = config.offset,
-        levelsToShow = config.constrained ? config.levelsToShow : Number.MAX_VALUE;
-
+Layouts.TM.Voronoi = new Class({
+  Implements : Layouts.TM.Area,
+  compute : function(prop) {
     this.controller.onBeforeCompute(root);
-
-    Graph.Util.computeLevels(this.graph, root.id, 0, "ignore");
-
-    var treeDepth = 0;
-
-    Graph.Util.eachLevel(root, 0, false, function (n, d) { if(d > treeDepth) treeDepth = d; });
-
-    var startNode = this.graph.getNode(this.clickedNode && this.clickedNode.id || root.id);
-    var maxDepth = Math.min(treeDepth, levelsToShow-1);
-    var initialDepth = startNode._depth;
-    if(this.layout.horizontal()) {
-      this.computeSubtree(startNode, -width/2, -height/2, width/(maxDepth+1), height, initialDepth, maxDepth, posType);
-    } else {
-      this.computeSubtree(startNode, -width/2, -height/2, width, height/(maxDepth+1), initialDepth, maxDepth, posType);
-    }
-  },
-
-  computeSubtree: function (root, x, y, width, height, initialDepth, maxDepth, posType) {
-    root.getPos(posType).setc(x, y);
-    root.setData('width', width, posType);
-    root.setData('height', height, posType);
-
-    var nodeLength, prevNodeLength = 0, totalDim = 0;
-    var children = Graph.Util.getSubnodes(root, [1, 1], 'ignore'); // next level from this node
-
-    if(!children.length)
-      return;
-
-    $.each(children, function(e) { totalDim += e.getData('dim'); });
-
-    for(var i=0, l=children.length; i < l; i++) {
-      if(this.layout.horizontal()) {
-        nodeLength = height * children[i].getData('dim') / totalDim;
-        this.computeSubtree(children[i], x+width, y, width, nodeLength, initialDepth, maxDepth, posType);
-        y += nodeLength;
-      } else {
-        nodeLength = width * children[i].getData('dim') / totalDim;
-        this.computeSubtree(children[i], x, y+height, nodeLength, height, initialDepth, maxDepth, posType);
-        x += nodeLength;
-      }
-    }
-  }
-});
-
-
-
-/*
- * File: Icicle.js
- *
-*/
-
-/*
-  Class: Icicle
-  
-  Icicle space filling visualization.
-  
-  Implements:
-  
-  All <Loader> methods
-  
-  Constructor Options:
-  
-  Inherits options from
-  
-  - <Options.Canvas>
-  - <Options.Controller>
-  - <Options.Node>
-  - <Options.Edge>
-  - <Options.Label>
-  - <Options.Events>
-  - <Options.Tips>
-  - <Options.NodeStyles>
-  - <Options.Navigation>
-  
-  Additionally, there are other parameters and some default values changed
-
-  orientation - (string) Default's *h*. Whether to set horizontal or vertical layouts. Possible values are 'h' and 'v'.
-  offset - (number) Default's *2*. Boxes offset.
-  constrained - (boolean) Default's *false*. Whether to show the entire tree when loaded or just the number of levels specified by _levelsToShow_.
-  levelsToShow - (number) Default's *3*. The number of levels to show for a subtree. This number is relative to the selected node.
-  animate - (boolean) Default's *false*. Whether to animate transitions.
-  Node.type - Described in <Options.Node>. Default's *rectangle*.
-  Label.type - Described in <Options.Label>. Default's *Native*.
-  duration - Described in <Options.Fx>. Default's *700*.
-  fps - Described in <Options.Fx>. Default's *45*.
-  
-  Instance Properties:
-  
-  canvas - Access a <Canvas> instance.
-  graph - Access a <Graph> instance.
-  op - Access a <Icicle.Op> instance.
-  fx - Access a <Icicle.Plot> instance.
-  labels - Access a <Icicle.Label> interface implementation.
-
-*/
-
-$jit.Icicle = new Class({
-  Implements: [ Loader, Extras, Layouts.Icicle ],
-
-  layout: {
-    orientation: "h",
-    vertical: function(){
-      return this.orientation == "v";
-    },
-    horizontal: function(){
-      return this.orientation == "h";
-    },
-    change: function(){
-      this.orientation = this.vertical()? "h" : "v";
-    }
-  },
-
-  initialize: function(controller) {
-    var config = {
-      animate: false,
-      orientation: "h",
-      offset: 2,
-      levelsToShow: Number.MAX_VALUE,
-      constrained: false,
-      Node: {
-        type: 'rectangle',
-        overridable: true
-      },
-      Edge: {
-        type: 'none'
-      },
-      Label: {
-        type: 'Native'
-      },
-      duration: 700,
-      fps: 45
-    };
-
-    var opts = Options("Canvas", "Node", "Edge", "Fx", "Tips", "NodeStyles",
-                       "Events", "Navigation", "Controller", "Label");
-    this.controller = this.config = $.merge(opts, config, controller);
-    this.layout.orientation = this.config.orientation;
-
-    var canvasConfig = this.config;
-    if (canvasConfig.useCanvas) {
-      this.canvas = canvasConfig.useCanvas;
-      this.config.labelContainer = this.canvas.id + '-label';
-    } else {
-      this.canvas = new Canvas(this, canvasConfig);
-      this.config.labelContainer = (typeof canvasConfig.injectInto == 'string'? canvasConfig.injectInto : canvasConfig.injectInto.id) + '-label';
-    }
-
-    this.graphOptions = {
-      'klass': Complex,
-      'Node': {
-        'selected': false,
-        'exist': true,
-        'drawn': true
-      }
-    };
-
-    this.graph = new Graph(
-      this.graphOptions, this.config.Node, this.config.Edge, this.config.Label);
-
-    this.labels = new $jit.Icicle.Label[this.config.Label.type](this);
-    this.fx = new $jit.Icicle.Plot(this, $jit.Icicle);
-    this.op = new $jit.Icicle.Op(this);
-    this.group = new $jit.Icicle.Group(this);
-    this.clickedNode = null;
-
-    this.initializeExtras();
-  },
-
-  /* 
-    Method: refresh 
-    
-    Computes positions and plots the tree.
-  */
-  refresh: function(){
-    var labelType = this.config.Label.type;
-    if(labelType != 'Native') {
-      var that = this;
-      this.graph.eachNode(function(n) { that.labels.hideLabel(n, false); });
-    }
-    this.compute();
-    this.plot();
-  },
-
-  /* 
-    Method: plot 
-    
-    Plots the Icicle visualization. This is a shortcut to *fx.plot*. 
-  
-   */
-  plot: function(){
-    this.fx.plot(this.config);
-  },
-
-  /* 
-    Method: enter 
-    
-    Sets the node as root.
-    
-     Parameters:
-     
-     node - (object) A <Graph.Node>.
-  
-   */
-  enter: function (node) {
-    if (this.busy)
-      return;
-    this.busy = true;
-
-    var that = this,
-        config = this.config;
-
-    var callback = {
-      onComplete: function() {
-        //compute positions of newly inserted nodes
-        if(config.request)
-          that.compute();
-
-        if(config.animate) {
-          that.graph.nodeList.setDataset(['current', 'end'], {
-            'alpha': [1, 0] //fade nodes
-          });
-
-          Graph.Util.eachSubgraph(node, function(n) {
-            n.setData('alpha', 1, 'end');
-          }, "ignore");
-
-          that.fx.animate({
-            duration: 500,
-            modes:['node-property:alpha'],
-            onComplete: function() {
-              that.clickedNode = node;
-              that.compute('end');
-
-              that.fx.animate({
-                modes:['linear', 'node-property:width:height'],
-                duration: 1000,
-                onComplete: function() {
-                  that.busy = false;
-                  that.clickedNode = node;
-                }
-              });
-            }
-          });
-        } else {
-          that.clickedNode = node;
-          that.busy = false;
-          that.refresh();
-        }
-      }
-    };
-
-    if(config.request) {
-      this.requestNodes(clickedNode, callback);
-    } else {
-      callback.onComplete();
-    }
-  },
-
-  /* 
-    Method: out 
-    
-    Sets the parent node of the current selected node as root.
-  
-   */
-  out: function(){
-    if(this.busy)
-      return;
-
-    var that = this,
-        GUtil = Graph.Util,
+    var root = this.graph.getNode(this.clickedNode && this.clickedNode.id || this.root),
+        size = this.canvas.getSize(),
         config = this.config,
-        graph = this.graph,
-        parents = GUtil.getParents(graph.getNode(this.clickedNode && this.clickedNode.id || this.root)),
-        parent = parents[0],
-        clickedNode = parent,
-        previousClickedNode = this.clickedNode;
+        offset = config.offset,
+        width = size.width,
+        height = size.height;
 
-    this.busy = true;
-    this.events.hoveredNode = false;
+    this.graph.computeLevels(this.root, 0, 0);
 
-    if(!parent) {
-      this.busy = false;
-      return;
+    // set root position and dimensions
+    root.getPos(prop).setc(-5, -5);
+    if (!root.histoPos) {
+      root.histoPos = [];
     }
+    root.histoPos[0] = $C(0, 0);
+    var bound = [
+      $C(-width * 0.5, -height * 0.5),
+      $C(width * 0.5, -height * 0.5),
+      $C(width * 0.5, height * 0.5),
+      $C(-width * 0.5, height * 0.5)
+    ];
+    bound = Geometry.offsetConvex(bound, -offset * 0.5);
+    root.setData('vertices', bound, prop);
+    root.setData('width', 0, prop);
+    root.setData('height', 0, prop);
 
-    //final plot callback
-    callback = {
-      onComplete: function() {
-        that.clickedNode = parent;
-        if(config.request) {
-          that.requestNodes(parent, {
-            onComplete: function() {
-              that.compute();
-              that.plot();
-              that.busy = false;
-            }
-          });
-        } else {
-          that.compute();
-          that.plot();
-          that.busy = false;
-        }
-      }
-    };
-
-    //animate node positions
-    if(config.animate) {
-      this.clickedNode = clickedNode;
-      this.compute('end');
-      //animate the visible subtree only
-      this.clickedNode = previousClickedNode;
-      this.fx.animate({
-        modes:['linear', 'node-property:width:height'],
-        duration: 1000,
-        onComplete: function() {
-          //animate the parent subtree
-          that.clickedNode = clickedNode;
-          //change nodes alpha
-          graph.nodeList.setDataset(['current', 'end'], {
-            'alpha': [0, 1]
-          });
-          GUtil.eachSubgraph(previousClickedNode, function(node) {
-            node.setData('alpha', 1);
-          }, "ignore");
-          that.fx.animate({
-            duration: 500,
-            modes:['node-property:alpha'],
-            onComplete: function() {
-              callback.onComplete();
-            }
-          });
-        }
-      });
-    } else {
-      callback.onComplete();
-    }
-  },
-  requestNodes: function(node, onComplete){
-    var handler = $.merge(this.controller, onComplete),
-        levelsToShow = this.config.constrained ? this.config.levelsToShow : Number.MAX_VALUE;
-
-    if (handler.request) {
-      var leaves = [], d = node._depth;
-      Graph.Util.eachLevel(node, 0, levelsToShow, function(n){
-        if (n.drawn && !Graph.Util.anySubnode(n)) {
-          leaves.push(n);
-          n._level = n._depth - d;
-          if (this.config.constrained)
-            n._level = levelsToShow - n._level;
-
-        }
-      });
-      this.group.requestNodes(leaves, handler);
-    } else {
-      handler.onComplete();
-    }
-  }
-});
-
-/*
-  Class: Icicle.Op
-  
-  Custom extension of <Graph.Op>.
-  
-  Extends:
-  
-  All <Graph.Op> methods
-  
-  See also:
-  
-  <Graph.Op>
-  
-  */
-$jit.Icicle.Op = new Class({
-
-  Implements: Graph.Op
-
-});
-
-/*
- * Performs operations on group of nodes.
- */
-$jit.Icicle.Group = new Class({
-
-  initialize: function(viz){
-    this.viz = viz;
-    this.canvas = viz.canvas;
-    this.config = viz.config;
+    bound = Geometry.offsetConvex(bound, -offset * 1.5);
+    this.computePositions(root, bound, prop, 0);
+    this.controller.onAfterCompute(root);
   },
 
-  /*
-   * Calls the request method on the controller to request a subtree for each node.
-   */
-  requestNodes: function(nodes, controller){
-    var counter = 0, len = nodes.length, nodeSelected = {};
-    var complete = function(){
-      controller.onComplete();
-    };
-    var viz = this.viz;
-    if (len == 0)
-      complete();
-    for(var i = 0; i < len; i++) {
-      nodeSelected[nodes[i].id] = nodes[i];
-      controller.request(nodes[i].id, nodes[i]._level, {
-        onComplete: function(nodeId, data){
-          if (data && data.children) {
-            data.id = nodeId;
-            viz.op.sum(data, {
-              type: 'nothing'
-            });
-          }
-          if (++counter == len) {
-            Graph.Util.computeLevels(viz.graph, viz.root, 0);
-            complete();
-          }
-        }
-      });
-    }
-  }
-});
 
-/*
-  Class: Icicle.Plot
-  
-  Custom extension of <Graph.Plot>.
-  
-  Extends:
-  
-  All <Graph.Plot> methods
-  
-  See also:
-  
-  <Graph.Plot>
-  
-  */
-$jit.Icicle.Plot = new Class({
-  Implements: Graph.Plot,
+  computePositions : function(node, bound, prop, level) {
+    var me = this,
+        chs = node.getSubnodes([ 1, 1 ], "ignore"),
+        config = this.config,
+        offset = config.offset,
+        historyPosition = node.histoPos[level] || c(0, 0),
+        sites,
+        polygons;
 
-  plot: function(opt, animating){
-    opt = opt || this.viz.controller;
-    var viz = this.viz,
-        graph = viz.graph,
-        root = graph.getNode(viz.clickedNode && viz.clickedNode.id || viz.root),
-        initialDepth = root._depth;
+    node.setData('width', 0, prop);
+    node.setData('height', 0, prop);
+    node.getPos(prop).setc(historyPosition.x, historyPosition.y);
 
-    viz.canvas.clear();
-    this.plotTree(root, $.merge(opt, {
-      'withLabels': true,
-      'hideLabels': false,
-      'plotSubtree': function(root, node) {
-        return !viz.config.constrained ||
-               (node._depth - initialDepth < viz.config.levelsToShow);
-      }
-    }), animating);
-  }
-});
-
-/*
-  Class: Icicle.Label
-  
-  Custom extension of <Graph.Label>. 
-  Contains custom <Graph.Label.SVG>, <Graph.Label.HTML> and <Graph.Label.Native> extensions.
-  
-  Extends:
-  
-  All <Graph.Label> methods and subclasses.
-  
-  See also:
-  
-  <Graph.Label>, <Graph.Label.Native>, <Graph.Label.HTML>, <Graph.Label.SVG>.
-  
-  */
-$jit.Icicle.Label = {};
-
-/*
-  Icicle.Label.Native
-  
-  Custom extension of <Graph.Label.Native>.
-  
-  Extends:
-  
-  All <Graph.Label.Native> methods
-  
-  See also:
-  
-  <Graph.Label.Native>
-
-  */
-$jit.Icicle.Label.Native = new Class({
-  Implements: Graph.Label.Native,
-
-  renderLabel: function(canvas, node, controller) {
-    var ctx = canvas.getCtx(),
-        width = node.getData('width'),
-        height = node.getData('height'),
-        size = node.getLabelData('size'),
-        m = ctx.measureText(node.name);
-
-    // Guess as much as possible if the label will fit in the node
-    if(height < (size * 1.5) || width < m.width)
-      return;
-
-    var pos = node.pos.getc(true);
-    ctx.fillText(node.name,
-                 pos.x + width / 2,
-                 pos.y + height / 2);
-  }
-});
-
-/*
-  Icicle.Label.SVG
-  
-  Custom extension of <Graph.Label.SVG>.
-  
-  Extends:
-  
-  All <Graph.Label.SVG> methods
-  
-  See also:
-  
-  <Graph.Label.SVG>
-*/
-$jit.Icicle.Label.SVG = new Class( {
-  Implements: Graph.Label.SVG,
-
-  initialize: function(viz){
-    this.viz = viz;
-  },
-
-  /*
-    placeLabel
-   
-    Overrides abstract method placeLabel in <Graph.Plot>.
-   
-    Parameters:
-   
-    tag - A DOM label element.
-    node - A <Graph.Node>.
-    controller - A configuration/controller object passed to the visualization.
-   */
-  placeLabel: function(tag, node, controller){
-    var pos = node.pos.getc(true), canvas = this.viz.canvas;
-    var radius = canvas.getSize();
-    var labelPos = {
-      x: Math.round(pos.x + radius.width / 2),
-      y: Math.round(pos.y + radius.height / 2)
-    };
-    tag.setAttribute('x', labelPos.x);
-    tag.setAttribute('y', labelPos.y);
-
-    controller.onPlaceLabel(tag, node);
-  }
-});
-
-/*
-  Icicle.Label.HTML
-  
-  Custom extension of <Graph.Label.HTML>.
-  
-  Extends:
-  
-  All <Graph.Label.HTML> methods.
-  
-  See also:
-  
-  <Graph.Label.HTML>
-  
-  */
-$jit.Icicle.Label.HTML = new Class( {
-  Implements: Graph.Label.HTML,
-
-  initialize: function(viz){
-    this.viz = viz;
-  },
-
-  /*
-    placeLabel
-   
-    Overrides abstract method placeLabel in <Graph.Plot>.
-   
-    Parameters:
-   
-    tag - A DOM label element.
-    node - A <Graph.Node>.
-    controller - A configuration/controller object passed to the visualization.
-   */
-  placeLabel: function(tag, node, controller){
-    var pos = node.pos.getc(true), canvas = this.viz.canvas;
-    var radius = canvas.getSize();
-    var labelPos = {
-      x: Math.round(pos.x + radius.width / 2),
-      y: Math.round(pos.y + radius.height / 2)
-    };
-
-    var style = tag.style;
-    style.left = labelPos.x + 'px';
-    style.top = labelPos.y + 'px';
-    style.display = '';
-
-    controller.onPlaceLabel(tag, node);
-  }
-});
-
-/*
-  Class: Icicle.Plot.NodeTypes
-  
-  This class contains a list of <Graph.Node> built-in types. 
-  Node types implemented are 'none', 'rectangle'.
-  
-  You can add your custom node types, customizing your visualization to the extreme.
-  
-  Example:
-  
-  (start code js)
-    Icicle.Plot.NodeTypes.implement({
-      'mySpecialType': {
-        'render': function(node, canvas) {
-          //print your custom node to canvas
-        },
-        //optional
-        'contains': function(node, pos) {
-          //return true if pos is inside the node or false otherwise
-        }
-      }
-    });
-  (end code)
-  
-  */
-$jit.Icicle.Plot.NodeTypes = new Class( {
-  'none': {
-    'render': $.empty
-  },
-
-  'rectangle': {
-    'render': function(node, canvas, animating) {
-      var config = this.viz.config;
-      var offset = config.offset;
-      var width = node.getData('width');
-      var height = node.getData('height');
-      var border = node.getData('border');
-      var pos = node.pos.getc(true);
-      var posx = pos.x + offset / 2, posy = pos.y + offset / 2;
-      var ctx = canvas.getCtx();
-      
-      if(width - offset < 2 || height - offset < 2) return;
-      
-      if(config.cushion) {
-        var color = node.getData('color');
-        var lg = ctx.createRadialGradient(posx + (width - offset)/2, 
-                                          posy + (height - offset)/2, 1, 
-                                          posx + (width-offset)/2, posy + (height-offset)/2, 
-                                          width < height? height : width);
-        var colorGrad = $.rgbToHex($.map($.hexToRgb(color), 
-            function(r) { return r * 0.3 >> 0; }));
-        lg.addColorStop(0, color);
-        lg.addColorStop(1, colorGrad);
-        ctx.fillStyle = lg;
-      }
-
-      if (border) {
-        ctx.strokeStyle = border;
-        ctx.lineWidth = 3;
-      }
-
-      ctx.fillRect(posx, posy, Math.max(0, width - offset), Math.max(0, height - offset));
-      border && ctx.strokeRect(pos.x, pos.y, width, height);
-    },
-
-    'contains': function(node, pos) {
-      if(this.viz.clickedNode && !$jit.Graph.Util.isDescendantOf(node, this.viz.clickedNode.id)) return false;
-      var npos = node.pos.getc(true),
-          width = node.getData('width'),
-          height = node.getData('height');
-      return this.nodeHelper.rectangle.contains({x: npos.x + width/2, y: npos.y + height/2}, pos, width, height);
-    }
-  }
-});
-
-$jit.Icicle.Plot.EdgeTypes = new Class( {
-  'none': $.empty
-});
-
-
-
-/*
- * File: Layouts.ForceDirected.js
- *
-*/
-
-/*
- * Class: Layouts.ForceDirected
- * 
- * Implements a Force Directed Layout.
- * 
- * Implemented By:
- * 
- * <ForceDirected>
- * 
- * Credits:
- * 
- * Marcus Cobden <http://marcuscobden.co.uk>
- * 
- */
-Layouts.ForceDirected = new Class({
-
-  getOptions: function(random) {
-    var s = this.canvas.getSize();
-    var w = s.width, h = s.height;
-    //count nodes
-    var count = 0;
-    this.graph.eachNode(function(n) { 
-      count++;
-    });
-    var k2 = w * h / count, k = Math.sqrt(k2);
-    var l = this.config.levelDistance;
-    
-    return {
-      width: w,
-      height: h,
-      tstart: w * 0.1,
-      nodef: function(x) { return k2 / (x || 1); },
-      edgef: function(x) { return /* x * x / k; */ k * (x - l); }
-    };
-  },
-  
-  compute: function(property, incremental) {
-    var prop = $.splat(property || ['current', 'start', 'end']);
-    var opt = this.getOptions();
-    NodeDim.compute(this.graph, prop, this.config);
-    this.graph.computeLevels(this.root, 0, "ignore");
-    this.graph.eachNode(function(n) {
-      $.each(prop, function(p) {
-        var pos = n.getPos(p);
-        if(pos.equals(Complex.KER)) {
-          pos.x = opt.width/5 * (Math.random() - 0.5);
-          pos.y = opt.height/5 * (Math.random() - 0.5);
-        }
-        //initialize disp vector
-        n.disp = {};
-        $.each(prop, function(p) {
-          n.disp[p] = $C(0, 0);
+    if (chs.length > 0) {
+      if (!chs[0].histoPos || !chs[0].histoPos[level + 1]) {
+        sites = $jit.util.map(chs, function(ch) {
+          var pt = Geometry.randPointInPolygon(bound);
+          if (ch.data && ch.data.$area)
+            pt.area = ch.data.$area;
+          return pt;
         });
-      });
-    });
-    this.computePositions(prop, opt, incremental);
-  },
-  
-  computePositions: function(property, opt, incremental) {
-    var times = this.config.iterations, i = 0, that = this;
-    if(incremental) {
-      (function iter() {
-        for(var total=incremental.iter, j=0; j<total; j++) {
-          opt.t = opt.tstart;
-          if(times) opt.t *= (1 - i++/(times -1));
-          that.computePositionStep(property, opt);
-          if(times && i >= times) {
-            incremental.onComplete();
-            return;
+        sites = me[me.config.centroidType](sites, bound);
+        $jit.util.each(sites, function(p, i) {
+          if (!chs[i].histoPos) {
+            chs[i].histoPos = [];
           }
-        }
-        incremental.onStep(Math.round(i / (times -1) * 100));
-        setTimeout(iter, 1);
-      })();
-    } else {
-      for(; i < times; i++) {
-        opt.t = opt.tstart * (1 - i/(times -1));
-        this.computePositionStep(property, opt);
+          chs[i].histoPos[level + 1] = p;
+        });
       }
+      sites = $jit.util.map(chs, function(ch) {
+        return ch.histoPos[level + 1];
+      });
+      polygons = Geometry.voronoi(sites, bound);
+
+      $jit.util.each(chs, function(ch, i) {
+        var vertices = polygons[i];
+        var newBoundary = vertices.slice(0);
+        if (Geometry.area(vertices) < 0) {
+          vertices.reverse();
+        }
+        if (offset) {
+          newBoundary = Geometry.offsetConvex(vertices, -offset * 2);
+          vertices = Geometry.offsetConvex(vertices, -offset * 0.5);
+          ch.offset = offset;
+        }
+        ch.setData('vertices', vertices, prop);
+        me.computePositions(ch, newBoundary, prop, level + 1);
+      });
     }
   },
+
+  centroid : function(sites, bound) {
+    var tdist = 2, polygons;
+    while (tdist > 1e-3) {
+      polygons = Geometry.voronoi(sites, bound);
+      tdist = 0;
+      sites = polygons.map(function(p, j) {
+        var c = Geometry.centroid(p);
+        tdist += Geometry.dist2(c, sites[j]);
+        return c;
+      });
+    }
+    return sites;
+  },
+
+  doLayoutPressure: function () {
+    var me = this,
+        root = me.graph.getNode(me.clickedNode && me.clickedNode.id || me.root);
+    root.eachNode(function() {
+
+    });
+  },
   
-  computePositionStep: function(property, opt) {
-    var graph = this.graph;
-    var min = Math.min, max = Math.max;
-    var dpos = $C(0, 0);
-    //calculate repulsive forces
-    graph.eachNode(function(v) {
-      //initialize disp
-      $.each(property, function(p) {
-        v.disp[p].x = 0; v.disp[p].y = 0;
+  weightedCentroid : function(sites, bound) {
+    // sites = this.centroid(sites, bound);
+    var pascal = [];
+    var tdist = 2, polygons, totalArea = Geometry.area(bound), totalWeight = 0, adjust;
+    $.each(sites, function(site, i) {
+      totalWeight += site.area;
+    });
+    adjust = totalArea / totalWeight;
+    polygons = Geometry.voronoi(sites, bound);
+    $.each(polygons, function(p, i) {
+        pascal[i] = sites[i].area * adjust / Geometry.area(p);
       });
-      graph.eachNode(function(u) {
-        if(u.id != v.id) {
-          $.each(property, function(p) {
-            var vp = v.getPos(p), up = u.getPos(p);
-            dpos.x = vp.x - up.x;
-            dpos.y = vp.y - up.y;
-            var norm = dpos.norm() || 1;
-            v.disp[p].$add(dpos
-                .$scale(opt.nodef(norm) / norm));
+    var s = 0, s2 = 0;
+    $.each(pascal, function(p, i) {
+      s += p;
+      s2 += p * p;
+    });
+    console.log('from ' + (s2 - s * s / pascal.length) / pascal.length);
+    while (tdist > 1e-3) {
+      polygons = Geometry.voronoi(sites, bound);
+      $.each(polygons, function(p, i) {
+        pascal[i] = sites[i].area * adjust / Geometry.area(p);
+      });
+      tdist = 0;
+      sites = polygons.map(function(p, j) {
+        var c = $C(0, 0), totalW = 0;
+        $.each(p, function(v, i) {
+          var poly = [sites[j], v, p[i + 1] || p[0]],
+              targetPascal = (v.attached) ? pascal[v.attached[0]] : 1,
+              w = Geometry.area(poly) * Math.exp((pascal[j] - targetPascal) * 2);
+          totalW += w;
+          c.$add(v.add(poly[2]).scale(0.5 * w));
+        });
+        c.$scale(1 / totalW);
+        c.area = sites[j].area;
+        tdist += Geometry.dist(c, sites[j]);
+        return c;
+      });
+    }
+    var s = 0, s2 = 0;
+    $.each(pascal, function(p, i) {
+      s += p;
+      s2 += p * p;
+    });
+    console.log('to ' + (s2 - s * s / pascal.length) / pascal.length);
+    return sites;
+  },
+
+  byArea : function(sites, bound) {
+    sites = this.centroid(sites, bound);
+    var tw = 0, iter = 0, polygons, pressure, polygons;
+    $jit.util.each(sites, function(s) {
+      tw += s.area;
+    });
+    tw = Geometry.area(bound) / tw;
+    for (; iter < 100; iter++) {
+      polygons = Geometry.voronoi(sites, bound);
+      for (var j = 0; j < sites.length; j++) {
+        if (polygons[j].length == 0) {
+          sites = polygons.map(function(p, j) {
+            return Geometry.centroid(p);
           });
+          // iter = 1;
+          break;
         }
+      }
+      pressure = polygons.map(function(p, ind) {
+        return p.area * tw / (Geometry.area(p) + 1e-10);
       });
-    });
-    //calculate attractive forces
-    var T = !!graph.getNode(this.root).visited;
-    graph.eachNode(function(node) {
-      node.eachAdjacency(function(adj) {
-        var nodeTo = adj.nodeTo;
-        if(!!nodeTo.visited === T) {
-          $.each(property, function(p) {
-            var vp = node.getPos(p), up = nodeTo.getPos(p);
-            dpos.x = vp.x - up.x;
-            dpos.y = vp.y - up.y;
-            var norm = dpos.norm() || 1;
-            node.disp[p].$add(dpos.$scale(-opt.edgef(norm) / norm));
-            nodeTo.disp[p].$add(dpos.$scale(-1));
-          });
-        }
+      polygons = Geometry.voronoi(sites, bound);
+      sites = polygons.map(function(p, ind) {
+        var po = $C(sites[ind].x, sites[ind].y), totalPressure, i;
+        po.area = sites[ind].area;
+        totalPressure = $C(0, 0);
+        $jit.util.each(p, function(v, i) {
+          var target = (v.attached) ? v.attached : -1,
+              targetPressure = (v.attached) ? pressure[v.attached[0]] : 1,
+              start = v,
+              stop = p[i + 1] || p[0],
+              pr = (pressure[ind] - targetPressure),
+              dx = stop.x - start.x,
+              dy = stop.y - start.y;
+          totalPressure.x += dy * pr;
+          totalPressure.y -= dx * pr;
+        });
+        po.x += totalPressure.x / 10;
+        po.y += totalPressure.y / 10;
+        po.tp = totalPressure;
+        return po;
       });
-      node.visited = !T;
-    });
-    //arrange positions to fit the canvas
-    var t = opt.t, w2 = opt.width / 2, h2 = opt.height / 2;
-    graph.eachNode(function(u) {
-      $.each(property, function(p) {
-        var disp = u.disp[p];
-        var norm = disp.norm() || 1;
-        var p = u.getPos(p);
-        p.$add($C(disp.x * min(Math.abs(disp.x), t) / norm, 
-            disp.y * min(Math.abs(disp.y), t) / norm));
-        p.x = min(w2, max(-w2, p.x));
-        p.y = min(h2, max(-h2, p.y));
-      });
-    });
+    }
+    return sites;
   }
 });
-
-/*
- * File: ForceDirected.js
- */
-
-/*
-   Class: ForceDirected
-      
-   A visualization that lays graphs using a Force-Directed layout algorithm.
-   
-   Inspired by:
-  
-   Force-Directed Drawing Algorithms (Stephen G. Kobourov) <http://www.cs.brown.edu/~rt/gdhandbook/chapters/force-directed.pdf>
-   
-  Implements:
-  
-  All <Loader> methods
-  
-   Constructor Options:
-   
-   Inherits options from
-   
-   - <Options.Canvas>
-   - <Options.Controller>
-   - <Options.Node>
-   - <Options.Edge>
-   - <Options.Label>
-   - <Options.Events>
-   - <Options.Tips>
-   - <Options.NodeStyles>
-   - <Options.Navigation>
-   
-   Additionally, there are two parameters
-   
-   levelDistance - (number) Default's *50*. The natural length desired for the edges.
-   iterations - (number) Default's *50*. The number of iterations for the spring layout simulation. Depending on the browser's speed you could set this to a more 'interesting' number, like *200*. 
-     
-   Instance Properties:
-
-   canvas - Access a <Canvas> instance.
-   graph - Access a <Graph> instance.
-   op - Access a <ForceDirected.Op> instance.
-   fx - Access a <ForceDirected.Plot> instance.
-   labels - Access a <ForceDirected.Label> interface implementation.
-
-*/
-
-$jit.ForceDirected = new Class( {
-
-  Implements: [ Loader, Extras, Layouts.ForceDirected ],
-
-  initialize: function(controller) {
-    var $ForceDirected = $jit.ForceDirected;
-
-    var config = {
-      iterations: 50,
-      levelDistance: 50
-    };
-
-    this.controller = this.config = $.merge(Options("Canvas", "Node", "Edge",
-        "Fx", "Tips", "NodeStyles", "Events", "Navigation", "Controller", "Label"), config, controller);
-
-    var canvasConfig = this.config;
-    if(canvasConfig.useCanvas) {
-      this.canvas = canvasConfig.useCanvas;
-      this.config.labelContainer = this.canvas.id + '-label';
-    } else {
-      if(canvasConfig.background) {
-        canvasConfig.background = $.merge({
-          type: 'Circles'
-        }, canvasConfig.background);
-      }
-      this.canvas = new Canvas(this, canvasConfig);
-      this.config.labelContainer = (typeof canvasConfig.injectInto == 'string'? canvasConfig.injectInto : canvasConfig.injectInto.id) + '-label';
-    }
-
-    this.graphOptions = {
-      'klass': Complex,
-      'Node': {
-        'selected': false,
-        'exist': true,
-        'drawn': true
-      }
-    };
-    this.graph = new Graph(this.graphOptions, this.config.Node,
-        this.config.Edge);
-    this.labels = new $ForceDirected.Label[canvasConfig.Label.type](this);
-    this.fx = new $ForceDirected.Plot(this, $ForceDirected);
-    this.op = new $ForceDirected.Op(this);
-    this.json = null;
-    this.busy = false;
-    // initialize extras
-    this.initializeExtras();
-  },
-
-  /* 
-    Method: refresh 
-    
-    Computes positions and plots the tree.
-  */
-  refresh: function() {
-    this.compute();
-    this.plot();
-  },
-
-  reposition: function() {
-    this.compute('end');
-  },
-
-/*
-  Method: computeIncremental
-  
-  Performs the Force Directed algorithm incrementally.
-  
-  Description:
-  
-  ForceDirected algorithms can perform many computations and lead to JavaScript taking too much time to complete. 
-  This method splits the algorithm into smaller parts allowing the user to track the evolution of the algorithm and 
-  avoiding browser messages such as "This script is taking too long to complete".
-  
-  Parameters:
-  
-  opt - (object) The object properties are described below
-  
-  iter - (number) Default's *20*. Split the algorithm into pieces of _iter_ iterations. For example, if the _iterations_ configuration property 
-  of your <ForceDirected> class is 100, then you could set _iter_ to 20 to split the main algorithm into 5 smaller pieces.
-  
-  property - (string) Default's *end*. Whether to update starting, current or ending node positions. Possible values are 'end', 'start', 'current'. 
-  You can also set an array of these properties. If you'd like to keep the current node positions but to perform these 
-  computations for final animation positions then you can just choose 'end'.
-  
-  onStep - (function) A callback function called when each "small part" of the algorithm completed. This function gets as first formal 
-  parameter a percentage value.
-  
-  onComplete - A callback function called when the algorithm completed.
-  
-  Example:
-  
-  In this example I calculate the end positions and then animate the graph to those positions
-  
-  (start code js)
-  var fd = new $jit.ForceDirected(...);
-  fd.computeIncremental({
-    iter: 20,
-    property: 'end',
-    onStep: function(perc) {
-      Log.write("loading " + perc + "%");
-    },
-    onComplete: function() {
-      Log.write("done");
-      fd.animate();
-    }
-  });
-  (end code)
-  
-  In this example I calculate all positions and (re)plot the graph
-  
-  (start code js)
-  var fd = new ForceDirected(...);
-  fd.computeIncremental({
-    iter: 20,
-    property: ['end', 'start', 'current'],
-    onStep: function(perc) {
-      Log.write("loading " + perc + "%");
-    },
-    onComplete: function() {
-      Log.write("done");
-      fd.plot();
-    }
-  });
-  (end code)
-  
-  */
-  computeIncremental: function(opt) {
-    opt = $.merge( {
-      iter: 20,
-      property: 'end',
-      onStep: $.empty,
-      onComplete: $.empty
-    }, opt || {});
-
-    this.config.onBeforeCompute(this.graph.getNode(this.root));
-    this.compute(opt.property, opt);
-  },
-
-  /*
-    Method: plot
-   
-    Plots the ForceDirected graph. This is a shortcut to *fx.plot*.
-   */
-  plot: function() {
-    this.fx.plot();
-  },
-
-  /*
-     Method: animate
-    
-     Animates the graph from the current positions to the 'end' node positions.
-  */
-  animate: function(opt) {
-    this.fx.animate($.merge( {
-      modes: [ 'linear' ]
-    }, opt || {}));
-  }
-});
-
-$jit.ForceDirected.$extend = true;
-
-(function(ForceDirected) {
-
-  /*
-     Class: ForceDirected.Op
-     
-     Custom extension of <Graph.Op>.
-
-     Extends:
-
-     All <Graph.Op> methods
-     
-     See also:
-     
-     <Graph.Op>
-
-  */
-  ForceDirected.Op = new Class( {
-
-    Implements: Graph.Op
-
-  });
-
-  /*
-    Class: ForceDirected.Plot
-    
-    Custom extension of <Graph.Plot>.
-  
-    Extends:
-  
-    All <Graph.Plot> methods
-    
-    See also:
-    
-    <Graph.Plot>
-  
-  */
-  ForceDirected.Plot = new Class( {
-
-    Implements: Graph.Plot
-
-  });
-
-  /*
-    Class: ForceDirected.Label
-    
-    Custom extension of <Graph.Label>. 
-    Contains custom <Graph.Label.SVG>, <Graph.Label.HTML> and <Graph.Label.Native> extensions.
-  
-    Extends:
-  
-    All <Graph.Label> methods and subclasses.
-  
-    See also:
-  
-    <Graph.Label>, <Graph.Label.Native>, <Graph.Label.HTML>, <Graph.Label.SVG>.
-  
-  */
-  ForceDirected.Label = {};
-
-  /*
-     ForceDirected.Label.Native
-     
-     Custom extension of <Graph.Label.Native>.
-
-     Extends:
-
-     All <Graph.Label.Native> methods
-
-     See also:
-
-     <Graph.Label.Native>
-
-  */
-  ForceDirected.Label.Native = new Class( {
-    Implements: Graph.Label.Native
-  });
-
-  /*
-    ForceDirected.Label.SVG
-    
-    Custom extension of <Graph.Label.SVG>.
-  
-    Extends:
-  
-    All <Graph.Label.SVG> methods
-  
-    See also:
-  
-    <Graph.Label.SVG>
-  
-  */
-  ForceDirected.Label.SVG = new Class( {
-    Implements: Graph.Label.SVG,
-
-    initialize: function(viz) {
-      this.viz = viz;
-    },
-
-    /* 
-       placeLabel
-
-       Overrides abstract method placeLabel in <Graph.Label>.
-
-       Parameters:
-
-       tag - A DOM label element.
-       node - A <Graph.Node>.
-       controller - A configuration/controller object passed to the visualization.
-      
-     */
-    placeLabel: function(tag, node, controller) {
-      var pos = node.pos.getc(true), 
-          canvas = this.viz.canvas,
-          ox = canvas.translateOffsetX,
-          oy = canvas.translateOffsetY,
-          sx = canvas.scaleOffsetX,
-          sy = canvas.scaleOffsetY,
-          radius = canvas.getSize();
-      var labelPos = {
-        x: Math.round(pos.x * sx + ox + radius.width / 2),
-        y: Math.round(pos.y * sy + oy + radius.height / 2)
-      };
-      tag.setAttribute('x', labelPos.x);
-      tag.setAttribute('y', labelPos.y);
-
-      controller.onPlaceLabel(tag, node);
-    }
-  });
-
-  /*
-     ForceDirected.Label.HTML
-     
-     Custom extension of <Graph.Label.HTML>.
-
-     Extends:
-
-     All <Graph.Label.HTML> methods.
-
-     See also:
-
-     <Graph.Label.HTML>
-
-  */
-  ForceDirected.Label.HTML = new Class( {
-    Implements: Graph.Label.HTML,
-
-    initialize: function(viz) {
-      this.viz = viz;
-    },
-    /* 
-       placeLabel
-
-       Overrides abstract method placeLabel in <Graph.Plot>.
-
-       Parameters:
-
-       tag - A DOM label element.
-       node - A <Graph.Node>.
-       controller - A configuration/controller object passed to the visualization.
-      
-     */
-    placeLabel: function(tag, node, controller) {
-      var pos = node.pos.getc(true), 
-          canvas = this.viz.canvas,
-          ox = canvas.translateOffsetX,
-          oy = canvas.translateOffsetY,
-          sx = canvas.scaleOffsetX,
-          sy = canvas.scaleOffsetY,
-          radius = canvas.getSize();
-      var labelPos = {
-        x: Math.round(pos.x * sx + ox + radius.width / 2),
-        y: Math.round(pos.y * sy + oy + radius.height / 2)
-      };
-      var style = tag.style;
-      style.left = labelPos.x + 'px';
-      style.top = labelPos.y + 'px';
-      style.display = this.fitsInCanvas(labelPos, canvas) ? '' : 'none';
-
-      controller.onPlaceLabel(tag, node);
-    }
-  });
-
-  /*
-    Class: ForceDirected.Plot.NodeTypes
-
-    This class contains a list of <Graph.Node> built-in types. 
-    Node types implemented are 'none', 'circle', 'triangle', 'rectangle', 'star', 'ellipse' and 'square'.
-
-    You can add your custom node types, customizing your visualization to the extreme.
-
-    Example:
-
-    (start code js)
-      ForceDirected.Plot.NodeTypes.implement({
-        'mySpecialType': {
-          'render': function(node, canvas) {
-            //print your custom node to canvas
-          },
-          //optional
-          'contains': function(node, pos) {
-            //return true if pos is inside the node or false otherwise
-          }
-        }
-      });
-    (end code)
-
-  */
-  ForceDirected.Plot.NodeTypes = new Class({
-    'none': {
-      'render': $.empty,
-      'contains': $.lambda(false)
-    },
-    'circle': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        this.nodeHelper.circle.render('fill', pos, dim, canvas);
-      },
-      'contains': function(node, pos){
-        var npos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        return this.nodeHelper.circle.contains(npos, pos, dim);
-      }
-    },
-    'ellipse': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true), 
-            width = node.getData('width'), 
-            height = node.getData('height');
-        this.nodeHelper.ellipse.render('fill', pos, width, height, canvas);
-        },
-      'contains': function(node, pos){
-        var npos = node.pos.getc(true), 
-            width = node.getData('width'), 
-            height = node.getData('height');
-        return this.nodeHelper.ellipse.contains(npos, pos, width, height);
-      }
-    },
-    'square': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        this.nodeHelper.square.render('fill', pos, dim, canvas);
-      },
-      'contains': function(node, pos){
-        var npos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        return this.nodeHelper.square.contains(npos, pos, dim);
-      }
-    },
-    'rectangle': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true), 
-            width = node.getData('width'), 
-            height = node.getData('height');
-        this.nodeHelper.rectangle.render('fill', pos, width, height, canvas);
-      },
-      'contains': function(node, pos){
-        var npos = node.pos.getc(true), 
-            width = node.getData('width'), 
-            height = node.getData('height');
-        return this.nodeHelper.rectangle.contains(npos, pos, width, height);
-      }
-    },
-    'triangle': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        this.nodeHelper.triangle.render('fill', pos, dim, canvas);
-      },
-      'contains': function(node, pos) {
-        var npos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        return this.nodeHelper.triangle.contains(npos, pos, dim);
-      }
-    },
-    'star': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true),
-            dim = node.getData('dim');
-        this.nodeHelper.star.render('fill', pos, dim, canvas);
-      },
-      'contains': function(node, pos) {
-        var npos = node.pos.getc(true),
-            dim = node.getData('dim');
-        return this.nodeHelper.star.contains(npos, pos, dim);
-      }
-    }
-  });
-
-  /*
-    Class: ForceDirected.Plot.EdgeTypes
-  
-    This class contains a list of <Graph.Adjacence> built-in types. 
-    Edge types implemented are 'none', 'line' and 'arrow'.
-  
-    You can add your custom edge types, customizing your visualization to the extreme.
-  
-    Example:
-  
-    (start code js)
-      ForceDirected.Plot.EdgeTypes.implement({
-        'mySpecialType': {
-          'render': function(adj, canvas) {
-            //print your custom edge to canvas
-          },
-          //optional
-          'contains': function(adj, pos) {
-            //return true if pos is inside the arc or false otherwise
-          }
-        }
-      });
-    (end code)
-  
-  */
-  ForceDirected.Plot.EdgeTypes = new Class({
-    'none': $.empty,
-    'line': {
-      'render': function(adj, canvas) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true);
-        this.edgeHelper.line.render(from, to, canvas);
-      },
-      'contains': function(adj, pos) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true);
-        return this.edgeHelper.line.contains(from, to, pos, this.edge.epsilon);
-      }
-    },
-    'arrow': {
-      'render': function(adj, canvas) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true),
-            dim = adj.getData('dim'),
-            direction = adj.data.$direction,
-            inv = (direction && direction.length>1 && direction[0] != adj.nodeFrom.id);
-        this.edgeHelper.arrow.render(from, to, dim, inv, canvas);
-      },
-      'contains': function(adj, pos) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true);
-        return this.edgeHelper.arrow.contains(from, to, pos, this.edge.epsilon);
-      }
-    }
-  });
-
-})($jit.ForceDirected);
 
 
 /*
@@ -15039,10 +8970,12 @@ $jit.TM.$extend = true;
   offset - (number) Default's *2*. Boxes offset.
   constrained - (boolean) Default's *false*. Whether to show the entire tree when loaded or just the number of levels specified by _levelsToShow_.
   levelsToShow - (number) Default's *3*. The number of levels to show for a subtree. This number is relative to the selected node.
+  labelsToShow - describe the range of levels to show for labels of sub tree. Default's [0, -1].
   animate - (boolean) Default's *false*. Whether to animate transitions.
   Node.type - Described in <Options.Node>. Default's *rectangle*.
   duration - Described in <Options.Fx>. Default's *700*.
   fps - Described in <Options.Fx>. Default's *45*.
+  
   
   Instance Properties:
   
@@ -15083,6 +9016,7 @@ TM.Base = {
       titleHeight: 13,
       offset: 2,
       levelsToShow: 0,
+      labelsToShow: [0, -1],
       constrained: false,
       animate: false,
       Node: {
@@ -15092,7 +9026,8 @@ TM.Base = {
         //right, Firefox?
         width: 3,
         height: 3,
-        color: '#444'
+        color: '#444',
+        props: 'node-property:width:height'
       },
       Label: {
         textAlign: 'center',
@@ -15120,7 +9055,10 @@ TM.Base = {
         }, canvasConfig.background);
       }
       this.canvas = new Canvas(this, canvasConfig);
-      this.config.labelContainer = (typeof canvasConfig.injectInto == 'string'? canvasConfig.injectInto : canvasConfig.injectInto.id) + '-label';
+      this.config.labelContainer = (
+        typeof canvasConfig.injectInto == 'string'? 
+        canvasConfig.injectInto : 
+        canvasConfig.injectInto.id) + '-label';
     }
 
     this.graphOptions = {
@@ -15155,10 +9093,10 @@ TM.Base = {
     var that = this;
     if(this.config.animate) {
       this.compute('end');
-      this.config.levelsToShow > 0 && this.geom.setRightLevelToShow(this.graph.getNode(this.clickedNode 
+      this.geom.setRightLevelToShow(this.graph.getNode(this.clickedNode
           && this.clickedNode.id || this.root));
       this.fx.animate($.merge(this.config, {
-        modes: ['linear', 'node-property:width:height'],
+        modes: ['linear', this.config.Node.props],
         onComplete: function() {
           that.busy = false;
         }
@@ -15166,12 +9104,11 @@ TM.Base = {
     } else {
       var labelType = this.config.Label.type;
       if(labelType != 'Native') {
-        var that = this;
         this.graph.eachNode(function(n) { that.labels.hideLabel(n, false); });
       }
       this.busy = false;
       this.compute();
-      this.config.levelsToShow > 0 && this.geom.setRightLevelToShow(this.graph.getNode(this.clickedNode 
+      this.geom.setRightLevelToShow(this.graph.getNode(this.clickedNode 
           && this.clickedNode.id || this.root));
       this.plot();
     }
@@ -15216,7 +9153,6 @@ TM.Base = {
   enter: function(n){
     if(this.busy) return;
     this.busy = true;
-    
     var that = this,
         config = this.config,
         graph = this.graph,
@@ -15226,19 +9162,20 @@ TM.Base = {
     var callback = {
       onComplete: function() {
         //ensure that nodes are shown for that level
-        if(config.levelsToShow > 0) {
-          that.geom.setRightLevelToShow(n);
-        }
+        that.geom.setRightLevelToShow(n);
+        
         //compute positions of newly inserted nodes
-        if(config.levelsToShow > 0 || config.request) that.compute();
+        if(config.request) that.compute();
         if(config.animate) {
           //fade nodes
           graph.nodeList.setData('alpha', 0, 'end');
           n.eachSubgraph(function(n) {
             n.setData('alpha', 1, 'end');
+            n.selected = false;
           }, "ignore");
+          clickedNode.selected = true;
           that.fx.animate({
-            duration: 500,
+            duration: that.config.duration / 3,
             modes:['node-property:alpha'],
             onComplete: function() {
               //compute end positions
@@ -15248,12 +9185,13 @@ TM.Base = {
               //TODO(nico) commenting this line didn't seem to throw errors...
               that.clickedNode = previousClickedNode;
               that.fx.animate({
-                modes:['linear', 'node-property:width:height'],
-                duration: 1000,
+                duration: 2 * that.config.duration / 3,
+                modes:['linear', that.config.Node.props],
                 onComplete: function() { 
                   that.busy = false;
                   //TODO(nico) check comment above
                   that.clickedNode = clickedNode;
+                  that.geom.setRightLevelToShow(clickedNode);
                 }
               });
             }
@@ -15265,6 +9203,7 @@ TM.Base = {
         }
       }
     };
+    this.geom.setRightLevelToShow(n);
     if(config.request) {
       this.requestNodes(clickedNode, callback);
     } else {
@@ -15296,9 +9235,12 @@ TM.Base = {
       this.busy = false;
       return;
     }
+    parent.selected = true;
+    
     //final plot callback
-    callback = {
+    var callback = {
       onComplete: function() {
+        previousClickedNode.selected = false;
         that.clickedNode = parent;
         if(config.request) {
           that.requestNodes(parent, {
@@ -15313,11 +9255,12 @@ TM.Base = {
           that.plot();
           that.busy = false;
         }
+        that.geom.setRightLevelToShow(parent);
+        that.plot();
       }
     };
     //prune tree
-    if (config.levelsToShow > 0)
-      this.geom.setRightLevelToShow(parent);
+    this.geom.setRightLevelToShow(parent);
     //animate node positions
     if(config.animate) {
       this.clickedNode = clickedNode;
@@ -15325,13 +9268,13 @@ TM.Base = {
       //animate the visible subtree only
       this.clickedNode = previousClickedNode;
       this.fx.animate({
-        modes:['linear', 'node-property:width:height'],
-        duration: 1000,
+        duration: 2 * this.config.duration / 3,
+        modes:['linear', this.config.Node.props],
         onComplete: function() {
           //animate the parent subtree
           that.clickedNode = clickedNode;
           //change nodes alpha
-          graph.eachNode(function(n) {
+          clickedNode.eachSubgraph(function(n) {
             n.setDataset(['current', 'end'], {
               'alpha': [0, 1]
             });
@@ -15339,8 +9282,9 @@ TM.Base = {
           previousClickedNode.eachSubgraph(function(node) {
             node.setData('alpha', 1);
           }, "ignore");
+          that.geom.setRightLevelToShow(parent);
           that.fx.animate({
-            duration: 500,
+            duration: that.config.duration / 3,
             modes:['node-property:alpha'],
             onComplete: function() {
               callback.onComplete();
@@ -15376,6 +9320,7 @@ TM.Base = {
   }
 };
 
+
 /*
   Class: TM.Op
   
@@ -15407,11 +9352,14 @@ TM.Geom = new Class({
   },
   
   setRightLevelToShow: function(node) {
-    var level = this.getRightLevelToShow(), 
+    var level = this.getRightLevelToShow(),
+        labelRange = this.viz.config.labelsToShow,
         fx = this.viz.labels;
-    node.eachLevel(0, level+1, function(n) {
+    var dump = {};
+    node.eachLevel(0, false, function(n) {
       var d = n._depth - node._depth;
-      if(d > level) {
+      n._hideLabel = labelRange[0] >= 0 && d < labelRange[0] || labelRange[1] >= 0 && d > labelRange[1];
+      if(level > 0 && d > level) {
         n.drawn = false; 
         n.exist = false;
         n.ignore = true;
@@ -15421,6 +9369,7 @@ TM.Geom = new Class({
         n.exist = true;
         delete n.ignore;
       }
+      dump[n.name] = n._hideLabel;
     });
     node.drawn = true;
     delete node.ignore;
@@ -15554,15 +9503,18 @@ TM.Label.Native = new Class({
   },
   
   renderLabel: function(canvas, node, controller){
-    if(!this.leaf(node) && !this.config.titleHeight) return;
+    if(node._hideLabel || !this.leaf(node) && !this.config.titleHeight) return;
     var pos = node.pos.getc(true), 
         ctx = canvas.getCtx(),
         width = node.getData('width'),
         height = node.getData('height'),
-        x = pos.x + width/2,
+        x = pos.x + width / 2,
         y = pos.y;
-        
-    ctx.fillText(node.name, x, y, width);
+      if (isNaN(width) || width === 0) {
+        ctx.fillText(node.name, x, y);
+      } else {
+        ctx.fillText(node.name, x, y, width);  
+      }
   }
 });
 
@@ -15601,6 +9553,7 @@ TM.Label.SVG = new Class( {
   
   */
   placeLabel: function(tag, node, controller){
+  	controller = controller || this.viz.controller;
     var pos = node.pos.getc(true), 
         canvas = this.viz.canvas,
         ox = canvas.translateOffsetX,
@@ -15615,7 +9568,7 @@ TM.Label.SVG = new Class( {
     tag.setAttribute('x', labelPos.x);
     tag.setAttribute('y', labelPos.y);
 
-    if(!this.leaf(node) && !this.config.titleHeight) {
+    if(node._hideLabel || !this.leaf(node) && !this.config.titleHeight) {
       tag.style.display = 'none';
     }
     controller.onPlaceLabel(tag, node);
@@ -15658,6 +9611,7 @@ TM.Label.HTML = new Class( {
   
   */
   placeLabel: function(tag, node, controller){
+    controller = controller || this.viz.controller;
     var pos = node.pos.getc(true), 
         canvas = this.viz.canvas,
         ox = canvas.translateOffsetX,
@@ -15678,7 +9632,7 @@ TM.Label.HTML = new Class( {
     style.zIndex = node._depth * 100;
     style.display = '';
 
-    if(!this.leaf(node) && !this.config.titleHeight) {
+    if(node._hideLabel || !this.leaf(node) && !this.config.titleHeight) {
       tag.style.display = 'none';
     }
     controller.onPlaceLabel(tag, node);
@@ -15818,1344 +9772,6 @@ TM.Strip = new Class( {
       Loader, Extras, TM.Base, Layouts.TM.Strip
   ]
 });
-
-
-/*
- * File: RGraph.js
- *
- */
-
-/*
-   Class: RGraph
-   
-   A radial graph visualization with advanced animations.
-   
-   Inspired by:
- 
-   Animated Exploration of Dynamic Graphs with Radial Layout (Ka-Ping Yee, Danyel Fisher, Rachna Dhamija, Marti Hearst) <http://bailando.sims.berkeley.edu/papers/infovis01.htm>
-   
-   Note:
-   
-   This visualization was built and engineered from scratch, taking only the paper as inspiration, and only shares some features with the visualization described in the paper.
-   
-  Implements:
-  
-  All <Loader> methods
-  
-   Constructor Options:
-   
-   Inherits options from
-   
-   - <Options.Canvas>
-   - <Options.Controller>
-   - <Options.Node>
-   - <Options.Edge>
-   - <Options.Label>
-   - <Options.Events>
-   - <Options.Tips>
-   - <Options.NodeStyles>
-   - <Options.Navigation>
-   
-   Additionally, there are other parameters and some default values changed
-   
-   interpolation - (string) Default's *linear*. Describes the way nodes are interpolated. Possible values are 'linear' and 'polar'.
-   levelDistance - (number) Default's *100*. The distance between levels of the tree. 
-     
-   Instance Properties:
-
-   canvas - Access a <Canvas> instance.
-   graph - Access a <Graph> instance.
-   op - Access a <RGraph.Op> instance.
-   fx - Access a <RGraph.Plot> instance.
-   labels - Access a <RGraph.Label> interface implementation.   
-*/
-
-$jit.RGraph = new Class( {
-
-  Implements: [
-      Loader, Extras, Layouts.Radial
-  ],
-
-  initialize: function(controller){
-    var $RGraph = $jit.RGraph;
-
-    var config = {
-      interpolation: 'linear',
-      levelDistance: 100
-    };
-
-    this.controller = this.config = $.merge(Options("Canvas", "Node", "Edge",
-        "Fx", "Controller", "Tips", "NodeStyles", "Events", "Navigation", "Label"), config, controller);
-
-    var canvasConfig = this.config;
-    if(canvasConfig.useCanvas) {
-      this.canvas = canvasConfig.useCanvas;
-      this.config.labelContainer = this.canvas.id + '-label';
-    } else {
-      if(canvasConfig.background) {
-        canvasConfig.background = $.merge({
-          type: 'Circles'
-        }, canvasConfig.background);
-      }
-      this.canvas = new Canvas(this, canvasConfig);
-      this.config.labelContainer = (typeof canvasConfig.injectInto == 'string'? canvasConfig.injectInto : canvasConfig.injectInto.id) + '-label';
-    }
-
-    this.graphOptions = {
-      'klass': Polar,
-      'Node': {
-        'selected': false,
-        'exist': true,
-        'drawn': true
-      }
-    };
-    this.graph = new Graph(this.graphOptions, this.config.Node,
-        this.config.Edge);
-    this.labels = new $RGraph.Label[canvasConfig.Label.type](this);
-    this.fx = new $RGraph.Plot(this, $RGraph);
-    this.op = new $RGraph.Op(this);
-    this.json = null;
-    this.root = null;
-    this.busy = false;
-    this.parent = false;
-    // initialize extras
-    this.initializeExtras();
-  },
-
-  /* 
-  
-    createLevelDistanceFunc 
-  
-    Returns the levelDistance function used for calculating a node distance 
-    to its origin. This function returns a function that is computed 
-    per level and not per node, such that all nodes with the same depth will have the 
-    same distance to the origin. The resulting function gets the 
-    parent node as parameter and returns a float.
-
-   */
-  createLevelDistanceFunc: function(){
-    var ld = this.config.levelDistance;
-    return function(elem){
-      return (elem._depth + 1) * ld;
-    };
-  },
-
-  /* 
-     Method: refresh 
-     
-     Computes positions and plots the tree.
-
-   */
-  refresh: function(){
-    this.compute();
-    this.plot();
-  },
-
-  reposition: function(){
-    this.compute('end');
-  },
-
-  /*
-   Method: plot
-  
-   Plots the RGraph. This is a shortcut to *fx.plot*.
-  */
-  plot: function(){
-    this.fx.plot();
-  },
-  /*
-   getNodeAndParentAngle
-  
-   Returns the _parent_ of the given node, also calculating its angle span.
-  */
-  getNodeAndParentAngle: function(id){
-    var theta = false;
-    var n = this.graph.getNode(id);
-    var ps = n.getParents();
-    var p = (ps.length > 0)? ps[0] : false;
-    if (p) {
-      var posParent = p.pos.getc(), posChild = n.pos.getc();
-      var newPos = posParent.add(posChild.scale(-1));
-      theta = Math.atan2(newPos.y, newPos.x);
-      if (theta < 0)
-        theta += 2 * Math.PI;
-    }
-    return {
-      parent: p,
-      theta: theta
-    };
-  },
-  /*
-   tagChildren
-  
-   Enumerates the children in order to maintain child ordering (second constraint of the paper).
-  */
-  tagChildren: function(par, id){
-    if (par.angleSpan) {
-      var adjs = [];
-      par.eachAdjacency(function(elem){
-        adjs.push(elem.nodeTo);
-      }, "ignore");
-      var len = adjs.length;
-      for ( var i = 0; i < len && id != adjs[i].id; i++)
-        ;
-      for ( var j = (i + 1) % len, k = 0; id != adjs[j].id; j = (j + 1) % len) {
-        adjs[j].dist = k++;
-      }
-    }
-  },
-  /* 
-  Method: onClick 
-  
-  Animates the <RGraph> to center the node specified by *id*.
-
-   Parameters:
-
-   id - A <Graph.Node> id.
-   opt - (optional|object) An object containing some extra properties described below
-   hideLabels - (boolean) Default's *true*. Hide labels when performing the animation.
-
-   Example:
-
-   (start code js)
-     rgraph.onClick('someid');
-     //or also...
-     rgraph.onClick('someid', {
-      hideLabels: false
-     });
-    (end code)
-    
-  */
-  onClick: function(id, opt){
-    if (this.root != id && !this.busy) {
-      this.busy = true;
-      this.root = id;
-      var that = this;
-      this.controller.onBeforeCompute(this.graph.getNode(id));
-      var obj = this.getNodeAndParentAngle(id);
-
-      // second constraint
-      this.tagChildren(obj.parent, id);
-      this.parent = obj.parent;
-      this.compute('end');
-
-      // first constraint
-      var thetaDiff = obj.theta - obj.parent.endPos.theta;
-      this.graph.eachNode(function(elem){
-        elem.endPos.set(elem.endPos.getp().add($P(thetaDiff, 0)));
-      });
-
-      var mode = this.config.interpolation;
-      opt = $.merge( {
-        onComplete: $.empty
-      }, opt || {});
-
-      this.fx.animate($.merge( {
-        hideLabels: true,
-        modes: [
-          mode
-        ]
-      }, opt, {
-        onComplete: function(){
-          that.busy = false;
-          opt.onComplete();
-        }
-      }));
-    }
-  }
-});
-
-$jit.RGraph.$extend = true;
-
-(function(RGraph){
-
-  /*
-     Class: RGraph.Op
-     
-     Custom extension of <Graph.Op>.
-
-     Extends:
-
-     All <Graph.Op> methods
-     
-     See also:
-     
-     <Graph.Op>
-
-  */
-  RGraph.Op = new Class( {
-
-    Implements: Graph.Op
-
-  });
-
-  /*
-     Class: RGraph.Plot
-    
-    Custom extension of <Graph.Plot>.
-  
-    Extends:
-  
-    All <Graph.Plot> methods
-    
-    See also:
-    
-    <Graph.Plot>
-  
-  */
-  RGraph.Plot = new Class( {
-
-    Implements: Graph.Plot
-
-  });
-
-  /*
-    Object: RGraph.Label
-
-    Custom extension of <Graph.Label>. 
-    Contains custom <Graph.Label.SVG>, <Graph.Label.HTML> and <Graph.Label.Native> extensions.
-  
-    Extends:
-  
-    All <Graph.Label> methods and subclasses.
-  
-    See also:
-  
-    <Graph.Label>, <Graph.Label.Native>, <Graph.Label.HTML>, <Graph.Label.SVG>.
-  
-   */
-  RGraph.Label = {};
-
-  /*
-     RGraph.Label.Native
-
-     Custom extension of <Graph.Label.Native>.
-
-     Extends:
-
-     All <Graph.Label.Native> methods
-
-     See also:
-
-     <Graph.Label.Native>
-
-  */
-  RGraph.Label.Native = new Class( {
-    Implements: Graph.Label.Native
-  });
-
-  /*
-     RGraph.Label.SVG
-    
-    Custom extension of <Graph.Label.SVG>.
-  
-    Extends:
-  
-    All <Graph.Label.SVG> methods
-  
-    See also:
-  
-    <Graph.Label.SVG>
-  
-  */
-  RGraph.Label.SVG = new Class( {
-    Implements: Graph.Label.SVG,
-
-    initialize: function(viz){
-      this.viz = viz;
-    },
-
-    /* 
-       placeLabel
-
-       Overrides abstract method placeLabel in <Graph.Plot>.
-
-       Parameters:
-
-       tag - A DOM label element.
-       node - A <Graph.Node>.
-       controller - A configuration/controller object passed to the visualization.
-      
-     */
-    placeLabel: function(tag, node, controller){
-      var pos = node.pos.getc(true), 
-          canvas = this.viz.canvas,
-          ox = canvas.translateOffsetX,
-          oy = canvas.translateOffsetY,
-          sx = canvas.scaleOffsetX,
-          sy = canvas.scaleOffsetY,
-          radius = canvas.getSize();
-      var labelPos = {
-        x: Math.round(pos.x * sx + ox + radius.width / 2),
-        y: Math.round(pos.y * sy + oy + radius.height / 2)
-      };
-      tag.setAttribute('x', labelPos.x);
-      tag.setAttribute('y', labelPos.y);
-
-      controller.onPlaceLabel(tag, node);
-    }
-  });
-
-  /*
-     RGraph.Label.HTML
-
-     Custom extension of <Graph.Label.HTML>.
-
-     Extends:
-
-     All <Graph.Label.HTML> methods.
-
-     See also:
-
-     <Graph.Label.HTML>
-
-  */
-  RGraph.Label.HTML = new Class( {
-    Implements: Graph.Label.HTML,
-
-    initialize: function(viz){
-      this.viz = viz;
-    },
-    /* 
-       placeLabel
-
-       Overrides abstract method placeLabel in <Graph.Plot>.
-
-       Parameters:
-
-       tag - A DOM label element.
-       node - A <Graph.Node>.
-       controller - A configuration/controller object passed to the visualization.
-      
-     */
-    placeLabel: function(tag, node, controller){
-      var pos = node.pos.getc(true), 
-          canvas = this.viz.canvas,
-          ox = canvas.translateOffsetX,
-          oy = canvas.translateOffsetY,
-          sx = canvas.scaleOffsetX,
-          sy = canvas.scaleOffsetY,
-          radius = canvas.getSize();
-      var labelPos = {
-        x: Math.round(pos.x * sx + ox + radius.width / 2),
-        y: Math.round(pos.y * sy + oy + radius.height / 2)
-      };
-
-      var style = tag.style;
-      style.left = labelPos.x + 'px';
-      style.top = labelPos.y + 'px';
-      style.display = this.fitsInCanvas(labelPos, canvas)? '' : 'none';
-
-      controller.onPlaceLabel(tag, node);
-    }
-  });
-
-  /*
-    Class: RGraph.Plot.NodeTypes
-
-    This class contains a list of <Graph.Node> built-in types. 
-    Node types implemented are 'none', 'circle', 'triangle', 'rectangle', 'star', 'ellipse' and 'square'.
-
-    You can add your custom node types, customizing your visualization to the extreme.
-
-    Example:
-
-    (start code js)
-      RGraph.Plot.NodeTypes.implement({
-        'mySpecialType': {
-          'render': function(node, canvas) {
-            //print your custom node to canvas
-          },
-          //optional
-          'contains': function(node, pos) {
-            //return true if pos is inside the node or false otherwise
-          }
-        }
-      });
-    (end code)
-
-  */
-  RGraph.Plot.NodeTypes = new Class({
-    'none': {
-      'render': $.empty,
-      'contains': $.lambda(false)
-    },
-    'circle': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        this.nodeHelper.circle.render('fill', pos, dim, canvas);
-      },
-      'contains': function(node, pos){
-        var npos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        return this.nodeHelper.circle.contains(npos, pos, dim);
-      }
-    },
-    'ellipse': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true), 
-            width = node.getData('width'), 
-            height = node.getData('height');
-        this.nodeHelper.ellipse.render('fill', pos, width, height, canvas);
-        },
-      'contains': function(node, pos){
-        var npos = node.pos.getc(true), 
-            width = node.getData('width'), 
-            height = node.getData('height');
-        return this.nodeHelper.ellipse.contains(npos, pos, width, height);
-      }
-    },
-    'square': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        this.nodeHelper.square.render('fill', pos, dim, canvas);
-      },
-      'contains': function(node, pos){
-        var npos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        return this.nodeHelper.square.contains(npos, pos, dim);
-      }
-    },
-    'rectangle': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true), 
-            width = node.getData('width'), 
-            height = node.getData('height');
-        this.nodeHelper.rectangle.render('fill', pos, width, height, canvas);
-      },
-      'contains': function(node, pos){
-        var npos = node.pos.getc(true), 
-            width = node.getData('width'), 
-            height = node.getData('height');
-        return this.nodeHelper.rectangle.contains(npos, pos, width, height);
-      }
-    },
-    'triangle': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        this.nodeHelper.triangle.render('fill', pos, dim, canvas);
-      },
-      'contains': function(node, pos) {
-        var npos = node.pos.getc(true), 
-            dim = node.getData('dim');
-        return this.nodeHelper.triangle.contains(npos, pos, dim);
-      }
-    },
-    'star': {
-      'render': function(node, canvas){
-        var pos = node.pos.getc(true),
-            dim = node.getData('dim');
-        this.nodeHelper.star.render('fill', pos, dim, canvas);
-      },
-      'contains': function(node, pos) {
-        var npos = node.pos.getc(true),
-            dim = node.getData('dim');
-        return this.nodeHelper.star.contains(npos, pos, dim);
-      }
-    }
-  });
-
-  /*
-    Class: RGraph.Plot.EdgeTypes
-
-    This class contains a list of <Graph.Adjacence> built-in types. 
-    Edge types implemented are 'none', 'line' and 'arrow'.
-  
-    You can add your custom edge types, customizing your visualization to the extreme.
-  
-    Example:
-  
-    (start code js)
-      RGraph.Plot.EdgeTypes.implement({
-        'mySpecialType': {
-          'render': function(adj, canvas) {
-            //print your custom edge to canvas
-          },
-          //optional
-          'contains': function(adj, pos) {
-            //return true if pos is inside the arc or false otherwise
-          }
-        }
-      });
-    (end code)
-  
-  */
-  RGraph.Plot.EdgeTypes = new Class({
-    'none': $.empty,
-    'line': {
-      'render': function(adj, canvas) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true);
-        this.edgeHelper.line.render(from, to, canvas);
-      },
-      'contains': function(adj, pos) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true);
-        return this.edgeHelper.line.contains(from, to, pos, this.edge.epsilon);
-      }
-    },
-    'arrow': {
-      'render': function(adj, canvas) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true),
-            dim = adj.getData('dim'),
-            direction = adj.data.$direction,
-            inv = (direction && direction.length>1 && direction[0] != adj.nodeFrom.id);
-        this.edgeHelper.arrow.render(from, to, dim, inv, canvas);
-      },
-      'contains': function(adj, pos) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true);
-        return this.edgeHelper.arrow.contains(from, to, pos, this.edge.epsilon);
-      }
-    }
-  });
-
-})($jit.RGraph);
-
-
-/*
- * File: Hypertree.js
- * 
-*/
-
-/* 
-     Complex 
-     
-     A multi-purpose Complex Class with common methods. Extended for the Hypertree. 
- 
-*/
-/* 
-   moebiusTransformation 
- 
-   Calculates a moebius transformation for this point / complex. 
-    For more information go to: 
-        http://en.wikipedia.org/wiki/Moebius_transformation. 
- 
-   Parameters: 
- 
-      c - An initialized Complex instance representing a translation Vector. 
-*/
-
-Complex.prototype.moebiusTransformation = function(c) {
-  var num = this.add(c);
-  var den = c.$conjugate().$prod(this);
-  den.x++;
-  return num.$div(den);
-};
-
-/* 
-    moebiusTransformation 
-     
-    Calculates a moebius transformation for the hyperbolic tree. 
-     
-    <http://en.wikipedia.org/wiki/Moebius_transformation> 
-      
-     Parameters: 
-     
-        graph - A <Graph> instance.
-        pos - A <Complex>.
-        prop - A property array.
-        theta - Rotation angle. 
-        startPos - _optional_ start position. 
-*/
-Graph.Util.moebiusTransformation = function(graph, pos, prop, startPos, flags) {
-  this.eachNode(graph, function(elem) {
-    for ( var i = 0; i < prop.length; i++) {
-      var p = pos[i].scale(-1), property = startPos ? startPos : prop[i];
-      elem.getPos(prop[i]).set(elem.getPos(property).getc().moebiusTransformation(p));
-    }
-  }, flags);
-};
-
-/* 
-   Class: Hypertree 
-   
-   A Hyperbolic Tree/Graph visualization.
-   
-   Inspired by:
- 
-   A Focus+Context Technique Based on Hyperbolic Geometry for Visualizing Large Hierarchies (John Lamping, Ramana Rao, and Peter Pirolli). 
-   <http://www.cs.tau.ac.il/~asharf/shrek/Projects/HypBrowser/startree-chi95.pdf>
- 
-  Note:
- 
-  This visualization was built and engineered from scratch, taking only the paper as inspiration, and only shares some features with the Hypertree described in the paper.
-
-  Implements:
-  
-  All <Loader> methods
-  
-  Constructor Options:
-  
-  Inherits options from
-  
-  - <Options.Canvas>
-  - <Options.Controller>
-  - <Options.Node>
-  - <Options.Edge>
-  - <Options.Label>
-  - <Options.Events>
-  - <Options.Tips>
-  - <Options.NodeStyles>
-  - <Options.Navigation>
-  
-  Additionally, there are other parameters and some default values changed
-  
-  radius - (string|number) Default's *auto*. The radius of the disc to plot the <Hypertree> in. 'auto' will take the smaller value from the width and height canvas dimensions. You can also set this to a custom value, for example *250*.
-  offset - (number) Default's *0*. A number in the range [0, 1) that will be substracted to each node position to make a more compact <Hypertree>. This will avoid placing nodes too far from each other when a there's a selected node.
-  fps - Described in <Options.Fx>. It's default value has been changed to *35*.
-  duration - Described in <Options.Fx>. It's default value has been changed to *1500*.
-  Edge.type - Described in <Options.Edge>. It's default value has been changed to *hyperline*. 
-  
-  Instance Properties:
-  
-  canvas - Access a <Canvas> instance.
-  graph - Access a <Graph> instance.
-  op - Access a <Hypertree.Op> instance.
-  fx - Access a <Hypertree.Plot> instance.
-  labels - Access a <Hypertree.Label> interface implementation.
-
-*/
-
-$jit.Hypertree = new Class( {
-
-  Implements: [ Loader, Extras, Layouts.Radial ],
-
-  initialize: function(controller) {
-    var $Hypertree = $jit.Hypertree;
-
-    var config = {
-      radius: "auto",
-      offset: 0,
-      Edge: {
-        type: 'hyperline'
-      },
-      duration: 1500,
-      fps: 35
-    };
-    this.controller = this.config = $.merge(Options("Canvas", "Node", "Edge",
-        "Fx", "Tips", "NodeStyles", "Events", "Navigation", "Controller", "Label"), config, controller);
-
-    var canvasConfig = this.config;
-    if(canvasConfig.useCanvas) {
-      this.canvas = canvasConfig.useCanvas;
-      this.config.labelContainer = this.canvas.id + '-label';
-    } else {
-      if(canvasConfig.background) {
-        canvasConfig.background = $.merge({
-          type: 'Circles'
-        }, canvasConfig.background);
-      }
-      this.canvas = new Canvas(this, canvasConfig);
-      this.config.labelContainer = (typeof canvasConfig.injectInto == 'string'? canvasConfig.injectInto : canvasConfig.injectInto.id) + '-label';
-    }
-
-    this.graphOptions = {
-      'klass': Polar,
-      'Node': {
-        'selected': false,
-        'exist': true,
-        'drawn': true
-      }
-    };
-    this.graph = new Graph(this.graphOptions, this.config.Node,
-        this.config.Edge);
-    this.labels = new $Hypertree.Label[canvasConfig.Label.type](this);
-    this.fx = new $Hypertree.Plot(this, $Hypertree);
-    this.op = new $Hypertree.Op(this);
-    this.json = null;
-    this.root = null;
-    this.busy = false;
-    // initialize extras
-    this.initializeExtras();
-  },
-
-  /* 
-  
-  createLevelDistanceFunc 
-
-  Returns the levelDistance function used for calculating a node distance 
-  to its origin. This function returns a function that is computed 
-  per level and not per node, such that all nodes with the same depth will have the 
-  same distance to the origin. The resulting function gets the 
-  parent node as parameter and returns a float.
-
-  */
-  createLevelDistanceFunc: function() {
-    // get max viz. length.
-    var r = this.getRadius();
-    // get max depth.
-    var depth = 0, max = Math.max, config = this.config;
-    this.graph.eachNode(function(node) {
-      depth = max(node._depth, depth);
-    }, "ignore");
-    depth++;
-    // node distance generator
-    var genDistFunc = function(a) {
-      return function(node) {
-        node.scale = r;
-        var d = node._depth + 1;
-        var acum = 0, pow = Math.pow;
-        while (d) {
-          acum += pow(a, d--);
-        }
-        return acum - config.offset;
-      };
-    };
-    // estimate better edge length.
-    for ( var i = 0.51; i <= 1; i += 0.01) {
-      var valSeries = (1 - Math.pow(i, depth)) / (1 - i);
-      if (valSeries >= 2) { return genDistFunc(i - 0.01); }
-    }
-    return genDistFunc(0.75);
-  },
-
-  /* 
-    Method: getRadius 
-    
-    Returns the current radius of the visualization. If *config.radius* is *auto* then it 
-    calculates the radius by taking the smaller size of the <Canvas> widget.
-    
-    See also:
-    
-    <Canvas.getSize>
-   
-  */
-  getRadius: function() {
-    var rad = this.config.radius;
-    if (rad !== "auto") { return rad; }
-    var s = this.canvas.getSize();
-    return Math.min(s.width, s.height) / 2;
-  },
-
-  /* 
-    Method: refresh 
-    
-    Computes positions and plots the tree.
-
-    Parameters:
-
-    reposition - (optional|boolean) Set this to *true* to force all positions (current, start, end) to match.
-
-   */
-  refresh: function(reposition) {
-    if (reposition) {
-      this.reposition();
-      this.graph.eachNode(function(node) {
-        node.startPos.rho = node.pos.rho = node.endPos.rho;
-        node.startPos.theta = node.pos.theta = node.endPos.theta;
-      });
-    } else {
-      this.compute();
-    }
-    this.plot();
-  },
-
-  /* 
-   reposition 
-   
-   Computes nodes' positions and restores the tree to its previous position.
-
-   For calculating nodes' positions the root must be placed on its origin. This method does this 
-     and then attemps to restore the hypertree to its previous position.
-    
-  */
-  reposition: function() {
-    this.compute('end');
-    var vector = this.graph.getNode(this.root).pos.getc().scale(-1);
-    Graph.Util.moebiusTransformation(this.graph, [ vector ], [ 'end' ],
-        'end', "ignore");
-    this.graph.eachNode(function(node) {
-      if (node.ignore) {
-        node.endPos.rho = node.pos.rho;
-        node.endPos.theta = node.pos.theta;
-      }
-    });
-  },
-
-  /* 
-   Method: plot 
-   
-   Plots the <Hypertree>. This is a shortcut to *fx.plot*. 
-
-  */
-  plot: function() {
-    this.fx.plot();
-  },
-
-  /* 
-   Method: onClick 
-   
-   Animates the <Hypertree> to center the node specified by *id*.
-
-   Parameters:
-
-   id - A <Graph.Node> id.
-   opt - (optional|object) An object containing some extra properties described below
-   hideLabels - (boolean) Default's *true*. Hide labels when performing the animation.
-
-   Example:
-
-   (start code js)
-     ht.onClick('someid');
-     //or also...
-     ht.onClick('someid', {
-      hideLabels: false
-     });
-    (end code)
-    
-  */
-  onClick: function(id, opt) {
-    var pos = this.graph.getNode(id).pos.getc(true);
-    this.move(pos, opt);
-  },
-
-  /* 
-   Method: move 
-
-   Translates the tree to the given position. 
-
-   Parameters:
-
-   pos - (object) A *x, y* coordinate object where x, y in [0, 1), to move the tree to.
-   opt - This object has been defined in <Hypertree.onClick>
-   
-   Example:
-   
-   (start code js)
-     ht.move({ x: 0, y: 0.7 }, {
-       hideLabels: false
-     });
-   (end code)
-
-  */
-  move: function(pos, opt) {
-    var versor = $C(pos.x, pos.y);
-    if (this.busy === false && versor.norm() < 1) {
-      this.busy = true;
-      var root = this.graph.getClosestNodeToPos(versor), that = this;
-      this.graph.computeLevels(root.id, 0);
-      this.controller.onBeforeCompute(root);
-      opt = $.merge( {
-        onComplete: $.empty
-      }, opt || {});
-      this.fx.animate($.merge( {
-        modes: [ 'moebius' ],
-        hideLabels: true
-      }, opt, {
-        onComplete: function() {
-          that.busy = false;
-          opt.onComplete();
-        }
-      }), versor);
-    }
-  }
-});
-
-$jit.Hypertree.$extend = true;
-
-(function(Hypertree) {
-
-  /* 
-     Class: Hypertree.Op 
-   
-     Custom extension of <Graph.Op>.
-
-     Extends:
-
-     All <Graph.Op> methods
-     
-     See also:
-     
-     <Graph.Op>
-
-  */
-  Hypertree.Op = new Class( {
-
-    Implements: Graph.Op
-
-  });
-
-  /* 
-     Class: Hypertree.Plot 
-   
-    Custom extension of <Graph.Plot>.
-  
-    Extends:
-  
-    All <Graph.Plot> methods
-    
-    See also:
-    
-    <Graph.Plot>
-  
-  */
-  Hypertree.Plot = new Class( {
-
-    Implements: Graph.Plot
-
-  });
-
-  /*
-    Object: Hypertree.Label
-
-    Custom extension of <Graph.Label>. 
-    Contains custom <Graph.Label.SVG>, <Graph.Label.HTML> and <Graph.Label.Native> extensions.
-  
-    Extends:
-  
-    All <Graph.Label> methods and subclasses.
-  
-    See also:
-  
-    <Graph.Label>, <Graph.Label.Native>, <Graph.Label.HTML>, <Graph.Label.SVG>.
-
-   */
-  Hypertree.Label = {};
-
-  /*
-     Hypertree.Label.Native
-
-     Custom extension of <Graph.Label.Native>.
-
-     Extends:
-
-     All <Graph.Label.Native> methods
-
-     See also:
-
-     <Graph.Label.Native>
-
-  */
-  Hypertree.Label.Native = new Class( {
-    Implements: Graph.Label.Native,
-
-    initialize: function(viz) {
-      this.viz = viz;
-    },
-
-    renderLabel: function(canvas, node, controller) {
-      var ctx = canvas.getCtx();
-      var coord = node.pos.getc(true);
-      var s = this.viz.getRadius();
-      ctx.fillText(node.name, coord.x * s, coord.y * s);
-    }
-  });
-
-  /*
-     Hypertree.Label.SVG
-
-    Custom extension of <Graph.Label.SVG>.
-  
-    Extends:
-  
-    All <Graph.Label.SVG> methods
-  
-    See also:
-  
-    <Graph.Label.SVG>
-  
-  */
-  Hypertree.Label.SVG = new Class( {
-    Implements: Graph.Label.SVG,
-
-    initialize: function(viz) {
-      this.viz = viz;
-    },
-
-    /* 
-       placeLabel
-
-       Overrides abstract method placeLabel in <Graph.Plot>.
-
-       Parameters:
-
-       tag - A DOM label element.
-       node - A <Graph.Node>.
-       controller - A configuration/controller object passed to the visualization.
-      
-     */
-    placeLabel: function(tag, node, controller) {
-      var pos = node.pos.getc(true), 
-          canvas = this.viz.canvas,
-          ox = canvas.translateOffsetX,
-          oy = canvas.translateOffsetY,
-          sx = canvas.scaleOffsetX,
-          sy = canvas.scaleOffsetY,
-          radius = canvas.getSize(),
-          r = this.viz.getRadius();
-      var labelPos = {
-        x: Math.round((pos.x * sx) * r + ox + radius.width / 2),
-        y: Math.round((pos.y * sy) * r + oy + radius.height / 2)
-      };
-      tag.setAttribute('x', labelPos.x);
-      tag.setAttribute('y', labelPos.y);
-      controller.onPlaceLabel(tag, node);
-    }
-  });
-
-  /*
-     Hypertree.Label.HTML
-
-     Custom extension of <Graph.Label.HTML>.
-
-     Extends:
-
-     All <Graph.Label.HTML> methods.
-
-     See also:
-
-     <Graph.Label.HTML>
-
-  */
-  Hypertree.Label.HTML = new Class( {
-    Implements: Graph.Label.HTML,
-
-    initialize: function(viz) {
-      this.viz = viz;
-    },
-    /* 
-       placeLabel
-
-       Overrides abstract method placeLabel in <Graph.Plot>.
-
-       Parameters:
-
-       tag - A DOM label element.
-       node - A <Graph.Node>.
-       controller - A configuration/controller object passed to the visualization.
-      
-     */
-    placeLabel: function(tag, node, controller) {
-      var pos = node.pos.getc(true), 
-          canvas = this.viz.canvas,
-          ox = canvas.translateOffsetX,
-          oy = canvas.translateOffsetY,
-          sx = canvas.scaleOffsetX,
-          sy = canvas.scaleOffsetY,
-          radius = canvas.getSize(),
-          r = this.viz.getRadius();
-      var labelPos = {
-        x: Math.round((pos.x * sx) * r + ox + radius.width / 2),
-        y: Math.round((pos.y * sy) * r + oy + radius.height / 2)
-      };
-      var style = tag.style;
-      style.left = labelPos.x + 'px';
-      style.top = labelPos.y + 'px';
-      style.display = this.fitsInCanvas(labelPos, canvas) ? '' : 'none';
-
-      controller.onPlaceLabel(tag, node);
-    }
-  });
-
-  /*
-    Class: Hypertree.Plot.NodeTypes
-
-    This class contains a list of <Graph.Node> built-in types. 
-    Node types implemented are 'none', 'circle', 'triangle', 'rectangle', 'star', 'ellipse' and 'square'.
-
-    You can add your custom node types, customizing your visualization to the extreme.
-
-    Example:
-
-    (start code js)
-      Hypertree.Plot.NodeTypes.implement({
-        'mySpecialType': {
-          'render': function(node, canvas) {
-            //print your custom node to canvas
-          },
-          //optional
-          'contains': function(node, pos) {
-            //return true if pos is inside the node or false otherwise
-          }
-        }
-      });
-    (end code)
-
-  */
-  Hypertree.Plot.NodeTypes = new Class({
-    'none': {
-      'render': $.empty,
-      'contains': $.lambda(false)
-    },
-    'circle': {
-      'render': function(node, canvas) {
-        var nconfig = this.node,
-            dim = node.getData('dim'),
-            p = node.pos.getc();
-        dim = nconfig.transform? dim * (1 - p.squaredNorm()) : dim;
-        p.$scale(node.scale);
-        if (dim > 0.2) {
-          this.nodeHelper.circle.render('fill', p, dim, canvas);
-        }
-      },
-      'contains': function(node, pos) {
-        var dim = node.getData('dim'),
-            npos = node.pos.getc().$scale(node.scale);
-        return this.nodeHelper.circle.contains(npos, pos, dim);
-      }
-    },
-    'ellipse': {
-      'render': function(node, canvas) {
-        var pos = node.pos.getc().$scale(node.scale),
-            width = node.getData('width'),
-            height = node.getData('height');
-        this.nodeHelper.ellipse.render('fill', pos, width, height, canvas);
-      },
-      'contains': function(node, pos) {
-        var width = node.getData('width'),
-            height = node.getData('height'),
-            npos = node.pos.getc().$scale(node.scale);
-        return this.nodeHelper.circle.contains(npos, pos, width, height);
-      }
-    },
-    'square': {
-      'render': function(node, canvas) {
-        var nconfig = this.node,
-            dim = node.getData('dim'),
-            p = node.pos.getc();
-        dim = nconfig.transform? dim * (1 - p.squaredNorm()) : dim;
-        p.$scale(node.scale);
-        if (dim > 0.2) {
-          this.nodeHelper.square.render('fill', p, dim, canvas);
-        }
-      },
-      'contains': function(node, pos) {
-        var dim = node.getData('dim'),
-            npos = node.pos.getc().$scale(node.scale);
-        return this.nodeHelper.square.contains(npos, pos, dim);
-      }
-    },
-    'rectangle': {
-      'render': function(node, canvas) {
-        var nconfig = this.node,
-            width = node.getData('width'),
-            height = node.getData('height'),
-            pos = node.pos.getc();
-        width = nconfig.transform? width * (1 - pos.squaredNorm()) : width;
-        height = nconfig.transform? height * (1 - pos.squaredNorm()) : height;
-        pos.$scale(node.scale);
-        if (width > 0.2 && height > 0.2) {
-          this.nodeHelper.rectangle.render('fill', pos, width, height, canvas);
-        }
-      },
-      'contains': function(node, pos) {
-        var width = node.getData('width'),
-            height = node.getData('height'),
-            npos = node.pos.getc().$scale(node.scale);
-        return this.nodeHelper.rectangle.contains(npos, pos, width, height);
-      }
-    },
-    'triangle': {
-      'render': function(node, canvas) {
-        var nconfig = this.node,
-            dim = node.getData('dim'),
-            p = node.pos.getc();
-        dim = nconfig.transform? dim * (1 - p.squaredNorm()) : dim;
-        p.$scale(node.scale);
-        if (dim > 0.2) {
-          this.nodeHelper.triangle.render('fill', p, dim, canvas);
-        }
-      },
-      'contains': function(node, pos) {
-        var dim = node.getData('dim'),
-            npos = node.pos.getc().$scale(node.scale);
-        return this.nodeHelper.triangle.contains(npos, pos, dim);
-      }
-    },
-    'star': {
-      'render': function(node, canvas) {
-        var nconfig = this.node,
-            dim = node.getData('dim'),
-            p = node.pos.getc();
-        dim = nconfig.transform? dim * (1 - p.squaredNorm()) : dim;
-        p.$scale(node.scale);
-        if (dim > 0.2) {
-          this.nodeHelper.star.render('fill', p, dim, canvas);
-        }
-      },
-      'contains': function(node, pos) {
-        var dim = node.getData('dim'),
-            npos = node.pos.getc().$scale(node.scale);
-        return this.nodeHelper.star.contains(npos, pos, dim);
-      }
-    }
-  });
-
-  /*
-   Class: Hypertree.Plot.EdgeTypes
-
-    This class contains a list of <Graph.Adjacence> built-in types. 
-    Edge types implemented are 'none', 'line', 'arrow' and 'hyperline'.
-  
-    You can add your custom edge types, customizing your visualization to the extreme.
-  
-    Example:
-  
-    (start code js)
-      Hypertree.Plot.EdgeTypes.implement({
-        'mySpecialType': {
-          'render': function(adj, canvas) {
-            //print your custom edge to canvas
-          },
-          //optional
-          'contains': function(adj, pos) {
-            //return true if pos is inside the arc or false otherwise
-          }
-        }
-      });
-    (end code)
-  
-  */
-  Hypertree.Plot.EdgeTypes = new Class({
-    'none': $.empty,
-    'line': {
-      'render': function(adj, canvas) {
-        var from = adj.nodeFrom.pos.getc(true),
-          to = adj.nodeTo.pos.getc(true),
-          r = adj.nodeFrom.scale;
-          this.edgeHelper.line.render({x:from.x*r, y:from.y*r}, {x:to.x*r, y:to.y*r}, canvas);
-      },
-      'contains': function(adj, pos) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true),
-            r = adj.nodeFrom.scale;
-            this.edgeHelper.line.contains({x:from.x*r, y:from.y*r}, {x:to.x*r, y:to.y*r}, pos, this.edge.epsilon);
-      }
-    },
-    'arrow': {
-      'render': function(adj, canvas) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true),
-            r = adj.nodeFrom.scale,
-            dim = adj.getData('dim'),
-            direction = adj.data.$direction,
-            inv = (direction && direction.length>1 && direction[0] != adj.nodeFrom.id);
-        this.edgeHelper.arrow.render({x:from.x*r, y:from.y*r}, {x:to.x*r, y:to.y*r}, dim, inv, canvas);
-      },
-      'contains': function(adj, pos) {
-        var from = adj.nodeFrom.pos.getc(true),
-            to = adj.nodeTo.pos.getc(true),
-            r = adj.nodeFrom.scale;
-        this.edgeHelper.arrow.contains({x:from.x*r, y:from.y*r}, {x:to.x*r, y:to.y*r}, pos, this.edge.epsilon);
-      }
-    },
-    'hyperline': {
-      'render': function(adj, canvas) {
-        var from = adj.nodeFrom.pos.getc(),
-            to = adj.nodeTo.pos.getc(),
-            dim = this.viz.getRadius();
-        this.edgeHelper.hyperline.render(from, to, dim, canvas);
-      },
-      'contains': $.lambda(false)
-    }
-  });
-
-})($jit.Hypertree);
 
 
 

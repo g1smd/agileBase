@@ -150,7 +150,7 @@ public final class ViewTools implements ViewToolsInfo {
 		}
 		throw new CantDoThatException("Unimplemented calendar constant: " + constantName);
 	}
-	
+
 	public String getTimezone() {
 		String timezone = TimeZone.getDefault().getDisplayName(false, TimeZone.LONG);
 		if (timezone.toLowerCase().equals("greenwich mean time")) {
@@ -523,8 +523,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("1629", "Matlock");
 			this.areaCodes.put("1630", "Market Drayton");
 			this.areaCodes.put("1631", "Oban");
-			this.areaCodes.put("1632",
-					"numbers are now used as fictional numbers for drama purposes");
+			this.areaCodes.put("1632", "fictional number");
 			this.areaCodes.put("1633", "Newport");
 			this.areaCodes.put("1634", "Medway");
 			this.areaCodes.put("1635", "Newbury");
@@ -1248,8 +1247,7 @@ public final class ViewTools implements ViewToolsInfo {
 			this.countryCodes.put("999", "reserved for future global service");
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)]", "");
-		phoneNumber = phoneNumber
-				.replaceAll("(?:00\\s?|\\+)([1-9][\\d\\s]+)[x\\#]?.*", "$1");
+		phoneNumber = phoneNumber.replaceAll("(?:00\\s?|\\+)([1-9][\\d\\s]+)[x\\#]?.*", "$1");
 		phoneNumber = phoneNumber.replaceAll("[\\s]", "");
 		// stop substring creating an IndexOutOfBoundsException below
 		if (phoneNumber.length() < 8) {
@@ -1325,11 +1323,9 @@ public final class ViewTools implements ViewToolsInfo {
 
 	public Set<FieldTypeDescriptorInfo> getFieldTypeDescriptors() throws ObjectNotFoundException {
 		Set<FieldTypeDescriptorInfo> fieldTypeDescriptors = new LinkedHashSet<FieldTypeDescriptorInfo>();
-		for (FieldCategory possibleFieldType : EnumSet
-				.allOf(FieldTypeDescriptor.FieldCategory.class)) {
+		for (FieldCategory possibleFieldType : EnumSet.allOf(FieldTypeDescriptor.FieldCategory.class)) {
 			if (possibleFieldType.isEnabled()) {
-				FieldTypeDescriptorInfo fieldTypeDescriptor = new FieldTypeDescriptor(
-						possibleFieldType);
+				FieldTypeDescriptorInfo fieldTypeDescriptor = new FieldTypeDescriptor(possibleFieldType);
 				fieldTypeDescriptors.add(fieldTypeDescriptor);
 			}
 		}
@@ -1339,8 +1335,7 @@ public final class ViewTools implements ViewToolsInfo {
 	public Set<FilterTypeDescriptorInfo> getFilterTypeDescriptors() {
 		Set<FilterTypeDescriptorInfo> filterTypeDescriptors = new LinkedHashSet<FilterTypeDescriptorInfo>();
 		for (FilterType possibleFilterType : EnumSet.allOf(FilterType.class)) {
-			FilterTypeDescriptorInfo filterTypeDescriptor = new FilterTypeDescriptor(
-					possibleFilterType);
+			FilterTypeDescriptorInfo filterTypeDescriptor = new FilterTypeDescriptor(possibleFilterType);
 			filterTypeDescriptors.add(filterTypeDescriptor);
 		}
 		return filterTypeDescriptors;
@@ -1503,8 +1498,7 @@ public final class ViewTools implements ViewToolsInfo {
 			majorVersionString = majorVersionString.replaceAll("^.*\\.", "");
 			majorVersionString = (new StringBuilder(majorVersionString)).reverse().toString();
 			// majorVersion is now 1
-			String minorVersionString = versionString.replaceFirst(
-					"^" + majorVersionString + "\\.", "");
+			String minorVersionString = versionString.replaceFirst("^" + majorVersionString + "\\.", "");
 			minorVersionString = minorVersionString.replaceAll("\\.", "");
 			// minorVersion is now 502
 			detectedVersion = Float.valueOf(majorVersionString + "." + minorVersionString);
@@ -1528,8 +1522,7 @@ public final class ViewTools implements ViewToolsInfo {
 			String majorVersionString = (new StringBuilder(versionString)).reverse().toString();
 			majorVersionString = majorVersionString.replaceAll("^.*\\.", "");
 			majorVersionString = (new StringBuilder(majorVersionString)).reverse().toString();
-			String minorVersionString = versionString.replaceFirst(
-					"^" + majorVersionString + "\\.", "");
+			String minorVersionString = versionString.replaceFirst("^" + majorVersionString + "\\.", "");
 			minorVersionString = minorVersionString.replaceAll("\\.", "");
 			detectedVersion = Float.valueOf(majorVersionString + "." + minorVersionString);
 		} else if (browser.equals(Browsers.OPERA)) {
@@ -1653,24 +1646,29 @@ public final class ViewTools implements ViewToolsInfo {
 		return files;
 	}
 
-	public String getOfqualUnitPage(String qualificationNumber) throws ClientProtocolException, IOException {
+	public String getOfqualUnitPage(String qualificationNumber) throws ClientProtocolException,
+			IOException {
 		qualificationNumber = qualificationNumber.replace("/", "_").replaceAll("[^\\w_]", "");
-		String url = "http://register.ofqual.gov.uk/Qualification/PrintDetails?qualificationNumber=" + qualificationNumber + "&showUnits=True";
+		String url = "http://register.ofqual.gov.uk/Qualification/PrintDetails?qualificationNumber="
+				+ qualificationNumber + "&showUnits=True";
 		return Request.Get(url).execute().returnContent().asString();
 	}
-	
-	public String getOfqualQualPage(String qualificationNumber) throws ClientProtocolException, IOException {
-		qualificationNumber = qualificationNumber.replace("/", "_").replaceAll("[^\\w_]", "");;
+
+	public String getOfqualQualPage(String qualificationNumber) throws ClientProtocolException,
+			IOException {
+		qualificationNumber = qualificationNumber.replace("/", "_").replaceAll("[^\\w_]", "");
+		;
 		String url = "http://register.ofqual.gov.uk/Qualification/Details/" + qualificationNumber;
 		return Request.Get(url).execute().returnContent().asString();
 	}
-	
+
 	public String getOfqualOutcomesPage(String unitCode) throws ClientProtocolException, IOException {
-		unitCode = unitCode.replace("/", "_").replaceAll("[^\\w_]", "");;
+		unitCode = unitCode.replace("/", "_").replaceAll("[^\\w_]", "");
+		;
 		String url = "http://register.ofqual.gov.uk/Unit/Details/" + unitCode;
 		return Request.Get(url).execute().returnContent().asString();
 	}
-	
+
 	public String getCommitUrl() throws IOException, CantDoThatException {
 		String commitFileName = this.request.getSession().getServletContext()
 				.getRealPath("/lastcommit.txt");
@@ -1711,7 +1709,7 @@ public final class ViewTools implements ViewToolsInfo {
 			throw new CantDoThatException("Commit log not found");
 		}
 	}
-	
+
 	public String md5(String input) {
 		return DigestUtils.md5Hex(input);
 	}
@@ -1737,8 +1735,8 @@ public final class ViewTools implements ViewToolsInfo {
 	/**
 	 * A map of telephone area code to city / location
 	 * 
-	 * Don't need ConcurrentHashMap here as data will only be put into this
-	 * cache once
+	 * Don't need ConcurrentHashMap here as data will only be put into this cache
+	 * once
 	 */
 	private Map<String, String> areaCodes = new HashMap<String, String>(1000);
 
@@ -1747,6 +1745,5 @@ public final class ViewTools implements ViewToolsInfo {
 	private Map<String, Boolean> templateExistsCache = new HashMap<String, Boolean>();
 
 	private static final SimpleLogger logger = new SimpleLogger(ViewTools.class);
-
 
 }
