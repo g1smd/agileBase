@@ -326,7 +326,8 @@ table#reportData td.capitalised {
 }
 
 table#reportData td .sequence {
-  padding-top: 5px; /* match table#reportData td.capitalised */
+  padding-top: 2px; /* match table#reportData td.capitalised */
+  font-size: 9.5pt;
 }
 
 table#reportData.draggable td.capitalised {
