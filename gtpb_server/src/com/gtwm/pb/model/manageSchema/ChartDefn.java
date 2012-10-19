@@ -71,9 +71,9 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 
 	/**
 	 * @param report
-	 *            The report the summary is based on
+	 *          The report the summary is based on
 	 * @param persist
-	 *            Whether to persist the summary to permanent storage
+	 *          Whether to persist the summary to permanent storage
 	 */
 	public ChartDefn(BaseReportInfo report, boolean persist) {
 		this.setReport(report);
@@ -119,8 +119,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 				for (SummaryGroupingModifier possibleModifier : SummaryGroupingModifier.values()) {
 					if ((possibleModifier.compareTo(groupingModifier) < 0)
 							&& (!possibleModifier.equals(SummaryGroupingModifier.DATE_QUARTER))) {
-						ChartGroupingInfo grouping = new ChartGrouping(groupByReportField,
-								possibleModifier);
+						ChartGroupingInfo grouping = new ChartGrouping(groupByReportField, possibleModifier);
 						if (this.persist) {
 							HibernateUtil.currentSession().save(grouping);
 						}
@@ -223,8 +222,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 					groupByFieldsCsv += "date_part('day'," + internalFieldName + ")";
 					break;
 				default:
-					throw new CantDoThatException("Grouping by " + groupingModifier
-							+ " not implemented");
+					throw new CantDoThatException("Grouping by " + groupingModifier + " not implemented");
 				}
 			}
 			groupByFieldsCsv += ", ";
@@ -237,10 +235,10 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 			groupByFieldsCsv = groupByFieldsCsv.substring(0, groupByFieldsCsv.length() - 2);
 		}
 		if (this.getAggregateFunctionsDirect().size() > 0) {
-			aggregateFunctionsCsv = aggregateFunctionsCsv.substring(0,
-					aggregateFunctionsCsv.length() - 2);
-			aggregateFunctionsCsv = aggregateFunctionsCsv.replace(
-					"agilebase_custom_variable_groupings", groupByFieldsCsv);
+			aggregateFunctionsCsv = aggregateFunctionsCsv
+					.substring(0, aggregateFunctionsCsv.length() - 2);
+			aggregateFunctionsCsv = aggregateFunctionsCsv.replace("agilebase_custom_variable_groupings",
+					groupByFieldsCsv);
 		}
 		// Compose complete SQL
 		ReportDataInfo reportData = new ReportData(conn, this.report, false, false);
@@ -262,8 +260,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 			if (filterArgs.length() > 0) {
 				filterArgs += " AND ";
 			}
-			filterArgs += filterSQL.replace("{fieldvalue}",
-					filterReportField.getInternalFieldName());
+			filterArgs += filterSQL.replace("{fieldvalue}", filterReportField.getInternalFieldName());
 		}
 		String sqlForSummary = null;
 		boolean validSummary = true;
@@ -329,8 +326,7 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 			sqlForSummary += " LIMIT (";
 			sqlForSummary += " SELECT (count(*) * " + rangeFraction + ")::integer";
 			if (groupings.size() > 0) {
-				sqlForSummary += " FROM (SELECT " + groupByFieldsCsv + " FROM "
-						+ internalReportName;
+				sqlForSummary += " FROM (SELECT " + groupByFieldsCsv + " FROM " + internalReportName;
 				sqlForSummary += " GROUP BY " + groupByFieldsCsv + ") AS grouped";
 			} else {
 				sqlForSummary += " FROM " + internalReportName;
@@ -396,8 +392,8 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 				return aggFn;
 			}
 		}
-		throw new ObjectNotFoundException("Aggregate with the internal name "
-				+ internalAggregateName + " not found in summary");
+		throw new ObjectNotFoundException("Aggregate with the internal name " + internalAggregateName
+				+ " not found in summary");
 	}
 
 	@OneToMany(targetEntity = ChartAggregateDefn.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -499,7 +495,11 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 	}
 
 	public String toString() {
-		return this.getTitle();
+		String title = this.getTitle();
+		if (title != null) {
+			return title;
+		}
+		return "Unnamed chart for " + this.getReport();
 	}
 
 	/**

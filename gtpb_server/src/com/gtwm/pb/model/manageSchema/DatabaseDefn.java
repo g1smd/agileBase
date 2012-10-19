@@ -1934,9 +1934,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 			// field types where indexing makes sense.
 			// Currently only small text fields and relations
 			if (!setUnique) {
-				if (fieldToAdd instanceof TextField) {
-					this.addRemoveRelevantTextIndexes(conn, (TextField) fieldToAdd);
-				} else if (fieldToAdd instanceof RelationField) {
+				// Note: don't set text field indexes, these are now set in ServletSchemaMethods.addField -> updateFieldOptions
+				if (fieldToAdd instanceof RelationField) {
 					this.addIndexDbAction(conn, internalTableName, internalFieldName, false);
 				}
 			}
@@ -3485,7 +3484,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				if (field.usesLookup()) {
 					this.addIndexDbAction(conn, internalTableName, internalFieldName, false);
 				} else {
-					this.addIndexDbAction(conn, internalTableName, internalFieldName, true);
+					// Don't add case insensitive indexes until necessary
+					//this.addIndexDbAction(conn, internalTableName, internalFieldName, true);
 				}
 			}
 		}
