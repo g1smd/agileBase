@@ -1103,7 +1103,7 @@ public final class ServletSchemaMethods {
 				newField = databaseDefn.addField(request, conn, table, fieldType, internalFieldName,
 						fieldName, fieldDesc);
 				// Set the field options
-				databaseDefn.updateFieldOption(request, newField);
+				databaseDefn.updateFieldOption(request, conn, newField);
 				conn.commit();
 				HibernateUtil.currentSession().getTransaction().commit();
 			} catch (SQLException sqlex) {
@@ -1132,7 +1132,7 @@ public final class ServletSchemaMethods {
 					}
 				}
 				throw new CantDoThatException("field addition failed", hex);
-			} catch (AgileBaseException pex) {
+			} catch (AgileBaseException abex) {
 				rollbackConnections(conn);
 				// remove field from memory (table fields and default report
 				// fields)
@@ -1144,7 +1144,7 @@ public final class ServletSchemaMethods {
 						table.getDefaultReport().removeField(reportField);
 					}
 				}
-				throw new CantDoThatException("field addition failed", pex);
+				throw new CantDoThatException("field addition failed: " + abex.getMessage(), abex);
 			} finally {
 				// These lines seem to be needed to 'load' data from Hibernate
 				// I don't know why that should be
@@ -1376,25 +1376,28 @@ public final class ServletSchemaMethods {
 			integerFieldDefault = ((IntegerField) field).getDefault();
 		}
 		// begin updating model and persisting changes
+		Connection conn = null;
 		try {
 			HibernateUtil.startHibernateTransaction();
-			// update the field:
-			databaseDefn.updateFieldOption(request, field);
+			conn = databaseDefn.getDataSource().getConnection();
+			conn.setAutoCommit(false);
+			databaseDefn.updateFieldOption(request, conn, field);
+			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
-			rollbackConnections(null);
+			rollbackConnections(conn);
 			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed", hex);
-		} catch (AgileBaseException pex) {
-			rollbackConnections(null);
+		} catch (AgileBaseException abex) {
+			rollbackConnections(conn);
 			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
-			throw new CantDoThatException("Updating field failed: " + pex.getMessage(), pex);
+			throw new CantDoThatException("Updating field failed: " + abex.getMessage(), abex);
 		} catch (SQLException sqlex) {
-			rollbackConnections(null);
+			rollbackConnections(conn);
 			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);

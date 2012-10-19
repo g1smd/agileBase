@@ -147,18 +147,18 @@ import org.hibernate.Session;
 public final class DatabaseDefn implements DatabaseInfo {
 
 	/**
-	 * There should be one DatabaseInfo object per agileBase application
-	 * instance. This constructor generates it. It bootstraps the application.
-	 * All schema objects are loaded into memory from the pervasive store.
+	 * There should be one DatabaseInfo object per agileBase application instance.
+	 * This constructor generates it. It bootstraps the application. All schema
+	 * objects are loaded into memory from the pervasive store.
 	 * 
-	 * The authentication manager (AuthManagerInfo), store of all users, roles
-	 * and permissions is loaded too.
+	 * The authentication manager (AuthManagerInfo), store of all users, roles and
+	 * permissions is loaded too.
 	 * 
 	 * Finally, the data manager (a DataManagementInfo object) is created and
 	 * initialised
 	 * 
 	 * @throws CantDoThatException
-	 *             If more than one Authenticator was found in the database
+	 *           If more than one Authenticator was found in the database
 	 */
 	public DatabaseDefn(DataSource relationalDataSource, String webAppRoot) throws SQLException,
 			ObjectNotFoundException, CantDoThatException, MissingParametersException,
@@ -183,8 +183,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		int hourNow = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 		int initialDelay = 24 + AppProperties.lowActivityHour - hourNow;
 		this.dashboardScheduler = Executors.newSingleThreadScheduledExecutor();
-		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(
-				dashboardPopulator, initialDelay, 24, TimeUnit.HOURS);
+		this.scheduledDashboardPopulate = dashboardScheduler.scheduleAtFixedRate(dashboardPopulator,
+				initialDelay, 24, TimeUnit.HOURS);
 		// one-off boot actions
 		// this.addCommentsFeedFields();
 	}
@@ -290,14 +290,14 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 		TextField commentFeedField = new TextFieldDefn(this.relationalDataSource, table, null,
 				HiddenFields.COMMENTS_FEED.getFieldName(),
-				HiddenFields.COMMENTS_FEED.getFieldDescription(), TextField.HIDDEN,
-				fieldOptions);
+				HiddenFields.COMMENTS_FEED.getFieldDescription(), TextField.HIDDEN, fieldOptions);
 		HibernateUtil.currentSession().save(commentFeedField);
 		table.addField(commentFeedField);
 		this.addFieldToRelationalDb(conn, table, commentFeedField);
 	}
 
-	//!DateField.UNIQUE,	!DateField.NOT_NULL, DateField.DEFAULT_TO_NOW, Calendar.SECOND, null, null,	FieldPrintoutSetting.NO_PRINTOUT
+	// !DateField.UNIQUE, !DateField.NOT_NULL, DateField.DEFAULT_TO_NOW,
+	// Calendar.SECOND, null, null, FieldPrintoutSetting.NO_PRINTOUT
 	private void addDateCreatedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		DateFieldOptions fieldOptions = new DateFieldOptions();
@@ -307,8 +307,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setPrintoutSetting(FieldPrintoutSetting.NO_PRINTOUT);
 		fieldOptions.setUnique(false);
 		DateField dateCreatedField = new DateFieldDefn(table, null,
-				HiddenFields.DATE_CREATED.getFieldName(),
-				HiddenFields.DATE_CREATED.getFieldDescription(), fieldOptions);
+				HiddenFields.DATE_CREATED.getFieldName(), HiddenFields.DATE_CREATED.getFieldDescription(),
+				fieldOptions);
 		dateCreatedField.setHidden(DateFieldDefn.HIDDEN);
 		HibernateUtil.currentSession().save(dateCreatedField);
 		table.addField(dateCreatedField);
@@ -327,9 +327,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setUnique(false);
 		fieldOptions.setUsesLookup(false);
 		TextField createdByField = new TextFieldDefn(this.relationalDataSource, table, null,
-				HiddenFields.CREATED_BY.getFieldName(),
-				HiddenFields.CREATED_BY.getFieldDescription(), TextField.HIDDEN,
-				fieldOptions);
+				HiddenFields.CREATED_BY.getFieldName(), HiddenFields.CREATED_BY.getFieldDescription(),
+				TextField.HIDDEN, fieldOptions);
 		HibernateUtil.currentSession().save(createdByField);
 		table.addField(createdByField);
 		this.addFieldToRelationalDb(conn, table, createdByField);
@@ -366,9 +365,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setUnique(false);
 		fieldOptions.setUsesLookup(false);
 		TextField modifiedByField = new TextFieldDefn(this.relationalDataSource, table, null,
-				HiddenFields.MODIFIED_BY.getFieldName(),
-				HiddenFields.MODIFIED_BY.getFieldDescription(),  TextField.HIDDEN,
-				fieldOptions);
+				HiddenFields.MODIFIED_BY.getFieldName(), HiddenFields.MODIFIED_BY.getFieldDescription(),
+				TextField.HIDDEN, fieldOptions);
 		HibernateUtil.currentSession().save(modifiedByField);
 		table.addField(modifiedByField);
 		this.addFieldToRelationalDb(conn, table, modifiedByField);
@@ -377,8 +375,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	private void addRecordLockedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		CheckboxField recordLockedField = new CheckboxFieldDefn(table, null,
-				HiddenFields.LOCKED.getFieldName(), HiddenFields.LOCKED.getFieldDescription(),
-				false, true, FieldPrintoutSetting.NO_PRINTOUT);
+				HiddenFields.LOCKED.getFieldName(), HiddenFields.LOCKED.getFieldDescription(), false, true,
+				FieldPrintoutSetting.NO_PRINTOUT);
 		HibernateUtil.currentSession().save(recordLockedField);
 		table.addField(recordLockedField);
 		this.addFieldToRelationalDb(conn, table, recordLockedField);
@@ -395,8 +393,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setUnique(false);
 		fieldOptions.setUsesLookup(false);
 		IntegerField viewCountField = new IntegerFieldDefn(this.relationalDataSource, table, null,
-				HiddenFields.VIEW_COUNT.getFieldName(),
-				HiddenFields.VIEW_COUNT.getFieldDescription(), fieldOptions);
+				HiddenFields.VIEW_COUNT.getFieldName(), HiddenFields.VIEW_COUNT.getFieldDescription(),
+				fieldOptions);
 		viewCountField.setHidden(true);
 		HibernateUtil.currentSession().save(viewCountField);
 		table.addField(viewCountField);
@@ -420,14 +418,14 @@ public final class DatabaseDefn implements DatabaseInfo {
 			statement.execute();
 			statement.close();
 			// Create an initial report for the table
-			SimpleReportInfo defaultReport = new SimpleReportDefn(newTable,
-					internalDefaultReportName, "Default report",
-					"A simple report of all items in the '" + tableName + "' data store", null);
+			SimpleReportInfo defaultReport = new SimpleReportDefn(newTable, internalDefaultReportName,
+					"Default report", "A simple report of all items in the '" + tableName + "' data store",
+					null);
 			// The true passed means it is the default report
 			newTable.addReport(defaultReport, true);
 			// Add an auto-generated primary key to act as a row identifier
-			SequenceField primaryKeyField = new SequenceFieldDefn(newTable, internalPrimaryKeyName,
-					"ID:" + tableName, PRIMARY_KEY_DESCRIPTION, FieldPrintoutSetting.NO_PRINTOUT);
+			SequenceField primaryKeyField = new SequenceFieldDefn(newTable, internalPrimaryKeyName, "ID:"
+					+ tableName, PRIMARY_KEY_DESCRIPTION, FieldPrintoutSetting.NO_PRINTOUT);
 			HibernateUtil.currentSession().save(primaryKeyField);
 			newTable.addField(primaryKeyField);
 			newTable.setPrimaryKey(primaryKeyField);
@@ -455,8 +453,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 			String errorCode = sqlex.getSQLState();
 			if (errorCode.equals("42P07")) {
 				// A table with that name already exists
-				throw new SQLException("The internal table name '"
-						+ newTable.getInternalTableName() + "' already exists", errorCode);
+				throw new SQLException("The internal table name '" + newTable.getInternalTableName()
+						+ "' already exists", errorCode);
 			} else if (errorCode.equals("42601")) {
 				throw new SQLException("Table couldn't be created", sqlex);
 			} else {
@@ -481,8 +479,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		try {
 			AppUserInfo loggedInUser = this.authManager.getUserByUserName(request,
 					request.getRemoteUser());
-			this.authManager.addUserPrivilege(request, loggedInUser, PrivilegeType.MANAGE_TABLE,
-					newTable);
+			this.authManager
+					.addUserPrivilege(request, loggedInUser, PrivilegeType.MANAGE_TABLE, newTable);
 			this.authManager.addUserPrivilege(request, loggedInUser, PrivilegeType.EDIT_TABLE_DATA,
 					newTable);
 			this.authManager.addUserPrivilege(request, loggedInUser, PrivilegeType.VIEW_TABLE_DATA,
@@ -509,8 +507,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, boolean direction,
-			HttpServletRequest request) throws ObjectNotFoundException {
+	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables,
+			boolean direction, HttpServletRequest request) throws ObjectNotFoundException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		Set<TableInfo> tables = company.getTables();
 		for (TableInfo table : tables) {
@@ -554,8 +552,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public void updateTable(Connection conn, HttpServletRequest request, TableInfo table,
 			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic,
-			String tableEmail, String tableEmailResponse, FormStyle formStyle, boolean allowAutoDelete, boolean allowNotifications)
-			throws DisallowedException, CantDoThatException, ObjectNotFoundException, SQLException {
+			String tableEmail, String tableEmailResponse, FormStyle formStyle, boolean allowAutoDelete,
+			boolean allowNotifications) throws DisallowedException, CantDoThatException,
+			ObjectNotFoundException, SQLException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -570,8 +569,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 			for (TableInfo existingTable : company.getTables()) {
 				if (existingTable.getTableName().equals(newTableName)) {
-					throw new CantDoThatException("A table called '" + newTableName
-							+ "' already exists");
+					throw new CantDoThatException("A table called '" + newTableName + "' already exists");
 				}
 			}
 			table.setTableName(newTableName);
@@ -593,8 +591,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			if (lockable) {
 				// Lock all existing records
 				String SQLCode = "UPDATE " + table.getInternalTableName() + " SET "
-						+ table.getField(HiddenFields.LOCKED.getFieldName()).getInternalFieldName()
-						+ " = true";
+						+ table.getField(HiddenFields.LOCKED.getFieldName()).getInternalFieldName() + " = true";
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				statement.executeUpdate();
 				statement.close();
@@ -617,8 +614,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void updateMap(HttpServletRequest request, BaseReportInfo report,
-			ReportFieldInfo postcodeField, ReportFieldInfo colourField,
-			ReportFieldInfo categoryField) throws DisallowedException, ObjectNotFoundException {
+			ReportFieldInfo postcodeField, ReportFieldInfo colourField, ReportFieldInfo categoryField)
+			throws DisallowedException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -644,8 +641,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public void removeTable(SessionDataInfo sessionData, HttpServletRequest request,
 			TableInfo tableToRemove, Connection conn) throws SQLException, DisallowedException,
-			CantDoThatException, TableDependencyException, CodingErrorException,
-			ObjectNotFoundException {
+			CantDoThatException, TableDependencyException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -711,8 +707,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	public BaseReportInfo addReport(SessionDataInfo sessionData, HttpServletRequest request,
 			Connection conn, TableInfo table, String internalReportName, String reportName,
 			String reportDesc, boolean populateReport) throws SQLException, DisallowedException,
-			CantDoThatException, CodingErrorException, ObjectNotFoundException,
-			ObjectNotFoundException, ObjectNotFoundException, MissingParametersException {
+			CantDoThatException, CodingErrorException, ObjectNotFoundException, ObjectNotFoundException,
+			ObjectNotFoundException, MissingParametersException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -741,11 +737,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 							TableInfo relatedTable = relationField.getRelatedTable();
 							if (!relatedTables.contains(relatedTable)) {
 								relatedTables.add(relatedTable);
-								JoinClauseInfo join = ServletSchemaMethods.generateJoinObject(
-										request, table.getInternalTableName(), "", field
-												.getInternalFieldName(), JoinType.LEFT_OUTER,
-										relatedTable.getInternalTableName(), "", relatedTable
-												.getPrimaryKey().getInternalFieldName(), this);
+								JoinClauseInfo join = ServletSchemaMethods.generateJoinObject(request, table
+										.getInternalTableName(), "", field.getInternalFieldName(), JoinType.LEFT_OUTER,
+										relatedTable.getInternalTableName(), "", relatedTable.getPrimaryKey()
+												.getInternalFieldName(), this);
 								report.addJoin(join);
 							}
 							report.addTableField(relationField.getDisplayField());
@@ -831,9 +826,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/**
-	 * Updates the definition of a view within the DB. This method should only
-	 * be used if updateViewDbActionWithCreateOrReplace fails. Drops the view
-	 * and recreates it.
+	 * Updates the definition of a view within the DB. This method should only be
+	 * used if updateViewDbActionWithCreateOrReplace fails. Drops the view and
+	 * recreates it.
 	 */
 	private boolean updateViewDbActionWithDropAndCreate(Connection conn, BaseReportInfo report)
 			throws SQLException, CantDoThatException, CodingErrorException, ObjectNotFoundException {
@@ -858,10 +853,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/**
-	 * Returns a Map whose keySet contains the names of the set of views
-	 * dependent upon the report identified by internalReportName. The keySet
-	 * also contains internalReportName. Each key maps to a list of view names
-	 * identifying views directly dependent upon the view identified by the key.
+	 * Returns a Map whose keySet contains the names of the set of views dependent
+	 * upon the report identified by internalReportName. The keySet also contains
+	 * internalReportName. Each key maps to a list of view names identifying views
+	 * directly dependent upon the view identified by the key.
 	 */
 	private void fillViewDependencyMap(Connection conn, String internalReportName,
 			Map<String, List<String>> reportDependencyMap, boolean recurse) throws SQLException {
@@ -877,8 +872,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			String dependentReportInternalName = results.getString(1);
 			dependentReportInternalNames.add(dependentReportInternalName);
 			if (!reportDependencyMap.keySet().contains(dependentReportInternalName) && recurse) {
-				fillViewDependencyMap(conn, dependentReportInternalName, reportDependencyMap,
-						recurse);
+				fillViewDependencyMap(conn, dependentReportInternalName, reportDependencyMap, recurse);
 			}
 		}
 		results.close();
@@ -907,8 +901,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/**
-	 * Updates the definition of a view within the DB. This method should only
-	 * be used if updateViewDbActionWithDropAndCreate and
+	 * Updates the definition of a view within the DB. This method should only be
+	 * used if updateViewDbActionWithDropAndCreate and
 	 * updateViewDbActionWithCreateOrReplace fails. Drops any dependent views so
 	 * that 'report' can be updated. Once report has been updated, all dependent
 	 * views are recreated.
@@ -921,23 +915,21 @@ public final class DatabaseDefn implements DatabaseInfo {
 		try {
 			savepoint = conn.setSavepoint("dropAndCreateDependenciesSavepoint");
 			Map<String, List<String>> reportDependencyMap = new HashMap<String, List<String>>();
-			this.fillViewDependencyMap(conn, report.getInternalReportName(), reportDependencyMap,
-					true);
+			this.fillViewDependencyMap(conn, report.getInternalReportName(), reportDependencyMap, true);
 			// Remove reports...
 			List<String> deletedReports = new ArrayList<String>();
 			while (deletedReports.size() < reportDependencyMap.size()) {
 				for (String reportInternalName : reportDependencyMap.keySet()) {
 					if (!deletedReports.contains(reportInternalName)) {
 						boolean cannotDelete = false;
-						for (String dependentReportInternalName : reportDependencyMap
-								.get(reportInternalName)) {
+						for (String dependentReportInternalName : reportDependencyMap.get(reportInternalName)) {
 							if (!deletedReports.contains(dependentReportInternalName)) {
 								cannotDelete = true;
 							}
 						}
 						if (!cannotDelete) {
-							PreparedStatement dropViewStatement = conn
-									.prepareStatement("DROP VIEW " + reportInternalName);
+							PreparedStatement dropViewStatement = conn.prepareStatement("DROP VIEW "
+									+ reportInternalName);
 							dropViewStatement.execute();
 							dropViewStatement.close();
 							deletedReports.add(reportInternalName);
@@ -948,8 +940,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			// Recreate reports...
 			Collections.reverse(deletedReports);
 			for (String reportInternalName : deletedReports) {
-				TableInfo table = this.findTableContainingReportWithoutChecks(reportInternalName,
-						request);
+				TableInfo table = this.findTableContainingReportWithoutChecks(reportInternalName, request);
 				HibernateUtil.activateObject(table);
 				BaseReportInfo reportToRecreate = table.getReport(reportInternalName);
 				String CreateViewSQL = "CREATE VIEW " + reportInternalName + " AS ("
@@ -1001,12 +992,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Create the database VIEW for the report
 	 */
-	private void updateViewDbAction(Connection conn, BaseReportInfo report,
-			HttpServletRequest request) throws SQLException, CantDoThatException,
-			CodingErrorException, ObjectNotFoundException {
+	private void updateViewDbAction(Connection conn, BaseReportInfo report, HttpServletRequest request)
+			throws SQLException, CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		boolean viewExists = viewExists(conn, report);
-		boolean createOrReplaceWorked = updateViewDbActionWithCreateOrReplace(conn, report,
-				viewExists);
+		boolean createOrReplaceWorked = updateViewDbActionWithCreateOrReplace(conn, report, viewExists);
 		if (viewExists && !createOrReplaceWorked) {
 			boolean dropAndCreateWorked = updateViewDbActionWithDropAndCreate(conn, report);
 			if (!dropAndCreateWorked) {
@@ -1017,8 +1006,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void removeReport(SessionDataInfo sessionData, HttpServletRequest request,
-			Connection conn, BaseReportInfo reportToRemove) throws SQLException,
-			DisallowedException, CantDoThatException, CodingErrorException, ObjectNotFoundException {
+			Connection conn, BaseReportInfo reportToRemove) throws SQLException, DisallowedException,
+			CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		TableInfo parentTable = reportToRemove.getParentTable();
 		// Can't remove the last report
 		if (parentTable.getReports().size() == 1) {
@@ -1045,8 +1034,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				BaseReportInfo selectorReport = formTab.getSelectorReport();
 				if (selectorReport != null) {
 					if (selectorReport.equals(reportToRemove)) {
-						throw new CantDoThatException("The table " + table
-								+ " has a tab that uses this report");
+						throw new CantDoThatException("The table " + table + " has a tab that uses this report");
 					}
 				}
 			}
@@ -1060,14 +1048,14 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/**
-	 * By calling removeReport above, you can't remove the last or default
-	 * report. However, sometimes we may need to internally remove the last
-	 * report, for example if we're removing a table all reports need to be
-	 * removed. This method is there for private use in these situations
+	 * By calling removeReport above, you can't remove the last or default report.
+	 * However, sometimes we may need to internally remove the last report, for
+	 * example if we're removing a table all reports need to be removed. This
+	 * method is there for private use in these situations
 	 */
 	private void removeReportWithoutChecks(SessionDataInfo sessionData, HttpServletRequest request,
-			BaseReportInfo reportToRemove, Connection conn) throws DisallowedException,
-			SQLException, CodingErrorException, CantDoThatException, ObjectNotFoundException {
+			BaseReportInfo reportToRemove, Connection conn) throws DisallowedException, SQLException,
+			CodingErrorException, CantDoThatException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, reportToRemove.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -1156,8 +1144,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void removeCustomReportTemplate(HttpServletRequest request, BaseReportInfo report,
-			String templateName) throws DisallowedException, ObjectNotFoundException,
-			CantDoThatException {
+			String templateName) throws DisallowedException, ObjectNotFoundException, CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.VIEW_TABLE_DATA, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -1183,9 +1170,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
-			String newReportName, String newReportDesc, ModuleInfo newModule,
-			ReportStyle newReportStyle, boolean allowExport, Integer memoryAllocation)
-			throws DisallowedException, CantDoThatException, SQLException, ObjectNotFoundException {
+			String newReportName, String newReportDesc, ModuleInfo newModule, ReportStyle newReportStyle,
+			boolean allowExport, Integer memoryAllocation) throws DisallowedException,
+			CantDoThatException, SQLException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -1195,11 +1182,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		if (newReportName != null) {
 			if (!report.getReportName().equals(newReportName)) {
 				for (BaseReportInfo testReport : report.getParentTable().getReports()) {
-					if (testReport.getReportName().equals(newReportName)
-							&& (!testReport.equals(report))) {
+					if (testReport.getReportName().equals(newReportName) && (!testReport.equals(report))) {
 						throw new CantDoThatException("A report called " + newReportName
-								+ " already exists in the "
-								+ report.getParentTable().getTableName() + " table");
+								+ " already exists in the " + report.getParentTable().getTableName() + " table");
 					}
 				}
 				report.setReportName(newReportName);
@@ -1232,29 +1217,30 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private BaseField generateFieldObject(HttpServletRequest request, TableInfo table,
-			String fieldType, String internalFieldName, String fieldName, String fieldDesc) throws CodingErrorException, CantDoThatException,
-			ObjectNotFoundException, DisallowedException {
+			String fieldType, String internalFieldName, String fieldName, String fieldDesc)
+			throws CodingErrorException, CantDoThatException, ObjectNotFoundException,
+			DisallowedException {
 		BaseField field = null;
-		BasicFieldOptions basicOptions = new BasicFieldOptions(); 
+		BasicFieldOptions basicOptions = new BasicFieldOptions();
 		basicOptions.setUnique(HttpRequestUtil.getBooleanValue(request,
 				PossibleBooleanOptions.UNIQUE.getFormInputName()));
 		basicOptions.setNotNull(HttpRequestUtil.getBooleanValue(request,
-					PossibleBooleanOptions.MANDATORY.getFormInputName()));
+				PossibleBooleanOptions.MANDATORY.getFormInputName()));
 		// The 'not applicable' property is not used currently
 		// TODO: really? check
-		//boolean notApplicable = false;
-		//String notApplicableDescription = null;
-		//String notApplicableValue = null;
+		// boolean notApplicable = false;
+		// String notApplicableDescription = null;
+		// String notApplicableValue = null;
 		basicOptions.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
 		String printoutSettingString = HttpRequestUtil.getStringValue(request,
 				PossibleListOptions.PRINTFORMAT.getFormInputName());
 		if (printoutSettingString != null) {
 			if (!printoutSettingString.equals("")) {
-				basicOptions.setPrintoutSetting(FieldPrintoutSetting.valueOf(printoutSettingString.toUpperCase()));
+				basicOptions.setPrintoutSetting(FieldPrintoutSetting.valueOf(printoutSettingString
+						.toUpperCase()));
 			}
 		}
-		FieldCategory fieldCategoryRequested = FieldCategory.valueOf(fieldType
-				.toUpperCase(Locale.UK));
+		FieldCategory fieldCategoryRequested = FieldCategory.valueOf(fieldType.toUpperCase(Locale.UK));
 		fieldName = fieldName.trim();
 		switch (fieldCategoryRequested) {
 		case DATE:
@@ -1296,8 +1282,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 					PossibleListOptions.LISTREPORT.getFormInputName());
 			TableInfo referencedReportTable = this.getTable(request, internalTableName);
 			BaseReportInfo referencedReport = referencedReportTable.getReport(internalReportName);
-			field = new ReferencedReportDataFieldDefn(table, internalFieldName, fieldName,
-					fieldDesc, referencedReport, basicOptions.getPrintoutSetting());
+			field = new ReferencedReportDataFieldDefn(table, internalFieldName, fieldName, fieldDesc,
+					referencedReport, basicOptions.getPrintoutSetting());
 			break;
 		default:
 			throw new CantDoThatException("Adding unrecognised field type '" + fieldType + "'");
@@ -1306,8 +1292,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private BaseField generateNumberField(HttpServletRequest request, TableInfo table,
-			String internalFieldName, String fieldName, String fieldDesc,
-			BasicFieldOptions basicOptions) throws CantDoThatException {
+			String internalFieldName, String fieldName, String fieldDesc, BasicFieldOptions basicOptions)
+			throws CantDoThatException {
 		BaseField field;
 		int precision = HttpRequestUtil.getIntegerValue(request,
 				PossibleListOptions.NUMBERPRECISION.getFormInputName(), 0);
@@ -1329,8 +1315,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 			fieldOptions.setPrintoutSetting(basicOptions.getPrintoutSetting());
 			fieldOptions.setStoresCurrency(storesCurrency);
 			fieldOptions.setUsesLookup(usesLookup);
-			field = new DecimalFieldDefn(this.relationalDataSource, table, internalFieldName,
-					fieldName, fieldDesc, fieldOptions);
+			field = new DecimalFieldDefn(this.relationalDataSource, table, internalFieldName, fieldName,
+					fieldDesc, fieldOptions);
 		} else {
 			Integer defaultNumber = HttpRequestUtil.getIntegerValueStrict(request,
 					PossibleTextOptions.DEFAULTVALUE.getFormInputName(), null,
@@ -1344,15 +1330,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 			fieldOptions.setNotApplicableValue(-1);
 			fieldOptions.setStoresCurrency(storesCurrency);
 			fieldOptions.setUsesLookup(usesLookup);
-			field = new IntegerFieldDefn(this.relationalDataSource, table, internalFieldName,
-					fieldName, fieldDesc, fieldOptions);
+			field = new IntegerFieldDefn(this.relationalDataSource, table, internalFieldName, fieldName,
+					fieldDesc, fieldOptions);
 		}
 		return field;
 	}
 
 	private BaseField generateTextField(HttpServletRequest request, TableInfo table,
-			String internalFieldName, String fieldName, String fieldDesc,
-			BasicFieldOptions basicOptions) throws CantDoThatException {
+			String internalFieldName, String fieldName, String fieldDesc, BasicFieldOptions basicOptions)
+			throws CantDoThatException {
 		BaseField field;
 		String defaultValue = HttpRequestUtil.getStringValue(request,
 				PossibleTextOptions.DEFAULTVALUE.getFormInputName());
@@ -1360,8 +1346,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				PossibleBooleanOptions.USELOOKUP.getFormInputName());
 		boolean tieDownLookup = HttpRequestUtil.getBooleanValue(request,
 				PossibleBooleanOptions.TIEDOWNLOOKUP.getFormInputName());
-		int textContentSize = Integer.valueOf(request
-				.getParameter(PossibleListOptions.TEXTCONTENTSIZE.getFormInputName()));
+		int textContentSize = Integer.valueOf(request.getParameter(PossibleListOptions.TEXTCONTENTSIZE
+				.getFormInputName()));
 		TextCase textCase = TextCase.valueOf(request.getParameter(
 				PossibleListOptions.TEXTCASE.getFormInputName()).toUpperCase());
 		TextFieldOptions textOptions = new TextFieldOptions();
@@ -1376,28 +1362,27 @@ public final class DatabaseDefn implements DatabaseInfo {
 		textOptions.setTieDownLookup(tieDownLookup);
 		textOptions.setUnique(basicOptions.getUnique());
 		textOptions.setUsesLookup(usesLookup);
-		field = new TextFieldDefn(this.relationalDataSource, table, internalFieldName,
-				fieldName, fieldDesc, !TextField.HIDDEN,
-				textOptions);
+		field = new TextFieldDefn(this.relationalDataSource, table, internalFieldName, fieldName,
+				fieldDesc, !TextField.HIDDEN, textOptions);
 		return field;
 	}
 
 	private BaseField generateDateField(HttpServletRequest request, TableInfo table,
-			String internalFieldName, String fieldName, String fieldDesc,
-			BasicFieldOptions basicOptions) throws CantDoThatException {
+			String internalFieldName, String fieldName, String fieldDesc, BasicFieldOptions basicOptions)
+			throws CantDoThatException {
 		BaseField field;
-		int dateResolution = Integer.valueOf(request
-				.getParameter(PossibleListOptions.DATERESOLUTION.getFormInputName()));
+		int dateResolution = Integer.valueOf(request.getParameter(PossibleListOptions.DATERESOLUTION
+				.getFormInputName()));
 		boolean defaultToNow = HttpRequestUtil.getBooleanValue(request,
 				PossibleBooleanOptions.DEFAULTTONOW.getFormInputName());
-		String maxAgeYearsString = request.getParameter(PossibleTextOptions.MAXYEARS
-				.getFormInputName());
+		String maxAgeYearsString = request
+				.getParameter(PossibleTextOptions.MAXYEARS.getFormInputName());
 		Integer maxAgeYears = null;
 		if (!maxAgeYearsString.equals("")) {
 			maxAgeYears = Integer.valueOf(maxAgeYearsString);
 		}
-		String minAgeYearsString = request.getParameter(PossibleTextOptions.MINYEARS
-				.getFormInputName());
+		String minAgeYearsString = request
+				.getParameter(PossibleTextOptions.MINYEARS.getFormInputName());
 		Integer minAgeYears = null;
 		if (!minAgeYearsString.equals("")) {
 			minAgeYears = Integer.valueOf(minAgeYearsString);
@@ -1415,18 +1400,19 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/*
-	 * Create a field object of the correct type chosen by the user and add it
-	 * to the table.<br> This is the top level function which will be called to
-	 * add a field. The other addField function is called by this and handles
-	 * the specifics of database and in-memory addition as well as adding the
-	 * field to the table's default report.<br>
+	 * Create a field object of the correct type chosen by the user and add it to
+	 * the table.<br> This is the top level function which will be called to add a
+	 * field. The other addField function is called by this and handles the
+	 * specifics of database and in-memory addition as well as adding the field to
+	 * the table's default report.<br>
 	 * 
 	 * @see #addField(TableInfo, BaseField) addField(TableInfo, BaseField) does
 	 * the specifics
 	 */
 	public BaseField addField(HttpServletRequest request, Connection conn, TableInfo table,
-			String fieldType, String internalFieldName, String fieldName, String fieldDesc) throws SQLException,
-			ObjectNotFoundException, DisallowedException, CantDoThatException, CodingErrorException {
+			String fieldType, String internalFieldName, String fieldName, String fieldDesc)
+			throws SQLException, ObjectNotFoundException, DisallowedException, CantDoThatException,
+			CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, table))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -1441,14 +1427,14 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logTableSchemaChange(user, table, AppAction.ADD_FIELD, "field name: "
-				+ fieldName);
+		usageLogger.logTableSchemaChange(user, table, AppAction.ADD_FIELD, "field name: " + fieldName);
 		UsageLogger.startLoggingThread(usageLogger);
 		return field;
 	}
 
-	// TODO: improve: takes a lot of repetitive code to do very little: updateXFieldOptions are all very similar
-	public void updateFieldOption(HttpServletRequest request, BaseField field)
+	// TODO: improve: takes a lot of repetitive code to do very little:
+	// updateXFieldOptions are all very similar
+	public void updateFieldOption(HttpServletRequest request, Connection conn, BaseField field)
 			throws DisallowedException, CantDoThatException, CodingErrorException, SQLException,
 			ObjectNotFoundException {
 		TableInfo table = field.getTableContainingField();
@@ -1460,9 +1446,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		HibernateUtil.activateObject(field);
 		String inputStart = "updateoption" + field.getInternalFieldName();
 		if (field instanceof TextField) {
-			this.updateTextFieldOptions(request, field, inputStart);
-		}
-		else if (field instanceof DateField) {
+			this.updateTextFieldOptions(request, conn, field, inputStart);
+		} else if (field instanceof DateField) {
 			this.updateDateFieldOptions(request, field, inputStart);
 		} else if (field instanceof DecimalField) {
 			this.updateDecimalFieldOptions(request, field, inputStart);
@@ -1508,8 +1493,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private void updateRelationFieldOptions(HttpServletRequest request, BaseField field,
-			String inputStart) throws CantDoThatException, CodingErrorException,
-			ObjectNotFoundException {
+			String inputStart) throws CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		RelationField relationField = (RelationField) field;
 		FieldTypeDescriptorInfo fieldDescriptor = relationField.getFieldDescriptor();
 		List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
@@ -1518,15 +1502,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 			String formInputValue = request.getParameter(formInputName);
 			if (formInputValue != null) {
 				if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
-					if (formInputName.equals(inputStart
-							+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+					if (formInputName
+							.equals(inputStart + PossibleBooleanOptions.MANDATORY.getFormInputName())) {
 						Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						relationField.setNotNull(notNull);
-					} else if (formInputName.equals("updateoption"
-							+ field.getInternalFieldName()
+					} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
 							+ PossibleBooleanOptions.DEFAULTTONULL.getFormInputName())) {
-						Boolean defaultToNull = Helpers
-								.valueRepresentsBooleanTrue(formInputValue);
+						Boolean defaultToNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						relationField.setDefaultToNull(defaultToNull);
 					} else if (formInputName.equals(inputStart
 							+ PossibleBooleanOptions.ONETOONE.getFormInputName())) {
@@ -1536,15 +1518,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 				} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
 					if (formInputName.equals(inputStart
 							+ PossibleListOptions.LISTVALUEFIELD.getFormInputName())) {
-						BaseField displayField = relationField.getRelatedTable().getField(
-								formInputValue);
+						BaseField displayField = relationField.getRelatedTable().getField(formInputValue);
 						relationField.setDisplayField(displayField);
 					} else if (formInputName.equals(inputStart
 							+ PossibleListOptions.LISTSECONDARYFIELD.getFormInputName())) {
 						BaseField secondaryDisplayField = null;
 						if (!formInputValue.equals("")) {
-							secondaryDisplayField = relationField.getRelatedTable().getField(
-									formInputValue);
+							secondaryDisplayField = relationField.getRelatedTable().getField(formInputValue);
 						}
 						relationField.setSecondaryDisplayField(secondaryDisplayField);
 					}
@@ -1565,8 +1545,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
 					if (formInputName.equals(inputStart
 							+ PossibleListOptions.CHECKBOXDEFAULT.getFormInputName())) {
-						Boolean defaultValue = Helpers
-								.valueRepresentsBooleanTrue(formInputValue);
+						Boolean defaultValue = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						checkboxField.setDefault(defaultValue);
 					}
 				}
@@ -1584,15 +1563,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 			String formInputValue = request.getParameter(formInputName);
 			if (formInputValue != null) {
 				if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
-					if (formInputName.equals(inputStart
-							+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+					if (formInputName
+							.equals(inputStart + PossibleBooleanOptions.MANDATORY.getFormInputName())) {
 						boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						decimalField.setNotNull(notNull);
-					} else if (formInputName.equals("updateoption"
-							+ field.getInternalFieldName()
+					} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
 							+ PossibleBooleanOptions.STORECURRENCY.getFormInputName())) {
-						boolean storesCurrency = Helpers
-								.valueRepresentsBooleanTrue(formInputValue);
+						boolean storesCurrency = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						decimalField.setStoresCurrency(storesCurrency);
 					}
 				} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
@@ -1602,8 +1579,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 						decimalField.setPrecision(precision);
 					}
 				} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
-					if (formInputName.equals(inputStart
-							+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
+					if (formInputName
+							.equals(inputStart + PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
 						if (formInputValue.equals("")) {
 							decimalField.setDefault(null);
 						} else {
@@ -1616,8 +1593,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	private void updateDateFieldOptions(HttpServletRequest request, BaseField field,
-			String inputStart) throws CantDoThatException, CodingErrorException {
+	private void updateDateFieldOptions(HttpServletRequest request, BaseField field, String inputStart)
+			throws CantDoThatException, CodingErrorException {
 		DateField dateField = (DateField) field;
 		FieldTypeDescriptorInfo fieldDescriptor = dateField.getFieldDescriptor();
 		List<BaseFieldDescriptorOptionInfo> fieldOptions = fieldDescriptor.getOptions();
@@ -1628,11 +1605,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 				if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
 					if (formInputName.equals(inputStart
 							+ PossibleBooleanOptions.DEFAULTTONOW.getFormInputName())) {
-						Boolean defaultToNow = Helpers
-								.valueRepresentsBooleanTrue(formInputValue);
+						Boolean defaultToNow = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						dateField.setDefaultToNow(defaultToNow);
-					} else if (formInputName.equals("updateoption"
-							+ field.getInternalFieldName()
+					} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
 							+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
 						Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						dateField.setNotNull(notNull);
@@ -1644,8 +1619,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 						dateField.setDateResolution(dateResolution);
 					}
 				} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
-					if (formInputName.equals(inputStart
-							+ PossibleTextOptions.MAXYEARS.getFormInputName())) {
+					if (formInputName.equals(inputStart + PossibleTextOptions.MAXYEARS.getFormInputName())) {
 						Integer maxAgeYears = null;
 						if (!formInputValue.equals("")) {
 							maxAgeYears = Integer.valueOf(formInputValue);
@@ -1664,7 +1638,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 	}
 
-	private void updateTextFieldOptions(HttpServletRequest request, BaseField field,
+	private void updateTextFieldOptions(HttpServletRequest request, Connection conn, BaseField field,
 			String inputStart) throws CantDoThatException, CodingErrorException, SQLException {
 		TextField textField = (TextField) field;
 		FieldTypeDescriptorInfo fieldDescriptor = textField.getFieldDescriptor();
@@ -1674,23 +1648,19 @@ public final class DatabaseDefn implements DatabaseInfo {
 			String formInputValue = request.getParameter(formInputName);
 			if (formInputValue != null) {
 				if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
-					if (formInputName.equals(inputStart
-							+ PossibleBooleanOptions.USELOOKUP.getFormInputName())) {
+					if (formInputName
+							.equals(inputStart + PossibleBooleanOptions.USELOOKUP.getFormInputName())) {
 						Boolean useLookup = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						textField.setUsesLookup(useLookup);
-					} else if (formInputName.equals("updateoption"
-							+ field.getInternalFieldName()
+					} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
 							+ PossibleBooleanOptions.UNIQUE.getFormInputName())) {
 						Boolean unique = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						textField.setUnique(unique);
-					} else if (formInputName.equals("updateoption"
-							+ field.getInternalFieldName()
+					} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
 							+ PossibleBooleanOptions.TIEDOWNLOOKUP.getFormInputName())) {
-						Boolean tieDownLookup = Helpers
-								.valueRepresentsBooleanTrue(formInputValue);
+						Boolean tieDownLookup = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						textField.setTieDownLookup(tieDownLookup);
-					} else if (formInputName.equals("updateoption"
-							+ field.getInternalFieldName()
+					} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
 							+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
 						Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						textField.setNotNull(notNull);
@@ -1701,16 +1671,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 							+ PossibleListOptions.TEXTCONTENTSIZE.getFormInputName())) {
 						int textContentSize = Integer.valueOf(formInputValue);
 						textField.setContentSize(textContentSize);
-					} else if (formInputName.equals("updateoption"
-							+ field.getInternalFieldName()
+					} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
 							+ PossibleListOptions.TEXTCASE.getFormInputName())) {
 						TextCase textCase = TextCase.valueOf(formInputValue.toUpperCase());
 						this.setTextCase(field, textCase);
 						textField.setTextCase(textCase);
 					}
 				} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
-					if (formInputName.equals(inputStart
-							+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
+					if (formInputName
+							.equals(inputStart + PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
 						if (formInputValue.equals("")) {
 							textField.setDefault(null);
 						} else {
@@ -1720,19 +1689,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				}
 			}
 		}
-		Connection conn = null;
-		try {
-			conn = this.relationalDataSource.getConnection();
-			conn.setAutoCommit(false);
-			this.addRemoveRelevantTextIndexes(conn, textField);
-			conn.commit();
-		} catch (SQLException sqlex) {
-			logger.error("Error setting relevant text indexes: " + sqlex);
-		} finally {
-			if (conn != null) {
-				conn.close();
-			}
-		}
+		this.addRemoveRelevantTextIndexes(conn, textField);
 	}
 
 	private void updateIntegerFieldOptions(HttpServletRequest request, BaseField field,
@@ -1745,18 +1702,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 			String formInputValue = request.getParameter(formInputName);
 			if (formInputValue != null) {
 				if (fieldOption instanceof BooleanFieldDescriptorOptionInfo) {
-					if (formInputName.equals(inputStart
-							+ PossibleBooleanOptions.MANDATORY.getFormInputName())) {
+					if (formInputName
+							.equals(inputStart + PossibleBooleanOptions.MANDATORY.getFormInputName())) {
 						Boolean notNull = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						integerField.setNotNull(notNull);
-					} else if (formInputName.equals("updateoption"
-							+ field.getInternalFieldName()
+					} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
 							+ PossibleBooleanOptions.STORECURRENCY.getFormInputName())) {
-						boolean storesCurrency = Helpers
-								.valueRepresentsBooleanTrue(formInputValue);
+						boolean storesCurrency = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						integerField.setStoresCurrency(storesCurrency);
-					} else if (formInputName.equals("updateoption"
-							+ field.getInternalFieldName()
+					} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
 							+ PossibleBooleanOptions.UNIQUE.getFormInputName())) {
 						Boolean unique = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						integerField.setUnique(unique);
@@ -1774,8 +1728,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 						}
 					}
 				} else if (fieldOption instanceof TextFieldDescriptorOptionInfo) {
-					if (formInputName.equals(inputStart
-							+ PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
+					if (formInputName
+							.equals(inputStart + PossibleTextOptions.DEFAULTVALUE.getFormInputName())) {
 						if (formInputValue.equals("")) {
 							integerField.setDefault(null);
 						} else {
@@ -1878,17 +1832,16 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * Adds field to relational database but not to object database
 	 * 
 	 * @throws CantDoThatException
-	 *             If an internal coding bug exists caused, specifically a field
-	 *             type passed is a VARCHAR field but the type is not recognised
-	 *             as a text field
+	 *           If an internal coding bug exists caused, specifically a field
+	 *           type passed is a VARCHAR field but the type is not recognised as
+	 *           a text field
 	 * 
 	 * @see #addFieldDbAction(Connection, String, String, String, boolean)
 	 * @see #addForeignKeyDbAction(Connection, String, RelationField)
 	 * @see #addIndexDbAction(Connection, String, String)
 	 */
-	private void addFieldToRelationalDb(Connection conn, TableInfo tableToAddTo,
-			BaseField fieldToAdd) throws CantDoThatException, SQLException,
-			ObjectNotFoundException, CodingErrorException {
+	private void addFieldToRelationalDb(Connection conn, TableInfo tableToAddTo, BaseField fieldToAdd)
+			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
 		String internalTableName = tableToAddTo.getInternalTableName();
 		String internalFieldName = fieldToAdd.getInternalFieldName();
 		String dbType = fieldToAdd.getDbType().toString().toLowerCase();
@@ -1925,8 +1878,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		try {
 			// Create field in DB
-			this.addFieldDbAction(conn, internalTableName, internalFieldName,
-					fieldToAdd.getFieldName(), dbType, setUnique);
+			this.addFieldDbAction(conn, internalTableName, internalFieldName, fieldToAdd.getFieldName(),
+					dbType, setUnique);
 			if (fieldToAdd.hasDefault()) {
 				this.setFieldDefaultDbAction(conn, fieldToAdd);
 			}
@@ -1934,7 +1887,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 			// field types where indexing makes sense.
 			// Currently only small text fields and relations
 			if (!setUnique) {
-				// Note: don't set text field indexes, these are now set in ServletSchemaMethods.addField -> updateFieldOptions
+				// Note: don't set text field indexes, these are now set in
+				// ServletSchemaMethods.addField -> updateFieldOptions
 				if (fieldToAdd instanceof RelationField) {
 					this.addIndexDbAction(conn, internalTableName, internalFieldName, false);
 				}
@@ -1972,8 +1926,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/**
-	 * Update all the existing field values in the database with the default
-	 * value for that field
+	 * Update all the existing field values in the database with the default value
+	 * for that field
 	 */
 	private void setFieldDefaultDbAction(Connection conn, BaseField field) throws SQLException,
 			CantDoThatException, ObjectNotFoundException, CodingErrorException {
@@ -2015,8 +1969,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 */
 	public RelationField addRelation(HttpServletRequest request, Connection conn,
 			TableInfo tableToAddTo, String internalFieldName, String fieldName, String fieldDesc,
-			TableInfo relatedTable, BaseField relatedField) throws SQLException,
-			DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException {
+			TableInfo relatedTable, BaseField relatedField) throws SQLException, DisallowedException,
+			CantDoThatException, ObjectNotFoundException, CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, tableToAddTo))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2031,7 +1985,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				.getFormInputName());
 		boolean defaultToNull = Helpers.valueRepresentsBooleanTrue(defaultToNullString);
 		FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.NAME_AND_VALUE;
-		String oneToOneString = request.getParameter(PossibleBooleanOptions.ONETOONE.getFormInputName());
+		String oneToOneString = request
+				.getParameter(PossibleBooleanOptions.ONETOONE.getFormInputName());
 		boolean oneToOne = Helpers.valueRepresentsBooleanTrue(oneToOneString);
 		String printoutSettingString = HttpRequestUtil.getStringValue(request,
 				PossibleListOptions.PRINTFORMAT.getFormInputName());
@@ -2051,8 +2006,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		} else {
 			fieldOptions.setUnique(true);
 		}
-		RelationField relationToAdd = new RelationFieldDefn(this.relationalDataSource,
-				tableToAddTo, internalFieldName, relatedTable, relatedField, fieldOptions);
+		RelationField relationToAdd = new RelationFieldDefn(this.relationalDataSource, tableToAddTo,
+				internalFieldName, relatedTable, relatedField, fieldOptions);
 		relationToAdd.setFieldDescription(fieldDesc);
 		relationToAdd.setFieldName(fieldName);
 		if (listValueFieldInternalName == null) {
@@ -2078,8 +2033,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * Test whether field can legally be removed from a table
 	 * 
 	 * @throws CantDoThatException
-	 *             Thrown if the field shouldn't be removed from it's parent
-	 *             table, with a message explaining why not
+	 *           Thrown if the field shouldn't be removed from it's parent table,
+	 *           with a message explaining why not
 	 */
 	private void removeFieldChecks(BaseField field, HttpServletRequest request)
 			throws CantDoThatException, CodingErrorException, ObjectNotFoundException {
@@ -2120,8 +2075,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 					if (reportField.getBaseField().equals(field)) {
 						reportsUsedIn.add(testReport);
 					} else if (reportField instanceof ReportCalcFieldInfo) {
-						String calcSQL = ((ReportCalcFieldInfo) reportField)
-								.getCalculationSQL(true);
+						String calcSQL = ((ReportCalcFieldInfo) reportField).getCalculationSQL(true);
 						if (calcSQL.contains(field.getInternalFieldName())) {
 							reportsUsedIn.add(testReport);
 						}
@@ -2167,8 +2121,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 					if (aggregateBaseField.equals(field)) {
 						reportsUsedIn.add(testReport);
 					}
-					ReportFieldInfo secondaryAggregateField = summaryAggregate
-							.getSecondaryReportField();
+					ReportFieldInfo secondaryAggregateField = summaryAggregate.getSecondaryReportField();
 					if (secondaryAggregateField != null) {
 						aggregateBaseField = secondaryAggregateField.getBaseField();
 						if (aggregateBaseField.equals(field)) {
@@ -2232,9 +2185,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		table.removeField(field);
 		if (field.getFieldCategory().savesData()) {
 			// Now try to remove the field from the table:
-			PreparedStatement statement = conn
-					.prepareStatement("ALTER TABLE " + table.getInternalTableName()
-							+ " DROP COLUMN " + field.getInternalFieldName());
+			PreparedStatement statement = conn.prepareStatement("ALTER TABLE "
+					+ table.getInternalTableName() + " DROP COLUMN " + field.getInternalFieldName());
 			statement.execute();
 			statement.close();
 		}
@@ -2258,17 +2210,17 @@ public final class DatabaseDefn implements DatabaseInfo {
 				try {
 					FileUtils.deleteDirectory(directory);
 				} catch (IOException e) {
-					logger.warn("Unable to remove " + fieldFolderName + " when removing field "
-							+ table + "." + field + ": " + e);
+					logger.warn("Unable to remove " + fieldFolderName + " when removing field " + table + "."
+							+ field + ": " + e);
 				}
 			}
 		}
 	}
 
 	public ReportFieldInfo addFieldToReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, SimpleReportInfo sourceReport, BaseField field)
-			throws SQLException, DisallowedException, InconsistentStateException,
-			CantDoThatException, CodingErrorException, ObjectNotFoundException {
+			SimpleReportInfo report, SimpleReportInfo sourceReport, BaseField field) throws SQLException,
+			DisallowedException, InconsistentStateException, CantDoThatException, CodingErrorException,
+			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2328,17 +2280,17 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public void setReportFieldIndex(Connection conn, SimpleReportInfo report,
-			ReportFieldInfo field, int newindex, HttpServletRequest request) throws SQLException,
-			CodingErrorException, ObjectNotFoundException, CantDoThatException {
+	public void setReportFieldIndex(Connection conn, SimpleReportInfo report, ReportFieldInfo field,
+			int newindex, HttpServletRequest request) throws SQLException, CodingErrorException,
+			ObjectNotFoundException, CantDoThatException {
 		HibernateUtil.activateObject(report);
 		report.setFieldIndex(newindex, field);
 		this.updateViewDbAction(conn, report, request);
 	}
 
-	public void addJoinToReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, JoinClauseInfo join) throws DisallowedException, SQLException,
-			CantDoThatException, CodingErrorException, ObjectNotFoundException {
+	public void addJoinToReport(HttpServletRequest request, Connection conn, SimpleReportInfo report,
+			JoinClauseInfo join) throws DisallowedException, SQLException, CantDoThatException,
+			CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2350,8 +2302,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.ADD_JOIN_TO_REPORT, "join: "
-				+ join);
+		usageLogger.logReportSchemaChange(user, report, AppAction.ADD_JOIN_TO_REPORT, "join: " + join);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
@@ -2375,10 +2326,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public void addSortToReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, ReportFieldInfo reportField, boolean ascending)
-			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException,
-			ObjectNotFoundException {
+	public void addSortToReport(HttpServletRequest request, Connection conn, SimpleReportInfo report,
+			ReportFieldInfo reportField, boolean ascending) throws DisallowedException,
+			CantDoThatException, SQLException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2423,8 +2373,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void addFilterToReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, ReportFilterInfo filter) throws SQLException,
-			DisallowedException, CantDoThatException, CodingErrorException, ObjectNotFoundException {
+			SimpleReportInfo report, ReportFilterInfo filter) throws SQLException, DisallowedException,
+			CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2473,8 +2423,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		company.addModule(newModule);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, null, AppAction.ADD_MODULE,
-				newModule.getModuleName());
+		usageLogger.logReportSchemaChange(user, null, AppAction.ADD_MODULE, newModule.getModuleName());
 		UsageLogger.startLoggingThread(usageLogger);
 		return newModule;
 	}
@@ -2492,8 +2441,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				.getTables();
 		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
 		for (TableInfo testTable : companyTables) {
-			if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
-					testTable)) {
+			if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, testTable)) {
 				SortedSet<BaseReportInfo> allTableReports = testTable.getReports();
 				// Strip down to the set of reports the user has privileges to
 				// view
@@ -2503,8 +2451,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 						viewableReports.add(report);
 					}
 				}
-				availableDataStores.put(testTable,
-						Collections.unmodifiableSortedSet(viewableReports));
+				availableDataStores.put(testTable, Collections.unmodifiableSortedSet(viewableReports));
 			}
 		}
 		return Collections.unmodifiableMap(availableDataStores);
@@ -2525,8 +2472,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.REMOVE_FILTER_FROM_REPORT,
-				"filter: " + filter);
+		usageLogger.logReportSchemaChange(user, report, AppAction.REMOVE_FILTER_FROM_REPORT, "filter: "
+				+ filter);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
@@ -2552,8 +2499,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/**
-	 * Return a set of all reports that would have to be modified before
-	 * dropping the given report, i.e. those that join to this one
+	 * Return a set of all reports that would have to be modified before dropping
+	 * the given report, i.e. those that join to this one
 	 * 
 	 * TODO: some overlap between this and
 	 */
@@ -2574,15 +2521,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 					SimpleReportInfo simpleTestReport = (SimpleReportInfo) testReport;
 					for (JoinClauseInfo join : simpleTestReport.getJoins()) {
 						if (!join.isLeftPartTable()) {
-							BaseReportInfo joinedReport = join.getLeftReportField()
-									.getParentReport();
+							BaseReportInfo joinedReport = join.getLeftReportField().getParentReport();
 							if (joinedReport.equals(report)) {
 								reportsUsedIn.add(testReport);
 							}
 						}
 						if (!join.isRightPartTable()) {
-							BaseReportInfo joinedReport = join.getRightReportField()
-									.getParentReport();
+							BaseReportInfo joinedReport = join.getRightReportField().getParentReport();
 							if (joinedReport.equals(report)) {
 								reportsUsedIn.add(testReport);
 							}
@@ -2596,8 +2541,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	public void addCalculationToReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportCalcFieldInfo calculationField) throws SQLException,
-			DisallowedException, InconsistentStateException, CantDoThatException,
-			CodingErrorException, ObjectNotFoundException {
+			DisallowedException, InconsistentStateException, CantDoThatException, CodingErrorException,
+			ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2642,8 +2587,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		boolean definitionUpdate = false;
 		if (!(calculationDefn.toLowerCase().equals(calculationField.getCalculationDefinition()))
 				|| !(dbFieldType.equals(calculationField.getDbType()))) {
-			Map<TableInfo, Set<BaseReportInfo>> availableDataStores = this
-					.getViewableDataStores(request);
+			Map<TableInfo, Set<BaseReportInfo>> availableDataStores = this.getViewableDataStores(request);
 			((ReportCalcFieldDefn) calculationField).updateCalculationDefinition(calculationDefn,
 					dbFieldType, availableDataStores);
 			definitionUpdate = true;
@@ -2675,17 +2619,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void returnCalculationInReportToMemory(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, ReportCalcFieldInfo calculationField,
-			String oldCalculationName, String oldCalculationDefn, DatabaseFieldType oldDbFieldType)
-			throws DisallowedException, CodingErrorException, CantDoThatException,
-			ObjectNotFoundException {
+			SimpleReportInfo report, ReportCalcFieldInfo calculationField, String oldCalculationName,
+			String oldCalculationDefn, DatabaseFieldType oldDbFieldType) throws DisallowedException,
+			CodingErrorException, CantDoThatException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
 					PrivilegeType.MANAGE_TABLE, report.getParentTable());
 		}
-		Map<TableInfo, Set<BaseReportInfo>> availableDataStores = this
-				.getViewableDataStores(request);
+		Map<TableInfo, Set<BaseReportInfo>> availableDataStores = this.getViewableDataStores(request);
 		((ReportCalcFieldDefn) calculationField).updateCalculationDefinition(oldCalculationDefn,
 				oldDbFieldType, availableDataStores);
 		((ReportCalcFieldDefn) calculationField).setBaseFieldName(oldCalculationName);
@@ -2705,16 +2647,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 				ReportFieldInfo secondaryAggReportField = aggFn.getSecondaryReportField();
 				if (secondaryAggReportField != null) {
 					if (secondaryAggReportField.equals(reportField)) {
-						throw new CantDoThatException(
-								"Please remove the report summary calculation " + aggFn
-										+ " before removing the report field");
+						throw new CantDoThatException("Please remove the report summary calculation " + aggFn
+								+ " before removing the report field");
 					}
 				}
 			}
 			for (ChartGroupingInfo grouping : chart.getGroupings()) {
 				if (grouping.getGroupingReportField().equals(reportField)) {
-					throw new CantDoThatException("Please remove the chart grouping on "
-							+ reportField + " before removing the report field");
+					throw new CantDoThatException("Please remove the chart grouping on " + reportField
+							+ " before removing the report field");
 				}
 			}
 			if (reportField.equals(chart.getFilterReportField())) {
@@ -2736,8 +2677,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 					if (testReportField.isFieldFromReport()) {
 						BaseReportInfo reportFieldIsFrom = testReportField.getReportFieldIsFrom();
 						if (reportFieldIsFrom.equals(reportField.getParentReport())
-								&& testReportField.getBaseField()
-										.equals(reportField.getBaseField())) {
+								&& testReportField.getBaseField().equals(reportField.getBaseField())) {
 							if (!((reportField instanceof ReportCalcFieldInfo) && (reportField
 									.equals(testReportField)))) {
 								reportsUsedIn.add(testReportField.getParentReport());
@@ -2745,10 +2685,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 						}
 					}
 					if (testReportField instanceof ReportCalcFieldInfo) {
-						String calcSQL = ((ReportCalcFieldInfo) testReportField)
-								.getCalculationSQL(true);
-						if (calcSQL.contains(reportField.getParentReport().getInternalReportName()
-								+ "." + reportField.getInternalFieldName())) {
+						String calcSQL = ((ReportCalcFieldInfo) testReportField).getCalculationSQL(true);
+						if (calcSQL.contains(reportField.getParentReport().getInternalReportName() + "."
+								+ reportField.getInternalFieldName())) {
 							if (!testReportField.equals(reportField)) {
 								reportsUsedIn.add(testReport);
 							}
@@ -2786,8 +2725,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				if (calcSQL.contains(reportField.getInternalFieldName())) {
 					throw new CantDoThatException("The report field " + reportField
 							+ " is referenced by the calculation " + testCalc
-							+ ". Please remove or update this calculation before removing "
-							+ reportField);
+							+ ". Please remove or update this calculation before removing " + reportField);
 				}
 			}
 		}
@@ -2810,8 +2748,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void removeFieldFromReport(HttpServletRequest request, Connection conn,
-			ReportFieldInfo reportField) throws SQLException, DisallowedException,
-			CantDoThatException, CodingErrorException, ObjectNotFoundException {
+			ReportFieldInfo reportField) throws SQLException, DisallowedException, CantDoThatException,
+			CodingErrorException, ObjectNotFoundException {
 		SimpleReportInfo report = (SimpleReportInfo) reportField.getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
@@ -2837,14 +2775,14 @@ public final class DatabaseDefn implements DatabaseInfo {
 		HibernateUtil.currentSession().delete(reportField);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.REMOVE_FIELD_FROM_REPORT,
-				"field: " + reportField);
+		usageLogger.logReportSchemaChange(user, report, AppAction.REMOVE_FIELD_FROM_REPORT, "field: "
+				+ reportField);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
 	public void setChartFilter(HttpServletRequest request, BaseReportInfo report,
-			SummaryFilter chartFilter) throws SQLException, DisallowedException,
-			ObjectNotFoundException, CantDoThatException {
+			SummaryFilter chartFilter) throws SQLException, DisallowedException, ObjectNotFoundException,
+			CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2861,8 +2799,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				report.getChart(), blankFilterValues, false);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.SET_CHART_FILTER,
-				"chart filter: " + chartFilter);
+		usageLogger.logReportSchemaChange(user, report, AppAction.SET_CHART_FILTER, "chart filter: "
+				+ chartFilter);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
@@ -2891,8 +2829,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void setChartRange(HttpServletRequest request, BaseReportInfo report, int rangePercent,
-			boolean rangeDirection) throws SQLException, DisallowedException,
-			ObjectNotFoundException, CantDoThatException {
+			boolean rangeDirection) throws SQLException, DisallowedException, ObjectNotFoundException,
+			CantDoThatException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -2924,8 +2862,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void addGroupingToChart(HttpServletRequest request, ReportFieldInfo groupingReportField,
-			SummaryGroupingModifier groupingModifer) throws DisallowedException,
-			CantDoThatException, ObjectNotFoundException, SQLException {
+			SummaryGroupingModifier groupingModifer) throws DisallowedException, CantDoThatException,
+			ObjectNotFoundException, SQLException {
 		HibernateUtil.activateObject(groupingReportField);
 		BaseReportInfo report = groupingReportField.getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -2950,8 +2888,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public void removeGroupingFromChart(HttpServletRequest request,
-			ReportFieldInfo groupingReportField) throws DisallowedException,
-			ObjectNotFoundException, SQLException, CantDoThatException {
+			ReportFieldInfo groupingReportField) throws DisallowedException, ObjectNotFoundException,
+			SQLException, CantDoThatException {
 		BaseReportInfo report = groupingReportField.getParentReport();
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
@@ -2969,8 +2907,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				report.getChart(), blankFilterValues, false);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.REMOVE_GROUPING_FROM_CHART,
-				"field: " + groupingReportField);
+		usageLogger.logReportSchemaChange(user, report, AppAction.REMOVE_GROUPING_FROM_CHART, "field: "
+				+ groupingReportField);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
@@ -2988,8 +2926,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.ADD_FUNCTION_TO_CHART,
-				"function: " + addedAggFn);
+		usageLogger.logReportSchemaChange(user, report, AppAction.ADD_FUNCTION_TO_CHART, "function: "
+				+ addedAggFn);
 		UsageLogger.startLoggingThread(usageLogger);
 		// Test change by selecting rows from the database
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
@@ -3048,8 +2986,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		// Move groupings from template summary to new summary
 		for (ChartGroupingInfo grouping : groupings) {
-			savedChart.addGrouping(grouping.getGroupingReportField(),
-					grouping.getGroupingModifier());
+			savedChart.addGrouping(grouping.getGroupingReportField(), grouping.getGroupingModifier());
 			ChartGroupingInfo removedGrouping = templateChart.removeGrouping(grouping
 					.getGroupingReportField());
 		}
@@ -3069,8 +3006,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logReportSchemaChange(user, report, AppAction.SAVE_CHART, "title: "
-				+ summaryTitle);
+		usageLogger.logReportSchemaChange(user, report, AppAction.SAVE_CHART, "title: " + summaryTitle);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
@@ -3123,8 +3059,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/**
-	 * To access a table, the logged in user either has to have view privileges
-	 * on that table, or be an administrator of the company the table is in
+	 * To access a table, the logged in user either has to have view privileges on
+	 * that table, or be an administrator of the company the table is in
 	 */
 	private boolean userAllowedToAccessTable(HttpServletRequest request, TableInfo table)
 			throws ObjectNotFoundException {
@@ -3154,8 +3090,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
 		/*
-		 * Treat internal table name as a public table name. Amalgamation of
-		 * company ID + table name *should* be unique
+		 * Treat internal table name as a public table name. Amalgamation of company
+		 * ID + table name *should* be unique
 		 */
 		cachedTable = this.tableCache.get(company.getInternalCompanyName() + internalTableName);
 		if (cachedTable != null) {
@@ -3192,8 +3128,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		AuthenticatorInfo authenticator = this.getAuthManager().getAuthenticator();
 		TableInfo cachedTable = this.reportTableCache.get(reportInternalName);
 		if (cachedTable != null) {
-			if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
-					cachedTable)) {
+			if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, cachedTable)) {
 				return cachedTable;
 			} else {
 				throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -3206,8 +3141,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			for (BaseReportInfo report : table.getReports()) {
 				if (report.getInternalReportName().equals(reportInternalName)) {
 					this.reportTableCache.put(reportInternalName, table);
-					if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA,
-							table)) {
+					if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, table)) {
 						return table;
 					} else {
 						throw new DisallowedException(this.authManager.getLoggedInUser(request),
@@ -3274,10 +3208,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 						} else {
 							// Not strictly the right exception, but the best we
 							// can do
-							logger.error("Found report field " + reportField + "in report "
-									+ report + " but user not allowed to view that report");
-							throw new DisallowedException(
-									this.authManager.getLoggedInUser(request),
+							logger.error("Found report field " + reportField + "in report " + report
+									+ " but user not allowed to view that report");
+							throw new DisallowedException(this.authManager.getLoggedInUser(request),
 									PrivilegeType.VIEW_TABLE_DATA, report.getParentTable());
 						}
 					}
@@ -3307,7 +3240,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	/**
 	 * @param fieldToAdd
-	 *            the field object representing the relation
+	 *          the field object representing the relation
 	 */
 	private void addForeignKeyDbAction(Connection conn, String internalTableName,
 			RelationField fieldToAdd) throws SQLException {
@@ -3329,14 +3262,14 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * Generates and executes the SQL to add a single-column index
 	 * 
 	 * @param conn
-	 *            Database connection to work with
+	 *          Database connection to work with
 	 * @param internalTableName
-	 *            Table of index
+	 *          Table of index
 	 * @param internalFieldName
 	 * @param caseInsensitiveIndex
-	 *            If true will make an index using the function lower(), so it
-	 *            can be used when quick filtering which filters on the
-	 *            lowercase input value
+	 *          If true will make an index using the function lower(), so it can
+	 *          be used when quick filtering which filters on the lowercase input
+	 *          value
 	 */
 	private void addIndexDbAction(Connection conn, String internalTableName,
 			String internalFieldName, boolean caseInsensitiveIndex) throws SQLException {
@@ -3372,11 +3305,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	/**
-	 * Generates and executes SQL to create a unique constraint on a field,
-	 * using an index. If this fails due to duplicates, report the duplicates
+	 * Generates and executes SQL to create a unique constraint on a field, using
+	 * an index. If this fails due to duplicates, report the duplicates
 	 */
-	private void addUniqueDbAction(Connection conn, String internalTableName,
-			String internalFieldName) throws SQLException, CantDoThatException {
+	private void addUniqueDbAction(Connection conn, String internalTableName, String internalFieldName)
+			throws SQLException, CantDoThatException {
 		// Use the same naming convention that postgresql uses
 		String indexName = internalTableName + "_" + internalFieldName + "_key";
 		String SQLCode = "CREATE UNIQUE INDEX " + indexName + " ON " + internalTableName + "("
@@ -3393,8 +3326,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 				try {
 					dupConn = this.relationalDataSource.getConnection();
 					dupConn.setAutoCommit(false);
-					SQLCode = "SELECT " + internalFieldName + ", count(*) FROM "
-							+ internalTableName;
+					SQLCode = "SELECT " + internalFieldName + ", count(*) FROM " + internalTableName;
 					SQLCode += " GROUP BY " + internalFieldName;
 					SQLCode += " HAVING count(*) > 1 ORDER BY " + internalFieldName;
 					PreparedStatement dupStatement = dupConn.prepareStatement(SQLCode);
@@ -3410,8 +3342,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 					results.close();
 					dupStatement.close();
 				} catch (SQLException dsqlex) {
-					logger.error("Error finding duplicate values while setting unique property: "
-							+ dsqlex);
+					logger.error("Error finding duplicate values while setting unique property: " + dsqlex);
 					throw new CantDoThatException("There are duplicate values", dsqlex);
 				} finally {
 					if (dupConn != null) {
@@ -3449,8 +3380,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			Connection conn = this.relationalDataSource.getConnection();
 			try {
 				conn.setAutoCommit(false);
-				this.removeIndexDbAction(conn, internalTableName, internalFieldName,
-						caseInsensitiveIndex);
+				this.removeIndexDbAction(conn, internalTableName, internalFieldName, caseInsensitiveIndex);
 				conn.commit();
 			} catch (SQLException sqlex) {
 				logger.warn("Index removal failed: " + sqlex);
@@ -3468,8 +3398,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * Given all the properties of a text field (content size, whether it uses a
 	 * lookup, if it's unique etc.), set indexes appropriately
 	 */
-	private void addRemoveRelevantTextIndexes(Connection conn, TextField field)
-			throws SQLException, CantDoThatException {
+	private void addRemoveRelevantTextIndexes(Connection conn, TextField field) throws SQLException,
+			CantDoThatException {
 		String internalTableName = field.getTableContainingField().getInternalTableName();
 		String internalFieldName = field.getInternalFieldName();
 		this.removeIndexDbAction(conn, internalTableName, internalFieldName, true);
@@ -3485,7 +3415,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 					this.addIndexDbAction(conn, internalTableName, internalFieldName, false);
 				} else {
 					// Don't add case insensitive indexes until necessary
-					//this.addIndexDbAction(conn, internalTableName, internalFieldName, true);
+					// this.addIndexDbAction(conn, internalTableName, internalFieldName,
+					// true);
 				}
 			}
 		}

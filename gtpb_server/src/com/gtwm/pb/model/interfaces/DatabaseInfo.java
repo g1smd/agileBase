@@ -243,7 +243,7 @@ public interface DatabaseInfo {
 	 * Update simple options for a table field, such as whether to use a lookup
 	 * for content, date precision etc.
 	 */
-	public void updateFieldOption(HttpServletRequest request, BaseField field)
+	public void updateFieldOption(HttpServletRequest request, Connection conn, BaseField field)
 			throws DisallowedException, CantDoThatException, CodingErrorException, SQLException,
 			ObjectNotFoundException;
 
