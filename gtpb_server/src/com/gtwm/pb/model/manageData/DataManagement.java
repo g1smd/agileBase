@@ -2178,6 +2178,8 @@ public final class DataManagement implements DataManagementInfo {
 								TextContentSizes.FEW_PARAS.getNumChars())) {
 							useKey = true;
 						}
+					} else if (field instanceof CommentFeedField) {
+						useKey = true;
 					}
 					if (useKey) {
 						valueString = value.getKeyValue();
