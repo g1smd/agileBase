@@ -42,7 +42,7 @@ function init() {
 	    }, 500);
 	  } else {
 			unzoom(); // un-zoom other cards
-	    if (left < 400) {
+	    if (left < 450) {
 	      container.css("left","400px");
 	    } else if (left < 800) {
 	      container.css("left","100px");
