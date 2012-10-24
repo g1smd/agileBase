@@ -385,8 +385,7 @@ public final class DataManagement implements DataManagementInfo {
 							// addComment has set this to true.
 							// We don't want to overwrite that
 							// TODO: Really, this should be atomic but it takes
-							// such
-							// a small amount of time compared to the SQL it's
+							// such a small amount of time compared to the SQL it's
 							// probably fine
 							if (field.hasComments() == null) {
 								field.setHasComments(false);

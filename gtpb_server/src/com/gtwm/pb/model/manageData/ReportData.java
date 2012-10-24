@@ -29,6 +29,7 @@ import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.ReportDataFieldStatsInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.CommentFeedField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.DecimalField;
@@ -1033,6 +1034,10 @@ public class ReportData implements ReportDataInfo {
 									// }
 									if (keyValue.length() > 401) {
 										displayValue = keyValue.substring(0, 400) + "...";
+									}
+									if (fieldSchema instanceof CommentFeedField) {
+										logger.debug("Comment key: " + keyValue);
+										logger.debug("Display value: " + displayValue);
 									}
 								}
 							}
