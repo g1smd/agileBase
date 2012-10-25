@@ -192,9 +192,9 @@ table#reportData {
   padding: 1em;
   margin: 1em;
   border-radius: 1em;
-  width: 100%;
+  width: 90%;
 }
 
-table#reportData tr {
+table#reportData tr td {
   padding: 0.5em;
 }
