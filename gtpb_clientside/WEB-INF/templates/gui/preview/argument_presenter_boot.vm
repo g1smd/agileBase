@@ -3,6 +3,7 @@
 <head>
   <script language="JavaScript" src="resources/jquery.js"></script>
   <script language="JavaScript" src="resources/preview/argument.js"></script>
+  <script language="JavaScript" src="resources/pane3_amalgam.js"></script>  
   <link rel="stylesheet" type="text/css" href="resources/pane1_amalgam.css" />
   <link rel="stylesheet" type="text/css" href="resources/preview/argument.css" />
 </head>
@@ -15,7 +16,7 @@
 	      ## See if the report contains any images / files
 	      #foreach($reportField in $report.getReportFields())
 	        #if($reportField.getBaseField().getFieldCategory() == "FILE")
-	          <button data-assetmanager="$assetManager" data-internaltablename="$report.getParentTable().getInternalTableName()" value="$report.getInternalReportName()">$report</button><p>
+	          <button class="report_choice" data-assetmanager="$assetManager" data-internaltablename="$report.getParentTable().getInternalTableName()" value="$report.getInternalReportName()">$report</button><p>
 	          #break
 	        #end
 	      #end

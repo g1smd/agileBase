@@ -16,8 +16,8 @@ $(document).ready(function() {
 		});
 	});
 	// For report chooser
-	$("button").click(function() {
-		$("button").fadeOut();
+	$("button.report_choice").click(function() {
+		$("button.report_choice").fadeOut();
 		var internalReportName = $(this).val();
 		var internalTableName = $(this).attr("data-internaltablename");
 		var assetManager = $(this).attr("data-assetmanager");
@@ -25,6 +25,11 @@ $(document).ready(function() {
 			assetManager = "false";
 		}
 		document.location = "AppController.servlet?return=gui/preview/argument_presenter_standalone&set_report=" + internalReportName + "&set_table=" + internalTableName + "&set_custom_boolean=true&booleankey=assetmanager&custombooleanvalue=" + assetManager;
+	});
+	$("#toggle_upload").click(function() {
+		$("#upload").load("AppController.servlet", {
+			"return": "gui/preview/uploader
+		}, editTabFunctions);
 	});
 });
 
