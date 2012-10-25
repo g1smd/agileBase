@@ -24,7 +24,7 @@ $(document).ready(function() {
 		if(assetManager != "true") {
 			assetManager = "false";
 		}
-		document.location = "AppController.servlet?return=gui/preview/argument_presenter_standalone&set_report=" + internalReportName + "&set_table=" + internalTableName + "&set_custom_boolean=true&booleankey=assemanager&custombooleanvalue=" + assetManager;
+		document.location = "AppController.servlet?return=gui/preview/argument_presenter_standalone&set_report=" + internalReportName + "&set_table=" + internalTableName + "&set_custom_boolean=true&booleankey=assetmanager&custombooleanvalue=" + assetManager;
 	});
 });
 
