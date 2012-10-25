@@ -13,7 +13,7 @@
 </table>
 #if($assetManager && $view.loggedInUserAllowedTo("EDIT_TABLE_DATA", $table))
 <div id="upload">
-  <button id="upload_toggle">upload a new $table.getSingularName()</button>
+  <button id="upload_toggle">upload a new $table.getSingularName() file</button>
 </div>
 #end
 <div id="argument">
