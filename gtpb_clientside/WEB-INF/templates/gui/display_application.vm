@@ -109,6 +109,6 @@
 			</span>
 		</div>
     </div>
-    <iframe id="oViewPane" name="oViewPane" src="AppController.servlet?return=gui/display_panes" frameborder=no scrolling=yes></iframe>
+    <iframe id="oViewPane" name="oViewPane" src="AppController.servlet?return=gui/display_panes" frameborder="no" scrolling="no"></iframe>
     </body>		
 </html>
