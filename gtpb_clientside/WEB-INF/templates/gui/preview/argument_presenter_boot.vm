@@ -12,10 +12,10 @@
 	  <h1><i class="fonticon icon-large $module.getIconPath()" ></i> $module: choose set</h1><p>
 	  #foreach($report in $view.getAllViewableReports())
 	    #if($module.equals($report.getModule()))
-	      ## See if the report contains any images
+	      ## See if the report contains any images / files
 	      #foreach($reportField in $report.getReportFields())
 	        #if($reportField.getBaseField().getFieldCategory() == "FILE")
-	          <button data-internaltablename="$report.getParentTable().getInternalTableName()" value="$report.getInternalReportName()">$report</button><p>
+	          <button data-assetmanager="$assetManager" data-internaltablename="$report.getParentTable().getInternalTableName()" value="$report.getInternalReportName()">$report</button><p>
 	          #break
 	        #end
 	      #end
