@@ -26,7 +26,7 @@ $(document).ready(function() {
 		}
 		document.location = "AppController.servlet?return=gui/preview/argument_presenter_standalone&set_report=" + internalReportName + "&set_table=" + internalTableName + "&set_custom_boolean=true&booleankey=assetmanager&custombooleanvalue=" + assetManager;
 	});
-	$("#toggle_upload").click(function() {
+	$("#upload_toggle").click(function() {
 		$("#upload").load("AppController.servlet", {
 			"return": "gui/preview/uploader"
 		}, editTabFunctions);

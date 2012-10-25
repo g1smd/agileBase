@@ -168,7 +168,7 @@ h1 {
   font-size: 14pt;
 }
 
-#sets button {
+#sets button, #upload button {
   font-size: 14pt;
   width: 20em;
   text-transform: lowercase;
