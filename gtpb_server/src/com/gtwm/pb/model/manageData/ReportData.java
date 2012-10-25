@@ -885,7 +885,8 @@ public class ReportData implements ReportDataInfo {
 				if (fieldShouldBeColoured) {
 					ReportDataFieldStatsInfo fieldStats = this.cachedFieldStats.get(reportField);
 					double stdDev = fieldStats.getStdDev();
-					if (stdDev != 0d) {
+					if (Math.abs(stdDev) > 1d) {
+						// Only colour extreme values
 						numberOfStdDevsFromMean = (fieldValue - fieldStats.getMean()) / stdDev;
 					}
 					// generate new ReportDataRowField object:
@@ -1035,10 +1036,10 @@ public class ReportData implements ReportDataInfo {
 									if (keyValue.length() > 401) {
 										displayValue = keyValue.substring(0, 400) + "...";
 									}
-									if (fieldSchema instanceof CommentFeedField) {
-										logger.debug("Comment key: " + keyValue);
-										logger.debug("Display value: " + displayValue);
-									}
+								}
+								if (fieldSchema instanceof CommentFeedField) {
+									logger.debug("Comment key: " + keyValue);
+									logger.debug("Display value: " + displayValue);
 								}
 							}
 						}
