@@ -1945,6 +1945,7 @@ public final class DataManagement implements DataManagementInfo {
 				long cacheAge = cachedFeed.getCacheAge();
 				if ((cacheAge < lastDataChangeAge) || (cacheAge < (cacheSeconds * 1000))) {
 					this.reportFeedCacheHits.incrementAndGet();
+					logger.debug("Returning cached feed");
 					return cachedFeed.getFeed();
 				}
 			}
@@ -1953,6 +1954,7 @@ public final class DataManagement implements DataManagementInfo {
 		if (dataFormat.equals(DataFormat.RSS)) {
 			numRows = 100;
 		}
+		logger.debug("About to get DataManagement#getReportDataRows");
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filters,
 				exactFilters, new HashMap<BaseField, Boolean>(0), numRows, QuickFilterType.AND,
 				false);
@@ -2500,6 +2502,7 @@ public final class DataManagement implements DataManagementInfo {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			ReportDataInfo reportData = this.getReportData(company, reportDefn, conn, true);
+			logger.debug("About to get report data rows");
 			reportDataRows = reportData.getReportDataRows(conn, user, filterValues, exactFilters,
 					sessionSorts, rowLimit, filterType, lookupPostcodeLatLong);
 		} finally {
