@@ -190,6 +190,8 @@ h1 {
 
 table#reportData {
   padding: 1em;
+  margin: 1em;
+  border-radius: 1em;
 }
 
 table#reportData tr {
