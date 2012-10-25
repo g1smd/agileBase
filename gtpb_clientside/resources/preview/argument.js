@@ -28,7 +28,7 @@ $(document).ready(function() {
 	});
 	$("#toggle_upload").click(function() {
 		$("#upload").load("AppController.servlet", {
-			"return": "gui/preview/uploader
+			"return": "gui/preview/uploader"
 		}, editTabFunctions);
 	});
 });
