@@ -27,10 +27,12 @@ $(document).ready(function() {
 		document.location = "AppController.servlet?return=gui/preview/argument_presenter_standalone&set_report=" + internalReportName + "&set_table=" + internalTableName + "&set_custom_boolean=true&booleankey=assetmanager&custombooleanvalue=" + assetManager;
 	});
 	$("#upload_toggle").click(function() {
+		$("#upload").hide();
 		$("#upload").load("AppController.servlet", {
 			"return": "gui/preview/uploader"
 		}, function() {
 			editTabFunctions();
+			$("#upload").show("normal");
 		});
 	});
 });

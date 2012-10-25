@@ -192,6 +192,7 @@ table#reportData {
   padding: 1em;
   margin: 1em;
   border-radius: 1em;
+  width: 100%;
 }
 
 table#reportData tr {
