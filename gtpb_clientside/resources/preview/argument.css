@@ -181,3 +181,17 @@ h1 {
 #home {
   cursor: pointer;
 }
+
+/** For uploader */
+
+.mini_action {
+  display: none;
+}
+
+table#reportData {
+  padding: 1em;
+}
+
+table#reportData tr {
+  padding: 0.5em;
+}

@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" href="resources/tabs/tabs.css" />
   <link rel="stylesheet" type="text/css" href="resources/preview/argument.css" />
 </head>
-<body>
+<body style="overflow:visible">
   #parse("gui/preview/argument_presenter.vm")
 </body>
 </html>
