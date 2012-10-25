@@ -11,6 +11,7 @@
   #set($filterPlaceholders = true)
   #parse("gui/pane2/pane2_head.vm")
 </table>
+Asset manager is $assetManager<p>
 #if($assetManager && $view.getLoggedInUserAllowedTo("EDIT_TABLE_DATA", $table))
   Upload a new asset<p>
   #parse("gui/preview/uploader.vm")
