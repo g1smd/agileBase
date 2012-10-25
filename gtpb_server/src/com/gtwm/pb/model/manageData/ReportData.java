@@ -1018,7 +1018,6 @@ public class ReportData implements ReportDataInfo {
 							}
 						} else {
 							keyValue = results.getString(fieldSchema.getInternalFieldName());
-							logger.debug("Test value " + keyValue);
 							if (keyValue == null) {
 								keyValue = "";
 							}
@@ -1040,10 +1039,6 @@ public class ReportData implements ReportDataInfo {
 									if (keyValue.length() > 401) {
 										displayValue = keyValue.substring(0, 400) + "...";
 									}
-								}
-								if (fieldSchema instanceof CommentFeedField) {
-									logger.debug("Comment key: " + keyValue);
-									logger.debug("Display value: " + displayValue);
 								}
 							}
 						}

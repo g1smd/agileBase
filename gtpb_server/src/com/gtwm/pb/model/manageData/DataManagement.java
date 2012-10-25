@@ -176,11 +176,11 @@ public final class DataManagement implements DataManagementInfo {
 
 	/**
 	 * @param dataSource
-	 *            Provides access to the relational database
+	 *          Provides access to the relational database
 	 * @param webAppRoot
-	 *            Allows access to the filesystem
+	 *          Allows access to the filesystem
 	 * @param authManager
-	 *            Provides access to company, role, user etc. objects
+	 *          Provides access to company, role, user etc. objects
 	 */
 	public DataManagement(DataSource dataSource, String webAppRoot, AuthManagerInfo authManager) {
 		this.dataSource = dataSource;
@@ -188,9 +188,9 @@ public final class DataManagement implements DataManagementInfo {
 		this.authManager = authManager;
 	}
 
-	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId,
-			AppUserInfo user, String rawComment) throws SQLException, ObjectNotFoundException,
-			CantDoThatException, CodingErrorException {
+	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId, AppUserInfo user,
+			String rawComment) throws SQLException, ObjectNotFoundException, CantDoThatException,
+			CodingErrorException {
 		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
 		// Protect against cross-site scripting
 		String comment = Naming.makeValidXML(Helpers.smartCharsReplace(rawComment));
@@ -214,13 +214,11 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			// Concatenate all comments into the hidden comments field (for
 			// searching)
-			BaseField concatenationField = table
-					.getField(HiddenFields.COMMENTS_FEED.getFieldName());
+			BaseField concatenationField = table.getField(HiddenFields.COMMENTS_FEED.getFieldName());
 			BaseField lastModifiedField = table.getField(HiddenFields.LAST_MODIFIED.getFieldName());
 			SQLCode = "UPDATE " + table.getInternalTableName() + " SET "
 					+ concatenationField.getInternalFieldName();
-			SQLCode += " = (? || coalesce(" + concatenationField.getInternalFieldName()
-					+ ", '')), ";
+			SQLCode += " = (? || coalesce(" + concatenationField.getInternalFieldName() + ", '')), ";
 			SQLCode += lastModifiedField.getInternalFieldName() + " = now()";
 			SQLCode += " WHERE " + table.getPrimaryKey().getInternalFieldName() + "=?";
 			statement = conn.prepareStatement(SQLCode);
@@ -253,8 +251,8 @@ public final class DataManagement implements DataManagementInfo {
 				String email = companyUser.getEmail();
 				if (email != null) {
 					if (email.contains("@")
-							&& authenticator.userAllowedTo(PrivilegeType.VIEW_TABLE_DATA, table,
-									companyUser) && (!companyUser.getUsesCustomUI())) {
+							&& authenticator.userAllowedTo(PrivilegeType.VIEW_TABLE_DATA, table, companyUser)
+							&& (!companyUser.getUsesCustomUI())) {
 						recipients.add(email);
 					}
 				}
@@ -268,9 +266,9 @@ public final class DataManagement implements DataManagementInfo {
 		// rowId, "comment", comment);
 	}
 
-	private void emailComments(Set<String> recipients, BaseField field, int rowId,
-			AppUserInfo user, String comment) throws CodingErrorException, CantDoThatException,
-			SQLException, ObjectNotFoundException {
+	private void emailComments(Set<String> recipients, BaseField field, int rowId, AppUserInfo user,
+			String comment) throws CodingErrorException, CantDoThatException, SQLException,
+			ObjectNotFoundException {
 		String body = user.getForename() + " " + user.getSurname() + " added the comment\n\n";
 		body += comment + "\n\n";
 		body += " to " + field.getTableContainingField().getSingularName() + " ";
@@ -282,8 +280,7 @@ public final class DataManagement implements DataManagementInfo {
 		List<DataRowInfo> rows = this.getReportDataRows(null, report, filters, true,
 				new HashMap<BaseField, Boolean>(0), 1, QuickFilterType.AND, false);
 		if (rows.size() != 1) {
-			logger.warn("Row can't be retrieved for comment for table " + table + ", row ID "
-					+ rowId);
+			logger.warn("Row can't be retrieved for comment for table " + table + ", row ID " + rowId);
 			return;
 		}
 		DataRowInfo row = rows.get(0);
@@ -293,8 +290,8 @@ public final class DataManagement implements DataManagementInfo {
 			boolean rowIdentifierFound = false;
 			BaseField firstField = null;
 			DataRowFieldInfo firstValue = null;
-			ENTRY_LOOP: for (Map.Entry<BaseField, DataRowFieldInfo> rowEntry : row
-					.getDataRowFields().entrySet()) {
+			ENTRY_LOOP: for (Map.Entry<BaseField, DataRowFieldInfo> rowEntry : row.getDataRowFields()
+					.entrySet()) {
 				BaseField rowField = rowEntry.getKey();
 				if (!rowField.equals(pKey)) {
 					if (rowField instanceof SequenceField) {
@@ -359,8 +356,7 @@ public final class DataManagement implements DataManagementInfo {
 			} else {
 				if (noCommentRows == null) {
 					// Create a concurrent set
-					noCommentRows = Collections
-							.newSetFromMap(new ConcurrentHashMap<Integer, Boolean>());
+					noCommentRows = Collections.newSetFromMap(new ConcurrentHashMap<Integer, Boolean>());
 				} else if (noCommentRows.size() > 1000) {
 					// Don't use an unlimited amount of memory
 					noCommentRows.clear();
@@ -412,10 +408,9 @@ public final class DataManagement implements DataManagementInfo {
 
 	public void saveRecord(HttpServletRequest request, TableInfo table,
 			LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord, int rowId,
-			SessionDataInfo sessionData, List<FileItem> multipartItems)
-			throws InputRecordException, ObjectNotFoundException, SQLException,
-			CodingErrorException, DisallowedException, CantDoThatException,
-			MissingParametersException {
+			SessionDataInfo sessionData, List<FileItem> multipartItems) throws InputRecordException,
+			ObjectNotFoundException, SQLException, CodingErrorException, DisallowedException,
+			CantDoThatException, MissingParametersException {
 		// editing a single record, pass in one row id
 		Set<Integer> rowIds = new HashSet<Integer>(1);
 		rowIds.add(rowId);
@@ -453,8 +448,8 @@ public final class DataManagement implements DataManagementInfo {
 			// filterValues & rowLimits in the WHERE clause
 			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
 			Map<BaseField, String> filterValues = sessionData.getReportFilterValues();
-			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
-					filterValues, false, emptySorts, -1, primaryKey, QuickFilterType.AND, false);
+			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn, filterValues,
+					false, emptySorts, -1, primaryKey, QuickFilterType.AND, false);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				Integer item = results.getInt(1);
@@ -468,8 +463,7 @@ public final class DataManagement implements DataManagementInfo {
 			// catch exception where field is not included
 			// within report and simply return an empty tree
 			logger.warn(sqlex.toString() + ". Probably occurred because field " + this
-					+ " isn't in report " + sessionReport
-					+ ", in which case it's nothing to worry about");
+					+ " isn't in report " + sessionReport + ", in which case it's nothing to worry about");
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -480,10 +474,9 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public void cloneRecord(HttpServletRequest request, TableInfo table, int rowId,
-			SessionDataInfo sessionData, List<FileItem> multipartItems)
-			throws ObjectNotFoundException, SQLException, CantDoThatException,
-			CodingErrorException, InputRecordException, DisallowedException,
-			MissingParametersException {
+			SessionDataInfo sessionData, List<FileItem> multipartItems) throws ObjectNotFoundException,
+			SQLException, CantDoThatException, CodingErrorException, InputRecordException,
+			DisallowedException, MissingParametersException {
 		// Get values to clone.
 		Map<BaseField, BaseValue> values = this.getTableDataRow(sessionData, table, rowId, false);
 		// Store in a linked hash map to maintain order as saveRecord needs
@@ -540,8 +533,8 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public void lockReportRecords(HttpServletRequest request, SessionDataInfo sessionData)
-			throws ObjectNotFoundException, CantDoThatException, SQLException,
-			CodingErrorException, DisallowedException {
+			throws ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException,
+			DisallowedException {
 		CompanyInfo company = this.authManager.getCompanyForLoggedInUser(request);
 		BaseReportInfo report = sessionData.getReport();
 		TableInfo table = report.getParentTable();
@@ -551,8 +544,8 @@ public final class DataManagement implements DataManagementInfo {
 		Map<BaseField, String> filters = sessionData.getReportFilterValues();
 		Map<BaseField, Boolean> sorts = new HashMap<BaseField, Boolean>();
 		AppUserInfo user = this.authManager.getLoggedInUser(request);
-		List<DataRowInfo> dataRows = this.getReportDataRows(user, report, filters, false, sorts,
-				-1, QuickFilterType.AND, false);
+		List<DataRowInfo> dataRows = this.getReportDataRows(user, report, filters, false, sorts, -1,
+				QuickFilterType.AND, false);
 		String lockFieldInternalName = table.getField(HiddenFields.LOCKED.getFieldName())
 				.getInternalFieldName();
 		String SQLCode = "UPDATE " + table.getInternalTableName() + " SET " + lockFieldInternalName
@@ -595,8 +588,8 @@ public final class DataManagement implements DataManagementInfo {
 			statement.setInt(1, rowId);
 			int rowsAffected = statement.executeUpdate();
 			if (rowsAffected != 1) {
-				logger.warn("Expected one record to be locked but " + rowsAffected
-						+ " were. SQLCode = " + SQLCode + ", rowid = " + rowId);
+				logger.warn("Expected one record to be locked but " + rowsAffected + " were. SQLCode = "
+						+ SQLCode + ", rowid = " + rowId);
 			}
 			statement.close();
 			conn.commit();
@@ -606,8 +599,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		// Override lock if we just locked the same record
-		TableInfo recordLockOverrideTable = ((SessionData) sessionData)
-				.getRecordLockOverrideTable();
+		TableInfo recordLockOverrideTable = ((SessionData) sessionData).getRecordLockOverrideTable();
 		int recordLockOverrideRowId = ((SessionData) sessionData).getRecordLockOverrideRowId();
 		if (recordLockOverrideTable != null) {
 			if ((recordLockOverrideTable.equals(table)) && (recordLockOverrideRowId == rowId)) {
@@ -691,10 +683,9 @@ public final class DataManagement implements DataManagementInfo {
 	 */
 	private void saveRecord(HttpServletRequest request, TableInfo table,
 			LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord, Set<Integer> rowIds,
-			SessionDataInfo sessionData, List<FileItem> multipartItems)
-			throws InputRecordException, ObjectNotFoundException, SQLException,
-			CantDoThatException, CodingErrorException, DisallowedException,
-			MissingParametersException {
+			SessionDataInfo sessionData, List<FileItem> multipartItems) throws InputRecordException,
+			ObjectNotFoundException, SQLException, CantDoThatException, CodingErrorException,
+			DisallowedException, MissingParametersException {
 		if ((dataToSave.size() == 0) && (!newRecord)) {
 			// Note: this does actually happen quite a lot, from two particular
 			// users, therefore I've commented out the log warning.
@@ -735,8 +726,7 @@ public final class DataManagement implements DataManagementInfo {
 		String fieldsAndPlaceholdersCsv = fieldsAndPlaceholdersCsvBuilder.toString();
 		if (!fieldsCsv.equals("")) {
 			fieldsCsv = fieldsCsv.substring(0, fieldsCsv.length() - 2);
-			valuePlaceholdersCsv = valuePlaceholdersCsv.substring(0,
-					valuePlaceholdersCsv.length() - 2);
+			valuePlaceholdersCsv = valuePlaceholdersCsv.substring(0, valuePlaceholdersCsv.length() - 2);
 			fieldsAndPlaceholdersCsv = fieldsAndPlaceholdersCsv.substring(0,
 					fieldsAndPlaceholdersCsv.length() - 2);
 		}
@@ -752,16 +742,14 @@ public final class DataManagement implements DataManagementInfo {
 					+ fieldsAndPlaceholdersCsv);
 			if (globalEdit) {
 				// add filter for various row ids
-				SQLCodeBuilder.append(" WHERE " + table.getPrimaryKey().getInternalFieldName()
-						+ " in (?");
+				SQLCodeBuilder.append(" WHERE " + table.getPrimaryKey().getInternalFieldName() + " in (?");
 				for (int i = 1; i < rowIds.size(); i++) {
 					SQLCodeBuilder.append(",?");
 				}
 				SQLCodeBuilder.append(")");
 			} else {
 				// add filter for single row id
-				SQLCodeBuilder.append(" WHERE " + table.getPrimaryKey().getInternalFieldName()
-						+ "=?");
+				SQLCodeBuilder.append(" WHERE " + table.getPrimaryKey().getInternalFieldName() + "=?");
 			}
 		}
 		Connection conn = null;
@@ -793,37 +781,30 @@ public final class DataManagement implements DataManagementInfo {
 					} else if (fieldValue instanceof IntegerValue) {
 						// if no related value, set relation field to null
 						if (field instanceof RelationField
-								&& (((IntegerValue) fieldValue).getValueInteger() == -1)
-								|| (fieldValue.isNull())) {
+								&& (((IntegerValue) fieldValue).getValueInteger() == -1) || (fieldValue.isNull())) {
 							statement.setNull(fieldNumber, Types.NULL);
 						} else {
-							statement.setInt(fieldNumber,
-									((IntegerValue) fieldValue).getValueInteger());
+							statement.setInt(fieldNumber, ((IntegerValue) fieldValue).getValueInteger());
 						}
 					} else if (fieldValue instanceof DurationValue) {
-						statement.setString(fieldNumber,
-								((DurationValue) fieldValue).getSqlFormatInterval());
+						statement.setString(fieldNumber, ((DurationValue) fieldValue).getSqlFormatInterval());
 					} else if (fieldValue instanceof DecimalValue) {
-						statement.setDouble(fieldNumber,
-								((DecimalValue) fieldValue).getValueFloat());
+						statement.setDouble(fieldNumber, ((DecimalValue) fieldValue).getValueFloat());
 					} else if (fieldValue instanceof DateValue) {
 						if (((DateValue) fieldValue).getValueDate() != null) {
-							java.util.Date javaDateValue = ((DateValue) fieldValue).getValueDate()
-									.getTime();
-							java.sql.Timestamp sqlTimestampValue = new java.sql.Timestamp(
-									javaDateValue.getTime());
+							java.util.Date javaDateValue = ((DateValue) fieldValue).getValueDate().getTime();
+							java.sql.Timestamp sqlTimestampValue = new java.sql.Timestamp(javaDateValue.getTime());
 							statement.setTimestamp(fieldNumber, sqlTimestampValue);
 						} else {
 							statement.setTimestamp(fieldNumber, null);
 						}
 					} else if (fieldValue instanceof CheckboxValue) {
-						statement.setBoolean(fieldNumber,
-								((CheckboxValue) fieldValue).getValueBoolean());
+						statement.setBoolean(fieldNumber, ((CheckboxValue) fieldValue).getValueBoolean());
 					} else if (fieldValue instanceof FileValue) {
 						statement.setString(fieldNumber, ((FileValue) fieldValue).toString());
 					} else {
-						throw new CodingErrorException("Field value " + fieldValue
-								+ " is of unknown type " + fieldValue.getClass().getSimpleName());
+						throw new CodingErrorException("Field value " + fieldValue + " is of unknown type "
+								+ fieldValue.getClass().getSimpleName());
 					}
 				}
 			}
@@ -837,8 +818,8 @@ public final class DataManagement implements DataManagementInfo {
 					// the UPDATE statement
 					for (Integer aRowId : rowIds) {
 						if (tableData.isRecordLocked(conn, sessionData, aRowId)) {
-							throw new CantDoThatException("Record " + aRowId + " from table "
-									+ table + " is locked to prevent editing");
+							throw new CantDoThatException("Record " + aRowId + " from table " + table
+									+ " is locked to prevent editing");
 						}
 						statement.setInt(++fieldNumber, aRowId);
 					}
@@ -900,14 +881,10 @@ public final class DataManagement implements DataManagementInfo {
 					} else if (errorMessage.contains("foreign key constraint")
 							&& possibleCauseField instanceof RelationField) {
 						errorMessage = "Please select a valid "
-								+ ((RelationField) possibleCauseField).getRelatedTable()
-								+ " record first";
+								+ ((RelationField) possibleCauseField).getRelatedTable() + " record first";
 					} else {
-						errorMessage = "Value "
-								+ dataToSave.get(possibleCauseField)
-								+ " not allowed ("
-								+ Helpers.replaceInternalNames(errorMessage,
-										table.getDefaultReport()) + ")";
+						errorMessage = "Value " + dataToSave.get(possibleCauseField) + " not allowed ("
+								+ Helpers.replaceInternalNames(errorMessage, table.getDefaultReport()) + ")";
 					}
 					throw new InputRecordException(errorMessage, possibleCauseField, sqlex);
 				}
@@ -927,18 +904,17 @@ public final class DataManagement implements DataManagementInfo {
 			if (field instanceof FileField) {
 				try {
 					if (newRecord) {
-						this.uploadFile(request, (FileField) field,
-								(FileValue) dataToSave.get(field), newRowId, multipartItems);
+						this.uploadFile(request, (FileField) field, (FileValue) dataToSave.get(field),
+								newRowId, multipartItems);
 					} else {
-						this.uploadFile(request, (FileField) field,
-								(FileValue) dataToSave.get(field), rowId, multipartItems);
+						this.uploadFile(request, (FileField) field, (FileValue) dataToSave.get(field), rowId,
+								multipartItems);
 					}
 				} catch (CantDoThatException cdtex) {
-					throw new InputRecordException("Error uploading file: " + cdtex.getMessage(),
-							field, cdtex);
+					throw new InputRecordException("Error uploading file: " + cdtex.getMessage(), field,
+							cdtex);
 				} catch (FileUploadException fuex) {
-					throw new InputRecordException("Error uploading file: " + fuex.getMessage(),
-							field, fuex);
+					throw new InputRecordException("Error uploading file: " + fuex.getMessage(), field, fuex);
 				}
 			}
 		}
@@ -992,13 +968,13 @@ public final class DataManagement implements DataManagementInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public int importCSV(HttpServletRequest request, TableInfo table,
-			boolean updateExistingRecords, BaseField recordIdentifierField, boolean generateRowIds,
-			char separator, char quotechar, int numHeaderLines, boolean useRelationDisplayValues,
-			boolean importSequenceValues, boolean requireExactRelationMatches, boolean trim,
-			boolean merge, List<FileItem> multipartItems, String csvContent) throws SQLException,
-			InputRecordException, IOException, CantDoThatException, ObjectNotFoundException,
-			DisallowedException, CodingErrorException {
+	public int importCSV(HttpServletRequest request, TableInfo table, boolean updateExistingRecords,
+			BaseField recordIdentifierField, boolean generateRowIds, char separator, char quotechar,
+			int numHeaderLines, boolean useRelationDisplayValues, boolean importSequenceValues,
+			boolean requireExactRelationMatches, boolean trim, boolean merge,
+			List<FileItem> multipartItems, String csvContent) throws SQLException, InputRecordException,
+			IOException, CantDoThatException, ObjectNotFoundException, DisallowedException,
+			CodingErrorException {
 		if (!FileUpload.isMultipartContent(new ServletRequestContext(request))) {
 			if (csvContent == null) {
 				throw new CantDoThatException(
@@ -1023,8 +999,7 @@ public final class DataManagement implements DataManagementInfo {
 		// For serial fields, if we need to set serial values explicitly, this
 		// will have to be dealt with later
 		for (BaseField field : table.getFields()) {
-			if (field instanceof SequenceField && (!field.equals(primaryKey))
-					&& (!importSequenceValues)) {
+			if (field instanceof SequenceField && (!field.equals(primaryKey)) && (!importSequenceValues)) {
 				fields.remove(field);
 			} else if (field.getHidden()) {
 				if (field.getFieldName().equals(HiddenFields.VIEW_COUNT.getFieldName())
@@ -1042,8 +1017,8 @@ public final class DataManagement implements DataManagementInfo {
 			// Also, if importing relations by display value, look up
 			// display/internal value mappings
 			if (useRelationDisplayValues && field instanceof RelationField) {
-				Map<String, String> displayToInternalValue = ((RelationFieldDefn) field).getItems(
-						true, false);
+				Map<String, String> displayToInternalValue = ((RelationFieldDefn) field).getItems(true,
+						false);
 				relationLookups.put((RelationField) field, displayToInternalValue);
 			}
 		}
@@ -1083,19 +1058,15 @@ public final class DataManagement implements DataManagementInfo {
 				}
 			}
 			if (recordIdentifierFieldNum == 0) {
-				throw new CantDoThatException(
-						"Can't find the field specified as record identifier ("
-								+ recordIdentifierField + ") in the list of table fields " + fields
-								+ " in table " + table);
+				throw new CantDoThatException("Can't find the field specified as record identifier ("
+						+ recordIdentifierField + ") in the list of table fields " + fields + " in table "
+						+ table);
 			}
 			updateSQLCode = updateSQLCode.substring(0, updateSQLCode.length() - 2);
 			updateSQLCode += " WHERE " + recordIdentifierField.getInternalFieldName() + "=?";
-			logCreationSQLCode = "UPDATE "
-					+ table.getInternalTableName()
-					+ " SET "
-					+ table.getField(HiddenFields.DATE_CREATED.getFieldName())
-							.getInternalFieldName() + "=?, "
-					+ table.getField(HiddenFields.CREATED_BY.getFieldName()).getInternalFieldName()
+			logCreationSQLCode = "UPDATE " + table.getInternalTableName() + " SET "
+					+ table.getField(HiddenFields.DATE_CREATED.getFieldName()).getInternalFieldName()
+					+ "=?, " + table.getField(HiddenFields.CREATED_BY.getFieldName()).getInternalFieldName()
 					+ "=? WHERE " + primaryKey.getInternalFieldName() + "=?";
 		}
 		insertSQLCode = "INSERT INTO " + table.getInternalTableName() + "(";
@@ -1224,10 +1195,8 @@ public final class DataManagement implements DataManagementInfo {
 							} else {
 								if ((field instanceof FileField) && (generateRowIds)) {
 									throw new CantDoThatException(
-											"Cannot generate row ids when importing file names. See line "
-													+ importLine + ", field '"
-													+ field.getFieldName() + "' with value '"
-													+ lineValue + "'");
+											"Cannot generate row ids when importing file names. See line " + importLine
+													+ ", field '" + field.getFieldName() + "' with value '" + lineValue + "'");
 								}
 								switch (field.getDbType()) {
 								case VARCHAR:
@@ -1248,36 +1217,29 @@ public final class DataManagement implements DataManagementInfo {
 										lineValue = "01 Jan " + lineValue;
 									}
 									try {
-										Calendar calValue = CalendarParser.parse(lineValue,
-												CalendarParser.DD_MM_YY);
-										statement.setTimestamp(fieldNum,
-												new Timestamp(calValue.getTimeInMillis()));
+										Calendar calValue = CalendarParser.parse(lineValue, CalendarParser.DD_MM_YY);
+										statement.setTimestamp(fieldNum, new Timestamp(calValue.getTimeInMillis()));
 										if (updateExistingRecords) {
 											backupInsertStatement.setTimestamp(fieldNum,
 													new Timestamp(calValue.getTimeInMillis()));
 										}
 									} catch (CalendarParserException cpex) {
-										throw new InputRecordException("Error importing line "
-												+ importLine + ", field " + field + ": "
-												+ cpex.getMessage(), field, cpex);
+										throw new InputRecordException("Error importing line " + importLine
+												+ ", field " + field + ": " + cpex.getMessage(), field, cpex);
 									}
 									break;
 								case FLOAT:
-									lineValue = lineValue.trim()
-											.replaceAll("[^\\d\\.\\+\\-eE]", "");
+									lineValue = lineValue.trim().replaceAll("[^\\d\\.\\+\\-eE]", "");
 									statement.setDouble(fieldNum, Double.valueOf(lineValue));
 									if (updateExistingRecords) {
-										backupInsertStatement.setDouble(fieldNum,
-												Double.valueOf(lineValue));
+										backupInsertStatement.setDouble(fieldNum, Double.valueOf(lineValue));
 									}
 									break;
 								case INTEGER:
-									if ((field instanceof RelationField)
-											&& (useRelationDisplayValues)) {
+									if ((field instanceof RelationField) && (useRelationDisplayValues)) {
 										// find key value for display value
 										RelationField relationField = (RelationField) field;
-										Map<String, String> valueKeyMap = relationLookups
-												.get(relationField);
+										Map<String, String> valueKeyMap = relationLookups.get(relationField);
 										String internalValueString = valueKeyMap.get(lineValue);
 										if (internalValueString == null) {
 											if (!requireExactRelationMatches) {
@@ -1285,25 +1247,19 @@ public final class DataManagement implements DataManagementInfo {
 												// algorithm
 												String potentialDisplayValue = null;
 												String lineValueLowerCase = lineValue.toLowerCase();
-												FUZZYMATCH: for (Map.Entry<String, String> entry : valueKeyMap
-														.entrySet()) {
+												FUZZYMATCH: for (Map.Entry<String, String> entry : valueKeyMap.entrySet()) {
 													potentialDisplayValue = entry.getKey();
-													if (potentialDisplayValue.toLowerCase()
-															.contains(lineValueLowerCase)) {
+													if (potentialDisplayValue.toLowerCase().contains(lineValueLowerCase)) {
 														internalValueString = entry.getValue();
 														break FUZZYMATCH;
 													}
 												}
 											}
 											if (internalValueString == null) {
-												throw new CantDoThatException(
-														"Error importing line " + importLine
-																+ ", field " + relationField
-																+ ": Can't find a related '"
-																+ relationField.getRelatedTable()
-																+ "' for "
-																+ relationField.getDisplayField()
-																+ " '" + lineValue + "'. ");
+												throw new CantDoThatException("Error importing line " + importLine
+														+ ", field " + relationField + ": Can't find a related '"
+														+ relationField.getRelatedTable() + "' for "
+														+ relationField.getDisplayField() + " '" + lineValue + "'. ");
 											}
 										}
 										int keyValue = Integer.valueOf(internalValueString);
@@ -1315,8 +1271,7 @@ public final class DataManagement implements DataManagementInfo {
 											}
 										}
 									} else {
-										lineValue = lineValue.trim().replaceAll(
-												"[^\\d\\.\\+\\-eE]", "");
+										lineValue = lineValue.trim().replaceAll("[^\\d\\.\\+\\-eE]", "");
 										int keyValue = Integer.valueOf(lineValue);
 										statement.setInt(fieldNum, keyValue);
 										if (updateExistingRecords) {
@@ -1328,8 +1283,7 @@ public final class DataManagement implements DataManagementInfo {
 									}
 									break;
 								case SERIAL:
-									lineValue = lineValue.trim()
-											.replaceAll("[^\\d\\.\\+\\-eE]", "");
+									lineValue = lineValue.trim().replaceAll("[^\\d\\.\\+\\-eE]", "");
 									int keyValue = Integer.valueOf(lineValue);
 									statement.setInt(fieldNum, keyValue);
 									if (updateExistingRecords) {
@@ -1340,12 +1294,10 @@ public final class DataManagement implements DataManagementInfo {
 									}
 									break;
 								case BOOLEAN:
-									boolean filterValueIsTrue = Helpers
-											.valueRepresentsBooleanTrue(lineValue);
+									boolean filterValueIsTrue = Helpers.valueRepresentsBooleanTrue(lineValue);
 									statement.setBoolean(fieldNum, filterValueIsTrue);
 									if (updateExistingRecords) {
-										backupInsertStatement.setBoolean(fieldNum,
-												filterValueIsTrue);
+										backupInsertStatement.setBoolean(fieldNum, filterValueIsTrue);
 									}
 									break;
 								}
@@ -1372,9 +1324,8 @@ public final class DataManagement implements DataManagementInfo {
 					if (identifierFieldDbType.equals(DatabaseFieldType.INTEGER)
 							|| identifierFieldDbType.equals(DatabaseFieldType.SERIAL)) {
 						if (recordIdentifierInteger == null) {
-							throw new InputRecordException(
-									"Can't find a record identifier value at line " + importLine,
-									recordIdentifierField);
+							throw new InputRecordException("Can't find a record identifier value at line "
+									+ importLine, recordIdentifierField);
 						}
 						recordIdentifierDescription = recordIdentifierField.getFieldName() + " = "
 								+ recordIdentifierInteger;
@@ -1382,9 +1333,8 @@ public final class DataManagement implements DataManagementInfo {
 						statement.setInt(fields.size() + 1, recordIdentifierInteger);
 					} else {
 						if (recordIdentifierString == null) {
-							throw new InputRecordException(
-									"Can't find a record identifier value at line " + importLine,
-									recordIdentifierField);
+							throw new InputRecordException("Can't find a record identifier value at line "
+									+ importLine, recordIdentifierField);
 						}
 						recordIdentifierDescription = recordIdentifierField.getFieldName() + " = '"
 								+ recordIdentifierString + "'";
@@ -1398,10 +1348,9 @@ public final class DataManagement implements DataManagementInfo {
 						backupInsertStatement.executeUpdate();
 						// NB Postgres specific code to find Row ID of newly
 						// inserted record, not cross-db compatible
-						String newRowIdSQLCode = "SELECT currval('" + table.getInternalTableName()
-								+ "_" + primaryKey.getInternalFieldName() + "_seq')";
-						PreparedStatement newRowIdStatement = conn
-								.prepareStatement(newRowIdSQLCode);
+						String newRowIdSQLCode = "SELECT currval('" + table.getInternalTableName() + "_"
+								+ primaryKey.getInternalFieldName() + "_seq')";
+						PreparedStatement newRowIdStatement = conn.prepareStatement(newRowIdSQLCode);
 						ResultSet newRowIdResults = newRowIdStatement.executeQuery();
 						if (newRowIdResults.next()) {
 							int newRowId = newRowIdResults.getInt(1);
@@ -1418,20 +1367,16 @@ public final class DataManagement implements DataManagementInfo {
 						} else {
 							newRowIdResults.close();
 							newRowIdStatement.close();
-							throw new SQLException(
-									"Row ID not found for the newly inserted record. '"
-											+ newRowIdStatement + "' didn't work");
+							throw new SQLException("Row ID not found for the newly inserted record. '"
+									+ newRowIdStatement + "' didn't work");
 						}
 						newRowIdResults.close();
 						newRowIdStatement.close();
 					} else if (rowsAffected > 1) {
-						throw new InputRecordException(
-								"Error importing line "
-										+ importLine
-										+ ". The record identifier field "
-										+ recordIdentifierDescription
-										+ " should match only 1 record in the database but it actually matches "
-										+ rowsAffected, recordIdentifierField);
+						throw new InputRecordException("Error importing line " + importLine
+								+ ". The record identifier field " + recordIdentifierDescription
+								+ " should match only 1 record in the database but it actually matches "
+								+ rowsAffected, recordIdentifierField);
 					}
 					// reset to null for the next line
 					recordIdentifierString = null;
@@ -1537,15 +1482,13 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	/**
-	 * Upload a file for a particular field in a particular record. If a file
-	 * with the same name already exists, rename the old one to avoid
-	 * overwriting. Reset the last modified time of the old one so the rename
-	 * doesn't muck this up. Maintaining the file timestamp is useful for
-	 * version history
+	 * Upload a file for a particular field in a particular record. If a file with
+	 * the same name already exists, rename the old one to avoid overwriting.
+	 * Reset the last modified time of the old one so the rename doesn't muck this
+	 * up. Maintaining the file timestamp is useful for version history
 	 */
 	private void uploadFile(HttpServletRequest request, FileField field, FileValue fileValue,
-			int rowId, List<FileItem> multipartItems) throws CantDoThatException,
-			FileUploadException {
+			int rowId, List<FileItem> multipartItems) throws CantDoThatException, FileUploadException {
 		if (rowId < 0) {
 			throw new CantDoThatException("Row ID " + rowId + " invalid");
 		}
@@ -1590,8 +1533,7 @@ public final class DataManagement implements DataManagementInfo {
 					String basePath = filePath;
 					int fileNum = 1;
 					if (basePath.contains(".")) {
-						basePath = basePath
-								.substring(0, basePath.length() - extension.length() - 1);
+						basePath = basePath.substring(0, basePath.length() - extension.length() - 1);
 					}
 					String renamedFileName = basePath + "-" + fileNum;
 					if (!extension.equals("")) {
@@ -1609,12 +1551,11 @@ public final class DataManagement implements DataManagementInfo {
 					// Keep the original timestamp
 					long lastModified = selectedFile.lastModified();
 					if (!selectedFile.renameTo(renamedFile)) {
-						throw new FileUploadException("Rename of existing file from '"
-								+ selectedFile + "' to '" + renamedFile + "' failed");
+						throw new FileUploadException("Rename of existing file from '" + selectedFile
+								+ "' to '" + renamedFile + "' failed");
 					}
 					if (!renamedFile.setLastModified(lastModified)) {
-						throw new FileUploadException("Error setting the last modified date of "
-								+ renamedFile);
+						throw new FileUploadException("Error setting the last modified date of " + renamedFile);
 					}
 					// I think a File object's name is inviolable but just in
 					// case
@@ -1629,8 +1570,7 @@ public final class DataManagement implements DataManagementInfo {
 				}
 				// Record upload speed
 				long requestStartTime = request.getSession().getLastAccessedTime();
-				float secondsToUpload = (System.currentTimeMillis() - requestStartTime)
-						/ ((float) 1000);
+				float secondsToUpload = (System.currentTimeMillis() - requestStartTime) / ((float) 1000);
 				if (secondsToUpload > 10) {
 					// Only time reasonably long uploads otherwise we'll amplify
 					// errors
@@ -1661,8 +1601,7 @@ public final class DataManagement implements DataManagementInfo {
 						// width is no > 40 px
 						Thumbnails.of(selectedFile).size(40, 60).toFile(thumb40File);
 					} catch (IOException ioex) {
-						throw new FileUploadException("Error generating thumbnail: "
-								+ ioex.getMessage());
+						throw new FileUploadException("Error generating thumbnail: " + ioex.getMessage());
 					}
 				} else if (extension.equals("pdf")) {
 					// Convert first page to PNG with imagemagick
@@ -1673,14 +1612,11 @@ public final class DataManagement implements DataManagementInfo {
 					op.addImage(); // Placeholder for output PNG
 					try {
 						// [0] means convert only first page
-						convert.run(op, new Object[] { filePath + "[0]",
-								filePath + "." + 500 + ".png" });
+						convert.run(op, new Object[] { filePath + "[0]", filePath + "." + 500 + ".png" });
 					} catch (IOException ioex) {
-						throw new FileUploadException("IO error while converting PDF to PNG: "
-								+ ioex);
+						throw new FileUploadException("IO error while converting PDF to PNG: " + ioex);
 					} catch (InterruptedException iex) {
-						throw new FileUploadException("Interrupted while converting PDF to PNG: "
-								+ iex);
+						throw new FileUploadException("Interrupted while converting PDF to PNG: " + iex);
 					} catch (IM4JavaException im4jex) {
 						throw new FileUploadException("Problem converting PDF to PNG: " + im4jex);
 					}
@@ -1701,27 +1637,27 @@ public final class DataManagement implements DataManagementInfo {
 	 * Used when deleting a record.
 	 * 
 	 * Recursively get any tables which contain data that depends on the record
-	 * specified, i.e. data that would be deleted in a cascade if the record
-	 * were deleted
+	 * specified, i.e. data that would be deleted in a cascade if the record were
+	 * deleted
 	 * 
 	 * Along with each table, return a snippet of the contents of dependent
 	 * record(s)
 	 * 
-	 * Also throw an exception immediately if any locked records are found as
-	 * this means the deletion should fail
+	 * Also throw an exception immediately if any locked records are found as this
+	 * means the deletion should fail
 	 * 
 	 * @param tables
-	 *            The set of tables to check for dependencies between, e.g. all
-	 *            the tables in a company
+	 *          The set of tables to check for dependencies between, e.g. all the
+	 *          tables in a company
 	 * @param sessionData
-	 *            Used to check for locked record overrides
+	 *          Used to check for locked record overrides
 	 * @param recordDependencies
-	 *            This method is recursive
+	 *          This method is recursive
 	 */
 	public static Map<TableInfo, String> getRecordsDependencies(Connection conn,
 			Set<TableInfo> tables, SessionDataInfo sessionData, DatabaseInfo databaseDefn,
-			TableInfo table, int rowId, Map<TableInfo, String> recordDependencies)
-			throws SQLException, ObjectNotFoundException, CantDoThatException {
+			TableInfo table, int rowId, Map<TableInfo, String> recordDependencies) throws SQLException,
+			ObjectNotFoundException, CantDoThatException {
 		for (TableInfo otherTable : tables) {
 			Set<BaseField> otherTableFields = otherTable.getFields();
 			for (BaseField field : otherTableFields) {
@@ -1789,8 +1725,7 @@ public final class DataManagement implements DataManagementInfo {
 					TableData otherTableData = new TableData(otherTable);
 					if (otherTableData.isRecordLocked(conn, sessionData, otherRowId)) {
 						throw new CantDoThatException("Record " + otherRowId
-								+ " cannot be removed from dependent table " + otherTable
-								+ " because it is locked");
+								+ " cannot be removed from dependent table " + otherTable + " because it is locked");
 					}
 					// recurse
 					if (!recordDependencies.keySet().contains(otherTable)) {
@@ -1809,16 +1744,15 @@ public final class DataManagement implements DataManagementInfo {
 	private void removeUploadedFiles(TableInfo table, int rowId) {
 		for (BaseField field : table.getFields()) {
 			if (field instanceof FileField) {
-				String folderName = this.getWebAppRoot() + "uploads/"
-						+ table.getInternalTableName() + "/" + field.getInternalFieldName() + "/"
-						+ rowId;
+				String folderName = this.getWebAppRoot() + "uploads/" + table.getInternalTableName() + "/"
+						+ field.getInternalFieldName() + "/" + rowId;
 				File folder = new File(folderName);
 				if (folder.exists()) {
 					try {
 						FileUtils.deleteDirectory(folder);
 					} catch (IOException e) {
-						logger.warn("Unable to remove " + folderName + " when removing field "
-								+ table + "." + field + ": " + e);
+						logger.warn("Unable to remove " + folderName + " when removing field " + table + "."
+								+ field + ": " + e);
 					}
 				}
 			}
@@ -1826,17 +1760,17 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public void removeRecord(HttpServletRequest request, SessionDataInfo sessionData,
-			DatabaseInfo databaseDefn, TableInfo table, int rowId, boolean cascade)
-			throws SQLException, ObjectNotFoundException, CodingErrorException,
-			CantDoThatException, DisallowedException, DataDependencyException {
+			DatabaseInfo databaseDefn, TableInfo table, int rowId, boolean cascade) throws SQLException,
+			ObjectNotFoundException, CodingErrorException, CantDoThatException, DisallowedException,
+			DataDependencyException {
 		Map<TableInfo, String> recordDependencies = new LinkedHashMap<TableInfo, String>();
 		Set<TableInfo> tables = this.authManager.getCompanyForLoggedInUser(request).getTables();
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
-			recordDependencies = getRecordsDependencies(conn, tables, sessionData, databaseDefn,
-					table, rowId, recordDependencies);
+			recordDependencies = getRecordsDependencies(conn, tables, sessionData, databaseDefn, table,
+					rowId, recordDependencies);
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -1865,8 +1799,7 @@ public final class DataManagement implements DataManagementInfo {
 			if (!cascade) {
 				String warning = "";
 				for (Map.Entry<TableInfo, String> dependency : recordDependencies.entrySet()) {
-					warning += dependency.getKey().getSimpleName() + " - " + dependency.getValue()
-							+ "\n";
+					warning += dependency.getKey().getSimpleName() + " - " + dependency.getValue() + "\n";
 				}
 				throw new DataDependencyException(warning);
 			}
@@ -1908,8 +1841,8 @@ public final class DataManagement implements DataManagementInfo {
 				statement.setInt(1, rowId);
 				int numCommentsDeleted = statement.executeUpdate();
 				if (numCommentsDeleted > 0) {
-					logger.info("" + numCommentsDeleted + " comments deleted when deleting "
-							+ table + " record " + rowId);
+					logger.info("" + numCommentsDeleted + " comments deleted when deleting " + table
+							+ " record " + rowId);
 				}
 				statement.close();
 				conn.commit();
@@ -1924,15 +1857,15 @@ public final class DataManagement implements DataManagementInfo {
 		logLastTableDataChangeTime(table);
 		UsageLogger usageLogger = new UsageLogger(dataSource);
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
-		usageLogger.logDataChange(user, table, null, AppAction.REMOVE_RECORD, rowId,
-				"Deleted data: " + deletedRow);
+		usageLogger.logDataChange(user, table, null, AppAction.REMOVE_RECORD, rowId, "Deleted data: "
+				+ deletedRow);
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
 	private String getReportDataAsFormat(DataFormat dataFormat, AppUserInfo user,
-			BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters,
-			long cacheSeconds) throws CodingErrorException, CantDoThatException, SQLException,
-			XMLStreamException, ObjectNotFoundException, JsonGenerationException {
+			BaseReportInfo report, Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
+			throws CodingErrorException, CantDoThatException, SQLException, XMLStreamException,
+			ObjectNotFoundException, JsonGenerationException {
 		String id = dataFormat.toString() + report.getInternalReportName();
 		CachedReportFeedInfo cachedFeed = null;
 		if (filters.size() == 0) {
@@ -1945,7 +1878,6 @@ public final class DataManagement implements DataManagementInfo {
 				long cacheAge = cachedFeed.getCacheAge();
 				if ((cacheAge < lastDataChangeAge) || (cacheAge < (cacheSeconds * 1000))) {
 					this.reportFeedCacheHits.incrementAndGet();
-					logger.debug("Returning cached feed");
 					return cachedFeed.getFeed();
 				}
 			}
@@ -1954,10 +1886,8 @@ public final class DataManagement implements DataManagementInfo {
 		if (dataFormat.equals(DataFormat.RSS)) {
 			numRows = 100;
 		}
-		logger.debug("About to get DataManagement#getReportDataRows");
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filters,
-				exactFilters, new HashMap<BaseField, Boolean>(0), numRows, QuickFilterType.AND,
-				false);
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filters, exactFilters,
+				new HashMap<BaseField, Boolean>(0), numRows, QuickFilterType.AND, false);
 		String dataFeedString = null;
 		if (dataFormat.equals(DataFormat.JSON)) {
 			dataFeedString = this.generateJSON(report, reportDataRows);
@@ -1985,9 +1915,8 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public String getReportRSS(AppUserInfo user, BaseReportInfo report,
-			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
-			throws SQLException, CodingErrorException, CantDoThatException, XMLStreamException,
-			ObjectNotFoundException {
+			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds) throws SQLException,
+			CodingErrorException, CantDoThatException, XMLStreamException, ObjectNotFoundException {
 		try {
 			return this.getReportDataAsFormat(DataFormat.RSS, user, report, filters, exactFilters,
 					cacheSeconds);
@@ -2173,20 +2102,7 @@ public final class DataManagement implements DataManagementInfo {
 				for (ReportFieldInfo reportField : report.getReportFields()) {
 					BaseField field = reportField.getBaseField();
 					DataRowFieldInfo value = reportDataRow.getValue(reportField);
-					boolean useKey = false;
-					if (field instanceof TextField) {
-						if (((TextField) field).getContentSize().equals(
-								TextContentSizes.FEW_PARAS.getNumChars())) {
-							useKey = true;
-						}
-					} else if (field instanceof CommentFeedField) {
-						useKey = true;
-					}
-					if (useKey) {
-						valueString = value.getKeyValue();
-					} else {
-						valueString = value.getDisplayValue();
-					}
+					valueString = value.getKeyValue();
 					jg.writeStringField(reportField.getInternalFieldName(), valueString);
 				}
 				jg.writeEndObject();
@@ -2205,13 +2121,11 @@ public final class DataManagement implements DataManagementInfo {
 			Map<BaseField, String> filterValues) throws CodingErrorException, CantDoThatException,
 			SQLException, JsonGenerationException, ObjectNotFoundException {
 		String id = "";
-		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
-				filterValues);
+		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(filterValues);
 		for (BaseReportInfo report : reports) {
 			ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 			if (eventDateReportField == null) {
-				throw new CantDoThatException("The report '" + report
-						+ "' has no suitable date field");
+				throw new CantDoThatException("The report '" + report + "' has no suitable date field");
 			}
 			id += report.getInternalReportName();
 		}
@@ -2237,9 +2151,8 @@ public final class DataManagement implements DataManagementInfo {
 			for (BaseReportInfo report : reports) {
 				String className = "report_" + report.getInternalReportName();
 				ReportFieldInfo eventDateReportField = report.getCalendarStartField();
-				List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report,
-						filterValues, false, new HashMap<BaseField, Boolean>(0), 10000,
-						QuickFilterType.AND, false);
+				List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filterValues,
+						false, new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false);
 				ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
 					DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
 					if (eventDateValue.getKeyValue().equals("")) {
@@ -2288,8 +2201,8 @@ public final class DataManagement implements DataManagementInfo {
 
 	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
-			throws CodingErrorException, CantDoThatException, SQLException,
-			JsonGenerationException, ObjectNotFoundException {
+			throws CodingErrorException, CantDoThatException, SQLException, JsonGenerationException,
+			ObjectNotFoundException {
 		ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 		if (eventDateReportField == null) {
 			throw new CantDoThatException("The report '" + report + "' has no suitable date field");
@@ -2298,8 +2211,7 @@ public final class DataManagement implements DataManagementInfo {
 		// Try cache first
 		// Make a sortedMap so toString is always consistent for the same
 		// key/value pairs and we can use it as an ID
-		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(
-				filterValues);
+		SortedMap<BaseField, String> sortedFilterValues = new TreeMap<BaseField, String>(filterValues);
 		String id = report.getInternalReportName() + sortedFilterValues.toString();
 		CachedReportFeedInfo cachedJSON = cachedCalendarJSONs.get(id);
 		if (cachedJSON != null) {
@@ -2323,13 +2235,15 @@ public final class DataManagement implements DataManagementInfo {
 			allDayValues = false;
 		}
 		DateTimeZone zone = DateTimeZone.getDefault();
-		// Workaround. At least on Ubuntu, the default timezone is Etc/GMT not Europe/London, when Europe/London is set in the OS
-		// Note: JodaTime used because Java's TimeZone class doesn't return Europe/London when requested, on the development OS
+		// Workaround. At least on Ubuntu, the default timezone is Etc/GMT not
+		// Europe/London, when Europe/London is set in the OS
+		// Note: JodaTime used because Java's TimeZone class doesn't return
+		// Europe/London when requested, on the development OS
 		if (zone.getID().contains("GMT")) {
 			zone = DateTimeZone.forID("Europe/London");
 		}
-		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filterValues,
-				false, new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false);
+		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filterValues, false,
+				new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false);
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
@@ -2357,10 +2271,12 @@ public final class DataManagement implements DataManagementInfo {
 				}
 				jg.writeBooleanField("allDay", allDayEvent);
 				// fullcalendar needs the number of seconds since the epoch
-				// Output in UTC rather than local time as fullcalendar adjusts clientside
-				// TODO: This may not work for non-GMT timezones as the offset is from UTC, untested
+				// Output in UTC rather than local time as fullcalendar adjusts
+				// clientside
+				// TODO: This may not work for non-GMT timezones as the offset is from
+				// UTC, untested
 				Long eventDateMillis = Long.parseLong(eventDateValue.getKeyValue());
-				//int timezoneOffset = timeZone.getOffset(eventDateMillis);
+				// int timezoneOffset = timeZone.getOffset(eventDateMillis);
 				int timezoneOffset = 0;
 				if (timezoneAdjust) {
 					timezoneOffset = zone.getOffset(eventDateMillis);
@@ -2418,8 +2334,7 @@ public final class DataManagement implements DataManagementInfo {
 		cachedCalendarJSONs.put(id, cachedJSON);
 		int cacheMisses = this.calendarJsonCacheMisses.incrementAndGet();
 		if (cacheMisses > 100) {
-			logger.info("JSON cache hits: " + this.calendarJsonCacheHits + ", misses "
-					+ cacheMisses);
+			logger.info("JSON cache hits: " + this.calendarJsonCacheHits + ", misses " + cacheMisses);
 			this.calendarJsonCacheHits.set(0);
 			this.calendarJsonCacheMisses.set(0);
 		}
@@ -2430,7 +2345,7 @@ public final class DataManagement implements DataManagementInfo {
 	 * TODO: perhaps move this static method to a more appropriate class
 	 * 
 	 * @param shortTitle
-	 *            If true, return only the first part of the title
+	 *          If true, return only the first part of the title
 	 */
 	public static String buildEventTitle(BaseReportInfo report, DataRowInfo reportDataRow,
 			boolean shortTitle) {
@@ -2453,8 +2368,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			switch (baseField.getDbType()) {
 			case BOOLEAN:
-				boolean reportFieldTrue = Helpers.valueRepresentsBooleanTrue(dataRowField
-						.getKeyValue());
+				boolean reportFieldTrue = Helpers.valueRepresentsBooleanTrue(dataRowField.getKeyValue());
 				if (reportFieldTrue) {
 					eventTitleBuilder.append(reportField.getFieldName() + ", ");
 					fieldCount++;
@@ -2502,7 +2416,6 @@ public final class DataManagement implements DataManagementInfo {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			ReportDataInfo reportData = this.getReportData(company, reportDefn, conn, true);
-			logger.debug("About to get report data rows");
 			reportDataRows = reportData.getReportDataRows(conn, user, filterValues, exactFilters,
 					sessionSorts, rowLimit, filterType, lookupPostcodeLatLong);
 		} finally {
@@ -2594,8 +2507,7 @@ public final class DataManagement implements DataManagementInfo {
 			// TODO: there is only one WHERE clause - there should be an
 			// improvement
 			// over a loop
-			for (Map.Entry<String, List<ReportQuickFilterInfo>> whereClause : whereClauseMap
-					.entrySet()) {
+			for (Map.Entry<String, List<ReportQuickFilterInfo>> whereClause : whereClauseMap.entrySet()) {
 				filterArgs = whereClause.getKey();
 				filtersUsed = whereClause.getValue();
 			}
@@ -2687,8 +2599,8 @@ public final class DataManagement implements DataManagementInfo {
 	}
 
 	public ChartDataInfo getChartData(CompanyInfo company, ChartInfo chart,
-			Map<BaseField, String> reportFilterValues, boolean aggressiveCache)
-			throws SQLException, CantDoThatException {
+			Map<BaseField, String> reportFilterValues, boolean aggressiveCache) throws SQLException,
+			CantDoThatException {
 		boolean needSummary = (chart.getAggregateFunctions().size() > 0);
 		if (!needSummary) {
 			return null;
@@ -2752,8 +2664,7 @@ public final class DataManagement implements DataManagementInfo {
 				ReportFieldInfo groupingReportField = grouping.getGroupingReportField();
 				BaseField baseField = groupingReportField.getBaseField();
 				if (baseField instanceof RelationField) {
-					String relatedKey = ((RelationField) baseField).getRelatedField()
-							.getInternalFieldName();
+					String relatedKey = ((RelationField) baseField).getRelatedField().getInternalFieldName();
 					String relatedDisplay = ((RelationField) baseField).getDisplayField()
 							.getInternalFieldName();
 					String relatedSource = ((RelationField) baseField).getRelatedTable()
@@ -2803,23 +2714,18 @@ public final class DataManagement implements DataManagementInfo {
 									// See DateFieldDefn constructor for
 									// format
 									// explanation
-									value = ((ReportCalcFieldInfo) groupingReportField)
-											.formatDate(dbValue);
+									value = ((ReportCalcFieldInfo) groupingReportField).formatDate(dbValue);
 								} else {
 									DateField dateField = (DateField) baseField;
 									value = (dateField.formatDate(dbValue));
-									if (Integer.valueOf(dateField.getDateResolution()).equals(
-											Calendar.DAY_OF_MONTH)) {
-										Date previousDbValue = previousDateValues
-												.get(groupingReportField);
+									if (Integer.valueOf(dateField.getDateResolution()).equals(Calendar.DAY_OF_MONTH)) {
+										Date previousDbValue = previousDateValues.get(groupingReportField);
 										if (previousDbValue != null) {
 											calendar.setTime(previousDbValue);
-											int previousDayOfYear = calendar
-													.get(Calendar.DAY_OF_YEAR);
+											int previousDayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
 											calendar.setTime(dbValue);
 											int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
-											int difference = Math
-													.abs(dayOfYear - previousDayOfYear);
+											int difference = Math.abs(dayOfYear - previousDayOfYear);
 											if (difference > 1) {
 												value += " (" + (difference - 1) + " day gap)";
 											}
@@ -2834,8 +2740,7 @@ public final class DataManagement implements DataManagementInfo {
 						if (baseField instanceof DecimalField) {
 							value = ((DecimalField) baseField).formatFloat(floatValue);
 						} else if (groupingReportField instanceof ReportCalcFieldInfo) {
-							value = ((ReportCalcFieldInfo) groupingReportField)
-									.formatFloat(floatValue);
+							value = ((ReportCalcFieldInfo) groupingReportField).formatFloat(floatValue);
 						} else {
 							value = summaryResults.getString(resultColumn);
 						}
@@ -2852,15 +2757,13 @@ public final class DataManagement implements DataManagementInfo {
 				}
 				for (ChartAggregateInfo aggregateFunction : aggregateFunctions) {
 					resultColumn++;
-					DatabaseFieldType dbType = aggregateFunction.getReportField().getBaseField()
-							.getDbType();
+					DatabaseFieldType dbType = aggregateFunction.getReportField().getBaseField().getDbType();
 					Double value = null;
 					// deal with aggregate results which are timestamps
 					// rather than doubles
 					if ((!aggregateFunction.getAggregateFunction().equals(AggregateFunction.COUNT))
 							&& (dbType.equals(DatabaseFieldType.TIMESTAMP))) {
-						java.sql.Timestamp timestampValue = summaryResults
-								.getTimestamp(resultColumn);
+						java.sql.Timestamp timestampValue = summaryResults.getTimestamp(resultColumn);
 						if (timestampValue != null) {
 							Long longValue = timestampValue.getTime();
 							value = longValue.doubleValue();
@@ -2872,15 +2775,12 @@ public final class DataManagement implements DataManagementInfo {
 						int precision = 1;
 						ReportFieldInfo aggReportField = aggregateFunction.getReportField();
 						if (aggReportField instanceof ReportCalcFieldInfo) {
-							DatabaseFieldType dbFieldType = ((ReportCalcFieldInfo) aggReportField)
-									.getDbType();
+							DatabaseFieldType dbFieldType = ((ReportCalcFieldInfo) aggReportField).getDbType();
 							if (dbFieldType.equals(DatabaseFieldType.FLOAT)) {
-								precision = ((ReportCalcFieldInfo) aggReportField)
-										.getDecimalPrecision();
+								precision = ((ReportCalcFieldInfo) aggReportField).getDecimalPrecision();
 							}
 						} else if (aggReportField.getBaseField() instanceof DecimalField) {
-							precision = ((DecimalField) aggReportField.getBaseField())
-									.getPrecision();
+							precision = ((DecimalField) aggReportField.getBaseField()).getPrecision();
 						}
 						Number currentGrandTotal = grandTotals.get(aggregateFunction);
 						if (currentGrandTotal == null) {
@@ -2911,8 +2811,8 @@ public final class DataManagement implements DataManagementInfo {
 			ReportData.enableOptimisations(conn, report, false);
 			float durationSecs = (System.currentTimeMillis() - startTime) / ((float) 1000);
 			if (durationSecs > AppProperties.longSqlTime) {
-				logger.debug("Long SELECT SQL execution time of " + durationSecs
-						+ " seconds for summary '" + chart + "', statement = " + statement);
+				logger.debug("Long SELECT SQL execution time of " + durationSecs + " seconds for summary '"
+						+ chart + "', statement = " + statement);
 			}
 			return new ChartData(reportSummaryRows, minAggValues, maxAggValues, grandTotals);
 		} catch (SQLException sqlex) {
@@ -3006,8 +2906,8 @@ public final class DataManagement implements DataManagementInfo {
 		return stringWriter.toString();
 	}
 
-	public int getNextRowId(SessionDataInfo sessionData, BaseReportInfo report,
-			boolean forwardSearch) throws SQLException, CantDoThatException {
+	public int getNextRowId(SessionDataInfo sessionData, BaseReportInfo report, boolean forwardSearch)
+			throws SQLException, CantDoThatException {
 		Map<BaseField, String> reportFilterValues = sessionData.getReportFilterValues();
 		ReportDataInfo reportData = new ReportData(null, report, false, false);
 		Map<String, List<ReportQuickFilterInfo>> whereClauseMap = reportData.getWhereClause(
@@ -3170,8 +3070,7 @@ public final class DataManagement implements DataManagementInfo {
 				statement.setString(1, anonymiseNote(capitalisedWords, comment));
 				int rowsAffected = statement.executeUpdate();
 				if (rowsAffected != 1) {
-					throw new SQLException("Update failed: returned " + rowsAffected + " rows: "
-							+ statement);
+					throw new SQLException("Update failed: returned " + rowsAffected + " rows: " + statement);
 				}
 			}
 			statement.close();
@@ -3186,8 +3085,8 @@ public final class DataManagement implements DataManagementInfo {
 	public void anonymiseData(TableInfo table, HttpServletRequest request,
 			SessionDataInfo sessionData, Map<BaseField, FieldContentType> fieldContentTypes,
 			List<FileItem> multipartItems) throws SQLException, CodingErrorException,
-			CantDoThatException, InputRecordException, ObjectNotFoundException,
-			DisallowedException, MissingParametersException {
+			CantDoThatException, InputRecordException, ObjectNotFoundException, DisallowedException,
+			MissingParametersException {
 		if (!request.getServerName().contains("backup")) {
 			throw new CantDoThatException(
 					"For safety, anonymisation can only run on a test/backup server");
@@ -3264,8 +3163,7 @@ public final class DataManagement implements DataManagementInfo {
 					if (keyValue.contains("@")) {
 						String emailSansSuffix = keyValue.trim().toLowerCase();
 						for (String emailSuffix : emailSuffixes) {
-							emailSansSuffix = emailSansSuffix.replaceAll(Pattern.quote(emailSuffix)
-									+ "$", "");
+							emailSansSuffix = emailSansSuffix.replaceAll(Pattern.quote(emailSuffix) + "$", "");
 						}
 						String[] emailComponents = emailSansSuffix.replace("@", ".").split("\\.");
 						for (String emailComponent : emailComponents) {
@@ -3317,8 +3215,7 @@ public final class DataManagement implements DataManagementInfo {
 								|| companyName.toLowerCase().endsWith(" the")
 								|| companyName.toLowerCase().endsWith(" for")
 								|| companyName.toLowerCase().endsWith(" &")
-								|| companyName.toLowerCase().endsWith(" of")
-								|| companyName.matches("^\\W.*")
+								|| companyName.toLowerCase().endsWith(" of") || companyName.matches("^\\W.*")
 								|| generatedCompanyNames.contains(companyName)) {
 							companyName = "";
 						}
@@ -3353,13 +3250,10 @@ public final class DataManagement implements DataManagementInfo {
 							int partIndex = randomGenerator.nextInt(emailParts.size());
 							emailAddress = emailParts.get(partIndex);
 							if (randomGenerator.nextBoolean()) {
-								emailAddress += "."
-										+ emailParts
-												.get(randomGenerator.nextInt(emailParts.size()));
+								emailAddress += "." + emailParts.get(randomGenerator.nextInt(emailParts.size()));
 							}
 							emailAddress += "@";
-							emailAddress += emailParts.get(randomGenerator.nextInt(emailParts
-									.size()));
+							emailAddress += emailParts.get(randomGenerator.nextInt(emailParts.size()));
 							if (randomGenerator.nextBoolean()) {
 								emailAddress += ".com";
 							} else if (randomGenerator.nextBoolean()) {
@@ -3442,8 +3336,7 @@ public final class DataManagement implements DataManagementInfo {
 						dataToSave.put(field, intValue);
 					}
 				} else {
-					throw new CodingErrorException("Unhandled anonymisation content type "
-							+ contentType);
+					throw new CodingErrorException("Unhandled anonymisation content type " + contentType);
 				}
 			}
 			this.saveRecord(request, table, dataToSave, false, rowId, sessionData, multipartItems);
@@ -3474,8 +3367,8 @@ public final class DataManagement implements DataManagementInfo {
 		return String.valueOf(keyChars);
 	}
 
-	public BaseReportInfo getMostPopularReport(HttpServletRequest request,
-			DatabaseInfo databaseDefn, AppUserInfo user) throws SQLException, CodingErrorException {
+	public BaseReportInfo getMostPopularReport(HttpServletRequest request, DatabaseInfo databaseDefn,
+			AppUserInfo user) throws SQLException, CodingErrorException {
 		BaseReportInfo mostPopularReport = this.userMostPopularReportCache.get(user);
 		if (mostPopularReport != null) {
 			return mostPopularReport;
@@ -3492,8 +3385,7 @@ public final class DataManagement implements DataManagementInfo {
 			while (results.next()) {
 				String internalReportName = results.getString(1);
 				try {
-					TableInfo table = databaseDefn.findTableContainingReport(request,
-							internalReportName);
+					TableInfo table = databaseDefn.findTableContainingReport(request, internalReportName);
 					BaseReportInfo report = table.getReport(internalReportName);
 					if (!report.equals(table.getDefaultReport())) {
 						if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
@@ -3607,8 +3499,8 @@ public final class DataManagement implements DataManagementInfo {
 	private final AuthManagerInfo authManager;
 
 	/**
-	 * Keep a record of the last time any schema or data change occurred for
-	 * each company, to help inform caching
+	 * Keep a record of the last time any schema or data change occurred for each
+	 * company, to help inform caching
 	 */
 	private static Map<CompanyInfo, Long> lastCompanyDataChangeTimes = new ConcurrentHashMap<CompanyInfo, Long>();
 
@@ -3642,15 +3534,15 @@ public final class DataManagement implements DataManagementInfo {
 
 	/**
 	 * Store the first record ID from each report, for use when logging record
-	 * accesses (don't log if the current record is the top record, it's
-	 * probably just been loaded as the defauls)
+	 * accesses (don't log if the current record is the top record, it's probably
+	 * just been loaded as the defauls)
 	 */
 	private Map<BaseReportInfo, Integer> topRecords = new ConcurrentHashMap<BaseReportInfo, Integer>();
 
 	private float uploadSpeed = 50000; // Default to 50KB per second
 
 	private static final SimpleLogger logger = new SimpleLogger(DataManagement.class);
-	
+
 	private static final boolean timezoneAdjust = false;
 
 }
