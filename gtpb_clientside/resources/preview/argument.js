@@ -29,7 +29,8 @@ $(document).ready(function() {
 	$("#upload_toggle").click(function() {
 		$("#upload").hide();
 		$("#upload").load("AppController.servlet", {
-			"return": "gui/preview/uploader"
+			"return": "gui/preview/uploader",
+			"save_new_record": true
 		}, function() {
 			editTabFunctions();
 			$("#upload").show("normal");
