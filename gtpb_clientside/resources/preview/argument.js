@@ -5,14 +5,22 @@ $(document).ready(function() {
   $("#filters td.leading").children("div").append("<a href='AppController.servlet?return=boot'><img id='home' src='resources/toolbar/agilebase.png' /></a>");
 	$("#fieldFilters").show();
 	$("#fieldFilters input").removeAttr("onkeyup");
+	$("#fieldFilters input").attr("gtpb_return","gui/preview/argument");
 	$("#fieldFilters input").keyup(function(event) {
-		new fSetFilter(event, this, function() {
+		new fSetFilter(event, this, function(data) {
+			$(this).removeAttr("changed");
+			$("#argument").children().remove();
+			$("#argument").append(data);
+			init();
+			/*
+			
 			$("#argument").load("AppController.servlet", {
 				"return": "gui/preview/argument",
 				abCache: (new Date()).getTime()
 			}, function() {
 				init();
 			});
+			*/
 		});
 	});
 	// For report chooser

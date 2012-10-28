@@ -417,12 +417,9 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 		});
 	}
 	if (fReqCompleteOverride) {
-		console.log("Running fReqCompleteOverride: ");
-		console.log(fReqCompleteToRun);
 		var oReq = new fRequest('AppController.servlet', aPostVars,
 				fReqCompleteToRun, -1);
 	} else {
-		console.log("Running normal fReqComplete");
 		ajaxManager.add( {
 			type :"POST",
 			url :"AppController.servlet",
