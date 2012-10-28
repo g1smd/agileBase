@@ -302,6 +302,7 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 
 
 	function fReqComplete(sResponseText, sResponseXML) {
+		console.log("Running fReqComplete");
 		if (!sResponseText)
 			return;
 		if (sResponseText == null)
@@ -411,18 +412,17 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 	var fReqCompleteToRun = fReqCompleteOverride ? fReqCompleteOverride : fReqComplete;
 	if (ajaxManager == null) {
 		ajaxManager = $.manageAjax.create('aB', {
-			// Old version options
-			//manageType :'queue',
-			//maxReq :2,
-			//blockSameRequest :true
 			queue: 'clear',
 			abortOld: true
 		});
 	}
 	if (fReqCompleteOverride) {
+		console.log("Running fReqCompleteOverride: ");
+		console.log(fReqCompleteToRun);
 		var oReq = new fRequest('AppController.servlet', aPostVars,
 				fReqCompleteToRun, -1);
 	} else {
+		console.log("Running normal fReqComplete");
 		ajaxManager.add( {
 			type :"POST",
 			url :"AppController.servlet",
