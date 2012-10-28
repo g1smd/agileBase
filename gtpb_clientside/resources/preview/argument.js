@@ -8,7 +8,6 @@ $(document).ready(function() {
 	$("#fieldFilters input").attr("gtpb_return","gui/preview/argument");
 	$("#fieldFilters input").keyup(function(event) {
 		function fReqCompleteOverride(data) {
-			$("#fieldFilters input").removeAttr("changed");
 			$("#argument").children().remove();
 			$("#argument").append(data);
 			init();
