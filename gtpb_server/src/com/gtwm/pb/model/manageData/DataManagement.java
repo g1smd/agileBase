@@ -111,6 +111,7 @@ import com.gtwm.pb.model.manageData.fields.DecimalValueDefn;
 import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageData.fields.IntegerValueDefn;
 import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
+import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes;
 import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
@@ -2102,7 +2103,11 @@ public final class DataManagement implements DataManagementInfo {
 				for (ReportFieldInfo reportField : report.getReportFields()) {
 					BaseField field = reportField.getBaseField();
 					DataRowFieldInfo value = reportDataRow.getValue(reportField);
-					valueString = value.getKeyValue();
+					if (field.getFieldCategory().equals(FieldCategory.DATE)) {
+						valueString = value.getDisplayValue();
+					} else {
+						valueString = value.getKeyValue();
+					}
 					jg.writeStringField(reportField.getInternalFieldName(), valueString);
 				}
 				jg.writeEndObject();

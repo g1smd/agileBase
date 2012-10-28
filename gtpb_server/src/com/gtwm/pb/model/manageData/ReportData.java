@@ -858,7 +858,6 @@ public class ReportData implements ReportDataInfo {
 		Map<BaseField, DataRowFieldInfo> row;
 		while (results.next()) {
 			int rowid = results.getInt(primaryKeyField.getInternalFieldName());
-			logger.debug("Got row " + rowid);
 			row = new LinkedHashMap<BaseField, DataRowFieldInfo>();
 			// row.clear();
 			// add all columns to the row:
@@ -932,12 +931,10 @@ public class ReportData implements ReportDataInfo {
 						// fallback to getting as a String and let the db
 						// driver work out the formatting
 						keyValue = results.getString(fieldSchema.getInternalFieldName());
-						logger.debug("Fallback key value for " + fieldSchema + ": " + keyValue);
 					}
 				} else {
 					// field isn't one that colouring information is cached for,
 					// generate a new ReportDataRowField object
-					logger.debug("Field type " + fieldSchema.getClass().getSimpleName() + ", " + fieldSchema.getDbType());
 					if (fieldSchema instanceof RelationField) {
 						RelationField relationField = (RelationField) fieldSchema;
 						keyValue = results.getString(relationField.getInternalFieldName());
