@@ -8,17 +8,10 @@ $(document).ready(function() {
 	$("#fieldFilters input").attr("gtpb_return","gui/preview/argument");
 	$("#fieldFilters input").keyup(function(event) {
 		function fReqCompleteOverride(data) {
-					$("#argument").children().remove();
-					$("#argument").append(data);
-					init();
-					/*
-					$("#argument").load("AppController.servlet", {
-						"return": "gui/preview/argument",
-						abCache: (new Date()).getTime()
-					}, function() {
-						init();
-					});
-					*/
+			$("#fieldFilters input").removeAttr("changed");
+			$("#argument").children().remove();
+			$("#argument").append(data);
+			init();
 		}
 		new fSetFilter(event, this, fReqCompleteOverride);
 	});
