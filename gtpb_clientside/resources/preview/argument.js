@@ -5,6 +5,7 @@ $(document).ready(function() {
   $("#filters td.leading").children("div").append("<a href='AppController.servlet?return=boot'><img id='home' src='resources/toolbar/agilebase.png' /></a>");
 	$("#fieldFilters").show();
 	$("#fieldFilters input").removeAttr("onkeyup");
+	/*
 	$("#fieldFilters input").keyup(function(event) {
 		new fSetFilter(event, this, function() {
 			$("#argument").load("AppController.servlet", {
@@ -15,6 +16,7 @@ $(document).ready(function() {
 			});
 		});
 	});
+	*/
 	// For report chooser
 	$("button.report_choice").click(function() {
 		$("button.report_choice").fadeOut();
