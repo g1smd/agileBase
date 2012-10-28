@@ -7,20 +7,20 @@ $(document).ready(function() {
 	$("#fieldFilters input").removeAttr("onkeyup");
 	$("#fieldFilters input").attr("gtpb_return","gui/preview/argument");
 	$("#fieldFilters input").keyup(function(event) {
-		new fSetFilter(event, this, function(data) {
-			$("#fieldFilters input").removeAttr("changed");
-			$("#argument").children().remove();
-			$("#argument").append(data);
-			init();
-			/*
-			$("#argument").load("AppController.servlet", {
-				"return": "gui/preview/argument",
-				abCache: (new Date()).getTime()
-			}, function() {
-				init();
-			});
-			*/
-		});
+		function fReqCompleteOverride(data) {
+					$("#argument").children().remove();
+					$("#argument").append(data);
+					init();
+					/*
+					$("#argument").load("AppController.servlet", {
+						"return": "gui/preview/argument",
+						abCache: (new Date()).getTime()
+					}, function() {
+						init();
+					});
+					*/
+		}
+		new fSetFilter(event, this, fReqCompleteOverride);
 	});
 	// For report chooser
 	$("button.report_choice").click(function() {
