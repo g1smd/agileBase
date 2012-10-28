@@ -17,6 +17,8 @@
  */
 package com.gtwm.pb.servlets;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -1057,6 +1059,11 @@ public final class ServletSessionMethods {
 		String fieldValue = request.getParameter("fieldvalue");
 		if (fieldValue == null) {
 			throw new MissingParametersException("'fieldvalue' parameter needed in request");
+		}
+		try {
+			fieldValue = URLDecoder.decode(fieldValue, "UTF-8");
+		} catch (UnsupportedEncodingException ueex) {
+			throw new CodingErrorException("Unable to decode string: " + ueex);
 		}
 		String filterSet = request.getParameter("customfilterset");
 		// get the actual field object from the field name
