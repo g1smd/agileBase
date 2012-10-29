@@ -1,4 +1,7 @@
 #foreach($backField in $fields)
-   <div class="fieldname">$backField</div>
-   <div class="fieldcontent">$dataRowFields.get($backField))</div>
+  #set($backValue = $dataRowFields.get($backField))
+  #if($backValue.getDisplayValue() != "")
+    <div class="fieldname">$backField</div>
+    <div class="fieldcontent"></div>
+  #end
 #end

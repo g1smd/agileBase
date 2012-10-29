@@ -199,6 +199,8 @@ table#reportData tr td {
   padding: 0.5em;
 }
 
+/** Asset manager */
+
 .scale_up {
   -webkit-transform: scale(5);
   -ms-transform: scale(5);
@@ -216,4 +218,8 @@ table#reportData tr td {
 
 .scale_up a {
   text-decoration: none;
+}
+
+.asset_manager .back {
+  font-size: 500%;
 }
