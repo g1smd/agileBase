@@ -84,7 +84,7 @@
 	#set($success = $colours.ensureCapacity($colsCapacity))##
     #set($dataRowFields = $datarow.getDataRowFields())##
     #foreach($field in $fields)##
-      #set($dbType = $field.getDbType())
+      #set($dbType = $field.getDbType().toString())
       #set($dataRowField = $dataRowFields.get($field))##
       #if($printout && ($field.getContentSize() > 500))##
         #set($success=$row.add($dataRowField.getKeyValue()))##
@@ -106,7 +106,7 @@
         #set($success=$row.add($dataRowField.getDisplayValue()))##
         #set($stdDevs = $dataRowField.getNumberOfStdDevsFromMean())##
         #if($dbType == "TIMESTAMP")##
-          #set($stdDevThreshold = 2)##
+          #set($stdDevThreshold = 10)##
         #else##
           #set($stdDevThreshold = 1)##
         #end##
@@ -114,7 +114,7 @@
         #if(($stdDevs > $stdDevThreshold) || ($stdDevs < $negativeThreshold))##
           #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
         #else##
-        #set($success=$colours.add(""))##
+          #set($success=$colours.add(""))##
         #end##
       #end##
     #end## foreach field
