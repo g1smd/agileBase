@@ -6,14 +6,15 @@
     #set($fieldId = $row.getValue($field.getTableContainingField().getPrimaryKey()).getKeyValue())
   #end
   #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
-  #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getExtension()")
   #if($fileValue.isImage())
+    #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getExtension()")
     <a href="$targetUrl" target="_blank"><img class="image" data-bigsrc="$targetUrl" src="$srcUrl" /></a>
   #else
     <div class="scale_up">
       <a href="$targetUrl" target="_blank"><img border="0" style="float:left" src="resources/icons/filetypes/${fileValue.getIconName()}.png"/> $fileValue</a>
       #if($targetUrl.endsWith("pdf"))
         <br>
+         #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.png")
          <a href="$targetUrl" target="_blank"><img class="image" data-bigsrc="$targetUrl" src="$srcUrl" /></a>
        #end
     </div>
