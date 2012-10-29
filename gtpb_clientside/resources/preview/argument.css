@@ -205,6 +205,8 @@ table#reportData tr td {
   -moz-transform: scale(5);
   transform: scale(5);
   padding: 10em;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 .scale_up img {
