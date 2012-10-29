@@ -1,4 +1,4 @@
-<div class="delete" data-rowid=""><i class="icon-remove"></div>
+<div class="delete" data-rowid="$thisUniqueId"><i class="icon-remove"></div>
 #foreach($backField in $fields)
   #set($backValue = $dataRowFields.get($backField))
   #if((!$backField.isPrimaryKey()) && ($backValue.getDisplayValue() != ""))

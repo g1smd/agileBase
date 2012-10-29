@@ -244,3 +244,9 @@ table#reportData tr td {
   font-size: 300%;
   padding: 0.5em;
 }
+
+.delete {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
