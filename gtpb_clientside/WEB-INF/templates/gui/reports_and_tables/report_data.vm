@@ -95,15 +95,19 @@
           #else##
             #set($success=$row.add("not $field.getFieldName().toLowerCase()"))##
           #end##
-        #elseif($field.getDbType() == "TIMESTAMP")
+        #elseif($field.getDbType() == "TIMESTAMP")##
           #set($success=$row.add("$field.getFieldName().replace(' [Auto]','') $dataRowField.getDisplayValue()"))##
-        #else
+        #else##
           #set($success=$row.add($dataRowField.getDisplayValue()))##
-        #end
+        #end##
         #set($success=$colours.add(""))## don't colour selector reports in tabs
       #else## not parent table
         #set($success=$row.add($dataRowField.getDisplayValue()))##
-        #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
+        #if($dataRowField.getNumberOfStdDevsFromMean() > 1)##
+          #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
+        #else##
+        #set($success=$colours.add(""))##
+        #end##
       #end##
     #end## foreach field
     #set($success=$colours.add("")) ## needs an extra one for some reason
