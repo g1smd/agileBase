@@ -198,3 +198,10 @@ table#reportData {
 table#reportData tr td {
   padding: 0.5em;
 }
+
+.scale_up {
+  -webkit-transform: scale(5);
+  -ms-transform: scale(5);
+  -moz-transform: scale(5);
+  transform: scale(5);
+}
