@@ -18,17 +18,10 @@
         #set($dataRowField = $dataRowFields.get($field))
         #set($fieldCategory = $field.getFieldCategory().toString())
         #if($fieldCategory == "FILE")
-          #set($cell = $dataRowField.getKeyValue())
-          #set($fileValue = $viewTools.getFileValueTool($cell))
-          #if($fileValue.isImage())
-            #if($field.getTableContainingField().equals($table))
-              #set($fieldId = $thisUniqueId)
-            #else
-              #set($fieldId = $row.getValue($field.getTableContainingField().getPrimaryKey()).getKeyValue())
-            #end
-            #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
-            #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getExtension()")
-            <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
+          #if($assetManager)
+            #parse("gui/preview/card_content_asset.vm")
+          #else
+            #parse("gui/preview/card_content_argument.vm")
           #end
         #end
       #end
