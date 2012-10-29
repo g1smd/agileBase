@@ -1,4 +1,6 @@
-<div class="delete" data-rowid="$thisUniqueId"><i class="icon-remove"></i></div>
+#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))
+  <div class="delete" title="delete" data-rowid="$thisUniqueId"><i class="icon-remove"></i></div>
+#end
 #foreach($backField in $fields)
   #set($backValue = $dataRowFields.get($backField))
   #if((!$backField.isPrimaryKey()) && ($backValue.getDisplayValue() != ""))
