@@ -26,6 +26,11 @@ $(document).ready(function() {
 		}
 		document.location = "AppController.servlet?return=gui/preview/argument_presenter_standalone&set_report=" + internalReportName + "&set_table=" + internalTableName + "&set_custom_boolean=true&booleankey=assetmanager&custombooleanvalue=" + assetManager;
 	});
+	if($("button.report_choice").size() == 1) {
+		$("#sets").append("<h1>loading...</h1>");
+		$("button.report_choice").click();
+		$("button.report_choice").attr("disabled","true");
+	}
 	$("#upload_toggle").click(function() {
 		$("#upload").hide();
 		$("#upload").load("AppController.servlet", {
