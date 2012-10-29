@@ -1,4 +1,4 @@
 #foreach($backField in $fields)
-   <div class="fieldname">$backfield</div>
+   <div class="fieldname">$backField</div>
    <div class="fieldcontent">$dataRowFields.get($backField))</div>
 #end
