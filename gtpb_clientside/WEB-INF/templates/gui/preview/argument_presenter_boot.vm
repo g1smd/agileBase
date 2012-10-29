@@ -9,10 +9,11 @@
 </head>
 <body>
   <div id="sets">
+      #set($hiddenReports = $view.getLoggedInUser().getHiddenReports())
       #set($module = $sessionData.getModule())
 	  <h1><i class="fonticon icon-large $module.getIconPath()" ></i> $module: choose collection</h1><p>
 	  #foreach($report in $view.getAllViewableReports())
-	    #if($module.equals($report.getModule()))
+	    #if((!$hiddenReports.contains($report)) && $module.equals($report.getModule()))
 	      ## See if the report contains any images / files
 	      #foreach($reportField in $report.getReportFields())
 	        #if($reportField.getBaseField().getFieldCategory() == "FILE")
