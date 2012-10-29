@@ -104,7 +104,7 @@
       #else## not parent table
         #set($success=$row.add($dataRowField.getDisplayValue()))##
         #set($stdDevs = $dataRowField.getNumberOfStdDevsFromMean())##
-        #if(($stdDevs > 1.5) || ($stdDevs < -1.5))##
+        #if(($stdDevs > 1) || ($stdDevs < -1))##
           #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
         #else##
         #set($success=$colours.add(""))##
