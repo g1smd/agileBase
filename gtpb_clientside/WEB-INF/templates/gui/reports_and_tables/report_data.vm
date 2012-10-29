@@ -103,8 +103,8 @@
         #set($success=$colours.add(""))## don't colour selector reports in tabs
       #else## not parent table
         #set($success=$row.add($dataRowField.getDisplayValue()))##
-        #set($stdDevs = $dataRowField.getNumberOfStdDevsFromMean())
-        #if(($stdDevs > 1) || ($stdDevs < -1))##
+        #set($stdDevs = $dataRowField.getNumberOfStdDevsFromMean())##
+        #if(($stdDevs > 1.5) || ($stdDevs < -1.5))##
           #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
         #else##
         #set($success=$colours.add(""))##
