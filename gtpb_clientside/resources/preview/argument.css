@@ -220,6 +220,11 @@ table#reportData tr td {
   text-decoration: none;
 }
 
-.asset_manager .back .fieldname, .asset_manager .back .fieldcontent {
+.asset_manager .back .fieldname {
   font-size: 200%;
+}
+
+.asset_manager .back .fieldcontent {
+  font-size: 300%;
+  padding: 0.5em;
 }
