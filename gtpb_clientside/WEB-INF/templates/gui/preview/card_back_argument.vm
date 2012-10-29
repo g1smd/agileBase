@@ -3,7 +3,7 @@
   #set($fieldCategory = $field.getFieldCategory().toString())
   ## Show large text fields only
   #if($field.getContentSize() > 100)
-    <div class="fieldname">$field.toString().replace("[Auto]","")</div>
+    <div class="fieldname">$field</div>
     <div class="fieldcontent">$tableDataRow.get($field)</div>
   #end
 #end

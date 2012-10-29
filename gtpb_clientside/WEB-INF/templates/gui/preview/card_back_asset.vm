@@ -1,7 +1,7 @@
 #foreach($backField in $fields)
   #set($backValue = $dataRowFields.get($backField))
   #if((!$backField.isPrimaryKey()) && ($backValue.getDisplayValue() != ""))
-    <div class="fieldname">$backField</div>
+    <div class="fieldname">$backField.toString().replace(" [Auto]","")</div>
     <div class="fieldcontent">$backValue</div>
   #end
 #end
