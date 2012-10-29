@@ -1,0 +1,4 @@
+#foreach($backField in $fields)
+   <div class="fieldname">$field</div>
+   <div class="fieldcontent">$dataRowFields.get($backField))</div>
+#end
