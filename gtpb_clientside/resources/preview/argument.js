@@ -57,7 +57,7 @@ function init() {
 			var rowId = $(this).attr("data-rowid");
 			setTimeout(function() {
 				$("#argument").load("AppController.servlet", {
-					"return": "gui/preview/argument",
+					"return": "gui/preview/assets",
 					remove_record: true,
 					rowid: rowId
 				}, function(data) {
