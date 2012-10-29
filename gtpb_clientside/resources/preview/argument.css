@@ -204,4 +204,14 @@ table#reportData tr td {
   -ms-transform: scale(5);
   -moz-transform: scale(5);
   transform: scale(5);
+  padding: 10em;
+}
+
+.scale_up img {
+  float: none!important;
+  vertical-align: middle;
+}
+
+.scale_up a {
+  text-decoration: none;
 }

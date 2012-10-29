@@ -12,5 +12,9 @@
   #else
     <div class="scale_up">
       <a href="$targetUrl" target="_blank"><img border="0" style="float:left" src="resources/icons/filetypes/${fileValue.getIconName()}.png"/> $fileValue</a>
+      #if($targetUrl.endsWith("pdf"))
+        <br>
+         <a href="$targetUrl" target="_blank"><img class="image" data-bigsrc="$targetUrl" src="$srcUrl" /></a>
+       #end
     </div>
   #end
