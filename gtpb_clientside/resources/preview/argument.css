@@ -158,6 +158,10 @@ input {
   min-width: 60%;
 }
 
+input[type=checkbox] {
+  min-width: auto;
+}
+
 #sets {
   display: block;
   width: 100%;
@@ -197,6 +201,12 @@ table#reportData {
 
 table#reportData tr td {
   padding: 0.5em;
+}
+
+.separator {
+  background:transparent url(line.gif) repeat-x scroll 0pt 28px;
+  color:#888888;
+  font-weight:bold;
 }
 
 /** Asset manager */
