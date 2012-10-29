@@ -39,9 +39,16 @@ figure {
 }
 
 .container:hover {
-	transform: scale(0.3);
-	-webkit-transform: scale(0.3);
-	-moz-transform: scale(0.3);
+  transform: scale(0.3);
+  -webkit-transform: scale(0.3);
+  -moz-transform: scale(0.3);
+  }
+
+.container.poof, .container.poof:hover {
+  transform: scale(0.01);
+  -webkit-transform: scale(0.01);
+  -moz-transform: scale(0.01);
+  opacity: 0;
 }
 
 .card {

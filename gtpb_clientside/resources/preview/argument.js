@@ -55,14 +55,17 @@ function init() {
 		$(".delete").click(function() {
 			$(this).closest(".container").addClass("poof");
 			var rowId = $(this).attr("data-rowid");
-			$("#argument").load("AppController.servlet", {
-				"return": "gui/preview/argument_presenter",
-				remove_record: true,
-				rowid: rowId
-			}, function(data) {
-				// Just in case the delete didn't work, revert to normal
-				$(".container").removeClass("poof");
-			})
+			setTimeout(1000, function() {
+				$("#argument").load("AppController.servlet", {
+					"return": "gui/preview/argument",
+					remove_record: true,
+					rowid: rowId
+				}, function(data) {
+					editTabFunctions();
+					// Just in case the delete didn't work, revert to normal
+					$(".container").removeClass("poof");
+				});
+			});
 		});
 		return;
 	}
