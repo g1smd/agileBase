@@ -4,7 +4,7 @@
   <script language="JavaScript" src="resources/jquery.js"></script>
   <script language="JavaScript" src="resources/preview/argument.js"></script>
   <script language="JavaScript" src="resources/pane3_amalgam.js"></script>
-  <link rel="stylesheet" type="text/css" href="resources/tabs/tabs.css" />
+  <link rel="stylesheet" type="text/css" href="resources/pane3_amalgam.css" />
   <link rel="stylesheet" type="text/css" href="resources/preview/argument.css" />
 </head>
 <body style="overflow:visible">
