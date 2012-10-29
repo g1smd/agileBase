@@ -84,18 +84,19 @@
 	#set($success = $colours.ensureCapacity($colsCapacity))##
     #set($dataRowFields = $datarow.getDataRowFields())##
     #foreach($field in $fields)##
+      #set($dbType = $field.getDbType())
       #set($dataRowField = $dataRowFields.get($field))##
       #if($printout && ($field.getContentSize() > 500))##
         #set($success=$row.add($dataRowField.getKeyValue()))##
         #set($success=$colours.add("")) ## TODO: this may fix the issue in pane2_body.vm, labelled 'Workaround for intermittent index out of bounds bug'
       #elseif($parentTable)##
-        #if($field.getDbType() == "BOOLEAN")
+        #if($dbType == "BOOLEAN")
           #if($dataRowField.getKeyValue() == "true")##
             #set($success=$row.add($field.getFieldName().toLowerCase()))##
           #else##
             #set($success=$row.add("not $field.getFieldName().toLowerCase()"))##
           #end##
-        #elseif($field.getDbType() == "TIMESTAMP")##
+        #elseif($dbType == "TIMESTAMP")##
           #set($success=$row.add("$field.getFieldName().replace(' [Auto]','') $dataRowField.getDisplayValue()"))##
         #else##
           #set($success=$row.add($dataRowField.getDisplayValue()))##
@@ -104,7 +105,13 @@
       #else## not parent table
         #set($success=$row.add($dataRowField.getDisplayValue()))##
         #set($stdDevs = $dataRowField.getNumberOfStdDevsFromMean())##
-        #if(($stdDevs > 1) || ($stdDevs < -1))##
+        #if($dbType == "TIMESTAMP")##
+          #set($stdDevThreshold = 2)##
+        #else##
+          #set($stdDevThreshold = 1)##
+        #end##
+        #set($negativeThreshold = -1 * $stdDevThreshold)##
+        #if(($stdDevs > $stdDevThreshold) || ($stdDevs < $negativeThreshold))##
           #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
         #else##
         #set($success=$colours.add(""))##
