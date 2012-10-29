@@ -27,14 +27,10 @@
       #end
       </figure>
       <figure class="back">
-        #set($tableDataRow = $view.getTableDataRow($table, $thisUniqueId))
-        #foreach($field in $tableDataRow.keySet())
-          #set($fieldCategory = $field.getFieldCategory().toString())
-          ## Show large text fields only
-          #if($field.getContentSize() > 100)
-            <div class="fieldname">$field</div>
-            <div class="fieldcontent">$tableDataRow.get($field)</div>
-          #end
+        #if($assetManager)
+          #parse("gui/preview/card_back_asset.vm")
+        #else
+          #parse("gui/preview/card_back_argument.vm")
         #end
       </figure>
     </div>

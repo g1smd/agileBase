@@ -49,6 +49,9 @@ function unzoom() {
 
 function init() {
 	if($("#argument").hasClass("asset_manager")) {
+		$(".card").click(function(event) {
+	    $(this).toggleClass("flipped");
+		});
 		return;
 	}
 	$(".card").click(function(event) {
