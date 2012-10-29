@@ -207,6 +207,11 @@ table#reportData tr td {
   background:transparent url(line.gif) repeat-x scroll 0pt 28px;
   color:#888888;
   font-weight:bold;
+  position: relative;
+}
+
+.separator .fieldname {
+  margin-left:-25px;
 }
 
 /** Asset manager */
