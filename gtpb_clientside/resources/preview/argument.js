@@ -55,7 +55,7 @@ function init() {
 		$(".delete").click(function() {
 			$(this).closest(".container").addClass("poof");
 			var rowId = $(this).attr("data-rowid");
-			setTimeout(1000, function() {
+			setTimeout(function() {
 				$("#argument").load("AppController.servlet", {
 					"return": "gui/preview/argument",
 					remove_record: true,
@@ -65,7 +65,7 @@ function init() {
 					// Just in case the delete didn't work, revert to normal
 					$(".container").removeClass("poof");
 				});
-			});
+			}, 1000);
 		});
 		return;
 	}
