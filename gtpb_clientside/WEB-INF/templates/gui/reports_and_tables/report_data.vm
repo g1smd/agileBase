@@ -106,7 +106,7 @@
         #set($success=$row.add($dataRowField.getDisplayValue()))##
         #set($stdDevs = $dataRowField.getNumberOfStdDevsFromMean())##
         #if($dbType == "TIMESTAMP")##
-          #set($stdDevThreshold = 10)##
+          #set($stdDevThreshold = 2)##
         #else##
           #set($stdDevThreshold = 1)##
         #end##
