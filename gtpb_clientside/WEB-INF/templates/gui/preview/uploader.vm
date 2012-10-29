@@ -1,2 +1,3 @@
 #set($disableComments = true)
+#set($uploadReturn="gui/preview/asset_manager_reload")
 #parse("gui/reports_and_tables/tabs/edit.vm")

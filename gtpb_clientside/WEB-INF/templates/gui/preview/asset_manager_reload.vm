@@ -1,0 +1,2 @@
+#set($assetManager = true)
+#parse("gui/preview/argument_presenter_standalone.vm")

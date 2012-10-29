@@ -91,7 +91,11 @@
           <span class="fieldname">$field</span>
           #set($showFieldName = true)
         #end
-        <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+        #if($uploadReturn)
+          <input type="hidden" name="return" value="$uploadReturn" />
+        #else
+          <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+        #end
         <input type="hidden" name="update_record" value="true" />
         <input type="hidden" name="internaltablename" value="$sessionTable.getInternalTableName()" />
         <input type="hidden" name="rowid" value="$sessionRowId" />
