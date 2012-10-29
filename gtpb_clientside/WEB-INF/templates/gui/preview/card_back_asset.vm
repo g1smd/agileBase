@@ -1,6 +1,6 @@
 #foreach($backField in $fields)
   #set($backValue = $dataRowFields.get($backField))
-  #if($backValue.getDisplayValue() != "")
+  #if((!$backField.isPrimaryKey()) && ($backValue.getDisplayValue() != ""))
     <div class="fieldname">$backField</div>
     <div class="fieldcontent">$backValue</div>
   #end
