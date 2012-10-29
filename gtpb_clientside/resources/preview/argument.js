@@ -48,7 +48,7 @@ function unzoom() {
 }
 
 function init() {
-	#if($("#argument").hasClass("asset_manager")) {
+	if($("#argument").hasClass("asset_manager")) {
 		return;
 	}
 	$(".card").click(function(event) {
