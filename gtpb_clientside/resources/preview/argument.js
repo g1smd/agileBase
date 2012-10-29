@@ -55,7 +55,7 @@ function init() {
 		$(".delete").click(function() {
 			$(this).closest(".container").addClass("poof");
 			var rowId = $(this).attr("data-rowid");
-			$.load("AppController.servlet", {
+			$("#argument").load("AppController.servlet", {
 				"return": "gui/preview/argument_presenter",
 				remove_record: true,
 				rowid: rowId
