@@ -2,6 +2,6 @@
   #set($backValue = $dataRowFields.get($backField))
   #if($backValue.getDisplayValue() != "")
     <div class="fieldname">$backField</div>
-    <div class="fieldcontent"></div>
+    <div class="fieldcontent">$backValue</div>
   #end
 #end
