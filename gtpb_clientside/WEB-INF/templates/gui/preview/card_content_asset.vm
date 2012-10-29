@@ -6,8 +6,8 @@
     #set($fieldId = $row.getValue($field.getTableContainingField().getPrimaryKey()).getKeyValue())
   #end
   #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
+  #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getExtension()")
   #if($fileValue.isImage())
-    #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getExtension()")
     <a href="$targetUrl" target="_blank"><img class="image" data-bigsrc="$targetUrl" src="$srcUrl" /></a>
   #else
     <div class="scale_up">
