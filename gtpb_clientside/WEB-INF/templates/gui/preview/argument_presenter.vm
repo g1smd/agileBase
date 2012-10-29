@@ -16,6 +16,6 @@
   <button id="upload_toggle">upload a new $table.getSingularName() file</button>
 </div>
 #end
-<div id="argument">
+<div id="argument" #if($assetManager) class="asset_manager" #end>
   #parse("gui/preview/argument.vm")
 </div>
