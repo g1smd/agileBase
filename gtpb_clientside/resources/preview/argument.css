@@ -247,7 +247,9 @@ table#reportData tr td {
 
 .delete {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0.5em;
+  left: 0.5em;
   font-size: 300%;
+  color: red;
+  cursor: pointer;
 }
