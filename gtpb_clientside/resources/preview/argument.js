@@ -61,7 +61,7 @@ function init() {
 					remove_record: true,
 					rowid: rowId
 				}, function(data) {
-					editTabFunctions();
+					init();
 					// Just in case the delete didn't work, revert to normal
 					$(".container").removeClass("poof");
 				});
