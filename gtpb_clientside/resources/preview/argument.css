@@ -262,7 +262,10 @@ table#reportData tr td {
 }
 
 #header {
-  font-color: #888888;
+  color: #888888;
   background-color: white;
   width: 100%;
+  padding: 1em;
+  font-size: 12pt;
+  text-transform: uppercase;
 }
