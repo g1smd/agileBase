@@ -261,7 +261,7 @@ table#reportData tr td {
   cursor: pointer;
 }
 
-.header {
+#header {
   font-color: #888888;
   background-color: white;
   width: 100%;
