@@ -5,6 +5,9 @@
 #set($internalTableName = $table.getInternalTableName())
 #set($fields = $report.getReportBaseFields())##
 #set($assetManager = $sessionData.getCustomBoolean("assetmanager"))
+<div id="header">
+  <i class="icon-picture icon-large"></i> <b>$view.getLoggedInUser().getCompany()</b> - digital asset management
+</div>
 <table id="filters">
   #set($filterTextOnly = true)
   #set($filterExcludeLargeText = true)

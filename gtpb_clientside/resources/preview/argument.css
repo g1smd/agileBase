@@ -260,3 +260,9 @@ table#reportData tr td {
   color: red;
   cursor: pointer;
 }
+
+.header {
+  font-color: #888888;
+  background-color: white;
+  width: 100%;
+}
