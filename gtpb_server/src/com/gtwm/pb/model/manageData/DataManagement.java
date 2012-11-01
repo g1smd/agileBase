@@ -1588,12 +1588,22 @@ public final class DataManagement implements DataManagementInfo {
 					if (field.getAttachmentType().equals(AttachmentType.PROFILE_PHOTO)) {
 						midSize = 250;
 					}
+					boolean needResize = false;
 					try {
 						BufferedImage originalImage = ImageIO.read(selectedFile);
 						int height = originalImage.getHeight();
 						int width = originalImage.getWidth();
-						// Conditional resize
 						if ((height > midSize) || (width > midSize)) {
+						  needResize = true;
+						}
+					} catch (IOException ioex) {
+						// Certain images can sometimes fail to be read e.g. CMYK JPGs
+						logger.error("Error reading image dimensions: " + ioex);
+						needResize = true; // Unable to read image size, assume resize needed
+					}
+					try {
+						// Conditional resize
+						if (needResize) {
 							Thumbnails.of(selectedFile).size(midSize, midSize).toFile(thumb500File);
 						} else {
 							FileUtils.copyFile(selectedFile, thumb500File);
