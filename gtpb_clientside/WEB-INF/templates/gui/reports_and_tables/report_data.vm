@@ -111,7 +111,7 @@
           #set($stdDevThreshold = 1)##
         #end##
         #set($negativeThreshold = -1 * $stdDevThreshold)##
-        #if(($stdDevs > $stdDevThreshold) || ($stdDevs < $negativeThreshold))##
+        #if(($dbType == "BOOLEAN") || (($stdDevs > $stdDevThreshold) || ($stdDevs < $negativeThreshold)))##
           #set($success=$colours.add($dataRowField.getStandardDevHexColour()))##
         #else##
           #set($success=$colours.add(""))##
