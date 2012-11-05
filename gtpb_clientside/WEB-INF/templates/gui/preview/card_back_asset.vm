@@ -1,7 +1,5 @@
  #set($cell = $dataRowField.getKeyValue())
- <h1>Cell is $cell</h1>
   #set($fileValue = $viewTools.getFileValueTool($cell))
-  <h1>File value is $fileValue</h1>
   #if($field.getTableContainingField().equals($table))
     #set($fieldId = $thisUniqueId)
   #else
