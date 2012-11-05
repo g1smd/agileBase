@@ -30,7 +30,7 @@
         #if($assetManager)
           ## Set $field to the file field
           #foreach($testField in $fields)
-            #if($field.getFieldCategory().toString() == "FILE")
+            #if($testField.getFieldCategory().toString() == "FILE")
               #set($field = $testField)
             #end
           #end
