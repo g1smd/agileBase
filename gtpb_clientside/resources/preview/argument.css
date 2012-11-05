@@ -252,13 +252,12 @@ table#reportData tr td {
   padding: 0.5em;
 }
 
-.delete {
-  position: absolute;
-  top: 0.25em;
-  left: 0.5em;
+.backbuttons {
   font-size: 300%;
-  color: red;
-  cursor: pointer;
+}
+
+.backdata {
+  font-size: 250%;
 }
 
 #header {

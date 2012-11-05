@@ -5,16 +5,18 @@
   #else
     #set($fieldId = $row.getValue($field.getTableContainingField().getPrimaryKey()).getKeyValue())
   #end
+<div class="backbuttons">
   #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
   <button onclick="javascript:document.location='$targetUrl';"><i class="icon-download"></i> download</button>
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))
   <button class="delete" data-rowid="$thisUniqueId"><i class="icon-remove"></i> delete</button>
 #end
+</div>
 <div class="backdata">
 #foreach($backField in $fields)
   #set($backValue = $dataRowFields.get($backField))
   #if((!$backField.isPrimaryKey()) && ($backValue.getDisplayValue() != ""))
-   $backField.toString().replace(" [Auto]",""):  $backValue<br>
+   $backField.toString().replace(" [Auto]",""):  $backValue<p>
   #end
 #end
 </div>
