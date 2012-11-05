@@ -254,10 +254,20 @@ table#reportData tr td {
 
 .backbuttons button {
   font-size: 300%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
 }
 
 .backdata {
   font-size: 250%;
+}
+
+.card figure .backdata {
+  text-align: left;
+  padding: 1em;
 }
 
 #header {
