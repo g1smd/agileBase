@@ -9,13 +9,13 @@
   #if($fileValue.isImage())
     <div class="scale_up"><a href="$targetUrl" target="_blank">$fileValue</a></div>
     #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getExtension()")
-    <a href="$targetUrl" target="_blank"><img class="image" data-bigsrc="$targetUrl" src="$srcUrl" /></a>
+    <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
   #else
     <div class="scale_up">
       <a href="$targetUrl" target="_blank"><img border="0" style="float:left" src="resources/icons/filetypes/${fileValue.getIconName()}.png"/> $fileValue</a>
     </div>
       #if($targetUrl.endsWith("pdf"))
          #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.png")
-         <a href="$targetUrl" target="_blank"><img class="image" data-bigsrc="$targetUrl" src="$srcUrl" /></a>
+         <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
        #end
   #end

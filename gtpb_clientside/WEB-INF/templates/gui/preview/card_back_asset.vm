@@ -1,10 +1,20 @@
+ #set($cell = $dataRowField.getKeyValue())
+  #set($fileValue = $viewTools.getFileValueTool($cell))
+  #if($field.getTableContainingField().equals($table))
+    #set($fieldId = $thisUniqueId)
+  #else
+    #set($fieldId = $row.getValue($field.getTableContainingField().getPrimaryKey()).getKeyValue())
+  #end
+  #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
+  <button onclick="javascript:document.location='$targetUrl';"></button>
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))
-  <div class="delete" title="delete" data-rowid="$thisUniqueId"><i class="icon-remove"></i></div>
+  <button class="delete" data-rowid="$thisUniqueId"><i class="icon-remove"></i> delete</button>
 #end
+<div class="backdata">
 #foreach($backField in $fields)
   #set($backValue = $dataRowFields.get($backField))
   #if((!$backField.isPrimaryKey()) && ($backValue.getDisplayValue() != ""))
-    <div class="fieldname">$backField.toString().replace(" [Auto]","")</div>
-    <div class="fieldcontent">$backValue</div>
+   $backField.toString().replace(" [Auto]",""):  $backValue<br>
   #end
 #end
+</div>
