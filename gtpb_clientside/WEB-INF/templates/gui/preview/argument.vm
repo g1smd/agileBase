@@ -32,6 +32,7 @@
           #foreach($testField in $fields)
             #if($testField.getFieldCategory().toString() == "FILE")
               #set($field = $testField)
+              #set($dataRowField = $dataRowFields.get($field))
             #end
           #end
           #parse("gui/preview/card_back_asset.vm")
