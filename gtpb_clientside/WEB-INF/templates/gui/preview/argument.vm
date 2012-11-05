@@ -28,6 +28,12 @@
       </figure>
       <figure class="back">
         #if($assetManager)
+          ## Set $field to the file field
+          #foreach($testField in $fields)
+            #if($field.getFieldCategory().toString() == "FILE")
+              #set($field = $testField)
+            #end
+          #end
           #parse("gui/preview/card_back_asset.vm")
         #else
           #parse("gui/preview/card_back_argument.vm")
