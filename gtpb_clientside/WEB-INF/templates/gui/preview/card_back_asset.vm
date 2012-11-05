@@ -6,7 +6,7 @@
     #set($fieldId = $row.getValue($field.getTableContainingField().getPrimaryKey()).getKeyValue())
   #end
   #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
-  <button onclick="javascript:document.location='$targetUrl';"></button>
+  <button onclick="javascript:document.location='$targetUrl';"><i class="icon-download"></i> download</button>
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))
   <button class="delete" data-rowid="$thisUniqueId"><i class="icon-remove"></i> delete</button>
 #end
