@@ -838,7 +838,7 @@ public final class ServletSessionMethods {
 	 * 
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
-	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_GB_Telephone_Numbers
 	 * edited by Ian Galpin; @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
