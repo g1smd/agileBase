@@ -41,21 +41,21 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
           <% if(live) { %>
             <form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform" class="form-horizontal">
           <% } else { %>
-              <form method="POST" action="/agileBase/j_security_check" name="loginform" id="loginform" class="form-horizontal">
+            <form method="POST" action="/agileBase/j_security_check" name="loginform" id="loginform" class="form-horizontal">
           <% } %>
-                <div class="control-group">
-                  <label class="control-label" for="j_username">username</label>
-                  <div class="controls"><input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></div>
-                </div>  
-                <div class="control-group">
-                  <label class="control-label" for="j_password">password</label>
-                 <div class="controls"><input type="password" name="j_password" id="j_password" /></div>
+              <div class="control-group">
+                <label class="control-label" for="j_username">username</label>
+                <div class="controls"><input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></div>
+              </div>  
+              <div class="control-group">
+                <label class="control-label" for="j_password">password</label>
+               <div class="controls"><input type="password" name="j_password" id="j_password" /></div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <button type="submit" value="login" class="btn">sign in</button>
                 </div>
-                <div class="control-group">
-                  <div class="controls">
-                    <button type="submit" value="login" class="btn" />sign in</button>
-                  </div>
-                </div>
+              </div>
             </form>
           </div>
       </div>
