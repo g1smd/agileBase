@@ -28,7 +28,7 @@
     });
   </script>
 </head>
-<body>
+<body style="padding: 1em">
   <h1>Generating export</h1>
   <p>Your export of '$report' is being generated.
   <p>In a moment, a spreadsheet file will download. When complete, you can close this window
