@@ -227,8 +227,10 @@ public final class ReportDownloader extends HttpServlet {
 
 	/**
 	 * Write the session report as an Excel file in a temporary location
+	 * 
+	 * Synchronized to allow only one export at a time, they can be memory consuming
 	 */
-	private File getSessionReportAsExcel(AppUserInfo user,
+	private synchronized File getSessionReportAsExcel(AppUserInfo user,
 			SessionDataInfo sessionData) throws AgileBaseException, IOException, SQLException {
 		BaseReportInfo report = sessionData.getReport();
 		if (report == null) {
@@ -269,8 +271,9 @@ public final class ReportDownloader extends HttpServlet {
 		// data
 		rowNum++;
 		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
+		// Limit to 100,000 rows max., more causes memory issues
 		List<DataRowInfo> reportDataRows = dataManagement.getReportDataRows(user, report,
-				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), -1,
+				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), 100000,
 				QuickFilterType.AND, false);
 		String fieldValue = "";
 		boolean isDefaultReport = (report.equals(report.getParentTable().getDefaultReport()));
