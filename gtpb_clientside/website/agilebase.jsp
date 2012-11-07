@@ -37,7 +37,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       </div>
       <div id="content">
         <h1 class="light">Log in to AgileBase</h1>
-        <div class="big">
+        <div class="big spaced">
           <% if(live) { %>
             <form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform" class="form-horizontal">
           <% } else { %>
