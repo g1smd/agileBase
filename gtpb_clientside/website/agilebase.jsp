@@ -53,7 +53,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
                 </div>
                 <div class="control-group">
                   <div class="controls">
-                    <button type="submit" value="login" class="btn btn-primary" />sign in</button>
+                    <button type="submit" value="login" class="btn" />sign in</button>
                   </div>
                 </div>
             </form>
