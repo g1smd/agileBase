@@ -31,6 +31,9 @@
 <body style="padding: 1em">
   <h1>Generating export</h1>
   <p>Your export of '$report' is being generated.
-  <p>In a moment, a spreadsheet file will download. When complete, you can close this window
+  <p>In a moment, a spreadsheet file will download. When complete, you can close this window.
+  #if($report.getRowCount() > 90000)
+    <p>Note: only the first 100,000 rows will be downloaded. You can filter in AgileBase to select particular data
+  #end
 </body>
 </html>

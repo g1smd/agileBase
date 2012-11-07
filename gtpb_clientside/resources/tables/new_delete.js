@@ -54,7 +54,8 @@ function fAppStore() {
 
 // Download the current session report
 function fExport() {
-	this.location.href = 'ReportDownloader.servlet';
+	window.open("AppController.servlet?return=gui/export");
+	//this.location.href = 'ReportDownloader.servlet';
 }
 
 function fLinks() {
