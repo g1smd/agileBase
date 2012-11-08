@@ -56,6 +56,7 @@ function init() {
 			var subject = $(this).attr("data-filename").replace(" ","%20") + " uploaded";
 			var targetUrl = $(this).attr("data-targeturl");
 			targetUrl = "https://appserver.gtportalbase.com" + targetUrl;
+			targetUrl = targetUrl.replace("&","%26").replace(" ","%20");
 			var body = $(this).attr("data-filename") + " has been uploaded to%0A%0A";
 			body += "www.chfoods.co.uk/digitalassets%0A%0A";
 			body += "Direct link:%0A%0A";
