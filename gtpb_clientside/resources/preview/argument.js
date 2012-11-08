@@ -53,16 +53,16 @@ function init() {
 	    $(this).toggleClass("flipped");
 		});
 		$(".mailto").click(function() {
-			var subject = $(this).attr("data-filename").replace(/\s/g,"%20").replace(/&/g,"%26") + " uploaded";
+			var subject = $(this).attr("data-filename").replace(/\s/g,"%20").replace(/&/g,"%26");
 			var targetUrl = $(this).attr("data-targeturl");
 			alert("Raw targetUrl is " + targetUrl);
 			targetUrl = "https://appserver.gtportalbase.com" + targetUrl.replace(/&/g,"%26").replace(/\s/g,"%20");
 			alert("After, targetUrl is " + targetUrl);
-			var body = $(this).attr("data-filename") + " has been uploaded to%0A%0A";
+			var body = subject + " has been uploaded to%0A%0A";
 			body += "www.chfoods.co.uk/digitalassets%0A%0A";
 			body += "Direct link:%0A%0A";
 			body += targetUrl + "%0A";
-			var loc = "mailto:?subject=" + subject + "&body=" + body;
+			var loc = "mailto:?subject=" + subject + "%20uploaded" + "&body=" + body;
 			console.log(loc);
 			document.location=loc;
 		});
