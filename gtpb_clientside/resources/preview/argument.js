@@ -53,11 +53,11 @@ function init() {
 	    $(this).toggleClass("flipped");
 		});
 		$(".mailto").click(function() {
-			var subject = $(this).attr("data-filename").replace(/\s/,"%20") + " uploaded";
+			var subject = $(this).attr("data-filename").replace(/\s/g,"%20") + " uploaded";
 			var targetUrl = $(this).attr("data-targeturl");
 			alert("Raw targetUrl is " + targetUrl);
-			targetUrl = "https://appserver.gtportalbase.com" + targetUrl.replace(/&/,"%26").replace(/\s/,"%20");
-			alert("Final targetUrl is " + targetUrl);
+			targetUrl = "https://appserver.gtportalbase.com" + targetUrl.replace(/&/g,"%26").replace(/\s/g,"%20");
+			alert("After, targetUrl is " + targetUrl);
 			var body = $(this).attr("data-filename") + " has been uploaded to%0A%0A";
 			body += "www.chfoods.co.uk/digitalassets%0A%0A";
 			body += "Direct link:%0A%0A";
