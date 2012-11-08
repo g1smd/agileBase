@@ -53,7 +53,7 @@ function init() {
 	    $(this).toggleClass("flipped");
 		});
 		$(".mailto").click(function() {
-			var subject = $(this).attr("data-filename").replace(/\s/g,"%20") + " uploaded";
+			var subject = $(this).attr("data-filename").replace(/\s/g,"%20").replace(/&/g,"%26") + " uploaded";
 			var targetUrl = $(this).attr("data-targeturl");
 			alert("Raw targetUrl is " + targetUrl);
 			targetUrl = "https://appserver.gtportalbase.com" + targetUrl.replace(/&/g,"%26").replace(/\s/g,"%20");
