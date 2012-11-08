@@ -56,9 +56,9 @@ function init() {
 			var subject = $(this).attr("data-filename").replace(" ","%20");
 			var targetUrl = $(this).attr("data-targeturl");
 			targetUrl = "https://www.agilebase.co.uk" + targetUrl;
-			var body = "This file has been uploaded to\n\n";
-			body += "www.chfoods.co.uk/assetmanager\n\n";
-			body += "Direct link:\n\n";
+			var body = "This file has been uploaded to%0A%0A";
+			body += "www.chfoods.co.uk/assetmanager%0A%0A";
+			body += "Direct link:%0A%0A";
 			body += targetUrl;
 			document.location="mailto:?subject=" + subject + "&body=" + body;
 		});
