@@ -55,8 +55,9 @@ function init() {
 		$(".mailto").click(function() {
 			var subject = $(this).attr("data-filename").replace(" ","%20") + " uploaded";
 			var targetUrl = $(this).attr("data-targeturl");
-			targetUrl = "https://appserver.gtportalbase.com" + targetUrl;
-			targetUrl = targetUrl.replace("&","%26").replace(" ","%20");
+			alert("Raw targetUrl is " + targetUrl);
+			targetUrl = "https://appserver.gtportalbase.com" + targetUrl.replace("&","%26").replace(" ","%20");
+			alert("Replaced targetUrl is " + targetUrl);
 			var body = $(this).attr("data-filename") + " has been uploaded to%0A%0A";
 			body += "www.chfoods.co.uk/digitalassets%0A%0A";
 			body += "Direct link:%0A%0A";
