@@ -57,7 +57,7 @@ function init() {
 			var targetUrl = $(this).attr("data-targeturl");
 			targetUrl = "https://www.agilebase.co.uk" + targetUrl;
 			var body = $(this).attr("data-filename") + " has been uploaded to%0A%0A";
-			body += "www.chfoods.co.uk/assetmanager%0A%0A";
+			body += "www.chfoods.co.uk/digitalassets%0A%0A";
 			body += "Direct link:%0A%0A";
 			body += targetUrl;
 			document.location="mailto:?subject=" + subject + "&body=" + body;
