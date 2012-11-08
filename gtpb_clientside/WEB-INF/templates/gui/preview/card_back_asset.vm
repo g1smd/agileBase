@@ -8,6 +8,7 @@
 <div class="backbuttons">
   #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
   <button onclick="javascript:document.location='$targetUrl';"><i class="icon-download"></i> download</button>
+  <button class="mailto" data-filename="$fileValue" data-targeturl="$targetUrl"><i class="icon-envelope"></i> email link</button>
 #if(($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table)) && ($view.getLoggedInUser().getUserType() != "LIMITED"))
   <button class="delete" data-rowid="$thisUniqueId"><i class="icon-remove"></i> delete</button>
 #end

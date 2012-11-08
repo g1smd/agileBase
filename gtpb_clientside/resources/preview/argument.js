@@ -52,6 +52,16 @@ function init() {
 		$(".card").click(function(event) {
 	    $(this).toggleClass("flipped");
 		});
+		$(".mailto").click(function() {
+			var subject = $(this).attr("data-filename").replace(" ","%20");
+			var targetUrl = $(this).attr("data-targeturl");
+			targetUrl = "https://www.agilebase.co.uk" + targetUrl;
+			var body = "This file has been uploaded to\n\n";
+			body += "www.chfoods.co.uk/assetmanager\n\n";
+			body += "Direct link:\n\n";
+			body += targetUrl;
+			document.location="mailto:?subject=" + subject + "&body=" + body;
+		});
 		$(".delete").click(function() {
 			$(this).closest(".container").addClass("poof");
 			var rowId = $(this).attr("data-rowid");
