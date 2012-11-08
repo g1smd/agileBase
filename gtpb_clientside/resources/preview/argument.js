@@ -62,7 +62,9 @@ function init() {
 			body += "www.chfoods.co.uk/digitalassets%0A%0A";
 			body += "Direct link:%0A%0A";
 			body += targetUrl + "%0A";
-			document.location="mailto:?subject=" + subject + "&body=" + body;
+			var loc = "mailto:?subject=" + subject + "&body=" + body;
+			console.log(loc);
+			document.location=loc;
 		});
 		$(".delete").click(function() {
 			$(this).closest(".container").addClass("poof");
