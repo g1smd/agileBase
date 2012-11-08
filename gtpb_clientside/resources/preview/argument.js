@@ -53,10 +53,10 @@ function init() {
 	    $(this).toggleClass("flipped");
 		});
 		$(".mailto").click(function() {
-			var subject = $(this).attr("data-filename").replace(" ","%20");
+			var subject = $(this).attr("data-filename").replace(" ","%20") + " uploaded";
 			var targetUrl = $(this).attr("data-targeturl");
 			targetUrl = "https://www.agilebase.co.uk" + targetUrl;
-			var body = "This file has been uploaded to%0A%0A";
+			var body = $(this).attr("data-filename") + " has been uploaded to%0A%0A";
 			body += "www.chfoods.co.uk/assetmanager%0A%0A";
 			body += "Direct link:%0A%0A";
 			body += targetUrl;
