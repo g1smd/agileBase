@@ -21,5 +21,5 @@
 #set($id='button_export')
 #set($params='disabled=true')
 ###set($classes='disabled')
-#set($tooltip='Export all data from the selected report to a CSV spreadsheet file')
+#set($tooltip='Export all data from the selected report to a spreadsheet file')
 #parse('gui/resources/button.vm')

@@ -52,6 +52,17 @@ function init() {
 		$(".card").click(function(event) {
 	    $(this).toggleClass("flipped");
 		});
+		$(".mailto").click(function() {
+			var subject = $(this).attr("data-filename").replace(/\s/g,"%20").replace(/&/g,"%26");
+			var targetUrl = $(this).attr("data-targeturl");
+			targetUrl = "https://appserver.gtportalbase.com" + targetUrl.replace(/&/g,"%26").replace(/\s/g,"%20");
+			var body = subject + " has been uploaded to%0A%0A";
+			body += "www.chfoods.co.uk/digitalassets%0A%0A";
+			body += "Direct link:%0A%0A";
+			body += targetUrl + "%0A";
+			var loc = "mailto:?subject=" + subject + "%20uploaded" + "&body=" + body;
+			document.location=loc;
+		});
 		$(".delete").click(function() {
 			$(this).closest(".container").addClass("poof");
 			var rowId = $(this).attr("data-rowid");

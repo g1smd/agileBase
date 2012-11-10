@@ -1,0 +1,39 @@
+##
+##  Copyright 2012 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+<!DOCTYPE html>
+#set($report = $sessionData.getReport())
+<html>
+<head>
+  <title>AgileBase - export $report</title>
+  <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />      
+  <script src="resources/jquery.js" language="Javascript"></script>
+  <script language="Javascript">
+    $(document).ready(function() {
+      document.location = "ReportDownloader.servlet";
+    });
+  </script>
+</head>
+<body style="padding: 1em">
+  <h1>Generating export</h1>
+  <p>Your export of '$report' is being generated.
+  <p>In a moment, a spreadsheet file will download. When complete, you can close this window.
+  #if($report.getRowCount() > 90000)
+    <p>Note: only the first 100,000 rows will be downloaded. You can filter in AgileBase to select particular data
+  #end
+</body>
+</html>

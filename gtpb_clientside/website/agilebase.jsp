@@ -13,26 +13,14 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 %>
 <html>
 	<head>
+    <meta charset="UTF-8">
 		<title>agileBase - a dedicated Lean Back Office platform</title>
+    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+    <link href="/agileBase/website/styles.css" rel="stylesheet">
 		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
-    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
-		<script type="text/javascript" src="<%= googleKey %>"></script>
-    <% if(ssl) { %>
-			<script src="https://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
-		<% } else { %>
-			<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js" type="text/javascript"></script>
-	  <% } %>
-		<script type="text/javascript">
-			google.load("feeds", "1");
-		</script>
-		<script type="text/javascript" src="/agileBase/website/scripts/ab.js"></script>
-		<style>
-		/* Google RSS stylesheet */
-		@import url("/agileBase/website/styles/gfdynamicfeedcontrol.css");
-		@import url("/agileBase/website/styles/styles.css");
-		@import url("/agileBase/website/styles/fonts.css");
-		</style>
     <meta name="google-site-verification" content="f-uEpO4sFJ0ePStIn6Svsj_wumUtsr153X4VYBA96K8" />
     <% if(!live) { %>
       <!-- don't index the test server -->
@@ -40,102 +28,37 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
     <% } %>
 	</head>
 	<body>
-	<div id="scroller">
-		<div id="tl_wrapper">
-			<div id="header" class="wrapper">
-					<div class="content">
-						<a id="home" href="#"><img src="/agileBase/website/images/logo-agilebase.png" alt="agileBase"></a>
-						<!--
-						<table cellspacing="0" cellpadding="0" border="0">
-              <tr class="row1">
-                <td class="col1"><a href="#popupPricingContent" class="colorbox">pricing</a></td>
-                <td><a href="#popupDemoContent" class="colorbox">demo</a></td>
-              </tr>
-              <tr class="row2">
-                <td class="col1"><a href="#popupHelpContent" class="colorbox">help</a></td>
-                <td><a href="#popupContactContent" class="colorbox">contact</a></td>
-              </tr>
-						</table>
-						-->
-					</div>
-		  </div> <!-- end of header -->
-          <div id="popupPricingContent" class="popup">
-            <h1>Setup</h1>
-            We typically spend the first day with a client prototyping a system in real time. 
-            By the end of the day, clients have firstly, a useful working basic system and secondly a good idea of how long further development is likely to take (and cost) based on their ambitions. 
-            <h1>Training</h1>
-            Alternatively, a popular method is to provide a fixed cost for training existing staff to allow them to develop systems completely on their own. 
-            Following this, users are empowered to develop the system based on their demand, at their own pace.
-            <h1>Hosting, licensing* and support</h1>
-            Hosted pricing is simply &pound;10/month/table.
-            Total cost will obviously depend on the ambitions of business users but SMEs using agileBase in some core areas can expect costs of a few tens of pounds per month.<br>
-            Add unlimited users for free! There's no additional per user cost, even if you set up logins for clients, suppliers or partners.<br>
-            Partner discounts are 50% and volume discounts are also available.<p>
-            <small>* agileBase is open source but custom components may be licensed</small>
+    <div class="container">
+      <div class="row abNav">
+        <div class="span2 home">
+          <a href="http://www.agilebase.co.uk"><img id="nav_home" src="/agileBase/website/images/agilebase.png" /></a>
+          <div class="arrow"></div>
+        </div>
+      </div>
+      <div id="content">
+        <h1 class="light">Log in to AgileBase</h1>
+        <div class="big spaced">
+          <% if(live) { %>
+            <form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform" class="form-horizontal">
+          <% } else { %>
+            <form method="POST" action="/agileBase/j_security_check" name="loginform" id="loginform" class="form-horizontal">
+          <% } %>
+              <div class="control-group">
+                <label class="control-label" for="j_username">username</label>
+                <div class="controls"><input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></div>
+              </div>  
+              <div class="control-group">
+                <label class="control-label" for="j_password">password</label>
+               <div class="controls"><input type="password" name="j_password" id="j_password" /></div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <button type="submit" value="login" class="btn">sign in</button>
+                </div>
+              </div>
+            </form>
           </div>
-          <div id="popupDemoContent" class="popup">
-            Log in to the demo server at <a href="http://www.agilebase.co.uk/test">www.agilebase.co.uk/test</a> with username and password <b>demo</b> for a sample demo.<br>
-            Please contact us for custom demos
-          </div>
-          <div id="popupHelpContent" class="popup">
-            Our support centre is<p><a href="http://www.agilebase.co.uk/help">www.agilebase.co.uk/help</a><p>
-            In brief, support for agileBase is organised into three types
-            <ul>
-            <li><a href="http://www.agilebase.co.uk/help">Support Forum (free)</a></li>
-            <li>Business specific support (charged)<br>
-            For private support issues regarding confidential client data, e.g. data restore requests, please email support@agilebase.co.uk
-            </li>
-            <li>Open source support (hybrid)<br>For details, see the support centre</li>
-            </ul>
-            <p>User and administrator documentation is also freely available online at the support centre
-          </div>
-          <div id="popupContactContent" class="popup">
-            Email <a href="mailto:oliver@agilebase.co.uk">oliver@agilebase.co.uk</a><br>
-            Phone +44(0)845 4561810<br>
-            Skype okohll<br>
-            <a href="http://www.gtwm.co.uk">More contacts</a> at GT webMarque
-          </div>
-			<div id="intro" class="wrapper">      
-				<div class="content">
-					<div id="login">
-					<% if(live) { %>
-						<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
-					<% } else { %>
-					    <form method="POST" action="/agileBase/j_security_check" name="loginform" id="loginform">
-					<% } %>
-								<div class="input">username<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/>
-								</div>  
-								<div class="input">password<input type="password" name="j_password" id="j_password" />
-								</div>
-								<!-- submit element allows us to press enter to log in -->
-								<input type="submit" value="login" style="display:none"/>
-								<a id="button_login" href="javascript:document.loginform.submit();">login</a>
-						</form>
-				</div>
-				<div id="urls" class="detail">
-				  <h1>Log in to agileBase &rarr;</h1>
-				  <br style="clear: left;" />
-				  Bookmark<p>
-				  <a href="https://www.agilebase.co.uk/start">www.agilebase.co.uk/start</a><p>
-				  to return to this login page
-				</div>
-				<div id="announce"><!-- populated by JavaScript RSS feed --></div>
-				</div>   <!-- end content -->
-			</div> <!-- end wrapper -->
-				<div class="wrapper">
-					<div class="content"> 
-					  <div id="detail_right">
-						</div>
-
-						<br style="clear: both;" /> <!-- because of the right floated content -->
-					</div>  <!-- end of content -->
-				</div>   <!-- end of wrapper -->
-				<div class="wrapper">
-					<div class="content" id="footer">
-						&copy; 2012 GT webMarque Ltd. Company number 03851934. Contact: Bristol office +44(0)845 456 1810, oliver@gtwm.co.uk. Swansea office cliff@gtwm.co.uk
-					</div>
-				</div>	<!-- end of wrapper -->				
-			</div>  <!-- end of tl_wrapper -->
-		</div>  <!-- end of scroller -->
-	</body>
+      </div>
+    </div>
+		</body>
 </html>		
