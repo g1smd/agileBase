@@ -125,10 +125,10 @@ public class TextValueDefn implements TextValue {
 			regexGB += "0";                                           // leading 0
 			regexGB += ")";
 			regexGB += "(?:";
-			regexGB += "\\d{5}\\)?\\s?\\d{4,5}|";                     // [5+4][5+5]
-			regexGB += "\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3})|";  // [4+5][4+6]
-			regexGB += "\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4}|";           // [3+6][3+7]
 			regexGB += "\\d{2}\\)?\\s?\\d{4}\\s?\\d{4}";              // [2+8]
+			regexGB += "\\d{3}\\)?\\s?\\d{3}\\s?\\d{3,4}|";           // [3+6][3+7]
+			regexGB += "\\d{4}\\)?\\s?(?:\\d{5}|\\d{3}\\s?\\d{3})|";  // [4+5][4+6]
+			regexGB += "\\d{5}\\)?\\s?\\d{4,5}|";                     // [5+4][5+5]
 			regexGB += ")";
 			regexGB += "(?:\\s?[x\\#]\\d{3,4})?";                     // optional "x" or "#" and extension
 			regexGB += "$";
