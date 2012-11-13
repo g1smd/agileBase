@@ -30,7 +30,7 @@ figure {
 	margin-top: -500px;
 	-webkit-perspective: 1500px;
   -moz-perspective: 1500px;
-  -ms-perspective: 1500px;
+  /* -ms-perspective: 1500px; */
 	perspective: 1500px;
 	-webkit-transition-duration: 1s;
   -moz-transition-duration: 1s;
@@ -76,9 +76,7 @@ figure {
 	-moz-transition-timing-function: ease-out;
   -webkit-transition-timing-function: ease-out;
   -ms-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-   -ms-backface-visibility: hidden;
-  
+  transition-timing-function: ease-out;  
 }
 
 .card.flipped {
