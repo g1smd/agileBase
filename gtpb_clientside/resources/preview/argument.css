@@ -70,8 +70,8 @@ figure {
 	transform-style: preserve-3d;
 	-webkit-perspective-origin: 50% 50%;
 	-moz-perspective-origin: 50% 50%;
-	-ms-perspective-origin: 50% 50%;
-	perspective-origin: 50% 50%;
+	/* -ms-perspective-origin: 50% 50%;
+	perspective-origin: 50% 50%; */
 	/* timing function same as .container */
 	-moz-transition-timing-function: ease-out;
   -webkit-transition-timing-function: ease-out;
