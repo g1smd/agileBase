@@ -212,6 +212,8 @@ public class Public extends VelocityViewServlet {
 						return this.getUserInterfaceTemplate(request, response, templateName,
 								context, cdtex);
 					}
+					// Anyone can access this form via cross-domain ajax
+					response.setHeader("Access-Control-Allow-Origin", "*");
 					context.put("gtpbPublicTable", table);
 					context.put("gtpbCompany", company);
 					if (templateName == null) {
