@@ -30,8 +30,8 @@ figure {
 	margin-top: -500px;
 	-webkit-perspective: 1500px;
   -moz-perspective: 1500px;
-  /* -ms-perspective: 1500px; */
-	/* perspective: 1500px; */
+  -ms-perspective: 1500px;
+	perspective: 1500px;
 	-webkit-transition-duration: 1s;
   -moz-transition-duration: 1s;
   -ms-transition-duration: 1s;
@@ -70,13 +70,13 @@ figure {
 	transform-style: preserve-3d;
 	-webkit-perspective-origin: 50% 50%;
 	-moz-perspective-origin: 50% 50%;
-	/* -ms-perspective-origin: 50% 50%;
-	perspective-origin: 50% 50%; */
+	-ms-perspective-origin: 50% 50%;
+	perspective-origin: 50% 50%;
 	/* timing function same as .container */
 	-moz-transition-timing-function: ease-out;
   -webkit-transition-timing-function: ease-out;
   -ms-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;  
+  transition-timing-function: ease-out;
 }
 
 .card.flipped {

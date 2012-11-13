@@ -1,6 +1,19 @@
 #set($browser = $viewTools.getBrowser())
 #set($version = $viewTools.getBrowserVersion())
-<h1>$browser $version</h1>
+#if($browser == "Internet Explorer")
+  <div class="warningmessage">
+    <b>browser compatibility</b><p>
+    To access the library, please use one of these browsers:<p>
+    <a href="http://chrome.google.com">Google Chrome</a><br>
+    <a href="http://www.firefox.com">Firefox</a><br>
+    <a href="http://www.apple.com/safari/">Safari</a>
+  </div>
+#elseif(($browser == "Firefox") && ($version < 15))
+  <div class="warningmessage">
+    <b>browser compatibility</b><p>
+    Please <a href="http://www.firefox.com">upgrade Firefox</a> to use the library
+  </div>
+#end
 
 #if(!$report)
   #set($report = $sessionData.getReport())
