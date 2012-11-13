@@ -20,21 +20,25 @@ figure {
 	top: 0;
 	width: 1000px;
 	height: 1414px;
+	transform: scale(0.2);
 	-webkit-transform: scale(0.2);
-	-moz-transform: scale(0.2);
-	/* margins compensate for zoom out */
+  -moz-transform: scale(0.2);
+  -ms-transform: scale(0.2);
+/* margins compensate for zoom out */
 	margin: -350px;
 	margin-bottom: -550px;
 	margin-top: -500px;
 	-webkit-perspective: 1500px;
-	-moz-perspective: 1500px;
-	-o-perspective: 1500px;
+  -moz-perspective: 1500px;
+  -ms-perspective: 1500px;
 	perspective: 1500px;
 	-webkit-transition-duration: 1s;
-	-moz-transition-duration: 1s;
-	transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+  transition-duration: 1s;
 	-moz-transition-timing-function: ease-out;
 	-webkit-transition-timing-function: ease-out;
+	-ms-transition-timing-function: ease-out;
 	transition-timing-function: ease-out;
 }
 
@@ -42,12 +46,14 @@ figure {
   transform: scale(0.3);
   -webkit-transform: scale(0.3);
   -moz-transform: scale(0.3);
+  -ms-transform: scale(0.3);
   }
 
 .container.poof, .container.poof:hover {
   transform: scale(0.01);
   -webkit-transform: scale(0.01);
   -moz-transform: scale(0.01);
+  -ms-transform: scale(0.01);
   opacity: 0;
 }
 
@@ -60,36 +66,39 @@ figure {
 	transition: transform 1s;
 	-webkit-transform-style: preserve-3d;
 	-moz-transform-style: preserve-3d;
-	-o-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
 	transform-style: preserve-3d;
 	-webkit-perspective-origin: 50% 50%;
 	-moz-perspective-origin: 50% 50%;
-	-o-perspective-origin: 50% 50%;
+	-ms-perspective-origin: 50% 50%;
 	perspective-origin: 50% 50%;
 	/* timing function same as .container */
 	-moz-transition-timing-function: ease-out;
-	-webkit-transition-timing-function: ease-out;
-	transition-timing-function: ease-out;
+  -webkit-transition-timing-function: ease-out;
+  -ms-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
 }
 
 .card.flipped {
 	-webkit-transform: rotateY(180deg);
 	-moz-transform: rotateY(180deg);
-	-o-transform: rotateY(180deg);
+	-ms-transform: rotateY(180deg);
 	transform: rotateY(180deg);
 }
 
 .container.zoomed {
 	transform: scale(1);
 	-webkit-transform: scale(1);
-	-moz-transform: scale(1);
-	z-index: 10;
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+z-index: 10;
 }
 
 .container.zoomed.semi {
 	transform: scale(0.5)!important;
 	-webkit-transform: scale(0.5)!important;
-	-moz-transform: scale(0.5)!important;
+  -moz-transform: scale(0.5)!important;
+  -ms-transform: scale(0.5)!important;
 }
 
 .container.unzoomed {
@@ -97,6 +106,7 @@ figure {
   transform: scale(0.17);
   -webkit-transform: scale(0.17);
   -moz-transform: scale(0.17);
+  -ms-transform: scale(0.17);
 }
 
 .card figure {
@@ -111,7 +121,7 @@ figure {
 	position: absolute;
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
-	-o-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
 	backface-visibility: hidden;
 }
 
@@ -126,7 +136,7 @@ figure {
 	font-size: 20pt;
 	-webkit-transform: rotateY(180deg);
 	-moz-transform: rotateY(180deg);
-	-o-transform: rotateY(180deg);
+	-ms-transform: rotateY(180deg);
 	transform: rotateY(180deg);
 	padding-top: 1em;
 }
