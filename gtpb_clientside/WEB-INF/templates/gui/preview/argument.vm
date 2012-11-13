@@ -1,3 +1,7 @@
+#set($browser = $viewTools.getBrowser())
+#set($version = $viewTools.getBrowserVersion())
+<h1>$browser $version</h1>
+
 #if(!$report)
   #set($report = $sessionData.getReport())
 #end
