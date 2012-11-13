@@ -1524,6 +1524,7 @@ public final class ViewTools implements ViewToolsInfo {
 			majorVersionString = (new StringBuilder(majorVersionString)).reverse().toString();
 			String minorVersionString = versionString.replaceFirst("^" + majorVersionString + "\\.", "");
 			minorVersionString = minorVersionString.replaceAll("\\.", "");
+			minorVersionString = minorVersionString.replaceAll("\\D.*$", "");
 			detectedVersion = Float.valueOf(majorVersionString + "." + minorVersionString);
 		} else if (browser.equals(Browsers.OPERA)) {
 			// Opera/8.02 (Macintosh; PPC Mac OS X; U; en)
