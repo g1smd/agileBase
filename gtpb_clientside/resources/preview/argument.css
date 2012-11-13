@@ -31,7 +31,7 @@ figure {
 	-webkit-perspective: 1500px;
   -moz-perspective: 1500px;
   /* -ms-perspective: 1500px; */
-	perspective: 1500px;
+	/* perspective: 1500px; */
 	-webkit-transition-duration: 1s;
   -moz-transition-duration: 1s;
   -ms-transition-duration: 1s;
