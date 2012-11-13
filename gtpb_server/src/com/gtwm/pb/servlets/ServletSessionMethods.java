@@ -838,7 +838,7 @@ public final class ServletSessionMethods {
 	 * 
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
-	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_UK_Telephone_Numbers
+	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_GB_Telephone_Numbers
 	 * edited by Ian Galpin; @g1smd
 	 */
 	private static String formatPhoneNumberGB(String fieldValueString) {
@@ -921,19 +921,19 @@ public final class ServletSessionMethods {
 		// and remainer of number from original data (preserves spaces)
 		if (fieldValueDigitsOnlyString.matches(pattern1)) {
 			Matcher c1 = Pattern.compile("^(\\d{1})(.*)$").matcher(fieldValueDigitsOnlyString);
-			Matcher m1 = Pattern.compile("^(?:(?:\\d\\s?){1})(.*)$").matcher(fieldValueString);
+			Matcher m1 = Pattern.compile("^(?:(?:\\d\\)?\\s?){1})(.*)$").matcher(fieldValueString);
 			if (c1.matches() && m1.matches()) {
 				fieldValueString = c1.group(1) + " " + m1.group(1);
 			}
 		} else if (fieldValueDigitsOnlyString.matches(pattern2)) {
 			Matcher c2 = Pattern.compile("^(\\d{2})(.*)$").matcher(fieldValueDigitsOnlyString);
-			Matcher m2 = Pattern.compile("^(?:(?:\\d\\s?){2})(.*)$").matcher(fieldValueString);
+			Matcher m2 = Pattern.compile("^(?:(?:\\d\\)?\\s?){2})(.*)$").matcher(fieldValueString);
 			if (c2.matches() && m2.matches()) {
 				fieldValueString = c2.group(1) + " " + m2.group(1);
 			}
 		} else if (fieldValueDigitsOnlyString.matches(pattern3)) {
 			Matcher c3 = Pattern.compile("^(\\d{3})(.*)$").matcher(fieldValueDigitsOnlyString);
-			Matcher m3 = Pattern.compile("^(?:(?:\\d\\s?){3})(.*)$").matcher(fieldValueString);
+			Matcher m3 = Pattern.compile("^(?:(?:\\d\\)?\\s?){3})(.*)$").matcher(fieldValueString);
 			if (c3.matches() && m3.matches()) {
 				fieldValueString = c3.group(1) + " " + m3.group(1);
 			}
