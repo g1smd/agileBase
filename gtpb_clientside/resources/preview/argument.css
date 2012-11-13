@@ -77,6 +77,8 @@ figure {
   -webkit-transition-timing-function: ease-out;
   -ms-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
+   -ms-backface-visibility: hidden;
+  
 }
 
 .card.flipped {
