@@ -57,8 +57,11 @@ Please correct the error below and try entering the data again
 	#end
   #if($formType == "table")
     </table>	
+    <button type="submit" value="Submit" class="btn" >submit</button
   #else
+      <li>
+        <button type="submit" value="Submit" class="btn" >submit</button
+      </li>
 	</ul>
   #end
-  <button type="submit" value="Submit" class="btn" >submit</button
 </form>
