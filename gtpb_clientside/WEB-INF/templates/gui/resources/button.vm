@@ -24,7 +24,11 @@
   #if($params)$params#end
   onclick="fButtonClick(this) #if($click); $click #end" 
   onmouseout="this.blur()">
-  <img src="$button_img">
+  #if($button_img.endsWith(".png"))
+    <img src="$button_img">
+  #else
+    <i class="$button_img"></i> ## font icon
+  #end
   #if(!$noCaption)<br>$caption#end
 </button>
 
