@@ -1,4 +1,8 @@
-agileBase colours:
+current agilebase colours:
+
+bright blue: #009FE3
+
+old agileBase colours:
 
 logo:
 dark blue:    #486f98
