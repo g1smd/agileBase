@@ -976,7 +976,7 @@ public class ReportData implements ReportDataInfo {
 								if (keyValue.equals("t")) {
 									keyValue = "true";
 									// colour true values green
-									colourRepresentation = "#8ce18c";
+									colourRepresentation = "#8DC63F";
 								} else {
 									keyValue = "false";
 								}
