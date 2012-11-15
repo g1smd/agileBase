@@ -1,5 +1,5 @@
 /* Pane 1 Tree view */
-.blue {background-color: #E7F5F9;}
+.blue {background: -moz-linear-gradient(top, #E7F5F9, white)}
 .blue h2 {background-color: #B3E3F3;}
 
 .cyan {background-color: #E7F5F9;}
