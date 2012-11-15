@@ -912,7 +912,7 @@ div#reportData {
 }
 
 .form_tabber i.icon-remove {
-  color: #EC008C;
+  color: #EC008C!important;
 }
 
 .form_tabber .tab_choice.active i {
