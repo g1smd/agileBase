@@ -7,14 +7,14 @@ table.jCalendar {
     border-spacing: 2px;
 }
 table.jCalendar th {
-	background: #333;
+	background: #656766;
 	color: #fff;
 	font-weight: bold;
 	padding: 3px 5px;
 }
 
 table.jCalendar td {
-	background: #ccc;
+	background: #E8E7E3;
 	color: #000;
 	padding: 3px 5px;
 	text-align: center;
@@ -24,15 +24,15 @@ table.jCalendar td.other-month {
 	color: #aaa;
 }
 table.jCalendar td.today {
-	background: #666;
+	background: #656766;
 	color: #fff;
 }
 table.jCalendar td.selected {
-	background: #f66;
+	background: #EC008C;
 	color: #fff;
 }
 table.jCalendar td.selected.dp-hover {
-	background: #f33;
+	background: #EC008C;
 	color: #fff;
 }
 table.jCalendar td.dp-hover,
@@ -75,7 +75,7 @@ a.dp-choose-date {
 
 div.dp-popup {
 	position: relative;
-	background: #ccc;
+	background-color: #E8E7E3;
 	/* font-size: 15px; */
 	font-size: 9pt;
 	font-family: Verdana,Geneva,sans-serif;
