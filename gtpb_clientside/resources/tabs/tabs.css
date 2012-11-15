@@ -474,7 +474,7 @@ img.file_preview {
   position: relative;
   min-height: 10px;
   padding: 2px;
-  border: 1px dashed #777777;
+  border: 1px dashed #656766;
   display: none;
   border-radius: 0.5em;
 }
@@ -696,7 +696,7 @@ div#reportData {
   border-radius: 0.5em;
   break-inside: avoid-column;
   -webkit-column-break-inside: avoid;
-  color: #777777;
+  color: #656766;
   line-height: 1.2em;
 }
 
@@ -886,7 +886,7 @@ div#reportData {
 }
 
 .form_tabber .tab_choice.no_records {
-  color: #777777;
+  color: #656766;
 }
 
 .form_tabber .tab_choice:first-child {

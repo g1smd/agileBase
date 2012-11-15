@@ -253,6 +253,7 @@ ol li ul li ul li li a:hover {
 
 .recordcount {
 	display: none;
+	color: #E7F7F9;
 }
 
 .currentOption .recordcount {
@@ -362,24 +363,22 @@ ul.moduleaction li {
 	color: #486f98;
 }
 
+#appspace {
+  margin-top: 1em;
+  border-top: 0.25em solid #009FE3;
+  border-bottom: 0.25em solid #009FE3;
+}
+
 #appspace .block {
-  background-color: white;
+  background-color: #E7F5F9;
+  text-align: center;
   padding-top: 0.5em;
-  border: 1px solid #ff8040;
   border-radius: 0.5em;
   margin: 0.5em;
-  margin-left: 0.25em;
-  margin-right: 0.25em;
+  margin-left: 5px;
+  margin-right: 5px;
   font-size: 8.5pt;
   overflow-x: hidden;
-}
-
-#appspace .block:nth-of-type(2) {
-  border-color: #486f98;
-}
-
-#appspace .block:nth-of-type(3) {
-  border-color: #50add6;
 }
 
 #appspace .appelement {
@@ -427,7 +426,7 @@ ul.moduleaction li {
 }
 
 #appspace a {
-  color: gray;
+  color: #656766;
   display: block;
   width: 100em;
 }
