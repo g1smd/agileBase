@@ -454,11 +454,11 @@ object,embed {
 
 .warningmessage {
 		border-radius: 1em;
-		border: 2px solid rgb(254,233,84);
 		text-align: center;
-		background: rgb(254,242,149);
-		margin: 10px;
-		padding: 10px;
+		background-color: #E8E7E3;
+		margin: 1em;
+		padding: 1em;
+		font-weight: bold;
 }
 
 				

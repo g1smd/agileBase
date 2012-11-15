@@ -37,11 +37,10 @@ table.data small { font-size:8pt; color:#cccccc }
 
 .warningmessage {
 		border-radius: 1em;
-		border: 2px solid #ff0000;
 		text-align: center;
-		background: rgb(254,242,149);
-		margin: 10px;
-		padding: 10px;
+    background-color: #E8E7E3;
+		margin: 1em;
+		padding: 1em;
 }
 
 .capitalised { text-transform: capitalize; }
