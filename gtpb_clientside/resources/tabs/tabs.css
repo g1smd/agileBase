@@ -254,8 +254,8 @@ textarea {
 
 /* dates */
 #reportData .input_saved.date {
-  background-color: auto;
-  color: auto;
+  background-color: none;
+  color: black;
 }
 
 #reportData .input_saved.date input, #reportData .input_saved.date select {
