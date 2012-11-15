@@ -49,7 +49,7 @@ button.gtpb img { border:0; }
 
 button.gtpb:hover {
 	cursor: pointer;
-  background-color: #f0f0f0;
+  background-color: #E7F7F9;
 }		 
 button.gtpb:active { background-color: white; }
 button.gtpb.selected {
