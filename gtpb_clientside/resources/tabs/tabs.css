@@ -252,6 +252,17 @@ textarea {
   color: white;
 }
 
+/* dates */
+#reportData .input_saved.date {
+  background-color: auto;
+  color: auto;
+}
+
+#reportData .input_saved.date input, #reportData .input_saved.date select {
+  background-color: #8DC63F; /* green */
+  color: white;
+}
+
 *[error] { color:red; }
 a[error] { font-size:8pt; }
 
