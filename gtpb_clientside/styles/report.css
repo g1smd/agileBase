@@ -412,6 +412,8 @@ tr.separator + tr.separator {
 
 #filterhelp {
   position: relative;
+  font-size: 11pt;
+  color: #656766;
 }
 
 .ab_tooltip {
