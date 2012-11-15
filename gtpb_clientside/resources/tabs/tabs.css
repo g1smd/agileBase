@@ -589,8 +589,8 @@ div.relation_field {
 }
 
 span.comment_text {
-  background-color: #E8E7E3;
-  color: black;
+  background-color: #E30083;
+  color: white;
   padding: 0.5em;
   margin: 0.1em;
   display: inline-block;
