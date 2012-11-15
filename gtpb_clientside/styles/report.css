@@ -341,6 +341,7 @@ table#reportData.draggable td.capitalised {
 
 table#reportData tr.separator td.capitalised {
 	text-align: left;
+	color: #656766!important;
 }
 
 
