@@ -49,7 +49,7 @@
 				  overflow:auto;
                 }
 				
-	#navigation button { margin:5px; margin-left:24px }
+	#navigation button { margin:5px; margin-left:24px; font-size: 8pt; }
                 
     .options_wrapper { padding-left:120px; 
     		           height:100%;
