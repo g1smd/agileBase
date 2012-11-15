@@ -157,9 +157,10 @@ table#reportData tr#currentRow td.trailing {
 
 table#reportData tr td.deleter {
   width: 1.3em;
+  color: #EC008C!important;
 }
 
-table#reportData tr td.deleter img {
+table#reportData tr td.deleter i {
   visibility: hidden;
   height: 1.3em;
 }
