@@ -3,25 +3,25 @@
 .blue h2 {background-color: white;}
 
 .cyan {background-color: #E7F5F9;}
-.cyan h2 {background-color: #E8E7E3;}
+.cyan h2 {background-color: white;}
 
 .green {background-color: #E7F5F9;}
-.green h2 {background-color: #E8E7E3;}
+.green h2 {background-color: white;}
 
 .orange {background-color: #E7F5F9;}
-.orange h2 {background-color: #E8E7E3;}
+.orange h2 {background-color: white;}
 
 .pink {background-color: #E7F5F9;}
-.pink h2 {background-color: #E8E7E3;}
+.pink h2 {background-color: white;}
 
 .purple {background-color: #E7F5F9;}
-.purple h2 {background-color: #E8E7E3;}
+.purple h2 {background-color: white;}
 
 .silver {background-color: #E7F5F9;}
 .silver h2 {background-color: #E8E7E3;}
 
 .yellow {background-color: #E7F5F9;}
-.yellow h2 {background-color: #E8E7E3;}
+.yellow h2 {background-color: white;}
 
 /* Pane 2 report list */
 #reportData .blue {background-color: #DDE6EF;}
