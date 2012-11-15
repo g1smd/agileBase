@@ -908,7 +908,7 @@ div#reportData {
 	height: 1.3em;
 	vertical-align: top;
 	cursor: pointer;
-	color: #EC008C;
+	color: #EC008C!important;
 }
 
 .form_tabber i.icon-remove {
