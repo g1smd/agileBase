@@ -164,14 +164,6 @@ table#reportData td input {
   padding: 0.3em;
   font-family: Verdana,Geneva,sans-serif;
   font-size: 9pt;
-  -moz-transition-duration: 1s;
-  -ms-transition-duration: 1s;
-  -webkit-transition-duration: 1s;
-  transition-duration: 1s;
-  -moz-transition-property: color, background-color;
-  -webkit-transition-property: color, background-color;
-  -ms-transition-property: color, background-color;
-  transition-property: color, background-color;
 }
 
 table#reportData td input[type='text'] {
@@ -213,6 +205,17 @@ table#reportData td .date input[type='text'] {
 
 table#reportData td img {
   border-radius: 0.5em;
+}
+
+input, textarea {
+  -moz-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+  -webkit-transition-duration: 1s;
+  transition-duration: 1s;
+  -moz-transition-property: color, background-color;
+  -webkit-transition-property: color, background-color;
+  -ms-transition-property: color, background-color;
+  transition-property: color, background-color;
 }
 
 textarea {
