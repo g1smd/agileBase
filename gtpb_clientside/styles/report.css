@@ -144,14 +144,14 @@ table#reportData td:last-child {
 }
 
 table#reportData tr#currentRow td { 
-  background-color: #B3E3F3!important; /* #3875d7!important; /* #ffd588; */
+  background-color: #00AEEF!important; /* #3875d7!important; /* #ffd588; */
   /* color: white!important; */
   border-right: none;
 }				
 
 table#reportData tr#currentRow td.leading,
 table#reportData tr#currentRow td.trailing {
-  background-color: #B3E3F3; /* #FFBA3B; */
+  background-color: #00AEEF; /* #FFBA3B; */
 }
 
 table#reportData tr td.deleter {
