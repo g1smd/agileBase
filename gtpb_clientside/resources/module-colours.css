@@ -1,27 +1,27 @@
 /* Pane 1 Tree view */
 .blue {background-color: #E7F5F9;}
-.blue h2 {background-color: #DDE6EF;}
+.blue h2 {background-color: #B3E3F3;}
 
 .cyan {background-color: #E7F5F9;}
-.cyan h2 {background-color: #DDEFEE;}
+.cyan h2 {background-color: #B3E3F3;}
 
 .green {background-color: #E7F5F9;}
-.green h2 {background-color: #DDEFE0;}
+.green h2 {background-color: #B3E3F3;}
 
 .orange {background-color: #E7F5F9;}
-.orange h2 {background-color: #EFEADD;}
+.orange h2 {background-color: #B3E3F3;}
 
 .pink {background-color: #E7F5F9;}
-.pink h2 {background-color: #EFDDE7;}
+.pink h2 {background-color: #B3E3F3;}
 
 .purple {background-color: #E7F5F9;}
-.purple h2 {background-color: #E8DDEF;}
+.purple h2 {background-color: #B3E3F3;}
 
 .silver {background-color: #E7F5F9;}
-.silver h2 {background-color: #F1F2ED;}
+.silver h2 {background-color: #B3E3F3;}
 
 .yellow {background-color: #E7F5F9;}
-.yellow h2 {background-color: #EBEFDD;}
+.yellow h2 {background-color: #B3E3F3;}
 
 /* Pane 2 report list */
 #reportData .blue {background-color: #DDE6EF;}
