@@ -898,24 +898,25 @@ div#reportData {
   background-color: #EEF3F9;
 }
 
-.form_tabber .tab_choice img {
+.form_tabber .tab_choice i {
   height: 1.3em;
   display: none;
-  vertical-align: top;
+  color: #009FE3;
 }
 
-.form_tabber #tab_deleter img {
+.form_tabber #tab_deleter i {
 	height: 1.3em;
 	vertical-align: top;
 	cursor: pointer;
+	color: #009FE3;
 }
 
-.form_tabber .tab_choice.active img {
+.form_tabber .tab_choice.active i {
   display: inline;
 }
 
-.form_tabber .tab_choice.active img:hover {
-  background-color: #E8E7E3;
+.form_tabber .tab_choice.active i:hover {
+/*  background-color: #E8E7E3; */
 }
 
 .form_tabber #tab_deleter {
