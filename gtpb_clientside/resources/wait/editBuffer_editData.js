@@ -442,7 +442,7 @@ function fEnableDisable(sAction, oFormObject) {
 			}
 			// add a tick to show it's been saved.
 			// Can't do this with just oObjToChange.addClass because :after isn't supported on input elements
-			$(oObjToChange).closest("td").prev("td").find(".saved").show();
+			//$(oObjToChange).closest("td").prev("td").find(".saved").show();
 			$(oObjToChange).addClass("input_saved");
 			$(oObjToChange).prev("select.combo-component").addClass("input_saved");
 		} else {

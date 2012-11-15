@@ -236,7 +236,7 @@ textarea {
 	display: none;
 }
 
-#reportData .block .input_saved {
+#reportData .input_saved {
   background-color: #8DC63F; /* green */
   color: white;
 }
