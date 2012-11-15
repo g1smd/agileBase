@@ -185,7 +185,7 @@ table#reportData tr.h1 td {
   height: 3em;
   line-height: 1.5em;
   vertical-align: middle;
-  background-color: #f4f4f4;
+  background-color: #E8E7E3;
 }
 
 table#reportData tr.h2 td {
@@ -390,7 +390,7 @@ tr.separator + tr.separator {
 }
 
 .seemorerows {
-	background: #f4f4f4;
+	background: #E8E7E3;
 	width: 100%;
 	padding-left: 14px;
 }
@@ -461,7 +461,7 @@ img.mini_icon {
   font-size: 8pt!important;
   position: fixed;
   padding: 0.5em;
-  background-color: #f4f4f4;
+  background-color: #E8E7E3;
   height: 2.95em;
   font-weight: normal;
   text-transform: lowercase;
