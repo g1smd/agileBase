@@ -550,10 +550,10 @@ function fChange(oObj, postChangeFunction)  {
     }
      
     function fSetError(sMessage) {	
-      var oLink=document.createElement('A');
-      oLink.innerHTML='error, click for more info';
-      oLink.setAttribute('error','true');
       sMessage = sMessage.replace(/\'/,'&quot;')
+      var oLink=document.createElement('A');
+      oLink.innerHTML='error: ' + sMessage;
+      oLink.setAttribute('error','true');
       oLink.setAttribute('href','javascript:alert(\''+sMessage+'\')');
      		
       fClearError(true);
