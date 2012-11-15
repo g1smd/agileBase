@@ -49,9 +49,9 @@ button.gtpb img { border:0; }
 
 button.gtpb:hover {
 	cursor: pointer;
-  background-color: #E7F7F9;
+  background-color: white;
 }		 
-button.gtpb:active { background-color: white; }
+button.gtpb:active { background-color: #00AEEF; }
 button.gtpb.selected {
   background-color: #E8E7E3;
   text-shadow: none;
