@@ -842,7 +842,7 @@ div#reportData {
 
 .form_tabber {
 	position: relative;
-	background-color: #cccccc;
+	background-color: #E8E7E3;
   margin: 0.5em;
   margin-bottom: 0;
   border-radius: 0.5em 0.5em 0 0;
@@ -880,8 +880,8 @@ div#reportData {
 }
 
 .form_tabber .tab_choice.active {
-  color: black;
-  background-color: white!important;
+  color: white;
+  background-color: #009FE3!important;
 }
 
 .form_tabber .tab_choice:hover {
