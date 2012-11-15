@@ -165,7 +165,7 @@ table#reportData tr td.deleter i {
   height: 1.3em;
 }
 
-table#reportData tr#currentRow td.deleter img {
+table#reportData tr#currentRow td.deleter i {
   visibility: visible;
   cursor: pointer;
 }
