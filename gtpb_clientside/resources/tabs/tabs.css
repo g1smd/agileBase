@@ -227,6 +227,7 @@ textarea {
 *[changed] { text-decoration:underline; }
 .changed { text-decoration:underline; }
 .saved {
+  color: #8DC63F;
 /*
 	background-image:url('/agileBase/resources/icons/tick.png');
   background-repeat: no-repeat;
