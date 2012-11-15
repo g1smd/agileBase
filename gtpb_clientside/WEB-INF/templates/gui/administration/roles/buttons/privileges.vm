@@ -15,7 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($button_img='resources/roles/privileges.png')
+##set($button_img='resources/roles/privileges.png')
+#set($button_img="icon-key")
 #set($click="fShowOption('options_wrapper_$options_wrapper_no','table_privileges')")
 #set($caption='Privileges')
 #set($id='button_table_privileges')

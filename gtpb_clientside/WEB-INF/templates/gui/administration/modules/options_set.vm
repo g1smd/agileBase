@@ -19,5 +19,5 @@
 
 #parse('gui/administration/modules/option_sets/module_details.vm')
 #parse('gui/administration/modules/option_sets/module_icon.vm')
-#parse('gui/administration/modules/option_sets/module_color.vm')
+##parse('gui/administration/modules/option_sets/module_color.vm')
 #parse('gui/administration/modules/option_sets/module_related.vm')

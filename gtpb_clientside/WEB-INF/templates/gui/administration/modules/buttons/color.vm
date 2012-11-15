@@ -15,8 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($button_img='resources/modules/color.png')
-#set($click="fShowOption('options_wrapper_$options_wrapper_no','module_color')")
-#set($caption='Colour')
-#set($id='button_module_color')
-#parse('gui/resources/button.vm')
+##set($button_img='resources/modules/color.png')
+##set($click="fShowOption('options_wrapper_$options_wrapper_no','module_color')")
+##set($caption='Colour')
+##set($id='button_module_color')
+##parse('gui/resources/button.vm')

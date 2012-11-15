@@ -86,7 +86,7 @@ td.trailing input[type=button] {
 }
 															
 .tab-interface .tab-list a:hover { 
-  border-bottom-color:orange;
+  border-bottom-color:#EC008C;
   color:black;
   padding-bottom: 6px;
 
@@ -1002,7 +1002,7 @@ div#reportData {
 	  tr#addNewField td { 
 	    vertical-align:top;
     	font-size:8pt;
-		border-top:1px solid orange;
+		border-top:1px solid #EC008C;
 	  }
 						
 	  optgroup { 

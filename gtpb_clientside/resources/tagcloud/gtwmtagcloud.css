@@ -27,7 +27,7 @@
 }
 
 .tagCloud a.clicked {
-	color:orange!important;
+	color:#EC008C!important;
 }
 
 
@@ -74,7 +74,7 @@
 }
 
 #filter a.clicked {
-	color:orange!important;
+	color:#EC008C!important;
 	text-decoration:line-through;
 }
 

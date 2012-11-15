@@ -15,7 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($option_set_id='module_color')
-#set($option_set_title='module color')
-#set($option_set_data_path='gui/administration/modules/option_sets/module_color_data.vm')
-#parse('gui/administration/option_set.vm')
+## Obsolete template
+##set($option_set_id='module_color')
+##set($option_set_title='module color')
+##set($option_set_data_path='gui/administration/modules/option_sets/module_color_data.vm')
+##parse('gui/administration/option_set.vm')

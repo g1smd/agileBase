@@ -23,12 +23,12 @@
 #set($selection=$sessionData.getModule())
 
 ###set($fields=[['index','index'],['modulename','module name'],['iconpath','icon'],['colour','colour']])
-#set($fields=['index','module name','icon','colour'])
+#set($fields=['index','module name','icon'])
 #set($data=[])
 #set($modules = $view.getLoggedInUser().getCompany().getModules())
 
 ## Get colours array
-#parse('gui/resources/module_color_colors.vm')
+##parse('gui/resources/module_color_colors.vm')
 
 #foreach($module in $modules)
  #if($module.getIconPath() != "")
@@ -37,16 +37,16 @@
  #else
    #set($imgTag='')
  #end
- #if ($module.getColour() != "")
-	#foreach($colour in $colours)
-    	#if($colour.get('colourName') == $module.getColour())
-    		#set($colourTag='<div class="colour-block '+$colour.get('styleName')+'">&nbsp</div><span style="font-size:8pt; color:#666666; padding:0 7px">'+$colour.get('colourName')+'</span></td>')
-    	#end
-	#end
- #else
-   #set($colourTag='')
- #end
- #set($row=[$module.getIndexNumber(),$module.getModuleName(),$imgTag,$colourTag])
+## #if ($module.getColour() != "")
+##	#foreach($colour in $colours)
+##    	#if($colour.get('colourName') == $module.getColour())
+##    		#set($colourTag='<div class="colour-block '+$colour.get('styleName')+'">&nbsp</div><span style="font-size:8pt; color:#666666; padding:0 7px">'+$colour.get('colourName')+'</span></td>')
+##    	#end
+##	#end
+## #else
+##  #set($colourTag='')
+## #end
+ #set($row=[$module.getIndexNumber(),$module.getModuleName(),$imgTag])
  #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_module=$module.getInternalModuleName()'")
  #set($uniqueid=$module.getInternalModuleName())
  #set($success=$data.add([$row,$click,$uniqueid,'',false]))

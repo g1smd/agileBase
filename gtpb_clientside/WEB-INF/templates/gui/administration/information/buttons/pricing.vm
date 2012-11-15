@@ -15,8 +15,9 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($button_img='resources/icons/applications/tango/apps/system-users.png')
-#set($click="fShowOption('options_wrapper_$options_wrapper_no','information_pricing')")
-#set($caption='Company')
-#set($id='button_information_pricing')
-#parse('gui/resources/button.vm')
+## Obsolete template
+##set($button_img='resources/icons/applications/tango/apps/system-users.png')
+##set($click="fShowOption('options_wrapper_$options_wrapper_no','information_pricing')")
+##set($caption='Company')
+##set($id='button_information_pricing')
+##parse('gui/resources/button.vm')

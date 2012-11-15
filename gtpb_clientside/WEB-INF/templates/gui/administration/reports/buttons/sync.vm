@@ -15,7 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($button_img='resources/usage/sync.png')
+##set($button_img='resources/usage/sync.png')
+#set($button_img="icon-share")
 #set($click="fShowOption('options_wrapper_$options_wrapper_no','report_sync')")
 #set($caption='Sync')
 #set($id='button_report_sync')
