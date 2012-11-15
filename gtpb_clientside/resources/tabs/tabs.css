@@ -911,6 +911,10 @@ div#reportData {
 	color: #EC008C;
 }
 
+.form_tabber i.icon_delete {
+  color: #EC008C;
+}
+
 .form_tabber .tab_choice.active i {
   display: inline;
 }
