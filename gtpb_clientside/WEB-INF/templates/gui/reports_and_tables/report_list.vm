@@ -77,7 +77,7 @@
     	#if($section != $previousSection)
           #if($foreach.count > 1) </li></ul> #end
     	  <li class="$colourStyleName"><h1><span>$section</span></h1>
-    	  <ul>
+    	  <ul class="outer">
         #end
     	#set($previousSection = $section)
     	#set($internalModuleName = $module.getInternalModuleName())
