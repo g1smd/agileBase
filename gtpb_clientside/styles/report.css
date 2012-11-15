@@ -462,11 +462,11 @@ img.mini_icon {
 }
 
 .mini_action {
-  font-size: 8pt!important;
+  font-size: 12pt!important;
   position: fixed;
   padding: 0.5em;
   background-color: #E8E7E3;
-  height: 2.95em;
+  /* height: 2.95em; */
   font-weight: normal;
   text-transform: lowercase;
   top: 0;
