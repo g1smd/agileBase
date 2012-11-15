@@ -110,7 +110,8 @@
 	}		
 </script>
 
-#set($button_img='resources/toolbar/pane3.png')
+##set($button_img='resources/toolbar/pane3.png')
+#set($button_img='icon-edit')
 #set($click="fFormatRHPanes(this)")
 #set($id='pane3butt')
 #set($caption='Record')

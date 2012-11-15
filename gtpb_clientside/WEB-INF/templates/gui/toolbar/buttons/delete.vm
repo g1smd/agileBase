@@ -15,7 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($button_img='resources/toolbar/delete.png')
+##set($button_img='resources/toolbar/delete.png')
+#set($button_img='icon-remove')
 #set($click="fDelete()")
 #set($caption='Delete')
 #set($id='button_delete')

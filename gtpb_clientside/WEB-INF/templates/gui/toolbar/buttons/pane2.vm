@@ -16,7 +16,8 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## For <script>, see pane3.vm
-#set($button_img='resources/toolbar/pane2.png')
+##set($button_img='resources/toolbar/pane2.png')
+#set($button_img='icon-table')
 #set($click="fFormatRHPanes(this)")
 #set($id='pane2butt')
 #set($caption='Report')

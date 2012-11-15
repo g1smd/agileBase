@@ -15,7 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($button_img='resources/toolbar/apps.png')
+##set($button_img='resources/toolbar/apps.png')
+#set($button_img='icon-cogs')
 #set($click="fAppStore()")
 #set($caption='AppStore')
 #set($id='button_apps')

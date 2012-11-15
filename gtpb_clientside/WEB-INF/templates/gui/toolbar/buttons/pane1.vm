@@ -15,7 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($button_img='resources/toolbar/pane1.png')
+##set($button_img='resources/toolbar/pane1.png')
+#set($button_img='icon-list-ul')
 #set($click="fTogglePane1(this)")
 #set($id='pane1butt')
 #set($caption='Modules')

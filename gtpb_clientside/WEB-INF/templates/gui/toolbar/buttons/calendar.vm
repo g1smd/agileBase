@@ -15,7 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($button_img='resources/toolbar/calendar.png')
+##set($button_img='resources/toolbar/calendar.png')
+#set($button_img='icon-calendar')
 #set($click="fCalendar()")
 #set($caption='Calendar')
 #set($id='button_calendar')

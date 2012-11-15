@@ -20,8 +20,8 @@
     window.open('AppController.servlet?return=gui/development/dev_tools','Development Tools','');
   }
 </script>
-
-#set($button_img="resources/toolbar/development.png")
+##set($button_img="resources/toolbar/development.png")
+#set($button_img="icon-wrench")
 #set($click="fLoadDevTools()")
 #set($caption='Dev tools')
 #set($id='button_development_tools')
