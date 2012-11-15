@@ -44,12 +44,12 @@
 -------------------------------------- */
 
 .cluetip-default {
-  background-color: #f0f0f0;
+  background-color: #E8E7E3;
 }
 .cluetip-default #cluetip-outer {
   position: relative;
   margin: 0;
-  background-color: #f0f0f0;
+  background-color: #E8E7E3;
 }
 .cluetip-default h3#cluetip-title {
   margin: 0 0 5px;

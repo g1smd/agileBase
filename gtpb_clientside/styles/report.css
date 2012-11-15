@@ -30,8 +30,8 @@ table#reportData th {
   font-size:8pt; 
   color:black;
   font-weight:bold;
-  border:1px solid white; /* #f0f0f0 / #cecece */
-  border-bottom: 1px solid #f0f0f0;
+  border:1px solid white; /* #E8E7E3 / #cecece */
+  border-bottom: 1px solid #E8E7E3;
   border-top: 0px;
   padding:5px;
   text-align:left;
@@ -419,7 +419,7 @@ tr.separator + tr.separator {
 	display: none;
 	top: 30px;
 	left: 0;
-	background-color: #f0f0f0;
+	background-color: #E8E7E3;
 	-moz-box-shadow: 0.5em 0.5em 2em #cccccc;
 	-webkit-box-shadow: 0.5em 0.5em 2em #cccccc;
 	box-shadow: 0.5em 0.5em 2em #cccccc;
@@ -475,7 +475,7 @@ table#reportData th div.mini_action {
 }
 
 table#reportData td.appSelected {
-	background-color: #F0F0F0;
+	background-color: #E8E7E3;
 }
 
 .mini_action a {

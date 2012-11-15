@@ -221,7 +221,7 @@ ol li ul li ul li{
 }
 
 .loading {
-  background-color: #f0f0f0;
+  background-color: #E8E7E3;
 }
 	
 /* links to tables, reports and admin functions */
@@ -403,7 +403,7 @@ ul.moduleaction li {
 }
 
 #appspace span.comment_text {
-  background-color: #f0f0f0;
+  background-color: #E8E7E3;
   color: black;
   padding: 0.5em;
   margin: 0.1em;

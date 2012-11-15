@@ -73,4 +73,4 @@ button.gtpb.selected {
 button.gtpb[disabled],
 button.gtpb[disabled]:hover,
 button.gtpb[disabled]:active,
-button.gtpb[disabled].selected { background:#f0f0f0; color:#aaaaaa }
+button.gtpb[disabled].selected { background:#E8E7E3; color:#aaaaaa }

@@ -12,7 +12,7 @@
 }
 
 body { 
-  background-color:#f0f0f0; 
+  background-color:#E8E7E3; 
   font-family: Verdana,Geneva,sans-serif;
   font-size:9pt;
   margin: 0;
@@ -588,7 +588,7 @@ div.relation_field {
 }
 
 span.comment_text {
-  background-color: #f0f0f0;
+  background-color: #E8E7E3;
   color: black;
   padding: 0.5em;
   margin: 0.1em;
@@ -906,7 +906,7 @@ div#reportData {
 }
 
 .form_tabber .tab_choice.active img:hover {
-  background-color: #f0f0f0;
+  background-color: #E8E7E3;
 }
 
 .form_tabber #tab_deleter {
