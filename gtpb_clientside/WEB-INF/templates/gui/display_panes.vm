@@ -48,14 +48,14 @@
 ##    	</frameset>
 ##    </frameset>
 ##  #else
-    <frameset id="colsWrapper" cols="250,*" border="5" frameborder="yes" framespacing="5" bordercolor="#EEF3F9">
+    <frameset id="colsWrapper" cols="250,*" border="0" frameborder="no" framespacing="0" bordercolor="#EEF3F9">
     	<frame name="pane_1" id="pane_1" frameborder="no" scrolling="auto" src="AppController.servlet?return=gui/pane1">
       #if($view.getLoggedInUser().getUserType() != "FULL")
         #set($rows = "*,0") ## full height pane 2
       #else
         #set($rows = "*,*") ## panes 2 and 3 both displayed
       #end
-    	<frameset id="rowsWrapper" rows="$rows" border="5" frameborder="yes" framespacing="5">
+    	<frameset id="rowsWrapper" rows="$rows" border="0" frameborder="no" framespacing="0">
     	  <!-- pane 2 and 3 loads will cascade from pane 1 -->
     	  <frame name="pane_2" id="pane_2" scrolling="auto" src=""> ##AppController.servlet?return=gui/resources/nothing
     	  <frame name="pane_3" id="pane_3" scrolling="no" src="">
