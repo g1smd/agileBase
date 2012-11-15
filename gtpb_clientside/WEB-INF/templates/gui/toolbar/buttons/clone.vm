@@ -20,7 +20,7 @@
 #set($click="fClone();showPane3IfNecessary(event);")
 #set($caption='Clone')
 #set($id='button_clone')
-#set($params='disabled=true style="color: #8DC63F"')
+#set($params='disabled=true')
 ###set($classes='disabled')
 #set($tooltip='Clone the record selected in pane 2')
 #parse('gui/resources/button.vm')

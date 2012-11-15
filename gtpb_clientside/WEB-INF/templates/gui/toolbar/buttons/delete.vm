@@ -20,7 +20,7 @@
 #set($click="fDelete()")
 #set($caption='Delete')
 #set($id='button_delete')
-#set($params='disabled=true style="color:#EC00BC"')
+#set($params='disabled=true')
 ###set($classes='disabled')
 #set($tooltip='Delete the records checked in pane 2')
 #parse('gui/resources/button.vm')

@@ -20,7 +20,7 @@
 #set($click="fNew();showPane3IfNecessary(event);")
 #set($caption='New')
 #set($id='button_new')
-#set($params='disabled=true style="color: #8DC63F"')
+#set($params='disabled=true')
 ###set($classes='disabled')
 #set($tooltip='Create a new record')
 #parse('gui/resources/button.vm')
