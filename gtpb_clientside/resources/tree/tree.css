@@ -38,6 +38,8 @@ body {
 	cursor: hand;
 	cursor: pointer;
 	height: 23px;
+	color: #009FE3;
+	font-weight: bold;
 	/*min-width: 250px; 
 	overflow: hidden;*/
 }
