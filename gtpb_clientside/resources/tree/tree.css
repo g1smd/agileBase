@@ -158,6 +158,7 @@ ul.outer {
 ul.inner {
   background-color: white;
   color: #656766;
+  padding-left: 1em;
 }
 		
 ol li ul li ul{
@@ -194,7 +195,7 @@ ol li ul li.collapsed ul{
 
 ol li ul li ul li{
 	padding: 0 0 0 8px;
-	background: transparent url(tree/line_hor.gif) no-repeat 0 0.55em;
+	/* background: transparent url(tree/line_hor.gif) no-repeat 0 0.55em; */
 }
 	
 .module-tree-item-wrap {

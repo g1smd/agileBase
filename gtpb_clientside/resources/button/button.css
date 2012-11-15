@@ -29,7 +29,7 @@ button.gtpb.captioned {
   height: 55px;
 }
 	 
-button.gtpb img { border:0; }
+button.gtpb img { border:0; padding-top: 3px; }
 
 .buttonGroup.joined button.gtpb {
   /* border: 1px solid #dddddd; */
