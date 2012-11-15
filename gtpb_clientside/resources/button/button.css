@@ -4,7 +4,6 @@ button.gtpb {
   height:40px;
   text-decoration:none;
   text-align:center;
-  color:black;
   font-size:8pt;
   /* text-shadow: 0px 1px 0px white; */
   float: left;
@@ -51,7 +50,7 @@ button.gtpb:hover {
 	cursor: pointer;
   background-color: #f0f0f0;
 }		 
-button.gtpb:active { background-color: gray; }
+button.gtpb:active { background-color: white; }
 button.gtpb.selected {
   background-color: #656766;
   text-shadow: none;
