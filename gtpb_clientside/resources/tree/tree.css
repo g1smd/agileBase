@@ -433,7 +433,7 @@ ul.moduleaction li {
 
 #appspace a {
   color: #656766;
-  display: block;
+  display: inline-block;
   width: 100em;
 }
 
