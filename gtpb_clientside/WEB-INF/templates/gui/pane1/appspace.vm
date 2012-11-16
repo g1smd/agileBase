@@ -69,16 +69,16 @@
     #end
   </div></div>
 #end
-#set($charts = $report.getSavedCharts())
-#if($charts.size() > 0)
-  #set($chart = $charts.toArray()[0])
-  #if($chart.getAggregateFunctions().size() > 0)
-    #set($chartData = $view.getChartData($chart))
-    #set($chartRows = $chartData.getChartDataRows())
-    #if($chartRows.size() > 0)
-      <div class="block"><div class="appelement">
-        #parse("gui/reports_and_tables/tabs/summary_chart.vm")
-      </div></div>
-    #end
-  #end
-#end
+###set($charts = $report.getSavedCharts())
+###if($charts.size() > 0)
+## #set($chart = $charts.toArray()[0])
+##  #if($chart.getAggregateFunctions().size() > 0)
+##    #set($chartData = $view.getChartData($chart))
+##    #set($chartRows = $chartData.getChartDataRows())
+##    #if($chartRows.size() > 0)
+##      <div class="block"><div class="appelement">
+##        #parse("gui/reports_and_tables/tabs/summary_chart.vm")
+##      </div></div>
+##    #end
+##  #end
+###end
