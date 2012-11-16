@@ -15,7 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($button_img='resources/reports/fields.png')
+##set($button_img='resources/reports/fields.png')
+#set($button_img="icon-reorder")
 #set($click="fShowOption('options_wrapper_$options_wrapper_no','fields')")
 #set($caption='Fields')
 #set($id='button_fields')
