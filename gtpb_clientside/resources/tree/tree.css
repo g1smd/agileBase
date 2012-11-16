@@ -8,13 +8,14 @@ body{
 
 h1{
 	position: relative; /* Fixes some obscure bug in IE */
-	padding: 5px 0 8px 10px;
+	/* padding: 5px 0 8px 10px; */
 	/* background: #fff; */
 	font-size: 12pt;
 	text-transform: uppercase;
 	margin-bottom: -3px;
+	background-color: #009FE3;
 	/* background: white url(tree/line.gif) repeat-x 0 50%; */
-	color: #656755;
+	color: white;
 	/* text-align: right; */
 }
 
@@ -209,7 +210,8 @@ ol li ul li ul li{
 }
 		
 .currentOption .module-tree-item-wrap {
-	background-color: #00AEEF;
+	background-color: #009FE3;
+	border-radius: 0.5em;
 }
 
 .tree-item-wrap {
@@ -218,7 +220,7 @@ ol li ul li ul li{
 }
 
 .currentOption .tree-item-wrap {
-	background-color: #00AEEF;
+	background-color: #009FE3;
 	color: white;
 }
 

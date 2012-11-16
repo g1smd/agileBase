@@ -51,7 +51,7 @@ button.gtpb:hover {
 	cursor: pointer;
   background-color: white;
 }		 
-button.gtpb:active { background-color: #00AEEF; color: white; }
+button.gtpb:active { background-color: #009FE3; color: white; }
 button.gtpb.selected {
   background-color: #E8E7E3;
   text-shadow: none;
