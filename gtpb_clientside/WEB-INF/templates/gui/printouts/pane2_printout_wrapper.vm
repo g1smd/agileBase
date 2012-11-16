@@ -52,9 +52,9 @@
 	        top:0;
 	        padding-left:20px; 
 			padding-top:7px; 
-			border-bottom:5px solid #eaba72;
+			border-bottom:5px solid #009FE3;
 	        z-index:1;
-	        background-color:#E8E7E3; 
+	        background-color:#E7F7F9; 
 	        position:absolute; 
 	        left:0px; 
 	        width:100%; 
@@ -166,14 +166,14 @@
       
         function fCreateButton(sCaption,sImg,sTooltip,fClick) {
           var oButton=document.createElement('button');
-		  $(oButton).addClass('gtpb');
+		  $(oButton).addClass('gtpb').addClass("captioned");
           oButton.setAttribute('title',sCaption);
 		  $(oButton).css('float','right');
           $(oButton).click(fClick);
           $(oButton).mouseout(function() {$(oButton).blur});
           
-          var oButtonImg=document.createElement('img');
-          oButtonImg.setAttribute('src',sImg);
+          var oButtonImg=document.createElement('i');
+          oButtonImg.addClass(sImg);
           oButton.appendChild(oButtonImg);
           
           oButton.appendChild(document.createTextNode(sCaption));
@@ -231,10 +231,10 @@
         oToolbar.setAttribute('id','toolbarDiv');
         
         ## First button will be at the right end of the toolbar, successive moving left
-        fCreateButton('Close','resources/toolbar/delete_only.png','Close the print preview',fClose);
-        fCreateButton('Manage','resources/toolbar/spanner_only.png','Upload and delete custom templates',fManage);
-        fCreateButton('Print','resources/toolbar/print_only.png','Print this content',fPrint);
-        fCreateButton('Email','resources/toolbar/email_only.png','Email this content',fEmail);
+        fCreateButton('Close','icon-remove','Close the print preview',fClose);
+        fCreateButton('Manage','icon-wrench','Upload and delete custom templates',fManage);
+        fCreateButton('Print','icon-print','Print this content',fPrint);
+        fCreateButton('Email','icon-envelope','Email this content',fEmail);
         fCreatePrintoutSelector('Print out:',fSelectPrintoutType);
 		
         document.body.appendChild(oToolbar);
