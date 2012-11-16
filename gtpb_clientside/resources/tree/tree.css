@@ -39,7 +39,7 @@ body {
 	cursor: hand;
 	cursor: pointer;
 	height: 23px;
-	color: #009FE3;
+	color: #656766;
 	/*min-width: 250px; 
 	overflow: hidden;*/
 }
@@ -157,7 +157,7 @@ ul.outer {
 }
 
 ul.inner {
-  background-color: white;
+  /* background-color: white; */
   color: #656766;
   padding-left: 1em;
 }
