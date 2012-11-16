@@ -21,7 +21,8 @@
                 }
 				
   #navigation button { margin:5px; margin-left:24px; font-size: 8pt; background-color: white;  }
-  #navigation button i { font-size:18pt; }
+#navigation button.selected {background-color: transparent; }
+#navigation button i { font-size:18pt; }
     .options_wrapper { padding-left:120px; 
     		           height:100%;
                        width:100%;
