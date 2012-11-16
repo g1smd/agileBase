@@ -25,7 +25,8 @@
 <html>
   <head>
 	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
-	<link href="resources/button/button.css" type="text/css" rel="stylesheet" />
+    <link href="resources/button/button.css" type="text/css" rel="stylesheet" />
+    <link href="resources/display_application.css" type="text/css" rel="stylesheet" />
     <style>
 	      * {
 		    -moz-box-sizing: border-box;
