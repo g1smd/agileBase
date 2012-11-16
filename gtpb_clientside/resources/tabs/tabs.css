@@ -496,7 +496,7 @@ img.file_preview {
   top: 0px;
   left: 0px;
   width: 0px;
-  background-color: #486f98;
+  background-color: #009FE3;
   padding: 2px;
   overflow: hidden;
   color: white;
@@ -509,7 +509,7 @@ img.file_preview {
 }
 
 .upload_progress_bar.upload_complete {
-  background-color: rgb(131,214,27); /* match 'saved' tick icon */
+  background-color: #8DC63F
 }
 
 div.relation_field {
@@ -543,7 +543,7 @@ div.relation_field {
     
     div.relation_picker div#toolbar {
       border-bottom:1px solid black;
-      background-color:#F1F2ED;
+      background-color:#E8E7E3;
       position:absolute;
       top:0;
       left:0;
