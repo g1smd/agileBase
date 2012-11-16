@@ -175,7 +175,7 @@
           
           var oButtonImg=$('<i></i>');
           oButtonImg.addClass(sImg);
-          $(oButton).append(oButtonImg);
+          $(oButton).append(oButtonImg).append("<br />");
           
           oButton.appendChild(document.createTextNode(sCaption));
           oToolbar.appendChild(oButton);          
