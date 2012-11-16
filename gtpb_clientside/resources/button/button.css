@@ -27,6 +27,11 @@ button.gtpb {
 
 button.gtpb.captioned {
   height: 55px;
+  font-size: 8pt;
+}
+
+button.gtpb.captioned i {
+  font-size: 18pt;
 }
 	 
 button.gtpb img { border:0; padding-top: 3px; }
