@@ -172,9 +172,9 @@
           $(oButton).click(fClick);
           $(oButton).mouseout(function() {$(oButton).blur});
           
-          var oButtonImg=document.createElement('i');
+          var oButtonImg=$('<i></i>');
           oButtonImg.addClass(sImg);
-          oButton.appendChild(oButtonImg);
+          $(oButton).append(oButtonImg);
           
           oButton.appendChild(document.createTextNode(sCaption));
           oToolbar.appendChild(oButton);          
