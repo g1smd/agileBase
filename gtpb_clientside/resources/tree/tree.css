@@ -346,10 +346,10 @@ ul.moduleaction li {
 
 #header #links .button:hover {
 	border-color: #486f98;
-	/* -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.5);
-	-moz-box-shadow: 0 3px 6px rgba(0,0,0,.5); */
 	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
-	-moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+  -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+  -ms-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+  box-shadow: 0 3px 6px rgba(0,0,0,.25);
 }
 
 #header #links .button img {
