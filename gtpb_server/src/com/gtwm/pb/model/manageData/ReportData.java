@@ -137,13 +137,14 @@ public class ReportData implements ReportDataInfo {
 				String pKeyInternalName = report.getParentTable().getPrimaryKey().getInternalFieldName();
 				int randomNumber = (new Random()).nextInt(10);
 				SQLCode += " WHERE " + pKeyInternalName + " % 10 = " + randomNumber;
-				// Avoid a long time on massive reports
-				SQLCode += " LIMIT 1000";
 			}
+			// Avoid a long time on massive reports
+			SQLCode += " LIMIT 1000";
 			try {
 				ReportData.enableOptimisations(conn, report, true);
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
-				statement.setQueryTimeout(60);
+				// setQueryTimeout not yet implemented by pgsql JDBC driver
+				//statement.setQueryTimeout(60);
 				ResultSet results = statement.executeQuery();
 				// Save average and mean of each colourable report field to
 				// cache
