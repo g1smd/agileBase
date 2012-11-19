@@ -408,7 +408,6 @@ ul.moduleaction li {
 }
 
 #appspace .comments {
-  background-color: white;
   font-size: 8.5pt;
 }
 
@@ -423,6 +422,11 @@ ul.moduleaction li {
 
 #appspace span.comment_attribution {
   color: gray;
+}
+
+#appspace .twitter.tweet .tweet_list, #appspace .twitter.query .tweet_list {
+  background-color: white;
+  color: #656766;
 }
 
 #appspace .map {
