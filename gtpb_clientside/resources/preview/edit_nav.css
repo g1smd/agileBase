@@ -10,12 +10,12 @@
 }
 
 #preview {
-	background-color: rgba(238,243,249,0.9); /* rgba(219,219,219,0.9); */ /* #dbdbdb; 777788, bdbdbd */
+	background-color: rgba(231,245,249,0.9);
   padding-top: 2.5em;
 }
 
 #launcher {
-	background-color: rgb(238,243,249);
+	background-color: #E7F5F9;
 }
 
 .pane1_id { display: none; }
