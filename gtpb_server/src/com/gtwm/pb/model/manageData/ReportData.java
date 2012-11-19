@@ -29,7 +29,6 @@ import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.ReportDataFieldStatsInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
-import com.gtwm.pb.model.interfaces.fields.CommentFeedField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.DecimalField;
@@ -48,7 +47,6 @@ import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.ObjectNotFoundException;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -139,10 +137,13 @@ public class ReportData implements ReportDataInfo {
 				String pKeyInternalName = report.getParentTable().getPrimaryKey().getInternalFieldName();
 				int randomNumber = (new Random()).nextInt(10);
 				SQLCode += " WHERE " + pKeyInternalName + " % 10 = " + randomNumber;
+				// Avoid a long time on massive reports
+				SQLCode += " LIMIT 1000";
 			}
 			try {
 				ReportData.enableOptimisations(conn, report, true);
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
+				statement.setQueryTimeout(60);
 				ResultSet results = statement.executeQuery();
 				// Save average and mean of each colourable report field to
 				// cache

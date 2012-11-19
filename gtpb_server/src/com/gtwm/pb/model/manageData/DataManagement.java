@@ -2476,7 +2476,8 @@ public final class DataManagement implements DataManagementInfo {
 						.getCacheCreationTime());
 				if (dataChangedAfterCached && reportData.exceededCacheTime()) {
 					boolean useSample = false;
-					if (reportDefn.getRowCount() > 1000) {
+					if ((reportDefn.getRowCount() > 1000) || (reportDefn.getRowCount() == 0)) {
+						// If row count large or unknown
 						useSample = true;
 					}
 					reportData = new ReportData(conn, reportDefn, useCaching, useSample);
