@@ -129,17 +129,19 @@ public class ReportData implements ReportDataInfo {
 			String SQLPart = SQLPartBuilder.toString();
 			SQLPart = SQLPart.substring(0, SQLPart.length() - 2);
 			String SQLCode = "SELECT " + SQLPart + " FROM " + report.getInternalReportName();
+			int sampleOneIn = 10;
 			if (useSample) {
-				// Take a random sample of about 10% of rows to speed the
+				if (report.getRowCount() > 10000) {
+					sampleOneIn = 100;
+				}
+				// Take a random sample of rows to speed the
 				// query. NB Don't use random() in SQL as it's very slow for a
 				// large no. rows
 				// SQLCode += " WHERE random() > 0.9 ORDER BY random()";
 				String pKeyInternalName = report.getParentTable().getPrimaryKey().getInternalFieldName();
 				int randomNumber = (new Random()).nextInt(10);
-				SQLCode += " WHERE " + pKeyInternalName + " % 10 = " + randomNumber;
+				SQLCode += " WHERE " + pKeyInternalName + " % " + sampleOneIn + " = " + randomNumber;
 			}
-			// Avoid a long time on massive reports
-			SQLCode += " LIMIT 1000";
 			try {
 				ReportData.enableOptimisations(conn, report, true);
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
@@ -151,7 +153,7 @@ public class ReportData implements ReportDataInfo {
 				if (results.next()) {
 					int rowCountEstimate = results.getInt(1);
 					if (useSample) {
-						rowCountEstimate = rowCountEstimate * 10;
+						rowCountEstimate = rowCountEstimate * sampleOneIn;
 						// round it
 						int roundingFactor = rowCountEstimate / 100;
 						if (roundingFactor > 0) {
