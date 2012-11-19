@@ -910,7 +910,7 @@ div#reportData {
 
 .form_tabber .tab_choice:hover {
   cursor: pointer;
-  background-color: #EEF3F9;
+  background-color: #E7F5F9;
 }
 
 .form_tabber .tab_choice i {
@@ -971,10 +971,6 @@ div#reportData {
   width: 100%;
   padding: 1em;
   text-align: center;
-}
-
-.selectorReport table#reportData {
-  /* background-color: #EEF3F9; */
 }
 
 .gtpb_url {
