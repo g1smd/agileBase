@@ -149,7 +149,7 @@ table#reportData tr.rowb  {
   -ms-column-count: 3;
   column-count: 3;
   font-size: 8pt;
-  color: #666666;
+  color: #656766;
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e6e7ea)); /* for webkit browsers */
   background: -moz-linear-gradient(top,  #fff,  #e6e7ea); /* for firefox 3.6+ */
   background: -ms-linear-gradient(top,  #fff,  #e6e7ea);

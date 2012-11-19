@@ -61,10 +61,6 @@ li#setup h2 {
 	border-radius: 0;
 }
 
-#tree .fonticon {
-  /* color: #666666; */
-}
-
 span.notifications {
   padding-left: 0.5em;
 }
@@ -166,7 +162,6 @@ ul.inner {
 ol li ul li ul{
 	/* margin: 2px 10px 0 10px; */
 	padding-bottom: 2px;
-	border-left: 1px dotted #CCC;
 }
 	
 /* reports */

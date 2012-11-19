@@ -80,7 +80,7 @@ td.trailing input[type=button] {
   border:1px solid #cecece;
   border-top:0;
   font-size:8pt;
-  color:#666666;
+  color:#656766;
   display: block;
   text-decoration: none;
 }
@@ -133,7 +133,7 @@ div.tab_content tr.caption:hover {
 div.tab_content td { 
   padding:10px;
   font-size:8pt;
-  color:#666666;
+  color:#656766;
   padding-left:10px; 
 }		
                      

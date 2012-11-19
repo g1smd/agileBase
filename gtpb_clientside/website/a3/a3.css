@@ -237,7 +237,7 @@ input[type=button], button {
 				inset 0px 1px 0px rgba(255, 255, 255, 0.5);
 			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9),
 				inset 0px 1px 0px rgba(255, 255, 255, 0.5);
-			background-color: #666;
+			background-color: #656766;
 			color: #fff;
 		}
 		input[type=button]:active, button:active {
