@@ -48,7 +48,7 @@ td.trailing input[type=button] {
 	margin: 0;
 	padding: 0 0 0 10px;
 	background: #E8E7E3;
-  border-top:1px solid #cecece;	
+  border-top:1px solid #e8e7e3;	
 }
 
 .tab-interface .tab-list li {
@@ -77,7 +77,7 @@ td.trailing input[type=button] {
   margin: 0;
   min-width: 100px;
   text-align:center;
-  border:1px solid #cecece;
+  border:1px solid #e8e7e3;
   border-top:0;
   font-size:8pt;
   color:#656766;
@@ -159,7 +159,7 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
 }
 
 table#reportData td input {
-  border: 1px solid #cecece;
+  border: 1px solid #e8e7e3;
   border-radius: 0.5em;
   padding: 0.3em;
   font-family: Verdana,Geneva,sans-serif;
@@ -181,7 +181,7 @@ table#reportData td input[type='file'] {
 table#reportData td select {
   min-width: 296px;  
   border-radius: 0.5em;
-  border: 1px solid #cecece;
+  border: 1px solid #e8e7e3;
   padding: 0.3em;
   font-family: Verdana,Geneva,sans-serif;
   font-size: 9pt;
@@ -219,7 +219,7 @@ input, textarea {
 }
 
 textarea {
-  border: 1px solid #cecece;
+  border: 1px solid #e8e7e3;
   border-radius: 0.5em;
   padding: 0.3em;
   font-family: Verdana,Geneva,sans-serif;
@@ -797,7 +797,6 @@ div#reportData {
 .date select, .date input {
   width: auto!important;
   float: none!important;
-  /* border: 1px solid #cecece!important; */
 }
 	
 .block input.ac_input {
@@ -805,11 +804,11 @@ div#reportData {
 }
 
 #reportData .block input:hover {
-  border: 1px solid #cecece!important;
+  border: 1px solid #e8e7e3!important;
 }
 
 #reportData .block input:focus {
-  border: 1px solid #cecece!important;
+  border: 1px solid #e8e7e3!important;
 }
 
 #reportData .block input[type=checkbox] {
@@ -848,7 +847,7 @@ div#reportData {
 	float: none;
 	width: 90%;
 	top: 0;
-	border: 1px solid #cecece;
+	border: 1px solid #e8e7e3;
 	position: static; /* Workaround https://bugs.webkit.org/show_bug.cgi?id=76834 */
 }
 

@@ -44,7 +44,7 @@ table#reportData th {
 
 .tab-item table#reportData th {
   font-size: 11pt!important; /* override modalFramework.css */
-  border-bottom: 1px solid #cecece!important;
+  border-bottom: 1px solid #e8e7e3!important;
   border-top: none!important;
   border-left: none!important;
   border-right: none!important;
@@ -101,16 +101,16 @@ div#wrapper table#reportData #fieldFilters td {
 table#reportData thead tr#fieldFilters input { 
   width:100%;
   border-radius: 0.5em;
-  border: 1px solid #cecece;
+  border: 1px solid #e8e7e3;
 }
 
 div#fieldFilters input {
   border-radius: 0.5em;
-  border: 1px solid #cecece;
+  border: 1px solid #e8e7e3;
 }
 					  
 table#reportData thead td { 
-  border-bottom:1px solid #cecece;
+  border-bottom:1px solid #e8e7e3;
 }					  
 
 table#reportData .selectable tr.rowa:hover td,
@@ -281,7 +281,7 @@ table#reportData tr.excludedRecord td {
 
 .sectioned_filter_row {
   background-color: white;
-  border-bottom: 1px solid #cecece;
+  border-bottom: 1px solid #e8e7e3;
   font-size: 8pt;
   line-height: 2em;
 }

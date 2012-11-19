@@ -130,7 +130,7 @@ div#_md_blank div#_md_dialog div#_md_content table#reportData {
 
 div#_md_blank div#_md_dialog div#_md_content table#reportData td {
   padding:3px 7px;
-  border-right:1px solid #cecece;
+  border-right:1px solid #e8e7e3;
   vertical-align:top;
   cursor:default;
   height:20px;
@@ -173,7 +173,6 @@ div#_md_blank div#_md_dialog div#_md_content table#reportData th {
   font-size:10pt; 
   color:black;
   font-weight:bold;
-  /* border:1px solid #cecece; */
   padding:7px;
   text-align:left;
   height:30px; 
@@ -196,11 +195,11 @@ div#_md_blank div#_md_dialog div#_md_content table#reportData thead tr#fieldFilt
 div#_md_blank div#_md_dialog div#_md_content table#reportData thead tr#fieldFilters input { 
   width:100%;
   border-radius: 0.5em;
-  border: 1px solid #cecece;
+  border: 1px solid #e8e7e3;
 }
 					  
 div#_md_blank div#_md_dialog div#_md_content table#reportData thead td { 
-  border-bottom:1px solid#cecece 
+  border-bottom:1px solid#e8e7e3 
 }					  
 
 div#_md_blank div#_md_dialog div#_md_content table#reportData tbody td { 
@@ -229,7 +228,7 @@ div#_md_blank div#_md_dialog div#_md_content div#_mdp_relationPicker div#_mdp_to
   top:0;
   left:0;
   background-color:#FAF5F2;
-  border-bottom:1px solid #cecece;
+  border-bottom:1px solid #e8e7e3;
   border-top:1px solid #ffffff;
   width:100%;
   height:49px;
