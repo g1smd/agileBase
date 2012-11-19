@@ -221,6 +221,7 @@ ol li ul li ul li{
 
 .loading {
   background-color: #E8E7E3;
+  border-radius: 0.5em;
 }
 	
 /* links to tables, reports and admin functions */

@@ -20,8 +20,8 @@ table.jCalendar td {
 	text-align: center;
 }
 table.jCalendar td.other-month {
-	background: #ddd;
-	color: #aaa;
+	background: #E8E7E3;
+	color: #656766;
 }
 table.jCalendar td.today {
 	background: #656766;

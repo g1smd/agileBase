@@ -459,7 +459,7 @@ img.edit_image {
 
 img.file_preview {
   max-width: 100%;
-  border: 1px solid #dddddd;
+  border: 1px solid #E8E7E3;
 }
 
 .gtpb_youtube {
@@ -749,7 +749,7 @@ div#reportData {
   transition-duration: 1s;
   float: right;
   width: 50%;
-  border: 1px solid #dddddd;
+  border: 1px solid #E8E7E3;
   font-size: 9.5pt;
   padding: 0.2em;
   border-radius: 0.5em;
@@ -770,7 +770,7 @@ div#reportData {
 }
 
 #reportData .block textarea {
-  border: 1px solid #dddddd;
+  border: 1px solid #E8E7E3;
   width: 100%;
   font-family: Verdana,Geneva,sans-serif;
 }

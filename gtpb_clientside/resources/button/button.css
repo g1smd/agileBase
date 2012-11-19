@@ -37,14 +37,11 @@ button.gtpb.captioned i {
 button.gtpb img { border:0; padding-top: 3px; }
 
 .buttonGroup.joined button.gtpb {
-  /* border: 1px solid #dddddd; */
   border-right: none;
   border-radius:0;
 }
 
 .buttonGroup.joined button.gtpb:last-child {
-	/* Four corners clockwise from top left */
-  /* border-right: 1px solid #dddddd; */
   border-radius: 0 1em 1em 0;
 }
 
