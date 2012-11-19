@@ -139,7 +139,7 @@ public class ReportData implements ReportDataInfo {
 				// large no. rows
 				// SQLCode += " WHERE random() > 0.9 ORDER BY random()";
 				String pKeyInternalName = report.getParentTable().getPrimaryKey().getInternalFieldName();
-				int randomNumber = (new Random()).nextInt(10);
+				int randomNumber = (new Random()).nextInt(sampleOneIn);
 				SQLCode += " WHERE " + pKeyInternalName + " % " + sampleOneIn + " = " + randomNumber;
 			}
 			try {
