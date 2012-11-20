@@ -1187,8 +1187,10 @@ function fTabs() {
 			}
 		}); // end of jqTab.click()
 		jqTab.find("i.new").click(
-				function() {
+				function(e) {
 					newChild(jqTab, parentInternalTableName);
+					// Stop normal tab click
+					e.stopPropagation();
 				});
 		// Initialise to session tab on load (if not already the active tab)
 		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active")) && (!jqTab.hasClass("tabLoading"))) {
