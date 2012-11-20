@@ -1159,7 +1159,7 @@ function fTabs() {
 						if ((tabContainer.find(".selectorReport").size() == 0)
 								&& jqTab.attr("data-singular") && (!jqTab.hasClass("no_records"))) {
 							var singularName = jqTab.attr("data-singular");
-							$("#tab_deleter").find("img").attr("title",
+							$("#tab_deleter").find("i").attr("title",
 									"delete this " + singularName);
 							$("#tab_deleter").fadeIn();
 						}
@@ -1186,7 +1186,7 @@ function fTabs() {
 				}
 			}
 		}); // end of jqTab.click()
-		jqTab.find("img.new").click(
+		jqTab.find("i.new").click(
 				function() {
 					newChild(jqTab, parentInternalTableName);
 				});
