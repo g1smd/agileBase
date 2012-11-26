@@ -207,15 +207,15 @@ table#reportData td img {
   border-radius: 0.5em;
 }
 
-input, textarea {
+input, select, textarea {
   -moz-transition-duration: 1s;
   -ms-transition-duration: 1s;
   -webkit-transition-duration: 1s;
   transition-duration: 1s;
-  -moz-transition-property: color, background-color;
-  -webkit-transition-property: color, background-color;
-  -ms-transition-property: color, background-color;
-  transition-property: color, background-color;
+  -moz-transition-property: all;
+  -webkit-transition-property: all;
+  -ms-transition-property: all;
+  transition-property: all;
 }
 
 textarea {
@@ -741,10 +741,6 @@ div#reportData {
 
 #reportData .block img {
 	margin-right: 1em;
-}
-
-input, select, textarea {
-  transition-duration: 1s;
 }
 
 #reportData .block input, #reportData .block select {
