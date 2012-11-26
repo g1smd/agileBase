@@ -743,8 +743,11 @@ div#reportData {
 	margin-right: 1em;
 }
 
-#reportData .block input, #reportData .block select {
+input, select, textarea {
   transition-duration: 1s;
+}
+
+#reportData .block input, #reportData .block select {
   float: right;
   width: 50%;
   border: 1px solid #E8E7E3;
