@@ -248,9 +248,7 @@ textarea {
 }
 
 #reportData .input_saved {
-  box-shadow: 0 -5px 0px #8DC63F inset;
-  -webkit-box-shadow: 0 -5px 0px #8DC63F inset;
-  -ms-box-shadow: 0 -5px 0px #8DC63F inset;
+  box-shadow: 0 0 0 0.5em #8DC63F;
 }
 
 /* dates */
@@ -260,9 +258,7 @@ textarea {
 }
 
 #reportData .input_saved.date input, #reportData .input_saved.date select {
-  box-shadow: 0 -5px 0px #8DC63F inset;
-  -webkit-box-shadow: 0 -5px 0px #8DC63F inset;
-  -ms-box-shadow: 0 -5px 0px #8DC63F inset;
+  box-shadow: 0 0 0 0.5em #8DC63F;
 }
 
 *[error] { color:red; }
