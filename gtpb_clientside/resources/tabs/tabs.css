@@ -931,7 +931,7 @@ div#reportData {
 }
 
 .form_tabber .tab_choice.active i {
-  display: inline;
+  display: inline-block; /* block part necessary for webkit to pick up clicks */
 }
 
 .form_tabber .tab_choice.active i:hover {
