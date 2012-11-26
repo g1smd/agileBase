@@ -1186,7 +1186,7 @@ function fTabs() {
 				}
 			}
 		}); // end of jqTab.click()
-		jqTab.find("i.new").click(
+		jqTab.find(".new").click(
 				function(e) {
 					console.log("new");
 					newChild(jqTab, parentInternalTableName);
