@@ -1188,6 +1188,7 @@ function fTabs() {
 		}); // end of jqTab.click()
 		jqTab.find("i.new").click(
 				function(e) {
+					console.log("new");
 					newChild(jqTab, parentInternalTableName);
 					// Stop normal tab click
 					e.stopPropagation();
