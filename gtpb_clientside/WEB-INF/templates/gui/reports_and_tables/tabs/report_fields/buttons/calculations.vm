@@ -18,6 +18,6 @@
 ##set($button_img='resources/reports/calculation.png')
 #set($button_img="icon-plus-sign")
 #set($click="fShowOption('options_wrapper_$options_wrapper_no','calculations'); fEnableCalcSyntaxHighlight();")
-#set($caption='Calculations')
+#set($caption='Calcs')
 #set($id='button_calculations')
 #parse('gui/resources/button.vm')
