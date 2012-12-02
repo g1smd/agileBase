@@ -77,7 +77,7 @@
       </div>
       <div class="buttonGroup">
 		<input type="search" class="searchbox" id="searchbox" placeholder="quick search"/>
-		<button id="doneSearch" />done</button>
+		<button id="doneSearch">done</button>
       </div>
       <div class="buttonGroup joined" style="float:right; margin-left:0; margin-right: 90px"> ## external applications, built in and customised
         ## #parse('gui/toolbar/buttons/wiki.vm')
