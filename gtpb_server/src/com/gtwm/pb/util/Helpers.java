@@ -42,6 +42,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
@@ -70,7 +71,8 @@ public final class Helpers {
 		}
 		Address fromAddress = new InternetAddress("notifications@agilebase.co.uk");
 		message.setFrom(fromAddress);
-		message.setText(body);
+		String bodySansEntities = StringEscapeUtils.unescapeHtml(body);
+		message.setText(bodySansEntities);
 		Transport.send(message);
 		logger.info("Sent message '" + subject + "' to " + recipients);
 	}
