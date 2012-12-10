@@ -19,7 +19,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
     <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
     <link href="/agileBase/website/styles.css" rel="stylesheet">
-		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
+		<link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
     <meta name="google-site-verification" content="f-uEpO4sFJ0ePStIn6Svsj_wumUtsr153X4VYBA96K8" />
     <% if(!live) { %>
