@@ -50,6 +50,11 @@ button.gtpb img { border:0; padding-top: 3px; }
   border-radius: 1em 0 0 1em;
 }
 
+.buttonGroup joined button.gtpb.selected {
+  background-color: #009FE3;
+  color: white;
+}
+
 button.gtpb:hover {
 	cursor: pointer;
   background-color: white;
