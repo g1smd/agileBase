@@ -34,7 +34,7 @@
       ## workaround for not having a while loop in Velocity
       #foreach($tmp in [1,2,3,4,5,6,7,8,9,10])
         #set($viewMoreAmount = $viewMoreAmount * 10)
-        #if($viewMoreAmount < 20000)
+        #if($viewMoreAmount < 5000)
           #if($viewMoreAmount * 3 > $totalRows)
             #set($viewMoreAmount = $totalRows * 2)
             <a href="?return=gui/reports_and_tables/report_data&set_report_row_limit=$viewMoreAmount">
@@ -45,7 +45,7 @@
           #end
           #if($viewMoreAmount > 6000) - could be slow#end&nbsp;&nbsp;
           #if(($viewMoreAmount * 3) > $totalRows) #break #end
-        #end ## end if option is for less than 20,000 rows
+        #end ## end if option is for less than 5,000 rows
       #end ## end foreach
     #else
       All $numRows records visible<br>
