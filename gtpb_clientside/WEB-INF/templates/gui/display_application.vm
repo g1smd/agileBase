@@ -56,21 +56,22 @@
         </div>
       #end
       ## Show add/clone/delete buttons if user has edit privileges on at least one table
-      <div class="buttonGroup joined"> ## display preferences
+      <div class="buttonGroup"> ## display preferences
         #parse('gui/toolbar/buttons/agilebase.vm')
-        #parse('gui/toolbar/buttons/pane1.vm')
+      </div>
+      <div class="buttonGroup"> ## removed 'joined' calss
 	    #parse('gui/toolbar/buttons/pane2.vm')
         #parse('gui/toolbar/buttons/pane3.vm')
       </div>
       #set($editableTables = $view.getTablesAllowedTo("EDIT_TABLE_DATA"))
       #if(($editableTables.size() > 0) || $view.loggedInUserAllowedTo("ADMINISTRATE"))
-      <div class="buttonGroup joined"> ## record actions
+      <div class="buttonGroup"> ## record actions
         #parse('gui/toolbar/buttons/new.vm')
         #parse('gui/toolbar/buttons/clone.vm')
         #parse('gui/toolbar/buttons/delete.vm')
       </div>
       #end
-      <div class="buttonGroup joined"> ## display preferences
+      <div class="buttonGroup"> ## display preferences
         ###parse('gui/toolbar/buttons/filter.vm')
         #parse('gui/toolbar/buttons/print.vm')
         #parse('gui/toolbar/buttons/export.vm')
@@ -79,7 +80,7 @@
 		<input type="search" class="searchbox" id="searchbox" placeholder="quick search"/>
 		<button id="doneSearch">done</button>
       </div>
-      <div class="buttonGroup joined" style="float:right; margin-left:0; margin-right: 90px"> ## external applications, built in and customised
+      <div class="buttonGroup" style="float:right; margin-left:0; margin-right: 90px"> ## external applications, built in and customised
         ## #parse('gui/toolbar/buttons/wiki.vm')
       #if($appUser.getUserType() != "LIMITED")
 	      #set($apps = $company.getApps())

@@ -56,6 +56,7 @@
   ## Get colours array
   #parse('gui/resources/module_color_colors.vm')
   #set($hiddenReports = $user.getHiddenReports())
+  #set($firstSection = true)
   #foreach($module in $moduleReports.keySet())
 	  #set($visibleModuleReports = $moduleReports.get($module))
 	  #set($temp = $visibleModuleReports.removeAll($hiddenReports))
@@ -77,7 +78,12 @@
     	#if($section != $previousSection)
           #if($foreach.count > 1) </li></ul> #end
     	  <li class="$colourStyleName"><h1><span>$section</span></h1>
+    	  #if($firstSection)
+    	    <i class="pane1_hideshow icon-caret-left"></i>
+    	    <i class="pane1_hideshow icon-caret-right" style="display:none"></i>
+    	  #end
     	  <ul class="outer">
+    	  #set($firstSection = false)
         #end
     	#set($previousSection = $section)
     	#set($internalModuleName = $module.getInternalModuleName())
