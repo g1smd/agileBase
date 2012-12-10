@@ -116,7 +116,7 @@
   #set($classes='toggleButton REPORT')
 #else
   #set($params='selected=true toggleButton=true')
-  #set($classes='selected toggleButton REPORT')
+  #set($classes='selected toggleButton')
 #end
 #set($tooltip='Show/hide the individual record information')
 #parse('gui/resources/button.vm')

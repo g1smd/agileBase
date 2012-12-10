@@ -285,8 +285,8 @@ public class ChartDefn implements ChartInfo, Comparable<ChartInfo> {
 				if (this.getRangeDirection()) {
 					oppositeSortDirection = " DESC";
 				}
-				if (rangePercent < 100) {
-					// order by function
+				if ((rangePercent < 100) || (!this.persist)) {
+					// order by function if range or a temporary chart (temporary charts are used for tooltips)
 					sqlForSummary += " ORDER BY "
 							+ aggregateFunctionsCsv.replace(",", oppositeSortDirection + ",");
 					sqlForSummary += oppositeSortDirection;
