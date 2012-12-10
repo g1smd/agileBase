@@ -15,6 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+## TODO: jQueryise this properly and move to tabs.js
+
 <script language="JavaScript" type="text/javascript">
 
 	// ^=XOR
@@ -27,15 +29,16 @@
      if (bPane2&&bPane3) return '*,*';				 // if both are switched on split equally
      if (bPane2^bPane3) return (bPane2?'*,0':'0,*'); // if one or the other show that one
 	 	 
-		 // if both are switched off, reset to show both
-		 oPane2Butt.click(); // set the buttons down.  We know that both are off so a click will switch them on
+	 // if both are switched off, reset to show both
+	 oPane2Butt.click(); // set the buttons down.  We know that both are off so a click will switch them on
      oPane3Butt.click();
      return ('*,*');
 	}
 	  
 
 	function fAnimateFrame(stepPercent, currentPercent, targetPercent, targetFrame) {
-    var difference = (targetPercent - currentPercent);
+      console.log("fAnimateFrame(" + targetPercent + "% pane " + targetFrame);
+      var difference = (targetPercent - currentPercent);
 		var change = difference * (stepPercent / 100);
 		currentPercent = currentPercent + change;
 		var rowsVal;
@@ -77,11 +80,6 @@
 	  var oPane2Butt=top.document.getElementById('pane2butt');
 	  var oPane3Butt=top.document.getElementById('pane3butt');
 	  
-	  //TODO: jQueryise this properly and move to tabs.js
-	  // the match property returns the match if it exists (or array of matches ?) or null if no match
-	  // convert this to a boolean for comparision operations below
-	  // var bPane2=(oPane2Butt.getAttribute('selected')=='true');
-	  // var bPane3=(oPane3Butt.getAttribute('selected')=='true');
 	  var bPane2=($(oPane2Butt).hasClass('selected'));
 	  var bPane3=($(oPane3Butt).hasClass('selected'));
 		
