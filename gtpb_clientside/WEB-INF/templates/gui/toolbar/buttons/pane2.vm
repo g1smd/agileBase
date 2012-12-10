@@ -17,7 +17,7 @@
 ##
 ## For <script>, see pane3.vm
 ##set($button_img='resources/toolbar/pane2.png')
-#set($button_img='icon-table')
+#set($button_img='icon-align-justify')
 #set($click="fFormatRHPanes(this)")
 #set($id='pane2butt')
 #set($caption='Report')
