@@ -273,7 +273,7 @@ public final class ReportDownloader extends HttpServlet {
 		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
 		// Limit rows, more cause memory issues
 		List<DataRowInfo> reportDataRows = dataManagement.getReportDataRows(user, report,
-				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), 10000,
+				sessionData.getReportFilterValues(), false, sessionData.getReportSorts(), 100000,
 				QuickFilterType.AND, false);
 		String fieldValue = "";
 		boolean isDefaultReport = (report.equals(report.getParentTable().getDefaultReport()));
