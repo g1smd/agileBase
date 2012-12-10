@@ -101,6 +101,7 @@
 	  var currentPercent = 0;
 	  fInitFrameAnimation();
 		if (jqThisButton.hasClass("REPORT") || jqThisButton.hasClass("LIMITED") || jqThisButton.hasClass("EXECUTIVE_DASHBOARD")) {
+	      console.log("Direct set");
 		  document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows=fRowsVal();					 						 
     } else {
 	    fAnimateFrame(0.1, currentPercent, targetPercent, targetFrame);
