@@ -34,10 +34,8 @@
      oPane3Butt.click();
      return ('*,*');
 	}
-	  
 
 	function fAnimateFrame(stepPercent, currentPercent, targetPercent, targetFrame) {
-      console.log("fAnimateFrame(" + targetPercent + "% pane " + targetFrame);
       var difference = (targetPercent - currentPercent);
 		var change = difference * (stepPercent / 100);
 		currentPercent = currentPercent + change;
@@ -101,7 +99,6 @@
 	  var currentPercent = 0;
 	  fInitFrameAnimation();
 		if (jqThisButton.hasClass("REPORT") || jqThisButton.hasClass("LIMITED") || jqThisButton.hasClass("EXECUTIVE_DASHBOARD")) {
-	      console.log("Direct set");
 		  document.getElementById('oViewPane').contentWindow.document.getElementById('rowsWrapper').rows=fRowsVal();					 						 
     } else {
 	    fAnimateFrame(0.1, currentPercent, targetPercent, targetFrame);
@@ -119,7 +116,7 @@
   #set($classes='toggleButton REPORT')
 #else
   #set($params='selected=true toggleButton=true')
-  #set($classes='selected toggleButton')
+  #set($classes='selected toggleButton REPORT')
 #end
 #set($tooltip='Show/hide the individual record information')
 #parse('gui/resources/button.vm')
