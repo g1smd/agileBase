@@ -71,6 +71,10 @@ a.dp-choose-date {
 	overflow: hidden;
 	background: url('calendar.png') no-repeat; 
 }
+
+.two_cols a.dp-choose-date {
+  float: right;
+}
 /* end of insertion by Oliver */
 
 div.dp-popup {
