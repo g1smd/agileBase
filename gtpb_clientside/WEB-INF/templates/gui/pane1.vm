@@ -56,10 +56,6 @@
 		}
 	  });
 	  parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';
-	  // Hide pane 1 when there's only one report visible
-	  if(jQuery("a.report_tooltip").size() == 1) {
-	    top.jQuery("button.toggleButton:first").click();
-	  }
 	  jQuery("a.report_tooltip").click(function() {
 	    parent.pane_2.document.location = jQuery(this).attr("href");
 	    parent.pane_3.pane3TabInterface.showTab(jQuery(this).attr("data-tabNum"));
