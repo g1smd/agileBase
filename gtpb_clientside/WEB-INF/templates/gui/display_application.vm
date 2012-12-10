@@ -59,7 +59,7 @@
       <div class="buttonGroup"> ## display preferences
         #parse('gui/toolbar/buttons/agilebase.vm')
       </div>
-      <div class="buttonGroup"> ## removed 'joined' calss
+      <div class="buttonGroup joined">
 	    #parse('gui/toolbar/buttons/pane2.vm')
         #parse('gui/toolbar/buttons/pane3.vm')
       </div>

@@ -39,6 +39,7 @@ button.gtpb img { border:0; padding-top: 3px; }
 .buttonGroup.joined button.gtpb {
   border-right: none;
   border-radius:0;
+  background-color: white;
 }
 
 .buttonGroup.joined button.gtpb:last-child {
