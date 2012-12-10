@@ -78,10 +78,10 @@
     	#if($section != $previousSection)
           #if($foreach.count > 1) </li></ul> #end
     	  <li class="$colourStyleName"><h1><span>$section</span></h1>
-    	  #if($firstSection)
-    	    <i class="pane1_hideshow icon-caret-left"></i>
-    	    <i class="pane1_hideshow icon-caret-right" style="display:none"></i>
-    	  #end
+##    	  #if($firstSection)
+##  	    <i class="pane1_hideshow icon-caret-left"></i>
+##    	    <i class="pane1_hideshow icon-caret-right" style="display:none"></i>
+##    	  #end
     	  <ul class="outer">
     	  #set($firstSection = false)
         #end
