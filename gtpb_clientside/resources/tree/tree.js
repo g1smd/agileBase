@@ -38,6 +38,7 @@ $(document).ready(
 		});
 
 function showApp(internalModuleName) {
+	alert("Showing app");
 	// Collapse all modules
 	$('#tree h2').each(function(event) {
 		var parentElem = $(this).parent();
