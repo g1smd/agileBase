@@ -178,7 +178,7 @@ function fAppLauncher() {
 	}
 	// Clear out old stuff from appspace
 	var appspace = $("#oViewPane").find("#pane_1").find("#appspace");
-	alert("appspace children: " + appSpace.children().size());
+	alert("appspace children: " + appspace.children().size());
 	appspace.children().remove();
 }
 
