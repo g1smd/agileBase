@@ -75,6 +75,10 @@ a.dp-choose-date {
 .two_cols a.dp-choose-date {
   float: right;
 }
+
+.two_cols.non_section a.dp-choose-date {
+  float: left;
+}
 /* end of insertion by Oliver */
 
 div.dp-popup {
