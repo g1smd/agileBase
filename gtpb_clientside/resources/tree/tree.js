@@ -38,13 +38,22 @@ $(document).ready(
 		});
 
 function showApp(internalModuleName) {
-	// Hide all apps
+	// Collapse all modules
+	$('#tree h2').each(function(event) {
+		var parentElem = $(this).parent();
+		if (parentElem.hasClass('moduleexpanded')) {
+			parentElem.children('ul').hide();
+			parentElem.removeClass('moduleexpanded');
+			parentElem.addClass('modulecollapsed');
+		}
+	});
+	// Hide all modules
 	$("#tree h1").next("ul").children("li").hide();
 	$("#tree h1").hide();
 	// Show selected app and related apps
 	var module = $("li#" + internalModuleName);
 	module.show();
-	expandRelated();
+	showRelated();
 	$("li#setup").hide();
 	// Load the first report in the module
 	module.find("a.report_tooltip").first().click();
@@ -222,7 +231,7 @@ function pane1Setup() {
 		});
 	}
 
-	expandRelated();
+	showRelated();
 
 	$('.expandable').click(function(event) {
 		// Prevent the children triggering open/close
@@ -238,7 +247,7 @@ function pane1Setup() {
 	});
 }
 
-function expandRelated() {
+function showRelated() {
 	$("li.moduleexpanded:visible, li.modulecollapsed:visible").each(function() {
 		var relatedModules = $(this).attr("data-dependent");
 		if (typeof relatedModules != "undefined") {
