@@ -1231,7 +1231,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// boolean notApplicable = false;
 		// String notApplicableDescription = null;
 		// String notApplicableValue = null;
-		basicOptions.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
+		basicOptions.setPrintoutSetting(FieldPrintoutSetting.NAME_VALUE_LINEBREAK);
 		String printoutSettingString = HttpRequestUtil.getStringValue(request,
 				PossibleListOptions.PRINTFORMAT.getFormInputName());
 		if (printoutSettingString != null) {

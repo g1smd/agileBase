@@ -176,6 +176,9 @@ function fAppLauncher() {
 		  appLauncherIntegrated();
 	  });
 	}
+	// Clear out old stuff from appspace
+	var appspace = $(document.getElementById('oViewPane').contentWindow.document).find("#appspace");
+	appspace.children().remove();
 }
 
 function closePreview() {
