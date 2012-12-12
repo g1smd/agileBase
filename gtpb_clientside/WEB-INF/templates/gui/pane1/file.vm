@@ -7,6 +7,7 @@
 #set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$rowIdUse/")
 #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject"))
 ## Image
+Attachment type $field.getAttachmentType()<br>
 #if($fieldValueObject.isImage())
   <div class="appelement image $field.getAttachmentType().name().toLowerCase()">
     <a class="download" href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
