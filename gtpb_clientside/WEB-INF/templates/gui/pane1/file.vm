@@ -15,7 +15,7 @@
   </div>
 #elseif($field.getAttachmentType() == "PROFILE_PHOTO")
   <div class="appelement image profile_photo">
-    <img src="resources/icons/file_placeholders/profile_photo.png" />
+    <img src="resources/icons/file_placeholders/profile_photo.png"/>
   </div>
 #elseif($downloadUrl.endsWith("pdf"))
   #set($previewUrl = "$downloadUrl.500.png?cachebust=$viewTools.getRandomString()")

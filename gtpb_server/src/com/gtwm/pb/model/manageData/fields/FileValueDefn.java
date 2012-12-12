@@ -122,7 +122,7 @@ public class FileValueDefn implements FileValue {
 	}
 
 	private enum Extension {
-		CSV, DOC, DOCX, HTM, PDF, PPT, PSD, TIF, TIFF, TXT, XLS, XLSX, ZIP;
+		CSV, DOC, DOCX, ODT, HTM, MSG, PDF, PPT, PSD, TIF, TIFF, BMP, TXT, RTF, XLS, XLSX, ODS, M4V, ZIP;
 	}
 
 	private String filename = null;
