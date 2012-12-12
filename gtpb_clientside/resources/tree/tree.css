@@ -394,6 +394,10 @@ ul.moduleaction li {
   margin-bottom: 0;
 }
 
+#appspace .appelement.profile_photo img {
+  background-color: #656766;
+}
+
 #appspace .image {
   text-align: center;
 }
