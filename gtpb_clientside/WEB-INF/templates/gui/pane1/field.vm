@@ -1,7 +1,7 @@
 #set($fieldValueObject = $tableDataRow.get($field))
 #set($fieldValue = $fieldValueObject.toString().trim())
 #set($category = $field.getFieldCategory().toString().toLowerCase())
-#if(($fieldValue != "") || ($category == "referenced_report_data"))
+#if(($fieldValue != "") || ($category == "referenced_report_data") || ($category == "file"))
   #if(($category == "text") || ($category == "file") || ($category == "referenced_report_data"))
     #parse("gui/pane1/${category}.vm")
   #end
