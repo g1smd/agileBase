@@ -24,7 +24,7 @@ public class AppProperties {
 	public static final String applicationName = "agileBase";
 
 	/* 3.2 = app launcher */
-	public static final String applicationVersion = "3.2";
+	public static final String applicationVersion = "3.3";
 
 	/**
 	 * Location of the Velocity template used to report template processing
