@@ -64,7 +64,7 @@
 	  </select><p>
 	  #set($companyId = $viewTools.cleanString($sessionUser.getCompany().getCompanyName()))
 	  #set($customTemplate = "gui/customisations/$companyId/index.vm")
-      <input type="checkbox" name="uses_custom_ui" gtpb_update_user="true" gtpb_internalusername="$internalUserName" #if($sessionUser.getUsesCustomUI()) checked #end onchange="top.oBuffer.writeBuffer(this);" #if($viewTools.templateExists($customTemplate)) disabled=true #end /> Use the custom $sessionUser.getCompany() UI rather than agileBase's<p>
+      <input type="checkbox" name="uses_custom_ui" gtpb_update_user="true" gtpb_internalusername="$internalUserName" #if($sessionUser.getUsesCustomUI()) checked #end onchange="top.oBuffer.writeBuffer(this);" #if(!$viewTools.templateExists($customTemplate)) disabled=true #end /> Use the custom $sessionUser.getCompany() UI rather than agileBase's<p>
       <input type="checkbox" name="uses_app_launcher" gtpb_update_user="true" gtpb_internalusername="$internalUserName" #if($sessionUser.getUsesAppLauncher()) checked #end onchange="top.oBuffer.writeBuffer(this);" /> Show the app launcher when logging in
 	</td>
   </tr>
