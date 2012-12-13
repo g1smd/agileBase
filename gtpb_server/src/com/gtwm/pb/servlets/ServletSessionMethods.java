@@ -1062,7 +1062,6 @@ public final class ServletSessionMethods {
 		}
 		try {
 			fieldValue = URLDecoder.decode(fieldValue, "UTF-8");
-			logger.debug("Decoded filter: " + fieldValue);
 		} catch (UnsupportedEncodingException ueex) {
 			throw new CodingErrorException("Unable to decode string: " + ueex);
 		}

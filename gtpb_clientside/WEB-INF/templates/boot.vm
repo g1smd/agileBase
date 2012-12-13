@@ -20,7 +20,8 @@
 #set($apps = $appUser.getCompany().getApps())
 #if($appUser.getUsesCustomUI())
   #set($companyId = $viewTools.cleanString($appUser.getCompany().getCompanyName()))
-  #parse("gui/customisations/$companyId/index.vm")
+  #set($customTemplate = "gui/customisations/$companyId/index.vm")
+  #parse($customTemplate)
 #elseif($appUser.getUsesAppLauncher())
   #parse("gui/preview/app_launcher_standalone.vm")
 #else
