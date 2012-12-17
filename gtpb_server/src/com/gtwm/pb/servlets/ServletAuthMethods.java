@@ -67,14 +67,18 @@ public final class ServletAuthMethods {
 
 	/**
 	 * Sends a password reset email to a user
-	 * @throws DisallowedException Only an administrator can send a password reset email
+	 * 
+	 * @throws DisallowedException
+	 *           Only an administrator can send a password reset email
 	 */
-	public synchronized static void sendPasswordReset(HttpServletRequest request, AuthManagerInfo authManager) throws DisallowedException, ObjectNotFoundException, CantDoThatException, CodingErrorException, MessagingException {
+	public synchronized static void sendPasswordReset(HttpServletRequest request,
+			AuthManagerInfo authManager) throws DisallowedException, ObjectNotFoundException,
+			CantDoThatException, CodingErrorException, MessagingException {
 		String internalUserName = request.getParameter("internalusername");
 		AppUserInfo user = authManager.getUserByInternalName(request, internalUserName);
 		HibernateUtil.startHibernateTransaction();
 		try {
-			authManager.sendPasswordReset(request, user);			
+			authManager.sendPasswordReset(request, user);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();
@@ -86,23 +90,22 @@ public final class ServletAuthMethods {
 			HibernateUtil.closeSession();
 		}
 	}
-	
+
 	/**
 	 * TODO: Http example usage
 	 * 
 	 * @throws MissingParametersException
-	 *             If there's an internal error passed up from
-	 *             authManager.addUser(). This should never happen
+	 *           If there's an internal error passed up from
+	 *           authManager.addUser(). This should never happen
 	 * @throws ObjectNotFoundException
-	 *             If the userName string of the actual created user differs in
-	 *             any way to the userName passed, this exception will be thrown
-	 *             when trying to set the session user to the newly created one
-	 *             because the user object won't be able to be retrieved
+	 *           If the userName string of the actual created user differs in any
+	 *           way to the userName passed, this exception will be thrown when
+	 *           trying to set the session user to the newly created one because
+	 *           the user object won't be able to be retrieved
 	 */
-	public synchronized static void addUser(SessionDataInfo sessionData,
-			HttpServletRequest request, AuthManagerInfo authManager) throws DisallowedException,
-			MissingParametersException, ObjectNotFoundException, CodingErrorException,
-			CantDoThatException {
+	public synchronized static void addUser(SessionDataInfo sessionData, HttpServletRequest request,
+			AuthManagerInfo authManager) throws DisallowedException, MissingParametersException,
+			ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		String internalUserName = request.getParameter("internalusername");
 		String baseUsername = request.getParameter(AppUserInfo.USERNAME.toLowerCase(Locale.UK));
 		String username = baseUsername;
@@ -168,9 +171,9 @@ public final class ServletAuthMethods {
 	/**
 	 * @param request
 	 * @throws DisallowedException
-	 *             If the logged in user doesn't have ADMINISTRATE privileges
+	 *           If the logged in user doesn't have ADMINISTRATE privileges
 	 * @throws ObjectNotFoundException
-	 *             If the user isn't found in the application's list of users
+	 *           If the user isn't found in the application's list of users
 	 */
 	public synchronized static void removeUser(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws DisallowedException,
@@ -218,7 +221,8 @@ public final class ServletAuthMethods {
 
 	public synchronized static void updateUser(SessionDataInfo sessionData,
 			HttpServletRequest request, AuthManagerInfo authManager) throws DisallowedException,
-			MissingParametersException, ObjectNotFoundException, CantDoThatException, CodingErrorException {
+			MissingParametersException, ObjectNotFoundException, CantDoThatException,
+			CodingErrorException {
 		AppUserInfo appUser;
 		String internalUserName = request.getParameter("internalusername");
 		if (internalUserName == null) {
@@ -241,7 +245,8 @@ public final class ServletAuthMethods {
 			usesCustomUI = Helpers.valueRepresentsBooleanTrue(usesCustomUIString);
 		}
 		boolean usesAppLauncher = appUser.getUsesAppLauncher();
-		String usesAppLauncherString = request.getParameter(AppUserInfo.USES_APP_LAUNCHER.toLowerCase());
+		String usesAppLauncherString = request
+				.getParameter(AppUserInfo.USES_APP_LAUNCHER.toLowerCase());
 		if (usesAppLauncherString != null) {
 			usesAppLauncher = Helpers.valueRepresentsBooleanTrue(usesAppLauncherString);
 		}
@@ -272,24 +277,23 @@ public final class ServletAuthMethods {
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
-			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					null, oldEmail, oldUserType, oldUsesCustomUI, oldUsesAppLauncher);
+			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename, null,
+					oldEmail, oldUserType, oldUsesCustomUI, oldUsesAppLauncher);
 			throw new CantDoThatException("User update failed", hex);
 		} catch (AgileBaseException pex) {
 			HibernateUtil.rollbackHibernateTransaction();
 			// rollback memory
-			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename,
-					null, oldEmail, oldUserType, oldUsesCustomUI, oldUsesAppLauncher);
+			authManager.updateUser(request, appUser, oldUserName, oldSurname, oldForename, null,
+					oldEmail, oldUserType, oldUsesCustomUI, oldUsesAppLauncher);
 			throw new CantDoThatException(pex.getMessage(), pex);
 		} finally {
 			HibernateUtil.closeSession();
 		}
 	}
 
-	public synchronized static void addRole(SessionDataInfo sessionData,
-			HttpServletRequest request, AuthManagerInfo authManager) throws DisallowedException,
-			MissingParametersException, ObjectNotFoundException, CodingErrorException,
-			CantDoThatException {
+	public synchronized static void addRole(SessionDataInfo sessionData, HttpServletRequest request,
+			AuthManagerInfo authManager) throws DisallowedException, MissingParametersException,
+			ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
 		String internalRoleName = request.getParameter("internalrolename");
 		String baseRoleName = request.getParameter("rolename");
@@ -401,22 +405,21 @@ public final class ServletAuthMethods {
 
 	/**
 	 * @throws MissingParametersException
-	 *             If role or privilegeType not specified in the request
+	 *           If role or privilegeType not specified in the request
 	 * @throws ObjectNotFoundException
-	 *             If tableInternalName specified in the request doesn't map to
-	 *             an actual table
+	 *           If tableInternalName specified in the request doesn't map to an
+	 *           actual table
 	 * @throws IllegalArgumentException
-	 *             If privilegeType doesn't map to an actual PrivilegeType
+	 *           If privilegeType doesn't map to an actual PrivilegeType
 	 */
-	public synchronized static void addPrivilege(HttpServletRequest request,
-			DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException,
-			ObjectNotFoundException, IllegalArgumentException, CantDoThatException {
+	public synchronized static void addPrivilege(HttpServletRequest request, DatabaseInfo databaseDefn)
+			throws DisallowedException, MissingParametersException, ObjectNotFoundException,
+			IllegalArgumentException, CantDoThatException {
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		String privilegeTypeParameter = request.getParameter("privilegetype");
 		String internalRoleName = request.getParameter("internalrolename");
 		String internalUserName = request.getParameter("internalusername");
-		if ((internalRoleName == null && internalUserName == null)
-				|| privilegeTypeParameter == null) {
+		if ((internalRoleName == null && internalUserName == null) || privilegeTypeParameter == null) {
 			throw new MissingParametersException(
 					"The 'privilegetype' parameter and either 'internalusername' or 'internalrolename' are required to add a privilege");
 		}
@@ -432,8 +435,7 @@ public final class ServletAuthMethods {
 					authManager.addRolePrivilege(request, role, privilegeType, table);
 				}
 				if (internalUserName != null) {
-					AppUserInfo appUser = authManager.getUserByInternalName(request,
-							internalUserName);
+					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName);
 					authManager.addUserPrivilege(request, appUser, privilegeType, table);
 				}
 			} else {
@@ -443,8 +445,7 @@ public final class ServletAuthMethods {
 					authManager.addRolePrivilege(request, role, privilegeType);
 				}
 				if (internalUserName != null) {
-					AppUserInfo appUser = authManager.getUserByInternalName(request,
-							internalUserName);
+					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName);
 					authManager.addUserPrivilege(request, appUser, privilegeType);
 				}
 			}
@@ -461,12 +462,12 @@ public final class ServletAuthMethods {
 	 * @param request
 	 * @throws DisallowedException
 	 * @throws MissingParametersException
-	 *             If role or privilegetype not specified in the request
+	 *           If role or privilegetype not specified in the request
 	 * @throws ObjectNotFoundException
-	 *             If tableInternalName specified in the request doesn't map to
-	 *             an actual table
+	 *           If tableInternalName specified in the request doesn't map to an
+	 *           actual table
 	 * @throws IllegalArgumentException
-	 *             If privilegeType doesn't map to an actual PrivilegeType
+	 *           If privilegeType doesn't map to an actual PrivilegeType
 	 */
 	public synchronized static void removePrivilege(HttpServletRequest request,
 			DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException,
@@ -476,8 +477,7 @@ public final class ServletAuthMethods {
 		String privilegeTypeParameter = request.getParameter("privilegetype");
 		String internalRoleName = request.getParameter("internalrolename");
 		String internalUserName = request.getParameter("internalusername");
-		if ((internalRoleName == null && internalUserName == null)
-				|| privilegeTypeParameter == null) {
+		if ((internalRoleName == null && internalUserName == null) || privilegeTypeParameter == null) {
 			throw new MissingParametersException(
 					"The 'privilegetype' parameter and either 'internalusername' or 'internalrolename' are required to remove a privilege");
 		}
@@ -493,8 +493,7 @@ public final class ServletAuthMethods {
 					authManager.removeRolePrivilege(request, role, privilegeType, table);
 				}
 				if (internalUserName != null) {
-					AppUserInfo appUser = authManager.getUserByInternalName(request,
-							internalUserName);
+					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName);
 					authManager.removeUserPrivilege(request, appUser, privilegeType, table);
 				}
 			} else {
@@ -504,8 +503,7 @@ public final class ServletAuthMethods {
 					authManager.removeRolePrivilege(request, role, privilegeType);
 				}
 				if (internalUserName != null) {
-					AppUserInfo appUser = authManager.getUserByInternalName(request,
-							internalUserName);
+					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName);
 					authManager.removeUserPrivilege(request, appUser, privilegeType);
 				}
 			}
@@ -524,16 +522,14 @@ public final class ServletAuthMethods {
 	 * removes them
 	 * 
 	 * @throws MissingParametersException
-	 *             If privilegetype, internaltablename and one of username or
-	 *             rolename are not included in the HTTP request
+	 *           If privilegetype, internaltablename and one of username or
+	 *           rolename are not included in the HTTP request
 	 * @throws CantDoThatException
-	 *             If the privilegetype supplied isn't a table-specific
-	 *             privilege
+	 *           If the privilegetype supplied isn't a table-specific privilege
 	 */
 	public synchronized static void setMaxTablePrivilege(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn)
-			throws MissingParametersException, CantDoThatException, ObjectNotFoundException,
-			DisallowedException {
+			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
+			CantDoThatException, ObjectNotFoundException, DisallowedException {
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		String privilegeTypeParameter = request.getParameter("privilegetype");
 		String internalRoleName = request.getParameter("internalrolename");
@@ -544,8 +540,7 @@ public final class ServletAuthMethods {
 			throw new MissingParametersException(
 					"The 'privilegetype', 'internaltablename' and 'assignto' parameters are required to set the max privilege level");
 		}
-		PrivilegeType maxPrivilegeType = PrivilegeType
-				.valueOf(privilegeTypeParameter.toUpperCase());
+		PrivilegeType maxPrivilegeType = PrivilegeType.valueOf(privilegeTypeParameter.toUpperCase());
 		TableInfo table = databaseDefn.getTable(request, internalTableName);
 		// Check it's a table privilege
 		if (maxPrivilegeType.isObjectSpecificPrivilege()) {
@@ -590,8 +585,7 @@ public final class ServletAuthMethods {
 								&& specifiedUserHasPrivilege) {
 							// if privilege requested lower than one they've
 							// got, remove it
-							authManager
-									.removeUserPrivilege(request, user, testPrivilegeType, table);
+							authManager.removeUserPrivilege(request, user, testPrivilegeType, table);
 						}
 					}
 				}
@@ -614,14 +608,11 @@ public final class ServletAuthMethods {
 				for (PrivilegeType testPrivilegeType : PrivilegeType.values()) {
 					if (testPrivilegeType.isObjectSpecificPrivilege()) {
 						if ((maxPrivilegeType.ordinal() >= testPrivilegeType.ordinal())
-								&& (!authManager.specifiedRoleHasPrivilege(request,
-										testPrivilegeType, role, table))) {
+								&& (!authManager.specifiedRoleHasPrivilege(request, testPrivilegeType, role, table))) {
 							authManager.addRolePrivilege(request, role, testPrivilegeType, table);
 						} else if ((maxPrivilegeType.ordinal() < testPrivilegeType.ordinal())
-								&& (authManager.specifiedRoleHasPrivilege(request,
-										testPrivilegeType, role, table))) {
-							authManager
-									.removeRolePrivilege(request, role, testPrivilegeType, table);
+								&& (authManager.specifiedRoleHasPrivilege(request, testPrivilegeType, role, table))) {
+							authManager.removeRolePrivilege(request, role, testPrivilegeType, table);
 						}
 					}
 				}
@@ -667,8 +658,7 @@ public final class ServletAuthMethods {
 				AppUserInfo user = authManager.getUserByInternalName(request, internalUserName);
 				for (PrivilegeType testPrivilegeType : PrivilegeType.values()) {
 					if (testPrivilegeType.isObjectSpecificPrivilege()) {
-						if (authManager.specifiedUserHasPrivilege(request, testPrivilegeType, user,
-								table)) {
+						if (authManager.specifiedUserHasPrivilege(request, testPrivilegeType, user, table)) {
 							// Check that at least one other user or role has
 							// privileges on the table
 							if (rolePrivilegesSize == 0) {
@@ -684,18 +674,16 @@ public final class ServletAuthMethods {
 											"At least one user/role must have privileges on a table");
 								}
 							}
-							authManager
-									.removeUserPrivilege(request, user, testPrivilegeType, table);
+							authManager.removeUserPrivilege(request, user, testPrivilegeType, table);
 						}
-					}	
+					}
 				}
 			} else {
 				// removing privilege from role
 				AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
 				for (PrivilegeType testPrivilegeType : PrivilegeType.values()) {
 					if (testPrivilegeType.isObjectSpecificPrivilege()) {
-						if (authManager.specifiedRoleHasPrivilege(request, testPrivilegeType, role,
-								table)) {
+						if (authManager.specifiedRoleHasPrivilege(request, testPrivilegeType, role, table)) {
 							// Check that at least one other user or role has
 							// privileges on the table
 							if (userPrivilegesSize == 0) {
@@ -711,8 +699,7 @@ public final class ServletAuthMethods {
 											"At least one user/role must have privileges on a table");
 								}
 							}
-							authManager
-									.removeRolePrivilege(request, role, testPrivilegeType, table);
+							authManager.removeRolePrivilege(request, role, testPrivilegeType, table);
 						}
 					}
 				}
@@ -729,16 +716,21 @@ public final class ServletAuthMethods {
 		}
 	}
 
-	public synchronized static void assignUserToRole(HttpServletRequest request,
-			AuthManagerInfo authManager) throws ObjectNotFoundException, DisallowedException,
-			MissingParametersException, CantDoThatException {
+	public synchronized static void assignUserToRole(SessionDataInfo sessionData, HttpServletRequest request,
+			AuthManagerInfo authManager) throws ObjectNotFoundException,
+			DisallowedException, MissingParametersException, CantDoThatException {
 		String internalRoleName = request.getParameter("internalrolename");
 		String internalUserName = request.getParameter("internalusername");
-		if (internalRoleName == null || internalUserName == null) {
-			throw new MissingParametersException(
-					"'internalrolename' and 'internalusername' parameters are required");
+		AppUserInfo user = null;
+		if (internalUserName == null) {
+			user = sessionData.getUser();
 		}
-		AppUserInfo user = authManager.getUserByInternalName(request, internalUserName);
+		if ((internalRoleName == null) || ((user == null) && (internalUserName == null))) {
+			throw new MissingParametersException("'internalrolename' and 'internalusername' are required");
+		}
+		if (user == null) {
+			user = authManager.getUserByInternalName(request, internalUserName);
+		}
 		AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
 		// begin updating model and persisting changes
 		HibernateUtil.startHibernateTransaction();

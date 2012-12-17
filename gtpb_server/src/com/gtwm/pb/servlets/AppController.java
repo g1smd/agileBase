@@ -387,7 +387,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletAuthMethods.removeRole(sessionData, request, databaseDefn);
 					break;
 				case ASSIGN_USER_TO_ROLE:
-					ServletAuthMethods.assignUserToRole(request, databaseDefn.getAuthManager());
+					ServletAuthMethods.assignUserToRole(sessionData, request, databaseDefn.getAuthManager());
 					break;
 				case REMOVE_USER_FROM_ROLE:
 					ServletAuthMethods.removeUserFromRole(request, databaseDefn);
