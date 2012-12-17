@@ -125,6 +125,14 @@ public final class ServletAuthMethods {
 				usernameCount++;
 				username = baseUsername + String.valueOf(usernameCount);
 			}
+		} else {
+			Set<String> existingUserNames = new HashSet<String>();
+			for (AppUserInfo appUser : authManager.getUsers(request)) {
+				existingUserNames.add(appUser.getUserName());
+			}
+			if (existingUserNames.contains(username)) {
+				throw new CantDoThatException("Username " + username + " already exists, please choose a different one");
+			}
 		}
 		String surname = request.getParameter(AppUserInfo.SURNAME.toLowerCase(Locale.UK));
 		String forename = request.getParameter(AppUserInfo.FORENAME.toLowerCase(Locale.UK));
