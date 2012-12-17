@@ -56,7 +56,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 
 	public AppUser(CompanyInfo company, String internalUserName, String userName, String surname,
-			String forename, String password, String email, String custom1) throws MissingParametersException,
+			String forename, String password, String email, String custom1, boolean useCustomUI) throws MissingParametersException,
 			CantDoThatException, CodingErrorException {
 		if (userName == null || password == null) {
 			throw new MissingParametersException("User name or password not specified");
@@ -81,6 +81,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		} else {
 			this.setForename(forename);
 		}
+		logger.debug("Email for user is " + email);
 		if (email == null) {
 			this.setEmail("");
 		} else {
@@ -91,6 +92,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		} else {
 			this.setCustom1(custom1);
 		}
+		this.setUsesCustomUI(useCustomUI);
 		this.hashAndSetPassword(password);
 		// Give them a default UI layout
 		this.setUserType(InitialView.REPORT);

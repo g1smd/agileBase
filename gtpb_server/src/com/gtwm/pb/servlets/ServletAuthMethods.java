@@ -135,9 +135,14 @@ public final class ServletAuthMethods {
 		}
 		String email = request.getParameter(AppUserInfo.EMAIL.toLowerCase());
 		String custom1 = request.getParameter(AppUserInfo.CUSTOM1.toLowerCase());
+		String useCustomUIString = request.getParameter(AppUserInfo.USES_CUSTOM_UI.toLowerCase());
+		boolean useCustomUI = false;
+		if (useCustomUIString != null) {
+			useCustomUI = Helpers.valueRepresentsBooleanTrue(useCustomUIString);
+		}
 		// begin updating model and persisting changes
 		AppUserInfo newUser = new AppUser(company, internalUserName, username, surname, forename,
-				password, email, custom1);
+				password, email, custom1, useCustomUI);
 		HibernateUtil.startHibernateTransaction();
 		try {
 			// add the user:
