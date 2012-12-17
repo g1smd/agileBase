@@ -166,7 +166,7 @@ public final class AuthManager implements AuthManagerInfo {
 					CompanyInfo masterCompany = new Company("Master Company");
 					((Authenticator) this.authenticator).addCompany(masterCompany);
 					AppUserInfo masterUser = new AppUser(masterCompany, null, masterUsername,
-							"Master", "User", masterPassword);
+							"Master", "User", masterPassword, "", "");
 					((Authenticator) this.authenticator).addUser(masterUser);
 					((Authenticator) this.authenticator).addUserPrivilege(masterUser,
 							PrivilegeType.MASTER);
@@ -285,7 +285,7 @@ public final class AuthManager implements AuthManagerInfo {
 		adminUsername = adminUsername.replaceAll("\\W", "");
 		String adminPassword = RandomString.generate();
 		AppUserInfo adminUser = new AppUser(company, null, adminUsername, "User", "Admin",
-				adminPassword);
+				adminPassword,"","");
 		String adminRolename = adminUsername;
 		AppRoleInfo adminRole = new AppRole(company, null, adminRolename);
 		// no mapping from role to authenticator so we have to explicitly save it

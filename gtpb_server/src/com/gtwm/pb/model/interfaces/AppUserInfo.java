@@ -46,8 +46,10 @@ public interface AppUserInfo {
 
 	public static final String EMAIL = "email";
 
+	public static final String CUSTOM1 = "custom1";
+
 	public static final String USES_CUSTOM_UI = "uses_custom_ui";
-	
+
 	public static final String USES_APP_LAUNCHER = "uses_app_launcher";
 
 	public CompanyInfo getCompany();
@@ -70,8 +72,8 @@ public interface AppUserInfo {
 			CantDoThatException, CodingErrorException;
 
 	/*
-	 * public void setPassword(String password) throws
-	 * MissingParametersException, CantDoThatException;
+	 * public void setPassword(String password) throws MissingParametersException,
+	 * CantDoThatException;
 	 */
 
 	public String getEmail();
@@ -83,8 +85,8 @@ public interface AppUserInfo {
 	public InitialView getUserType();
 
 	/**
-	 * A user can have some reports hidden from them, not for security reasons
-	 * but to reduce clutter
+	 * A user can have some reports hidden from them, not for security reasons but
+	 * to reduce clutter
 	 */
 	public Set<BaseReportInfo> getHiddenReports();
 
@@ -112,11 +114,10 @@ public interface AppUserInfo {
 	public void unhideReport(BaseReportInfo report) throws CantDoThatException;
 
 	/**
-	 * Record the fact that a section in the edit tab is contracted for this
-	 * user
+	 * Record the fact that a section in the edit tab is contracted for this user
 	 * 
 	 * @param internalFieldName
-	 *            The identifier of the section heading field
+	 *          The identifier of the section heading field
 	 */
 	public void contractSection(String internalFieldName) throws CantDoThatException;
 
@@ -140,12 +141,12 @@ public interface AppUserInfo {
 	public boolean getUsesCustomUI();
 
 	public void setUsesCustomUI(boolean usesCustomUI) throws CantDoThatException;
-	
+
 	/**
 	 * Wether to show the app launcher by default on startup
 	 */
 	public boolean getUsesAppLauncher();
-	
+
 	public void setUsesAppLauncher(boolean usesAppLauncher) throws CantDoThatException;
 
 	/**
@@ -153,26 +154,33 @@ public interface AppUserInfo {
 	 * 
 	 * Note the current password is reset to a value that can be sent out by
 	 * email, so between the time the email is sent and the user actually resets
-	 * the password, the login is at risk. To help protect the account,
-	 * passwords have to be reset within a certain time period. If this time
-	 * period has passed,
+	 * the password, the login is at risk. To help protect the account, passwords
+	 * have to be reset within a certain time period. If this time period has
+	 * passed,
 	 */
 	public boolean getAllowPasswordReset();
 
 	/**
-	 * 1) Sets the counter going for the time period in which the password can
-	 * be reset.
+	 * 1) Sets the counter going for the time period in which the password can be
+	 * reset.
 	 * 
 	 * 2) Resets the password to a random value
 	 * 
 	 * 3) Sends the user a password reset email
 	 * 
 	 * @param appUrl
-	 *            is used in the email notification to the user
+	 *          is used in the email notification to the user
 	 * 
 	 * @throws CantDoThatException
-	 *             if the user doesn't have an email address
+	 *           if the user doesn't have an email address
 	 */
 	public void sendPasswordReset(String appUrl) throws CantDoThatException, CodingErrorException,
 			MessagingException;
+
+	/**
+	 * A custom data field that can be used by applications
+	 * */
+	public String getCustom1();
+
+	public void setCustom1(String custom1) throws CantDoThatException;
 }

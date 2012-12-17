@@ -249,6 +249,14 @@ public class PublicUser implements AppUserInfo {
 	public void setUsesCustomUI(boolean usesCustomUI) throws CantDoThatException {
 		throw new CantDoThatException("This public user can't have a custom ui");
 	}
+	
+	public String getCustom1() {
+		return "";
+	}
+	
+	public void setCustom1(String custom1) throws CantDoThatException {
+		throw new CantDoThatException("This public user can't store custom data");
+	}
 
 	@Override
 	public boolean getUsesAppLauncher() {

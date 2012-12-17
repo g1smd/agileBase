@@ -133,9 +133,11 @@ public final class ServletAuthMethods {
 		if (password == null) {
 			password = RandomString.generate();
 		}
+		String email = request.getParameter(AppUserInfo.EMAIL.toLowerCase());
+		String custom1 = request.getParameter(AppUserInfo.CUSTOM1.toLowerCase());
 		// begin updating model and persisting changes
 		AppUserInfo newUser = new AppUser(company, internalUserName, username, surname, forename,
-				password);
+				password, email, custom1);
 		HibernateUtil.startHibernateTransaction();
 		try {
 			// add the user:

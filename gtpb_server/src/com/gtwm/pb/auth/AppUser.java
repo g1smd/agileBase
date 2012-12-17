@@ -56,7 +56,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 
 	public AppUser(CompanyInfo company, String internalUserName, String userName, String surname,
-			String forename, String password) throws MissingParametersException,
+			String forename, String password, String email, String custom1) throws MissingParametersException,
 			CantDoThatException, CodingErrorException {
 		if (userName == null || password == null) {
 			throw new MissingParametersException("User name or password not specified");
@@ -80,6 +80,16 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 			this.setForename("");
 		} else {
 			this.setForename(forename);
+		}
+		if (email == null) {
+			this.setEmail("");
+		} else {
+			this.setEmail(email);
+		}
+		if (custom1 == null) {
+			this.setCustom1("");
+		} else {
+			this.setCustom1(custom1);
 		}
 		this.hashAndSetPassword(password);
 		// Give them a default UI layout
@@ -343,6 +353,14 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		}
 		this.passwordResetSent = System.currentTimeMillis();
 	}
+	
+	public String getCustom1() {
+		return this.custom1;
+	}
+	
+	public void setCustom1(String custom1) {
+		this.custom1 = custom1;
+	}
 
 	public String toString() {
 		return this.getUserName();
@@ -413,6 +431,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	 * Epoch time at which a password reset email was sent
 	 */
 	private long passwordResetSent = 0;
+	
+	private String custom1 = "";
 
 	private static final SimpleLogger logger = new SimpleLogger(AppUser.class);
 }
