@@ -25,8 +25,7 @@
   <style>
   .infomessage {
 	border-radius: 1em;
-	border: 2px solid #DDE6EF;
-	background: #eef3f9;
+	background: #E7F5F9;
 	margin: 10px;
 	padding: 10px;
 	position: relative;
