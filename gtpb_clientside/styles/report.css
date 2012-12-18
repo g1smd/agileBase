@@ -503,7 +503,6 @@ table#reportData td.appSelected {
 }
 
 .time_date {
-  float: left;
   display: inline-block;
 }
 
