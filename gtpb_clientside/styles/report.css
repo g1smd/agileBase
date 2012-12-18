@@ -516,6 +516,7 @@ time {
   background-color: #656766;
   color: white;
   border-radius: 1em;
+  vertical-align: top;
 }
 
 .favicon {
