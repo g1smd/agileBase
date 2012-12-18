@@ -114,9 +114,9 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	    #set($minute = $timeParts[1])
 	    #set($cell = "$date <time><span class='hour-$hour'><span class='minute-$minute'></span</span>")
 	    #if($hour.startsWith("0"))
-	      #set($cell = "$cell am</time>")
+	      #set($cell = "$cell</time> am")
 	    #else
-	      #set($cell = "$cell pm</time>")
+	      #set($cell = "$cell</time> pm")
 	    #end
       #elseif($fieldCategory == "FILE")
         #set($fileValue = $viewTools.getFileValueTool($cell))
