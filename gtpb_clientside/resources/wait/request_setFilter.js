@@ -302,7 +302,6 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 
 
 	function fReqComplete(sResponseText, sResponseXML) {
-		console.log("Running fReqComplete");
 		if (!sResponseText)
 			return;
 		if (sResponseText == null)

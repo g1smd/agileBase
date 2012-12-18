@@ -180,9 +180,8 @@ var TabInterfaceObject = function(containerElem) {
 		if (typeof rowId != "undefined") {
 		  currentRowId = rowId;
 		}
-		if(console) {
-			console.log("TabInterfaceObjectPub.refresh(" + rowId + ")");
-		}
+		//Elaine
+		//console.log("TabInterfaceObjectPub.refresh(" + rowId + ")");
 		currentTab.queueTab();
 	}
 
@@ -1136,9 +1135,8 @@ function fTabs() {
 					$(".tab_container").fadeOut(); // fade out all tab containers
 					tabContainer.addClass("load-spinner").css("position", "relative");
 					tabContainer.fadeIn();
-					if(console) {
-						console.log("About to load tab_content");
-					}
+					// Elaine
+					//console.log("About to load tab_content");
 					tabContainer.load("AppController.servlet", {
 						"return" : "gui/reports_and_tables/tabs/tab_content",
 						set_custom_table : true,
@@ -1148,9 +1146,8 @@ function fTabs() {
 						rowidinternaltablename: parentInternalTableName, 
 						abCache: new Date().getTime()
 					}, function() {
-						if(console) {
-							console.log("Loaded load tab_content");
-						}
+						// Elaine
+						//console.log("Loaded load tab_content");
 						tabContainer.removeClass("load-spinner");
 						jqTab.addClass("active");
 						jqTab.removeClass("tabLoading");
@@ -1188,7 +1185,8 @@ function fTabs() {
 		}); // end of jqTab.click()
 		jqTab.find(".new").click(
 				function(e) {
-					console.log("new");
+					// Elaine
+					//console.log("new");
 					newChild(jqTab, parentInternalTableName);
 					// Stop normal tab click
 					e.stopPropagation();
