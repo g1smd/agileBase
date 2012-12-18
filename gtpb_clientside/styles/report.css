@@ -502,6 +502,10 @@ table#reportData td.appSelected {
   vertical-align: middle;
 }
 
+.time_date {
+  float: left;
+}
+
 time {
   font-family: 'pe-analogclock';
   vertical-align: top;
