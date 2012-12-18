@@ -506,7 +506,9 @@ time {
   font-family: 'pe-analogclock';
   vertical-align: top;
   font-size: 150%;
-  color: #656766;
+  background-color: #656766;
+  color: white;
+  border-radius: 1em;
 }
 
 .favicon {
