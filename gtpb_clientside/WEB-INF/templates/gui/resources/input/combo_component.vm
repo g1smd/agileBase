@@ -70,7 +70,7 @@
     	#end
     	</optgroup>
     #end
-    #if(!$gtpbPublicTable)
+    #if((!$gtpbPublicTable) && (!$disableComboAddNewEntry))
     	<option value="new-custom-option">-- add new entry --></option>
     #end
     </select>
