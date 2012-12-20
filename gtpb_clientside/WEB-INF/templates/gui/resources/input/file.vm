@@ -38,13 +38,13 @@
     ## File icon
     #if(!$fieldValueObject.isImage())
       #if(!$userCanEdit) <br style="clear: left"> #end
-      <img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/> $fieldValue
       ## Users were frequently having problems with browsers caching old document versions
 			#set($pdf = false)
 			#if($downloadUrl.endsWith("pdf")) #set($pdf = true) #end
       #set($previewUrl = "$downloadUrl.500.png")
 			#set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
-      <a href="$downloadUrl">download</a>
+      <a href="$downloadUrl"><img border="0" class="document" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/></a> 
+      <a href="$downloadUrl">$fieldValue</a>
             ## PDF preview
 			###if($pdf && !$sectionHasImage)
 			##	<br clear="left" />

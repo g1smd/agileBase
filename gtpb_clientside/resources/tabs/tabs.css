@@ -455,6 +455,13 @@ img.edit_image {
   border-radius: 0.5em;
 }
 
+img.download {
+  float: left;
+  background-color: #656766;
+  border-radius: 1em;
+  padding: 0.25em;
+}
+
 img.file_preview {
   max-width: 100%;
   border: 1px solid #E8E7E3;
