@@ -586,8 +586,9 @@ function fSexyUpload() {
 				jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
 			},
 			complete : function(event, responseText) {
+				console.log(event);
+				return;
 				alert(responseText);
-				alert("Status: " + event.status);
 				jqProgressBar.text("Upload complete");
 				jqProgressBar.addClass("upload_complete");
 				jqProgressBar.css("width", "100%");
