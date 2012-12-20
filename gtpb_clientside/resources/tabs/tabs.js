@@ -596,8 +596,9 @@ function fSexyUpload() {
 					document.location = "?return=gui/reports_and_tables/pane3&cachebust=" + (new Date()).getTime();
 				} else {
 					var exceptionMessage = $(responseText).find("exception").text();
-					jqProgressBar.text("Upload error: " + exceptionMessage );
-					jqUploadInfo.text("Upload error: " + exceptionMessage);
+					alert(exceptionMessage);
+					jqProgressBar.text(exceptionMessage );
+					jqUploadInfo.text(exceptionMessage);
 				}
 			},
 			error : function(event) {
