@@ -58,7 +58,8 @@ public class FileValueDefn implements FileValue {
 			// if item is a file
 			if (!item.isFormField()) {
 				if (item.getFieldName().equals(internalFieldName)) {
-					this.filename = item.getName().replaceAll("^.*\\\\", "");
+					this.filename = item.getName().replaceAll("^.*\\\\", "").replace("&", "and");
+					this.filename = Helpers.rinseString(this.filename, "\\s\\.");
 					break ITEMLOOP;
 				}
 			}
