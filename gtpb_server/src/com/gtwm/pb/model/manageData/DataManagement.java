@@ -112,7 +112,6 @@ import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageData.fields.IntegerValueDefn;
 import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
-import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.TextContentSizes;
 import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.servlets.ServletUtilMethods;
@@ -707,6 +706,27 @@ public final class DataManagement implements DataManagementInfo {
 		} else {
 			throw new ObjectNotFoundException("Row ID list " + rowIds + " is invalid");
 		}
+		// If any fields are files to upload, do the actual uploads.
+		// Do this before opening an SQL connection in case the uploads take a long
+		// time and time out the SQL connection. An upload error will then cause the
+		// record save to fail. Note: new record uploads have to be left until after the
+		// SQL as the new record row ID needs to be retrieved from the database
+		if (!newRecord) {
+			for (BaseField field : dataToSave.keySet()) {
+				if (field instanceof FileField) {
+					try {
+						this.uploadFile(request, (FileField) field, (FileValue) dataToSave.get(field), rowId,
+								multipartItems);
+					} catch (CantDoThatException cdtex) {
+						throw new InputRecordException("Error uploading file: " + cdtex.getMessage(), field,
+								cdtex);
+					} catch (FileUploadException fuex) {
+						throw new InputRecordException("Error uploading file: " + fuex.getMessage(), field,
+								fuex);
+					}
+				}
+			}
+		}
 		StringBuilder SQLCodeBuilder = new StringBuilder();
 		// Generate CSV of fields and placeholders to use in update/insert SQL
 		// string
@@ -898,29 +918,22 @@ public final class DataManagement implements DataManagementInfo {
 				conn.close();
 			}
 		}
-		// If any fields were files to upload, do the actual uploads.
-		// Do this after the commit in case the uploads take a long time and
-		// time out the SQL connection.
-		for (BaseField field : dataToSave.keySet()) {
-			if (field instanceof FileField) {
-				try {
-					if (newRecord) {
-						this.uploadFile(request, (FileField) field, (FileValue) dataToSave.get(field),
-								newRowId, multipartItems);
-					} else {
-						this.uploadFile(request, (FileField) field, (FileValue) dataToSave.get(field), rowId,
-								multipartItems);
-					}
-				} catch (CantDoThatException cdtex) {
-					throw new InputRecordException("Error uploading file: " + cdtex.getMessage(), field,
-							cdtex);
-				} catch (FileUploadException fuex) {
-					throw new InputRecordException("Error uploading file: " + fuex.getMessage(), field, fuex);
-				}
-			}
-		}
 		if (newRecord) {
 			sessionData.setRowId(table, newRowId);
+			// If any files to upload for new records, do the actual uploads
+			for (BaseField field : dataToSave.keySet()) {
+				if (field instanceof FileField) {
+					try {
+						this.uploadFile(request, (FileField) field, (FileValue) dataToSave.get(field),
+							newRowId, multipartItems);
+					} catch (CantDoThatException cdtex) {
+						throw new InputRecordException("Error uploading file: " + cdtex.getMessage(), field,
+								cdtex);
+					} catch (FileUploadException fuex) {
+						throw new InputRecordException("Error uploading file: " + fuex.getMessage(), field, fuex);
+					}
+				}
+			}
 		}
 		this.logLastDataChangeTime(request);
 		logLastTableDataChangeTime(table);
@@ -1594,12 +1607,13 @@ public final class DataManagement implements DataManagementInfo {
 						int height = originalImage.getHeight();
 						int width = originalImage.getWidth();
 						if ((height > midSize) || (width > midSize)) {
-						  needResize = true;
+							needResize = true;
 						}
 					} catch (IOException ioex) {
 						// Certain images can sometimes fail to be read e.g. CMYK JPGs
 						logger.error("Error reading image dimensions: " + ioex);
-						needResize = true; // Unable to read image size, assume resize needed
+						needResize = true; // Unable to read image size, assume resize
+																// needed
 					}
 					try {
 						// Conditional resize
