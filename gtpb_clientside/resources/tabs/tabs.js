@@ -586,12 +586,17 @@ function fSexyUpload() {
 				jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
 			},
 			complete : function(event, responseText) {
-				alert(responseText);
-				jqProgressBar.text("Upload complete");
-				jqProgressBar.addClass("upload_complete");
-				jqProgressBar.css("width", "100%");
-				var returnTemplate = jqForm.find("input[name=return]").val();
-				document.location = "?return=" + returnTemplate + "&cachebust=" + (new Date()).getTime();
+				var response = responseText.find("response");
+				if (response == "ok") {
+					jqProgressBar.text("Upload complete");
+					jqProgressBar.addClass("upload_complete");
+					jqProgressBar.css("width", "100%");
+					//var returnTemplate = jqForm.find("input[name=return]").val();
+					//TODO: check if uploads are used anywhere else other than pane 3
+					document.location = "?return=gui/reports_and_tables/pane3&cachebust=" + (new Date()).getTime();
+				} else {
+					jqProgressBar.text("Upload error: " + responseText.find("exception").text());
+				}
 			},
 			error : function(event) {
 				jqProgressBar.text("Error, file upload incomplete");

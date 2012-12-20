@@ -94,7 +94,7 @@
         #if($uploadReturn)
           <input type="hidden" name="return" value="$uploadReturn" />
         #else
-          <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
+          <input type="hidden" name="return" value="gui/resources/xmlreturn_rowid" /> ## gui/reports_and_tables/pane3
         #end
         <input type="hidden" name="update_record" value="true" />
         <input type="hidden" name="internaltablename" value="$sessionTable.getInternalTableName()" />
