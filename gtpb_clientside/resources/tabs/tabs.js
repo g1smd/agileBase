@@ -587,7 +587,6 @@ function fSexyUpload() {
 			},
 			complete : function(event, responseText) {
 				var response = $(responseText).find("response").text();
-				alert(response);
 				if (response == "ok") {
 					jqProgressBar.text("Upload complete");
 					jqProgressBar.addClass("upload_complete");
@@ -596,7 +595,7 @@ function fSexyUpload() {
 					//TODO: check if uploads are used anywhere else other than pane 3
 					document.location = "?return=gui/reports_and_tables/pane3&cachebust=" + (new Date()).getTime();
 				} else {
-					jqProgressBar.text("Upload error: " + $(responseText).find("exception").text());
+					jqProgressBar.text("Upload error");
 				}
 			},
 			error : function(event) {
