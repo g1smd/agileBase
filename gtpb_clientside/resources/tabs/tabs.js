@@ -595,6 +595,7 @@ function fSexyUpload() {
 					//TODO: check if uploads are used anywhere else other than pane 3
 					document.location = "?return=gui/reports_and_tables/pane3&cachebust=" + (new Date()).getTime();
 				} else {
+					alert("Upload error");
 					jqProgressBar.text("Upload error");
 				}
 			},
