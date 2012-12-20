@@ -1510,13 +1510,6 @@ public final class DataManagement implements DataManagementInfo {
 			throw new CantDoThatException(
 					"To upload a file, the form must be posted as multi-part form data");
 		}
-		if (fileValue.toString().contains("/")) {
-			throw new CantDoThatException(
-					"Filename contains a slash character which is not allowed, no upload done");
-		}
-		if (fileValue.toString().contains("'") || fileValue.toString().contains("\"")) {
-			throw new CantDoThatException("Filename must not contain quote marks");
-		}
 		// Put the file in a unique folder per row ID.
 		// This is in the format table ID / field ID / row ID
 		String uploadFolderName = this.getWebAppRoot() + "uploads/"
