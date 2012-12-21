@@ -23,7 +23,27 @@
     <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
     <link href="http://agilebase.co.uk/styles.css" rel="stylesheet">
+      .good {
+        background-color: #8DC63F;
+      }
+      .bad {
+        background-color: #EC008C;
+      }
+    <style>
+    <script language="JavaScript" src="resources/jquery.js"></script>
+    <script language="JavaScript" src="resources/jquery.complexify.js"></script>
     <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
+    <script language="JavaScript">
+      $(document).ready(function() {
+        $("#password").complexify({}, function(valid, complexity) {
+          if (valid) {
+            $(this).closest("form").addClass("good").removeClass("bad");
+          } else {
+            $(this).closest("form").addClass("bad").removeClass("good");
+          }
+        });
+      });
+    </script>
 </head>
 <body><div class="container">
 #if($user.getAllowPasswordReset())
@@ -42,7 +62,7 @@
             <input type="hidden" name="return" value="gui/set_password/email_success" />
             <input type="hidden" name="update_user" value="true" />
             <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
-            <input type="password" name="password" /><button type="submit" value="Set" class="btn">set</button>
+            <input type="password" name="password" id="password"/><button type="submit" value="Set" class="btn">set</button>
           </form>
       </div>
     </div>
