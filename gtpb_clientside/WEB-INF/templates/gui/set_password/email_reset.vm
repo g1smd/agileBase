@@ -22,7 +22,7 @@
   <title>$user.getCompany() :: agilebase - set password</title>
     <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-    <link href="/agileBase/website/styles.css" rel="stylesheet">
+    <link href="http://agilebase.co.uk/styles.css" rel="stylesheet">
     <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
 </head>
 <body><div class="container">
@@ -46,7 +46,7 @@
    </div>
    <div class="row">
      <div class="span6">
-	  Please choose a password
+	  <h2>Please choose a password</h2>
 	  <div class="spaced">
 	      <form name="changepassword" method="post" action="AppController.servlet">
 	        <input type="hidden" name="return" value="gui/set_password/email_success" />
