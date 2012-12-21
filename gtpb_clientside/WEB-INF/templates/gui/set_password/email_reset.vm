@@ -46,7 +46,7 @@
    </div>
    <div class="row big">
      <div class="span6">
-	  <h2>Please choose a password</h2>
+	  Please choose a password
 	  <div class="spaced" style="margin-left: 1em;">
 	      <form name="changepassword" method="post" action="AppController.servlet">
 	        <input type="hidden" name="return" value="gui/set_password/email_success" />
