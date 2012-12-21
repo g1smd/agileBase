@@ -34,21 +34,27 @@
     </div>
   </div>
   <h1><img src="/agileBase/website/images/brandmark.png" /> : your details</h1>
-  These details have been set up by $user.getCompany()
-  <ul>
-    <li>Name: $user.getForename() $user.getSurname()</li>
-    <li>Email: $user.getEmail()</li>
-    <li>Username: $user.getUserName()</li>
-  </ul>
-  <h2>Please choose a password</h2>
-  <div class="big spaced">
-	  <form name="changepassword" method="post" action="AppController.servlet">
-	    <input type="hidden" name="return" value="gui/set_password/email_success" />
-	    <input type="hidden" name="update_user" value="true" />
-	    <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
-	    <input type="password" name="password" /><p>
-	    <input type="submit" value="Set" />
-	  </form>
+  <div class="row">
+    <div class="span6">
+	  These details have been set up by $user.getCompany()
+	  <ul class="mid_spaced">
+	    <li>Name: $user.getForename() $user.getSurname()</li>
+	    <li>Email: $user.getEmail()</li>
+	    <li>Username: $user.getUserName()</li>
+	  </ul>
+    </div>
+    <div class="span6">
+	  <h2>Please choose a password</h2>
+	  <div class="big spaced">
+	      <form name="changepassword" method="post" action="AppController.servlet">
+	        <input type="hidden" name="return" value="gui/set_password/email_success" />
+	        <input type="hidden" name="update_user" value="true" />
+	        <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
+	        <input type="password" name="password" /><p>
+	        <input type="submit" value="Set" />
+	      </form>
+	  </div>
+    </div>
   </div>
 #else
   The password reset link you used has expired, please ask your administrative contact for another.
