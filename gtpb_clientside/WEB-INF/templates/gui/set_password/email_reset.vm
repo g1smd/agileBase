@@ -29,11 +29,11 @@
 #if($user.getAllowPasswordReset())
   <div class="row abNav">
     <div class="span2 home">
-      <img src="/agileBase/website/images/brandmark.png" />
+      <img src="/agileBase/website/images/agilebase.png" />
       <div class="arrow"></div>
     </div>
   </div>
-  <h1>Your $user.getCompany() details</h1>
+  <h1><img src="/agileBase/website/images/brandmark.png" /> : your $user.getCompany() details</h1>
   Name: $user.getForename() $user.getSurname()<br>
   Email: $user.getEmail()<br>
   Username: $user.getUserName()
