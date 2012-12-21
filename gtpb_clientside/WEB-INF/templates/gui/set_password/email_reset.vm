@@ -26,7 +26,6 @@
     <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
 </head>
 <body><div class="container">
-
 #if($user.getAllowPasswordReset())
   <div class="row abNav">
     <div class="span2 home">
@@ -51,6 +50,5 @@
 #else
   The password reset link you used has expired, please ask your administrative contact for another.
 #end
-
 </div></body>
 </html>
