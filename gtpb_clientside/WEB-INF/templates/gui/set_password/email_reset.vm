@@ -44,7 +44,7 @@
     <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
     <script language="JavaScript">
       $(document).ready(function() {
-        $("#password").complexify({}, function(valid, complexity) {
+        $("#password").complexify({strengthScaleFactor: 0.8}, function(valid, complexity) {
           if (valid) {
             $(this).closest("form").addClass("good").removeClass("bad");
           } else {
