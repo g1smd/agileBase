@@ -37,7 +37,7 @@
   <div class="row big">
     <div class="span6">
 	  These details have been set up by $user.getCompany()
-	  <ul class="mid_spaced">
+	  <ul class="mid_spaced" style="margin-left: 1em;">
 	    <li>Name: $user.getForename() $user.getSurname()</li>
 	    <li>Email: $user.getEmail()</li>
 	    <li>Username: $user.getUserName()</li>
@@ -47,12 +47,12 @@
    <div class="row big">
      <div class="span6">
 	  <h2>Please choose a password</h2>
-	  <div class="spaced">
+	  <div class="spaced" style="margin-left: 1em;">
 	      <form name="changepassword" method="post" action="AppController.servlet">
 	        <input type="hidden" name="return" value="gui/set_password/email_success" />
 	        <input type="hidden" name="update_user" value="true" />
 	        <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
-	        <input type="password" name="password" /><input type="submit" value="Set" />
+	        <input type="password" name="password" /><button type="submit" value="Set" class="btn">set</button>
 	      </form>
 	  </div>
 	</div>
