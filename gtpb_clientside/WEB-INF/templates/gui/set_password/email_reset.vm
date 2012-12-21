@@ -43,9 +43,11 @@
 	    <li>Username: $user.getUserName()</li>
 	  </ul>
     </div>
-    <div class="span6">
+   </div>
+   <div class="row">
+     <div class="span6">
 	  Please choose a password
-	  <div class="big spaced">
+	  <div class="spaced">
 	      <form name="changepassword" method="post" action="AppController.servlet">
 	        <input type="hidden" name="return" value="gui/set_password/email_success" />
 	        <input type="hidden" name="update_user" value="true" />
@@ -53,7 +55,7 @@
 	        <input type="password" name="password" /><input type="submit" value="Set" />
 	      </form>
 	  </div>
-    </div>
+	</div>
   </div>
 #else
   The password reset link you used has expired, please ask your administrative contact for another.
