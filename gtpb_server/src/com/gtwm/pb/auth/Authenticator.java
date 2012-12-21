@@ -388,10 +388,12 @@ public final class Authenticator implements AuthenticatorInfo {
 		return this.userAllowedTo(privilegeType, table, appUser);
 	}
 
-	protected boolean userAllowedTo(PrivilegeType privilegeType, AppUserInfo appUser) throws CodingErrorException {
+	protected boolean userAllowedTo(PrivilegeType privilegeType, AppUserInfo appUser)
+			throws CodingErrorException {
 		// Sanity
 		if (privilegeType.isObjectSpecificPrivilege()) {
-			throw new CodingErrorException("Privilege type " + privilegeType + " not relevant, must be a non-table-specific privilege");
+			throw new CodingErrorException("Privilege type " + privilegeType
+					+ " not relevant, must be a non-table-specific privilege");
 		}
 		// Check cache
 		Set<AuthCacheObjectInfo> cachedResults = this.authCache.get(appUser);
@@ -400,7 +402,7 @@ public final class Authenticator implements AuthenticatorInfo {
 			this.authCache.put(appUser, cachedResults);
 		} else {
 			for (AuthCacheObjectInfo authCacheObject : cachedResults) {
-				if (authCacheObject.getPrivilegeType().equals(privilegeType)) {
+				if (authCacheObject.getPrivilegeType().equals(privilegeType) && (authCacheObject.getTable() == null)) {
 					return authCacheObject.userAllowedTo();
 				}
 			}
@@ -446,10 +448,12 @@ public final class Authenticator implements AuthenticatorInfo {
 			this.authCache.put(appUser, cachedResults);
 		} else {
 			for (AuthCacheObjectInfo authCacheObject : cachedResults) {
-				if (authCacheObject.getTable().equals(table)
-						&& authCacheObject.getPrivilegeType().equals(privilegeType)) {
-					// this.cacheHits++;
-					return authCacheObject.userAllowedTo();
+				if (authCacheObject.getTable() != null) {
+					if (authCacheObject.getTable().equals(table)
+							&& authCacheObject.getPrivilegeType().equals(privilegeType)) {
+						// this.cacheHits++;
+						return authCacheObject.userAllowedTo();
+					}
 				}
 			}
 		}
