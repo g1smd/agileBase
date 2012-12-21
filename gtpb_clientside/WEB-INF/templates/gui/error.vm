@@ -26,15 +26,15 @@
   #set($cause = $exception.getCause())
   #if($cause.getClass().getSimpleName() == "DisallowedException")
     <h1>Request access</h1>
-    <div class="well big">$cause.getMessage()</div>
     <div class="big spaced">
+      <p>$cause.getMessage()
       <p>These administrators can grant you access if you request it:</p>
       #set($admins = $view.getAdministrators())
       <ul>
       #foreach($admin in $admins)
         <li>
           $admin.getForename() $admin.getSurname()
-          #if($admin.getEmail() != "")
+          #if($admin.getEmail() && ($admin.getEmail != ""))
             <a href="mailto:$admin.getEmail()?subject=agilebase%20access:%20$sessionData.getTable().getSimpleName()">$admin.getEmail()</a>
           #end
         </li>
