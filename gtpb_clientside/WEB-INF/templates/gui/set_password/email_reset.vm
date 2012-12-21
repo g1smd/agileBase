@@ -32,8 +32,8 @@
         background-color: #EC008C;
       }
       #strength {
-        display: inline-block;
-        text-align: right;
+        display: inline;
+        float: right;
         color: white;
         font-weight: bold;
       }
@@ -50,7 +50,7 @@
           } else {
             $(this).closest("form").addClass("bad").removeClass("good");
           }
-          $("#strength").text(complexity + "%");
+          $("#strength").text(Math.round(complexity) + "%");
         });
       });
     </script>
