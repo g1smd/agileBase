@@ -150,32 +150,6 @@ i.massive {
 	color: rgb(230,231,224);
 }
 
-iframe {
-	margin-right: auto;
-	margin-left: auto;
-	display: block;
-}
-
-.call_to_action {
-	background-color: #009FE3;
-	padding: 1em;
-	border-radius: 1em;
-	color: white;
-	display: block;
-	text-decoration: none;
-	text-align: center;
-	margin-bottom: 2em;
-	margin-left: auto;
-	margin-right: auto;
-	width: 40%;
-	font-size: 14pt;
-}
-
-a.call_to_action:hover {
-	color: white;
-	text-decoration: none;
-}
-
 ul {
 	background-color: rgb(230,231,224);
 	border-radius: 1em;
@@ -189,19 +163,6 @@ ul li {
 
 ul li i {
 	color: #009FE3;
-}
-
-.casestudy {
-	float: right;
-	padding: 0.5em;
-	display: block;
-	background-color: #656766;
-	border-radius: 0.5em;
-	text-decoration: none;
-}
-
-a.casestudy {
-	color: white;
 }
 
 .loading {
