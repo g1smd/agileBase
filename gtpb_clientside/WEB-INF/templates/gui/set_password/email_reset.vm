@@ -56,7 +56,6 @@
     </script>
 </head>
 <body><div class="container">
-#if($user.getAllowPasswordReset())
   <div class="row abNav">
     <div class="span2 home">
       <img src="/agileBase/website/images/agilebase.png" />
@@ -64,6 +63,7 @@
     </div>
   </div>
   <h1><img src="/agileBase/website/images/brandmark.png" /> : password set</h1>
+#if($user.getAllowPasswordReset())
    <div class="row big">
      <div class="span6">
       Please choose a password
@@ -89,7 +89,7 @@
     </div>
    </div>
 #else
-  The password reset link you used has expired, please ask your administrative contact for another.
+  <div class="big spaced">The password reset link you used has expired, please ask your administrative contact for another.</div>
 #end
 </div></body>
 </html>
