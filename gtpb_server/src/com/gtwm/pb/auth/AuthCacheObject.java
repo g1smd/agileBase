@@ -60,7 +60,8 @@ public class AuthCacheObject implements AuthCacheObjectInfo {
 		}
 		AuthCacheObject authCacheObject = (AuthCacheObject) obj;
 		if (this.getTable() == null) {
-			if ((authCacheObject.getTable() == null) && (this.getPrivilegeType().equals(authCacheObject.getPrivilegeType()))
+			if ((authCacheObject.getTable() == null)
+					&& (this.getPrivilegeType().equals(authCacheObject.getPrivilegeType()))
 					&& (this.userAllowedTo() == authCacheObject.userAllowedTo())) {
 				return true;
 			}
@@ -77,7 +78,9 @@ public class AuthCacheObject implements AuthCacheObjectInfo {
 	public int hashCode() {
 		if (this.hashCode == 0) {
 			int hashCode = 17;
-			hashCode = 37 * hashCode + this.getTable().hashCode();
+			if (this.getTable() != null) {
+				hashCode = 37 * hashCode + this.getTable().hashCode();
+			}
 			hashCode = 37 * hashCode + this.getPrivilegeType().hashCode();
 			hashCode = 37 * hashCode + Boolean.valueOf(this.allowedTo).hashCode();
 			this.hashCode = hashCode;
