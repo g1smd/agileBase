@@ -33,11 +33,14 @@
       <div class="arrow"></div>
     </div>
   </div>
-  <h1><img src="/agileBase/website/images/brandmark.png" /> : your details set by $user.getCompany()</h1>
-  Name: $user.getForename() $user.getSurname()<br>
-  Email: $user.getEmail()<br>
-  Username: $user.getUserName()
-  <h1>Please choose a password</h1>
+  <h1><img src="/agileBase/website/images/brandmark.png" /> : your details</h1>
+  These details have been set up by $user.getCompany()
+  <ul>
+    <li>Name: $user.getForename() $user.getSurname()</li>
+    <li>Email: $user.getEmail()</li>
+    <li>Username: $user.getUserName()</li>
+  </ul>
+  <h2>Please choose a password</h2>
   <div class="big spaced">
 	  <form name="changepassword" method="post" action="AppController.servlet">
 	    <input type="hidden" name="return" value="gui/set_password/email_success" />
