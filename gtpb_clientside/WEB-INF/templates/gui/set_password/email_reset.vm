@@ -34,6 +34,19 @@
     </div>
   </div>
   <h1><img src="/agileBase/website/images/brandmark.png" /> : password set</h1>
+   <div class="row big">
+     <div class="span6">
+      Please choose a password
+      <div class="mid_spaced" style="margin-left: 1em;">
+          <form name="changepassword" method="post" action="AppController.servlet">
+            <input type="hidden" name="return" value="gui/set_password/email_success" />
+            <input type="hidden" name="update_user" value="true" />
+            <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
+            <input type="password" name="password" /><button type="submit" value="Set" class="btn">set</button>
+          </form>
+      </div>
+    </div>
+  </div>
   <div class="row big">
     <div class="span6">
 	  Your details have been set up by $user.getCompany()
@@ -44,19 +57,6 @@
 	  </ul>
     </div>
    </div>
-   <div class="row big">
-     <div class="span6">
-	  Please choose a password
-	  <div class="mid_spaced" style="margin-left: 1em;">
-	      <form name="changepassword" method="post" action="AppController.servlet">
-	        <input type="hidden" name="return" value="gui/set_password/email_success" />
-	        <input type="hidden" name="update_user" value="true" />
-	        <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
-	        <input type="password" name="password" /><button type="submit" value="Set" class="btn">set</button>
-	      </form>
-	  </div>
-	</div>
-  </div>
 #else
   The password reset link you used has expired, please ask your administrative contact for another.
 #end
