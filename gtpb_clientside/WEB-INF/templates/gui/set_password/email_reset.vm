@@ -50,7 +50,7 @@
           } else {
             $(this).closest("form").addClass("bad").removeClass("good");
           }
-          $("#strength").text(Math.round(complexity) + "%");
+          $("#strength").text(Math.round(complexity) + "% good");
         });
       });
     </script>
