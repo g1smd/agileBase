@@ -34,7 +34,7 @@
     </div>
   </div>
   <h1><img src="/agileBase/website/images/brandmark.png" /> : your details</h1>
-  <div class="row">
+  <div class="row big">
     <div class="span6">
 	  These details have been set up by $user.getCompany()
 	  <ul class="mid_spaced">
@@ -44,7 +44,7 @@
 	  </ul>
     </div>
    </div>
-   <div class="row">
+   <div class="row big">
      <div class="span6">
 	  <h2>Please choose a password</h2>
 	  <div class="spaced">
