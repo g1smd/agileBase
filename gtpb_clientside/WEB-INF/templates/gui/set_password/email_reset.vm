@@ -30,6 +30,12 @@
       .bad {
         background-color: #EC008C;
       }
+      #strength {
+        display: inline-block;
+        text-align: right;
+        color: white;
+        font-weight: bold;
+      }
     </style>
     <script language="JavaScript" src="resources/jquery.js"></script>
     <script language="JavaScript" src="resources/jquery.complexify.js"></script>
@@ -42,6 +48,7 @@
           } else {
             $(this).closest("form").addClass("bad").removeClass("good");
           }
+          $("#strength").text(complexity + "%");
         });
       });
     </script>
@@ -64,6 +71,7 @@
             <input type="hidden" name="update_user" value="true" />
             <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
             <input type="password" name="password" id="password"/><button type="submit" value="Set" class="btn">set</button>
+            <div id="strength"></div>
           </form>
       </div>
     </div>
