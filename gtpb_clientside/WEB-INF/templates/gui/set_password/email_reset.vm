@@ -24,6 +24,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
     <link href="http://agilebase.co.uk/styles.css" rel="stylesheet">
     <style>
+    #[[
       .good {
         background-color: #8DC63F;
       }
@@ -36,6 +37,7 @@
         color: white;
         font-weight: bold;
       }
+    ]]#
     </style>
     <script language="JavaScript" src="resources/jquery.js"></script>
     <script language="JavaScript" src="resources/jquery.complexify.js"></script>
