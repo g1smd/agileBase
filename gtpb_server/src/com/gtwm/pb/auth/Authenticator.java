@@ -83,8 +83,8 @@ public final class Authenticator implements AuthenticatorInfo {
 
 	@Transient
 	public SortedSet<CompanyInfo> getCompanies() {
-		return Collections.unmodifiableSortedSet(new TreeSet<CompanyInfo>(this
-				.getCompaniesCollection()));
+		return Collections
+				.unmodifiableSortedSet(new TreeSet<CompanyInfo>(this.getCompaniesCollection()));
 	}
 
 	/**
@@ -110,8 +110,8 @@ public final class Authenticator implements AuthenticatorInfo {
 	}
 
 	protected synchronized void updateUser(AppUserInfo appUser, String userName, String surname,
-			String forename, String password, String email, InitialView userType,
-			boolean usesCustomUI, boolean usesAppLauncher) throws MissingParametersException, CantDoThatException,
+			String forename, String password, String email, InitialView userType, boolean usesCustomUI,
+			boolean usesAppLauncher) throws MissingParametersException, CantDoThatException,
 			CodingErrorException {
 		// need to remove and add user to all sorted collections it's in because
 		// we may be changing a property (userName) that compareTo depends on
@@ -193,8 +193,8 @@ public final class Authenticator implements AuthenticatorInfo {
 	 * Add a general application functionality privilege for a role.
 	 * 
 	 * @throws CantDoThatException
-	 *             If privilege type is MASTER: The MASTER privilege can only be
-	 *             assigned to users, not roles
+	 *           If privilege type is MASTER: The MASTER privilege can only be
+	 *           assigned to users, not roles
 	 */
 	protected void addRolePrivilege(AppRoleInfo role, PrivilegeType privilegeType)
 			throws CantDoThatException {
@@ -224,8 +224,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	 * Add a table privilege for a role
 	 * 
 	 * @throws IllegalArgumentException
-	 *             if the privilege requested isn't compatible with a table
-	 *             object
+	 *           if the privilege requested isn't compatible with a table object
 	 */
 	protected synchronized void addRolePrivilege(AppRoleInfo role, PrivilegeType privilegeType,
 			TableInfo table) throws IllegalArgumentException {
@@ -241,8 +240,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	 * @return the removed privilege
 	 * 
 	 * @throws IllegalArgumentException
-	 *             if the privilege requested isn't compatible with a table
-	 *             object
+	 *           if the privilege requested isn't compatible with a table object
 	 */
 	protected synchronized RoleTablePrivilegeInfo removeRolePrivilege(AppRoleInfo role,
 			PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException {
@@ -257,8 +255,8 @@ public final class Authenticator implements AuthenticatorInfo {
 	 * Adds a general application privilege for a specific user
 	 * 
 	 * @throws CantDoThatException
-	 *             If privilege being assigned is MASTER but the user already
-	 *             has other privileges.
+	 *           If privilege being assigned is MASTER but the user already has
+	 *           other privileges.
 	 */
 	protected synchronized void addUserPrivilege(AppUserInfo appUser, PrivilegeType privilegeType)
 			throws CantDoThatException {
@@ -285,8 +283,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	 * Adds a table privilege for a specific user
 	 * 
 	 * @throws IllegalArgumentException
-	 *             if the privilege requested isn't compatible with a table
-	 *             object
+	 *           if the privilege requested isn't compatible with a table object
 	 */
 	protected synchronized void addUserPrivilege(AppUserInfo appUser, PrivilegeType privilegeType,
 			TableInfo table) throws IllegalArgumentException {
@@ -318,8 +315,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	 * @return the removed privilege
 	 * 
 	 * @throws IllegalArgumentException
-	 *             if the privilege requested isn't compatible with a table
-	 *             object
+	 *           if the privilege requested isn't compatible with a table object
 	 */
 	protected synchronized UserTablePrivilegeInfo removeUserPrivilege(AppUserInfo appUser,
 			PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException {
@@ -336,8 +332,9 @@ public final class Authenticator implements AuthenticatorInfo {
 		try {
 			appUser = getUserByUserName(request.getRemoteUser());
 		} catch (ObjectNotFoundException onfe) {
-			logger.error("Authentication check can't complete: AppUserInfo object not found for logged in user '"
-					+ request.getRemoteUser() + "'");
+			logger
+					.error("Authentication check can't complete: AppUserInfo object not found for logged in user '"
+							+ request.getRemoteUser() + "'");
 			throw onfe;
 		}
 		// Check whether a role the user is in has the required privilege
@@ -382,12 +379,54 @@ public final class Authenticator implements AuthenticatorInfo {
 		try {
 			appUser = this.getUserByUserName(request.getRemoteUser());
 		} catch (ObjectNotFoundException onfe) {
-			logger.error("Authentication check can't complete: AppUserInfo object not found for logged in user '"
-					+ request.getRemoteUser() + "'");
+			logger
+					.error("Authentication check can't complete: AppUserInfo object not found for logged in user '"
+							+ request.getRemoteUser() + "'");
 			// If there's no user then they can't see anything
 			return false;
 		}
 		return this.userAllowedTo(privilegeType, table, appUser);
+	}
+
+	protected boolean userAllowedTo(PrivilegeType privilegeType, AppUserInfo appUser) throws CodingErrorException {
+		// Sanity
+		if (privilegeType.isObjectSpecificPrivilege()) {
+			throw new CodingErrorException("Privilege type " + privilegeType + " not relevant, must be a non-table-specific privilege");
+		}
+		// Check cache
+		Set<AuthCacheObjectInfo> cachedResults = this.authCache.get(appUser);
+		if (cachedResults == null) {
+			cachedResults = new HashSet<AuthCacheObjectInfo>();
+			this.authCache.put(appUser, cachedResults);
+		} else {
+			for (AuthCacheObjectInfo authCacheObject : cachedResults) {
+				if (authCacheObject.getPrivilegeType().equals(privilegeType)) {
+					return authCacheObject.userAllowedTo();
+				}
+			}
+		}
+		// Shortcut. Currently there is only one non-table privilege which only
+		// roles can have so we only check roles privs. If this changes, we'll have
+		// to update
+		for (AppRoleInfo role : this.getRolesDirect()) {
+			if (role.getUsers().contains(appUser)) {
+				for (RoleGeneralPrivilegeInfo privilege : this.getRolePrivilegesDirect()) {
+					if (!(privilege instanceof RoleTablePrivilegeInfo)) {
+						if (privilege.getPrivilegeType().equals(PrivilegeType.ADMINISTRATE)
+								&& privilege.getRole().equals(role)) {
+							AuthCacheObjectInfo authCacheObject = new AuthCacheObject(privilegeType, true);
+							cachedResults.add(authCacheObject);
+							this.authCache.put(appUser, cachedResults);
+							return true;
+						}
+					}
+				}
+			}
+		}
+		AuthCacheObjectInfo authCacheObject = new AuthCacheObject(privilegeType, false);
+		cachedResults.add(authCacheObject);
+		this.authCache.put(appUser, cachedResults);
+		return false;
 	}
 
 	/**
@@ -425,8 +464,7 @@ public final class Authenticator implements AuthenticatorInfo {
 				if ((objectPrivilege.getPrivilegeType().equals(privilegeType))
 						&& (objectPrivilege.getUser().equals(appUser))
 						&& (objectPrivilege.getTable().equals(table))) {
-					AuthCacheObjectInfo authCacheObject = new AuthCacheObject(table, privilegeType,
-							true);
+					AuthCacheObjectInfo authCacheObject = new AuthCacheObject(table, privilegeType, true);
 					cachedResults.add(authCacheObject);
 					this.authCache.put(appUser, cachedResults);
 					return true;
@@ -445,8 +483,7 @@ public final class Authenticator implements AuthenticatorInfo {
 						if ((objectPrivilege.getPrivilegeType().equals(privilegeType))
 								&& (objectPrivilege.getRole().equals(role))
 								&& (objectPrivilege.getTable().equals(table))) {
-							AuthCacheObjectInfo authCacheObject = new AuthCacheObject(table,
-									privilegeType, true);
+							AuthCacheObjectInfo authCacheObject = new AuthCacheObject(table, privilegeType, true);
 							cachedResults.add(authCacheObject);
 							this.authCache.put(appUser, cachedResults);
 							return true;
@@ -468,13 +505,13 @@ public final class Authenticator implements AuthenticatorInfo {
 		try {
 			appUser = this.getUserByUserName(request.getRemoteUser());
 		} catch (ObjectNotFoundException onfe) {
-			logger.error("Authentication check can't complete: AppUserInfo object not found for logged in user '"
-					+ request.getRemoteUser() + "'");
+			logger
+					.error("Authentication check can't complete: AppUserInfo object not found for logged in user '"
+							+ request.getRemoteUser() + "'");
 			// If there's no user then they can't see anything
 			return false;
 		}
-		return this
-				.specifiedUserAllowedToViewReport(appUser, report, new HashSet<BaseReportInfo>());
+		return this.specifiedUserAllowedToViewReport(appUser, report, new HashSet<BaseReportInfo>());
 	}
 
 	public Set<TableInfo> getTablesNecessaryToViewReport(HttpServletRequest request,
@@ -499,8 +536,8 @@ public final class Authenticator implements AuthenticatorInfo {
 		Set<BaseReportInfo> joinedReports = simpleReport.getJoinedReports();
 		for (BaseReportInfo joinedReport : joinedReports) {
 			if (!analyzedReports.contains(joinedReport)) {
-				necessaryTables.addAll(this.tablesNecessaryToViewReport(joinedReport,
-						necessaryTables, analyzedReports));
+				necessaryTables.addAll(this.tablesNecessaryToViewReport(joinedReport, necessaryTables,
+						analyzedReports));
 				analyzedReports.add(joinedReport);
 			}
 		}

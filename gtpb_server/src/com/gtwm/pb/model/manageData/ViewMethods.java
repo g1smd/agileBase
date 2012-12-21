@@ -925,17 +925,21 @@ public final class ViewMethods implements ViewMethodsInfo {
 
 	public SortedSet<AppUserInfo> adminGetUsers() throws DisallowedException,
 			ObjectNotFoundException {
-		return getAuthManager().getUsers(this.request);
+		return this.getAuthManager().getUsers(this.request);
+	}
+	
+	public SortedSet<AppUserInfo> getAdministrators() throws ObjectNotFoundException, CodingErrorException {
+		return this.getAuthManager().getAdministrators(this.request);
 	}
 
 	public SortedSet<AppRoleInfo> adminGetRoles() throws DisallowedException,
 			ObjectNotFoundException {
-		return getAuthManager().getRoles(this.request);
+		return this.getAuthManager().getRoles(this.request);
 	}
 
 	public SortedSet<AppRoleInfo> adminGetRolesForUser(AppUserInfo user)
 			throws DisallowedException, ObjectNotFoundException {
-		return getAuthManager().getRolesForUser(this.request, user);
+		return this.getAuthManager().getRolesForUser(this.request, user);
 	}
 
 	public EnumSet<PrivilegeType> adminGetPrivilegeTypes() throws DisallowedException,
@@ -946,45 +950,45 @@ public final class ViewMethods implements ViewMethodsInfo {
 	public boolean loggedInUserAllowedTo(String privilegeTypeToCheck)
 			throws IllegalArgumentException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
-		return getAuthenticator().loggedInUserAllowedTo(this.request, privilegeType);
+		return this.getAuthenticator().loggedInUserAllowedTo(this.request, privilegeType);
 	}
 
 	public boolean loggedInUserAllowedTo(String privilegeTypeToCheck, TableInfo table)
 			throws IllegalArgumentException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
-		return getAuthenticator().loggedInUserAllowedTo(this.request, privilegeType, table);
+		return this.getAuthenticator().loggedInUserAllowedTo(this.request, privilegeType, table);
 	}
 
 	public boolean loggedInUserAllowedToViewReport(BaseReportInfo report)
 			throws CodingErrorException {
-		return getAuthenticator().loggedInUserAllowedToViewReport(this.request, report);
+		return this.getAuthenticator().loggedInUserAllowedToViewReport(this.request, report);
 	}
 
 	public boolean userHasPrivilege(String privilegeTypeToCheck) throws DisallowedException,
 			IllegalArgumentException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
 		AppUserInfo sessionUser = this.sessionData.getUser();
-		return getAuthManager().specifiedUserHasPrivilege(this.request, privilegeType, sessionUser);
+		return this.getAuthManager().specifiedUserHasPrivilege(this.request, privilegeType, sessionUser);
 	}
 
 	public boolean userHasPrivilege(String privilegeTypeToCheck, TableInfo table)
 			throws IllegalArgumentException, ObjectNotFoundException, DisallowedException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
 		AppUserInfo sessionUser = this.sessionData.getUser();
-		return getAuthManager().specifiedUserHasPrivilege(this.request, privilegeType, sessionUser,
+		return this.getAuthManager().specifiedUserHasPrivilege(this.request, privilegeType, sessionUser,
 				table);
 	}
 
 	public boolean userHasPrivilege(AppUserInfo user, String privilegeTypeToCheck)
 			throws DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
-		return getAuthManager().specifiedUserHasPrivilege(this.request, privilegeType, user);
+		return this.getAuthManager().specifiedUserHasPrivilege(this.request, privilegeType, user);
 	}
 
 	public boolean userHasPrivilege(AppUserInfo user, String privilegeTypeToCheck, TableInfo table)
 			throws DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
-		boolean hasPrivilege = getAuthManager().specifiedUserHasPrivilege(this.request,
+		boolean hasPrivilege = this.getAuthManager().specifiedUserHasPrivilege(this.request,
 				privilegeType, user, table);
 		return hasPrivilege;
 	}
@@ -993,27 +997,27 @@ public final class ViewMethods implements ViewMethodsInfo {
 			DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
 		AppRoleInfo sessionRole = this.sessionData.getRole();
-		return getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, sessionRole);
+		return this.getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, sessionRole);
 	}
 
 	public boolean roleHasPrivilege(String privilegeTypeToCheck, TableInfo table)
 			throws IllegalArgumentException, DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
 		AppRoleInfo sessionRole = this.sessionData.getRole();
-		return getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, sessionRole,
+		return this.getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, sessionRole,
 				table);
 	}
 
 	public boolean roleHasPrivilege(AppRoleInfo role, String privilegeTypeToCheck)
 			throws IllegalArgumentException, DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
-		return getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, role);
+		return this.getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, role);
 	}
 
 	public boolean roleHasPrivilege(AppRoleInfo role, String privilegeTypeToCheck, TableInfo table)
 			throws IllegalArgumentException, DisallowedException, ObjectNotFoundException {
 		PrivilegeType privilegeType = PrivilegeType.valueOf(privilegeTypeToCheck.toUpperCase());
-		return getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, role, table);
+		return this.getAuthManager().specifiedRoleHasPrivilege(this.request, privilegeType, role, table);
 	}
 
 	public List<JoinClauseInfo> getCandidateJoins(SimpleReportInfo report, boolean direction)

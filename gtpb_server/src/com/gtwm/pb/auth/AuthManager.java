@@ -60,6 +60,7 @@ import org.hibernate.HibernateException;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.HashSet;
+import java.util.TreeSet;
 
 /**
  * Manages the application's Authenticator object - use the static methods in
@@ -753,6 +754,17 @@ public final class AuthManager implements AuthManagerInfo {
 		} else {
 			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
 		}
+	}
+	
+	public SortedSet<AppUserInfo> getAdministrators(HttpServletRequest request) throws ObjectNotFoundException, CodingErrorException {
+		CompanyInfo company = this.getCompanyForLoggedInUser(request);
+		SortedSet<AppUserInfo> admins = new TreeSet<AppUserInfo>();
+		for (AppUserInfo user : company.getUsers()) {
+			if (((Authenticator) this.getAuthenticator()).userAllowedTo(PrivilegeType.ADMINISTRATE,user)) {
+				admins.add(user);
+			}
+		}
+		return admins;
 	}
 
 	public SortedSet<AppRoleInfo> getRoles(HttpServletRequest request) throws DisallowedException,

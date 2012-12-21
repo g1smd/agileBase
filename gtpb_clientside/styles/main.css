@@ -22,11 +22,12 @@ table.data tr.rowb td small { color:#E8E7E3 }
 table.data small { font-size:8pt; color:#cccccc }
 
 #errormessage {
-		border-radius: 1em;
-		border: 2px solid #ff0000;
-		text-align: center;
-		background: rgb(233,204,201);
-		margin: 10px;
+  border-radius: 1em;
+  text-align: center;
+  background-color: #E8E7E3;
+  margin: 1em;
+  padding: 1em;
+  font-weight: bold;
 }
 
 .warningmessage {

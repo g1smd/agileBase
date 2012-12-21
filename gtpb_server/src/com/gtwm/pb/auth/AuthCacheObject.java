@@ -33,6 +33,12 @@ public class AuthCacheObject implements AuthCacheObjectInfo {
 		this.allowedTo = allowedTo;
 	}
 
+	public AuthCacheObject(PrivilegeType privilegeType, boolean allowedTo) {
+		this.table = null;
+		this.privilegeType = privilegeType;
+		this.allowedTo = allowedTo;
+	}
+
 	public PrivilegeType getPrivilegeType() {
 		return this.privilegeType;
 	}
@@ -53,10 +59,17 @@ public class AuthCacheObject implements AuthCacheObjectInfo {
 			return false;
 		}
 		AuthCacheObject authCacheObject = (AuthCacheObject) obj;
-		if (this.getTable().equals(authCacheObject.getTable())
-				&& this.getPrivilegeType().equals(authCacheObject.getPrivilegeType())
-				&& this.userAllowedTo() == authCacheObject.userAllowedTo()) {
-			return true;
+		if (this.getTable() == null) {
+			if ((authCacheObject.getTable() == null) && (this.getPrivilegeType().equals(authCacheObject.getPrivilegeType()))
+					&& (this.userAllowedTo() == authCacheObject.userAllowedTo())) {
+				return true;
+			}
+		} else {
+			if (this.getTable().equals(authCacheObject.getTable())
+					&& this.getPrivilegeType().equals(authCacheObject.getPrivilegeType())
+					&& (this.userAllowedTo() == authCacheObject.userAllowedTo())) {
+				return true;
+			}
 		}
 		return false;
 	}

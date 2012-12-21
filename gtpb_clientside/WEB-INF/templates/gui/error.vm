@@ -16,12 +16,31 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <style>
-		@import url("styles/main.css");
+  @import url("styles/main.css");
+  @import url("website/styles.css");
+  @import url("website/bootstrap/css/bootstrap.css");
 </style>
-<div id="errormessage">
-<b>Error:</b><p>
 #if($view.getWhetherExceptionOccurred())
-  $view.getException().getMessage()<p>
+  #set($exception = $view.getException())
+  #set($cause = $exception.getCause())
+  #if($cause.getClass().getSimpleName() == "DisallowedException")
+    <h1>Request access</h1>
+    <div class="well big">$cause.getMessage()</div>
+    <div class="big spaced">
+      <p>These administrators can grant you access if you request it:</p>
+      #set($admins = $view.getAdministrators())
+      #foreach($admin in $admins)
+        <li>$admin</li>
+      #end
+      <ul>
+      </ul>
+    </div>
+  #else
+    <div id="errormessage">
+      <b>Error</b><p>
+      $exception.getMessage()<p>
+    </div>
+  #end
 #else
   The error handling template has been called but there's no exception available - I can't tell what happened
 #end

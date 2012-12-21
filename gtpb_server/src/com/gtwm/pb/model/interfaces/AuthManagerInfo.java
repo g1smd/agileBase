@@ -41,8 +41,8 @@ import com.gtwm.pb.util.Enumerations.InitialView;
 public interface AuthManagerInfo {
 
 	/**
-	 * @return The application's authenticator object, used to check privileges
-	 *         of the logged in user
+	 * @return The application's authenticator object, used to check privileges of
+	 *         the logged in user
 	 */
 	public AuthenticatorInfo getAuthenticator();
 
@@ -62,7 +62,7 @@ public interface AuthManagerInfo {
 	 * Add a new company
 	 * 
 	 * @throws DisallowedException
-	 *             If the logged in user doesn't have MASTER privileges
+	 *           If the logged in user doesn't have MASTER privileges
 	 */
 	public void addCompany(HttpServletRequest request, CompanyInfo company)
 			throws DisallowedException, CantDoThatException, CodingErrorException,
@@ -72,22 +72,21 @@ public interface AuthManagerInfo {
 			throws DisallowedException, CodingErrorException, CantDoThatException,
 			ObjectNotFoundException;
 
-	public CompanyInfo getCompanyByInternalName(HttpServletRequest request,
-			String internalCompanyName) throws DisallowedException, ObjectNotFoundException;
+	public CompanyInfo getCompanyByInternalName(HttpServletRequest request, String internalCompanyName)
+			throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @throws ObjectNotFoundException
-	 *             If no user object can be found for the username known by the
-	 *             request - could possibly happen if the session gets out of
-	 *             sync with objects, e.g. the logged in user is deleted by
-	 *             someone else
+	 *           If no user object can be found for the username known by the
+	 *           request - could possibly happen if the session gets out of sync
+	 *           with objects, e.g. the logged in user is deleted by someone else
 	 */
 	public CompanyInfo getCompanyForLoggedInUser(HttpServletRequest request)
 			throws ObjectNotFoundException;
 
 	/**
 	 * @throws DisallowedException
-	 *             If the logged in user doesn't have MASTER privileges
+	 *           If the logged in user doesn't have MASTER privileges
 	 */
 	public SortedSet<CompanyInfo> getCompanies(HttpServletRequest request)
 			throws DisallowedException, ObjectNotFoundException;
@@ -95,38 +94,37 @@ public interface AuthManagerInfo {
 	/**
 	 * @throws SQLException
 	 * @throws MissingParametersException
-	 *             If userName or password is null or blank
+	 *           If userName or password is null or blank
 	 * @throws DisallowedException
-	 *             If the current user doesn't have ADMINISTRATE privileges, or
-	 *             if trying to add a user to another company and the MASTER
-	 *             privilege isn't present
+	 *           If the current user doesn't have ADMINISTRATE privileges, or if
+	 *           trying to add a user to another company and the MASTER privilege
+	 *           isn't present
 	 */
-	public void addUser(HttpServletRequest request, AppUserInfo newUser)
-			throws DisallowedException, MissingParametersException, ObjectNotFoundException,
+	public void addUser(HttpServletRequest request, AppUserInfo newUser) throws DisallowedException,
+			MissingParametersException, ObjectNotFoundException, CodingErrorException;
+
+	/**
+	 * @throws DisallowedException
+	 *           If the current user doesn't have ADMINISTRATE privileges
+	 * @throws SQLException
+	 * @throws MissingParametersException
+	 *           If userName or password is whitespace or zero-length string
+	 */
+	public void updateUser(HttpServletRequest request, AppUserInfo appUser, String userName,
+			String surname, String forename, String password, String email, InitialView userType,
+			boolean usesCustomUI, boolean usesAppLauncher) throws DisallowedException,
+			MissingParametersException, CantDoThatException, ObjectNotFoundException,
 			CodingErrorException;
 
 	/**
-	 * @throws DisallowedException
-	 *             If the current user doesn't have ADMINISTRATE privileges
-	 * @throws SQLException
-	 * @throws MissingParametersException
-	 *             If userName or password is whitespace or zero-length string
-	 */
-	public void updateUser(HttpServletRequest request, AppUserInfo appUser, String userName,
-			String surname, String forename, String password, String email, InitialView userType, boolean usesCustomUI, boolean usesAppLauncher)
-			throws DisallowedException, MissingParametersException, CantDoThatException,
-			ObjectNotFoundException, CodingErrorException;
-
-	/**
 	 * @param appUser
-	 *            The user to remove
+	 *          The user to remove
 	 * @throws DisallowedException
-	 *             If logged in user doesn't have ADMINISTRATE or MASTER
-	 *             privileges
+	 *           If logged in user doesn't have ADMINISTRATE or MASTER privileges
 	 * @throws SQLException
 	 * @throws ObjectNotFoundException
-	 *             If the user isn't found in the application's collection of
-	 *             users (stored in com.gtwm.pb.auth.Authenticator)
+	 *           If the user isn't found in the application's collection of users
+	 *           (stored in com.gtwm.pb.auth.Authenticator)
 	 */
 	public void removeUser(HttpServletRequest request, AppUserInfo appUser)
 			throws DisallowedException, ObjectNotFoundException, CodingErrorException,
@@ -137,12 +135,12 @@ public interface AuthManagerInfo {
 
 	/**
 	 * @throws DisallowedException
-	 *             If user doesn't have ADMINISTRATE privileges, or if a role's
-	 *             being added to a different company and the user doesn't have
-	 *             MASTER privileges
+	 *           If user doesn't have ADMINISTRATE privileges, or if a role's
+	 *           being added to a different company and the user doesn't have
+	 *           MASTER privileges
 	 * @throws SQLException
 	 * @throws MissingParametersException
-	 *             If roleName is null or an empty string
+	 *           If roleName is null or an empty string
 	 */
 	public void addRole(HttpServletRequest request, AppRoleInfo role) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CodingErrorException;
@@ -152,12 +150,12 @@ public interface AuthManagerInfo {
 
 	/**
 	 * @throws DisallowedException
-	 *             If logged in user doesn't have ADMINISTRATE or MASTER
-	 *             privileges. MASYER is allowed because when deleting a
-	 *             company, users and roles of that company must also be deleted
+	 *           If logged in user doesn't have ADMINISTRATE or MASTER privileges.
+	 *           MASYER is allowed because when deleting a company, users and
+	 *           roles of that company must also be deleted
 	 */
-	public void removeRole(HttpServletRequest request, AppRoleInfo role)
-			throws DisallowedException, ObjectNotFoundException, CodingErrorException, CantDoThatException;
+	public void removeRole(HttpServletRequest request, AppRoleInfo role) throws DisallowedException,
+			ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
 	/**
 	 * 
@@ -167,16 +165,16 @@ public interface AuthManagerInfo {
 	public AppRoleInfo getRoleByInternalName(String internalRoleName);
 
 	/**
-	 * Creates and stores a privilege which is an object that matches a role to
-	 * a privilege type, e.g the role 'administrator' may have the privilege
+	 * Creates and stores a privilege which is an object that matches a role to a
+	 * privilege type, e.g the role 'administrator' may have the privilege
 	 * ADMINISTRATE
 	 * 
 	 * @throws DisallowedException
-	 *             If user doesn't have ADMINISTRATE privileges
+	 *           If user doesn't have ADMINISTRATE privileges
 	 * 
 	 * @throws CantDoThatException
-	 *             If the privilege type can't be assigned to a role because it
-	 *             is invalid for roles
+	 *           If the privilege type can't be assigned to a role because it is
+	 *           invalid for roles
 	 */
 	public void addRolePrivilege(HttpServletRequest request, AppRoleInfo role,
 			PrivilegeType privilegeType) throws DisallowedException, CantDoThatException,
@@ -185,13 +183,12 @@ public interface AuthManagerInfo {
 	/**
 	 * Creates and stores a table-specific privilege which is an object that
 	 * matches a role, privilege type and table together, e.g the role
-	 * 'sales_rep', privilege type VIEW_TABLE_DATA and table 'Sales' may be
-	 * linked
+	 * 'sales_rep', privilege type VIEW_TABLE_DATA and table 'Sales' may be linked
 	 * 
 	 * @throws IllegalArgumentException
-	 *             If the privilegeType isn't a table-specific privilege
+	 *           If the privilegeType isn't a table-specific privilege
 	 * @throws DisallowedException
-	 *             If user doesn't have ADMINISTRATE privileges
+	 *           If user doesn't have ADMINISTRATE privileges
 	 */
 	public void addRolePrivilege(HttpServletRequest request, AppRoleInfo role,
 			PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException,
@@ -208,8 +205,8 @@ public interface AuthManagerInfo {
 	 * Add a general user privilege
 	 * 
 	 * @throws CantDoThatException
-	 *             If the privilege type can't be assigned to that particular
-	 *             user because it conflicts with other privileges
+	 *           If the privilege type can't be assigned to that particular user
+	 *           because it conflicts with other privileges
 	 */
 	public void addUserPrivilege(HttpServletRequest request, AppUserInfo appUser,
 			PrivilegeType privilegeType) throws DisallowedException, CantDoThatException,
@@ -219,8 +216,8 @@ public interface AuthManagerInfo {
 	 * Add a table-specific user privilege
 	 * 
 	 * @throws CantDoThatException
-	 *             If the privilege type can't be assigned to that particular
-	 *             user because it conflicts with other privileges
+	 *           If the privilege type can't be assigned to that particular user
+	 *           because it conflicts with other privileges
 	 */
 	public void addUserPrivilege(HttpServletRequest request, AppUserInfo appUser,
 			PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException,
@@ -234,25 +231,25 @@ public interface AuthManagerInfo {
 			DisallowedException, ObjectNotFoundException;
 
 	/**
-	 * For use when a table is deleted, to clear all privileges there were on
-	 * that table
+	 * For use when a table is deleted, to clear all privileges there were on that
+	 * table
 	 * 
 	 * @throws DisallowedException
-	 *             If the logged in user doesn't have MANAGE_TABLE privileges on
-	 *             the table
+	 *           If the logged in user doesn't have MANAGE_TABLE privileges on the
+	 *           table
 	 */
 	public void removePrivilegesOnTable(HttpServletRequest request, TableInfo table)
 			throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @throws MissingParametersException
-	 *             If role null or empty string
+	 *           If role null or empty string
 	 * @throws ObjectNotFoundException
-	 *             If role specified doesn't exist
+	 *           If role specified doesn't exist
 	 * @throws DisallowedException
-	 *             If the current user doesn't have ADMINISTRATE privileges
+	 *           If the current user doesn't have ADMINISTRATE privileges
 	 * @throws CantDoThatException
-	 *             If user has MASTER privileges, they can't be added to a role
+	 *           If user has MASTER privileges, they can't be added to a role
 	 */
 	public void assignUserToRole(HttpServletRequest request, AppUserInfo user, AppRoleInfo role)
 			throws DisallowedException, ObjectNotFoundException, MissingParametersException,
@@ -269,22 +266,30 @@ public interface AuthManagerInfo {
 			ObjectNotFoundException;
 
 	/**
+	 * TODO: company.getUsers doesn't throw an exception if not administrator,
+	 * these methods should behave the same either way
+	 * 
 	 * @return A list of users who can log in from the current company
 	 * @throws DisallowedException
-	 *             If the current user doesn't have ADMINISTRATE privileges
+	 *           If the current user doesn't have ADMINISTRATE privileges
 	 * @throws ObjectNotFoundException
-	 *             If there's an error retrieving the current company object
+	 *           If there's an error retrieving the current company object
 	 */
 	public SortedSet<AppUserInfo> getUsers(HttpServletRequest request) throws DisallowedException,
 			ObjectNotFoundException;
+	
+	/**
+	 * @return A set of administrators for the company of the logged in user. Useful to show who can grant privileges etc. if a user requests it
+	 */
+	public SortedSet<AppUserInfo> getAdministrators(HttpServletRequest request) throws ObjectNotFoundException, CodingErrorException;
 
 	/**
-	 * @return A list of roles from the current company that users can be
-	 *         assigned to. Each role can allow a list of privileges
+	 * @return A list of roles from the current company that users can be assigned
+	 *         to. Each role can allow a list of privileges
 	 * @throws DisallowedException
-	 *             If the current user doesn't have ADMINISTRATE privileges
+	 *           If the current user doesn't have ADMINISTRATE privileges
 	 * @throws ObjectNotFoundException
-	 *             If there's an error retrieving the current company object
+	 *           If there's an error retrieving the current company object
 	 */
 	public SortedSet<AppRoleInfo> getRoles(HttpServletRequest request) throws DisallowedException,
 			ObjectNotFoundException;
@@ -294,18 +299,18 @@ public interface AuthManagerInfo {
 	 * the list of users in a role, just call role.getUsers() directly
 	 * 
 	 * @throws DisallowedException
-	 *             If the current user doesn't have ADMINISTRATE privileges
+	 *           If the current user doesn't have ADMINISTRATE privileges
 	 */
 	public SortedSet<AppRoleInfo> getRolesForUser(HttpServletRequest request, AppUserInfo user)
 			throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * @return The complete set of privileges the user specified has (not
-	 *         including privileges they may have as a result of being a member
-	 *         of a role)
+	 *         including privileges they may have as a result of being a member of
+	 *         a role)
 	 * @throws DisallowedException
-	 *             If the current (logged in) user doesn't have ADMINISTRATE
-	 *             privileges
+	 *           If the current (logged in) user doesn't have ADMINISTRATE
+	 *           privileges
 	 */
 	public Set<UserGeneralPrivilegeInfo> getPrivilegesForUser(HttpServletRequest request,
 			AppUserInfo user) throws DisallowedException, ObjectNotFoundException;
@@ -313,47 +318,45 @@ public interface AuthManagerInfo {
 	/**
 	 * @return The complete set of privileges the specified role has
 	 * @throws DisallowedException
-	 *             If the current (logged in) user doesn't have ADMINISTRATE
-	 *             privileges
+	 *           If the current (logged in) user doesn't have ADMINISTRATE
+	 *           privileges
 	 */
 	public Set<RoleGeneralPrivilegeInfo> getPrivilegesForRole(HttpServletRequest request,
 			AppRoleInfo role) throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * IMPORTANT NOTE: Don't use these specifiedUserHasPrivilege methods to do
-	 * authentication on the logged in user, use
-	 * getAuthenticator().userAllowedTo instead which checks both user and any
-	 * roles the user is in and which validates the username
+	 * authentication on the logged in user, use getAuthenticator().userAllowedTo
+	 * instead which checks both user and any roles the user is in and which
+	 * validates the username
 	 */
-	public boolean specifiedUserHasPrivilege(HttpServletRequest request,
-			PrivilegeType privilegeType, AppUserInfo user) throws DisallowedException,
-			ObjectNotFoundException;
+	public boolean specifiedUserHasPrivilege(HttpServletRequest request, PrivilegeType privilegeType,
+			AppUserInfo user) throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * Checks whether the specified user has a particular table privilege
 	 */
-	public boolean specifiedUserHasPrivilege(HttpServletRequest request,
-			PrivilegeType privilegeType, AppUserInfo user, TableInfo table)
-			throws DisallowedException, ObjectNotFoundException;
+	public boolean specifiedUserHasPrivilege(HttpServletRequest request, PrivilegeType privilegeType,
+			AppUserInfo user, TableInfo table) throws DisallowedException, ObjectNotFoundException;
 
-	public boolean specifiedRoleHasPrivilege(HttpServletRequest request,
-			PrivilegeType privilegeType, AppRoleInfo role) throws DisallowedException,
-			ObjectNotFoundException;
+	public boolean specifiedRoleHasPrivilege(HttpServletRequest request, PrivilegeType privilegeType,
+			AppRoleInfo role) throws DisallowedException, ObjectNotFoundException;
 
-	public boolean specifiedRoleHasPrivilege(HttpServletRequest request,
-			PrivilegeType privilegeType, AppRoleInfo role, TableInfo table)
-			throws DisallowedException, ObjectNotFoundException;
+	public boolean specifiedRoleHasPrivilege(HttpServletRequest request, PrivilegeType privilegeType,
+			AppRoleInfo role, TableInfo table) throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * Checks whether the specified user is able to view a report by having all
 	 * the relevant privileges or roles with privileges
 	 * 
 	 * @throws DisallowedException
-	 *             if the logged in user isn't an administrator
+	 *           if the logged in user isn't an administrator
 	 */
 	public boolean specifiedUserAllowedToViewReport(HttpServletRequest request, AppUserInfo user,
 			BaseReportInfo report) throws DisallowedException, CodingErrorException,
 			ObjectNotFoundException;
-	
-	public void sendPasswordReset(HttpServletRequest request, AppUserInfo user) throws DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException, MessagingException;
+
+	public void sendPasswordReset(HttpServletRequest request, AppUserInfo user)
+			throws DisallowedException, CantDoThatException, ObjectNotFoundException,
+			CodingErrorException, MessagingException;
 }

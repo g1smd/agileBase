@@ -1,5 +1,4 @@
 /*
- *  Copyright 2012 GT webMarque Ltd
  * 
  *  This file is part of agileBase.
  *
@@ -184,6 +183,8 @@ public interface ViewMethodsInfo {
 	public SortedSet<AppUserInfo> adminGetUsers() throws DisallowedException,
 			ObjectNotFoundException;
 
+	public SortedSet<AppUserInfo> getAdministrators() throws ObjectNotFoundException, CodingErrorException;
+	
 	/**
 	 * @return Application name as set statically in AppProperties
 	 * @see com.gtwm.pb.util.AppProperties
