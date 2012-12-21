@@ -35,7 +35,7 @@
         <li>
           $admin.getForename() $admin.getSurname()
           #if($admin.getEmail() && ($admin.getEmail != ""))
-            <a href="mailto:$admin.getEmail()?subject=agilebase%20access:%20$sessionData.getTable().getSimpleName()">$admin.getEmail()</a>
+            <a href="mailto:$admin.getEmail()?subject=agilebase%20access%20to%20$sessionData.getTable().getSimpleName()">$admin.getEmail()</a>
           #end
         </li>
       #end

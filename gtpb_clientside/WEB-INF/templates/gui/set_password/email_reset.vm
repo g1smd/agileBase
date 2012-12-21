@@ -19,26 +19,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>$user.getCompany() :: agileBase - set password</title>
-  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
-  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
+  <title>$user.getCompany() :: agilebase - set password</title>
+    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+    <link href="/agileBase/website/styles.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
 </head>
-<body style="padding: 5em">
+<body><div class="container">
+
 #if($user.getAllowPasswordReset())
+  <div class="row abNav">
+    <div class="span2 home">
+      <img src="/agileBase/website/images/brandmark.png" />
+      <div class="arrow"></div>
+    </div>
+  </div>
   <h1>Your $user.getCompany() details</h1>
   Name: $user.getForename() $user.getSurname()<br>
   Email: $user.getEmail()<br>
   Username: $user.getUserName()
   <h1>Please choose a password</h1>
-  <form name="changepassword" method="post" action="AppController.servlet">
-    <input type="hidden" name="return" value="gui/set_password/email_success" />
-    <input type="hidden" name="update_user" value="true" />
-    <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
-    <input type="password" name="password" /><p>
-    <input type="submit" value="Set" />
-  </form>
+  <div class="big spaced">
+	  <form name="changepassword" method="post" action="AppController.servlet">
+	    <input type="hidden" name="return" value="gui/set_password/email_success" />
+	    <input type="hidden" name="update_user" value="true" />
+	    <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
+	    <input type="password" name="password" /><p>
+	    <input type="submit" value="Set" />
+	  </form>
+  </div>
 #else
   The password reset link you used has expired, please ask your administrative contact for another.
 #end
-</body>
+
+</div></body>
 </html>

@@ -346,9 +346,10 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 			}
 			Set<String> recipients = new HashSet<String>();
 			recipients.add(this.getEmail());
-			String subject = "Set your password";
-			String body = "Please choose a password for your account by following this link:\n\n";
-			body += passwordResetLink + "\n";
+			String subject = "Agilebase setup";
+			String body = "Your username is " + this.getUserName() + ". Please choose a password for your account by following this link:\n\n";
+			body += passwordResetLink + "\n\n";
+			body += "This is an automated message from www.agilebase.co.uk";
 			Helpers.sendEmail(recipients, body, subject);
 		} catch (MissingParametersException mpex) {
 			throw new CodingErrorException("Error generating a password: " + mpex);
