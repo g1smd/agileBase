@@ -66,7 +66,7 @@
 #set($requested_username = $viewTools.getRequestParameters().get("u"))
 #if($requested_username != $user.getUserName())
   <div class="big spaced">You are still logged in as $user. Please <a href="AppController.servlet?logout=true&return=boot">log out</a> then try the link again to reset $requested_username's password</div>
-#if($user.getAllowPasswordReset())
+#elseif($user.getAllowPasswordReset())
    <div class="row big">
      <div class="span6">
       Please choose a password
