@@ -63,6 +63,9 @@
     </div>
   </div>
   <h1><img src="/agileBase/website/images/brandmark.png" /> : password set</h1>
+#set($requested_username = $viewTools.getRequestParameters().get("x"))
+#if($requested_username != $user.getUserName())
+  <div class="big spaced">You are still logged in as $user. Please <a href="AppController.servlet?logout=true&return=boot">log out</a> then try the link again to reset $requested_username's password</div>
 #if($user.getAllowPasswordReset())
    <div class="row big">
      <div class="span6">
