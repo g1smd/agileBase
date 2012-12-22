@@ -19,12 +19,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>$user.getCompany() :: agileBase - password set</title>
-  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
-  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
+  <title>$user.getCompany() :: agilebase - password set</title>
+    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+    <link href="http://agilebase.co.uk/styles.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
 </head>
-<body style="padding: 5em">
-Your password is now set, you can continue to log in to $user.getCompany() at<p>
-<a href="http://www.agilebase.co.uk/start">http://www.agilebase.co.uk/start</a>
+<body><div class="container">
+  <div class="row abNav">
+    <div class="span2 home">
+      <img src="/agileBase/website/images/agilebase.png" />
+      <div class="arrow"></div>
+    </div>
+  </div>
+  <h1><img src="/agileBase/website/images/brandmark.png" /> : password set</h1>
+    <div class="big spaced">
+      <p>Your password is now set, you can continue to log in to $user.getCompany() at
+      <p><a href="http://www.agilebase.co.uk/start">www.agilebase.co.uk/start</a>
+    </div>
 </body>
 </html>
