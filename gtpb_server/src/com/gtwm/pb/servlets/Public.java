@@ -103,7 +103,7 @@ public class Public extends VelocityViewServlet {
 		String templateName = ServletUtilMethods.getParameter(request, "return", multipartItems);
 		if (templateName != null) {
 			// var is from public input, clean
-			templateName = templateName.replaceAll("\\W", "");
+			templateName = Helpers.rinseString(templateName, "\\/");
 		}
 		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
 		for (PublicAction publicAction : publicActions) {
