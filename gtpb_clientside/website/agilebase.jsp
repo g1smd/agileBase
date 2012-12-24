@@ -23,7 +23,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
     <script tyle="text/javascript">
       $(document).ready(function() {
-      	$("#password_reset").click(function() {
+      	$("a#password_reset").click(function(event) {
+      		event.preventDefault();
+      		alert("click");
       		$("form").fadeOut();
       		$("form#password_reset_form").fadeIn();
       	});
@@ -66,7 +68,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
               </div>
               <div class="control-group">
                 <div class="controls">
-                  <a href="#" id="password_reset">Can't log in?</a>
+                  <small><small><a href="#" id="password_reset">Can't log in?</a></small></small>
                 </div>
               </div>
             </form>
