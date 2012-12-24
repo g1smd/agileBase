@@ -79,9 +79,10 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
               <input type="hidden" name="send_password_reset" value="true" />
               <p>If you've forgotten your password, please enter your username to be sent a password reset link by email.
               <p>If you don't know your username, please contact your organisation's administrator.
-                <label class="control-label" for="username">username</label>
-                <input type="text" name="username" id="username" autocorrect="off" autocapitalize="off" />
+              <div class="spaced">
+                <input type="text" name="username" id="username" autocorrect="off" autocapitalize="off" placeholder="username" />
                 <button type="submit" class="btn">request password</button>
+              </div>
             </form>
           </div>
       </div>
