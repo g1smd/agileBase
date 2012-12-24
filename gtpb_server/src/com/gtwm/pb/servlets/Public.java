@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +19,6 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.velocity.Template;
@@ -30,8 +28,6 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.view.VelocityViewServlet;
 import org.codehaus.jackson.JsonGenerationException;
 import org.grlea.log.SimpleLogger;
-
-import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
@@ -48,7 +44,6 @@ import com.gtwm.pb.model.manageData.SessionData;
 import com.gtwm.pb.model.manageData.ViewTools;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.CantDoThatException;
-import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.PublicAction;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
@@ -114,17 +109,6 @@ public class Public extends VelocityViewServlet {
 		for (PublicAction publicAction : publicActions) {
 			String publicActionValue = request.getParameter(publicAction.toString().toLowerCase());
 			if (publicActionValue != null) {
-				TableInfo table = null;
-				try {
-					String internalTableName = request.getParameter("t");
-					if (internalTableName == null) {
-						throw new MissingParametersException("t (internal table ID) parameter is necessary");
-					}
-					table = this.getPublicTable(company, internalTableName);
-				} catch (AgileBaseException abex) {
-					ServletUtilMethods.logException(abex, request, "Error preparing public data");
-					return this.getUserInterfaceTemplate(request, response, "report_error", context, abex);
-				}
 				switch (publicAction) {
 				case SEND_PASSWORD_RESET:
 					logger.debug(publicAction.toString());
@@ -173,6 +157,7 @@ public class Public extends VelocityViewServlet {
 							throw new MissingParametersException(
 									"r (internal report ID) parameter is necessary to export report JSON/RSS");
 						}
+						TableInfo table = this.getPublicTable(company, request.getParameter("t"));
 						BaseReportInfo report = table.getReport(internalReportName);
 						if (!report.getCalendarSyncable()) {
 							throw new CantDoThatException("The report " + report
@@ -208,6 +193,14 @@ public class Public extends VelocityViewServlet {
 					}
 					break;
 				case SHOW_FORM:
+					TableInfo table = null;
+					try {
+						table = this.getPublicTable(company, request.getParameter("t"));
+					} catch (ObjectNotFoundException | MissingParametersException e) {
+						ServletUtilMethods.logException(e, request,
+								"Error getting table");
+						return this.getUserInterfaceTemplate(request, response, templateName, context, e);
+					}
 					if (!table.getTableFormPublic()) {
 						CantDoThatException cdtex = new CantDoThatException("The table " + table
 								+ " has not been set for use as a public form");
@@ -252,6 +245,7 @@ public class Public extends VelocityViewServlet {
 							rowId = Integer.valueOf(rowIdString);
 							newRecord = false;
 						}
+						table = this.getPublicTable(company, request.getParameter("t"));
 						if (!table.getTableFormPublic()) {
 							throw new CantDoThatException("The table " + table
 									+ " has not been set for use as a public form");
