@@ -87,24 +87,23 @@ public class Public extends VelocityViewServlet {
 		List<FileItem> multipartItems = ServletUtilMethods.getMultipartItems(request);
 		// For company specific customisations
 		String customFolder = ServletUtilMethods.getParameter(request, "custom", multipartItems);
-		AppUserInfo publicUser;
-		try {
-			publicUser = ServletUtilMethods.getPublicUserForRequest(request, this.databaseDefn
-					.getAuthManager().getAuthenticator());
-		} catch (AgileBaseException abex) {
-			ServletUtilMethods.logException(abex, request, "Error getting public user for request");
-			return this.getUserInterfaceTemplate(request, response, "gui/public/error", context,
-					abex);
-		}
-		CompanyInfo company = publicUser.getCompany();
-		String templatePath;
-		if (customFolder != null) {
-			String cleanCompanyName = company.getCompanyName().replaceAll("\\W", "").toLowerCase();
-			customFolder = customFolder.replaceAll("\\W", "").toLowerCase();
-			templatePath = "gui/customisations/" + cleanCompanyName + "/public/" + customFolder
-					+ "/";
-		} else {
-			templatePath = "gui/public/";
+		AppUserInfo publicUser = null;
+		CompanyInfo company = null;
+		String templatePath = "gui/public/";
+		if (request.getParameter("c") != null) {
+			try {
+				publicUser = ServletUtilMethods.getPublicUserForRequest(request, this.databaseDefn
+						.getAuthManager().getAuthenticator());
+			} catch (AgileBaseException abex) {
+				ServletUtilMethods.logException(abex, request, "Error getting public user for request");
+				return this.getUserInterfaceTemplate(request, response, "gui/public/error", context, abex);
+			}
+			company = publicUser.getCompany();
+			if (customFolder != null) {
+				String cleanCompanyName = company.getCompanyName().replaceAll("\\W", "").toLowerCase();
+				customFolder = customFolder.replaceAll("\\W", "").toLowerCase();
+				templatePath = "gui/customisations/" + cleanCompanyName + "/public/" + customFolder + "/";
+			}
 		}
 		String templateName = ServletUtilMethods.getParameter(request, "return", multipartItems);
 		if (templateName != null) {
@@ -119,14 +118,12 @@ public class Public extends VelocityViewServlet {
 				try {
 					String internalTableName = request.getParameter("t");
 					if (internalTableName == null) {
-						throw new MissingParametersException(
-								"t (internal table ID) parameter is necessary");
+						throw new MissingParametersException("t (internal table ID) parameter is necessary");
 					}
 					table = this.getPublicTable(company, internalTableName);
 				} catch (AgileBaseException abex) {
 					ServletUtilMethods.logException(abex, request, "Error preparing public data");
-					return this.getUserInterfaceTemplate(request, response, "report_error",
-							context, abex);
+					return this.getUserInterfaceTemplate(request, response, "report_error", context, abex);
 				}
 				switch (publicAction) {
 				case SEND_PASSWORD_RESET:
@@ -136,8 +133,7 @@ public class Public extends VelocityViewServlet {
 						this.databaseDefn.getAuthManager().sendPasswordReset(request);
 					} catch (AgileBaseException | MessagingException ex) {
 						ServletUtilMethods.logException(ex, request, "Error sending password reset notice");
-						return this.getUserInterfaceTemplate(request, response, "report_error",
-								context, ex);
+						return this.getUserInterfaceTemplate(request, response, "report_error", context, ex);
 					}
 					break;
 				case GET_REPORT_JSON:
@@ -160,15 +156,15 @@ public class Public extends VelocityViewServlet {
 						}
 						if (cacheSeconds == null) {
 							cacheSeconds = Long.valueOf(30 * 60); // default to
-																	// 30 mins
-																	// cache
+							// 30 mins
+							// cache
 						}
 					} else {
 						templateName = templatePath + "report_rss";
 						if (cacheSeconds == null) {
 							cacheSeconds = Long.valueOf(2 * 60); // default to 2
-																	// mins
-																	// cache
+							// mins
+							// cache
 						}
 					}
 					String internalReportName = request.getParameter("r");
@@ -186,35 +182,29 @@ public class Public extends VelocityViewServlet {
 						boolean exactFilters = Helpers.valueRepresentsBooleanTrue(request
 								.getParameter("exact_filters"));
 						if (publicAction.equals(PublicAction.GET_REPORT_JSON)) {
-							String reportJSON = dataManagement.getReportJSON(publicUser, report,
-									filters, exactFilters, cacheSeconds);
+							String reportJSON = dataManagement.getReportJSON(publicUser, report, filters,
+									exactFilters, cacheSeconds);
 							context.put("gtwmReportJSON", reportJSON);
 						} else {
-							String reportRSS = dataManagement.getReportRSS(publicUser, report,
-									filters, exactFilters, cacheSeconds);
+							String reportRSS = dataManagement.getReportRSS(publicUser, report, filters,
+									exactFilters, cacheSeconds);
 							context.put("gtwmReportRSS", reportRSS);
 							response.setContentType(ResponseReturnType.XML.getResponseType());
 						}
 					} catch (AgileBaseException abex) {
-						ServletUtilMethods.logException(abex, request,
-								"General error getting report JSON/RSS");
-						return this.getUserInterfaceTemplate(request, response, templateName,
-								context, abex);
+						ServletUtilMethods.logException(abex, request, "General error getting report JSON/RSS");
+						return this.getUserInterfaceTemplate(request, response, templateName, context, abex);
 					} catch (SQLException sqlex) {
-						ServletUtilMethods.logException(sqlex, request,
-								"General error getting report JSON/RSS");
-						return this.getUserInterfaceTemplate(request, response, templateName,
-								context, sqlex);
+						ServletUtilMethods
+								.logException(sqlex, request, "General error getting report JSON/RSS");
+						return this.getUserInterfaceTemplate(request, response, templateName, context, sqlex);
 					} catch (XMLStreamException xmlex) {
-						ServletUtilMethods.logException(xmlex, request,
-								"General error getting report JSON/RSS");
-						return this.getUserInterfaceTemplate(request, response, templateName,
-								context, xmlex);
+						ServletUtilMethods
+								.logException(xmlex, request, "General error getting report JSON/RSS");
+						return this.getUserInterfaceTemplate(request, response, templateName, context, xmlex);
 					} catch (JsonGenerationException jgex) {
-						ServletUtilMethods.logException(jgex, request,
-								"General error getting report JSON/RSS");
-						return this.getUserInterfaceTemplate(request, response, templateName,
-								context, jgex);
+						ServletUtilMethods.logException(jgex, request, "General error getting report JSON/RSS");
+						return this.getUserInterfaceTemplate(request, response, templateName, context, jgex);
 					}
 					break;
 				case SHOW_FORM:
@@ -223,8 +213,7 @@ public class Public extends VelocityViewServlet {
 								+ " has not been set for use as a public form");
 						ServletUtilMethods.logException(cdtex, request,
 								"General error performing save from public");
-						return this.getUserInterfaceTemplate(request, response, templateName,
-								context, cdtex);
+						return this.getUserInterfaceTemplate(request, response, templateName, context, cdtex);
 					}
 					// Anyone can access this form via cross-domain ajax
 					response.setHeader("Access-Control-Allow-Origin", "*");
@@ -258,8 +247,7 @@ public class Public extends VelocityViewServlet {
 							String rowIdString = ServletUtilMethods.getParameter(request, "row_id",
 									multipartItems);
 							if (rowIdString == null) {
-								throw new CantDoThatException(
-										"row_id must be provided to update a record");
+								throw new CantDoThatException("row_id must be provided to update a record");
 							}
 							rowId = Integer.valueOf(rowIdString);
 							newRecord = false;
@@ -273,8 +261,7 @@ public class Public extends VelocityViewServlet {
 						// Check that all mandatory fields have been filled in
 						LinkedHashMap<BaseField, BaseValue> fieldInputValues = new LinkedHashMap<BaseField, BaseValue>(
 								sessionData.getFieldInputValues());
-						for (Map.Entry<BaseField, BaseValue> inputEntry : fieldInputValues
-								.entrySet()) {
+						for (Map.Entry<BaseField, BaseValue> inputEntry : fieldInputValues.entrySet()) {
 							BaseField inputField = inputEntry.getKey();
 							if (inputField.getNotNull()) {
 								BaseValue inputValue = inputEntry.getValue();
@@ -286,13 +273,13 @@ public class Public extends VelocityViewServlet {
 									context.put("gtpbCompany", company);
 									AgileBaseException exceptionCaught = new InputRecordException(
 											"This required field has to be filled in", inputField);
-									return this.getUserInterfaceTemplate(request, response,
-											templateName, context, exceptionCaught);
+									return this.getUserInterfaceTemplate(request, response, templateName, context,
+											exceptionCaught);
 								}
 							}
 						}
-						dataManagement.saveRecord(request, table, fieldInputValues, newRecord,
-								rowId, sessionData, multipartItems);
+						dataManagement.saveRecord(request, table, fieldInputValues, newRecord, rowId,
+								sessionData, multipartItems);
 						if (newRecord) {
 							sendEmail(company, table, fieldInputValues);
 						}
@@ -303,26 +290,22 @@ public class Public extends VelocityViewServlet {
 						ServletUtilMethods.logException(abex, request,
 								"General error performing save from public");
 						templateName = templatePath + "form";
-						return this.getUserInterfaceTemplate(request, response, templateName,
-								context, abex);
+						return this.getUserInterfaceTemplate(request, response, templateName, context, abex);
 					} catch (SQLException sqlex) {
-						ServletUtilMethods.logException(sqlex, request,
-								"SQL error performing save from public");
+						ServletUtilMethods
+								.logException(sqlex, request, "SQL error performing save from public");
 						templateName = templatePath + "form";
-						return this.getUserInterfaceTemplate(request, response, templateName,
-								context, sqlex);
+						return this.getUserInterfaceTemplate(request, response, templateName, context, sqlex);
 					} catch (FileUploadException fuex) {
 						ServletUtilMethods.logException(fuex, request,
 								"General error doing file upload from public");
 						templateName = templatePath + "form";
-						return this.getUserInterfaceTemplate(request, response, templateName,
-								context, fuex);
+						return this.getUserInterfaceTemplate(request, response, templateName, context, fuex);
 					} catch (MessagingException mex) {
 						ServletUtilMethods.logException(mex, request,
 								"Emailing error performing save from public");
 						templateName = templatePath + "form";
-						return this.getUserInterfaceTemplate(request, response, templateName,
-								context, mex);
+						return this.getUserInterfaceTemplate(request, response, templateName, context, mex);
 					}
 					break;
 				}
@@ -348,14 +331,13 @@ public class Public extends VelocityViewServlet {
 	 * functionality, and return the requested template.
 	 * 
 	 * @param exceptionCaught
-	 *            An exception thrown by handleRequest. Pass null if none. This
-	 *            will be saved in ViewMethods to allow the UI to find out what
-	 *            went wrong
+	 *          An exception thrown by handleRequest. Pass null if none. This will
+	 *          be saved in ViewMethods to allow the UI to find out what went
+	 *          wrong
 	 * @return The template requested, ready to parse by the UI
 	 */
 	private Template getUserInterfaceTemplate(HttpServletRequest request,
-			HttpServletResponse response, String templateName, Context context,
-			Exception exceptionCaught) {
+			HttpServletResponse response, String templateName, Context context, Exception exceptionCaught) {
 		ViewToolsInfo viewTools = new ViewTools(request, response, this.webAppRoot);
 		context.put("viewTools", viewTools);
 		context.put("exceptionCaught", exceptionCaught);
@@ -381,8 +363,7 @@ public class Public extends VelocityViewServlet {
 		return template;
 	}
 
-	private static Map<BaseField, String> getFilters(BaseReportInfo report,
-			HttpServletRequest request) {
+	private static Map<BaseField, String> getFilters(BaseReportInfo report, HttpServletRequest request) {
 		Map<BaseField, String> filters = new HashMap<BaseField, String>();
 		for (BaseField field : report.getReportBaseFields()) {
 			String internalFieldName = field.getInternalFieldName();
@@ -437,8 +418,7 @@ public class Public extends VelocityViewServlet {
 				BaseValue value = entry.getValue();
 				if (value instanceof TextValue) {
 					if (((TextValue) value).isEmailAddress()) {
-						message.addRecipient(Message.RecipientType.CC,
-								new InternetAddress(value.toString()));
+						message.addRecipient(Message.RecipientType.CC, new InternetAddress(value.toString()));
 					}
 				}
 			}
