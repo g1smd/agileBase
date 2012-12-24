@@ -25,9 +25,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       $(document).ready(function() {
       	$("a#password_reset").click(function(event) {
       		event.preventDefault();
-      		alert("click");
-      		$("form").fadeOut();
-      		$("form#password_reset_form").fadeIn();
+      		$("form").hide("normal");
+      		$("form#password_reset_form").show("normal");
       	});
       });
     </script>
@@ -73,17 +72,16 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
               </div>
             </form>
           <% if(live) { %>
-            <form style="display:none" method="POST" action="https://appserver.gtportalbase.com/agileBase/Public.servlet" id="password_reset_form" name="password_reset_form" class="form-horizontal">
+            <form style="display:none" method="POST" action="https://appserver.gtportalbase.com/agileBase/Public.servlet" id="password_reset_form" name="password_reset_form" class="form-inline">
           <% } else { %>
-            <form style="display:none" method="POST" action="/agileBase/Public.servlet" id="password_reset_form" name="password_reset_form" class="form-horizontal">
+            <form style="display:none" method="POST" action="/agileBase/Public.servlet" id="password_reset_form" name="password_reset_form" class="form-inline">
           <% } %>
               <input type="hidden" name="send_password_reset" value="true" />
               <p>If you've forgotten your password, please enter your username to be sent a password reset link by email.
-              <p>If you don't know your username, please contact your organisation's administrator
-              <div class="control-group">
+              <p>If you don't know your username, please contact your organisation's administrator.
                 <label class="control-label" for="username">username</label>
-                <div class="controls"><input type="text" name="username" id="username" autocorrect="off" autocapitalize="off" /></div>
-              </div>
+                <input type="text" name="username" id="username" autocorrect="off" autocapitalize="off" />
+                <button type="submit" class="btn">request password</button>
             </form>
           </div>
       </div>
