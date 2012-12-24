@@ -30,6 +30,8 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.view.VelocityViewServlet;
 import org.codehaus.jackson.JsonGenerationException;
 import org.grlea.log.SimpleLogger;
+
+import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
@@ -46,6 +48,7 @@ import com.gtwm.pb.model.manageData.SessionData;
 import com.gtwm.pb.model.manageData.ViewTools;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.CantDoThatException;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.PublicAction;
 import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
@@ -126,6 +129,16 @@ public class Public extends VelocityViewServlet {
 							context, abex);
 				}
 				switch (publicAction) {
+				case SEND_PASSWORD_RESET:
+					templateName = templatePath + "xmlreturn_rowid";
+					try {
+						this.databaseDefn.getAuthManager().sendPasswordReset(request);
+					} catch (AgileBaseException | MessagingException ex) {
+						ServletUtilMethods.logException(ex, request, "Error sending password reset notice");
+						return this.getUserInterfaceTemplate(request, response, "report_error",
+								context, ex);
+					}
+					break;
 				case GET_REPORT_JSON:
 				case GET_REPORT_RSS:
 					Long cacheSeconds = null;

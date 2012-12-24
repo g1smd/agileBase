@@ -356,7 +356,10 @@ public interface AuthManagerInfo {
 			BaseReportInfo report) throws DisallowedException, CodingErrorException,
 			ObjectNotFoundException;
 
-	public void sendPasswordReset(HttpServletRequest request, AppUserInfo user)
-			throws DisallowedException, CantDoThatException, ObjectNotFoundException,
-			CodingErrorException, MessagingException;
+	/**
+	 * Send a password reset, username provided by internalusername or username parameters in the HTTP request
+	 */
+	public void sendPasswordReset(HttpServletRequest request)
+			throws CantDoThatException, ObjectNotFoundException,
+			CodingErrorException, MessagingException, DisallowedException, MissingParametersException;
 }

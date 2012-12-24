@@ -28,6 +28,7 @@ import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
 import com.gtwm.pb.auth.AppRole;
 import com.gtwm.pb.auth.AppUser;
+import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
@@ -66,19 +67,14 @@ import com.gtwm.pb.util.Enumerations.InitialView;
 public final class ServletAuthMethods {
 
 	/**
-	 * Sends a password reset email to a user
-	 * 
-	 * @throws DisallowedException
-	 *           Only an administrator can send a password reset email
+	 * Sends a password reset email to a user. Anyone can do this given a username
 	 */
 	public synchronized static void sendPasswordReset(HttpServletRequest request,
 			AuthManagerInfo authManager) throws DisallowedException, ObjectNotFoundException,
-			CantDoThatException, CodingErrorException, MessagingException {
-		String internalUserName = request.getParameter("internalusername");
-		AppUserInfo user = authManager.getUserByInternalName(request, internalUserName);
+			CantDoThatException, CodingErrorException, MessagingException, MissingParametersException {
 		HibernateUtil.startHibernateTransaction();
 		try {
-			authManager.sendPasswordReset(request, user);
+			authManager.sendPasswordReset(request);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			HibernateUtil.rollbackHibernateTransaction();
@@ -131,7 +127,8 @@ public final class ServletAuthMethods {
 				existingUserNames.add(appUser.getUserName());
 			}
 			if (existingUserNames.contains(username)) {
-				throw new CantDoThatException("Username " + username + " already exists, please choose a different one");
+				throw new CantDoThatException("Username " + username
+						+ " already exists, please choose a different one");
 			}
 		}
 		String surname = request.getParameter(AppUserInfo.SURNAME.toLowerCase(Locale.UK));
@@ -724,8 +721,8 @@ public final class ServletAuthMethods {
 		}
 	}
 
-	public synchronized static void assignUserToRole(SessionDataInfo sessionData, HttpServletRequest request,
-			AuthManagerInfo authManager) throws ObjectNotFoundException,
+	public synchronized static void assignUserToRole(SessionDataInfo sessionData,
+			HttpServletRequest request, AuthManagerInfo authManager) throws ObjectNotFoundException,
 			DisallowedException, MissingParametersException, CantDoThatException {
 		String internalRoleName = request.getParameter("internalrolename");
 		String internalUserName = request.getParameter("internalusername");

@@ -894,9 +894,19 @@ public final class AuthManager implements AuthManagerInfo {
 				.getRemoteUser());
 	}
 	
-	public void sendPasswordReset(HttpServletRequest request, AppUserInfo user) throws DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException, MessagingException {
-		if (!this.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
-			throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
+	public void sendPasswordReset(HttpServletRequest request) throws CantDoThatException, ObjectNotFoundException, CodingErrorException, MessagingException, DisallowedException, MissingParametersException {
+		AppUserInfo user = null;
+		String internalUserName = request.getParameter("internalusername");
+		if (internalUserName != null) {
+			user = this.getUserByInternalName(request, internalUserName);
+		} else {
+			String userName = request.getParameter("username");
+			if (userName != null) {
+				user = ((Authenticator) this.getAuthenticator()).getUserByUserName(userName);
+			}
+		}
+		if (user == null) {
+			throw new MissingParametersException("internalusername or username must be supplied to identify user");
 		}
 		HibernateUtil.activateObject(user);
 		user.sendPasswordReset(Helpers.getAppUrl(request));

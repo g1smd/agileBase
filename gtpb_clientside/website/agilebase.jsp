@@ -21,6 +21,14 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
     <link href="/agileBase/website/styles.css" rel="stylesheet">
 		<link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
+    <script tyle="text/javascript">
+      $(document).ready(function() {
+      	$("#password_reset").click(function() {
+      		$("form").fadeOut();
+      		$("form#password_reset_form").fadeIn();
+      	});
+      });
+    </script>
     <meta name="google-site-verification" content="f-uEpO4sFJ0ePStIn6Svsj_wumUtsr153X4VYBA96K8" />
     <% if(!live) { %>
       <!-- don't index the test server -->
@@ -55,6 +63,24 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
                 <div class="controls">
                   <button type="submit" value="login" class="btn">sign in</button>
                 </div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <a href="#" id="password_reset">Can't log in?</a>
+                </div>
+              </div>
+            </form>
+          <% if(live) { %>
+            <form style="display:none" method="POST" action="https://appserver.gtportalbase.com/agileBase/Public.servlet" id="password_reset_form" name="password_reset_form" class="form-horizontal">
+          <% } else { %>
+            <form style="display:none" method="POST" action="/agileBase/Public.servlet" id="password_reset_form" name="password_reset_form" class="form-horizontal">
+          <% } %>
+              <input type="hidden" name="send_password_reset" value="true" />
+              <p>If you've forgotten your password, please enter your username to be sent a password reset link by email.
+              <p>If you don't know your username, please contact your organisation's administrator
+              <div class="control-group">
+                <label class="control-label" for="username">username</label>
+                <div class="controls"><input type="text" name="username" id="username" autocorrect="off" autocapitalize="off" /></div>
               </div>
             </form>
           </div>
