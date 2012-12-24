@@ -72,9 +72,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
               </div>
             </form>
           <% if(live) { %>
-            <form style="display:none" method="POST" action="https://appserver.gtportalbase.com/agileBase/Public.servlet" id="password_reset_form" name="password_reset_form" class="form-inline">
+            <form style="display:none" method="POST" action="https://appserver.gtportalbase.com/agileBase/Public.ab" id="password_reset_form" name="password_reset_form" class="form-inline">
           <% } else { %>
-            <form style="display:none" method="POST" action="/agileBase/Public.servlet" id="password_reset_form" name="password_reset_form" class="form-inline">
+            <form style="display:none" method="POST" action="/agileBase/Public.ab" id="password_reset_form" name="password_reset_form" class="form-inline">
           <% } %>
               <input type="hidden" name="send_password_reset" value="true" />
               <p>If you've forgotten your password, please enter your username to be sent a password reset link by email.

@@ -130,6 +130,7 @@ public class Public extends VelocityViewServlet {
 				}
 				switch (publicAction) {
 				case SEND_PASSWORD_RESET:
+					logger.debug(publicAction.toString());
 					templateName = templatePath + "xmlreturn_rowid";
 					try {
 						this.databaseDefn.getAuthManager().sendPasswordReset(request);
