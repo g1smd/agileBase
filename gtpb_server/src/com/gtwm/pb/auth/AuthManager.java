@@ -909,7 +909,9 @@ public final class AuthManager implements AuthManagerInfo {
 			throw new MissingParametersException("internalusername or username must be supplied to identify user");
 		}
 		HibernateUtil.activateObject(user);
-		user.sendPasswordReset(Helpers.getAppUrl(request));
+		// If this was called by the 'forgotten password' link, the URL may be Public ab, replace this
+		String appUrl = Helpers.getAppUrl(request).replace("Public.ab", "AppController.servlet");
+		user.sendPasswordReset(appUrl);
 	}
 
 	private AuthenticatorInfo authenticator = null;

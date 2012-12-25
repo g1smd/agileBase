@@ -103,7 +103,7 @@ public class Public extends VelocityViewServlet {
 		String templateName = ServletUtilMethods.getParameter(request, "return", multipartItems);
 		if (templateName != null) {
 			// var is from public input, clean
-			templateName = Helpers.rinseString(templateName, "\\/");
+			templateName = templatePath + Helpers.rinseString(templateName, "\\/");
 		}
 		DataManagementInfo dataManagement = this.databaseDefn.getDataManagement();
 		for (PublicAction publicAction : publicActions) {
@@ -111,7 +111,6 @@ public class Public extends VelocityViewServlet {
 			if (publicActionValue != null) {
 				switch (publicAction) {
 				case SEND_PASSWORD_RESET:
-					logger.debug(publicAction.toString());
 					templateName = templatePath + "xmlreturn_rowid";
 					try {
 						this.databaseDefn.getAuthManager().sendPasswordReset(request);
@@ -310,6 +309,9 @@ public class Public extends VelocityViewServlet {
 
 	private TableInfo getPublicTable(CompanyInfo company, String internalTableName)
 			throws ObjectNotFoundException, MissingParametersException {
+		if (internalTableName == null) {
+			throw new MissingParametersException("table identification needed");
+		}
 		TableInfo table = null;
 		for (TableInfo testTable : company.getTables()) {
 			if (testTable.getInternalTableName().equals(internalTableName)) {
