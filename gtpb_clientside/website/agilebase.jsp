@@ -40,8 +40,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       			if (response == "ok") {
       				formParent.append("<p>A password reset link has been sent to your email address</p>");
       			} else {
-      				var message = $(data).find("exception").text();
-      				formParent.append("<div class='errormessage'>" + message + "</div");
+      				formParent.append("<div class='errormessage'>Unable to request password. Perhaps the login name was incorrect or no email address is associated with the account</div>");
       			}
       		});
       	});
