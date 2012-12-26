@@ -36,10 +36,10 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       			form.remove();
       			var response = $(data).find("response").text();
       			if (response == "ok") {
-      				parent.append("<p>A password reset link has been sent to your email address</p>");
+      				formParent.append("<p>A password reset link has been sent to your email address</p>");
       			} else {
       				var message = $(data).find("exception").text();
-      				parent.append("<div class='errormessage'>" + message + "</div");
+      				formParent.append("<div class='errormessage'>" + message + "</div");
       			}
       		});
       	});
