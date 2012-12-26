@@ -116,7 +116,7 @@ public class Public extends VelocityViewServlet {
 						ServletAuthMethods.sendPasswordReset(request, this.databaseDefn.getAuthManager());
 					} catch (AgileBaseException | MessagingException ex) {
 						ServletUtilMethods.logException(ex, request, "Error sending password reset notice");
-						return this.getUserInterfaceTemplate(request, response, "report_error", context, ex);
+						return this.getUserInterfaceTemplate(request, response, templateName, context, ex);
 					}
 					break;
 				case GET_REPORT_JSON:

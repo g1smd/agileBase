@@ -14,19 +14,34 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 <html>
 	<head>
     <meta charset="UTF-8">
-		<title>agileBase - a dedicated Lean Back Office platform</title>
+		<title>agilebase : log in</title>
     <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
     <link href="/agileBase/website/styles.css" rel="stylesheet">
 		<link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
-    <script tyle="text/javascript">
+    <script type="text/javascript">
       $(document).ready(function() {
       	$("a#password_reset").click(function(event) {
       		event.preventDefault();
       		$("form").hide("normal");
       		$("form#password_reset_form").show("normal");
+      	});
+      	$("#password_reset_form").submit(function() {
+      		var form = $(this);
+      		var formParent = form.parent();
+      		form.preventDefault();
+      		$.post(form.attr("action"), form.serialize(), function(data) {
+      			form.remove();
+      			var response = $(data).find("response").text();
+      			if (response == "ok") {
+      				parent.append("<p>A password reset link has been sent to your email address</p>");
+      			} else {
+      				var message = $(data)find("exception").text();
+      				parent.append("<div class='errormessage'>" + message + "</div");
+      			}
+      		});
       	});
       });
     </script>
