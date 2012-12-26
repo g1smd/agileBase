@@ -38,7 +38,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       			if (response == "ok") {
       				parent.append("<p>A password reset link has been sent to your email address</p>");
       			} else {
-      				var message = $(data)find("exception").text();
+      				var message = $(data).find("exception").text();
       				parent.append("<div class='errormessage'>" + message + "</div");
       			}
       		});
