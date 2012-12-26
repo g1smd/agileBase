@@ -31,6 +31,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       	$("#password_reset_form").submit(function(event) {
           event.preventDefault();
       		var form = $(this);
+          form.find("input").hide();
+          form.find("button").hide();
       		var formParent = form.parent();
       		$.post(form.attr("action"), form.serialize(), function(data) {
       			form.remove();
