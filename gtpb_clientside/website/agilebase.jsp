@@ -28,10 +28,10 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       		$("form").hide("normal");
       		$("form#password_reset_form").show("normal");
       	});
-      	$("#password_reset_form").submit(function() {
+      	$("#password_reset_form").submit(function(event) {
+          event.preventDefault();
       		var form = $(this);
       		var formParent = form.parent();
-      		form.preventDefault();
       		$.post(form.attr("action"), form.serialize(), function(data) {
       			form.remove();
       			var response = $(data).find("response").text();
