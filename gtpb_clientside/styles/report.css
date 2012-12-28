@@ -52,7 +52,7 @@ table#reportData th {
 }
 
 table#reportData th[onclick]:hover {
-  border-bottom-color:#FFD588!important;
+  border-bottom-color:#009FE3!important;
   border-bottom-width: 2px!important;
   background-color: #E8E7E3;
 /*
