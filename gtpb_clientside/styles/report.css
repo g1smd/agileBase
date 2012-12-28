@@ -44,7 +44,7 @@ table#reportData th {
 
 .tab-item table#reportData th {
   font-size: 11pt!important; /* override modalFramework.css */
-  border-bottom: 1px solid #e8e7e3!important;
+  border-bottom: 1px solid #E7F5F9!important;
   border-top: none!important;
   border-left: none!important;
   border-right: none!important;
@@ -64,7 +64,7 @@ table#reportData th[onclick]:hover {
 }
 
 table#reportData th#sortedColumn{
-  background-color: #656766;
+  background-color: #009FE3;
   color: white;
 }
 
@@ -111,7 +111,7 @@ div#fieldFilters input {
 }
 					  
 table#reportData thead td { 
-  border-bottom:1px solid #e8e7e3;
+  border-bottom:1px solid #E7F5F9;
 }					  
 
 table#reportData .selectable tr.rowa:hover td,
