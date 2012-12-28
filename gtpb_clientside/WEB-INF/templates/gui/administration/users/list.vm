@@ -27,7 +27,7 @@
 #set($data=[])
 #foreach($user in $view.adminGetUsers())
  #set($row=[$user.getUserName(),$user.getForename(),$user.getSurname(),$user.getUserType().toString().toLowerCase()])
- #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_user=$user.getInternalUserName()'")
+ #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_user=$user.getInternalUserName()';showPane3IfNecessary(event);")
  #set($uniqueid=$user.getInternalUserName())
  #set($success=$data.add([$row,$click,$uniqueid,'',false]))
 #end
