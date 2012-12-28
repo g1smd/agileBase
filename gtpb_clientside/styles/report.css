@@ -64,8 +64,7 @@ table#reportData th[onclick]:hover {
 }
 
 table#reportData th#sortedColumn{
-  background-color: #009FE3;
-  color: white;
+  background-color: #E8E7E3;
 }
 
 table#reportData th#sortedColumn[sortDirn=true] {
