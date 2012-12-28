@@ -217,6 +217,7 @@ ol li ul li ul li{
 .currentOption .tree-item-wrap {
 	background-color: #009FE3;
 	color: white;
+	border-radius: 0.5em;
 }
 
 .loading {
