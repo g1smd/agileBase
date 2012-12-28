@@ -38,7 +38,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       			form.remove();
       			var response = $(data).find("response").text();
       			if (response == "ok") {
-      				formParent.append("<p>A password reset link has been sent to your email address</p>");
+      				formParent.append("<p>Request successful, a password reset link has been sent to your email. If it doesn't turn up, try checking your spam filter.</p>");
       			} else {
       				formParent.append("<div class='errormessage'>Unable to request password. Perhaps the login name was incorrect or no email address is associated with the account. Please contact your administrator</div>");
       			}
@@ -93,7 +93,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
             <form style="display:none" method="POST" action="/agileBase/Public.ab" id="password_reset_form" name="password_reset_form" class="form-inline">
           <% } %>
               <input type="hidden" name="send_password_reset" value="true" />
-              <p>If you've forgotten your password, please enter your username to be sent a password reset link by email.
+              <p>Forgotten your password? Please enter your username and check your email for a password reset link.
               <p>If you don't know your username, please contact your organisation's administrator.
               <div class="spaced">
                 <input type="text" name="username" id="username" autocorrect="off" autocapitalize="off" placeholder="username" />
