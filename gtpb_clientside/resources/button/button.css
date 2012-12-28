@@ -63,18 +63,6 @@ button.gtpb:active { background-color: #009FE3; color: white; }
 button.gtpb.selected {
   background-color: #E8E7E3;
   text-shadow: none;
-	/* Standard */
-  /*background: -moz-linear-gradient(top, #555555, #999999);
-  background: -webkit-linear-gradient(top, #555555, #999999);
-  background: -ms-linear-gradient(top, #555555, #999999);
-  background: linear-gradient(top, #555555, #999999);
-  /* */
-  /* xmas  
-  background: -moz-linear-gradient(top, rgba(0,0,0,0.5), #999999);
-  background: -webkit-linear-gradient(top, rgba(0,0,0,0.5), #999999);
-  background: -ms-linear-gradient(top, rgba(0,0,0,0.5), #999999);
-  background: linear-gradient(top, rgba(0,0,0,0.5), #999999);
-	/* */
   border: 1px solid white;
 }
 

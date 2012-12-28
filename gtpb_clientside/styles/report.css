@@ -54,26 +54,28 @@ table#reportData th {
 table#reportData th[onclick]:hover {
   border-bottom-color:#FFD588!important;
   border-bottom-width: 2px!important;
-  /* background-color:#F8F8F6!important; */
+  background-color: #E8E7E3;
+/*
   background: linear-gradient(top, #fafafa, #f8f8f8)!important;
   background: -moz-linear-gradient(top, #fafafa, #f8f8f8)!important;
   background: -webkit-linear-gradient(top, #fafafa, #f8f8f8)!important;
   background: ms-linear-gradient(top, #fafafa, #f8f8f8)!important;
+*/
 }
 
 table#reportData th#sortedColumn{
-  background-color: #E4EAF2;
-  /* padding-right:25px; */
+  background-color: #656766;
+  color: white;
 }
 
 table#reportData th#sortedColumn[sortDirn=true] {
   background-image:url('reports/asc.png');
-  border-bottom-color:green;
+  border-bottom-color: #8DC63F;
 }
 
 table#reportData th#sortedColumn[sortDirn=false] {
   background-image:url('reports/desc.png');
-  border-bottom-color:red;
+  border-bottom-color: #EC00BC;
 }
 
 table#reportData th div {
@@ -257,7 +259,7 @@ table#reportData tr.rowb  {
 }
 
 #wrapper table#reportData tr.rowb  { 
-  border: 1px solid #f2f2f2;
+  border: 1px solid #E7F5F9;
   border-left: 0;
 }
 
