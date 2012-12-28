@@ -279,7 +279,7 @@
 		   #if($subtitle != "")
 		     subtitle: {
 			   text: "$subtitle",
-			   style: { textTransform: 'lowercase' }
+			   style: { textTransform: 'lowercase', color: '#656766' }
 			 },
 		   #end
 		 #else
@@ -287,7 +287,8 @@
              style: {
 			   margin: '0px',
 			   height: '0px',
-			   display: 'none'
+			   display: 'none',
+			   color: '#656766'
 			 }
            },
 		 #end
