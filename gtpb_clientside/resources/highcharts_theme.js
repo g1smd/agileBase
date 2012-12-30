@@ -118,6 +118,9 @@ Highcharts.theme = {
 		},
 		column: {
 			shadow: false
+		},
+		area: {
+			shadow: false
 		}
 	},
 
