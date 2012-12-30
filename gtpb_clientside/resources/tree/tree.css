@@ -399,6 +399,10 @@ ul.moduleaction li {
   background-color: #656766;
 }
 
+#appspace span.comment_attribution {
+  display: block;
+}
+
 #appspace .image {
   text-align: center;
 }
