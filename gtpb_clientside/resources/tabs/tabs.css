@@ -1030,7 +1030,7 @@ div#reportData {
   
   .chart_controls .existing_element a {
     color: black;
-  	background-color: #dee7f8; /* Colour of names in to: field in Apple Mail */
+  	background-color: #E7F5F9;
     text-decoration:none;
     text-transform:lowercase;
     padding:3px;
@@ -1038,14 +1038,14 @@ div#reportData {
     background-image: url('remove-light.png');
     background-repeat:no-repeat;
     background-position:center right;
-    border: #a4bdec solid 1px;
+    border: #656766 solid 1px;
     border-radius: 10px;
   }
   
   .chart_controls .existing_element a:hover {
-    color: black;
-  	background-color: #bbcef1;
-    border: #6d95e0 solid 1px;
+    color: white;
+  	background-color: #656766;
+    border: #656766 solid 1px;
     background-image: url('remove-dark.png');
   }
   
