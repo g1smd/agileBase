@@ -212,9 +212,8 @@ public class Public extends VelocityViewServlet {
 					context.put("gtpbPublicTable", table);
 					context.put("gtpbCompany", company);
 					if (templateName == null) {
-						templateName = "form";
+						templateName = templatePath + "form";
 					}
-					templateName = templatePath + templateName;
 					String gtpbCss = request.getParameter("css");
 					if (gtpbCss != null) {
 						// Allow only local CSS. Arbitrary CSS injection is a
@@ -230,9 +229,8 @@ public class Public extends VelocityViewServlet {
 					int rowId = -1;
 					boolean newRecord = true;
 					if (templateName == null) {
-						templateName = "posted";
+						templateName = templatePath + "posted";
 					}
-					templateName = templatePath + templateName;
 					SessionDataInfo sessionData = new SessionData();
 					try {
 						if (publicAction.equals(PublicAction.UPDATE_RECORD)) {
