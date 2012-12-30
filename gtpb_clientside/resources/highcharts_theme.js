@@ -84,7 +84,6 @@ Highcharts.theme = {
 		}
 	},
 
-
 	plotOptions: {
 		line: {
 			dataLabels: {
@@ -92,20 +91,33 @@ Highcharts.theme = {
 			},
 			marker: {
 				lineColor: '#656766'
-			}
+			},
+			shadow: false
 		},
 		spline: {
 			marker: {
 				lineColor: '#656766'
-			}
+			},
+			shadow: false
 		},
 		scatter: {
 			marker: {
 				lineColor: '#656766'
-			}
+			},
+			shadow: false
 		},
 		candlestick: {
 			lineColor: '#656766'
+		},
+		shadow: false,
+		pie: {
+			shadow: false
+		},
+		bar: {
+			shadow: false
+		},
+		column: {
+			shadow: false
 		}
 	},
 
