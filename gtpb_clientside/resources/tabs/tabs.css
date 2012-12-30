@@ -1041,8 +1041,7 @@ div#reportData {
     border: #656766 solid 1px;
     border-radius: 10px;
   }
-  
-  
+
   .chart_controls .existing_element a:hover {
     color: white;
   	background-color: #656766;

@@ -31,6 +31,7 @@
 	  <link href="resources/mobile/pane1_amalgam.css" type="text/css" rel="stylesheet" />
 	#else
 	  <link href="resources/pane1_amalgam.css" type="text/css" rel="stylesheet" />
+      <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
 	#end
 	## JS
 	<script type="text/javascript" src="resources/jquery.js"></script>
