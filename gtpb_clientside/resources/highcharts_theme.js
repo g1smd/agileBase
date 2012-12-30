@@ -117,7 +117,7 @@ Highcharts.theme = {
 
 	navigation: {
 		buttonOptions: {
-			backgroundColor: ''#E8E7E3',
+			backgroundColor: '#E8E7E3',
 			borderColor: '#656766',
 			symbolStroke: '#C0C0C0',
 			hoverSymbolStroke: '#FFFFFF'
