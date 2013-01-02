@@ -44,8 +44,8 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 		switch (fieldType) {
 		case TEXT:
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.UNIQUE));
-			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.USELOOKUP));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
+			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.USELOOKUP));
 			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.DEFAULTVALUE));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.TIEDOWNLOOKUP));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.TEXTCONTENTSIZE));
@@ -57,8 +57,8 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			break;
 		case NUMBER:
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.UNIQUE));
-			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.USELOOKUP));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
+			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.USELOOKUP));
 			this.options
 					.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.STORECURRENCY));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.NUMBERPRECISION));
