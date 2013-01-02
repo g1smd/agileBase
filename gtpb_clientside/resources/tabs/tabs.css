@@ -1115,7 +1115,7 @@ div#reportData {
 }
 
 table#reportData td .editoptions select {
-  min-width: 8em;
+  min-width: 20em;
   margin-bottom: 0.3em;
 }
 
