@@ -618,6 +618,7 @@ div.relation_field {
 
 .comment {
   margin-top: 0.5em;
+  clear: left;
 }
 
 span.comment_text {
