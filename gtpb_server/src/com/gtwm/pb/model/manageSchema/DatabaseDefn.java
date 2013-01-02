@@ -628,14 +628,18 @@ public final class DatabaseDefn implements DatabaseInfo {
 			HibernateUtil.currentSession().save(map);
 			report.setMap(map);
 		}
-		if (postcodeField != null) {
-			map.setPostcodeField(postcodeField);
-		}
-		if (colourField != null) {
-			map.setColourField(colourField);
-		}
-		if (categoryField != null) {
-			map.setCategoryField(categoryField);
+		if ((postcodeField == null) && (colourField == null) && (categoryField == null)) {
+			map.setPostcodeField(null);
+		} else {
+			if (postcodeField != null) {
+				map.setPostcodeField(postcodeField);
+			}
+			if (colourField != null) {
+				map.setColourField(colourField);
+			}
+			if (categoryField != null) {
+				map.setCategoryField(categoryField);
+			}
 		}
 	}
 
