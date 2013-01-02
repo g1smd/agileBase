@@ -187,10 +187,6 @@ table#reportData td select {
   font-size: 9pt;
 }
 
-#newfield table#reportData td select {
-  min-width: 1em;
-}
-
 table#reportData td .date select {
   min-width: 0;
 }
@@ -1119,7 +1115,7 @@ div#reportData {
 }
 
 .editoptions select {
-  min-width: 10em;
+  min-width: 8em;
   margin-bottom: 0.3em;
 }
 
