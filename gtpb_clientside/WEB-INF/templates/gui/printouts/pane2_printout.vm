@@ -80,6 +80,10 @@
 	        color:red;
 	      }
 	      
+	      #map {
+	        display: none;
+	      }
+	      
 	    </style>
     #parse('gui/display_error.vm')
     #set($report = $sessionData.getReport())
