@@ -1114,7 +1114,7 @@ div#reportData {
   display: inline-block;
 }
 
-.editoptions select {
+table#reportData td .editoptions select {
   min-width: 8em;
   margin-bottom: 0.3em;
 }
