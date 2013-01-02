@@ -1114,11 +1114,12 @@ div#reportData {
 }
 
 .editoptions label {
-  min-width: 20em;
+  min-width: 8em;
+  display: inline-block;
 }
 
-.editoptions select, .editoptions input {
-  min-width: 20em;
+.editoptions select {
+  min-width: 10em;
   margin-bottom: 0.3em;
 }
 
