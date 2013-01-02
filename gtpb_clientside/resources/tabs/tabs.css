@@ -1107,8 +1107,22 @@ div#reportData {
 	font-weight: bold;
 }
 
-/* manage tab */
+/* fields tab */
+.editoptions {
+  min-width: 50em;
+  border-bottom: 1px solid #009FE3;
+}
 
+.editoptions label {
+  min-width: 20em;
+}
+
+.editoptions select, .editoptions input {
+  min-width: 20em;
+  margin-bottom: 0.3em;
+}
+
+/* manage tab */
 #module_related .suggested {
   background-color: white;
   border-radius: 0.5em;  

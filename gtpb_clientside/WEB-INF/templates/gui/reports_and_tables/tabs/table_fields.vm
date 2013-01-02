@@ -130,10 +130,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 	                #end	
 				 #end
 				 #if($options.size() > 0)
-				  <a href="#" onclick="$('#editoptions_$internalFieldName').slideDown('normal'); $('#viewoptions_$internalFieldName').hide('fast'); fWebkitGlitch();" >more/change</a>	
+				  <a href="#" onclick="$('#editoptions_$internalFieldName').slideDown('normal'); $('#viewoptions_$internalFieldName').hide('fast'); fWebkitGlitch();" >edit options</a>	
 				 #end
 				</div>
-				<div id="editoptions_$internalFieldName" style="display:none">
+				<div class="editoptions" id="editoptions_$internalFieldName" style="display:none">
 		         #foreach($option in $options)
 			        #set($formInputName = $option.getFormInputName())
 			        #set($formName = "updateoption${field.getInternalFieldName()}${formInputName}")
@@ -148,6 +148,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 			        #if($option.getClass().getSimpleName()=="ListFieldDescriptorOption")
 						#if( (($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision")) || ($option.getFormInputName() == "fieldpropertylisttable"))
 						#else
+				  <label for="${formName}">$option.getOptionDescription()</label>
 			      <select class="small" name="$formName" onchange="new fChange(this);"
 			        gtpb_internalfieldname="$internalFieldName"
                     gtpb_update_field_option="true">
@@ -157,14 +158,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 					  </option>
       		        #end 
                   </select>
-                  $option.getOptionDescription()
+                 
 				   #end ## end if a whole number and the option is NUMBERPRECISION
 	      		   #end ## end ListFieldDescriptorOption
 	          	   #if($option.getClass().getSimpleName()=="TextFieldDescriptorOption")
-                  <input type="text" name="$formName" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_internalfieldname="$internalFieldName" gtpb_update_field_option="true" #if($option.isValueNull() == false) value="$option.getValue()" #end />
                   <label for="$formName">
                     $option.getOptionDescription()
                   </label>
+                  <input type="text" name="$formName" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_internalfieldname="$internalFieldName" gtpb_update_field_option="true" #if($option.isValueNull() == false) value="$option.getValue()" #end />
                   #end<br>
 			    #end ## end loop through options
 				</div>
