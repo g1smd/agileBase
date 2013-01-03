@@ -539,6 +539,12 @@ time {
   border-radius: 1em;
 }
 
+#dateControlWrapper .close {
+  float:right;
+  font-size: 12pt;
+  color: #009FE3;
+}
+
 #dateControlCell h1 {
   font-size: 11pt;
   font-weight: normal;
