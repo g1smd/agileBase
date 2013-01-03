@@ -541,9 +541,10 @@ time {
 
 #dateControlWrapper .close {
   float:right;
-  font-size: 12pt;
-  color: #EC00BC;
-  padding-right: 1em;
+  background-color: #EC00BC;
+  color: white;
+  padding: 0.5em;
+  border-top-right-radius: 1em;
 }
 
 #dateControlWrapper .calMonth {
