@@ -368,6 +368,9 @@ function clearFilters() {
 }
 
 function dateFilterControls(event, inputObj) {
+	if ($("#fieldFilterControls").is(":visible")) {
+		return;
+	}
 	$("#fieldFilterControls").fadeIn();
 	$("#dateControlWrapper .close").click(function() {
 		$("#fieldFilterControls").fadeOut();
