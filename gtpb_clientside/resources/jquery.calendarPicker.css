@@ -1,9 +1,9 @@
 .calBox {
-  background-color: #928d81;
+  background-color: #E8E7E3; /*#928d81; */
   padding: 2px;
   -moz-border-radius: 4px;
   text-align: center;
-  color: white;
+  color: black;
 }
 
 .calElement {
@@ -14,7 +14,7 @@
 
 .calYear {
   font-size: 20px;
-  border-bottom: 1px dashed #666;
+  /* border-bottom: 1px dashed #666; */
   padding-bottom: 5px;
   margin-bottom: 5px
 }
@@ -24,7 +24,7 @@
 }
 
 .calMonth {
-  border-bottom: 1px dashed #666;
+  /* border-bottom: 1px dashed #666; */
   padding-bottom: 5px;
   margin-bottom: 5px;
 }
@@ -65,8 +65,8 @@ span.calElement.next:hover, span.calElement.prev:hover {
 
 
 .calElement.selected {
-  background-color: #404040;
-  border: 1px solid #404040;
+  background-color: #009FE3;
+  border: 1px solid #009FE3;
   -moz-border-radius: 3px
 }
 

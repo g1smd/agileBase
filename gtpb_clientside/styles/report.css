@@ -533,7 +533,9 @@ time {
 }
 
 #dateControlWrapper {
-  background-color: white;
+  background-color: #E8E7E3;
+  padding: 1em;
+  border-radius: 1em;
 }
 
 #dateControlCell h1 {
