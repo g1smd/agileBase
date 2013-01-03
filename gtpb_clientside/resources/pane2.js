@@ -451,9 +451,7 @@ function dateFilterControls(event, inputObj) {
 				minRange = minRange * 2;
 				maxRange = maxRange * 2;
 			}
-			$("#dateRangeSelector").dateRangeSlider({
-				bounds: {max: new Date(maxRange), min: new Date(minRange)}
-			});
+			$("#dateRangeSelector").dateRangeSlider("option", "bounds", {max: new Date(maxRange), min: new Date(minRange)});
 		});
 /*		$("#rangeStart,#rangeEnd").keyup(function() {
 			var minString = $("#rangeStart").val();
