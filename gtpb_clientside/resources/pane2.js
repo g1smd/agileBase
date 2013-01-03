@@ -368,7 +368,7 @@ function clearFilters() {
 }
 
 function dateFilterControls(event, inputObj) {
-	$("#fieldFilterControls").slideDown("normal");
+	$("#fieldFilterControls").show();
 	$("#individualDateSelector").calendarPicker({
 		years: 6,
 		months: 12,

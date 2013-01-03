@@ -521,7 +521,7 @@ time {
 }
 
 #fieldFilterControls {
-  display: absolute;
+  position: absolute;
   top: 56px;
   opacity: 0.8;
 }
