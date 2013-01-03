@@ -83,6 +83,7 @@
       <h1>choose an individual date</h1>
       <div id="individualDateSelector"></div>
       <h1>or a date range</h1>
+      <div id="dateRangeSelector"></div>
     </div>
   </td>
   <td class=trailing><div>&nbsp;</div></td>      

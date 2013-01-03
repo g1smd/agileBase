@@ -377,4 +377,5 @@ function dateFilterControls(event, inputObj) {
 			alert(cal.currentDate);
 		}
 	});
+	$("#dateRangeSelector").dateRangeSlider();
 }
