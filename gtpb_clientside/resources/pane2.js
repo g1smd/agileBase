@@ -369,7 +369,7 @@ function clearFilters() {
 
 function dateFilterControls(event, inputObj) {
 	// A filter other than a date filter clicked on
-	if (!$(inputObj.hasClass("filter_date"))) {
+	if (!$(inputObj).hasClass("filter_date")) {
 		$("#fieldFilterControls").fadeOut();
 		return;
 	}
