@@ -377,7 +377,7 @@ function dateFilterControls(event, inputObj) {
 		months: 6,
 		days: 12,
 		callback: function(cal) {
-			alert(cal.currentDate);
+
 		}
 	});
 	var today = new Date();
