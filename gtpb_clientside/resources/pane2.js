@@ -405,6 +405,6 @@ function dateFilterControls(event, inputObj) {
       var month = months[val.getMonth()];
       var year = val.getFullYear();
       return days + " " + month + " " + year;
-    }
-	});
-});
+		}
+  });
+}
