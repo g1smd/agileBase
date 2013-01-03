@@ -529,6 +529,7 @@ time {
 #fieldFilterControls #dateControlCell {
   position: absolute;
   top: 0;
+  left: 1em;
   width: 80em;
 }
 
