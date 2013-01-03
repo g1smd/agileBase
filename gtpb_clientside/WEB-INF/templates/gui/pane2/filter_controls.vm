@@ -4,6 +4,8 @@
 <div id="rangeWrapper">
   <h1>or a date range</h1>
   <div id="dateRangeSelector"></div>
+  <i class="icon-zoom-in"></i> 
+  <i class="icon-zoom-out"></i> 
   <div id="dateRangeInputs">
     <input style="float:left; display:none;" id="rangeStart" />
     <input style="float:right; display:none;" id="rangeEnd" />
