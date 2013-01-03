@@ -456,6 +456,8 @@ function dateFilterControls(event, inputObj) {
 				zoomLevel -= 1;
 			}
 			$("#dateRangeSelector").dateRangeSlider("option", "bounds", {max: new Date(now - maxRange), min: new Date(now - minRange)});
+			/*
+			 * Zoom level options seem to cause Firefox to hang
 			if (zoomLevel < -3) {
 				$("#dateRangeSelector").dateRangeSlider("option","step", {months: 1});
 			} else if (zoomLevel < -1) {
@@ -463,6 +465,7 @@ function dateFilterControls(event, inputObj) {
 			} else {
 				$("#dateRangeSelector").dateRangeSlider("option","step", {days: 1});
 			}
+			*/
 		});
 /*		$("#rangeStart,#rangeEnd").keyup(function() {
 			var minString = $("#rangeStart").val();
