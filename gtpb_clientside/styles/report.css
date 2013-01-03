@@ -535,6 +535,7 @@ time {
 #dateControlWrapper {
   background-color: #E8E7E3;
   padding: 1em;
+  padding-bottom: 6em;
   border-radius: 1em;
 }
 
@@ -547,6 +548,11 @@ time {
 
 #dateRangeSelector {
   margin-top: 3em;
+}
+
+#dateRangeInputs {
+  position: relative;
+  top: 3em;
 }
 
 .favicon {
