@@ -381,54 +381,55 @@ function dateFilterControls(event, inputObj) {
 	// reset to clear previous actions
 	$("#dateControlWrapper").children().remove();
 	$("#dateControlWrapperTemplate").clone().children().appendTo($("#dateControlWrapper"));
-	$("#fieldFilterControls").show();
-	$("#dateControlWrapper .close").click(function() {
-		$("#fieldFilterControls").fadeOut();
-	});
-	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-	// individual date
-	$("#individualDateSelector").calendarPicker({
-		years: 3,
-		months: 6,
-		days: 12,
-		callback: function(cal) {
-			if (firstCallback) {
-				firstCallback = false;
-			} else {
-			  var selected = cal.currentDate;
-			  var selectedString = selected.getDate() + " " + months[selected.getMonth()] + " " + selected.getFullYear();
-			  $(inputObj).val(selectedString);
-			  $(inputObj).keyup();
+	$("#fieldFilterControls").fadeIn(function() {
+		$("#dateControlWrapper .close").click(function() {
+			$("#fieldFilterControls").fadeOut();
+		});
+		var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+		// individual date
+		$("#individualDateSelector").calendarPicker({
+			years: 3,
+			months: 6,
+			days: 12,
+			callback: function(cal) {
+				if (firstCallback) {
+					firstCallback = false;
+				} else {
+				  var selected = cal.currentDate;
+				  var selectedString = selected.getDate() + " " + months[selected.getMonth()] + " " + selected.getFullYear();
+				  $(inputObj).val(selectedString);
+				  $(inputObj).keyup();
+				}
 			}
-		}
-	});
-	// date range
-	var today = new Date();
-	var maxDate = today;
-	maxDate.setDate(today.getDate() + 60);
-	var minDate = new Date();
-	minDate.setDate(maxDate.getDate() - 730);
-	var rangeStart = new Date();
-	rangeStart.setMonth(today.getMonth() - 6);
-	rangeStart.setDate(1);
-	$("#dateRangeSelector").dateRangeSlider({
-		bounds: {max: maxDate, min: minDate},
-		defaultValues: {max: new Date(), min: rangeStart},
-		formatter: function(val) {
-      var days = val.getDate();
-      var month = months[val.getMonth()];
-      var year = val.getFullYear();
-      return days + " " + month + " " + year;
-		}
-  });
-	$("#dateRangeSelector").bind("valuesChanged", function(e, data) {
-		var minDate = data.values.min;
-		var maxDate = data.values.max;
-		var minString = minDate.getDate() + " " + months[minDate.getMonth()] + " " + minDate.getFullYear();
-		$("#rangeStart").val(minString);
-		var maxString = maxDate.getDate() + " " + months[maxDate.getMonth()] + " " + maxDate.getFullYear();
-		$("#rangeEnd").val(maxString);
-		$(inputObj).val(">" + minString + " and <" + maxString);
-		$(inputObj).keyup();
+		});
+		// date range
+		var today = new Date();
+		var maxDate = today;
+		maxDate.setDate(today.getDate() + 60);
+		var minDate = new Date();
+		minDate.setDate(maxDate.getDate() - 730);
+		var rangeStart = new Date();
+		rangeStart.setMonth(today.getMonth() - 6);
+		rangeStart.setDate(1);
+		$("#dateRangeSelector").dateRangeSlider({
+			bounds: {max: maxDate, min: minDate},
+			defaultValues: {max: new Date(), min: rangeStart},
+			formatter: function(val) {
+	      var days = val.getDate();
+	      var month = months[val.getMonth()];
+	      var year = val.getFullYear();
+	      return days + " " + month + " " + year;
+			}
+	  });
+		$("#dateRangeSelector").bind("valuesChanged", function(e, data) {
+			var minDate = data.values.min;
+			var maxDate = data.values.max;
+			var minString = minDate.getDate() + " " + months[minDate.getMonth()] + " " + minDate.getFullYear();
+			$("#rangeStart").val(minString);
+			var maxString = maxDate.getDate() + " " + months[maxDate.getMonth()] + " " + maxDate.getFullYear();
+			$("#rangeEnd").val(maxString);
+			$(inputObj).val(">" + minString + " and <" + maxString);
+			$(inputObj).keyup();
+		});		
 	});
 }
