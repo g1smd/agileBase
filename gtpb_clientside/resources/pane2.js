@@ -368,6 +368,7 @@ function clearFilters() {
 }
 
 function dateFilterControls(event, inputObj) {
+	var firstCallback = true;
 	if ($("#fieldFilterControls").is(":visible")) {
 		return;
 	}
@@ -382,10 +383,14 @@ function dateFilterControls(event, inputObj) {
 		months: 6,
 		days: 12,
 		callback: function(cal) {
-			var selected = cal.currentDate;
-			var selectedString = selected.getDate() + " " + months[selected.getMonth()] + " " + selected.getFullYear();
-			$(inputObj).val(selectedString);
-			$(inputObj).keyup();
+			if (firstCallback) {
+				firstCallback = false;
+			} else {
+			  var selected = cal.currentDate;
+			  var selectedString = selected.getDate() + " " + months[selected.getMonth()] + " " + selected.getFullYear();
+			  $(inputObj).val(selectedString);
+			  $(inputObj).keyup();
+			}
 		}
 	});
 	// date range
