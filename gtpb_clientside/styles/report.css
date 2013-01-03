@@ -523,7 +523,7 @@ time {
 #fieldFilterControls {
   position: absolute;
   top: 50px;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 #fieldFilterControls #dateControlCell {
@@ -535,7 +535,6 @@ time {
 
 #dateControlWrapper {
   background-color: #E8E7E3;
-  padding: 1em;
   padding-bottom: 6em;
   border-radius: 1em;
   border: 1px solid white;
@@ -546,6 +545,7 @@ time {
   float:right;
   font-size: 12pt;
   color: #EC00BC;
+  padding-right: 1em;
 }
 
 #dateControlCell h1 {
@@ -553,12 +553,22 @@ time {
   font-weight: normal;
   margin: 0;
   padding-bottom: 0.25em;
+  margin-left: 1em;
   color: #656766;
 }
 
+#dateControlCell #dateRangeWrapper h1 {
+  color: white;
+}
+
 #individualDateSelector {
-  margin-bottom: 1em;
-  border-bottom: 1px solid #EC00BC;
+/*  border-bottom: 1px solid #EC00BC; */
+}
+
+#dateRangeWrapper {
+  height: 9em;
+  background-color: #656766;
+  color: white;
 }
 
 #dateRangeSelector {
