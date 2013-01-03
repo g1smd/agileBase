@@ -442,8 +442,8 @@ function dateFilterControls(event, inputObj) {
 		});
 		$("#rangeWrapper .zoom").click(function() {
 			var bounds = $("#dateRangeSelector").dateRangeSlider("option", "bounds");
-			var minRange = ((new Date()).getTimes() - bounds.min.getTime());
-			var maxRange = ((new Date()).getTimes() - bounds.max.getTime());
+			var minRange = ((new Date()).getTime() - bounds.min.getTime());
+			var maxRange = ((new Date()).getTime() - bounds.max.getTime());
 			if ($(this).hasClass("in")) {
 				minRange = minRange / 2;
 				maxRange = maxRange / 2;
