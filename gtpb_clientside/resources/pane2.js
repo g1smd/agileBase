@@ -378,6 +378,6 @@ function dateFilterControls(event, inputObj) {
 		}
 	});
 	$("#dateRangeSelector").dateRangeSlider({
-		bounds: {max: new Date();}
+		bounds: {max: new Date()}
 	});
 }
