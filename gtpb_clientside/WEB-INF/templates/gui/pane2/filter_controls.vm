@@ -1,0 +1,9 @@
+<i class="icon-remove close"></i>
+<h1>choose an individual date</h1>
+<div id="individualDateSelector"></div>
+<h1>or a date range</h1>
+<div id="dateRangeSelector"></div>
+<div id="dateRangeInputs">
+  <input style="float:left" id="rangeStart" />
+  <input style="float:right" id="rangeEnd" />
+</div>
