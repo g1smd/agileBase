@@ -370,8 +370,6 @@ function clearFilters() {
 function dateFilterControls(event, inputObj) {
 	$("#fieldFilterControls").show();
 	$("#individualDateSelector").calendarPicker({
-		years: 6,
-		months: 12,
 		callback: function(cal) {
 			alert(cal.currentDate);
 		}
