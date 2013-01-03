@@ -401,10 +401,20 @@ function dateFilterControls(event, inputObj) {
 		bounds: {max: maxDate, min: minDate},
 		defaultValues: {max: new Date(), min: rangeStart},
 		formatter: function(val) {
-      var days = val.getDay();
+      var days = val.getDate();
       var month = months[val.getMonth()];
       var year = val.getFullYear();
       return days + " " + month + " " + year;
 		}
   });
+	$("#dateRangeSelector").bind("valuesChanged", function(e, data) {
+		var minDate = data.values.min;
+		var maxDate = data.values.max;
+		var minString = minDate.getDate() + " " + months[minDate.getMonth()] + " " + minDate.getFullYear();
+		$("#rangeStart").val(minString);
+		var minString = maxDate.getDate() + " " + months[maxDate.getMonth()] + " " + maxDate.getFullYear();
+		$("#rangeEnd").val(maxString);
+		$(inputObj).val(">" + minString + " and <" + maxString);
+		$(inputObj).keyup();
+	});
 }

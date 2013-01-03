@@ -552,13 +552,22 @@ time {
   padding-bottom: 0.25em;
 }
 
+#individualDateSelector {
+  margin-bottom: 1em;
+}
+
 #dateRangeSelector {
-  margin-top: 3em;
+  margin-top: 2em;
 }
 
 #dateRangeInputs {
   position: relative;
-  top: 3em;
+  top: 2em;
+}
+
+.ui-rangeSlider-bar {
+  top: -1px!important;
+  height: 28px!important;
 }
 
 .favicon {
