@@ -412,7 +412,7 @@ function dateFilterControls(event, inputObj) {
 		var maxDate = data.values.max;
 		var minString = minDate.getDate() + " " + months[minDate.getMonth()] + " " + minDate.getFullYear();
 		$("#rangeStart").val(minString);
-		var minString = maxDate.getDate() + " " + months[maxDate.getMonth()] + " " + maxDate.getFullYear();
+		var maxString = maxDate.getDate() + " " + months[maxDate.getMonth()] + " " + maxDate.getFullYear();
 		$("#rangeEnd").val(maxString);
 		$(inputObj).val(">" + minString + " and <" + maxString);
 		$(inputObj).keyup();
