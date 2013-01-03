@@ -370,7 +370,7 @@ function clearFilters() {
 function dateFilterControls(event, inputObj) {
 	$("#fieldFilterControls").show();
 	$("#individualDateSelector").calendarPicker({
-		days: 3,
+		days: 7,
 		callback: function(cal) {
 			alert(cal.currentDate);
 		}
