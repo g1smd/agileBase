@@ -372,7 +372,7 @@ function dateFilterControls(event, inputObj) {
 	$("#individualDateSelector").calendarPicker({
 		years: 3,
 		months: 6,
-		days: 14,
+		days: 13,
 		callback: function(cal) {
 			alert(cal.currentDate);
 		}

@@ -81,6 +81,6 @@ span.calElement:hover {
 }
 
 .calElement.today {
-  border: 1px solid #e0e000;
+  border: 1px solid #EC00BC;
   border-radius: 3px
 }
