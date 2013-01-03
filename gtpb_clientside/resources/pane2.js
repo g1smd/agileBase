@@ -377,5 +377,7 @@ function dateFilterControls(event, inputObj) {
 			alert(cal.currentDate);
 		}
 	});
-	$("#dateRangeSelector").dateRangeSlider();
+	$("#dateRangeSelector").dateRangeSlider({
+		bounds: {max: new Date();}
+	});
 }
