@@ -14,9 +14,9 @@
 
 .calYear {
   font-size: 10pt;
-  /* border-bottom: 1px dashed #666; */
+  /* border-bottom: 1px dashed #666;
   padding-bottom: 5px;
-  margin-bottom: 5px
+  margin-bottom: 5px; */
 }
 
 .calYear .calElement {
