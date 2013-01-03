@@ -378,8 +378,10 @@ function dateFilterControls(event, inputObj) {
 		days: 12,
 		callback: function(cal) {
 			var selected = cal.currentDate;
-			var selectedString = selected.getDate() + "/" + selected.getMonth() + 1 + "/" + selected.getFullYear();
+			var selectedMonth = selected.getMonth() + 1;
+			var selectedString = selected.getDate() + "/" + selectedMonth + "/" + selected.getFullYear();
 			$(inputObj).val(selectedString);
+			$(inputObj).keyUp();
 		}
 	});
 	var today = new Date();
