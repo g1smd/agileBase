@@ -526,6 +526,12 @@ time {
   opacity: 0.8;
 }
 
+#fieldFilterControls #dateControlCell {
+  position: absolite;
+  top: 0;
+  width: 60em;
+}
+
 .favicon {
 	float:left;
 	height:16px;

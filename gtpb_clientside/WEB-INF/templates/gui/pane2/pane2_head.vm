@@ -78,7 +78,7 @@
 </tr>
 <tr id="fieldFilterControls" style="display:none">
   <td class="leading"><div>&nbsp;</div></td>
-  <td colspan="$fields.size()" style="width:100%">
+  <td colspan="$fields.size()" id="dateControlCell">
     <h1>individual date</h1>
     <div id="individualDateSelector"></div>
     <h1>date range</h1>
