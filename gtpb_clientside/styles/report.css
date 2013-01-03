@@ -546,6 +546,10 @@ time {
   padding-right: 1em;
 }
 
+#dateControlWrapper .calMonth {
+  font-size: 0; /* children have their own font sizes, this is just to remove additional line height */
+}
+
 #dateControlCell h1 {
   font-size: 14pt;
   font-weight: normal;

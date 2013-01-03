@@ -69,7 +69,7 @@
 }
 
 .ui-rangeSlider-leftArrow .ui-rangeSlider-arrow-inner{
-  border-right:10px solid #656766;
+/*  border-right:10px solid #656766; */
   left: 0;
   margin-left: -8px;
 }
