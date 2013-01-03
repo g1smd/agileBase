@@ -2,7 +2,7 @@
 <h1>choose a date</h1>
 <div id="individualDateSelector"></div>
 <div id="rangeWrapper">
-  <h1>or a date range <i class="icon-plus-sign"></i>  <i class="icon-minus-sign"></i></h1>
+  <h1>or drag a range | <i class="icon-plus-sign"></i>  <i class="icon-minus-sign"></i></h1>
   <div id="dateRangeSelector"></div>
   <div id="dateRangeInputs">
     <input style="float:left; display:none;" id="rangeStart" />
