@@ -558,10 +558,11 @@ time {
 
 #individualDateSelector {
   margin-bottom: 1em;
+  border-bottom: 1px solid #EC00BC;
 }
 
 #dateRangeSelector {
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 #dateRangeInputs {
