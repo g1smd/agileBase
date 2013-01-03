@@ -441,7 +441,7 @@ function dateFilterControls(event, inputObj) {
 			}
 		});
 		$("#rangeWrapper .zoom").click(function() {
-			var bounds = $("#dateRangeSelector").rangeSlider("option", "bounds");
+			var bounds = $("#dateRangeSelector").dateRangeSlider("option", "bounds");
 			var minRange = ((new Date()).getTimes() - bounds.min.getTime());
 			var maxRange = ((new Date()).getTimes() - bounds.max.getTime());
 			if ($(this).hasClass("in")) {
