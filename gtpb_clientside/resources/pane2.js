@@ -381,7 +381,8 @@ function dateFilterControls(event, inputObj) {
 	// reset to clear previous actions
 	$("#dateControlWrapper").children().remove();
 	$("#dateControlWrapperTemplate").clone().children().appendTo($("#dateControlWrapper"));
-	$("#fieldFilterControls").fadeIn(function() {
+	$("#fieldFilterControls").show();
+	$("#dateControlWrapper").load("AppController.servlet?return=gui/pane2/filter_controls", function() {
 		$("#dateControlWrapper .close").click(function() {
 			$("#fieldFilterControls").fadeOut();
 		});
@@ -431,5 +432,5 @@ function dateFilterControls(event, inputObj) {
 			$(inputObj).val(">" + minString + " and <" + maxString);
 			$(inputObj).keyup();
 		});		
-	});
+	}); // end of load function
 }
