@@ -436,6 +436,14 @@ function dateFilterControls(event, inputObj) {
 				$(inputObj).val(">" + minString + " and <" + maxString);
 				$(inputObj).keyup();
 			}
-		});		
+		});
+		$("#rangeStart,#rangeEnd").keyup(function() {
+			var minString = $("#rangeStart").val();
+			var maxString = $("#rangeEnd").val();
+			if ((start != "") && (end != "")) {
+				$(inputObj).val(">" + minString + " and <" + maxString);
+				$(inputObj).keyup();
+			}
+		});
 	}); // end of load function
 }
