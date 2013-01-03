@@ -80,9 +80,9 @@
   <td class="leading"><div>&nbsp;</div></td>
   <td colspan="$fields.size()" id="dateControlCell">
     <div id="dateControlWrapper">
-      <h1>individual date</h1>
+      <h1>choose an individual date</h1>
       <div id="individualDateSelector"></div>
-      <h1>date range</h1>
+      <h1>or a date range</h1>
     </div>
   </td>
   <td class=trailing><div>&nbsp;</div></td>      

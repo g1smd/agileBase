@@ -538,8 +538,9 @@ time {
 
 #dateControlCell h1 {
   font-size: 11pt;
-  font-weight: 0;
-  background-color: white;
+  font-weight: normal;
+  margin-bottom: 0;
+  padding-bottom: 0.25em;
 }
 
 .favicon {
