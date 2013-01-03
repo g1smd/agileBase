@@ -382,10 +382,10 @@ function dateFilterControls(event, inputObj) {
 	maxDate.setDate(today.getDate() + 60);
 	var minDate = new Date();
 	minDate.setDate(maxDate.getDate() - 730);
-	var monthStart = today;
-	monthStart.setDate(today.getDate() - 31);
+	var rangeStart = new Date();
+	rangeStart.setDate(today.getDate() - 60);
 	$("#dateRangeSelector").dateRangeSlider({
 		bounds: {max: maxDate, min: minDate},
-		defaultValues: {max: new Date(), min: monthStart}
+		defaultValues: {max: new Date(), min: rangeStart}
 	});
 }
