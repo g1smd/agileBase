@@ -452,6 +452,7 @@ function dateFilterControls(event, inputObj) {
 				maxRange = maxRange * 2;
 			}
 			$("#dateRangeSelector").dateRangeSlider("option", "bounds", {max: new Date(maxRange), min: new Date(minRange)});
+			$("#dateRangeSelector").dateRangeSlider("resize");
 		});
 /*		$("#rangeStart,#rangeEnd").keyup(function() {
 			var minString = $("#rangeStart").val();
