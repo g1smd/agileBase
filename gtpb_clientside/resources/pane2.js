@@ -379,7 +379,7 @@ function dateFilterControls(event, inputObj) {
 		callback: function(cal) {
 			var selected = cal.currentDate;
 			var months = ['Jan','Feb','Mar','Apr','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-			var selectedString = selected.getDate() + " " + months[selected.getMonth()] + " " + selected.getFullYear();
+			var selectedString = selected.getDate() + " " + months[selected.getMonth() - 1] + " " + selected.getFullYear();
 			$(inputObj).val(selectedString);
 			$(inputObj).keyup();
 		}
