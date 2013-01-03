@@ -378,6 +378,7 @@ function dateFilterControls(event, inputObj) {
 		return;
 	}
 	var firstCallback = true;
+	var firstRangeCallback = true;
 	// reset to clear previous actions
 	$("#dateControlWrapper").children().remove();
 	$("#dateControlWrapperTemplate").clone().children().appendTo($("#dateControlWrapper"));
@@ -423,14 +424,18 @@ function dateFilterControls(event, inputObj) {
 			}
 	  });
 		$("#dateRangeSelector").bind("valuesChanged", function(e, data) {
-			var minDate = data.values.min;
-			var maxDate = data.values.max;
-			var minString = minDate.getDate() + " " + months[minDate.getMonth()] + " " + minDate.getFullYear();
-			$("#rangeStart").val(minString);
-			var maxString = maxDate.getDate() + " " + months[maxDate.getMonth()] + " " + maxDate.getFullYear();
-			$("#rangeEnd").val(maxString);
-			$(inputObj).val(">" + minString + " and <" + maxString);
-			$(inputObj).keyup();
+			if (firstRangeCallback) {
+				firstRangeCallback = false;
+			} else {
+				var minDate = data.values.min;
+				var maxDate = data.values.max;
+				var minString = minDate.getDate() + " " + months[minDate.getMonth()] + " " + minDate.getFullYear();
+				$("#rangeStart").val(minString);
+				var maxString = maxDate.getDate() + " " + months[maxDate.getMonth()] + " " + maxDate.getFullYear();
+				$("#rangeEnd").val(maxString);
+				$(inputObj).val(">" + minString + " and <" + maxString);
+				$(inputObj).keyup();
+			}
 		});		
 	}); // end of load function
 }
