@@ -523,6 +523,7 @@ time {
 #fieldFilterControls {
   position: absolute;
   top: 50px;
+  opacity: 0.9;
 }
 
 #fieldFilterControls #dateControlCell {
@@ -532,7 +533,7 @@ time {
 }
 
 #dateControlWrapper {
-  background-color: rgba(232,231,227,0.9);
+  background-color: #E8E7E3;
   padding: 1em;
   border-radius: 1em;
 }
@@ -542,6 +543,10 @@ time {
   font-weight: normal;
   margin: 0;
   padding-bottom: 0.25em;
+}
+
+#individualDateSelector {
+  margin-top: 3em;
 }
 
 .favicon {

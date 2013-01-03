@@ -84,6 +84,10 @@
       <div id="individualDateSelector"></div>
       <h1>or a date range</h1>
       <div id="dateRangeSelector"></div>
+      <div id="dateRangeInputs">
+        <input style="float:left" id="rangeStart" />
+        <input style="float:right" id="rangeEnd" />
+      </div>
     </div>
   </td>
   <td class=trailing><div>&nbsp;</div></td>      
