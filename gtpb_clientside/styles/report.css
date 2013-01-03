@@ -557,7 +557,7 @@ time {
   color: #656766;
 }
 
-#dateControlCell #dateRangeWrapper h1 {
+#dateControlCell #rangeWrapper h1 {
   color: white;
 }
 
@@ -565,7 +565,7 @@ time {
 /*  border-bottom: 1px solid #EC00BC; */
 }
 
-#dateRangeWrapper {
+#rangeWrapper {
   height: 9em;
   background-color: #656766;
   color: white;
