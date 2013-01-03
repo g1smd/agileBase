@@ -377,6 +377,7 @@ function dateFilterControls(event, inputObj) {
 	if ($("#fieldFilterControls").is(":visible")) {
 		return;
 	}
+	var zoomLevel = 0;
 	var firstCallback = true;
 	var firstRangeCallback = true;
 	// reset to clear previous actions
@@ -448,12 +449,20 @@ function dateFilterControls(event, inputObj) {
 			if ($(this).hasClass("in")) {
 				minRange = minRange / 2;
 				maxRange = maxRange / 2;
+				zoomLevel += 1;
 			} else {
 				minRange = minRange * 2;
 				maxRange = maxRange * 2;
+				zoomLevel -= 1;
 			}
 			$("#dateRangeSelector").dateRangeSlider("option", "bounds", {max: new Date(now - maxRange), min: new Date(now - minRange)});
-			//$("#dateRangeSelector").dateRangeSlider("resize");
+			if (zoomLevel < -3) {
+				$("#dateRangeSelector").dateRangeSlider("option","step", {months: 1});
+			} else if (zoomLevel < -1) {
+				$("#dateRangeSelector").dateRangeSlider("option","step", {weeks: 1});
+			} else {
+				$("#dateRangeSelector").dateRangeSlider("option","step", {days: 1});
+			}
 		});
 /*		$("#rangeStart,#rangeEnd").keyup(function() {
 			var minString = $("#rangeStart").val();
