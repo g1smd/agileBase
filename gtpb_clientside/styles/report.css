@@ -520,6 +520,12 @@ time {
   vertical-align: top;
 }
 
+#fieldFilterControls {
+  display: absolute;
+  top: 56px;
+  opacity: 0.8;
+}
+
 .favicon {
 	float:left;
 	height:16px;
