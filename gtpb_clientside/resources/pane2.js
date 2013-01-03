@@ -440,7 +440,7 @@ function dateFilterControls(event, inputObj) {
 		$("#rangeStart,#rangeEnd").keyup(function() {
 			var minString = $("#rangeStart").val();
 			var maxString = $("#rangeEnd").val();
-			if ((start != "") && (end != "")) {
+			if ((minString != "") && (maxString != "")) {
 				$(inputObj).val(">" + minString + " and <" + maxString);
 				$(inputObj).keyup();
 			}
