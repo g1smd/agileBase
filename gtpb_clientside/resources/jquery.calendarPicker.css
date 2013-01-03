@@ -73,8 +73,9 @@ span.calElement.next:hover, span.calElement.prev:hover {
 }
 
 span.calElement:hover {
-  background-color: #404040;
-  border: 1px solid #404040;
+  color: white;
+  background-color: #656766;
+  border: 1px solid #656766;
   border-radius: 3px;
   cursor: pointer;
 }
