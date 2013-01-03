@@ -103,7 +103,6 @@ $.fn.extend({
 		}
 		return 0;
 	},
-
 	uniqueId: function() {
 		return this.each(function() {
 			if ( !this.id ) {
