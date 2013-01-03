@@ -568,12 +568,14 @@ time {
   height: 9em;
   background-color: #656766;
   color: white;
-  border-radius-bottom-left: 1em;
-  border-radius-bottom-right: 1em;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
 }
 
 #dateRangeSelector {
   margin-top: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 #dateRangeInputs {
