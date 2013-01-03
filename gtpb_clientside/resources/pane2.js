@@ -400,8 +400,8 @@ function dateFilterControls(event, inputObj) {
 	$("#dateRangeSelector").dateRangeSlider({
 		bounds: {max: maxDate, min: minDate},
 		defaultValues: {max: new Date(), min: rangeStart},
-		formatter: function(val){
-      var days = val.getDay(),
+		formatter: function(val) {
+      var days = val.getDay();
       var month = months[val.getMonth()];
       var year = val.getFullYear();
       return days + " " + month + " " + year;
