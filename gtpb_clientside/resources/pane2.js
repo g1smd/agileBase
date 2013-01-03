@@ -383,7 +383,8 @@ function dateFilterControls(event, inputObj) {
 	var minDate = new Date();
 	minDate.setDate(maxDate.getDate() - 730);
 	var rangeStart = new Date();
-	rangeStart.setDate(today.getDate() - 60);
+	rangeStart.setMonth(today.getMonth() - 6);
+	rangeStart.setDate(1);
 	$("#dateRangeSelector").dateRangeSlider({
 		bounds: {max: maxDate, min: minDate},
 		defaultValues: {max: new Date(), min: rangeStart}
