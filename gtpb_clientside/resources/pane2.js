@@ -368,10 +368,16 @@ function clearFilters() {
 }
 
 function dateFilterControls(event, inputObj) {
-	var firstCallback = true;
+	// A filter other than a date filter clicked on
+	if (!$(inputObj.hasClass("filter_date"))) {
+		$("#fieldFilterControls").fadeOut();
+		return;
+	}
+	// Filter is already active
 	if ($("#fieldFilterControls").is(":visible")) {
 		return;
 	}
+	var firstCallback = true;
 	// reset to clear previous actions
 	$("#dateControlWrapper").children().remove();
 	$("#dateControlWrapper").append($("#dateControlWrapperTemplate").children());
