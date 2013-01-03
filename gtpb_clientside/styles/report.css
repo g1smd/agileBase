@@ -532,6 +532,16 @@ time {
   width: 80em;
 }
 
+#dateControlWrapper {
+  background-color: white;
+}
+
+#dateControlCell h1 {
+  font-size: 11pt;
+  font-weight: 0;
+  background-color: white;
+}
+
 .favicon {
 	float:left;
 	height:16px;
