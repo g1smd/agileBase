@@ -547,6 +547,7 @@ time {
   padding: 0.5em;
   border-top-right-radius: 1em;
   border-bottom-left-radius: 0.5em;
+  cursor: pointer;
 }
 
 #dateControlWrapper .calMonth {
