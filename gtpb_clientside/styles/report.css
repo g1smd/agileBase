@@ -535,7 +535,6 @@ time {
 
 #dateControlWrapper {
   background-color: #E8E7E3;
-  padding-bottom: 6em;
   border-radius: 1em;
   border: 1px solid white;
   box-shadow: 0.5em 0.5em 2em #CCCCCC;
@@ -566,9 +565,12 @@ time {
 }
 
 #rangeWrapper {
+  padding-top: 1em;
   height: 9em;
   background-color: #656766;
   color: white;
+  border-radius-bottom-left: 1em;
+  border-radius-bottom-right: 1em;
 }
 
 #dateRangeSelector {
