@@ -381,7 +381,7 @@ function dateFilterControls(event, inputObj) {
 	// reset to clear previous actions
 	$("#dateControlWrapper").children().remove();
 	$("#dateControlWrapperTemplate").clone().children().appendTo($("#dateControlWrapper"));
-	$("#fieldFilterControls").fadeIn();
+	$("#fieldFilterControls").show();
 	$("#dateControlWrapper .close").click(function() {
 		$("#fieldFilterControls").fadeOut();
 	});
