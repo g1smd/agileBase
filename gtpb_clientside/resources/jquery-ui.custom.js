@@ -102,7 +102,6 @@ $.fn.extend({
 				elem = elem.parent();
 			}
 		}
-
 		return 0;
 	},
 
