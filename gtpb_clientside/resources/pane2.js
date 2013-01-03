@@ -366,3 +366,14 @@ function clearFilters() {
 		  fLoadReport(sResponseText, oReportBody, null);
 	});
 }
+
+function dateFilterControls(event, inputObj) {
+	$("#fieldFilterControls").slideDown("normal");
+	$("#individualDateSelector").calendarPicker({
+		years: 6,
+		months: 12,
+		callback: function(cal) {
+			alert(cal.currentDate);
+		}
+	});
+}

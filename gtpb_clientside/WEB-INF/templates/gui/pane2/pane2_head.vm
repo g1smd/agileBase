@@ -76,3 +76,12 @@
   #end
   <td class=trailing><div>&nbsp;</div></td>      
 </tr>
+<tr id="fieldFilterControls" style="display:none">
+  <td class="leading"><div>&nbsp;</div></td>
+  <td colspan="$fields.size()">
+    <h1>individual date</h1>
+    <div id="individualDateSelector"></div>
+    <h1>date range</h1>
+  </td>
+  <td class=trailing><div>&nbsp;</div></td>      
+</tr>
