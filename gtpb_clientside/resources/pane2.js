@@ -431,14 +431,31 @@ function dateFilterControls(event, inputObj) {
 				var minDate = data.values.min;
 				var maxDate = data.values.max;
 				var minString = minDate.getDate() + " " + months[minDate.getMonth()] + " " + minDate.getFullYear();
-				$("#rangeStart").val(minString);
 				var maxString = maxDate.getDate() + " " + months[maxDate.getMonth()] + " " + maxDate.getFullYear();
+				/*
+				$("#rangeStart").val(minString);
 				$("#rangeEnd").val(maxString);
+				*/
 				$(inputObj).val(">" + minString + " and <" + maxString);
 				$(inputObj).keyup();
 			}
 		});
-		$("#rangeStart,#rangeEnd").keyup(function() {
+		$("#rangeWrapper .zoom").click(function() {
+			var bounds = $("#dateRangeSelector").rangeSlider("option", "bounds");
+			var minRange = ((new Date()).getTimes() - bounds.min.getTime());
+			var maxRange = ((new Date()).getTimes() - bounds.max.getTime());
+			if ($(this).hasClass("in")) {
+				minRange = minRange / 2;
+				maxRange = maxRange / 2;
+			} else {
+				minRange = minRange * 2;
+				maxRange = maxRange * 2;
+			}
+			$("#dateRangeSelector").dateRangeSlider({
+				bounds: {max: new Date(maxRange), min: new Date(minRange)}
+			});
+		});
+/*		$("#rangeStart,#rangeEnd").keyup(function() {
 			var minString = $("#rangeStart").val();
 			var maxString = $("#rangeEnd").val();
 			if ((minString != "") && (maxString != "")) {
@@ -446,5 +463,6 @@ function dateFilterControls(event, inputObj) {
 				$(inputObj).keyup();
 			}
 		});
+		*/
 	}); // end of load function
 }

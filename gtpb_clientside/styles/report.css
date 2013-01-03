@@ -579,6 +579,10 @@ time {
   border-bottom-right-radius: 1em;
 }
 
+#rangeWrapper .zoom {
+  cursor: pointer;
+}
+
 #dateRangeSelector {
   margin-top: 1em;
   margin-left: 1em;
