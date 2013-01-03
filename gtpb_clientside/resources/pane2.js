@@ -379,6 +379,7 @@ function dateFilterControls(event, inputObj) {
 	});
 	var today = new Date();
 	var maxDate = today;
+	maxDate.setDate(today.getDate() + 60);
 	var minDate = new Date();
 	minDate.setDate(maxDate.getDate() - 730);
 	var monthStart = today;
