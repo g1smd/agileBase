@@ -522,7 +522,7 @@ time {
 
 #fieldFilterControls {
   position: absolute;
-  top: 56px;
+  top: 50px;
   opacity: 0.9;
 }
 
@@ -541,7 +541,7 @@ time {
 #dateControlCell h1 {
   font-size: 11pt;
   font-weight: normal;
-  margin-bottom: 0;
+  margin: 0;
   padding-bottom: 0.25em;
 }
 
