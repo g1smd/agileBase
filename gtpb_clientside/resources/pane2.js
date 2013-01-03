@@ -442,8 +442,9 @@ function dateFilterControls(event, inputObj) {
 		});
 		$("#rangeWrapper .zoom").click(function() {
 			var bounds = $("#dateRangeSelector").dateRangeSlider("option", "bounds");
-			var minRange = ((new Date()).getTime() - bounds.min.getTime());
-			var maxRange = ((new Date()).getTime() - bounds.max.getTime());
+			var now = new Date();
+			var minRange = (now.getTime() - bounds.min.getTime());
+			var maxRange = (now.getTime() - bounds.max.getTime());
 			if ($(this).hasClass("in")) {
 				minRange = minRange / 2;
 				maxRange = maxRange / 2;
@@ -451,8 +452,9 @@ function dateFilterControls(event, inputObj) {
 				minRange = minRange * 2;
 				maxRange = maxRange * 2;
 			}
-			$("#dateRangeSelector").dateRangeSlider("option", "bounds", {max: new Date(maxRange), min: new Date(minRange)});
+			$("#dateRangeSelector").dateRangeSlider("option", "bounds", {max: new Date(now - maxRange), min: new Date(now - minRange)});
 			$("#dateRangeSelector").dateRangeSlider("resize");
+			console.log(new Date(now - minRange));
 		});
 /*		$("#rangeStart,#rangeEnd").keyup(function() {
 			var minString = $("#rangeStart").val();
