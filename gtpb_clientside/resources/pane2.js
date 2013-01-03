@@ -377,7 +377,16 @@ function dateFilterControls(event, inputObj) {
 			alert(cal.currentDate);
 		}
 	});
+	var today = new Date();
+	var maxDate = today + 7;
+	var minDate = today - 730;
+	var monthStart = today;
+	monthStart.setDate(1);
+	if (monthStart == today) {
+		monthStart = monthStart = 31;
+	}
 	$("#dateRangeSelector").dateRangeSlider({
-		bounds: {max: new Date()}
+		bounds: {max: maxDate, min: minDate},
+		range: {max: today, min: monthStart}
 	});
 }
