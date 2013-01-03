@@ -372,13 +372,15 @@ function dateFilterControls(event, inputObj) {
 	if ($("#fieldFilterControls").is(":visible")) {
 		return;
 	}
+	// reset to clear previous actions
+	$("#dateControlWrapper").children().remove();
+	$("#dateControlWrapper").append($("#dateControlWrapperTemplate").children());
 	$("#fieldFilterControls").fadeIn();
 	$("#dateControlWrapper .close").click(function() {
 		$("#fieldFilterControls").fadeOut();
 	});
 	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 	// individual date
-	$("#individualDateSelector").empty(); // Remove any previous actions
 	$("#individualDateSelector").calendarPicker({
 		years: 3,
 		months: 6,
@@ -403,7 +405,6 @@ function dateFilterControls(event, inputObj) {
 	var rangeStart = new Date();
 	rangeStart.setMonth(today.getMonth() - 6);
 	rangeStart.setDate(1);
-	$("#dateRangeSelector").empty(); // remove any previous actions
 	$("#dateRangeSelector").dateRangeSlider({
 		bounds: {max: maxDate, min: minDate},
 		defaultValues: {max: new Date(), min: rangeStart},
