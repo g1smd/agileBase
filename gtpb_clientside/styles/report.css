@@ -537,6 +537,8 @@ time {
   padding: 1em;
   padding-bottom: 6em;
   border-radius: 1em;
+  border: 1px solid white;
+  box-shadow: 0.5em 0.5em 2em #CCCCCC;
 }
 
 #dateControlWrapper .close {
@@ -546,10 +548,11 @@ time {
 }
 
 #dateControlCell h1 {
-  font-size: 11pt;
+  font-size: 14pt;
   font-weight: normal;
   margin: 0;
   padding-bottom: 0.25em;
+  color: #656766;
 }
 
 #individualDateSelector {
