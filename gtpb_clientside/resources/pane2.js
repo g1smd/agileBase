@@ -390,7 +390,7 @@ function dateFilterControls(event, inputObj) {
 	var zoomLevel = 0;
 	var firstCallback = true;
 	var firstRangeCallback = true;
-	console.log($(inputObj).position.left);
+	console.log($(inputObj).position().left);
 	// reset to clear previous actions
 	$("#dateControlWrapper").children().remove();
 	$("#dateControlWrapperTemplate").clone().children().appendTo($("#dateControlWrapper"));
