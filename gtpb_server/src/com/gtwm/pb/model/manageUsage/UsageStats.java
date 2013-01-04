@@ -39,6 +39,8 @@ import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.manageUsage.UsageLogger.LogType;
 
+import java.awt.Color;
+import java.awt.color.ColorSpace;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.PreparedStatement;
@@ -216,7 +218,7 @@ public class UsageStats implements UsageStatsInfo {
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
-		int ratio = (maxMin * 2) / 100;
+		float ratio = ((float) maxMin * 2) / 100;
 		try {
 			jg = jsonFactory.createJsonGenerator(stringWriter);
 			jg.writeStartObject();
@@ -263,12 +265,14 @@ public class UsageStats implements UsageStatsInfo {
 						jg.writeStringField("name", report.getReportName().toLowerCase());
 						jg.writeObjectFieldStart("data");
 						jg.writeNumberField("$area", leaf.getArea());
-						int colour = leaf.getColour();
-						int hue = 198; // agileBase blue
-						int lightness = 89;
+						float hue = 198f / 360; // agileBase blue
 						// normalize: -maxMin..maxMin -> 1..100
-						int saturation = (leaf.getColour() / ratio) + 50;
-						jg.writeStringField("$color", "hsl(" + hue + "," + saturation + "," + lightness + ")");
+						float saturation = (((float) leaf.getColour() / ratio) + 50) / 100;
+						float lightness = 89f / 100; // agileBase blue brightness
+						Color colour = Color.getHSBColor(hue, saturation, lightness);
+						String rgb = Integer.toString(colour.getRGB() & 0x00FFFFFF, 16); // hsb -> rgb
+						rgb = String.format("%6s", rgb).replace(" ","0");  // pad left with zeros
+						jg.writeStringField("$color", "#" + rgb);
 						jg.writeEndObject();
 						jg.writeArrayFieldStart("children");
 						jg.writeEndArray(); // no children, empty
