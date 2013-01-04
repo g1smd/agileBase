@@ -52,7 +52,7 @@ $(document).ready(function() {
 	      };  
 	  }  
 	});  
-	var treemapJson = $.getJson("AppController.servlet?return=s/treemap_json&returntype=json");
+	var treemapJson = $.getJSON("AppController.servlet?return=s/treemap_json&returntype=json");
 	tm.loadJSON(treemapJson);  
 	tm.refresh();  
 });
