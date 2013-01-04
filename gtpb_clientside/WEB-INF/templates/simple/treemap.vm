@@ -1,0 +1,14 @@
+<html>
+<head>
+    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+    <link href="resources/display_application.css" type="text/css" rel="stylesheet" />
+    <link href="styles/main.css" type="text/css" rel="stylesheet" />
+    <title>Agilebase usage</title>
+    <script src="resources/jquery.js" language="Javascript"></script>
+    <script language="JavaScript" src="resources/jit.js"></script>
+    <script language="JavaScript" src="simple/simple.js"></script>
+</head>
+<body>
+<div id="infoviz">
+</div>
+</body>
