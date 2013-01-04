@@ -23,20 +23,6 @@ $(document).ready(function() {
 		    }  
 		  },  
 		  duration: 1000,  
-			Color: {  
-  			//Allow coloring  
-  			allow: true,  
-  			//Select a value range for the $color  
-		    //property. Defaults to -100 and 100.  
-			    minValue: -750,  
-			    maxValue: 750,  
-  			//Set color range. Defaults to reddish and  
-  			//greenish. It takes an array of three  
-  			//integers as R, G and B values.  
-  			//maxColorValue: [0, 255, 50],
-  			maxColorValue: [255, 50, 50],
-		    minColorValue: [50, 150, 255]
-			},
 		  //Enable tips  
 		  Tips: {  
 		    enable: true,  

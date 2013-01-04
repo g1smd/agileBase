@@ -162,11 +162,11 @@ public class UsageStats implements UsageStatsInfo {
 				// Hard code the max and min for now.
 				// TODO: These could become parameters
 				if (results.wasNull()) {
-					percentageIncrease = -750;
-				} else if (percentageIncrease > 750) {
-					percentageIncrease = 750;
-				} else if (percentageIncrease < -750) {
-					percentageIncrease = -750;
+					percentageIncrease = -1 * maxMin;
+				} else if (percentageIncrease > maxMin) {
+					percentageIncrease = maxMin;
+				} else if (percentageIncrease < (-1 * maxMin)) {
+					percentageIncrease = -1 * maxMin;
 				}
 				String section = module.getSection();
 				if (section == null) {
@@ -216,6 +216,7 @@ public class UsageStats implements UsageStatsInfo {
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
+		int ratio = (maxMin * 2) / 100;
 		try {
 			jg = jsonFactory.createJsonGenerator(stringWriter);
 			jg.writeStartObject();
@@ -262,7 +263,12 @@ public class UsageStats implements UsageStatsInfo {
 						jg.writeStringField("name", report.getReportName().toLowerCase());
 						jg.writeObjectFieldStart("data");
 						jg.writeNumberField("$area", leaf.getArea());
-						jg.writeNumberField("$color", leaf.getColour());
+						int colour = leaf.getColour();
+						int hue = 198; // agileBase blue
+						int lightness = 89;
+						// normalize: -maxMin..maxMin -> 1..100
+						int saturation = (leaf.getColour() / ratio) + 50;
+						jg.writeStringField("$color", "hsl(" + hue + "," + saturation + "," + lightness + ")");
 						jg.writeEndObject();
 						jg.writeArrayFieldStart("children");
 						jg.writeEndArray(); // no children, empty
@@ -906,6 +912,8 @@ public class UsageStats implements UsageStatsInfo {
 	}
 	
 	private int monthlyTableCost = 0;
+	
+	private static final int maxMin = 750;
 
 	private int numTables = 0;
 
