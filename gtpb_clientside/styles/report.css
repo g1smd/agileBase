@@ -585,6 +585,8 @@ time {
   display: inline-block;
   color: #E7F5F9;
   font-size: 14pt;
+  float: right;
+  margin-right: 1em;
 }
 
 #dateRangeSelector {
