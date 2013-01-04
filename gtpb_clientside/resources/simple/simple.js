@@ -12,7 +12,6 @@ $(document).ready(function() {
 		  animate: true,  
 		  //box offsets  
 		  offset: 1,  
-		  cushion: true,
 		  //Attach left and right click events  
 		  Events: {  
 		    enable: true,  
