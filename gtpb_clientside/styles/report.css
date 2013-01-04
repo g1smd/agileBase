@@ -435,17 +435,17 @@ tr.separator + tr.separator {
 	top: 30px;
 	left: 0;
 	background-color: #E8E7E3;
-	-moz-box-shadow: 0.5em 0.5em 2em #cccccc;
-	-webkit-box-shadow: 0.5em 0.5em 2em #cccccc;
-	box-shadow: 0.5em 0.5em 2em #cccccc;
+	-moz-box-shadow: 0.5em 0.5em 2em #656766;
+	-webkit-box-shadow: 0.5em 0.5em 2em #656766;
+	box-shadow: 0.5em 0.5em 2em #656766;
 	width: auto!important;
 	max-width: 1000px;
 	font-weight: normal;
 	font-size: 9pt;
 	padding: 0.2em;
 	text-transform: none;
-	border-radius: 5px;
-	border: 1px solid white;
+	border-radius: 0.5em;
+	opacity: 0.95;
 }
 
 .ab_tooltip .tooltip_content {
@@ -536,7 +536,7 @@ time {
 #dateControlWrapper {
   background-color: #E8E7E3;
   border-radius: 1em;
-  box-shadow: 0.5em 0.5em 2em #CCCCCC;
+  box-shadow: 0.5em 0.5em 2em #656766;
   cursor: default;
 }
 

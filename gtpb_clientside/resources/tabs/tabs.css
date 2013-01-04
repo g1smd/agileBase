@@ -416,7 +416,7 @@ div#recordUnlock button div small, div#recordUnlock div#staticMessage small
 }
 
 #wordcloud a:hover {
-  border-bottom: 5px dotted #cccccc;
+  border-bottom: 5px dotted #656766;
 }
 
 #wordcloud_controls {
@@ -954,7 +954,7 @@ div#reportData {
   margin: 0.5em;
   margin-right: 0;
   margin-top: 0;
-  border: 0.75em solid #cccccc;
+  border: 0.75em solid #656766;
   border-top: 0;
   border-radius: 0 0 0.5em 0.5em;
 }
