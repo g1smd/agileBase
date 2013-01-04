@@ -237,6 +237,7 @@ public class UsageStats implements UsageStatsInfo {
 				jg.writeStringField("name", section.toUpperCase());
 				jg.writeObjectFieldStart("data");
 				jg.writeNumberField("$area", sectionAreas.get(section));
+				jg.writeStringField("$color", "#E8E7E3");
 				jg.writeEndObject();
 				jg.writeArrayFieldStart("children");
 				// loop through modules
@@ -251,6 +252,7 @@ public class UsageStats implements UsageStatsInfo {
 					jg.writeStringField("name", module.getModuleName().toLowerCase());
 					jg.writeObjectFieldStart("data");
 					jg.writeNumberField("$area", moduleAreas.get(module));
+					jg.writeStringField("$color", "#E8E7E3");
 					jg.writeEndObject();
 					jg.writeArrayFieldStart("children");
 					for (UsageStatsTreeMapNodeInfo leaf : leaves) {
