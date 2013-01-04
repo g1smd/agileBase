@@ -8,4 +8,14 @@
     <input style="float:left; display:none;" id="rangeStart" />
     <input style="float:right; display:none;" id="rangeEnd" />
   </div>
+  <div id="dateRangePresets">
+    <button>today</button> 
+    <button>yesterday</button> 
+    <button>this week</button> 
+    <button>last week</button> 
+    <button>this month</button> 
+    <button>last month</button> 
+    <button>this year</button> 
+    <button>last year</button> 
+  </div>
 </div>

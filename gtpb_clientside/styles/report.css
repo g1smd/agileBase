@@ -595,6 +595,12 @@ time {
   top: 3em;
 }
 
+#dateRangePresets button {
+  background-color: #E7F5F9;
+  color: #009FE3;
+  border: 0;
+}
+
 .ui-rangeSlider-bar {
   top: -1px!important;
   height: 28px!important;
