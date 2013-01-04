@@ -606,6 +606,7 @@ time {
   border: 0;
   font-size: 9pt;
   border-radius: 0.5em;
+  padding: 0.25em;
 }
 
 .ui-rangeSlider-bar {
