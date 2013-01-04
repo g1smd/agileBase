@@ -368,7 +368,7 @@ function clearFilters() {
 }
 
 function launchDateFilterControls(event, inputObj) {
-  	$("inputObj").addClass("waitingForFilterControls");
+  	$(inputObj).addClass("waitingForFilterControls");
   	setTimeout(dateFilterControls, 1000, event, inputObj);
 }
 
