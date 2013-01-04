@@ -583,6 +583,7 @@ time {
 #rangeWrapper .zoom {
   cursor: pointer;
   display: inline-block;
+  color: #E7F5F9;
 }
 
 #dateRangeSelector {
