@@ -1,4 +1,7 @@
 #infovis {
+  position: relative;
+  font-size: 8pt;
+  font-family: Verdana, Geneva, Arial, sans-serif;
   height: 700px;
   width: 1200px;
   margin-left: auto;
