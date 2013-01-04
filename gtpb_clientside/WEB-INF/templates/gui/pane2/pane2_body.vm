@@ -105,7 +105,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
       #set($image = false)
       #set($attachmentType = '')
 	  #set($textValue = false)
-	  #if((($fieldCategory == "DATE") && (!$field.getHidden()) && ($cell.contains(":"))) && (!$parentTable)) ## parentTable content has the field name prepended to the date content
+	  #if((($fieldCategory == "DATE") && ($cell.contains(":"))) && (!$parentTable)) ## parentTable content has the field name prepended to the date content
 	    #set($originalCell = $cell)
 	    #set($date = $cell.substring(0,11))
 	    #set($dateParts = $date.split(" "))
@@ -116,13 +116,17 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	      #set($timeParts = $time.split(":"))
 	      #set($hour = $timeParts[0])
 	      #set($minute = $timeParts[1])
-	      #set($cell = "<div class='time_date'>$dateParts[0] $dateParts[1]<br>$dateParts[2]</div> <span class='time_time'><time title='$time'><span class='hour-$hour'><span class='minute-$minute'></span</span>")
-	      #if($hour.startsWith("0") || ($hour == "10") || ($hour == "11"))
-	        #set($cell = "$cell</time> am</span>")
+	      #if($field.getHidden())
+	        #set($cell = "<div class='time_date'>$dateParts[0] $dateParts[1]<br>$dateParts[2]</div><small title='$time'>$hour:$minute</small>")
 	      #else
-	        #set($cell = "$cell</time> pm</span>")
-	      #end
-	    #end
+	        #set($cell = "<div class='time_date'>$dateParts[0] $dateParts[1]<br>$dateParts[2]</div> <span class='time_time'><time title='$time'><span class='hour-$hour'><span class='minute-$minute'></span</span>")
+	        #if($hour.startsWith("0") || ($hour == "10") || ($hour == "11"))
+	          #set($cell = "$cell</time> am</span>")
+	        #else
+	          #set($cell = "$cell</time> pm</span>")
+	        #end
+	      #end ## end not hidden
+	    #end ## end not 00:00:00
       #elseif($fieldCategory == "FILE")
         #set($fileValue = $viewTools.getFileValueTool($cell))
         #set($attachmentType = $field.getAttachmentType().name())
