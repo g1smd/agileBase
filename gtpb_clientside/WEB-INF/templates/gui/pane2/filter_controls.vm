@@ -2,7 +2,7 @@
 <h1>choose a date</h1>
 <div id="individualDateSelector"></div>
 <div id="rangeWrapper">
-  <h1>or drag a range&nbsp;&nbsp;<i class="icon-plus-sign zoom in"></i>  <i class="icon-minus-sign zoom out"></i></h1>
+  <h1>or drag a range</h1>
   <div id="dateRangeSelector"></div>
   <div id="dateRangeInputs">
     <input style="float:left; display:none;" id="rangeStart" />
@@ -17,5 +17,6 @@
     <button>last month</button> 
     <button>this year</button> 
     <button>last year</button> 
+    <i class="icon-plus-sign zoom in"></i>  <i class="icon-minus-sign zoom out"></i>
   </div>
 </div>

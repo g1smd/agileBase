@@ -584,6 +584,7 @@ time {
   cursor: pointer;
   display: inline-block;
   color: #E7F5F9;
+  font-size: 14pt;
 }
 
 #dateRangeSelector {
