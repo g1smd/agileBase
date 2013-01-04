@@ -515,6 +515,7 @@ time {
   font-family: 'pe-analogclock';
   font-size: 200%;
   background-color: #656766;
+  background: radial-gradient(ellipse at center, #656766 0%,#ffffff 90%);
   color: white;
   border-radius: 1em;
   vertical-align: top;
