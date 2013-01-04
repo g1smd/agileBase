@@ -376,7 +376,9 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 		// remove the trailing &
 		return sPostString.slice(0, -1);
 	}
-
+  
+	// Start of main fSetFilter body
+	$(oObj).removeClass("waitingForFilterControls");
 	// Firstly, just return if an arrow key was pressed
 	if (typeof e !== "undefined") {
 		var k = e.keyCode;

@@ -367,6 +367,11 @@ function clearFilters() {
 	});
 }
 
+function launchDateFilterControls(event, inputObj) {
+  	$("inputObj").addClass("waitingForFilterControls");
+  	setTimeout(dateFilterControls, 1000, event, inputObj);
+}
+
 function dateFilterControls(event, inputObj) {
 	// A filter other than a date filter clicked on
 	if (!$(inputObj).hasClass("filter_date")) {
@@ -377,6 +382,11 @@ function dateFilterControls(event, inputObj) {
 	if ($("#fieldFilterControls").is(":visible")) {
 		return;
 	}
+	// Timeout cleared by user typing something immediately
+	if (!$(inputObj).hasClass("waitingForFilterControls")) {
+		return;
+	}
+	$(inputObj).removeClass("waitingForFilterControls");
 	var zoomLevel = 0;
 	var firstCallback = true;
 	var firstRangeCallback = true;
