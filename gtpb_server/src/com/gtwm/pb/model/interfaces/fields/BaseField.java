@@ -123,6 +123,8 @@ public interface BaseField extends Comparable<BaseField> {
 	 * Sets whether the field should be displayed in input forms. Note - the
 	 * field may still be shown in reports even if hidden. Hiding in reports
 	 * will be controlled by a separate ReportFieldInfo parameter (TODO)
+	 * 
+	 * e.g. fields like the record creation timestamp will be hidden
 	 */
 	public void setHidden(Boolean hidden);
 
