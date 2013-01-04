@@ -9,6 +9,6 @@
     <script language="JavaScript" src="resources/simple/simple.js"></script>
 </head>
 <body>
-<div id="infoviz">
+<div id="infovis">
 </div>
 </body>
