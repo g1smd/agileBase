@@ -46,7 +46,7 @@ $(document).ready(function() {
 		      style.display = '';  
 		      style.border = '1px solid transparent';  
 		      domElement.onmouseover = function() {  
-		        style.border = '1px solid #9FD4FF';  
+		        style.border = '1px solid #EC00BC';  
 		      };  
 		      domElement.onmouseout = function() {  
 		        style.border = '1px solid transparent';  
