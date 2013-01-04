@@ -12,3 +12,8 @@
     position:absolute;  
     overflow:hidden;  
 }
+
+#infovis .node {
+  width: 100%;
+  background-color: #E8E7E3;
+}
