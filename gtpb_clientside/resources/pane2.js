@@ -373,8 +373,14 @@ function launchDateFilterControls(event, inputObj) {
 }
 
 function dateFilterControls(event, inputObj) {
-	// A filter other than a date filter clicked on
 	if (!$(inputObj).hasClass("filter_date")) {
+		// A filter other than a date filter clicked on
+		$("#fieldFilterControls").fadeOut();
+		return;
+	}
+	var resolution = parseInt($(inputObj).attr("data-resolution"));
+	if (resolution < 5) {
+	  // Filter is a year or month resolution date, can't use filter
 		$("#fieldFilterControls").fadeOut();
 		return;
 	}
