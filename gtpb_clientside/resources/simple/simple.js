@@ -8,7 +8,7 @@ $(document).ready(function() {
 	  //parent box title heights  
 	  titleHeight: 15,  
 	  //enable animations  
-	  animate: animate,  
+	  animate: true,  
 	  //box offsets  
 	  offset: 1,  
 	  //Attach left and right click events  
