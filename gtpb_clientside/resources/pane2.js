@@ -458,6 +458,11 @@ function dateFilterControls(event, inputObj) {
 				$(inputObj).keyup();
 			}
 		});
+		$("#dateRangePresets button").click(function() {
+			$(inputObj).val($(this).text());
+			$(inputObj).keyup();
+			$("#fieldFilterControls").fadeOut();
+		});
 		$("#rangeWrapper .zoom").click(function() {
 			var bounds = $("#dateRangeSelector").dateRangeSlider("option", "bounds");
 			var now = new Date();
