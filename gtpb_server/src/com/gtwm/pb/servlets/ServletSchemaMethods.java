@@ -2360,14 +2360,11 @@ public final class ServletSchemaMethods {
 		}
 		// begin updating model and persisting changes
 		JoinClauseInfo join = report.getJoinByInternalName(internalJoinName); // store
-		// for
-		// rollback
 		Connection conn = null;
 		try {
 			HibernateUtil.startHibernateTransaction();
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
-			// remove the report filter
 			databaseDefn.removeJoinFromReport(request, conn, report, join);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();

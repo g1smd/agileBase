@@ -636,6 +636,11 @@ public interface ViewMethodsInfo {
 	 */
 	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException,
 			ObjectNotFoundException;
+	
+	/**
+	 * Return whether a join is actively used in the report or is unecessary and can be removed
+	 */
+	public boolean isJoinUsed(SimpleReportInfo report, JoinClauseInfo join) throws CantDoThatException, CodingErrorException;
 
 	/**
 	 * @return Whether an exception (error) occurred when processing the request

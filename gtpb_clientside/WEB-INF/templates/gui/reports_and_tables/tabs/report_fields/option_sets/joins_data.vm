@@ -108,7 +108,8 @@
   #end
 			</td>
 			<td class=trailing>
-			 #if($foreach.count == $joins.size())
+			## #if($foreach.count == $joins.size())
+			#if(!($view.isJoinUsed($report, $join)))
 				<input type=button value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_join_from_report=true gtpb_internaljoinname="$join.getInternalJoinName()">
 			 #else &nbsp;
 			 #end

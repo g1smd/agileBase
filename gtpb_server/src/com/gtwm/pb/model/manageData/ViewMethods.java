@@ -1165,6 +1165,10 @@ public final class ViewMethods implements ViewMethodsInfo {
 	public int getUploadSpeed() {
 		return this.databaseDefn.getDataManagement().getUploadSpeed();
 	}
+	
+	public boolean isJoinUsed(SimpleReportInfo report, JoinClauseInfo join) throws CantDoThatException, CodingErrorException {
+		return this.databaseDefn.isJoinUsed(report, join);
+	}
 
 	private String toolbarPluginName = null;
 

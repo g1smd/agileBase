@@ -59,16 +59,15 @@ public interface DatabaseInfo {
 	 * Create a new table and add to the database
 	 * 
 	 * @param request
-	 *            Allows the method to get the current user to test privileges
+	 *          Allows the method to get the current user to test privileges
 	 * @param sessionData
-	 *            The method needs access to sessionData in order to set the
-	 *            current table to the one added
+	 *          The method needs access to sessionData in order to set the current
+	 *          table to the one added
 	 * @throws DisallowedException
-	 *             If the current user doesn't have ADMINISTRATE privileges
+	 *           If the current user doesn't have ADMINISTRATE privileges
 	 * @throws CantDoThatException
-	 *             If an internal error occurred while constructing the table,
-	 *             or the logged in user can't be found in the app's list of
-	 *             users
+	 *           If an internal error occurred while constructing the table, or
+	 *           the logged in user can't be found in the app's list of users
 	 */
 	public TableInfo addTable(SessionDataInfo sessionData, HttpServletRequest request,
 			Connection conn, String internalTableName, String internalDefaultReportName,
@@ -82,22 +81,23 @@ public interface DatabaseInfo {
 	 * Change the name, description or options of an existing table
 	 * 
 	 * @throws CantDoThatException
-	 *             If there is already a table with the new name
+	 *           If there is already a table with the new name
 	 * @throws DisallowedException
-	 *             If the logged in user doesn't have MANAGE_TABLE privileges
-	 *             for the table
+	 *           If the logged in user doesn't have MANAGE_TABLE privileges for
+	 *           the table
 	 * @throws ObjectNotFoundException
-	 *             If the logged in user isn't found in the application's list
-	 *             of users
+	 *           If the logged in user isn't found in the application's list of
+	 *           users
 	 */
 	public void updateTable(Connection conn, HttpServletRequest request, TableInfo table,
 			String newTableName, String newTableDesc, Boolean lockable, Boolean tableFormPublic,
-			String tableEmail, String tableEmailResponse, FormStyle formStyle, boolean allowAutoDelete, boolean allowNotifiactions) throws DisallowedException,
-			CantDoThatException, ObjectNotFoundException, SQLException;
+			String tableEmail, String tableEmailResponse, FormStyle formStyle, boolean allowAutoDelete,
+			boolean allowNotifiactions) throws DisallowedException, CantDoThatException,
+			ObjectNotFoundException, SQLException;
 
 	/**
-	 * Remove table tableToRemove provided no dependencies exist; otherwise
-	 * throw a TableDependencyException
+	 * Remove table tableToRemove provided no dependencies exist; otherwise throw
+	 * a TableDependencyException
 	 * 
 	 * @param sessionData
 	 * @param request
@@ -107,13 +107,12 @@ public interface DatabaseInfo {
 	 * @throws CantDoThatException
 	 * @throws TableDependencyException
 	 * @throws CodingErrorException
-	 *             If the tableToRemove is an audit table but no parent table
-	 *             can be found
+	 *           If the tableToRemove is an audit table but no parent table can be
+	 *           found
 	 */
 	public void removeTable(SessionDataInfo sessionData, HttpServletRequest request,
 			TableInfo tableToRemove, Connection conn) throws SQLException, DisallowedException,
-			CantDoThatException, TableDependencyException, CodingErrorException,
-			ObjectNotFoundException;
+			CantDoThatException, TableDependencyException, CodingErrorException, ObjectNotFoundException;
 
 	/**
 	 * Adds TableInfo objects to dependentTables where all tables added are
@@ -122,36 +121,41 @@ public interface DatabaseInfo {
 	 * return value.
 	 * 
 	 * @param baseTable
-	 * @param dependentTables Pass in an empty set to start with, will be populated through recursion
-	 * @param direction: true means find dependent child tables (contacts given orgs), false means the opposite
+	 * @param dependentTables
+	 *          Pass in an empty set to start with, will be populated through
+	 *          recursion
+	 * @param direction
+	 *          : true means find dependent child tables (contacts given orgs),
+	 *          false means the opposite
 	 */
-	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables, boolean direction,
-			HttpServletRequest request) throws ObjectNotFoundException;
+	public void getDependentTables(TableInfo baseTable, Set<TableInfo> dependentTables,
+			boolean direction, HttpServletRequest request) throws ObjectNotFoundException;
 
 	/**
 	 * Adds TableInfo objects to dependentTables where all tables added are
 	 * directly dependent (through RelationField) on baseTable.
 	 * 
-	 * @param direction: true means find dependent child tables (contacts given orgs), false means the opposite
+	 * @param direction
+	 *          : true means find dependent child tables (contacts given orgs),
+	 *          false means the opposite
 	 * 
 	 */
-	public SortedSet<TableInfo> getDirectlyDependentTables(TableInfo baseTable, 
+	public SortedSet<TableInfo> getDirectlyDependentTables(TableInfo baseTable,
 			HttpServletRequest request) throws ObjectNotFoundException;
 
 	/**
 	 * Create a report and add it to the database
 	 * 
 	 * @param request
-	 *            Allows the method to get the current user to test privileges
+	 *          Allows the method to get the current user to test privileges
 	 * @param sessionData
-	 *            The method needs access to sessionData in order to set the
-	 *            current report to the one added
+	 *          The method needs access to sessionData in order to set the current
+	 *          report to the one added
 	 * @param populateReport
-	 *            Whether to add all current table fields into the new report or
-	 *            not
+	 *          Whether to add all current table fields into the new report or not
 	 * @throws DisallowedException
-	 *             If the current user doesn't have MANAGE_TABLE privilege for
-	 *             the report's parent table
+	 *           If the current user doesn't have MANAGE_TABLE privilege for the
+	 *           report's parent table
 	 */
 	public BaseReportInfo addReport(SessionDataInfo sessionData, HttpServletRequest request,
 			Connection conn, TableInfo table, String internalReportName, String reportName,
@@ -163,15 +167,15 @@ public interface DatabaseInfo {
 	 * Change the name and/or description of a report
 	 * 
 	 * @throws DisallowedException
-	 *             If the logged in user doesn't have MANAGE_TABLE privileges on
-	 *             the report's parent table
+	 *           If the logged in user doesn't have MANAGE_TABLE privileges on the
+	 *           report's parent table
 	 * @throws CantDoThatException
-	 *             If a report with the specified name already exists
+	 *           If a report with the specified name already exists
 	 */
 	public void updateReport(Connection conn, HttpServletRequest request, BaseReportInfo report,
-			String newReportName, String newReportDesc, ModuleInfo newModule,
-			ReportStyle reportStyle, boolean allowExport, Integer memoryAllocation)
-			throws DisallowedException, CantDoThatException, SQLException, ObjectNotFoundException;
+			String newReportName, String newReportDesc, ModuleInfo newModule, ReportStyle reportStyle,
+			boolean allowExport, Integer memoryAllocation) throws DisallowedException,
+			CantDoThatException, SQLException, ObjectNotFoundException;
 
 	/**
 	 * Attach a custom template to a report for printout / outputs
@@ -181,28 +185,26 @@ public interface DatabaseInfo {
 			ObjectNotFoundException, CantDoThatException, FileUploadException;
 
 	public void removeCustomReportTemplate(HttpServletRequest request, BaseReportInfo report,
-			String fileName) throws DisallowedException, ObjectNotFoundException,
-			CantDoThatException;
+			String fileName) throws DisallowedException, ObjectNotFoundException, CantDoThatException;
 
 	/**
 	 * 
 	 * @param sessionData
-	 *            If removing the current session report, set the session report
-	 *            to be another one
+	 *          If removing the current session report, set the session report to
+	 *          be another one
 	 * @param request
-	 *            Allows the method to get the current user to test privileges
+	 *          Allows the method to get the current user to test privileges
 	 * @param report
-	 *            Report to remove
+	 *          Report to remove
 	 * @throws SQLException
 	 * @throws DisallowedException
-	 *             If the current user doesn't have MANAGE_TABLE privileges for
-	 *             the report
+	 *           If the current user doesn't have MANAGE_TABLE privileges for the
+	 *           report
 	 * @throws CantDoThatException
-	 *             If the report is the last one in the table or the default
-	 *             report
+	 *           If the report is the last one in the table or the default report
 	 * @throws CodingErrorException
-	 *             If the report's parent table is an audit table but no
-	 *             associated 'normal' table can be found for it
+	 *           If the report's parent table is an audit table but no associated
+	 *           'normal' table can be found for it
 	 */
 	public void removeReport(SessionDataInfo sessionData, HttpServletRequest request,
 			Connection conn, BaseReportInfo report) throws SQLException, DisallowedException,
@@ -212,26 +214,27 @@ public interface DatabaseInfo {
 	 * Add a field to a table
 	 * 
 	 * @param request
-	 *            Allows the method to get the current user to test privileges
+	 *          Allows the method to get the current user to test privileges
 	 * @param table
-	 *            Table to add the field to
+	 *          Table to add the field to
 	 * @param fieldType
-	 *            The generic 'user interface' field type as read from the input
-	 *            form. It doesn't differentiate between int or float numbers,
-	 *            normal or multi-line text for example
+	 *          The generic 'user interface' field type as read from the input
+	 *          form. It doesn't differentiate between int or float numbers,
+	 *          normal or multi-line text for example
 	 * @throws ObjectNotFoundException
-	 *             If the table with identifier internalTableName isn't found
+	 *           If the table with identifier internalTableName isn't found
 	 * @throws CantDoThatException
-	 *             Due to an internal coding error: see
-	 *             DatabaseDefn.addField(Connection, TableInfo, BaseField) for
-	 *             details. OR an un-recognised field type
+	 *           Due to an internal coding error: see
+	 *           DatabaseDefn.addField(Connection, TableInfo, BaseField) for
+	 *           details. OR an un-recognised field type
 	 * @throws DisallowedException
-	 *             If the current user doesn't have MANAGE_TABLE privileges for
-	 *             table
+	 *           If the current user doesn't have MANAGE_TABLE privileges for
+	 *           table
 	 */
 	public BaseField addField(HttpServletRequest request, Connection conn, TableInfo table,
-			String internalFieldName, String fieldType, String fieldName, String fieldDesc) throws SQLException,
-			ObjectNotFoundException, DisallowedException, CantDoThatException, CodingErrorException;
+			String internalFieldName, String fieldType, String fieldName, String fieldDesc)
+			throws SQLException, ObjectNotFoundException, DisallowedException, CantDoThatException,
+			CodingErrorException;
 
 	/**
 	 * Update basic field details - name and description
@@ -250,32 +253,31 @@ public interface DatabaseInfo {
 	public void setFieldIndex(TableInfo table, BaseField field, int newindex)
 			throws ObjectNotFoundException, CantDoThatException;
 
-	public void setReportFieldIndex(Connection conn, SimpleReportInfo report,
-			ReportFieldInfo field, int newindex, HttpServletRequest request) throws SQLException,
-			CodingErrorException, ObjectNotFoundException, CantDoThatException;
+	public void setReportFieldIndex(Connection conn, SimpleReportInfo report, ReportFieldInfo field,
+			int newindex, HttpServletRequest request) throws SQLException, CodingErrorException,
+			ObjectNotFoundException, CantDoThatException;
 
 	/**
 	 * Add a foreign key database relation between tables
 	 * 
 	 * @param tableToAddTo
 	 * @param relatedTable
-	 *            The table containing the related field
+	 *          The table containing the related field
 	 * @param relatedField
 	 * @param notNull
-	 *            Whether the relation field should have a not null constraint
-	 *            on it
+	 *          Whether the relation field should have a not null constraint on it
 	 * @throws SQLException
 	 * @throws DisallowedException
-	 *             If the current user doesn't have MANAGE_TABLE privileges for
-	 *             tableToAddTo or VIEW_TABLE_DATA privileges for relatedTable
+	 *           If the current user doesn't have MANAGE_TABLE privileges for
+	 *           tableToAddTo or VIEW_TABLE_DATA privileges for relatedTable
 	 * @throws CantDoThatException
-	 *             Due to an internal coding bug - see the private
-	 *             DatabaseDefn.addField for details
+	 *           Due to an internal coding bug - see the private
+	 *           DatabaseDefn.addField for details
 	 */
 	public RelationField addRelation(HttpServletRequest request, Connection conn,
 			TableInfo tableToAddTo, String internalFieldName, String fieldName, String fieldDesc,
-			TableInfo relatedTable, BaseField relatedField) throws SQLException,
-			DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException;
+			TableInfo relatedTable, BaseField relatedField) throws SQLException, DisallowedException,
+			CantDoThatException, ObjectNotFoundException, CodingErrorException;
 
 	// public void removeTable(String InternalTableName);
 
@@ -283,10 +285,10 @@ public interface DatabaseInfo {
 	 * Remove field from memory and database
 	 * 
 	 * @throws DisallowedException
-	 *             If the current user doesn't have MANAGE_TABLE privileges for
-	 *             table
+	 *           If the current user doesn't have MANAGE_TABLE privileges for
+	 *           table
 	 * @throws CantDoThatException
-	 *             If you try to delete the primary key field of a table
+	 *           If you try to delete the primary key field of a table
 	 */
 	public void removeField(HttpServletRequest request, Connection conn, BaseField field)
 			throws SQLException, DisallowedException, CantDoThatException, CodingErrorException,
@@ -294,18 +296,18 @@ public interface DatabaseInfo {
 
 	/**
 	 * @param report
-	 *            The report to add the field to
+	 *          The report to add the field to
 	 * @param field
-	 *            Identifier of the field to add
+	 *          Identifier of the field to add
 	 * @throws SQLException
 	 * @throws InconsistentStateException
-	 *             Shouldn't happen, see method code if it does
+	 *           Shouldn't happen, see method code if it does
 	 * @return The added field
 	 */
 	public ReportFieldInfo addFieldToReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, SimpleReportInfo sourceReport, BaseField field)
-			throws SQLException, DisallowedException, InconsistentStateException,
-			CantDoThatException, CodingErrorException, ObjectNotFoundException;
+			SimpleReportInfo report, SimpleReportInfo sourceReport, BaseField field) throws SQLException,
+			DisallowedException, InconsistentStateException, CantDoThatException, CodingErrorException,
+			ObjectNotFoundException;
 
 	public void addDistinctToReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, BaseField distinctField) throws DisallowedException,
@@ -315,10 +317,9 @@ public interface DatabaseInfo {
 			SimpleReportInfo report, BaseField distinctField) throws DisallowedException,
 			ObjectNotFoundException, CantDoThatException, CodingErrorException, SQLException;
 
-	public void addSortToReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, ReportFieldInfo reportField, boolean ascending)
-			throws DisallowedException, CantDoThatException, SQLException, CodingErrorException,
-			ObjectNotFoundException;
+	public void addSortToReport(HttpServletRequest request, Connection conn, SimpleReportInfo report,
+			ReportFieldInfo reportField, boolean ascending) throws DisallowedException,
+			CantDoThatException, SQLException, CodingErrorException, ObjectNotFoundException;
 
 	public void updateSortFromReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportFieldInfo reportField, boolean ascending)
@@ -331,30 +332,29 @@ public interface DatabaseInfo {
 
 	/**
 	 * @throws CantDoThatException
-	 *             If the report only has one field which we are trying to
-	 *             remove. A report must contain at least one field
+	 *           If the report only has one field which we are trying to remove. A
+	 *           report must contain at least one field
 	 * @throws DisallowedException
-	 *             If the current user doesn't have MANAGE_TABLE privileges for
-	 *             the table containing report
+	 *           If the current user doesn't have MANAGE_TABLE privileges for the
+	 *           table containing report
 	 */
 	public void removeFieldFromReport(HttpServletRequest request, Connection conn,
-			ReportFieldInfo reportField) throws SQLException, DisallowedException,
-			CantDoThatException, CodingErrorException, ObjectNotFoundException;
+			ReportFieldInfo reportField) throws SQLException, DisallowedException, CantDoThatException,
+			CodingErrorException, ObjectNotFoundException;
 
 	/**
 	 * @param calculationDefn
-	 *            SQL definition of the calculation, e.g 'table1.field1 * 0.175'
+	 *          SQL definition of the calculation, e.g 'table1.field1 * 0.175'
 	 * @throws DisallowedException
-	 *             If current user doesn't have MANAGE_TABLE privileges for the
-	 *             report's parent table
+	 *           If current user doesn't have MANAGE_TABLE privileges for the
+	 *           report's parent table
 	 * @throws InconsistentStateException
-	 *             Don't worry about this - see DatabaseDefn method code if you
-	 *             want
+	 *           Don't worry about this - see DatabaseDefn method code if you want
 	 */
 	public void addCalculationToReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportCalcFieldInfo calculationField) throws SQLException,
-			DisallowedException, InconsistentStateException, CantDoThatException,
-			CodingErrorException, ObjectNotFoundException;
+			DisallowedException, InconsistentStateException, CantDoThatException, CodingErrorException,
+			ObjectNotFoundException;
 
 	public void updateCalculationInReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportCalcFieldInfo calculationField, String calculationName,
@@ -363,57 +363,58 @@ public interface DatabaseInfo {
 			CodingErrorException;
 
 	public void returnCalculationInReportToMemory(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, ReportCalcFieldInfo calculationField,
-			String oldCalculationName, String oldCalculationDefn, DatabaseFieldType oldDbFieldType)
-			throws DisallowedException, CodingErrorException, CantDoThatException,
-			ObjectNotFoundException;
+			SimpleReportInfo report, ReportCalcFieldInfo calculationField, String oldCalculationName,
+			String oldCalculationDefn, DatabaseFieldType oldDbFieldType) throws DisallowedException,
+			CodingErrorException, CantDoThatException, ObjectNotFoundException;
 
 	/**
 	 * Create a filter object, add it to the report, update the database view
 	 * representing the report
 	 * 
 	 * @param report
-	 *            Report to add filter to
+	 *          Report to add filter to
 	 * @param filterField
-	 *            Field being filtered on
+	 *          Field being filtered on
 	 * @param filterType
-	 *            GREATER_THAN, EQUAL etc.
+	 *          GREATER_THAN, EQUAL etc.
 	 * @param filterValues
-	 *            A list of values being filtered on. Will be just one value for
-	 *            all filter field types apart from dropdowns
+	 *          A list of values being filtered on. Will be just one value for all
+	 *          filter field types apart from dropdowns
 	 * @throws DisallowedException
-	 *             If current user doesn't have MANAGE_TABLE privileges for the
-	 *             report's parent table
+	 *           If current user doesn't have MANAGE_TABLE privileges for the
+	 *           report's parent table
 	 * @throws CantDoThatException
-	 *             If the field is not able to be used as a filter for this
-	 *             report, because it isn't in one of the tables used in it
-	 * @see com.gtwm.pb.util.Enumerations.FilterType - a list of recognised
-	 *      filter type values
+	 *           If the field is not able to be used as a filter for this report,
+	 *           because it isn't in one of the tables used in it
+	 * @see com.gtwm.pb.util.Enumerations.FilterType - a list of recognised filter
+	 *      type values
 	 */
 	public void addFilterToReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, ReportFilterInfo filter) throws SQLException,
-			DisallowedException, CantDoThatException, CodingErrorException, ObjectNotFoundException;
+			SimpleReportInfo report, ReportFilterInfo filter) throws SQLException, DisallowedException,
+			CantDoThatException, CodingErrorException, ObjectNotFoundException;
 
 	public Map<TableInfo, Set<BaseReportInfo>> getViewableDataStores(HttpServletRequest request)
 			throws CodingErrorException, ObjectNotFoundException;
 
 	/**
 	 * @param internalFilterName
-	 *            Identifier of the filter as retrieved by
-	 *            filter.getInternalName()
+	 *          Identifier of the filter as retrieved by filter.getInternalName()
 	 * @throws DisallowedException
-	 *             If the logged in user doesn't have MANAGE_TABLE privileges
+	 *           If the logged in user doesn't have MANAGE_TABLE privileges
 	 * @throws ObjectNotFoundException
-	 *             If a filter with the given internalFilterName isn't found in
-	 *             the report
+	 *           If a filter with the given internalFilterName isn't found in the
+	 *           report
 	 */
 	public void removeFilterFromReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, ReportFilterInfo filter) throws DisallowedException,
 			ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException;
 
-	public void addJoinToReport(HttpServletRequest request, Connection conn,
-			SimpleReportInfo report, JoinClauseInfo join) throws DisallowedException, SQLException,
-			CantDoThatException, CodingErrorException, ObjectNotFoundException;
+	public void addJoinToReport(HttpServletRequest request, Connection conn, SimpleReportInfo report,
+			JoinClauseInfo join) throws DisallowedException, SQLException, CantDoThatException,
+			CodingErrorException, ObjectNotFoundException;
+
+	public boolean isJoinUsed(SimpleReportInfo report, JoinClauseInfo join)
+			throws CantDoThatException, CodingErrorException;
 
 	public void removeJoinFromReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, JoinClauseInfo join) throws DisallowedException, SQLException,
@@ -423,23 +424,23 @@ public interface DatabaseInfo {
 	 * For a report's summary, add a grouping into the 'GROUP BY' SQL satement
 	 * 
 	 * @param report
-	 *            The report that contains the summary report to use
+	 *          The report that contains the summary report to use
 	 * 
 	 * @throws DisallowedException
-	 *             If the logged in user doesn't have MANAGE_TABLE privileges on
-	 *             the report's parent table
+	 *           If the logged in user doesn't have MANAGE_TABLE privileges on the
+	 *           report's parent table
 	 */
 	public void addGroupingToChart(HttpServletRequest request, ReportFieldInfo groupingReportField,
-			SummaryGroupingModifier groupingModifer) throws DisallowedException,
-			CantDoThatException, ObjectNotFoundException, SQLException;
+			SummaryGroupingModifier groupingModifer) throws DisallowedException, CantDoThatException,
+			ObjectNotFoundException, SQLException;
 
 	/**
 	 * Remove groupings on groupingReportField from the summary of its parent
 	 * report
 	 */
 	public void removeGroupingFromChart(HttpServletRequest request,
-			ReportFieldInfo groupingReportField) throws DisallowedException,
-			ObjectNotFoundException, SQLException, CantDoThatException;
+			ReportFieldInfo groupingReportField) throws DisallowedException, ObjectNotFoundException,
+			SQLException, CantDoThatException;
 
 	/**
 	 * Add an aggregate function so a summary report
@@ -475,8 +476,8 @@ public interface DatabaseInfo {
 	 * Set the range of rows returned, e.g. the top 25%
 	 */
 	public void setChartRange(HttpServletRequest request, BaseReportInfo report, int rangePercent,
-			boolean rangeDirection) throws SQLException, DisallowedException,
-			ObjectNotFoundException, CantDoThatException;
+			boolean rangeDirection) throws SQLException, DisallowedException, ObjectNotFoundException,
+			CantDoThatException;
 
 	/**
 	 * Makes a copy of the current summary report and saves it in the collection
@@ -490,37 +491,36 @@ public interface DatabaseInfo {
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException;
 
 	public void updateMap(HttpServletRequest request, BaseReportInfo report,
-			ReportFieldInfo postcodeField, ReportFieldInfo colourField,
-			ReportFieldInfo categoryField) throws DisallowedException, ObjectNotFoundException;
+			ReportFieldInfo postcodeField, ReportFieldInfo colourField, ReportFieldInfo categoryField)
+			throws DisallowedException, ObjectNotFoundException;
 
 	/**
 	 * Returns the TableInfo object that has the required ID identifier. If no
-	 * table is found with that internal name, fall back to searching for one
-	 * with a user facing name of that ID
+	 * table is found with that internal name, fall back to searching for one with
+	 * a user facing name of that ID
 	 * 
 	 * @param internalTableName
-	 *            the identifier of the table we're looking for
+	 *          the identifier of the table we're looking for
 	 * @return the found table
 	 * @throws ObjectNotFoundException
-	 *             if we can't find the table we're looking for
+	 *           if we can't find the table we're looking for
 	 * @throws DisallowedException
-	 *             To retrieve a table, user either has to have view privileges
-	 *             on that table, or be an administrator of the company the
-	 *             table is in
+	 *           To retrieve a table, user either has to have view privileges on
+	 *           that table, or be an administrator of the company the table is in
 	 */
 	public TableInfo getTable(HttpServletRequest request, String tableId)
 			throws ObjectNotFoundException, DisallowedException;
 
 	/**
 	 * @param reportInternalName
-	 *            Identifier of the report
-	 * @return The table containing the given report. To obtain a report object
-	 *         we need to first know the table containing it so this method
-	 *         helps us if we don't. NB in normal situations we *should* know
-	 *         the table containing it already. Only in the case of a session
-	 *         timeout or something will we not.
+	 *          Identifier of the report
+	 * @return The table containing the given report. To obtain a report object we
+	 *         need to first know the table containing it so this method helps us
+	 *         if we don't. NB in normal situations we *should* know the table
+	 *         containing it already. Only in the case of a session timeout or
+	 *         something will we not.
 	 * @throws ObjectNotFoundException
-	 *             If the report doesn't exist in *any* table
+	 *           If the report doesn't exist in *any* table
 	 * @see com.gtwm.pb.model.interfaces.TableInfo#getReportByInternalName(String)
 	 *      Use TableInfo.getReportByInternalName(...) directly instead if
 	 *      possible, it is more efficient
@@ -530,7 +530,7 @@ public interface DatabaseInfo {
 
 	/**
 	 * @throws DisallowedException
-	 *             If the user doesn't have VIEW privileges on the table found
+	 *           If the user doesn't have VIEW privileges on the table found
 	 */
 	public TableInfo findTableContainingField(HttpServletRequest request, String internalFieldName)
 			throws ObjectNotFoundException, DisallowedException;
@@ -540,18 +540,19 @@ public interface DatabaseInfo {
 	 * An inefficient method, knowing the parent is preferable
 	 * 
 	 * @throws DisallowedException
-	 *             If the user doesn't have privileges to view the report to be
-	 *             returned
+	 *           If the user doesn't have privileges to view the report to be
+	 *           returned
 	 */
 	public ReportFieldInfo findReportFieldByInternalName(HttpServletRequest request,
 			String internalFieldName) throws ObjectNotFoundException, DisallowedException,
 			CodingErrorException;
 
 	/**
-	 * Creates a new module and adds it to the company of the logged in user, or the specified company
+	 * Creates a new module and adds it to the company of the logged in user, or
+	 * the specified company
 	 * 
 	 * @param company
-	 *            If null, add to the current company
+	 *          If null, add to the current company
 	 */
 	public ModuleInfo addModule(HttpServletRequest request, CompanyInfo company)
 			throws ObjectNotFoundException, DisallowedException;

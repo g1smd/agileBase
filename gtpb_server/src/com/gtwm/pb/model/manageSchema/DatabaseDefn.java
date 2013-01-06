@@ -2310,6 +2310,126 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
+	public boolean isJoinUsed(SimpleReportInfo report, JoinClauseInfo join) throws CantDoThatException, CodingErrorException {
+		Set<JoinClauseInfo> reportJoins = report.getJoins();
+		Set<ReportFieldInfo> reportFields = report.getReportFields();
+		Set<BaseField> reportBaseFields = report.getReportBaseFields();
+		if (join.isLeftPartTable()) {
+			TableInfo leftTable = join.getLeftTableField().getTableContainingField();
+			if (this.tableJoinChecks(join, report, leftTable)) {
+				return true;
+			}
+		}
+		if (join.isRightPartTable()) {
+			TableInfo rightTable = join.getRightTableField().getTableContainingField();
+			if (this.tableJoinChecks(join, report, rightTable)) {
+				return true;
+			}
+		}
+		if (!(join.isLeftPartTable())) {
+			BaseReportInfo leftReport = join.getLeftReportField().getParentReport();
+			if (this.reportJoinChecks(join, report, leftReport)) {
+				return true;
+			}
+		}
+		if (!(join.isRightPartTable())) {
+			BaseReportInfo rightReport = join.getRightReportField().getParentReport();
+			if (this.reportJoinChecks(join, report, rightReport)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean reportJoinChecks(JoinClauseInfo join, SimpleReportInfo report, BaseReportInfo checkReport) throws CodingErrorException, CantDoThatException {
+		Set<ReportFieldInfo> reportFields = report.getReportFields();
+		Set<JoinClauseInfo> reportJoins = report.getJoins();
+		Set<ReportFilterInfo> filters = report.getFilters();
+		// Is checkReport used directly in the report?
+		for (ReportFieldInfo reportField : reportFields) {
+			if (reportField.getParentReport().equals(checkReport)) {
+				return true;
+			}
+			if (reportField instanceof ReportCalcFieldInfo) {
+				String calcSQL = ((ReportCalcFieldInfo) reportField).getCalculationSQL(false);
+				if (calcSQL.contains(checkReport.getInternalReportName())) {
+					return true;
+				}
+			}
+		}
+		// check if it's used to join to another join later in the set
+		for (JoinClauseInfo reportJoin : reportJoins) {
+			if (reportJoin.getCreationTimestamp().after(join.getCreationTimestamp())) {
+				if (!(reportJoin.isLeftPartTable())) {
+					if (reportJoin.getLeftReportField().getParentReport().equals(checkReport)) {
+						return true;
+					}
+				}
+				if (!(reportJoin.isRightPartTable())) {
+					if (reportJoin.getRightReportField().getParentReport().equals(checkReport)) {
+						return true;
+					}
+				}
+			}
+		}
+		for (ReportFilterInfo filter : filters) {
+			if (filter.isFilterFieldFromReport()) {
+				ReportFieldInfo filterField = filter.getFilterReportField();
+				if (filterField.getParentReport().equals(checkReport)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean  tableJoinChecks(JoinClauseInfo join, SimpleReportInfo report, TableInfo checkTable) throws CantDoThatException, CodingErrorException {
+		Set<JoinClauseInfo> reportJoins = report.getJoins();
+		Set<ReportFieldInfo> reportFields = report.getReportFields();
+		Set<BaseField> reportBaseFields = report.getReportBaseFields();
+		Set<ReportFilterInfo> filters = report.getFilters();
+		// check if checkTable is used directly in the report
+		for (BaseField field : reportBaseFields) {
+			if (field.getTableContainingField().equals(checkTable)) {
+				return true;
+			}
+		}
+		// Is checkTable used in any calculations?
+		for(ReportFieldInfo reportField : reportFields) {
+			if (reportField instanceof ReportCalcFieldInfo) {
+				for (BaseField calcField : ((ReportCalcFieldInfo) reportField).getFieldsUsed()) {
+					if (calcField.getTableContainingField().equals(checkTable)) {
+						return true;
+					}
+				}
+			}
+		}
+		// check if it's used to join to another join later in the set
+		for (JoinClauseInfo reportJoin : reportJoins) {
+			if (reportJoin.getCreationTimestamp().after(join.getCreationTimestamp())) {
+				if (reportJoin.isLeftPartTable()) {
+					if (reportJoin.getLeftTableField().getTableContainingField().equals(checkTable)) {
+						return true;
+					}
+				}
+				if (reportJoin.isRightPartTable()) {
+					if (reportJoin.getRightTableField().getTableContainingField().equals(checkTable)) {
+						return true;
+					}
+				}
+			}
+		}
+		for (ReportFilterInfo filter : filters) {
+			if (!filter.isFilterFieldFromReport()) {
+				BaseField filterField = filter.getFilterBaseField();
+				if (filterField.getTableContainingField().equals(checkTable)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public void removeJoinFromReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, JoinClauseInfo join) throws DisallowedException, SQLException,
 			CantDoThatException, CodingErrorException, ObjectNotFoundException {
@@ -2317,6 +2437,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 				PrivilegeType.MANAGE_TABLE, report.getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
 					PrivilegeType.MANAGE_TABLE, report.getParentTable());
+		}
+		if (this.isJoinUsed(report, join)) {
+			throw new CantDoThatException("The join " + join + " is used in the report " + report + " and can't be removed");
 		}
 		HibernateUtil.activateObject(report);
 		report.removeJoin(join);
