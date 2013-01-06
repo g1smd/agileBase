@@ -2314,31 +2314,43 @@ public final class DatabaseDefn implements DatabaseInfo {
 		Set<JoinClauseInfo> reportJoins = report.getJoins();
 		Set<ReportFieldInfo> reportFields = report.getReportFields();
 		Set<BaseField> reportBaseFields = report.getReportBaseFields();
+		boolean leftUsed = false;
+		boolean rightUsed = false;
 		if (join.isLeftPartTable()) {
 			TableInfo leftTable = join.getLeftTableField().getTableContainingField();
 			if (this.tableJoinChecks(join, report, leftTable)) {
-				return true;
+				leftUsed = true;
 			}
 		}
 		if (join.isRightPartTable()) {
 			TableInfo rightTable = join.getRightTableField().getTableContainingField();
 			if (this.tableJoinChecks(join, report, rightTable)) {
-				return true;
+				rightUsed = true;
 			}
 		}
 		if (!(join.isLeftPartTable())) {
 			BaseReportInfo leftReport = join.getLeftReportField().getParentReport();
 			if (this.reportJoinChecks(join, report, leftReport)) {
-				return true;
+				leftUsed = true;
 			}
 		}
 		if (!(join.isRightPartTable())) {
 			BaseReportInfo rightReport = join.getRightReportField().getParentReport();
 			if (this.reportJoinChecks(join, report, rightReport)) {
-				return true;
+				rightUsed = true;
 			}
 		}
-		return false;
+		int usedCount = 0;
+		if (leftUsed) {
+			usedCount++;
+		}
+		if (rightUsed) {
+			usedCount++;
+		}
+		if (usedCount < 2) {
+			return false;
+		}
+		return true;
 	}
 
 	private boolean reportJoinChecks(JoinClauseInfo join, SimpleReportInfo report, BaseReportInfo checkReport) throws CodingErrorException, CantDoThatException {
