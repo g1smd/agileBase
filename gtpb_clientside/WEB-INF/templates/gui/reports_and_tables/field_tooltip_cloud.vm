@@ -1,0 +1,35 @@
+#set($min = 999999)
+#set($max = 0)
+  #foreach($chartDataRow in $chartDataRows)
+    ## There will only be one agg - the count
+    #set($aggregateValues = $chartDataRow.getAggregateValues())
+    #foreach($aggregate in $aggregateValues.keySet())
+      #set($val = $aggregateValues.get($aggregate)))
+      #if ($val > $max)
+        #set($max = $val)
+      #end
+      #if($val < $min)
+        #set($min = $val)
+      #end
+    #end
+  #end
+#set($mathTool = $viewTools.getMathTool())
+#set($range = $mathTool.sub($max, $min))
+#set($divisor = $mathTool.div($range, 7))
+#foreach($chartDataRow in $chartDataRows)
+    #set($aggregateValues = $chartDataRow.getAggregateValues())
+    #set($groupingValues = $chartDataRow.getGroupingValues())
+    ## There will only be one agg - the count
+    #foreach($aggregate in $aggregateValues.keySet())
+      #set($val = $aggregateValues.get($aggregate).intValue())
+      #set($fontSize = $mathTool.add(7, $mathTool.div($val, $divisor)))
+    #end
+    ## There will only be one grouping - the field
+    #foreach($grouping in $groupingValues.keySet())
+      #if($groupingValues.get($grouping))
+        <span style="font-size: ${fontSize}pt; float: left;" title="$val items">$groupingValues.get($grouping) </span>
+      #else
+        <span style="font-size: ${fontSize}pt; float: left;" title="$val items">(empty) </span>
+      #end
+    #end
+#end

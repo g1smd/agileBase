@@ -1,0 +1,31 @@
+      <br>
+      ##Sparkline
+      #set($sparklineData = [])
+      #foreach($chartDataRow in $chartDataRows)
+        ## There will only be one agg - the count
+        #set($aggregateValues = $chartDataRow.getAggregateValues())
+        #foreach($aggregate in $aggregateValues.keySet())
+          #set($success = $sparklineData.add($aggregateValues.get($aggregate)))
+        #end
+      #end
+      <span class="sparkline">$viewTools.joinWith($sparklineData,",")</span><br>
+      ## Textual data
+      <div class="tooltip_content">
+      #foreach($chartDataRow in $chartDataRows)
+        #set($aggregateValues = $chartDataRow.getAggregateValues())
+        #set($groupingValues = $chartDataRow.getGroupingValues())
+        ## There will only be one agg - the count
+        #foreach($aggregate in $aggregateValues.keySet())
+          <span style="color:#656766">$aggregateValues.get($aggregate).intValue() x</span> 
+        #end
+        ## There will only be one grouping - the field
+        #foreach($grouping in $groupingValues.keySet())
+          #if($groupingValues.get($grouping))
+            $groupingValues.get($grouping)
+          #else
+            (empty)
+          #end
+        #end
+        <br>
+      #end ## loop through each summary data row
+      </div>
