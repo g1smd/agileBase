@@ -439,7 +439,7 @@ tr.separator + tr.separator {
 	-webkit-box-shadow: 0.5em 0.5em 2em #656766;
 	box-shadow: 0.5em 0.5em 2em #656766;
 	width: auto!important;
-	max-width: 1000px;
+	max-width: 700px;
 	font-weight: normal;
 	font-size: 9pt;
 	padding: 0.2em;
@@ -450,6 +450,11 @@ tr.separator + tr.separator {
 
 .ab_tooltip .tooltip_content {
 	font-size: 8pt;
+}
+
+.ab_tooltip .word {
+  float: left;
+  margin-right: 1em;
 }
 
 .ab_tooltip td {
