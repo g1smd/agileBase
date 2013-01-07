@@ -50,6 +50,7 @@
   position: relative;
   margin: 0;
   background-color: #E8E7E3;
+  border-radius: 0.5em;
 }
 .cluetip-default h3#cluetip-title {
   margin: 0 0 5px;

@@ -17,40 +17,15 @@ $reportField
       <br>
       #set($aggregateValues = $chartDataRows.get(0).getAggregateValues())
       #foreach($aggregate in $aggregateValues.keySet())
+        ## e.g. "sum(value) = 104.23"
     	$aggregate.getAggregateFunction().getLabel() = $aggregateValues.get($aggregate)<br>
       #end
     #else
-      <br>
-      ##Sparkline
-      #set($sparklineData = [])
-      #foreach($chartDataRow in $chartDataRows)
-        ## There will only be one agg - the count
-        #set($aggregateValues = $chartDataRow.getAggregateValues())
-    	#foreach($aggregate in $aggregateValues.keySet())
-    	  #set($temp = $sparklineData.add($aggregateValues.get($aggregate)))
-        #end
+      #if($chartDataRows.size() > 30)
+        #parse("gui/reports_and_tables/field_tooltip_cloud.vm")
+      #else
+        #parse("gui/reports_and_tables/field_tooltip_sparkline.vm")
       #end
-      <span class="sparkline">$viewTools.joinWith($sparklineData,",")</span><br>
-      ## Textual data
-      <div class="tooltip_content">
-      #foreach($chartDataRow in $chartDataRows)
-        #set($aggregateValues = $chartDataRow.getAggregateValues())
-    	#set($groupingValues = $chartDataRow.getGroupingValues())
-        ## There will only be one agg - the count
-    	#foreach($aggregate in $aggregateValues.keySet())
-    	  $aggregateValues.get($aggregate).intValue() x 
-        #end
-    	## There will only be one grouping - the field
-    	#foreach($grouping in $groupingValues.keySet())
-    	  #if($groupingValues.get($grouping))
-    		$groupingValues.get($grouping)
-    	  #else
-    		(empty)
-    	  #end
-    	#end
-    	<br>
-      #end ## loop through each summary data row
-      </div>
-    #end ## if there is a grouping
+      #end ## if there is a grouping
 	#end
 #end ## if displayDetails
