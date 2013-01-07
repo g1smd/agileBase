@@ -4,7 +4,7 @@
     ## There will only be one agg - the count
     #set($aggregateValues = $chartDataRow.getAggregateValues())
     #foreach($aggregate in $aggregateValues.keySet())
-      #set($val = $aggregateValues.get($aggregate)))
+      #set($val = $aggregateValues.get($aggregate))
       #if ($val > $max)
         #set($max = $val)
       #end
@@ -27,9 +27,9 @@
     ## There will only be one grouping - the field
     #foreach($grouping in $groupingValues.keySet())
       #if($groupingValues.get($grouping))
-        <span style="font-size: ${fontSize}pt; float: left;" title="$val items">$groupingValues.get($grouping) </span>
+        <span style="font-size: ${fontSize}pt;" title="$val items">$groupingValues.get($grouping)</span> 
       #else
-        <span style="font-size: ${fontSize}pt; float: left;" title="$val items">(empty) </span>
+        <span style="font-size: ${fontSize}pt;" title="$val items">(empty)</span> 
       #end
     #end
 #end
