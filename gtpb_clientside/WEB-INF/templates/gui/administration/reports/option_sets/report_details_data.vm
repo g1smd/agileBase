@@ -29,13 +29,13 @@
     <td>Name:</td>
     <td>
 		#set($pane1_report_name="$report.getParentTable().getInternalTableName()$internalReportName")
-      <input type="text" name="reportname" gtpb_update_report value="$report" pane1_report_name="$pane1_report_name" onkeyup="top.oBuffer.writeBuffer(this); parent.pane_1.fUpdateTitle('$pane1_report_name', this.value);" maxKeyCount="6" identifier="$internalReportName" gtpb_internalreportname="$internalReportName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/>
+      <input type="text" name="reportname" gtpb_update_report value="$report" pane1_report_name="$pane1_report_name" onkeyup="top.oBuffer.writeBuffer(this); parent.pane_1.fUpdateTitle('$pane1_report_name', this.value);" maxKeyCount="6" identifier="$internalReportName" gtpb_internalreportname="$internalReportName" />
     </td>
   </tr>
   <tr>
     <td>Purpose:<br><span class="greytext">Purpose and any key users</span></td>
     <td>
-	  <textarea name="reportdesc" cols="60" rows="4" gtpb_update_report onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="15" gtpb_internalreportname="$internalReportName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">$report.getReportDescription()</textarea>
+	  <textarea name="reportdesc" cols="60" rows="4" gtpb_update_report onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="15" gtpb_internalreportname="$internalReportName">$report.getReportDescription()</textarea>
     </td>
   </tr>
   <tr>
@@ -118,7 +118,7 @@
       #if(!$memoryAllocation)
         #set($memoryAllocation = 0)
       #end
-      <input type="text" name="memoryallocation" gtpb_update_report value="$memoryAllocation" pane1_report_name="$pane1_report_name" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="2" identifier="$internalReportName" gtpb_internalreportname="$internalReportName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/> MB
+      <input type="text" name="memoryallocation" gtpb_update_report value="$memoryAllocation" pane1_report_name="$pane1_report_name" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="2" identifier="$internalReportName" gtpb_internalreportname="$internalReportName" /> MB
     </td>
   </tr>
   <tr id="showAdvanced">

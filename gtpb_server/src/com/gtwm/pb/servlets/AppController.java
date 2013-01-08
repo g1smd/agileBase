@@ -88,14 +88,13 @@ import org.grlea.log.SimpleLogger;
 public final class AppController extends VelocityViewServlet {
 
 	/**
-	 * init() is called once automatically by the servlet container (e.g.
-	 * Tomcat) at servlet startup. We use it to initialise various things,
-	 * namely:
+	 * init() is called once automatically by the servlet container (e.g. Tomcat)
+	 * at servlet startup. We use it to initialise various things, namely:
 	 * 
 	 * a) create the DatabaseDefn object which is the top level application
-	 * object. The DatabaseDefn object will load the list of tables & reports
-	 * into memory when it is constructed. It will also configure and load the
-	 * object database
+	 * object. The DatabaseDefn object will load the list of tables & reports into
+	 * memory when it is constructed. It will also configure and load the object
+	 * database
 	 * 
 	 * b) create a DataSource object here to pass to the DatabaseDefn. This data
 	 * source then acts as a pool of connections from which a connection to the
@@ -116,8 +115,7 @@ public final class AppController extends VelocityViewServlet {
 			// Get a data source for the relational database to pass to the
 			// DatabaseDefn object
 			initialContext = new InitialContext();
-			relationalDataSource = (DataSource) initialContext
-					.lookup("java:comp/env/jdbc/agileBaseData");
+			relationalDataSource = (DataSource) initialContext.lookup("java:comp/env/jdbc/agileBaseData");
 			if (relationalDataSource == null) {
 				throw new ServletException("Can't get data source");
 			}
@@ -175,10 +173,11 @@ public final class AppController extends VelocityViewServlet {
 	}
 
 	/**
-	 * Optionally return application/xml or other content rather than the
-	 * default text/html
+	 * Optionally return application/xml or other content rather than the default
+	 * text/html
 	 * 
-	 * If there is no returntype specified, don't set a header, but return ResponseReturnType.HTML
+	 * If there is no returntype specified, don't set a header, but return
+	 * ResponseReturnType.HTML
 	 * 
 	 * This can be useful when using AJAX interfaces with XMLHttpRequest in the
 	 * browser
@@ -194,12 +193,10 @@ public final class AppController extends VelocityViewServlet {
 				if (responseReturnType.equals(ResponseReturnType.DOWNLOAD)) {
 					String filename = ServletUtilMethods.getParameter(request, "returnfilename",
 							multipartItems);
-					response.setHeader("Content-Disposition", "attachment;filename=\"" + filename
-							+ "\"");
+					response.setHeader("Content-Disposition", "attachment;filename=\"" + filename + "\"");
 				}
 			} catch (IllegalArgumentException iaex) {
-				EnumSet<ResponseReturnType> allReturnTypes = EnumSet
-						.allOf(ResponseReturnType.class);
+				EnumSet<ResponseReturnType> allReturnTypes = EnumSet.allOf(ResponseReturnType.class);
 				ServletUtilMethods.logException(iaex, request, "Unknown returntype specified: "
 						+ returnType + " - must be one of " + allReturnTypes);
 			}
@@ -208,32 +205,28 @@ public final class AppController extends VelocityViewServlet {
 	}
 
 	public static void carryOutSessionActions(HttpServletRequest request,
-			SessionDataInfo sessionData, DatabaseInfo databaseDefn, Context context,
-			HttpSession session, List<FileItem> multipartItems) throws SQLException,
-			AgileBaseException {
+			SessionDataInfo sessionData, DatabaseInfo databaseDefn, Context context, HttpSession session,
+			List<FileItem> multipartItems) throws SQLException, AgileBaseException {
 		// Set any new values for the session variables before carrying out main
 		// app actions
 		EnumSet<SessionAction> sessionActions = EnumSet.allOf(SessionAction.class);
 		for (SessionAction sessionAction : sessionActions) {
-			String sessionActionParam = request
-					.getParameter(sessionAction.toString().toLowerCase());
+			String sessionActionParam = request.getParameter(sessionAction.toString().toLowerCase());
 			if (sessionActionParam != null) {
 				switch (sessionAction) {
 				case PRESET_ROW_ID:
-					ServletSessionMethods.setRowId(sessionData, request, sessionActionParam,
-							databaseDefn, sessionAction);
+					ServletSessionMethods.setRowId(sessionData, request, sessionActionParam, databaseDefn,
+							sessionAction);
 					break;
 				case SET_TABLE:
-					ServletSessionMethods.setTable(sessionData, request, sessionActionParam,
-							databaseDefn);
+					ServletSessionMethods.setTable(sessionData, request, sessionActionParam, databaseDefn);
 					break;
 				case SET_REPORT:
-					ServletSessionMethods.setReport(request, sessionData, sessionActionParam,
-							databaseDefn);
+					ServletSessionMethods.setReport(request, sessionData, sessionActionParam, databaseDefn);
 					break;
 				case SET_ROW_ID:
-					ServletSessionMethods.setRowId(sessionData, request, sessionActionParam,
-							databaseDefn, sessionAction);
+					ServletSessionMethods.setRowId(sessionData, request, sessionActionParam, databaseDefn,
+							sessionAction);
 					break;
 				case SET_REPORT_ROW_LIMIT:
 					sessionData.setReportRowLimit(Integer.parseInt(sessionActionParam));
@@ -245,8 +238,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletSessionMethods.clearAllReportFilterValues(sessionData);
 					break;
 				case SET_GLOBAL_REPORT_FILTER_STRING:
-					ServletSessionMethods.setReportGlobalFilterString(sessionData, request,
-							databaseDefn);
+					ServletSessionMethods.setReportGlobalFilterString(sessionData, request, databaseDefn);
 					break;
 				case SET_REPORT_SORT:
 					ServletSessionMethods.setReportSort(sessionData, request, databaseDefn);
@@ -258,17 +250,15 @@ public final class AppController extends VelocityViewServlet {
 					ServletSessionMethods.clearAllReportSorts(sessionData);
 					break;
 				case SET_USER:
-					ServletSessionMethods.setUser(sessionData, request, sessionActionParam,
-							databaseDefn);
+					ServletSessionMethods.setUser(sessionData, request, sessionActionParam, databaseDefn);
 					break;
 				case SET_ROLE:
-					AppRoleInfo role = databaseDefn.getAuthManager().getRoleByInternalName(
-							sessionActionParam);
+					AppRoleInfo role = databaseDefn.getAuthManager()
+							.getRoleByInternalName(sessionActionParam);
 					sessionData.setRole(role);
 					break;
 				case SET_CONTEXT:
-					SessionContext sessionContext = SessionContext.valueOf(sessionActionParam
-							.toUpperCase());
+					SessionContext sessionContext = SessionContext.valueOf(sessionActionParam.toUpperCase());
 					sessionData.setContext(sessionContext);
 					break;
 				case SET_CUSTOM_VARIABLE:
@@ -299,8 +289,7 @@ public final class AppController extends VelocityViewServlet {
 					sessionData.clearCustomVariable(sessionActionParam);
 					break;
 				case SET_MODULE:
-					ServletSessionMethods.setModule(sessionData, request, sessionActionParam,
-							databaseDefn);
+					ServletSessionMethods.setModule(sessionData, request, sessionActionParam, databaseDefn);
 					break;
 				case SET_LOCK_OVERRIDE:
 					ServletSessionMethods.setLockOverride(sessionData, request, databaseDefn);
@@ -321,8 +310,7 @@ public final class AppController extends VelocityViewServlet {
 
 	public static void carryOutAppActions(HttpServletRequest request, SessionDataInfo sessionData,
 			DatabaseInfo databaseDefn, List<FileItem> multipartItems, StringBuffer appActionName)
-			throws AgileBaseException, SQLException, FileUploadException, IOException,
-			MessagingException {
+			throws AgileBaseException, SQLException, FileUploadException, IOException, MessagingException {
 		// perform any actions
 		EnumSet<AppAction> appActions = EnumSet.allOf(AppAction.class);
 		for (AppAction appAction : appActions) {
@@ -336,23 +324,24 @@ public final class AppController extends VelocityViewServlet {
 				switch (appAction) {
 				// Most commonly used actions at the start
 				case UPDATE_RECORD:
-					ServletDataMethods.saveRecord(sessionData, request, false, databaseDefn,
-							multipartItems);
+					ServletDataMethods.saveRecord(sessionData, request, false, databaseDefn, multipartItems);
+					break;
+				case ADD_USER:
+					// ADD_USER before SAVE_NEW_RECORD so that user record can be created
+					// and record belonging to them in the same request (Edudo)
+					ServletAuthMethods.addUser(sessionData, request, databaseDefn.getAuthManager());
 					break;
 				case SAVE_NEW_RECORD:
-					ServletDataMethods.saveRecord(sessionData, request, true, databaseDefn,
-							multipartItems);
+					ServletDataMethods.saveRecord(sessionData, request, true, databaseDefn, multipartItems);
 					break;
 				case CLONE_RECORD:
-					ServletDataMethods.cloneRecord(sessionData, request, databaseDefn,
-							multipartItems);
+					ServletDataMethods.cloneRecord(sessionData, request, databaseDefn, multipartItems);
 					break;
 				case REMOVE_RECORD:
 					ServletDataMethods.removeRecord(sessionData, request, databaseDefn);
 					break;
 				case GLOBAL_EDIT:
-					ServletDataMethods.globalEdit(sessionData, request, databaseDefn,
-							multipartItems);
+					ServletDataMethods.globalEdit(sessionData, request, databaseDefn, multipartItems);
 					break;
 				case CONTRACT_SECTION:
 					ServletSchemaMethods.contractSection(sessionData, request, databaseDefn);
@@ -363,15 +352,11 @@ public final class AppController extends VelocityViewServlet {
 				case ADD_COMMENT:
 					ServletDataMethods.addComment(sessionData, request, databaseDefn);
 					break;
-				case ADD_USER:
-					ServletAuthMethods.addUser(sessionData, request, databaseDefn.getAuthManager());
-					break;
 				case REMOVE_USER:
 					ServletAuthMethods.removeUser(sessionData, request, databaseDefn);
 					break;
 				case UPDATE_USER:
-					ServletAuthMethods.updateUser(sessionData, request,
-							databaseDefn.getAuthManager());
+					ServletAuthMethods.updateUser(sessionData, request, databaseDefn.getAuthManager());
 					break;
 				case SEND_PASSWORD_RESET:
 					ServletAuthMethods.sendPasswordReset(request, databaseDefn.getAuthManager());
@@ -380,8 +365,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletAuthMethods.addRole(sessionData, request, databaseDefn.getAuthManager());
 					break;
 				case UPDATE_ROLE:
-					ServletAuthMethods.updateRole(sessionData, request,
-							databaseDefn.getAuthManager());
+					ServletAuthMethods.updateRole(sessionData, request, databaseDefn.getAuthManager());
 					break;
 				case REMOVE_ROLE:
 					ServletAuthMethods.removeRole(sessionData, request, databaseDefn);
@@ -435,12 +419,11 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.updateReport(sessionData, request, databaseDefn);
 					break;
 				case UPLOAD_CUSTOM_TEMPLATE:
-					ServletSchemaMethods.uploadCustomReportTemplate(sessionData, request,
-							databaseDefn, multipartItems);
+					ServletSchemaMethods.uploadCustomReportTemplate(sessionData, request, databaseDefn,
+							multipartItems);
 					break;
 				case REMOVE_CUSTOM_TEMPLATE:
-					ServletSchemaMethods.removeCustomReportTemplate(sessionData, request,
-							databaseDefn);
+					ServletSchemaMethods.removeCustomReportTemplate(sessionData, request, databaseDefn);
 					break;
 				case REMOVE_REPORT:
 					ServletSchemaMethods.removeReport(sessionData, request, databaseDefn);
@@ -461,8 +444,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.addCalculationToReport(sessionData, request, databaseDefn);
 					break;
 				case UPDATE_CALCULATION_IN_REPORT:
-					ServletSchemaMethods.updateCalculationInReport(sessionData, request,
-							databaseDefn);
+					ServletSchemaMethods.updateCalculationInReport(sessionData, request, databaseDefn);
 					break;
 				case ADD_FILTER_TO_REPORT:
 					ServletSchemaMethods.addFilterToReport(sessionData, request, databaseDefn);
@@ -480,15 +462,13 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.addGroupingToChart(sessionData, request, databaseDefn);
 					break;
 				case REMOVE_GROUPING_FROM_CHART:
-					ServletSchemaMethods
-							.removeGroupingFromChart(sessionData, request, databaseDefn);
+					ServletSchemaMethods.removeGroupingFromChart(sessionData, request, databaseDefn);
 					break;
 				case ADD_FUNCTION_TO_CHART:
 					ServletSchemaMethods.addFunctionToChart(sessionData, request, databaseDefn);
 					break;
 				case REMOVE_FUNCTION_FROM_CHART:
-					ServletSchemaMethods
-							.removeFunctionFromChart(sessionData, request, databaseDefn);
+					ServletSchemaMethods.removeFunctionFromChart(sessionData, request, databaseDefn);
 					break;
 				case SET_CHART_FILTER:
 					ServletSchemaMethods.setChartFilter(sessionData, request, databaseDefn);
@@ -506,19 +486,16 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.removeChart(sessionData, request, databaseDefn);
 					break;
 				case SET_WORD_CLOUD_FIELD:
-					ServletSchemaMethods
-							.setReportWordCloudField(sessionData, request, databaseDefn);
+					ServletSchemaMethods.setReportWordCloudField(sessionData, request, databaseDefn);
 					break;
 				case UPDATE_MAP:
 					ServletSchemaMethods.updateMap(sessionData, request, databaseDefn);
 					break;
 				case SET_DASHBOARD_CHART_STATE:
-					ServletDashboardMethods.setDashboardSummaryState(sessionData, request,
-							databaseDefn);
+					ServletDashboardMethods.setDashboardSummaryState(sessionData, request, databaseDefn);
 					break;
 				case CSV_IMPORT:
-					ServletDataMethods.importRecords(sessionData, request, databaseDefn,
-							multipartItems);
+					ServletDataMethods.importRecords(sessionData, request, databaseDefn, multipartItems);
 					break;
 				case LOCK_RECORDS:
 					ServletDataMethods.lockRecords(sessionData, request, databaseDefn);
@@ -530,8 +507,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.removeCompany(request, databaseDefn.getAuthManager());
 					break;
 				case ANONYMISE:
-					ServletDataMethods.anonymiseTableData(sessionData, request, databaseDefn,
-							multipartItems);
+					ServletDataMethods.anonymiseTableData(sessionData, request, databaseDefn, multipartItems);
 					break;
 				case ADD_MODULE:
 					ServletSchemaMethods.addModule(request, sessionData, databaseDefn);
@@ -540,8 +516,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.removeModule(request, sessionData, databaseDefn);
 					break;
 				case UPDATE_MODULE:
-					ServletSchemaMethods.updateModule(request, sessionData,
-							databaseDefn.getAuthManager());
+					ServletSchemaMethods.updateModule(request, sessionData, databaseDefn.getAuthManager());
 					break;
 				case HIDE_REPORT:
 					ServletSchemaMethods.hideReportFromUser(sessionData, request, databaseDefn);
@@ -550,12 +525,10 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.unhideReportFromUser(sessionData, request, databaseDefn);
 					break;
 				case ADD_OPERATIONAL_DASHBOARD_REPORT:
-					ServletSchemaMethods.addOperationalDashboardReport(sessionData, request,
-							databaseDefn);
+					ServletSchemaMethods.addOperationalDashboardReport(sessionData, request, databaseDefn);
 					break;
 				case REMOVE_OPERATIONAL_DASHBOARD_REPORT:
-					ServletSchemaMethods.removeOperationalDashboardReport(sessionData, request,
-							databaseDefn);
+					ServletSchemaMethods.removeOperationalDashboardReport(sessionData, request, databaseDefn);
 					break;
 				case ADD_FORM_TABLE:
 					ServletSchemaMethods.addFormTable(sessionData, request, databaseDefn);
@@ -590,8 +563,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.addDistinctToReport(sessionData, request, databaseDefn);
 					break;
 				case REMOVE_REPORT_DISTINCT:
-					ServletSchemaMethods.removeDistinctFromReport(sessionData, request,
-							databaseDefn);
+					ServletSchemaMethods.removeDistinctFromReport(sessionData, request, databaseDefn);
 					break;
 				}
 			}
@@ -599,28 +571,24 @@ public final class AppController extends VelocityViewServlet {
 	}
 
 	public static void carryOutPostSessionActions(HttpServletRequest request,
-			SessionDataInfo sessionData, DatabaseInfo databaseDefn,
-			EnumSet<SessionAction> sessionActions) throws SQLException, ObjectNotFoundException,
-			MissingParametersException, DisallowedException {
+			SessionDataInfo sessionData, DatabaseInfo databaseDefn, EnumSet<SessionAction> sessionActions)
+			throws SQLException, ObjectNotFoundException, MissingParametersException, DisallowedException {
 		for (SessionAction sessionAction : sessionActions) {
 			String sessionActionParam = request.getParameter(sessionAction.toString().toLowerCase(
 					Locale.UK));
 			if (sessionActionParam != null) {
 				switch (sessionAction) {
 				case POSTSET_TABLE:
-					ServletSessionMethods.setTable(sessionData, request, sessionActionParam,
-							databaseDefn);
+					ServletSessionMethods.setTable(sessionData, request, sessionActionParam, databaseDefn);
 					break;
 				case POSTSET_REPORT:
-					ServletSessionMethods.setReport(request, sessionData, sessionActionParam,
-							databaseDefn);
+					ServletSessionMethods.setReport(request, sessionData, sessionActionParam, databaseDefn);
 					break;
 				case POSTSET_CUSTOM_TABLE:
 					ServletSessionMethods.setCustomTable(sessionData, request, false, databaseDefn);
 					break;
 				case POSTSET_CUSTOM_REPORT:
-					ServletSessionMethods
-							.setCustomReport(sessionData, request, false, databaseDefn);
+					ServletSessionMethods.setCustomReport(sessionData, request, false, databaseDefn);
 					break;
 				}
 			}
@@ -654,8 +622,7 @@ public final class AppController extends VelocityViewServlet {
 				// Set up a session for a newly logged in user
 				sessionData = new SessionData(this.databaseDefn, this.relationalDataSource, request);
 			} catch (SQLException | AgileBaseException ex) {
-				ServletUtilMethods.logException(ex, request, "Error creating session data object: "
-						+ ex);
+				ServletUtilMethods.logException(ex, request, "Error creating session data object: " + ex);
 				sessionData = new SessionData();
 			}
 			// Set session cookie expiry date
@@ -675,8 +642,7 @@ public final class AppController extends VelocityViewServlet {
 					multipartItems);
 		} catch (AgileBaseException | RuntimeException | SQLException ex) {
 			ServletUtilMethods.logException(ex, request, "Error setting session data");
-			if (returnType.equals(ResponseReturnType.XML)
-					|| returnType.equals(ResponseReturnType.JSON)) {
+			if (returnType.equals(ResponseReturnType.XML) || returnType.equals(ResponseReturnType.JSON)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, ex, multipartItems);
 			} else {
@@ -684,27 +650,24 @@ public final class AppController extends VelocityViewServlet {
 						sessionData, ex, multipartItems);
 			}
 			/*
-			 * } catch (Exception ex) { ServletUtilMethods.logException(ex,
-			 * request, "General error setting session data"); if
+			 * } catch (Exception ex) { ServletUtilMethods.logException(ex, request,
+			 * "General error setting session data"); if
 			 * (returnType.equals(ResponseReturnType.XML)) { return
-			 * getUserInterfaceTemplate(request, response, templateName,
-			 * context, session, sessionData, ex, multipartItems); } else { //
-			 * override to return the error template templateName =
-			 * "report_error"; return getUserInterfaceTemplate(request,
-			 * response, templateName, context, session, sessionData, ex,
-			 * multipartItems); }
+			 * getUserInterfaceTemplate(request, response, templateName, context,
+			 * session, sessionData, ex, multipartItems); } else { // override to
+			 * return the error template templateName = "report_error"; return
+			 * getUserInterfaceTemplate(request, response, templateName, context,
+			 * session, sessionData, ex, multipartItems); }
 			 */
 		}
 		// Use StringBuffer to get a mutable string that can be altered by
 		// carryOutAppActions
 		StringBuffer appActionName = new StringBuffer("");
 		try {
-			carryOutAppActions(request, sessionData, this.databaseDefn, multipartItems,
-					appActionName);
+			carryOutAppActions(request, sessionData, this.databaseDefn, multipartItems, appActionName);
 		} catch (AgileBaseException | SQLException | RuntimeException | FileUploadException
 				| IOException | MessagingException ex) {
-			ServletUtilMethods.logException(ex, request, "Error carrying out action "
-					+ appActionName);
+			ServletUtilMethods.logException(ex, request, "Error carrying out action " + appActionName);
 			return getUserInterfaceTemplate(request, response, templateName, context, session,
 					sessionData, ex, multipartItems);
 		}
@@ -715,8 +678,7 @@ public final class AppController extends VelocityViewServlet {
 			carryOutPostSessionActions(request, sessionData, this.databaseDefn, sessionActions);
 		} catch (AgileBaseException | RuntimeException | SQLException ex) {
 			ServletUtilMethods.logException(ex, request, "Error setting session data post acction");
-			if (returnType.equals(ResponseReturnType.XML)
-					|| returnType.equals(ResponseReturnType.JSON)) {
+			if (returnType.equals(ResponseReturnType.XML) || returnType.equals(ResponseReturnType.JSON)) {
 				return getUserInterfaceTemplate(request, response, templateName, context, session,
 						sessionData, ex, multipartItems);
 			} else {
@@ -741,8 +703,8 @@ public final class AppController extends VelocityViewServlet {
 		// view to display
 		// in mergeTemplate()
 		// Create ViewMethods object and return the requested template
-		return getUserInterfaceTemplate(request, response, templateName, context, session,
-				sessionData, null, multipartItems);
+		return getUserInterfaceTemplate(request, response, templateName, context, session, sessionData,
+				null, multipartItems);
 	}
 
 	/**
@@ -750,23 +712,23 @@ public final class AppController extends VelocityViewServlet {
 	 * functionality, and return the requested template.
 	 * 
 	 * TODO: This method obviously doesn't throw any exceptions for a reason,
-	 * presumably we always want to return a template whatever happens. Check
-	 * out whether there's a better way of doing things though
+	 * presumably we always want to return a template whatever happens. Check out
+	 * whether there's a better way of doing things though
 	 * 
 	 * @param exceptionCaught
-	 *            An exception thrown by handleRequest. Pass null if none. This
-	 *            will be saved in ViewMethods to allow the UI to find out what
-	 *            went wrong
+	 *          An exception thrown by handleRequest. Pass null if none. This will
+	 *          be saved in ViewMethods to allow the UI to find out what went
+	 *          wrong
 	 * @return The template requested, ready to parse by the UI
 	 * 
 	 */
 	private Template getUserInterfaceTemplate(HttpServletRequest request,
-			HttpServletResponse response, String templateName, Context context,
-			HttpSession session, SessionDataInfo sessionData, Exception exceptionCaught,
-			List<FileItem> multipartItems) {
+			HttpServletResponse response, String templateName, Context context, HttpSession session,
+			SessionDataInfo sessionData, Exception exceptionCaught, List<FileItem> multipartItems) {
 		// template ('return' parameter) *must* be specified
 		if (templateName == null) {
-			logger.error("No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
+			logger
+					.error("No template specified. Please add 'return=<i>templatename</i>' to the HTTP request");
 		} else {
 			// Allow slashes and dashes but no other special characters
 			templateName = Helpers.rinseString(templateName, "\\/-");
@@ -801,23 +763,21 @@ public final class AppController extends VelocityViewServlet {
 						logger.error("Error preparing uploaded custom template variables: " + abex);
 						viewMethods.setException(abex);
 					} catch (SQLException sqlex) {
-						logger.error("SQL Error preparing uploaded custom template variables: "
-								+ sqlex);
+						logger.error("SQL Error preparing uploaded custom template variables: " + sqlex);
 						viewMethods.setException(sqlex);
 					}
 				}
 			}
 			AppUserInfo user = this.databaseDefn.getAuthManager().getLoggedInUser(request);
 			/*
-			 * if (user.getUsesCustomUI()) { String cleanCompanyName =
-			 * user.getCompany
+			 * if (user.getUsesCustomUI()) { String cleanCompanyName = user.getCompany
 			 * ().getCompanyName().toLowerCase().replaceAll("\\W", ""); String
-			 * companyPath = "gui/customisations/" + cleanCompanyName + "/"; //
-			 * Only allow templates in the company path, or the boot template if
+			 * companyPath = "gui/customisations/" + cleanCompanyName + "/"; // Only
+			 * allow templates in the company path, or the boot template if
 			 * ((!templateName.startsWith(companyPath)) &&
-			 * (!templateName.equals("boot"))) { logger.error("Path " +
-			 * templateName + " is outside of the company path " + companyPath +
-			 * " for user " + user); templateName = null; } }
+			 * (!templateName.equals("boot"))) { logger.error("Path " + templateName +
+			 * " is outside of the company path " + companyPath + " for user " +
+			 * user); templateName = null; } }
 			 */
 		} catch (ObjectNotFoundException onfex) {
 			ServletUtilMethods.logException(onfex, request, "Error getting template");
@@ -854,8 +814,8 @@ public final class AppController extends VelocityViewServlet {
 		// There will be only one row
 		for (DataRowInfo dataRow : reportDataRows) {
 			for (BaseField field : report.getReportBaseFields()) {
-				String rinsedFieldName = Helpers.rinseString(field.getFieldName().toLowerCase())
-						.replace(" ", "_");
+				String rinsedFieldName = Helpers.rinseString(field.getFieldName().toLowerCase()).replace(
+						" ", "_");
 				DataRowFieldInfo value = dataRow.getValue(field);
 				if (field instanceof TextField) {
 					context.put(rinsedFieldName, value.getKeyValue());
@@ -880,8 +840,8 @@ public final class AppController extends VelocityViewServlet {
 						+ comment.getTimestampString() + "</span>";
 				value += "</div>";
 			}
-			String rinsedFieldName = Helpers.rinseString(field.getFieldName().toLowerCase())
-					.replace(" ", "_");
+			String rinsedFieldName = Helpers.rinseString(field.getFieldName().toLowerCase()).replace(" ",
+					"_");
 			context.put(rinsedFieldName, value);
 			context.put(field.getInternalFieldName(), value);
 		}
@@ -890,8 +850,7 @@ public final class AppController extends VelocityViewServlet {
 			BaseReportInfo selectorReport = formTab.getSelectorReport();
 			Map<BaseField, String> filter = new HashMap<BaseField, String>();
 			filter.put(table.getPrimaryKey(), String.valueOf(rowId));
-			List<DataRowInfo> selectorRows = view.getReportDataRows(selectorReport, 50, filter,
-					true);
+			List<DataRowInfo> selectorRows = view.getReportDataRows(selectorReport, 50, filter, true);
 			String tabName = formTab.toString().toLowerCase().replace(" ", "_");
 			context.put(tabName + "_rows", selectorRows);
 			StringBuilder selectorRowsHtml = new StringBuilder("<table class='childData'><tr>\n");
@@ -908,8 +867,8 @@ public final class AppController extends VelocityViewServlet {
 					if (!selectorField.equals(parentTable.getPrimaryKey())) {
 						selectorRowsHtml.append("<td class='"
 								+ selectorField.getDbType().toString().toLowerCase() + " table_"
-								+ parentTable.getInternalTableName() + "'>"
-								+ selectorRow.getValue(selectorField) + "</td>");
+								+ parentTable.getInternalTableName() + "'>" + selectorRow.getValue(selectorField)
+								+ "</td>");
 					}
 				}
 				selectorRowsHtml.append("</tr>\n");
@@ -930,8 +889,7 @@ public final class AppController extends VelocityViewServlet {
 		try {
 			super.mergeTemplate(template, context, response);
 		} catch (Exception ex) {
-			ServletUtilMethods
-					.logException(ex, "Error interpreting template " + template.getName());
+			ServletUtilMethods.logException(ex, "Error interpreting template " + template.getName());
 			try {
 				// Make the exception that just occurred accessible for
 				// reporting
@@ -945,23 +903,20 @@ public final class AppController extends VelocityViewServlet {
 			} catch (ParseErrorException pee) {
 				ServletUtilMethods.logException(pee, "Syntax error in the template");
 			} catch (Exception exex) {
-				ServletUtilMethods.logException(exex,
-						"General templating error whilst reporting error");
+				ServletUtilMethods.logException(exex, "General templating error whilst reporting error");
 			}
 		}
 		float secondsToHandleMerge = (System.currentTimeMillis() - mergeTemplateStartTime)
 				/ ((float) 1000);
 		if (secondsToHandleMerge > AppProperties.longProcessingTime) {
 			logger.warn("Long template request processing time of "
-					+ String.valueOf(secondsToHandleMerge) + " seconds for template "
-					+ template.getName());
+					+ String.valueOf(secondsToHandleMerge) + " seconds for template " + template.getName());
 			ViewMethodsInfo viewMethods = (ViewMethodsInfo) context.get("view");
 			SessionDataInfo sessionData = (SessionDataInfo) context.get("sessionData");
 			try {
 				BaseReportInfo report = sessionData.getReport();
-				logger.warn("Logged in user: " + viewMethods.getLoggedInUser()
-						+ ", session report = " + report + " filtered by "
-						+ sessionData.getReportFilterValues(report) + ", limit "
+				logger.warn("Logged in user: " + viewMethods.getLoggedInUser() + ", session report = "
+						+ report + " filtered by " + sessionData.getReportFilterValues(report) + ", limit "
 						+ sessionData.getReportRowLimit());
 			} catch (DisallowedException dex) {
 				logger.warn("Not allowed to get logged in user: " + dex);

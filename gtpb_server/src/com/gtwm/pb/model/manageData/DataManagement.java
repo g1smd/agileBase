@@ -638,7 +638,13 @@ public final class DataManagement implements DataManagementInfo {
 					((DateValue) fieldValue).setDateResolution(Calendar.SECOND);
 				}
 				if (field.getFieldName().equals(HiddenFields.CREATED_BY.getFieldName())) {
-					fieldValue = this.getCurrentUserValue(request);
+					// 'Created by' can be overridden by an administrator on request
+					String createdByOverrideUsername = request.getParameter("created_by_override_username");
+					if (createdByOverrideUsername == null) {
+						fieldValue = this.getUserValue(request, request.getRemoteUser());
+					} else {
+						fieldValue = this.getUserValue(request, createdByOverrideUsername);
+					}
 				}
 				if (field.getFieldName().equals(HiddenFields.LOCKED.getFieldName())) {
 					fieldValue = new CheckboxValueDefn(false);
@@ -650,7 +656,7 @@ public final class DataManagement implements DataManagementInfo {
 				((DateValue) fieldValue).setDateResolution(Calendar.SECOND);
 			}
 			if (field.getFieldName().equals(HiddenFields.MODIFIED_BY.getFieldName())) {
-				fieldValue = this.getCurrentUserValue(request);
+				fieldValue = this.getUserValue(request, request.getRemoteUser());
 			}
 			if (fieldValue != null) {
 				// by design, the user should never be able to send a request
@@ -661,15 +667,15 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	private BaseValue getCurrentUserValue(HttpServletRequest request)
+	private BaseValue getUserValue(HttpServletRequest request, String userName)
 			throws MissingParametersException, ObjectNotFoundException, DisallowedException {
 		BaseValue fieldValue;
-		String userName = request.getRemoteUser();
 		AppUserInfo currentUser = null;
 		if (userName == null) {
 			currentUser = ServletUtilMethods.getPublicUserForRequest(request,
 					this.authManager.getAuthenticator());
 		} else {
+			// Note: getUserByUserName will throw DisallowedException unless the userName is that of the logged in user or the logged in user is an administrator
 			currentUser = this.authManager.getUserByUserName(request, userName);
 		}
 		String fullname = currentUser.getForename() + " " + currentUser.getSurname();
