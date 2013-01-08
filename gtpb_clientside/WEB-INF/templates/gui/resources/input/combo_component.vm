@@ -21,6 +21,7 @@
   #set($fieldValue = $fieldValue.trim())
 #end
 $viewTools.log("updateAsType is $updateAsType")
+
 #if($field.getTieDownLookup())
   #set($disableComboFilteredOptions = true)
   #set($disableComboAddNewEntry = true)
