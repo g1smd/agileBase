@@ -638,8 +638,8 @@ public final class DataManagement implements DataManagementInfo {
 					((DateValue) fieldValue).setDateResolution(Calendar.SECOND);
 				}
 				if (field.getFieldName().equals(HiddenFields.CREATED_BY.getFieldName())) {
-					// 'Created by' can be overridden by an administrator on request
-					String createdByOverrideUsername = request.getParameter("created_by_override_username");
+					// 'Created by' can be overridden by an administrator on request by supplying a 'username' parameter
+					String createdByOverrideUsername = request.getParameter("username");
 					if (createdByOverrideUsername == null) {
 						fieldValue = this.getUserValue(request, request.getRemoteUser());
 					} else {

@@ -21,14 +21,12 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
-
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
 import com.gtwm.pb.auth.AppRole;
 import com.gtwm.pb.auth.AppUser;
-import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
