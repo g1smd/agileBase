@@ -21,6 +21,11 @@
   #set($fieldValue = $fieldValue.trim())
 #end
 
+#if($field.getTieDownLookup())
+  #set($disableComboFilteredOptions = true)
+  #set($disableComboAddNewEntry = true)
+#end
+
 #set($all_items = $field.getItems())
 #if($all_items.size() > 0) ##if any items in the combo
 	<select class="combo-component" #if($gtpbPublicTable) name="$field.getInternalFieldName()" #else name="$field.getInternalFieldName()_dropdown" #end
@@ -36,12 +41,12 @@
 		## Don't show 'please pick one' if field is mandated and filled in
     	<option value="">-- please pick one --</option>
     #end
-	#if($gtpbPublicTable)
+	#if($gtpbPublicTable || $disableComboFilteredOptions)
 		#set($filtered_items = $all_items)
 	#else
 		#set($filtered_items = $field.getItems($sessionData.getReport(), $sessionData.getReportFilterValues()))
     #end
-	#if(($all_items.size() == $filtered_items.size()) || ($disableComboFilteredOptions))
+	#if($all_items.size() == $filtered_items.size())
     	## there are no items filtered
     	#foreach($item in $all_items)
     		#set($washedItem = $viewTools.escape($item))
