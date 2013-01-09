@@ -37,7 +37,9 @@ function fPicker(){
     	alert('no reports available to load content for');
     	return;
       }
-      aPostVars['custominternalreportname']=oElements.picker.reportsList.options[oElements.picker.reportsList.selectedIndex].value;
+      // Try the data-internalreportname property first, if not set fall back to the selected element of the report dropdown
+      // TODO: set the selected item of the dropdown if we do have a property specified
+      aPostVars['custominternalreportname']=this.formEl.data-internalreportname || oElements.picker.reportsList.options[oElements.picker.reportsList.selectedIndex].value;
     }
     var oReq=new fRequest('AppController.servlet',aPostVars,fDisplayContent,0);
   }
