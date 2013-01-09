@@ -75,7 +75,7 @@ function fPicker(){
   function fDestroy() {
     oElements.picker.parentNode.removeChild(oElements.picker);
     // hack for iPod/iPhone compatibility - see fSetOverFlowHack in relation.vm
-    document.getElementById('gtpb_wrapper').style.overflow = 'visible';
+    $("#gtpb_wrapper").css("overflow","visible");
   }
  
   function fHTMLElements() {
