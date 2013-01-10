@@ -425,6 +425,7 @@ function dateFilterControls(event, inputObj) {
 				  var selectedString = selected.getDate() + " " + months[selected.getMonth()] + " " + selected.getFullYear();
 				  $(inputObj).val(selectedString);
 				  $(inputObj).keyup();
+					$("#fieldFilterControls").fadeOut();				  
 				}
 			}
 		});
