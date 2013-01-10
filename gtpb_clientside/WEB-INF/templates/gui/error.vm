@@ -23,7 +23,11 @@
 <div class="container">
 #if($view.getWhetherExceptionOccurred())
   #set($exception = $view.getException())
-  #set($cause = $exception.getCause())
+  #if($exception.getClass().getSimpleName() == "DisallowedException")
+    #set($cause = $exception)
+  #else
+    #set($cause = $exception.getCause())
+  #end
   #if($cause.getClass().getSimpleName() == "DisallowedException")
     <h1>Request access</h1>
     <div class="big spaced">
