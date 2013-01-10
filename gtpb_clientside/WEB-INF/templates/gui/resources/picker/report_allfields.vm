@@ -1,0 +1,2 @@
+#set($displayAllFields = true)
+#parse("gui/resources/picker/report.vm")
