@@ -28,7 +28,9 @@
             #else
               <span class="ab_field_name">$field</span>
             #end
-              <span class="ab_field_description">$field.getFieldDescription()</span>
+              #if($field.getFieldDescription() != "")
+                <span class="ab_field_description">$field.getFieldDescription()</span>
+              #end
             #if($fieldCategory !='SEPARATOR')
 			  <div class="ab_field_input">
 			    #parse('gui/resources/input/input.vm')
