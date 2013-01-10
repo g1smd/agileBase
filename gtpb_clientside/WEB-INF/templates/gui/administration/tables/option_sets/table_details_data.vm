@@ -25,9 +25,9 @@
   <tr valign="top">
     <td class="table_details">
 	<b>Name:</b><br>
-      <input type="text" name="tablename" gtpb_update_table value="$table.getTableName()" onkeyup="top.oBuffer.writeBuffer(this); parent.pane_1.fUpdateTitle('$internalTableName$table.getDefaultReport().getInternalReportName()', this.value);" maxKeyCount="6" identifier="$internalTableName" gtpb_internaltablename="$internalTableName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/><p>
+      <input type="text" name="tablename" gtpb_update_table value="$table.getTableName()" onkeyup="top.oBuffer.writeBuffer(this); parent.pane_1.fUpdateTitle('$internalTableName$table.getDefaultReport().getInternalReportName()', this.value);" maxKeyCount="6" identifier="$internalTableName" gtpb_internaltablename="$internalTableName" /><p>
     <b>Purpose:</b><br><span class="greytext" style="font-size:8pt">Purpose of table and key stakeholders who value it</span><br>
-	  <textarea name="tabledesc" cols="50" rows="4" gtpb_update_table onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" gtpb_internaltablename="$internalTableName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')">$table.getTableDescription()</textarea><p>
+	  <textarea name="tabledesc" cols="50" rows="4" gtpb_update_table onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" gtpb_internaltablename="$internalTableName">$table.getTableDescription()</textarea><p>
       <!-- table deletion button -->
       #set($tableDeleteEnabled = true)
       #if(!$view.loggedInUserAllowedTo('ADMINISTRATE'))

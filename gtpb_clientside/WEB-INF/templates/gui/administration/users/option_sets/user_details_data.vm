@@ -35,7 +35,7 @@
       <br />username
     </td>
     <td>
-      <input type="password" name="password" gtpb_internalusername="$internalUserName" gtpb_update_user onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" #*onfocus="this.setAttribute('type','text')" onblur="this.setAttribute('type','password')*#">
+      <input type="password" name="password" gtpb_internalusername="$internalUserName" gtpb_update_user onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
       <br />type new password to reset
     </td>
   </tr>

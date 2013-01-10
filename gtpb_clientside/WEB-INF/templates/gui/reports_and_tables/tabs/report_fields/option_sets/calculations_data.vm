@@ -50,7 +50,7 @@
       <tr>
         <td style="vertical-align:top">Field name</td>
         <td>
-			<input type="text" name="calculationname" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')" />
+			<input type="text" name="calculationname" />
 			      &nbsp;<select name="databasetype">
 		            <option value="VARCHAR">Text</option>
 		            <option value="INTEGER">Whole number</option>

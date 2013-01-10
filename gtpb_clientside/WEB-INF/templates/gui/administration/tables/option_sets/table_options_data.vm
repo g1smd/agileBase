@@ -19,7 +19,7 @@ Auto delete<br>
 <input type="checkbox" name="tableformpublic" gtpb_update_table #if($table.getTableFormPublic()) checked #end onchange="top.oBuffer.writeBuffer(this);" identifier="$internalTableName" gtpb_internaltablename="$internalTableName">
 Public data entry<br>
 <span class="greytext" style="font-size:8pt">Publish a <a href="Public.ab?show_form=true&c=$company.getInternalCompanyName()&t=$internalTableName&css=styles/public.css" target="_blank">form</a> which the general public can use to enter data.<br>Send notifications of new items to:</span><br>
-<input name="tableemail" gtpb_update_table #if($table.getEmail()) value="$table.getEmail()" #end onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" identifier="$internalTableName" gtpb_internaltablename="$internalTableName" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"/><br>
+<input name="tableemail" gtpb_update_table #if($table.getEmail()) value="$table.getEmail()" #end onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" identifier="$internalTableName" gtpb_internaltablename="$internalTableName" /><br>
 <span class="greytext" style="font-size: 8pt">Respond with custom message (leave blank for a default message):</span><br>
 <textarea name="tableemailresponse" cols="80" rows="5" gtpb_update_table onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" identifier="$internalTableName" gtpb_internaltablename="$internalTableName">#if($table.getEmailResponse()) $table.getEmailResponse() #end</textarea>
 <p>

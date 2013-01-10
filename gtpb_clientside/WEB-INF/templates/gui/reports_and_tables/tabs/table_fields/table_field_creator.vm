@@ -22,8 +22,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/table_field_crea
 	  ##nodrag and nodrop classes used by jquery.tableDnD plugin
 	  <tr id="addNewField" class="nodrag nodrop">
 	    <td class="leading" height="20">&nbsp;</td>
-		    <td height="20"><input type="text" name="fieldname" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"></td>
-		    <td height="20"><input type="text" name="fielddesc" onfocus="this.setAttribute('focused','true')" onblur="this.removeAttribute('focused')"></td>
+		    <td height="20"><input type="text" name="fieldname"></td>
+		    <td height="20"><input type="text" name="fielddesc"></td>
 		    <td height="20">
 		      <select name="fieldtype" onchange="fSelectFieldOption(this.selectedIndex)">
 				<optgroup label="Data input fields">
