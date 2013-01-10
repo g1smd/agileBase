@@ -24,9 +24,9 @@
     	<li #if($fieldCategory =='SEPARATOR') class="separator" #end #if($fieldCausingException.equals($field)) class="agilebase_error_field" #end>
             <label for="$field.getInternalFieldName()">
             #if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
-              $field.getSimplifiedFieldName()
+              <span class="ab_field_name">$field.getSimplifiedFieldName()</span>
             #else
-              $field
+              <span class="ab_field_name">$field</span>
             #end
               <span class="ab_field_description">$field.getFieldDescription()</span>
             #if($fieldCategory !='SEPARATOR')
