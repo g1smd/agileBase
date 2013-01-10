@@ -34,8 +34,17 @@
 		  #set($colours=[])
 		  #set($dataRowFields = $datarow.getDataRowFields())
 		  #set($keyValue=$dataRowFields.get($keyField).getKeyValue())
-		  	#set($displayValue=$dataRowFields.get($displayField).getDisplayValue())
-		  			#set($expando=[['keyValue',$keyValue],['displayValue',$displayValue]])
+		  #if($displayAllFields)
+		    ## Use all report fields as the display value
+		    #set($displayValue = "")
+		    #foreach($pickerField in $pickerReport.getBaseFields())
+		      #set($displayValue = "$displayValue, $datarow.getValue($pickerField)")
+		    #end
+		  #else
+		    ## Use just one field as the display value
+            #set($displayValue=$dataRowFields.get($displayField).getDisplayValue())
+		    #set($expando=[['keyValue',$keyValue],['displayValue',$displayValue]])
+		  #end
 		  #foreach($field in $reportBaseFields)
 		    #if ((!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN"))
 			      #set($dataRowField = $dataRowFields.get($field))

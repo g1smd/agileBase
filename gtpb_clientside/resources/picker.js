@@ -29,7 +29,11 @@ function fPicker(){
     if (!oElements.picker.reportsList) {
       aPostVars['return']='gui/resources/picker/wiki';
     } else {
-      aPostVars['return']='gui/resources/picker/report';
+    	if (oElements.picker.displayValueAllFields) {
+        aPostVars['return']='gui/resources/picker/report_allfields';    		
+    	} else {
+        aPostVars['return']='gui/resources/picker/report';
+    	}
       aPostVars['set_custom_report']='true';
       aPostVars['reportkey']='picker_report';
       aPostVars['custominternaltablename']=oCaller.formEl.getAttribute('internalTableName');
