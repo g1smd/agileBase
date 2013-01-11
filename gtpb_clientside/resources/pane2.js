@@ -418,6 +418,9 @@ function dateFilterControls(event, inputObj) {
 			months: 6,
 			days: 12,
 			callback: function(cal) {
+			  $(".calDay .calElement").click(function() {
+			  	$("#fieldFilterControls").attr("data-day_selected","true");
+			  });
 				if (firstCallback) {
 					firstCallback = false;
 				} else {
@@ -425,16 +428,12 @@ function dateFilterControls(event, inputObj) {
 				  var selectedString = selected.getDate() + " " + months[selected.getMonth()] + " " + selected.getFullYear();
 				  $(inputObj).val(selectedString);
 				  $(inputObj).keyup();
-				  alert(event.target.nodeName);
 				  if($("#fieldFilterControls").attr("data-day_selected") == "true") {
 						$("#fieldFilterControls").fadeOut();				  
 				  }
 				}
 			}
 		});
-	  $(".calDay .calElement").click(function() {
-	  	$("#fieldFilterControls").attr("data-day_selected","true");
-	  });
 		// date range
 		var today = new Date();
 		var maxDate = today;
