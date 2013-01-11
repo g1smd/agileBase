@@ -426,7 +426,7 @@ function dateFilterControls(event, inputObj) {
 				  $(inputObj).val(selectedString);
 				  $(inputObj).keyup();
 				  alert(event.target.nodeName);
-				  #if($("#fieldFilterControls").attr("data-day_selected") == "true") {
+				  if($("#fieldFilterControls").attr("data-day_selected") == "true") {
 						$("#fieldFilterControls").fadeOut();				  
 				  }
 				}
