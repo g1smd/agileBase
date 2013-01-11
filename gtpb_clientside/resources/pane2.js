@@ -417,7 +417,7 @@ function dateFilterControls(event, inputObj) {
 			years: 3,
 			months: 6,
 			days: 12,
-			callback: function(cal) {
+			callback: function(cal, event) {
 				if (firstCallback) {
 					firstCallback = false;
 				} else {
@@ -425,6 +425,7 @@ function dateFilterControls(event, inputObj) {
 				  var selectedString = selected.getDate() + " " + months[selected.getMonth()] + " " + selected.getFullYear();
 				  $(inputObj).val(selectedString);
 				  $(inputObj).keyup();
+				  alert(event.target.nodeName);
 					$("#fieldFilterControls").fadeOut();				  
 				}
 			}
