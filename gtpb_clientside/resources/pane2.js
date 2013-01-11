@@ -418,8 +418,12 @@ function dateFilterControls(event, inputObj) {
 			months: 6,
 			days: 12,
 			callback: function(cal) {
-			  $(".calDay .calElement").click(function() {
-			  	$("#fieldFilterControls").attr("data-day_selected","true");
+			  $(".calElement").click(function() {
+			  	if ($(this).closest(".calDay").size() > 0) {
+			  	  $("#fieldFilterControls").attr("data-day_selected","true");
+			  	} else {
+			  	  $("#fieldFilterControls").removeAttr("data-day_selected");
+			  	}
 			  });
 				if (firstCallback) {
 					firstCallback = false;
