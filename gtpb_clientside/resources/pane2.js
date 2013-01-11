@@ -417,7 +417,7 @@ function dateFilterControls(event, inputObj) {
 			years: 3,
 			months: 6,
 			days: 12,
-			callback: function(event, cal) {
+			callback: function(cal) {
 				if (firstCallback) {
 					firstCallback = false;
 				} else {
@@ -426,10 +426,15 @@ function dateFilterControls(event, inputObj) {
 				  $(inputObj).val(selectedString);
 				  $(inputObj).keyup();
 				  alert(event.target.nodeName);
-					$("#fieldFilterControls").fadeOut();				  
+				  #if($("#fieldFilterControls").attr("data-day_selected") == "true") {
+						$("#fieldFilterControls").fadeOut();				  
+				  }
 				}
 			}
 		});
+	  $(".calDay .calElement").click(function() {
+	  	$("#fieldFilterControls").attr("data-day_selected","true");
+	  });
 		// date range
 		var today = new Date();
 		var maxDate = today;
