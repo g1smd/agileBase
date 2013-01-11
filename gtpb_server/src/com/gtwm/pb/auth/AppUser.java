@@ -328,10 +328,17 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 
 	public void sendPasswordReset(String appUrl) throws CantDoThatException, CodingErrorException,
 			MessagingException {
-		if (this.getEmail() == null) {
-			throw new CantDoThatException("The user has no email address");
+		String emailAddress = this.getEmail();
+		if (emailAddress == null) {
+			emailAddress = "";
 		}
-		if (!this.getEmail().contains("@")) {
+		if (!emailAddress.contains("@")) {
+			if (this.getUserName().contains("@")) {
+				// If email address not present, fall back to username if it looks like an email address
+				emailAddress = this.getUserName();
+			}
+		}
+		if (!emailAddress.contains("@")) {
 			throw new CantDoThatException("The user's email isn't valid");
 		}
 		try {
@@ -345,7 +352,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 								+ passwordResetLink);
 			}
 			Set<String> recipients = new HashSet<String>();
-			recipients.add(this.getEmail());
+			recipients.add(emailAddress);
 			String subject = "Agilebase setup";
 			String body = "Your username is " + this.getUserName() + ". Please choose a password for your account by following this link:\n\n";
 			body += passwordResetLink + "\n\n";
