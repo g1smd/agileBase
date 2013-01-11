@@ -417,7 +417,7 @@ function dateFilterControls(event, inputObj) {
 			years: 3,
 			months: 6,
 			days: 12,
-			callback: function(cal, event) {
+			callback: function(event, cal) {
 				if (firstCallback) {
 					firstCallback = false;
 				} else {
