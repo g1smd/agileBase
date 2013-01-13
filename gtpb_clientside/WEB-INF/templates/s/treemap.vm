@@ -21,7 +21,7 @@
 	    </div>
 	  </div> ## end row
 	  <h1>What's in use?</h1>
-	  <p>Large areas have high use. Blue areas have increasing use.
+	  <p class="big">Large areas have high use. Blue areas have increasing use.
 	  <div id="infovis">
 	  </div>
 	  <h1>Long term trends</h1>
