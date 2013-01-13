@@ -55,5 +55,6 @@ $(document).ready(function() {
 		});
 		tm.loadJSON(treemapJson);  
 		tm.refresh();		
-	}); // end of getJSON
+	}); // end of treemap getJSON
+	fSparkLines();
 }); // end of document.ready

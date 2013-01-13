@@ -6,9 +6,50 @@
     <title>Agilebase usage</title>
     <script src="resources/jquery.js" language="JavaScript"></script>
     <script language="JavaScript" src="resources/jit.js"></script>
+    <script language="JavaScript" src="resources/jquery.sparkline.js"></script>
+    <script language="JavaScript" src="customisations/common/dashboard/dashboard.js"></script> ## TODO: prune leaving only sparklines or move sparklines somewhere else
     <script language="JavaScript" src="resources/simple/simple.js"></script>
 </head>
 <body>
-<div id="infovis">
-</div>
+	<div class="container">
+	  <div class="row abNav">
+	    <div class="span2 home">
+	      <a href="AppController.servlet?return=boot"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
+	      <div class="arrow"></div>
+	    </div>
+	  </div> ## end row
+	  <h1>What's in use?</h1>
+	  <p>Large areas have high use. Blue areas have increasing use.
+	  <div id="infovis">
+	  </div>
+	  <h1>Long term trends</h1>
+	  <div class="row">
+	    <div class="span4">
+			These 'sparkline' charts show trends in adoption and usage over the past year<br>
+			<span class="sparkline_logins">...</span> 
+			<a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">Logins</a>
+			<br>
+			<span class="sparkline_report_views" alt="report_views">...</span> 
+			<a href="?return=gui/administration/information/export/report_view&returntype=download&returnfilename=report_views.csv">Report views</a>
+			<br>
+			<span class="sparkline_data_edits">...</span> 
+			<a href="?return=gui/administration/information/export/data_change&returntype=download&returnfilename=data_changes.csv">Data changes</a>
+	    </div>
+        <div class="span4">
+			These charts are a pointer to levels of analysis rather than pure data entry<br>
+			<span class="sparkline_report_additions">...</span> 
+			<span class="sparkline_report_removals">...</span>
+			<br><span style="color:blue">Report building</span> and <span style="color:red">Demolishing</span><br>
+			<a href="?return=gui/administration/information/export/report_schema_change&returntype=download&returnfilename=report_schema_changes.csv">Download all changes</a>
+        </div>
+        <div class="span4">
+			Table building points to agileBase use in new areas or projects. Removals suggest halts and cost reductions.<br>
+			<span class="sparkline_table_additions">...</span>
+			<span class="sparkline_table_removals">...</span>
+			<br>
+			<span style="color:blue">Table building</span> and <span style="color:red">Demolishing</span><br>
+			<a href="?return=gui/administration/information/export/table_schema_change&returntype=download&returnfilename=table_schema_changes.csv">Download all changes</a>
+        </div>
+	  </div>
+	</div> ## end container
 </body>
