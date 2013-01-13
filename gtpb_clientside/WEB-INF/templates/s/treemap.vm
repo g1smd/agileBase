@@ -39,26 +39,26 @@
 	  <div class="row" style="margin-bottom: 2em">
 	    <div class="span4">
 			<span class="sparkline_logins">...</span> 
-			<a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">Logins</a>
+			<a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">logins</a>
 			<br>
 			<span class="sparkline_report_views" alt="report_views">...</span> 
-			<a href="?return=gui/administration/information/export/report_view&returntype=download&returnfilename=report_views.csv">Report views</a>
+			<a href="?return=gui/administration/information/export/report_view&returntype=download&returnfilename=report_views.csv">report views</a>
 			<br>
 			<span class="sparkline_data_edits">...</span> 
-			<a href="?return=gui/administration/information/export/data_change&returntype=download&returnfilename=data_changes.csv">Data changes</a>
+			<a href="?return=gui/administration/information/export/data_change&returntype=download&returnfilename=data_changes.csv">rata changes</a>
 	    </div>
         <div class="span4">
 			<span class="sparkline_report_additions">...</span> 
 			<span class="sparkline_report_removals">...</span>
-			<br><span style="color:009FE3">Report building</span> and <span style="color:#E30083">Demolishing</span><br>
-			<a href="?return=gui/administration/information/export/report_schema_change&returntype=download&returnfilename=report_schema_changes.csv">Download all changes</a>
+			<br><span style="color:009FE3">report building</span> and <span style="color:#E30083">demolishing</span><br>
+			<a href="?return=gui/administration/information/export/report_schema_change&returntype=download&returnfilename=report_schema_changes.csv">download all changes</a>
         </div>
         <div class="span4">
 			<span class="sparkline_table_additions">...</span>
 			<span class="sparkline_table_removals">...</span>
 			<br>
-			<span style="color:009FE3">Table building</span> and <span style="color:#E30083">Demolishing</span><br>
-			<a href="?return=gui/administration/information/export/table_schema_change&returntype=download&returnfilename=table_schema_changes.csv">Download all changes</a>
+			<span style="color:009FE3">table building</span> and <span style="color:#E30083">demolishing</span><br>
+			<a href="?return=gui/administration/information/export/table_schema_change&returntype=download&returnfilename=table_schema_changes.csv">download all changes</a>
         </div>
 	  </div>
 	</div> ## end container

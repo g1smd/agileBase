@@ -142,7 +142,7 @@ function fInfo() {
 }
 
 function fDashboard() {
-  document.location = 'AppController.servlet?return=gui/customisations/common/dashboard/dashboard';
+  document.location = 'AppController.servlet?return=s/treemap';
 }
   
 function fForms() {
