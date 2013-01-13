@@ -824,10 +824,6 @@ public class UsageStats implements UsageStatsInfo {
 	private List<Integer> getTimelineCounts(LogType logType, int options)
 			throws DisallowedException, SQLException, ObjectNotFoundException {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
-		if (!authManager.getAuthenticator().loggedInUserAllowedTo(this.request,
-				PrivilegeType.ADMINISTRATE)) {
-			throw new DisallowedException(authManager.getLoggedInUser(this.request), PrivilegeType.ADMINISTRATE);
-		}
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(this.request);
 		// Check cache
 		List<Integer> timelineCounts = new LinkedList<Integer>();
