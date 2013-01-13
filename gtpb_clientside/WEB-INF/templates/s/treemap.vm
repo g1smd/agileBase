@@ -15,16 +15,16 @@
 </head>
 <body>
 	<div class="container">
-	  <div class="row">
+	  <div class="row spaced">
 	    <div class="span4">
 	      <a href="AppController.servlet?return=boot"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
 	    </div>
 	  </div> ## end row
-	  <h1>What's in use?</h1>
+	  <h1 class="spaced">What's in use?</h1>
 	  <p class="big">Large areas have high use. Blue areas have increasing use.
 	  <div id="infovis">
 	  </div>
-	  <h1>Long term trends</h1>
+	  <h1 class="spaced">Long term trends</h1>
 	  <div class="row">
 	    <div class="span4">
 			These 'sparkline' charts show trends in adoption and usage over the past year<br>
