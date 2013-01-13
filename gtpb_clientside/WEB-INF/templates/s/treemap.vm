@@ -36,7 +36,7 @@
             Table building points to agileBase use in new areas or projects. Removals suggest halts and cost reductions
         </div>
       </div>
-	  <div class="row">
+	  <div class="row" style="marging-bottom: 2em">
 	    <div class="span4">
 			<span class="sparkline_logins">...</span> 
 			<a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">Logins</a>
