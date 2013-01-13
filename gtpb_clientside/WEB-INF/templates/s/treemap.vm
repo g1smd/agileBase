@@ -27,12 +27,15 @@
 	  <h1 class="spaced">Long term trends</h1>
 	  <div class="row">
         <div class="span4">
+            OPERATIONAL<br>
             These 'sparkline' charts show trends in adoption and usage over the past year
         </div>
         <div class="span4">
+            TACTICAL<br>
             These charts are a pointer to levels of analysis rather than pure data entry
         </div>
         <div class="span4">
+            STRATEGIC<br>
             Table building points to agileBase use in new areas or projects. Removals suggest halts and cost reductions
         </div>
       </div>
