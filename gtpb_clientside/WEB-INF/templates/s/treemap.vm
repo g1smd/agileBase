@@ -21,7 +21,7 @@
 	    </div>
 	  </div> ## end row
 	  <h1 class="spaced">What's in use?</h1>
-	  <p class="big">Large areas have high use. Blue areas have increasing use.
+	  <p class="big">Large areas have high use. Dark areas have increasing use, light decreasing.
 	  <div id="infovis">
 	  </div>
 	  <h1 class="spaced">Long term trends</h1>
@@ -41,7 +41,7 @@
 			These charts are a pointer to levels of analysis rather than pure data entry<br>
 			<span class="sparkline_report_additions">...</span> 
 			<span class="sparkline_report_removals">...</span>
-			<br><span style="color:blue">Report building</span> and <span style="color:red">Demolishing</span><br>
+			<br><span style="color:009FE3">Report building</span> and <span style="color:#E30083">Demolishing</span><br>
 			<a href="?return=gui/administration/information/export/report_schema_change&returntype=download&returnfilename=report_schema_changes.csv">Download all changes</a>
         </div>
         <div class="span4">
@@ -49,7 +49,7 @@
 			<span class="sparkline_table_additions">...</span>
 			<span class="sparkline_table_removals">...</span>
 			<br>
-			<span style="color:blue">Table building</span> and <span style="color:red">Demolishing</span><br>
+			<span style="color:009FE3">Table building</span> and <span style="color:#E30083">Demolishing</span><br>
 			<a href="?return=gui/administration/information/export/table_schema_change&returntype=download&returnfilename=table_schema_changes.csv">Download all changes</a>
         </div>
 	  </div>
