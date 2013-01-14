@@ -38,7 +38,7 @@
 		    ## Use all report fields as the display value
 		    #set($displayValue = "")
 		    #foreach($pickerField in $pickerReport.getBaseFields())
-		      #set($displayValue = "$displayValue, $datarow.get($pickerField).getDisplayValue()")
+		      #set($displayValue = "$displayValue, $dataRowFields.get($pickerField).getDisplayValue()")
 		    #end
 		  #else
 		    ## Use just one field as the display value
