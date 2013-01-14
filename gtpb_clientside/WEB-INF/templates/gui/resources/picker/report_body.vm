@@ -37,7 +37,7 @@
 		  #if($displayAllFields)
 		    ## Use all report fields as the display value
 		    #set($displayValue = "")
-		    #foreach($pickerField in $pickerReport.getBaseFields())
+		    #foreach($pickerField in $pickerReport.getReportBaseFields())
 		      #set($displayValue = "$displayValue, $dataRowFields.get($pickerField).getDisplayValue()")
 		    #end
 		    $viewTools.log("Display value is $displayValue")
