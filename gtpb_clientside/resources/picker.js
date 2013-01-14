@@ -29,7 +29,7 @@ function fPicker(){
     if (!oElements.picker.reportsList) {
       aPostVars['return']='gui/resources/picker/wiki';
     } else {
-    	if (oElements.picker.displayValueAllFields) {
+    	if (oCaller.formEl.displayValueAllFields) {
         aPostVars['return']='gui/resources/picker/report_allfields';    		
     	} else {
         aPostVars['return']='gui/resources/picker/report';
