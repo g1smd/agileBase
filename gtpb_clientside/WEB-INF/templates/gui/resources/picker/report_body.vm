@@ -40,6 +40,7 @@
 		    #foreach($pickerField in $pickerReport.getBaseFields())
 		      #set($displayValue = "$displayValue, $dataRowFields.get($pickerField).getDisplayValue()")
 		    #end
+		    $viewTools.log("Display value is $displayValue")
 		  #else
 		    ## Use just one field as the display value
             #set($displayValue=$dataRowFields.get($displayField).getDisplayValue())
