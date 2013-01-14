@@ -43,8 +43,8 @@
 		  #else
 		    ## Use just one field as the display value
             #set($displayValue=$dataRowFields.get($displayField).getDisplayValue())
-		    #set($expando=[['keyValue',$keyValue],['displayValue',$displayValue]])
 		  #end
+          #set($expando=[['keyValue',$keyValue],['displayValue',$displayValue]])
 		  #foreach($field in $reportBaseFields)
 		    #if ((!$field.isPrimaryKey()) || ($sessionContext == "SYSADMIN"))
 			      #set($dataRowField = $dataRowFields.get($field))
