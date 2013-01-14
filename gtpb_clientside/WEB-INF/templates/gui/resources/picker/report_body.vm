@@ -38,9 +38,11 @@
 		    ## Use all report fields as the display value
 		    #set($displayValue = "")
 		    #foreach($pickerField in $pickerReport.getReportBaseFields())
-		      #set($displayValue = "$displayValue, $dataRowFields.get($pickerField).getDisplayValue()")
+		      #if(!$pickerField.isPrimaryKey())
+		        #set($displayValue = "$displayValue, $dataRowFields.get($pickerField).getDisplayValue()")
+		      #end
 		    #end
-		    $viewTools.log("Display value is $displayValue")
+		    #set($displayValue = $displayValue.substring(2))
 		  #else
 		    ## Use just one field as the display value
             #set($displayValue=$dataRowFields.get($displayField).getDisplayValue())
