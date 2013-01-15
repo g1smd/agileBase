@@ -93,7 +93,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
                   <h1>$reportFieldTable.getSimpleName()</h1>
 					      #end
                 #set($rowCount = 0)
-      					#set($address = $viewTools.getAddress($tableDataRow))
+      			#set($address = $viewTools.getAddress($tableDataRow))
                 #set($fields = $reportFieldTable.getFields())
                 #foreach($field in $fields)
               	  #set($tableDataValue = $tableDataRow.get($field))
@@ -109,6 +109,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
                       #else
                         #set($fieldEncountered = $field)
                       #end
+                      $viewTools.log("Is $fieldEncountered in $fieldsEncountered?")
                       #if((!$fieldsEncountered.containsKey($fieldEncountered)) && ($field.getPrintoutSetting().name() != "NO_PRINTOUT"))
                         #set($rrd_rowId = $relatedRowId) ## For use by input/referenced_report_data.vm
                         #parse("gui/reports_and_tables/tabs/table_data_row_view.vm")
