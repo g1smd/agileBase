@@ -109,7 +109,6 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/view")
                       #else
                         #set($fieldEncountered = $field)
                       #end
-                      $viewTools.log("Is $fieldEncountered in $fieldsEncountered?")
                       #if((!$fieldsEncountered.containsKey($fieldEncountered)) && ($field.getPrintoutSetting().name() != "NO_PRINTOUT"))
                         #set($rrd_rowId = $relatedRowId) ## For use by input/referenced_report_data.vm
                         #parse("gui/reports_and_tables/tabs/table_data_row_view.vm")
