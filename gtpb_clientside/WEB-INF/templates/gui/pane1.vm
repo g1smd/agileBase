@@ -121,15 +121,18 @@
 	    ##else
           #set($manageableTables = $view.getTablesAllowedTo("MANAGE_TABLE"))
           #set($administrationAllowed = $view.loggedInUserAllowedTo("ADMINISTRATE"))
-          #if(($manageableTables || $administrationAllowed) && (!$appId))
-	        <li id="setup" #if($appId) style="display:none" #end>
-	          <h1><span>Setup</span></h1>
-  		      <ul>
-		      #parse('gui/reports_and_tables/table_list.vm')
-		      #parse('gui/administration/administration.vm')
-		      </ul>
-	        </li>
-	      #end
+          #if((($manageableTables.size() > 0) || $administrationAllowed) && (!$appId))
+            #set($displaySetup = true)
+          #else
+            #set($displaySetup = false)
+          #end
+          <li id="setup" #if(!$displaySetup) style="display:none" #end>
+            <h1><span>Setup</span></h1>
+	        <ul>
+	        #parse('gui/reports_and_tables/table_list.vm')
+	        #parse('gui/administration/administration.vm')
+	        </ul>
+          </li>
 	   ##end
 	  #end
 	</ol> ## end list of sections	  
