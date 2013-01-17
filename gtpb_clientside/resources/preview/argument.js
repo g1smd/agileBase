@@ -50,7 +50,7 @@ function unzoom() {
 function init() {
 	if($("#argument").hasClass("asset_manager")) {
 		$(".card").click(function(event) {
-			if (this).hasClass("flipped") {
+			if ($(this).hasClass("flipped")) {
 				$(this).find(".front").children().fadeIn("normal");
 			} else {
 				$(this).find(".front").children().fadeOut("normal");
