@@ -18,7 +18,7 @@
  -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN>
 <%
-Thread.sleep(1000);
+Thread.sleep(3000);
 %>
 <html>
   <head>

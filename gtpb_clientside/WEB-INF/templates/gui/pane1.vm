@@ -120,13 +120,16 @@
 	      <li id="appspace" data-recordid=""></li>
 	    ##else
           #set($manageableTables = $view.getTablesAllowedTo("MANAGE_TABLE"))
-	      <li id="setup" #if($appId) style="display:none" #end>
-	        <h1><span>Setup</span></h1>
-  		    <ul>
-		    #parse('gui/reports_and_tables/table_list.vm')
-		    #parse('gui/administration/administration.vm')
-		    </ul>
-	      </li>
+          #set($administrationAllowed = $view.loggedInUserAllowedTo("ADMINISTRATE"))
+          #if(($manageableTables || $administrationAllowed) && (!$appId))
+	        <li id="setup" #if($appId) style="display:none" #end>
+	          <h1><span>Setup</span></h1>
+  		      <ul>
+		      #parse('gui/reports_and_tables/table_list.vm')
+		      #parse('gui/administration/administration.vm')
+		      </ul>
+	        </li>
+	      #end
 	   ##end
 	  #end
 	</ol> ## end list of sections	  
