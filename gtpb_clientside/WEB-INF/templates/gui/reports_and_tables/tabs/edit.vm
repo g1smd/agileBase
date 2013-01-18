@@ -115,7 +115,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 		  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
 			#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
 			<$cellTag colspan="2"><div class="warningmessage">
-			The following fields are mandated and must be completed before continuing
+			The following fields must be completed before continuing
 			</div></$cellTag>
 			#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
 		  </$rowTag>
