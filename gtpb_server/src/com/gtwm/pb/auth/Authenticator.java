@@ -581,6 +581,22 @@ public final class Authenticator implements AuthenticatorInfo {
 	}
 
 	@Transient
+	/**
+	 * NB This implementation doesn't use a cache as it's only used for password reset lookups
+	 */
+	protected AppUserInfo getUserByEmail(String email) throws ObjectNotFoundException, CantDoThatException {
+		if (!email.contains("@")) {
+			throw new CantDoThatException(email + " isn't a valid email address");
+		}
+		for (AppUserInfo user : this.getUsersDirect()) {
+			if (email.equals(user.getEmail())) {
+				return user;
+			}
+		}
+		throw new ObjectNotFoundException("User with email address '" + email + "' not found");
+	}
+	
+	@Transient
 	protected AppUserInfo getUserByUserName(String userName) throws ObjectNotFoundException {
 		AppUserInfo cachedUser = this.usersCache.get(userName);
 		if (cachedUser != null) {
