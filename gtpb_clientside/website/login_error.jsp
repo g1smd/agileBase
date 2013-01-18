@@ -31,11 +31,19 @@ Thread.sleep(3000);
   </head>
 <body>
   <div class="container big">
-    <div class="errormessage">
+    <div class="row abNav">
+      <div class="span2 home">
+        <a href="http://www.agilebase.co.uk"><img id="nav_home" src="/agileBase/website/images/agilebase.png" /></a>
+        <div class="arrow"></div>
+      </div>
+    </div>
+    <div id="content">
+    <div class="alert alert-block">
       <i class="icon-large icon-exclamation-sign"></i> 
       Login failed, please <a href="/agileBase/AppController.servlet?return=boot">return to the login page</a>
     </div>
     <p>If you've forgotten your password, please use the 'Can't log in' link in the login page to reset it
+  </div>
   </div>
 </body>
 </html>
