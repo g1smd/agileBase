@@ -23,25 +23,19 @@ Thread.sleep(3000);
 <html>
   <head>
   	<title>Login error</title>
-    <link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
-    <style>
-      h1 {
-        font-family: Verdana,Arial,sans-serif;
-        font-size-adjust: 0.58;
-        text-align: center;
-      }
-      
-      img {
-      	display: block;
-      	margin-top: 20px;
-    	margin-left: auto;
-    	margin-right: auto;
-      }
-    </style>
+    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+    <link href="/agileBase/website/styles.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
   </head>
 <body>
-<a href="/agileBase/AppController.servlet?return=boot"><img border="0" src="/agileBase/website/images/disallowed.png"></a><br>
-<h1>Login failed, please <a href="/agileBase/AppController.servlet?return=boot">try again</a></h1>
-
+  <div class="container big">
+    <div class="errormessage">
+      <i class="icon-large icon-exclamation-sign"></i> 
+      Login failed, please <a href="/agileBase/AppController.servlet?return=boot">return to the login page</a>
+    </div>
+    <p>If you've forgotten your password, please use the 'Can't log in' link in the login page to reset it
+  </div>
 </body>
 </html>
