@@ -110,7 +110,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			#end
 	  #end
 	  #if($unfilledMandatories)
-	    <div class="unfilled_mandatories">
+	    <div class="unfilledMandatories">
 		  #set($rowCount = $rowCount + 1)
 		  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
 			#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
