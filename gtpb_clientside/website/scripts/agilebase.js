@@ -16,7 +16,7 @@ $(document).ready(function() {
 			if (response == "ok") {
 				formParent.append("<p>Request successful, a password reset link has been sent to your email. If it doesn't turn up, try checking your spam filter.</p>");
 			} else {
-				formParent.append("<div class='errormessage'>Unable to request password. Perhaps the login name was incorrect or no email address is associated with the account. Please contact your administrator</div>");
+				formParent.append("<div class='errormessage'>Unable to request password. Perhaps there's no email address associated with your account. Please contact your administrator</div>");
 			}
 		});
 	});
