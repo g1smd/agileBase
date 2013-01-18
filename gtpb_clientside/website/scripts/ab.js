@@ -1,3 +1,5 @@
+/* This file obsolete */
+
 function  loadFeedControl() {
 	var feed  = "http://blog.agilebase.co.uk/?feed=rss2";
 		var options = {

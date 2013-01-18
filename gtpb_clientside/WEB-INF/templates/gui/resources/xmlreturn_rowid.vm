@@ -2,6 +2,10 @@
   #if($view.getWhetherExceptionOccurred())
     <exception type="$view.getException().getClass().getSimpleName()">$view.getException().getMessage()</exception>
     <response>exception</response>
+  #elseif($exceptionCaught)
+    ## $exceptionCaught set by Public.servlet as there is no $view set
+    <exception type="$exceptionCaught.getClass().getSimpleName()">$exceptionCaught.getMessage()</exception>
+    <response>exception</response>
   #else
     <response>ok</response>
     <rowid>$sessionData.getRowId()</rowid>
