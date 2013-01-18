@@ -70,6 +70,10 @@ public final class ServletAuthMethods {
 	public synchronized static void sendPasswordReset(HttpServletRequest request,
 			AuthManagerInfo authManager) throws DisallowedException, ObjectNotFoundException,
 			CantDoThatException, CodingErrorException, MessagingException, MissingParametersException {
+		String antiRobot = request.getParameter("iamnotanumber");
+		if (!antiRobot.trim().equals("9")) {
+			throw new CantDoThatException("Wrong answer to the question");
+		}
 		HibernateUtil.startHibernateTransaction();
 		try {
 			authManager.sendPasswordReset(request);

@@ -93,10 +93,13 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
             <form style="display:none" method="POST" action="/agileBase/Public.ab" id="password_reset_form" name="password_reset_form" class="form-inline">
           <% } %>
               <input type="hidden" name="send_password_reset" value="true" />
-              <p>Forgotten your password? Please enter your username and check your email for a password reset link.
-              <p>If you don't know your username, please contact your organisation's administrator.
+              <p>Forgotten your password? Please enter your email address and check your email for a password reset link.
+              <p>Also, answer this maths question:
               <div class="spaced">
-                <input type="text" name="username" id="username" autocorrect="off" autocapitalize="off" placeholder="username" />
+                <p>
+                11 - 2 = <input type="text" name="iamnotanumber" size="4">
+                <p>
+                <input type="text" name="username" id="username" autocorrect="off" autocapitalize="off" placeholder="email" />
                 <button type="submit" class="btn">request password</button>
               </div>
             </form>
