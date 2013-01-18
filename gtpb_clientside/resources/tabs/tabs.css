@@ -979,6 +979,13 @@ div#reportData {
 	position: relative;
 	top: 0.2em;
 }
+
+.unfilledMandatories {
+  background-color: white;
+  padding: 1em;
+  marging: 2em;
+  border-radius: 1em;
+}
 	
 /* 3) Summary tab css */
 

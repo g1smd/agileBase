@@ -110,21 +110,20 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			#end
 	  #end
 	  #if($unfilledMandatories)
+	    <div class="unfilled_mandatories">
 		  #set($rowCount = $rowCount + 1)
 		  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
 			#if(!$edit_nav)<td class=leading>&nbsp;</td>#end
 			<$cellTag colspan="2"><div class="warningmessage">
-			The following fields are mandated and must be completed before continuing.<br>
-			This record will be highlighted in the dashboard as an exception until values are filled in.<br>
-			If the information necessary isn't available yet, other records can continue to be edited.
+			The following fields are mandated and must be completed before continuing
 			</div></$cellTag>
 			#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
 		  </$rowTag>
-      #foreach($field in $fields)
-			  #if($field.getNotNull() && $tableDataRow.get($field) == "")
-				  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-			  #end
-      #end ## end loop through fields
+	      #foreach($field in $fields)
+				  #if($field.getNotNull() && $tableDataRow.get($field) == "")
+					  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+				  #end
+	      #end ## end loop through fields
 		  #set($rowCount = $rowCount + 1)
 		  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
 			#if(!$edit_nav)<$cellTag class=leading>&nbsp;</$cellTag>#end
@@ -132,8 +131,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			<$cellTag><input type="button" value="Complete" alt="Complete the rest of the record" onclick="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';"></$cellTag>
 			#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
 		  </$rowTag>
+		</div>
 	  #else
-      #parse("gui/reports_and_tables/tabs/edit_content.vm")
+        #parse("gui/reports_and_tables/tabs/edit_content.vm")
 	  #end ## end if no unfilled mandatories
     #if($view.isWikiIntegrated() && (!$mobile_device))
       #parse("gui/reports_and_tables/tabs/wiki.vm")  
