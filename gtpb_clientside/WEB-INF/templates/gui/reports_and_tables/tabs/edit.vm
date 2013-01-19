@@ -120,9 +120,9 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 			#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
 		  </$rowTag>
 	      #foreach($field in $fields)
-				  #if($field.getNotNull() && $tableDataRow.get($field) == "")
-					  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
-				  #end
+		    #if($field.getNotNull() && $tableDataRow.get($field) == "")
+			  #parse("gui/reports_and_tables/tabs/table_data_row.vm")
+		    #end
 	      #end ## end loop through fields
 		  #set($rowCount = $rowCount + 1)
 		  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
