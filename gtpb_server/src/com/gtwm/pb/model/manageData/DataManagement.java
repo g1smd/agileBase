@@ -1603,7 +1603,7 @@ public final class DataManagement implements DataManagementInfo {
 						midSize = 250;
 					}
 					boolean needResize = false;
-					if (!fileValue.getExtension().equals(fileValue.getPreviewExtension())) {
+					if ((extension.equals("pdf")) || (!fileValue.getExtension().equals(fileValue.getPreviewExtension()))) {
 						needResize = true;
 					} else {
 						try {
@@ -1802,8 +1802,8 @@ public final class DataManagement implements DataManagementInfo {
 					try {
 						FileUtils.deleteDirectory(folder);
 					} catch (IOException e) {
-						logger.warn("Unable to remove " + folderName + " when removing field " + table + "."
-								+ field + ": " + e);
+						logger.warn("Unable to remove " + folderName + " when removing record, " + table + "."
+								+ field + "(" + rowId + "): " + e);
 					}
 				}
 			}
