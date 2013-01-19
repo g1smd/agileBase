@@ -1603,6 +1603,10 @@ public final class DataManagement implements DataManagementInfo {
 					}
 					boolean needResize = false;
 					try {
+						String names[] = ImageIO.getReaderFormatNames();  
+				    for (int i = 0; i < names.length; ++i) {  
+				      logger.debug("Able to read " + names[i]);
+				    }  
 						BufferedImage originalImage = ImageIO.read(selectedFile);
 						int height = originalImage.getHeight();
 						int width = originalImage.getWidth();
