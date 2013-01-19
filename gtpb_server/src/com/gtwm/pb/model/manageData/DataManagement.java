@@ -109,10 +109,12 @@ import com.gtwm.pb.model.interfaces.fields.DateValue;
 import com.gtwm.pb.model.interfaces.fields.FileValue;
 import com.gtwm.pb.model.manageData.fields.DateValueDefn;
 import com.gtwm.pb.model.manageData.fields.DecimalValueDefn;
+import com.gtwm.pb.model.manageData.fields.FileValueDefn;
 import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageData.fields.IntegerValueDefn;
 import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
+import com.gtwm.pb.model.manageSchema.fields.FileFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.servlets.ServletUtilMethods;
@@ -1591,7 +1593,7 @@ public final class DataManagement implements DataManagementInfo {
 					float uploadSpeed = ((float) fileSize) / secondsToUpload;
 					this.updateUploadSpeed(uploadSpeed);
 				}
-				if (extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png")) {
+				if (extension.equals("pdf") || (new FileValueDefn(filePath)).isImage()) {
 					// image.png -> image.png.40.png
 					String thumb40Path = filePath + "." + 40 + "." + extension;
 					String thumb500Path = filePath + "." + 500 + "." + extension;
@@ -1603,10 +1605,6 @@ public final class DataManagement implements DataManagementInfo {
 					}
 					boolean needResize = false;
 					try {
-						String names[] = ImageIO.getReaderFormatNames();  
-				    for (int i = 0; i < names.length; ++i) {  
-				      logger.debug("Able to read " + names[i]);
-				    }  
 						BufferedImage originalImage = ImageIO.read(selectedFile);
 						int height = originalImage.getHeight();
 						int width = originalImage.getWidth();
@@ -1618,57 +1616,49 @@ public final class DataManagement implements DataManagementInfo {
 						// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5100094
 						// http://code.google.com/p/thumbnailator/issues/detail?id=40
 						logger.error("Error reading image dimensions: " + ioex);
-						if (selectedFile.length() > 10000000) {
+						if (selectedFile.length() > 1000000) {
 							needResize = true;
 						}
 					}
-					try {
 						// Conditional resize
 						if (needResize) {
-							Thumbnails.of(selectedFile).size(midSize, midSize).toFile(thumb500File);
+							this.createThumbnail(midSize, midSize, filePath);
 						} else {
-							Files.copy(selectedFile.toPath(), thumb500File.toPath());
-							//FileUtils.copyFile(selectedFile, thumb500File);
+							try {
+								Files.copy(selectedFile.toPath(), thumb500File.toPath());
+							} catch (IOException ioex) {
+								throw new FileUploadException("Error copying " + selectedFile + " to .500 version", ioex);
+							}
 						}
 						// Allow files that are up to 60 px tall as long as the
-						// width is no > 40 px
-						Thumbnails.of(selectedFile).size(40, 60).toFile(thumb40File);
-					} catch (IOException ioex) {
-						throw new FileUploadException("Error generating thumbnail: " + ioex.getMessage());
-					}
-				} else if (extension.equals("pdf") || extension.equals("tif") || extension.equals("tiff")) {
-					// Convert first page to PNG with imagemagick
-					ConvertCmd convert = new ConvertCmd();
-					IMOperation op = new IMOperation();
-					op.addImage(); // Placeholder for input PDF
-					op.resize(500, 500);
-					op.addImage(); // Placeholder for output PNG
-					String newExtension = extension;
-					if (extension.equals("pdf")) {
-						newExtension = "png";
-					} else {
-						newExtension = "jpg";
-					}
-					try {
-						// [0] means convert only first page if a PDF
-						convert.run(op, new Object[] { filePath + "[0]", filePath + "." + 500 + "." + newExtension });
-						if (newExtension.equals("jpg")) {
-							convert = new ConvertCmd();
-							op = new IMOperation();
-							op.addImage(); // Placeholder for input TIF
-							op.resize(40, 60);
-							op.addImage(); // Placeholder for output JPG
-							convert.run(op, new Object[] { filePath, filePath + "." + 40 + "." + newExtension });
-						}
-					} catch (IOException ioex) {
-						throw new FileUploadException("IO error while converting " + extension + " to " + newExtension + ": " + ioex);
-					} catch (InterruptedException iex) {
-						throw new FileUploadException("Interrupted while converting " + extension + " to " + newExtension + ": "  + iex);
-					} catch (IM4JavaException im4jex) {
-						throw new FileUploadException("Problem converting " + extension + " to " + newExtension + ": " + im4jex);
-					}
+						// width less than 40 px
+						this.createThumbnail(40,60, filePath);
 				}
 			}
+		}
+	}
+	
+	public void createThumbnail(int width, int height, String inputFilePath) throws FileUploadException {
+		ConvertCmd convert = new ConvertCmd();
+		IMOperation op = new IMOperation();
+		op.addImage(); // Placeholder for input PDF
+		op.resize(width, height);
+		op.addImage(); // Placeholder for output PNG
+		String newExtension = (new FileValueDefn(inputFilePath)).getPreviewExtension();
+		try {
+			String convertPath = inputFilePath;
+			if (inputFilePath.endsWith("pdf")) {
+				// [0] means convert only first page if a PDF
+				convertPath += "[0]";
+				newExtension = "png";
+			}
+			convert.run(op, new Object[] { convertPath, inputFilePath + "." + width + "." + newExtension });
+		} catch (IOException ioex) {
+			throw new FileUploadException("IO error while converting " + inputFilePath + " to " + newExtension + ": " + ioex);
+		} catch (InterruptedException iex) {
+			throw new FileUploadException("Interrupted while converting " + inputFilePath + " to " + newExtension + ": "  + iex);
+		} catch (IM4JavaException im4jex) {
+			throw new FileUploadException("Problem converting " + inputFilePath + " to " + newExtension + ": " + im4jex);
 		}
 	}
 
