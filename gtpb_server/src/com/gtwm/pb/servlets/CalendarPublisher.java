@@ -78,6 +78,7 @@ public final class CalendarPublisher extends HttpServlet {
 		this.databaseDefn = (DatabaseInfo) servletContext
 				.getAttribute("com.gtwm.pb.servlets.databaseDefn");
 		if (this.databaseDefn == null) {
+			logger.error(	"Error starting CalendarPublisher servlet. No databaseDefn object in the servlet context");
 			throw new ServletException(
 					"Error starting CalendarPublisher servlet. No databaseDefn object in the servlet context");
 		}
@@ -107,16 +108,19 @@ public final class CalendarPublisher extends HttpServlet {
 			throws ServletException {
 		String internalCompanyName = request.getParameter("c");
 		if (internalCompanyName == null) {
+			logger.error("c (internal company ID) parameter is necessary to export a calendar");
 			throw new ServletException(new MissingParametersException(
 					"c (internal company ID) parameter is necessary to export a calendar"));
 		}
 		String internalTableName = request.getParameter("t");
 		if (internalTableName == null) {
+			logger.error("t (internal table ID) parameter is necessary to export a calendar");
 			throw new ServletException(new MissingParametersException(
 					"t (internal table ID) parameter is necessary to export a calendar"));
 		}
 		String internalReportName = request.getParameter("r");
 		if (internalReportName == null) {
+			logger.error("r (internal report ID) parameter is necessary to export a calendar");
 			throw new ServletException(new MissingParametersException(
 					"r (internal report ID) parameter is necessary to export a calendar"));
 		}
@@ -135,6 +139,8 @@ public final class CalendarPublisher extends HttpServlet {
 				}
 			}
 			if (table == null) {
+				logger.error("Table with ID " + internalTableName
+						+ " not found in company " + company);
 				throw new ObjectNotFoundException("Table with ID " + internalTableName
 						+ " not found in company " + company);
 			}
@@ -176,12 +182,16 @@ public final class CalendarPublisher extends HttpServlet {
 			AppUserInfo publicUser, BaseReportInfo report) throws CantDoThatException,
 			CodingErrorException, SQLException, ParseException, SocketException, ObjectNotFoundException {
 		if (!report.getCalendarSyncable()) {
+			logger.error("The report " + report
+					+ " has not been set as publicly exportable");
 			throw new CantDoThatException("The report " + report
 					+ " has not been set as publicly exportable");
 		}
 		ReportFieldInfo eventStartField = report.getCalendarStartField();
 		ReportFieldInfo eventEndField = report.getCalendarEndField();
 		if (eventStartField == null) {
+			logger.error("The report " + report
+					+ " contains no date fields that can be used for calendar syncing");
 			throw new CantDoThatException("The report " + report
 					+ " contains no date fields that can be used for calendar syncing");
 		}
