@@ -114,7 +114,6 @@ import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageData.fields.IntegerValueDefn;
 import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
 import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
-import com.gtwm.pb.model.manageSchema.fields.FileFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.servlets.ServletUtilMethods;
@@ -641,7 +640,8 @@ public final class DataManagement implements DataManagementInfo {
 					((DateValue) fieldValue).setDateResolution(Calendar.SECOND);
 				}
 				if (field.getFieldName().equals(HiddenFields.CREATED_BY.getFieldName())) {
-					// 'Created by' can be overridden by an administrator on request by supplying a 'username' parameter
+					// 'Created by' can be overridden by an administrator on request by
+					// supplying a 'username' parameter
 					String createdByOverrideUsername = request.getParameter("username");
 					if (createdByOverrideUsername == null) {
 						fieldValue = this.getUserValue(request, request.getRemoteUser());
@@ -678,7 +678,9 @@ public final class DataManagement implements DataManagementInfo {
 			currentUser = ServletUtilMethods.getPublicUserForRequest(request,
 					this.authManager.getAuthenticator());
 		} else {
-			// Note: getUserByUserName will throw DisallowedException unless the userName is that of the logged in user or the logged in user is an administrator
+			// Note: getUserByUserName will throw DisallowedException unless the
+			// userName is that of the logged in user or the logged in user is an
+			// administrator
 			currentUser = this.authManager.getUserByUserName(request, userName);
 		}
 		String fullname = currentUser.getForename() + " " + currentUser.getSurname();
@@ -718,7 +720,8 @@ public final class DataManagement implements DataManagementInfo {
 		// If any fields are files to upload, do the actual uploads.
 		// Do this before opening an SQL connection in case the uploads take a long
 		// time and time out the SQL connection. An upload error will then cause the
-		// record save to fail. Note: new record uploads have to be left until after the
+		// record save to fail. Note: new record uploads have to be left until after
+		// the
 		// SQL as the new record row ID needs to be retrieved from the database
 		if (!newRecord) {
 			for (BaseField field : dataToSave.keySet()) {
@@ -934,12 +937,13 @@ public final class DataManagement implements DataManagementInfo {
 				if (field instanceof FileField) {
 					try {
 						this.uploadFile(request, (FileField) field, (FileValue) dataToSave.get(field),
-							newRowId, multipartItems);
+								newRowId, multipartItems);
 					} catch (CantDoThatException cdtex) {
 						throw new InputRecordException("Error uploading file: " + cdtex.getMessage(), field,
 								cdtex);
 					} catch (FileUploadException fuex) {
-						throw new InputRecordException("Error uploading file: " + fuex.getMessage(), field, fuex);
+						throw new InputRecordException("Error uploading file: " + fuex.getMessage(), field,
+								fuex);
 					}
 				}
 			}
@@ -1620,25 +1624,27 @@ public final class DataManagement implements DataManagementInfo {
 							needResize = true;
 						}
 					}
-						// Conditional resize
-						if (needResize) {
-							this.createThumbnail(midSize, midSize, filePath);
-						} else {
-							try {
-								Files.copy(selectedFile.toPath(), thumb500File.toPath());
-							} catch (IOException ioex) {
-								throw new FileUploadException("Error copying " + selectedFile + " to .500 version", ioex);
-							}
+					// Conditional resize
+					if (needResize) {
+						this.createThumbnail(midSize, midSize, filePath);
+					} else {
+						try {
+							Files.copy(selectedFile.toPath(), thumb500File.toPath());
+						} catch (IOException ioex) {
+							throw new FileUploadException("Error copying " + selectedFile + " to .500 version",
+									ioex);
 						}
-						// Allow files that are up to 60 px tall as long as the
-						// width less than 40 px
-						this.createThumbnail(40,60, filePath);
+					}
+					// Allow files that are up to 60 px tall as long as the
+					// width less than 40 px
+					this.createThumbnail(40, 60, filePath);
 				}
 			}
 		}
 	}
-	
-	public void createThumbnail(int width, int height, String inputFilePath) throws FileUploadException {
+
+	public void createThumbnail(int width, int height, String inputFilePath)
+			throws FileUploadException {
 		ConvertCmd convert = new ConvertCmd();
 		IMOperation op = new IMOperation();
 		op.addImage(); // Placeholder for input PDF
@@ -1652,13 +1658,17 @@ public final class DataManagement implements DataManagementInfo {
 				convertPath += "[0]";
 				newExtension = "png";
 			}
-			convert.run(op, new Object[] { convertPath, inputFilePath + "." + width + "." + newExtension });
+			convert.run(op,
+					new Object[] { convertPath, inputFilePath + "." + width + "." + newExtension });
 		} catch (IOException ioex) {
-			throw new FileUploadException("IO error while converting " + inputFilePath + " to " + newExtension + ": " + ioex);
+			throw new FileUploadException("IO error while converting " + inputFilePath + " to "
+					+ newExtension + ": " + ioex);
 		} catch (InterruptedException iex) {
-			throw new FileUploadException("Interrupted while converting " + inputFilePath + " to " + newExtension + ": "  + iex);
+			throw new FileUploadException("Interrupted while converting " + inputFilePath + " to "
+					+ newExtension + ": " + iex);
 		} catch (IM4JavaException im4jex) {
-			throw new FileUploadException("Problem converting " + inputFilePath + " to " + newExtension + ": " + im4jex);
+			throw new FileUploadException("Problem converting " + inputFilePath + " to " + newExtension
+					+ ": " + im4jex);
 		}
 	}
 
