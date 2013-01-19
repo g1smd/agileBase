@@ -74,7 +74,7 @@
         <pathelement location="WEB-INF/lib/httpcore-4.2.1.jar"/>
         <pathelement location="WEB-INF/lib/fluent-hc-4.2.1.jar"/>
 				<!-- CSV import/export -->
-		        <pathelement location="WEB-INF/lib/opencsv-1.5.jar"/>
+		        <pathelement location="WEB-INF/lib/opencsv-2.3.jar"/>
 				<!-- Google client API -->
 				<!-- <pathelement location="WEB-INF/lib/gdata-client-1.0.jar"/> -->
 				<!-- Jamon profiler, currently unused -->
