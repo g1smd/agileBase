@@ -1591,7 +1591,7 @@ public final class DataManagement implements DataManagementInfo {
 					float uploadSpeed = ((float) fileSize) / secondsToUpload;
 					this.updateUploadSpeed(uploadSpeed);
 				}
-				if (extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png") || extension.equals("tif") || extension.equals("tiff") ) {
+				if (extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png")) {
 					// image.png -> image.png.40.png
 					String thumb40Path = filePath + "." + 40 + "." + extension;
 					String thumb500Path = filePath + "." + 500 + "." + extension;
@@ -1634,22 +1634,26 @@ public final class DataManagement implements DataManagementInfo {
 					} catch (IOException ioex) {
 						throw new FileUploadException("Error generating thumbnail: " + ioex.getMessage());
 					}
-				} else if (extension.equals("pdf")) {
+				} else if (extension.equals("pdf") || extension.equals("tif") || extension.equals("tiff")) {
 					// Convert first page to PNG with imagemagick
 					ConvertCmd convert = new ConvertCmd();
 					IMOperation op = new IMOperation();
 					op.addImage(); // Placeholder for input PDF
 					op.resize(500, 500);
 					op.addImage(); // Placeholder for output PNG
+					String newExtension = extension;
+					if (extension.equals("pdf")) {
+						newExtension = "png";
+					}
 					try {
 						// [0] means convert only first page
-						convert.run(op, new Object[] { filePath + "[0]", filePath + "." + 500 + ".png" });
+						convert.run(op, new Object[] { filePath + "[0]", filePath + "." + 500 + "." + newExtension });
 					} catch (IOException ioex) {
-						throw new FileUploadException("IO error while converting PDF to PNG: " + ioex);
+						throw new FileUploadException("IO error while converting " + extension + " to " + newExtension + ": " + ioex);
 					} catch (InterruptedException iex) {
-						throw new FileUploadException("Interrupted while converting PDF to PNG: " + iex);
+						throw new FileUploadException("Interrupted while converting " + extension + " to " + newExtension + ": "  + iex);
 					} catch (IM4JavaException im4jex) {
-						throw new FileUploadException("Problem converting PDF to PNG: " + im4jex);
+						throw new FileUploadException("Problem converting " + extension + " to " + newExtension + ": " + im4jex);
 					}
 				}
 			}
