@@ -1615,6 +1615,8 @@ public final class DataManagement implements DataManagementInfo {
 						}
 					} catch (IOException ioex) {
 						// Certain images can sometimes fail to be read e.g. CMYK JPGs
+						// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5100094
+						// http://code.google.com/p/thumbnailator/issues/detail?id=40
 						logger.error("Error reading image dimensions: " + ioex);
 						if (selectedFile.length() > 10000000) {
 							needResize = true;
@@ -1644,10 +1646,20 @@ public final class DataManagement implements DataManagementInfo {
 					String newExtension = extension;
 					if (extension.equals("pdf")) {
 						newExtension = "png";
+					} else {
+						newExtension = "jpg";
 					}
 					try {
-						// [0] means convert only first page
+						// [0] means convert only first page if a PDF
 						convert.run(op, new Object[] { filePath + "[0]", filePath + "." + 500 + "." + newExtension });
+						if (newExtension.equals("jpg")) {
+							convert = new ConvertCmd();
+							op = new IMOperation();
+							op.addImage(); // Placeholder for input TIF
+							op.resize(40, 60);
+							op.addImage(); // Placeholder for output JPG
+							convert.run(op, new Object[] { filePath, filePath + "." + 40 + "." + newExtension });
+						}
 					} catch (IOException ioex) {
 						throw new FileUploadException("IO error while converting " + extension + " to " + newExtension + ": " + ioex);
 					} catch (InterruptedException iex) {
